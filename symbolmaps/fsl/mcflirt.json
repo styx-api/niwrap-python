@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "mcflirt",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "bins": {
+      "var_param": "bins"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "init": {
+      "var_param": "init"
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "mean_vol": {
+      "var_param": "mean_vol"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "ref_file": {
+      "var_param": "ref_file"
+    },
+    "ref_vol": {
+      "var_param": "ref_vol"
+    },
+    "rotation": {
+      "var_param": "rotation"
+    },
+    "save_mats": {
+      "var_param": "save_mats"
+    },
+    "save_plots": {
+      "var_param": "save_plots"
+    },
+    "save_rmsabs": {
+      "var_param": "save_rmsabs"
+    },
+    "save_rmsrel": {
+      "var_param": "save_rmsrel"
+    },
+    "scaling": {
+      "var_param": "scaling"
+    },
+    "smooth": {
+      "var_param": "smooth"
+    },
+    "stages": {
+      "var_param": "stages"
+    },
+    "stats_imgs": {
+      "var_param": "stats_imgs"
+    },
+    "use_contour": {
+      "var_param": "use_contour"
+    },
+    "use_gradient": {
+      "var_param": "use_gradient"
+    }
+  }
+}

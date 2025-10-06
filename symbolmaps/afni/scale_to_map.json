@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "scale_to_map",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "icol": {
+      "var_param": "icol"
+    },
+    "vcol": {
+      "var_param": "vcol"
+    },
+    "cmap": {
+      "var_param": "cmap"
+    },
+    "cmapfile": {
+      "var_param": "cmapfile"
+    },
+    "cmapdb": {
+      "var_param": "cmapdb"
+    },
+    "frf": {
+      "var_param": "frf"
+    },
+    "clp": {
+      "var_param": "clp"
+    },
+    "perc_clp": {
+      "var_param": "perc_clp"
+    },
+    "apr": {
+      "var_param": "apr"
+    },
+    "anr": {
+      "var_param": "anr"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "nointerp": {
+      "var_param": "nointerp"
+    },
+    "direct": {
+      "var_param": "direct"
+    },
+    "msk_zero": {
+      "var_param": "msk_zero"
+    },
+    "msk": {
+      "var_param": "msk"
+    },
+    "msk_col": {
+      "var_param": "msk_col"
+    },
+    "nomsk_col": {
+      "var_param": "nomsk_col"
+    },
+    "br": {
+      "var_param": "br"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "showmap": {
+      "var_param": "showmap"
+    },
+    "showdb": {
+      "var_param": "showdb"
+    },
+    "novolreg": {
+      "var_param": "novolreg"
+    },
+    "noxform": {
+      "var_param": "noxform"
+    },
+    "setenv": {
+      "var_param": "setenv"
+    },
+    "trace": {
+      "var_param": "trace_",
+      "fn_struct_make_params": "scale_to_map_trace_params",
+      "properties": {
+        "trace": {
+          "var_param": "trace_"
+        },
+        "TRACE": {
+          "var_param": "trace_2"
+        }
+      }
+    },
+    "nomall": {
+      "var_param": "nomall"
+    },
+    "yesmall": {
+      "var_param": "yesmall"
+    }
+  }
+}

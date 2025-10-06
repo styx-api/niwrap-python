@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "reg2subject",
+  "properties": {
+    "regfile": {
+      "var_param": "regfile"
+    }
+  }
+}

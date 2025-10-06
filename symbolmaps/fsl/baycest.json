@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "baycest",
+  "properties": {
+    "data_file": {
+      "var_param": "data_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "pools_file": {
+      "var_param": "pools_file"
+    },
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "ptrain_file": {
+      "var_param": "ptrain_file"
+    },
+    "spatial_flag": {
+      "var_param": "spatial_flag"
+    },
+    "t12prior_flag": {
+      "var_param": "t12prior_flag"
+    }
+  }
+}

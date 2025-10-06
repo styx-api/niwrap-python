@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "surface_coordinates_to_metric",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    }
+  }
+}

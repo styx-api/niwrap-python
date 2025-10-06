@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "surfmaths",
+  "properties": {
+    "first_input": {
+      "var_param": "first_input"
+    },
+    "operations_inputs": {
+      "var_param": "operations_inputs"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

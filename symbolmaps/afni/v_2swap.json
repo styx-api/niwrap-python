@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v_2swap",
+  "properties": {
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

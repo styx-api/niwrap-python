@@ -1,0 +1,152 @@
+{
+  "fn_root_make_params_and_execute": "mris_preproc",
+  "properties": {
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "target_subject": {
+      "var_param": "target_subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "meas": {
+      "var_param": "meas"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "measdir": {
+      "var_param": "measdir"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "fsgd": {
+      "var_param": "fsgd"
+    },
+    "subjectlist": {
+      "var_param": "subjectlist"
+    },
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "qdec_long": {
+      "var_param": "qdec_long"
+    },
+    "surfmeasfile": {
+      "var_param": "surfmeasfile"
+    },
+    "volmeasfile_reg": {
+      "var_param": "volmeasfile_reg"
+    },
+    "projfrac": {
+      "var_param": "projfrac"
+    },
+    "projfrac_max": {
+      "var_param": "projfrac_max"
+    },
+    "projfrac_avg": {
+      "var_param": "projfrac_avg"
+    },
+    "no_mask_non_cortex": {
+      "var_param": "no_mask_non_cortex"
+    },
+    "session_file": {
+      "var_param": "session_file"
+    },
+    "dir_file": {
+      "var_param": "dir_file"
+    },
+    "analysis": {
+      "var_param": "analysis"
+    },
+    "contrast": {
+      "var_param": "contrast"
+    },
+    "cvar_flag": {
+      "var_param": "cvar_flag"
+    },
+    "offset_flag": {
+      "var_param": "offset_flag"
+    },
+    "map": {
+      "var_param": "map_"
+    },
+    "etiv_flag": {
+      "var_param": "etiv_flag"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "fwhm_src": {
+      "var_param": "fwhm_src"
+    },
+    "niters": {
+      "var_param": "niters"
+    },
+    "niters_src": {
+      "var_param": "niters_src"
+    },
+    "cortex_only": {
+      "var_param": "cortex_only"
+    },
+    "mgz_flag": {
+      "var_param": "mgz_flag"
+    },
+    "no_jac_flag": {
+      "var_param": "no_jac_flag"
+    },
+    "paired_diff_flag": {
+      "var_param": "paired_diff_flag"
+    },
+    "cache_out": {
+      "var_param": "cache_out"
+    },
+    "cache_in": {
+      "var_param": "cache_in"
+    },
+    "cache_out_only": {
+      "var_param": "cache_out_only"
+    },
+    "no_prune_flag": {
+      "var_param": "no_prune_flag"
+    },
+    "mean_flag": {
+      "var_param": "mean_flag"
+    },
+    "std_flag": {
+      "var_param": "std_flag"
+    },
+    "reshape_flag": {
+      "var_param": "reshape_flag"
+    },
+    "surfreg": {
+      "var_param": "surfreg"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "synth_flag": {
+      "var_param": "synth_flag"
+    },
+    "tmpdir": {
+      "var_param": "tmpdir"
+    },
+    "nocleanup_flag": {
+      "var_param": "nocleanup_flag"
+    },
+    "cleanup_flag": {
+      "var_param": "cleanup_flag"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "nolog_flag": {
+      "var_param": "nolog_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

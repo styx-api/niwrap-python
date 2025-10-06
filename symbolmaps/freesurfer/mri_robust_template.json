@@ -1,0 +1,116 @@
+{
+  "fn_root_make_params_and_execute": "mri_robust_template",
+  "properties": {
+    "mov_files": {
+      "var_param": "mov_files"
+    },
+    "template_file": {
+      "var_param": "template_file"
+    },
+    "sat_value": {
+      "var_param": "sat_value"
+    },
+    "satit_flag": {
+      "var_param": "satit_flag"
+    },
+    "lta_files": {
+      "var_param": "lta_files"
+    },
+    "mapmov_files": {
+      "var_param": "mapmov_files"
+    },
+    "mapmovhdr_files": {
+      "var_param": "mapmovhdr_files"
+    },
+    "weights_files": {
+      "var_param": "weights_files"
+    },
+    "oneminusw_flag": {
+      "var_param": "oneminusw_flag"
+    },
+    "average_type": {
+      "var_param": "average_type"
+    },
+    "inittp": {
+      "var_param": "inittp"
+    },
+    "fixtp_flag": {
+      "var_param": "fixtp_flag"
+    },
+    "iscale_flag": {
+      "var_param": "iscale_flag"
+    },
+    "iscaleonly_flag": {
+      "var_param": "iscaleonly_flag"
+    },
+    "iscalein_files": {
+      "var_param": "iscalein_files"
+    },
+    "iscaleout_files": {
+      "var_param": "iscaleout_files"
+    },
+    "transonly_flag": {
+      "var_param": "transonly_flag"
+    },
+    "affine_flag": {
+      "var_param": "affine_flag"
+    },
+    "ixforms_files": {
+      "var_param": "ixforms_files"
+    },
+    "masks_files": {
+      "var_param": "masks_files"
+    },
+    "vox2vox_flag": {
+      "var_param": "vox2vox_flag"
+    },
+    "leastsquares_flag": {
+      "var_param": "leastsquares_flag"
+    },
+    "noit_flag": {
+      "var_param": "noit_flag"
+    },
+    "maxit": {
+      "var_param": "maxit"
+    },
+    "highit": {
+      "var_param": "highit"
+    },
+    "epsit": {
+      "var_param": "epsit"
+    },
+    "pairmaxit": {
+      "var_param": "pairmaxit"
+    },
+    "pairepsit": {
+      "var_param": "pairepsit"
+    },
+    "subsample": {
+      "var_param": "subsample"
+    },
+    "nomulti_flag": {
+      "var_param": "nomulti_flag"
+    },
+    "floattype_flag": {
+      "var_param": "floattype_flag"
+    },
+    "finalnearest_flag": {
+      "var_param": "finalnearest_flag"
+    },
+    "doubleprec_flag": {
+      "var_param": "doubleprec_flag"
+    },
+    "cras_flag": {
+      "var_param": "cras_flag"
+    },
+    "res_thresh": {
+      "var_param": "res_thresh"
+    },
+    "frobnorm_thresh": {
+      "var_param": "frobnorm_thresh"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

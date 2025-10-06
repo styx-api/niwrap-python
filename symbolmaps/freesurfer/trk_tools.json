@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "trk_tools",
+  "properties": {
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "input_trk": {
+      "var_param": "input_trk"
+    },
+    "output_trk": {
+      "var_param": "output_trk"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "update_header": {
+      "var_param": "update_header"
+    },
+    "output_vtk": {
+      "var_param": "output_vtk"
+    }
+  }
+}

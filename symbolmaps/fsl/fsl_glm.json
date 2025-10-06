@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "fsl_glm",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "design_matrix": {
+      "var_param": "design_matrix"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "contrasts": {
+      "var_param": "contrasts"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "design_norm_flag": {
+      "var_param": "design_norm_flag"
+    },
+    "data_norm_flag": {
+      "var_param": "data_norm_flag"
+    },
+    "vn_flag": {
+      "var_param": "vn_flag"
+    },
+    "demean_flag": {
+      "var_param": "demean_flag"
+    },
+    "output_copes": {
+      "var_param": "output_copes"
+    },
+    "output_zstats": {
+      "var_param": "output_zstats"
+    },
+    "output_tstats": {
+      "var_param": "output_tstats"
+    },
+    "output_pvals": {
+      "var_param": "output_pvals"
+    },
+    "output_fvals": {
+      "var_param": "output_fvals"
+    },
+    "output_pfvals": {
+      "var_param": "output_pfvals"
+    },
+    "output_residuals": {
+      "var_param": "output_residuals"
+    },
+    "output_varcb": {
+      "var_param": "output_varcb"
+    },
+    "output_sigsq": {
+      "var_param": "output_sigsq"
+    },
+    "output_data": {
+      "var_param": "output_data"
+    },
+    "output_vnscales": {
+      "var_param": "output_vnscales"
+    },
+    "vx_text": {
+      "var_param": "vx_text"
+    },
+    "vx_images": {
+      "var_param": "vx_images"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

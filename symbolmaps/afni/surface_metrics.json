@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "surface_metrics",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "convexity": {
+      "var_param": "convexity"
+    },
+    "closest_node": {
+      "var_param": "closest_node"
+    },
+    "area": {
+      "var_param": "area"
+    },
+    "tri_sines": {
+      "var_param": "tri_sines"
+    },
+    "tri_cosines": {
+      "var_param": "tri_cosines"
+    },
+    "tri_CoSines": {
+      "var_param": "tri_co_sines"
+    },
+    "tri_angles": {
+      "var_param": "tri_angles"
+    },
+    "node_angles": {
+      "var_param": "node_angles"
+    },
+    "curvature": {
+      "var_param": "curvature"
+    },
+    "edges": {
+      "var_param": "edges"
+    },
+    "node_normals": {
+      "var_param": "node_normals"
+    },
+    "face_normals": {
+      "var_param": "face_normals"
+    },
+    "normals_scale": {
+      "var_param": "normals_scale"
+    },
+    "coords": {
+      "var_param": "coords"
+    },
+    "sph_coords": {
+      "var_param": "sph_coords"
+    },
+    "sph_coords_center": {
+      "var_param": "sph_coords_center"
+    },
+    "boundary_nodes": {
+      "var_param": "boundary_nodes"
+    },
+    "boundary_triangles": {
+      "var_param": "boundary_triangles"
+    },
+    "internal_nodes": {
+      "var_param": "internal_nodes"
+    },
+    "surf1": {
+      "var_param": "surf1"
+    },
+    "tlrc": {
+      "var_param": "tlrc"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

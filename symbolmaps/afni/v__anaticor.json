@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v__anaticor",
+  "properties": {
+    "ts": {
+      "var_param": "ts"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "motion": {
+      "var_param": "motion"
+    },
+    "aseg": {
+      "var_param": "aseg"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "radius": {
+      "var_param": "radius"
+    },
+    "view": {
+      "var_param": "view"
+    },
+    "nuisance": {
+      "var_param": "nuisance"
+    },
+    "no_ventricles": {
+      "var_param": "no_ventricles"
+    },
+    "Rsq_WMe": {
+      "var_param": "rsq_wme"
+    },
+    "coverage": {
+      "var_param": "coverage"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "dirty": {
+      "var_param": "dirty"
+    },
+    "echo": {
+      "var_param": "echo"
+    }
+  }
+}

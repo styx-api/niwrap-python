@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "sh2response",
+  "properties": {
+    "lmax": {
+      "var_param": "lmax"
+    },
+    "dump": {
+      "var_param": "dump"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "sh2response_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "SH": {
+      "var_param": "sh"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "directions": {
+      "var_param": "directions"
+    },
+    "response": {
+      "var_param": "response"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "metric_tfce",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric_in": {
+      "var_param": "metric_in"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "presmooth": {
+      "var_param": "presmooth",
+      "fn_struct_make_params": "metric_tfce_presmooth_params",
+      "properties": {
+        "kernel": {
+          "var_param": "kernel"
+        },
+        "opt_fwhm": {
+          "var_param": "opt_fwhm"
+        }
+      }
+    },
+    "opt_roi_roi_metric": {
+      "var_param": "opt_roi_roi_metric"
+    },
+    "parameters": {
+      "var_param": "parameters",
+      "fn_struct_make_params": "metric_tfce_parameters_params",
+      "properties": {
+        "e": {
+          "var_param": "e"
+        },
+        "h": {
+          "var_param": "h"
+        }
+      }
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    },
+    "opt_corrected_areas_area_metric": {
+      "var_param": "opt_corrected_areas_area_metric"
+    }
+  }
+}

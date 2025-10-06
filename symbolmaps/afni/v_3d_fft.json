@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_fft",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "abs": {
+      "var_param": "abs_"
+    },
+    "phase": {
+      "var_param": "phase"
+    },
+    "complex": {
+      "var_param": "complex_"
+    },
+    "inverse": {
+      "var_param": "inverse"
+    },
+    "Lx": {
+      "var_param": "lx"
+    },
+    "Ly": {
+      "var_param": "ly"
+    },
+    "Lz": {
+      "var_param": "lz"
+    },
+    "altIN": {
+      "var_param": "alt_in"
+    },
+    "altOUT": {
+      "var_param": "alt_out"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

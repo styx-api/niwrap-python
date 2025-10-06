@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "aparcstatsdiff",
+  "properties": {
+    "subj1": {
+      "var_param": "subj1"
+    },
+    "subj2": {
+      "var_param": "subj2"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "parc": {
+      "var_param": "parc"
+    },
+    "meas": {
+      "var_param": "meas"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    }
+  }
+}

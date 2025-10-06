@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "spharm_reco",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "decomposition_order": {
+      "var_param": "decomposition_order"
+    },
+    "bases_prefix": {
+      "var_param": "bases_prefix"
+    },
+    "coefficients": {
+      "var_param": "coefficients"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "smoothing": {
+      "var_param": "smoothing"
+    }
+  }
+}

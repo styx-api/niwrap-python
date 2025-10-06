@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "cifti_merge",
+  "properties": {
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_direction_direction": {
+      "var_param": "opt_direction_direction"
+    },
+    "opt_mem_limit_limit_gb": {
+      "var_param": "opt_mem_limit_limit_gb"
+    },
+    "cifti": {
+      "var_param": "cifti",
+      "fn_struct_make_params": "cifti_merge_cifti_params",
+      "properties": {
+        "cifti_in": {
+          "var_param": "cifti_in"
+        },
+        "index": {
+          "var_param": "index",
+          "fn_struct_make_params": "cifti_merge_index_params",
+          "properties": {
+            "index": {
+              "var_param": "index"
+            },
+            "up_to": {
+              "var_param": "up_to",
+              "fn_struct_make_params": "cifti_merge_up_to_params",
+              "properties": {
+                "last_index": {
+                  "var_param": "last_index"
+                },
+                "opt_reverse": {
+                  "var_param": "opt_reverse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

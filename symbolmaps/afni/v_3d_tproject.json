@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tproject",
+  "properties": {
+    "TR": {
+      "var_param": "tr"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "bandpass": {
+      "var_param": "bandpass"
+    },
+    "blur": {
+      "var_param": "blur"
+    },
+    "cenmode": {
+      "var_param": "cenmode"
+    },
+    "censor": {
+      "var_param": "censor"
+    },
+    "censortr": {
+      "var_param": "censortr"
+    },
+    "concat": {
+      "var_param": "concat"
+    },
+    "dsort": {
+      "var_param": "dsort"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "noblock": {
+      "var_param": "noblock"
+    },
+    "norm": {
+      "var_param": "norm"
+    },
+    "ort": {
+      "var_param": "ort"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "stopband": {
+      "var_param": "stopband"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

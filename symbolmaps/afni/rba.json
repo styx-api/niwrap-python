@@ -1,0 +1,83 @@
+{
+  "fn_root_make_params_and_execute": "rba",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dataTable": {
+      "var_param": "data_table"
+    },
+    "chains": {
+      "var_param": "chains"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "eoi": {
+      "var_param": "eoi"
+    },
+    "wcp": {
+      "var_param": "wcp"
+    },
+    "tstat": {
+      "var_param": "tstat"
+    },
+    "stdz": {
+      "var_param": "stdz"
+    },
+    "cVars": {
+      "var_param": "c_vars"
+    },
+    "qVars": {
+      "var_param": "q_vars"
+    },
+    "distROI": {
+      "var_param": "dist_roi"
+    },
+    "distSubj": {
+      "var_param": "dist_subj"
+    },
+    "distY": {
+      "var_param": "dist_y"
+    },
+    "ridgePlot": {
+      "var_param": "ridge_plot"
+    },
+    "roi": {
+      "var_param": "roi"
+    },
+    "subj": {
+      "var_param": "subj"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "se": {
+      "var_param": "se"
+    },
+    "pdp": {
+      "var_param": "pdp"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "md": {
+      "var_param": "md"
+    },
+    "r2z": {
+      "var_param": "r2z"
+    }
+  }
+}

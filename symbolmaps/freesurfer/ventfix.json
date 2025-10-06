@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "ventfix",
+  "properties": {
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "option1": {
+      "var_param": "option1"
+    }
+  }
+}

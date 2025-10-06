@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "compute_vox2vox",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "t4file": {
+      "var_param": "t4file"
+    },
+    "target": {
+      "var_param": "target"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "init_user_dotfiles_py",
+  "properties": {
+    "help": {
+      "var_param": "help_"
+    },
+    "help_dotfiles_all": {
+      "var_param": "help_dotfiles_all"
+    },
+    "help_dotfiles_mod": {
+      "var_param": "help_dotfiles_mod"
+    },
+    "help_shells": {
+      "var_param": "help_shells"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "show_valid_opts": {
+      "var_param": "show_valid_opts"
+    },
+    "ver": {
+      "var_param": "ver"
+    },
+    "dot_files_list": {
+      "var_param": "dot_files_list"
+    },
+    "dir_bin": {
+      "var_param": "dir_bin"
+    },
+    "dir_dot": {
+      "var_param": "dir_dot"
+    },
+    "do_updates": {
+      "var_param": "do_updates"
+    },
+    "dry_run": {
+      "var_param": "dry_run"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "make_backup": {
+      "var_param": "make_backup"
+    },
+    "shell_list": {
+      "var_param": "shell_list"
+    },
+    "test": {
+      "var_param": "test"
+    },
+    "verbosity_level": {
+      "var_param": "verbosity_level"
+    }
+  }
+}

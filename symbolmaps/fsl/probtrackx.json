@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "probtrackx",
+  "properties": {
+    "samples": {
+      "var_param": "samples"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "targetmasks": {
+      "var_param": "targetmasks"
+    },
+    "mask2": {
+      "var_param": "mask2"
+    },
+    "waypoints": {
+      "var_param": "waypoints"
+    },
+    "network": {
+      "var_param": "network"
+    },
+    "mesh": {
+      "var_param": "mesh"
+    },
+    "seedref": {
+      "var_param": "seedref"
+    },
+    "dir": {
+      "var_param": "dir_"
+    },
+    "forcedir": {
+      "var_param": "forcedir"
+    },
+    "opd": {
+      "var_param": "opd"
+    },
+    "pd": {
+      "var_param": "pd"
+    },
+    "os2t": {
+      "var_param": "os2t"
+    },
+    "avoid": {
+      "var_param": "avoid"
+    },
+    "stop": {
+      "var_param": "stop"
+    },
+    "xfm": {
+      "var_param": "xfm"
+    },
+    "invxfm": {
+      "var_param": "invxfm"
+    },
+    "nsamples": {
+      "var_param": "nsamples"
+    },
+    "nsteps": {
+      "var_param": "nsteps"
+    },
+    "distthresh": {
+      "var_param": "distthresh"
+    },
+    "cthr": {
+      "var_param": "cthr"
+    },
+    "fibthresh": {
+      "var_param": "fibthresh"
+    },
+    "sampvox": {
+      "var_param": "sampvox"
+    },
+    "steplength": {
+      "var_param": "steplength"
+    },
+    "loopcheck": {
+      "var_param": "loopcheck"
+    },
+    "usef": {
+      "var_param": "usef"
+    },
+    "randfib": {
+      "var_param": "randfib"
+    },
+    "fibst": {
+      "var_param": "fibst"
+    },
+    "modeuler": {
+      "var_param": "modeuler"
+    },
+    "rseed": {
+      "var_param": "rseed"
+    },
+    "s2tastext": {
+      "var_param": "s2tastext"
+    }
+  }
+}

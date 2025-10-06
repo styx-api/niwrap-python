@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_remlfit",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "regression_matrix": {
+      "var_param": "regression_matrix"
+    },
+    "baseline_files": {
+      "var_param": "baseline_files"
+    },
+    "sort_nods": {
+      "var_param": "sort_nods"
+    },
+    "temp_storage": {
+      "var_param": "temp_storage"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "no_fdr_curve": {
+      "var_param": "no_fdr_curve"
+    },
+    "go_for_it": {
+      "var_param": "go_for_it"
+    },
+    "max_a_param": {
+      "var_param": "max_a_param"
+    },
+    "max_b_param": {
+      "var_param": "max_b_param"
+    },
+    "grid_param": {
+      "var_param": "grid_param"
+    },
+    "negative_corr": {
+      "var_param": "negative_corr"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

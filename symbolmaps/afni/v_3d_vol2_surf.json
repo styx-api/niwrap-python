@@ -1,0 +1,131 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_vol2_surf",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "sv": {
+      "var_param": "sv"
+    },
+    "grid_parent": {
+      "var_param": "grid_parent"
+    },
+    "map_func": {
+      "var_param": "map_func"
+    },
+    "surf_A": {
+      "var_param": "surf_a"
+    },
+    "surf_B": {
+      "var_param": "surf_b"
+    },
+    "out_1D": {
+      "var_param": "out_1_d"
+    },
+    "out_niml": {
+      "var_param": "out_niml"
+    },
+    "use_norms": {
+      "var_param": "use_norms"
+    },
+    "norm_len": {
+      "var_param": "norm_len"
+    },
+    "first_node": {
+      "var_param": "first_node"
+    },
+    "last_node": {
+      "var_param": "last_node"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "dnode": {
+      "var_param": "dnode"
+    },
+    "f_steps": {
+      "var_param": "f_steps"
+    },
+    "f_index": {
+      "var_param": "f_index"
+    },
+    "f_p1_mm": {
+      "var_param": "f_p1_mm"
+    },
+    "f_pn_mm": {
+      "var_param": "f_pn_mm"
+    },
+    "f_p1_fr": {
+      "var_param": "f_p1_fr"
+    },
+    "f_pn_fr": {
+      "var_param": "f_pn_fr"
+    },
+    "skip_col_nodes": {
+      "var_param": "skip_col_nodes"
+    },
+    "skip_col_1dindex": {
+      "var_param": "skip_col_1dindex"
+    },
+    "skip_col_i": {
+      "var_param": "skip_col_i"
+    },
+    "skip_col_j": {
+      "var_param": "skip_col_j"
+    },
+    "skip_col_k": {
+      "var_param": "skip_col_k"
+    },
+    "skip_col_vals": {
+      "var_param": "skip_col_vals"
+    },
+    "no_headers": {
+      "var_param": "no_headers"
+    },
+    "save_seg_coords": {
+      "var_param": "save_seg_coords"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    },
+    "gp_index": {
+      "var_param": "gp_index"
+    },
+    "oob_index": {
+      "var_param": "oob_index"
+    },
+    "oob_value": {
+      "var_param": "oob_value"
+    },
+    "oom_value": {
+      "var_param": "oom_value"
+    },
+    "outcols_afni_nsd": {
+      "var_param": "outcols_afni_nsd"
+    },
+    "outcols_1_result": {
+      "var_param": "outcols_1_result"
+    },
+    "outcols_results": {
+      "var_param": "outcols_results"
+    },
+    "outcols_nsd_format": {
+      "var_param": "outcols_nsd_format"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "keep_norm_dir": {
+      "var_param": "keep_norm_dir"
+    },
+    "reverse_norm_dir": {
+      "var_param": "reverse_norm_dir"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "hiam_make_template",
+  "properties": {
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surface_name": {
+      "var_param": "surface_name"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    }
+  }
+}

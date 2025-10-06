@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_errts_cormat",
+  "properties": {
+    "dset": {
+      "var_param": "dset"
+    },
+    "concat": {
+      "var_param": "concat"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "maxlag": {
+      "var_param": "maxlag"
+    },
+    "polort": {
+      "var_param": "polort"
+    }
+  }
+}

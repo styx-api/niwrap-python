@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "map_track_id",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "in_trk": {
+      "var_param": "in_trk"
+    },
+    "in_map": {
+      "var_param": "in_map"
+    },
+    "reference": {
+      "var_param": "reference"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "orig_zero": {
+      "var_param": "orig_zero"
+    },
+    "line_only_num": {
+      "var_param": "line_only_num"
+    },
+    "already_inv": {
+      "var_param": "already_inv"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "reg_mni305_2mm",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "regfile": {
+      "var_param": "regfile"
+    }
+  }
+}

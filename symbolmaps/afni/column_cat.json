@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "column_cat",
+  "properties": {
+    "line_number": {
+      "var_param": "line_number"
+    },
+    "separator_string": {
+      "var_param": "separator_string"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

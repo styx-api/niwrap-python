@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "fslsize",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "short_format_flag": {
+      "var_param": "short_format_flag"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "tal_compare",
+  "properties": {
+    "ref_file": {
+      "var_param": "ref_file"
+    },
+    "moving_file": {
+      "var_param": "moving_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

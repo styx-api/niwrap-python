@@ -1,0 +1,221 @@
+{
+  "fn_root_make_params_and_execute": "mri_glmfit",
+  "properties": {
+    "glmdir": {
+      "var_param": "glmdir"
+    },
+    "y_input": {
+      "var_param": "y_input"
+    },
+    "table_input": {
+      "var_param": "table_input"
+    },
+    "fsgd": {
+      "var_param": "fsgd"
+    },
+    "design_matrix": {
+      "var_param": "design_matrix"
+    },
+    "contrast_matrix": {
+      "var_param": "contrast_matrix"
+    },
+    "osgm_flag": {
+      "var_param": "osgm_flag"
+    },
+    "no_contrasts_ok_flag": {
+      "var_param": "no_contrasts_ok_flag"
+    },
+    "dti_params": {
+      "var_param": "dti_params"
+    },
+    "dti_matrix": {
+      "var_param": "dti_matrix"
+    },
+    "pvr": {
+      "var_param": "pvr"
+    },
+    "selfreg": {
+      "var_param": "selfreg"
+    },
+    "wls": {
+      "var_param": "wls"
+    },
+    "yffxvar": {
+      "var_param": "yffxvar"
+    },
+    "ffxdof": {
+      "var_param": "ffxdof"
+    },
+    "ffxdofdat": {
+      "var_param": "ffxdofdat"
+    },
+    "weight": {
+      "var_param": "weight"
+    },
+    "weight_inv_flag": {
+      "var_param": "weight_inv_flag"
+    },
+    "weight_sqrt_flag": {
+      "var_param": "weight_sqrt_flag"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "var_fwhm": {
+      "var_param": "var_fwhm"
+    },
+    "no_mask_smooth_flag": {
+      "var_param": "no_mask_smooth_flag"
+    },
+    "no_est_fwhm_flag": {
+      "var_param": "no_est_fwhm_flag"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "no_mask_flag": {
+      "var_param": "no_mask_flag"
+    },
+    "no_cortex_flag": {
+      "var_param": "no_cortex_flag"
+    },
+    "mask_inv_flag": {
+      "var_param": "mask_inv_flag"
+    },
+    "prune_flag": {
+      "var_param": "prune_flag"
+    },
+    "no_prune_flag": {
+      "var_param": "no_prune_flag"
+    },
+    "logy_flag": {
+      "var_param": "logy_flag"
+    },
+    "no_logy_flag": {
+      "var_param": "no_logy_flag"
+    },
+    "rm_spatial_mean_flag": {
+      "var_param": "rm_spatial_mean_flag"
+    },
+    "yhat_save_flag": {
+      "var_param": "yhat_save_flag"
+    },
+    "eres_save_flag": {
+      "var_param": "eres_save_flag"
+    },
+    "eres_scm_flag": {
+      "var_param": "eres_scm_flag"
+    },
+    "save_fwhm_map_flag": {
+      "var_param": "save_fwhm_map_flag"
+    },
+    "y_out": {
+      "var_param": "y_out"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "skew_flag": {
+      "var_param": "skew_flag"
+    },
+    "kurtosis_flag": {
+      "var_param": "kurtosis_flag"
+    },
+    "sim_params": {
+      "var_param": "sim_params"
+    },
+    "sim_sign": {
+      "var_param": "sim_sign"
+    },
+    "uniform_params": {
+      "var_param": "uniform_params"
+    },
+    "permute_input_flag": {
+      "var_param": "permute_input_flag"
+    },
+    "pca_flag": {
+      "var_param": "pca_flag"
+    },
+    "tar1_flag": {
+      "var_param": "tar1_flag"
+    },
+    "save_yhat_flag": {
+      "var_param": "save_yhat_flag"
+    },
+    "save_cond_flag": {
+      "var_param": "save_cond_flag"
+    },
+    "voxdump": {
+      "var_param": "voxdump"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "synth_flag": {
+      "var_param": "synth_flag"
+    },
+    "resynthtest_it": {
+      "var_param": "resynthtest_it"
+    },
+    "profile_it": {
+      "var_param": "profile_it"
+    },
+    "mrtm1_params": {
+      "var_param": "mrtm1_params"
+    },
+    "mrtm2_params": {
+      "var_param": "mrtm2_params"
+    },
+    "logan_params": {
+      "var_param": "logan_params"
+    },
+    "bp_clip_neg_flag": {
+      "var_param": "bp_clip_neg_flag"
+    },
+    "bp_clip_max": {
+      "var_param": "bp_clip_max"
+    },
+    "perm_force_flag": {
+      "var_param": "perm_force_flag"
+    },
+    "diag_level": {
+      "var_param": "diag_level"
+    },
+    "diag_cluster_flag": {
+      "var_param": "diag_cluster_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "checkopts_flag": {
+      "var_param": "checkopts_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "no_fix_vertex_area_flag": {
+      "var_param": "no_fix_vertex_area_flag"
+    },
+    "allowsubjrep_flag": {
+      "var_param": "allowsubjrep_flag"
+    },
+    "allow_zero_dof_flag": {
+      "var_param": "allow_zero_dof_flag"
+    },
+    "illcond_flag": {
+      "var_param": "illcond_flag"
+    },
+    "sim_done_file": {
+      "var_param": "sim_done_file"
+    },
+    "no_sig_double_flag": {
+      "var_param": "no_sig_double_flag"
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "fn_root_make_params_and_execute": "mri_vol2vol",
+  "properties": {
+    "movvol": {
+      "var_param": "movvol"
+    },
+    "targvol": {
+      "var_param": "targvol"
+    },
+    "outvol": {
+      "var_param": "outvol"
+    },
+    "dispvol": {
+      "var_param": "dispvol"
+    },
+    "downsample": {
+      "var_param": "downsample"
+    },
+    "register_dat": {
+      "var_param": "register_dat"
+    },
+    "lta": {
+      "var_param": "lta"
+    },
+    "lta_inv": {
+      "var_param": "lta_inv"
+    },
+    "fsl": {
+      "var_param": "fsl"
+    },
+    "xfm": {
+      "var_param": "xfm"
+    },
+    "inv": {
+      "var_param": "inv"
+    },
+    "tal": {
+      "var_param": "tal"
+    },
+    "talres": {
+      "var_param": "talres"
+    },
+    "talxfm": {
+      "var_param": "talxfm"
+    },
+    "m3z": {
+      "var_param": "m3z"
+    },
+    "inv_morph": {
+      "var_param": "inv_morph"
+    },
+    "fstarg": {
+      "var_param": "fstarg"
+    },
+    "crop": {
+      "var_param": "crop"
+    },
+    "slice_crop": {
+      "var_param": "slice_crop"
+    },
+    "slice_reverse": {
+      "var_param": "slice_reverse"
+    },
+    "slice_bias": {
+      "var_param": "slice_bias"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "fill_average": {
+      "var_param": "fill_average"
+    },
+    "fill_conserve": {
+      "var_param": "fill_conserve"
+    },
+    "fill_up": {
+      "var_param": "fill_up"
+    },
+    "mul": {
+      "var_param": "mul"
+    },
+    "precision": {
+      "var_param": "precision"
+    },
+    "keep_precision": {
+      "var_param": "keep_precision"
+    },
+    "kernel": {
+      "var_param": "kernel"
+    },
+    "copy_ctab": {
+      "var_param": "copy_ctab"
+    },
+    "gcam": {
+      "var_param": "gcam"
+    },
+    "spm_warp": {
+      "var_param": "spm_warp"
+    },
+    "map_point": {
+      "var_param": "map_point"
+    },
+    "map_point_inv_lta": {
+      "var_param": "map_point_inv_lta"
+    },
+    "no_resample": {
+      "var_param": "no_resample"
+    },
+    "rot": {
+      "var_param": "rot"
+    },
+    "trans": {
+      "var_param": "trans"
+    },
+    "shear": {
+      "var_param": "shear"
+    },
+    "reg_final": {
+      "var_param": "reg_final"
+    },
+    "synth": {
+      "var_param": "synth"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "save_reg": {
+      "var_param": "save_reg"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

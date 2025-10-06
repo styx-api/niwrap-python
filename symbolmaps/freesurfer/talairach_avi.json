@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "talairach_avi",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_xfm": {
+      "var_param": "output_xfm"
+    },
+    "atlas": {
+      "var_param": "atlas"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

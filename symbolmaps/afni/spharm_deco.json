@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "spharm_deco",
+  "properties": {
+    "i_type_s": {
+      "var_param": "i_type_s"
+    },
+    "unit_sph_label": {
+      "var_param": "unit_sph_label"
+    },
+    "order_l": {
+      "var_param": "order_l"
+    },
+    "i_type_sd": {
+      "var_param": "i_type_sd"
+    },
+    "data_d": {
+      "var_param": "data_d"
+    },
+    "bases_prefix": {
+      "var_param": "bases_prefix"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "o_type_sdr": {
+      "var_param": "o_type_sdr"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    }
+  }
+}

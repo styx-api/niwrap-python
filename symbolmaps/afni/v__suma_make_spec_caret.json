@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__suma_make_spec_caret",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "surface_path": {
+      "var_param": "surface_path"
+    },
+    "side_labels_style": {
+      "var_param": "side_labels_style"
+    }
+  }
+}

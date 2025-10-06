@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "siena_diff",
+  "properties": {
+    "input1_basename": {
+      "var_param": "input1_basename"
+    },
+    "input2_basename": {
+      "var_param": "input2_basename"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "no_seg_flag": {
+      "var_param": "no_seg_flag"
+    },
+    "self_corr_factor": {
+      "var_param": "self_corr_factor"
+    },
+    "ignore_z_flow_flag": {
+      "var_param": "ignore_z_flow_flag"
+    },
+    "apply_std_mask_flag": {
+      "var_param": "apply_std_mask_flag"
+    },
+    "segment_options": {
+      "var_param": "segment_options"
+    }
+  }
+}

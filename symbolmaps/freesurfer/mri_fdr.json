@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_fdr",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "fdr_value": {
+      "var_param": "fdr_value"
+    },
+    "default_frame": {
+      "var_param": "default_frame"
+    },
+    "positive_only": {
+      "var_param": "positive_only"
+    },
+    "negative_only": {
+      "var_param": "negative_only"
+    },
+    "all_voxels": {
+      "var_param": "all_voxels"
+    },
+    "raw_p_values": {
+      "var_param": "raw_p_values"
+    },
+    "threshold_file": {
+      "var_param": "threshold_file"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "check_options": {
+      "var_param": "check_options"
+    }
+  }
+}

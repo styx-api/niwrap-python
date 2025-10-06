@@ -1,0 +1,110 @@
+{
+  "fn_root_make_params_and_execute": "mri_fwhm",
+  "properties": {
+    "inputvol": {
+      "var_param": "inputvol"
+    },
+    "outputvol": {
+      "var_param": "outputvol"
+    },
+    "save_detrended": {
+      "var_param": "save_detrended"
+    },
+    "save_unmasked": {
+      "var_param": "save_unmasked"
+    },
+    "smooth_only": {
+      "var_param": "smooth_only"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_thresh": {
+      "var_param": "mask_thresh"
+    },
+    "auto_mask": {
+      "var_param": "auto_mask"
+    },
+    "nerode": {
+      "var_param": "nerode"
+    },
+    "mask_inv": {
+      "var_param": "mask_inv"
+    },
+    "out_mask": {
+      "var_param": "out_mask"
+    },
+    "detrend_matrix": {
+      "var_param": "detrend_matrix"
+    },
+    "detrend_order": {
+      "var_param": "detrend_order"
+    },
+    "square_input": {
+      "var_param": "square_input"
+    },
+    "smooth_by_fwhm": {
+      "var_param": "smooth_by_fwhm"
+    },
+    "smooth_by_gstd": {
+      "var_param": "smooth_by_gstd"
+    },
+    "median_filter": {
+      "var_param": "median_filter"
+    },
+    "smooth_to_fwhm": {
+      "var_param": "smooth_to_fwhm"
+    },
+    "to_fwhm_tol": {
+      "var_param": "to_fwhm_tol"
+    },
+    "to_fwhm_nmax": {
+      "var_param": "to_fwhm_nmax"
+    },
+    "to_fwhm_file": {
+      "var_param": "to_fwhm_file"
+    },
+    "summary_file": {
+      "var_param": "summary_file"
+    },
+    "dat_file": {
+      "var_param": "dat_file"
+    },
+    "fwhm_dat_file": {
+      "var_param": "fwhm_dat_file"
+    },
+    "fwhm_vol_mean_file": {
+      "var_param": "fwhm_vol_mean_file"
+    },
+    "fwhm_vol": {
+      "var_param": "fwhm_vol"
+    },
+    "synth": {
+      "var_param": "synth"
+    },
+    "synth_frames": {
+      "var_param": "synth_frames"
+    },
+    "nframes_min": {
+      "var_param": "nframes_min"
+    },
+    "ispm": {
+      "var_param": "ispm"
+    },
+    "nspm_zero_padding": {
+      "var_param": "nspm_zero_padding"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

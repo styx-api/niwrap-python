@@ -1,0 +1,122 @@
+{
+  "fn_root_make_params_and_execute": "fabber",
+  "properties": {
+    "output": {
+      "var_param": "output"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "data_file": {
+      "var_param": "data_file"
+    },
+    "data_files": {
+      "var_param": "data_files"
+    },
+    "data_order": {
+      "var_param": "data_order"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "mt_n": {
+      "var_param": "mt_n"
+    },
+    "supp_data": {
+      "var_param": "supp_data"
+    },
+    "evaluate_output": {
+      "var_param": "evaluate_output"
+    },
+    "evaluate_params": {
+      "var_param": "evaluate_params"
+    },
+    "evaluate_nt": {
+      "var_param": "evaluate_nt"
+    },
+    "simple_output": {
+      "var_param": "simple_output"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "link_to_latest": {
+      "var_param": "link_to_latest"
+    },
+    "load_models": {
+      "var_param": "load_models"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "optfile": {
+      "var_param": "optfile",
+      "fn_struct_make_params": "fabber_optfile_params",
+      "properties": {
+        "optfile_short": {
+          "var_param": "optfile_short"
+        },
+        "optfile_long": {
+          "var_param": "optfile_long"
+        }
+      }
+    },
+    "save_model_fit": {
+      "var_param": "save_model_fit"
+    },
+    "save_residuals": {
+      "var_param": "save_residuals"
+    },
+    "save_model_extras": {
+      "var_param": "save_model_extras"
+    },
+    "save_mvn": {
+      "var_param": "save_mvn"
+    },
+    "save_mean": {
+      "var_param": "save_mean"
+    },
+    "save_std": {
+      "var_param": "save_std"
+    },
+    "save_var": {
+      "var_param": "save_var"
+    },
+    "save_zstat": {
+      "var_param": "save_zstat"
+    },
+    "save_noise_mean": {
+      "var_param": "save_noise_mean"
+    },
+    "save_noise_std": {
+      "var_param": "save_noise_std"
+    },
+    "save_free_energy": {
+      "var_param": "save_free_energy"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "list_methods": {
+      "var_param": "list_methods"
+    },
+    "list_models": {
+      "var_param": "list_models"
+    },
+    "list_params": {
+      "var_param": "list_params"
+    },
+    "desc_params": {
+      "var_param": "desc_params"
+    },
+    "list_outputs": {
+      "var_param": "list_outputs"
+    },
+    "old_optfile": {
+      "var_param": "old_optfile"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "fixup_mni_paths",
+  "properties": {
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

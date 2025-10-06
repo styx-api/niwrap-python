@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "run_segment_subject_t2_auto_estimate_alveus_ml_sh",
+  "properties": {
+    "deployed_mcr_root": {
+      "var_param": "deployed_mcr_root"
+    },
+    "arguments": {
+      "var_param": "arguments"
+    }
+  }
+}

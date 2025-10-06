@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v_3dmask_tool",
+  "properties": {
+    "count": {
+      "var_param": "count"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "dilate_inputs": {
+      "var_param": "dilate_inputs"
+    },
+    "dilate_results": {
+      "var_param": "dilate_results"
+    },
+    "fill_dirs": {
+      "var_param": "fill_dirs"
+    },
+    "fill_holes": {
+      "var_param": "fill_holes"
+    },
+    "frac": {
+      "var_param": "frac"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "inter": {
+      "var_param": "inter"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "union": {
+      "var_param": "union"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

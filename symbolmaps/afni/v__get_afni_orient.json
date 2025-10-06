@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__get_afni_orient",
+  "properties": {
+    "exploratory": {
+      "var_param": "exploratory"
+    },
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

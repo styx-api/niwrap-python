@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "possum_interpmot_py",
+  "properties": {
+    "motion_type": {
+      "var_param": "motion_type"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "tr_slice": {
+      "var_param": "tr_slice"
+    },
+    "nslices": {
+      "var_param": "nslices"
+    },
+    "nvols": {
+      "var_param": "nvols"
+    },
+    "custom_motion_file": {
+      "var_param": "custom_motion_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

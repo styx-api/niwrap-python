@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "retro_ts_py",
+  "properties": {
+    "resp_file": {
+      "var_param": "resp_file"
+    },
+    "card_file": {
+      "var_param": "card_file"
+    },
+    "phys_fs": {
+      "var_param": "phys_fs"
+    },
+    "num_slices": {
+      "var_param": "num_slices"
+    },
+    "volume_tr": {
+      "var_param": "volume_tr"
+    },
+    "phys_file": {
+      "var_param": "phys_file"
+    },
+    "phys_json": {
+      "var_param": "phys_json"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "rvt_shifts": {
+      "var_param": "rvt_shifts"
+    },
+    "rvt_out": {
+      "var_param": "rvt_out"
+    },
+    "resp_cutoff_freq": {
+      "var_param": "resp_cutoff_freq"
+    },
+    "cardiac_cutoff_freq": {
+      "var_param": "cardiac_cutoff_freq"
+    },
+    "cardiac_out": {
+      "var_param": "cardiac_out"
+    },
+    "respiration_out": {
+      "var_param": "respiration_out"
+    },
+    "interp_style": {
+      "var_param": "interp_style"
+    },
+    "fir_order": {
+      "var_param": "fir_order"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "demo": {
+      "var_param": "demo"
+    },
+    "show_graphs": {
+      "var_param": "show_graphs"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "slice_offset": {
+      "var_param": "slice_offset"
+    },
+    "slice_major": {
+      "var_param": "slice_major"
+    },
+    "slice_order": {
+      "var_param": "slice_order"
+    },
+    "zero_phase_offset": {
+      "var_param": "zero_phase_offset"
+    },
+    "legacy_transform": {
+      "var_param": "legacy_transform"
+    }
+  }
+}

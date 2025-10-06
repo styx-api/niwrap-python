@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "dtistudio_fiberto_segments",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "swap_flag": {
+      "var_param": "swap_flag"
+    }
+  }
+}

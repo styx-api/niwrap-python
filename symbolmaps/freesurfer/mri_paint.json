@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mri_paint",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "registration_file": {
+      "var_param": "registration_file"
+    },
+    "output_float_file": {
+      "var_param": "output_float_file"
+    },
+    "image_offset": {
+      "var_param": "image_offset"
+    },
+    "paint_surf_coords": {
+      "var_param": "paint_surf_coords"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_friedman",
+  "properties": {
+    "levels": {
+      "var_param": "levels"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "workmem": {
+      "var_param": "workmem"
+    },
+    "voxel_num": {
+      "var_param": "voxel_num"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

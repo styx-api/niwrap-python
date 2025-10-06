@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tfilter",
+  "properties": {
+    "inputdataset": {
+      "var_param": "inputdataset"
+    },
+    "outputdataset": {
+      "var_param": "outputdataset"
+    },
+    "filters": {
+      "var_param": "filters"
+    }
+  }
+}

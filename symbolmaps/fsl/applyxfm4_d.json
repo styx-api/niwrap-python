@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "applyxfm4_d",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "ref_volume": {
+      "var_param": "ref_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "transformation_matrix": {
+      "var_param": "transformation_matrix"
+    },
+    "interpolation_method": {
+      "var_param": "interpolation_method"
+    },
+    "single_matrix_flag": {
+      "var_param": "single_matrix_flag"
+    },
+    "four_digit_flag": {
+      "var_param": "four_digit_flag"
+    },
+    "user_prefix": {
+      "var_param": "user_prefix"
+    }
+  }
+}

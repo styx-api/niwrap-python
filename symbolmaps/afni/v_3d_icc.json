@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_icc",
+  "properties": {
+    "model": {
+      "var_param": "model"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "data_table": {
+      "var_param": "data_table"
+    },
+    "bounds": {
+      "var_param": "bounds"
+    },
+    "jobs": {
+      "var_param": "jobs"
+    },
+    "qVars": {
+      "var_param": "q_vars"
+    },
+    "qVarCenters": {
+      "var_param": "q_var_centers"
+    },
+    "subj": {
+      "var_param": "subj"
+    },
+    "input_file_column": {
+      "var_param": "input_file_column"
+    },
+    "tStat": {
+      "var_param": "t_stat"
+    },
+    "dbgArgs": {
+      "var_param": "dbg_args"
+    },
+    "cio": {
+      "var_param": "cio"
+    },
+    "rio": {
+      "var_param": "rio"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "fsr_coreg",
+  "properties": {
+    "import_dir": {
+      "var_param": "import_dir"
+    },
+    "reference_mode": {
+      "var_param": "reference_mode"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "expert_options": {
+      "var_param": "expert_options"
+    }
+  }
+}

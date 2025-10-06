@@ -1,0 +1,149 @@
+{
+  "fn_root_make_params_and_execute": "mri_nl_align",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "warp": {
+      "var_param": "warp"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    },
+    "debug_node": {
+      "var_param": "debug_node"
+    },
+    "no_neg": {
+      "var_param": "no_neg"
+    },
+    "renormalize": {
+      "var_param": "renormalize"
+    },
+    "aseg_flag": {
+      "var_param": "aseg_flag"
+    },
+    "diag_volume": {
+      "var_param": "diag_volume"
+    },
+    "optimal_flag": {
+      "var_param": "optimal_flag"
+    },
+    "momentum_flag": {
+      "var_param": "momentum_flag"
+    },
+    "fixed_flag": {
+      "var_param": "fixed_flag"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
+    "dtrans": {
+      "var_param": "dtrans"
+    },
+    "match_peak_flag": {
+      "var_param": "match_peak_flag"
+    },
+    "erode": {
+      "var_param": "erode"
+    },
+    "match_mean": {
+      "var_param": "match_mean"
+    },
+    "intensity": {
+      "var_param": "intensity"
+    },
+    "ll": {
+      "var_param": "ll"
+    },
+    "noregrid_flag": {
+      "var_param": "noregrid_flag"
+    },
+    "regrid_flag": {
+      "var_param": "regrid_flag"
+    },
+    "view": {
+      "var_param": "view"
+    },
+    "levels": {
+      "var_param": "levels"
+    },
+    "area_smoothness": {
+      "var_param": "area_smoothness"
+    },
+    "asmooth": {
+      "var_param": "asmooth"
+    },
+    "area": {
+      "var_param": "area"
+    },
+    "tolerance": {
+      "var_param": "tolerance"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    },
+    "min_sigma": {
+      "var_param": "min_sigma"
+    },
+    "ribbon": {
+      "var_param": "ribbon"
+    },
+    "rthresh": {
+      "var_param": "rthresh"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "passes": {
+      "var_param": "passes"
+    },
+    "skip": {
+      "var_param": "skip"
+    },
+    "apply": {
+      "var_param": "apply"
+    },
+    "distance_log": {
+      "var_param": "distance_log"
+    },
+    "momentum": {
+      "var_param": "momentum"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "smoothness": {
+      "var_param": "smoothness"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "inverse_transform": {
+      "var_param": "inverse_transform"
+    },
+    "binary": {
+      "var_param": "binary"
+    },
+    "jacobian": {
+      "var_param": "jacobian"
+    },
+    "disable_zero_locations": {
+      "var_param": "disable_zero_locations"
+    },
+    "smooth_averages": {
+      "var_param": "smooth_averages"
+    },
+    "exp_k": {
+      "var_param": "exp_k"
+    },
+    "diagnostics": {
+      "var_param": "diagnostics"
+    }
+  }
+}

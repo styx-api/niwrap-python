@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "cor_to_minc",
+  "properties": {
+    "cor_directory": {
+      "var_param": "cor_directory"
+    },
+    "minc_file": {
+      "var_param": "minc_file"
+    }
+  }
+}

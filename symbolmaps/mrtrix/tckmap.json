@@ -1,0 +1,98 @@
+{
+  "fn_root_make_params_and_execute": "tckmap",
+  "properties": {
+    "template": {
+      "var_param": "template"
+    },
+    "vox": {
+      "var_param": "vox"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "dec": {
+      "var_param": "dec"
+    },
+    "dixel": {
+      "var_param": "dixel"
+    },
+    "tod": {
+      "var_param": "tod"
+    },
+    "contrast": {
+      "var_param": "contrast"
+    },
+    "image": {
+      "var_param": "image"
+    },
+    "vector_file": {
+      "var_param": "vector_file"
+    },
+    "stat_vox": {
+      "var_param": "stat_vox"
+    },
+    "stat_tck": {
+      "var_param": "stat_tck"
+    },
+    "fwhm_tck": {
+      "var_param": "fwhm_tck"
+    },
+    "map_zero": {
+      "var_param": "map_zero"
+    },
+    "backtrack": {
+      "var_param": "backtrack"
+    },
+    "upsample": {
+      "var_param": "upsample"
+    },
+    "precise": {
+      "var_param": "precise"
+    },
+    "ends_only": {
+      "var_param": "ends_only"
+    },
+    "tck_weights_in": {
+      "var_param": "tck_weights_in"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tckmap_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "tracks": {
+      "var_param": "tracks"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

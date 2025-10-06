@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "isnifti",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

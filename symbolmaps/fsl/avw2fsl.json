@@ -1,0 +1,113 @@
+{
+  "fn_root_make_params_and_execute": "avw2fsl",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "destination": {
+      "var_param": "destination"
+    },
+    "archive": {
+      "var_param": "archive"
+    },
+    "attributes_only": {
+      "var_param": "attributes_only"
+    },
+    "backup": {
+      "var_param": "backup"
+    },
+    "backup_noarg": {
+      "var_param": "backup_noarg"
+    },
+    "copy_contents": {
+      "var_param": "copy_contents"
+    },
+    "no_dereference_preserve_links": {
+      "var_param": "no_dereference_preserve_links"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "interactive": {
+      "var_param": "interactive"
+    },
+    "follow_symlinks_cmdline": {
+      "var_param": "follow_symlinks_cmdline"
+    },
+    "hard_link": {
+      "var_param": "hard_link"
+    },
+    "dereference": {
+      "var_param": "dereference"
+    },
+    "no_clobber": {
+      "var_param": "no_clobber"
+    },
+    "no_dereference": {
+      "var_param": "no_dereference"
+    },
+    "preserve": {
+      "var_param": "preserve"
+    },
+    "preserve_attr": {
+      "var_param": "preserve_attr"
+    },
+    "preserve_context": {
+      "var_param": "preserve_context"
+    },
+    "no_preserve": {
+      "var_param": "no_preserve"
+    },
+    "parents": {
+      "var_param": "parents"
+    },
+    "recursive": {
+      "var_param": "recursive"
+    },
+    "reflink": {
+      "var_param": "reflink"
+    },
+    "remove_destination": {
+      "var_param": "remove_destination"
+    },
+    "sparse": {
+      "var_param": "sparse"
+    },
+    "strip_trailing_slashes": {
+      "var_param": "strip_trailing_slashes"
+    },
+    "symbolic_link": {
+      "var_param": "symbolic_link"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "target_directory": {
+      "var_param": "target_directory"
+    },
+    "no_target_directory": {
+      "var_param": "no_target_directory"
+    },
+    "update": {
+      "var_param": "update_"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "one_file_system": {
+      "var_param": "one_file_system"
+    },
+    "selinux_context": {
+      "var_param": "selinux_context"
+    },
+    "context": {
+      "var_param": "context"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

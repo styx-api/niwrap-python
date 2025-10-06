@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "v__animal_warper",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "base_template": {
+      "var_param": "base_template"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "brainmask": {
+      "var_param": "brainmask"
+    },
+    "atlases": {
+      "var_param": "atlases"
+    },
+    "atlas_followers": {
+      "var_param": "atlas_followers"
+    },
+    "seg_followers": {
+      "var_param": "seg_followers"
+    },
+    "template_followers": {
+      "var_param": "template_followers"
+    },
+    "dset_followers": {
+      "var_param": "dset_followers"
+    },
+    "roidset_followers": {
+      "var_param": "roidset_followers"
+    },
+    "input_abbrev": {
+      "var_param": "input_abbrev"
+    },
+    "base_abbrev": {
+      "var_param": "base_abbrev"
+    },
+    "atlas_abbrevs": {
+      "var_param": "atlas_abbrevs"
+    },
+    "template_abbrevs": {
+      "var_param": "template_abbrevs"
+    },
+    "seg_abbrevs": {
+      "var_param": "seg_abbrevs"
+    },
+    "dset_abbrevs": {
+      "var_param": "dset_abbrevs"
+    },
+    "roidset_abbrevs": {
+      "var_param": "roidset_abbrevs"
+    },
+    "align_centers_meth": {
+      "var_param": "align_centers_meth"
+    },
+    "aff_move_opt": {
+      "var_param": "aff_move_opt"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "maxlev": {
+      "var_param": "maxlev"
+    },
+    "no_surfaces": {
+      "var_param": "no_surfaces"
+    },
+    "feature_size": {
+      "var_param": "feature_size"
+    },
+    "supersize": {
+      "var_param": "supersize"
+    },
+    "init_scale": {
+      "var_param": "init_scale"
+    },
+    "mode_smooth_size": {
+      "var_param": "mode_smooth_size"
+    },
+    "mode_smooth_replacement_off": {
+      "var_param": "mode_smooth_replacement_off"
+    },
+    "center_out": {
+      "var_param": "center_out"
+    },
+    "align_type": {
+      "var_param": "align_type"
+    },
+    "extra_qw_opts": {
+      "var_param": "extra_qw_opts"
+    },
+    "keep_temp": {
+      "var_param": "keep_temp"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "ok_to_exist": {
+      "var_param": "ok_to_exist"
+    },
+    "echo": {
+      "var_param": "echo"
+    }
+  }
+}

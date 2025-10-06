@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v__t1scale",
+  "properties": {
+    "t1_volume": {
+      "var_param": "t1_volume"
+    },
+    "pd_volume": {
+      "var_param": "pd_volume"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "align": {
+      "var_param": "align"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "head_mask": {
+      "var_param": "head_mask"
+    },
+    "unmasked_uni": {
+      "var_param": "unmasked_uni"
+    },
+    "masked_uni": {
+      "var_param": "masked_uni"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "h_web": {
+      "var_param": "h_web"
+    },
+    "h_view": {
+      "var_param": "h_view"
+    },
+    "all_opts": {
+      "var_param": "all_opts"
+    },
+    "h_find_word": {
+      "var_param": "h_find_word"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mri_maps2csd",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "csd_file": {
+      "var_param": "csd_file"
+    },
+    "pdf_file": {
+      "var_param": "pdf_file"
+    },
+    "subject_hemi_surf": {
+      "var_param": "subject_hemi_surf"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "sign": {
+      "var_param": "sign"
+    },
+    "csd_apply_file": {
+      "var_param": "csd_apply_file"
+    },
+    "apply_out": {
+      "var_param": "apply_out"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    }
+  }
+}

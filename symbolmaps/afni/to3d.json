@@ -1,0 +1,125 @@
+{
+  "fn_root_make_params_and_execute": "to3d",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "type": {
+      "var_param": "type_"
+    },
+    "statpar": {
+      "var_param": "statpar"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "session": {
+      "var_param": "session"
+    },
+    "geomparent": {
+      "var_param": "geomparent"
+    },
+    "anatparent": {
+      "var_param": "anatparent"
+    },
+    "nosave_flag": {
+      "var_param": "nosave_flag"
+    },
+    "nowritebrik_flag": {
+      "var_param": "nowritebrik_flag"
+    },
+    "view": {
+      "var_param": "view"
+    },
+    "time_zt": {
+      "var_param": "time_zt"
+    },
+    "time_tz": {
+      "var_param": "time_tz"
+    },
+    "tr_units": {
+      "var_param": "tr_units"
+    },
+    "torg": {
+      "var_param": "torg"
+    },
+    "xFOV": {
+      "var_param": "x_fov"
+    },
+    "yFOV": {
+      "var_param": "y_fov"
+    },
+    "zFOV": {
+      "var_param": "z_fov"
+    },
+    "xSLAB": {
+      "var_param": "x_slab"
+    },
+    "ySLAB": {
+      "var_param": "y_slab"
+    },
+    "zSLAB": {
+      "var_param": "z_slab"
+    },
+    "zorigin": {
+      "var_param": "zorigin"
+    },
+    "data_type": {
+      "var_param": "data_type"
+    },
+    "global_scaling_factor": {
+      "var_param": "global_scaling_factor"
+    },
+    "nofloatscan_flag": {
+      "var_param": "nofloatscan_flag"
+    },
+    "in1_flag": {
+      "var_param": "in1_flag"
+    },
+    "orient": {
+      "var_param": "orient"
+    },
+    "skip_outliers_flag": {
+      "var_param": "skip_outliers_flag"
+    },
+    "text_outliers_flag": {
+      "var_param": "text_outliers_flag"
+    },
+    "save_outliers": {
+      "var_param": "save_outliers"
+    },
+    "assume_dicom_mosaic_flag": {
+      "var_param": "assume_dicom_mosaic_flag"
+    },
+    "oblique_origin_flag": {
+      "var_param": "oblique_origin_flag"
+    },
+    "reverse_list_flag": {
+      "var_param": "reverse_list_flag"
+    },
+    "use_last_elem_flag": {
+      "var_param": "use_last_elem_flag"
+    },
+    "use_old_mosaic_code_flag": {
+      "var_param": "use_old_mosaic_code_flag"
+    },
+    "ushort2float_flag": {
+      "var_param": "ushort2float_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "gamma": {
+      "var_param": "gamma"
+    },
+    "ncolors": {
+      "var_param": "ncolors"
+    },
+    "xtwarns_flag": {
+      "var_param": "xtwarns_flag"
+    },
+    "quit_on_err_flag": {
+      "var_param": "quit_on_err_flag"
+    }
+  }
+}

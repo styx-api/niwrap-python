@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3dpc",
+  "properties": {
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "dmean": {
+      "var_param": "dmean"
+    },
+    "vmean": {
+      "var_param": "vmean"
+    },
+    "vnorm": {
+      "var_param": "vnorm"
+    },
+    "normalize": {
+      "var_param": "normalize"
+    },
+    "nscale": {
+      "var_param": "nscale"
+    },
+    "pcsave": {
+      "var_param": "pcsave"
+    },
+    "reduce": {
+      "var_param": "reduce"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dummy_lines": {
+      "var_param": "dummy_lines"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "eigonly": {
+      "var_param": "eigonly"
+    },
+    "float": {
+      "var_param": "float_"
+    },
+    "mask": {
+      "var_param": "mask"
+    }
+  }
+}

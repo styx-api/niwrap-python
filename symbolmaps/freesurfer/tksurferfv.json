@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "tksurferfv",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "tksurfer": {
+      "var_param": "tksurfer"
+    },
+    "all_surfaces": {
+      "var_param": "all_surfaces"
+    },
+    "vgl": {
+      "var_param": "vgl"
+    },
+    "no_vgl": {
+      "var_param": "no_vgl"
+    },
+    "no_outline": {
+      "var_param": "no_outline"
+    },
+    "neuro_orientation": {
+      "var_param": "neuro_orientation"
+    },
+    "rotate_around_cursor": {
+      "var_param": "rotate_around_cursor"
+    },
+    "heat_scale": {
+      "var_param": "heat_scale"
+    }
+  }
+}

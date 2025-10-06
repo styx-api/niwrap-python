@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "dmri_pathstats",
+  "properties": {
+    "intrk": {
+      "var_param": "intrk"
+    },
+    "rois": {
+      "var_param": "rois"
+    },
+    "intrc": {
+      "var_param": "intrc"
+    },
+    "meas": {
+      "var_param": "meas"
+    },
+    "measname": {
+      "var_param": "measname"
+    },
+    "dtbase": {
+      "var_param": "dtbase"
+    },
+    "path": {
+      "var_param": "path"
+    },
+    "subj": {
+      "var_param": "subj"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "outvox": {
+      "var_param": "outvox"
+    },
+    "median": {
+      "var_param": "median"
+    },
+    "ends": {
+      "var_param": "ends"
+    },
+    "ref": {
+      "var_param": "ref"
+    },
+    "pthr": {
+      "var_param": "pthr"
+    },
+    "fthr": {
+      "var_param": "fthr"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

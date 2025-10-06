@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "surface_resample",
+  "properties": {
+    "surface_in": {
+      "var_param": "surface_in"
+    },
+    "current_sphere": {
+      "var_param": "current_sphere"
+    },
+    "new_sphere": {
+      "var_param": "new_sphere"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "surface_out": {
+      "var_param": "surface_out"
+    },
+    "area_surfs": {
+      "var_param": "area_surfs",
+      "fn_struct_make_params": "surface_resample_area_surfs_params",
+      "properties": {
+        "current_area": {
+          "var_param": "current_area"
+        },
+        "new_area": {
+          "var_param": "new_area"
+        }
+      }
+    },
+    "area_metrics": {
+      "var_param": "area_metrics",
+      "fn_struct_make_params": "surface_resample_area_metrics_params",
+      "properties": {
+        "current_area": {
+          "var_param": "current_area"
+        },
+        "new_area": {
+          "var_param": "new_area"
+        }
+      }
+    },
+    "opt_bypass_sphere_check": {
+      "var_param": "opt_bypass_sphere_check"
+    }
+  }
+}

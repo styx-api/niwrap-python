@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_warp",
+  "properties": {
+    "matvec_in2out": {
+      "var_param": "matvec_in2out"
+    },
+    "matvec_out2in": {
+      "var_param": "matvec_out2in"
+    },
+    "tta2mni": {
+      "var_param": "tta2mni"
+    },
+    "mni2tta": {
+      "var_param": "mni2tta"
+    },
+    "matparent": {
+      "var_param": "matparent"
+    },
+    "card2oblique": {
+      "var_param": "card2oblique"
+    },
+    "oblique_parent": {
+      "var_param": "oblique_parent"
+    },
+    "deoblique": {
+      "var_param": "deoblique"
+    },
+    "oblique2card": {
+      "var_param": "oblique2card"
+    },
+    "disp_obl_xform_only": {
+      "var_param": "disp_obl_xform_only"
+    },
+    "linear": {
+      "var_param": "linear"
+    },
+    "cubic": {
+      "var_param": "cubic"
+    },
+    "NN": {
+      "var_param": "nn"
+    },
+    "quintic": {
+      "var_param": "quintic"
+    },
+    "wsinc5": {
+      "var_param": "wsinc5"
+    },
+    "fsl_matvec": {
+      "var_param": "fsl_matvec"
+    },
+    "newgrid": {
+      "var_param": "newgrid"
+    },
+    "gridset": {
+      "var_param": "gridset"
+    },
+    "zpad": {
+      "var_param": "zpad"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

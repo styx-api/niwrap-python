@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "eddy_quad",
+  "properties": {
+    "eddyBase": {
+      "var_param": "eddy_base"
+    },
+    "eddyIndex": {
+      "var_param": "eddy_index"
+    },
+    "eddyParams": {
+      "var_param": "eddy_params"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "bvals": {
+      "var_param": "bvals"
+    },
+    "bvecs": {
+      "var_param": "bvecs"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "field": {
+      "var_param": "field"
+    },
+    "slspec": {
+      "var_param": "slspec"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

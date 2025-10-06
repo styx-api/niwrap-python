@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mri_make_uchar",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "talairach_xform": {
+      "var_param": "talairach_xform"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "first_percentile": {
+      "var_param": "first_percentile"
+    },
+    "wm_percentile": {
+      "var_param": "wm_percentile"
+    },
+    "max_radius": {
+      "var_param": "max_radius"
+    },
+    "cumulative_histo": {
+      "var_param": "cumulative_histo"
+    },
+    "vradvol": {
+      "var_param": "vradvol"
+    }
+  }
+}

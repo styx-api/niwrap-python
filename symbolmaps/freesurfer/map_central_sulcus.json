@@ -1,0 +1,113 @@
+{
+  "fn_root_make_params_and_execute": "map_central_sulcus",
+  "properties": {
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "process_directive": {
+      "var_param": "process_directive"
+    },
+    "hemi_flag": {
+      "var_param": "hemi_flag"
+    },
+    "expert_prefs_file": {
+      "var_param": "expert_prefs_file"
+    },
+    "xopts_use": {
+      "var_param": "xopts_use"
+    },
+    "xopts_clean": {
+      "var_param": "xopts_clean"
+    },
+    "xopts_overwrite": {
+      "var_param": "xopts_overwrite"
+    },
+    "watershed_cmd": {
+      "var_param": "watershed_cmd"
+    },
+    "xmask_file": {
+      "var_param": "xmask_file"
+    },
+    "wsless": {
+      "var_param": "wsless"
+    },
+    "wsmore": {
+      "var_param": "wsmore"
+    },
+    "wsatlas": {
+      "var_param": "wsatlas"
+    },
+    "no_wsatlas": {
+      "var_param": "no_wsatlas"
+    },
+    "no_wsgcaatlas": {
+      "var_param": "no_wsgcaatlas"
+    },
+    "wsthresh": {
+      "var_param": "wsthresh"
+    },
+    "wsseed": {
+      "var_param": "wsseed"
+    },
+    "norm3diters": {
+      "var_param": "norm3diters"
+    },
+    "normmaxgrad": {
+      "var_param": "normmaxgrad"
+    },
+    "norm1_b": {
+      "var_param": "norm1_b"
+    },
+    "norm2_b": {
+      "var_param": "norm2_b"
+    },
+    "norm1_n": {
+      "var_param": "norm1_n"
+    },
+    "norm2_n": {
+      "var_param": "norm2_n"
+    },
+    "cm_flag": {
+      "var_param": "cm_flag"
+    },
+    "no_fix_with_ga": {
+      "var_param": "no_fix_with_ga"
+    },
+    "fix_diag_only": {
+      "var_param": "fix_diag_only"
+    },
+    "seg_wlo": {
+      "var_param": "seg_wlo"
+    },
+    "seg_ghi": {
+      "var_param": "seg_ghi"
+    },
+    "nothicken": {
+      "var_param": "nothicken"
+    },
+    "no_ca_align_after": {
+      "var_param": "no_ca_align_after"
+    },
+    "no_ca_align": {
+      "var_param": "no_ca_align"
+    },
+    "deface": {
+      "var_param": "deface"
+    },
+    "mprage": {
+      "var_param": "mprage"
+    },
+    "washu_mprage": {
+      "var_param": "washu_mprage"
+    },
+    "schwartzya3t_atlas": {
+      "var_param": "schwartzya3t_atlas"
+    },
+    "mail_username": {
+      "var_param": "mail_username"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

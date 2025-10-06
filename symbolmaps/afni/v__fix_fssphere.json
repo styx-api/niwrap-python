@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__fix_fssphere",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "sphere_file": {
+      "var_param": "sphere_file"
+    },
+    "num_iterations": {
+      "var_param": "num_iterations"
+    },
+    "extent_lim": {
+      "var_param": "extent_lim"
+    },
+    "project_first": {
+      "var_param": "project_first"
+    },
+    "keep_temp": {
+      "var_param": "keep_temp"
+    }
+  }
+}

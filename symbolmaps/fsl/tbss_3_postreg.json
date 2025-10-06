@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "tbss_3_postreg",
+  "properties": {
+    "derive_mean_from_study": {
+      "var_param": "derive_mean_from_study"
+    },
+    "use_fmrib58": {
+      "var_param": "use_fmrib58"
+    }
+  }
+}

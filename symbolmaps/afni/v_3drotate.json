@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "v_3drotate",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "ashift": {
+      "var_param": "ashift"
+    },
+    "bshift": {
+      "var_param": "bshift"
+    },
+    "rotate": {
+      "var_param": "rotate"
+    },
+    "rotparent": {
+      "var_param": "rotparent"
+    },
+    "gridparent": {
+      "var_param": "gridparent"
+    },
+    "matvec_dicom": {
+      "var_param": "matvec_dicom"
+    },
+    "matvec_order": {
+      "var_param": "matvec_order"
+    },
+    "matvec_dset": {
+      "var_param": "matvec_dset"
+    },
+    "dfile": {
+      "var_param": "dfile"
+    },
+    "1Dfile": {
+      "var_param": "v_1_dfile"
+    },
+    "points": {
+      "var_param": "points"
+    },
+    "origin": {
+      "var_param": "origin"
+    },
+    "Fourier": {
+      "var_param": "fourier"
+    },
+    "NN": {
+      "var_param": "nn"
+    },
+    "linear": {
+      "var_param": "linear"
+    },
+    "cubic": {
+      "var_param": "cubic"
+    },
+    "quintic": {
+      "var_param": "quintic"
+    },
+    "heptic": {
+      "var_param": "heptic"
+    },
+    "Fourier_nopad": {
+      "var_param": "fourier_nopad"
+    },
+    "clipit": {
+      "var_param": "clipit"
+    },
+    "noclip": {
+      "var_param": "noclip"
+    },
+    "zpad": {
+      "var_param": "zpad"
+    }
+  }
+}

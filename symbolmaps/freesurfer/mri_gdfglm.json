@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "mri_gdfglm",
+  "properties": {
+    "inputs": {
+      "var_param": "inputs"
+    }
+  }
+}

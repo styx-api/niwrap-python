@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "fslvbm_3_proc",
+  "properties": {
+    "arch": {
+      "var_param": "arch"
+    },
+    "coprocessor": {
+      "var_param": "coprocessor"
+    },
+    "coprocessor_multi": {
+      "var_param": "coprocessor_multi"
+    },
+    "coprocessor_class": {
+      "var_param": "coprocessor_class"
+    },
+    "coprocessor_class_strict": {
+      "var_param": "coprocessor_class_strict"
+    },
+    "coprocessor_toolkit": {
+      "var_param": "coprocessor_toolkit"
+    },
+    "not_requeueable": {
+      "var_param": "not_requeueable"
+    },
+    "jobhold": {
+      "var_param": "jobhold"
+    },
+    "array_hold": {
+      "var_param": "array_hold"
+    },
+    "logdir": {
+      "var_param": "logdir"
+    },
+    "mailoptions": {
+      "var_param": "mailoptions"
+    },
+    "mailto": {
+      "var_param": "mailto"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "priority": {
+      "var_param": "priority"
+    },
+    "queue": {
+      "var_param": "queue_"
+    },
+    "resource": {
+      "var_param": "resource_"
+    },
+    "delete_job": {
+      "var_param": "delete_job"
+    },
+    "memory_gb": {
+      "var_param": "memory_gb"
+    },
+    "parallel_env_threads": {
+      "var_param": "parallel_env_threads"
+    },
+    "array_task": {
+      "var_param": "array_task"
+    },
+    "array_native": {
+      "var_param": "array_native"
+    },
+    "number_jobscripts": {
+      "var_param": "number_jobscripts"
+    },
+    "keep_jobscript": {
+      "var_param": "keep_jobscript"
+    },
+    "coprocessor_name": {
+      "var_param": "coprocessor_name"
+    },
+    "has_queues": {
+      "var_param": "has_queues"
+    },
+    "project": {
+      "var_param": "project"
+    },
+    "submit_scheduler": {
+      "var_param": "submit_scheduler"
+    },
+    "runtime_limit": {
+      "var_param": "runtime_limit"
+    },
+    "show_config": {
+      "var_param": "show_config"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "config_file": {
+      "var_param": "config_file"
+    }
+  }
+}

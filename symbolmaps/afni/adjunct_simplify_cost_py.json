@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "adjunct_simplify_cost_py",
+  "properties": {
+    "cost_function": {
+      "var_param": "cost_function"
+    }
+  }
+}

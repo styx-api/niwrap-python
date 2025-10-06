@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mris_fill",
+  "properties": {
+    "resolution": {
+      "var_param": "resolution"
+    },
+    "conform": {
+      "var_param": "conform"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    }
+  }
+}

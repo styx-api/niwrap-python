@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_relabel_hypointensities",
+  "properties": {
+    "input_aseg": {
+      "var_param": "input_aseg"
+    },
+    "surface_directory": {
+      "var_param": "surface_directory"
+    },
+    "output_aseg": {
+      "var_param": "output_aseg"
+    }
+  }
+}

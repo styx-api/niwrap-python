@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "epi_b0_correct_py",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "input_freq": {
+      "var_param": "input_freq"
+    },
+    "input_epi": {
+      "var_param": "input_epi"
+    },
+    "input_mask": {
+      "var_param": "input_mask"
+    },
+    "input_magn": {
+      "var_param": "input_magn"
+    },
+    "input_anat": {
+      "var_param": "input_anat"
+    },
+    "input_json": {
+      "var_param": "input_json"
+    },
+    "epi_pe_dir": {
+      "var_param": "epi_pe_dir"
+    },
+    "epi_pe_bwpp": {
+      "var_param": "epi_pe_bwpp"
+    },
+    "epi_pe_echo_sp": {
+      "var_param": "epi_pe_echo_sp"
+    },
+    "epi_pe_vox_dim": {
+      "var_param": "epi_pe_vox_dim"
+    },
+    "scale_freq": {
+      "var_param": "scale_freq"
+    },
+    "out_cmds": {
+      "var_param": "out_cmds"
+    },
+    "out_pars": {
+      "var_param": "out_pars"
+    },
+    "wdir_name": {
+      "var_param": "wdir_name"
+    },
+    "blur_sigma": {
+      "var_param": "blur_sigma"
+    },
+    "do_recenter_freq": {
+      "var_param": "do_recenter_freq"
+    },
+    "mask_dilate": {
+      "var_param": "mask_dilate"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "qc_box_focus_ulay": {
+      "var_param": "qc_box_focus_ulay"
+    },
+    "no_qc_image": {
+      "var_param": "no_qc_image"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "ver": {
+      "var_param": "ver"
+    },
+    "date": {
+      "var_param": "date"
+    }
+  }
+}

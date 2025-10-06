@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "surface_create_sphere",
+  "properties": {
+    "num_vertices": {
+      "var_param": "num_vertices"
+    },
+    "sphere_out": {
+      "var_param": "sphere_out"
+    }
+  }
+}

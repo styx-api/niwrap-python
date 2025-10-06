@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "imgreg_4dfp",
+  "properties": {
+    "target_image": {
+      "var_param": "target_image"
+    },
+    "target_mask": {
+      "var_param": "target_mask"
+    },
+    "source_image": {
+      "var_param": "source_image"
+    },
+    "source_mask": {
+      "var_param": "source_mask"
+    },
+    "t4file": {
+      "var_param": "t4file"
+    },
+    "mode": {
+      "var_param": "mode"
+    }
+  }
+}

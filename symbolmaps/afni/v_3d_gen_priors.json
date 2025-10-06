@@ -1,0 +1,83 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_gen_priors",
+  "properties": {
+    "sigs": {
+      "var_param": "sigs"
+    },
+    "tdist": {
+      "var_param": "tdist"
+    },
+    "cprefix": {
+      "var_param": "cprefix"
+    },
+    "pprefix": {
+      "var_param": "pprefix"
+    },
+    "labeltable": {
+      "var_param": "labeltable"
+    },
+    "do": {
+      "var_param": "do"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mrange": {
+      "var_param": "mrange"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "vox_debug": {
+      "var_param": "vox_debug"
+    },
+    "vox_debug_file": {
+      "var_param": "vox_debug_file"
+    },
+    "uid": {
+      "var_param": "uid"
+    },
+    "use_tmp": {
+      "var_param": "use_tmp"
+    },
+    "no_tmp": {
+      "var_param": "no_tmp"
+    },
+    "pset": {
+      "var_param": "pset"
+    },
+    "cset": {
+      "var_param": "cset"
+    },
+    "regroup_classes": {
+      "var_param": "regroup_classes"
+    },
+    "classes": {
+      "var_param": "classes"
+    },
+    "features": {
+      "var_param": "features"
+    },
+    "strict_feature_match": {
+      "var_param": "strict_feature_match"
+    },
+    "featgroups": {
+      "var_param": "featgroups"
+    },
+    "show_this_dist": {
+      "var_param": "show_this_dist"
+    },
+    "fast": {
+      "var_param": "fast"
+    },
+    "slow": {
+      "var_param": "slow"
+    }
+  }
+}

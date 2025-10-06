@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "imreg",
+  "properties": {
+    "base_image": {
+      "var_param": "base_image"
+    },
+    "image_sequence": {
+      "var_param": "image_sequence"
+    },
+    "nowrite": {
+      "var_param": "nowrite"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "start": {
+      "var_param": "start"
+    },
+    "step": {
+      "var_param": "step"
+    },
+    "flim": {
+      "var_param": "flim"
+    },
+    "keepsize": {
+      "var_param": "keepsize"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "dprefix": {
+      "var_param": "dprefix"
+    },
+    "bilinear": {
+      "var_param": "bilinear"
+    },
+    "modes": {
+      "var_param": "modes"
+    },
+    "mlcf": {
+      "var_param": "mlcf"
+    },
+    "wtim": {
+      "var_param": "wtim"
+    },
+    "dfspace": {
+      "var_param": "dfspace"
+    },
+    "cmass": {
+      "var_param": "cmass"
+    },
+    "fine": {
+      "var_param": "fine"
+    },
+    "nofine": {
+      "var_param": "nofine"
+    }
+  }
+}

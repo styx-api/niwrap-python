@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "reg_resample",
+  "properties": {
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "floating_image": {
+      "var_param": "floating_image"
+    },
+    "affine_transform": {
+      "var_param": "affine_transform"
+    },
+    "flirt_affine_transform": {
+      "var_param": "flirt_affine_transform"
+    },
+    "control_point_grid": {
+      "var_param": "control_point_grid"
+    },
+    "deformation_field": {
+      "var_param": "deformation_field"
+    },
+    "resampled_image": {
+      "var_param": "resampled_image"
+    },
+    "resampled_blank": {
+      "var_param": "resampled_blank"
+    },
+    "nearest_neighbor": {
+      "var_param": "nearest_neighbor"
+    },
+    "linear_interpolation": {
+      "var_param": "linear_interpolation"
+    }
+  }
+}

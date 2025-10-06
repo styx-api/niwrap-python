@@ -1,0 +1,89 @@
+{
+  "fn_root_make_params_and_execute": "mris_register_to_volume",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "pial": {
+      "var_param": "pial"
+    },
+    "pial_only": {
+      "var_param": "pial_only"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "noglobal": {
+      "var_param": "noglobal"
+    },
+    "median": {
+      "var_param": "median"
+    },
+    "mri_reg": {
+      "var_param": "mri_reg"
+    },
+    "tx_mmd": {
+      "var_param": "tx_mmd"
+    },
+    "ty_mmd": {
+      "var_param": "ty_mmd"
+    },
+    "tz_mmd": {
+      "var_param": "tz_mmd"
+    },
+    "ax_mmd": {
+      "var_param": "ax_mmd"
+    },
+    "ay_mmd": {
+      "var_param": "ay_mmd"
+    },
+    "az_mmd": {
+      "var_param": "az_mmd"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "noise": {
+      "var_param": "noise"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "skip": {
+      "var_param": "skip"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    },
+    "cnr": {
+      "var_param": "cnr"
+    },
+    "max_rot": {
+      "var_param": "max_rot"
+    },
+    "max_trans": {
+      "var_param": "max_trans"
+    },
+    "border": {
+      "var_param": "border"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "dilate": {
+      "var_param": "dilate"
+    },
+    "patch": {
+      "var_param": "patch"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "out_reg": {
+      "var_param": "out_reg"
+    }
+  }
+}

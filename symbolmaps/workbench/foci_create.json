@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "foci_create",
+  "properties": {
+    "output": {
+      "var_param": "output"
+    },
+    "class": {
+      "var_param": "class_",
+      "fn_struct_make_params": "foci_create_class_params",
+      "properties": {
+        "class_name": {
+          "var_param": "class_name"
+        },
+        "foci_list_file": {
+          "var_param": "foci_list_file"
+        },
+        "surface": {
+          "var_param": "surface"
+        }
+      }
+    }
+  }
+}

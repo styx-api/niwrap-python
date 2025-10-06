@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "fspalm",
+  "properties": {
+    "glmdir": {
+      "var_param": "glmdir"
+    },
+    "cft": {
+      "var_param": "cft"
+    },
+    "cwp": {
+      "var_param": "cwp"
+    },
+    "onetail": {
+      "var_param": "onetail"
+    },
+    "twotail": {
+      "var_param": "twotail"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "iters": {
+      "var_param": "iters"
+    },
+    "monly": {
+      "var_param": "monly"
+    },
+    "pponly": {
+      "var_param": "pponly"
+    },
+    "octave": {
+      "var_param": "octave"
+    },
+    "centroid": {
+      "var_param": "centroid"
+    },
+    "2spaces": {
+      "var_param": "v_2spaces"
+    },
+    "3spaces": {
+      "var_param": "v_3spaces"
+    },
+    "pargs": {
+      "var_param": "pargs"
+    }
+  }
+}

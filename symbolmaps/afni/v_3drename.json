@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v_3drename",
+  "properties": {
+    "old_prefix": {
+      "var_param": "old_prefix"
+    },
+    "new_prefix": {
+      "var_param": "new_prefix"
+    }
+  }
+}

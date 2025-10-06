@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__2dwarper_allin",
+  "properties": {
+    "input_prefix": {
+      "var_param": "input_prefix"
+    },
+    "mask_prefix": {
+      "var_param": "mask_prefix"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

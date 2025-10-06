@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_filter_dwis",
+  "properties": {
+    "input_dwi": {
+      "var_param": "input_dwi"
+    },
+    "input_gradient": {
+      "var_param": "input_gradient"
+    },
+    "select_string": {
+      "var_param": "select_string"
+    },
+    "select_file": {
+      "var_param": "select_file"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "input_bvals": {
+      "var_param": "input_bvals"
+    },
+    "unit_mag_out": {
+      "var_param": "unit_mag_out"
+    },
+    "qc_prefix": {
+      "var_param": "qc_prefix"
+    },
+    "no_qc_view": {
+      "var_param": "no_qc_view"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    },
+    "do_movie": {
+      "var_param": "do_movie"
+    }
+  }
+}

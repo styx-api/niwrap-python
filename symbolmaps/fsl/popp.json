@@ -1,0 +1,104 @@
+{
+  "fn_root_make_params_and_execute": "popp",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_basename": {
+      "var_param": "output_basename"
+    },
+    "sampling_rate": {
+      "var_param": "sampling_rate"
+    },
+    "tr_value": {
+      "var_param": "tr_value"
+    },
+    "resp_column": {
+      "var_param": "resp_column"
+    },
+    "cardiac_column": {
+      "var_param": "cardiac_column"
+    },
+    "trigger_column": {
+      "var_param": "trigger_column"
+    },
+    "rvt_flag": {
+      "var_param": "rvt_flag"
+    },
+    "heart_rate_flag": {
+      "var_param": "heart_rate_flag"
+    },
+    "pulseox_trigger_flag": {
+      "var_param": "pulseox_trigger_flag"
+    },
+    "smooth_card": {
+      "var_param": "smooth_card"
+    },
+    "smooth_resp": {
+      "var_param": "smooth_resp"
+    },
+    "high_freq_cutoff": {
+      "var_param": "high_freq_cutoff"
+    },
+    "low_freq_cutoff": {
+      "var_param": "low_freq_cutoff"
+    },
+    "init_thresh_c": {
+      "var_param": "init_thresh_c"
+    },
+    "n_thresh_c": {
+      "var_param": "n_thresh_c"
+    },
+    "init_thresh_r": {
+      "var_param": "init_thresh_r"
+    },
+    "n_thresh_r": {
+      "var_param": "n_thresh_r"
+    },
+    "invert_resp_flag": {
+      "var_param": "invert_resp_flag"
+    },
+    "invert_cardiac_flag": {
+      "var_param": "invert_cardiac_flag"
+    },
+    "noclean1_flag": {
+      "var_param": "noclean1_flag"
+    },
+    "noclean2_flag": {
+      "var_param": "noclean2_flag"
+    },
+    "load_card_phase": {
+      "var_param": "load_card_phase"
+    },
+    "load_resp_phase": {
+      "var_param": "load_resp_phase"
+    },
+    "vol_file": {
+      "var_param": "vol_file"
+    },
+    "start_sample": {
+      "var_param": "start_sample"
+    },
+    "resp_add": {
+      "var_param": "resp_add"
+    },
+    "resp_del": {
+      "var_param": "resp_del"
+    },
+    "card_add": {
+      "var_param": "card_add"
+    },
+    "card_del": {
+      "var_param": "card_del"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

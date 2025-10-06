@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_cc",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "aseg_file": {
+      "var_param": "aseg_file"
+    },
+    "norm_file": {
+      "var_param": "norm_file"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "rotation_lta": {
+      "var_param": "rotation_lta"
+    },
+    "force_flag": {
+      "var_param": "force_flag"
+    },
+    "include_fornix": {
+      "var_param": "include_fornix"
+    },
+    "compartments": {
+      "var_param": "compartments"
+    },
+    "thickness": {
+      "var_param": "thickness"
+    },
+    "skip_voxels": {
+      "var_param": "skip_voxels"
+    },
+    "max_rotation": {
+      "var_param": "max_rotation"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "feat_model",
+  "properties": {
+    "design_name_root": {
+      "var_param": "design_name_root"
+    },
+    "confound_matrix": {
+      "var_param": "confound_matrix"
+    }
+  }
+}

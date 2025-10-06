@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "hiam_make_surfaces",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "structure": {
+      "var_param": "structure"
+    }
+  }
+}

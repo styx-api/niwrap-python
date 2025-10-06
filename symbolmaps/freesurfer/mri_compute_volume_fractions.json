@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "mri_compute_volume_fractions",
+  "properties": {
+    "output_stem": {
+      "var_param": "output_stem"
+    },
+    "registration_file": {
+      "var_param": "registration_file"
+    },
+    "regheader": {
+      "var_param": "regheader"
+    },
+    "usf": {
+      "var_param": "usf"
+    },
+    "resolution": {
+      "var_param": "resolution"
+    },
+    "resmm": {
+      "var_param": "resmm"
+    },
+    "segmentation_file": {
+      "var_param": "segmentation_file"
+    },
+    "wsurf": {
+      "var_param": "wsurf"
+    },
+    "psurf": {
+      "var_param": "psurf"
+    },
+    "no_aseg": {
+      "var_param": "no_aseg"
+    },
+    "stackfile": {
+      "var_param": "stackfile"
+    },
+    "gmfile": {
+      "var_param": "gmfile"
+    },
+    "no_fill_csf": {
+      "var_param": "no_fill_csf"
+    },
+    "dilation": {
+      "var_param": "dilation"
+    },
+    "out_seg": {
+      "var_param": "out_seg"
+    },
+    "ttseg": {
+      "var_param": "ttseg"
+    },
+    "ttseg_ctab": {
+      "var_param": "ttseg_ctab"
+    },
+    "mgz_format": {
+      "var_param": "mgz_format"
+    },
+    "mgh_format": {
+      "var_param": "mgh_format"
+    },
+    "nii_format": {
+      "var_param": "nii_format"
+    },
+    "nii_gz_format": {
+      "var_param": "nii_gz_format"
+    },
+    "ttype_head": {
+      "var_param": "ttype_head"
+    },
+    "vg_thresh": {
+      "var_param": "vg_thresh"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    }
+  }
+}

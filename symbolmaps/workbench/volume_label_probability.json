@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "volume_label_probability",
+  "properties": {
+    "label_maps": {
+      "var_param": "label_maps"
+    },
+    "probability_out": {
+      "var_param": "probability_out"
+    },
+    "opt_exclude_unlabeled": {
+      "var_param": "opt_exclude_unlabeled"
+    }
+  }
+}

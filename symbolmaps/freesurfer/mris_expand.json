@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_expand",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "expansion_distance": {
+      "var_param": "expansion_distance"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "thickness": {
+      "var_param": "thickness"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "tmap": {
+      "var_param": "tmap"
+    },
+    "tmap_random": {
+      "var_param": "tmap_random"
+    }
+  }
+}

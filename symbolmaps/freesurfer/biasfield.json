@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "biasfield",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "tmpdir": {
+      "var_param": "tmpdir"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

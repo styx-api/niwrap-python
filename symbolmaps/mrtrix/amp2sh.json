@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "amp2sh",
+  "properties": {
+    "lmax": {
+      "var_param": "lmax"
+    },
+    "normalise": {
+      "var_param": "normalise"
+    },
+    "directions": {
+      "var_param": "directions"
+    },
+    "rician": {
+      "var_param": "rician"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "amp2sh_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "shells": {
+      "var_param": "shells"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "amp2sh_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "amp": {
+      "var_param": "amp"
+    },
+    "SH": {
+      "var_param": "sh"
+    }
+  }
+}

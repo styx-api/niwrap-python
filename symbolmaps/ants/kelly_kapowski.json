@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "kelly_kapowski",
+  "properties": {
+    "image_dimensionality": {
+      "var_param": "image_dimensionality"
+    },
+    "segmentation_image": {
+      "var_param": "segmentation_image"
+    },
+    "gray_matter_probability_image": {
+      "var_param": "gray_matter_probability_image"
+    },
+    "white_matter_probability_image": {
+      "var_param": "white_matter_probability_image"
+    },
+    "convergence": {
+      "var_param": "convergence"
+    },
+    "thickness_prior_estimate": {
+      "var_param": "thickness_prior_estimate"
+    },
+    "thickness_prior_image": {
+      "var_param": "thickness_prior_image"
+    },
+    "gradient_step": {
+      "var_param": "gradient_step"
+    },
+    "smoothing_variance": {
+      "var_param": "smoothing_variance"
+    },
+    "smoothing_velocity_field_parameter": {
+      "var_param": "smoothing_velocity_field_parameter"
+    },
+    "use_bspline_smoothing": {
+      "var_param": "use_bspline_smoothing"
+    },
+    "use_masked_smoothing": {
+      "var_param": "use_masked_smoothing"
+    },
+    "time_points": {
+      "var_param": "time_points"
+    },
+    "restrict_deformation": {
+      "var_param": "restrict_deformation"
+    },
+    "number_of_integration_points": {
+      "var_param": "number_of_integration_points"
+    },
+    "maximum_number_of_invert_displacement_field_iterations": {
+      "var_param": "maximum_number_of_invert_displacement_field_iterations"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

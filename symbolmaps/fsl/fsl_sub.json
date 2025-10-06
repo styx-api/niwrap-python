@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "fsl_sub",
+  "properties": {
+    "arch": {
+      "var_param": "arch"
+    },
+    "coprocessor": {
+      "var_param": "coprocessor"
+    },
+    "coprocessor_multi": {
+      "var_param": "coprocessor_multi"
+    },
+    "coprocessor_class": {
+      "var_param": "coprocessor_class"
+    },
+    "coprocessor_class_strict": {
+      "var_param": "coprocessor_class_strict"
+    },
+    "coprocessor_toolkit": {
+      "var_param": "coprocessor_toolkit"
+    },
+    "usescript": {
+      "var_param": "usescript"
+    },
+    "jobhold": {
+      "var_param": "jobhold"
+    },
+    "not_requeueable": {
+      "var_param": "not_requeueable"
+    },
+    "array_hold": {
+      "var_param": "array_hold"
+    },
+    "logdir": {
+      "var_param": "logdir"
+    },
+    "mailoptions": {
+      "var_param": "mailoptions"
+    },
+    "mailto": {
+      "var_param": "mailto"
+    },
+    "novalidation": {
+      "var_param": "novalidation"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "priority": {
+      "var_param": "priority"
+    },
+    "queue": {
+      "var_param": "queue_"
+    },
+    "resource": {
+      "var_param": "resource_"
+    },
+    "delete_job": {
+      "var_param": "delete_job"
+    },
+    "jobram": {
+      "var_param": "jobram"
+    },
+    "parallelenv_threads": {
+      "var_param": "parallelenv_threads"
+    },
+    "array_task": {
+      "var_param": "array_task"
+    },
+    "array_native": {
+      "var_param": "array_native"
+    },
+    "array_limit": {
+      "var_param": "array_limit"
+    },
+    "keep_jobscript": {
+      "var_param": "keep_jobscript"
+    },
+    "project": {
+      "var_param": "project"
+    },
+    "noramsplit": {
+      "var_param": "noramsplit"
+    },
+    "jobtime": {
+      "var_param": "jobtime"
+    },
+    "has_coprocessor": {
+      "var_param": "has_coprocessor"
+    },
+    "has_queues": {
+      "var_param": "has_queues"
+    },
+    "show_config": {
+      "var_param": "show_config"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "fileisimage": {
+      "var_param": "fileisimage"
+    }
+  }
+}

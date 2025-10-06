@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_lrflip",
+  "properties": {
+    "flip_lr": {
+      "var_param": "flip_lr"
+    },
+    "flip_ap": {
+      "var_param": "flip_ap"
+    },
+    "flip_is": {
+      "var_param": "flip_is"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "backend_average_roi_correlation",
+  "properties": {
+    "index_list": {
+      "var_param": "index_list"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    }
+  }
+}

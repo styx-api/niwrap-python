@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_brain_sync",
+  "properties": {
+    "inset1": {
+      "var_param": "inset1"
+    },
+    "inset2": {
+      "var_param": "inset2"
+    },
+    "qprefix": {
+      "var_param": "qprefix"
+    },
+    "pprefix": {
+      "var_param": "pprefix"
+    },
+    "normalize": {
+      "var_param": "normalize"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

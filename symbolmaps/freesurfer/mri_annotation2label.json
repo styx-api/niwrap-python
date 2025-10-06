@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "mri_annotation2label",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "lobes": {
+      "var_param": "lobes"
+    },
+    "lobes_strict": {
+      "var_param": "lobes_strict"
+    },
+    "lobes_strict_phcg": {
+      "var_param": "lobes_strict_phcg"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "labelbase": {
+      "var_param": "labelbase"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "seg": {
+      "var_param": "seg"
+    },
+    "segbase": {
+      "var_param": "segbase"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "border": {
+      "var_param": "border"
+    },
+    "border_annot": {
+      "var_param": "border_annot"
+    },
+    "annotation": {
+      "var_param": "annotation"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "stat": {
+      "var_param": "stat_"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

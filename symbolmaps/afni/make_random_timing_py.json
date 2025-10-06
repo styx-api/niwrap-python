@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "make_random_timing_py",
+  "properties": {
+    "num_runs": {
+      "var_param": "num_runs"
+    },
+    "run_time": {
+      "var_param": "run_time"
+    },
+    "num_stim": {
+      "var_param": "num_stim"
+    },
+    "num_reps": {
+      "var_param": "num_reps"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "stim_dur": {
+      "var_param": "stim_dur"
+    },
+    "across_runs": {
+      "var_param": "across_runs"
+    },
+    "max_consec": {
+      "var_param": "max_consec"
+    },
+    "max_rest": {
+      "var_param": "max_rest"
+    },
+    "min_rest": {
+      "var_param": "min_rest"
+    },
+    "not_first": {
+      "var_param": "not_first"
+    },
+    "not_last": {
+      "var_param": "not_last"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "ordered_stimuli": {
+      "var_param": "ordered_stimuli"
+    },
+    "pre_stim_rest": {
+      "var_param": "pre_stim_rest"
+    },
+    "post_stim_rest": {
+      "var_param": "post_stim_rest"
+    },
+    "save_3dd_cmd": {
+      "var_param": "save_3dd_cmd"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "stim_labels": {
+      "var_param": "stim_labels"
+    },
+    "t_digits": {
+      "var_param": "t_digits"
+    },
+    "t_gran": {
+      "var_param": "t_gran"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "tr_locked": {
+      "var_param": "tr_locked"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "show_timing_stats": {
+      "var_param": "show_timing_stats"
+    }
+  }
+}

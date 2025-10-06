@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_copy_params",
+  "properties": {
+    "in_vol": {
+      "var_param": "in_vol"
+    },
+    "template_vol": {
+      "var_param": "template_vol"
+    },
+    "out_vol": {
+      "var_param": "out_vol"
+    },
+    "size_flag": {
+      "var_param": "size_flag"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "balloon",
+  "properties": {
+    "tr": {
+      "var_param": "tr"
+    },
+    "num_scans": {
+      "var_param": "num_scans"
+    },
+    "event_times": {
+      "var_param": "event_times"
+    },
+    "t_rise": {
+      "var_param": "t_rise"
+    },
+    "t_fall": {
+      "var_param": "t_fall"
+    },
+    "t_sustain": {
+      "var_param": "t_sustain"
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "fn_root_make_params_and_execute": "mri_volsynth",
+  "properties": {
+    "output_volid": {
+      "var_param": "output_volid"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "nframes": {
+      "var_param": "nframes"
+    },
+    "offset_flag": {
+      "var_param": "offset_flag"
+    },
+    "offset_mid_flag": {
+      "var_param": "offset_mid_flag"
+    },
+    "curv": {
+      "var_param": "curv"
+    },
+    "dim": {
+      "var_param": "dim"
+    },
+    "res": {
+      "var_param": "res"
+    },
+    "vox_size": {
+      "var_param": "vox_size"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "cdircos": {
+      "var_param": "cdircos"
+    },
+    "rdircos": {
+      "var_param": "rdircos"
+    },
+    "sdircos": {
+      "var_param": "sdircos"
+    },
+    "c_ras": {
+      "var_param": "c_ras"
+    },
+    "p0": {
+      "var_param": "p0"
+    },
+    "precision": {
+      "var_param": "precision"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "seedfile": {
+      "var_param": "seedfile"
+    },
+    "pdf": {
+      "var_param": "pdf"
+    },
+    "bb": {
+      "var_param": "bb"
+    },
+    "gmean": {
+      "var_param": "gmean"
+    },
+    "gstd": {
+      "var_param": "gstd"
+    },
+    "delta_crsf": {
+      "var_param": "delta_crsf"
+    },
+    "delta_val": {
+      "var_param": "delta_val"
+    },
+    "delta_val_off": {
+      "var_param": "delta_val_off"
+    },
+    "grid": {
+      "var_param": "grid"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "dof_num": {
+      "var_param": "dof_num"
+    },
+    "dof_den": {
+      "var_param": "dof_den"
+    },
+    "rescale_flag": {
+      "var_param": "rescale_flag"
+    },
+    "val_a": {
+      "var_param": "val_a"
+    },
+    "val_b": {
+      "var_param": "val_b"
+    },
+    "vox_radius": {
+      "var_param": "vox_radius"
+    },
+    "mm_radius": {
+      "var_param": "mm_radius"
+    },
+    "sphere_center": {
+      "var_param": "sphere_center"
+    },
+    "hsc": {
+      "var_param": "hsc"
+    },
+    "abs_flag": {
+      "var_param": "abs_flag"
+    },
+    "cp": {
+      "var_param": "cp"
+    },
+    "spike": {
+      "var_param": "spike"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "sum2": {
+      "var_param": "sum2"
+    },
+    "dim_surf_flag": {
+      "var_param": "dim_surf_flag"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    }
+  }
+}

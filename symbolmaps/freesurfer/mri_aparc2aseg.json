@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "mri_aparc2aseg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "output_volfile": {
+      "var_param": "output_volfile"
+    },
+    "old_ribbon": {
+      "var_param": "old_ribbon"
+    },
+    "new_ribbon": {
+      "var_param": "new_ribbon"
+    },
+    "a2005s": {
+      "var_param": "a2005s"
+    },
+    "a2009s": {
+      "var_param": "a2009s"
+    },
+    "annot_name": {
+      "var_param": "annot_name"
+    },
+    "annot_table": {
+      "var_param": "annot_table"
+    },
+    "base_offset": {
+      "var_param": "base_offset"
+    },
+    "label_wm": {
+      "var_param": "label_wm"
+    },
+    "wmparc_dmax": {
+      "var_param": "wmparc_dmax"
+    },
+    "rip_unknown": {
+      "var_param": "rip_unknown"
+    },
+    "hypo_as_wm": {
+      "var_param": "hypo_as_wm"
+    },
+    "no_fix_parahip": {
+      "var_param": "no_fix_parahip"
+    },
+    "smooth_normals": {
+      "var_param": "smooth_normals"
+    },
+    "crs_test": {
+      "var_param": "crs_test"
+    },
+    "left_hemisphere": {
+      "var_param": "left_hemisphere"
+    },
+    "right_hemisphere": {
+      "var_param": "right_hemisphere"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

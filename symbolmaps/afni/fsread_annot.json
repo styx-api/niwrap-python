@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "fsread_annot",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "fscmap": {
+      "var_param": "fscmap"
+    },
+    "fscmap_range": {
+      "var_param": "fscmap_range"
+    },
+    "fsversion": {
+      "var_param": "fsversion"
+    },
+    "col_1d": {
+      "var_param": "col_1d"
+    },
+    "roi_1d": {
+      "var_param": "roi_1d"
+    },
+    "cmap_1d": {
+      "var_param": "cmap_1d"
+    },
+    "show_fscmap": {
+      "var_param": "show_fscmap"
+    },
+    "dset": {
+      "var_param": "dset"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

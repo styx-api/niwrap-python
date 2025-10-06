@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mksurfatlas",
+  "properties": {
+    "atlas": {
+      "var_param": "atlas"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "surfval": {
+      "var_param": "surfval"
+    },
+    "surfvaldir": {
+      "var_param": "surfvaldir"
+    },
+    "regsurf": {
+      "var_param": "regsurf"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "get_afni_model_prf",
+  "properties": {
+    "amplitude": {
+      "var_param": "amplitude"
+    },
+    "x_coord": {
+      "var_param": "x_coord"
+    },
+    "y_coord": {
+      "var_param": "y_coord"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    }
+  }
+}

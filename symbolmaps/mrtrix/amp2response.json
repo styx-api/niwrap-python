@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "amp2response",
+  "properties": {
+    "isotropic": {
+      "var_param": "isotropic"
+    },
+    "noconstraint": {
+      "var_param": "noconstraint"
+    },
+    "directions": {
+      "var_param": "directions"
+    },
+    "shells": {
+      "var_param": "shells"
+    },
+    "lmax": {
+      "var_param": "lmax"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "amp2response_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "amps": {
+      "var_param": "amps"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "directions_1": {
+      "var_param": "directions_1"
+    },
+    "response": {
+      "var_param": "response"
+    }
+  }
+}

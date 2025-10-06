@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "surface_curvature",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "opt_mean_mean_out": {
+      "var_param": "opt_mean_mean_out"
+    },
+    "opt_gauss_gauss_out": {
+      "var_param": "opt_gauss_gauss_out"
+    }
+  }
+}

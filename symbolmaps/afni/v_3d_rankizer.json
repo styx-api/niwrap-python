@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_rankizer",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "base_rank": {
+      "var_param": "base_rank"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "percentize": {
+      "var_param": "percentize"
+    },
+    "percentize_mask": {
+      "var_param": "percentize_mask"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_mvm_validator",
+  "properties": {
+    "datatable": {
+      "var_param": "datatable"
+    },
+    "shinyfolder": {
+      "var_param": "shinyfolder"
+    }
+  }
+}

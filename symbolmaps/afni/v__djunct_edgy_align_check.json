@@ -1,0 +1,83 @@
+{
+  "fn_root_make_params_and_execute": "v__djunct_edgy_align_check",
+  "properties": {
+    "ULAY": {
+      "var_param": "ulay"
+    },
+    "OLAY": {
+      "var_param": "olay"
+    },
+    "PREFIX": {
+      "var_param": "prefix"
+    },
+    "set_dicom_xyz": {
+      "var_param": "set_dicom_xyz"
+    },
+    "box_focus_slices": {
+      "var_param": "box_focus_slices"
+    },
+    "montgap": {
+      "var_param": "montgap"
+    },
+    "montcolor": {
+      "var_param": "montcolor"
+    },
+    "cbar": {
+      "var_param": "cbar"
+    },
+    "save_ftype": {
+      "var_param": "save_ftype"
+    },
+    "umin_fac": {
+      "var_param": "umin_fac"
+    },
+    "montx": {
+      "var_param": "montx"
+    },
+    "monty": {
+      "var_param": "monty"
+    },
+    "use_olay_grid": {
+      "var_param": "use_olay_grid"
+    },
+    "label_mode": {
+      "var_param": "label_mode"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "ver_flag": {
+      "var_param": "ver_flag"
+    },
+    "echo_flag": {
+      "var_param": "echo_flag"
+    },
+    "sharpen_ulay_off_flag": {
+      "var_param": "sharpen_ulay_off_flag"
+    },
+    "mask_olay_edges_flag": {
+      "var_param": "mask_olay_edges_flag"
+    },
+    "no_cor_flag": {
+      "var_param": "no_cor_flag"
+    },
+    "no_sag_flag": {
+      "var_param": "no_sag_flag"
+    },
+    "no_axi_flag": {
+      "var_param": "no_axi_flag"
+    },
+    "no_clean_flag": {
+      "var_param": "no_clean_flag"
+    },
+    "ulay_range": {
+      "var_param": "ulay_range"
+    },
+    "ulay_range_nz": {
+      "var_param": "ulay_range_nz"
+    },
+    "ulay_range_am": {
+      "var_param": "ulay_range_am"
+    }
+  }
+}

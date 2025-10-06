@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "surface_sphere_triangular_patches",
+  "properties": {
+    "sphere": {
+      "var_param": "sphere"
+    },
+    "divisions": {
+      "var_param": "divisions"
+    },
+    "text_out": {
+      "var_param": "text_out"
+    }
+  }
+}

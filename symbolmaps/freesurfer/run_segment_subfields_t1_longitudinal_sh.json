@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "run_segment_subfields_t1_longitudinal_sh",
+  "properties": {
+    "deployed_mcr_root": {
+      "var_param": "deployed_mcr_root"
+    },
+    "additional_args": {
+      "var_param": "additional_args"
+    }
+  }
+}

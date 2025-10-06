@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "label_to_volume_mapping",
+  "properties": {
+    "label": {
+      "var_param": "label"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "volume_space": {
+      "var_param": "volume_space"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "opt_nearest_vertex_distance": {
+      "var_param": "opt_nearest_vertex_distance"
+    },
+    "ribbon_constrained": {
+      "var_param": "ribbon_constrained",
+      "fn_struct_make_params": "label_to_volume_mapping_ribbon_constrained_params",
+      "properties": {
+        "inner_surf": {
+          "var_param": "inner_surf"
+        },
+        "outer_surf": {
+          "var_param": "outer_surf"
+        },
+        "opt_voxel_subdiv_subdiv_num": {
+          "var_param": "opt_voxel_subdiv_subdiv_num"
+        },
+        "opt_greedy": {
+          "var_param": "opt_greedy"
+        },
+        "opt_thick_columns": {
+          "var_param": "opt_thick_columns"
+        }
+      }
+    }
+  }
+}

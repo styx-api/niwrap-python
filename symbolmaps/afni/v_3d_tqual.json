@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tqual",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "spearman": {
+      "var_param": "spearman"
+    },
+    "quadrant": {
+      "var_param": "quadrant"
+    },
+    "autoclip": {
+      "var_param": "autoclip"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "clip": {
+      "var_param": "clip"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "range": {
+      "var_param": "range_"
+    }
+  }
+}

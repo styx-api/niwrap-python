@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "volume_find_clusters",
+  "properties": {
+    "volume_in": {
+      "var_param": "volume_in"
+    },
+    "value_threshold": {
+      "var_param": "value_threshold"
+    },
+    "minimum_volume": {
+      "var_param": "minimum_volume"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "opt_less_than": {
+      "var_param": "opt_less_than"
+    },
+    "opt_roi_roi_volume": {
+      "var_param": "opt_roi_roi_volume"
+    },
+    "opt_subvolume_subvol": {
+      "var_param": "opt_subvolume_subvol"
+    },
+    "opt_size_ratio_ratio": {
+      "var_param": "opt_size_ratio_ratio"
+    },
+    "opt_distance_distance": {
+      "var_param": "opt_distance_distance"
+    },
+    "opt_start_startval": {
+      "var_param": "opt_start_startval"
+    }
+  }
+}

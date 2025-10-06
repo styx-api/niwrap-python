@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "export_gcam",
+  "properties": {
+    "fixed": {
+      "var_param": "fixed"
+    },
+    "moving": {
+      "var_param": "moving"
+    },
+    "morph": {
+      "var_param": "morph"
+    },
+    "out_gcam": {
+      "var_param": "out_gcam"
+    },
+    "zlib_buffer": {
+      "var_param": "zlib_buffer"
+    },
+    "bbox_threshold": {
+      "var_param": "bbox_threshold"
+    },
+    "interp_method": {
+      "var_param": "interp_method"
+    },
+    "test": {
+      "var_param": "test"
+    }
+  }
+}

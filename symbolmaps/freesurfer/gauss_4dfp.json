@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "gauss_4dfp",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "f_half": {
+      "var_param": "f_half"
+    },
+    "output_root": {
+      "var_param": "output_root"
+    },
+    "endian_flag": {
+      "var_param": "endian_flag"
+    },
+    "wrap_flag": {
+      "var_param": "wrap_flag"
+    },
+    "differentiate_flag": {
+      "var_param": "differentiate_flag"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "fsl_mvlm",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "basename_output_files": {
+      "var_param": "basename_output_files"
+    },
+    "algorithm": {
+      "var_param": "algorithm"
+    },
+    "design_matrix": {
+      "var_param": "design_matrix"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "design_normalization": {
+      "var_param": "design_normalization"
+    },
+    "variance_normalisation": {
+      "var_param": "variance_normalisation"
+    },
+    "demean": {
+      "var_param": "demean"
+    },
+    "nmf_dim": {
+      "var_param": "nmf_dim"
+    },
+    "nmf_iterations": {
+      "var_param": "nmf_iterations"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "out_data": {
+      "var_param": "out_data"
+    },
+    "out_vnscales": {
+      "var_param": "out_vnscales"
+    }
+  }
+}

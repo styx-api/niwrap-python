@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "cifti_restrict_dense_map",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_cifti_roi_roi_cifti": {
+      "var_param": "opt_cifti_roi_roi_cifti"
+    },
+    "opt_left_roi_roi_metric": {
+      "var_param": "opt_left_roi_roi_metric"
+    },
+    "opt_right_roi_roi_metric": {
+      "var_param": "opt_right_roi_roi_metric"
+    },
+    "opt_cerebellum_roi_roi_metric": {
+      "var_param": "opt_cerebellum_roi_roi_metric"
+    },
+    "opt_vol_roi_roi_vol": {
+      "var_param": "opt_vol_roi_roi_vol"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_easyreg",
+  "properties": {
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "reference_segmentation": {
+      "var_param": "reference_segmentation"
+    },
+    "floating_image": {
+      "var_param": "floating_image"
+    },
+    "floating_segmentation": {
+      "var_param": "floating_segmentation"
+    },
+    "registered_reference": {
+      "var_param": "registered_reference"
+    },
+    "registered_floating": {
+      "var_param": "registered_floating"
+    },
+    "forward_field": {
+      "var_param": "forward_field"
+    },
+    "inverse_field": {
+      "var_param": "inverse_field"
+    },
+    "affine_only": {
+      "var_param": "affine_only"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

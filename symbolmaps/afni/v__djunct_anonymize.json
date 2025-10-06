@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v__djunct_anonymize",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "add_note": {
+      "var_param": "add_note"
+    },
+    "copy_to": {
+      "var_param": "copy_to"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    }
+  }
+}

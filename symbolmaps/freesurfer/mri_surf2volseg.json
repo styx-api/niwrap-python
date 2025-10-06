@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "mri_surf2volseg",
+  "properties": {
+    "input_segmentation": {
+      "var_param": "input_segmentation"
+    },
+    "output_segmentation": {
+      "var_param": "output_segmentation"
+    },
+    "source_segmentation": {
+      "var_param": "source_segmentation"
+    },
+    "lh_white_surf": {
+      "var_param": "lh_white_surf"
+    },
+    "lh_pial_surf": {
+      "var_param": "lh_pial_surf"
+    },
+    "rh_white_surf": {
+      "var_param": "rh_white_surf"
+    },
+    "rh_pial_surf": {
+      "var_param": "rh_pial_surf"
+    },
+    "lh_cortex_mask": {
+      "var_param": "lh_cortex_mask"
+    },
+    "rh_cortex_mask": {
+      "var_param": "rh_cortex_mask"
+    },
+    "fix_presurf_ribbon": {
+      "var_param": "fix_presurf_ribbon"
+    },
+    "label_cortex": {
+      "var_param": "label_cortex"
+    },
+    "label_wm": {
+      "var_param": "label_wm"
+    },
+    "label_wm_unknown": {
+      "var_param": "label_wm_unknown"
+    },
+    "lh_annotation": {
+      "var_param": "lh_annotation"
+    },
+    "rh_annotation": {
+      "var_param": "rh_annotation"
+    },
+    "wmparc_dmax": {
+      "var_param": "wmparc_dmax"
+    },
+    "rip_unknown": {
+      "var_param": "rip_unknown"
+    },
+    "hypo_as_wm": {
+      "var_param": "hypo_as_wm"
+    },
+    "hashres": {
+      "var_param": "hashres"
+    },
+    "nhops": {
+      "var_param": "nhops"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "crs_test": {
+      "var_param": "crs_test"
+    },
+    "ctab_file": {
+      "var_param": "ctab_file"
+    },
+    "threads_number": {
+      "var_param": "threads_number"
+    }
+  }
+}

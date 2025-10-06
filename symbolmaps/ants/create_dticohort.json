@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "create_dticohort",
+  "properties": {
+    "image_dimensionality": {
+      "var_param": "image_dimensionality"
+    },
+    "dti_atlas": {
+      "var_param": "dti_atlas"
+    },
+    "label_mask_image": {
+      "var_param": "label_mask_image"
+    },
+    "noise_sigma": {
+      "var_param": "noise_sigma"
+    },
+    "pathology": {
+      "var_param": "pathology"
+    },
+    "dwi_parameters": {
+      "var_param": "dwi_parameters"
+    },
+    "registered_population": {
+      "var_param": "registered_population"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "segment_subject_notal",
+  "properties": {
+    "subject_path": {
+      "var_param": "subject_path"
+    }
+  }
+}

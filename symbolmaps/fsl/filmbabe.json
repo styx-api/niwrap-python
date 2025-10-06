@@ -1,0 +1,104 @@
+{
+  "fn_root_make_params_and_execute": "filmbabe",
+  "properties": {
+    "datafile": {
+      "var_param": "datafile"
+    },
+    "datafile_alias": {
+      "var_param": "datafile_alias"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_alias": {
+      "var_param": "mask_alias"
+    },
+    "designfile": {
+      "var_param": "designfile"
+    },
+    "designfile_alias_1": {
+      "var_param": "designfile_alias_1"
+    },
+    "designfile_alias_2": {
+      "var_param": "designfile_alias_2"
+    },
+    "frf": {
+      "var_param": "frf"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "verbose_flag_alias": {
+      "var_param": "verbose_flag_alias"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "debug_level_alias_1": {
+      "var_param": "debug_level_alias_1"
+    },
+    "debug_level_alias_2": {
+      "var_param": "debug_level_alias_2"
+    },
+    "timing_on_flag": {
+      "var_param": "timing_on_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "help_flag_alias": {
+      "var_param": "help_flag_alias"
+    },
+    "flobs_prior_off_flag": {
+      "var_param": "flobs_prior_off_flag"
+    },
+    "flobs_prior_off_alias": {
+      "var_param": "flobs_prior_off_alias"
+    },
+    "flobs_dir": {
+      "var_param": "flobs_dir"
+    },
+    "prior_covar_file": {
+      "var_param": "prior_covar_file"
+    },
+    "prior_covar_file_alias": {
+      "var_param": "prior_covar_file_alias"
+    },
+    "prior_mean_file": {
+      "var_param": "prior_mean_file"
+    },
+    "prior_mean_file_alias": {
+      "var_param": "prior_mean_file_alias"
+    },
+    "log_dir": {
+      "var_param": "log_dir"
+    },
+    "log_dir_alias_1": {
+      "var_param": "log_dir_alias_1"
+    },
+    "log_dir_alias_2": {
+      "var_param": "log_dir_alias_2"
+    },
+    "num_iterations": {
+      "var_param": "num_iterations"
+    },
+    "temporal_ar_mrf_prec": {
+      "var_param": "temporal_ar_mrf_prec"
+    },
+    "temporal_ar_mrf_prec_alias": {
+      "var_param": "temporal_ar_mrf_prec_alias"
+    },
+    "temporal_ar_flag": {
+      "var_param": "temporal_ar_flag"
+    },
+    "num_trace_samples": {
+      "var_param": "num_trace_samples"
+    },
+    "num_trace_samples_alias": {
+      "var_param": "num_trace_samples_alias"
+    },
+    "temporal_ar_order": {
+      "var_param": "temporal_ar_order"
+    }
+  }
+}

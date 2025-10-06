@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_mean",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "fscale": {
+      "var_param": "fscale"
+    },
+    "gscale": {
+      "var_param": "gscale"
+    },
+    "nscale": {
+      "var_param": "nscale"
+    },
+    "non_zero": {
+      "var_param": "non_zero"
+    },
+    "stdev": {
+      "var_param": "stdev"
+    },
+    "sqr": {
+      "var_param": "sqr"
+    },
+    "sum": {
+      "var_param": "sum_"
+    },
+    "count": {
+      "var_param": "count"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "min": {
+      "var_param": "min_"
+    },
+    "absmax": {
+      "var_param": "absmax"
+    },
+    "signed_absmax": {
+      "var_param": "signed_absmax"
+    },
+    "mask_inter": {
+      "var_param": "mask_inter"
+    },
+    "mask_union": {
+      "var_param": "mask_union"
+    },
+    "weightset": {
+      "var_param": "weightset"
+    }
+  }
+}

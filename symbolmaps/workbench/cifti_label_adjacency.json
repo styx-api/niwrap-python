@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "cifti_label_adjacency",
+  "properties": {
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "adjacency_out": {
+      "var_param": "adjacency_out"
+    },
+    "opt_left_surface_surface": {
+      "var_param": "opt_left_surface_surface"
+    },
+    "opt_right_surface_surface": {
+      "var_param": "opt_right_surface_surface"
+    },
+    "opt_cerebellum_surface_surface": {
+      "var_param": "opt_cerebellum_surface_surface"
+    }
+  }
+}

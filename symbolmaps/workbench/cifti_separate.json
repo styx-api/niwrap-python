@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "cifti_separate",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "volume_all": {
+      "var_param": "volume_all",
+      "fn_struct_make_params": "cifti_separate_volume_all_params",
+      "properties": {
+        "volume_out": {
+          "var_param": "volume_out"
+        },
+        "opt_roi_roi_out": {
+          "var_param": "opt_roi_roi_out"
+        },
+        "opt_label_label_out": {
+          "var_param": "opt_label_label_out"
+        },
+        "opt_crop": {
+          "var_param": "opt_crop"
+        }
+      }
+    },
+    "label": {
+      "var_param": "label",
+      "fn_struct_make_params": "cifti_separate_label_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "label_out": {
+          "var_param": "label_out"
+        },
+        "opt_roi_roi_out": {
+          "var_param": "opt_roi_roi_out"
+        }
+      }
+    },
+    "metric": {
+      "var_param": "metric",
+      "fn_struct_make_params": "cifti_separate_metric_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "metric_out": {
+          "var_param": "metric_out"
+        },
+        "opt_roi_roi_out": {
+          "var_param": "opt_roi_roi_out"
+        }
+      }
+    },
+    "volume": {
+      "var_param": "volume",
+      "fn_struct_make_params": "cifti_separate_volume_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "volume_out": {
+          "var_param": "volume_out"
+        },
+        "opt_roi_roi_out": {
+          "var_param": "opt_roi_roi_out"
+        },
+        "opt_crop": {
+          "var_param": "opt_crop"
+        }
+      }
+    }
+  }
+}

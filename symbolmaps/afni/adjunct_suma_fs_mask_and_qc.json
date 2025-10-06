@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "adjunct_suma_fs_mask_and_qc",
+  "properties": {
+    "subj_id": {
+      "var_param": "subj_id"
+    },
+    "suma_dir": {
+      "var_param": "suma_dir"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hview": {
+      "var_param": "hview"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

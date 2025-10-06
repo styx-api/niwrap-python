@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "sfa2fieldsign",
+  "properties": {
+    "sfadir": {
+      "var_param": "sfadir"
+    },
+    "register_dat": {
+      "var_param": "register_dat"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "proj_frac": {
+      "var_param": "proj_frac"
+    },
+    "occip": {
+      "var_param": "occip"
+    },
+    "patch": {
+      "var_param": "patch"
+    },
+    "osd": {
+      "var_param": "osd"
+    },
+    "lh": {
+      "var_param": "lh"
+    },
+    "rh": {
+      "var_param": "rh"
+    }
+  }
+}

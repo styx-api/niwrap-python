@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "run_mris_preproc",
+  "properties": {
+    "qdec_table": {
+      "var_param": "qdec_table"
+    },
+    "target_average": {
+      "var_param": "target_average"
+    }
+  }
+}

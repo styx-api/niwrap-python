@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "xsanatreg",
+  "properties": {
+    "src_cordir": {
+      "var_param": "src_cordir"
+    },
+    "targ_cordir": {
+      "var_param": "targ_cordir"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "temp_directory": {
+      "var_param": "temp_directory"
+    },
+    "source_minc": {
+      "var_param": "source_minc"
+    },
+    "target_minc": {
+      "var_param": "target_minc"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "umask": {
+      "var_param": "umask"
+    }
+  }
+}

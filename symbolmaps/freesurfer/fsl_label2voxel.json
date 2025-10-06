@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fsl_label2voxel",
+  "properties": {
+    "label_value": {
+      "var_param": "label_value"
+    },
+    "labeled_volume": {
+      "var_param": "labeled_volume"
+    },
+    "src_volume": {
+      "var_param": "src_volume"
+    },
+    "output_filename": {
+      "var_param": "output_filename"
+    }
+  }
+}

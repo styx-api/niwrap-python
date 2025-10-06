@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "label_subject",
+  "properties": {
+    "nu_file": {
+      "var_param": "nu_file"
+    },
+    "orig_dir": {
+      "var_param": "orig_dir"
+    }
+  }
+}

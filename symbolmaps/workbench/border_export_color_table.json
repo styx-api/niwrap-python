@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "border_export_color_table",
+  "properties": {
+    "border_file": {
+      "var_param": "border_file"
+    },
+    "table_out": {
+      "var_param": "table_out"
+    },
+    "opt_class_colors": {
+      "var_param": "opt_class_colors"
+    }
+  }
+}

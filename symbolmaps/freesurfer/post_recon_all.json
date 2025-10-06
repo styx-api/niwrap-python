@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "post_recon_all",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "subfields": {
+      "var_param": "subfields"
+    },
+    "no_subfields": {
+      "var_param": "no_subfields"
+    },
+    "subregions": {
+      "var_param": "subregions"
+    },
+    "no_subregions": {
+      "var_param": "no_subregions"
+    },
+    "cvs": {
+      "var_param": "cvs"
+    },
+    "no_cvs": {
+      "var_param": "no_cvs"
+    },
+    "qcache": {
+      "var_param": "qcache"
+    },
+    "no_qcache": {
+      "var_param": "no_qcache"
+    },
+    "no_sclimbic": {
+      "var_param": "no_sclimbic"
+    },
+    "no_hthsu": {
+      "var_param": "no_hthsu"
+    },
+    "no_synthstrip": {
+      "var_param": "no_synthstrip"
+    },
+    "no_synthseg": {
+      "var_param": "no_synthseg"
+    },
+    "no_qastats": {
+      "var_param": "no_qastats"
+    },
+    "no_samseg": {
+      "var_param": "no_samseg"
+    },
+    "no_xhemi": {
+      "var_param": "no_xhemi"
+    },
+    "no_cos7": {
+      "var_param": "no_cos7"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "exit_on_error": {
+      "var_param": "exit_on_error"
+    }
+  }
+}

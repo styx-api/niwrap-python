@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "mris_congeal",
+  "properties": {
+    "input_surface_name": {
+      "var_param": "input_surface_name"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_surface_name": {
+      "var_param": "output_surface_name"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "disable_rigid_alignment": {
+      "var_param": "disable_rigid_alignment"
+    },
+    "disable_sulc_alignment": {
+      "var_param": "disable_sulc_alignment"
+    },
+    "smoothwm_curv": {
+      "var_param": "smoothwm_curv"
+    },
+    "jacobian_output": {
+      "var_param": "jacobian_output"
+    },
+    "distance_term": {
+      "var_param": "distance_term"
+    },
+    "manual_label": {
+      "var_param": "manual_label"
+    },
+    "addframe": {
+      "var_param": "addframe"
+    },
+    "overlay": {
+      "var_param": "overlay"
+    },
+    "overlay_dir": {
+      "var_param": "overlay_dir"
+    },
+    "target_subject": {
+      "var_param": "target_subject"
+    }
+  }
+}

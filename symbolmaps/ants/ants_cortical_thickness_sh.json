@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "ants_cortical_thickness_sh",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "anatomical_image": {
+      "var_param": "anatomical_image"
+    },
+    "brain_template": {
+      "var_param": "brain_template"
+    },
+    "brain_extraction_probability_mask": {
+      "var_param": "brain_extraction_probability_mask"
+    },
+    "brain_segmentation_priors": {
+      "var_param": "brain_segmentation_priors"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "image_file_suffix": {
+      "var_param": "image_file_suffix"
+    },
+    "template_for_t1_registration": {
+      "var_param": "template_for_t1_registration"
+    },
+    "extraction_registration_mask": {
+      "var_param": "extraction_registration_mask"
+    },
+    "keep_temporary_files": {
+      "var_param": "keep_temporary_files"
+    },
+    "denoise_anatomical_images": {
+      "var_param": "denoise_anatomical_images"
+    },
+    "max_iterations_for_registration": {
+      "var_param": "max_iterations_for_registration"
+    },
+    "atropos_prior_segmentation_weight": {
+      "var_param": "atropos_prior_segmentation_weight"
+    },
+    "number_of_segmentation_iterations": {
+      "var_param": "number_of_segmentation_iterations"
+    },
+    "posterior_formulation": {
+      "var_param": "posterior_formulation"
+    },
+    "use_floating_point_precision": {
+      "var_param": "use_floating_point_precision"
+    },
+    "use_random_seeding": {
+      "var_param": "use_random_seeding"
+    },
+    "use_b_spline_smoothing": {
+      "var_param": "use_b_spline_smoothing"
+    },
+    "cortical_thickness_prior_image": {
+      "var_param": "cortical_thickness_prior_image"
+    },
+    "label_propagation": {
+      "var_param": "label_propagation"
+    },
+    "additional_priors_for_thickness": {
+      "var_param": "additional_priors_for_thickness"
+    },
+    "use_quick_registration_parameters": {
+      "var_param": "use_quick_registration_parameters"
+    },
+    "atropos_iterations": {
+      "var_param": "atropos_iterations"
+    },
+    "script_stage_to_run": {
+      "var_param": "script_stage_to_run"
+    },
+    "test_debug_mode": {
+      "var_param": "test_debug_mode"
+    }
+  }
+}

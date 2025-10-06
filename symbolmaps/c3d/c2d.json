@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "c2d",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "operations": {
+      "var_param": "operations"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

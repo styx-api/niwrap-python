@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_dft",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "abs_output": {
+      "var_param": "abs_output"
+    },
+    "nfft": {
+      "var_param": "nfft"
+    },
+    "detrend": {
+      "var_param": "detrend"
+    },
+    "taper": {
+      "var_param": "taper"
+    },
+    "inverse": {
+      "var_param": "inverse"
+    }
+  }
+}

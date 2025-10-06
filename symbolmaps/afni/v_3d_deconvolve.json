@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_deconvolve",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "num_stimts": {
+      "var_param": "num_stimts"
+    },
+    "stim_file": {
+      "var_param": "stim_file"
+    },
+    "stim_label": {
+      "var_param": "stim_label"
+    },
+    "stim_base": {
+      "var_param": "stim_base"
+    },
+    "stim_times": {
+      "var_param": "stim_times"
+    },
+    "iresp": {
+      "var_param": "iresp"
+    },
+    "fitts": {
+      "var_param": "fitts"
+    },
+    "fout": {
+      "var_param": "fout"
+    },
+    "tout": {
+      "var_param": "tout"
+    },
+    "bucket": {
+      "var_param": "bucket"
+    },
+    "cbucket": {
+      "var_param": "cbucket"
+    },
+    "x1D": {
+      "var_param": "x1_d"
+    },
+    "jobs": {
+      "var_param": "jobs"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "plugout_ijk",
+  "properties": {
+    "host": {
+      "var_param": "host"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "port": {
+      "var_param": "port"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "port_offset": {
+      "var_param": "port_offset"
+    },
+    "port_quiet": {
+      "var_param": "port_quiet"
+    },
+    "port_bloc_offset": {
+      "var_param": "port_bloc_offset"
+    },
+    "max_bloc": {
+      "var_param": "max_bloc"
+    },
+    "max_bloc_quiet": {
+      "var_param": "max_bloc_quiet"
+    },
+    "num_assigned_ports": {
+      "var_param": "num_assigned_ports"
+    },
+    "num_assigned_ports_quiet": {
+      "var_param": "num_assigned_ports_quiet"
+    }
+  }
+}

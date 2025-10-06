@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_intracranial",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "min_val": {
+      "var_param": "min_val"
+    },
+    "max_val": {
+      "var_param": "max_val"
+    },
+    "min_conn": {
+      "var_param": "min_conn"
+    },
+    "max_conn": {
+      "var_param": "max_conn"
+    },
+    "no_smooth": {
+      "var_param": "no_smooth"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

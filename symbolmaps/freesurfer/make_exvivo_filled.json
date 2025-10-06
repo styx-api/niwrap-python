@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "make_exvivo_filled",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "input_samseg": {
+      "var_param": "input_samseg"
+    },
+    "input_intensity_vol": {
+      "var_param": "input_intensity_vol"
+    },
+    "hemi_both": {
+      "var_param": "hemi_both"
+    }
+  }
+}

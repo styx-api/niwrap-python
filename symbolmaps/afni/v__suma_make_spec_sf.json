@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__suma_make_spec_sf",
+  "properties": {
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "surface_path": {
+      "var_param": "surface_path"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    }
+  }
+}

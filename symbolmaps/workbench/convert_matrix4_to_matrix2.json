@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "convert_matrix4_to_matrix2",
+  "properties": {
+    "matrix4_wbsparse": {
+      "var_param": "matrix4_wbsparse"
+    },
+    "counts_out": {
+      "var_param": "counts_out"
+    },
+    "opt_distances_distance_out": {
+      "var_param": "opt_distances_distance_out"
+    },
+    "individual_fibers": {
+      "var_param": "individual_fibers",
+      "fn_struct_make_params": "convert_matrix4_to_matrix2_individual_fibers_params",
+      "properties": {
+        "fiber_1": {
+          "var_param": "fiber_1"
+        },
+        "fiber_2": {
+          "var_param": "fiber_2"
+        },
+        "fiber_3": {
+          "var_param": "fiber_3"
+        }
+      }
+    }
+  }
+}

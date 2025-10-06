@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "volume_label_to_surface_mapping",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "label_out": {
+      "var_param": "label_out"
+    },
+    "ribbon_constrained": {
+      "var_param": "ribbon_constrained",
+      "fn_struct_make_params": "volume_label_to_surface_mapping_ribbon_constrained_params",
+      "properties": {
+        "inner_surf": {
+          "var_param": "inner_surf"
+        },
+        "outer_surf": {
+          "var_param": "outer_surf"
+        },
+        "opt_volume_roi_roi_volume": {
+          "var_param": "opt_volume_roi_roi_volume"
+        },
+        "opt_voxel_subdiv_subdiv_num": {
+          "var_param": "opt_voxel_subdiv_subdiv_num"
+        },
+        "opt_thin_columns": {
+          "var_param": "opt_thin_columns"
+        }
+      }
+    },
+    "opt_subvol_select_subvol": {
+      "var_param": "opt_subvol_select_subvol"
+    }
+  }
+}

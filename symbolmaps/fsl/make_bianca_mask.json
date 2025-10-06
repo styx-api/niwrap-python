@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "make_bianca_mask",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "overlay_flag": {
+      "var_param": "overlay_flag"
+    },
+    "binary_mask_flag": {
+      "var_param": "binary_mask_flag"
+    },
+    "approx_skull_flag": {
+      "var_param": "approx_skull_flag"
+    },
+    "no_seg_output_flag": {
+      "var_param": "no_seg_output_flag"
+    },
+    "fractional_intensity": {
+      "var_param": "fractional_intensity"
+    },
+    "vg_fractional_intensity": {
+      "var_param": "vg_fractional_intensity"
+    },
+    "head_radius": {
+      "var_param": "head_radius"
+    },
+    "center_of_gravity": {
+      "var_param": "center_of_gravity"
+    },
+    "thresholding_flag": {
+      "var_param": "thresholding_flag"
+    },
+    "vtk_mesh": {
+      "var_param": "vtk_mesh"
+    },
+    "robust_iters_flag": {
+      "var_param": "robust_iters_flag"
+    },
+    "residual_optic_cleanup_flag": {
+      "var_param": "residual_optic_cleanup_flag"
+    },
+    "reduce_bias_flag": {
+      "var_param": "reduce_bias_flag"
+    },
+    "slice_padding_flag": {
+      "var_param": "slice_padding_flag"
+    },
+    "whole_set_mask_flag": {
+      "var_param": "whole_set_mask_flag"
+    },
+    "additional_surfaces_flag": {
+      "var_param": "additional_surfaces_flag"
+    },
+    "additional_surfaces_t2": {
+      "var_param": "additional_surfaces_t2"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

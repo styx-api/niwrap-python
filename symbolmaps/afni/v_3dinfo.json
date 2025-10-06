@@ -1,0 +1,344 @@
+{
+  "fn_root_make_params_and_execute": "v_3dinfo",
+  "properties": {
+    "orient": {
+      "var_param": "orient"
+    },
+    "Lextent": {
+      "var_param": "lextent"
+    },
+    "Rextent": {
+      "var_param": "rextent"
+    },
+    "Aextent": {
+      "var_param": "aextent"
+    },
+    "Pextent": {
+      "var_param": "pextent"
+    },
+    "Iextent": {
+      "var_param": "iextent"
+    },
+    "Sextent": {
+      "var_param": "sextent"
+    },
+    "all_names": {
+      "var_param": "all_names"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "very_verbose": {
+      "var_param": "very_verbose"
+    },
+    "short": {
+      "var_param": "short"
+    },
+    "no_hist": {
+      "var_param": "no_hist"
+    },
+    "h": {
+      "var_param": "h"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "extreme_help": {
+      "var_param": "extreme_help"
+    },
+    "h_view": {
+      "var_param": "h_view"
+    },
+    "h_web": {
+      "var_param": "h_web"
+    },
+    "h_find": {
+      "var_param": "h_find"
+    },
+    "h_raw": {
+      "var_param": "h_raw"
+    },
+    "h_spx": {
+      "var_param": "h_spx"
+    },
+    "h_aspx": {
+      "var_param": "h_aspx"
+    },
+    "all_opts": {
+      "var_param": "all_opts"
+    },
+    "label2index": {
+      "var_param": "label2index"
+    },
+    "niml_hdr": {
+      "var_param": "niml_hdr"
+    },
+    "subbrick_info": {
+      "var_param": "subbrick_info"
+    },
+    "exists": {
+      "var_param": "exists"
+    },
+    "id": {
+      "var_param": "id_"
+    },
+    "is_atlas": {
+      "var_param": "is_atlas"
+    },
+    "is_atlas_or_labeltable": {
+      "var_param": "is_atlas_or_labeltable"
+    },
+    "is_nifti": {
+      "var_param": "is_nifti"
+    },
+    "dset_extension": {
+      "var_param": "dset_extension"
+    },
+    "storage_mode": {
+      "var_param": "storage_mode"
+    },
+    "space": {
+      "var_param": "space"
+    },
+    "gen_space": {
+      "var_param": "gen_space"
+    },
+    "av_space": {
+      "var_param": "av_space"
+    },
+    "nifti_code": {
+      "var_param": "nifti_code"
+    },
+    "is_oblique": {
+      "var_param": "is_oblique"
+    },
+    "handedness": {
+      "var_param": "handedness"
+    },
+    "obliquity": {
+      "var_param": "obliquity"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "prefix_noext": {
+      "var_param": "prefix_noext"
+    },
+    "ni": {
+      "var_param": "ni"
+    },
+    "nj": {
+      "var_param": "nj"
+    },
+    "nk": {
+      "var_param": "nk"
+    },
+    "nijk": {
+      "var_param": "nijk"
+    },
+    "nv": {
+      "var_param": "nv"
+    },
+    "nt": {
+      "var_param": "nt_"
+    },
+    "n4": {
+      "var_param": "n4"
+    },
+    "nvi": {
+      "var_param": "nvi"
+    },
+    "nti": {
+      "var_param": "nti"
+    },
+    "ntimes": {
+      "var_param": "ntimes"
+    },
+    "max_node": {
+      "var_param": "max_node"
+    },
+    "di": {
+      "var_param": "di"
+    },
+    "dj": {
+      "var_param": "dj"
+    },
+    "dk": {
+      "var_param": "dk"
+    },
+    "d3": {
+      "var_param": "d3"
+    },
+    "adi": {
+      "var_param": "adi"
+    },
+    "adj": {
+      "var_param": "adj"
+    },
+    "adk": {
+      "var_param": "adk"
+    },
+    "ad3": {
+      "var_param": "ad3"
+    },
+    "voxvol": {
+      "var_param": "voxvol"
+    },
+    "oi": {
+      "var_param": "oi"
+    },
+    "oj": {
+      "var_param": "oj"
+    },
+    "ok": {
+      "var_param": "ok"
+    },
+    "o3": {
+      "var_param": "o3"
+    },
+    "dcx": {
+      "var_param": "dcx"
+    },
+    "dcy": {
+      "var_param": "dcy"
+    },
+    "dcz": {
+      "var_param": "dcz"
+    },
+    "dc3": {
+      "var_param": "dc3"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "dmin": {
+      "var_param": "dmin"
+    },
+    "dmax": {
+      "var_param": "dmax"
+    },
+    "dminus": {
+      "var_param": "dminus"
+    },
+    "dmaxus": {
+      "var_param": "dmaxus"
+    },
+    "smode": {
+      "var_param": "smode"
+    },
+    "header_name": {
+      "var_param": "header_name"
+    },
+    "brick_name": {
+      "var_param": "brick_name"
+    },
+    "iname": {
+      "var_param": "iname"
+    },
+    "extent": {
+      "var_param": "extent"
+    },
+    "fac": {
+      "var_param": "fac"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "min": {
+      "var_param": "min_"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "minus": {
+      "var_param": "minus"
+    },
+    "maxus": {
+      "var_param": "maxus"
+    },
+    "labeltable": {
+      "var_param": "labeltable"
+    },
+    "labeltable_as_atlas_points": {
+      "var_param": "labeltable_as_atlas_points"
+    },
+    "atlas_points": {
+      "var_param": "atlas_points"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "slice_timing": {
+      "var_param": "slice_timing"
+    },
+    "header_line": {
+      "var_param": "header_line"
+    },
+    "hdr": {
+      "var_param": "hdr"
+    },
+    "sb_delim": {
+      "var_param": "sb_delim"
+    },
+    "NA_flag": {
+      "var_param": "na_flag"
+    },
+    "atr_delim": {
+      "var_param": "atr_delim"
+    },
+    "aform_real": {
+      "var_param": "aform_real"
+    },
+    "aform_real_oneline": {
+      "var_param": "aform_real_oneline"
+    },
+    "aform_real_refit_ori": {
+      "var_param": "aform_real_refit_ori"
+    },
+    "is_aform_real_orth": {
+      "var_param": "is_aform_real_orth"
+    },
+    "aform_orth": {
+      "var_param": "aform_orth"
+    },
+    "perm_to_orient": {
+      "var_param": "perm_to_orient"
+    },
+    "same_grid": {
+      "var_param": "same_grid"
+    },
+    "same_dim": {
+      "var_param": "same_dim"
+    },
+    "same_delta": {
+      "var_param": "same_delta"
+    },
+    "same_orient": {
+      "var_param": "same_orient"
+    },
+    "same_center": {
+      "var_param": "same_center"
+    },
+    "same_obl": {
+      "var_param": "same_obl"
+    },
+    "same_all_grid": {
+      "var_param": "same_all_grid"
+    },
+    "val_diff": {
+      "var_param": "val_diff"
+    },
+    "sval_diff": {
+      "var_param": "sval_diff"
+    },
+    "monog_pairs": {
+      "var_param": "monog_pairs"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

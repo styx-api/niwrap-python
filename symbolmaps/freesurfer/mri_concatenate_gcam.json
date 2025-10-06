@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mri_concatenate_gcam",
+  "properties": {
+    "inputs": {
+      "var_param": "inputs"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "source_image": {
+      "var_param": "source_image"
+    },
+    "target_image": {
+      "var_param": "target_image"
+    },
+    "reduce": {
+      "var_param": "reduce"
+    },
+    "invert": {
+      "var_param": "invert"
+    },
+    "downsample": {
+      "var_param": "downsample"
+    }
+  }
+}

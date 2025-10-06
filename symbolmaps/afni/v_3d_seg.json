@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_seg",
+  "properties": {
+    "anat": {
+      "var_param": "anat"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "blur_meth": {
+      "var_param": "blur_meth"
+    },
+    "bias_fwhm": {
+      "var_param": "bias_fwhm"
+    },
+    "classes": {
+      "var_param": "classes"
+    },
+    "Bmrf": {
+      "var_param": "bmrf"
+    },
+    "bias_classes": {
+      "var_param": "bias_classes"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "mixfrac": {
+      "var_param": "mixfrac"
+    },
+    "mixfloor": {
+      "var_param": "mixfloor"
+    },
+    "gold": {
+      "var_param": "gold"
+    },
+    "gold_bias": {
+      "var_param": "gold_bias"
+    },
+    "main_N": {
+      "var_param": "main_n"
+    },
+    "cset": {
+      "var_param": "cset"
+    },
+    "labeltable": {
+      "var_param": "labeltable"
+    },
+    "vox_debug": {
+      "var_param": "vox_debug"
+    },
+    "vox_debug_file": {
+      "var_param": "vox_debug_file"
+    }
+  }
+}

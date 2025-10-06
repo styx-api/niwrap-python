@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "surface_inflation",
+  "properties": {
+    "anatomical_surface_in": {
+      "var_param": "anatomical_surface_in"
+    },
+    "surface_in": {
+      "var_param": "surface_in"
+    },
+    "number_of_smoothing_cycles": {
+      "var_param": "number_of_smoothing_cycles"
+    },
+    "smoothing_strength": {
+      "var_param": "smoothing_strength"
+    },
+    "smoothing_iterations": {
+      "var_param": "smoothing_iterations"
+    },
+    "inflation_factor": {
+      "var_param": "inflation_factor"
+    },
+    "surface_out": {
+      "var_param": "surface_out"
+    }
+  }
+}

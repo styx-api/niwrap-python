@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "tbss_1_preproc",
+  "properties": {
+    "images": {
+      "var_param": "images"
+    }
+  }
+}

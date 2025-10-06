@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "build_afni_py",
+  "properties": {
+    "build_root": {
+      "var_param": "build_root"
+    },
+    "clean_root": {
+      "var_param": "clean_root"
+    },
+    "git_branch": {
+      "var_param": "git_branch"
+    },
+    "git_tag": {
+      "var_param": "git_tag"
+    },
+    "git_update": {
+      "var_param": "git_update"
+    },
+    "make_target": {
+      "var_param": "make_target"
+    },
+    "makefile": {
+      "var_param": "makefile"
+    },
+    "package": {
+      "var_param": "package"
+    },
+    "prep_only": {
+      "var_param": "prep_only"
+    },
+    "run_cmake": {
+      "var_param": "run_cmake"
+    },
+    "run_make": {
+      "var_param": "run_make"
+    },
+    "verbose_level": {
+      "var_param": "verbose_level"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "show_valid_opts": {
+      "var_param": "show_valid_opts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

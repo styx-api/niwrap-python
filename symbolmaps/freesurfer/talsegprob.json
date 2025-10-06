@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "talsegprob",
+  "properties": {
+    "subjects_list": {
+      "var_param": "subjects_list"
+    },
+    "fsgd_file": {
+      "var_param": "fsgd_file"
+    },
+    "segmentation_number": {
+      "var_param": "segmentation_number"
+    },
+    "second_segmentation_number": {
+      "var_param": "second_segmentation_number"
+    },
+    "hippo_flag": {
+      "var_param": "hippo_flag"
+    },
+    "left_hippo_flag": {
+      "var_param": "left_hippo_flag"
+    },
+    "right_hippo_flag": {
+      "var_param": "right_hippo_flag"
+    },
+    "segmentation_file": {
+      "var_param": "segmentation_file"
+    },
+    "probability_output": {
+      "var_param": "probability_output"
+    },
+    "vote_output": {
+      "var_param": "vote_output"
+    },
+    "concat_output": {
+      "var_param": "concat_output"
+    },
+    "xform_file": {
+      "var_param": "xform_file"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "tmpdir": {
+      "var_param": "tmpdir"
+    },
+    "nocleanup_flag": {
+      "var_param": "nocleanup_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "echo_flag": {
+      "var_param": "echo_flag"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "swap_voxelwise",
+  "properties": {
+    "vectors_file_list": {
+      "var_param": "vectors_file_list"
+    },
+    "scalars_file_list": {
+      "var_param": "scalars_file_list"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "output_base_name": {
+      "var_param": "output_base_name"
+    },
+    "reorder_mode": {
+      "var_param": "reorder_mode"
+    },
+    "init_mask": {
+      "var_param": "init_mask"
+    },
+    "crossing_thresh": {
+      "var_param": "crossing_thresh"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    }
+  }
+}

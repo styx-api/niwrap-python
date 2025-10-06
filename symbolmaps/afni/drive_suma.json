@@ -1,0 +1,98 @@
+{
+  "fn_root_make_params_and_execute": "drive_suma",
+  "properties": {
+    "command": {
+      "var_param": "command"
+    },
+    "surf_label": {
+      "var_param": "surf_label"
+    },
+    "surface_file": {
+      "var_param": "surface_file"
+    },
+    "surf_state": {
+      "var_param": "surf_state"
+    },
+    "surf_winding": {
+      "var_param": "surf_winding"
+    },
+    "coordinates": {
+      "var_param": "coordinates"
+    },
+    "autorecord": {
+      "var_param": "autorecord"
+    },
+    "background_color": {
+      "var_param": "background_color"
+    },
+    "view_file": {
+      "var_param": "view_file"
+    },
+    "do_file": {
+      "var_param": "do_file"
+    },
+    "do_draw_mask": {
+      "var_param": "do_draw_mask"
+    },
+    "fixed_do": {
+      "var_param": "fixed_do"
+    },
+    "mobile_do": {
+      "var_param": "mobile_do"
+    },
+    "key_press": {
+      "var_param": "key_press"
+    },
+    "viewer": {
+      "var_param": "viewer"
+    },
+    "anim_dup": {
+      "var_param": "anim_dup"
+    },
+    "save_as": {
+      "var_param": "save_as"
+    },
+    "save_index": {
+      "var_param": "save_index"
+    },
+    "save_range": {
+      "var_param": "save_range"
+    },
+    "save_last": {
+      "var_param": "save_last"
+    },
+    "save_last_n": {
+      "var_param": "save_last_n"
+    },
+    "save_all": {
+      "var_param": "save_all"
+    },
+    "echo_edu": {
+      "var_param": "echo_edu"
+    },
+    "echo_nel_stdout": {
+      "var_param": "echo_nel_stdout"
+    },
+    "echo_nel_stderr": {
+      "var_param": "echo_nel_stderr"
+    },
+    "examples": {
+      "var_param": "examples"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "h": {
+      "var_param": "h"
+    },
+    "help_nido": {
+      "var_param": "help_nido"
+    },
+    "c_demo": {
+      "var_param": "c_demo"
+    },
+    "viewer_cont": {
+      "var_param": "viewer_cont"
+    }
+  }
+}

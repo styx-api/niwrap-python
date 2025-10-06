@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "list_otl_labels",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    }
+  }
+}

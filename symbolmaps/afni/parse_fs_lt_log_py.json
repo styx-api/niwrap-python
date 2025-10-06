@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "parse_fs_lt_log_py",
+  "properties": {
+    "logfile": {
+      "var_param": "logfile"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "show_orig": {
+      "var_param": "show_orig"
+    },
+    "show_all_orig": {
+      "var_param": "show_all_orig"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

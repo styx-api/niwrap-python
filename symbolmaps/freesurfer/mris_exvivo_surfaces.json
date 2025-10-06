@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_exvivo_surfaces",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "omit_self_intersection": {
+      "var_param": "omit_self_intersection"
+    },
+    "create_curvature_area": {
+      "var_param": "create_curvature_area"
+    },
+    "average_curvature": {
+      "var_param": "average_curvature"
+    },
+    "white_only": {
+      "var_param": "white_only"
+    },
+    "formalin": {
+      "var_param": "formalin"
+    }
+  }
+}

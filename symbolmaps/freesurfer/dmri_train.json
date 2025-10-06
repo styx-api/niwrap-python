@@ -1,0 +1,89 @@
+{
+  "fn_root_make_params_and_execute": "dmri_train",
+  "properties": {
+    "slist": {
+      "var_param": "slist"
+    },
+    "trk_files": {
+      "var_param": "trk_files"
+    },
+    "rois": {
+      "var_param": "rois"
+    },
+    "seg": {
+      "var_param": "seg"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    },
+    "lmask": {
+      "var_param": "lmask"
+    },
+    "bmask_training": {
+      "var_param": "bmask_training"
+    },
+    "outtrk": {
+      "var_param": "outtrk"
+    },
+    "bmask_test": {
+      "var_param": "bmask_test"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "regnl": {
+      "var_param": "regnl"
+    },
+    "refnl": {
+      "var_param": "refnl"
+    },
+    "basereg": {
+      "var_param": "basereg"
+    },
+    "baseref": {
+      "var_param": "baseref"
+    },
+    "ncpts": {
+      "var_param": "ncpts"
+    },
+    "max_streamlines": {
+      "var_param": "max_streamlines"
+    },
+    "xstr": {
+      "var_param": "xstr"
+    },
+    "aprior": {
+      "var_param": "aprior"
+    },
+    "sprior": {
+      "var_param": "sprior"
+    },
+    "trunc": {
+      "var_param": "trunc"
+    },
+    "out_files": {
+      "var_param": "out_files"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "cptdir": {
+      "var_param": "cptdir"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mris_label_mode",
+  "properties": {
+    "input_curv_file": {
+      "var_param": "input_curv_file"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "output_curv_file": {
+      "var_param": "output_curv_file"
+    },
+    "summary_statistics": {
+      "var_param": "summary_statistics"
+    },
+    "statistics_cond": {
+      "var_param": "statistics_cond"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    }
+  }
+}

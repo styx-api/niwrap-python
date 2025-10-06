@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "new_invwarp",
+  "properties": {
+    "warpvol": {
+      "var_param": "warpvol"
+    },
+    "outvol": {
+      "var_param": "outvol"
+    },
+    "refvol": {
+      "var_param": "refvol"
+    },
+    "relflag": {
+      "var_param": "relflag"
+    },
+    "absflag": {
+      "var_param": "absflag"
+    },
+    "noconstraintflag": {
+      "var_param": "noconstraintflag"
+    },
+    "jmin": {
+      "var_param": "jmin"
+    },
+    "jmax": {
+      "var_param": "jmax"
+    },
+    "debugflag": {
+      "var_param": "debugflag"
+    },
+    "verboseflag": {
+      "var_param": "verboseflag"
+    }
+  }
+}

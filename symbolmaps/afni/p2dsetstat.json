@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "p2dsetstat",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "pvalue": {
+      "var_param": "pvalue"
+    },
+    "bisided": {
+      "var_param": "bisided"
+    },
+    "twosided": {
+      "var_param": "twosided"
+    },
+    "onesided": {
+      "var_param": "onesided"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

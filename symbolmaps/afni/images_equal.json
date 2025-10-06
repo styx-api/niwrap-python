@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "images_equal",
+  "properties": {
+    "file_a": {
+      "var_param": "file_a"
+    },
+    "file_b": {
+      "var_param": "file_b"
+    },
+    "all_flag": {
+      "var_param": "all_flag"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "fsl_schurprod",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "design_file": {
+      "var_param": "design_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "regression_flag": {
+      "var_param": "regression_flag"
+    },
+    "index": {
+      "var_param": "index"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

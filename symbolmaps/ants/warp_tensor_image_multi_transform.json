@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "warp_tensor_image_multi_transform",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "tightest_bounding_box": {
+      "var_param": "tightest_bounding_box"
+    },
+    "reslice_by_header": {
+      "var_param": "reslice_by_header"
+    },
+    "use_nearest_neighbor": {
+      "var_param": "use_nearest_neighbor"
+    },
+    "transforms": {
+      "var_param": "transforms"
+    },
+    "ants_prefix": {
+      "var_param": "ants_prefix"
+    },
+    "ants_prefix_invert": {
+      "var_param": "ants_prefix_invert"
+    }
+  }
+}

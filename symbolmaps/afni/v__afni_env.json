@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v__afni_env",
+  "properties": {
+    "set_flag": {
+      "var_param": "set_flag"
+    },
+    "unset_flag": {
+      "var_param": "unset_flag"
+    },
+    "get_flag": {
+      "var_param": "get_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "help_web_flag": {
+      "var_param": "help_web_flag"
+    },
+    "help_web_flag_alias": {
+      "var_param": "help_web_flag_alias"
+    },
+    "help_view_flag": {
+      "var_param": "help_view_flag"
+    },
+    "help_view_flag_alias": {
+      "var_param": "help_view_flag_alias"
+    },
+    "all_opts_flag": {
+      "var_param": "all_opts_flag"
+    },
+    "help_find_flag": {
+      "var_param": "help_find_flag"
+    }
+  }
+}

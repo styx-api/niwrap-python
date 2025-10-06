@@ -1,0 +1,125 @@
+{
+  "fn_root_make_params_and_execute": "mri_rf_label",
+  "properties": {
+    "input_volumes": {
+      "var_param": "input_volumes"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "gcafile": {
+      "var_param": "gcafile"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "cross_sequence_flag": {
+      "var_param": "cross_sequence_flag"
+    },
+    "nogibbs_flag": {
+      "var_param": "nogibbs_flag"
+    },
+    "wm_path": {
+      "var_param": "wm_path"
+    },
+    "conform_flag": {
+      "var_param": "conform_flag"
+    },
+    "normpd_flag": {
+      "var_param": "normpd_flag"
+    },
+    "gca_tl": {
+      "var_param": "gca_tl"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    },
+    "debug_node": {
+      "var_param": "debug_node"
+    },
+    "debug_label": {
+      "var_param": "debug_label"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "example": {
+      "var_param": "example"
+    },
+    "pthresh": {
+      "var_param": "pthresh"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "novar_flag": {
+      "var_param": "novar_flag"
+    },
+    "regularize": {
+      "var_param": "regularize"
+    },
+    "nohippo_flag": {
+      "var_param": "nohippo_flag"
+    },
+    "fwm": {
+      "var_param": "fwm"
+    },
+    "mri_vol": {
+      "var_param": "mri_vol"
+    },
+    "heq": {
+      "var_param": "heq"
+    },
+    "renorm": {
+      "var_param": "renorm"
+    },
+    "flash_flag": {
+      "var_param": "flash_flag"
+    },
+    "flash_params": {
+      "var_param": "flash_params"
+    },
+    "renormalize": {
+      "var_param": "renormalize"
+    },
+    "set_input": {
+      "var_param": "set_input"
+    },
+    "histogram_flag": {
+      "var_param": "histogram_flag"
+    },
+    "cond_density_mean": {
+      "var_param": "cond_density_mean"
+    },
+    "snapshots": {
+      "var_param": "snapshots"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "expand": {
+      "var_param": "expand"
+    },
+    "max_iter": {
+      "var_param": "max_iter"
+    },
+    "filter_mode": {
+      "var_param": "filter_mode"
+    },
+    "longitudinal_vol": {
+      "var_param": "longitudinal_vol"
+    },
+    "longitudinal_lta": {
+      "var_param": "longitudinal_lta"
+    },
+    "relabel_unlikely_flag": {
+      "var_param": "relabel_unlikely_flag"
+    }
+  }
+}

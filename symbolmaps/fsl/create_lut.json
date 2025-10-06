@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "create_lut",
+  "properties": {
+    "output_file_root": {
+      "var_param": "output_file_root"
+    }
+  }
+}

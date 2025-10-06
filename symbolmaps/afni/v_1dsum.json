@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_1dsum",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "ignore_rows": {
+      "var_param": "ignore_rows"
+    },
+    "use_rows": {
+      "var_param": "use_rows"
+    },
+    "mean_flag": {
+      "var_param": "mean_flag"
+    },
+    "nocomment_flag": {
+      "var_param": "nocomment_flag"
+    },
+    "okempty_flag": {
+      "var_param": "okempty_flag"
+    }
+  }
+}

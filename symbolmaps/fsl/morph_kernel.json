@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "morph_kernel",
+  "properties": {
+    "cube_side_length": {
+      "var_param": "cube_side_length"
+    },
+    "sphere_radius": {
+      "var_param": "sphere_radius"
+    }
+  }
+}

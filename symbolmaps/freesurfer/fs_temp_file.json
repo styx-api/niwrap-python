@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "fs_temp_file",
+  "properties": {
+    "base_dir": {
+      "var_param": "base_dir"
+    },
+    "base_dir_alt": {
+      "var_param": "base_dir_alt"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "suffix_alt": {
+      "var_param": "suffix_alt"
+    },
+    "scratch": {
+      "var_param": "scratch"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "help_alt": {
+      "var_param": "help_alt"
+    }
+  }
+}

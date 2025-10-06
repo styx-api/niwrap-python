@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "surface_cut_resample",
+  "properties": {
+    "surface_in": {
+      "var_param": "surface_in"
+    },
+    "current_sphere": {
+      "var_param": "current_sphere"
+    },
+    "new_sphere": {
+      "var_param": "new_sphere"
+    },
+    "surface_out": {
+      "var_param": "surface_out"
+    }
+  }
+}

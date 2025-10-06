@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3ddot",
+  "properties": {
+    "input_datasets": {
+      "var_param": "input_datasets"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mrange": {
+      "var_param": "mrange"
+    },
+    "demean": {
+      "var_param": "demean"
+    },
+    "docor": {
+      "var_param": "docor"
+    },
+    "dodot": {
+      "var_param": "dodot"
+    },
+    "docoef": {
+      "var_param": "docoef"
+    },
+    "dosums": {
+      "var_param": "dosums"
+    },
+    "doeta2": {
+      "var_param": "doeta2"
+    },
+    "dodice": {
+      "var_param": "dodice"
+    },
+    "show_labels": {
+      "var_param": "show_labels"
+    },
+    "upper": {
+      "var_param": "upper"
+    },
+    "full": {
+      "var_param": "full"
+    },
+    "1D": {
+      "var_param": "v_1_d"
+    },
+    "NIML": {
+      "var_param": "niml"
+    }
+  }
+}

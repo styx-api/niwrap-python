@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "make_stim_times_py",
+  "properties": {
+    "files": {
+      "var_param": "files"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "nruns": {
+      "var_param": "nruns"
+    },
+    "nt": {
+      "var_param": "nt_"
+    },
+    "run_trs": {
+      "var_param": "run_trs"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "no_consec_events": {
+      "var_param": "no_consec_events"
+    },
+    "amplitudes": {
+      "var_param": "amplitudes"
+    },
+    "show_valid_opts": {
+      "var_param": "show_valid_opts"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

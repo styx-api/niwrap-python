@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "find_the_biggest",
+  "properties": {
+    "volumes_surfaces": {
+      "var_param": "volumes_surfaces"
+    },
+    "output_index": {
+      "var_param": "output_index"
+    }
+  }
+}

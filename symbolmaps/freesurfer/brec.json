@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "brec",
+  "properties": {
+    "my_file": {
+      "var_param": "my_file"
+    },
+    "depth_limit": {
+      "var_param": "depth_limit"
+    }
+  }
+}

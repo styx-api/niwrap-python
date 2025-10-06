@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "float_scan",
+  "properties": {
+    "fix_illegal_values": {
+      "var_param": "fix_illegal_values"
+    },
+    "verbose_mode": {
+      "var_param": "verbose_mode"
+    },
+    "skip_count": {
+      "var_param": "skip_count"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    }
+  }
+}

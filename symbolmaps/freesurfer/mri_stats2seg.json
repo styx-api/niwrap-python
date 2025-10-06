@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_stats2seg",
+  "properties": {
+    "stat_file": {
+      "var_param": "stat_file"
+    },
+    "segmentation_volume": {
+      "var_param": "segmentation_volume"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "check_opts": {
+      "var_param": "check_opts"
+    }
+  }
+}

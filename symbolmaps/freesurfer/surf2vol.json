@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "surf2vol",
+  "properties": {
+    "fixed_surface": {
+      "var_param": "fixed_surface"
+    },
+    "moving_surface": {
+      "var_param": "moving_surface"
+    },
+    "fixed_mri": {
+      "var_param": "fixed_mri"
+    },
+    "moving_mri": {
+      "var_param": "moving_mri"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "output_field": {
+      "var_param": "output_field"
+    },
+    "output_affine": {
+      "var_param": "output_affine"
+    },
+    "output_surf": {
+      "var_param": "output_surf"
+    },
+    "output_surf_affine": {
+      "var_param": "output_surf_affine"
+    },
+    "output_mesh": {
+      "var_param": "output_mesh"
+    },
+    "spacing_x": {
+      "var_param": "spacing_x"
+    },
+    "spacing_y": {
+      "var_param": "spacing_y"
+    },
+    "spacing_z": {
+      "var_param": "spacing_z"
+    },
+    "poisson_ratio": {
+      "var_param": "poisson_ratio"
+    },
+    "dirty_factor": {
+      "var_param": "dirty_factor"
+    },
+    "debug_output": {
+      "var_param": "debug_output"
+    },
+    "cache_transform": {
+      "var_param": "cache_transform"
+    }
+  }
+}

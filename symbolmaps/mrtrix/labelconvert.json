@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "labelconvert",
+  "properties": {
+    "spine": {
+      "var_param": "spine"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "labelconvert_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "path_in": {
+      "var_param": "path_in"
+    },
+    "lut_in": {
+      "var_param": "lut_in"
+    },
+    "lut_out": {
+      "var_param": "lut_out"
+    },
+    "image_out": {
+      "var_param": "image_out"
+    }
+  }
+}

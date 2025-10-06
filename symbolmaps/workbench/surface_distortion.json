@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "surface_distortion",
+  "properties": {
+    "surface_reference": {
+      "var_param": "surface_reference"
+    },
+    "surface_distorted": {
+      "var_param": "surface_distorted"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "smooth": {
+      "var_param": "smooth",
+      "fn_struct_make_params": "surface_distortion_smooth_params",
+      "properties": {
+        "sigma": {
+          "var_param": "sigma"
+        },
+        "opt_fwhm": {
+          "var_param": "opt_fwhm"
+        }
+      }
+    },
+    "opt_caret5_method": {
+      "var_param": "opt_caret5_method"
+    },
+    "opt_edge_method": {
+      "var_param": "opt_edge_method"
+    },
+    "local_affine_method": {
+      "var_param": "local_affine_method",
+      "fn_struct_make_params": "surface_distortion_local_affine_method_params",
+      "properties": {
+        "opt_log2": {
+          "var_param": "opt_log2"
+        }
+      }
+    }
+  }
+}

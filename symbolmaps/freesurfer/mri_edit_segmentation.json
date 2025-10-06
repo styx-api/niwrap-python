@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_edit_segmentation",
+  "properties": {
+    "input_segmentation": {
+      "var_param": "input_segmentation"
+    },
+    "t1_volume": {
+      "var_param": "t1_volume"
+    },
+    "output_segmentation": {
+      "var_param": "output_segmentation"
+    }
+  }
+}

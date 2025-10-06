@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "asegstats2table",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "inputs": {
+      "var_param": "inputs"
+    },
+    "tablefile": {
+      "var_param": "tablefile"
+    },
+    "subjectsfile": {
+      "var_param": "subjectsfile"
+    },
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "qdec_long": {
+      "var_param": "qdec_long"
+    },
+    "fsgd": {
+      "var_param": "fsgd"
+    },
+    "maxsegno": {
+      "var_param": "maxsegno"
+    },
+    "segids_from_file": {
+      "var_param": "segids_from_file"
+    },
+    "segno_include": {
+      "var_param": "segno_include"
+    },
+    "segno_exclude": {
+      "var_param": "segno_exclude"
+    },
+    "measure": {
+      "var_param": "measure"
+    },
+    "delimiter": {
+      "var_param": "delimiter"
+    },
+    "statsfile": {
+      "var_param": "statsfile"
+    },
+    "subdir": {
+      "var_param": "subdir"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "write_etiv": {
+      "var_param": "write_etiv"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "transpose_flag": {
+      "var_param": "transpose_flag"
+    },
+    "common_segs_flag": {
+      "var_param": "common_segs_flag"
+    },
+    "all_segs_flag": {
+      "var_param": "all_segs_flag"
+    },
+    "no_vol_extras_flag": {
+      "var_param": "no_vol_extras_flag"
+    },
+    "skip_missing_flag": {
+      "var_param": "skip_missing_flag"
+    },
+    "replace53_flag": {
+      "var_param": "replace53_flag"
+    }
+  }
+}

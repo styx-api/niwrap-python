@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "pulse",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_base": {
+      "var_param": "output_base"
+    },
+    "seq": {
+      "var_param": "seq"
+    },
+    "angle": {
+      "var_param": "angle"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "trslc": {
+      "var_param": "trslc"
+    },
+    "nx": {
+      "var_param": "nx"
+    },
+    "ny": {
+      "var_param": "ny"
+    },
+    "dx": {
+      "var_param": "dx"
+    },
+    "dy": {
+      "var_param": "dy"
+    },
+    "maxG": {
+      "var_param": "max_g"
+    },
+    "riset": {
+      "var_param": "riset"
+    },
+    "bw": {
+      "var_param": "bw"
+    },
+    "numvol": {
+      "var_param": "numvol"
+    },
+    "numslc": {
+      "var_param": "numslc"
+    },
+    "slcthk": {
+      "var_param": "slcthk"
+    },
+    "gap": {
+      "var_param": "gap"
+    },
+    "zstart": {
+      "var_param": "zstart"
+    },
+    "slcdir": {
+      "var_param": "slcdir"
+    },
+    "phasedir": {
+      "var_param": "phasedir"
+    },
+    "readdir": {
+      "var_param": "readdir"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "kcoord_flag": {
+      "var_param": "kcoord_flag"
+    },
+    "cover": {
+      "var_param": "cover"
+    }
+  }
+}

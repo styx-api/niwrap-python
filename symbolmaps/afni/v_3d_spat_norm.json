@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_spat_norm",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "orig_space": {
+      "var_param": "orig_space"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "monkey": {
+      "var_param": "monkey"
+    },
+    "marmot": {
+      "var_param": "marmot"
+    },
+    "rat": {
+      "var_param": "rat"
+    },
+    "human": {
+      "var_param": "human"
+    },
+    "bottom_cuts": {
+      "var_param": "bottom_cuts"
+    }
+  }
+}

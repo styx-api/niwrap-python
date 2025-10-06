@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__purify_1_d",
+  "properties": {
+    "sub_brick": {
+      "var_param": "sub_brick"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

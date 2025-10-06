@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "image_math",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "operations_and_inputs": {
+      "var_param": "operations_and_inputs"
+    },
+    "image1": {
+      "var_param": "image1"
+    },
+    "image2": {
+      "var_param": "image2"
+    }
+  }
+}

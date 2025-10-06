@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_tool_py",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "write": {
+      "var_param": "write"
+    },
+    "select_cols": {
+      "var_param": "select_cols"
+    },
+    "select_rows": {
+      "var_param": "select_rows"
+    },
+    "select_groups": {
+      "var_param": "select_groups"
+    },
+    "censor_motion": {
+      "var_param": "censor_motion"
+    },
+    "pad_into_many_runs": {
+      "var_param": "pad_into_many_runs"
+    },
+    "set_nruns": {
+      "var_param": "set_nruns"
+    },
+    "set_run_lengths": {
+      "var_param": "set_run_lengths"
+    },
+    "show_rows_cols": {
+      "var_param": "show_rows_cols"
+    },
+    "transpose": {
+      "var_param": "transpose"
+    },
+    "reverse": {
+      "var_param": "reverse"
+    },
+    "show_max_displace": {
+      "var_param": "show_max_displace"
+    }
+  }
+}

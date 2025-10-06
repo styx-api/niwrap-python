@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "gcatrain",
+  "properties": {
+    "gcadir": {
+      "var_param": "gcadir"
+    },
+    "subjectlistfile": {
+      "var_param": "subjectlistfile"
+    },
+    "init_subject_transform": {
+      "var_param": "init_subject_transform"
+    },
+    "seg_file": {
+      "var_param": "seg_file"
+    },
+    "source_subjects_dir": {
+      "var_param": "source_subjects_dir"
+    },
+    "num_iters": {
+      "var_param": "num_iters"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "exclude_file": {
+      "var_param": "exclude_file"
+    },
+    "exclude_subject": {
+      "var_param": "exclude_subject"
+    },
+    "symmetric_atlas": {
+      "var_param": "symmetric_atlas"
+    },
+    "color_table": {
+      "var_param": "color_table"
+    },
+    "no_submit": {
+      "var_param": "no_submit"
+    },
+    "mail_flag": {
+      "var_param": "mail_flag"
+    },
+    "no_strict": {
+      "var_param": "no_strict"
+    },
+    "gcareg_iters": {
+      "var_param": "gcareg_iters"
+    },
+    "prep_only": {
+      "var_param": "prep_only"
+    },
+    "nu10_flag": {
+      "var_param": "nu10_flag"
+    },
+    "nu12_flag": {
+      "var_param": "nu12_flag"
+    },
+    "no_emreg": {
+      "var_param": "no_emreg"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "surface_fdr",
+  "properties": {
+    "input_vtk": {
+      "var_param": "input_vtk"
+    }
+  }
+}

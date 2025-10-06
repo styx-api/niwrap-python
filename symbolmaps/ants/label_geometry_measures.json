@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "label_geometry_measures",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "label_image": {
+      "var_param": "label_image"
+    },
+    "intensity_image": {
+      "var_param": "intensity_image"
+    },
+    "csv_file": {
+      "var_param": "csv_file"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "mkheadsurf",
+  "properties": {
+    "input_vol": {
+      "var_param": "input_vol"
+    },
+    "output_vol": {
+      "var_param": "output_vol"
+    },
+    "output_surf": {
+      "var_param": "output_surf"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "nsmooth": {
+      "var_param": "nsmooth"
+    },
+    "noseghead": {
+      "var_param": "noseghead"
+    },
+    "thresh1": {
+      "var_param": "thresh1"
+    },
+    "thresh2": {
+      "var_param": "thresh2"
+    },
+    "nhitsmin": {
+      "var_param": "nhitsmin"
+    },
+    "ndilate": {
+      "var_param": "ndilate"
+    },
+    "nerode": {
+      "var_param": "nerode"
+    },
+    "fillval": {
+      "var_param": "fillval"
+    },
+    "fhi": {
+      "var_param": "fhi"
+    },
+    "no_rescale": {
+      "var_param": "no_rescale"
+    },
+    "no_fill_holes_islands": {
+      "var_param": "no_fill_holes_islands"
+    },
+    "or_mask": {
+      "var_param": "or_mask"
+    },
+    "tessellation_method": {
+      "var_param": "tessellation_method"
+    },
+    "inflate": {
+      "var_param": "inflate"
+    },
+    "curv": {
+      "var_param": "curv"
+    },
+    "srcvol": {
+      "var_param": "srcvol"
+    },
+    "headvol": {
+      "var_param": "headvol"
+    },
+    "headsurf": {
+      "var_param": "headsurf"
+    },
+    "smheadsurf": {
+      "var_param": "smheadsurf"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "umask": {
+      "var_param": "umask"
+    },
+    "logfile": {
+      "var_param": "logfile"
+    }
+  }
+}

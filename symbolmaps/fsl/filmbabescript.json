@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "filmbabescript",
+  "properties": {
+    "feat_dir": {
+      "var_param": "feat_dir"
+    },
+    "flobs_dir": {
+      "var_param": "flobs_dir"
+    }
+  }
+}

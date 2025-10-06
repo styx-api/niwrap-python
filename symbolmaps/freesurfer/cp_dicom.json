@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "cp_dicom",
+  "properties": {
+    "dicom_dir": {
+      "var_param": "dicom_dir"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

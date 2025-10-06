@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "cifti_reduce",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_direction_direction": {
+      "var_param": "opt_direction_direction"
+    },
+    "exclude_outliers": {
+      "var_param": "exclude_outliers",
+      "fn_struct_make_params": "cifti_reduce_exclude_outliers_params",
+      "properties": {
+        "sigma_below": {
+          "var_param": "sigma_below"
+        },
+        "sigma_above": {
+          "var_param": "sigma_above"
+        }
+      }
+    },
+    "opt_only_numeric": {
+      "var_param": "opt_only_numeric"
+    }
+  }
+}

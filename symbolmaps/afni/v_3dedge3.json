@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3dedge3",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "fscale": {
+      "var_param": "fscale"
+    },
+    "gscale": {
+      "var_param": "gscale"
+    },
+    "nscale": {
+      "var_param": "nscale"
+    },
+    "scale_floats": {
+      "var_param": "scale_floats"
+    },
+    "automask": {
+      "var_param": "automask"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "topup",
+  "properties": {
+    "imain": {
+      "var_param": "imain"
+    },
+    "datain": {
+      "var_param": "datain"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "fout": {
+      "var_param": "fout"
+    },
+    "iout": {
+      "var_param": "iout"
+    },
+    "logout": {
+      "var_param": "logout"
+    },
+    "warpres": {
+      "var_param": "warpres"
+    },
+    "subsamp": {
+      "var_param": "subsamp"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "config": {
+      "var_param": "config"
+    },
+    "miter": {
+      "var_param": "miter"
+    },
+    "lambda": {
+      "var_param": "lambda_"
+    },
+    "ssqlambda": {
+      "var_param": "ssqlambda"
+    },
+    "regmod": {
+      "var_param": "regmod"
+    },
+    "estmov": {
+      "var_param": "estmov"
+    },
+    "minmet": {
+      "var_param": "minmet"
+    },
+    "splineorder": {
+      "var_param": "splineorder"
+    },
+    "numprec": {
+      "var_param": "numprec"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "regrid": {
+      "var_param": "regrid"
+    },
+    "nthr": {
+      "var_param": "nthr"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

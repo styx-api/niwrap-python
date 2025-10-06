@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "imupsam",
+  "properties": {
+    "ascii_flag": {
+      "var_param": "ascii_flag"
+    },
+    "factor": {
+      "var_param": "factor"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    }
+  }
+}

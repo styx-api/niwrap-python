@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "fim2",
+  "properties": {
+    "image_files": {
+      "var_param": "image_files"
+    },
+    "pcnt": {
+      "var_param": "pcnt"
+    },
+    "pcthresh": {
+      "var_param": "pcthresh"
+    },
+    "im1": {
+      "var_param": "im1"
+    },
+    "num": {
+      "var_param": "num"
+    },
+    "non": {
+      "var_param": "non"
+    },
+    "coef": {
+      "var_param": "coef"
+    },
+    "ort": {
+      "var_param": "ort"
+    },
+    "ideal": {
+      "var_param": "ideal"
+    },
+    "polref": {
+      "var_param": "polref"
+    },
+    "fimfile": {
+      "var_param": "fimfile"
+    },
+    "corr": {
+      "var_param": "corr"
+    },
+    "corfile": {
+      "var_param": "corfile"
+    },
+    "cnrfile": {
+      "var_param": "cnrfile"
+    },
+    "sigfile": {
+      "var_param": "sigfile"
+    },
+    "fitfile": {
+      "var_param": "fitfile"
+    },
+    "subort": {
+      "var_param": "subort"
+    },
+    "flim": {
+      "var_param": "flim"
+    },
+    "clean": {
+      "var_param": "clean"
+    },
+    "clip": {
+      "var_param": "clip"
+    },
+    "q": {
+      "var_param": "q"
+    },
+    "dfspace": {
+      "var_param": "dfspace"
+    },
+    "regbase": {
+      "var_param": "regbase"
+    }
+  }
+}

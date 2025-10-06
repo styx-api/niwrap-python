@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "film_gls",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "ac_flag": {
+      "var_param": "ac_flag"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "ar_flag": {
+      "var_param": "ar_flag"
+    },
+    "noest_flag": {
+      "var_param": "noest_flag"
+    },
+    "outputPW_flag": {
+      "var_param": "output_pw_flag"
+    },
+    "pava_flag": {
+      "var_param": "pava_flag"
+    },
+    "sa_flag": {
+      "var_param": "sa_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "results_dir": {
+      "var_param": "results_dir"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "mean_func_file": {
+      "var_param": "mean_func_file"
+    },
+    "min_timepoint_file": {
+      "var_param": "min_timepoint_file"
+    },
+    "paradigm_file": {
+      "var_param": "paradigm_file"
+    },
+    "t_contrasts_file": {
+      "var_param": "t_contrasts_file"
+    },
+    "f_contrasts_file": {
+      "var_param": "f_contrasts_file"
+    },
+    "epith": {
+      "var_param": "epith"
+    },
+    "ms": {
+      "var_param": "ms"
+    },
+    "tukey": {
+      "var_param": "tukey"
+    },
+    "mt": {
+      "var_param": "mt"
+    },
+    "ven": {
+      "var_param": "ven"
+    },
+    "vef": {
+      "var_param": "vef"
+    }
+  }
+}

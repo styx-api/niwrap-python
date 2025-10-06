@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "super_resolution",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "domain_image": {
+      "var_param": "domain_image"
+    },
+    "gradient_sigma": {
+      "var_param": "gradient_sigma"
+    },
+    "mesh_size": {
+      "var_param": "mesh_size"
+    },
+    "number_of_levels": {
+      "var_param": "number_of_levels"
+    },
+    "input_image_files": {
+      "var_param": "input_image_files"
+    }
+  }
+}

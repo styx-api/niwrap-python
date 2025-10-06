@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "unpack_mnc_tcl",
+  "properties": {
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    }
+  }
+}

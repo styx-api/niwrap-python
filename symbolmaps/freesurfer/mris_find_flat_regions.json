@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mris_find_flat_regions",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "wfile": {
+      "var_param": "wfile"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    }
+  }
+}

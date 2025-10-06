@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_log_likelihood",
+  "properties": {
+    "input_brain_images": {
+      "var_param": "input_brain_images"
+    },
+    "atlas_file": {
+      "var_param": "atlas_file"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    }
+  }
+}

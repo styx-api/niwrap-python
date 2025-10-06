@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_thickness_comparison",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "thickness_file": {
+      "var_param": "thickness_file"
+    },
+    "w_file": {
+      "var_param": "w_file"
+    },
+    "labels": {
+      "var_param": "labels"
+    }
+  }
+}

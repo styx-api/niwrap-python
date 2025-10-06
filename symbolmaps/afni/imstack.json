@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "imstack",
+  "properties": {
+    "image_files": {
+      "var_param": "image_files"
+    },
+    "data_type": {
+      "var_param": "data_type"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

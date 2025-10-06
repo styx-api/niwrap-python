@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "fs_print_help",
+  "properties": {
+    "arguments": {
+      "var_param": "arguments"
+    }
+  }
+}

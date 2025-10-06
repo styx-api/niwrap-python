@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "v__update_afni_binaries",
+  "properties": {
+    "defaults_flag": {
+      "var_param": "defaults_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "help_sys_progs_flag": {
+      "var_param": "help_sys_progs_flag"
+    },
+    "apsearch": {
+      "var_param": "apsearch"
+    },
+    "bindir": {
+      "var_param": "bindir"
+    },
+    "curl_flag": {
+      "var_param": "curl_flag"
+    },
+    "do_dotfiles_flag": {
+      "var_param": "do_dotfiles_flag"
+    },
+    "do_extras_flag": {
+      "var_param": "do_extras_flag"
+    },
+    "echo_flag": {
+      "var_param": "echo_flag"
+    },
+    "make_backup": {
+      "var_param": "make_backup"
+    },
+    "no_cert_verify_flag": {
+      "var_param": "no_cert_verify_flag"
+    },
+    "no_recur_flag": {
+      "var_param": "no_recur_flag"
+    },
+    "proto": {
+      "var_param": "proto"
+    },
+    "quick_flag": {
+      "var_param": "quick_flag"
+    },
+    "show_obsoletes_flag": {
+      "var_param": "show_obsoletes_flag"
+    },
+    "show_obsoletes_grep_flag": {
+      "var_param": "show_obsoletes_grep_flag"
+    },
+    "show_system_progs_flag": {
+      "var_param": "show_system_progs_flag"
+    },
+    "sys_ok_flag": {
+      "var_param": "sys_ok_flag"
+    },
+    "test_flag": {
+      "var_param": "test_flag"
+    },
+    "test_protos_flag": {
+      "var_param": "test_protos_flag"
+    },
+    "revert_flag": {
+      "var_param": "revert_flag"
+    },
+    "local_package": {
+      "var_param": "local_package"
+    },
+    "prog_list": {
+      "var_param": "prog_list"
+    },
+    "package": {
+      "var_param": "package"
+    }
+  }
+}

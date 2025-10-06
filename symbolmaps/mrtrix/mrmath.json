@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "mrmath",
+  "properties": {
+    "axis": {
+      "var_param": "axis"
+    },
+    "keep_unary_axes": {
+      "var_param": "keep_unary_axes"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrmath_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

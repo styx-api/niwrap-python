@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "mrgrid",
+  "properties": {
+    "template": {
+      "var_param": "template"
+    },
+    "size": {
+      "var_param": "size"
+    },
+    "voxel": {
+      "var_param": "voxel"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "oversample": {
+      "var_param": "oversample"
+    },
+    "as": {
+      "var_param": "as_"
+    },
+    "uniform": {
+      "var_param": "uniform"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "crop_unbound": {
+      "var_param": "crop_unbound"
+    },
+    "axis": {
+      "var_param": "axis",
+      "fn_struct_make_params": "mrgrid_axis_params",
+      "properties": {
+        "index": {
+          "var_param": "index"
+        },
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "all_axes": {
+      "var_param": "all_axes"
+    },
+    "fill": {
+      "var_param": "fill"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrgrid_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "siena_cal",
+  "properties": {
+    "input1_file": {
+      "var_param": "input1_file"
+    },
+    "input2_file": {
+      "var_param": "input2_file"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "siena_diff_options": {
+      "var_param": "siena_diff_options"
+    }
+  }
+}

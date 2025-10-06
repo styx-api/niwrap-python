@@ -1,0 +1,89 @@
+{
+  "fn_root_make_params_and_execute": "reg_transform",
+  "properties": {
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "cpp2def_input": {
+      "var_param": "cpp2def_input"
+    },
+    "cpp2def_output": {
+      "var_param": "cpp2def_output"
+    },
+    "comp1_cpp2": {
+      "var_param": "comp1_cpp2"
+    },
+    "comp1_cpp1": {
+      "var_param": "comp1_cpp1"
+    },
+    "comp1_output": {
+      "var_param": "comp1_output"
+    },
+    "comp2_cpp": {
+      "var_param": "comp2_cpp"
+    },
+    "comp2_def": {
+      "var_param": "comp2_def"
+    },
+    "comp2_output": {
+      "var_param": "comp2_output"
+    },
+    "comp3_def2": {
+      "var_param": "comp3_def2"
+    },
+    "comp3_def1": {
+      "var_param": "comp3_def1"
+    },
+    "comp3_output": {
+      "var_param": "comp3_output"
+    },
+    "def2disp_input": {
+      "var_param": "def2disp_input"
+    },
+    "def2disp_output": {
+      "var_param": "def2disp_output"
+    },
+    "disp2def_input": {
+      "var_param": "disp2def_input"
+    },
+    "disp2def_output": {
+      "var_param": "disp2def_output"
+    },
+    "upd_sform_image": {
+      "var_param": "upd_sform_image"
+    },
+    "upd_sform_affine": {
+      "var_param": "upd_sform_affine"
+    },
+    "upd_sform_output": {
+      "var_param": "upd_sform_output"
+    },
+    "aff2def_affine": {
+      "var_param": "aff2def_affine"
+    },
+    "aff2def_target": {
+      "var_param": "aff2def_target"
+    },
+    "aff2def_cpp_or_def": {
+      "var_param": "aff2def_cpp_or_def"
+    },
+    "aff2def_output": {
+      "var_param": "aff2def_output"
+    },
+    "inv_affine_input": {
+      "var_param": "inv_affine_input"
+    },
+    "inv_affine_output": {
+      "var_param": "inv_affine_output"
+    },
+    "comp_aff_1st": {
+      "var_param": "comp_aff_1st"
+    },
+    "comp_aff_2nd": {
+      "var_param": "comp_aff_2nd"
+    },
+    "comp_aff_output": {
+      "var_param": "comp_aff_output"
+    }
+  }
+}

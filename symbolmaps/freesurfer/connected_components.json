@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "connected_components",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    }
+  }
+}

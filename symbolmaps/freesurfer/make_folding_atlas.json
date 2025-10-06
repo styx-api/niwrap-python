@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "make_folding_atlas",
+  "properties": {
+    "subjlistfile": {
+      "var_param": "subjlistfile"
+    },
+    "fsgdfile": {
+      "var_param": "fsgdfile"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_base": {
+      "var_param": "output_base"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "xhemi": {
+      "var_param": "xhemi"
+    },
+    "init_surf_reg": {
+      "var_param": "init_surf_reg"
+    },
+    "init_subject": {
+      "var_param": "init_subject"
+    },
+    "no_annot_template": {
+      "var_param": "no_annot_template"
+    },
+    "left_hemisphere": {
+      "var_param": "left_hemisphere"
+    },
+    "right_hemisphere": {
+      "var_param": "right_hemisphere"
+    },
+    "lhrh": {
+      "var_param": "lhrh"
+    },
+    "ico_order": {
+      "var_param": "ico_order"
+    },
+    "no_vol_on_last": {
+      "var_param": "no_vol_on_last"
+    },
+    "vol": {
+      "var_param": "vol"
+    },
+    "init": {
+      "var_param": "init"
+    },
+    "short_sleep": {
+      "var_param": "short_sleep"
+    },
+    "no_template_only": {
+      "var_param": "no_template_only"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "slurm_account": {
+      "var_param": "slurm_account"
+    }
+  }
+}

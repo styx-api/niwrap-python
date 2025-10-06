@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "trac_all",
+  "properties": {
+    "config_file": {
+      "var_param": "config_file"
+    },
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "dicom_file": {
+      "var_param": "dicom_file"
+    },
+    "pre_processing": {
+      "var_param": "pre_processing"
+    },
+    "bedpost": {
+      "var_param": "bedpost"
+    },
+    "pathway_reconstruction": {
+      "var_param": "pathway_reconstruction"
+    },
+    "assemble_measures": {
+      "var_param": "assemble_measures"
+    },
+    "image_corrections": {
+      "var_param": "image_corrections"
+    },
+    "no_image_corrections": {
+      "var_param": "no_image_corrections"
+    },
+    "image_quality_assessment": {
+      "var_param": "image_quality_assessment"
+    },
+    "no_image_quality_assessment": {
+      "var_param": "no_image_quality_assessment"
+    },
+    "intra_registration": {
+      "var_param": "intra_registration"
+    },
+    "no_intra_registration": {
+      "var_param": "no_intra_registration"
+    },
+    "tensor_fit": {
+      "var_param": "tensor_fit"
+    },
+    "no_tensor_fit": {
+      "var_param": "no_tensor_fit"
+    },
+    "inter_registration": {
+      "var_param": "inter_registration"
+    },
+    "no_inter_registration": {
+      "var_param": "no_inter_registration"
+    },
+    "pathway_priors": {
+      "var_param": "pathway_priors"
+    },
+    "no_pathway_priors": {
+      "var_param": "no_pathway_priors"
+    },
+    "infant_options": {
+      "var_param": "infant_options"
+    },
+    "job_file": {
+      "var_param": "job_file"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "no_append_log": {
+      "var_param": "no_append_log"
+    },
+    "cmd_file": {
+      "var_param": "cmd_file"
+    },
+    "no_is_running": {
+      "var_param": "no_is_running"
+    },
+    "subjects_directory": {
+      "var_param": "subjects_directory"
+    },
+    "umask": {
+      "var_param": "umask"
+    },
+    "group_id": {
+      "var_param": "group_id"
+    },
+    "allow_core_dump": {
+      "var_param": "allow_core_dump"
+    },
+    "debug_mode": {
+      "var_param": "debug_mode"
+    },
+    "dont_run": {
+      "var_param": "dont_run"
+    },
+    "only_versions": {
+      "var_param": "only_versions"
+    },
+    "version_info": {
+      "var_param": "version_info"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

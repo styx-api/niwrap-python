@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "gifti_all_labels_to_rois",
+  "properties": {
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "map": {
+      "var_param": "map_"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    }
+  }
+}

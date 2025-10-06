@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "mris_skeletonize",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "surfvals": {
+      "var_param": "surfvals"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "k1": {
+      "var_param": "k1"
+    },
+    "curv_nonmaxsup": {
+      "var_param": "curv_nonmaxsup"
+    },
+    "gyrus": {
+      "var_param": "gyrus"
+    },
+    "sulcus": {
+      "var_param": "sulcus"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "sphere": {
+      "var_param": "sphere"
+    },
+    "pointset": {
+      "var_param": "pointset"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "nbrsize": {
+      "var_param": "nbrsize"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "cluster": {
+      "var_param": "cluster"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    }
+  }
+}

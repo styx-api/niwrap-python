@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "qatools_py",
+  "properties": {
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "screenshots": {
+      "var_param": "screenshots"
+    },
+    "fornix": {
+      "var_param": "fornix"
+    },
+    "outlier": {
+      "var_param": "outlier"
+    },
+    "outlier_table": {
+      "var_param": "outlier_table"
+    }
+  }
+}

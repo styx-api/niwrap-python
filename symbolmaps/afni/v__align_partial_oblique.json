@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v__align_partial_oblique",
+  "properties": {
+    "base": {
+      "var_param": "base"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "keep_tmp": {
+      "var_param": "keep_tmp"
+    },
+    "clean": {
+      "var_param": "clean"
+    },
+    "dxyz": {
+      "var_param": "dxyz"
+    },
+    "dx": {
+      "var_param": "dx"
+    },
+    "dy": {
+      "var_param": "dy"
+    },
+    "dz": {
+      "var_param": "dz"
+    }
+  }
+}

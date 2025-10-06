@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mri_pretess",
+  "properties": {
+    "filledvol": {
+      "var_param": "filledvol"
+    },
+    "labelstring": {
+      "var_param": "labelstring"
+    },
+    "normvol": {
+      "var_param": "normvol"
+    },
+    "newfilledvol": {
+      "var_param": "newfilledvol"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    },
+    "nocorners": {
+      "var_param": "nocorners"
+    },
+    "write": {
+      "var_param": "write"
+    },
+    "keep": {
+      "var_param": "keep"
+    },
+    "test": {
+      "var_param": "test"
+    }
+  }
+}

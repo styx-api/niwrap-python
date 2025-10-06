@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "cifti_create_label",
+  "properties": {
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "volume": {
+      "var_param": "volume",
+      "fn_struct_make_params": "cifti_create_label_volume_params",
+      "properties": {
+        "label_volume": {
+          "var_param": "label_volume"
+        },
+        "structure_label_volume": {
+          "var_param": "structure_label_volume"
+        }
+      }
+    },
+    "left_label": {
+      "var_param": "left_label",
+      "fn_struct_make_params": "cifti_create_label_left_label_params",
+      "properties": {
+        "label": {
+          "var_param": "label"
+        },
+        "opt_roi_left_roi_metric": {
+          "var_param": "opt_roi_left_roi_metric"
+        }
+      }
+    },
+    "right_label": {
+      "var_param": "right_label",
+      "fn_struct_make_params": "cifti_create_label_right_label_params",
+      "properties": {
+        "label": {
+          "var_param": "label"
+        },
+        "opt_roi_right_roi_metric": {
+          "var_param": "opt_roi_right_roi_metric"
+        }
+      }
+    },
+    "cerebellum_label": {
+      "var_param": "cerebellum_label",
+      "fn_struct_make_params": "cifti_create_label_cerebellum_label_params",
+      "properties": {
+        "label": {
+          "var_param": "label"
+        },
+        "opt_roi_cerebellum_roi_metric": {
+          "var_param": "opt_roi_cerebellum_roi_metric"
+        }
+      }
+    }
+  }
+}

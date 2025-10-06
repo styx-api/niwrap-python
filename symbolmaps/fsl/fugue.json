@@ -1,0 +1,104 @@
+{
+  "fn_root_make_params_and_execute": "fugue",
+  "properties": {
+    "asym_se_time": {
+      "var_param": "asym_se_time"
+    },
+    "despike_2dfilter": {
+      "var_param": "despike_2dfilter"
+    },
+    "despike_threshold": {
+      "var_param": "despike_threshold"
+    },
+    "dwell_time": {
+      "var_param": "dwell_time"
+    },
+    "dwell_to_asym_ratio": {
+      "var_param": "dwell_to_asym_ratio"
+    },
+    "fmap_in_file": {
+      "var_param": "fmap_in_file"
+    },
+    "fmap_out_file": {
+      "var_param": "fmap_out_file"
+    },
+    "forward_warping": {
+      "var_param": "forward_warping"
+    },
+    "fourier_order": {
+      "var_param": "fourier_order"
+    },
+    "icorr": {
+      "var_param": "icorr"
+    },
+    "icorr_only": {
+      "var_param": "icorr_only"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "median_2dfilter": {
+      "var_param": "median_2dfilter"
+    },
+    "no_extend": {
+      "var_param": "no_extend"
+    },
+    "no_gap_fill": {
+      "var_param": "no_gap_fill"
+    },
+    "nokspace": {
+      "var_param": "nokspace"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "pava": {
+      "var_param": "pava"
+    },
+    "phase_conjugate": {
+      "var_param": "phase_conjugate"
+    },
+    "phasemap_in_file": {
+      "var_param": "phasemap_in_file"
+    },
+    "poly_order": {
+      "var_param": "poly_order"
+    },
+    "save_fmap": {
+      "var_param": "save_fmap"
+    },
+    "save_shift": {
+      "var_param": "save_shift"
+    },
+    "save_unmasked_fmap": {
+      "var_param": "save_unmasked_fmap"
+    },
+    "save_unmasked_shift": {
+      "var_param": "save_unmasked_shift"
+    },
+    "shift_in_file": {
+      "var_param": "shift_in_file"
+    },
+    "shift_out_file": {
+      "var_param": "shift_out_file"
+    },
+    "smooth2d": {
+      "var_param": "smooth2d"
+    },
+    "smooth3d": {
+      "var_param": "smooth3d"
+    },
+    "unwarp_direction": {
+      "var_param": "unwarp_direction"
+    },
+    "unwarped_file": {
+      "var_param": "unwarped_file"
+    },
+    "warped_file": {
+      "var_param": "warped_file"
+    }
+  }
+}

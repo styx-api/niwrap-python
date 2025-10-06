@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "clust_exp_stat_parse_py",
+  "properties": {
+    "statdset": {
+      "var_param": "statdset"
+    },
+    "meanbrik": {
+      "var_param": "meanbrik"
+    },
+    "threshbrik": {
+      "var_param": "threshbrik"
+    },
+    "subjdset": {
+      "var_param": "subjdset"
+    },
+    "subjtable": {
+      "var_param": "subjtable"
+    },
+    "master": {
+      "var_param": "master"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "pval": {
+      "var_param": "pval"
+    },
+    "minvox": {
+      "var_param": "minvox"
+    },
+    "atlas": {
+      "var_param": "atlas"
+    },
+    "session": {
+      "var_param": "session"
+    },
+    "noshiny": {
+      "var_param": "noshiny"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    }
+  }
+}

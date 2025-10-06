@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "metric_stats",
+  "properties": {
+    "metric_in": {
+      "var_param": "metric_in"
+    },
+    "opt_reduce_operation": {
+      "var_param": "opt_reduce_operation"
+    },
+    "opt_percentile_percent": {
+      "var_param": "opt_percentile_percent"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    },
+    "roi": {
+      "var_param": "roi",
+      "fn_struct_make_params": "metric_stats_roi_params",
+      "properties": {
+        "roi_metric": {
+          "var_param": "roi_metric"
+        },
+        "opt_match_maps": {
+          "var_param": "opt_match_maps"
+        }
+      }
+    },
+    "opt_show_map_name": {
+      "var_param": "opt_show_map_name"
+    }
+  }
+}

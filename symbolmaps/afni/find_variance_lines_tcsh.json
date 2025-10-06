@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "find_variance_lines_tcsh",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "min_cvox": {
+      "var_param": "min_cvox"
+    },
+    "min_nt": {
+      "var_param": "min_nt"
+    },
+    "nerode": {
+      "var_param": "nerode"
+    },
+    "nfirst": {
+      "var_param": "nfirst"
+    },
+    "percentile": {
+      "var_param": "percentile"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "do_clean": {
+      "var_param": "do_clean"
+    },
+    "do_img": {
+      "var_param": "do_img"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "ver": {
+      "var_param": "ver"
+    }
+  }
+}

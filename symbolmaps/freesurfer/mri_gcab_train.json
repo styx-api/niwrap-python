@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "mri_gcab_train",
+  "properties": {
+    "removed_info": {
+      "var_param": "removed_info"
+    }
+  }
+}

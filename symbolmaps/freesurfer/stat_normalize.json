@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "stat_normalize",
+  "properties": {
+    "input_sv_prefix": {
+      "var_param": "input_sv_prefix"
+    },
+    "output_sv_prefix": {
+      "var_param": "output_sv_prefix"
+    },
+    "resolution": {
+      "var_param": "resolution"
+    },
+    "field_of_view": {
+      "var_param": "field_of_view"
+    },
+    "sph_avg": {
+      "var_param": "sph_avg"
+    },
+    "xfm_file": {
+      "var_param": "xfm_file"
+    },
+    "fix_xfm_flag": {
+      "var_param": "fix_xfm_flag"
+    },
+    "float2int_option": {
+      "var_param": "float2int_option"
+    }
+  }
+}

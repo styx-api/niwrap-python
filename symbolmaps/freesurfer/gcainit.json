@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "gcainit",
+  "properties": {
+    "gcadir": {
+      "var_param": "gcadir"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "fn_root_make_params_and_execute": "mri_ca_register",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "tolerance": {
+      "var_param": "tolerance"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "transform_lta": {
+      "var_param": "transform_lta"
+    },
+    "level": {
+      "var_param": "level"
+    },
+    "read_intensity": {
+      "var_param": "read_intensity"
+    },
+    "align": {
+      "var_param": "align"
+    },
+    "invert_save_file": {
+      "var_param": "invert_save_file"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
+    "regularize": {
+      "var_param": "regularize"
+    },
+    "regularize_mean": {
+      "var_param": "regularize_mean"
+    },
+    "scale_smoothness": {
+      "var_param": "scale_smoothness"
+    },
+    "nobright": {
+      "var_param": "nobright"
+    },
+    "renormalize_map": {
+      "var_param": "renormalize_map"
+    },
+    "renormalize": {
+      "var_param": "renormalize"
+    },
+    "read_lta": {
+      "var_param": "read_lta"
+    },
+    "smoothness": {
+      "var_param": "smoothness"
+    },
+    "samples": {
+      "var_param": "samples"
+    },
+    "nsmall": {
+      "var_param": "nsmall"
+    },
+    "fixed": {
+      "var_param": "fixed"
+    },
+    "optimal": {
+      "var_param": "optimal"
+    },
+    "noneg": {
+      "var_param": "noneg"
+    },
+    "wm": {
+      "var_param": "wm"
+    },
+    "min_avgs": {
+      "var_param": "min_avgs"
+    },
+    "transform_limit": {
+      "var_param": "transform_limit"
+    },
+    "relabel": {
+      "var_param": "relabel"
+    },
+    "relabel_avgs": {
+      "var_param": "relabel_avgs"
+    },
+    "reset_avgs": {
+      "var_param": "reset_avgs"
+    },
+    "vf_file": {
+      "var_param": "vf_file"
+    },
+    "diag_file": {
+      "var_param": "diag_file"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "example": {
+      "var_param": "example"
+    },
+    "bigventricles": {
+      "var_param": "bigventricles"
+    },
+    "uncompress": {
+      "var_param": "uncompress"
+    },
+    "second_pass_renorm": {
+      "var_param": "second_pass_renorm"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

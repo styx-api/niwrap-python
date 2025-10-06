@@ -1,0 +1,294 @@
+{
+  "fn_root_make_params_and_execute": "mrcalc",
+  "properties": {
+    "abs": {
+      "var_param": "abs_",
+      "fn_struct_make_params": "mrcalc_abs_params",
+      "properties": {}
+    },
+    "neg": {
+      "var_param": "neg",
+      "fn_struct_make_params": "mrcalc_neg_params",
+      "properties": {}
+    },
+    "add": {
+      "var_param": "add",
+      "fn_struct_make_params": "mrcalc_add_params",
+      "properties": {}
+    },
+    "subtract": {
+      "var_param": "subtract",
+      "fn_struct_make_params": "mrcalc_subtract_params",
+      "properties": {}
+    },
+    "multiply": {
+      "var_param": "multiply",
+      "fn_struct_make_params": "mrcalc_multiply_params",
+      "properties": {}
+    },
+    "divide": {
+      "var_param": "divide",
+      "fn_struct_make_params": "mrcalc_divide_params",
+      "properties": {}
+    },
+    "min": {
+      "var_param": "min_",
+      "fn_struct_make_params": "mrcalc_min_params",
+      "properties": {}
+    },
+    "max": {
+      "var_param": "max_",
+      "fn_struct_make_params": "mrcalc_max_params",
+      "properties": {}
+    },
+    "lt": {
+      "var_param": "lt",
+      "fn_struct_make_params": "mrcalc_lt_params",
+      "properties": {}
+    },
+    "gt": {
+      "var_param": "gt",
+      "fn_struct_make_params": "mrcalc_gt_params",
+      "properties": {}
+    },
+    "le": {
+      "var_param": "le",
+      "fn_struct_make_params": "mrcalc_le_params",
+      "properties": {}
+    },
+    "ge": {
+      "var_param": "ge",
+      "fn_struct_make_params": "mrcalc_ge_params",
+      "properties": {}
+    },
+    "eq": {
+      "var_param": "eq",
+      "fn_struct_make_params": "mrcalc_eq_params",
+      "properties": {}
+    },
+    "neq": {
+      "var_param": "neq",
+      "fn_struct_make_params": "mrcalc_neq_params",
+      "properties": {}
+    },
+    "if": {
+      "var_param": "if_",
+      "fn_struct_make_params": "mrcalc_if_params",
+      "properties": {}
+    },
+    "replace": {
+      "var_param": "replace",
+      "fn_struct_make_params": "mrcalc_replace_params",
+      "properties": {}
+    },
+    "sqrt": {
+      "var_param": "sqrt",
+      "fn_struct_make_params": "mrcalc_sqrt_params",
+      "properties": {}
+    },
+    "pow": {
+      "var_param": "pow_",
+      "fn_struct_make_params": "mrcalc_pow_params",
+      "properties": {}
+    },
+    "round": {
+      "var_param": "round_",
+      "fn_struct_make_params": "mrcalc_round_params",
+      "properties": {}
+    },
+    "ceil": {
+      "var_param": "ceil",
+      "fn_struct_make_params": "mrcalc_ceil_params",
+      "properties": {}
+    },
+    "floor": {
+      "var_param": "floor",
+      "fn_struct_make_params": "mrcalc_floor_params",
+      "properties": {}
+    },
+    "not": {
+      "var_param": "not_",
+      "fn_struct_make_params": "mrcalc_not_params",
+      "properties": {}
+    },
+    "and": {
+      "var_param": "and_",
+      "fn_struct_make_params": "mrcalc_and_params",
+      "properties": {}
+    },
+    "or": {
+      "var_param": "or_",
+      "fn_struct_make_params": "mrcalc_or_params",
+      "properties": {}
+    },
+    "xor": {
+      "var_param": "xor",
+      "fn_struct_make_params": "mrcalc_xor_params",
+      "properties": {}
+    },
+    "isnan": {
+      "var_param": "isnan",
+      "fn_struct_make_params": "mrcalc_isnan_params",
+      "properties": {}
+    },
+    "isinf": {
+      "var_param": "isinf",
+      "fn_struct_make_params": "mrcalc_isinf_params",
+      "properties": {}
+    },
+    "finite": {
+      "var_param": "finite",
+      "fn_struct_make_params": "mrcalc_finite_params",
+      "properties": {}
+    },
+    "complex": {
+      "var_param": "complex_",
+      "fn_struct_make_params": "mrcalc_complex_params",
+      "properties": {}
+    },
+    "polar": {
+      "var_param": "polar",
+      "fn_struct_make_params": "mrcalc_polar_params",
+      "properties": {}
+    },
+    "real": {
+      "var_param": "real",
+      "fn_struct_make_params": "mrcalc_real_params",
+      "properties": {}
+    },
+    "imag": {
+      "var_param": "imag",
+      "fn_struct_make_params": "mrcalc_imag_params",
+      "properties": {}
+    },
+    "phase": {
+      "var_param": "phase",
+      "fn_struct_make_params": "mrcalc_phase_params",
+      "properties": {}
+    },
+    "conj": {
+      "var_param": "conj",
+      "fn_struct_make_params": "mrcalc_conj_params",
+      "properties": {}
+    },
+    "proj": {
+      "var_param": "proj",
+      "fn_struct_make_params": "mrcalc_proj_params",
+      "properties": {}
+    },
+    "exp": {
+      "var_param": "exp",
+      "fn_struct_make_params": "mrcalc_exp_params",
+      "properties": {}
+    },
+    "log": {
+      "var_param": "log",
+      "fn_struct_make_params": "mrcalc_log_params",
+      "properties": {}
+    },
+    "log10": {
+      "var_param": "log10",
+      "fn_struct_make_params": "mrcalc_log10_params",
+      "properties": {}
+    },
+    "cos": {
+      "var_param": "cos",
+      "fn_struct_make_params": "mrcalc_cos_params",
+      "properties": {}
+    },
+    "sin": {
+      "var_param": "sin",
+      "fn_struct_make_params": "mrcalc_sin_params",
+      "properties": {}
+    },
+    "tan": {
+      "var_param": "tan",
+      "fn_struct_make_params": "mrcalc_tan_params",
+      "properties": {}
+    },
+    "acos": {
+      "var_param": "acos",
+      "fn_struct_make_params": "mrcalc_acos_params",
+      "properties": {}
+    },
+    "asin": {
+      "var_param": "asin",
+      "fn_struct_make_params": "mrcalc_asin_params",
+      "properties": {}
+    },
+    "atan": {
+      "var_param": "atan",
+      "fn_struct_make_params": "mrcalc_atan_params",
+      "properties": {}
+    },
+    "cosh": {
+      "var_param": "cosh",
+      "fn_struct_make_params": "mrcalc_cosh_params",
+      "properties": {}
+    },
+    "sinh": {
+      "var_param": "sinh",
+      "fn_struct_make_params": "mrcalc_sinh_params",
+      "properties": {}
+    },
+    "tanh": {
+      "var_param": "tanh",
+      "fn_struct_make_params": "mrcalc_tanh_params",
+      "properties": {}
+    },
+    "acosh": {
+      "var_param": "acosh",
+      "fn_struct_make_params": "mrcalc_acosh_params",
+      "properties": {}
+    },
+    "asinh": {
+      "var_param": "asinh",
+      "fn_struct_make_params": "mrcalc_asinh_params",
+      "properties": {}
+    },
+    "atanh": {
+      "var_param": "atanh",
+      "fn_struct_make_params": "mrcalc_atanh_params",
+      "properties": {}
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrcalc_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "operand": {
+      "var_param": "operand"
+    }
+  }
+}

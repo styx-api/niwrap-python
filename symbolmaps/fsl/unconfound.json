@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "unconfound",
+  "properties": {
+    "in4d": {
+      "var_param": "in4d"
+    },
+    "out4d": {
+      "var_param": "out4d"
+    },
+    "confound_mat": {
+      "var_param": "confound_mat"
+    }
+  }
+}

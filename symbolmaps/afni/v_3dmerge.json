@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_3dmerge",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "blur_fwhm": {
+      "var_param": "blur_fwhm"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "clust": {
+      "var_param": "clust"
+    },
+    "dindex": {
+      "var_param": "dindex"
+    },
+    "tindex": {
+      "var_param": "tindex"
+    },
+    "absolute": {
+      "var_param": "absolute"
+    },
+    "dxyz": {
+      "var_param": "dxyz"
+    },
+    "gmean": {
+      "var_param": "gmean"
+    },
+    "gmax": {
+      "var_param": "gmax"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

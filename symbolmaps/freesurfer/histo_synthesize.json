@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "histo_synthesize",
+  "properties": {
+    "mri_volume": {
+      "var_param": "mri_volume"
+    },
+    "histo_volume": {
+      "var_param": "histo_volume"
+    },
+    "synthetic_histo": {
+      "var_param": "synthetic_histo"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "dt_recon",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "bvals_bvecs": {
+      "var_param": "bvals_bvecs"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "info_dump": {
+      "var_param": "info_dump"
+    },
+    "ec_reference": {
+      "var_param": "ec_reference"
+    },
+    "no_ec_flag": {
+      "var_param": "no_ec_flag"
+    },
+    "no_reg_flag": {
+      "var_param": "no_reg_flag"
+    },
+    "register_file": {
+      "var_param": "register_file"
+    },
+    "no_tal_flag": {
+      "var_param": "no_tal_flag"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "save_ec_residuals_flag": {
+      "var_param": "save_ec_residuals_flag"
+    },
+    "pca_analysis_flag": {
+      "var_param": "pca_analysis_flag"
+    },
+    "mask_prune_threshold": {
+      "var_param": "mask_prune_threshold"
+    },
+    "init_spm_flag": {
+      "var_param": "init_spm_flag"
+    },
+    "init_fsl_flag": {
+      "var_param": "init_fsl_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

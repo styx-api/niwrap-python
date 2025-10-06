@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "bugr",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "command_line": {
+      "var_param": "command_line"
+    },
+    "error_message": {
+      "var_param": "error_message"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    }
+  }
+}

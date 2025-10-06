@@ -1,0 +1,119 @@
+{
+  "fn_root_make_params_and_execute": "mris_convert",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "second_input_file": {
+      "var_param": "second_input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "patch": {
+      "var_param": "patch"
+    },
+    "curv_overlay_files": {
+      "var_param": "curv_overlay_files"
+    },
+    "functional_data_file": {
+      "var_param": "functional_data_file"
+    },
+    "orig_positions": {
+      "var_param": "orig_positions"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "rescale": {
+      "var_param": "rescale"
+    },
+    "talairach_xfm": {
+      "var_param": "talairach_xfm"
+    },
+    "normals": {
+      "var_param": "normals"
+    },
+    "neighbors": {
+      "var_param": "neighbors"
+    },
+    "xyz": {
+      "var_param": "xyz"
+    },
+    "annotation_file": {
+      "var_param": "annotation_file"
+    },
+    "parcstats_file": {
+      "var_param": "parcstats_file"
+    },
+    "gifti_dataarray_num": {
+      "var_param": "gifti_dataarray_num"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "label_stats_file": {
+      "var_param": "label_stats_file"
+    },
+    "combine_surfs": {
+      "var_param": "combine_surfs"
+    },
+    "merge_gifti": {
+      "var_param": "merge_gifti"
+    },
+    "split_gifti": {
+      "var_param": "split_gifti"
+    },
+    "gifti_outdir": {
+      "var_param": "gifti_outdir"
+    },
+    "delete_cmds": {
+      "var_param": "delete_cmds"
+    },
+    "center": {
+      "var_param": "center"
+    },
+    "vol_geom": {
+      "var_param": "vol_geom"
+    },
+    "remove_vol_geom": {
+      "var_param": "remove_vol_geom"
+    },
+    "to_surf": {
+      "var_param": "to_surf"
+    },
+    "to_scanner": {
+      "var_param": "to_scanner"
+    },
+    "to_tkr": {
+      "var_param": "to_tkr"
+    },
+    "userealras": {
+      "var_param": "userealras"
+    },
+    "usesurfras": {
+      "var_param": "usesurfras"
+    },
+    "upsample": {
+      "var_param": "upsample"
+    },
+    "volume": {
+      "var_param": "volume"
+    },
+    "area": {
+      "var_param": "area"
+    },
+    "angle": {
+      "var_param": "angle"
+    },
+    "label_to_mask": {
+      "var_param": "label_to_mask"
+    },
+    "cras_add": {
+      "var_param": "cras_add"
+    },
+    "cras_subtract": {
+      "var_param": "cras_subtract"
+    }
+  }
+}

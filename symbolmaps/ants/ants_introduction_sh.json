@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "ants_introduction_sh",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "labels_in_fixed_image_space": {
+      "var_param": "labels_in_fixed_image_space"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "n4_bias_field_correction": {
+      "var_param": "n4_bias_field_correction"
+    },
+    "outprefix": {
+      "var_param": "outprefix"
+    },
+    "quality_check": {
+      "var_param": "quality_check"
+    },
+    "similarity_metric": {
+      "var_param": "similarity_metric"
+    },
+    "transformation_model": {
+      "var_param": "transformation_model"
+    }
+  }
+}

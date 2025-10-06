@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "applywarp",
+  "properties": {
+    "interp": {
+      "var_param": "interp"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "ref_file": {
+      "var_param": "ref_file"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "relwarp": {
+      "var_param": "relwarp"
+    },
+    "abswarp": {
+      "var_param": "abswarp"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "field_file": {
+      "var_param": "field_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "postmat": {
+      "var_param": "postmat"
+    },
+    "premat": {
+      "var_param": "premat"
+    },
+    "superlevel": {
+      "var_param": "superlevel"
+    },
+    "superlevel_2": {
+      "var_param": "superlevel_2"
+    },
+    "supersample": {
+      "var_param": "supersample"
+    }
+  }
+}

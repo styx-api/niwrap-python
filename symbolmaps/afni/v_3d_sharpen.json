@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_sharpen",
+  "properties": {
+    "sharpening_factor": {
+      "var_param": "sharpening_factor"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

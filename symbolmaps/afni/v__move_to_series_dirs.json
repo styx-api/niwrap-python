@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v__move_to_series_dirs",
+  "properties": {
+    "action": {
+      "var_param": "action"
+    },
+    "dprefix": {
+      "var_param": "dprefix"
+    },
+    "tag": {
+      "var_param": "tag"
+    },
+    "test": {
+      "var_param": "test"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "ver": {
+      "var_param": "ver"
+    },
+    "dicom_files": {
+      "var_param": "dicom_files"
+    }
+  }
+}

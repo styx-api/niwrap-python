@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "v_1dplot_py",
+  "properties": {
+    "infiles": {
+      "var_param": "infiles"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "boxplot_on": {
+      "var_param": "boxplot_on"
+    },
+    "bplot_view": {
+      "var_param": "bplot_view"
+    },
+    "margin_off": {
+      "var_param": "margin_off"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "xfile": {
+      "var_param": "xfile"
+    },
+    "xvals": {
+      "var_param": "xvals"
+    },
+    "yaxis": {
+      "var_param": "yaxis"
+    },
+    "ylabels": {
+      "var_param": "ylabels"
+    },
+    "ylabels_maxlen": {
+      "var_param": "ylabels_maxlen"
+    },
+    "legend_on": {
+      "var_param": "legend_on"
+    },
+    "legend_labels": {
+      "var_param": "legend_labels"
+    },
+    "legend_locs": {
+      "var_param": "legend_locs"
+    },
+    "xlabel": {
+      "var_param": "xlabel"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "reverse_order": {
+      "var_param": "reverse_order"
+    },
+    "sepscl": {
+      "var_param": "sepscl"
+    },
+    "one_graph": {
+      "var_param": "one_graph"
+    },
+    "dpi": {
+      "var_param": "dpi"
+    },
+    "figsize": {
+      "var_param": "figsize"
+    },
+    "fontsize": {
+      "var_param": "fontsize"
+    },
+    "fontfamily": {
+      "var_param": "fontfamily"
+    },
+    "fontstyles": {
+      "var_param": "fontstyles"
+    },
+    "colors": {
+      "var_param": "colors"
+    },
+    "patches": {
+      "var_param": "patches"
+    },
+    "censor_trs": {
+      "var_param": "censor_trs"
+    },
+    "censor_files": {
+      "var_param": "censor_files"
+    },
+    "censor_hline": {
+      "var_param": "censor_hline"
+    },
+    "censor_rgb": {
+      "var_param": "censor_rgb"
+    },
+    "bkgd_color": {
+      "var_param": "bkgd_color"
+    }
+  }
+}

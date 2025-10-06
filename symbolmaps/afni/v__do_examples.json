@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__do_examples",
+  "properties": {
+    "auto_test": {
+      "var_param": "auto_test"
+    }
+  }
+}

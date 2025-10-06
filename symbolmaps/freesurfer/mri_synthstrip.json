@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mri_synthstrip",
+  "properties": {
+    "image": {
+      "var_param": "image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "gpu": {
+      "var_param": "gpu"
+    },
+    "border": {
+      "var_param": "border"
+    },
+    "exclude_csf": {
+      "var_param": "exclude_csf"
+    },
+    "model_weights": {
+      "var_param": "model_weights"
+    }
+  }
+}

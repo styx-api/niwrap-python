@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_probedicom",
+  "properties": {
+    "dicom_file": {
+      "var_param": "dicom_file"
+    },
+    "option1": {
+      "var_param": "option1"
+    },
+    "option2": {
+      "var_param": "option2"
+    }
+  }
+}

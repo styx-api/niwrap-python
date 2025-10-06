@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "gcaprepone",
+  "properties": {
+    "gcadir": {
+      "var_param": "gcadir"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "init_subject": {
+      "var_param": "init_subject"
+    },
+    "source_subjects_dir": {
+      "var_param": "source_subjects_dir"
+    },
+    "done_file": {
+      "var_param": "done_file"
+    },
+    "no_emreg": {
+      "var_param": "no_emreg"
+    }
+  }
+}

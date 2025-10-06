@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_clusterize",
+  "properties": {
+    "inset": {
+      "var_param": "inset"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_from_hdr": {
+      "var_param": "mask_from_hdr"
+    },
+    "out_mask": {
+      "var_param": "out_mask"
+    },
+    "ithr": {
+      "var_param": "ithr"
+    },
+    "idat": {
+      "var_param": "idat"
+    },
+    "onesided": {
+      "var_param": "onesided"
+    },
+    "twosided": {
+      "var_param": "twosided"
+    },
+    "bisided": {
+      "var_param": "bisided"
+    },
+    "within_range": {
+      "var_param": "within_range"
+    },
+    "nn": {
+      "var_param": "nn"
+    },
+    "clust_nvox": {
+      "var_param": "clust_nvox"
+    },
+    "clust_vol": {
+      "var_param": "clust_vol"
+    },
+    "pref_map": {
+      "var_param": "pref_map"
+    },
+    "pref_dat": {
+      "var_param": "pref_dat"
+    },
+    "one_d_format": {
+      "var_param": "one_d_format"
+    },
+    "no_one_d_format": {
+      "var_param": "no_one_d_format"
+    },
+    "summarize": {
+      "var_param": "summarize"
+    },
+    "nosum": {
+      "var_param": "nosum"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "outvol_if_no_clust": {
+      "var_param": "outvol_if_no_clust"
+    },
+    "orient": {
+      "var_param": "orient"
+    },
+    "abs_table_data": {
+      "var_param": "abs_table_data"
+    },
+    "binary": {
+      "var_param": "binary"
+    }
+  }
+}

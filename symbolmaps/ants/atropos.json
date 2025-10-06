@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "atropos",
+  "properties": {
+    "image_dimensionality": {
+      "var_param": "image_dimensionality"
+    },
+    "intensity_image": {
+      "var_param": "intensity_image"
+    },
+    "bspline": {
+      "var_param": "bspline"
+    },
+    "initialization": {
+      "var_param": "initialization"
+    },
+    "partial_volume_label_set": {
+      "var_param": "partial_volume_label_set"
+    },
+    "use_partial_volume_likelihoods": {
+      "var_param": "use_partial_volume_likelihoods"
+    },
+    "posterior_formulation": {
+      "var_param": "posterior_formulation"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "convergence": {
+      "var_param": "convergence"
+    },
+    "likelihood_model": {
+      "var_param": "likelihood_model"
+    },
+    "mrf": {
+      "var_param": "mrf"
+    },
+    "icm": {
+      "var_param": "icm"
+    },
+    "use_random_seed": {
+      "var_param": "use_random_seed"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "minimize_memory_usage": {
+      "var_param": "minimize_memory_usage"
+    },
+    "winsorize_outliers": {
+      "var_param": "winsorize_outliers"
+    },
+    "use_euclidean_distance": {
+      "var_param": "use_euclidean_distance"
+    },
+    "label_propagation": {
+      "var_param": "label_propagation"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

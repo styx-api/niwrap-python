@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "register_subject",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "mask_volume": {
+      "var_param": "mask_volume"
+    },
+    "control_points": {
+      "var_param": "control_points"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "gca_file": {
+      "var_param": "gca_file"
+    }
+  }
+}

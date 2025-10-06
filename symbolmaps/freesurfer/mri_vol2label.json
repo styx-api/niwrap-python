@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_vol2label",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "label_id": {
+      "var_param": "label_id"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "vol_file": {
+      "var_param": "vol_file"
+    },
+    "surf_subject_hemi": {
+      "var_param": "surf_subject_hemi"
+    },
+    "surf_path": {
+      "var_param": "surf_path"
+    },
+    "opt_params": {
+      "var_param": "opt_params"
+    },
+    "remove_holes": {
+      "var_param": "remove_holes"
+    },
+    "dilations": {
+      "var_param": "dilations"
+    },
+    "erosions": {
+      "var_param": "erosions"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

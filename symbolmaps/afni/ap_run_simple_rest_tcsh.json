@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "ap_run_simple_rest_tcsh",
+  "properties": {
+    "anat": {
+      "var_param": "anat"
+    },
+    "epi": {
+      "var_param": "epi"
+    },
+    "nt_rm": {
+      "var_param": "nt_rm"
+    },
+    "run_ap": {
+      "var_param": "run_ap"
+    },
+    "run_proc": {
+      "var_param": "run_proc"
+    },
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "compressor": {
+      "var_param": "compressor"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "echo": {
+      "var_param": "echo"
+    }
+  }
+}

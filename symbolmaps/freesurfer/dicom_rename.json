@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "dicom_rename",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "output_base": {
+      "var_param": "output_base"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

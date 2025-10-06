@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_3dfractionize",
+  "properties": {
+    "template": {
+      "var_param": "template"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "clip": {
+      "var_param": "clip"
+    },
+    "warp": {
+      "var_param": "warp"
+    },
+    "preserve": {
+      "var_param": "preserve"
+    },
+    "vote": {
+      "var_param": "vote"
+    }
+  }
+}

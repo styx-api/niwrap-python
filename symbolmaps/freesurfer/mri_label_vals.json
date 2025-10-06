@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_label_vals",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "cras_flag": {
+      "var_param": "cras_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

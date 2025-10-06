@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "fsl_gen_3_d",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    }
+  }
+}

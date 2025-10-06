@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "tbss_4_prestats",
+  "properties": {
+    "threshold": {
+      "var_param": "threshold"
+    }
+  }
+}

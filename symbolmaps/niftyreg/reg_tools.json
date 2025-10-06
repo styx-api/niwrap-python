@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "reg_tools",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "add_value_or_image": {
+      "var_param": "add_value_or_image"
+    },
+    "sub_value_or_image": {
+      "var_param": "sub_value_or_image"
+    },
+    "mul_value_or_image": {
+      "var_param": "mul_value_or_image"
+    },
+    "div_value_or_image": {
+      "var_param": "div_value_or_image"
+    },
+    "smooth_value": {
+      "var_param": "smooth_value"
+    },
+    "smooth_gaussian": {
+      "var_param": "smooth_gaussian"
+    },
+    "rms_image": {
+      "var_param": "rms_image"
+    },
+    "binarize": {
+      "var_param": "binarize"
+    },
+    "threshold_value": {
+      "var_param": "threshold_value"
+    },
+    "nan_mask_image": {
+      "var_param": "nan_mask_image"
+    }
+  }
+}

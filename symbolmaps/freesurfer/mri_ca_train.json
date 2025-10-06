@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mri_ca_train",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_gca": {
+      "var_param": "output_gca"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "mask_volume": {
+      "var_param": "mask_volume"
+    },
+    "node_spacing": {
+      "var_param": "node_spacing"
+    },
+    "prior_spacing": {
+      "var_param": "prior_spacing"
+    },
+    "input_training": {
+      "var_param": "input_training"
+    },
+    "symmetrize": {
+      "var_param": "symmetrize"
+    },
+    "makesym": {
+      "var_param": "makesym"
+    },
+    "check_symmetry": {
+      "var_param": "check_symmetry"
+    },
+    "sanity_check": {
+      "var_param": "sanity_check"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "done_file": {
+      "var_param": "done_file"
+    }
+  }
+}

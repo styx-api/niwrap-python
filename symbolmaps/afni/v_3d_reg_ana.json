@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_reg_ana",
+  "properties": {
+    "rows": {
+      "var_param": "rows"
+    },
+    "cols": {
+      "var_param": "cols"
+    },
+    "xydata": {
+      "var_param": "xydata"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "diskspace": {
+      "var_param": "diskspace"
+    },
+    "workmem": {
+      "var_param": "workmem"
+    },
+    "rmsmin": {
+      "var_param": "rmsmin"
+    },
+    "fdisp": {
+      "var_param": "fdisp"
+    },
+    "flof": {
+      "var_param": "flof"
+    },
+    "fcoef": {
+      "var_param": "fcoef"
+    },
+    "rcoef": {
+      "var_param": "rcoef"
+    },
+    "tcoef": {
+      "var_param": "tcoef"
+    },
+    "bucket": {
+      "var_param": "bucket"
+    },
+    "brick": {
+      "var_param": "brick"
+    },
+    "datum": {
+      "var_param": "datum"
+    }
+  }
+}

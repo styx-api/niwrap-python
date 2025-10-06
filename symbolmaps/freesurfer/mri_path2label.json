@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mri_path2label",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "single": {
+      "var_param": "single"
+    },
+    "path_to_label": {
+      "var_param": "path_to_label"
+    },
+    "label_to_path": {
+      "var_param": "label_to_path"
+    },
+    "connect": {
+      "var_param": "connect"
+    },
+    "fill": {
+      "var_param": "fill"
+    },
+    "confillx": {
+      "var_param": "confillx"
+    },
+    "confill": {
+      "var_param": "confill"
+    },
+    "source_file": {
+      "var_param": "source_file"
+    },
+    "dest_file": {
+      "var_param": "dest_file"
+    }
+  }
+}

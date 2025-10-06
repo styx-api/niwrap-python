@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_dct_align",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "destination": {
+      "var_param": "destination"
+    },
+    "output_xform": {
+      "var_param": "output_xform"
+    }
+  }
+}

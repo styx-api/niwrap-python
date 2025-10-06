@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "mri_align_long_csh",
+  "properties": {
+    "base_id": {
+      "var_param": "base_id"
+    }
+  }
+}

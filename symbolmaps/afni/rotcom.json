@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "rotcom",
+  "properties": {
+    "rotate_ashift": {
+      "var_param": "rotate_ashift"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

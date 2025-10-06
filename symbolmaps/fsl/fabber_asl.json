@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "fabber_asl",
+  "properties": {
+    "listmethods": {
+      "var_param": "listmethods"
+    },
+    "listmodels": {
+      "var_param": "listmodels"
+    },
+    "listparams": {
+      "var_param": "listparams"
+    },
+    "descparams": {
+      "var_param": "descparams"
+    },
+    "listoutputs": {
+      "var_param": "listoutputs"
+    },
+    "evaluate": {
+      "var_param": "evaluate"
+    },
+    "evaluate_params": {
+      "var_param": "evaluate_params"
+    },
+    "evaluate_nt": {
+      "var_param": "evaluate_nt"
+    },
+    "simple_output": {
+      "var_param": "simple_output"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "link_to_latest": {
+      "var_param": "link_to_latest"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "loadmodels": {
+      "var_param": "loadmodels"
+    },
+    "data": {
+      "var_param": "data"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "suppdata": {
+      "var_param": "suppdata"
+    },
+    "dump_param_names": {
+      "var_param": "dump_param_names"
+    },
+    "save_model_fit": {
+      "var_param": "save_model_fit"
+    },
+    "save_residuals": {
+      "var_param": "save_residuals"
+    },
+    "save_model_extras": {
+      "var_param": "save_model_extras"
+    },
+    "save_mvn": {
+      "var_param": "save_mvn"
+    },
+    "save_mean": {
+      "var_param": "save_mean"
+    },
+    "save_std": {
+      "var_param": "save_std"
+    },
+    "save_var": {
+      "var_param": "save_var"
+    },
+    "save_zstat": {
+      "var_param": "save_zstat"
+    },
+    "save_noise_mean": {
+      "var_param": "save_noise_mean"
+    },
+    "save_noise_std": {
+      "var_param": "save_noise_std"
+    },
+    "save_free_energy": {
+      "var_param": "save_free_energy"
+    },
+    "optfile": {
+      "var_param": "optfile"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

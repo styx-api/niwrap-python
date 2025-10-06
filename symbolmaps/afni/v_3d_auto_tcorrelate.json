@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_auto_tcorrelate",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "pearson": {
+      "var_param": "pearson"
+    },
+    "eta2": {
+      "var_param": "eta2"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "autoclip": {
+      "var_param": "autoclip"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_only_targets": {
+      "var_param": "mask_only_targets"
+    },
+    "mask_source": {
+      "var_param": "mask_source"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "out1d": {
+      "var_param": "out1d"
+    },
+    "time": {
+      "var_param": "time_"
+    },
+    "mmap": {
+      "var_param": "mmap_"
+    }
+  }
+}

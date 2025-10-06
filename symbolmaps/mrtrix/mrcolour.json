@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "mrcolour",
+  "properties": {
+    "upper": {
+      "var_param": "upper"
+    },
+    "lower": {
+      "var_param": "lower"
+    },
+    "colour": {
+      "var_param": "colour"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrcolour_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "map": {
+      "var_param": "map_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

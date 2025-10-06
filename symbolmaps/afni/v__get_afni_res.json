@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__get_afni_res",
+  "properties": {
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    }
+  }
+}

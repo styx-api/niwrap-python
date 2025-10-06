@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "defect2seg",
+  "properties": {
+    "output_seg": {
+      "var_param": "output_seg"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "left_hemisphere": {
+      "var_param": "left_hemisphere"
+    },
+    "right_hemisphere": {
+      "var_param": "right_hemisphere"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "lh_only": {
+      "var_param": "lh_only"
+    },
+    "rh_only": {
+      "var_param": "rh_only"
+    },
+    "cortex": {
+      "var_param": "cortex"
+    },
+    "no_cortex": {
+      "var_param": "no_cortex"
+    }
+  }
+}

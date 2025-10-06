@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "quick_alpha_vals_py",
+  "properties": {
+    "niter": {
+      "var_param": "niter"
+    },
+    "max_file": {
+      "var_param": "max_file"
+    }
+  }
+}

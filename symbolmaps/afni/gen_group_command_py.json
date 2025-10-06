@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "gen_group_command_py",
+  "properties": {
+    "command_name": {
+      "var_param": "command_name"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "set_labels": {
+      "var_param": "set_labels"
+    },
+    "subj_prefix": {
+      "var_param": "subj_prefix"
+    },
+    "subj_suffix": {
+      "var_param": "subj_suffix"
+    },
+    "subs_betas": {
+      "var_param": "subs_betas"
+    },
+    "subs_tstats": {
+      "var_param": "subs_tstats"
+    },
+    "type": {
+      "var_param": "type_"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "write_script": {
+      "var_param": "write_script"
+    },
+    "other_options": {
+      "var_param": "other_options"
+    }
+  }
+}

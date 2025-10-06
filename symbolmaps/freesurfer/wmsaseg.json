@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "wmsaseg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "source_orig": {
+      "var_param": "source_orig"
+    },
+    "source_long": {
+      "var_param": "source_long"
+    },
+    "output_subdir": {
+      "var_param": "output_subdir"
+    },
+    "gca_file": {
+      "var_param": "gca_file"
+    },
+    "no_reg": {
+      "var_param": "no_reg"
+    },
+    "no_canorm": {
+      "var_param": "no_canorm"
+    },
+    "init_spm": {
+      "var_param": "init_spm"
+    },
+    "reg_only": {
+      "var_param": "reg_only"
+    },
+    "halo1": {
+      "var_param": "halo1"
+    },
+    "halo2": {
+      "var_param": "halo2"
+    }
+  }
+}

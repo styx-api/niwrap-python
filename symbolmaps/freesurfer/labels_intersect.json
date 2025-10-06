@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "labels_intersect",
+  "properties": {
+    "label1": {
+      "var_param": "label1"
+    },
+    "label2": {
+      "var_param": "label2"
+    },
+    "outputname": {
+      "var_param": "outputname"
+    }
+  }
+}

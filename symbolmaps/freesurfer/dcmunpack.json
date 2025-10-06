@@ -1,0 +1,119 @@
+{
+  "fn_root_make_params_and_execute": "dcmunpack",
+  "properties": {
+    "src": {
+      "var_param": "src"
+    },
+    "targ": {
+      "var_param": "targ"
+    },
+    "run": {
+      "var_param": "run"
+    },
+    "auto_runseq": {
+      "var_param": "auto_runseq"
+    },
+    "keep_scouts": {
+      "var_param": "keep_scouts"
+    },
+    "scanonly": {
+      "var_param": "scanonly"
+    },
+    "one_per_dir": {
+      "var_param": "one_per_dir"
+    },
+    "ext": {
+      "var_param": "ext"
+    },
+    "pre": {
+      "var_param": "pre"
+    },
+    "pat": {
+      "var_param": "pat"
+    },
+    "no_infodump": {
+      "var_param": "no_infodump"
+    },
+    "generic": {
+      "var_param": "generic"
+    },
+    "copy_only": {
+      "var_param": "copy_only"
+    },
+    "no_convert": {
+      "var_param": "no_convert"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "key_string": {
+      "var_param": "key_string"
+    },
+    "index_out": {
+      "var_param": "index_out"
+    },
+    "index_in": {
+      "var_param": "index_in"
+    },
+    "it_dicom": {
+      "var_param": "it_dicom"
+    },
+    "no_exit_on_error": {
+      "var_param": "no_exit_on_error"
+    },
+    "run_skip": {
+      "var_param": "run_skip"
+    },
+    "no_rescale_dicom": {
+      "var_param": "no_rescale_dicom"
+    },
+    "rescale_dicom": {
+      "var_param": "rescale_dicom"
+    },
+    "no_dwi": {
+      "var_param": "no_dwi"
+    },
+    "iid": {
+      "var_param": "iid"
+    },
+    "ijd": {
+      "var_param": "ijd"
+    },
+    "ikd": {
+      "var_param": "ikd"
+    },
+    "extra_info": {
+      "var_param": "extra_info"
+    },
+    "first_dicom": {
+      "var_param": "first_dicom"
+    },
+    "no_dcm2niix": {
+      "var_param": "no_dcm2niix"
+    },
+    "phase": {
+      "var_param": "phase"
+    },
+    "fips": {
+      "var_param": "fips"
+    },
+    "fips_run": {
+      "var_param": "fips_run"
+    },
+    "xml_only": {
+      "var_param": "xml_only"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "ants_joint_tensor_fusion",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "target_image": {
+      "var_param": "target_image"
+    },
+    "atlas_image": {
+      "var_param": "atlas_image"
+    },
+    "atlas_segmentation": {
+      "var_param": "atlas_segmentation"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "beta": {
+      "var_param": "beta"
+    },
+    "retain_label_posterior_images": {
+      "var_param": "retain_label_posterior_images"
+    },
+    "retain_atlas_voting_images": {
+      "var_param": "retain_atlas_voting_images"
+    },
+    "constrain_nonnegative": {
+      "var_param": "constrain_nonnegative"
+    },
+    "log_euclidean": {
+      "var_param": "log_euclidean"
+    },
+    "patch_radius": {
+      "var_param": "patch_radius"
+    },
+    "patch_metric": {
+      "var_param": "patch_metric"
+    },
+    "search_radius": {
+      "var_param": "search_radius"
+    },
+    "exclusion_image": {
+      "var_param": "exclusion_image"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "xcorr",
+  "properties": {
+    "input1": {
+      "var_param": "input1"
+    },
+    "input2": {
+      "var_param": "input2"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "tmp_dir": {
+      "var_param": "tmp_dir"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    }
+  }
+}

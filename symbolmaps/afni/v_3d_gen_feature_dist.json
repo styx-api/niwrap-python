@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_gen_feature_dist",
+  "properties": {
+    "features_string": {
+      "var_param": "features_string"
+    },
+    "class_string": {
+      "var_param": "class_string"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "other": {
+      "var_param": "other"
+    },
+    "no_other": {
+      "var_param": "no_other"
+    },
+    "samp": {
+      "var_param": "samp"
+    },
+    "sig": {
+      "var_param": "sig"
+    },
+    "hspec": {
+      "var_param": "hspec"
+    },
+    "labeltable": {
+      "var_param": "labeltable"
+    },
+    "show_histograms": {
+      "var_param": "show_histograms"
+    }
+  }
+}

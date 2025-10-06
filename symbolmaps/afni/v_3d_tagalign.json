@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tagalign",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "master_dataset": {
+      "var_param": "master_dataset"
+    },
+    "tagset_file": {
+      "var_param": "tagset_file"
+    },
+    "no_keep_tags": {
+      "var_param": "no_keep_tags"
+    },
+    "matvec_file": {
+      "var_param": "matvec_file"
+    },
+    "rotate": {
+      "var_param": "rotate"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
+    "rotscl": {
+      "var_param": "rotscl"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "dummy": {
+      "var_param": "dummy"
+    },
+    "linear_interpolation": {
+      "var_param": "linear_interpolation"
+    },
+    "cubic_interpolation": {
+      "var_param": "cubic_interpolation"
+    },
+    "nearest_neighbor_interpolation": {
+      "var_param": "nearest_neighbor_interpolation"
+    },
+    "quintic_interpolation": {
+      "var_param": "quintic_interpolation"
+    }
+  }
+}

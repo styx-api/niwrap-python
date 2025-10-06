@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mris_init_global_tractography",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "parcellation": {
+      "var_param": "parcellation"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    }
+  }
+}

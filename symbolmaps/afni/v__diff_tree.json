@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "v__diff_tree",
+  "properties": {
+    "new_dir": {
+      "var_param": "new_dir"
+    },
+    "old_dir": {
+      "var_param": "old_dir"
+    },
+    "diff_opts": {
+      "var_param": "diff_opts"
+    },
+    "ignore_append": {
+      "var_param": "ignore_append"
+    },
+    "ia": {
+      "var_param": "ia"
+    },
+    "ignore_list": {
+      "var_param": "ignore_list"
+    },
+    "il": {
+      "var_param": "il"
+    },
+    "ignore_missing": {
+      "var_param": "ignore_missing"
+    },
+    "no_diffs": {
+      "var_param": "no_diffs"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "save": {
+      "var_param": "save"
+    },
+    "show": {
+      "var_param": "show"
+    },
+    "show_list_comp": {
+      "var_param": "show_list_comp"
+    },
+    "skip_data": {
+      "var_param": "skip_data"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "diff_prog": {
+      "var_param": "diff_prog"
+    },
+    "xxdiff": {
+      "var_param": "xxdiff"
+    },
+    "X_option": {
+      "var_param": "x_option"
+    }
+  }
+}

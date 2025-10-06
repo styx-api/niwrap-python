@@ -1,0 +1,113 @@
+{
+  "fn_root_make_params_and_execute": "dmri_paths",
+  "properties": {
+    "indir": {
+      "var_param": "indir"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "dwi": {
+      "var_param": "dwi"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "bval": {
+      "var_param": "bval"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "bpdir": {
+      "var_param": "bpdir"
+    },
+    "ntr": {
+      "var_param": "ntr"
+    },
+    "fmin": {
+      "var_param": "fmin"
+    },
+    "basereg": {
+      "var_param": "basereg"
+    },
+    "basemask": {
+      "var_param": "basemask"
+    },
+    "roi1": {
+      "var_param": "roi1"
+    },
+    "roi2": {
+      "var_param": "roi2"
+    },
+    "roimesh1": {
+      "var_param": "roimesh1"
+    },
+    "roimesh2": {
+      "var_param": "roimesh2"
+    },
+    "roiref1": {
+      "var_param": "roiref1"
+    },
+    "roiref2": {
+      "var_param": "roiref2"
+    },
+    "prior": {
+      "var_param": "prior"
+    },
+    "nprior": {
+      "var_param": "nprior"
+    },
+    "nset": {
+      "var_param": "nset"
+    },
+    "lprior": {
+      "var_param": "lprior"
+    },
+    "lset": {
+      "var_param": "lset"
+    },
+    "seg": {
+      "var_param": "seg"
+    },
+    "tprior": {
+      "var_param": "tprior"
+    },
+    "cprior": {
+      "var_param": "cprior"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "regnl": {
+      "var_param": "regnl"
+    },
+    "init": {
+      "var_param": "init"
+    },
+    "nb": {
+      "var_param": "nb"
+    },
+    "ns": {
+      "var_param": "ns"
+    },
+    "nk": {
+      "var_param": "nk"
+    },
+    "nu": {
+      "var_param": "nu"
+    },
+    "sdp": {
+      "var_param": "sdp"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

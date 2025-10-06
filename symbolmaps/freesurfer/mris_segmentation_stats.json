@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mris_segmentation_stats",
+  "properties": {
+    "overlay_name": {
+      "var_param": "overlay_name"
+    },
+    "segmentation_label_name": {
+      "var_param": "segmentation_label_name"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "roc_file": {
+      "var_param": "roc_file"
+    }
+  }
+}

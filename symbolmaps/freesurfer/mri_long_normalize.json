@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mri_long_normalize",
+  "properties": {
+    "input_vol": {
+      "var_param": "input_vol"
+    },
+    "base_tp_file": {
+      "var_param": "base_tp_file"
+    },
+    "output_vol": {
+      "var_param": "output_vol"
+    },
+    "normalization_iters": {
+      "var_param": "normalization_iters"
+    },
+    "disable_1d": {
+      "var_param": "disable_1d"
+    },
+    "smooth_bias": {
+      "var_param": "smooth_bias"
+    },
+    "aseg": {
+      "var_param": "aseg"
+    },
+    "debug_gvx": {
+      "var_param": "debug_gvx"
+    },
+    "debug_gx": {
+      "var_param": "debug_gx"
+    },
+    "reading": {
+      "var_param": "reading"
+    },
+    "print_usage": {
+      "var_param": "print_usage"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "halfcosbasis",
+  "properties": {
+    "hrf_param_file": {
+      "var_param": "hrf_param_file"
+    },
+    "hrf_param_file_hf": {
+      "var_param": "hrf_param_file_hf"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "debug_level_debug": {
+      "var_param": "debug_level_debug"
+    },
+    "debug_level_debuglevel": {
+      "var_param": "debug_level_debuglevel"
+    },
+    "timing_on_flag": {
+      "var_param": "timing_on_flag"
+    },
+    "log_dir": {
+      "var_param": "log_dir"
+    },
+    "log_dir_ld": {
+      "var_param": "log_dir_ld"
+    },
+    "log_dir_logdir": {
+      "var_param": "log_dir_logdir"
+    },
+    "num_hrf_samples": {
+      "var_param": "num_hrf_samples"
+    },
+    "num_hrf_basis_funcs": {
+      "var_param": "num_hrf_basis_funcs"
+    },
+    "num_secs": {
+      "var_param": "num_secs"
+    },
+    "num_secs_nsecs": {
+      "var_param": "num_secs_nsecs"
+    },
+    "temp_res": {
+      "var_param": "temp_res"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "help_flag_long": {
+      "var_param": "help_flag_long"
+    }
+  }
+}

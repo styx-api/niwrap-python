@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_map_to_dti",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "followers_nn": {
+      "var_param": "followers_nn"
+    },
+    "followers_wsinc5": {
+      "var_param": "followers_wsinc5"
+    },
+    "followers_surf": {
+      "var_param": "followers_surf"
+    },
+    "followers_ndset": {
+      "var_param": "followers_ndset"
+    },
+    "followers_spec": {
+      "var_param": "followers_spec"
+    },
+    "matrix": {
+      "var_param": "matrix"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    }
+  }
+}

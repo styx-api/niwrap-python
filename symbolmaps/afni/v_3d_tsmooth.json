@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tsmooth",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "datum_type": {
+      "var_param": "datum_type"
+    },
+    "lin_filter": {
+      "var_param": "lin_filter"
+    },
+    "med_filter": {
+      "var_param": "med_filter"
+    },
+    "osf_filter": {
+      "var_param": "osf_filter"
+    },
+    "lin_filter_custom": {
+      "var_param": "lin_filter_custom"
+    },
+    "hamming": {
+      "var_param": "hamming"
+    },
+    "blackman": {
+      "var_param": "blackman"
+    },
+    "custom_filter": {
+      "var_param": "custom_filter"
+    },
+    "extend": {
+      "var_param": "extend"
+    },
+    "zero": {
+      "var_param": "zero"
+    },
+    "trend": {
+      "var_param": "trend"
+    },
+    "adaptive": {
+      "var_param": "adaptive"
+    }
+  }
+}

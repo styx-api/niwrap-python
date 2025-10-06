@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_simulate_atrophy",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "atrophy_fraction": {
+      "var_param": "atrophy_fraction"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "atrophy_percent": {
+      "var_param": "atrophy_percent"
+    },
+    "noise_level": {
+      "var_param": "noise_level"
+    }
+  }
+}

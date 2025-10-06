@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_surf_mask",
+  "properties": {
+    "surface_type": {
+      "var_param": "surface_type"
+    },
+    "surface_file": {
+      "var_param": "surface_file"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "grid_parent": {
+      "var_param": "grid_parent"
+    },
+    "fill_method": {
+      "var_param": "fill_method"
+    },
+    "surface_volume": {
+      "var_param": "surface_volume"
+    },
+    "mask_only": {
+      "var_param": "mask_only"
+    },
+    "flip_orientation": {
+      "var_param": "flip_orientation"
+    },
+    "no_distance": {
+      "var_param": "no_distance"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "create_icosahedron",
+  "properties": {
+    "rad": {
+      "var_param": "rad"
+    },
+    "rec_depth": {
+      "var_param": "rec_depth"
+    },
+    "lin_depth": {
+      "var_param": "lin_depth"
+    },
+    "min_nodes": {
+      "var_param": "min_nodes"
+    },
+    "nums": {
+      "var_param": "nums"
+    },
+    "nums_quiet": {
+      "var_param": "nums_quiet"
+    },
+    "center_coordinates": {
+      "var_param": "center_coordinates"
+    },
+    "to_sphere": {
+      "var_param": "to_sphere"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

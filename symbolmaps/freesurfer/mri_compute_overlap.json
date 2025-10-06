@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mri_compute_overlap",
+  "properties": {
+    "volumes": {
+      "var_param": "volumes"
+    },
+    "label_numbers": {
+      "var_param": "label_numbers"
+    },
+    "all_labels": {
+      "var_param": "all_labels"
+    },
+    "show_label": {
+      "var_param": "show_label"
+    },
+    "total_overlap": {
+      "var_param": "total_overlap"
+    },
+    "no_summary": {
+      "var_param": "no_summary"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "quiet_mode": {
+      "var_param": "quiet_mode"
+    },
+    "translate_label": {
+      "var_param": "translate_label"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

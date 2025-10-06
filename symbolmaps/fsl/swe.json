@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "swe",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_root": {
+      "var_param": "output_root"
+    },
+    "design_mat": {
+      "var_param": "design_mat"
+    },
+    "design_con": {
+      "var_param": "design_con"
+    },
+    "design_sub": {
+      "var_param": "design_sub"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "fcon": {
+      "var_param": "fcon"
+    },
+    "modified": {
+      "var_param": "modified"
+    },
+    "wild_bootstrap": {
+      "var_param": "wild_bootstrap"
+    },
+    "logp": {
+      "var_param": "logp"
+    },
+    "nboot": {
+      "var_param": "nboot"
+    },
+    "corrp": {
+      "var_param": "corrp"
+    },
+    "fonly": {
+      "var_param": "fonly"
+    },
+    "tfce": {
+      "var_param": "tfce"
+    },
+    "tfce_2d": {
+      "var_param": "tfce_2d"
+    },
+    "cluster_t": {
+      "var_param": "cluster_t"
+    },
+    "cluster_t_mass": {
+      "var_param": "cluster_t_mass"
+    },
+    "cluster_f": {
+      "var_param": "cluster_f"
+    },
+    "cluster_f_mass": {
+      "var_param": "cluster_f_mass"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "raw": {
+      "var_param": "raw"
+    },
+    "equiv": {
+      "var_param": "equiv"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "uncorr_p": {
+      "var_param": "uncorr_p"
+    },
+    "null_dist": {
+      "var_param": "null_dist"
+    },
+    "no_rc_mask": {
+      "var_param": "no_rc_mask"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "tfce_h": {
+      "var_param": "tfce_h"
+    },
+    "tfce_d": {
+      "var_param": "tfce_d"
+    },
+    "tfce_e": {
+      "var_param": "tfce_e"
+    },
+    "tfce_c": {
+      "var_param": "tfce_c"
+    },
+    "voxelwise_ev": {
+      "var_param": "voxelwise_ev"
+    },
+    "voxelwise_evs": {
+      "var_param": "voxelwise_evs"
+    },
+    "glm_output": {
+      "var_param": "glm_output"
+    }
+  }
+}

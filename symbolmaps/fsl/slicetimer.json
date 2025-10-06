@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "slicetimer",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "down_flag": {
+      "var_param": "down_flag"
+    },
+    "tr_value": {
+      "var_param": "tr_value"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "odd_flag": {
+      "var_param": "odd_flag"
+    },
+    "tcustom_file": {
+      "var_param": "tcustom_file"
+    },
+    "tglobal_value": {
+      "var_param": "tglobal_value"
+    },
+    "ocustom_file": {
+      "var_param": "ocustom_file"
+    }
+  }
+}

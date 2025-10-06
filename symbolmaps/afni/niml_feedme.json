@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "niml_feedme",
+  "properties": {
+    "host": {
+      "var_param": "host"
+    },
+    "interval": {
+      "var_param": "interval"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "accum": {
+      "var_param": "accum"
+    },
+    "target_dataset": {
+      "var_param": "target_dataset"
+    },
+    "drive_cmds": {
+      "var_param": "drive_cmds"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

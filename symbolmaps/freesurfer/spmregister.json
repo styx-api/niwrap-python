@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "spmregister",
+  "properties": {
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "mov": {
+      "var_param": "mov"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "frame": {
+      "var_param": "frame"
+    },
+    "mid_frame": {
+      "var_param": "mid_frame"
+    },
+    "template_out": {
+      "var_param": "template_out"
+    },
+    "fsvol": {
+      "var_param": "fsvol"
+    },
+    "force_ras": {
+      "var_param": "force_ras"
+    },
+    "outvol": {
+      "var_param": "outvol"
+    },
+    "tmpdir": {
+      "var_param": "tmpdir"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

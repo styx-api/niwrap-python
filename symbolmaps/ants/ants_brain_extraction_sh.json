@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "ants_brain_extraction_sh",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "anatomical_image": {
+      "var_param": "anatomical_image"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "probability_mask": {
+      "var_param": "probability_mask"
+    },
+    "tissue_classification": {
+      "var_param": "tissue_classification"
+    },
+    "brain_extraction_registration_mask": {
+      "var_param": "brain_extraction_registration_mask"
+    },
+    "keep_temporary_files": {
+      "var_param": "keep_temporary_files"
+    },
+    "single_floating_point_precision": {
+      "var_param": "single_floating_point_precision"
+    },
+    "initial_moving_transform": {
+      "var_param": "initial_moving_transform"
+    },
+    "rotation_search_params": {
+      "var_param": "rotation_search_params"
+    },
+    "image_file_suffix": {
+      "var_param": "image_file_suffix"
+    },
+    "translation_search_params": {
+      "var_param": "translation_search_params"
+    },
+    "random_seeding": {
+      "var_param": "random_seeding"
+    },
+    "debug_mode": {
+      "var_param": "debug_mode"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

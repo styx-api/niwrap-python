@@ -1,0 +1,110 @@
+{
+  "fn_root_make_params_and_execute": "dwi2fod",
+  "properties": {
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "dwi2fod_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "shells": {
+      "var_param": "shells"
+    },
+    "directions": {
+      "var_param": "directions"
+    },
+    "lmax": {
+      "var_param": "lmax"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "filter": {
+      "var_param": "filter_"
+    },
+    "neg_lambda": {
+      "var_param": "neg_lambda"
+    },
+    "norm_lambda": {
+      "var_param": "norm_lambda"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "norm_lambda_1": {
+      "var_param": "norm_lambda_1"
+    },
+    "neg_lambda_1": {
+      "var_param": "neg_lambda_1"
+    },
+    "predicted_signal": {
+      "var_param": "predicted_signal"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "dwi2fod_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "algorithm": {
+      "var_param": "algorithm"
+    },
+    "dwi": {
+      "var_param": "dwi"
+    },
+    "response_odf": {
+      "var_param": "response_odf",
+      "fn_struct_make_params": "dwi2fod_response_odf_params",
+      "properties": {
+        "response": {
+          "var_param": "response"
+        },
+        "odf": {
+          "var_param": "odf"
+        }
+      }
+    }
+  }
+}

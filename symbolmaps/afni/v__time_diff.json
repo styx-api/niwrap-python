@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__time_diff",
+  "properties": {
+    "file1": {
+      "var_param": "file1"
+    },
+    "file2": {
+      "var_param": "file2"
+    }
+  }
+}

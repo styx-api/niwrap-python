@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "sienax",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "bet_options": {
+      "var_param": "bet_options"
+    },
+    "twoclass_segment_flag": {
+      "var_param": "twoclass_segment_flag"
+    },
+    "t2_flag": {
+      "var_param": "t2_flag"
+    },
+    "top_threshold": {
+      "var_param": "top_threshold"
+    },
+    "bottom_threshold": {
+      "var_param": "bottom_threshold"
+    },
+    "regional_flag": {
+      "var_param": "regional_flag"
+    },
+    "lesion_mask": {
+      "var_param": "lesion_mask"
+    },
+    "fast_options": {
+      "var_param": "fast_options"
+    }
+  }
+}

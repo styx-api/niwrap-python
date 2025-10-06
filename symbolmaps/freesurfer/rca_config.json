@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "rca_config",
+  "properties": {
+    "source_config": {
+      "var_param": "source_config"
+    },
+    "updated_config": {
+      "var_param": "updated_config"
+    },
+    "unknown_args_file": {
+      "var_param": "unknown_args_file"
+    },
+    "args": {
+      "var_param": "args"
+    }
+  }
+}

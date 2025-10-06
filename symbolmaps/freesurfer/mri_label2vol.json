@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "mri_label2vol",
+  "properties": {
+    "labels": {
+      "var_param": "labels"
+    },
+    "annotation": {
+      "var_param": "annotation"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "registration": {
+      "var_param": "registration"
+    },
+    "identity_flag": {
+      "var_param": "identity_flag"
+    },
+    "fill_threshold": {
+      "var_param": "fill_threshold"
+    },
+    "label_vox_vol": {
+      "var_param": "label_vox_vol"
+    },
+    "projection": {
+      "var_param": "projection"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "hits_volume": {
+      "var_param": "hits_volume"
+    },
+    "label_stat_volume": {
+      "var_param": "label_stat_volume"
+    },
+    "stat_threshold": {
+      "var_param": "stat_threshold"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "defects": {
+      "var_param": "defects"
+    },
+    "native_vox2ras_flag": {
+      "var_param": "native_vox2ras_flag"
+    }
+  }
+}

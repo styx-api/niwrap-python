@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "inspec",
+  "properties": {
+    "specfile": {
+      "var_param": "specfile"
+    },
+    "newspecname": {
+      "var_param": "newspecname"
+    },
+    "detail": {
+      "var_param": "detail"
+    },
+    "leftspec": {
+      "var_param": "leftspec"
+    },
+    "rightspec": {
+      "var_param": "rightspec"
+    },
+    "state_rm": {
+      "var_param": "state_rm"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

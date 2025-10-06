@@ -1,0 +1,89 @@
+{
+  "fn_root_make_params_and_execute": "randomise",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "base_name": {
+      "var_param": "base_name"
+    },
+    "design_mat": {
+      "var_param": "design_mat"
+    },
+    "tcon": {
+      "var_param": "tcon"
+    },
+    "c_thresh": {
+      "var_param": "c_thresh"
+    },
+    "cm_thresh": {
+      "var_param": "cm_thresh"
+    },
+    "demean": {
+      "var_param": "demean"
+    },
+    "f_c_thresh": {
+      "var_param": "f_c_thresh"
+    },
+    "f_cm_thresh": {
+      "var_param": "f_cm_thresh"
+    },
+    "f_only": {
+      "var_param": "f_only"
+    },
+    "fcon": {
+      "var_param": "fcon"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "num_perm": {
+      "var_param": "num_perm"
+    },
+    "one_sample_group_mean": {
+      "var_param": "one_sample_group_mean"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "p_vec_n_dist_files": {
+      "var_param": "p_vec_n_dist_files"
+    },
+    "raw_stats_imgs": {
+      "var_param": "raw_stats_imgs"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "show_info_parallel_mode": {
+      "var_param": "show_info_parallel_mode"
+    },
+    "show_total_perms": {
+      "var_param": "show_total_perms"
+    },
+    "tfce": {
+      "var_param": "tfce"
+    },
+    "tfce2D": {
+      "var_param": "tfce2_d"
+    },
+    "tfce_C": {
+      "var_param": "tfce_c"
+    },
+    "tfce_E": {
+      "var_param": "tfce_e"
+    },
+    "tfce_H": {
+      "var_param": "tfce_h"
+    },
+    "var_smooth": {
+      "var_param": "var_smooth"
+    },
+    "vox_p_values": {
+      "var_param": "vox_p_values"
+    },
+    "x_block_labels": {
+      "var_param": "x_block_labels"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "dirgen",
+  "properties": {
+    "power": {
+      "var_param": "power"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "restarts": {
+      "var_param": "restarts"
+    },
+    "unipolar": {
+      "var_param": "unipolar"
+    },
+    "cartesian": {
+      "var_param": "cartesian"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "dirgen_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "ndir": {
+      "var_param": "ndir"
+    },
+    "dirs": {
+      "var_param": "dirs"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3dto_xdataset",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

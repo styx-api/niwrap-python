@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "zero_lt_4dfp",
+  "properties": {
+    "flt_value": {
+      "var_param": "flt_value"
+    },
+    "file_4dfp": {
+      "var_param": "file_4dfp"
+    },
+    "outroot": {
+      "var_param": "outroot"
+    },
+    "endianness": {
+      "var_param": "endianness"
+    }
+  }
+}

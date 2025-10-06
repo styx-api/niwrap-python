@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "surf_mesh",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "edge_fraction": {
+      "var_param": "edge_fraction"
+    },
+    "surface_volume": {
+      "var_param": "surface_volume"
+    },
+    "one_state": {
+      "var_param": "one_state"
+    },
+    "anatomical_label": {
+      "var_param": "anatomical_label"
+    },
+    "no_volume_registration": {
+      "var_param": "no_volume_registration"
+    },
+    "set_env": {
+      "var_param": "set_env"
+    }
+  }
+}

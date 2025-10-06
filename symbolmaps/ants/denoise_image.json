@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "denoise_image",
+  "properties": {
+    "image_dimensionality": {
+      "var_param": "image_dimensionality"
+    },
+    "noise_model": {
+      "var_param": "noise_model"
+    },
+    "shrink_factor": {
+      "var_param": "shrink_factor"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "patch_radius": {
+      "var_param": "patch_radius"
+    },
+    "search_radius": {
+      "var_param": "search_radius"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "fn_root_make_params_and_execute": "prelude",
+  "properties": {
+    "output_unwrap": {
+      "var_param": "output_unwrap"
+    },
+    "output_unwrap_alias": {
+      "var_param": "output_unwrap_alias"
+    },
+    "complex_phase": {
+      "var_param": "complex_phase"
+    },
+    "complex_phase_alias": {
+      "var_param": "complex_phase_alias"
+    },
+    "absolute_volume": {
+      "var_param": "absolute_volume"
+    },
+    "absolute_volume_alias": {
+      "var_param": "absolute_volume_alias"
+    },
+    "phase_volume": {
+      "var_param": "phase_volume"
+    },
+    "phase_volume_alias": {
+      "var_param": "phase_volume_alias"
+    },
+    "num_phase_split": {
+      "var_param": "num_phase_split"
+    },
+    "label_slices": {
+      "var_param": "label_slices"
+    },
+    "slice_processing": {
+      "var_param": "slice_processing"
+    },
+    "slice_processing_alias": {
+      "var_param": "slice_processing_alias"
+    },
+    "force_3d": {
+      "var_param": "force_3d"
+    },
+    "force_3d_alias": {
+      "var_param": "force_3d_alias"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "threshold_alias": {
+      "var_param": "threshold_alias"
+    },
+    "mask_volume": {
+      "var_param": "mask_volume"
+    },
+    "mask_volume_alias": {
+      "var_param": "mask_volume_alias"
+    },
+    "start_image": {
+      "var_param": "start_image"
+    },
+    "end_image": {
+      "var_param": "end_image"
+    },
+    "save_mask": {
+      "var_param": "save_mask"
+    },
+    "save_raw_phase": {
+      "var_param": "save_raw_phase"
+    },
+    "save_raw_phase_alias": {
+      "var_param": "save_raw_phase_alias"
+    },
+    "save_labels": {
+      "var_param": "save_labels"
+    },
+    "save_labels_alias": {
+      "var_param": "save_labels_alias"
+    },
+    "remove_ramps": {
+      "var_param": "remove_ramps"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "verbose_alias": {
+      "var_param": "verbose_alias"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "help_alias": {
+      "var_param": "help_alias"
+    }
+  }
+}

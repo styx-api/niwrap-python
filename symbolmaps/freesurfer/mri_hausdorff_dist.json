@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mri_hausdorff_dist",
+  "properties": {
+    "vol1": {
+      "var_param": "vol1"
+    },
+    "vol2": {
+      "var_param": "vol2"
+    },
+    "output_text_file": {
+      "var_param": "output_text_file"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "input_file_flag": {
+      "var_param": "input_file_flag"
+    },
+    "blur_sigma": {
+      "var_param": "blur_sigma"
+    },
+    "max_flag": {
+      "var_param": "max_flag"
+    },
+    "label_index": {
+      "var_param": "label_index"
+    }
+  }
+}

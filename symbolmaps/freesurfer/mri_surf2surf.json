@@ -1,0 +1,173 @@
+{
+  "fn_root_make_params_and_execute": "mri_surf2surf",
+  "properties": {
+    "src_subject": {
+      "var_param": "src_subject"
+    },
+    "sval_path": {
+      "var_param": "sval_path"
+    },
+    "sval_xyz": {
+      "var_param": "sval_xyz"
+    },
+    "projfrac": {
+      "var_param": "projfrac"
+    },
+    "projabs": {
+      "var_param": "projabs"
+    },
+    "sval_tal_xyz": {
+      "var_param": "sval_tal_xyz"
+    },
+    "sval_area": {
+      "var_param": "sval_area"
+    },
+    "sval_annot": {
+      "var_param": "sval_annot"
+    },
+    "sval_nxyz": {
+      "var_param": "sval_nxyz"
+    },
+    "patch": {
+      "var_param": "patch"
+    },
+    "sfmt": {
+      "var_param": "sfmt"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "reg_inv": {
+      "var_param": "reg_inv"
+    },
+    "srcicoorder": {
+      "var_param": "srcicoorder"
+    },
+    "trg_subject": {
+      "var_param": "trg_subject"
+    },
+    "trgicoorder": {
+      "var_param": "trgicoorder"
+    },
+    "tval_path": {
+      "var_param": "tval_path"
+    },
+    "tval_xyz": {
+      "var_param": "tval_xyz"
+    },
+    "tfmt": {
+      "var_param": "tfmt"
+    },
+    "trg_dist": {
+      "var_param": "trg_dist"
+    },
+    "s": {
+      "var_param": "s"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "src_hemi": {
+      "var_param": "src_hemi"
+    },
+    "trg_hemi": {
+      "var_param": "trg_hemi"
+    },
+    "dual_hemi": {
+      "var_param": "dual_hemi"
+    },
+    "jac": {
+      "var_param": "jac"
+    },
+    "surfreg": {
+      "var_param": "surfreg"
+    },
+    "src_surfreg": {
+      "var_param": "src_surfreg"
+    },
+    "trg_surfreg": {
+      "var_param": "trg_surfreg"
+    },
+    "mapmethod": {
+      "var_param": "mapmethod"
+    },
+    "frame": {
+      "var_param": "frame"
+    },
+    "fwhm_src": {
+      "var_param": "fwhm_src"
+    },
+    "fwhm_trg": {
+      "var_param": "fwhm_trg"
+    },
+    "nsmooth_in": {
+      "var_param": "nsmooth_in"
+    },
+    "nsmooth_out": {
+      "var_param": "nsmooth_out"
+    },
+    "cortex": {
+      "var_param": "cortex"
+    },
+    "no_cortex": {
+      "var_param": "no_cortex"
+    },
+    "label_src": {
+      "var_param": "label_src"
+    },
+    "label_trg": {
+      "var_param": "label_trg"
+    },
+    "mul": {
+      "var_param": "mul"
+    },
+    "div": {
+      "var_param": "div"
+    },
+    "reshape": {
+      "var_param": "reshape"
+    },
+    "reshape_factor": {
+      "var_param": "reshape_factor"
+    },
+    "reshape3d": {
+      "var_param": "reshape3d"
+    },
+    "split": {
+      "var_param": "split"
+    },
+    "synth": {
+      "var_param": "synth"
+    },
+    "ones": {
+      "var_param": "ones"
+    },
+    "normvar": {
+      "var_param": "normvar"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "prune": {
+      "var_param": "prune"
+    },
+    "no_prune": {
+      "var_param": "no_prune"
+    },
+    "proj_surf": {
+      "var_param": "proj_surf"
+    },
+    "proj_norm": {
+      "var_param": "proj_norm"
+    },
+    "reg_diff": {
+      "var_param": "reg_diff"
+    },
+    "rms": {
+      "var_param": "rms"
+    },
+    "rms_mask": {
+      "var_param": "rms_mask"
+    }
+  }
+}

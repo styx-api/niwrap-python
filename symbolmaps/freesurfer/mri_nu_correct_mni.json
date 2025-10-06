@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "mri_nu_correct_mni",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "proto_iterations": {
+      "var_param": "proto_iterations"
+    },
+    "mask_volume": {
+      "var_param": "mask_volume"
+    },
+    "stop_threshold": {
+      "var_param": "stop_threshold"
+    },
+    "uchar_transform": {
+      "var_param": "uchar_transform"
+    },
+    "ants_n3": {
+      "var_param": "ants_n3"
+    },
+    "ants_n4": {
+      "var_param": "ants_n4"
+    },
+    "no_uchar": {
+      "var_param": "no_uchar"
+    },
+    "ants_n4_replace_zeros": {
+      "var_param": "ants_n4_replace_zeros"
+    },
+    "cm_flag": {
+      "var_param": "cm_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

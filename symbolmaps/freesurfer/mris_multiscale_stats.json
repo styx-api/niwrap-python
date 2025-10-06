@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mris_multiscale_stats",
+  "properties": {
+    "output_subject": {
+      "var_param": "output_subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "curv": {
+      "var_param": "curv"
+    },
+    "class1_subjects": {
+      "var_param": "class1_subjects"
+    },
+    "class2_subjects": {
+      "var_param": "class2_subjects"
+    }
+  }
+}

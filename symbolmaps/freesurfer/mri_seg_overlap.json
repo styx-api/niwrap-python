@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_seg_overlap",
+  "properties": {
+    "vol1": {
+      "var_param": "vol1"
+    },
+    "vol2": {
+      "var_param": "vol2"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "measures": {
+      "var_param": "measures"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "label_names": {
+      "var_param": "label_names"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "no_names_flag": {
+      "var_param": "no_names_flag"
+    },
+    "seg_flag": {
+      "var_param": "seg_flag"
+    },
+    "quiet_flag": {
+      "var_param": "quiet_flag"
+    }
+  }
+}

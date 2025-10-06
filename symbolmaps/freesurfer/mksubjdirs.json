@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mksubjdirs",
+  "properties": {
+    "subj_name": {
+      "var_param": "subj_name"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
+    "parents": {
+      "var_param": "parents"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "selinux_context": {
+      "var_param": "selinux_context"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

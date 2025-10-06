@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "cifti_create_scalar_series",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_transpose": {
+      "var_param": "opt_transpose"
+    },
+    "opt_name_file_file": {
+      "var_param": "opt_name_file_file"
+    },
+    "series": {
+      "var_param": "series",
+      "fn_struct_make_params": "cifti_create_scalar_series_series_params",
+      "properties": {
+        "unit": {
+          "var_param": "unit"
+        },
+        "start": {
+          "var_param": "start"
+        },
+        "step": {
+          "var_param": "step"
+        }
+      }
+    }
+  }
+}

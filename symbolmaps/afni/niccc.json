@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "niccc",
+  "properties": {
+    "streamspec": {
+      "var_param": "streamspec"
+    },
+    "duplicate": {
+      "var_param": "duplicate"
+    },
+    "nodata": {
+      "var_param": "nodata"
+    },
+    "attribute": {
+      "var_param": "attribute"
+    },
+    "match": {
+      "var_param": "match"
+    },
+    "file": {
+      "var_param": "file"
+    },
+    "string": {
+      "var_param": "string_"
+    },
+    "stdout": {
+      "var_param": "stdout"
+    },
+    "hash": {
+      "var_param": "hash_"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "find_attr": {
+      "var_param": "find_attr"
+    },
+    "skip_attr": {
+      "var_param": "skip_attr"
+    }
+  }
+}

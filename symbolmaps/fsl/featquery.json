@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "featquery",
+  "properties": {
+    "n_featdirs": {
+      "var_param": "n_featdirs"
+    },
+    "featdirs": {
+      "var_param": "featdirs"
+    },
+    "n_stats": {
+      "var_param": "n_stats"
+    },
+    "stats": {
+      "var_param": "stats"
+    },
+    "output_rootname": {
+      "var_param": "output_rootname"
+    },
+    "atlas_flag": {
+      "var_param": "atlas_flag"
+    },
+    "percent_convert_flag": {
+      "var_param": "percent_convert_flag"
+    },
+    "thresh_flag": {
+      "var_param": "thresh_flag"
+    },
+    "interp_thresh": {
+      "var_param": "interp_thresh"
+    },
+    "timeseries_flag": {
+      "var_param": "timeseries_flag"
+    },
+    "weight_flag": {
+      "var_param": "weight_flag"
+    },
+    "browser_flag": {
+      "var_param": "browser_flag"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "coords": {
+      "var_param": "coords"
+    }
+  }
+}

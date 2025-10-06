@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "mrhistogram",
+  "properties": {
+    "bins": {
+      "var_param": "bins"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "ignorezero": {
+      "var_param": "ignorezero"
+    },
+    "allvolumes": {
+      "var_param": "allvolumes"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrhistogram_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "image": {
+      "var_param": "image"
+    },
+    "hist": {
+      "var_param": "hist"
+    }
+  }
+}

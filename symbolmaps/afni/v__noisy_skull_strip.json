@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__noisy_skull_strip",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "keep_tmp": {
+      "var_param": "keep_tmp"
+    },
+    "3dskullstrip_opts": {
+      "var_param": "v_3dskullstrip_opts"
+    }
+  }
+}

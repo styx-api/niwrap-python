@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_watershed",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "input_gradient_field": {
+      "var_param": "input_gradient_field"
+    },
+    "output_annotation": {
+      "var_param": "output_annotation"
+    },
+    "max_clusters": {
+      "var_param": "max_clusters"
+    },
+    "mask_label": {
+      "var_param": "mask_label"
+    }
+  }
+}

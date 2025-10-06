@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "fs_install_mcr",
+  "properties": {
+    "mcr_version": {
+      "var_param": "mcr_version"
+    }
+  }
+}

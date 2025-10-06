@@ -1,0 +1,113 @@
+{
+  "fn_root_make_params_and_execute": "mri_ms_fitparms",
+  "properties": {
+    "volumes": {
+      "var_param": "volumes"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "afi_flag": {
+      "var_param": "afi_flag"
+    },
+    "ait_flag": {
+      "var_param": "ait_flag"
+    },
+    "at": {
+      "var_param": "at"
+    },
+    "conform_flag": {
+      "var_param": "conform_flag"
+    },
+    "correct_flag": {
+      "var_param": "correct_flag"
+    },
+    "cubic_flag": {
+      "var_param": "cubic_flag"
+    },
+    "debug_slice_flag": {
+      "var_param": "debug_slice_flag"
+    },
+    "debug_voxel_flag": {
+      "var_param": "debug_voxel_flag"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "fa_scale": {
+      "var_param": "fa_scale"
+    },
+    "faf": {
+      "var_param": "faf"
+    },
+    "fsmooth": {
+      "var_param": "fsmooth"
+    },
+    "invert_flag": {
+      "var_param": "invert_flag"
+    },
+    "momentum": {
+      "var_param": "momentum"
+    },
+    "max_t2": {
+      "var_param": "max_t2"
+    },
+    "n_iter": {
+      "var_param": "n_iter"
+    },
+    "nearest_flag": {
+      "var_param": "nearest_flag"
+    },
+    "nocompress_flag": {
+      "var_param": "nocompress_flag"
+    },
+    "nosynth_flag": {
+      "var_param": "nosynth_flag"
+    },
+    "residuals": {
+      "var_param": "residuals"
+    },
+    "smooth_sigma": {
+      "var_param": "smooth_sigma"
+    },
+    "scale_factor": {
+      "var_param": "scale_factor"
+    },
+    "sinc_flag": {
+      "var_param": "sinc_flag"
+    },
+    "transform_flag": {
+      "var_param": "transform_flag"
+    },
+    "echo_time": {
+      "var_param": "echo_time"
+    },
+    "repetition_time": {
+      "var_param": "repetition_time"
+    },
+    "trilinear_flag": {
+      "var_param": "trilinear_flag"
+    },
+    "tukey_flag": {
+      "var_param": "tukey_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "use_brain_mask_flag": {
+      "var_param": "use_brain_mask_flag"
+    },
+    "write_intermediate": {
+      "var_param": "write_intermediate"
+    },
+    "extract_subimage": {
+      "var_param": "extract_subimage"
+    },
+    "window_flag": {
+      "var_param": "window_flag"
+    }
+  }
+}

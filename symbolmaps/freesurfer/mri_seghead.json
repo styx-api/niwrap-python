@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "mri_seghead",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "fill_value": {
+      "var_param": "fill_value"
+    },
+    "fhi_value": {
+      "var_param": "fhi_value"
+    },
+    "thresh1_value": {
+      "var_param": "thresh1_value"
+    },
+    "thresh2_value": {
+      "var_param": "thresh2_value"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "nhitsmin_value": {
+      "var_param": "nhitsmin_value"
+    },
+    "hvoldat_file": {
+      "var_param": "hvoldat_file"
+    },
+    "signal_behind_head": {
+      "var_param": "signal_behind_head"
+    },
+    "rescale": {
+      "var_param": "rescale"
+    },
+    "fill_holes_islands": {
+      "var_param": "fill_holes_islands"
+    },
+    "seed_point": {
+      "var_param": "seed_point"
+    },
+    "or_mask_file": {
+      "var_param": "or_mask_file"
+    },
+    "gdiag_option": {
+      "var_param": "gdiag_option"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "fn_root_make_params_and_execute": "run_fastsurfer_sh",
+  "properties": {
+    "sid": {
+      "var_param": "sid"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "t1_input": {
+      "var_param": "t1_input"
+    },
+    "fs_license": {
+      "var_param": "fs_license"
+    },
+    "asegdkt_segfile": {
+      "var_param": "asegdkt_segfile"
+    },
+    "vox_size": {
+      "var_param": "vox_size"
+    },
+    "seg_only": {
+      "var_param": "seg_only"
+    },
+    "seg_log": {
+      "var_param": "seg_log"
+    },
+    "conformed_name": {
+      "var_param": "conformed_name"
+    },
+    "norm_name": {
+      "var_param": "norm_name"
+    },
+    "t2_input": {
+      "var_param": "t2_input"
+    },
+    "reg_mode": {
+      "var_param": "reg_mode"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "device": {
+      "var_param": "device"
+    },
+    "viewagg_device": {
+      "var_param": "viewagg_device"
+    },
+    "batch_size": {
+      "var_param": "batch_size"
+    },
+    "python_cmd": {
+      "var_param": "python_cmd"
+    },
+    "surf_only": {
+      "var_param": "surf_only"
+    },
+    "no_biasfield": {
+      "var_param": "no_biasfield"
+    },
+    "tal_reg": {
+      "var_param": "tal_reg"
+    },
+    "no_asegdkt": {
+      "var_param": "no_asegdkt"
+    },
+    "no_cereb": {
+      "var_param": "no_cereb"
+    },
+    "cereb_segfile": {
+      "var_param": "cereb_segfile"
+    },
+    "no_hypothal": {
+      "var_param": "no_hypothal"
+    },
+    "qc_snap": {
+      "var_param": "qc_snap"
+    },
+    "three_t": {
+      "var_param": "three_t"
+    },
+    "parallel": {
+      "var_param": "parallel"
+    },
+    "ignore_fs_version": {
+      "var_param": "ignore_fs_version"
+    },
+    "fstess": {
+      "var_param": "fstess"
+    },
+    "fsqsphere": {
+      "var_param": "fsqsphere"
+    },
+    "fsaparc": {
+      "var_param": "fsaparc"
+    },
+    "no_fs_t1": {
+      "var_param": "no_fs_t1"
+    },
+    "no_surfreg": {
+      "var_param": "no_surfreg"
+    },
+    "allow_root": {
+      "var_param": "allow_root"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

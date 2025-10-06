@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "surface_vertex_areas",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric": {
+      "var_param": "metric"
+    }
+  }
+}

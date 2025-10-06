@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_convert_dcm_anat",
+  "properties": {
+    "dicom_directory": {
+      "var_param": "dicom_directory"
+    },
+    "nifti_input": {
+      "var_param": "nifti_input"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "orient": {
+      "var_param": "orient"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "reorig_reorient_off": {
+      "var_param": "reorig_reorient_off"
+    },
+    "qc_prefix": {
+      "var_param": "qc_prefix"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    },
+    "no_qc_view": {
+      "var_param": "no_qc_view"
+    }
+  }
+}

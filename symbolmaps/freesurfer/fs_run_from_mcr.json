@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fs_run_from_mcr",
+  "properties": {
+    "name": {
+      "var_param": "name"
+    },
+    "command": {
+      "var_param": "command"
+    },
+    "zeroth_flag": {
+      "var_param": "zeroth_flag"
+    },
+    "empty_env_flag": {
+      "var_param": "empty_env_flag"
+    }
+  }
+}

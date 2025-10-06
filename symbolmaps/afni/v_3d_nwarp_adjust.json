@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_nwarp_adjust",
+  "properties": {
+    "input_warps": {
+      "var_param": "input_warps"
+    },
+    "source_datasets": {
+      "var_param": "source_datasets"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

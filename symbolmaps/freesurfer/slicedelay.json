@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "slicedelay",
+  "properties": {
+    "slicedelayfile": {
+      "var_param": "slicedelayfile"
+    },
+    "nslices": {
+      "var_param": "nslices"
+    },
+    "order": {
+      "var_param": "order"
+    },
+    "ngroups": {
+      "var_param": "ngroups"
+    }
+  }
+}

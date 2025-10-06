@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "scene_file_update",
+  "properties": {
+    "input_scene_file": {
+      "var_param": "input_scene_file"
+    },
+    "output_scene_file": {
+      "var_param": "output_scene_file"
+    },
+    "scene_name_or_number": {
+      "var_param": "scene_name_or_number"
+    },
+    "opt_fix_map_palette_settings": {
+      "var_param": "opt_fix_map_palette_settings"
+    },
+    "opt_remove_missing_files": {
+      "var_param": "opt_remove_missing_files"
+    },
+    "opt_error": {
+      "var_param": "opt_error"
+    },
+    "opt_verbose": {
+      "var_param": "opt_verbose"
+    },
+    "copy_map_one_palette": {
+      "var_param": "copy_map_one_palette",
+      "fn_struct_make_params": "scene_file_update_copy_map_one_palette_params",
+      "properties": {
+        "data_file_name_suffix": {
+          "var_param": "data_file_name_suffix"
+        }
+      }
+    },
+    "data_file_add": {
+      "var_param": "data_file_add",
+      "fn_struct_make_params": "scene_file_update_data_file_add_params",
+      "properties": {
+        "name_of_data_file": {
+          "var_param": "name_of_data_file"
+        }
+      }
+    },
+    "data_file_remove": {
+      "var_param": "data_file_remove",
+      "fn_struct_make_params": "scene_file_update_data_file_remove_params",
+      "properties": {
+        "name_of_data_file": {
+          "var_param": "name_of_data_file"
+        }
+      }
+    }
+  }
+}

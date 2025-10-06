@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3dcopy",
+  "properties": {
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "denote": {
+      "var_param": "denote"
+    },
+    "old_prefix": {
+      "var_param": "old_prefix"
+    },
+    "view": {
+      "var_param": "view"
+    },
+    "new_prefix": {
+      "var_param": "new_prefix"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "fn_root_make_params_and_execute": "mris_ca_train",
+  "properties": {
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "canonsurf": {
+      "var_param": "canonsurf"
+    },
+    "annot_file": {
+      "var_param": "annot_file"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "nbrs": {
+      "var_param": "nbrs"
+    },
+    "orig": {
+      "var_param": "orig"
+    },
+    "norm1": {
+      "var_param": "norm1"
+    },
+    "norm2": {
+      "var_param": "norm2"
+    },
+    "norm3": {
+      "var_param": "norm3"
+    },
+    "ic": {
+      "var_param": "ic"
+    },
+    "sulc": {
+      "var_param": "sulc"
+    },
+    "sulconly": {
+      "var_param": "sulconly"
+    },
+    "a": {
+      "var_param": "a"
+    },
+    "parcellation_table": {
+      "var_param": "parcellation_table"
+    },
+    "n": {
+      "var_param": "n"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "debug_vertex": {
+      "var_param": "debug_vertex"
+    },
+    "gcs_means": {
+      "var_param": "gcs_means"
+    },
+    "gcs_priors": {
+      "var_param": "gcs_priors"
+    },
+    "gcs_diff": {
+      "var_param": "gcs_diff"
+    },
+    "nfill": {
+      "var_param": "nfill"
+    },
+    "no_fill": {
+      "var_param": "no_fill"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

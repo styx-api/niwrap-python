@@ -1,0 +1,89 @@
+{
+  "fn_root_make_params_and_execute": "mredit",
+  "properties": {
+    "plane": {
+      "var_param": "plane",
+      "fn_struct_make_params": "mredit_plane_params",
+      "properties": {
+        "axis": {
+          "var_param": "axis"
+        },
+        "coord": {
+          "var_param": "coord"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "sphere": {
+      "var_param": "sphere",
+      "fn_struct_make_params": "mredit_sphere_params",
+      "properties": {
+        "position": {
+          "var_param": "position"
+        },
+        "radius": {
+          "var_param": "radius"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "voxel": {
+      "var_param": "voxel",
+      "fn_struct_make_params": "mredit_voxel_params",
+      "properties": {
+        "position": {
+          "var_param": "position"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "scanner": {
+      "var_param": "scanner"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mredit_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

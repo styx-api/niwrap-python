@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mri_rf_long_train",
+  "properties": {
+    "seg_dir": {
+      "var_param": "seg_dir"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "node_spacing": {
+      "var_param": "node_spacing"
+    },
+    "prior_spacing": {
+      "var_param": "prior_spacing"
+    },
+    "input_data": {
+      "var_param": "input_data"
+    },
+    "check": {
+      "var_param": "check"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_rfa": {
+      "var_param": "output_rfa"
+    }
+  }
+}

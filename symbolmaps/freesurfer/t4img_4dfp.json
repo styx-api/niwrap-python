@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "t4img_4dfp",
+  "properties": {
+    "t4file": {
+      "var_param": "t4file"
+    },
+    "imgfile": {
+      "var_param": "imgfile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__roi_decluster",
+  "properties": {
+    "input_dset": {
+      "var_param": "input_dset"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "nvox_thresh": {
+      "var_param": "nvox_thresh"
+    },
+    "frac_thresh": {
+      "var_param": "frac_thresh"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "neighborhood_type": {
+      "var_param": "neighborhood_type"
+    }
+  }
+}

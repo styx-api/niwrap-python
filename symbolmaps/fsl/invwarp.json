@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "invwarp",
+  "properties": {
+    "warp": {
+      "var_param": "warp"
+    },
+    "out_img": {
+      "var_param": "out_img"
+    },
+    "ref_img": {
+      "var_param": "ref_img"
+    },
+    "absolute": {
+      "var_param": "absolute"
+    },
+    "relative": {
+      "var_param": "relative"
+    },
+    "noconstraint": {
+      "var_param": "noconstraint"
+    },
+    "jacobian_min": {
+      "var_param": "jacobian_min"
+    },
+    "jacobian_max": {
+      "var_param": "jacobian_max"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

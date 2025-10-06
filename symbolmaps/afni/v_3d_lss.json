@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_lss",
+  "properties": {
+    "matrix": {
+      "var_param": "matrix"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "nodata": {
+      "var_param": "nodata"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "save1D": {
+      "var_param": "save1_d"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

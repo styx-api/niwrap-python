@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "tbss_skeleton",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "skeleton_params": {
+      "var_param": "skeleton_params"
+    },
+    "alt_4d": {
+      "var_param": "alt_4d"
+    },
+    "alt_skeleton": {
+      "var_param": "alt_skeleton"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "debug2_flag": {
+      "var_param": "debug2_flag"
+    }
+  }
+}

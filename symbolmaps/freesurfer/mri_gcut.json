@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_gcut",
+  "properties": {
+    "wmmask_110": {
+      "var_param": "wmmask_110"
+    },
+    "mult_file": {
+      "var_param": "mult_file"
+    },
+    "threshold_value": {
+      "var_param": "threshold_value"
+    },
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    }
+  }
+}

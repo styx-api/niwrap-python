@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "fsrealpath",
+  "properties": {
+    "path": {
+      "var_param": "path"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

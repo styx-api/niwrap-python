@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__get_afni_dims",
+  "properties": {
+    "input_dset": {
+      "var_param": "input_dset"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_brain_voyagerto_afni",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "force_byte_swap": {
+      "var_param": "force_byte_swap"
+    },
+    "brainvoyager_qx": {
+      "var_param": "brainvoyager_qx"
+    },
+    "tlrc_space": {
+      "var_param": "tlrc_space"
+    },
+    "acpc_space": {
+      "var_param": "acpc_space"
+    },
+    "orig_space": {
+      "var_param": "orig_space"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "novolreg": {
+      "var_param": "novolreg"
+    },
+    "noxform": {
+      "var_param": "noxform"
+    },
+    "set_environment": {
+      "var_param": "set_environment"
+    },
+    "trace_debugging": {
+      "var_param": "trace_debugging"
+    },
+    "trace_extreme_debugging": {
+      "var_param": "trace_extreme_debugging"
+    },
+    "turn_off_memory_tracing": {
+      "var_param": "turn_off_memory_tracing"
+    },
+    "turn_on_memory_tracing": {
+      "var_param": "turn_on_memory_tracing"
+    }
+  }
+}

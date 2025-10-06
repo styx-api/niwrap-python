@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "ants_joint_label_fusion_sh",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "atlas_image_mrf": {
+      "var_param": "atlas_image_mrf"
+    },
+    "atlas_segmentation_mrf": {
+      "var_param": "atlas_segmentation_mrf"
+    },
+    "rigid_transform": {
+      "var_param": "rigid_transform"
+    },
+    "similarity_metric": {
+      "var_param": "similarity_metric"
+    },
+    "other_options": {
+      "var_param": "other_options"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "target_image": {
+      "var_param": "target_image"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "rigid_transform_additional_options": {
+      "var_param": "rigid_transform_additional_options"
+    },
+    "similarity_metric_additional_options": {
+      "var_param": "similarity_metric_additional_options"
+    }
+  }
+}

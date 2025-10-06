@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "extract_seg_waveform",
+  "properties": {
+    "seg_file": {
+      "var_param": "seg_file"
+    },
+    "seg_indices": {
+      "var_param": "seg_indices"
+    },
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "vsm_file": {
+      "var_param": "vsm_file"
+    },
+    "regheader_flag": {
+      "var_param": "regheader_flag"
+    },
+    "demean_flag": {
+      "var_param": "demean_flag"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

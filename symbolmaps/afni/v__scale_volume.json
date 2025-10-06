@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v__scale_volume",
+  "properties": {
+    "input_dset": {
+      "var_param": "input_dset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "val_clip": {
+      "var_param": "val_clip"
+    },
+    "perc_clip": {
+      "var_param": "perc_clip"
+    },
+    "scale_by_mean": {
+      "var_param": "scale_by_mean"
+    },
+    "scale_by_median": {
+      "var_param": "scale_by_median"
+    },
+    "norm": {
+      "var_param": "norm"
+    },
+    "mask": {
+      "var_param": "mask"
+    }
+  }
+}

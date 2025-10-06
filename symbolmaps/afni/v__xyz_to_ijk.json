@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v__xyz_to_ijk",
+  "properties": {
+    "inset": {
+      "var_param": "inset"
+    },
+    "x_coord": {
+      "var_param": "x_coord"
+    },
+    "y_coord": {
+      "var_param": "y_coord"
+    },
+    "z_coord": {
+      "var_param": "z_coord"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

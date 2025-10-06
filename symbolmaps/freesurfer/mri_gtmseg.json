@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "mri_gtmseg",
+  "properties": {
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "source_subject": {
+      "var_param": "source_subject"
+    },
+    "internal_usf": {
+      "var_param": "internal_usf"
+    },
+    "apas_file": {
+      "var_param": "apas_file"
+    },
+    "context_annotation": {
+      "var_param": "context_annotation"
+    },
+    "subseg_wm": {
+      "var_param": "subseg_wm"
+    },
+    "wm_annotation": {
+      "var_param": "wm_annotation"
+    },
+    "dmax": {
+      "var_param": "dmax"
+    },
+    "keep_hypo": {
+      "var_param": "keep_hypo"
+    },
+    "keep_cc": {
+      "var_param": "keep_cc"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "lhminmax": {
+      "var_param": "lhminmax"
+    },
+    "rhminmax": {
+      "var_param": "rhminmax"
+    },
+    "output_usf": {
+      "var_param": "output_usf"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "threads_max": {
+      "var_param": "threads_max"
+    },
+    "threads_max_1": {
+      "var_param": "threads_max_1"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "check_opts": {
+      "var_param": "check_opts"
+    }
+  }
+}

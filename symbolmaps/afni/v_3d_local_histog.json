@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_local_histog",
+  "properties": {
+    "nbhd_option": {
+      "var_param": "nbhd_option"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "hsave": {
+      "var_param": "hsave"
+    },
+    "lab_file": {
+      "var_param": "lab_file"
+    },
+    "exclude": {
+      "var_param": "exclude"
+    },
+    "exc_nonlab": {
+      "var_param": "exc_nonlab"
+    },
+    "mincount": {
+      "var_param": "mincount"
+    },
+    "probability": {
+      "var_param": "probability"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "input_datasets": {
+      "var_param": "input_datasets"
+    }
+  }
+}

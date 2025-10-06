@@ -1,0 +1,95 @@
+{
+  "fn_root_make_params_and_execute": "mideface",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "facemask": {
+      "var_param": "facemask"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "exclusion_mask": {
+      "var_param": "exclusion_mask"
+    },
+    "samseg_ndilations": {
+      "var_param": "samseg_ndilations"
+    },
+    "samseg_json": {
+      "var_param": "samseg_json"
+    },
+    "samseg_fast": {
+      "var_param": "samseg_fast"
+    },
+    "no_samseg_fast": {
+      "var_param": "no_samseg_fast"
+    },
+    "init_reg": {
+      "var_param": "init_reg"
+    },
+    "synthseg_ndilations": {
+      "var_param": "synthseg_ndilations"
+    },
+    "fill_const": {
+      "var_param": "fill_const"
+    },
+    "fill_zero": {
+      "var_param": "fill_zero"
+    },
+    "fhi": {
+      "var_param": "fhi"
+    },
+    "no_ears": {
+      "var_param": "no_ears"
+    },
+    "back_of_head": {
+      "var_param": "back_of_head"
+    },
+    "forehead": {
+      "var_param": "forehead"
+    },
+    "pics": {
+      "var_param": "pics"
+    },
+    "code": {
+      "var_param": "code_"
+    },
+    "image_convert": {
+      "var_param": "image_convert"
+    },
+    "no_post": {
+      "var_param": "no_post"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "output_format": {
+      "var_param": "output_format"
+    },
+    "atlas": {
+      "var_param": "atlas"
+    },
+    "expert": {
+      "var_param": "expert"
+    },
+    "display_no": {
+      "var_param": "display_no"
+    },
+    "apply_volume": {
+      "var_param": "apply_volume"
+    },
+    "check_volume": {
+      "var_param": "check_volume"
+    },
+    "check_output_file": {
+      "var_param": "check_output_file"
+    }
+  }
+}

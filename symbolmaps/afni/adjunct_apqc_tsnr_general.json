@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "adjunct_apqc_tsnr_general",
+  "properties": {
+    "montgap": {
+      "var_param": "montgap"
+    },
+    "montcolor": {
+      "var_param": "montcolor"
+    },
+    "montx": {
+      "var_param": "montx"
+    },
+    "monty": {
+      "var_param": "monty"
+    },
+    "opacity": {
+      "var_param": "opacity"
+    },
+    "blowup": {
+      "var_param": "blowup"
+    },
+    "save_ftype": {
+      "var_param": "save_ftype"
+    },
+    "set_dicom_xyz": {
+      "var_param": "set_dicom_xyz"
+    },
+    "set_ijk": {
+      "var_param": "set_ijk"
+    },
+    "set_subbricks": {
+      "var_param": "set_subbricks"
+    },
+    "olay_alpha": {
+      "var_param": "olay_alpha"
+    },
+    "olay_boxed": {
+      "var_param": "olay_boxed"
+    },
+    "thr_olay": {
+      "var_param": "thr_olay"
+    },
+    "ulay_range_nz": {
+      "var_param": "ulay_range_nz"
+    },
+    "ulay_range": {
+      "var_param": "ulay_range"
+    },
+    "delta_slices": {
+      "var_param": "delta_slices"
+    },
+    "olay_disc_hot_range": {
+      "var_param": "olay_disc_hot_range"
+    },
+    "olay_cont_max": {
+      "var_param": "olay_cont_max"
+    },
+    "cbar_cont": {
+      "var_param": "cbar_cont"
+    },
+    "no_cor": {
+      "var_param": "no_cor"
+    },
+    "no_sag": {
+      "var_param": "no_sag"
+    },
+    "no_axi": {
+      "var_param": "no_axi"
+    },
+    "echo": {
+      "var_param": "echo"
+    }
+  }
+}

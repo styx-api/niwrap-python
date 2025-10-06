@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "samsegmesh2surf",
+  "properties": {
+    "atlas_mesh": {
+      "var_param": "atlas_mesh"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "lta_transform": {
+      "var_param": "lta_transform"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "output_priors": {
+      "var_param": "output_priors"
+    },
+    "invert_flag": {
+      "var_param": "invert_flag"
+    }
+  }
+}

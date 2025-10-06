@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_clust_sim",
+  "properties": {
+    "nxyz": {
+      "var_param": "nxyz"
+    },
+    "dxyz": {
+      "var_param": "dxyz"
+    },
+    "ball": {
+      "var_param": "ball"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "oksmallmask": {
+      "var_param": "oksmallmask"
+    },
+    "inset": {
+      "var_param": "inset"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "acf": {
+      "var_param": "acf"
+    },
+    "nopad": {
+      "var_param": "nopad"
+    },
+    "pthr": {
+      "var_param": "pthr"
+    },
+    "athr": {
+      "var_param": "athr"
+    },
+    "lots": {
+      "var_param": "lots"
+    },
+    "mega": {
+      "var_param": "mega"
+    },
+    "iter": {
+      "var_param": "iter_"
+    },
+    "nodec": {
+      "var_param": "nodec"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "niml": {
+      "var_param": "niml"
+    },
+    "both": {
+      "var_param": "both"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "cmd": {
+      "var_param": "cmd_"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "ssave": {
+      "var_param": "ssave"
+    }
+  }
+}

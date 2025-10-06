@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "simple_syn_registration",
+  "properties": {
+    "fixed_image": {
+      "var_param": "fixed_image"
+    },
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "initial_transform": {
+      "var_param": "initial_transform"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

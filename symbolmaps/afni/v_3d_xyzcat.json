@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_xyzcat",
+  "properties": {
+    "direction": {
+      "var_param": "direction"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    }
+  }
+}

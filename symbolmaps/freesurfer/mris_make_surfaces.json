@@ -1,0 +1,164 @@
+{
+  "fn_root_make_params_and_execute": "mris_make_surfaces",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "white": {
+      "var_param": "white"
+    },
+    "pial": {
+      "var_param": "pial"
+    },
+    "whiteonly": {
+      "var_param": "whiteonly"
+    },
+    "nowhite": {
+      "var_param": "nowhite"
+    },
+    "orig_white": {
+      "var_param": "orig_white"
+    },
+    "orig_pial": {
+      "var_param": "orig_pial"
+    },
+    "q": {
+      "var_param": "q"
+    },
+    "max_gray_scale": {
+      "var_param": "max_gray_scale"
+    },
+    "c": {
+      "var_param": "c"
+    },
+    "cortex": {
+      "var_param": "cortex"
+    },
+    "w": {
+      "var_param": "w"
+    },
+    "first_wm_peak": {
+      "var_param": "first_wm_peak"
+    },
+    "a_avgs": {
+      "var_param": "a_avgs"
+    },
+    "pa_avgs": {
+      "var_param": "pa_avgs"
+    },
+    "wa_avgs": {
+      "var_param": "wa_avgs"
+    },
+    "t1_vol": {
+      "var_param": "t1_vol"
+    },
+    "w_vol": {
+      "var_param": "w_vol"
+    },
+    "long": {
+      "var_param": "long"
+    },
+    "dura_thresh": {
+      "var_param": "dura_thresh"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "erase_cerebellum": {
+      "var_param": "erase_cerebellum"
+    },
+    "wm_weight": {
+      "var_param": "wm_weight"
+    },
+    "nsigma_above": {
+      "var_param": "nsigma_above"
+    },
+    "nsigma_below": {
+      "var_param": "nsigma_below"
+    },
+    "t2_min_inside": {
+      "var_param": "t2_min_inside"
+    },
+    "t2_max_inside": {
+      "var_param": "t2_max_inside"
+    },
+    "t2_outside_min": {
+      "var_param": "t2_outside_min"
+    },
+    "t2_outside_max": {
+      "var_param": "t2_outside_max"
+    },
+    "min_peak_pct": {
+      "var_param": "min_peak_pct"
+    },
+    "border_vals_hires": {
+      "var_param": "border_vals_hires"
+    },
+    "no_unitize": {
+      "var_param": "no_unitize"
+    },
+    "intensity": {
+      "var_param": "intensity"
+    },
+    "curv": {
+      "var_param": "curv"
+    },
+    "tspring": {
+      "var_param": "tspring"
+    },
+    "nspring": {
+      "var_param": "nspring"
+    },
+    "repulse": {
+      "var_param": "repulse"
+    },
+    "save_target": {
+      "var_param": "save_target"
+    },
+    "save_res": {
+      "var_param": "save_res"
+    },
+    "v_vertexno": {
+      "var_param": "v_vertexno"
+    },
+    "diag_vertex": {
+      "var_param": "diag_vertex"
+    },
+    "rip": {
+      "var_param": "rip"
+    },
+    "sigma_white": {
+      "var_param": "sigma_white"
+    },
+    "sigma_pial": {
+      "var_param": "sigma_pial"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "min_border_white": {
+      "var_param": "min_border_white"
+    },
+    "max_border_white": {
+      "var_param": "max_border_white"
+    },
+    "min_gray_white_border": {
+      "var_param": "min_gray_white_border"
+    },
+    "max_gray": {
+      "var_param": "max_gray"
+    },
+    "max_gray_csf_border": {
+      "var_param": "max_gray_csf_border"
+    },
+    "min_gray_csf_border": {
+      "var_param": "min_gray_csf_border"
+    },
+    "max_csf": {
+      "var_param": "max_csf"
+    }
+  }
+}

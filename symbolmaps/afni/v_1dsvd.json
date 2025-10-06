@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v_1dsvd",
+  "properties": {
+    "one": {
+      "var_param": "one"
+    },
+    "vmean": {
+      "var_param": "vmean"
+    },
+    "vnorm": {
+      "var_param": "vnorm"
+    },
+    "cond": {
+      "var_param": "cond"
+    },
+    "sing": {
+      "var_param": "sing"
+    },
+    "sort": {
+      "var_param": "sort"
+    },
+    "nosort": {
+      "var_param": "nosort"
+    },
+    "asort": {
+      "var_param": "asort"
+    },
+    "left_eigenvectors": {
+      "var_param": "left_eigenvectors"
+    },
+    "num_eigenvectors": {
+      "var_param": "num_eigenvectors"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mmppsp",
+  "properties": {
+    "samseg_dir": {
+      "var_param": "samseg_dir"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "lh_flag": {
+      "var_param": "lh_flag"
+    },
+    "rh_flag": {
+      "var_param": "rh_flag"
+    },
+    "likelihood_flag": {
+      "var_param": "likelihood_flag"
+    },
+    "posterior_flag": {
+      "var_param": "posterior_flag"
+    },
+    "force_update_flag": {
+      "var_param": "force_update_flag"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "no_initsphreg_flag": {
+      "var_param": "no_initsphreg_flag"
+    },
+    "stop_after": {
+      "var_param": "stop_after"
+    },
+    "wexpanddist": {
+      "var_param": "wexpanddist"
+    }
+  }
+}

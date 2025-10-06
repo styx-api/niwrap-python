@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "ants_apply_transforms_to_points",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "precision": {
+      "var_param": "precision"
+    },
+    "forantsr": {
+      "var_param": "forantsr"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "transform": {
+      "var_param": "transform"
+    }
+  }
+}

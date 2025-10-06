@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "djpeg",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "gray": {
+      "var_param": "gray"
+    },
+    "fast_dct": {
+      "var_param": "fast_dct"
+    },
+    "one_pixel_height": {
+      "var_param": "one_pixel_height"
+    },
+    "pseudo_pixel_ratio": {
+      "var_param": "pseudo_pixel_ratio"
+    },
+    "crop_region": {
+      "var_param": "crop_region"
+    }
+  }
+}

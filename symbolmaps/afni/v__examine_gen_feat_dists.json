@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v__examine_gen_feat_dists",
+  "properties": {
+    "features_dir": {
+      "var_param": "features_dir"
+    },
+    "wildcards": {
+      "var_param": "wildcards"
+    },
+    "output_suffix": {
+      "var_param": "output_suffix"
+    },
+    "exclude_features": {
+      "var_param": "exclude_features"
+    },
+    "exclude_classes": {
+      "var_param": "exclude_classes"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "panels_horizontal": {
+      "var_param": "panels_horizontal"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "fslswapdim_exe",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "axis_a": {
+      "var_param": "axis_a"
+    },
+    "axis_b": {
+      "var_param": "axis_b"
+    },
+    "axis_c": {
+      "var_param": "axis_c"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "checkLR_flag": {
+      "var_param": "check_lr_flag"
+    }
+  }
+}

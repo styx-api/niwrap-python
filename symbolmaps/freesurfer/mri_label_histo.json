@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_label_histo",
+  "properties": {
+    "t1_volume": {
+      "var_param": "t1_volume"
+    },
+    "labeled_volume": {
+      "var_param": "labeled_volume"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

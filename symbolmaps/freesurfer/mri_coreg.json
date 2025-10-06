@@ -1,0 +1,164 @@
+{
+  "fn_root_make_params_and_execute": "mri_coreg",
+  "properties": {
+    "movvol": {
+      "var_param": "movvol"
+    },
+    "refvol": {
+      "var_param": "refvol"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "zscale": {
+      "var_param": "zscale"
+    },
+    "xztrans_yrot": {
+      "var_param": "xztrans_yrot"
+    },
+    "xytrans_zrot": {
+      "var_param": "xytrans_zrot"
+    },
+    "xytrans_zrot_xyscale_xyshear": {
+      "var_param": "xytrans_zrot_xyscale_xyshear"
+    },
+    "ref_maskvol": {
+      "var_param": "ref_maskvol"
+    },
+    "no_ref_mask": {
+      "var_param": "no_ref_mask"
+    },
+    "mov_maskvol": {
+      "var_param": "mov_maskvol"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "regdat": {
+      "var_param": "regdat"
+    },
+    "no_coord_dither": {
+      "var_param": "no_coord_dither"
+    },
+    "no_intensity_dither": {
+      "var_param": "no_intensity_dither"
+    },
+    "spatial_scales": {
+      "var_param": "spatial_scales"
+    },
+    "trans": {
+      "var_param": "trans"
+    },
+    "rot": {
+      "var_param": "rot"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "shear": {
+      "var_param": "shear"
+    },
+    "init_reg": {
+      "var_param": "init_reg"
+    },
+    "out_param_file": {
+      "var_param": "out_param_file"
+    },
+    "out_cost_file": {
+      "var_param": "out_cost_file"
+    },
+    "no_cras0": {
+      "var_param": "no_cras0"
+    },
+    "centroid": {
+      "var_param": "centroid"
+    },
+    "ras2ras": {
+      "var_param": "ras2ras"
+    },
+    "nitersmax": {
+      "var_param": "nitersmax"
+    },
+    "ftol": {
+      "var_param": "ftol"
+    },
+    "linmintol": {
+      "var_param": "linmintol"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "sat": {
+      "var_param": "sat"
+    },
+    "conf_ref": {
+      "var_param": "conf_ref"
+    },
+    "no_bf": {
+      "var_param": "no_bf"
+    },
+    "bf_lim": {
+      "var_param": "bf_lim"
+    },
+    "bf_nsamp": {
+      "var_param": "bf_nsamp"
+    },
+    "no_smooth": {
+      "var_param": "no_smooth"
+    },
+    "ref_fwhm": {
+      "var_param": "ref_fwhm"
+    },
+    "mov_oob": {
+      "var_param": "mov_oob"
+    },
+    "init_reg_save": {
+      "var_param": "init_reg_save"
+    },
+    "init_reg_save_only": {
+      "var_param": "init_reg_save_only"
+    },
+    "mat2par": {
+      "var_param": "mat2par"
+    },
+    "mat2rot": {
+      "var_param": "mat2rot"
+    },
+    "par2mat": {
+      "var_param": "par2mat"
+    },
+    "lrrev": {
+      "var_param": "lrrev"
+    },
+    "landmarks": {
+      "var_param": "landmarks"
+    },
+    "rms": {
+      "var_param": "rms"
+    },
+    "movout": {
+      "var_param": "movout"
+    },
+    "mov_idither": {
+      "var_param": "mov_idither"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

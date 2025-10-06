@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "run_samseg",
+  "properties": {
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "input_mode": {
+      "var_param": "input_mode"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "reg_only": {
+      "var_param": "reg_only"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "init_reg_file": {
+      "var_param": "init_reg_file"
+    },
+    "atlas_dir": {
+      "var_param": "atlas_dir"
+    },
+    "gmm_file": {
+      "var_param": "gmm_file"
+    },
+    "ignore_unknown": {
+      "var_param": "ignore_unknown"
+    },
+    "options_file": {
+      "var_param": "options_file"
+    },
+    "pallidum_separate": {
+      "var_param": "pallidum_separate"
+    },
+    "mesh_stiffness": {
+      "var_param": "mesh_stiffness"
+    },
+    "smooth_wm_cortex_priors": {
+      "var_param": "smooth_wm_cortex_priors"
+    },
+    "bias_field_smoothing_kernel": {
+      "var_param": "bias_field_smoothing_kernel"
+    },
+    "lesion": {
+      "var_param": "lesion"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "samples": {
+      "var_param": "samples"
+    },
+    "burnin": {
+      "var_param": "burnin"
+    },
+    "lesion_pseudo_samples": {
+      "var_param": "lesion_pseudo_samples"
+    },
+    "lesion_rho": {
+      "var_param": "lesion_rho"
+    },
+    "lesion_mask_structure": {
+      "var_param": "lesion_mask_structure"
+    },
+    "lesion_mask_pattern": {
+      "var_param": "lesion_mask_pattern"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "dissection_photo": {
+      "var_param": "dissection_photo"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "save_posteriors": {
+      "var_param": "save_posteriors"
+    },
+    "save_probabilities": {
+      "var_param": "save_probabilities"
+    },
+    "showfigs": {
+      "var_param": "showfigs"
+    },
+    "save_mesh": {
+      "var_param": "save_mesh"
+    },
+    "save_warp": {
+      "var_param": "save_warp"
+    },
+    "movie": {
+      "var_param": "movie"
+    }
+  }
+}

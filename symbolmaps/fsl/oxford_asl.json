@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "oxford_asl",
+  "properties": {
+    "asl_data": {
+      "var_param": "asl_data"
+    },
+    "output_dir_name": {
+      "var_param": "output_dir_name"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "spatial_smoothing": {
+      "var_param": "spatial_smoothing"
+    },
+    "white_paper_analysis": {
+      "var_param": "white_paper_analysis"
+    },
+    "motion_correction": {
+      "var_param": "motion_correction"
+    },
+    "input_asl_format": {
+      "var_param": "input_asl_format"
+    },
+    "input_block_format": {
+      "var_param": "input_block_format"
+    },
+    "inversion_times": {
+      "var_param": "inversion_times"
+    },
+    "ti_image": {
+      "var_param": "ti_image"
+    },
+    "casl": {
+      "var_param": "casl"
+    },
+    "arterial_suppression": {
+      "var_param": "arterial_suppression"
+    },
+    "bolus_duration": {
+      "var_param": "bolus_duration"
+    },
+    "bat": {
+      "var_param": "bat"
+    },
+    "tissue_t1": {
+      "var_param": "tissue_t1"
+    },
+    "blood_t1": {
+      "var_param": "blood_t1"
+    },
+    "slice_timing_difference": {
+      "var_param": "slice_timing_difference"
+    },
+    "slice_band": {
+      "var_param": "slice_band"
+    },
+    "flip_angle": {
+      "var_param": "flip_angle"
+    },
+    "fsl_anat_dir": {
+      "var_param": "fsl_anat_dir"
+    },
+    "structural_image": {
+      "var_param": "structural_image"
+    },
+    "bet_structural_image": {
+      "var_param": "bet_structural_image"
+    },
+    "fast_segmentation_images": {
+      "var_param": "fast_segmentation_images"
+    },
+    "sensitivity_correction": {
+      "var_param": "sensitivity_correction"
+    },
+    "precomputed_m0_value": {
+      "var_param": "precomputed_m0_value"
+    },
+    "inversion_efficiency": {
+      "var_param": "inversion_efficiency"
+    },
+    "tr_calibration_data": {
+      "var_param": "tr_calibration_data"
+    },
+    "calibration_image": {
+      "var_param": "calibration_image"
+    },
+    "calibration_method": {
+      "var_param": "calibration_method"
+    }
+  }
+}

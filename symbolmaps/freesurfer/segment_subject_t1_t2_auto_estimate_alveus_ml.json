@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "segment_subject_t1_t2_auto_estimate_alveus_ml",
+  "properties": {
+    "input_t1": {
+      "var_param": "input_t1"
+    },
+    "input_t2": {
+      "var_param": "input_t2"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "other_options": {
+      "var_param": "other_options"
+    }
+  }
+}

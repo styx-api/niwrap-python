@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "fslcpgeom",
+  "properties": {
+    "source_file": {
+      "var_param": "source_file"
+    },
+    "destination_file": {
+      "var_param": "destination_file"
+    },
+    "dimensions_flag": {
+      "var_param": "dimensions_flag"
+    }
+  }
+}

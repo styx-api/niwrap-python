@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "img2stdcoord",
+  "properties": {
+    "coordinate_file": {
+      "var_param": "coordinate_file"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "standard_image": {
+      "var_param": "standard_image"
+    },
+    "affine_transform": {
+      "var_param": "affine_transform"
+    },
+    "warp_field": {
+      "var_param": "warp_field"
+    },
+    "prewarp_affine_transform": {
+      "var_param": "prewarp_affine_transform"
+    },
+    "voxel_flag": {
+      "var_param": "voxel_flag"
+    },
+    "mm_flag": {
+      "var_param": "mm_flag"
+    },
+    "verbose_flag_1": {
+      "var_param": "verbose_flag_1"
+    },
+    "verbose_flag_2": {
+      "var_param": "verbose_flag_2"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

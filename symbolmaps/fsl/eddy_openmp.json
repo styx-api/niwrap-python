@@ -1,0 +1,137 @@
+{
+  "fn_root_make_params_and_execute": "eddy_openmp",
+  "properties": {
+    "imain": {
+      "var_param": "imain"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "index": {
+      "var_param": "index"
+    },
+    "acqp": {
+      "var_param": "acqp"
+    },
+    "bvecs": {
+      "var_param": "bvecs"
+    },
+    "bvals": {
+      "var_param": "bvals"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "mb": {
+      "var_param": "mb"
+    },
+    "mb_offs": {
+      "var_param": "mb_offs"
+    },
+    "slspec": {
+      "var_param": "slspec"
+    },
+    "json": {
+      "var_param": "json_"
+    },
+    "mporder": {
+      "var_param": "mporder"
+    },
+    "s2v_lambda": {
+      "var_param": "s2v_lambda"
+    },
+    "topup": {
+      "var_param": "topup"
+    },
+    "field": {
+      "var_param": "field"
+    },
+    "field_mat": {
+      "var_param": "field_mat"
+    },
+    "flm": {
+      "var_param": "flm"
+    },
+    "slm": {
+      "var_param": "slm"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "s2v_niter": {
+      "var_param": "s2v_niter"
+    },
+    "cnr_maps": {
+      "var_param": "cnr_maps"
+    },
+    "residuals": {
+      "var_param": "residuals"
+    },
+    "fep": {
+      "var_param": "fep"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "s2v_interp": {
+      "var_param": "s2v_interp"
+    },
+    "resamp": {
+      "var_param": "resamp"
+    },
+    "nvoxhp": {
+      "var_param": "nvoxhp"
+    },
+    "initrand": {
+      "var_param": "initrand"
+    },
+    "ff": {
+      "var_param": "ff"
+    },
+    "repol": {
+      "var_param": "repol"
+    },
+    "ol_nstd": {
+      "var_param": "ol_nstd"
+    },
+    "ol_nvox": {
+      "var_param": "ol_nvox"
+    },
+    "ol_type": {
+      "var_param": "ol_type"
+    },
+    "ol_pos": {
+      "var_param": "ol_pos"
+    },
+    "ol_sqr": {
+      "var_param": "ol_sqr"
+    },
+    "estimate_move_by_susceptibility": {
+      "var_param": "estimate_move_by_susceptibility"
+    },
+    "mbs_niter": {
+      "var_param": "mbs_niter"
+    },
+    "mbs_lambda": {
+      "var_param": "mbs_lambda"
+    },
+    "mbs_ksp": {
+      "var_param": "mbs_ksp"
+    },
+    "dont_sep_offs_move": {
+      "var_param": "dont_sep_offs_move"
+    },
+    "dont_peas": {
+      "var_param": "dont_peas"
+    },
+    "data_is_shelled": {
+      "var_param": "data_is_shelled"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

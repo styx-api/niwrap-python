@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "cluster2html",
+  "properties": {
+    "featdir": {
+      "var_param": "featdir"
+    },
+    "inroot": {
+      "var_param": "inroot"
+    },
+    "std_flag": {
+      "var_param": "std_flag"
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "fn_root_make_params_and_execute": "fabber_dce",
+  "properties": {
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "inference_method": {
+      "var_param": "inference_method"
+    },
+    "forward_model": {
+      "var_param": "forward_model"
+    },
+    "input_data": {
+      "var_param": "input_data"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "list_methods": {
+      "var_param": "list_methods"
+    },
+    "list_models": {
+      "var_param": "list_models"
+    },
+    "list_params": {
+      "var_param": "list_params"
+    },
+    "describe_params": {
+      "var_param": "describe_params"
+    },
+    "list_outputs": {
+      "var_param": "list_outputs"
+    },
+    "evaluate_model": {
+      "var_param": "evaluate_model"
+    },
+    "evaluate_params": {
+      "var_param": "evaluate_params"
+    },
+    "evaluate_nt": {
+      "var_param": "evaluate_nt"
+    },
+    "simple_output": {
+      "var_param": "simple_output"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "link_to_latest": {
+      "var_param": "link_to_latest"
+    },
+    "load_models": {
+      "var_param": "load_models"
+    },
+    "multiple_data": {
+      "var_param": "multiple_data"
+    },
+    "data_order": {
+      "var_param": "data_order"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "masked_time_points": {
+      "var_param": "masked_time_points"
+    },
+    "supplemental_data": {
+      "var_param": "supplemental_data"
+    },
+    "dump_param_names": {
+      "var_param": "dump_param_names"
+    },
+    "save_model_fit": {
+      "var_param": "save_model_fit"
+    },
+    "save_residuals": {
+      "var_param": "save_residuals"
+    },
+    "save_model_extras": {
+      "var_param": "save_model_extras"
+    },
+    "save_mvn": {
+      "var_param": "save_mvn"
+    },
+    "save_mean": {
+      "var_param": "save_mean"
+    },
+    "save_std": {
+      "var_param": "save_std"
+    },
+    "save_variances": {
+      "var_param": "save_variances"
+    },
+    "save_zstat": {
+      "var_param": "save_zstat"
+    },
+    "save_noise_mean": {
+      "var_param": "save_noise_mean"
+    },
+    "save_noise_std": {
+      "var_param": "save_noise_std"
+    },
+    "save_free_energy": {
+      "var_param": "save_free_energy"
+    },
+    "option_file": {
+      "var_param": "option_file"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

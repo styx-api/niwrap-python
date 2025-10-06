@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "surf2_vol_coord",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "grid_vol": {
+      "var_param": "grid_vol"
+    },
+    "grid_subbrick": {
+      "var_param": "grid_subbrick"
+    },
+    "sv": {
+      "var_param": "sv"
+    },
+    "one_node": {
+      "var_param": "one_node"
+    },
+    "closest_nodes": {
+      "var_param": "closest_nodes"
+    },
+    "qual": {
+      "var_param": "qual"
+    },
+    "lpi": {
+      "var_param": "lpi"
+    },
+    "rai": {
+      "var_param": "rai"
+    },
+    "verb_level": {
+      "var_param": "verb_level"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

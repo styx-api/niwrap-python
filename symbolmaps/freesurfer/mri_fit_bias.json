@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_fit_bias",
+  "properties": {
+    "inputvol": {
+      "var_param": "inputvol"
+    },
+    "lpf_cutoff": {
+      "var_param": "lpf_cutoff"
+    },
+    "segvol": {
+      "var_param": "segvol"
+    },
+    "maskvol": {
+      "var_param": "maskvol"
+    },
+    "outvol": {
+      "var_param": "outvol"
+    },
+    "biasfield": {
+      "var_param": "biasfield"
+    },
+    "dctvol": {
+      "var_param": "dctvol"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "nerode": {
+      "var_param": "nerode"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    }
+  }
+}

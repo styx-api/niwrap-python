@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_1dgrayplot",
+  "properties": {
+    "tsfile": {
+      "var_param": "tsfile"
+    },
+    "install": {
+      "var_param": "install"
+    },
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "flip": {
+      "var_param": "flip"
+    },
+    "sep": {
+      "var_param": "sep"
+    },
+    "use": {
+      "var_param": "use"
+    },
+    "ps": {
+      "var_param": "ps"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "aiv",
+  "properties": {
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "port": {
+      "var_param": "port"
+    },
+    "pad": {
+      "var_param": "pad"
+    },
+    "input_images": {
+      "var_param": "input_images"
+    }
+  }
+}

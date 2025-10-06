@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "register_subject_flash",
+  "properties": {
+    "input_volumes": {
+      "var_param": "input_volumes"
+    }
+  }
+}

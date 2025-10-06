@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "long_mris_slopes",
+  "properties": {
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "meas": {
+      "var_param": "meas"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "sd": {
+      "var_param": "sd"
+    },
+    "do_avg": {
+      "var_param": "do_avg"
+    },
+    "do_rate": {
+      "var_param": "do_rate"
+    },
+    "do_pc1fit": {
+      "var_param": "do_pc1fit"
+    },
+    "do_pc1": {
+      "var_param": "do_pc1"
+    },
+    "do_spc": {
+      "var_param": "do_spc"
+    },
+    "do_stack": {
+      "var_param": "do_stack"
+    },
+    "do_label": {
+      "var_param": "do_label"
+    },
+    "qcache": {
+      "var_param": "qcache"
+    },
+    "resid": {
+      "var_param": "resid"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "nosmooth": {
+      "var_param": "nosmooth"
+    },
+    "time": {
+      "var_param": "time_"
+    },
+    "generic_time": {
+      "var_param": "generic_time"
+    },
+    "in_label": {
+      "var_param": "in_label"
+    },
+    "jac": {
+      "var_param": "jac"
+    },
+    "name_avg": {
+      "var_param": "name_avg"
+    },
+    "name_rate": {
+      "var_param": "name_rate"
+    },
+    "name_pc1fit": {
+      "var_param": "name_pc1fit"
+    },
+    "name_pc1": {
+      "var_param": "name_pc1"
+    },
+    "name_spc": {
+      "var_param": "name_spc"
+    },
+    "name_resid": {
+      "var_param": "name_resid"
+    },
+    "out_stack": {
+      "var_param": "out_stack"
+    },
+    "out_label": {
+      "var_param": "out_label"
+    },
+    "isec_labels": {
+      "var_param": "isec_labels"
+    },
+    "stack_avg": {
+      "var_param": "stack_avg"
+    },
+    "stack_rate": {
+      "var_param": "stack_rate"
+    },
+    "stack_pc1fit": {
+      "var_param": "stack_pc1fit"
+    },
+    "stack_pc1": {
+      "var_param": "stack_pc1"
+    },
+    "stack_spc": {
+      "var_param": "stack_spc"
+    },
+    "stack_resid": {
+      "var_param": "stack_resid"
+    }
+  }
+}

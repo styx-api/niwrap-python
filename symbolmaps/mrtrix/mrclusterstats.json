@@ -1,0 +1,119 @@
+{
+  "fn_root_make_params_and_execute": "mrclusterstats",
+  "properties": {
+    "notest": {
+      "var_param": "notest"
+    },
+    "errors": {
+      "var_param": "errors"
+    },
+    "exchange_within": {
+      "var_param": "exchange_within"
+    },
+    "exchange_whole": {
+      "var_param": "exchange_whole"
+    },
+    "strong": {
+      "var_param": "strong"
+    },
+    "nshuffles": {
+      "var_param": "nshuffles"
+    },
+    "permutations": {
+      "var_param": "permutations"
+    },
+    "nonstationarity": {
+      "var_param": "nonstationarity"
+    },
+    "skew_nonstationarity": {
+      "var_param": "skew_nonstationarity"
+    },
+    "nshuffles_nonstationarity": {
+      "var_param": "nshuffles_nonstationarity"
+    },
+    "permutations_nonstationarity": {
+      "var_param": "permutations_nonstationarity"
+    },
+    "tfce_dh": {
+      "var_param": "tfce_dh"
+    },
+    "tfce_e": {
+      "var_param": "tfce_e"
+    },
+    "tfce_h": {
+      "var_param": "tfce_h"
+    },
+    "variance": {
+      "var_param": "variance"
+    },
+    "ftests": {
+      "var_param": "ftests"
+    },
+    "fonly": {
+      "var_param": "fonly"
+    },
+    "column": {
+      "var_param": "column",
+      "fn_struct_make_params": "mrclusterstats_column_params",
+      "properties": {
+        "path": {
+          "var_param": "path"
+        }
+      }
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "connectivity": {
+      "var_param": "connectivity"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrclusterstats_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "design": {
+      "var_param": "design"
+    },
+    "contrast": {
+      "var_param": "contrast"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

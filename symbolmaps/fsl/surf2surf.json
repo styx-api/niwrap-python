@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "surf2surf",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "input_convention": {
+      "var_param": "input_convention"
+    },
+    "output_convention": {
+      "var_param": "output_convention"
+    },
+    "input_ref_volume": {
+      "var_param": "input_ref_volume"
+    },
+    "output_ref_volume": {
+      "var_param": "output_ref_volume"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "output_values": {
+      "var_param": "output_values"
+    }
+  }
+}

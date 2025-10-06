@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v_4swap",
+  "properties": {
+    "files": {
+      "var_param": "files"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

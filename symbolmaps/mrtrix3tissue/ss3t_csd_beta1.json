@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "ss3t_csd_beta1",
+  "properties": {
+    "mask": {
+      "var_param": "mask"
+    },
+    "bzero_pct": {
+      "var_param": "bzero_pct"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "ss3t_csd_beta1_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "dwi": {
+      "var_param": "dwi"
+    },
+    "response_odf": {
+      "var_param": "response_odf",
+      "fn_struct_make_params": "ss3t_csd_beta1_response_odf_params",
+      "properties": {
+        "response": {
+          "var_param": "response"
+        },
+        "odf": {
+          "var_param": "odf"
+        }
+      }
+    }
+  }
+}

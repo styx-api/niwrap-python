@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_defects_pointset",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "defects": {
+      "var_param": "defects"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "control": {
+      "var_param": "control"
+    }
+  }
+}

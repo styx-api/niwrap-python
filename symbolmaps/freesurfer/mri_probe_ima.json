@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mri_probe_ima",
+  "properties": {
+    "ima_file": {
+      "var_param": "ima_file"
+    },
+    "key_string": {
+      "var_param": "key_string"
+    },
+    "offset_type_len": {
+      "var_param": "offset_type_len"
+    },
+    "attribute_name": {
+      "var_param": "attribute_name"
+    },
+    "fileinfo": {
+      "var_param": "fileinfo"
+    },
+    "dictionary": {
+      "var_param": "dictionary"
+    },
+    "ob_stem": {
+      "var_param": "ob_stem"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

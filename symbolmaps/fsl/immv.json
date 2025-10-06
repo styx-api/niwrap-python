@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "immv",
+  "properties": {
+    "source_files": {
+      "var_param": "source_files"
+    },
+    "destination": {
+      "var_param": "destination"
+    }
+  }
+}

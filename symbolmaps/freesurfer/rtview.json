@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "rtview",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "left_hemi": {
+      "var_param": "left_hemi"
+    },
+    "right_hemi": {
+      "var_param": "right_hemi"
+    },
+    "eccen": {
+      "var_param": "eccen"
+    },
+    "polar": {
+      "var_param": "polar"
+    },
+    "real_file": {
+      "var_param": "real_file"
+    },
+    "imag_file": {
+      "var_param": "imag_file"
+    },
+    "fsig_file": {
+      "var_param": "fsig_file"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "flat_display": {
+      "var_param": "flat_display"
+    },
+    "patch": {
+      "var_param": "patch"
+    },
+    "tcl_file": {
+      "var_param": "tcl_file"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    }
+  }
+}

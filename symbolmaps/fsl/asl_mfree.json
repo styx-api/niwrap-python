@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "asl_mfree",
+  "properties": {
+    "datafile": {
+      "var_param": "datafile"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "aif": {
+      "var_param": "aif"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "mthresh": {
+      "var_param": "mthresh"
+    },
+    "tcorrect": {
+      "var_param": "tcorrect"
+    },
+    "bata": {
+      "var_param": "bata"
+    },
+    "batt": {
+      "var_param": "batt"
+    },
+    "bat": {
+      "var_param": "bat"
+    },
+    "bat_grad_thr": {
+      "var_param": "bat_grad_thr"
+    },
+    "t1": {
+      "var_param": "t1"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "std": {
+      "var_param": "std"
+    },
+    "nwb": {
+      "var_param": "nwb"
+    },
+    "turbo_quasar": {
+      "var_param": "turbo_quasar"
+    },
+    "shift_factor": {
+      "var_param": "shift_factor"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "run_first_all",
+  "properties": {
+    "method": {
+      "var_param": "method"
+    },
+    "brainextract_flag": {
+      "var_param": "brainextract_flag"
+    },
+    "structure": {
+      "var_param": "structure"
+    },
+    "affine_matrix": {
+      "var_param": "affine_matrix"
+    },
+    "threestage_flag": {
+      "var_param": "threestage_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    }
+  }
+}

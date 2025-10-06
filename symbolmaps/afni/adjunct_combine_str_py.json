@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "adjunct_combine_str_py",
+  "properties": {
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "upper_index": {
+      "var_param": "upper_index"
+    },
+    "string_selectors": {
+      "var_param": "string_selectors"
+    }
+  }
+}

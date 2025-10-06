@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "concat_bvars",
+  "properties": {
+    "output_bvars": {
+      "var_param": "output_bvars"
+    },
+    "input_bvars": {
+      "var_param": "input_bvars"
+    }
+  }
+}

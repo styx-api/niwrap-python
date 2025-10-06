@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "print_unique_labels_csh",
+  "properties": {
+    "label_volume": {
+      "var_param": "label_volume"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "list_only": {
+      "var_param": "list_only"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

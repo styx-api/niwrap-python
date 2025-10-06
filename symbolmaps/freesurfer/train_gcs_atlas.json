@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "train_gcs_atlas",
+  "properties": {
+    "manual_parcellation": {
+      "var_param": "manual_parcellation"
+    },
+    "subjlist_file": {
+      "var_param": "subjlist_file"
+    },
+    "left_hemi": {
+      "var_param": "left_hemi"
+    },
+    "right_hemi": {
+      "var_param": "right_hemi"
+    },
+    "hemi_spec": {
+      "var_param": "hemi_spec"
+    },
+    "output_gcs": {
+      "var_param": "output_gcs"
+    },
+    "surf_reg": {
+      "var_param": "surf_reg"
+    },
+    "color_table": {
+      "var_param": "color_table"
+    },
+    "exclude_subject": {
+      "var_param": "exclude_subject"
+    },
+    "jackknife_flag": {
+      "var_param": "jackknife_flag"
+    },
+    "aseg_filename": {
+      "var_param": "aseg_filename"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

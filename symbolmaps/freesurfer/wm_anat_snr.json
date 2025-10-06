@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "wm_anat_snr",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nerode": {
+      "var_param": "nerode"
+    },
+    "tmp_dir": {
+      "var_param": "tmp_dir"
+    },
+    "cleanup": {
+      "var_param": "cleanup"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    }
+  }
+}

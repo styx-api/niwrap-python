@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "fsl_sub_mgh",
+  "properties": {
+    "estimated_time": {
+      "var_param": "estimated_time"
+    },
+    "queue_name": {
+      "var_param": "queue_name"
+    },
+    "architecture": {
+      "var_param": "architecture"
+    },
+    "job_priority": {
+      "var_param": "job_priority"
+    },
+    "email_address": {
+      "var_param": "email_address"
+    },
+    "hold_job": {
+      "var_param": "hold_job"
+    },
+    "task_file": {
+      "var_param": "task_file"
+    },
+    "job_name": {
+      "var_param": "job_name"
+    },
+    "log_dir": {
+      "var_param": "log_dir"
+    },
+    "mail_options": {
+      "var_param": "mail_options"
+    },
+    "flags_in_scripts": {
+      "var_param": "flags_in_scripts"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "shell_path": {
+      "var_param": "shell_path"
+    }
+  }
+}

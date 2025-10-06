@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "label_elderly_subject",
+  "properties": {
+    "norm_volume": {
+      "var_param": "norm_volume"
+    },
+    "transform_lta": {
+      "var_param": "transform_lta"
+    },
+    "classifier_array": {
+      "var_param": "classifier_array"
+    },
+    "aseg_volume": {
+      "var_param": "aseg_volume"
+    }
+  }
+}

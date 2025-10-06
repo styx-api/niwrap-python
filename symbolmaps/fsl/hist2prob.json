@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "hist2prob",
+  "properties": {
+    "image": {
+      "var_param": "image"
+    },
+    "size": {
+      "var_param": "size"
+    },
+    "low_threshold": {
+      "var_param": "low_threshold"
+    },
+    "high_threshold": {
+      "var_param": "high_threshold"
+    }
+  }
+}

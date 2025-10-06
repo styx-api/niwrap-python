@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_upsample",
+  "properties": {
+    "upsample_factor": {
+      "var_param": "upsample_factor"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "linear_interpolation": {
+      "var_param": "linear_interpolation"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    }
+  }
+}

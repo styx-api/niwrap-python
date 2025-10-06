@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "mri_wbc",
+  "properties": {
+    "functional_volume": {
+      "var_param": "functional_volume"
+    },
+    "volume_mask": {
+      "var_param": "volume_mask"
+    },
+    "lh_functional_surface": {
+      "var_param": "lh_functional_surface"
+    },
+    "lh_surface": {
+      "var_param": "lh_surface"
+    },
+    "lh_inflated": {
+      "var_param": "lh_inflated"
+    },
+    "lh_mask": {
+      "var_param": "lh_mask"
+    },
+    "lh_label": {
+      "var_param": "lh_label"
+    },
+    "rh_functional_surface": {
+      "var_param": "rh_functional_surface"
+    },
+    "rh_surface": {
+      "var_param": "rh_surface"
+    },
+    "rh_inflated": {
+      "var_param": "rh_inflated"
+    },
+    "rh_mask": {
+      "var_param": "rh_mask"
+    },
+    "rh_label": {
+      "var_param": "rh_label"
+    },
+    "rho_threshold": {
+      "var_param": "rho_threshold"
+    },
+    "dist_threshold": {
+      "var_param": "dist_threshold"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_joint_density",
+  "properties": {
+    "vol1": {
+      "var_param": "vol1"
+    },
+    "vol2": {
+      "var_param": "vol2"
+    },
+    "output_density_file": {
+      "var_param": "output_density_file"
+    }
+  }
+}

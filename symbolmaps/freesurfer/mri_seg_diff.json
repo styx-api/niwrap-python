@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_seg_diff",
+  "properties": {
+    "seg1": {
+      "var_param": "seg1"
+    },
+    "seg2": {
+      "var_param": "seg2"
+    },
+    "seg": {
+      "var_param": "seg"
+    },
+    "diff": {
+      "var_param": "diff"
+    },
+    "diff_in": {
+      "var_param": "diff_in"
+    },
+    "merged": {
+      "var_param": "merged"
+    },
+    "diff_force": {
+      "var_param": "diff_force"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

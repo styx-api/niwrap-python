@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_refine_seg",
+  "properties": {
+    "input_segmentation": {
+      "var_param": "input_segmentation"
+    },
+    "output_segmentation": {
+      "var_param": "output_segmentation"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

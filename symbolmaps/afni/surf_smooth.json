@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "surf_smooth",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "input_data": {
+      "var_param": "input_data"
+    },
+    "target_fwhm": {
+      "var_param": "target_fwhm"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "number_iterations": {
+      "var_param": "number_iterations"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "band_pass_frequency": {
+      "var_param": "band_pass_frequency"
+    },
+    "lambda_mu": {
+      "var_param": "lambda_mu"
+    },
+    "interp_weights": {
+      "var_param": "interp_weights"
+    },
+    "node_mask": {
+      "var_param": "node_mask"
+    },
+    "surface_output": {
+      "var_param": "surface_output"
+    },
+    "dbg_node": {
+      "var_param": "dbg_node"
+    },
+    "use_neighbors_outside_mask": {
+      "var_param": "use_neighbors_outside_mask"
+    },
+    "talk_suma": {
+      "var_param": "talk_suma"
+    },
+    "refresh_rate": {
+      "var_param": "refresh_rate"
+    }
+  }
+}

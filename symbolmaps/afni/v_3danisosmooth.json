@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "v_3danisosmooth",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "2d_flag": {
+      "var_param": "v_2d_flag"
+    },
+    "3d_flag": {
+      "var_param": "v_3d_flag"
+    },
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "automask_flag": {
+      "var_param": "automask_flag"
+    },
+    "viewer_flag": {
+      "var_param": "viewer_flag"
+    },
+    "nosmooth_flag": {
+      "var_param": "nosmooth_flag"
+    },
+    "sigma1": {
+      "var_param": "sigma1"
+    },
+    "sigma2": {
+      "var_param": "sigma2"
+    },
+    "deltat": {
+      "var_param": "deltat"
+    },
+    "savetempdata_flag": {
+      "var_param": "savetempdata_flag"
+    },
+    "save_temp_with_diff_measures_flag": {
+      "var_param": "save_temp_with_diff_measures_flag"
+    },
+    "phiding_flag": {
+      "var_param": "phiding_flag"
+    },
+    "phiexp_flag": {
+      "var_param": "phiexp_flag"
+    },
+    "noneg_flag": {
+      "var_param": "noneg_flag"
+    },
+    "setneg_value": {
+      "var_param": "setneg_value"
+    },
+    "edgefraction": {
+      "var_param": "edgefraction"
+    },
+    "datum_type": {
+      "var_param": "datum_type"
+    },
+    "matchorig_flag": {
+      "var_param": "matchorig_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

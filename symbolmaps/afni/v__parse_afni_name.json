@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__parse_afni_name",
+  "properties": {
+    "afni_name": {
+      "var_param": "afni_name"
+    }
+  }
+}

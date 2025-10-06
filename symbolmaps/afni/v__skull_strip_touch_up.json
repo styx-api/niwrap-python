@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__skull_strip_touch_up",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "brain_dataset": {
+      "var_param": "brain_dataset"
+    },
+    "head_dataset": {
+      "var_param": "head_dataset"
+    },
+    "mask_out": {
+      "var_param": "mask_out"
+    },
+    "orig_dim": {
+      "var_param": "orig_dim"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

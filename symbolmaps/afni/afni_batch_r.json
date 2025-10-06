@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "afni_batch_r",
+  "properties": {
+    "no_restore": {
+      "var_param": "no_restore"
+    },
+    "save_workspace": {
+      "var_param": "save_workspace"
+    },
+    "no_readline": {
+      "var_param": "no_readline"
+    },
+    "vanilla_mode": {
+      "var_param": "vanilla_mode"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "mean",
+  "properties": {
+    "datafile": {
+      "var_param": "datafile"
+    },
+    "maskfile": {
+      "var_param": "maskfile"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "timing_flag": {
+      "var_param": "timing_flag"
+    },
+    "log_dir": {
+      "var_param": "log_dir"
+    },
+    "forcedir_flag": {
+      "var_param": "forcedir_flag"
+    },
+    "inference_tech": {
+      "var_param": "inference_tech"
+    },
+    "num_jumps": {
+      "var_param": "num_jumps"
+    },
+    "num_burnin": {
+      "var_param": "num_burnin"
+    },
+    "num_sample_every": {
+      "var_param": "num_sample_every"
+    },
+    "num_update_proposalevery": {
+      "var_param": "num_update_proposalevery"
+    },
+    "acceptance_rate": {
+      "var_param": "acceptance_rate"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "error_precision": {
+      "var_param": "error_precision"
+    },
+    "noamp_flag": {
+      "var_param": "noamp_flag"
+    },
+    "prior_mean": {
+      "var_param": "prior_mean"
+    },
+    "prior_std": {
+      "var_param": "prior_std"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "gen_ss_review_table_py",
+  "properties": {
+    "infiles": {
+      "var_param": "infiles"
+    },
+    "write_table": {
+      "var_param": "write_table"
+    },
+    "write_outliers": {
+      "var_param": "write_outliers"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "empty_is_outlier": {
+      "var_param": "empty_is_outlier"
+    },
+    "outlier_sep": {
+      "var_param": "outlier_sep"
+    },
+    "separator": {
+      "var_param": "separator"
+    },
+    "showlabs": {
+      "var_param": "showlabs"
+    },
+    "show_infiles": {
+      "var_param": "show_infiles"
+    },
+    "show_keepers": {
+      "var_param": "show_keepers"
+    },
+    "report_outliers": {
+      "var_param": "report_outliers"
+    },
+    "report_outliers_fill_style": {
+      "var_param": "report_outliers_fill_style"
+    },
+    "show_missing": {
+      "var_param": "show_missing"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

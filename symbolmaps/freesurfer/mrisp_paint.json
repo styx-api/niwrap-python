@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "mrisp_paint",
+  "properties": {
+    "template_file": {
+      "var_param": "template_file"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "vertex_coords": {
+      "var_param": "vertex_coords"
+    },
+    "average_flag": {
+      "var_param": "average_flag"
+    },
+    "normalize_flag": {
+      "var_param": "normalize_flag"
+    },
+    "frame_number": {
+      "var_param": "frame_number"
+    },
+    "square_root_flag": {
+      "var_param": "square_root_flag"
+    },
+    "variance_params": {
+      "var_param": "variance_params"
+    },
+    "usage_flag": {
+      "var_param": "usage_flag"
+    },
+    "birn_info_flag": {
+      "var_param": "birn_info_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "diag_vertex": {
+      "var_param": "diag_vertex"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "diag_write_flag": {
+      "var_param": "diag_write_flag"
+    }
+  }
+}

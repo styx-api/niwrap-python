@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fsladd",
+  "properties": {
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "mean_flag": {
+      "var_param": "mean_flag"
+    },
+    "scale_flag": {
+      "var_param": "scale_flag"
+    },
+    "volume_list": {
+      "var_param": "volume_list"
+    }
+  }
+}

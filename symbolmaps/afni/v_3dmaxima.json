@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3dmaxima",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "min_dist": {
+      "var_param": "min_dist"
+    },
+    "out_rad": {
+      "var_param": "out_rad"
+    },
+    "input_flag": {
+      "var_param": "input_flag"
+    },
+    "spheres_1_flag": {
+      "var_param": "spheres_1_flag"
+    },
+    "spheres_1toN_flag": {
+      "var_param": "spheres_1to_n_flag"
+    },
+    "spheres_Nto1_flag": {
+      "var_param": "spheres_nto1_flag"
+    },
+    "neg_ext_flag": {
+      "var_param": "neg_ext_flag"
+    },
+    "true_max_flag": {
+      "var_param": "true_max_flag"
+    },
+    "dset_coords_flag": {
+      "var_param": "dset_coords_flag"
+    },
+    "no_text_flag": {
+      "var_param": "no_text_flag"
+    },
+    "coords_only_flag": {
+      "var_param": "coords_only_flag"
+    },
+    "n_style_sort_flag": {
+      "var_param": "n_style_sort_flag"
+    },
+    "n_style_weight_ave_flag": {
+      "var_param": "n_style_weight_ave_flag"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "hist_flag": {
+      "var_param": "hist_flag"
+    },
+    "ver_flag": {
+      "var_param": "ver_flag"
+    }
+  }
+}

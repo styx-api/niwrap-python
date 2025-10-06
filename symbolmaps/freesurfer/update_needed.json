@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "update_needed",
+  "properties": {
+    "target_file": {
+      "var_param": "target_file"
+    },
+    "source_file": {
+      "var_param": "source_file"
+    },
+    "additional_source_files": {
+      "var_param": "additional_source_files"
+    }
+  }
+}

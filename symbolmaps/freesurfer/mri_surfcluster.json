@@ -1,0 +1,128 @@
+{
+  "fn_root_make_params_and_execute": "mri_surfcluster",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "thmin": {
+      "var_param": "thmin"
+    },
+    "sign": {
+      "var_param": "sign"
+    },
+    "no_adjust_flag": {
+      "var_param": "no_adjust_flag"
+    },
+    "fdr": {
+      "var_param": "fdr"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "surfpath": {
+      "var_param": "surfpath"
+    },
+    "annot": {
+      "var_param": "annot"
+    },
+    "frame": {
+      "var_param": "frame"
+    },
+    "csd": {
+      "var_param": "csd"
+    },
+    "vwsig": {
+      "var_param": "vwsig"
+    },
+    "cwsig": {
+      "var_param": "cwsig"
+    },
+    "maxcwpval": {
+      "var_param": "maxcwpval"
+    },
+    "bonferroni": {
+      "var_param": "bonferroni"
+    },
+    "sig2p_max_flag": {
+      "var_param": "sig2p_max_flag"
+    },
+    "bonferroni_max": {
+      "var_param": "bonferroni_max"
+    },
+    "csdpdf": {
+      "var_param": "csdpdf"
+    },
+    "csdpdf_only_flag": {
+      "var_param": "csdpdf_only_flag"
+    },
+    "csd_out": {
+      "var_param": "csd_out"
+    },
+    "cwpvalthresh": {
+      "var_param": "cwpvalthresh"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "fwhmdat": {
+      "var_param": "fwhmdat"
+    },
+    "clabel": {
+      "var_param": "clabel"
+    },
+    "cortex_flag": {
+      "var_param": "cortex_flag"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_inv_flag": {
+      "var_param": "mask_inv_flag"
+    },
+    "centroid_flag": {
+      "var_param": "centroid_flag"
+    },
+    "sum": {
+      "var_param": "sum_"
+    },
+    "pointset": {
+      "var_param": "pointset"
+    },
+    "maxareafile": {
+      "var_param": "maxareafile"
+    },
+    "o": {
+      "var_param": "o"
+    },
+    "ocn": {
+      "var_param": "ocn"
+    },
+    "olab": {
+      "var_param": "olab"
+    },
+    "oannot": {
+      "var_param": "oannot"
+    },
+    "minarea": {
+      "var_param": "minarea"
+    },
+    "xfm": {
+      "var_param": "xfm"
+    },
+    "no_fixmni_flag": {
+      "var_param": "no_fixmni_flag"
+    },
+    "sd": {
+      "var_param": "sd"
+    },
+    "thmax": {
+      "var_param": "thmax"
+    }
+  }
+}

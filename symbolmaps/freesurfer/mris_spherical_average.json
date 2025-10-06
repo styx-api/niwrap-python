@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mris_spherical_average",
+  "properties": {
+    "which": {
+      "var_param": "which"
+    },
+    "fname": {
+      "var_param": "fname"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "spherical_surf": {
+      "var_param": "spherical_surf"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "segment": {
+      "var_param": "segment"
+    },
+    "normalize": {
+      "var_param": "normalize"
+    },
+    "orig": {
+      "var_param": "orig"
+    },
+    "output_subject_name": {
+      "var_param": "output_subject_name"
+    },
+    "output_subject_dir": {
+      "var_param": "output_subject_dir"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "average_area": {
+      "var_param": "average_area"
+    },
+    "summary_statistics": {
+      "var_param": "summary_statistics"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tcorr_map",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "zmean": {
+      "var_param": "zmean"
+    },
+    "qmean": {
+      "var_param": "qmean"
+    },
+    "pmean": {
+      "var_param": "pmean"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "varthresh": {
+      "var_param": "varthresh"
+    },
+    "norm_varthresh": {
+      "var_param": "norm_varthresh"
+    },
+    "corrmap": {
+      "var_param": "corrmap"
+    },
+    "corrmask": {
+      "var_param": "corrmask"
+    },
+    "aexpr": {
+      "var_param": "aexpr"
+    },
+    "cexpr": {
+      "var_param": "cexpr"
+    },
+    "sexpr": {
+      "var_param": "sexpr"
+    },
+    "hist": {
+      "var_param": "hist"
+    }
+  }
+}

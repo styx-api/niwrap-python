@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "volume_create",
+  "properties": {
+    "i_dim": {
+      "var_param": "i_dim"
+    },
+    "j_dim": {
+      "var_param": "j_dim"
+    },
+    "k_dim": {
+      "var_param": "k_dim"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "plumb": {
+      "var_param": "plumb",
+      "fn_struct_make_params": "volume_create_plumb_params",
+      "properties": {
+        "axis_order": {
+          "var_param": "axis_order"
+        },
+        "x_spacing": {
+          "var_param": "x_spacing"
+        },
+        "y_spacing": {
+          "var_param": "y_spacing"
+        },
+        "z_spacing": {
+          "var_param": "z_spacing"
+        },
+        "x_offset": {
+          "var_param": "x_offset"
+        },
+        "y_offset": {
+          "var_param": "y_offset"
+        },
+        "z_offset": {
+          "var_param": "z_offset"
+        }
+      }
+    },
+    "sform": {
+      "var_param": "sform",
+      "fn_struct_make_params": "volume_create_sform_params",
+      "properties": {
+        "xi_spacing": {
+          "var_param": "xi_spacing"
+        },
+        "xj_spacing": {
+          "var_param": "xj_spacing"
+        },
+        "xk_spacing": {
+          "var_param": "xk_spacing"
+        },
+        "x_offset": {
+          "var_param": "x_offset"
+        },
+        "yi_spacing": {
+          "var_param": "yi_spacing"
+        },
+        "yj_spacing": {
+          "var_param": "yj_spacing"
+        },
+        "yk_spacing": {
+          "var_param": "yk_spacing"
+        },
+        "y_offset": {
+          "var_param": "y_offset"
+        },
+        "zi_spacing": {
+          "var_param": "zi_spacing"
+        },
+        "zj_spacing": {
+          "var_param": "zj_spacing"
+        },
+        "zk_spacing": {
+          "var_param": "zk_spacing"
+        },
+        "z_offset": {
+          "var_param": "z_offset"
+        }
+      }
+    }
+  }
+}

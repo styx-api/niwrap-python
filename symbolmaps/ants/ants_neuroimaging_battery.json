@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "ants_neuroimaging_battery",
+  "properties": {
+    "input_directory": {
+      "var_param": "input_directory"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "anatomical_image": {
+      "var_param": "anatomical_image"
+    },
+    "anatomical_mask": {
+      "var_param": "anatomical_mask"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "template_transform_name": {
+      "var_param": "template_transform_name"
+    },
+    "template_labels": {
+      "var_param": "template_labels"
+    },
+    "dti_flag": {
+      "var_param": "dti_flag"
+    },
+    "pcasl_flag": {
+      "var_param": "pcasl_flag"
+    },
+    "pasl_flag": {
+      "var_param": "pasl_flag"
+    },
+    "pasl_m0_flag": {
+      "var_param": "pasl_m0_flag"
+    },
+    "bold_flag": {
+      "var_param": "bold_flag"
+    },
+    "rsbold_flag": {
+      "var_param": "rsbold_flag"
+    },
+    "mt_flag": {
+      "var_param": "mt_flag"
+    },
+    "no_mt_flag": {
+      "var_param": "no_mt_flag"
+    },
+    "temp_directory": {
+      "var_param": "temp_directory"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "info_only": {
+      "var_param": "info_only"
+    }
+  }
+}

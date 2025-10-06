@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "v_3dsvm",
+  "properties": {
+    "train_vol": {
+      "var_param": "train_vol"
+    },
+    "train_labels": {
+      "var_param": "train_labels"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "no_model_mask": {
+      "var_param": "no_model_mask"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "bucket": {
+      "var_param": "bucket"
+    },
+    "type": {
+      "var_param": "type_"
+    },
+    "c_value": {
+      "var_param": "c_value"
+    },
+    "epsilon": {
+      "var_param": "epsilon"
+    },
+    "kernel": {
+      "var_param": "kernel"
+    },
+    "d_value": {
+      "var_param": "d_value"
+    },
+    "gamma": {
+      "var_param": "gamma"
+    },
+    "s_value": {
+      "var_param": "s_value"
+    },
+    "r_value": {
+      "var_param": "r_value"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "wout": {
+      "var_param": "wout"
+    },
+    "test_vol": {
+      "var_param": "test_vol"
+    },
+    "predictions": {
+      "var_param": "predictions"
+    },
+    "classout": {
+      "var_param": "classout"
+    },
+    "nopred_censored": {
+      "var_param": "nopred_censored"
+    },
+    "nodetrend": {
+      "var_param": "nodetrend"
+    },
+    "nopred_scale": {
+      "var_param": "nopred_scale"
+    },
+    "test_labels": {
+      "var_param": "test_labels"
+    },
+    "multiclass": {
+      "var_param": "multiclass"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

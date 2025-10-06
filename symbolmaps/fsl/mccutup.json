@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mccutup",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "param1": {
+      "var_param": "param1"
+    },
+    "param2": {
+      "var_param": "param2"
+    }
+  }
+}

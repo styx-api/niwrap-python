@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "seg2recon",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "segvol": {
+      "var_param": "segvol"
+    },
+    "inputvol": {
+      "var_param": "inputvol"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "ndilate": {
+      "var_param": "ndilate"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    },
+    "no_cc": {
+      "var_param": "no_cc"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "headmask": {
+      "var_param": "headmask"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "expert": {
+      "var_param": "expert"
+    },
+    "rca": {
+      "var_param": "rca"
+    },
+    "no_bias_field_cor": {
+      "var_param": "no_bias_field_cor"
+    }
+  }
+}

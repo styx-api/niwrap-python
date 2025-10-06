@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_detrend",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    }
+  }
+}

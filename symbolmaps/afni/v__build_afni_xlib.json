@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__build_afni_xlib",
+  "properties": {
+    "afniX": {
+      "var_param": "afni_x"
+    },
+    "localinstall": {
+      "var_param": "localinstall"
+    },
+    "debug_symbols": {
+      "var_param": "debug_symbols"
+    },
+    "lib32": {
+      "var_param": "lib32"
+    },
+    "lib64": {
+      "var_param": "lib64"
+    },
+    "packages": {
+      "var_param": "packages"
+    }
+  }
+}

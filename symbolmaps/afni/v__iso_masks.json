@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__iso_masks",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "isovals": {
+      "var_param": "isovals"
+    }
+  }
+}

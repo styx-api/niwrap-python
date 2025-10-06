@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mri_modify",
+  "properties": {
+    "x_ras": {
+      "var_param": "x_ras"
+    },
+    "y_ras": {
+      "var_param": "y_ras"
+    },
+    "z_ras": {
+      "var_param": "z_ras"
+    },
+    "cras": {
+      "var_param": "cras"
+    },
+    "x_size": {
+      "var_param": "x_size"
+    },
+    "y_size": {
+      "var_param": "y_size"
+    },
+    "z_size": {
+      "var_param": "z_size"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "ti": {
+      "var_param": "ti"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    }
+  }
+}

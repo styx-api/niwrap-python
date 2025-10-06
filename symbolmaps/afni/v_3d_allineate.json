@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_allineate",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "param_save": {
+      "var_param": "param_save"
+    },
+    "param_apply": {
+      "var_param": "param_apply"
+    },
+    "matrix_save": {
+      "var_param": "matrix_save"
+    },
+    "matrix_apply": {
+      "var_param": "matrix_apply"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "final": {
+      "var_param": "final"
+    },
+    "nmatch": {
+      "var_param": "nmatch"
+    },
+    "nopad": {
+      "var_param": "nopad"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

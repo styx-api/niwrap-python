@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "cifti_replace_structure",
+  "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "volume_all": {
+      "var_param": "volume_all",
+      "fn_struct_make_params": "cifti_replace_structure_volume_all_params",
+      "properties": {
+        "volume": {
+          "var_param": "volume"
+        },
+        "opt_from_cropped": {
+          "var_param": "opt_from_cropped"
+        }
+      }
+    },
+    "opt_discard_unused_labels": {
+      "var_param": "opt_discard_unused_labels"
+    },
+    "opt_label_collision_action": {
+      "var_param": "opt_label_collision_action"
+    },
+    "label": {
+      "var_param": "label",
+      "fn_struct_make_params": "cifti_replace_structure_label_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "label": {
+          "var_param": "label"
+        }
+      }
+    },
+    "metric": {
+      "var_param": "metric",
+      "fn_struct_make_params": "cifti_replace_structure_metric_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "metric": {
+          "var_param": "metric"
+        }
+      }
+    },
+    "volume": {
+      "var_param": "volume",
+      "fn_struct_make_params": "cifti_replace_structure_volume_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "volume": {
+          "var_param": "volume"
+        },
+        "opt_from_cropped": {
+          "var_param": "opt_from_cropped"
+        }
+      }
+    }
+  }
+}

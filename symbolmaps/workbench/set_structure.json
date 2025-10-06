@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "set_structure",
+  "properties": {
+    "data_file": {
+      "var_param": "data_file"
+    },
+    "structure": {
+      "var_param": "structure"
+    },
+    "opt_surface_type_type": {
+      "var_param": "opt_surface_type_type"
+    },
+    "opt_surface_secondary_type_secondary_type": {
+      "var_param": "opt_surface_secondary_type_secondary_type"
+    }
+  }
+}

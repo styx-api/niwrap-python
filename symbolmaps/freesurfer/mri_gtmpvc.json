@@ -1,0 +1,191 @@
+{
+  "fn_root_make_params_and_execute": "mri_gtmpvc",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "frame": {
+      "var_param": "frame"
+    },
+    "psf": {
+      "var_param": "psf"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "registration": {
+      "var_param": "registration"
+    },
+    "regheader": {
+      "var_param": "regheader"
+    },
+    "reg_identity": {
+      "var_param": "reg_identity"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "auto_mask": {
+      "var_param": "auto_mask"
+    },
+    "no_reduce_fov": {
+      "var_param": "no_reduce_fov"
+    },
+    "reduce_fov_eqodd": {
+      "var_param": "reduce_fov_eqodd"
+    },
+    "contrast_matrix": {
+      "var_param": "contrast_matrix"
+    },
+    "default_seg_merge": {
+      "var_param": "default_seg_merge"
+    },
+    "merge_hypos": {
+      "var_param": "merge_hypos"
+    },
+    "merge_cblum_wm_gyri": {
+      "var_param": "merge_cblum_wm_gyri"
+    },
+    "tt_reduce": {
+      "var_param": "tt_reduce"
+    },
+    "replace_seg": {
+      "var_param": "replace_seg"
+    },
+    "replace_file": {
+      "var_param": "replace_file"
+    },
+    "rescale": {
+      "var_param": "rescale"
+    },
+    "no_rescale": {
+      "var_param": "no_rescale"
+    },
+    "scale_refval": {
+      "var_param": "scale_refval"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "ctab_default": {
+      "var_param": "ctab_default"
+    },
+    "tt_update": {
+      "var_param": "tt_update"
+    },
+    "lateralization": {
+      "var_param": "lateralization"
+    },
+    "no_tfe": {
+      "var_param": "no_tfe"
+    },
+    "no_pvc": {
+      "var_param": "no_pvc"
+    },
+    "segpvfres": {
+      "var_param": "segpvfres"
+    },
+    "rbv": {
+      "var_param": "rbv"
+    },
+    "rbv_res": {
+      "var_param": "rbv_res"
+    },
+    "mueller_pvc": {
+      "var_param": "mueller_pvc"
+    },
+    "mg_ref_cerebral_wm": {
+      "var_param": "mg_ref_cerebral_wm"
+    },
+    "mg_ref_lobes_wm": {
+      "var_param": "mg_ref_lobes_wm"
+    },
+    "glm_mg_pvc": {
+      "var_param": "glm_mg_pvc"
+    },
+    "km_ref": {
+      "var_param": "km_ref"
+    },
+    "km_hb": {
+      "var_param": "km_hb"
+    },
+    "steady_state": {
+      "var_param": "steady_state"
+    },
+    "save_x": {
+      "var_param": "save_x"
+    },
+    "save_y": {
+      "var_param": "save_y"
+    },
+    "save_beta": {
+      "var_param": "save_beta"
+    },
+    "save_x0": {
+      "var_param": "save_x0"
+    },
+    "save_input": {
+      "var_param": "save_input"
+    },
+    "save_eres": {
+      "var_param": "save_eres"
+    },
+    "save_yhat": {
+      "var_param": "save_yhat"
+    },
+    "save_yhat_noise": {
+      "var_param": "save_yhat_noise"
+    },
+    "save_yhat_full_fov": {
+      "var_param": "save_yhat_full_fov"
+    },
+    "save_yhat0": {
+      "var_param": "save_yhat0"
+    },
+    "synth": {
+      "var_param": "synth"
+    },
+    "synth_only": {
+      "var_param": "synth_only"
+    },
+    "synth_save": {
+      "var_param": "synth_save"
+    },
+    "save_text": {
+      "var_param": "save_text"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "max_threads": {
+      "var_param": "max_threads"
+    },
+    "max_threads_minus_one": {
+      "var_param": "max_threads_minus_one"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "vg_thresh": {
+      "var_param": "vg_thresh"
+    },
+    "gdiag": {
+      "var_param": "gdiag"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

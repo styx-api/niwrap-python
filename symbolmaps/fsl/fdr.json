@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "fdr",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "maskfile": {
+      "var_param": "maskfile"
+    },
+    "qvalue": {
+      "var_param": "qvalue"
+    },
+    "adjustedimage": {
+      "var_param": "adjustedimage"
+    },
+    "othresh_flag": {
+      "var_param": "othresh_flag"
+    },
+    "order_flag": {
+      "var_param": "order_flag"
+    },
+    "oneminusp_flag": {
+      "var_param": "oneminusp_flag"
+    },
+    "positive_corr_flag": {
+      "var_param": "positive_corr_flag"
+    },
+    "independent_flag": {
+      "var_param": "independent_flag"
+    },
+    "conservative_flag": {
+      "var_param": "conservative_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    }
+  }
+}

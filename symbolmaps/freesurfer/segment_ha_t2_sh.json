@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "segment_ha_t2_sh",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    }
+  }
+}

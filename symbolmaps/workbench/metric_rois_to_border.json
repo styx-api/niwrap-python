@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "metric_rois_to_border",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "class_name": {
+      "var_param": "class_name"
+    },
+    "border_out": {
+      "var_param": "border_out"
+    },
+    "opt_placement_fraction": {
+      "var_param": "opt_placement_fraction"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    }
+  }
+}

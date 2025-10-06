@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "v_3dttest__",
+  "properties": {
+    "setA": {
+      "var_param": "set_a"
+    },
+    "setB": {
+      "var_param": "set_b"
+    },
+    "setA_long": {
+      "var_param": "set_a_long"
+    },
+    "setB_long": {
+      "var_param": "set_b_long"
+    },
+    "covariates": {
+      "var_param": "covariates"
+    },
+    "labelA": {
+      "var_param": "label_a"
+    },
+    "labelB": {
+      "var_param": "label_b"
+    },
+    "setweightA": {
+      "var_param": "setweight_a"
+    },
+    "setweightB": {
+      "var_param": "setweight_b"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "resid": {
+      "var_param": "resid"
+    },
+    "paired": {
+      "var_param": "paired"
+    },
+    "unpooled": {
+      "var_param": "unpooled"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "exblur": {
+      "var_param": "exblur"
+    },
+    "randomsign": {
+      "var_param": "randomsign"
+    },
+    "permute": {
+      "var_param": "permute"
+    },
+    "ETAC": {
+      "var_param": "etac"
+    },
+    "ETAC_blur": {
+      "var_param": "etac_blur"
+    },
+    "ETAC_opt": {
+      "var_param": "etac_opt"
+    },
+    "seed": {
+      "var_param": "seed"
+    }
+  }
+}

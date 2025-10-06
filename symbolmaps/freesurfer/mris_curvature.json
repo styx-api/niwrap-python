@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mris_curvature",
+  "properties": {
+    "save_curvature_files": {
+      "var_param": "save_curvature_files"
+    },
+    "max_principal_curvature": {
+      "var_param": "max_principal_curvature"
+    },
+    "mgh_output_format": {
+      "var_param": "mgh_output_format"
+    },
+    "min_principal_curvature": {
+      "var_param": "min_principal_curvature"
+    },
+    "iterative_averages": {
+      "var_param": "iterative_averages"
+    },
+    "neighborhood_size": {
+      "var_param": "neighborhood_size"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "curvatures": {
+      "var_param": "curvatures"
+    },
+    "H_curvature": {
+      "var_param": "h_curvature"
+    },
+    "K_curvature": {
+      "var_param": "k_curvature"
+    },
+    "k1_curvature": {
+      "var_param": "k1_curvature"
+    },
+    "k2_curvature": {
+      "var_param": "k2_curvature"
+    },
+    "k1k2_curvature": {
+      "var_param": "k1k2_curvature"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    }
+  }
+}

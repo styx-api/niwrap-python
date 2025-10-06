@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "recon_all_clinical_sh",
+  "properties": {
+    "input_scan": {
+      "var_param": "input_scan"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "subject_dir": {
+      "var_param": "subject_dir"
+    }
+  }
+}

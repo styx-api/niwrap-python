@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "xmat_tool_py",
+  "properties": {
+    "no_gui": {
+      "var_param": "no_gui"
+    },
+    "load_xmat": {
+      "var_param": "load_xmat"
+    },
+    "load_1d": {
+      "var_param": "load_1d"
+    },
+    "choose_cols": {
+      "var_param": "choose_cols"
+    },
+    "choose_nonzero_cols": {
+      "var_param": "choose_nonzero_cols"
+    },
+    "chrono": {
+      "var_param": "chrono"
+    },
+    "cormat_cutoff": {
+      "var_param": "cormat_cutoff"
+    },
+    "cosmat_cutoff": {
+      "var_param": "cosmat_cutoff"
+    },
+    "cosmat_motion": {
+      "var_param": "cosmat_motion"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "show_col_types": {
+      "var_param": "show_col_types"
+    },
+    "show_conds": {
+      "var_param": "show_conds"
+    },
+    "show_cormat": {
+      "var_param": "show_cormat"
+    },
+    "show_cormat_warnings": {
+      "var_param": "show_cormat_warnings"
+    },
+    "show_cosmat": {
+      "var_param": "show_cosmat"
+    },
+    "show_cosmat_warnings": {
+      "var_param": "show_cosmat_warnings"
+    },
+    "show_fit_betas": {
+      "var_param": "show_fit_betas"
+    },
+    "show_fit_ts": {
+      "var_param": "show_fit_ts"
+    },
+    "show_xmat": {
+      "var_param": "show_xmat"
+    },
+    "show_1d": {
+      "var_param": "show_1d"
+    },
+    "gui_plot_xmat_as_one": {
+      "var_param": "gui_plot_xmat_as_one"
+    }
+  }
+}

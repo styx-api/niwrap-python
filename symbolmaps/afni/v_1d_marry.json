@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_marry",
+  "properties": {
+    "sep": {
+      "var_param": "sep"
+    },
+    "divorce": {
+      "var_param": "divorce"
+    },
+    "files": {
+      "var_param": "files"
+    }
+  }
+}

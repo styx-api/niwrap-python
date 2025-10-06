@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "dcmdrle_fs",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "arguments": {
+      "var_param": "arguments"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "log_level": {
+      "var_param": "log_level"
+    },
+    "log_config": {
+      "var_param": "log_config"
+    },
+    "read_file": {
+      "var_param": "read_file"
+    },
+    "read_file_only": {
+      "var_param": "read_file_only"
+    },
+    "read_dataset": {
+      "var_param": "read_dataset"
+    },
+    "uid_default": {
+      "var_param": "uid_default"
+    },
+    "uid_always": {
+      "var_param": "uid_always"
+    },
+    "byte_order_default": {
+      "var_param": "byte_order_default"
+    },
+    "byte_order_reverse": {
+      "var_param": "byte_order_reverse"
+    },
+    "write_file": {
+      "var_param": "write_file"
+    },
+    "write_dataset": {
+      "var_param": "write_dataset"
+    },
+    "write_xfer_little": {
+      "var_param": "write_xfer_little"
+    },
+    "write_xfer_big": {
+      "var_param": "write_xfer_big"
+    },
+    "write_xfer_implicit": {
+      "var_param": "write_xfer_implicit"
+    },
+    "enable_new_vr": {
+      "var_param": "enable_new_vr"
+    },
+    "disable_new_vr": {
+      "var_param": "disable_new_vr"
+    },
+    "group_length_recalc": {
+      "var_param": "group_length_recalc"
+    },
+    "group_length_create": {
+      "var_param": "group_length_create"
+    },
+    "group_length_remove": {
+      "var_param": "group_length_remove"
+    },
+    "length_explicit": {
+      "var_param": "length_explicit"
+    },
+    "length_undefined": {
+      "var_param": "length_undefined"
+    },
+    "padding_retain": {
+      "var_param": "padding_retain"
+    },
+    "padding_off": {
+      "var_param": "padding_off"
+    },
+    "padding_create": {
+      "var_param": "padding_create"
+    }
+  }
+}

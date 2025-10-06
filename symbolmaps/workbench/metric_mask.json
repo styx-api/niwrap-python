@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "metric_mask",
+  "properties": {
+    "metric": {
+      "var_param": "metric"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    }
+  }
+}

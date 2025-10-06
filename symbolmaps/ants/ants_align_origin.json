@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "ants_align_origin",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

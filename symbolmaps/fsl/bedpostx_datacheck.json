@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "bedpostx_datacheck",
+  "properties": {
+    "data_dir": {
+      "var_param": "data_dir"
+    }
+  }
+}

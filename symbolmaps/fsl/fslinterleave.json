@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fslinterleave",
+  "properties": {
+    "infile1": {
+      "var_param": "infile1"
+    },
+    "infile2": {
+      "var_param": "infile2"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "reverse_slice_order_flag": {
+      "var_param": "reverse_slice_order_flag"
+    }
+  }
+}

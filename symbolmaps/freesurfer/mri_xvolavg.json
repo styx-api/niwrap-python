@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_xvolavg",
+  "properties": {
+    "input_volumes": {
+      "var_param": "input_volumes"
+    },
+    "vol_type": {
+      "var_param": "vol_type"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    }
+  }
+}

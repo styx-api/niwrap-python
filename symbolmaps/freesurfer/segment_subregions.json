@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "segment_subregions",
+  "properties": {
+    "structure": {
+      "var_param": "structure"
+    },
+    "cross": {
+      "var_param": "cross"
+    },
+    "long_base": {
+      "var_param": "long_base"
+    },
+    "sd": {
+      "var_param": "sd"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "temp_dir": {
+      "var_param": "temp_dir"
+    },
+    "out_dir": {
+      "var_param": "out_dir"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

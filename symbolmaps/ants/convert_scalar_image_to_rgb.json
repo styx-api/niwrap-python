@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "convert_scalar_image_to_rgb",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "colormap": {
+      "var_param": "colormap"
+    },
+    "custom_colormap_file": {
+      "var_param": "custom_colormap_file"
+    },
+    "minimum_input": {
+      "var_param": "minimum_input"
+    },
+    "maximum_input": {
+      "var_param": "maximum_input"
+    },
+    "minimum_rgb_output": {
+      "var_param": "minimum_rgb_output"
+    },
+    "maximum_rgb_output": {
+      "var_param": "maximum_rgb_output"
+    },
+    "vtk_lookup_table": {
+      "var_param": "vtk_lookup_table"
+    }
+  }
+}

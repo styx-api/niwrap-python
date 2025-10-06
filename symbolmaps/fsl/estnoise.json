@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "estnoise",
+  "properties": {
+    "input_4d_data": {
+      "var_param": "input_4d_data"
+    },
+    "spatial_sigma": {
+      "var_param": "spatial_sigma"
+    },
+    "temp_hp_sigma": {
+      "var_param": "temp_hp_sigma"
+    },
+    "temp_lp_sigma": {
+      "var_param": "temp_lp_sigma"
+    }
+  }
+}

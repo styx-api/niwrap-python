@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "label2patch",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "output_patch": {
+      "var_param": "output_patch"
+    },
+    "dilate": {
+      "var_param": "dilate"
+    },
+    "erode": {
+      "var_param": "erode"
+    },
+    "close": {
+      "var_param": "close"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "surface_name": {
+      "var_param": "surface_name"
+    },
+    "write_surface": {
+      "var_param": "write_surface"
+    }
+  }
+}

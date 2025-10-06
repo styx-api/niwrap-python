@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "is_lta",
+  "properties": {
+    "candidate_file": {
+      "var_param": "candidate_file"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    }
+  }
+}

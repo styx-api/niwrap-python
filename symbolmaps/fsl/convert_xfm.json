@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "convert_xfm",
+  "properties": {
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "invert_xfm": {
+      "var_param": "invert_xfm"
+    },
+    "concat_xfm": {
+      "var_param": "concat_xfm"
+    },
+    "fix_scale_skew": {
+      "var_param": "fix_scale_skew"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    }
+  }
+}

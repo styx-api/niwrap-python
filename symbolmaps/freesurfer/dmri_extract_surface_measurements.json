@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "dmri_extract_surface_measurements",
+  "properties": {
+    "streamline_file": {
+      "var_param": "streamline_file"
+    },
+    "lh_surface_file": {
+      "var_param": "lh_surface_file"
+    },
+    "lh_thickness_overlay": {
+      "var_param": "lh_thickness_overlay"
+    },
+    "lh_curvature_overlay": {
+      "var_param": "lh_curvature_overlay"
+    },
+    "rh_surface_file": {
+      "var_param": "rh_surface_file"
+    },
+    "rh_thickness_overlay": {
+      "var_param": "rh_thickness_overlay"
+    },
+    "rh_curvature_overlay": {
+      "var_param": "rh_curvature_overlay"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "reference_image_anatomical": {
+      "var_param": "reference_image_anatomical"
+    },
+    "transformation": {
+      "var_param": "transformation"
+    },
+    "annotation_file": {
+      "var_param": "annotation_file"
+    },
+    "fa_options": {
+      "var_param": "fa_options"
+    }
+  }
+}

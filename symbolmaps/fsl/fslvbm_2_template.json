@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "fslvbm_2_template",
+  "properties": {
+    "arch": {
+      "var_param": "arch"
+    },
+    "coprocessor": {
+      "var_param": "coprocessor"
+    },
+    "coprocessor_multi": {
+      "var_param": "coprocessor_multi"
+    },
+    "coprocessor_class": {
+      "var_param": "coprocessor_class"
+    },
+    "coprocessor_toolkit": {
+      "var_param": "coprocessor_toolkit"
+    },
+    "jobhold": {
+      "var_param": "jobhold"
+    },
+    "array_hold": {
+      "var_param": "array_hold"
+    },
+    "logdir": {
+      "var_param": "logdir"
+    },
+    "mailoptions": {
+      "var_param": "mailoptions"
+    },
+    "mailto": {
+      "var_param": "mailto"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "priority": {
+      "var_param": "priority"
+    },
+    "queue": {
+      "var_param": "queue_"
+    },
+    "resource": {
+      "var_param": "resource_"
+    },
+    "delete_job": {
+      "var_param": "delete_job"
+    },
+    "memory_gb": {
+      "var_param": "memory_gb"
+    },
+    "parallel_env": {
+      "var_param": "parallel_env"
+    },
+    "array_task": {
+      "var_param": "array_task"
+    },
+    "array_native": {
+      "var_param": "array_native"
+    },
+    "num_tasks": {
+      "var_param": "num_tasks"
+    },
+    "coprocessor_name": {
+      "var_param": "coprocessor_name"
+    },
+    "project": {
+      "var_param": "project"
+    },
+    "runtime_limit": {
+      "var_param": "runtime_limit"
+    },
+    "job_file": {
+      "var_param": "job_file"
+    }
+  }
+}

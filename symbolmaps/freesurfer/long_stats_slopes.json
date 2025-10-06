@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "long_stats_slopes",
+  "properties": {
+    "qdec_table": {
+      "var_param": "qdec_table"
+    },
+    "stats_file": {
+      "var_param": "stats_file"
+    },
+    "measure": {
+      "var_param": "measure"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "do_avg": {
+      "var_param": "do_avg"
+    },
+    "do_rate": {
+      "var_param": "do_rate"
+    },
+    "do_pc1fit": {
+      "var_param": "do_pc1fit"
+    },
+    "do_pc1": {
+      "var_param": "do_pc1"
+    },
+    "do_spc": {
+      "var_param": "do_spc"
+    },
+    "do_stack": {
+      "var_param": "do_stack"
+    },
+    "resid": {
+      "var_param": "resid"
+    },
+    "time_var": {
+      "var_param": "time_var"
+    },
+    "generic_time": {
+      "var_param": "generic_time"
+    },
+    "cross_sectional": {
+      "var_param": "cross_sectional"
+    },
+    "out_avg": {
+      "var_param": "out_avg"
+    },
+    "out_rate": {
+      "var_param": "out_rate"
+    },
+    "out_pc1fit": {
+      "var_param": "out_pc1fit"
+    },
+    "out_pc1": {
+      "var_param": "out_pc1"
+    },
+    "out_spc": {
+      "var_param": "out_spc"
+    },
+    "out_resid": {
+      "var_param": "out_resid"
+    },
+    "out_stack": {
+      "var_param": "out_stack"
+    },
+    "stack_avg": {
+      "var_param": "stack_avg"
+    },
+    "stack_rate": {
+      "var_param": "stack_rate"
+    },
+    "stack_pc1fit": {
+      "var_param": "stack_pc1fit"
+    },
+    "stack_pc1": {
+      "var_param": "stack_pc1"
+    },
+    "stack_spc": {
+      "var_param": "stack_spc"
+    },
+    "stack_resid": {
+      "var_param": "stack_resid"
+    }
+  }
+}

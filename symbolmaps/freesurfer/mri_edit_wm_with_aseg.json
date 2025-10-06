@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mri_edit_wm_with_aseg",
+  "properties": {
+    "input_wm": {
+      "var_param": "input_wm"
+    },
+    "input_t1_brain": {
+      "var_param": "input_t1_brain"
+    },
+    "aseg": {
+      "var_param": "aseg"
+    },
+    "output_wm": {
+      "var_param": "output_wm"
+    },
+    "fillven": {
+      "var_param": "fillven"
+    },
+    "fix_scm_ha": {
+      "var_param": "fix_scm_ha"
+    },
+    "fix_scm_ha_only": {
+      "var_param": "fix_scm_ha_only"
+    },
+    "keep": {
+      "var_param": "keep"
+    },
+    "keep_in": {
+      "var_param": "keep_in"
+    },
+    "lh": {
+      "var_param": "lh"
+    },
+    "rh": {
+      "var_param": "rh"
+    },
+    "fix_ento_wm": {
+      "var_param": "fix_ento_wm"
+    },
+    "sa_fix_ento_wm": {
+      "var_param": "sa_fix_ento_wm"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    }
+  }
+}

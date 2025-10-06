@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "vol2segavg",
+  "properties": {
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "registration": {
+      "var_param": "registration"
+    },
+    "segmentation_file": {
+      "var_param": "segmentation_file"
+    },
+    "aparc_aseg_flag": {
+      "var_param": "aparc_aseg_flag"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "segmentation_id": {
+      "var_param": "segmentation_id"
+    },
+    "multiply_value": {
+      "var_param": "multiply_value"
+    },
+    "no_bb_flag": {
+      "var_param": "no_bb_flag"
+    },
+    "erode_value": {
+      "var_param": "erode_value"
+    },
+    "dilate_value": {
+      "var_param": "dilate_value"
+    },
+    "wm_flag": {
+      "var_param": "wm_flag"
+    },
+    "vcsf_flag": {
+      "var_param": "vcsf_flag"
+    },
+    "xcsf_flag": {
+      "var_param": "xcsf_flag"
+    },
+    "remove_mean_flag": {
+      "var_param": "remove_mean_flag"
+    }
+  }
+}

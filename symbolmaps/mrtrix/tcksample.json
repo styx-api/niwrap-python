@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "tcksample",
+  "properties": {
+    "stat_tck": {
+      "var_param": "stat_tck"
+    },
+    "nointerp": {
+      "var_param": "nointerp"
+    },
+    "precise": {
+      "var_param": "precise"
+    },
+    "use_tdi_fraction": {
+      "var_param": "use_tdi_fraction"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tcksample_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "tracks": {
+      "var_param": "tracks"
+    },
+    "image": {
+      "var_param": "image"
+    },
+    "values": {
+      "var_param": "values_"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_notes",
+  "properties": {
+    "add_note": {
+      "var_param": "add_note"
+    },
+    "append_history": {
+      "var_param": "append_history"
+    },
+    "replace_history": {
+      "var_param": "replace_history"
+    },
+    "delete_note": {
+      "var_param": "delete_note"
+    },
+    "print_notes": {
+      "var_param": "print_notes"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

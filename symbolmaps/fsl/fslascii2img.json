@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "fslascii2img",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "xsize": {
+      "var_param": "xsize"
+    },
+    "ysize": {
+      "var_param": "ysize"
+    },
+    "zsize": {
+      "var_param": "zsize"
+    },
+    "tsize": {
+      "var_param": "tsize"
+    },
+    "xdim": {
+      "var_param": "xdim"
+    },
+    "ydim": {
+      "var_param": "ydim"
+    },
+    "zdim": {
+      "var_param": "zdim"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    }
+  }
+}

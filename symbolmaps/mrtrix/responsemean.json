@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "responsemean",
+  "properties": {
+    "input_response": {
+      "var_param": "input_response"
+    },
+    "output_response": {
+      "var_param": "output_response"
+    },
+    "legacy": {
+      "var_param": "legacy"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "scratch_dir": {
+      "var_param": "scratch_dir"
+    },
+    "continue_scratch_dir": {
+      "var_param": "continue_scratch_dir"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

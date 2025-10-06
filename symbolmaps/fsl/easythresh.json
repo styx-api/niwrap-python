@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "easythresh",
+  "properties": {
+    "raw_zstat_input": {
+      "var_param": "raw_zstat_input"
+    },
+    "brain_mask_input": {
+      "var_param": "brain_mask_input"
+    },
+    "cluster_z_thresh_input": {
+      "var_param": "cluster_z_thresh_input"
+    },
+    "cluster_prob_thresh_input": {
+      "var_param": "cluster_prob_thresh_input"
+    },
+    "background_image_input": {
+      "var_param": "background_image_input"
+    },
+    "output_root": {
+      "var_param": "output_root"
+    },
+    "mm_flag": {
+      "var_param": "mm_flag"
+    }
+  }
+}

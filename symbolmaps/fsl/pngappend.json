@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "pngappend",
+  "properties": {
+    "input_files_and_options": {
+      "var_param": "input_files_and_options"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

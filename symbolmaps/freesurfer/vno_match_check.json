@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "vno_match_check",
+  "properties": {
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "right_hemi": {
+      "var_param": "right_hemi"
+    },
+    "left_hemi": {
+      "var_param": "left_hemi"
+    }
+  }
+}

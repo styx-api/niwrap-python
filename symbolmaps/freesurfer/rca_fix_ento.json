@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "rca_fix_ento",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "submit": {
+      "var_param": "submit"
+    },
+    "account": {
+      "var_param": "account"
+    },
+    "brain_mask": {
+      "var_param": "brain_mask"
+    }
+  }
+}

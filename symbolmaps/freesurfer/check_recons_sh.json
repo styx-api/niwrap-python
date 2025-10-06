@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "check_recons_sh",
+  "properties": {
+    "subject_directory": {
+      "var_param": "subject_directory"
+    }
+  }
+}

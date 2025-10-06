@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "overlay",
+  "properties": {
+    "auto_thresh_bg": {
+      "var_param": "auto_thresh_bg"
+    },
+    "background_image": {
+      "var_param": "background_image"
+    },
+    "bg_thresh": {
+      "var_param": "bg_thresh"
+    },
+    "full_bg_range": {
+      "var_param": "full_bg_range"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "out_type": {
+      "var_param": "out_type"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "stat_image": {
+      "var_param": "stat_image"
+    },
+    "stat_image2": {
+      "var_param": "stat_image2"
+    },
+    "stat_thresh": {
+      "var_param": "stat_thresh"
+    },
+    "stat_thresh2": {
+      "var_param": "stat_thresh2"
+    },
+    "use_checkerboard": {
+      "var_param": "use_checkerboard"
+    }
+  }
+}

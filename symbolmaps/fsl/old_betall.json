@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "old_betall",
+  "properties": {
+    "t1_filerout": {
+      "var_param": "t1_filerout"
+    },
+    "t2_filerout": {
+      "var_param": "t2_filerout"
+    }
+  }
+}

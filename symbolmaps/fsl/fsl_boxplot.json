@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "fsl_boxplot",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "legend_file": {
+      "var_param": "legend_file"
+    },
+    "x_label": {
+      "var_param": "x_label"
+    },
+    "y_label": {
+      "var_param": "y_label"
+    },
+    "plot_height": {
+      "var_param": "plot_height"
+    },
+    "plot_width": {
+      "var_param": "plot_width"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "imglob",
+  "properties": {
+    "multiple_extensions": {
+      "var_param": "multiple_extensions"
+    },
+    "input_list": {
+      "var_param": "input_list"
+    },
+    "single_extension": {
+      "var_param": "single_extension"
+    }
+  }
+}

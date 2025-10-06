@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "pnm_evs",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "tr_value": {
+      "var_param": "tr_value"
+    },
+    "cardiac_file": {
+      "var_param": "cardiac_file"
+    },
+    "respiratory_file": {
+      "var_param": "respiratory_file"
+    },
+    "order_cardiac": {
+      "var_param": "order_cardiac"
+    },
+    "order_respiratory": {
+      "var_param": "order_respiratory"
+    },
+    "order_mult_cardiac": {
+      "var_param": "order_mult_cardiac"
+    },
+    "order_mult_respiratory": {
+      "var_param": "order_mult_respiratory"
+    },
+    "csf_mask": {
+      "var_param": "csf_mask"
+    },
+    "rvt_file": {
+      "var_param": "rvt_file"
+    },
+    "heartrate_file": {
+      "var_param": "heartrate_file"
+    },
+    "rvt_smooth": {
+      "var_param": "rvt_smooth"
+    },
+    "heartrate_smooth": {
+      "var_param": "heartrate_smooth"
+    },
+    "slice_direction": {
+      "var_param": "slice_direction"
+    },
+    "slice_order": {
+      "var_param": "slice_order"
+    },
+    "slice_timing_file": {
+      "var_param": "slice_timing_file"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

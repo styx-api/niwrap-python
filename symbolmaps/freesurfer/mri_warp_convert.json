@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mri_warp_convert",
+  "properties": {
+    "inm3z": {
+      "var_param": "inm3z"
+    },
+    "infsl": {
+      "var_param": "infsl"
+    },
+    "inlps": {
+      "var_param": "inlps"
+    },
+    "initk": {
+      "var_param": "initk"
+    },
+    "inras": {
+      "var_param": "inras"
+    },
+    "invox": {
+      "var_param": "invox"
+    },
+    "outm3z": {
+      "var_param": "outm3z"
+    },
+    "outfsl": {
+      "var_param": "outfsl"
+    },
+    "outlps": {
+      "var_param": "outlps"
+    },
+    "outitk": {
+      "var_param": "outitk"
+    },
+    "outras": {
+      "var_param": "outras"
+    },
+    "outvox": {
+      "var_param": "outvox"
+    },
+    "insrcgeom": {
+      "var_param": "insrcgeom"
+    },
+    "downsample": {
+      "var_param": "downsample"
+    }
+  }
+}

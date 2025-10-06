@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "nifti_tool",
+  "properties": {
+    "action": {
+      "var_param": "action"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "field": {
+      "var_param": "field"
+    },
+    "mod_field": {
+      "var_param": "mod_field"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "convert2dtype": {
+      "var_param": "convert2dtype"
+    },
+    "convert_fail_choice": {
+      "var_param": "convert_fail_choice"
+    },
+    "convert_verify": {
+      "var_param": "convert_verify"
+    },
+    "add_comment_ext": {
+      "var_param": "add_comment_ext"
+    },
+    "rm_ext": {
+      "var_param": "rm_ext"
+    }
+  }
+}

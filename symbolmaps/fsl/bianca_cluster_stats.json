@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "bianca_cluster_stats",
+  "properties": {
+    "bianca_output_map": {
+      "var_param": "bianca_output_map"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "min_cluster_size": {
+      "var_param": "min_cluster_size"
+    },
+    "mask": {
+      "var_param": "mask"
+    }
+  }
+}

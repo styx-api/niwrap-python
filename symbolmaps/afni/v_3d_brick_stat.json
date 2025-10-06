@@ -1,0 +1,95 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_brick_stat",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "quick": {
+      "var_param": "quick"
+    },
+    "slow": {
+      "var_param": "slow"
+    },
+    "min": {
+      "var_param": "min_"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "sum": {
+      "var_param": "sum_"
+    },
+    "var": {
+      "var_param": "var"
+    },
+    "stdev": {
+      "var_param": "stdev"
+    },
+    "count": {
+      "var_param": "count"
+    },
+    "volume": {
+      "var_param": "volume"
+    },
+    "positive": {
+      "var_param": "positive"
+    },
+    "negative": {
+      "var_param": "negative"
+    },
+    "zero": {
+      "var_param": "zero"
+    },
+    "non_positive": {
+      "var_param": "non_positive"
+    },
+    "non_negative": {
+      "var_param": "non_negative"
+    },
+    "non_zero": {
+      "var_param": "non_zero"
+    },
+    "absolute": {
+      "var_param": "absolute"
+    },
+    "nan": {
+      "var_param": "nan"
+    },
+    "nonan": {
+      "var_param": "nonan"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mrange": {
+      "var_param": "mrange"
+    },
+    "mvalue": {
+      "var_param": "mvalue"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "percentile": {
+      "var_param": "percentile"
+    },
+    "perclist": {
+      "var_param": "perclist"
+    },
+    "median": {
+      "var_param": "median"
+    },
+    "perc_quiet": {
+      "var_param": "perc_quiet"
+    },
+    "ver": {
+      "var_param": "ver"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

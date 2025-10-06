@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "sratio",
+  "properties": {
+    "value_a": {
+      "var_param": "value_a"
+    },
+    "value_b": {
+      "var_param": "value_b"
+    },
+    "abs_flag": {
+      "var_param": "abs_flag"
+    },
+    "mask_threshold": {
+      "var_param": "mask_threshold"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "ptoz",
+  "properties": {
+    "p_value": {
+      "var_param": "p_value"
+    },
+    "tail_flag": {
+      "var_param": "tail_flag"
+    },
+    "grf_flag": {
+      "var_param": "grf_flag"
+    }
+  }
+}

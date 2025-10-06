@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v__rename_panga",
+  "properties": {
+    "dir_number": {
+      "var_param": "dir_number"
+    },
+    "first_image_number": {
+      "var_param": "first_image_number"
+    },
+    "num_slices": {
+      "var_param": "num_slices"
+    },
+    "num_reps": {
+      "var_param": "num_reps"
+    },
+    "output_root": {
+      "var_param": "output_root"
+    },
+    "keep_prefix": {
+      "var_param": "keep_prefix"
+    },
+    "interactive": {
+      "var_param": "interactive"
+    },
+    "outliers_check": {
+      "var_param": "outliers_check"
+    },
+    "slice_pattern": {
+      "var_param": "slice_pattern"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    }
+  }
+}

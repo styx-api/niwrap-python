@@ -1,0 +1,110 @@
+{
+  "fn_root_make_params_and_execute": "v__make_label_table",
+  "properties": {
+    "labeltable": {
+      "var_param": "labeltable"
+    },
+    "atlas_pointlist": {
+      "var_param": "atlas_pointlist"
+    },
+    "lab_r": {
+      "var_param": "lab_r"
+    },
+    "lab_v": {
+      "var_param": "lab_v"
+    },
+    "lab_file_delim": {
+      "var_param": "lab_file_delim"
+    },
+    "lab_file": {
+      "var_param": "lab_file"
+    },
+    "dset": {
+      "var_param": "dset"
+    },
+    "longnames": {
+      "var_param": "longnames"
+    },
+    "last_longname_col": {
+      "var_param": "last_longname_col"
+    },
+    "centers": {
+      "var_param": "centers"
+    },
+    "centertype": {
+      "var_param": "centertype"
+    },
+    "centermask": {
+      "var_param": "centermask"
+    },
+    "skip_novoxels": {
+      "var_param": "skip_novoxels"
+    },
+    "all_labels": {
+      "var_param": "all_labels"
+    },
+    "all_keys": {
+      "var_param": "all_keys"
+    },
+    "lkeys": {
+      "var_param": "lkeys"
+    },
+    "rkeys": {
+      "var_param": "rkeys"
+    },
+    "klabel": {
+      "var_param": "klabel"
+    },
+    "match_label": {
+      "var_param": "match_label"
+    },
+    "labeltable_of_dset": {
+      "var_param": "labeltable_of_dset"
+    },
+    "word_label_match": {
+      "var_param": "word_label_match"
+    },
+    "quiet_death": {
+      "var_param": "quiet_death"
+    },
+    "lt_to_atlas_pl": {
+      "var_param": "lt_to_atlas_pl"
+    },
+    "dset_lt_to_atlas_pl": {
+      "var_param": "dset_lt_to_atlas_pl"
+    },
+    "lt_to_csv": {
+      "var_param": "lt_to_csv"
+    },
+    "atlasize_labeled_dset": {
+      "var_param": "atlasize_labeled_dset"
+    },
+    "atlas_file": {
+      "var_param": "atlas_file"
+    },
+    "atlas_name": {
+      "var_param": "atlas_name"
+    },
+    "atlas_description": {
+      "var_param": "atlas_description"
+    },
+    "replace": {
+      "var_param": "replace"
+    },
+    "add_atlas_dset": {
+      "var_param": "add_atlas_dset"
+    },
+    "h_web": {
+      "var_param": "h_web"
+    },
+    "h_view": {
+      "var_param": "h_view"
+    },
+    "all_opts": {
+      "var_param": "all_opts"
+    },
+    "h_find": {
+      "var_param": "h_find"
+    }
+  }
+}

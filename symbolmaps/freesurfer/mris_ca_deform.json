@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_ca_deform",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "label_vol": {
+      "var_param": "label_vol"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "intensity_vol": {
+      "var_param": "intensity_vol"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    }
+  }
+}

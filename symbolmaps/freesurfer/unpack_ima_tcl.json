@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "unpack_ima_tcl",
+  "properties": {
+    "target_dir": {
+      "var_param": "target_dir"
+    }
+  }
+}

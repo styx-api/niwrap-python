@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "sphere_subject",
+  "properties": {
+    "input_dir": {
+      "var_param": "input_dir"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "license_file": {
+      "var_param": "license_file"
+    }
+  }
+}

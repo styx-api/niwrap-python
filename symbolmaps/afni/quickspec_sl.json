@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "quickspec_sl",
+  "properties": {
+    "surf_A": {
+      "var_param": "surf_a"
+    },
+    "surf_B": {
+      "var_param": "surf_b"
+    },
+    "surf_intermed_pref": {
+      "var_param": "surf_intermed_pref"
+    },
+    "infl_surf_A": {
+      "var_param": "infl_surf_a"
+    },
+    "infl_surf_B": {
+      "var_param": "infl_surf_b"
+    },
+    "infl_surf_intermed_pref": {
+      "var_param": "infl_surf_intermed_pref"
+    },
+    "both_lr_flag": {
+      "var_param": "both_lr_flag"
+    },
+    "out_spec": {
+      "var_param": "out_spec"
+    }
+  }
+}

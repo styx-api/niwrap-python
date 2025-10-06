@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "fsl_rigid_register",
+  "properties": {
+    "refvol": {
+      "var_param": "refvol"
+    },
+    "inputvol": {
+      "var_param": "inputvol"
+    },
+    "outputvol": {
+      "var_param": "outputvol"
+    },
+    "fslmat": {
+      "var_param": "fslmat"
+    },
+    "regmat": {
+      "var_param": "regmat"
+    },
+    "xfmmat": {
+      "var_param": "xfmmat"
+    },
+    "ltamat": {
+      "var_param": "ltamat"
+    },
+    "noinitgeom": {
+      "var_param": "noinitgeom"
+    },
+    "applyxfm": {
+      "var_param": "applyxfm"
+    },
+    "applyinitxfm": {
+      "var_param": "applyinitxfm"
+    },
+    "initxfm": {
+      "var_param": "initxfm"
+    },
+    "maxangle": {
+      "var_param": "maxangle"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "bins": {
+      "var_param": "bins"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "tmpdir": {
+      "var_param": "tmpdir"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "cleanup": {
+      "var_param": "cleanup"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

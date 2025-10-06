@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "border_to_rois",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "border_file": {
+      "var_param": "border_file"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "opt_border_name": {
+      "var_param": "opt_border_name"
+    },
+    "opt_inverse": {
+      "var_param": "opt_inverse"
+    },
+    "opt_include_border": {
+      "var_param": "opt_include_border"
+    }
+  }
+}

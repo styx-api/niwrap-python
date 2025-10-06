@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "fnirtfileutils",
+  "properties": {
+    "input_coefs": {
+      "var_param": "input_coefs"
+    },
+    "ref_volume": {
+      "var_param": "ref_volume"
+    },
+    "out_field": {
+      "var_param": "out_field"
+    },
+    "output_format": {
+      "var_param": "output_format"
+    },
+    "warp_res": {
+      "var_param": "warp_res"
+    },
+    "knot_space": {
+      "var_param": "knot_space"
+    },
+    "jacobian_output": {
+      "var_param": "jacobian_output"
+    },
+    "jacobian_matrix_output": {
+      "var_param": "jacobian_matrix_output"
+    },
+    "with_aff": {
+      "var_param": "with_aff"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

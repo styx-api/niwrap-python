@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "quantify_hasubregions_sh",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "subjects_directory": {
+      "var_param": "subjects_directory"
+    }
+  }
+}

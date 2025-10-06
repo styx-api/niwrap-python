@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "surface_set_coordinates",
+  "properties": {
+    "surface_in": {
+      "var_param": "surface_in"
+    },
+    "coord_metric": {
+      "var_param": "coord_metric"
+    },
+    "surface_out": {
+      "var_param": "surface_out"
+    }
+  }
+}

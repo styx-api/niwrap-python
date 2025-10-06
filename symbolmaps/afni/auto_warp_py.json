@@ -1,0 +1,104 @@
+{
+  "fn_root_make_params_and_execute": "auto_warp_py",
+  "properties": {
+    "base": {
+      "var_param": "base"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "skull_strip_input": {
+      "var_param": "skull_strip_input"
+    },
+    "qblur": {
+      "var_param": "qblur"
+    },
+    "qworkhard": {
+      "var_param": "qworkhard"
+    },
+    "qw_opts": {
+      "var_param": "qw_opts"
+    },
+    "keep_rm_files": {
+      "var_param": "keep_rm_files"
+    },
+    "prep_only": {
+      "var_param": "prep_only"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hview": {
+      "var_param": "hview"
+    },
+    "limited_help": {
+      "var_param": "limited_help"
+    },
+    "option_help": {
+      "var_param": "option_help"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "ver": {
+      "var_param": "ver"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "save_script": {
+      "var_param": "save_script"
+    },
+    "skip_affine": {
+      "var_param": "skip_affine"
+    },
+    "skull_strip_base": {
+      "var_param": "skull_strip_base"
+    },
+    "ex_mode": {
+      "var_param": "ex_mode"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "child_anat": {
+      "var_param": "child_anat"
+    },
+    "warp_dxyz": {
+      "var_param": "warp_dxyz"
+    },
+    "affine_dxyz": {
+      "var_param": "affine_dxyz"
+    },
+    "affine_input_xmat": {
+      "var_param": "affine_input_xmat"
+    },
+    "smooth_anat": {
+      "var_param": "smooth_anat"
+    },
+    "smooth_base": {
+      "var_param": "smooth_base"
+    },
+    "unifize_input": {
+      "var_param": "unifize_input"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "followers": {
+      "var_param": "followers"
+    },
+    "affine_followers_xmat": {
+      "var_param": "affine_followers_xmat"
+    },
+    "skullstrip_opts": {
+      "var_param": "skullstrip_opts"
+    },
+    "at_opts": {
+      "var_param": "at_opts"
+    }
+  }
+}

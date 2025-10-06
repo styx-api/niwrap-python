@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "dicom_hinfo",
+  "properties": {
+    "tag": {
+      "var_param": "tag"
+    },
+    "sepstr": {
+      "var_param": "sepstr"
+    },
+    "full_entry": {
+      "var_param": "full_entry"
+    },
+    "no_name": {
+      "var_param": "no_name"
+    },
+    "namelast": {
+      "var_param": "namelast"
+    },
+    "files": {
+      "var_param": "files"
+    }
+  }
+}

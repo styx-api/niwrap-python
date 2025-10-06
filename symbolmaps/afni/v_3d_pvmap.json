@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_pvmap",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "inputdataset": {
+      "var_param": "inputdataset"
+    }
+  }
+}

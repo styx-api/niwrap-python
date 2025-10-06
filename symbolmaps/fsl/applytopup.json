@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "applytopup",
+  "properties": {
+    "imain": {
+      "var_param": "imain"
+    },
+    "datain": {
+      "var_param": "datain"
+    },
+    "inindex": {
+      "var_param": "inindex"
+    },
+    "topup": {
+      "var_param": "topup"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

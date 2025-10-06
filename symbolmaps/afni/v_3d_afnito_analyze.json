@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_afnito_analyze",
+  "properties": {
+    "4d_option": {
+      "var_param": "v_4d_option"
+    },
+    "orient_option": {
+      "var_param": "orient_option"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "afni_dataset": {
+      "var_param": "afni_dataset"
+    }
+  }
+}

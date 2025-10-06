@@ -1,0 +1,116 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_nlfim",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "signal_model": {
+      "var_param": "signal_model"
+    },
+    "noise_model": {
+      "var_param": "noise_model"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "intr": {
+      "var_param": "intr"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "time_file": {
+      "var_param": "time_file"
+    },
+    "sconstr": {
+      "var_param": "sconstr"
+    },
+    "nconstr": {
+      "var_param": "nconstr"
+    },
+    "nabs": {
+      "var_param": "nabs"
+    },
+    "nrand": {
+      "var_param": "nrand"
+    },
+    "nbest": {
+      "var_param": "nbest"
+    },
+    "rmsmin": {
+      "var_param": "rmsmin"
+    },
+    "fdisp": {
+      "var_param": "fdisp"
+    },
+    "progress": {
+      "var_param": "progress"
+    },
+    "voxel_count": {
+      "var_param": "voxel_count"
+    },
+    "simplex": {
+      "var_param": "simplex"
+    },
+    "powell": {
+      "var_param": "powell"
+    },
+    "both": {
+      "var_param": "both"
+    },
+    "freg": {
+      "var_param": "freg"
+    },
+    "frsqr": {
+      "var_param": "frsqr"
+    },
+    "fsmax": {
+      "var_param": "fsmax"
+    },
+    "ftmax": {
+      "var_param": "ftmax"
+    },
+    "fpsmax": {
+      "var_param": "fpsmax"
+    },
+    "farea": {
+      "var_param": "farea"
+    },
+    "fparea": {
+      "var_param": "fparea"
+    },
+    "fscoef": {
+      "var_param": "fscoef"
+    },
+    "fncoef": {
+      "var_param": "fncoef"
+    },
+    "tscoef": {
+      "var_param": "tscoef"
+    },
+    "tncoef": {
+      "var_param": "tncoef"
+    },
+    "bucket": {
+      "var_param": "bucket"
+    },
+    "brick": {
+      "var_param": "brick"
+    },
+    "nofdr": {
+      "var_param": "nofdr"
+    },
+    "sfit": {
+      "var_param": "sfit"
+    },
+    "snfit": {
+      "var_param": "snfit"
+    },
+    "jobs": {
+      "var_param": "jobs"
+    }
+  }
+}

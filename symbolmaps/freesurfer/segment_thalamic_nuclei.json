@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "segment_thalamic_nuclei",
+  "properties": {
+    "t1_image": {
+      "var_param": "t1_image"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    }
+  }
+}

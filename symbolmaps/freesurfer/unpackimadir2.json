@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "unpackimadir2",
+  "properties": {
+    "directory": {
+      "var_param": "directory"
+    }
+  }
+}

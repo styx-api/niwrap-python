@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "scene_file_relocate",
+  "properties": {
+    "input_scene": {
+      "var_param": "input_scene"
+    },
+    "output_scene": {
+      "var_param": "output_scene"
+    }
+  }
+}

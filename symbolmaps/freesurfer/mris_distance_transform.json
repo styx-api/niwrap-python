@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mris_distance_transform",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "anterior": {
+      "var_param": "anterior"
+    },
+    "posterior": {
+      "var_param": "posterior"
+    },
+    "divide": {
+      "var_param": "divide"
+    },
+    "olabel": {
+      "var_param": "olabel"
+    }
+  }
+}

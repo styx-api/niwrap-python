@@ -1,0 +1,104 @@
+{
+  "fn_root_make_params_and_execute": "qdelaunay",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "furthest_site": {
+      "var_param": "furthest_site"
+    },
+    "triangulated_output": {
+      "var_param": "triangulated_output"
+    },
+    "joggled_input": {
+      "var_param": "joggled_input"
+    },
+    "joggle_range": {
+      "var_param": "joggle_range"
+    },
+    "search_simplex": {
+      "var_param": "search_simplex"
+    },
+    "point_infinity": {
+      "var_param": "point_infinity"
+    },
+    "delaunay_visible": {
+      "var_param": "delaunay_visible"
+    },
+    "delaunay_regions": {
+      "var_param": "delaunay_regions"
+    },
+    "trace_level": {
+      "var_param": "trace_level"
+    },
+    "check": {
+      "var_param": "check"
+    },
+    "statistics": {
+      "var_param": "statistics_"
+    },
+    "verify": {
+      "var_param": "verify"
+    },
+    "output_stdout": {
+      "var_param": "output_stdout"
+    },
+    "facets_summary": {
+      "var_param": "facets_summary"
+    },
+    "input_file_option": {
+      "var_param": "input_file_option"
+    },
+    "output_file_option": {
+      "var_param": "output_file_option"
+    },
+    "trace_point": {
+      "var_param": "trace_point"
+    },
+    "trace_merge": {
+      "var_param": "trace_merge"
+    },
+    "trace_merge_width": {
+      "var_param": "trace_merge_width"
+    },
+    "stop_point": {
+      "var_param": "stop_point"
+    },
+    "stop_cone_point": {
+      "var_param": "stop_cone_point"
+    },
+    "centrum_radius": {
+      "var_param": "centrum_radius"
+    },
+    "max_angle_cosine": {
+      "var_param": "max_angle_cosine"
+    },
+    "perturb_factor": {
+      "var_param": "perturb_factor"
+    },
+    "min_facet_width": {
+      "var_param": "min_facet_width"
+    },
+    "facet_dump": {
+      "var_param": "facet_dump"
+    },
+    "geomview": {
+      "var_param": "geomview"
+    },
+    "vertices_incident": {
+      "var_param": "vertices_incident"
+    },
+    "mathematica": {
+      "var_param": "mathematica"
+    },
+    "off_format": {
+      "var_param": "off_format"
+    },
+    "point_coordinates": {
+      "var_param": "point_coordinates"
+    },
+    "summary": {
+      "var_param": "summary"
+    }
+  }
+}

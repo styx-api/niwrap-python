@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "dcmdir_info_mgh",
+  "properties": {
+    "dicomdir": {
+      "var_param": "dicomdir"
+    },
+    "unpackdir": {
+      "var_param": "unpackdir"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "nopre": {
+      "var_param": "nopre"
+    }
+  }
+}

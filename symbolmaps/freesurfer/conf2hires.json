@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "conf2hires",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "t2": {
+      "var_param": "t2"
+    },
+    "no_t2": {
+      "var_param": "no_t2"
+    },
+    "mm_norm_sigma": {
+      "var_param": "mm_norm_sigma"
+    },
+    "flair": {
+      "var_param": "flair"
+    },
+    "no_flair": {
+      "var_param": "no_flair"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "copy_bias_from_conf": {
+      "var_param": "copy_bias_from_conf"
+    },
+    "norm_opts_rca": {
+      "var_param": "norm_opts_rca"
+    },
+    "cubic": {
+      "var_param": "cubic"
+    },
+    "trilin": {
+      "var_param": "trilin"
+    },
+    "dev": {
+      "var_param": "dev"
+    },
+    "no_dev": {
+      "var_param": "no_dev"
+    },
+    "bbr_con": {
+      "var_param": "bbr_con"
+    },
+    "bbr_t1": {
+      "var_param": "bbr_t1"
+    },
+    "bbr_t2": {
+      "var_param": "bbr_t2"
+    },
+    "first_peak_d1": {
+      "var_param": "first_peak_d1"
+    },
+    "first_peak_d2": {
+      "var_param": "first_peak_d2"
+    },
+    "stopmask": {
+      "var_param": "stopmask"
+    },
+    "expert": {
+      "var_param": "expert"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "segpons",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "aseg": {
+      "var_param": "aseg"
+    },
+    "apas": {
+      "var_param": "apas"
+    },
+    "seg": {
+      "var_param": "seg"
+    },
+    "no_refine": {
+      "var_param": "no_refine"
+    },
+    "pons152_mask": {
+      "var_param": "pons152_mask"
+    }
+  }
+}

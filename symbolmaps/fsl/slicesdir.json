@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "slicesdir",
+  "properties": {
+    "flag_filelist": {
+      "var_param": "flag_filelist"
+    },
+    "outline_image": {
+      "var_param": "outline_image"
+    },
+    "edge_threshold": {
+      "var_param": "edge_threshold"
+    },
+    "slice_option": {
+      "var_param": "slice_option"
+    },
+    "filelist": {
+      "var_param": "filelist"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "minc2seqinfo",
+  "properties": {
+    "mincfile": {
+      "var_param": "mincfile"
+    },
+    "seqinfofile": {
+      "var_param": "seqinfofile"
+    }
+  }
+}

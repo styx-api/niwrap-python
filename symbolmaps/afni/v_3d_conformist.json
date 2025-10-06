@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_conformist",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

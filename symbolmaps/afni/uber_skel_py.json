@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "uber_skel_py",
+  "properties": {
+    "qt_options": {
+      "var_param": "qt_options"
+    },
+    "no_gui_flag": {
+      "var_param": "no_gui_flag"
+    },
+    "print_script": {
+      "var_param": "print_script"
+    },
+    "save_script": {
+      "var_param": "save_script"
+    },
+    "user_var": {
+      "var_param": "user_var"
+    },
+    "help_howto_program": {
+      "var_param": "help_howto_program"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "help_gui": {
+      "var_param": "help_gui"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "show_valid_opts": {
+      "var_param": "show_valid_opts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

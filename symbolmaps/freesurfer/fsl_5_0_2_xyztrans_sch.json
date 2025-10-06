@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "fsl_5_0_2_xyztrans_sch",
+  "properties": {
+    "term_option": {
+      "var_param": "term_option"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "no_scrollback_flag": {
+      "var_param": "no_scrollback_flag"
+    }
+  }
+}

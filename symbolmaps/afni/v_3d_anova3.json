@@ -1,0 +1,116 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_anova3",
+  "properties": {
+    "type": {
+      "var_param": "type_"
+    },
+    "alevels": {
+      "var_param": "alevels"
+    },
+    "blevels": {
+      "var_param": "blevels"
+    },
+    "clevels": {
+      "var_param": "clevels"
+    },
+    "dsets": {
+      "var_param": "dsets"
+    },
+    "voxel_num": {
+      "var_param": "voxel_num"
+    },
+    "diskspace": {
+      "var_param": "diskspace"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "outfile_fa": {
+      "var_param": "outfile_fa"
+    },
+    "outfile_fb": {
+      "var_param": "outfile_fb"
+    },
+    "outfile_fc": {
+      "var_param": "outfile_fc"
+    },
+    "outfile_fab": {
+      "var_param": "outfile_fab"
+    },
+    "outfile_fac": {
+      "var_param": "outfile_fac"
+    },
+    "outfile_fbc": {
+      "var_param": "outfile_fbc"
+    },
+    "outfile_fabc": {
+      "var_param": "outfile_fabc"
+    },
+    "outfile_amean": {
+      "var_param": "outfile_amean"
+    },
+    "outfile_bmean": {
+      "var_param": "outfile_bmean"
+    },
+    "outfile_cmean": {
+      "var_param": "outfile_cmean"
+    },
+    "outfile_xmean": {
+      "var_param": "outfile_xmean"
+    },
+    "outfile_adiff": {
+      "var_param": "outfile_adiff"
+    },
+    "outfile_bdiff": {
+      "var_param": "outfile_bdiff"
+    },
+    "outfile_cdiff": {
+      "var_param": "outfile_cdiff"
+    },
+    "outfile_xdiff": {
+      "var_param": "outfile_xdiff"
+    },
+    "outfile_acontr": {
+      "var_param": "outfile_acontr"
+    },
+    "outfile_bcontr": {
+      "var_param": "outfile_bcontr"
+    },
+    "outfile_ccontr": {
+      "var_param": "outfile_ccontr"
+    },
+    "outfile_abcontr": {
+      "var_param": "outfile_abcontr",
+      "fn_struct_make_params": "v_3d_anova3_outfile_abcontr_params",
+      "properties": {
+        "outfile_abcontr": {
+          "var_param": "outfile_abcontr"
+        },
+        "outfile_Abcontr": {
+          "var_param": "outfile_abcontr_"
+        }
+      }
+    },
+    "outfile_abdiff": {
+      "var_param": "outfile_abdiff",
+      "fn_struct_make_params": "v_3d_anova3_outfile_abcontr_1_params",
+      "properties": {
+        "outfile_abdiff": {
+          "var_param": "outfile_abdiff"
+        },
+        "outfile_Abdiff": {
+          "var_param": "outfile_abdiff_"
+        }
+      }
+    },
+    "outfile_abmean": {
+      "var_param": "outfile_abmean"
+    },
+    "outfile_bucket": {
+      "var_param": "outfile_bucket"
+    },
+    "anova_options": {
+      "var_param": "anova_options"
+    }
+  }
+}

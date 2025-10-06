@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "gifti_convert",
+  "properties": {
+    "gifti_encoding": {
+      "var_param": "gifti_encoding"
+    },
+    "input_gifti_file": {
+      "var_param": "input_gifti_file"
+    },
+    "output_gifti_file": {
+      "var_param": "output_gifti_file"
+    }
+  }
+}

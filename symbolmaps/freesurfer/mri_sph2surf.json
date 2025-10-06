@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mri_sph2surf",
+  "properties": {
+    "instem": {
+      "var_param": "instem"
+    },
+    "outstem": {
+      "var_param": "outstem"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "svitdir": {
+      "var_param": "svitdir"
+    },
+    "umask": {
+      "var_param": "umask"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "tensor2metric",
+  "properties": {
+    "adc": {
+      "var_param": "adc"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "ad": {
+      "var_param": "ad"
+    },
+    "rd": {
+      "var_param": "rd"
+    },
+    "cl": {
+      "var_param": "cl"
+    },
+    "cp": {
+      "var_param": "cp"
+    },
+    "cs": {
+      "var_param": "cs"
+    },
+    "value": {
+      "var_param": "value"
+    },
+    "vector": {
+      "var_param": "vector"
+    },
+    "num": {
+      "var_param": "num"
+    },
+    "modulate": {
+      "var_param": "modulate"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tensor2metric_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "tensor": {
+      "var_param": "tensor"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v__add_edge",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "examine_list": {
+      "var_param": "examine_list"
+    },
+    "ax_mont": {
+      "var_param": "ax_mont"
+    },
+    "ax_geom": {
+      "var_param": "ax_geom"
+    },
+    "sag_geom": {
+      "var_param": "sag_geom"
+    },
+    "layout_file": {
+      "var_param": "layout_file"
+    },
+    "no_layout": {
+      "var_param": "no_layout"
+    },
+    "edge_percentile": {
+      "var_param": "edge_percentile"
+    },
+    "single_edge": {
+      "var_param": "single_edge"
+    },
+    "opacity": {
+      "var_param": "opacity"
+    },
+    "keep_temp": {
+      "var_param": "keep_temp"
+    },
+    "no_deoblique": {
+      "var_param": "no_deoblique"
+    },
+    "auto_record": {
+      "var_param": "auto_record"
+    },
+    "auto": {
+      "var_param": "auto"
+    },
+    "no_auto": {
+      "var_param": "no_auto"
+    }
+  }
+}

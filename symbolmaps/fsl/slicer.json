@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "slicer",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "overlay_file": {
+      "var_param": "overlay_file"
+    },
+    "label_slices": {
+      "var_param": "label_slices"
+    },
+    "colour_map": {
+      "var_param": "colour_map"
+    },
+    "scaling": {
+      "var_param": "scaling"
+    },
+    "intensity_range": {
+      "var_param": "intensity_range"
+    },
+    "threshold_edges": {
+      "var_param": "threshold_edges"
+    },
+    "dither_edges": {
+      "var_param": "dither_edges"
+    },
+    "nearest_neighbour": {
+      "var_param": "nearest_neighbour"
+    },
+    "show_orientation": {
+      "var_param": "show_orientation"
+    },
+    "red_dot_marker": {
+      "var_param": "red_dot_marker"
+    },
+    "output_single_image": {
+      "var_param": "output_single_image"
+    },
+    "output_sagittal_slice": {
+      "var_param": "output_sagittal_slice"
+    },
+    "output_sagittal_slice_fname": {
+      "var_param": "output_sagittal_slice_fname"
+    },
+    "output_axial_slice": {
+      "var_param": "output_axial_slice"
+    },
+    "output_axial_slice_fname": {
+      "var_param": "output_axial_slice_fname"
+    },
+    "output_coronal_slice": {
+      "var_param": "output_coronal_slice"
+    },
+    "output_coronal_slice_fname": {
+      "var_param": "output_coronal_slice_fname"
+    },
+    "output_all_axial_slices": {
+      "var_param": "output_all_axial_slices"
+    },
+    "output_all_axial_slices_fname": {
+      "var_param": "output_all_axial_slices_fname"
+    },
+    "output_sample_axial_slices": {
+      "var_param": "output_sample_axial_slices"
+    },
+    "output_sample_axial_slices_width": {
+      "var_param": "output_sample_axial_slices_width"
+    },
+    "output_sample_axial_slices_fname": {
+      "var_param": "output_sample_axial_slices_fname"
+    }
+  }
+}

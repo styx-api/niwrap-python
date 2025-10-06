@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "ifh2hdr",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "range": {
+      "var_param": "range_"
+    }
+  }
+}

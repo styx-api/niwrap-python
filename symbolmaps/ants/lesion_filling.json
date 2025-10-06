@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "lesion_filling",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "t1_image": {
+      "var_param": "t1_image"
+    },
+    "lesion_mask": {
+      "var_param": "lesion_mask"
+    },
+    "output_lesion_filled": {
+      "var_param": "output_lesion_filled"
+    }
+  }
+}

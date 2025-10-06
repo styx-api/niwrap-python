@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "mm",
+  "properties": {
+    "spatial_data_file": {
+      "var_param": "spatial_data_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "timing_flag": {
+      "var_param": "timing_flag"
+    },
+    "example_epi_file": {
+      "var_param": "example_epi_file"
+    },
+    "log_directory": {
+      "var_param": "log_directory"
+    },
+    "nonspatial_flag": {
+      "var_param": "nonspatial_flag"
+    },
+    "fix_mrf_precision_flag": {
+      "var_param": "fix_mrf_precision_flag"
+    },
+    "mrf_prec_start": {
+      "var_param": "mrf_prec_start"
+    },
+    "mrf_prec_multiplier": {
+      "var_param": "mrf_prec_multiplier"
+    },
+    "init_multiplier": {
+      "var_param": "init_multiplier"
+    },
+    "no_update_theta_flag": {
+      "var_param": "no_update_theta_flag"
+    },
+    "zfstat_flag": {
+      "var_param": "zfstat_flag"
+    },
+    "phi": {
+      "var_param": "phi"
+    },
+    "niters": {
+      "var_param": "niters"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    }
+  }
+}

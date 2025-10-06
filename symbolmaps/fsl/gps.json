@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "gps",
+  "properties": {
+    "ndir": {
+      "var_param": "ndir"
+    },
+    "optws": {
+      "var_param": "optws"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "ranseed": {
+      "var_param": "ranseed"
+    },
+    "init": {
+      "var_param": "init"
+    },
+    "report": {
+      "var_param": "report"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

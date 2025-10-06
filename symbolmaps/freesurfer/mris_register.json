@@ -1,0 +1,194 @@
+{
+  "fn_root_make_params_and_execute": "mris_register",
+  "properties": {
+    "surf_fname": {
+      "var_param": "surf_fname"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "out_fname": {
+      "var_param": "out_fname"
+    },
+    "one_flag": {
+      "var_param": "one_flag"
+    },
+    "addframe": {
+      "var_param": "addframe"
+    },
+    "annot_name": {
+      "var_param": "annot_name"
+    },
+    "curvature_fname": {
+      "var_param": "curvature_fname"
+    },
+    "canonical_name": {
+      "var_param": "canonical_name"
+    },
+    "inflated": {
+      "var_param": "inflated"
+    },
+    "inflated_name": {
+      "var_param": "inflated_name"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "orig_name": {
+      "var_param": "orig_name"
+    },
+    "overlay_values": {
+      "var_param": "overlay_values"
+    },
+    "overlay_dir": {
+      "var_param": "overlay_dir"
+    },
+    "starting_reg_fname": {
+      "var_param": "starting_reg_fname"
+    },
+    "jacobian_fname": {
+      "var_param": "jacobian_fname"
+    },
+    "n_averages": {
+      "var_param": "n_averages"
+    },
+    "adaptive": {
+      "var_param": "adaptive"
+    },
+    "l_area": {
+      "var_param": "l_area"
+    },
+    "l_corr": {
+      "var_param": "l_corr"
+    },
+    "curvature_flag": {
+      "var_param": "curvature_flag"
+    },
+    "l_dist": {
+      "var_param": "l_dist"
+    },
+    "dt_value": {
+      "var_param": "dt_value"
+    },
+    "dt_decrease": {
+      "var_param": "dt_decrease"
+    },
+    "dt_increase": {
+      "var_param": "dt_increase"
+    },
+    "l_external": {
+      "var_param": "l_external"
+    },
+    "error_ratio": {
+      "var_param": "error_ratio"
+    },
+    "initial_flag": {
+      "var_param": "initial_flag"
+    },
+    "l_laplacian": {
+      "var_param": "l_laplacian"
+    },
+    "line_min": {
+      "var_param": "line_min"
+    },
+    "momentum": {
+      "var_param": "momentum"
+    },
+    "max_degrees": {
+      "var_param": "max_degrees"
+    },
+    "median": {
+      "var_param": "median"
+    },
+    "min_degrees": {
+      "var_param": "min_degrees"
+    },
+    "multi_scale": {
+      "var_param": "multi_scale"
+    },
+    "n_iterations": {
+      "var_param": "n_iterations"
+    },
+    "n_angles": {
+      "var_param": "n_angles"
+    },
+    "neighborhood_size": {
+      "var_param": "neighborhood_size"
+    },
+    "l_nlarea": {
+      "var_param": "l_nlarea"
+    },
+    "no_curv": {
+      "var_param": "no_curv"
+    },
+    "no_normalization": {
+      "var_param": "no_normalization"
+    },
+    "no_rotation": {
+      "var_param": "no_rotation"
+    },
+    "no_sulc": {
+      "var_param": "no_sulc"
+    },
+    "num_surfaces": {
+      "var_param": "num_surfaces"
+    },
+    "overlay_corr": {
+      "var_param": "overlay_corr"
+    },
+    "max_passes": {
+      "var_param": "max_passes"
+    },
+    "l_parea": {
+      "var_param": "l_parea"
+    },
+    "remove_negative": {
+      "var_param": "remove_negative"
+    },
+    "reverse": {
+      "var_param": "reverse"
+    },
+    "rotate_values": {
+      "var_param": "rotate_values"
+    },
+    "registration_file": {
+      "var_param": "registration_file"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "search_flag": {
+      "var_param": "search_flag"
+    },
+    "spring_value": {
+      "var_param": "spring_value"
+    },
+    "tolerance": {
+      "var_param": "tolerance"
+    },
+    "topology_flag": {
+      "var_param": "topology_flag"
+    },
+    "vnum": {
+      "var_param": "vnum"
+    },
+    "vsmooth": {
+      "var_param": "vsmooth"
+    },
+    "write_iterations": {
+      "var_param": "write_iterations"
+    },
+    "gdiag_no": {
+      "var_param": "gdiag_no"
+    },
+    "vector_flag": {
+      "var_param": "vector_flag"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

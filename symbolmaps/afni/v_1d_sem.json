@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_sem",
+  "properties": {
+    "theta": {
+      "var_param": "theta"
+    },
+    "correlation_matrix": {
+      "var_param": "correlation_matrix"
+    },
+    "residual_variance": {
+      "var_param": "residual_variance"
+    },
+    "degrees_of_freedom": {
+      "var_param": "degrees_of_freedom"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "number_random_trials": {
+      "var_param": "number_random_trials"
+    },
+    "limits": {
+      "var_param": "limits"
+    },
+    "calculate_cost": {
+      "var_param": "calculate_cost"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "tree_growth": {
+      "var_param": "tree_growth"
+    },
+    "model_search": {
+      "var_param": "model_search"
+    },
+    "max_paths": {
+      "var_param": "max_paths"
+    },
+    "stop_cost": {
+      "var_param": "stop_cost"
+    },
+    "forest_growth": {
+      "var_param": "forest_growth"
+    },
+    "grow_all": {
+      "var_param": "grow_all"
+    },
+    "leafpicker": {
+      "var_param": "leafpicker"
+    }
+  }
+}

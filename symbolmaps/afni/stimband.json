@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "stimband",
+  "properties": {
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "matrixfiles": {
+      "var_param": "matrixfiles"
+    },
+    "additional_matrixfiles": {
+      "var_param": "additional_matrixfiles"
+    },
+    "min_freq": {
+      "var_param": "min_freq"
+    },
+    "min_bwidth": {
+      "var_param": "min_bwidth"
+    },
+    "min_pow": {
+      "var_param": "min_pow"
+    }
+  }
+}

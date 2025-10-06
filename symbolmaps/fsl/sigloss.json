@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "sigloss",
+  "properties": {
+    "input_b0map": {
+      "var_param": "input_b0map"
+    },
+    "output_sigloss": {
+      "var_param": "output_sigloss"
+    },
+    "input_mask": {
+      "var_param": "input_mask"
+    },
+    "echo_time": {
+      "var_param": "echo_time"
+    },
+    "slice_direction": {
+      "var_param": "slice_direction"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

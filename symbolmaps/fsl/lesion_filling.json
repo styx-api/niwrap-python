@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "lesion_filling",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "lesionmask": {
+      "var_param": "lesionmask"
+    },
+    "wmmask": {
+      "var_param": "wmmask"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "components_flag": {
+      "var_param": "components_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v__radial_correlate",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "results_dir": {
+      "var_param": "results_dir"
+    },
+    "do_corr": {
+      "var_param": "do_corr"
+    },
+    "do_clust": {
+      "var_param": "do_clust"
+    },
+    "mask_dset": {
+      "var_param": "mask_dset"
+    },
+    "cthresh": {
+      "var_param": "cthresh"
+    },
+    "frac_limit": {
+      "var_param": "frac_limit"
+    },
+    "sphere_rad": {
+      "var_param": "sphere_rad"
+    },
+    "use_3dmerge": {
+      "var_param": "use_3dmerge"
+    },
+    "percentile": {
+      "var_param": "percentile"
+    },
+    "min_thr": {
+      "var_param": "min_thr"
+    },
+    "nfirst": {
+      "var_param": "nfirst"
+    },
+    "ver": {
+      "var_param": "ver"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "corr_mask": {
+      "var_param": "corr_mask"
+    },
+    "do_clean": {
+      "var_param": "do_clean"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "merge_frad": {
+      "var_param": "merge_frad"
+    }
+  }
+}

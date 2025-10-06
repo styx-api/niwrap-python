@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_afnito_niml",
+  "properties": {
+    "dset": {
+      "var_param": "dset"
+    },
+    "data": {
+      "var_param": "data"
+    },
+    "ascii": {
+      "var_param": "ascii_"
+    },
+    "tcp": {
+      "var_param": "tcp"
+    }
+  }
+}

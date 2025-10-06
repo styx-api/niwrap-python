@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "label_resample",
+  "properties": {
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "current_sphere": {
+      "var_param": "current_sphere"
+    },
+    "new_sphere": {
+      "var_param": "new_sphere"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "label_out": {
+      "var_param": "label_out"
+    },
+    "area_surfs": {
+      "var_param": "area_surfs",
+      "fn_struct_make_params": "label_resample_area_surfs_params",
+      "properties": {
+        "current_area": {
+          "var_param": "current_area"
+        },
+        "new_area": {
+          "var_param": "new_area"
+        }
+      }
+    },
+    "area_metrics": {
+      "var_param": "area_metrics",
+      "fn_struct_make_params": "label_resample_area_metrics_params",
+      "properties": {
+        "current_area": {
+          "var_param": "current_area"
+        },
+        "new_area": {
+          "var_param": "new_area"
+        }
+      }
+    },
+    "opt_current_roi_roi_metric": {
+      "var_param": "opt_current_roi_roi_metric"
+    },
+    "opt_valid_roi_out_roi_out": {
+      "var_param": "opt_valid_roi_out_roi_out"
+    },
+    "opt_largest": {
+      "var_param": "opt_largest"
+    },
+    "opt_bypass_sphere_check": {
+      "var_param": "opt_bypass_sphere_check"
+    }
+  }
+}

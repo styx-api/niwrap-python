@@ -1,0 +1,83 @@
+{
+  "fn_root_make_params_and_execute": "mris_fix_topology",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "orig_name": {
+      "var_param": "orig_name"
+    },
+    "sphere_name": {
+      "var_param": "sphere_name"
+    },
+    "inflated_name": {
+      "var_param": "inflated_name"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "defect_base_name": {
+      "var_param": "defect_base_name"
+    },
+    "write_fixed_inflated": {
+      "var_param": "write_fixed_inflated"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "verbose_low": {
+      "var_param": "verbose_low"
+    },
+    "warnings": {
+      "var_param": "warnings_"
+    },
+    "errors": {
+      "var_param": "errors"
+    },
+    "movies": {
+      "var_param": "movies"
+    },
+    "intersect": {
+      "var_param": "intersect"
+    },
+    "mappings": {
+      "var_param": "mappings"
+    },
+    "correct_defect": {
+      "var_param": "correct_defect"
+    },
+    "niters": {
+      "var_param": "niters"
+    },
+    "genetic": {
+      "var_param": "genetic"
+    },
+    "optimize": {
+      "var_param": "optimize"
+    },
+    "random": {
+      "var_param": "random_"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "diag": {
+      "var_param": "diag"
+    },
+    "mgz": {
+      "var_param": "mgz"
+    },
+    "smooth": {
+      "var_param": "smooth"
+    },
+    "diagnostic_level": {
+      "var_param": "diagnostic_level"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

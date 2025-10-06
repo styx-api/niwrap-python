@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "bbregister",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "moveable_volume": {
+      "var_param": "moveable_volume"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "contrast_type_t1": {
+      "var_param": "contrast_type_t1"
+    },
+    "contrast_type_t2": {
+      "var_param": "contrast_type_t2"
+    },
+    "vsm": {
+      "var_param": "vsm"
+    },
+    "init_coreg": {
+      "var_param": "init_coreg"
+    },
+    "no_coreg_ref_mask": {
+      "var_param": "no_coreg_ref_mask"
+    },
+    "init_header": {
+      "var_param": "init_header"
+    },
+    "init_reg": {
+      "var_param": "init_reg"
+    },
+    "intvol": {
+      "var_param": "intvol"
+    },
+    "mid_frame": {
+      "var_param": "mid_frame"
+    },
+    "frame_no": {
+      "var_param": "frame_no"
+    },
+    "template_out": {
+      "var_param": "template_out"
+    },
+    "o_outvol": {
+      "var_param": "o_outvol"
+    },
+    "s_from_reg": {
+      "var_param": "s_from_reg"
+    }
+  }
+}

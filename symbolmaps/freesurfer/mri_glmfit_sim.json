@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "mri_glmfit_sim",
+  "properties": {
+    "glmdir": {
+      "var_param": "glmdir"
+    },
+    "cwp": {
+      "var_param": "cwp"
+    },
+    "mczsim": {
+      "var_param": "mczsim"
+    },
+    "mczsim_dir": {
+      "var_param": "mczsim_dir"
+    },
+    "mczsim_label": {
+      "var_param": "mczsim_label"
+    },
+    "perm": {
+      "var_param": "perm"
+    },
+    "perm_resid": {
+      "var_param": "perm_resid"
+    },
+    "perm_signflip": {
+      "var_param": "perm_signflip"
+    },
+    "grf": {
+      "var_param": "grf"
+    },
+    "spaces_2": {
+      "var_param": "spaces_2"
+    },
+    "spaces_3": {
+      "var_param": "spaces_3"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "bg": {
+      "var_param": "bg"
+    },
+    "sleep": {
+      "var_param": "sleep"
+    },
+    "a2009s": {
+      "var_param": "a2009s"
+    },
+    "annot": {
+      "var_param": "annot"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "no_sim": {
+      "var_param": "no_sim"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "fwhm_override": {
+      "var_param": "fwhm_override"
+    },
+    "fwhm_add": {
+      "var_param": "fwhm_add"
+    },
+    "uniform": {
+      "var_param": "uniform"
+    },
+    "no_out_annot": {
+      "var_param": "no_out_annot"
+    },
+    "no_cluster_mean": {
+      "var_param": "no_cluster_mean"
+    },
+    "y_file": {
+      "var_param": "y_file"
+    },
+    "centroid": {
+      "var_param": "centroid"
+    },
+    "spatial_sum": {
+      "var_param": "spatial_sum"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

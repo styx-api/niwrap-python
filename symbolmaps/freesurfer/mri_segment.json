@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "mri_segment",
+  "properties": {
+    "in_vol": {
+      "var_param": "in_vol"
+    },
+    "out_vol": {
+      "var_param": "out_vol"
+    },
+    "no1d_remove": {
+      "var_param": "no1d_remove"
+    },
+    "slope": {
+      "var_param": "slope"
+    },
+    "pslope": {
+      "var_param": "pslope"
+    },
+    "nslope": {
+      "var_param": "nslope"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    },
+    "auto": {
+      "var_param": "auto"
+    },
+    "noauto": {
+      "var_param": "noauto"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "keep": {
+      "var_param": "keep"
+    },
+    "gray_hi": {
+      "var_param": "gray_hi"
+    },
+    "wm_low": {
+      "var_param": "wm_low"
+    },
+    "wm_low_factor": {
+      "var_param": "wm_low_factor"
+    },
+    "wm_hi": {
+      "var_param": "wm_hi"
+    },
+    "nseg": {
+      "var_param": "nseg"
+    },
+    "thicken": {
+      "var_param": "thicken"
+    },
+    "fillbg": {
+      "var_param": "fillbg"
+    },
+    "fillv": {
+      "var_param": "fillv"
+    },
+    "blur_sigma": {
+      "var_param": "blur_sigma"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "thin_strand_limit": {
+      "var_param": "thin_strand_limit"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "extract_options": {
+      "var_param": "extract_options"
+    },
+    "wsize": {
+      "var_param": "wsize"
+    },
+    "wsizemm": {
+      "var_param": "wsizemm"
+    },
+    "polvw_size": {
+      "var_param": "polvw_size"
+    },
+    "polv_len": {
+      "var_param": "polv_len"
+    },
+    "datfile": {
+      "var_param": "datfile"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "diagno": {
+      "var_param": "diagno"
+    },
+    "diag_write": {
+      "var_param": "diag_write"
+    },
+    "diag_verbose": {
+      "var_param": "diag_verbose"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "susan",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "brightness_threshold": {
+      "var_param": "brightness_threshold"
+    },
+    "spatial_size": {
+      "var_param": "spatial_size"
+    },
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "use_median_filter": {
+      "var_param": "use_median_filter"
+    },
+    "n_usans": {
+      "var_param": "n_usans"
+    },
+    "usan1": {
+      "var_param": "usan1"
+    },
+    "brightness_threshold1": {
+      "var_param": "brightness_threshold1"
+    },
+    "usan2": {
+      "var_param": "usan2"
+    },
+    "brightness_threshold2": {
+      "var_param": "brightness_threshold2"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

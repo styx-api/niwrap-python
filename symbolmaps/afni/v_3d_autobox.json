@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_autobox",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "alt_input": {
+      "var_param": "alt_input"
+    },
+    "noclust": {
+      "var_param": "noclust"
+    },
+    "extent": {
+      "var_param": "extent"
+    },
+    "extent_ijk": {
+      "var_param": "extent_ijk"
+    },
+    "extent_ijk_to_file": {
+      "var_param": "extent_ijk_to_file"
+    },
+    "extent_ijk_midslice": {
+      "var_param": "extent_ijk_midslice"
+    },
+    "extent_ijkord": {
+      "var_param": "extent_ijkord"
+    },
+    "extent_ijkord_to_file": {
+      "var_param": "extent_ijkord_to_file"
+    },
+    "extent_xyz_to_file": {
+      "var_param": "extent_xyz_to_file"
+    },
+    "extent_xyz_midslice": {
+      "var_param": "extent_xyz_midslice"
+    },
+    "npad": {
+      "var_param": "npad"
+    },
+    "npad_safety_on": {
+      "var_param": "npad_safety_on"
+    }
+  }
+}

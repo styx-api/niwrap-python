@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "n4_bias_field_correction",
+  "properties": {
+    "image_dimensionality": {
+      "var_param": "image_dimensionality"
+    },
+    "shrink_factor": {
+      "var_param": "shrink_factor"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "rescale_intensities": {
+      "var_param": "rescale_intensities"
+    },
+    "weight_image": {
+      "var_param": "weight_image"
+    },
+    "convergence": {
+      "var_param": "convergence",
+      "fn_struct_make_params": "n4_bias_field_correction_convergence_params",
+      "properties": {
+        "convergence": {
+          "var_param": "convergence"
+        },
+        "convergence_threshold": {
+          "var_param": "convergence_threshold"
+        }
+      }
+    },
+    "bspline_fitting": {
+      "var_param": "bspline_fitting",
+      "fn_struct_make_params": "n4_bias_field_correction_bspline_fitting_params",
+      "properties": {
+        "spline_distance": {
+          "var_param": "spline_distance"
+        },
+        "spline_order": {
+          "var_param": "spline_order"
+        }
+      }
+    },
+    "histogram_sharpening": {
+      "var_param": "histogram_sharpening",
+      "fn_struct_make_params": "n4_bias_field_correction_histogram_sharpening_params",
+      "properties": {
+        "fwhm": {
+          "var_param": "fwhm"
+        },
+        "wiener_noise": {
+          "var_param": "wiener_noise"
+        },
+        "number_of_histogram_bins": {
+          "var_param": "number_of_histogram_bins"
+        }
+      }
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

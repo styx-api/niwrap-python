@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "possum",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "mr_parameters": {
+      "var_param": "mr_parameters"
+    },
+    "motion_matrix": {
+      "var_param": "motion_matrix"
+    },
+    "pulse_sequence": {
+      "var_param": "pulse_sequence"
+    },
+    "rf_slice_profile": {
+      "var_param": "rf_slice_profile"
+    },
+    "output_signal": {
+      "var_param": "output_signal"
+    },
+    "event_matrix": {
+      "var_param": "event_matrix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "kcoord": {
+      "var_param": "kcoord"
+    },
+    "b0_inhomogeneities": {
+      "var_param": "b0_inhomogeneities"
+    },
+    "extra_b0_inhomogeneities": {
+      "var_param": "extra_b0_inhomogeneities"
+    },
+    "b0_inhomogeneities_timecourse": {
+      "var_param": "b0_inhomogeneities_timecourse"
+    },
+    "rf_inhomogeneity_receive": {
+      "var_param": "rf_inhomogeneity_receive"
+    },
+    "rf_inhomogeneity_transmit": {
+      "var_param": "rf_inhomogeneity_transmit"
+    },
+    "activation_volume": {
+      "var_param": "activation_volume"
+    },
+    "activation_timecourse": {
+      "var_param": "activation_timecourse"
+    },
+    "activation_4d_volume": {
+      "var_param": "activation_4d_volume"
+    },
+    "activation_4d_timecourse": {
+      "var_param": "activation_4d_timecourse"
+    },
+    "level": {
+      "var_param": "level"
+    },
+    "num_procs": {
+      "var_param": "num_procs"
+    },
+    "proc_id": {
+      "var_param": "proc_id"
+    },
+    "no_speedup": {
+      "var_param": "no_speedup"
+    },
+    "rf_average": {
+      "var_param": "rf_average"
+    }
+  }
+}

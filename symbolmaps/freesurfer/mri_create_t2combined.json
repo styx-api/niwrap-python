@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mri_create_t2combined",
+  "properties": {
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "t1wb": {
+      "var_param": "t1wb"
+    },
+    "t2upper": {
+      "var_param": "t2upper"
+    },
+    "t2middle": {
+      "var_param": "t2middle"
+    },
+    "t2lower": {
+      "var_param": "t2lower"
+    },
+    "t2combined": {
+      "var_param": "t2combined"
+    },
+    "show": {
+      "var_param": "show"
+    }
+  }
+}

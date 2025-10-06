@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tshift",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "rlt": {
+      "var_param": "rlt"
+    },
+    "rltplus": {
+      "var_param": "rltplus"
+    },
+    "slice_encoding_direction": {
+      "var_param": "slice_encoding_direction"
+    },
+    "tpattern": {
+      "var_param": "tpattern"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "tslice": {
+      "var_param": "tslice"
+    },
+    "tzero": {
+      "var_param": "tzero"
+    }
+  }
+}

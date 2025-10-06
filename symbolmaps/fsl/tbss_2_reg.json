@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "tbss_2_reg",
+  "properties": {
+    "use_fmrib58_fa_1mm": {
+      "var_param": "use_fmrib58_fa_1mm"
+    },
+    "target_image": {
+      "var_param": "target_image"
+    },
+    "find_best_target": {
+      "var_param": "find_best_target"
+    }
+  }
+}

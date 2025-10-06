@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_mark_temporal_lobe",
+  "properties": {
+    "spacing": {
+      "var_param": "spacing"
+    },
+    "use_gradient": {
+      "var_param": "use_gradient"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

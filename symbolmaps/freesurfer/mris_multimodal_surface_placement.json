@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "mris_multimodal_surface_placement",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "sphere_surface": {
+      "var_param": "sphere_surface"
+    },
+    "normals": {
+      "var_param": "normals"
+    },
+    "values": {
+      "var_param": "values_"
+    },
+    "debug_vertex": {
+      "var_param": "debug_vertex"
+    },
+    "step_size": {
+      "var_param": "step_size"
+    },
+    "number_of_steps": {
+      "var_param": "number_of_steps"
+    },
+    "gradient_sigma": {
+      "var_param": "gradient_sigma"
+    },
+    "aseg_aparc": {
+      "var_param": "aseg_aparc"
+    },
+    "white_surface": {
+      "var_param": "white_surface"
+    },
+    "prob_of_csf": {
+      "var_param": "prob_of_csf"
+    },
+    "t1_image": {
+      "var_param": "t1_image"
+    },
+    "t2_image": {
+      "var_param": "t2_image"
+    },
+    "flair_image": {
+      "var_param": "flair_image"
+    },
+    "min_max": {
+      "var_param": "min_max"
+    }
+  }
+}

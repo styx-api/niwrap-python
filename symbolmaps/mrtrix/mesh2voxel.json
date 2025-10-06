@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mesh2voxel",
+  "properties": {
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mesh2voxel_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "source": {
+      "var_param": "source"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

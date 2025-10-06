@@ -1,0 +1,110 @@
+{
+  "fn_root_make_params_and_execute": "fabber_dualecho",
+  "properties": {
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "data": {
+      "var_param": "data"
+    },
+    "data_order": {
+      "var_param": "data_order"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "mt_list": {
+      "var_param": "mt_list"
+    },
+    "supp_data": {
+      "var_param": "supp_data"
+    },
+    "options_file": {
+      "var_param": "options_file"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "list_methods_flag": {
+      "var_param": "list_methods_flag"
+    },
+    "list_models_flag": {
+      "var_param": "list_models_flag"
+    },
+    "list_params_flag": {
+      "var_param": "list_params_flag"
+    },
+    "desc_params_flag": {
+      "var_param": "desc_params_flag"
+    },
+    "list_outputs_flag": {
+      "var_param": "list_outputs_flag"
+    },
+    "evaluate": {
+      "var_param": "evaluate"
+    },
+    "evaluate_params": {
+      "var_param": "evaluate_params"
+    },
+    "evaluate_nt": {
+      "var_param": "evaluate_nt"
+    },
+    "simple_output_flag": {
+      "var_param": "simple_output_flag"
+    },
+    "overwrite_flag": {
+      "var_param": "overwrite_flag"
+    },
+    "link_to_latest_flag": {
+      "var_param": "link_to_latest_flag"
+    },
+    "load_models": {
+      "var_param": "load_models"
+    },
+    "dump_param_names_flag": {
+      "var_param": "dump_param_names_flag"
+    },
+    "save_model_fit_flag": {
+      "var_param": "save_model_fit_flag"
+    },
+    "save_residuals_flag": {
+      "var_param": "save_residuals_flag"
+    },
+    "save_model_extras_flag": {
+      "var_param": "save_model_extras_flag"
+    },
+    "save_mvn_flag": {
+      "var_param": "save_mvn_flag"
+    },
+    "save_mean_flag": {
+      "var_param": "save_mean_flag"
+    },
+    "save_std_flag": {
+      "var_param": "save_std_flag"
+    },
+    "save_var_flag": {
+      "var_param": "save_var_flag"
+    },
+    "save_zstat_flag": {
+      "var_param": "save_zstat_flag"
+    },
+    "save_noise_mean_flag": {
+      "var_param": "save_noise_mean_flag"
+    },
+    "save_noise_std_flag": {
+      "var_param": "save_noise_std_flag"
+    },
+    "save_free_energy_flag": {
+      "var_param": "save_free_energy_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

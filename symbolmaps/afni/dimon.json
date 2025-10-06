@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "dimon",
+  "properties": {
+    "infile_prefix": {
+      "var_param": "infile_prefix"
+    },
+    "infile_pattern": {
+      "var_param": "infile_pattern"
+    },
+    "infile_list": {
+      "var_param": "infile_list"
+    },
+    "rt_cmd": {
+      "var_param": "rt_cmd"
+    },
+    "host": {
+      "var_param": "host"
+    },
+    "drive_afni": {
+      "var_param": "drive_afni"
+    },
+    "drive_wait": {
+      "var_param": "drive_wait"
+    },
+    "te_list": {
+      "var_param": "te_list"
+    },
+    "sort_method": {
+      "var_param": "sort_method"
+    }
+  }
+}

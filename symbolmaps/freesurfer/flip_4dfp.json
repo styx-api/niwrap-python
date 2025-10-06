@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "flip_4dfp",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    },
+    "endianness": {
+      "var_param": "endianness"
+    }
+  }
+}

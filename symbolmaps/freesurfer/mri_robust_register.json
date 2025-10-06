@@ -1,0 +1,152 @@
+{
+  "fn_root_make_params_and_execute": "mri_robust_register",
+  "properties": {
+    "movable_volume": {
+      "var_param": "movable_volume"
+    },
+    "target_volume": {
+      "var_param": "target_volume"
+    },
+    "output_registration": {
+      "var_param": "output_registration"
+    },
+    "outlier_sensitivity": {
+      "var_param": "outlier_sensitivity"
+    },
+    "satit": {
+      "var_param": "satit"
+    },
+    "mapped_movable": {
+      "var_param": "mapped_movable"
+    },
+    "mapped_movable_hdr": {
+      "var_param": "mapped_movable_hdr"
+    },
+    "weights": {
+      "var_param": "weights"
+    },
+    "oneminus_w": {
+      "var_param": "oneminus_w"
+    },
+    "iscale": {
+      "var_param": "iscale"
+    },
+    "iscale_only": {
+      "var_param": "iscale_only"
+    },
+    "iscale_out": {
+      "var_param": "iscale_out"
+    },
+    "iscale_in": {
+      "var_param": "iscale_in"
+    },
+    "trans_only": {
+      "var_param": "trans_only"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
+    "ixform": {
+      "var_param": "ixform"
+    },
+    "init_orient": {
+      "var_param": "init_orient"
+    },
+    "no_init": {
+      "var_param": "no_init"
+    },
+    "vox2vox": {
+      "var_param": "vox2vox"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "ent_radius": {
+      "var_param": "ent_radius"
+    },
+    "ent_correction": {
+      "var_param": "ent_correction"
+    },
+    "ent_ball": {
+      "var_param": "ent_ball"
+    },
+    "ent_mov": {
+      "var_param": "ent_mov"
+    },
+    "powell_tolerance": {
+      "var_param": "powell_tolerance"
+    },
+    "sobel": {
+      "var_param": "sobel"
+    },
+    "no_sym": {
+      "var_param": "no_sym"
+    },
+    "maximum_iterations": {
+      "var_param": "maximum_iterations"
+    },
+    "ent_dst": {
+      "var_param": "ent_dst"
+    },
+    "high_iter": {
+      "var_param": "high_iter"
+    },
+    "eps_iteration": {
+      "var_param": "eps_iteration"
+    },
+    "no_multiscale": {
+      "var_param": "no_multiscale"
+    },
+    "max_size": {
+      "var_param": "max_size"
+    },
+    "min_size": {
+      "var_param": "min_size"
+    },
+    "w_limit": {
+      "var_param": "w_limit"
+    },
+    "sub_sample": {
+      "var_param": "sub_sample"
+    },
+    "float_type": {
+      "var_param": "float_type"
+    },
+    "white_bg_mov": {
+      "var_param": "white_bg_mov"
+    },
+    "white_bg_dst": {
+      "var_param": "white_bg_dst"
+    },
+    "uchar": {
+      "var_param": "uchar"
+    },
+    "mask_mov": {
+      "var_param": "mask_mov"
+    },
+    "mask_dst": {
+      "var_param": "mask_dst"
+    },
+    "half_mov": {
+      "var_param": "half_mov"
+    },
+    "half_dst": {
+      "var_param": "half_dst"
+    },
+    "half_weights": {
+      "var_param": "half_weights"
+    },
+    "half_mov_lta": {
+      "var_param": "half_mov_lta"
+    },
+    "half_dst_lta": {
+      "var_param": "half_dst_lta"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

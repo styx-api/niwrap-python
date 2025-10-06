@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "cifti_export_dense_mapping",
+  "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "volume_all": {
+      "var_param": "volume_all",
+      "fn_struct_make_params": "cifti_export_dense_mapping_volume_all_params",
+      "properties": {
+        "text_out": {
+          "var_param": "text_out"
+        },
+        "opt_no_cifti_index": {
+          "var_param": "opt_no_cifti_index"
+        },
+        "opt_structure": {
+          "var_param": "opt_structure"
+        }
+      }
+    },
+    "surface": {
+      "var_param": "surface",
+      "fn_struct_make_params": "cifti_export_dense_mapping_surface_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "text_out": {
+          "var_param": "text_out"
+        },
+        "opt_no_cifti_index": {
+          "var_param": "opt_no_cifti_index"
+        }
+      }
+    },
+    "volume": {
+      "var_param": "volume",
+      "fn_struct_make_params": "cifti_export_dense_mapping_volume_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "text_out": {
+          "var_param": "text_out"
+        },
+        "opt_no_cifti_index": {
+          "var_param": "opt_no_cifti_index"
+        }
+      }
+    }
+  }
+}

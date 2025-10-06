@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "dsetstat2p",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "statval": {
+      "var_param": "statval"
+    },
+    "bisided": {
+      "var_param": "bisided"
+    },
+    "two_sided": {
+      "var_param": "two_sided"
+    },
+    "one_sided": {
+      "var_param": "one_sided"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "first_utils",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "norm_factors": {
+      "var_param": "norm_factors"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "extra_path": {
+      "var_param": "extra_path"
+    },
+    "flirt_matrices": {
+      "var_param": "flirt_matrices"
+    },
+    "use_scale": {
+      "var_param": "use_scale"
+    },
+    "dice_overlap": {
+      "var_param": "dice_overlap"
+    },
+    "input_mesh": {
+      "var_param": "input_mesh"
+    },
+    "use_norm": {
+      "var_param": "use_norm"
+    },
+    "surface_out": {
+      "var_param": "surface_out"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "mesh_label": {
+      "var_param": "mesh_label"
+    },
+    "use_bvars": {
+      "var_param": "use_bvars"
+    },
+    "use_recon_mni": {
+      "var_param": "use_recon_mni"
+    },
+    "vertex_analysis": {
+      "var_param": "vertex_analysis"
+    },
+    "use_recon_native": {
+      "var_param": "use_recon_native"
+    },
+    "use_rigid_align": {
+      "var_param": "use_rigid_align"
+    },
+    "design_matrix": {
+      "var_param": "design_matrix"
+    },
+    "recon_mesh_from_bvars": {
+      "var_param": "recon_mesh_from_bvars"
+    },
+    "read_bvars": {
+      "var_param": "read_bvars"
+    },
+    "mesh_to_vol": {
+      "var_param": "mesh_to_vol"
+    },
+    "centre_origin": {
+      "var_param": "centre_origin"
+    },
+    "save_vertices": {
+      "var_param": "save_vertices"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "use_pca_filter": {
+      "var_param": "use_pca_filter"
+    },
+    "num_modes": {
+      "var_param": "num_modes"
+    },
+    "single_boundary_corr": {
+      "var_param": "single_boundary_corr"
+    },
+    "do_mvglm": {
+      "var_param": "do_mvglm"
+    },
+    "concat_bvars": {
+      "var_param": "concat_bvars"
+    },
+    "debug_mode": {
+      "var_param": "debug_mode"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

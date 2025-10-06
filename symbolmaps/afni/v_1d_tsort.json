@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_tsort",
+  "properties": {
+    "inc_order": {
+      "var_param": "inc_order"
+    },
+    "dec_order": {
+      "var_param": "dec_order"
+    },
+    "transpose": {
+      "var_param": "transpose"
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "imode": {
+      "var_param": "imode"
+    },
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

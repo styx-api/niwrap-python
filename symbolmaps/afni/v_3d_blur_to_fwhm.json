@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_blur_to_fwhm",
+  "properties": {
+    "automask": {
+      "var_param": "automask"
+    },
+    "blurmaster": {
+      "var_param": "blurmaster"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "fwhmxy": {
+      "var_param": "fwhmxy"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

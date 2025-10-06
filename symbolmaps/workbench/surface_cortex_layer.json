@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "surface_cortex_layer",
+  "properties": {
+    "white_surface": {
+      "var_param": "white_surface"
+    },
+    "pial_surface": {
+      "var_param": "pial_surface"
+    },
+    "location": {
+      "var_param": "location"
+    },
+    "out_surface": {
+      "var_param": "out_surface"
+    },
+    "opt_placement_out_placement_metric": {
+      "var_param": "opt_placement_out_placement_metric"
+    }
+  }
+}

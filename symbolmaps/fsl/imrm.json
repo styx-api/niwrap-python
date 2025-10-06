@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "imrm",
+  "properties": {
+    "images_to_remove": {
+      "var_param": "images_to_remove"
+    }
+  }
+}

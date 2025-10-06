@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "mri_ca_normalize",
+  "properties": {
+    "input_brain_volumes": {
+      "var_param": "input_brain_volumes"
+    },
+    "atlas_file": {
+      "var_param": "atlas_file"
+    },
+    "xform_file": {
+      "var_param": "xform_file"
+    },
+    "output_volumes": {
+      "var_param": "output_volumes"
+    },
+    "seg_file": {
+      "var_param": "seg_file"
+    },
+    "sigma_value": {
+      "var_param": "sigma_value"
+    },
+    "fsamples_file": {
+      "var_param": "fsamples_file"
+    },
+    "dilate_iters": {
+      "var_param": "dilate_iters"
+    },
+    "nsamples_file": {
+      "var_param": "nsamples_file"
+    },
+    "mask_vol": {
+      "var_param": "mask_vol"
+    },
+    "control_points_file": {
+      "var_param": "control_points_file"
+    },
+    "fonly_file": {
+      "var_param": "fonly_file"
+    },
+    "diag_file": {
+      "var_param": "diag_file"
+    },
+    "debug_voxel_coords": {
+      "var_param": "debug_voxel_coords"
+    },
+    "debug_node_coords": {
+      "var_param": "debug_node_coords"
+    },
+    "tr_value": {
+      "var_param": "tr_value"
+    },
+    "te_value": {
+      "var_param": "te_value"
+    },
+    "alpha_value": {
+      "var_param": "alpha_value"
+    },
+    "example_mri_vol": {
+      "var_param": "example_mri_vol"
+    },
+    "extra_norm_pctl": {
+      "var_param": "extra_norm_pctl"
+    },
+    "prior_threshold": {
+      "var_param": "prior_threshold"
+    },
+    "n_regions": {
+      "var_param": "n_regions"
+    },
+    "verbose_value": {
+      "var_param": "verbose_value"
+    },
+    "top_percent": {
+      "var_param": "top_percent"
+    },
+    "novar_flag": {
+      "var_param": "novar_flag"
+    },
+    "renorm_file": {
+      "var_param": "renorm_file"
+    },
+    "flash_flag": {
+      "var_param": "flash_flag"
+    }
+  }
+}

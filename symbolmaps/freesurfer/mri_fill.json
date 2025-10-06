@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "mri_fill",
+  "properties": {
+    "input_mr_dir": {
+      "var_param": "input_mr_dir"
+    },
+    "output_mr_dir": {
+      "var_param": "output_mr_dir"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "xform_name": {
+      "var_param": "xform_name"
+    },
+    "segmentation_file": {
+      "var_param": "segmentation_file"
+    },
+    "atlas_file": {
+      "var_param": "atlas_file"
+    },
+    "fill_ven": {
+      "var_param": "fill_ven"
+    },
+    "seed_cc_tal": {
+      "var_param": "seed_cc_tal"
+    },
+    "seed_pons_tal": {
+      "var_param": "seed_pons_tal"
+    },
+    "seed_lh_tal": {
+      "var_param": "seed_lh_tal"
+    },
+    "seed_rh_tal": {
+      "var_param": "seed_rh_tal"
+    },
+    "seed_cc_vox": {
+      "var_param": "seed_cc_vox"
+    },
+    "seed_pons_vox": {
+      "var_param": "seed_pons_vox"
+    },
+    "auto_man_files": {
+      "var_param": "auto_man_files"
+    },
+    "no_auto_man": {
+      "var_param": "no_auto_man"
+    },
+    "pointset_args": {
+      "var_param": "pointset_args"
+    },
+    "ctab_file": {
+      "var_param": "ctab_file"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "nmovie_qt",
+  "properties": {
+    "images": {
+      "var_param": "images"
+    }
+  }
+}

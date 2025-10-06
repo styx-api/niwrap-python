@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_linear_register",
+  "properties": {
+    "input_brain": {
+      "var_param": "input_brain"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

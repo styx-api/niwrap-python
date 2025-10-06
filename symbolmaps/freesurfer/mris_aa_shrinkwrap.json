@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_aa_shrinkwrap",
+  "properties": {
+    "t1_vol": {
+      "var_param": "t1_vol"
+    },
+    "pd_vol": {
+      "var_param": "pd_vol"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "omit_self_intersection": {
+      "var_param": "omit_self_intersection"
+    },
+    "create_curvature_area": {
+      "var_param": "create_curvature_area"
+    },
+    "average_curvature": {
+      "var_param": "average_curvature"
+    },
+    "white_only": {
+      "var_param": "white_only"
+    }
+  }
+}

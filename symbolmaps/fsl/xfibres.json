@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "xfibres",
+  "properties": {
+    "datafile": {
+      "var_param": "datafile"
+    },
+    "maskfile": {
+      "var_param": "maskfile"
+    },
+    "bvecs": {
+      "var_param": "bvecs"
+    },
+    "bvals": {
+      "var_param": "bvals"
+    },
+    "logdir": {
+      "var_param": "logdir"
+    },
+    "forcedir": {
+      "var_param": "forcedir"
+    },
+    "max_fibres": {
+      "var_param": "max_fibres"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "fudge": {
+      "var_param": "fudge"
+    },
+    "num_jumps": {
+      "var_param": "num_jumps"
+    },
+    "num_burnin": {
+      "var_param": "num_burnin"
+    },
+    "burnin_noard": {
+      "var_param": "burnin_noard"
+    },
+    "sampleevery": {
+      "var_param": "sampleevery"
+    },
+    "updateproposal": {
+      "var_param": "updateproposal"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "noard": {
+      "var_param": "noard"
+    },
+    "allard": {
+      "var_param": "allard"
+    },
+    "nospat": {
+      "var_param": "nospat"
+    },
+    "nonlinear": {
+      "var_param": "nonlinear"
+    },
+    "cnonlinear": {
+      "var_param": "cnonlinear"
+    },
+    "rician": {
+      "var_param": "rician"
+    },
+    "add_f0": {
+      "var_param": "add_f0"
+    },
+    "ard_f0": {
+      "var_param": "ard_f0"
+    },
+    "rmean": {
+      "var_param": "rmean"
+    },
+    "rstd": {
+      "var_param": "rstd"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

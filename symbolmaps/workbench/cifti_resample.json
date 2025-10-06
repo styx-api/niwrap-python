@@ -1,0 +1,221 @@
+{
+  "fn_root_make_params_and_execute": "cifti_resample",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "cifti_template": {
+      "var_param": "cifti_template"
+    },
+    "template_direction": {
+      "var_param": "template_direction"
+    },
+    "surface_method": {
+      "var_param": "surface_method"
+    },
+    "volume_method": {
+      "var_param": "volume_method"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_surface_largest": {
+      "var_param": "opt_surface_largest"
+    },
+    "volume_predilate": {
+      "var_param": "volume_predilate",
+      "fn_struct_make_params": "cifti_resample_volume_predilate_params",
+      "properties": {
+        "dilate_mm": {
+          "var_param": "dilate_mm"
+        },
+        "opt_nearest": {
+          "var_param": "opt_nearest"
+        },
+        "weighted": {
+          "var_param": "weighted",
+          "fn_struct_make_params": "cifti_resample_weighted_params",
+          "properties": {
+            "opt_exponent_exponent": {
+              "var_param": "opt_exponent_exponent"
+            },
+            "opt_legacy_cutoff": {
+              "var_param": "opt_legacy_cutoff"
+            }
+          }
+        }
+      }
+    },
+    "surface_postdilate": {
+      "var_param": "surface_postdilate",
+      "fn_struct_make_params": "cifti_resample_surface_postdilate_params",
+      "properties": {
+        "dilate_mm": {
+          "var_param": "dilate_mm"
+        },
+        "opt_nearest": {
+          "var_param": "opt_nearest"
+        },
+        "opt_linear": {
+          "var_param": "opt_linear"
+        },
+        "weighted": {
+          "var_param": "weighted",
+          "fn_struct_make_params": "cifti_resample_weighted_1_params",
+          "properties": {
+            "opt_exponent_exponent": {
+              "var_param": "opt_exponent_exponent"
+            },
+            "opt_legacy_cutoff": {
+              "var_param": "opt_legacy_cutoff"
+            }
+          }
+        }
+      }
+    },
+    "affine": {
+      "var_param": "affine",
+      "fn_struct_make_params": "cifti_resample_affine_params",
+      "properties": {
+        "affine_file": {
+          "var_param": "affine_file"
+        },
+        "flirt": {
+          "var_param": "flirt",
+          "fn_struct_make_params": "cifti_resample_flirt_params",
+          "properties": {
+            "source_volume": {
+              "var_param": "source_volume"
+            },
+            "target_volume": {
+              "var_param": "target_volume"
+            }
+          }
+        }
+      }
+    },
+    "warpfield": {
+      "var_param": "warpfield",
+      "fn_struct_make_params": "cifti_resample_warpfield_params",
+      "properties": {
+        "warpfield": {
+          "var_param": "warpfield"
+        },
+        "opt_fnirt_source_volume": {
+          "var_param": "opt_fnirt_source_volume"
+        }
+      }
+    },
+    "left_spheres": {
+      "var_param": "left_spheres",
+      "fn_struct_make_params": "cifti_resample_left_spheres_params",
+      "properties": {
+        "current_sphere": {
+          "var_param": "current_sphere"
+        },
+        "new_sphere": {
+          "var_param": "new_sphere"
+        },
+        "left_area_surfs": {
+          "var_param": "left_area_surfs",
+          "fn_struct_make_params": "cifti_resample_left_area_surfs_params",
+          "properties": {
+            "current_area": {
+              "var_param": "current_area"
+            },
+            "new_area": {
+              "var_param": "new_area"
+            }
+          }
+        },
+        "left_area_metrics": {
+          "var_param": "left_area_metrics",
+          "fn_struct_make_params": "cifti_resample_left_area_metrics_params",
+          "properties": {
+            "current_area": {
+              "var_param": "current_area"
+            },
+            "new_area": {
+              "var_param": "new_area"
+            }
+          }
+        }
+      }
+    },
+    "right_spheres": {
+      "var_param": "right_spheres",
+      "fn_struct_make_params": "cifti_resample_right_spheres_params",
+      "properties": {
+        "current_sphere": {
+          "var_param": "current_sphere"
+        },
+        "new_sphere": {
+          "var_param": "new_sphere"
+        },
+        "right_area_surfs": {
+          "var_param": "right_area_surfs",
+          "fn_struct_make_params": "cifti_resample_right_area_surfs_params",
+          "properties": {
+            "current_area": {
+              "var_param": "current_area"
+            },
+            "new_area": {
+              "var_param": "new_area"
+            }
+          }
+        },
+        "right_area_metrics": {
+          "var_param": "right_area_metrics",
+          "fn_struct_make_params": "cifti_resample_right_area_metrics_params",
+          "properties": {
+            "current_area": {
+              "var_param": "current_area"
+            },
+            "new_area": {
+              "var_param": "new_area"
+            }
+          }
+        }
+      }
+    },
+    "cerebellum_spheres": {
+      "var_param": "cerebellum_spheres",
+      "fn_struct_make_params": "cifti_resample_cerebellum_spheres_params",
+      "properties": {
+        "current_sphere": {
+          "var_param": "current_sphere"
+        },
+        "new_sphere": {
+          "var_param": "new_sphere"
+        },
+        "cerebellum_area_surfs": {
+          "var_param": "cerebellum_area_surfs",
+          "fn_struct_make_params": "cifti_resample_cerebellum_area_surfs_params",
+          "properties": {
+            "current_area": {
+              "var_param": "current_area"
+            },
+            "new_area": {
+              "var_param": "new_area"
+            }
+          }
+        },
+        "cerebellum_area_metrics": {
+          "var_param": "cerebellum_area_metrics",
+          "fn_struct_make_params": "cifti_resample_cerebellum_area_metrics_params",
+          "properties": {
+            "current_area": {
+              "var_param": "current_area"
+            },
+            "new_area": {
+              "var_param": "new_area"
+            }
+          }
+        }
+      }
+    }
+  }
+}

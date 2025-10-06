@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__shift_volume",
+  "properties": {
+    "rai_shift_vector": {
+      "var_param": "rai_shift_vector"
+    },
+    "mni_anat_to_mni": {
+      "var_param": "mni_anat_to_mni"
+    },
+    "mni_to_mni_anat": {
+      "var_param": "mni_to_mni_anat"
+    },
+    "dset": {
+      "var_param": "dset"
+    },
+    "no_cp": {
+      "var_param": "no_cp"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "imcutup",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "xynum": {
+      "var_param": "xynum"
+    },
+    "yxnum": {
+      "var_param": "yxnum"
+    },
+    "xynum_format": {
+      "var_param": "xynum_format"
+    },
+    "yxnum_format": {
+      "var_param": "yxnum_format"
+    },
+    "nx": {
+      "var_param": "nx"
+    },
+    "ny": {
+      "var_param": "ny"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    }
+  }
+}

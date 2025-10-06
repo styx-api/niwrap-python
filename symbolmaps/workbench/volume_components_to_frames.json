@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "volume_components_to_frames",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

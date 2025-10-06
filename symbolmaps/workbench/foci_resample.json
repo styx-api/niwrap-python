@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "foci_resample",
+  "properties": {
+    "foci_in": {
+      "var_param": "foci_in"
+    },
+    "foci_out": {
+      "var_param": "foci_out"
+    },
+    "left_surfaces": {
+      "var_param": "left_surfaces",
+      "fn_struct_make_params": "foci_resample_left_surfaces_params",
+      "properties": {
+        "current_surf": {
+          "var_param": "current_surf"
+        },
+        "new_surf": {
+          "var_param": "new_surf"
+        }
+      }
+    },
+    "right_surfaces": {
+      "var_param": "right_surfaces",
+      "fn_struct_make_params": "foci_resample_right_surfaces_params",
+      "properties": {
+        "current_surf": {
+          "var_param": "current_surf"
+        },
+        "new_surf": {
+          "var_param": "new_surf"
+        }
+      }
+    },
+    "cerebellum_surfaces": {
+      "var_param": "cerebellum_surfaces",
+      "fn_struct_make_params": "foci_resample_cerebellum_surfaces_params",
+      "properties": {
+        "current_surf": {
+          "var_param": "current_surf"
+        },
+        "new_surf": {
+          "var_param": "new_surf"
+        }
+      }
+    },
+    "opt_discard_distance_from_surface": {
+      "var_param": "opt_discard_distance_from_surface"
+    },
+    "opt_restore_xyz": {
+      "var_param": "opt_restore_xyz"
+    }
+  }
+}

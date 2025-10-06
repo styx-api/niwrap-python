@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "run_samseg_long",
+  "properties": {
+    "timepoint": {
+      "var_param": "timepoint"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "lesion": {
+      "var_param": "lesion"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "samples": {
+      "var_param": "samples"
+    },
+    "burnin": {
+      "var_param": "burnin"
+    },
+    "lesion_mask_structure": {
+      "var_param": "lesion_mask_structure"
+    },
+    "lesion_mask_pattern": {
+      "var_param": "lesion_mask_pattern"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
+    "atlas": {
+      "var_param": "atlas"
+    },
+    "deformation_hyperprior": {
+      "var_param": "deformation_hyperprior"
+    },
+    "gmm_hyperprior": {
+      "var_param": "gmm_hyperprior"
+    },
+    "save_warp": {
+      "var_param": "save_warp"
+    },
+    "save_mesh": {
+      "var_param": "save_mesh"
+    },
+    "save_posteriors": {
+      "var_param": "save_posteriors"
+    },
+    "pallidum_separate": {
+      "var_param": "pallidum_separate"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "tp_to_base_transform": {
+      "var_param": "tp_to_base_transform"
+    },
+    "force_different_resolutions": {
+      "var_param": "force_different_resolutions"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "showfigs": {
+      "var_param": "showfigs"
+    },
+    "movie": {
+      "var_param": "movie"
+    }
+  }
+}

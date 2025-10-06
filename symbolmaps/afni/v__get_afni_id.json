@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__get_afni_id",
+  "properties": {
+    "dset": {
+      "var_param": "dset"
+    }
+  }
+}

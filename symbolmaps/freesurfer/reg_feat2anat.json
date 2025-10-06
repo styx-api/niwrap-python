@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "reg_feat2anat",
+  "properties": {
+    "feat_dir": {
+      "var_param": "feat_dir"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "overwrite_exf2std": {
+      "var_param": "overwrite_exf2std"
+    },
+    "manual": {
+      "var_param": "manual"
+    },
+    "manxfm_type": {
+      "var_param": "manxfm_type"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "bins": {
+      "var_param": "bins"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "max_angle": {
+      "var_param": "max_angle"
+    },
+    "bet": {
+      "var_param": "bet"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "no_bbr": {
+      "var_param": "no_bbr"
+    },
+    "spm": {
+      "var_param": "spm"
+    },
+    "no_inorm": {
+      "var_param": "no_inorm"
+    },
+    "fmov": {
+      "var_param": "fmov"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

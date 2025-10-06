@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "signal2image",
+  "properties": {
+    "pulse_sequence": {
+      "var_param": "pulse_sequence"
+    },
+    "input_signal": {
+      "var_param": "input_signal"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "kspace_coordinates": {
+      "var_param": "kspace_coordinates"
+    },
+    "output_kspace": {
+      "var_param": "output_kspace"
+    },
+    "abs_flag": {
+      "var_param": "abs_flag"
+    },
+    "homodyne_flag": {
+      "var_param": "homodyne_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "apodize_flag": {
+      "var_param": "apodize_flag"
+    },
+    "cutoff": {
+      "var_param": "cutoff"
+    },
+    "rolloff": {
+      "var_param": "rolloff"
+    },
+    "save_flag": {
+      "var_param": "save_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "plugout_drive",
+  "properties": {
+    "host": {
+      "var_param": "host"
+    },
+    "shm": {
+      "var_param": "shm"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "port": {
+      "var_param": "port"
+    },
+    "maxwait": {
+      "var_param": "maxwait"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "command": {
+      "var_param": "command"
+    },
+    "quit": {
+      "var_param": "quit_"
+    },
+    "np": {
+      "var_param": "np"
+    },
+    "npq": {
+      "var_param": "npq"
+    },
+    "npb": {
+      "var_param": "npb"
+    },
+    "max_port_bloc": {
+      "var_param": "max_port_bloc"
+    },
+    "max_port_bloc_quiet": {
+      "var_param": "max_port_bloc_quiet"
+    },
+    "num_assigned_ports": {
+      "var_param": "num_assigned_ports"
+    },
+    "num_assigned_ports_quiet": {
+      "var_param": "num_assigned_ports_quiet"
+    }
+  }
+}

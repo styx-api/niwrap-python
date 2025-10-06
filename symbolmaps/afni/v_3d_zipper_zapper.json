@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_zipper_zapper",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "min_slice_nvox": {
+      "var_param": "min_slice_nvox"
+    },
+    "min_streak_len": {
+      "var_param": "min_streak_len"
+    },
+    "do_out_slice_param": {
+      "var_param": "do_out_slice_param"
+    },
+    "no_out_bad_mask": {
+      "var_param": "no_out_bad_mask"
+    },
+    "no_out_text_vals": {
+      "var_param": "no_out_text_vals"
+    },
+    "dont_use_streak": {
+      "var_param": "dont_use_streak"
+    },
+    "dont_use_drop": {
+      "var_param": "dont_use_drop"
+    },
+    "dont_use_corr": {
+      "var_param": "dont_use_corr"
+    },
+    "min_streak_val": {
+      "var_param": "min_streak_val"
+    },
+    "min_drop_frac": {
+      "var_param": "min_drop_frac"
+    },
+    "min_drop_diff": {
+      "var_param": "min_drop_diff"
+    },
+    "min_corr_len": {
+      "var_param": "min_corr_len"
+    },
+    "min_corr_corr": {
+      "var_param": "min_corr_corr"
+    }
+  }
+}

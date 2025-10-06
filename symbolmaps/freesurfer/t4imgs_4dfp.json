@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "t4imgs_4dfp",
+  "properties": {
+    "sqrt_normalize": {
+      "var_param": "sqrt_normalize"
+    },
+    "cubic_spline": {
+      "var_param": "cubic_spline"
+    },
+    "output_nan": {
+      "var_param": "output_nan"
+    },
+    "convert_t4": {
+      "var_param": "convert_t4"
+    },
+    "nearest_neighbor": {
+      "var_param": "nearest_neighbor"
+    },
+    "output_111_space": {
+      "var_param": "output_111_space"
+    },
+    "output_222_space": {
+      "var_param": "output_222_space"
+    },
+    "output_333n_space": {
+      "var_param": "output_333n_space"
+    },
+    "duplicate_dimensions": {
+      "var_param": "duplicate_dimensions"
+    },
+    "big_endian": {
+      "var_param": "big_endian"
+    },
+    "little_endian": {
+      "var_param": "little_endian"
+    },
+    "input_images": {
+      "var_param": "input_images"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    }
+  }
+}

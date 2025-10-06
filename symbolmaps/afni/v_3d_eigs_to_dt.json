@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_eigs_to_dt",
+  "properties": {
+    "eig_vals": {
+      "var_param": "eig_vals"
+    },
+    "eig_vecs": {
+      "var_param": "eig_vecs"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    },
+    "scale_eigs": {
+      "var_param": "scale_eigs"
+    }
+  }
+}

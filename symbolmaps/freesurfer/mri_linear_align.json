@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_linear_align",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "output_xform": {
+      "var_param": "output_xform"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "fn_root_make_params_and_execute": "ants_registration",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "save_state": {
+      "var_param": "save_state"
+    },
+    "restore_state": {
+      "var_param": "restore_state"
+    },
+    "write_composite_transform": {
+      "var_param": "write_composite_transform"
+    },
+    "print_similarity_measure_interval": {
+      "var_param": "print_similarity_measure_interval"
+    },
+    "write_interval_volumes": {
+      "var_param": "write_interval_volumes"
+    },
+    "collapse_output_transforms": {
+      "var_param": "collapse_output_transforms"
+    },
+    "initialize_transforms_per_stage": {
+      "var_param": "initialize_transforms_per_stage"
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "restrict_deformation": {
+      "var_param": "restrict_deformation"
+    },
+    "initial_fixed_transform": {
+      "var_param": "initial_fixed_transform"
+    },
+    "initial_moving_transform": {
+      "var_param": "initial_moving_transform"
+    },
+    "stages": {
+      "var_param": "stages",
+      "fn_struct_make_params": "ants_registration_stage_params",
+      "properties": {
+        "transform": {
+          "var_param": "transform"
+        },
+        "metric": {
+          "var_param": "metric"
+        },
+        "convergence": {
+          "var_param": "convergence",
+          "fn_struct_make_params": "ants_registration_convergence_params",
+          "properties": {
+            "convergence": {
+              "var_param": "convergence"
+            },
+            "convergence_threshold": {
+              "var_param": "convergence_threshold"
+            },
+            "convergence_window_size": {
+              "var_param": "convergence_window_size"
+            }
+          }
+        },
+        "smoothing_sigmas": {
+          "var_param": "smoothing_sigmas"
+        },
+        "shrink_factors": {
+          "var_param": "shrink_factors"
+        },
+        "use_histogram_matching": {
+          "var_param": "use_histogram_matching"
+        }
+      }
+    },
+    "winsorize_image_intensities": {
+      "var_param": "winsorize_image_intensities",
+      "fn_struct_make_params": "ants_registration_winsorize_image_intensities_params",
+      "properties": {
+        "lower_quantile": {
+          "var_param": "lower_quantile"
+        },
+        "upper_quantile": {
+          "var_param": "upper_quantile"
+        }
+      }
+    },
+    "masks": {
+      "var_param": "masks",
+      "fn_struct_make_params": "ants_registration_masks_params",
+      "properties": {
+        "fixed_mask": {
+          "var_param": "fixed_mask"
+        },
+        "moving_mask": {
+          "var_param": "moving_mask"
+        }
+      }
+    },
+    "minc": {
+      "var_param": "minc"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "float": {
+      "var_param": "float_"
+    }
+  }
+}

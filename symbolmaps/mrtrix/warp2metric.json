@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "warp2metric",
+  "properties": {
+    "fc": {
+      "var_param": "fc",
+      "fn_struct_make_params": "warp2metric_fc_params",
+      "properties": {
+        "template_fixel_directory": {
+          "var_param": "template_fixel_directory"
+        },
+        "output_fixel_directory": {
+          "var_param": "output_fixel_directory"
+        },
+        "output_fixel_data": {
+          "var_param": "output_fixel_data"
+        }
+      }
+    },
+    "jmat": {
+      "var_param": "jmat"
+    },
+    "jdet": {
+      "var_param": "jdet"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "warp2metric_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "in": {
+      "var_param": "in_"
+    }
+  }
+}

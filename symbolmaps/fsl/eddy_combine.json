@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "eddy_combine",
+  "properties": {
+    "pos_data": {
+      "var_param": "pos_data"
+    },
+    "pos_bvals": {
+      "var_param": "pos_bvals"
+    },
+    "pos_bvecs": {
+      "var_param": "pos_bvecs"
+    },
+    "pos_series_vol": {
+      "var_param": "pos_series_vol"
+    },
+    "neg_data": {
+      "var_param": "neg_data"
+    },
+    "neg_bvals": {
+      "var_param": "neg_bvals"
+    },
+    "neg_bvecs": {
+      "var_param": "neg_bvecs"
+    },
+    "neg_series_vol": {
+      "var_param": "neg_series_vol"
+    },
+    "output_path": {
+      "var_param": "output_path"
+    },
+    "only_matched_flag": {
+      "var_param": "only_matched_flag"
+    }
+  }
+}

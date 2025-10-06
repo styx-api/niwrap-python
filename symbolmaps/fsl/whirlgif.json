@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "whirlgif",
+  "properties": {
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "loop_count": {
+      "var_param": "loop_count"
+    },
+    "delay_time": {
+      "var_param": "delay_time"
+    },
+    "disp_flag": {
+      "var_param": "disp_flag"
+    },
+    "list_file": {
+      "var_param": "list_file"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

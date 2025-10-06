@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "first",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "input_model": {
+      "var_param": "input_model"
+    },
+    "flirt_matrix": {
+      "var_param": "flirt_matrix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "input_model2": {
+      "var_param": "input_model2"
+    },
+    "nmodes": {
+      "var_param": "nmodes"
+    },
+    "intref": {
+      "var_param": "intref"
+    },
+    "multi_image_input": {
+      "var_param": "multi_image_input"
+    },
+    "binary_surface_output": {
+      "var_param": "binary_surface_output"
+    },
+    "bmap_name": {
+      "var_param": "bmap_name"
+    },
+    "bvars": {
+      "var_param": "bvars"
+    },
+    "shcond": {
+      "var_param": "shcond"
+    },
+    "loadbvars": {
+      "var_param": "loadbvars"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "mri_create_tests",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "out_src": {
+      "var_param": "out_src"
+    },
+    "out_target": {
+      "var_param": "out_target"
+    },
+    "input_target": {
+      "var_param": "input_target"
+    },
+    "lta_in": {
+      "var_param": "lta_in"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "noise": {
+      "var_param": "noise"
+    },
+    "outlier": {
+      "var_param": "outlier"
+    },
+    "outlier_box": {
+      "var_param": "outlier_box"
+    },
+    "translation_flag": {
+      "var_param": "translation_flag"
+    },
+    "transdist": {
+      "var_param": "transdist"
+    },
+    "rotation_flag": {
+      "var_param": "rotation_flag"
+    },
+    "maxdeg": {
+      "var_param": "maxdeg"
+    },
+    "intensity_flag": {
+      "var_param": "intensity_flag"
+    },
+    "iscale": {
+      "var_param": "iscale"
+    },
+    "lta_out": {
+      "var_param": "lta_out"
+    },
+    "lta_outs": {
+      "var_param": "lta_outs"
+    },
+    "lta_outt": {
+      "var_param": "lta_outt"
+    },
+    "iscale_out": {
+      "var_param": "iscale_out"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "paste_image_into_image",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_canvas_image": {
+      "var_param": "input_canvas_image"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "start_index": {
+      "var_param": "start_index"
+    },
+    "background_label": {
+      "var_param": "background_label"
+    },
+    "paint_over_non_background_voxels": {
+      "var_param": "paint_over_non_background_voxels"
+    },
+    "conflict_label": {
+      "var_param": "conflict_label"
+    }
+  }
+}

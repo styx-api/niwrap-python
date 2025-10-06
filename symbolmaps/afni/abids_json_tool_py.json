@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "abids_json_tool_py",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "txt2json": {
+      "var_param": "txt2json"
+    },
+    "json2txt": {
+      "var_param": "json2txt"
+    },
+    "add_json": {
+      "var_param": "add_json"
+    },
+    "del_json": {
+      "var_param": "del_json"
+    },
+    "force_add": {
+      "var_param": "force_add"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "delimiter_major": {
+      "var_param": "delimiter_major"
+    },
+    "delimiter_minor": {
+      "var_param": "delimiter_minor"
+    },
+    "literal_keys": {
+      "var_param": "literal_keys"
+    },
+    "values_stay_str": {
+      "var_param": "values_stay_str"
+    }
+  }
+}

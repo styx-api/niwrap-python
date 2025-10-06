@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "cifti_gradient",
+  "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "left_surface": {
+      "var_param": "left_surface",
+      "fn_struct_make_params": "cifti_gradient_left_surface_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "opt_left_corrected_areas_area_metric": {
+          "var_param": "opt_left_corrected_areas_area_metric"
+        }
+      }
+    },
+    "right_surface": {
+      "var_param": "right_surface",
+      "fn_struct_make_params": "cifti_gradient_right_surface_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "opt_right_corrected_areas_area_metric": {
+          "var_param": "opt_right_corrected_areas_area_metric"
+        }
+      }
+    },
+    "cerebellum_surface": {
+      "var_param": "cerebellum_surface",
+      "fn_struct_make_params": "cifti_gradient_cerebellum_surface_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "opt_cerebellum_corrected_areas_area_metric": {
+          "var_param": "opt_cerebellum_corrected_areas_area_metric"
+        }
+      }
+    },
+    "opt_surface_presmooth_surface_kernel": {
+      "var_param": "opt_surface_presmooth_surface_kernel"
+    },
+    "opt_volume_presmooth_volume_kernel": {
+      "var_param": "opt_volume_presmooth_volume_kernel"
+    },
+    "opt_presmooth_fwhm": {
+      "var_param": "opt_presmooth_fwhm"
+    },
+    "opt_average_output": {
+      "var_param": "opt_average_output"
+    },
+    "opt_vectors_vectors_out": {
+      "var_param": "opt_vectors_vectors_out"
+    }
+  }
+}

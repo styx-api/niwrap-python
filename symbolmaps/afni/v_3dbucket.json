@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v_3dbucket",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "session": {
+      "var_param": "session"
+    },
+    "glueto": {
+      "var_param": "glueto"
+    },
+    "aglueto": {
+      "var_param": "aglueto"
+    },
+    "dry": {
+      "var_param": "dry"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "fbuc": {
+      "var_param": "fbuc"
+    },
+    "abuc": {
+      "var_param": "abuc"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

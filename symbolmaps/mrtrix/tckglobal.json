@@ -1,0 +1,116 @@
+{
+  "fn_root_make_params_and_execute": "tckglobal",
+  "properties": {
+    "grad": {
+      "var_param": "grad"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "riso": {
+      "var_param": "riso",
+      "fn_struct_make_params": "tckglobal_riso_params",
+      "properties": {
+        "response": {
+          "var_param": "response"
+        }
+      }
+    },
+    "lmax": {
+      "var_param": "lmax"
+    },
+    "length": {
+      "var_param": "length"
+    },
+    "weight": {
+      "var_param": "weight"
+    },
+    "ppot": {
+      "var_param": "ppot"
+    },
+    "cpot": {
+      "var_param": "cpot"
+    },
+    "t0": {
+      "var_param": "t0"
+    },
+    "t1": {
+      "var_param": "t1"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "fod": {
+      "var_param": "fod"
+    },
+    "noapo": {
+      "var_param": "noapo"
+    },
+    "fiso": {
+      "var_param": "fiso"
+    },
+    "eext": {
+      "var_param": "eext"
+    },
+    "etrend": {
+      "var_param": "etrend"
+    },
+    "balance": {
+      "var_param": "balance"
+    },
+    "density": {
+      "var_param": "density"
+    },
+    "prob": {
+      "var_param": "prob"
+    },
+    "beta": {
+      "var_param": "beta"
+    },
+    "lambda": {
+      "var_param": "lambda_"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tckglobal_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "source": {
+      "var_param": "source"
+    },
+    "response": {
+      "var_param": "response"
+    },
+    "tracks": {
+      "var_param": "tracks"
+    }
+  }
+}

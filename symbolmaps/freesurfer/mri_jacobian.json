@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mri_jacobian",
+  "properties": {
+    "morph_file": {
+      "var_param": "morph_file"
+    },
+    "template_vol": {
+      "var_param": "template_vol"
+    },
+    "output_vol": {
+      "var_param": "output_vol"
+    },
+    "atlas_coord": {
+      "var_param": "atlas_coord"
+    },
+    "write_area_vols": {
+      "var_param": "write_area_vols"
+    },
+    "log_jacobian": {
+      "var_param": "log_jacobian"
+    },
+    "smooth_sigma": {
+      "var_param": "smooth_sigma"
+    },
+    "zero_mean_log": {
+      "var_param": "zero_mean_log"
+    },
+    "tm3d": {
+      "var_param": "tm3d"
+    },
+    "help1": {
+      "var_param": "help1"
+    },
+    "help2": {
+      "var_param": "help2"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    },
+    "remove": {
+      "var_param": "remove"
+    }
+  }
+}

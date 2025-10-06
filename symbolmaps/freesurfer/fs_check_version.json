@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "fs_check_version",
+  "properties": {
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "require_match": {
+      "var_param": "require_match"
+    },
+    "no_require_match": {
+      "var_param": "no_require_match"
+    },
+    "test": {
+      "var_param": "test"
+    },
+    "test_debug": {
+      "var_param": "test_debug"
+    }
+  }
+}

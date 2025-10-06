@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "reg_aladin",
+  "properties": {
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "floating_image": {
+      "var_param": "floating_image"
+    },
+    "symmetric": {
+      "var_param": "symmetric"
+    },
+    "output_affine": {
+      "var_param": "output_affine"
+    },
+    "rigid_only": {
+      "var_param": "rigid_only"
+    },
+    "direct_affine": {
+      "var_param": "direct_affine"
+    },
+    "smooth_ref": {
+      "var_param": "smooth_ref"
+    },
+    "smooth_float": {
+      "var_param": "smooth_float"
+    },
+    "num_levels": {
+      "var_param": "num_levels"
+    },
+    "first_levels": {
+      "var_param": "first_levels"
+    },
+    "use_nifti_origin": {
+      "var_param": "use_nifti_origin"
+    },
+    "percent_block": {
+      "var_param": "percent_block"
+    },
+    "percent_inlier": {
+      "var_param": "percent_inlier"
+    }
+  }
+}

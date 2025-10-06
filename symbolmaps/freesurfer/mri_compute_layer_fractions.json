@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mri_compute_layer_fractions",
+  "properties": {
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_stem": {
+      "var_param": "output_stem"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "aseg_file": {
+      "var_param": "aseg_file"
+    },
+    "target_volume": {
+      "var_param": "target_volume"
+    },
+    "hemi_flag": {
+      "var_param": "hemi_flag"
+    },
+    "fs_names_flag": {
+      "var_param": "fs_names_flag"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "n_layers": {
+      "var_param": "n_layers"
+    },
+    "synth_flag": {
+      "var_param": "synth_flag"
+    },
+    "thickness": {
+      "var_param": "thickness"
+    },
+    "random_file": {
+      "var_param": "random_file"
+    },
+    "identity_file": {
+      "var_param": "identity_file"
+    }
+  }
+}

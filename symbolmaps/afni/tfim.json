@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "tfim",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "pthresh": {
+      "var_param": "pthresh"
+    },
+    "eqcorr": {
+      "var_param": "eqcorr"
+    },
+    "paired": {
+      "var_param": "paired"
+    },
+    "set1_images": {
+      "var_param": "set1_images"
+    },
+    "set2_images": {
+      "var_param": "set2_images"
+    },
+    "base1_value": {
+      "var_param": "base1_value"
+    }
+  }
+}

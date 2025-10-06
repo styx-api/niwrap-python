@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "fs_time",
+  "properties": {
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "key": {
+      "var_param": "key"
+    },
+    "load_avg": {
+      "var_param": "load_avg"
+    },
+    "command": {
+      "var_param": "command"
+    },
+    "args": {
+      "var_param": "args"
+    }
+  }
+}

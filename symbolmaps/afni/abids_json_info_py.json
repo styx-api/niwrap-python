@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "abids_json_info_py",
+  "properties": {
+    "json_files": {
+      "var_param": "json_files"
+    },
+    "tr_flag": {
+      "var_param": "tr_flag"
+    },
+    "te_flag": {
+      "var_param": "te_flag"
+    },
+    "te_sec_flag": {
+      "var_param": "te_sec_flag"
+    },
+    "match_nii_flag": {
+      "var_param": "match_nii_flag"
+    },
+    "field_list": {
+      "var_param": "field_list"
+    },
+    "list_fields_flag": {
+      "var_param": "list_fields_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

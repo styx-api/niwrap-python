@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_toy_prog",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "output_datum": {
+      "var_param": "output_datum"
+    },
+    "mini_help": {
+      "var_param": "mini_help"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "extreme_help": {
+      "var_param": "extreme_help"
+    },
+    "help_view": {
+      "var_param": "help_view"
+    },
+    "help_web": {
+      "var_param": "help_web"
+    },
+    "help_find": {
+      "var_param": "help_find"
+    },
+    "help_raw": {
+      "var_param": "help_raw"
+    },
+    "help_spx": {
+      "var_param": "help_spx"
+    },
+    "help_aspx": {
+      "var_param": "help_aspx"
+    },
+    "help_all_opts": {
+      "var_param": "help_all_opts"
+    }
+  }
+}

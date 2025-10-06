@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__no_pound",
+  "properties": {
+    "afni_files": {
+      "var_param": "afni_files"
+    }
+  }
+}

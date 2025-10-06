@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "swi_preprocess",
+  "properties": {
+    "scanner": {
+      "var_param": "scanner"
+    },
+    "ge_file": {
+      "var_param": "ge_file"
+    },
+    "philips_file": {
+      "var_param": "philips_file"
+    },
+    "siemens_magnitude": {
+      "var_param": "siemens_magnitude"
+    },
+    "siemens_phase": {
+      "var_param": "siemens_phase"
+    },
+    "out_magnitude": {
+      "var_param": "out_magnitude"
+    },
+    "out_phase": {
+      "var_param": "out_phase"
+    }
+  }
+}

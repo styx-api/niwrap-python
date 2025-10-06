@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "inflate_subject3",
+  "properties": {
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "script_name": {
+      "var_param": "script_name"
+    }
+  }
+}

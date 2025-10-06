@@ -1,0 +1,98 @@
+{
+  "fn_root_make_params_and_execute": "mris_fwhm",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "cortex_flag": {
+      "var_param": "cortex_flag"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "x_matrix": {
+      "var_param": "x_matrix"
+    },
+    "detrend_order": {
+      "var_param": "detrend_order"
+    },
+    "smooth_only_flag": {
+      "var_param": "smooth_only_flag"
+    },
+    "no_detrend_flag": {
+      "var_param": "no_detrend_flag"
+    },
+    "sqr_flag": {
+      "var_param": "sqr_flag"
+    },
+    "sum_file": {
+      "var_param": "sum_file"
+    },
+    "dat_file": {
+      "var_param": "dat_file"
+    },
+    "ar1dat_file": {
+      "var_param": "ar1dat_file"
+    },
+    "ar1vol": {
+      "var_param": "ar1vol"
+    },
+    "fwhmmap": {
+      "var_param": "fwhmmap"
+    },
+    "prune_flag": {
+      "var_param": "prune_flag"
+    },
+    "no_prune_flag": {
+      "var_param": "no_prune_flag"
+    },
+    "out_mask": {
+      "var_param": "out_mask"
+    },
+    "varnorm_flag": {
+      "var_param": "varnorm_flag"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "niters_only": {
+      "var_param": "niters_only"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "sd": {
+      "var_param": "sd"
+    },
+    "synth_flag": {
+      "var_param": "synth_flag"
+    },
+    "synth_frames": {
+      "var_param": "synth_frames"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "checkopts_flag": {
+      "var_param": "checkopts_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

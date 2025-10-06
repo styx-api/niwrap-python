@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "inflate_subject_rh",
+  "properties": {
+    "arguments": {
+      "var_param": "arguments"
+    }
+  }
+}

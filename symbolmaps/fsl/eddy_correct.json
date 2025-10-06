@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "eddy_correct",
+  "properties": {
+    "4d_input": {
+      "var_param": "v_4d_input"
+    },
+    "4d_output": {
+      "var_param": "v_4d_output"
+    },
+    "reference_no": {
+      "var_param": "reference_no"
+    },
+    "interp_method": {
+      "var_param": "interp_method"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_undump",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "master": {
+      "var_param": "master"
+    },
+    "dimensions": {
+      "var_param": "dimensions"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "dval": {
+      "var_param": "dval"
+    },
+    "fval": {
+      "var_param": "fval"
+    },
+    "ijk": {
+      "var_param": "ijk"
+    },
+    "xyz": {
+      "var_param": "xyz"
+    },
+    "sphere_radius": {
+      "var_param": "sphere_radius"
+    },
+    "cube_mode": {
+      "var_param": "cube_mode"
+    },
+    "orient": {
+      "var_param": "orient"
+    },
+    "head_only": {
+      "var_param": "head_only"
+    },
+    "roimask": {
+      "var_param": "roimask"
+    },
+    "allow_nan": {
+      "var_param": "allow_nan"
+    }
+  }
+}

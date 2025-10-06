@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_amp_to_rsfc",
+  "properties": {
+    "in_amp": {
+      "var_param": "in_amp"
+    },
+    "in_pow": {
+      "var_param": "in_pow"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "band": {
+      "var_param": "band"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "nifti": {
+      "var_param": "nifti"
+    }
+  }
+}

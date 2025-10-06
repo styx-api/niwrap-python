@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "v__clip_volume",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "below_zmm": {
+      "var_param": "below_zmm"
+    },
+    "above_zmm": {
+      "var_param": "above_zmm"
+    },
+    "left_xmm": {
+      "var_param": "left_xmm"
+    },
+    "right_xmm": {
+      "var_param": "right_xmm"
+    },
+    "anterior_ymm": {
+      "var_param": "anterior_ymm"
+    },
+    "posterior_ymm": {
+      "var_param": "posterior_ymm"
+    },
+    "box": {
+      "var_param": "box"
+    },
+    "mask_box": {
+      "var_param": "mask_box"
+    },
+    "and_logic": {
+      "var_param": "and_logic"
+    },
+    "or_logic": {
+      "var_param": "or_logic"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    },
+    "crop_allzero": {
+      "var_param": "crop_allzero"
+    },
+    "crop_greedy": {
+      "var_param": "crop_greedy"
+    },
+    "crop": {
+      "var_param": "crop"
+    },
+    "crop_npad": {
+      "var_param": "crop_npad"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "followers": {
+      "var_param": "followers"
+    }
+  }
+}

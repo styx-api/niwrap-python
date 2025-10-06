@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "voxel2fixel",
+  "properties": {
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "voxel2fixel_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "image_in": {
+      "var_param": "image_in"
+    },
+    "fixel_directory_in": {
+      "var_param": "fixel_directory_in"
+    },
+    "fixel_directory_out": {
+      "var_param": "fixel_directory_out"
+    },
+    "fixel_data_out": {
+      "var_param": "fixel_data_out"
+    }
+  }
+}

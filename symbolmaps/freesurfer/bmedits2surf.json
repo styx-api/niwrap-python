@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "bmedits2surf",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "self": {
+      "var_param": "self"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "tmp_dir": {
+      "var_param": "tmp_dir"
+    },
+    "cleanup": {
+      "var_param": "cleanup"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "left_hemisphere": {
+      "var_param": "left_hemisphere"
+    },
+    "right_hemisphere": {
+      "var_param": "right_hemisphere"
+    },
+    "no_surfs": {
+      "var_param": "no_surfs"
+    }
+  }
+}

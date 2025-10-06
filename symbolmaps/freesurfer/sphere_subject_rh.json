@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "sphere_subject_rh",
+  "properties": {
+    "license_file": {
+      "var_param": "license_file"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "v__suma_make_spec_fs",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "fs_setup": {
+      "var_param": "fs_setup"
+    },
+    "filesystem_path": {
+      "var_param": "filesystem_path"
+    },
+    "extra_annot_labels": {
+      "var_param": "extra_annot_labels"
+    },
+    "extra_fs_dsets": {
+      "var_param": "extra_fs_dsets"
+    },
+    "make_rank_dsets": {
+      "var_param": "make_rank_dsets"
+    },
+    "use_mgz": {
+      "var_param": "use_mgz"
+    },
+    "neuro": {
+      "var_param": "neuro"
+    },
+    "gnifti": {
+      "var_param": "gnifti"
+    },
+    "nifti": {
+      "var_param": "nifti"
+    },
+    "inflate": {
+      "var_param": "inflate"
+    },
+    "set_space": {
+      "var_param": "set_space"
+    },
+    "ld": {
+      "var_param": "ld"
+    },
+    "ldpref": {
+      "var_param": "ldpref"
+    },
+    "no_ld": {
+      "var_param": "no_ld"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "cifti_label_to_border",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "opt_placement_fraction": {
+      "var_param": "opt_placement_fraction"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    },
+    "border": {
+      "var_param": "border",
+      "fn_struct_make_params": "cifti_label_to_border_border_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "border_out": {
+          "var_param": "border_out"
+        }
+      }
+    }
+  }
+}

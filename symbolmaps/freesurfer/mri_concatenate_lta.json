@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_concatenate_lta",
+  "properties": {
+    "lta_1": {
+      "var_param": "lta_1"
+    },
+    "lta_2": {
+      "var_param": "lta_2"
+    },
+    "lta_final": {
+      "var_param": "lta_final"
+    },
+    "tal_src": {
+      "var_param": "tal_src"
+    },
+    "tal_template": {
+      "var_param": "tal_template"
+    },
+    "invert1": {
+      "var_param": "invert1"
+    },
+    "invert2": {
+      "var_param": "invert2"
+    },
+    "invertout": {
+      "var_param": "invertout"
+    },
+    "out_type": {
+      "var_param": "out_type"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "rmsdiff_radius": {
+      "var_param": "rmsdiff_radius"
+    },
+    "rmsdiff_outputfile": {
+      "var_param": "rmsdiff_outputfile"
+    }
+  }
+}

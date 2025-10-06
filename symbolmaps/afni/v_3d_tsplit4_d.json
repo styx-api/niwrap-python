@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tsplit4_d",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "infile": {
+      "var_param": "infile"
+    },
+    "keep_datum": {
+      "var_param": "keep_datum"
+    },
+    "digits": {
+      "var_param": "digits"
+    }
+  }
+}

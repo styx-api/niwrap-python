@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "build_desikan_killiany_gcs_csh",
+  "properties": {
+    "hemi": {
+      "var_param": "hemi"
+    }
+  }
+}

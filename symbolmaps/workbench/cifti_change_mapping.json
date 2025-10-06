@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "cifti_change_mapping",
+  "properties": {
+    "data_cifti": {
+      "var_param": "data_cifti"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "series": {
+      "var_param": "series",
+      "fn_struct_make_params": "cifti_change_mapping_series_params",
+      "properties": {
+        "step": {
+          "var_param": "step"
+        },
+        "start": {
+          "var_param": "start"
+        },
+        "opt_unit_unit": {
+          "var_param": "opt_unit_unit"
+        }
+      }
+    },
+    "scalar": {
+      "var_param": "scalar",
+      "fn_struct_make_params": "cifti_change_mapping_scalar_params",
+      "properties": {
+        "opt_name_file_file": {
+          "var_param": "opt_name_file_file"
+        }
+      }
+    },
+    "from_cifti": {
+      "var_param": "from_cifti",
+      "fn_struct_make_params": "cifti_change_mapping_from_cifti_params",
+      "properties": {
+        "template_cifti": {
+          "var_param": "template_cifti"
+        },
+        "direction": {
+          "var_param": "direction"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "antsuse_landmark_images_to_get_affine_transform",
+  "properties": {
+    "fixed_image": {
+      "var_param": "fixed_image"
+    },
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "transform_type": {
+      "var_param": "transform_type"
+    },
+    "output_affine": {
+      "var_param": "output_affine"
+    }
+  }
+}

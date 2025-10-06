@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "zip_spec_file",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "extract_folder": {
+      "var_param": "extract_folder"
+    },
+    "zip_file": {
+      "var_param": "zip_file"
+    },
+    "opt_base_dir_directory": {
+      "var_param": "opt_base_dir_directory"
+    },
+    "opt_skip_missing": {
+      "var_param": "opt_skip_missing"
+    }
+  }
+}

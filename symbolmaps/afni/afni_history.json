@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "afni_history",
+  "properties": {
+    "verb_level": {
+      "var_param": "verb_level"
+    },
+    "check_date": {
+      "var_param": "check_date"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "list_authors": {
+      "var_param": "list_authors"
+    },
+    "list_types": {
+      "var_param": "list_types"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "author": {
+      "var_param": "author"
+    },
+    "level": {
+      "var_param": "level"
+    },
+    "min_level": {
+      "var_param": "min_level"
+    },
+    "program": {
+      "var_param": "program"
+    },
+    "past_entries": {
+      "var_param": "past_entries"
+    },
+    "past_days": {
+      "var_param": "past_days"
+    },
+    "past_months": {
+      "var_param": "past_months"
+    },
+    "past_years": {
+      "var_param": "past_years"
+    },
+    "type": {
+      "var_param": "type_"
+    },
+    "html": {
+      "var_param": "html_"
+    },
+    "dline": {
+      "var_param": "dline"
+    },
+    "reverse": {
+      "var_param": "reverse"
+    },
+    "show_field": {
+      "var_param": "show_field"
+    },
+    "show_field_names": {
+      "var_param": "show_field_names"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "convex_hull",
+  "properties": {
+    "vol": {
+      "var_param": "vol"
+    },
+    "isoval": {
+      "var_param": "isoval"
+    },
+    "isorange": {
+      "var_param": "isorange"
+    },
+    "isocmask": {
+      "var_param": "isocmask"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "surface_input": {
+      "var_param": "surface_input"
+    },
+    "surf_vol": {
+      "var_param": "surf_vol"
+    },
+    "input_1d": {
+      "var_param": "input_1d"
+    },
+    "q_opt": {
+      "var_param": "q_opt"
+    },
+    "proj_xy": {
+      "var_param": "proj_xy"
+    },
+    "orig_coord": {
+      "var_param": "orig_coord"
+    },
+    "these_coords": {
+      "var_param": "these_coords"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "novolreg": {
+      "var_param": "novolreg"
+    },
+    "setenv": {
+      "var_param": "setenv"
+    }
+  }
+}

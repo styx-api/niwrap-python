@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "surface_geodesic_distance_all_to_all",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_roi_roi_metric": {
+      "var_param": "opt_roi_roi_metric"
+    },
+    "opt_limit_limit_mm": {
+      "var_param": "opt_limit_limit_mm"
+    },
+    "opt_corrected_areas_area_metric": {
+      "var_param": "opt_corrected_areas_area_metric"
+    },
+    "opt_naive": {
+      "var_param": "opt_naive"
+    }
+  }
+}

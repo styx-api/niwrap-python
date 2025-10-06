@@ -1,0 +1,185 @@
+{
+  "fn_root_make_params_and_execute": "tkregister2_cmdl",
+  "properties": {
+    "movable_volume": {
+      "var_param": "movable_volume"
+    },
+    "target_volume": {
+      "var_param": "target_volume"
+    },
+    "fstarg_flag": {
+      "var_param": "fstarg_flag"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "check_reg_flag": {
+      "var_param": "check_reg_flag"
+    },
+    "regheader_flag": {
+      "var_param": "regheader_flag"
+    },
+    "regheader_center_flag": {
+      "var_param": "regheader_center_flag"
+    },
+    "fsl_targ_flag": {
+      "var_param": "fsl_targ_flag"
+    },
+    "fsl_targ_lr_flag": {
+      "var_param": "fsl_targ_lr_flag"
+    },
+    "gca_subject": {
+      "var_param": "gca_subject"
+    },
+    "gca_skull_subject": {
+      "var_param": "gca_skull_subject"
+    },
+    "no_zero_cras_flag": {
+      "var_param": "no_zero_cras_flag"
+    },
+    "movbright": {
+      "var_param": "movbright"
+    },
+    "no_inorm_flag": {
+      "var_param": "no_inorm_flag"
+    },
+    "fmov": {
+      "var_param": "fmov"
+    },
+    "fmov_targ_flag": {
+      "var_param": "fmov_targ_flag"
+    },
+    "plane": {
+      "var_param": "plane"
+    },
+    "slice": {
+      "var_param": "slice_"
+    },
+    "volview": {
+      "var_param": "volview"
+    },
+    "fov": {
+      "var_param": "fov"
+    },
+    "movscale": {
+      "var_param": "movscale"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "surf_rgb": {
+      "var_param": "surf_rgb"
+    },
+    "lh_only_flag": {
+      "var_param": "lh_only_flag"
+    },
+    "rh_only_flag": {
+      "var_param": "rh_only_flag"
+    },
+    "fstal_flag": {
+      "var_param": "fstal_flag"
+    },
+    "talxfmname": {
+      "var_param": "talxfmname"
+    },
+    "ixfm": {
+      "var_param": "ixfm"
+    },
+    "xfm": {
+      "var_param": "xfm"
+    },
+    "xfmout": {
+      "var_param": "xfmout"
+    },
+    "fsl": {
+      "var_param": "fsl"
+    },
+    "fslregout": {
+      "var_param": "fslregout"
+    },
+    "freeview": {
+      "var_param": "freeview"
+    },
+    "vox2vox": {
+      "var_param": "vox2vox"
+    },
+    "lta": {
+      "var_param": "lta"
+    },
+    "lta_inv": {
+      "var_param": "lta_inv"
+    },
+    "ltaout": {
+      "var_param": "ltaout"
+    },
+    "ltaout_inv_flag": {
+      "var_param": "ltaout_inv_flag"
+    },
+    "feat": {
+      "var_param": "feat"
+    },
+    "fsfeat": {
+      "var_param": "fsfeat"
+    },
+    "identity_flag": {
+      "var_param": "identity_flag"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "nofix_flag": {
+      "var_param": "nofix_flag"
+    },
+    "float2int": {
+      "var_param": "float2int"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "tag_flag": {
+      "var_param": "tag_flag"
+    },
+    "mov_orientation": {
+      "var_param": "mov_orientation"
+    },
+    "targ_orientation": {
+      "var_param": "targ_orientation"
+    },
+    "int": {
+      "var_param": "int_"
+    },
+    "double_window_size_flag": {
+      "var_param": "double_window_size_flag"
+    },
+    "window_scale": {
+      "var_param": "window_scale"
+    },
+    "det": {
+      "var_param": "det"
+    },
+    "aseg_flag": {
+      "var_param": "aseg_flag"
+    },
+    "aparc_flag": {
+      "var_param": "aparc_flag"
+    },
+    "wmparc_flag": {
+      "var_param": "wmparc_flag"
+    },
+    "gdiagno": {
+      "var_param": "gdiagno"
+    },
+    "trans": {
+      "var_param": "trans"
+    },
+    "rot": {
+      "var_param": "rot"
+    },
+    "conf_targ_flag": {
+      "var_param": "conf_targ_flag"
+    }
+  }
+}

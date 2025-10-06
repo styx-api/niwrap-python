@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "extract_region_from_image",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "region_specification": {
+      "var_param": "region_specification"
+    }
+  }
+}

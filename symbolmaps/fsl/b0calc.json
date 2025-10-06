@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "b0calc",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "zero_order_x": {
+      "var_param": "zero_order_x"
+    },
+    "zero_order_y": {
+      "var_param": "zero_order_y"
+    },
+    "zero_order_z": {
+      "var_param": "zero_order_z"
+    },
+    "b0_x": {
+      "var_param": "b0_x"
+    },
+    "b0_y": {
+      "var_param": "b0_y"
+    },
+    "b0_z": {
+      "var_param": "b0_z"
+    },
+    "delta": {
+      "var_param": "delta"
+    },
+    "chi0": {
+      "var_param": "chi0"
+    },
+    "xyz_flag": {
+      "var_param": "xyz_flag"
+    },
+    "extend_boundary": {
+      "var_param": "extend_boundary"
+    },
+    "direct_conv": {
+      "var_param": "direct_conv"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

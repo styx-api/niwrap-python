@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "oct_register_mosaic",
+  "properties": {
+    "tiles_or_mosaic_list": {
+      "var_param": "tiles_or_mosaic_list"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "downsample": {
+      "var_param": "downsample"
+    },
+    "weight_file": {
+      "var_param": "weight_file"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "tedana_wrapper_py",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "echo_times": {
+      "var_param": "echo_times"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "results_dir": {
+      "var_param": "results_dir"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "save_all": {
+      "var_param": "save_all"
+    },
+    "prep_only": {
+      "var_param": "prep_only"
+    },
+    "tedana_prog": {
+      "var_param": "tedana_prog"
+    },
+    "tedana_is_exec": {
+      "var_param": "tedana_is_exec"
+    },
+    "ted_label": {
+      "var_param": "ted_label"
+    },
+    "tedana_opts": {
+      "var_param": "tedana_opts"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "detailed_help": {
+      "var_param": "detailed_help"
+    }
+  }
+}

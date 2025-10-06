@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mri_gradunwarp",
+  "properties": {
+    "gradient_coeff": {
+      "var_param": "gradient_coeff"
+    },
+    "load_transtbl": {
+      "var_param": "load_transtbl"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "out_transtbl": {
+      "var_param": "out_transtbl"
+    },
+    "save_transtbl_only": {
+      "var_param": "save_transtbl_only"
+    },
+    "interpolation_type": {
+      "var_param": "interpolation_type"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

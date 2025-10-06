@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mri_twoclass",
+  "properties": {
+    "segmentation_volume": {
+      "var_param": "segmentation_volume"
+    },
+    "output_subject": {
+      "var_param": "output_subject"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "c1_subjects": {
+      "var_param": "c1_subjects"
+    },
+    "c2_subjects": {
+      "var_param": "c2_subjects"
+    },
+    "f_threshold": {
+      "var_param": "f_threshold"
+    },
+    "bonferroni_correction": {
+      "var_param": "bonferroni_correction"
+    }
+  }
+}

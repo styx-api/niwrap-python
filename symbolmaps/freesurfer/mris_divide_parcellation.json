@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_divide_parcellation",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "sourceannot": {
+      "var_param": "sourceannot"
+    },
+    "splitfile_or_areathresh": {
+      "var_param": "splitfile_or_areathresh"
+    },
+    "outannot": {
+      "var_param": "outannot"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "label_name": {
+      "var_param": "label_name"
+    }
+  }
+}

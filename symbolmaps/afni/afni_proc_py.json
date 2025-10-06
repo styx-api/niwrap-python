@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "afni_proc_py",
+  "properties": {
+    "dsets": {
+      "var_param": "dsets"
+    },
+    "subj_id": {
+      "var_param": "subj_id"
+    },
+    "out_dir": {
+      "var_param": "out_dir"
+    },
+    "blocks": {
+      "var_param": "blocks"
+    },
+    "anat": {
+      "var_param": "anat"
+    },
+    "echo_times": {
+      "var_param": "echo_times"
+    },
+    "stim_times": {
+      "var_param": "stim_times"
+    },
+    "stim_files": {
+      "var_param": "stim_files"
+    },
+    "copy_files": {
+      "var_param": "copy_files"
+    },
+    "copy_anat": {
+      "var_param": "copy_anat"
+    },
+    "regress_params": {
+      "var_param": "regress_params"
+    }
+  }
+}

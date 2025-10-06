@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_isc",
+  "properties": {
+    "outfile_prefix": {
+      "var_param": "outfile_prefix"
+    },
+    "num_jobs": {
+      "var_param": "num_jobs"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "model_structure": {
+      "var_param": "model_structure"
+    },
+    "qvar_centers": {
+      "var_param": "qvar_centers"
+    },
+    "quantitative_vars": {
+      "var_param": "quantitative_vars"
+    },
+    "fisher_transform": {
+      "var_param": "fisher_transform"
+    },
+    "io_functions": {
+      "var_param": "io_functions"
+    },
+    "data_table": {
+      "var_param": "data_table"
+    }
+  }
+}

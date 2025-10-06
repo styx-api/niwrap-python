@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "threshold_image",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "image_in": {
+      "var_param": "image_in"
+    },
+    "out_image": {
+      "var_param": "out_image"
+    },
+    "threshlo": {
+      "var_param": "threshlo"
+    },
+    "threshhi": {
+      "var_param": "threshhi"
+    },
+    "inside_value": {
+      "var_param": "inside_value"
+    },
+    "outside_value": {
+      "var_param": "outside_value"
+    },
+    "otsu_number_of_thresholds": {
+      "var_param": "otsu_number_of_thresholds"
+    },
+    "kmeans_number_of_thresholds": {
+      "var_param": "kmeans_number_of_thresholds"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    }
+  }
+}

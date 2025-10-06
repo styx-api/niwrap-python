@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "mris_target_pos",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "adgws_file": {
+      "var_param": "adgws_file"
+    },
+    "threshold_values": {
+      "var_param": "threshold_values"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "interpolation_method": {
+      "var_param": "interpolation_method"
+    },
+    "debug_vertex": {
+      "var_param": "debug_vertex"
+    },
+    "cbv_flag": {
+      "var_param": "cbv_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "check_options": {
+      "var_param": "check_options"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

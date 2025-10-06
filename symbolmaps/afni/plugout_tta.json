@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "plugout_tta",
+  "properties": {
+    "host": {
+      "var_param": "host"
+    },
+    "port": {
+      "var_param": "port"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "port_offset": {
+      "var_param": "port_offset"
+    },
+    "port_offset_quiet": {
+      "var_param": "port_offset_quiet"
+    },
+    "port_offset_bloc": {
+      "var_param": "port_offset_bloc"
+    },
+    "max_port_bloc": {
+      "var_param": "max_port_bloc"
+    },
+    "max_port_bloc_quiet": {
+      "var_param": "max_port_bloc_quiet"
+    },
+    "num_assigned_ports": {
+      "var_param": "num_assigned_ports"
+    },
+    "num_assigned_ports_quiet": {
+      "var_param": "num_assigned_ports_quiet"
+    }
+  }
+}

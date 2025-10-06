@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__afni_refacer_make_onebig_a12",
+  "properties": {
+    "t1w_dataset": {
+      "var_param": "t1w_dataset"
+    }
+  }
+}

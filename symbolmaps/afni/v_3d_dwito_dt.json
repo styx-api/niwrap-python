@@ -1,0 +1,83 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_dwito_dt",
+  "properties": {
+    "gradient_file": {
+      "var_param": "gradient_file"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "bmatrix_NZ": {
+      "var_param": "bmatrix_nz"
+    },
+    "bmatrix_Z": {
+      "var_param": "bmatrix_z"
+    },
+    "bmatrix_FULL": {
+      "var_param": "bmatrix_full"
+    },
+    "scale_out_1000": {
+      "var_param": "scale_out_1000"
+    },
+    "bmax_ref": {
+      "var_param": "bmax_ref"
+    },
+    "nonlinear": {
+      "var_param": "nonlinear"
+    },
+    "linear": {
+      "var_param": "linear"
+    },
+    "reweight": {
+      "var_param": "reweight"
+    },
+    "max_iter": {
+      "var_param": "max_iter"
+    },
+    "max_iter_rw": {
+      "var_param": "max_iter_rw"
+    },
+    "eigs": {
+      "var_param": "eigs"
+    },
+    "debug_briks": {
+      "var_param": "debug_briks"
+    },
+    "cumulative_wts": {
+      "var_param": "cumulative_wts"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "drive_afni": {
+      "var_param": "drive_afni"
+    },
+    "sep_dsets": {
+      "var_param": "sep_dsets"
+    },
+    "csf_val": {
+      "var_param": "csf_val"
+    },
+    "min_bad_md": {
+      "var_param": "min_bad_md"
+    },
+    "csf_fa": {
+      "var_param": "csf_fa"
+    },
+    "opt": {
+      "var_param": "opt"
+    },
+    "mean_b0": {
+      "var_param": "mean_b0"
+    }
+  }
+}

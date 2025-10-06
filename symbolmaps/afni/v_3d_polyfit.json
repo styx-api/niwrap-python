@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_polyfit",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "poly_order": {
+      "var_param": "poly_order"
+    },
+    "blur": {
+      "var_param": "blur"
+    },
+    "median_radius": {
+      "var_param": "median_radius"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "resid_prefix": {
+      "var_param": "resid_prefix"
+    },
+    "coeff_output": {
+      "var_param": "coeff_output"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "mean_scale": {
+      "var_param": "mean_scale"
+    },
+    "clip_box": {
+      "var_param": "clip_box"
+    },
+    "fit_method": {
+      "var_param": "fit_method"
+    },
+    "base_dataset": {
+      "var_param": "base_dataset"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

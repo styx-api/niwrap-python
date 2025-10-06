@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "possum_sum",
+  "properties": {
+    "input_signal": {
+      "var_param": "input_signal"
+    },
+    "output_signal": {
+      "var_param": "output_signal"
+    },
+    "num_processors": {
+      "var_param": "num_processors"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    }
+  }
+}

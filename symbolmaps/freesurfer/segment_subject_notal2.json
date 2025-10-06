@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "segment_subject_notal2",
+  "properties": {
+    "license_file": {
+      "var_param": "license_file"
+    }
+  }
+}

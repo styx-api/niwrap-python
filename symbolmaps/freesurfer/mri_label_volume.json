@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "mri_label_volume",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "partial_volume_effects": {
+      "var_param": "partial_volume_effects"
+    },
+    "intracranial_volume": {
+      "var_param": "intracranial_volume"
+    },
+    "spreadsheet_subject": {
+      "var_param": "spreadsheet_subject"
+    },
+    "non_zero_voxels": {
+      "var_param": "non_zero_voxels"
+    },
+    "replace_label_in": {
+      "var_param": "replace_label_in"
+    },
+    "replace_label_out": {
+      "var_param": "replace_label_out"
+    },
+    "brain_volume": {
+      "var_param": "brain_volume"
+    },
+    "percentage": {
+      "var_param": "percentage"
+    },
+    "log_results": {
+      "var_param": "log_results"
+    },
+    "atlas_transform_file": {
+      "var_param": "atlas_transform_file"
+    },
+    "atlas_scalefactor": {
+      "var_param": "atlas_scalefactor"
+    },
+    "etiv_transform_file": {
+      "var_param": "etiv_transform_file"
+    },
+    "etiv_scalefactor": {
+      "var_param": "etiv_scalefactor"
+    },
+    "etiv_subject": {
+      "var_param": "etiv_subject"
+    }
+  }
+}

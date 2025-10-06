@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "fsl_regfilt",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "designfile": {
+      "var_param": "designfile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "maskfile": {
+      "var_param": "maskfile"
+    },
+    "filter": {
+      "var_param": "filter_"
+    },
+    "freq_filter_flag": {
+      "var_param": "freq_filter_flag"
+    },
+    "freq_ic_flag": {
+      "var_param": "freq_ic_flag"
+    },
+    "freq_ic_smooth": {
+      "var_param": "freq_ic_smooth"
+    },
+    "fthresh": {
+      "var_param": "fthresh"
+    },
+    "fthresh2": {
+      "var_param": "fthresh2"
+    },
+    "vn_flag": {
+      "var_param": "vn_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "aggressive_flag": {
+      "var_param": "aggressive_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "out_data": {
+      "var_param": "out_data"
+    },
+    "out_mix": {
+      "var_param": "out_mix"
+    },
+    "out_vnscales": {
+      "var_param": "out_vnscales"
+    }
+  }
+}

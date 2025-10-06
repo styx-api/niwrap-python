@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "bedpostx_gpu",
+  "properties": {
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "gpu_queue": {
+      "var_param": "gpu_queue"
+    },
+    "num_jobs": {
+      "var_param": "num_jobs"
+    },
+    "num_fibers": {
+      "var_param": "num_fibers"
+    },
+    "ard_weight": {
+      "var_param": "ard_weight"
+    },
+    "burnin_period": {
+      "var_param": "burnin_period"
+    },
+    "num_jumps": {
+      "var_param": "num_jumps"
+    },
+    "sample_every": {
+      "var_param": "sample_every"
+    },
+    "deconv_model": {
+      "var_param": "deconv_model"
+    },
+    "grad_nonlinear": {
+      "var_param": "grad_nonlinear"
+    }
+  }
+}

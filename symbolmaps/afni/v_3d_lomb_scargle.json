@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_lomb_scargle",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "inset": {
+      "var_param": "inset"
+    },
+    "censor_1d": {
+      "var_param": "censor_1d"
+    },
+    "censor_string": {
+      "var_param": "censor_string"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "out_pow_spec": {
+      "var_param": "out_pow_spec"
+    },
+    "nyquist_multiplier": {
+      "var_param": "nyquist_multiplier"
+    },
+    "nifti": {
+      "var_param": "nifti"
+    }
+  }
+}

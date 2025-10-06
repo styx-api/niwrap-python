@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "diffusion_utils",
+  "properties": {
+    "dummy_flag": {
+      "var_param": "dummy_flag"
+    }
+  }
+}

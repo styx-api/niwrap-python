@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "ants_motion_corr",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "n_images": {
+      "var_param": "n_images"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "use_fixed_reference_image": {
+      "var_param": "use_fixed_reference_image"
+    },
+    "use_scales_estimator": {
+      "var_param": "use_scales_estimator"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "smoothing_sigmas": {
+      "var_param": "smoothing_sigmas"
+    },
+    "shrink_factors": {
+      "var_param": "shrink_factors"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "average_image": {
+      "var_param": "average_image"
+    },
+    "write_displacement": {
+      "var_param": "write_displacement"
+    },
+    "use_histogram_matching": {
+      "var_param": "use_histogram_matching"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

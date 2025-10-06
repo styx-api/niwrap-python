@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "convert_to_jpg",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    }
+  }
+}

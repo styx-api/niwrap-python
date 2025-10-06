@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "mris_pmake",
+  "properties": {
+    "options_file": {
+      "var_param": "options_file"
+    },
+    "working_dir": {
+      "var_param": "working_dir"
+    },
+    "listen_mode": {
+      "var_param": "listen_mode"
+    },
+    "listen_on_port": {
+      "var_param": "listen_on_port"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "surface0": {
+      "var_param": "surface0"
+    },
+    "surface1": {
+      "var_param": "surface1"
+    },
+    "curve0": {
+      "var_param": "curve0"
+    },
+    "curve1": {
+      "var_param": "curve1"
+    },
+    "use_abs_curvs": {
+      "var_param": "use_abs_curvs"
+    },
+    "mpm_prog": {
+      "var_param": "mpm_prog"
+    },
+    "mpm_args": {
+      "var_param": "mpm_args"
+    }
+  }
+}

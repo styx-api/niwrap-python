@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "parc_atlas_jackknife_test",
+  "properties": {
+    "register": {
+      "var_param": "register"
+    },
+    "reg_dist": {
+      "var_param": "reg_dist"
+    },
+    "reg_append": {
+      "var_param": "reg_append"
+    },
+    "reg_copy": {
+      "var_param": "reg_copy"
+    },
+    "train": {
+      "var_param": "train"
+    },
+    "classify": {
+      "var_param": "classify"
+    },
+    "test": {
+      "var_param": "test"
+    },
+    "all": {
+      "var_param": "all_"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "freesurfer_home": {
+      "var_param": "freesurfer_home"
+    },
+    "binaries_path": {
+      "var_param": "binaries_path"
+    },
+    "dontrun": {
+      "var_param": "dontrun"
+    }
+  }
+}

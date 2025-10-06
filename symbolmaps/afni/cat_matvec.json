@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "cat_matvec",
+  "properties": {
+    "matrix_format": {
+      "var_param": "matrix_format"
+    },
+    "oneline_format": {
+      "var_param": "oneline_format"
+    },
+    "four_by_four_format": {
+      "var_param": "four_by_four_format"
+    },
+    "matvec_spec": {
+      "var_param": "matvec_spec"
+    }
+  }
+}

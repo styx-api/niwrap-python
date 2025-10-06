@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v__reorder",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "mapfile": {
+      "var_param": "mapfile"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "save_work": {
+      "var_param": "save_work"
+    },
+    "test": {
+      "var_param": "test"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

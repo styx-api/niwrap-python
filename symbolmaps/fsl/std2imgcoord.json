@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "std2imgcoord",
+  "properties": {
+    "filename_coordinates": {
+      "var_param": "filename_coordinates"
+    },
+    "standard_image": {
+      "var_param": "standard_image"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "affine_transform": {
+      "var_param": "affine_transform"
+    },
+    "warp_field": {
+      "var_param": "warp_field"
+    },
+    "prewarp_affine_transform": {
+      "var_param": "prewarp_affine_transform"
+    },
+    "output_mm": {
+      "var_param": "output_mm"
+    },
+    "output_vox": {
+      "var_param": "output_vox"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "more_verbose": {
+      "var_param": "more_verbose"
+    }
+  }
+}

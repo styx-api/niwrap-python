@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "dicom_hdr",
+  "properties": {
+    "files": {
+      "var_param": "files"
+    },
+    "hex": {
+      "var_param": "hex_"
+    },
+    "noname": {
+      "var_param": "noname"
+    },
+    "sexinfo": {
+      "var_param": "sexinfo"
+    },
+    "mulfram": {
+      "var_param": "mulfram"
+    },
+    "v_dump": {
+      "var_param": "v_dump"
+    },
+    "no_length": {
+      "var_param": "no_length"
+    },
+    "slice_times": {
+      "var_param": "slice_times"
+    },
+    "slice_times_verb": {
+      "var_param": "slice_times_verb"
+    },
+    "siemens_csa_data": {
+      "var_param": "siemens_csa_data"
+    }
+  }
+}

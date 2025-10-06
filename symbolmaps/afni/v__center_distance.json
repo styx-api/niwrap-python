@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__center_distance",
+  "properties": {
+    "dset1": {
+      "var_param": "dset1"
+    },
+    "dset2": {
+      "var_param": "dset2"
+    }
+  }
+}

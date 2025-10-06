@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mri_reorient_lr_csh",
+  "properties": {
+    "input_vol": {
+      "var_param": "input_vol"
+    },
+    "output_vol": {
+      "var_param": "output_vol"
+    },
+    "display_result": {
+      "var_param": "display_result"
+    },
+    "clean_files": {
+      "var_param": "clean_files"
+    },
+    "output_registration": {
+      "var_param": "output_registration"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

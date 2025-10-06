@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "map_icosahedron",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "rec_depth": {
+      "var_param": "rec_depth"
+    },
+    "lin_depth": {
+      "var_param": "lin_depth"
+    },
+    "morph_surf": {
+      "var_param": "morph_surf"
+    },
+    "num_it": {
+      "var_param": "num_it"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "nn_dset": {
+      "var_param": "nn_dset"
+    },
+    "dset": {
+      "var_param": "dset"
+    },
+    "fix_cut_surfaces": {
+      "var_param": "fix_cut_surfaces"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

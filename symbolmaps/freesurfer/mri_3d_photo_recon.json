@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mri_3d_photo_recon",
+  "properties": {
+    "input_photo_dir": {
+      "var_param": "input_photo_dir"
+    },
+    "input_segmentation_dir": {
+      "var_param": "input_segmentation_dir"
+    },
+    "slice_thickness": {
+      "var_param": "slice_thickness"
+    },
+    "photo_resolution": {
+      "var_param": "photo_resolution"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "ref_mask": {
+      "var_param": "ref_mask"
+    },
+    "ref_surface": {
+      "var_param": "ref_surface"
+    },
+    "ref_soft_mask": {
+      "var_param": "ref_soft_mask"
+    },
+    "mesh_reorient_with_indices": {
+      "var_param": "mesh_reorient_with_indices"
+    },
+    "photos_posterior_side": {
+      "var_param": "photos_posterior_side"
+    },
+    "order_posterior_to_anterior": {
+      "var_param": "order_posterior_to_anterior"
+    },
+    "allow_z_stretch": {
+      "var_param": "allow_z_stretch"
+    },
+    "rigid_only_for_photos": {
+      "var_param": "rigid_only_for_photos"
+    },
+    "gpu_index": {
+      "var_param": "gpu_index"
+    }
+  }
+}

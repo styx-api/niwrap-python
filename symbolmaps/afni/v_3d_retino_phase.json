@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_retino_phase",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "exp": {
+      "var_param": "exp"
+    },
+    "con": {
+      "var_param": "con"
+    },
+    "clw": {
+      "var_param": "clw"
+    },
+    "ccw": {
+      "var_param": "ccw"
+    },
+    "spectra": {
+      "var_param": "spectra"
+    },
+    "tstim": {
+      "var_param": "tstim"
+    },
+    "nrings": {
+      "var_param": "nrings"
+    },
+    "nwedges": {
+      "var_param": "nwedges"
+    },
+    "ort_adjust": {
+      "var_param": "ort_adjust"
+    },
+    "pre_stim": {
+      "var_param": "pre_stim"
+    },
+    "sum_adjust": {
+      "var_param": "sum_adjust"
+    },
+    "phase_estimate": {
+      "var_param": "phase_estimate"
+    },
+    "ref_ts": {
+      "var_param": "ref_ts"
+    },
+    "multi_ref_ts": {
+      "var_param": "multi_ref_ts"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_zregrid",
+  "properties": {
+    "z_thickness": {
+      "var_param": "z_thickness"
+    },
+    "slice_count": {
+      "var_param": "slice_count"
+    },
+    "z_size": {
+      "var_param": "z_size"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "infile": {
+      "var_param": "infile"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

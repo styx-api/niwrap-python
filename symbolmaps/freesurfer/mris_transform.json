@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mris_transform",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "trx_src": {
+      "var_param": "trx_src"
+    },
+    "trx_dst": {
+      "var_param": "trx_dst"
+    },
+    "is_inverse": {
+      "var_param": "is_inverse"
+    }
+  }
+}

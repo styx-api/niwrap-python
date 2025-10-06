@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "ants_motion_corr_stats",
+  "properties": {
+    "mask": {
+      "var_param": "mask"
+    },
+    "moco_params": {
+      "var_param": "moco_params"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "transform_index": {
+      "var_param": "transform_index"
+    },
+    "framewise": {
+      "var_param": "framewise"
+    },
+    "spatial_map": {
+      "var_param": "spatial_map"
+    },
+    "timeseries_displacement": {
+      "var_param": "timeseries_displacement"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

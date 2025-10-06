@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_axialize_anat",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "ref_file": {
+      "var_param": "ref_file"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mode_t2w": {
+      "var_param": "mode_t2w"
+    },
+    "mode_t1w": {
+      "var_param": "mode_t1w"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "out_match_ref": {
+      "var_param": "out_match_ref"
+    },
+    "do_ceil_out": {
+      "var_param": "do_ceil_out"
+    },
+    "extra_al_wtmask": {
+      "var_param": "extra_al_wtmask"
+    },
+    "extra_al_cost": {
+      "var_param": "extra_al_cost"
+    },
+    "extra_al_opts": {
+      "var_param": "extra_al_opts"
+    },
+    "focus_mask": {
+      "var_param": "focus_mask"
+    },
+    "focus_by_ss": {
+      "var_param": "focus_by_ss"
+    },
+    "remove_inf_sli": {
+      "var_param": "remove_inf_sli"
+    },
+    "pre_align_center_mass": {
+      "var_param": "pre_align_center_mass"
+    },
+    "pre_center_mass": {
+      "var_param": "pre_center_mass"
+    },
+    "post_lr_symm": {
+      "var_param": "post_lr_symm"
+    },
+    "no_pre_lr_symm": {
+      "var_param": "no_pre_lr_symm"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "qc_ulay_range": {
+      "var_param": "qc_ulay_range"
+    },
+    "no_qc_view": {
+      "var_param": "no_qc_view"
+    },
+    "qc_prefix": {
+      "var_param": "qc_prefix"
+    }
+  }
+}

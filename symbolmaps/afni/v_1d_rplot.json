@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_rplot",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "save_size": {
+      "var_param": "save_size"
+    },
+    "TR": {
+      "var_param": "tr"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "input_type": {
+      "var_param": "input_type"
+    },
+    "legend_font_size": {
+      "var_param": "legend_font_size"
+    },
+    "left_y_margin_text": {
+      "var_param": "left_y_margin_text"
+    },
+    "right_y_margin_text": {
+      "var_param": "right_y_margin_text"
+    },
+    "x_axis_label": {
+      "var_param": "x_axis_label"
+    },
+    "y_axis_label": {
+      "var_param": "y_axis_label"
+    },
+    "x_axis_range": {
+      "var_param": "x_axis_range"
+    },
+    "y_axis_range": {
+      "var_param": "y_axis_range"
+    },
+    "plot_char": {
+      "var_param": "plot_char"
+    },
+    "group_labels": {
+      "var_param": "group_labels"
+    },
+    "legend_show": {
+      "var_param": "legend_show"
+    },
+    "legend_position": {
+      "var_param": "legend_position"
+    },
+    "save_plot": {
+      "var_param": "save_plot"
+    },
+    "column_name_show": {
+      "var_param": "column_name_show"
+    }
+  }
+}

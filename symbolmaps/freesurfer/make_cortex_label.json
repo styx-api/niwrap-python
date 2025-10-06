@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "make_cortex_label",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "use_a2009s": {
+      "var_param": "use_a2009s"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    }
+  }
+}

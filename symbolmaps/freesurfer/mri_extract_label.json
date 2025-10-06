@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mri_extract_label",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "gaussian_smoothing": {
+      "var_param": "gaussian_smoothing"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "exit_none_found": {
+      "var_param": "exit_none_found"
+    },
+    "dilate": {
+      "var_param": "dilate"
+    },
+    "erode": {
+      "var_param": "erode"
+    }
+  }
+}

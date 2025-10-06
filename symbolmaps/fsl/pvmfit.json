@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "pvmfit",
+  "properties": {
+    "data_file": {
+      "var_param": "data_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "bvec_file": {
+      "var_param": "bvec_file"
+    },
+    "bval_file": {
+      "var_param": "bval_file"
+    },
+    "output_basename": {
+      "var_param": "output_basename"
+    },
+    "number_of_fibres": {
+      "var_param": "number_of_fibres"
+    },
+    "model_type": {
+      "var_param": "model_type"
+    },
+    "fit_all_models": {
+      "var_param": "fit_all_models"
+    },
+    "constrained_nonlinear": {
+      "var_param": "constrained_nonlinear"
+    },
+    "constrained_nonlinear_f": {
+      "var_param": "constrained_nonlinear_f"
+    },
+    "grid_search": {
+      "var_param": "grid_search"
+    },
+    "include_noise_floor": {
+      "var_param": "include_noise_floor"
+    },
+    "save_bic": {
+      "var_param": "save_bic"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "mri_sbbr",
+  "properties": {
+    "template_volume": {
+      "var_param": "template_volume"
+    },
+    "surface_file": {
+      "var_param": "surface_file"
+    },
+    "init_reg_file": {
+      "var_param": "init_reg_file"
+    },
+    "t1": {
+      "var_param": "t1"
+    },
+    "t2": {
+      "var_param": "t2"
+    },
+    "optimization_type": {
+      "var_param": "optimization_type"
+    },
+    "distance_in": {
+      "var_param": "distance_in"
+    },
+    "distance_out": {
+      "var_param": "distance_out"
+    },
+    "slope": {
+      "var_param": "slope"
+    },
+    "ftol": {
+      "var_param": "ftol"
+    },
+    "linmintol": {
+      "var_param": "linmintol"
+    },
+    "niters_max": {
+      "var_param": "niters_max"
+    },
+    "search": {
+      "var_param": "search"
+    },
+    "search1d": {
+      "var_param": "search1d"
+    },
+    "parameter_set": {
+      "var_param": "parameter_set"
+    },
+    "increment": {
+      "var_param": "increment"
+    },
+    "slice_number": {
+      "var_param": "slice_number"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "output_registration": {
+      "var_param": "output_registration"
+    },
+    "inverted_output_registration": {
+      "var_param": "inverted_output_registration"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "diagnostic": {
+      "var_param": "diagnostic"
+    },
+    "check_options": {
+      "var_param": "check_options"
+    }
+  }
+}

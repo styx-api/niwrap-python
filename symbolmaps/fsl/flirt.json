@@ -1,0 +1,140 @@
+{
+  "fn_root_make_params_and_execute": "flirt",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "reference": {
+      "var_param": "reference"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "out_matrix_file": {
+      "var_param": "out_matrix_file"
+    },
+    "angle_rep": {
+      "var_param": "angle_rep"
+    },
+    "apply_isoxfm": {
+      "var_param": "apply_isoxfm"
+    },
+    "apply_xfm": {
+      "var_param": "apply_xfm"
+    },
+    "bbrslope": {
+      "var_param": "bbrslope"
+    },
+    "bbrtype": {
+      "var_param": "bbrtype"
+    },
+    "bgvalue": {
+      "var_param": "bgvalue"
+    },
+    "bins": {
+      "var_param": "bins"
+    },
+    "coarse_search": {
+      "var_param": "coarse_search"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "cost_func": {
+      "var_param": "cost_func"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "display_init": {
+      "var_param": "display_init"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "echospacing": {
+      "var_param": "echospacing"
+    },
+    "fieldmap": {
+      "var_param": "fieldmap"
+    },
+    "fieldmapmask": {
+      "var_param": "fieldmapmask"
+    },
+    "fine_search": {
+      "var_param": "fine_search"
+    },
+    "force_scaling": {
+      "var_param": "force_scaling"
+    },
+    "in_matrix_file": {
+      "var_param": "in_matrix_file"
+    },
+    "in_weight": {
+      "var_param": "in_weight"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "min_sampling": {
+      "var_param": "min_sampling"
+    },
+    "no_clamp": {
+      "var_param": "no_clamp"
+    },
+    "no_resample": {
+      "var_param": "no_resample"
+    },
+    "no_resample_blur": {
+      "var_param": "no_resample_blur"
+    },
+    "no_search": {
+      "var_param": "no_search"
+    },
+    "padding_size": {
+      "var_param": "padding_size"
+    },
+    "pedir": {
+      "var_param": "pedir"
+    },
+    "ref_weight": {
+      "var_param": "ref_weight"
+    },
+    "rigid2D": {
+      "var_param": "rigid2_d"
+    },
+    "schedule": {
+      "var_param": "schedule"
+    },
+    "searchr_x": {
+      "var_param": "searchr_x"
+    },
+    "searchr_y": {
+      "var_param": "searchr_y"
+    },
+    "searchr_z": {
+      "var_param": "searchr_z"
+    },
+    "sinc_width": {
+      "var_param": "sinc_width"
+    },
+    "sinc_window": {
+      "var_param": "sinc_window"
+    },
+    "uses_qform": {
+      "var_param": "uses_qform"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "wm_seg": {
+      "var_param": "wm_seg"
+    },
+    "wmcoords": {
+      "var_param": "wmcoords"
+    },
+    "wmnorms": {
+      "var_param": "wmnorms"
+    }
+  }
+}

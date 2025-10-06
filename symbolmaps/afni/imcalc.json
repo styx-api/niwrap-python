@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "imcalc",
+  "properties": {
+    "datum_type": {
+      "var_param": "datum_type"
+    },
+    "image_inputs": {
+      "var_param": "image_inputs"
+    },
+    "expression": {
+      "var_param": "expression"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    }
+  }
+}

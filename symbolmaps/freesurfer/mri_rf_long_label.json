@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "mri_rf_long_label",
+  "properties": {
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

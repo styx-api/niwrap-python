@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v__command_globb",
+  "properties": {
+    "program_command": {
+      "var_param": "program_command"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "extension": {
+      "var_param": "extension"
+    },
+    "brick_list": {
+      "var_param": "brick_list"
+    }
+  }
+}

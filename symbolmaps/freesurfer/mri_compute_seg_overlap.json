@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_compute_seg_overlap",
+  "properties": {
+    "segvol1": {
+      "var_param": "segvol1"
+    },
+    "segvol2": {
+      "var_param": "segvol2"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "mean_log_file": {
+      "var_param": "mean_log_file"
+    },
+    "std_log_file": {
+      "var_param": "std_log_file"
+    },
+    "overall_log_flag": {
+      "var_param": "overall_log_flag"
+    },
+    "exclude_cortex_flag": {
+      "var_param": "exclude_cortex_flag"
+    },
+    "exclude_wm_flag": {
+      "var_param": "exclude_wm_flag"
+    },
+    "all_labels_flag": {
+      "var_param": "all_labels_flag"
+    },
+    "dice_params": {
+      "var_param": "dice_params"
+    }
+  }
+}

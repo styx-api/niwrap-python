@@ -1,0 +1,152 @@
+{
+  "fn_root_make_params_and_execute": "melodic",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "dimensionality_reduction": {
+      "var_param": "dimensionality_reduction"
+    },
+    "generate_report": {
+      "var_param": "generate_report"
+    },
+    "cifti_io": {
+      "var_param": "cifti_io"
+    },
+    "variance_normalization": {
+      "var_param": "variance_normalization"
+    },
+    "no_masking": {
+      "var_param": "no_masking"
+    },
+    "update_masking": {
+      "var_param": "update_masking"
+    },
+    "no_bet": {
+      "var_param": "no_bet"
+    },
+    "bg_threshold": {
+      "var_param": "bg_threshold"
+    },
+    "dimest_technique": {
+      "var_param": "dimest_technique"
+    },
+    "separate_variance_normalization": {
+      "var_param": "separate_variance_normalization"
+    },
+    "disable_migp": {
+      "var_param": "disable_migp"
+    },
+    "num_internal_eigenmaps": {
+      "var_param": "num_internal_eigenmaps"
+    },
+    "migp_shuffle": {
+      "var_param": "migp_shuffle"
+    },
+    "migp_factor": {
+      "var_param": "migp_factor"
+    },
+    "num_ics": {
+      "var_param": "num_ics"
+    },
+    "nonlinearity": {
+      "var_param": "nonlinearity"
+    },
+    "covar_weights": {
+      "var_param": "covar_weights"
+    },
+    "eps_error": {
+      "var_param": "eps_error"
+    },
+    "eps_rank1_error": {
+      "var_param": "eps_rank1_error"
+    },
+    "max_iters": {
+      "var_param": "max_iters"
+    },
+    "max_restarts": {
+      "var_param": "max_restarts"
+    },
+    "mm_threshold": {
+      "var_param": "mm_threshold"
+    },
+    "no_mixture_modeling": {
+      "var_param": "no_mixture_modeling"
+    },
+    "ic_components_file": {
+      "var_param": "ic_components_file"
+    },
+    "mixing_matrix_file": {
+      "var_param": "mixing_matrix_file"
+    },
+    "session_modes_file": {
+      "var_param": "session_modes_file"
+    },
+    "component_filter": {
+      "var_param": "component_filter"
+    },
+    "background_image": {
+      "var_param": "background_image"
+    },
+    "tr_seconds": {
+      "var_param": "tr_seconds"
+    },
+    "log_power_calc": {
+      "var_param": "log_power_calc"
+    },
+    "time_domain_design_matrix": {
+      "var_param": "time_domain_design_matrix"
+    },
+    "time_domain_t_contrast_matrix": {
+      "var_param": "time_domain_t_contrast_matrix"
+    },
+    "subject_domain_design_matrix": {
+      "var_param": "subject_domain_design_matrix"
+    },
+    "subject_domain_t_contrast_matrix": {
+      "var_param": "subject_domain_t_contrast_matrix"
+    },
+    "output_unmixing_matrix": {
+      "var_param": "output_unmixing_matrix"
+    },
+    "output_stats": {
+      "var_param": "output_stats"
+    },
+    "output_pca": {
+      "var_param": "output_pca"
+    },
+    "output_whitening": {
+      "var_param": "output_whitening"
+    },
+    "output_original_ics": {
+      "var_param": "output_original_ics"
+    },
+    "output_mean_volume": {
+      "var_param": "output_mean_volume"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "copyright": {
+      "var_param": "copyright_"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "report_maps": {
+      "var_param": "report_maps"
+    },
+    "keep_meanvol": {
+      "var_param": "keep_meanvol"
+    }
+  }
+}

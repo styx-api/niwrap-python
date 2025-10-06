@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "aparc_stats_aseg",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "gcs_name": {
+      "var_param": "gcs_name"
+    },
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "gcs_dir": {
+      "var_param": "gcs_dir"
+    },
+    "parc_name": {
+      "var_param": "parc_name"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "lh_flag": {
+      "var_param": "lh_flag"
+    },
+    "rh_flag": {
+      "var_param": "rh_flag"
+    },
+    "a2009s_flag": {
+      "var_param": "a2009s_flag"
+    },
+    "no_aseg_flag": {
+      "var_param": "no_aseg_flag"
+    },
+    "no_cortparc_flag": {
+      "var_param": "no_cortparc_flag"
+    },
+    "no_parcstats_flag": {
+      "var_param": "no_parcstats_flag"
+    },
+    "no_aparc2aseg_flag": {
+      "var_param": "no_aparc2aseg_flag"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "th3_flag": {
+      "var_param": "th3_flag"
+    },
+    "no_th3_flag": {
+      "var_param": "no_th3_flag"
+    },
+    "longitudinal": {
+      "var_param": "longitudinal"
+    },
+    "expert_file": {
+      "var_param": "expert_file"
+    },
+    "expert_use_flag": {
+      "var_param": "expert_use_flag"
+    },
+    "expert_clean_flag": {
+      "var_param": "expert_clean_flag"
+    },
+    "expert_overwrite_flag": {
+      "var_param": "expert_overwrite_flag"
+    }
+  }
+}

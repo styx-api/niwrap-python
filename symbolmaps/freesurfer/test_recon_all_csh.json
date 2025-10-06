@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "test_recon_all_csh",
+  "properties": {
+    "reference_subj_source_dir": {
+      "var_param": "reference_subj_source_dir"
+    },
+    "reference_subjid": {
+      "var_param": "reference_subjid"
+    },
+    "test_subject_dest_dir": {
+      "var_param": "test_subject_dest_dir"
+    },
+    "test_subjid": {
+      "var_param": "test_subjid"
+    },
+    "freesurfer_home": {
+      "var_param": "freesurfer_home"
+    },
+    "norecon": {
+      "var_param": "norecon"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "feat",
+  "properties": {
+    "design_file": {
+      "var_param": "design_file"
+    }
+  }
+}

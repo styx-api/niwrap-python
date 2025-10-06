@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "vsm_smooth",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "fwhm_value": {
+      "var_param": "fwhm_value"
+    },
+    "temp_dir": {
+      "var_param": "temp_dir"
+    }
+  }
+}

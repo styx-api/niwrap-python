@@ -1,0 +1,185 @@
+{
+  "fn_root_make_params_and_execute": "v_1dplot",
+  "properties": {
+    "tsfiles": {
+      "var_param": "tsfiles"
+    },
+    "install": {
+      "var_param": "install"
+    },
+    "sep": {
+      "var_param": "sep"
+    },
+    "one": {
+      "var_param": "one"
+    },
+    "sepscl": {
+      "var_param": "sepscl"
+    },
+    "noline": {
+      "var_param": "noline",
+      "fn_struct_make_params": "v_1dplot_noline_params",
+      "properties": {
+        "noline": {
+          "var_param": "noline"
+        },
+        "NOLINE": {
+          "var_param": "noline_"
+        }
+      }
+    },
+    "box": {
+      "var_param": "box"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "norm2": {
+      "var_param": "norm2"
+    },
+    "normx": {
+      "var_param": "normx"
+    },
+    "norm1": {
+      "var_param": "norm1"
+    },
+    "demean": {
+      "var_param": "demean"
+    },
+    "x": {
+      "var_param": "x"
+    },
+    "xl10": {
+      "var_param": "xl10"
+    },
+    "dx": {
+      "var_param": "dx"
+    },
+    "xzero": {
+      "var_param": "xzero"
+    },
+    "nopush": {
+      "var_param": "nopush"
+    },
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "use": {
+      "var_param": "use"
+    },
+    "xlabel": {
+      "var_param": "xlabel"
+    },
+    "ylabel": {
+      "var_param": "ylabel"
+    },
+    "plabel": {
+      "var_param": "plabel"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "wintitle": {
+      "var_param": "wintitle"
+    },
+    "naked": {
+      "var_param": "naked"
+    },
+    "aspect": {
+      "var_param": "aspect"
+    },
+    "stdin": {
+      "var_param": "stdin"
+    },
+    "ps": {
+      "var_param": "ps"
+    },
+    "jpg": {
+      "var_param": "jpg"
+    },
+    "jpeg": {
+      "var_param": "jpeg"
+    },
+    "png": {
+      "var_param": "png"
+    },
+    "pnm": {
+      "var_param": "pnm"
+    },
+    "pngs": {
+      "var_param": "pngs"
+    },
+    "jpgs": {
+      "var_param": "jpgs"
+    },
+    "jpegs": {
+      "var_param": "jpegs"
+    },
+    "pnms": {
+      "var_param": "pnms"
+    },
+    "ytran": {
+      "var_param": "ytran"
+    },
+    "xtran": {
+      "var_param": "xtran"
+    },
+    "xaxis": {
+      "var_param": "xaxis"
+    },
+    "yaxis": {
+      "var_param": "yaxis"
+    },
+    "ynames": {
+      "var_param": "ynames"
+    },
+    "volreg": {
+      "var_param": "volreg"
+    },
+    "thick": {
+      "var_param": "thick",
+      "fn_struct_make_params": "v_1dplot_thick_params",
+      "properties": {
+        "thick": {
+          "var_param": "thick"
+        },
+        "THICK": {
+          "var_param": "thick_"
+        }
+      }
+    },
+    "dashed": {
+      "var_param": "dashed"
+    },
+    "setenv": {
+      "var_param": "setenv"
+    },
+    "censor_RGB": {
+      "var_param": "censor_rgb"
+    },
+    "censor": {
+      "var_param": "censor"
+    },
+    "CENSORTR": {
+      "var_param": "censortr"
+    },
+    "concat": {
+      "var_param": "concat"
+    },
+    "rbox": {
+      "var_param": "rbox",
+      "fn_struct_make_params": "v_1dplot_rbox_params",
+      "properties": {
+        "rbox": {
+          "var_param": "rbox"
+        },
+        "Rbox": {
+          "var_param": "rbox_"
+        }
+      }
+    },
+    "line": {
+      "var_param": "line"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mris_flatten",
+  "properties": {
+    "input_patch": {
+      "var_param": "input_patch"
+    },
+    "output_patch": {
+      "var_param": "output_patch"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "distances": {
+      "var_param": "distances"
+    },
+    "dilations": {
+      "var_param": "dilations"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "copy_coords": {
+      "var_param": "copy_coords"
+    },
+    "norand": {
+      "var_param": "norand"
+    }
+  }
+}

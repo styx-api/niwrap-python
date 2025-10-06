@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_zcutup",
+  "properties": {
+    "keep_slices": {
+      "var_param": "keep_slices"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

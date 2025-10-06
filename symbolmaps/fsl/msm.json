@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "msm",
+  "properties": {
+    "inmesh": {
+      "var_param": "inmesh"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "refmesh": {
+      "var_param": "refmesh"
+    },
+    "indata": {
+      "var_param": "indata"
+    },
+    "refdata": {
+      "var_param": "refdata"
+    },
+    "trans": {
+      "var_param": "trans"
+    },
+    "in_register": {
+      "var_param": "in_register"
+    },
+    "inweight": {
+      "var_param": "inweight"
+    },
+    "refweight": {
+      "var_param": "refweight"
+    },
+    "format": {
+      "var_param": "format_"
+    },
+    "conf": {
+      "var_param": "conf"
+    },
+    "levels": {
+      "var_param": "levels"
+    },
+    "smoothout": {
+      "var_param": "smoothout"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "printoptions": {
+      "var_param": "printoptions"
+    }
+  }
+}

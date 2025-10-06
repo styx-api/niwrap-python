@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_convert_dcm_dwis",
+  "properties": {
+    "dicom_dir": {
+      "var_param": "dicom_dir"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "nifti_files": {
+      "var_param": "nifti_files"
+    },
+    "bvec_files": {
+      "var_param": "bvec_files"
+    },
+    "bval_files": {
+      "var_param": "bval_files"
+    },
+    "work_dir": {
+      "var_param": "work_dir"
+    },
+    "orientation": {
+      "var_param": "orientation"
+    },
+    "origin_xyz": {
+      "var_param": "origin_xyz"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    },
+    "no_flip": {
+      "var_param": "no_flip"
+    },
+    "qc_prefix": {
+      "var_param": "qc_prefix"
+    },
+    "reorient_off": {
+      "var_param": "reorient_off"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    },
+    "no_qc_view": {
+      "var_param": "no_qc_view"
+    },
+    "do_movie": {
+      "var_param": "do_movie"
+    }
+  }
+}

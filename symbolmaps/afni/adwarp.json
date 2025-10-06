@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "adwarp",
+  "properties": {
+    "apar": {
+      "var_param": "apar"
+    },
+    "dpar": {
+      "var_param": "dpar"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dxyz": {
+      "var_param": "dxyz"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "resam": {
+      "var_param": "resam"
+    },
+    "thr": {
+      "var_param": "thr"
+    },
+    "func": {
+      "var_param": "func"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "surf_to_surf",
+  "properties": {
+    "input_surface_1": {
+      "var_param": "input_surface_1"
+    },
+    "input_surface_2": {
+      "var_param": "input_surface_2"
+    },
+    "surface_volume": {
+      "var_param": "surface_volume"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "output_params": {
+      "var_param": "output_params"
+    },
+    "node_indices": {
+      "var_param": "node_indices"
+    },
+    "proj_dir": {
+      "var_param": "proj_dir"
+    },
+    "data": {
+      "var_param": "data"
+    },
+    "node_debug": {
+      "var_param": "node_debug"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "make_consistent": {
+      "var_param": "make_consistent"
+    },
+    "dset": {
+      "var_param": "dset"
+    },
+    "mapfile": {
+      "var_param": "mapfile"
+    }
+  }
+}

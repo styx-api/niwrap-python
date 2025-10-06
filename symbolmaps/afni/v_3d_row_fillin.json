@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_row_fillin",
+  "properties": {
+    "maxgap": {
+      "var_param": "maxgap"
+    },
+    "dir": {
+      "var_param": "dir_"
+    },
+    "binary": {
+      "var_param": "binary"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    }
+  }
+}

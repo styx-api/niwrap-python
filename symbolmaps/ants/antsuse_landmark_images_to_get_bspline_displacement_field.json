@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "antsuse_landmark_images_to_get_bspline_displacement_field",
+  "properties": {
+    "fixed_image_with_labeled_landmarks": {
+      "var_param": "fixed_image_with_labeled_landmarks"
+    },
+    "moving_image_with_labeled_landmarks": {
+      "var_param": "moving_image_with_labeled_landmarks"
+    },
+    "output_displacement_field": {
+      "var_param": "output_displacement_field"
+    },
+    "mesh_size": {
+      "var_param": "mesh_size"
+    },
+    "number_of_levels": {
+      "var_param": "number_of_levels"
+    },
+    "order": {
+      "var_param": "order"
+    },
+    "enforce_stationary_boundaries": {
+      "var_param": "enforce_stationary_boundaries"
+    },
+    "landmark_weights": {
+      "var_param": "landmark_weights"
+    }
+  }
+}

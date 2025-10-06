@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "metric_false_correlation",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric_in": {
+      "var_param": "metric_in"
+    },
+    "3d_dist": {
+      "var_param": "v_3d_dist"
+    },
+    "geo_outer": {
+      "var_param": "geo_outer"
+    },
+    "geo_inner": {
+      "var_param": "geo_inner"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "opt_roi_roi_metric": {
+      "var_param": "opt_roi_roi_metric"
+    },
+    "opt_dump_text_text_out": {
+      "var_param": "opt_dump_text_text_out"
+    }
+  }
+}

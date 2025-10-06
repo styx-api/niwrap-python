@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "first_roi_slicesdir",
+  "properties": {
+    "input_t1_images": {
+      "var_param": "input_t1_images"
+    },
+    "input_label_images": {
+      "var_param": "input_label_images"
+    }
+  }
+}

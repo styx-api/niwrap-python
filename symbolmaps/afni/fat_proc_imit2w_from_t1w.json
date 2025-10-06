@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_imit2w_from_t1w",
+  "properties": {
+    "t1_file": {
+      "var_param": "t1_file"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "ss_blur_fwhm": {
+      "var_param": "ss_blur_fwhm"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "no_qc_view": {
+      "var_param": "no_qc_view"
+    },
+    "qc_prefix": {
+      "var_param": "qc_prefix"
+    }
+  }
+}

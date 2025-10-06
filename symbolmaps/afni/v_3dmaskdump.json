@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3dmaskdump",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "mask_range": {
+      "var_param": "mask_range"
+    },
+    "output_index": {
+      "var_param": "output_index"
+    },
+    "output_noijk": {
+      "var_param": "output_noijk"
+    },
+    "output_xyz": {
+      "var_param": "output_xyz"
+    },
+    "output_filename": {
+      "var_param": "output_filename"
+    },
+    "calc_mask_opts": {
+      "var_param": "calc_mask_opts"
+    },
+    "xbox_coords": {
+      "var_param": "xbox_coords"
+    },
+    "dbox_coords": {
+      "var_param": "dbox_coords"
+    },
+    "nbox_coords": {
+      "var_param": "nbox_coords"
+    },
+    "ibox_coords": {
+      "var_param": "ibox_coords"
+    },
+    "xball_coords": {
+      "var_param": "xball_coords"
+    },
+    "dball_coords": {
+      "var_param": "dball_coords"
+    },
+    "nball_coords": {
+      "var_param": "nball_coords"
+    },
+    "nozero_output": {
+      "var_param": "nozero_output"
+    },
+    "random_voxels": {
+      "var_param": "random_voxels"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "output_niml": {
+      "var_param": "output_niml"
+    },
+    "quiet_mode": {
+      "var_param": "quiet_mode"
+    }
+  }
+}

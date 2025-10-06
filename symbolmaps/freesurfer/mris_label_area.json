@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mris_label_area",
+  "properties": {
+    "pct_flag": {
+      "var_param": "pct_flag"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "brain_vol": {
+      "var_param": "brain_vol"
+    },
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surf_name": {
+      "var_param": "surf_name"
+    },
+    "annot_name": {
+      "var_param": "annot_name"
+    },
+    "labels": {
+      "var_param": "labels"
+    }
+  }
+}

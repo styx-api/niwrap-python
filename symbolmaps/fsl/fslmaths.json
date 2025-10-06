@@ -1,0 +1,317 @@
+{
+  "fn_root_make_params_and_execute": "fslmaths",
+  "properties": {
+    "datatype_internal": {
+      "var_param": "datatype_internal"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "operations": {
+      "var_param": "operations",
+      "fn_struct_make_params": "fslmaths_operation_params",
+      "properties": {
+        "add": {
+          "var_param": "add"
+        },
+        "sub": {
+          "var_param": "sub"
+        },
+        "mul": {
+          "var_param": "mul"
+        },
+        "div": {
+          "var_param": "div"
+        },
+        "rem": {
+          "var_param": "rem"
+        },
+        "mas": {
+          "var_param": "mas"
+        },
+        "thr": {
+          "var_param": "thr"
+        },
+        "thrp": {
+          "var_param": "thrp"
+        },
+        "thrP": {
+          "var_param": "thr_p"
+        },
+        "uthr": {
+          "var_param": "uthr"
+        },
+        "uthrp": {
+          "var_param": "uthrp"
+        },
+        "uthrP": {
+          "var_param": "uthr_p"
+        },
+        "max": {
+          "var_param": "max_"
+        },
+        "min": {
+          "var_param": "min_"
+        },
+        "seed": {
+          "var_param": "seed"
+        },
+        "restart": {
+          "var_param": "restart"
+        },
+        "save": {
+          "var_param": "save"
+        },
+        "exp": {
+          "var_param": "exp"
+        },
+        "log": {
+          "var_param": "log"
+        },
+        "sin": {
+          "var_param": "sin"
+        },
+        "cos": {
+          "var_param": "cos"
+        },
+        "tan": {
+          "var_param": "tan"
+        },
+        "asin": {
+          "var_param": "asin"
+        },
+        "acos": {
+          "var_param": "acos"
+        },
+        "atan": {
+          "var_param": "atan"
+        },
+        "sqr": {
+          "var_param": "sqr"
+        },
+        "sqrt": {
+          "var_param": "sqrt"
+        },
+        "recip": {
+          "var_param": "recip"
+        },
+        "abs": {
+          "var_param": "abs_"
+        },
+        "bin": {
+          "var_param": "bin_"
+        },
+        "binv": {
+          "var_param": "binv"
+        },
+        "fillh": {
+          "var_param": "fillh"
+        },
+        "fillh26": {
+          "var_param": "fillh26"
+        },
+        "index": {
+          "var_param": "index"
+        },
+        "grid": {
+          "var_param": "grid"
+        },
+        "edge": {
+          "var_param": "edge"
+        },
+        "tfce": {
+          "var_param": "tfce"
+        },
+        "tfceS": {
+          "var_param": "tfce_s"
+        },
+        "nan": {
+          "var_param": "nan"
+        },
+        "nanm": {
+          "var_param": "nanm"
+        },
+        "rand": {
+          "var_param": "rand"
+        },
+        "randn": {
+          "var_param": "randn"
+        },
+        "inm": {
+          "var_param": "inm"
+        },
+        "ing": {
+          "var_param": "ing"
+        },
+        "range": {
+          "var_param": "range_"
+        },
+        "tensor_decomp": {
+          "var_param": "tensor_decomp"
+        },
+        "kernel_3D": {
+          "var_param": "kernel_3_d"
+        },
+        "kernel_2D": {
+          "var_param": "kernel_2_d"
+        },
+        "kernel_box": {
+          "var_param": "kernel_box"
+        },
+        "kernel_boxv": {
+          "var_param": "kernel_boxv"
+        },
+        "kernel_boxv3": {
+          "var_param": "kernel_boxv3"
+        },
+        "kernel_gauss": {
+          "var_param": "kernel_gauss"
+        },
+        "kernel_sphere": {
+          "var_param": "kernel_sphere"
+        },
+        "kernel_file": {
+          "var_param": "kernel_file"
+        },
+        "dilM": {
+          "var_param": "dil_m"
+        },
+        "dilD": {
+          "var_param": "dil_d"
+        },
+        "dilF": {
+          "var_param": "dil_f"
+        },
+        "dilall": {
+          "var_param": "dilall"
+        },
+        "ero": {
+          "var_param": "ero"
+        },
+        "eroF": {
+          "var_param": "ero_f"
+        },
+        "fmedian": {
+          "var_param": "fmedian"
+        },
+        "fmean": {
+          "var_param": "fmean"
+        },
+        "fmeanu": {
+          "var_param": "fmeanu"
+        },
+        "s": {
+          "var_param": "s"
+        },
+        "subsamp2": {
+          "var_param": "subsamp2"
+        },
+        "subsamp2offc": {
+          "var_param": "subsamp2offc"
+        },
+        "Tmean": {
+          "var_param": "tmean"
+        },
+        "Xmean": {
+          "var_param": "xmean"
+        },
+        "Ymean": {
+          "var_param": "ymean"
+        },
+        "Zmean": {
+          "var_param": "zmean"
+        },
+        "Tstd": {
+          "var_param": "tstd"
+        },
+        "Xstd": {
+          "var_param": "xstd"
+        },
+        "Ystd": {
+          "var_param": "ystd"
+        },
+        "Zstd": {
+          "var_param": "zstd"
+        },
+        "Tmax": {
+          "var_param": "tmax"
+        },
+        "Xmax": {
+          "var_param": "xmax"
+        },
+        "Ymax": {
+          "var_param": "ymax"
+        },
+        "Zmax": {
+          "var_param": "zmax"
+        },
+        "Tmaxn": {
+          "var_param": "tmaxn"
+        },
+        "Xmaxn": {
+          "var_param": "xmaxn"
+        },
+        "Ymaxn": {
+          "var_param": "ymaxn"
+        },
+        "Zmaxn": {
+          "var_param": "zmaxn"
+        },
+        "Tmin": {
+          "var_param": "tmin"
+        },
+        "Xmin": {
+          "var_param": "xmin"
+        },
+        "Ymin": {
+          "var_param": "ymin"
+        },
+        "Zmin": {
+          "var_param": "zmin"
+        },
+        "Tmedian": {
+          "var_param": "tmedian"
+        },
+        "Xmedian": {
+          "var_param": "xmedian"
+        },
+        "Ymedian": {
+          "var_param": "ymedian"
+        },
+        "Zmedian": {
+          "var_param": "zmedian"
+        },
+        "Tperc": {
+          "var_param": "tperc"
+        },
+        "Xperc": {
+          "var_param": "xperc"
+        },
+        "Yperc": {
+          "var_param": "yperc"
+        },
+        "Zperc": {
+          "var_param": "zperc"
+        },
+        "Tar1": {
+          "var_param": "tar1"
+        },
+        "roi": {
+          "var_param": "roi"
+        },
+        "bptf": {
+          "var_param": "bptf"
+        },
+        "roc": {
+          "var_param": "roc"
+        }
+      }
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "output_datatype": {
+      "var_param": "output_datatype"
+    }
+  }
+}

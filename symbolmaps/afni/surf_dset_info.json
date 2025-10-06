@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "surf_dset_info",
+  "properties": {
+    "input_dsets": {
+      "var_param": "input_dsets"
+    },
+    "debug_level": {
+      "var_param": "debug_level"
+    },
+    "novolreg": {
+      "var_param": "novolreg"
+    },
+    "noxform": {
+      "var_param": "noxform"
+    },
+    "setenv": {
+      "var_param": "setenv"
+    },
+    "trace": {
+      "var_param": "trace_"
+    },
+    "extreme_trace": {
+      "var_param": "extreme_trace"
+    },
+    "nomall": {
+      "var_param": "nomall"
+    },
+    "yesmall": {
+      "var_param": "yesmall"
+    },
+    "mini_help": {
+      "var_param": "mini_help"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "extreme_help": {
+      "var_param": "extreme_help"
+    },
+    "help_view": {
+      "var_param": "help_view"
+    },
+    "help_web": {
+      "var_param": "help_web"
+    },
+    "help_find": {
+      "var_param": "help_find"
+    },
+    "help_raw": {
+      "var_param": "help_raw"
+    },
+    "help_spx": {
+      "var_param": "help_spx"
+    },
+    "help_aspx": {
+      "var_param": "help_aspx"
+    },
+    "all_opts": {
+      "var_param": "all_opts"
+    }
+  }
+}

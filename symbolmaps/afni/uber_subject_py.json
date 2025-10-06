@@ -1,0 +1,134 @@
+{
+  "fn_root_make_params_and_execute": "uber_subject_py",
+  "properties": {
+    "qt_opts": {
+      "var_param": "qt_opts"
+    },
+    "svar": {
+      "var_param": "svar"
+    },
+    "cvar": {
+      "var_param": "cvar"
+    },
+    "no_gui": {
+      "var_param": "no_gui"
+    },
+    "print_ap_command": {
+      "var_param": "print_ap_command"
+    },
+    "save_ap_command": {
+      "var_param": "save_ap_command"
+    },
+    "exec_ap_command": {
+      "var_param": "exec_ap_command"
+    },
+    "exec_proc_script": {
+      "var_param": "exec_proc_script"
+    },
+    "align_cost": {
+      "var_param": "align_cost"
+    },
+    "align_giant_move": {
+      "var_param": "align_giant_move"
+    },
+    "align_opts_aea": {
+      "var_param": "align_opts_aea"
+    },
+    "anal_domain": {
+      "var_param": "anal_domain"
+    },
+    "anal_type": {
+      "var_param": "anal_type"
+    },
+    "anat": {
+      "var_param": "anat"
+    },
+    "anat_has_skull": {
+      "var_param": "anat_has_skull"
+    },
+    "blocks": {
+      "var_param": "blocks"
+    },
+    "blur_size": {
+      "var_param": "blur_size"
+    },
+    "epi": {
+      "var_param": "epi"
+    },
+    "epi_wildcard": {
+      "var_param": "epi_wildcard"
+    },
+    "gid": {
+      "var_param": "gid"
+    },
+    "gltsym": {
+      "var_param": "gltsym"
+    },
+    "gltsym_label": {
+      "var_param": "gltsym_label"
+    },
+    "motion_limit": {
+      "var_param": "motion_limit"
+    },
+    "outlier_limit": {
+      "var_param": "outlier_limit"
+    },
+    "regress_GOFORIT": {
+      "var_param": "regress_goforit"
+    },
+    "regress_bandpass": {
+      "var_param": "regress_bandpass"
+    },
+    "regress_jobs": {
+      "var_param": "regress_jobs"
+    },
+    "regress_mot_deriv": {
+      "var_param": "regress_mot_deriv"
+    },
+    "regress_opts_3dD": {
+      "var_param": "regress_opts_3d_d"
+    },
+    "reml_exec": {
+      "var_param": "reml_exec"
+    },
+    "run_clustsim": {
+      "var_param": "run_clustsim"
+    },
+    "sid": {
+      "var_param": "sid"
+    },
+    "stim": {
+      "var_param": "stim"
+    },
+    "stim_basis": {
+      "var_param": "stim_basis"
+    },
+    "stim_label": {
+      "var_param": "stim_label"
+    },
+    "stim_type": {
+      "var_param": "stim_type"
+    },
+    "stim_wildcard": {
+      "var_param": "stim_wildcard"
+    },
+    "tcat_nfirst": {
+      "var_param": "tcat_nfirst"
+    },
+    "tlrc_base": {
+      "var_param": "tlrc_base"
+    },
+    "tlrc_ok_maxite": {
+      "var_param": "tlrc_ok_maxite"
+    },
+    "tlrc_opts_at": {
+      "var_param": "tlrc_opts_at"
+    },
+    "volreg_base": {
+      "var_param": "volreg_base"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

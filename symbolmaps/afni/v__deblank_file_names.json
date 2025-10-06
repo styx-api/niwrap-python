@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__deblank_file_names",
+  "properties": {
+    "move": {
+      "var_param": "move"
+    },
+    "nobrac": {
+      "var_param": "nobrac"
+    },
+    "demo_set": {
+      "var_param": "demo_set"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "files": {
+      "var_param": "files"
+    }
+  }
+}

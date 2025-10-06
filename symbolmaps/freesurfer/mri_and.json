@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "mri_and",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

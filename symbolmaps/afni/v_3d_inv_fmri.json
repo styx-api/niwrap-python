@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_inv_fmri",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "activation_map": {
+      "var_param": "activation_map"
+    },
+    "map_weight": {
+      "var_param": "map_weight"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "baseline_file": {
+      "var_param": "baseline_file"
+    },
+    "polynom_order": {
+      "var_param": "polynom_order"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "smooth_fir": {
+      "var_param": "smooth_fir"
+    },
+    "smooth_median": {
+      "var_param": "smooth_median"
+    }
+  }
+}

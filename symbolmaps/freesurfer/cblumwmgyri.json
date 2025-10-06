@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "cblumwmgyri",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "source_seg": {
+      "var_param": "source_seg"
+    },
+    "n_erodes_dilates": {
+      "var_param": "n_erodes_dilates"
+    },
+    "out_seg": {
+      "var_param": "out_seg"
+    },
+    "no_segstats": {
+      "var_param": "no_segstats"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    }
+  }
+}

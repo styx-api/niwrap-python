@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "fsdcmdecompress",
+  "properties": {
+    "indcmfile": {
+      "var_param": "indcmfile"
+    },
+    "outdcmfile": {
+      "var_param": "outdcmfile"
+    },
+    "dcmtk": {
+      "var_param": "dcmtk"
+    },
+    "jpeg": {
+      "var_param": "jpeg"
+    },
+    "rle": {
+      "var_param": "rle"
+    },
+    "gdcm": {
+      "var_param": "gdcm"
+    }
+  }
+}

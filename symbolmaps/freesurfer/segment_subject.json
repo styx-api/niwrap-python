@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "segment_subject",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_xfm": {
+      "var_param": "output_xfm"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

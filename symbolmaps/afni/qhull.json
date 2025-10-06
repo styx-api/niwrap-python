@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "qhull",
+  "properties": {
+    "input_coords": {
+      "var_param": "input_coords"
+    },
+    "delaunay": {
+      "var_param": "delaunay"
+    },
+    "furthest_delaunay": {
+      "var_param": "furthest_delaunay"
+    },
+    "voronoi": {
+      "var_param": "voronoi"
+    },
+    "furthest_voronoi": {
+      "var_param": "furthest_voronoi"
+    },
+    "halfspace_intersection": {
+      "var_param": "halfspace_intersection"
+    },
+    "triangulated_output": {
+      "var_param": "triangulated_output"
+    },
+    "joggled_input": {
+      "var_param": "joggled_input"
+    },
+    "verify": {
+      "var_param": "verify"
+    },
+    "summary": {
+      "var_param": "summary"
+    },
+    "vertices_incident": {
+      "var_param": "vertices_incident"
+    },
+    "normals": {
+      "var_param": "normals"
+    },
+    "vertex_coordinates": {
+      "var_param": "vertex_coordinates"
+    },
+    "halfspace_intersections": {
+      "var_param": "halfspace_intersections"
+    },
+    "extreme_points": {
+      "var_param": "extreme_points"
+    },
+    "total_area_volume": {
+      "var_param": "total_area_volume"
+    },
+    "off_format": {
+      "var_param": "off_format"
+    },
+    "geomview_output": {
+      "var_param": "geomview_output"
+    },
+    "mathematica_output": {
+      "var_param": "mathematica_output"
+    },
+    "print_facets": {
+      "var_param": "print_facets"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

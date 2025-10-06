@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "rsfgen",
+  "properties": {
+    "length": {
+      "var_param": "length"
+    },
+    "num_experimental_conditions": {
+      "var_param": "num_experimental_conditions"
+    },
+    "block_length": {
+      "var_param": "block_length"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "suppress_output_flag": {
+      "var_param": "suppress_output_flag"
+    },
+    "single_file_flag": {
+      "var_param": "single_file_flag"
+    },
+    "single_column_flag": {
+      "var_param": "single_column_flag"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "num_reps": {
+      "var_param": "num_reps"
+    },
+    "permutation_seed": {
+      "var_param": "permutation_seed"
+    },
+    "markov_file": {
+      "var_param": "markov_file"
+    },
+    "prob_zero": {
+      "var_param": "prob_zero"
+    },
+    "input_table": {
+      "var_param": "input_table"
+    }
+  }
+}

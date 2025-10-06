@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "cifti_transpose",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_mem_limit_limit_gb": {
+      "var_param": "opt_mem_limit_limit_gb"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "check_subject",
+  "properties": {
+    "subject_dir": {
+      "var_param": "subject_dir"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "morph_only_subject",
+  "properties": {
+    "placeholder_input": {
+      "var_param": "placeholder_input"
+    }
+  }
+}

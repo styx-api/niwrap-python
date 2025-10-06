@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_local_bistat",
+  "properties": {
+    "nbhd": {
+      "var_param": "nbhd"
+    },
+    "stats": {
+      "var_param": "stats"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "weight": {
+      "var_param": "weight"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "histpow": {
+      "var_param": "histpow"
+    },
+    "histbin": {
+      "var_param": "histbin"
+    },
+    "hclip1": {
+      "var_param": "hclip1"
+    },
+    "hclip2": {
+      "var_param": "hclip2"
+    },
+    "dataset1": {
+      "var_param": "dataset1"
+    },
+    "dataset2": {
+      "var_param": "dataset2"
+    }
+  }
+}

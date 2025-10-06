@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_1dcat",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "tsv_output": {
+      "var_param": "tsv_output"
+    },
+    "csv_output": {
+      "var_param": "csv_output"
+    },
+    "nonconst_output": {
+      "var_param": "nonconst_output"
+    },
+    "nonfixed_output": {
+      "var_param": "nonfixed_output"
+    },
+    "number_format": {
+      "var_param": "number_format"
+    },
+    "stack_output": {
+      "var_param": "stack_output"
+    },
+    "column_row_selection": {
+      "var_param": "column_row_selection"
+    },
+    "ok_empty": {
+      "var_param": "ok_empty"
+    }
+  }
+}

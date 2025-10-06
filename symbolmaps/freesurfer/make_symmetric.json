@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "make_symmetric",
+  "properties": {
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "transform_map": {
+      "var_param": "transform_map"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "get_label_thickness",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

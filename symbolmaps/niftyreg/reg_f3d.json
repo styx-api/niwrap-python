@@ -1,0 +1,125 @@
+{
+  "fn_root_make_params_and_execute": "reg_f3d",
+  "properties": {
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "floating_image": {
+      "var_param": "floating_image"
+    },
+    "affine_transform": {
+      "var_param": "affine_transform"
+    },
+    "flirt_affine_transform": {
+      "var_param": "flirt_affine_transform"
+    },
+    "control_point_grid_input": {
+      "var_param": "control_point_grid_input"
+    },
+    "output_cpp": {
+      "var_param": "output_cpp"
+    },
+    "output_resampled_image": {
+      "var_param": "output_resampled_image"
+    },
+    "reference_mask": {
+      "var_param": "reference_mask"
+    },
+    "smooth_reference": {
+      "var_param": "smooth_reference"
+    },
+    "smooth_floating": {
+      "var_param": "smooth_floating"
+    },
+    "num_bins_joint_histogram": {
+      "var_param": "num_bins_joint_histogram"
+    },
+    "num_bins_floating_joint_histogram": {
+      "var_param": "num_bins_floating_joint_histogram"
+    },
+    "lower_threshold_reference": {
+      "var_param": "lower_threshold_reference"
+    },
+    "upper_threshold_reference": {
+      "var_param": "upper_threshold_reference"
+    },
+    "lower_threshold_floating": {
+      "var_param": "lower_threshold_floating"
+    },
+    "upper_threshold_floating": {
+      "var_param": "upper_threshold_floating"
+    },
+    "spacing_x": {
+      "var_param": "spacing_x"
+    },
+    "spacing_y": {
+      "var_param": "spacing_y"
+    },
+    "spacing_z": {
+      "var_param": "spacing_z"
+    },
+    "bending_energy": {
+      "var_param": "bending_energy"
+    },
+    "linear_elasticity": {
+      "var_param": "linear_elasticity"
+    },
+    "l2_norm_displacement": {
+      "var_param": "l2_norm_displacement"
+    },
+    "jacobian_determinant": {
+      "var_param": "jacobian_determinant"
+    },
+    "no_approx_jl": {
+      "var_param": "no_approx_jl"
+    },
+    "no_conj": {
+      "var_param": "no_conj"
+    },
+    "ssd": {
+      "var_param": "ssd"
+    },
+    "kld": {
+      "var_param": "kld"
+    },
+    "amc": {
+      "var_param": "amc"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "num_levels": {
+      "var_param": "num_levels"
+    },
+    "first_levels": {
+      "var_param": "first_levels"
+    },
+    "no_pyramid": {
+      "var_param": "no_pyramid"
+    },
+    "symmetric": {
+      "var_param": "symmetric"
+    },
+    "floating_mask": {
+      "var_param": "floating_mask"
+    },
+    "inverse_consistency": {
+      "var_param": "inverse_consistency"
+    },
+    "velocity_field": {
+      "var_param": "velocity_field"
+    },
+    "composition_steps": {
+      "var_param": "composition_steps"
+    },
+    "smooth_gradient": {
+      "var_param": "smooth_gradient"
+    },
+    "padding_value": {
+      "var_param": "padding_value"
+    },
+    "verbose_off": {
+      "var_param": "verbose_off"
+    }
+  }
+}

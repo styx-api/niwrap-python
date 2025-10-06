@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "xfmrot",
+  "properties": {
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "input_vector_file": {
+      "var_param": "input_vector_file"
+    },
+    "output_vector_file": {
+      "var_param": "output_vector_file"
+    }
+  }
+}

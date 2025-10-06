@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "examine_xmat",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "interactive": {
+      "var_param": "interactive"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "cprefix": {
+      "var_param": "cprefix"
+    },
+    "pprefix": {
+      "var_param": "pprefix"
+    },
+    "select": {
+      "var_param": "select_"
+    },
+    "msg_trace": {
+      "var_param": "msg_trace"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

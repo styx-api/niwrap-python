@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_re_ho",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "inset": {
+      "var_param": "inset"
+    },
+    "nneigh": {
+      "var_param": "nneigh"
+    },
+    "chi_sq": {
+      "var_param": "chi_sq"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "neigh_rad": {
+      "var_param": "neigh_rad"
+    },
+    "neigh_x": {
+      "var_param": "neigh_x"
+    },
+    "neigh_y": {
+      "var_param": "neigh_y"
+    },
+    "neigh_z": {
+      "var_param": "neigh_z"
+    },
+    "box_rad": {
+      "var_param": "box_rad"
+    },
+    "box_x": {
+      "var_param": "box_x"
+    },
+    "box_y": {
+      "var_param": "box_y"
+    },
+    "box_z": {
+      "var_param": "box_z"
+    },
+    "in_rois": {
+      "var_param": "in_rois"
+    }
+  }
+}

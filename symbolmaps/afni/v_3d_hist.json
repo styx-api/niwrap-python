@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_hist",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "dind_subbrick": {
+      "var_param": "dind_subbrick"
+    },
+    "mask_dset": {
+      "var_param": "mask_dset"
+    },
+    "mask_range": {
+      "var_param": "mask_range"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    },
+    "hist_file": {
+      "var_param": "hist_file"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "equalized": {
+      "var_param": "equalized"
+    },
+    "nbin": {
+      "var_param": "nbin"
+    },
+    "min": {
+      "var_param": "min_"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "binwidth": {
+      "var_param": "binwidth"
+    },
+    "ignore_out": {
+      "var_param": "ignore_out"
+    },
+    "range_hist": {
+      "var_param": "range_hist"
+    },
+    "showhist": {
+      "var_param": "showhist"
+    },
+    "at_val": {
+      "var_param": "at_val"
+    },
+    "get_params": {
+      "var_param": "get_params"
+    },
+    "voxvol": {
+      "var_param": "voxvol"
+    },
+    "val_at": {
+      "var_param": "val_at"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

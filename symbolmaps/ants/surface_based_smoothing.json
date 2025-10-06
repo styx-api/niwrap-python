@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "surface_based_smoothing",
+  "properties": {
+    "image_to_smooth": {
+      "var_param": "image_to_smooth"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    },
+    "surface_image": {
+      "var_param": "surface_image"
+    },
+    "outname": {
+      "var_param": "outname"
+    },
+    "num_repeats": {
+      "var_param": "num_repeats"
+    }
+  }
+}

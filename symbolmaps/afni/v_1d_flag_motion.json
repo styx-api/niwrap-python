@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_flag_motion",
+  "properties": {
+    "input_motion_file": {
+      "var_param": "input_motion_file"
+    },
+    "max_translation": {
+      "var_param": "max_translation"
+    },
+    "max_rotation": {
+      "var_param": "max_rotation"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "listsubj",
+  "properties": {
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "cross": {
+      "var_param": "cross"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "long": {
+      "var_param": "long"
+    },
+    "done": {
+      "var_param": "done"
+    },
+    "error": {
+      "var_param": "error"
+    },
+    "running": {
+      "var_param": "running"
+    },
+    "full_path": {
+      "var_param": "full_path"
+    },
+    "count": {
+      "var_param": "count"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "mri_average",
+  "properties": {
+    "input_volumes": {
+      "var_param": "input_volumes"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "rigid_alignment": {
+      "var_param": "rigid_alignment"
+    },
+    "read_from_file": {
+      "var_param": "read_from_file"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "tol": {
+      "var_param": "tol"
+    },
+    "conform": {
+      "var_param": "conform"
+    },
+    "noconform": {
+      "var_param": "noconform"
+    },
+    "reduce": {
+      "var_param": "reduce"
+    },
+    "sinc_interpolation": {
+      "var_param": "sinc_interpolation"
+    },
+    "trilinear": {
+      "var_param": "trilinear"
+    },
+    "window": {
+      "var_param": "window"
+    },
+    "snapshots": {
+      "var_param": "snapshots"
+    },
+    "translation": {
+      "var_param": "translation"
+    },
+    "rotation": {
+      "var_param": "rotation"
+    },
+    "momentum": {
+      "var_param": "momentum"
+    },
+    "rms": {
+      "var_param": "rms"
+    },
+    "rms_alt": {
+      "var_param": "rms_alt"
+    },
+    "percent": {
+      "var_param": "percent"
+    },
+    "binarize": {
+      "var_param": "binarize"
+    },
+    "absolute": {
+      "var_param": "absolute"
+    }
+  }
+}

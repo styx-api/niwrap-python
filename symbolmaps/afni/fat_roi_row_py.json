@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fat_roi_row_py",
+  "properties": {
+    "roi": {
+      "var_param": "roi"
+    },
+    "matrix_files": {
+      "var_param": "matrix_files"
+    },
+    "list_file": {
+      "var_param": "list_file"
+    },
+    "extern_labs_no": {
+      "var_param": "extern_labs_no"
+    }
+  }
+}

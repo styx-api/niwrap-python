@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "afni_",
+  "properties": {
+    "session_directories": {
+      "var_param": "session_directories"
+    },
+    "bysub": {
+      "var_param": "bysub"
+    },
+    "all_dsets": {
+      "var_param": "all_dsets"
+    },
+    "purge": {
+      "var_param": "purge"
+    },
+    "posfunc": {
+      "var_param": "posfunc"
+    },
+    "recursive": {
+      "var_param": "recursive"
+    },
+    "no1D": {
+      "var_param": "no1_d"
+    },
+    "nocsv": {
+      "var_param": "nocsv"
+    },
+    "notsv": {
+      "var_param": "notsv"
+    },
+    "unique": {
+      "var_param": "unique"
+    },
+    "orient": {
+      "var_param": "orient"
+    },
+    "noplugins": {
+      "var_param": "noplugins"
+    },
+    "seehidden": {
+      "var_param": "seehidden"
+    },
+    "allow_all_plugins": {
+      "var_param": "allow_all_plugins"
+    },
+    "yesplugouts": {
+      "var_param": "yesplugouts"
+    },
+    "debug_plugouts": {
+      "var_param": "debug_plugouts"
+    },
+    "noplugouts": {
+      "var_param": "noplugouts"
+    },
+    "skip_afnirc": {
+      "var_param": "skip_afnirc"
+    },
+    "layout": {
+      "var_param": "layout"
+    },
+    "niml": {
+      "var_param": "niml"
+    },
+    "np": {
+      "var_param": "np"
+    },
+    "npq": {
+      "var_param": "npq"
+    },
+    "npb": {
+      "var_param": "npb"
+    },
+    "com": {
+      "var_param": "com"
+    },
+    "comsep": {
+      "var_param": "comsep"
+    }
+  }
+}

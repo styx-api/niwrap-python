@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "dwi2adc",
+  "properties": {
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "dwi2adc_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "dwi2adc_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

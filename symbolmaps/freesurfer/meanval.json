@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "meanval",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "avgwf_flag": {
+      "var_param": "avgwf_flag"
+    }
+  }
+}

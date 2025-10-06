@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__clust_exp_run_shiny",
+  "properties": {
+    "directory": {
+      "var_param": "directory"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

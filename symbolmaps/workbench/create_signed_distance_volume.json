@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "create_signed_distance_volume",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "refspace": {
+      "var_param": "refspace"
+    },
+    "outvol": {
+      "var_param": "outvol"
+    },
+    "opt_roi_out_roi_vol": {
+      "var_param": "opt_roi_out_roi_vol"
+    },
+    "opt_fill_value_value": {
+      "var_param": "opt_fill_value_value"
+    },
+    "opt_exact_limit_dist": {
+      "var_param": "opt_exact_limit_dist"
+    },
+    "opt_approx_limit_dist": {
+      "var_param": "opt_approx_limit_dist"
+    },
+    "opt_approx_neighborhood_num": {
+      "var_param": "opt_approx_neighborhood_num"
+    },
+    "opt_winding_method": {
+      "var_param": "opt_winding_method"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "dmri_trk2trk",
+  "properties": {
+    "in_trk": {
+      "var_param": "in_trk"
+    },
+    "in_asc": {
+      "var_param": "in_asc"
+    },
+    "in_dir": {
+      "var_param": "in_dir"
+    },
+    "out_trk": {
+      "var_param": "out_trk"
+    },
+    "out_asc": {
+      "var_param": "out_asc"
+    },
+    "out_vol": {
+      "var_param": "out_vol"
+    },
+    "out_dir": {
+      "var_param": "out_dir"
+    },
+    "in_ref": {
+      "var_param": "in_ref"
+    },
+    "out_ref": {
+      "var_param": "out_ref"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "regnl_file": {
+      "var_param": "regnl_file"
+    },
+    "inv_flag": {
+      "var_param": "inv_flag"
+    },
+    "fill_flag": {
+      "var_param": "fill_flag"
+    },
+    "overlay": {
+      "var_param": "overlay"
+    },
+    "inclusion_mask": {
+      "var_param": "inclusion_mask"
+    },
+    "exclusion_mask": {
+      "var_param": "exclusion_mask"
+    },
+    "terminal_inclusion_mask": {
+      "var_param": "terminal_inclusion_mask"
+    },
+    "terminal_exclusion_mask": {
+      "var_param": "terminal_exclusion_mask"
+    },
+    "length_min": {
+      "var_param": "length_min"
+    },
+    "length_max": {
+      "var_param": "length_max"
+    },
+    "mean_flag": {
+      "var_param": "mean_flag"
+    },
+    "nearmean_flag": {
+      "var_param": "nearmean_flag"
+    },
+    "nth_streamline": {
+      "var_param": "nth_streamline"
+    },
+    "every_nth_streamline": {
+      "var_param": "every_nth_streamline"
+    },
+    "smooth_flag": {
+      "var_param": "smooth_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "check_opts": {
+      "var_param": "check_opts"
+    }
+  }
+}

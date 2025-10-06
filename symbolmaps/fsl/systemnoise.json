@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "systemnoise",
+  "properties": {
+    "input_signal": {
+      "var_param": "input_signal"
+    },
+    "output_signal": {
+      "var_param": "output_signal"
+    },
+    "noise_standard_deviation": {
+      "var_param": "noise_standard_deviation"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_track_id",
+  "properties": {
+    "mode": {
+      "var_param": "mode"
+    },
+    "netrois": {
+      "var_param": "netrois"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dti_in": {
+      "var_param": "dti_in"
+    },
+    "dti_list": {
+      "var_param": "dti_list"
+    },
+    "dti_extra": {
+      "var_param": "dti_extra"
+    },
+    "dti_search_no": {
+      "var_param": "dti_search_no"
+    },
+    "hardi_gfa": {
+      "var_param": "hardi_gfa"
+    },
+    "hardi_dirs": {
+      "var_param": "hardi_dirs"
+    },
+    "hardi_pars": {
+      "var_param": "hardi_pars"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "thru_mask": {
+      "var_param": "thru_mask"
+    },
+    "targ_surf_stop": {
+      "var_param": "targ_surf_stop"
+    },
+    "targ_surf_twixt": {
+      "var_param": "targ_surf_twixt"
+    },
+    "logic": {
+      "var_param": "logic"
+    },
+    "mini_num": {
+      "var_param": "mini_num"
+    },
+    "uncert": {
+      "var_param": "uncert"
+    },
+    "unc_min_fa": {
+      "var_param": "unc_min_fa"
+    },
+    "unc_min_v": {
+      "var_param": "unc_min_v"
+    },
+    "algopt": {
+      "var_param": "algopt"
+    },
+    "alg_thresh_fa": {
+      "var_param": "alg_thresh_fa"
+    },
+    "alg_thresh_ang": {
+      "var_param": "alg_thresh_ang"
+    },
+    "alg_thresh_len": {
+      "var_param": "alg_thresh_len"
+    },
+    "alg_nseed_x": {
+      "var_param": "alg_nseed_x"
+    },
+    "alg_nseed_y": {
+      "var_param": "alg_nseed_y"
+    },
+    "alg_nseed_z": {
+      "var_param": "alg_nseed_z"
+    },
+    "alg_thresh_frac": {
+      "var_param": "alg_thresh_frac"
+    },
+    "alg_nseed_vox": {
+      "var_param": "alg_nseed_vox"
+    },
+    "alg_nmonte": {
+      "var_param": "alg_nmonte"
+    },
+    "extra_tr_par": {
+      "var_param": "extra_tr_par"
+    },
+    "uncut_at_rois": {
+      "var_param": "uncut_at_rois"
+    },
+    "dump_rois": {
+      "var_param": "dump_rois"
+    },
+    "dump_no_labtab": {
+      "var_param": "dump_no_labtab"
+    },
+    "dump_lab_consec": {
+      "var_param": "dump_lab_consec"
+    },
+    "posteriori": {
+      "var_param": "posteriori"
+    },
+    "rec_orig": {
+      "var_param": "rec_orig"
+    },
+    "do_trk_out": {
+      "var_param": "do_trk_out"
+    },
+    "trk_opp_orient": {
+      "var_param": "trk_opp_orient"
+    },
+    "nifti": {
+      "var_param": "nifti"
+    },
+    "no_indipair_out": {
+      "var_param": "no_indipair_out"
+    },
+    "write_rois": {
+      "var_param": "write_rois"
+    },
+    "write_opts": {
+      "var_param": "write_opts"
+    },
+    "pair_out_power": {
+      "var_param": "pair_out_power"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

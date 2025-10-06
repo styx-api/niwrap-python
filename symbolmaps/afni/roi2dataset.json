@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "roi2dataset",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "input_rois": {
+      "var_param": "input_rois"
+    },
+    "keep_separate": {
+      "var_param": "keep_separate"
+    },
+    "nodelist": {
+      "var_param": "nodelist"
+    },
+    "nodelist_nodups": {
+      "var_param": "nodelist_nodups"
+    },
+    "nodelist_with_roival": {
+      "var_param": "nodelist_with_roival"
+    },
+    "label_dset": {
+      "var_param": "label_dset"
+    },
+    "output_format": {
+      "var_param": "output_format"
+    },
+    "domain_parent_id": {
+      "var_param": "domain_parent_id"
+    },
+    "pad_to_node": {
+      "var_param": "pad_to_node"
+    },
+    "pad_label": {
+      "var_param": "pad_label"
+    }
+  }
+}

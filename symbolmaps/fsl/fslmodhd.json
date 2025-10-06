@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "fslmodhd",
+  "properties": {
+    "image": {
+      "var_param": "image"
+    },
+    "keyword": {
+      "var_param": "keyword_"
+    },
+    "value": {
+      "var_param": "value"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "cifti_cross_correlation",
+  "properties": {
+    "cifti_a": {
+      "var_param": "cifti_a"
+    },
+    "cifti_b": {
+      "var_param": "cifti_b"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_weights_weight_file": {
+      "var_param": "opt_weights_weight_file"
+    },
+    "opt_fisher_z": {
+      "var_param": "opt_fisher_z"
+    },
+    "opt_mem_limit_limit_gb": {
+      "var_param": "opt_mem_limit_limit_gb"
+    }
+  }
+}

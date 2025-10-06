@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "v__simulate_motion",
+  "properties": {
+    "epi": {
+      "var_param": "epi"
+    },
+    "motion_file": {
+      "var_param": "motion_file"
+    },
+    "epi_timing": {
+      "var_param": "epi_timing"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "save_workdir": {
+      "var_param": "save_workdir"
+    },
+    "test": {
+      "var_param": "test"
+    },
+    "verb_level": {
+      "var_param": "verb_level"
+    },
+    "vr_base": {
+      "var_param": "vr_base"
+    },
+    "warp_method": {
+      "var_param": "warp_method"
+    },
+    "warp_1D": {
+      "var_param": "warp_1_d"
+    },
+    "warp_master": {
+      "var_param": "warp_master"
+    },
+    "wsinc5": {
+      "var_param": "wsinc5"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "todo": {
+      "var_param": "todo"
+    },
+    "ver": {
+      "var_param": "ver"
+    }
+  }
+}

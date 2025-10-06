@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_ball_match",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "radius": {
+      "var_param": "radius"
+    },
+    "dataset_option": {
+      "var_param": "dataset_option"
+    },
+    "ball_radius": {
+      "var_param": "ball_radius"
+    },
+    "spheroid_axes": {
+      "var_param": "spheroid_axes"
+    }
+  }
+}

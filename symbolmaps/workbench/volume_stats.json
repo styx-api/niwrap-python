@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "volume_stats",
+  "properties": {
+    "volume_in": {
+      "var_param": "volume_in"
+    },
+    "opt_reduce_operation": {
+      "var_param": "opt_reduce_operation"
+    },
+    "opt_percentile_percent": {
+      "var_param": "opt_percentile_percent"
+    },
+    "opt_subvolume_subvolume": {
+      "var_param": "opt_subvolume_subvolume"
+    },
+    "roi": {
+      "var_param": "roi",
+      "fn_struct_make_params": "volume_stats_roi_params",
+      "properties": {
+        "roi_volume": {
+          "var_param": "roi_volume"
+        },
+        "opt_match_maps": {
+          "var_param": "opt_match_maps"
+        }
+      }
+    },
+    "opt_show_map_name": {
+      "var_param": "opt_show_map_name"
+    }
+  }
+}

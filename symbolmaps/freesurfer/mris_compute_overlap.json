@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mris_compute_overlap",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "annotation": {
+      "var_param": "annotation"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "percentage": {
+      "var_param": "percentage"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "brain_volume": {
+      "var_param": "brain_volume"
+    }
+  }
+}

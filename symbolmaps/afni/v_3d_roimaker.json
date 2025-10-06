@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_roimaker",
+  "properties": {
+    "inset": {
+      "var_param": "inset"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "refset": {
+      "var_param": "refset"
+    },
+    "volthr": {
+      "var_param": "volthr"
+    },
+    "only_some_top": {
+      "var_param": "only_some_top"
+    },
+    "only_conn_top": {
+      "var_param": "only_conn_top"
+    },
+    "inflate": {
+      "var_param": "inflate"
+    },
+    "trim_off_wm": {
+      "var_param": "trim_off_wm"
+    },
+    "wm_skel": {
+      "var_param": "wm_skel"
+    },
+    "skel_thr": {
+      "var_param": "skel_thr"
+    },
+    "skel_stop": {
+      "var_param": "skel_stop"
+    },
+    "skel_stop_strict": {
+      "var_param": "skel_stop_strict"
+    },
+    "csf_skel": {
+      "var_param": "csf_skel"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "neigh_upto_vert": {
+      "var_param": "neigh_upto_vert"
+    },
+    "nifti": {
+      "var_param": "nifti"
+    },
+    "preinfl_inset": {
+      "var_param": "preinfl_inset"
+    },
+    "preinfl_inflate": {
+      "var_param": "preinfl_inflate"
+    },
+    "dump_no_labtab": {
+      "var_param": "dump_no_labtab"
+    }
+  }
+}

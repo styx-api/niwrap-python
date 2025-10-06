@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__show_dynamic_range",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

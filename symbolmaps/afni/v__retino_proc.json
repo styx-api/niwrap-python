@@ -1,0 +1,125 @@
+{
+  "fn_root_make_params_and_execute": "v__retino_proc",
+  "properties": {
+    "ccw": {
+      "var_param": "ccw"
+    },
+    "clw": {
+      "var_param": "clw"
+    },
+    "exp": {
+      "var_param": "exp"
+    },
+    "con": {
+      "var_param": "con"
+    },
+    "epi_ref": {
+      "var_param": "epi_ref"
+    },
+    "epi_anat_ref": {
+      "var_param": "epi_anat_ref"
+    },
+    "anat_vol": {
+      "var_param": "anat_vol"
+    },
+    "anat_vol_epi": {
+      "var_param": "anat_vol_epi"
+    },
+    "surf_vol": {
+      "var_param": "surf_vol"
+    },
+    "surf_vol_epi": {
+      "var_param": "surf_vol_epi"
+    },
+    "phase": {
+      "var_param": "phase"
+    },
+    "delay": {
+      "var_param": "delay"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "period_ecc": {
+      "var_param": "period_ecc"
+    },
+    "period_pol": {
+      "var_param": "period_pol"
+    },
+    "pre_ecc": {
+      "var_param": "pre_ecc"
+    },
+    "pre_pol": {
+      "var_param": "pre_pol"
+    },
+    "on_ecc": {
+      "var_param": "on_ecc"
+    },
+    "on_pol": {
+      "var_param": "on_pol"
+    },
+    "var_on_ecc": {
+      "var_param": "var_on_ecc"
+    },
+    "var_on_pol": {
+      "var_param": "var_on_pol"
+    },
+    "nwedges": {
+      "var_param": "nwedges"
+    },
+    "nrings": {
+      "var_param": "nrings"
+    },
+    "fwhm_pol": {
+      "var_param": "fwhm_pol"
+    },
+    "fwhm_ecc": {
+      "var_param": "fwhm_ecc"
+    },
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "no_tshift": {
+      "var_param": "no_tshift"
+    },
+    "spec_left": {
+      "var_param": "spec_left"
+    },
+    "spec_right": {
+      "var_param": "spec_right"
+    },
+    "dorts": {
+      "var_param": "dorts"
+    },
+    "ccw_orts": {
+      "var_param": "ccw_orts"
+    },
+    "clw_orts": {
+      "var_param": "clw_orts"
+    },
+    "exp_orts": {
+      "var_param": "exp_orts"
+    },
+    "con_orts": {
+      "var_param": "con_orts"
+    },
+    "sid": {
+      "var_param": "sid"
+    },
+    "out_dir": {
+      "var_param": "out_dir"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "echo_edu": {
+      "var_param": "echo_edu"
+    },
+    "a2e_opts": {
+      "var_param": "a2e_opts"
+    },
+    "aea_opts": {
+      "var_param": "aea_opts"
+    }
+  }
+}

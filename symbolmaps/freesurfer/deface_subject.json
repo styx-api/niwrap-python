@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "deface_subject",
+  "properties": {
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "volume_input": {
+      "var_param": "volume_input"
+    },
+    "volume_output": {
+      "var_param": "volume_output"
+    }
+  }
+}

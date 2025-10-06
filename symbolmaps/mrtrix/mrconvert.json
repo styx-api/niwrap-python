@@ -1,0 +1,176 @@
+{
+  "fn_root_make_params_and_execute": "mrconvert",
+  "properties": {
+    "coord": {
+      "var_param": "coord",
+      "fn_struct_make_params": "mrconvert_coord_params",
+      "properties": {
+        "axis": {
+          "var_param": "axis"
+        },
+        "selection": {
+          "var_param": "selection"
+        }
+      }
+    },
+    "vox": {
+      "var_param": "vox"
+    },
+    "axes": {
+      "var_param": "axes"
+    },
+    "scaling": {
+      "var_param": "scaling"
+    },
+    "json_import": {
+      "var_param": "json_import"
+    },
+    "json_export": {
+      "var_param": "json_export"
+    },
+    "clear_property": {
+      "var_param": "clear_property",
+      "fn_struct_make_params": "mrconvert_clear_property_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        }
+      }
+    },
+    "set_property": {
+      "var_param": "set_property",
+      "fn_struct_make_params": "mrconvert_set_property_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "append_property": {
+      "var_param": "append_property",
+      "fn_struct_make_params": "mrconvert_append_property_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "copy_properties": {
+      "var_param": "copy_properties"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "mrconvert_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "bvalue_scaling": {
+      "var_param": "bvalue_scaling"
+    },
+    "export_grad_mrtrix": {
+      "var_param": "export_grad_mrtrix"
+    },
+    "export_grad_fsl": {
+      "var_param": "export_grad_fsl",
+      "fn_struct_make_params": "mrconvert_export_grad_fsl_params",
+      "properties": {
+        "bvecs_path": {
+          "var_param": "bvecs_path"
+        },
+        "bvals_path": {
+          "var_param": "bvals_path"
+        }
+      }
+    },
+    "import_pe_table": {
+      "var_param": "import_pe_table"
+    },
+    "import_pe_eddy": {
+      "var_param": "import_pe_eddy",
+      "fn_struct_make_params": "mrconvert_import_pe_eddy_params",
+      "properties": {
+        "config": {
+          "var_param": "config"
+        },
+        "indices": {
+          "var_param": "indices"
+        }
+      }
+    },
+    "export_pe_table": {
+      "var_param": "export_pe_table"
+    },
+    "export_pe_eddy": {
+      "var_param": "export_pe_eddy",
+      "fn_struct_make_params": "mrconvert_export_pe_eddy_params",
+      "properties": {
+        "config": {
+          "var_param": "config"
+        },
+        "indices": {
+          "var_param": "indices"
+        }
+      }
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrconvert_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

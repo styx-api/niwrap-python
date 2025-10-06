@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v__align_centers",
+  "properties": {
+    "base": {
+      "var_param": "base"
+    },
+    "dset": {
+      "var_param": "dset"
+    },
+    "children": {
+      "var_param": "children"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "matrix_only": {
+      "var_param": "matrix_only"
+    },
+    "matrix_only_no_dset": {
+      "var_param": "matrix_only_no_dset"
+    },
+    "no_cp": {
+      "var_param": "no_cp"
+    },
+    "center_grid": {
+      "var_param": "center_grid"
+    },
+    "center_cm": {
+      "var_param": "center_cm"
+    },
+    "center_cm_no_amask": {
+      "var_param": "center_cm_no_amask"
+    },
+    "shift_xform": {
+      "var_param": "shift_xform"
+    },
+    "shift_xform_inv": {
+      "var_param": "shift_xform_inv"
+    }
+  }
+}

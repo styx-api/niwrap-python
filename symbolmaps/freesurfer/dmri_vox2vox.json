@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "dmri_vox2vox",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "input_directory": {
+      "var_param": "input_directory"
+    },
+    "output_files": {
+      "var_param": "output_files"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "input_reference": {
+      "var_param": "input_reference"
+    },
+    "output_reference": {
+      "var_param": "output_reference"
+    },
+    "affine_registration": {
+      "var_param": "affine_registration"
+    },
+    "nonlinear_registration": {
+      "var_param": "nonlinear_registration"
+    },
+    "inverse_nonlinear": {
+      "var_param": "inverse_nonlinear"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "check_options": {
+      "var_param": "check_options"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

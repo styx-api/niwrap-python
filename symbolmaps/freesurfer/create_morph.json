@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "create_morph",
+  "properties": {
+    "input_transforms": {
+      "var_param": "input_transforms"
+    },
+    "output_transform": {
+      "var_param": "output_transform"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "debug_coordinates": {
+      "var_param": "debug_coordinates"
+    }
+  }
+}

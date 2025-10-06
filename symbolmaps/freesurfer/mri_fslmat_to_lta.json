@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_fslmat_to_lta",
+  "properties": {
+    "src_vol": {
+      "var_param": "src_vol"
+    },
+    "target_vol": {
+      "var_param": "target_vol"
+    },
+    "fslmat_file": {
+      "var_param": "fslmat_file"
+    },
+    "lta_file": {
+      "var_param": "lta_file"
+    }
+  }
+}

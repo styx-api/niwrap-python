@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "imrotate",
+  "properties": {
+    "linear_interpolation": {
+      "var_param": "linear_interpolation"
+    },
+    "fourier_interpolation": {
+      "var_param": "fourier_interpolation"
+    },
+    "dx": {
+      "var_param": "dx"
+    },
+    "dy": {
+      "var_param": "dy"
+    },
+    "phi": {
+      "var_param": "phi"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    }
+  }
+}

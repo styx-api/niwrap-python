@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_cvs_check",
+  "properties": {
+    "mov_subjid": {
+      "var_param": "mov_subjid"
+    },
+    "template_subjid": {
+      "var_param": "template_subjid"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

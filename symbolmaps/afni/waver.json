@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "waver",
+  "properties": {
+    "wav": {
+      "var_param": "wav"
+    },
+    "gam": {
+      "var_param": "gam"
+    },
+    "expr": {
+      "var_param": "expr"
+    },
+    "file_opt": {
+      "var_param": "file_opt"
+    },
+    "delay_time": {
+      "var_param": "delay_time"
+    },
+    "rise_time": {
+      "var_param": "rise_time"
+    },
+    "fall_time": {
+      "var_param": "fall_time"
+    },
+    "undershoot": {
+      "var_param": "undershoot"
+    },
+    "restore_time": {
+      "var_param": "restore_time"
+    },
+    "gamb": {
+      "var_param": "gamb"
+    },
+    "gamc": {
+      "var_param": "gamc"
+    },
+    "gamd": {
+      "var_param": "gamd"
+    },
+    "peak": {
+      "var_param": "peak"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "xyout": {
+      "var_param": "xyout"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "inline_data": {
+      "var_param": "inline_data"
+    },
+    "tstim_data": {
+      "var_param": "tstim_data"
+    },
+    "when_data": {
+      "var_param": "when_data"
+    },
+    "numout": {
+      "var_param": "numout"
+    },
+    "ver_flag": {
+      "var_param": "ver_flag"
+    }
+  }
+}

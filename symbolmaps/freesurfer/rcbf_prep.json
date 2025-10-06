@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "rcbf_prep",
+  "properties": {
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "rcbfvol": {
+      "var_param": "rcbfvol"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "roitab": {
+      "var_param": "roitab"
+    },
+    "register": {
+      "var_param": "register"
+    },
+    "template": {
+      "var_param": "template"
+    }
+  }
+}

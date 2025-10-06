@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "v__chauffeur_afni",
+  "properties": {
+    "ulay": {
+      "var_param": "ulay"
+    },
+    "olay": {
+      "var_param": "olay"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mode_4D": {
+      "var_param": "mode_4_d"
+    },
+    "func_range": {
+      "var_param": "func_range"
+    },
+    "opacity": {
+      "var_param": "opacity"
+    },
+    "set_subbricks": {
+      "var_param": "set_subbricks"
+    },
+    "montx": {
+      "var_param": "montx"
+    },
+    "monty": {
+      "var_param": "monty"
+    },
+    "montgap": {
+      "var_param": "montgap"
+    },
+    "label_mode": {
+      "var_param": "label_mode"
+    },
+    "label_size": {
+      "var_param": "label_size"
+    },
+    "label_color": {
+      "var_param": "label_color"
+    },
+    "label_setback": {
+      "var_param": "label_setback"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "do_clean": {
+      "var_param": "do_clean"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "surf_patch",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "surf_A": {
+      "var_param": "surf_a"
+    },
+    "surf_B": {
+      "var_param": "surf_b"
+    },
+    "nodefile": {
+      "var_param": "nodefile"
+    },
+    "inode": {
+      "var_param": "inode"
+    },
+    "ilabel": {
+      "var_param": "ilabel"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "hits": {
+      "var_param": "hits"
+    },
+    "masklabel": {
+      "var_param": "masklabel"
+    },
+    "vol": {
+      "var_param": "vol"
+    },
+    "vol_only": {
+      "var_param": "vol_only"
+    },
+    "patch2surf": {
+      "var_param": "patch2surf"
+    },
+    "coord_gain": {
+      "var_param": "coord_gain"
+    },
+    "check_bowtie": {
+      "var_param": "check_bowtie"
+    },
+    "fix_bowtie": {
+      "var_param": "fix_bowtie"
+    },
+    "ok_bowtie": {
+      "var_param": "ok_bowtie"
+    },
+    "adjust_contour": {
+      "var_param": "adjust_contour"
+    },
+    "do_not_adjust_contour": {
+      "var_param": "do_not_adjust_contour"
+    },
+    "stitched_surface": {
+      "var_param": "stitched_surface"
+    },
+    "flip_orientation": {
+      "var_param": "flip_orientation"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

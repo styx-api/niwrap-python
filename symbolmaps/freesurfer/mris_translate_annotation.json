@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_translate_annotation",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "in_annot": {
+      "var_param": "in_annot"
+    },
+    "translation_file": {
+      "var_param": "translation_file"
+    },
+    "out_annot": {
+      "var_param": "out_annot"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "fat_mat_tableize_py",
+  "properties": {
+    "input_matrices": {
+      "var_param": "input_matrices"
+    },
+    "input_csv": {
+      "var_param": "input_csv"
+    },
+    "input_list": {
+      "var_param": "input_list"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "parameters": {
+      "var_param": "parameters"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "date": {
+      "var_param": "date"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "help_short": {
+      "var_param": "help_short"
+    },
+    "help_view": {
+      "var_param": "help_view"
+    }
+  }
+}

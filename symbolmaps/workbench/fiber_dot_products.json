@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "fiber_dot_products",
+  "properties": {
+    "white_surf": {
+      "var_param": "white_surf"
+    },
+    "fiber_file": {
+      "var_param": "fiber_file"
+    },
+    "max_dist": {
+      "var_param": "max_dist"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "dot_metric": {
+      "var_param": "dot_metric"
+    },
+    "f_metric": {
+      "var_param": "f_metric"
+    }
+  }
+}

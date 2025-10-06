@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "beta2sxa",
+  "properties": {
+    "beta_files": {
+      "var_param": "beta_files"
+    },
+    "number_of_conditions": {
+      "var_param": "number_of_conditions"
+    },
+    "number_of_per_subjects": {
+      "var_param": "number_of_per_subjects"
+    },
+    "sxa_output": {
+      "var_param": "sxa_output"
+    }
+  }
+}

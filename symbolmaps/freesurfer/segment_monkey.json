@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "segment_monkey",
+  "properties": {
+    "control_points": {
+      "var_param": "control_points"
+    }
+  }
+}

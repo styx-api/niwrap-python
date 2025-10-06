@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "lta_convert",
+  "properties": {
+    "in_lta": {
+      "var_param": "in_lta"
+    },
+    "in_fsl": {
+      "var_param": "in_fsl"
+    },
+    "in_mni": {
+      "var_param": "in_mni"
+    },
+    "in_reg": {
+      "var_param": "in_reg"
+    },
+    "in_niftyreg": {
+      "var_param": "in_niftyreg"
+    },
+    "in_itk": {
+      "var_param": "in_itk"
+    },
+    "in_vox": {
+      "var_param": "in_vox"
+    },
+    "out_lta": {
+      "var_param": "out_lta"
+    },
+    "out_fsl": {
+      "var_param": "out_fsl"
+    },
+    "out_mni": {
+      "var_param": "out_mni"
+    },
+    "out_reg": {
+      "var_param": "out_reg"
+    },
+    "out_niftyreg": {
+      "var_param": "out_niftyreg"
+    },
+    "out_itk": {
+      "var_param": "out_itk"
+    },
+    "out_vox": {
+      "var_param": "out_vox"
+    },
+    "invert": {
+      "var_param": "invert"
+    },
+    "ltavox2vox": {
+      "var_param": "ltavox2vox"
+    },
+    "ltatkreg": {
+      "var_param": "ltatkreg"
+    },
+    "src_geometry": {
+      "var_param": "src_geometry"
+    },
+    "trg_geometry": {
+      "var_param": "trg_geometry"
+    },
+    "trg_conform": {
+      "var_param": "trg_conform"
+    },
+    "subject_name": {
+      "var_param": "subject_name"
+    }
+  }
+}

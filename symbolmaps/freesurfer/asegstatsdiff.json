@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "asegstatsdiff",
+  "properties": {
+    "subject1": {
+      "var_param": "subject1"
+    },
+    "subject2": {
+      "var_param": "subject2"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    }
+  }
+}

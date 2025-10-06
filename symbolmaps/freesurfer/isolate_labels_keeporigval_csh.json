@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "isolate_labels_keeporigval_csh",
+  "properties": {
+    "vol": {
+      "var_param": "vol"
+    },
+    "outprefix": {
+      "var_param": "outprefix"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

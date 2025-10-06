@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_morphology",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "number_iter": {
+      "var_param": "number_iter"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "label_option": {
+      "var_param": "label_option"
+    }
+  }
+}

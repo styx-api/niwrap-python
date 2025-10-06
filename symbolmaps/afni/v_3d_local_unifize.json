@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_local_unifize",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "working_dir": {
+      "var_param": "working_dir"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "local_rad": {
+      "var_param": "local_rad"
+    },
+    "local_perc": {
+      "var_param": "local_perc"
+    },
+    "local_mask": {
+      "var_param": "local_mask"
+    },
+    "filter_thr": {
+      "var_param": "filter_thr"
+    }
+  }
+}

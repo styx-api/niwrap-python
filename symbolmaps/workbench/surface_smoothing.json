@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "surface_smoothing",
+  "properties": {
+    "surface_in": {
+      "var_param": "surface_in"
+    },
+    "smoothing_strength": {
+      "var_param": "smoothing_strength"
+    },
+    "smoothing_iterations": {
+      "var_param": "smoothing_iterations"
+    },
+    "surface_out": {
+      "var_param": "surface_out"
+    }
+  }
+}

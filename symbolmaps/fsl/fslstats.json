@@ -1,0 +1,89 @@
+{
+  "fn_root_make_params_and_execute": "fslstats",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "index_mask": {
+      "var_param": "index_mask"
+    },
+    "lower_threshold": {
+      "var_param": "lower_threshold"
+    },
+    "upper_threshold": {
+      "var_param": "upper_threshold"
+    },
+    "robust_intensity_flag": {
+      "var_param": "robust_intensity_flag"
+    },
+    "minmax_intensity_flag": {
+      "var_param": "minmax_intensity_flag"
+    },
+    "voxels_volume_flag": {
+      "var_param": "voxels_volume_flag"
+    },
+    "nonzero_voxels_volume_flag": {
+      "var_param": "nonzero_voxels_volume_flag"
+    },
+    "mean_flag": {
+      "var_param": "mean_flag"
+    },
+    "nonzero_mean_flag": {
+      "var_param": "nonzero_mean_flag"
+    },
+    "std_dev_flag": {
+      "var_param": "std_dev_flag"
+    },
+    "nonzero_std_dev_flag": {
+      "var_param": "nonzero_std_dev_flag"
+    },
+    "smallest_roi_flag": {
+      "var_param": "smallest_roi_flag"
+    },
+    "max_coords_flag": {
+      "var_param": "max_coords_flag"
+    },
+    "min_coords_flag": {
+      "var_param": "min_coords_flag"
+    },
+    "cog_mm_flag": {
+      "var_param": "cog_mm_flag"
+    },
+    "cog_voxel_flag": {
+      "var_param": "cog_voxel_flag"
+    },
+    "percentile": {
+      "var_param": "percentile"
+    },
+    "nonzero_percentile": {
+      "var_param": "nonzero_percentile"
+    },
+    "absolute_values_flag": {
+      "var_param": "absolute_values_flag"
+    },
+    "nan_as_zero_flag": {
+      "var_param": "nan_as_zero_flag"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "difference_image": {
+      "var_param": "difference_image"
+    },
+    "hist_bins": {
+      "var_param": "hist_bins"
+    },
+    "hist_bins_min_max": {
+      "var_param": "hist_bins_min_max"
+    },
+    "timeseries_flag": {
+      "var_param": "timeseries_flag"
+    },
+    "mean_entropy_flag": {
+      "var_param": "mean_entropy_flag"
+    },
+    "nonzero_mean_entropy_flag": {
+      "var_param": "nonzero_mean_entropy_flag"
+    }
+  }
+}

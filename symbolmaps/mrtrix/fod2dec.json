@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "fod2dec",
+  "properties": {
+    "mask": {
+      "var_param": "mask"
+    },
+    "contrast": {
+      "var_param": "contrast"
+    },
+    "lum": {
+      "var_param": "lum"
+    },
+    "lum_coefs": {
+      "var_param": "lum_coefs"
+    },
+    "lum_gamma": {
+      "var_param": "lum_gamma"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "no_weight": {
+      "var_param": "no_weight"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "fod2dec_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

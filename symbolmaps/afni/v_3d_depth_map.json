@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_depth_map",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "dist_squared": {
+      "var_param": "dist_squared"
+    },
+    "ignore_voxdims": {
+      "var_param": "ignore_voxdims"
+    },
+    "rimify": {
+      "var_param": "rimify"
+    },
+    "zeros_are_zero": {
+      "var_param": "zeros_are_zero"
+    },
+    "zeros_are_neg": {
+      "var_param": "zeros_are_neg"
+    },
+    "nz_are_neg": {
+      "var_param": "nz_are_neg"
+    },
+    "bounds_are_not_zero": {
+      "var_param": "bounds_are_not_zero"
+    },
+    "only2D": {
+      "var_param": "only2_d"
+    },
+    "binary_only": {
+      "var_param": "binary_only"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

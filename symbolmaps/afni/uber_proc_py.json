@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "uber_proc_py",
+  "properties": {
+    "results_dir": {
+      "var_param": "results_dir"
+    }
+  }
+}

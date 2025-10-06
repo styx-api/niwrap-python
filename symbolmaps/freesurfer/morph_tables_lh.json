@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "morph_tables_lh",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "some_flag": {
+      "var_param": "some_flag"
+    }
+  }
+}

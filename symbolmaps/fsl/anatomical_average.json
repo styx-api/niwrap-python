@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "anatomical_average",
+  "properties": {
+    "output_basename": {
+      "var_param": "output_basename"
+    },
+    "input_images": {
+      "var_param": "input_images"
+    },
+    "standard_image": {
+      "var_param": "standard_image"
+    },
+    "standard_brain_mask": {
+      "var_param": "standard_brain_mask"
+    },
+    "no_crop_flag": {
+      "var_param": "no_crop_flag"
+    },
+    "work_dir": {
+      "var_param": "work_dir"
+    },
+    "brainsize": {
+      "var_param": "brainsize"
+    },
+    "noclean_flag": {
+      "var_param": "noclean_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    }
+  }
+}

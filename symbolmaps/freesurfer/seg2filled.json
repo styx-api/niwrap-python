@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "seg2filled",
+  "properties": {
+    "seg_file": {
+      "var_param": "seg_file"
+    },
+    "norm_file": {
+      "var_param": "norm_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "ndil": {
+      "var_param": "ndil"
+    },
+    "cavity_flag": {
+      "var_param": "cavity_flag"
+    },
+    "surf_name": {
+      "var_param": "surf_name"
+    },
+    "surf_dir": {
+      "var_param": "surf_dir"
+    }
+  }
+}

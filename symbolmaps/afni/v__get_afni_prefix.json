@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__get_afni_prefix",
+  "properties": {
+    "name": {
+      "var_param": "name"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    }
+  }
+}

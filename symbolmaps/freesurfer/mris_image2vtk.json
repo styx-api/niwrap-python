@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_image2vtk",
+  "properties": {
+    "input_filename": {
+      "var_param": "input_filename"
+    },
+    "output_filename": {
+      "var_param": "output_filename"
+    },
+    "lower_threshold": {
+      "var_param": "lower_threshold"
+    },
+    "upper_threshold": {
+      "var_param": "upper_threshold"
+    },
+    "vtk_smoothing_iters": {
+      "var_param": "vtk_smoothing_iters"
+    },
+    "image_smoothing_size": {
+      "var_param": "image_smoothing_size"
+    },
+    "reduction_percent": {
+      "var_param": "reduction_percent"
+    }
+  }
+}

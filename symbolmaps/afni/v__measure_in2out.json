@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v__measure_in2out",
+  "properties": {
+    "maskset": {
+      "var_param": "maskset"
+    },
+    "surfset": {
+      "var_param": "surfset"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "resample": {
+      "var_param": "resample"
+    },
+    "increment": {
+      "var_param": "increment"
+    },
+    "surfsmooth": {
+      "var_param": "surfsmooth"
+    },
+    "maxthick": {
+      "var_param": "maxthick"
+    },
+    "depthsearch": {
+      "var_param": "depthsearch"
+    },
+    "maskinoutvals": {
+      "var_param": "maskinoutvals"
+    },
+    "keep_temp_files": {
+      "var_param": "keep_temp_files"
+    },
+    "surfsmooth_method": {
+      "var_param": "surfsmooth_method"
+    },
+    "fs_cort_dir": {
+      "var_param": "fs_cort_dir"
+    }
+  }
+}

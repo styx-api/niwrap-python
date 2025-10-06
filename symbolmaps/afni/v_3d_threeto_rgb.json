@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_threeto_rgb",
+  "properties": {
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "scale_factor": {
+      "var_param": "scale_factor"
+    },
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "fim": {
+      "var_param": "fim"
+    },
+    "anat": {
+      "var_param": "anat"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "input_dataset2": {
+      "var_param": "input_dataset2"
+    },
+    "input_dataset3": {
+      "var_param": "input_dataset3"
+    }
+  }
+}

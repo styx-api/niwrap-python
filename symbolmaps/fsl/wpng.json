@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "wpng",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "gamma": {
+      "var_param": "gamma"
+    },
+    "bgcolor": {
+      "var_param": "bgcolor"
+    },
+    "text_flag": {
+      "var_param": "text_flag"
+    },
+    "time_flag": {
+      "var_param": "time_flag"
+    },
+    "interlace_flag": {
+      "var_param": "interlace_flag"
+    }
+  }
+}

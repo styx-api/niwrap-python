@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_exvivo_strip",
+  "properties": {
+    "invol": {
+      "var_param": "invol"
+    },
+    "outvol": {
+      "var_param": "outvol"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "pred": {
+      "var_param": "pred"
+    },
+    "norm": {
+      "var_param": "norm"
+    },
+    "fv": {
+      "var_param": "fv"
+    },
+    "uthresh": {
+      "var_param": "uthresh"
+    },
+    "border": {
+      "var_param": "border"
+    },
+    "multichannel": {
+      "var_param": "multichannel"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "wts": {
+      "var_param": "wts"
+    },
+    "gpu": {
+      "var_param": "gpu"
+    }
+  }
+}

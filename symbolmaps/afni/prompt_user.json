@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "prompt_user",
+  "properties": {
+    "pause_message": {
+      "var_param": "pause_message"
+    },
+    "timeout": {
+      "var_param": "timeout"
+    },
+    "timeout_alias": {
+      "var_param": "timeout_alias"
+    }
+  }
+}

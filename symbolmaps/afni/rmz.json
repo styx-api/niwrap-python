@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "rmz",
+  "properties": {
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "hash_flag": {
+      "var_param": "hash_flag"
+    },
+    "keep_flag": {
+      "var_param": "keep_flag"
+    },
+    "filenames": {
+      "var_param": "filenames"
+    }
+  }
+}

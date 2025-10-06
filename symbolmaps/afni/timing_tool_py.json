@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "timing_tool_py",
+  "properties": {
+    "timing_file": {
+      "var_param": "timing_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "run_length": {
+      "var_param": "run_length"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "extend_file": {
+      "var_param": "extend_file"
+    },
+    "sort": {
+      "var_param": "sort"
+    },
+    "scale_data": {
+      "var_param": "scale_data"
+    },
+    "shift_to_run_offset": {
+      "var_param": "shift_to_run_offset"
+    },
+    "timing_to_1D_file": {
+      "var_param": "timing_to_1_d_file"
+    },
+    "stim_duration": {
+      "var_param": "stim_duration"
+    },
+    "multi_timing_files": {
+      "var_param": "multi_timing_files"
+    },
+    "multi_show_isi_stats": {
+      "var_param": "multi_show_isi_stats"
+    },
+    "multi_show_timing": {
+      "var_param": "multi_show_timing"
+    },
+    "show_timing": {
+      "var_param": "show_timing"
+    },
+    "multi_stim_duration": {
+      "var_param": "multi_stim_duration"
+    },
+    "round_times_frac": {
+      "var_param": "round_times_frac"
+    },
+    "truncate_times": {
+      "var_param": "truncate_times"
+    },
+    "multi_timing_event_list": {
+      "var_param": "multi_timing_event_list"
+    }
+  }
+}

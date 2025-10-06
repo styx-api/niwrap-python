@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_cor2label",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "label_id": {
+      "var_param": "label_id"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "volume_file": {
+      "var_param": "volume_file"
+    },
+    "surface_overlay": {
+      "var_param": "surface_overlay"
+    },
+    "surface_path": {
+      "var_param": "surface_path"
+    },
+    "optimize": {
+      "var_param": "optimize"
+    },
+    "remove_holes_islands": {
+      "var_param": "remove_holes_islands"
+    },
+    "dilate": {
+      "var_param": "dilate"
+    },
+    "erode": {
+      "var_param": "erode"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "fn_root_make_params_and_execute": "mrregister",
+  "properties": {
+    "type": {
+      "var_param": "type_"
+    },
+    "transformed": {
+      "var_param": "transformed",
+      "fn_struct_make_params": "mrregister_transformed_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        }
+      }
+    },
+    "transformed_midway": {
+      "var_param": "transformed_midway",
+      "fn_struct_make_params": "mrregister_transformed_midway_params",
+      "properties": {
+        "image1_transformed": {
+          "var_param": "image1_transformed"
+        },
+        "image2_transformed": {
+          "var_param": "image2_transformed"
+        }
+      }
+    },
+    "mask1": {
+      "var_param": "mask1"
+    },
+    "mask2": {
+      "var_param": "mask2"
+    },
+    "nan": {
+      "var_param": "nan"
+    },
+    "rigid": {
+      "var_param": "rigid"
+    },
+    "rigid_1tomidway": {
+      "var_param": "rigid_1tomidway"
+    },
+    "rigid_2tomidway": {
+      "var_param": "rigid_2tomidway"
+    },
+    "rigid_init_translation": {
+      "var_param": "rigid_init_translation"
+    },
+    "rigid_init_rotation": {
+      "var_param": "rigid_init_rotation"
+    },
+    "rigid_init_matrix": {
+      "var_param": "rigid_init_matrix"
+    },
+    "rigid_scale": {
+      "var_param": "rigid_scale"
+    },
+    "rigid_niter": {
+      "var_param": "rigid_niter"
+    },
+    "rigid_metric": {
+      "var_param": "rigid_metric"
+    },
+    "rigid_metric_diff_estimator": {
+      "var_param": "rigid_metric_diff_estimator"
+    },
+    "rigid_lmax": {
+      "var_param": "rigid_lmax"
+    },
+    "rigid_log": {
+      "var_param": "rigid_log"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
+    "affine_1tomidway": {
+      "var_param": "affine_1tomidway"
+    },
+    "affine_2tomidway": {
+      "var_param": "affine_2tomidway"
+    },
+    "affine_init_translation": {
+      "var_param": "affine_init_translation"
+    },
+    "affine_init_rotation": {
+      "var_param": "affine_init_rotation"
+    },
+    "affine_init_matrix": {
+      "var_param": "affine_init_matrix"
+    },
+    "affine_scale": {
+      "var_param": "affine_scale"
+    },
+    "affine_niter": {
+      "var_param": "affine_niter"
+    },
+    "affine_metric": {
+      "var_param": "affine_metric"
+    },
+    "affine_metric_diff_estimator": {
+      "var_param": "affine_metric_diff_estimator"
+    },
+    "affine_lmax": {
+      "var_param": "affine_lmax"
+    },
+    "affine_log": {
+      "var_param": "affine_log"
+    },
+    "init_translation_unmasked1": {
+      "var_param": "init_translation_unmasked1"
+    },
+    "init_translation_unmasked2": {
+      "var_param": "init_translation_unmasked2"
+    },
+    "init_rotation_unmasked1": {
+      "var_param": "init_rotation_unmasked1"
+    },
+    "init_rotation_unmasked2": {
+      "var_param": "init_rotation_unmasked2"
+    },
+    "init_rotation_search_angles": {
+      "var_param": "init_rotation_search_angles"
+    },
+    "init_rotation_search_scale": {
+      "var_param": "init_rotation_search_scale"
+    },
+    "init_rotation_search_directions": {
+      "var_param": "init_rotation_search_directions"
+    },
+    "init_rotation_search_run_global": {
+      "var_param": "init_rotation_search_run_global"
+    },
+    "init_rotation_search_global_iterations": {
+      "var_param": "init_rotation_search_global_iterations"
+    },
+    "linstage_iterations": {
+      "var_param": "linstage_iterations"
+    },
+    "linstage_optimiser_first": {
+      "var_param": "linstage_optimiser_first"
+    },
+    "linstage_optimiser_last": {
+      "var_param": "linstage_optimiser_last"
+    },
+    "linstage_optimiser_default": {
+      "var_param": "linstage_optimiser_default"
+    },
+    "linstage_diagnostics_prefix": {
+      "var_param": "linstage_diagnostics_prefix"
+    },
+    "nl_warp": {
+      "var_param": "nl_warp",
+      "fn_struct_make_params": "mrregister_nl_warp_params",
+      "properties": {
+        "warp1": {
+          "var_param": "warp1"
+        },
+        "warp2": {
+          "var_param": "warp2"
+        }
+      }
+    },
+    "nl_warp_full": {
+      "var_param": "nl_warp_full"
+    },
+    "nl_init": {
+      "var_param": "nl_init"
+    },
+    "nl_scale": {
+      "var_param": "nl_scale"
+    },
+    "nl_niter": {
+      "var_param": "nl_niter"
+    },
+    "nl_update_smooth": {
+      "var_param": "nl_update_smooth"
+    },
+    "nl_disp_smooth": {
+      "var_param": "nl_disp_smooth"
+    },
+    "nl_grad_step": {
+      "var_param": "nl_grad_step"
+    },
+    "nl_lmax": {
+      "var_param": "nl_lmax"
+    },
+    "diagnostics_image": {
+      "var_param": "diagnostics_image"
+    },
+    "directions": {
+      "var_param": "directions"
+    },
+    "noreorientation": {
+      "var_param": "noreorientation"
+    },
+    "mc_weights": {
+      "var_param": "mc_weights"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrregister_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "image1_image2": {
+      "var_param": "image1_image2"
+    },
+    "contrast1_contrast2": {
+      "var_param": "contrast1_contrast2"
+    }
+  }
+}

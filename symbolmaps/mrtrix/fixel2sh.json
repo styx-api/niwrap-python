@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "fixel2sh",
+  "properties": {
+    "lmax": {
+      "var_param": "lmax"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "fixel2sh_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "fixel_in": {
+      "var_param": "fixel_in"
+    },
+    "sh_out": {
+      "var_param": "sh_out"
+    }
+  }
+}

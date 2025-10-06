@@ -1,0 +1,149 @@
+{
+  "fn_root_make_params_and_execute": "mri_concat",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "file_list": {
+      "var_param": "file_list"
+    },
+    "paired_sum": {
+      "var_param": "paired_sum"
+    },
+    "paired_avg": {
+      "var_param": "paired_avg"
+    },
+    "paired_diff": {
+      "var_param": "paired_diff"
+    },
+    "paired_diff_norm": {
+      "var_param": "paired_diff_norm"
+    },
+    "paired_diff_norm1": {
+      "var_param": "paired_diff_norm1"
+    },
+    "paired_diff_norm2": {
+      "var_param": "paired_diff_norm2"
+    },
+    "norm_mean": {
+      "var_param": "norm_mean"
+    },
+    "norm1": {
+      "var_param": "norm1"
+    },
+    "matrix": {
+      "var_param": "matrix"
+    },
+    "frame_weight": {
+      "var_param": "frame_weight"
+    },
+    "norm_weight": {
+      "var_param": "norm_weight"
+    },
+    "group_mean": {
+      "var_param": "group_mean"
+    },
+    "combine": {
+      "var_param": "combine"
+    },
+    "keep_datatype": {
+      "var_param": "keep_datatype"
+    },
+    "abs": {
+      "var_param": "abs_"
+    },
+    "pos": {
+      "var_param": "pos"
+    },
+    "neg": {
+      "var_param": "neg"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "median": {
+      "var_param": "median"
+    },
+    "mean_div_n": {
+      "var_param": "mean_div_n"
+    },
+    "sum": {
+      "var_param": "sum_"
+    },
+    "var": {
+      "var_param": "var"
+    },
+    "std": {
+      "var_param": "std"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "max_index": {
+      "var_param": "max_index"
+    },
+    "max_index_prune": {
+      "var_param": "max_index_prune"
+    },
+    "max_index_add": {
+      "var_param": "max_index_add"
+    },
+    "min": {
+      "var_param": "min_"
+    },
+    "replicate_times": {
+      "var_param": "replicate_times"
+    },
+    "fnorm": {
+      "var_param": "fnorm"
+    },
+    "conjunction": {
+      "var_param": "conjunction"
+    },
+    "vote": {
+      "var_param": "vote"
+    },
+    "sort": {
+      "var_param": "sort"
+    },
+    "temporal_ar1": {
+      "var_param": "temporal_ar1"
+    },
+    "prune": {
+      "var_param": "prune"
+    },
+    "pca": {
+      "var_param": "pca"
+    },
+    "pca_mask": {
+      "var_param": "pca_mask"
+    },
+    "scm": {
+      "var_param": "scm"
+    },
+    "zconcat": {
+      "var_param": "zconcat"
+    },
+    "max_bonfcor": {
+      "var_param": "max_bonfcor"
+    },
+    "multiply": {
+      "var_param": "multiply"
+    },
+    "add": {
+      "var_param": "add"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "rms": {
+      "var_param": "rms"
+    },
+    "no_check": {
+      "var_param": "no_check"
+    }
+  }
+}

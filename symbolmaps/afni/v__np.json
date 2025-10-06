@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__np",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_nwarp_xyz",
+  "properties": {
+    "xyzfile": {
+      "var_param": "xyzfile"
+    },
+    "warp_spec": {
+      "var_param": "warp_spec"
+    },
+    "iwarp": {
+      "var_param": "iwarp"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

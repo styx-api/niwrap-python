@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "serial_helper",
+  "properties": {
+    "serial_port": {
+      "var_param": "serial_port"
+    },
+    "sock_num": {
+      "var_param": "sock_num"
+    },
+    "mp_max": {
+      "var_param": "mp_max"
+    },
+    "mp_min": {
+      "var_param": "mp_min"
+    },
+    "num_extra": {
+      "var_param": "num_extra"
+    },
+    "disp_all": {
+      "var_param": "disp_all"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "show_times": {
+      "var_param": "show_times"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "no_serial": {
+      "var_param": "no_serial"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

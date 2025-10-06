@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mri_func2sph",
+  "properties": {
+    "instem": {
+      "var_param": "instem"
+    },
+    "outstem": {
+      "var_param": "outstem"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "fvitdir": {
+      "var_param": "fvitdir"
+    },
+    "hole_filling_iters": {
+      "var_param": "hole_filling_iters"
+    },
+    "icosahedron_size": {
+      "var_param": "icosahedron_size"
+    },
+    "input_type": {
+      "var_param": "input_type"
+    },
+    "umask": {
+      "var_param": "umask"
+    }
+  }
+}

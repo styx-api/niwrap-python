@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "volume_tfce",
+  "properties": {
+    "volume_in": {
+      "var_param": "volume_in"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "presmooth": {
+      "var_param": "presmooth",
+      "fn_struct_make_params": "volume_tfce_presmooth_params",
+      "properties": {
+        "kernel": {
+          "var_param": "kernel"
+        },
+        "opt_fwhm": {
+          "var_param": "opt_fwhm"
+        }
+      }
+    },
+    "opt_roi_roi_volume": {
+      "var_param": "opt_roi_roi_volume"
+    },
+    "parameters": {
+      "var_param": "parameters",
+      "fn_struct_make_params": "volume_tfce_parameters_params",
+      "properties": {
+        "e": {
+          "var_param": "e"
+        },
+        "h": {
+          "var_param": "h"
+        }
+      }
+    },
+    "opt_subvolume_subvolume": {
+      "var_param": "opt_subvolume_subvolume"
+    }
+  }
+}

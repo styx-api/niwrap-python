@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "eddy_squad",
+  "properties": {
+    "grouping": {
+      "var_param": "grouping"
+    },
+    "group_db": {
+      "var_param": "group_db"
+    },
+    "update": {
+      "var_param": "update_"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "subject_list": {
+      "var_param": "subject_list"
+    }
+  }
+}

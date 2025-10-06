@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mris_sample_label",
+  "properties": {
+    "input_label_file": {
+      "var_param": "input_label_file"
+    },
+    "input_surface_file": {
+      "var_param": "input_surface_file"
+    },
+    "output_label_file": {
+      "var_param": "output_label_file"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "pta",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "model_formula": {
+      "var_param": "model_formula"
+    },
+    "vt_formulation": {
+      "var_param": "vt_formulation"
+    },
+    "prediction_table": {
+      "var_param": "prediction_table"
+    },
+    "verbosity_level": {
+      "var_param": "verbosity_level"
+    },
+    "response_var": {
+      "var_param": "response_var"
+    },
+    "dbg_args": {
+      "var_param": "dbg_args"
+    }
+  }
+}

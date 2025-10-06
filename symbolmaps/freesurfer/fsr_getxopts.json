@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "fsr_getxopts",
+  "properties": {
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

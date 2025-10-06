@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "apsearch",
+  "properties": {
+    "search_term": {
+      "var_param": "search_term"
+    },
+    "file_output": {
+      "var_param": "file_output"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

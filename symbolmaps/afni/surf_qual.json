@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "surf_qual",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "surface_a": {
+      "var_param": "surface_a"
+    },
+    "sphere_flag": {
+      "var_param": "sphere_flag"
+    },
+    "summary_flag": {
+      "var_param": "summary_flag"
+    },
+    "self_intersect_flag": {
+      "var_param": "self_intersect_flag"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

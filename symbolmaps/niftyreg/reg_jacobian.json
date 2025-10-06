@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "reg_jacobian",
+  "properties": {
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "deformation_field": {
+      "var_param": "deformation_field"
+    },
+    "control_point_lattice": {
+      "var_param": "control_point_lattice"
+    },
+    "output_jacobian": {
+      "var_param": "output_jacobian"
+    },
+    "output_jacobian_matrix": {
+      "var_param": "output_jacobian_matrix"
+    },
+    "output_log_jacobian": {
+      "var_param": "output_log_jacobian"
+    },
+    "affine_matrix": {
+      "var_param": "affine_matrix"
+    }
+  }
+}

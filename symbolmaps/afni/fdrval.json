@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "fdrval",
+  "properties": {
+    "dset": {
+      "var_param": "dset"
+    },
+    "sub": {
+      "var_param": "sub"
+    },
+    "val_list": {
+      "var_param": "val_list"
+    },
+    "pval": {
+      "var_param": "pval"
+    },
+    "ponly": {
+      "var_param": "ponly"
+    },
+    "qonly": {
+      "var_param": "qonly"
+    },
+    "qinput": {
+      "var_param": "qinput"
+    },
+    "inverse": {
+      "var_param": "inverse"
+    }
+  }
+}

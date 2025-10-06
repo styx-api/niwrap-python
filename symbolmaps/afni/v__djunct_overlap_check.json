@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "v__djunct_overlap_check",
+  "properties": {
+    "ulay": {
+      "var_param": "ulay"
+    },
+    "olay": {
+      "var_param": "olay"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "box_focus_slices": {
+      "var_param": "box_focus_slices"
+    },
+    "montgap": {
+      "var_param": "montgap"
+    },
+    "montcolor": {
+      "var_param": "montcolor"
+    },
+    "cbar": {
+      "var_param": "cbar"
+    },
+    "opacity": {
+      "var_param": "opacity"
+    },
+    "zerocolor": {
+      "var_param": "zerocolor"
+    },
+    "set_dicom_xyz": {
+      "var_param": "set_dicom_xyz"
+    },
+    "ulay_range": {
+      "var_param": "ulay_range"
+    },
+    "ulay_range_nz": {
+      "var_param": "ulay_range_nz"
+    },
+    "montx": {
+      "var_param": "montx"
+    },
+    "monty": {
+      "var_param": "monty"
+    },
+    "montx_cat": {
+      "var_param": "montx_cat"
+    },
+    "monty_cat": {
+      "var_param": "monty_cat"
+    },
+    "label_mode": {
+      "var_param": "label_mode"
+    },
+    "pbar_posonly_off": {
+      "var_param": "pbar_posonly_off"
+    },
+    "edgy_ulay": {
+      "var_param": "edgy_ulay"
+    },
+    "set_dicom_xyz_off": {
+      "var_param": "set_dicom_xyz_off"
+    },
+    "no_cor": {
+      "var_param": "no_cor"
+    },
+    "no_axi": {
+      "var_param": "no_axi"
+    },
+    "no_sag": {
+      "var_param": "no_sag"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    }
+  }
+}

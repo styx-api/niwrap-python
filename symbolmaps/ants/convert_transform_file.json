@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "convert_transform_file",
+  "properties": {
+    "dimensions": {
+      "var_param": "dimensions"
+    },
+    "input_transform_file": {
+      "var_param": "input_transform_file"
+    },
+    "output_transform_file": {
+      "var_param": "output_transform_file"
+    },
+    "matrix": {
+      "var_param": "matrix"
+    },
+    "homogeneous_matrix": {
+      "var_param": "homogeneous_matrix"
+    },
+    "RAS": {
+      "var_param": "ras"
+    },
+    "convert_to_affine_type": {
+      "var_param": "convert_to_affine_type"
+    }
+  }
+}

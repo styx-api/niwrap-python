@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "predict_v1_sh",
+  "properties": {
+    "template": {
+      "var_param": "template"
+    },
+    "inflated_surface_flag": {
+      "var_param": "inflated_surface_flag"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "print_mode_flag": {
+      "var_param": "print_mode_flag"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "usage_flag": {
+      "var_param": "usage_flag"
+    }
+  }
+}

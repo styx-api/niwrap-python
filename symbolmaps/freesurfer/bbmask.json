@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "bbmask",
+  "properties": {
+    "mask": {
+      "var_param": "mask"
+    },
+    "src_volumes": {
+      "var_param": "src_volumes"
+    },
+    "npad": {
+      "var_param": "npad"
+    },
+    "registration": {
+      "var_param": "registration"
+    },
+    "regheader": {
+      "var_param": "regheader"
+    },
+    "sub2src": {
+      "var_param": "sub2src"
+    }
+  }
+}

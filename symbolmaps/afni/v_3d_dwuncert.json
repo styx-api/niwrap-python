@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_dwuncert",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "input_prefix": {
+      "var_param": "input_prefix"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "grad_file": {
+      "var_param": "grad_file"
+    },
+    "bmatrix_file": {
+      "var_param": "bmatrix_file"
+    },
+    "num_iters": {
+      "var_param": "num_iters"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "calc_thr_fa": {
+      "var_param": "calc_thr_fa"
+    },
+    "csf_fa": {
+      "var_param": "csf_fa"
+    }
+  }
+}

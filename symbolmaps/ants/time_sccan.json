@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "time_sccan",
+  "properties": {
+    "output": {
+      "var_param": "output"
+    },
+    "number_consecutive_labels": {
+      "var_param": "number_consecutive_labels"
+    },
+    "minimum_region_size": {
+      "var_param": "minimum_region_size"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "sparsity": {
+      "var_param": "sparsity"
+    },
+    "n_eigenvectors": {
+      "var_param": "n_eigenvectors"
+    },
+    "robustify": {
+      "var_param": "robustify"
+    },
+    "l1": {
+      "var_param": "l1"
+    },
+    "cluster_thresh": {
+      "var_param": "cluster_thresh"
+    },
+    "ridge_cca": {
+      "var_param": "ridge_cca"
+    },
+    "partial_scca_option": {
+      "var_param": "partial_scca_option"
+    },
+    "timeseriesimage_to_matrix": {
+      "var_param": "timeseriesimage_to_matrix",
+      "fn_struct_make_params": "time_sccan_timeseriesimage_to_matrix_params",
+      "properties": {
+        "timeseries_image": {
+          "var_param": "timeseries_image"
+        },
+        "mask_image": {
+          "var_param": "mask_image"
+        }
+      }
+    },
+    "labelsimage_to_matrix": {
+      "var_param": "labelsimage_to_matrix"
+    },
+    "network": {
+      "var_param": "network"
+    }
+  }
+}

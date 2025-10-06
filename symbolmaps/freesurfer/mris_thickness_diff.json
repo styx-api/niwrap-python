@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "mris_thickness_diff",
+  "properties": {
+    "src_type": {
+      "var_param": "src_type"
+    },
+    "trg_type": {
+      "var_param": "trg_type"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "out_resampled": {
+      "var_param": "out_resampled"
+    },
+    "nsmooth": {
+      "var_param": "nsmooth"
+    },
+    "register": {
+      "var_param": "register"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "invert": {
+      "var_param": "invert"
+    },
+    "src_volume": {
+      "var_param": "src_volume"
+    },
+    "dst_volume": {
+      "var_param": "dst_volume"
+    },
+    "abs": {
+      "var_param": "abs_"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "subject_name": {
+      "var_param": "subject_name"
+    }
+  }
+}

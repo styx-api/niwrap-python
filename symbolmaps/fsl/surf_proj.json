@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "surf_proj",
+  "properties": {
+    "data": {
+      "var_param": "data"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "surface_reference": {
+      "var_param": "surface_reference"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "meshspace": {
+      "var_param": "meshspace"
+    },
+    "step_size": {
+      "var_param": "step_size"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "surface_output": {
+      "var_param": "surface_output"
+    }
+  }
+}

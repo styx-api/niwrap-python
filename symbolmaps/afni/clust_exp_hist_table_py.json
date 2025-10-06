@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "clust_exp_hist_table_py",
+  "properties": {
+    "stat_dset": {
+      "var_param": "stat_dset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "session": {
+      "var_param": "session"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    }
+  }
+}

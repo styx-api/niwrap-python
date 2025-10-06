@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "ftoz",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "dof1": {
+      "var_param": "dof1"
+    },
+    "dof2": {
+      "var_param": "dof2"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

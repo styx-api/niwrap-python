@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_nwarp_apply",
+  "properties": {
+    "nwarp": {
+      "var_param": "nwarp"
+    },
+    "iwarp": {
+      "var_param": "iwarp"
+    },
+    "source": {
+      "var_param": "source"
+    },
+    "master": {
+      "var_param": "master"
+    },
+    "newgrid": {
+      "var_param": "newgrid"
+    },
+    "dxyz": {
+      "var_param": "dxyz"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "ainterp": {
+      "var_param": "ainterp"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "short": {
+      "var_param": "short"
+    },
+    "wprefix": {
+      "var_param": "wprefix"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

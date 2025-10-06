@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_zeropad",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "I": {
+      "var_param": "i"
+    },
+    "S": {
+      "var_param": "s"
+    },
+    "A": {
+      "var_param": "a"
+    },
+    "P": {
+      "var_param": "p"
+    },
+    "L": {
+      "var_param": "l"
+    },
+    "R": {
+      "var_param": "r"
+    },
+    "z": {
+      "var_param": "z"
+    },
+    "RL": {
+      "var_param": "rl"
+    },
+    "AP": {
+      "var_param": "ap"
+    },
+    "IS": {
+      "var_param": "is_"
+    },
+    "pad2even": {
+      "var_param": "pad2even"
+    },
+    "mm_flag": {
+      "var_param": "mm_flag"
+    },
+    "master_dataset": {
+      "var_param": "master_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

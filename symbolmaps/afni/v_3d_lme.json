@@ -1,0 +1,95 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_lme",
+  "properties": {
+    "PREFIX": {
+      "var_param": "prefix"
+    },
+    "MODEL": {
+      "var_param": "model"
+    },
+    "DATA_TABLE": {
+      "var_param": "data_table"
+    },
+    "BOUNDS": {
+      "var_param": "bounds"
+    },
+    "CIO_FLAG": {
+      "var_param": "cio_flag"
+    },
+    "COR_STR": {
+      "var_param": "cor_str"
+    },
+    "CUTOFF": {
+      "var_param": "cutoff"
+    },
+    "DBG_ARGS_FLAG": {
+      "var_param": "dbg_args_flag"
+    },
+    "JOBS": {
+      "var_param": "jobs"
+    },
+    "GLT_CODE": {
+      "var_param": "glt_code"
+    },
+    "GLT_LABEL": {
+      "var_param": "glt_label"
+    },
+    "GLF_LABEL": {
+      "var_param": "glf_label"
+    },
+    "GLF_CODE": {
+      "var_param": "glf_code"
+    },
+    "ICC_FLAG": {
+      "var_param": "icc_flag"
+    },
+    "ICCB_FLAG": {
+      "var_param": "iccb_flag"
+    },
+    "LOG_LIK_FLAG": {
+      "var_param": "log_lik_flag"
+    },
+    "LOGIT_FLAG": {
+      "var_param": "logit_flag"
+    },
+    "ML_FLAG": {
+      "var_param": "ml_flag"
+    },
+    "QVARS_CENTERS": {
+      "var_param": "qvars_centers"
+    },
+    "QVARS": {
+      "var_param": "qvars"
+    },
+    "RANEFF": {
+      "var_param": "raneff"
+    },
+    "MASK": {
+      "var_param": "mask"
+    },
+    "NUM_GLF": {
+      "var_param": "num_glf"
+    },
+    "NUM_GLT": {
+      "var_param": "num_glt"
+    },
+    "RESID": {
+      "var_param": "resid"
+    },
+    "RE": {
+      "var_param": "re_"
+    },
+    "REPREFIX": {
+      "var_param": "reprefix"
+    },
+    "RIO_FLAG": {
+      "var_param": "rio_flag"
+    },
+    "SHOW_OPTIONS_FLAG": {
+      "var_param": "show_options_flag"
+    },
+    "SS_TYPE": {
+      "var_param": "ss_type"
+    }
+  }
+}

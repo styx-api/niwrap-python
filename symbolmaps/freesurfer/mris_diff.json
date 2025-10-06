@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "mris_diff",
+  "properties": {
+    "surface1": {
+      "var_param": "surface1"
+    },
+    "surface2": {
+      "var_param": "surface2"
+    },
+    "subject1": {
+      "var_param": "subject1"
+    },
+    "subject2": {
+      "var_param": "subject2"
+    },
+    "subj_dir1": {
+      "var_param": "subj_dir1"
+    },
+    "subj_dir2": {
+      "var_param": "subj_dir2"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "curv": {
+      "var_param": "curv"
+    },
+    "aparc": {
+      "var_param": "aparc"
+    },
+    "aparc2": {
+      "var_param": "aparc2"
+    },
+    "simple": {
+      "var_param": "simple"
+    },
+    "simple_patch": {
+      "var_param": "simple_patch"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "maxerrs": {
+      "var_param": "maxerrs"
+    },
+    "renumbered": {
+      "var_param": "renumbered"
+    },
+    "worst_bucket": {
+      "var_param": "worst_bucket"
+    },
+    "grid": {
+      "var_param": "grid"
+    },
+    "no_check_xyz": {
+      "var_param": "no_check_xyz"
+    },
+    "no_check_nxyz": {
+      "var_param": "no_check_nxyz"
+    },
+    "xyz_rms": {
+      "var_param": "xyz_rms"
+    },
+    "angle_rms": {
+      "var_param": "angle_rms"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "min_dist": {
+      "var_param": "min_dist"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "gdiag_no": {
+      "var_param": "gdiag_no"
+    },
+    "check_opts": {
+      "var_param": "check_opts"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "pointflirt",
+  "properties": {
+    "invol_coords": {
+      "var_param": "invol_coords"
+    },
+    "refvol_coords": {
+      "var_param": "refvol_coords"
+    },
+    "out_matrix": {
+      "var_param": "out_matrix"
+    },
+    "use_vox": {
+      "var_param": "use_vox"
+    },
+    "vol_input": {
+      "var_param": "vol_input"
+    },
+    "vol_ref": {
+      "var_param": "vol_ref"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    }
+  }
+}

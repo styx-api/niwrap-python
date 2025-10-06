@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_remesh",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "edge_length": {
+      "var_param": "edge_length"
+    },
+    "num_vertices": {
+      "var_param": "num_vertices"
+    },
+    "face_area": {
+      "var_param": "face_area"
+    },
+    "remesh": {
+      "var_param": "remesh"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    }
+  }
+}

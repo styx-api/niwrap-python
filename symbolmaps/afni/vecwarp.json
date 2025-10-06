@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "vecwarp",
+  "properties": {
+    "apar": {
+      "var_param": "apar"
+    },
+    "matvec": {
+      "var_param": "matvec"
+    },
+    "forward": {
+      "var_param": "forward"
+    },
+    "backward": {
+      "var_param": "backward"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "force": {
+      "var_param": "force"
+    }
+  }
+}

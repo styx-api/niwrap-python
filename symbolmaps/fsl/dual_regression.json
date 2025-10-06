@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "dual_regression",
+  "properties": {
+    "group_ic_maps": {
+      "var_param": "group_ic_maps"
+    },
+    "des_norm": {
+      "var_param": "des_norm"
+    },
+    "design_mat": {
+      "var_param": "design_mat"
+    },
+    "design_con": {
+      "var_param": "design_con"
+    },
+    "n_perm": {
+      "var_param": "n_perm"
+    },
+    "thr_flag": {
+      "var_param": "thr_flag"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

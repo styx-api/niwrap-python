@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "make_average_surface",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "fsgd_file": {
+      "var_param": "fsgd_file"
+    },
+    "average_subject_name": {
+      "var_param": "average_subject_name"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "sd_out_dir": {
+      "var_param": "sd_out_dir"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "icosahedron_number": {
+      "var_param": "icosahedron_number"
+    },
+    "surf_reg": {
+      "var_param": "surf_reg"
+    },
+    "left_hemi": {
+      "var_param": "left_hemi"
+    },
+    "right_hemi": {
+      "var_param": "right_hemi"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "annot_template": {
+      "var_param": "annot_template"
+    },
+    "template_only": {
+      "var_param": "template_only"
+    },
+    "no_template_only": {
+      "var_param": "no_template_only"
+    },
+    "no_annot": {
+      "var_param": "no_annot"
+    },
+    "no_cortex_label": {
+      "var_param": "no_cortex_label"
+    },
+    "annot_list": {
+      "var_param": "annot_list"
+    },
+    "meas_list": {
+      "var_param": "meas_list"
+    },
+    "no_surf2surf": {
+      "var_param": "no_surf2surf"
+    },
+    "no_symlink": {
+      "var_param": "no_symlink"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "echo": {
+      "var_param": "echo"
+    }
+  }
+}

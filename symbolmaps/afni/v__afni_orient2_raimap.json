@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__afni_orient2_raimap",
+  "properties": {
+    "orientation_code": {
+      "var_param": "orientation_code"
+    }
+  }
+}

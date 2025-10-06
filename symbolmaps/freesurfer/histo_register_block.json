@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "histo_register_block",
+  "properties": {
+    "seg_time1": {
+      "var_param": "seg_time1"
+    },
+    "seg_time2": {
+      "var_param": "seg_time2"
+    },
+    "transform1": {
+      "var_param": "transform1"
+    },
+    "transform2": {
+      "var_param": "transform2"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "out_like": {
+      "var_param": "out_like"
+    },
+    "invert_transform": {
+      "var_param": "invert_transform"
+    }
+  }
+}

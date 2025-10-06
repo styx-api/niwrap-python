@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_hires_register",
+  "properties": {
+    "hires_labeling": {
+      "var_param": "hires_labeling"
+    },
+    "input_intensity": {
+      "var_param": "input_intensity"
+    },
+    "input_aseg": {
+      "var_param": "input_aseg"
+    },
+    "output_xform": {
+      "var_param": "output_xform"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_slice_ndice",
+  "properties": {
+    "infile_a": {
+      "var_param": "infile_a"
+    },
+    "infile_b": {
+      "var_param": "infile_b"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "out_domain": {
+      "var_param": "out_domain"
+    },
+    "no_cmd_echo": {
+      "var_param": "no_cmd_echo"
+    }
+  }
+}

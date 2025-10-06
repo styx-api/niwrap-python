@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v__make_plug_diff",
+  "properties": {
+    "vtk_dir": {
+      "var_param": "vtk_dir"
+    },
+    "xm_dir": {
+      "var_param": "xm_dir"
+    },
+    "afni_src_dir": {
+      "var_param": "afni_src_dir"
+    },
+    "afni_bin_dir": {
+      "var_param": "afni_bin_dir"
+    },
+    "comments": {
+      "var_param": "comments"
+    },
+    "linux": {
+      "var_param": "linux"
+    },
+    "diff_dir": {
+      "var_param": "diff_dir"
+    }
+  }
+}

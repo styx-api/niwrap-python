@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "mri_fieldsign",
+  "properties": {
+    "fieldsign_file": {
+      "var_param": "fieldsign_file"
+    },
+    "eccen_values": {
+      "var_param": "eccen_values"
+    },
+    "polar_values": {
+      "var_param": "polar_values"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "patch_file": {
+      "var_param": "patch_file"
+    },
+    "occip_flag": {
+      "var_param": "occip_flag"
+    },
+    "sphere_flag": {
+      "var_param": "sphere_flag"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "nsmooth": {
+      "var_param": "nsmooth"
+    },
+    "reverse_flag": {
+      "var_param": "reverse_flag"
+    },
+    "old_flag": {
+      "var_param": "old_flag"
+    },
+    "eccen_rotation": {
+      "var_param": "eccen_rotation"
+    },
+    "polar_rotation": {
+      "var_param": "polar_rotation"
+    },
+    "eccen_output": {
+      "var_param": "eccen_output"
+    },
+    "polar_output": {
+      "var_param": "polar_output"
+    },
+    "eccen_sfa_file": {
+      "var_param": "eccen_sfa_file"
+    },
+    "polar_sfa_file": {
+      "var_param": "polar_sfa_file"
+    },
+    "sfa_dir": {
+      "var_param": "sfa_dir"
+    },
+    "sfa_true_flag": {
+      "var_param": "sfa_true_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "checkopts_flag": {
+      "var_param": "checkopts_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

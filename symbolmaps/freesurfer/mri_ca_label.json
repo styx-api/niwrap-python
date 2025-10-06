@@ -1,0 +1,161 @@
+{
+  "fn_root_make_params_and_execute": "mri_ca_label",
+  "properties": {
+    "input_volumes": {
+      "var_param": "input_volumes"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "gca_file": {
+      "var_param": "gca_file"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "cross_sequence": {
+      "var_param": "cross_sequence"
+    },
+    "no_gibbs": {
+      "var_param": "no_gibbs"
+    },
+    "wm_segmentation": {
+      "var_param": "wm_segmentation"
+    },
+    "conform": {
+      "var_param": "conform"
+    },
+    "topo_dist_thresh": {
+      "var_param": "topo_dist_thresh"
+    },
+    "topo_volume_thresh1": {
+      "var_param": "topo_volume_thresh1"
+    },
+    "topo_volume_thresh2": {
+      "var_param": "topo_volume_thresh2"
+    },
+    "norm_pd": {
+      "var_param": "norm_pd"
+    },
+    "thin_temporal_lobe": {
+      "var_param": "thin_temporal_lobe"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    },
+    "debug_node": {
+      "var_param": "debug_node"
+    },
+    "debug_label": {
+      "var_param": "debug_label"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "example": {
+      "var_param": "example"
+    },
+    "pthresh": {
+      "var_param": "pthresh"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "write_probs": {
+      "var_param": "write_probs"
+    },
+    "novar": {
+      "var_param": "novar"
+    },
+    "regularize": {
+      "var_param": "regularize"
+    },
+    "nohippo": {
+      "var_param": "nohippo"
+    },
+    "fixed_white_matter": {
+      "var_param": "fixed_white_matter"
+    },
+    "mri": {
+      "var_param": "mri"
+    },
+    "histogram_equalization": {
+      "var_param": "histogram_equalization"
+    },
+    "renorm": {
+      "var_param": "renorm"
+    },
+    "flash": {
+      "var_param": "flash"
+    },
+    "flash_params": {
+      "var_param": "flash_params"
+    },
+    "renormalize": {
+      "var_param": "renormalize"
+    },
+    "set_input_volume": {
+      "var_param": "set_input_volume"
+    },
+    "histogram_normalize": {
+      "var_param": "histogram_normalize"
+    },
+    "mean_filter": {
+      "var_param": "mean_filter"
+    },
+    "write_snapshots": {
+      "var_param": "write_snapshots"
+    },
+    "mask_final_labeling": {
+      "var_param": "mask_final_labeling"
+    },
+    "expand": {
+      "var_param": "expand"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "filter_labeled_volume": {
+      "var_param": "filter_labeled_volume"
+    },
+    "longitudinal_processing": {
+      "var_param": "longitudinal_processing"
+    },
+    "relabel_unlikely": {
+      "var_param": "relabel_unlikely"
+    },
+    "disables_wmsa": {
+      "var_param": "disables_wmsa"
+    },
+    "fix_ventricle": {
+      "var_param": "fix_ventricle"
+    },
+    "insert_wm_bet_putctx": {
+      "var_param": "insert_wm_bet_putctx"
+    },
+    "sa_insert_wm_bet_putctx": {
+      "var_param": "sa_insert_wm_bet_putctx"
+    },
+    "insert_from_seg": {
+      "var_param": "insert_from_seg"
+    },
+    "sa_insert_from_seg": {
+      "var_param": "sa_insert_from_seg"
+    },
+    "cblum_from_seg": {
+      "var_param": "cblum_from_seg"
+    },
+    "sa_cblum_from_seg": {
+      "var_param": "sa_cblum_from_seg"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

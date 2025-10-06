@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_winsor",
+  "properties": {
+    "irad": {
+      "var_param": "irad"
+    },
+    "cbot": {
+      "var_param": "cbot"
+    },
+    "ctop": {
+      "var_param": "ctop"
+    },
+    "nrep": {
+      "var_param": "nrep"
+    },
+    "keepzero": {
+      "var_param": "keepzero"
+    },
+    "clip": {
+      "var_param": "clip"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

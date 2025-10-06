@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_connec_vis",
+  "properties": {
+    "in_rois": {
+      "var_param": "in_rois"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "prefix_file": {
+      "var_param": "prefix_file"
+    },
+    "tsmoo_kpb": {
+      "var_param": "tsmoo_kpb"
+    },
+    "tsmoo_niter": {
+      "var_param": "tsmoo_niter"
+    },
+    "iso_opt": {
+      "var_param": "iso_opt"
+    },
+    "trackid_no_or": {
+      "var_param": "trackid_no_or"
+    },
+    "output_tcat": {
+      "var_param": "output_tcat"
+    },
+    "output_tstat": {
+      "var_param": "output_tstat"
+    },
+    "wdir": {
+      "var_param": "wdir"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    }
+  }
+}

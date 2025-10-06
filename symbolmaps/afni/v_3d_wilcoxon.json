@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_wilcoxon",
+  "properties": {
+    "workmem": {
+      "var_param": "workmem"
+    },
+    "voxel": {
+      "var_param": "voxel"
+    },
+    "dset1_x": {
+      "var_param": "dset1_x"
+    },
+    "dset2_y": {
+      "var_param": "dset2_y"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3dretroicor",
+  "properties": {
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "card": {
+      "var_param": "card"
+    },
+    "cardphase": {
+      "var_param": "cardphase"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "resp": {
+      "var_param": "resp"
+    },
+    "respphase": {
+      "var_param": "respphase"
+    },
+    "order": {
+      "var_param": "order"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

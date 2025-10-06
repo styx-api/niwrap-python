@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "mri_topologycorrection",
+  "properties": {
+    "input_orig_file": {
+      "var_param": "input_orig_file"
+    },
+    "input_segmented_file": {
+      "var_param": "input_segmented_file"
+    }
+  }
+}

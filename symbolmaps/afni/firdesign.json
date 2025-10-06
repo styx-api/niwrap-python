@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "firdesign",
+  "properties": {
+    "fbot": {
+      "var_param": "fbot"
+    },
+    "ftop": {
+      "var_param": "ftop"
+    },
+    "ntap": {
+      "var_param": "ntap"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "alternative_band": {
+      "var_param": "alternative_band"
+    },
+    "alternative_ntap": {
+      "var_param": "alternative_ntap"
+    }
+  }
+}

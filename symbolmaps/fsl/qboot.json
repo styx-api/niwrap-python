@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "qboot",
+  "properties": {
+    "data_file": {
+      "var_param": "data_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "bvecs_file": {
+      "var_param": "bvecs_file"
+    },
+    "bvals_file": {
+      "var_param": "bvals_file"
+    },
+    "log_dir": {
+      "var_param": "log_dir"
+    },
+    "forcedir_flag": {
+      "var_param": "forcedir_flag"
+    },
+    "q_file": {
+      "var_param": "q_file"
+    },
+    "model_type": {
+      "var_param": "model_type"
+    },
+    "lmax_order": {
+      "var_param": "lmax_order"
+    },
+    "npeaks": {
+      "var_param": "npeaks"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "num_samples": {
+      "var_param": "num_samples"
+    },
+    "lambda_param": {
+      "var_param": "lambda_param"
+    },
+    "delta_param": {
+      "var_param": "delta_param"
+    },
+    "alpha_param": {
+      "var_param": "alpha_param"
+    },
+    "seed_param": {
+      "var_param": "seed_param"
+    },
+    "gfa_flag": {
+      "var_param": "gfa_flag"
+    },
+    "savecoeff_flag": {
+      "var_param": "savecoeff_flag"
+    },
+    "savemeancoeff_flag": {
+      "var_param": "savemeancoeff_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

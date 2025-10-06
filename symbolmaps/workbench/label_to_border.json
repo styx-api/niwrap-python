@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "label_to_border",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "border_out": {
+      "var_param": "border_out"
+    },
+    "opt_placement_fraction": {
+      "var_param": "opt_placement_fraction"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    }
+  }
+}

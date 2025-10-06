@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_par2_afni_pl",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "skip_outliers_test": {
+      "var_param": "skip_outliers_test"
+    },
+    "output_nifti": {
+      "var_param": "output_nifti"
+    },
+    "output_analyze": {
+      "var_param": "output_analyze"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "gzip_files": {
+      "var_param": "gzip_files"
+    },
+    "byte_swap_2": {
+      "var_param": "byte_swap_2"
+    },
+    "byte_swap_4": {
+      "var_param": "byte_swap_4"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

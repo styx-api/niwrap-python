@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "fnirt",
+  "properties": {
+    "affine_file": {
+      "var_param": "affine_file"
+    },
+    "config_file": {
+      "var_param": "config_file"
+    },
+    "field_file": {
+      "var_param": "field_file"
+    },
+    "fieldcoeff_file": {
+      "var_param": "fieldcoeff_file"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "jacobian_file": {
+      "var_param": "jacobian_file"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "modulatedref_file": {
+      "var_param": "modulatedref_file"
+    },
+    "ref_file": {
+      "var_param": "ref_file"
+    },
+    "refmask_file": {
+      "var_param": "refmask_file"
+    },
+    "warped_file": {
+      "var_param": "warped_file"
+    }
+  }
+}

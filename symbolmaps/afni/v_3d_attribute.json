@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_attribute",
+  "properties": {
+    "all": {
+      "var_param": "all_"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "center": {
+      "var_param": "center"
+    },
+    "ssep": {
+      "var_param": "ssep"
+    },
+    "sprep": {
+      "var_param": "sprep"
+    },
+    "quote": {
+      "var_param": "quote"
+    },
+    "aname": {
+      "var_param": "aname"
+    },
+    "dset": {
+      "var_param": "dset"
+    }
+  }
+}

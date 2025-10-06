@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_nlfilter",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "blur_sigma": {
+      "var_param": "blur_sigma"
+    },
+    "gaussian_sigma": {
+      "var_param": "gaussian_sigma"
+    },
+    "mean_flag": {
+      "var_param": "mean_flag"
+    },
+    "window_size": {
+      "var_param": "window_size"
+    },
+    "cplov_flag": {
+      "var_param": "cplov_flag"
+    },
+    "minmax_flag": {
+      "var_param": "minmax_flag"
+    },
+    "no_offsets_flag": {
+      "var_param": "no_offsets_flag"
+    },
+    "no_crop_flag": {
+      "var_param": "no_crop_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

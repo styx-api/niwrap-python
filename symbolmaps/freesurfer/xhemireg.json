@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "xhemireg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "map_lh": {
+      "var_param": "map_lh"
+    },
+    "map_rh": {
+      "var_param": "map_rh"
+    },
+    "perform_reg": {
+      "var_param": "perform_reg"
+    },
+    "tal_compute": {
+      "var_param": "tal_compute"
+    },
+    "no_tal_compute": {
+      "var_param": "no_tal_compute"
+    },
+    "tal_estimate": {
+      "var_param": "tal_estimate"
+    },
+    "no_tal_estimate": {
+      "var_param": "no_tal_estimate"
+    },
+    "gcaprep": {
+      "var_param": "gcaprep"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

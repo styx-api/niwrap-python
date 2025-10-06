@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "mri_sclimbic_seg",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "conform": {
+      "var_param": "conform"
+    },
+    "etiv": {
+      "var_param": "etiv"
+    },
+    "exclude_labels": {
+      "var_param": "exclude_labels"
+    },
+    "keep_ac": {
+      "var_param": "keep_ac"
+    },
+    "vox_count_volumes": {
+      "var_param": "vox_count_volumes"
+    },
+    "model_file": {
+      "var_param": "model_file"
+    },
+    "ctab_file": {
+      "var_param": "ctab_file"
+    },
+    "population_stats": {
+      "var_param": "population_stats"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "vmp": {
+      "var_param": "vmp"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "tal_xfm": {
+      "var_param": "tal_xfm"
+    },
+    "write_posteriors": {
+      "var_param": "write_posteriors"
+    },
+    "write_volumes": {
+      "var_param": "write_volumes"
+    },
+    "write_qa_stats": {
+      "var_param": "write_qa_stats"
+    },
+    "preprocess_7T": {
+      "var_param": "preprocess_7_t"
+    },
+    "percentile": {
+      "var_param": "percentile"
+    },
+    "cuda_device": {
+      "var_param": "cuda_device"
+    },
+    "output_base": {
+      "var_param": "output_base"
+    },
+    "no_cite": {
+      "var_param": "no_cite"
+    },
+    "nchannels": {
+      "var_param": "nchannels"
+    }
+  }
+}

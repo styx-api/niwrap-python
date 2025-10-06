@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "long_submit_postproc",
+  "properties": {
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "prog": {
+      "var_param": "prog"
+    },
+    "flags": {
+      "var_param": "flags"
+    },
+    "dir": {
+      "var_param": "dir_"
+    },
+    "simulate": {
+      "var_param": "simulate"
+    },
+    "pause": {
+      "var_param": "pause"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "queue": {
+      "var_param": "queue_"
+    }
+  }
+}

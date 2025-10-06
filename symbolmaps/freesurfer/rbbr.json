@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "rbbr",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "t1_contrast": {
+      "var_param": "t1_contrast"
+    },
+    "t2_contrast": {
+      "var_param": "t2_contrast"
+    },
+    "init_reg": {
+      "var_param": "init_reg"
+    },
+    "init_spm": {
+      "var_param": "init_spm"
+    },
+    "init_fsl": {
+      "var_param": "init_fsl"
+    },
+    "init_header": {
+      "var_param": "init_header"
+    },
+    "cost_threshold": {
+      "var_param": "cost_threshold"
+    },
+    "gtm_synthesize": {
+      "var_param": "gtm_synthesize"
+    },
+    "tt_reduce": {
+      "var_param": "tt_reduce"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "output_reg": {
+      "var_param": "output_reg"
+    },
+    "output_lta": {
+      "var_param": "output_lta"
+    },
+    "left_hemi": {
+      "var_param": "left_hemi"
+    },
+    "right_hemi": {
+      "var_param": "right_hemi"
+    },
+    "gm_proj_frac": {
+      "var_param": "gm_proj_frac"
+    },
+    "gm_proj_abs": {
+      "var_param": "gm_proj_abs"
+    },
+    "wm_proj_abs": {
+      "var_param": "wm_proj_abs"
+    },
+    "frame_no": {
+      "var_param": "frame_no"
+    },
+    "output_template": {
+      "var_param": "output_template"
+    },
+    "no_merge": {
+      "var_param": "no_merge"
+    }
+  }
+}

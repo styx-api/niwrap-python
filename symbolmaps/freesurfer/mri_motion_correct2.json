@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_motion_correct2",
+  "properties": {
+    "output_spec": {
+      "var_param": "output_spec"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "wild": {
+      "var_param": "wild"
+    },
+    "tmp_dir": {
+      "var_param": "tmp_dir"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "umask": {
+      "var_param": "umask"
+    },
+    "cm": {
+      "var_param": "cm"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

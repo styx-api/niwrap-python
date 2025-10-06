@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "from3d",
+  "properties": {
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "nsize": {
+      "var_param": "nsize"
+    },
+    "raw": {
+      "var_param": "raw"
+    },
+    "float": {
+      "var_param": "float_"
+    },
+    "zfirst": {
+      "var_param": "zfirst"
+    },
+    "zlast": {
+      "var_param": "zlast"
+    },
+    "tfirst": {
+      "var_param": "tfirst"
+    },
+    "tlast": {
+      "var_param": "tlast"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

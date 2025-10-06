@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__no_ext",
+  "properties": {
+    "inputfile": {
+      "var_param": "inputfile"
+    },
+    "extensions": {
+      "var_param": "extensions"
+    }
+  }
+}

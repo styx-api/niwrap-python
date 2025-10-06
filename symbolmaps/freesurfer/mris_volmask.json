@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "mris_volmask",
+  "properties": {
+    "cap_distance": {
+      "var_param": "cap_distance"
+    },
+    "label_background": {
+      "var_param": "label_background"
+    },
+    "label_left_white": {
+      "var_param": "label_left_white"
+    },
+    "label_left_ribbon": {
+      "var_param": "label_left_ribbon"
+    },
+    "label_right_white": {
+      "var_param": "label_right_white"
+    },
+    "label_right_ribbon": {
+      "var_param": "label_right_ribbon"
+    },
+    "surf_white": {
+      "var_param": "surf_white"
+    },
+    "surf_pial": {
+      "var_param": "surf_pial"
+    },
+    "aseg_name": {
+      "var_param": "aseg_name"
+    },
+    "out_root": {
+      "var_param": "out_root"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "save_distance": {
+      "var_param": "save_distance"
+    },
+    "lh_only": {
+      "var_param": "lh_only"
+    },
+    "rh_only": {
+      "var_param": "rh_only"
+    },
+    "parallel": {
+      "var_param": "parallel"
+    },
+    "edit_aseg": {
+      "var_param": "edit_aseg"
+    },
+    "save_ribbon": {
+      "var_param": "save_ribbon"
+    },
+    "io": {
+      "var_param": "io_"
+    }
+  }
+}

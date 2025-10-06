@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "vertexvol",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "left_hemisphere": {
+      "var_param": "left_hemisphere"
+    },
+    "right_hemisphere": {
+      "var_param": "right_hemisphere"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "use_th3": {
+      "var_param": "use_th3"
+    },
+    "no_th3": {
+      "var_param": "no_th3"
+    }
+  }
+}

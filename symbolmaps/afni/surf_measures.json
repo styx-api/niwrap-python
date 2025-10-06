@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "surf_measures",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "surf_A": {
+      "var_param": "surf_a"
+    },
+    "surf_B": {
+      "var_param": "surf_b"
+    },
+    "out_1D": {
+      "var_param": "out_1_d"
+    },
+    "out_dset": {
+      "var_param": "out_dset"
+    },
+    "func": {
+      "var_param": "func"
+    },
+    "surf_volume": {
+      "var_param": "surf_volume"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "dnode": {
+      "var_param": "dnode"
+    },
+    "nodes_1D": {
+      "var_param": "nodes_1_d"
+    },
+    "info_all": {
+      "var_param": "info_all"
+    },
+    "info_area": {
+      "var_param": "info_area"
+    },
+    "info_norms": {
+      "var_param": "info_norms"
+    },
+    "info_thick": {
+      "var_param": "info_thick"
+    },
+    "info_vol": {
+      "var_param": "info_vol"
+    },
+    "info_volg": {
+      "var_param": "info_volg"
+    },
+    "ver": {
+      "var_param": "ver"
+    }
+  }
+}

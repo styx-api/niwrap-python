@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "cjpeg",
+  "properties": {
+    "quality": {
+      "var_param": "quality"
+    },
+    "grayscale": {
+      "var_param": "grayscale"
+    },
+    "optimize": {
+      "var_param": "optimize"
+    },
+    "baseline": {
+      "var_param": "baseline"
+    },
+    "progressive": {
+      "var_param": "progressive"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

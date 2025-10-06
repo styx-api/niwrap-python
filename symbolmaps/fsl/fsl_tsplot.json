@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "fsl_tsplot",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "title": {
+      "var_param": "title"
+    },
+    "legend_file": {
+      "var_param": "legend_file"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "ymin": {
+      "var_param": "ymin"
+    },
+    "ymax": {
+      "var_param": "ymax"
+    },
+    "xlabel": {
+      "var_param": "xlabel"
+    },
+    "ylabel": {
+      "var_param": "ylabel"
+    },
+    "height": {
+      "var_param": "height"
+    },
+    "width": {
+      "var_param": "width"
+    },
+    "unit": {
+      "var_param": "unit"
+    },
+    "precision": {
+      "var_param": "precision"
+    },
+    "sci_flag": {
+      "var_param": "sci_flag"
+    },
+    "start_col": {
+      "var_param": "start_col"
+    },
+    "end_col": {
+      "var_param": "end_col"
+    }
+  }
+}

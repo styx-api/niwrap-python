@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "dcm2niix_afni",
+  "properties": {
+    "input_folder": {
+      "var_param": "input_folder"
+    },
+    "compression_level": {
+      "var_param": "compression_level"
+    },
+    "adjacent_dicoms": {
+      "var_param": "adjacent_dicoms"
+    },
+    "bids_sidecar": {
+      "var_param": "bids_sidecar"
+    },
+    "anonymize_bids": {
+      "var_param": "anonymize_bids"
+    },
+    "comment": {
+      "var_param": "comment"
+    },
+    "directory_search_depth": {
+      "var_param": "directory_search_depth"
+    },
+    "export_format": {
+      "var_param": "export_format"
+    },
+    "filename_template": {
+      "var_param": "filename_template"
+    },
+    "generate_defaults": {
+      "var_param": "generate_defaults"
+    },
+    "ignore_images": {
+      "var_param": "ignore_images"
+    },
+    "lossless_scale": {
+      "var_param": "lossless_scale"
+    },
+    "merge_slices": {
+      "var_param": "merge_slices"
+    },
+    "series_crc_number": {
+      "var_param": "series_crc_number"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "phillips_scaling": {
+      "var_param": "phillips_scaling"
+    },
+    "rename_dicoms": {
+      "var_param": "rename_dicoms"
+    },
+    "single_file_mode": {
+      "var_param": "single_file_mode"
+    },
+    "up_to_date": {
+      "var_param": "up_to_date"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "write_behavior": {
+      "var_param": "write_behavior"
+    },
+    "crop_3d": {
+      "var_param": "crop_3d"
+    },
+    "gz_compress": {
+      "var_param": "gz_compress"
+    },
+    "big_endian": {
+      "var_param": "big_endian"
+    },
+    "progress": {
+      "var_param": "progress"
+    },
+    "ignore_trigger_times": {
+      "var_param": "ignore_trigger_times"
+    },
+    "terse": {
+      "var_param": "terse"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "xml": {
+      "var_param": "xml_"
+    }
+  }
+}

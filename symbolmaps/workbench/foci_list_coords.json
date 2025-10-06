@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "foci_list_coords",
+  "properties": {
+    "foci_file": {
+      "var_param": "foci_file"
+    },
+    "coord_file_out": {
+      "var_param": "coord_file_out"
+    },
+    "opt_names_out_names_file_out": {
+      "var_param": "opt_names_out_names_file_out"
+    }
+  }
+}

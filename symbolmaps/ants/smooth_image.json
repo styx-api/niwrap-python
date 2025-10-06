@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "smooth_image",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "image_ext": {
+      "var_param": "image_ext"
+    },
+    "smoothing_sigma": {
+      "var_param": "smoothing_sigma"
+    },
+    "out_image_ext": {
+      "var_param": "out_image_ext"
+    },
+    "sigma_units": {
+      "var_param": "sigma_units"
+    },
+    "median_filter": {
+      "var_param": "median_filter"
+    }
+  }
+}

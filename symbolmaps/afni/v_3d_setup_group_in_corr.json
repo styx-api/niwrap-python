@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_setup_group_in_corr",
+  "properties": {
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "short_flag": {
+      "var_param": "short_flag"
+    },
+    "byte_flag": {
+      "var_param": "byte_flag"
+    },
+    "labels_file": {
+      "var_param": "labels_file"
+    },
+    "delete_flag": {
+      "var_param": "delete_flag"
+    },
+    "prep_method": {
+      "var_param": "prep_method"
+    },
+    "lr_pairs": {
+      "var_param": "lr_pairs"
+    }
+  }
+}

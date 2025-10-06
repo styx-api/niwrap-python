@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "cifti_create_dense_timeseries",
+  "properties": {
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "volume": {
+      "var_param": "volume",
+      "fn_struct_make_params": "cifti_create_dense_timeseries_volume_params",
+      "properties": {
+        "volume_data": {
+          "var_param": "volume_data"
+        },
+        "structure_label_volume": {
+          "var_param": "structure_label_volume"
+        }
+      }
+    },
+    "left_metric": {
+      "var_param": "left_metric",
+      "fn_struct_make_params": "cifti_create_dense_timeseries_left_metric_params",
+      "properties": {
+        "metric": {
+          "var_param": "metric"
+        },
+        "opt_roi_left_roi_metric": {
+          "var_param": "opt_roi_left_roi_metric"
+        }
+      }
+    },
+    "right_metric": {
+      "var_param": "right_metric",
+      "fn_struct_make_params": "cifti_create_dense_timeseries_right_metric_params",
+      "properties": {
+        "metric": {
+          "var_param": "metric"
+        },
+        "opt_roi_right_roi_metric": {
+          "var_param": "opt_roi_right_roi_metric"
+        }
+      }
+    },
+    "cerebellum_metric": {
+      "var_param": "cerebellum_metric",
+      "fn_struct_make_params": "cifti_create_dense_timeseries_cerebellum_metric_params",
+      "properties": {
+        "metric": {
+          "var_param": "metric"
+        },
+        "opt_roi_cerebellum_roi_metric": {
+          "var_param": "opt_roi_cerebellum_roi_metric"
+        }
+      }
+    },
+    "opt_timestep_interval": {
+      "var_param": "opt_timestep_interval"
+    },
+    "opt_timestart_start": {
+      "var_param": "opt_timestart_start"
+    },
+    "opt_unit_unit": {
+      "var_param": "opt_unit_unit"
+    }
+  }
+}

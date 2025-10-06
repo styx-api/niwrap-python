@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "ants_multivariate_template_construction2_sh",
+  "properties": {
+    "dimension": {
+      "var_param": "dimension"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "image_statistic": {
+      "var_param": "image_statistic"
+    },
+    "sharpening": {
+      "var_param": "sharpening"
+    },
+    "backup_images": {
+      "var_param": "backup_images"
+    },
+    "parallel_control": {
+      "var_param": "parallel_control"
+    },
+    "single_precision": {
+      "var_param": "single_precision"
+    },
+    "gradient_step": {
+      "var_param": "gradient_step"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "cpu_cores": {
+      "var_param": "cpu_cores"
+    },
+    "num_modalities": {
+      "var_param": "num_modalities"
+    },
+    "modality_weights": {
+      "var_param": "modality_weights"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "shrink_factors": {
+      "var_param": "shrink_factors"
+    },
+    "smoothing_kernels": {
+      "var_param": "smoothing_kernels"
+    },
+    "n4_bias_correction": {
+      "var_param": "n4_bias_correction"
+    },
+    "prepend_commands": {
+      "var_param": "prepend_commands"
+    },
+    "rigid_registration": {
+      "var_param": "rigid_registration"
+    },
+    "linear_registration": {
+      "var_param": "linear_registration"
+    },
+    "similarity_metric": {
+      "var_param": "similarity_metric"
+    },
+    "transformation_type": {
+      "var_param": "transformation_type"
+    },
+    "walltime": {
+      "var_param": "walltime"
+    },
+    "memory_limit": {
+      "var_param": "memory_limit"
+    },
+    "xgrid_args": {
+      "var_param": "xgrid_args"
+    },
+    "update_template": {
+      "var_param": "update_template"
+    },
+    "target_volume": {
+      "var_param": "target_volume"
+    },
+    "input_images": {
+      "var_param": "input_images"
+    }
+  }
+}

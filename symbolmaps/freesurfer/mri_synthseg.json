@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "mri_synthseg",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_segmentation": {
+      "var_param": "output_segmentation"
+    },
+    "cortex_parcellation": {
+      "var_param": "cortex_parcellation"
+    },
+    "robust_prediction": {
+      "var_param": "robust_prediction"
+    },
+    "fast_prediction": {
+      "var_param": "fast_prediction"
+    },
+    "clip_ct": {
+      "var_param": "clip_ct"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "output_qc": {
+      "var_param": "output_qc"
+    },
+    "output_posteriors": {
+      "var_param": "output_posteriors"
+    },
+    "resampled_images": {
+      "var_param": "resampled_images"
+    },
+    "image_patch_size": {
+      "var_param": "image_patch_size"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "cpu": {
+      "var_param": "cpu"
+    },
+    "version_1": {
+      "var_param": "version_1"
+    },
+    "photo_synthseg": {
+      "var_param": "photo_synthseg"
+    }
+  }
+}

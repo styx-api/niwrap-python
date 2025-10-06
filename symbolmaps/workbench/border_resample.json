@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "border_resample",
+  "properties": {
+    "border_in": {
+      "var_param": "border_in"
+    },
+    "current_sphere": {
+      "var_param": "current_sphere"
+    },
+    "new_sphere": {
+      "var_param": "new_sphere"
+    },
+    "border_out": {
+      "var_param": "border_out"
+    }
+  }
+}

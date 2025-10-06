@@ -1,0 +1,155 @@
+{
+  "fn_root_make_params_and_execute": "mrinfo",
+  "properties": {
+    "all": {
+      "var_param": "all_"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "format": {
+      "var_param": "format_"
+    },
+    "ndim": {
+      "var_param": "ndim"
+    },
+    "size": {
+      "var_param": "size"
+    },
+    "spacing": {
+      "var_param": "spacing"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "multiplier": {
+      "var_param": "multiplier"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "property": {
+      "var_param": "property_",
+      "fn_struct_make_params": "mrinfo_property_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        }
+      }
+    },
+    "json_keyval": {
+      "var_param": "json_keyval"
+    },
+    "json_all": {
+      "var_param": "json_all"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "mrinfo_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "bvalue_scaling": {
+      "var_param": "bvalue_scaling"
+    },
+    "export_grad_mrtrix": {
+      "var_param": "export_grad_mrtrix"
+    },
+    "export_grad_fsl": {
+      "var_param": "export_grad_fsl",
+      "fn_struct_make_params": "mrinfo_export_grad_fsl_params",
+      "properties": {
+        "bvecs_path": {
+          "var_param": "bvecs_path"
+        },
+        "bvals_path": {
+          "var_param": "bvals_path"
+        }
+      }
+    },
+    "dwgrad": {
+      "var_param": "dwgrad"
+    },
+    "shell_bvalues": {
+      "var_param": "shell_bvalues"
+    },
+    "shell_sizes": {
+      "var_param": "shell_sizes"
+    },
+    "shell_indices": {
+      "var_param": "shell_indices"
+    },
+    "export_pe_table": {
+      "var_param": "export_pe_table"
+    },
+    "export_pe_eddy": {
+      "var_param": "export_pe_eddy",
+      "fn_struct_make_params": "mrinfo_export_pe_eddy_params",
+      "properties": {
+        "config": {
+          "var_param": "config"
+        },
+        "indices": {
+          "var_param": "indices"
+        }
+      }
+    },
+    "petable": {
+      "var_param": "petable"
+    },
+    "nodelete": {
+      "var_param": "nodelete"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrinfo_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "image": {
+      "var_param": "image"
+    }
+  }
+}

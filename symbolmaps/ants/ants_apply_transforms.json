@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "ants_apply_transforms",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "input_image_type": {
+      "var_param": "input_image_type"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "output_data_type": {
+      "var_param": "output_data_type"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "default_value": {
+      "var_param": "default_value"
+    },
+    "static_cast_for_R": {
+      "var_param": "static_cast_for_r"
+    },
+    "float": {
+      "var_param": "float_"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

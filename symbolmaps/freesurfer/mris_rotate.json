@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_rotate",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "alpha_deg": {
+      "var_param": "alpha_deg"
+    },
+    "beta_deg": {
+      "var_param": "beta_deg"
+    },
+    "gamma_deg": {
+      "var_param": "gamma_deg"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "regfile": {
+      "var_param": "regfile"
+    },
+    "invalidate_geometry": {
+      "var_param": "invalidate_geometry"
+    }
+  }
+}

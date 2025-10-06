@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "afni_check_omp",
+  "properties": {
+    "iterations": {
+      "var_param": "iterations"
+    }
+  }
+}

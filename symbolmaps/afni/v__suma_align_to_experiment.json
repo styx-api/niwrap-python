@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v__suma_align_to_experiment",
+  "properties": {
+    "exp_anat": {
+      "var_param": "exp_anat"
+    },
+    "surf_anat": {
+      "var_param": "surf_anat"
+    },
+    "dxyz": {
+      "var_param": "dxyz"
+    },
+    "out_dxyz": {
+      "var_param": "out_dxyz"
+    },
+    "wd": {
+      "var_param": "wd"
+    },
+    "al": {
+      "var_param": "al"
+    },
+    "al_opt": {
+      "var_param": "al_opt"
+    },
+    "ok_change_view": {
+      "var_param": "ok_change_view"
+    },
+    "strip_skull": {
+      "var_param": "strip_skull"
+    },
+    "skull_strip_opt": {
+      "var_param": "skull_strip_opt"
+    },
+    "align_centers": {
+      "var_param": "align_centers"
+    },
+    "init_xform": {
+      "var_param": "init_xform"
+    },
+    "EA_clip_below": {
+      "var_param": "ea_clip_below"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "surf_anat_followers": {
+      "var_param": "surf_anat_followers"
+    },
+    "followers_interp": {
+      "var_param": "followers_interp"
+    },
+    "atlas_followers": {
+      "var_param": "atlas_followers"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "keep_tmp": {
+      "var_param": "keep_tmp"
+    },
+    "overwrite_resp": {
+      "var_param": "overwrite_resp"
+    }
+  }
+}

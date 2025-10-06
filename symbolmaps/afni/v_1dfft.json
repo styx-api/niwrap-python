@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_1dfft",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "ignore": {
+      "var_param": "ignore"
+    },
+    "use": {
+      "var_param": "use"
+    },
+    "nfft": {
+      "var_param": "nfft"
+    },
+    "tocx": {
+      "var_param": "tocx"
+    },
+    "fromcx": {
+      "var_param": "fromcx"
+    },
+    "hilbert": {
+      "var_param": "hilbert"
+    },
+    "nodetrend": {
+      "var_param": "nodetrend"
+    }
+  }
+}

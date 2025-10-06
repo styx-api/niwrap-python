@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "mris_volsmooth",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "registration": {
+      "var_param": "registration"
+    },
+    "projfrac": {
+      "var_param": "projfrac"
+    },
+    "projfrac_avg": {
+      "var_param": "projfrac_avg"
+    },
+    "fill_ribbon": {
+      "var_param": "fill_ribbon"
+    },
+    "surf_out": {
+      "var_param": "surf_out"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "niters": {
+      "var_param": "niters"
+    },
+    "vol_fwhm": {
+      "var_param": "vol_fwhm"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

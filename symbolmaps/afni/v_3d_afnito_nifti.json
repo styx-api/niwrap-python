@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_afnito_nifti",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "force_float": {
+      "var_param": "force_float"
+    },
+    "pure": {
+      "var_param": "pure"
+    },
+    "denote": {
+      "var_param": "denote"
+    },
+    "oldid": {
+      "var_param": "oldid"
+    },
+    "newid": {
+      "var_param": "newid"
+    }
+  }
+}

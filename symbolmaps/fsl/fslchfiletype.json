@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "fslchfiletype",
+  "properties": {
+    "filetype": {
+      "var_param": "filetype"
+    },
+    "filename": {
+      "var_param": "filename"
+    },
+    "filename2": {
+      "var_param": "filename2"
+    }
+  }
+}

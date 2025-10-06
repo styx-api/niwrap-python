@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_rigid_register",
+  "properties": {
+    "source_volume": {
+      "var_param": "source_volume"
+    },
+    "target_volume": {
+      "var_param": "target_volume"
+    },
+    "transform_output": {
+      "var_param": "transform_output"
+    }
+  }
+}

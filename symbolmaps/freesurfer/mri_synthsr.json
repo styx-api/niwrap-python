@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_synthsr",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "ct": {
+      "var_param": "ct"
+    },
+    "disable_sharpening": {
+      "var_param": "disable_sharpening"
+    },
+    "disable_flipping": {
+      "var_param": "disable_flipping"
+    },
+    "lowfield": {
+      "var_param": "lowfield"
+    },
+    "v1": {
+      "var_param": "v1"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "cpu": {
+      "var_param": "cpu"
+    },
+    "model": {
+      "var_param": "model"
+    }
+  }
+}

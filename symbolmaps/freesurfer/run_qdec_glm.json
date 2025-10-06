@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "run_qdec_glm",
+  "properties": {
+    "qdec_directory": {
+      "var_param": "qdec_directory"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "possum_matrix",
+  "properties": {
+    "pulse_sequence": {
+      "var_param": "pulse_sequence"
+    },
+    "motion_matrix": {
+      "var_param": "motion_matrix"
+    },
+    "output_matrix": {
+      "var_param": "output_matrix"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "old_version_flag": {
+      "var_param": "old_version_flag"
+    },
+    "segment_size": {
+      "var_param": "segment_size"
+    }
+  }
+}

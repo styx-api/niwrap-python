@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "xhemi_tal",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    }
+  }
+}

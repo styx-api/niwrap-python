@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v__measure_bb_thick",
+  "properties": {
+    "maskset": {
+      "var_param": "maskset"
+    },
+    "surfset": {
+      "var_param": "surfset"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "resample": {
+      "var_param": "resample"
+    },
+    "increment": {
+      "var_param": "increment"
+    },
+    "surfsmooth": {
+      "var_param": "surfsmooth"
+    },
+    "smoothmm": {
+      "var_param": "smoothmm"
+    },
+    "maxthick": {
+      "var_param": "maxthick"
+    },
+    "depth_search": {
+      "var_param": "depth_search"
+    },
+    "keep_temp_files": {
+      "var_param": "keep_temp_files"
+    },
+    "balls_only": {
+      "var_param": "balls_only"
+    },
+    "surfsmooth_method": {
+      "var_param": "surfsmooth_method"
+    }
+  }
+}

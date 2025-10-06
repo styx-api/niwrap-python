@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "make_dyadic_vectors",
+  "properties": {
+    "theta_vol": {
+      "var_param": "theta_vol"
+    },
+    "phi_vol": {
+      "var_param": "phi_vol"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "perc": {
+      "var_param": "perc"
+    }
+  }
+}

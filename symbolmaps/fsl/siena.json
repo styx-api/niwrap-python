@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "siena",
+  "properties": {
+    "input1": {
+      "var_param": "input1"
+    },
+    "input2": {
+      "var_param": "input2"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "bet_options": {
+      "var_param": "bet_options"
+    },
+    "two_class_seg_flag": {
+      "var_param": "two_class_seg_flag"
+    },
+    "t2_weighted_flag": {
+      "var_param": "t2_weighted_flag"
+    },
+    "standard_space_mask_flag": {
+      "var_param": "standard_space_mask_flag"
+    },
+    "upper_ignore": {
+      "var_param": "upper_ignore"
+    },
+    "lower_ignore": {
+      "var_param": "lower_ignore"
+    },
+    "sienadiff_options": {
+      "var_param": "sienadiff_options"
+    },
+    "ventricle_analysis_flag": {
+      "var_param": "ventricle_analysis_flag"
+    },
+    "ventricle_mask": {
+      "var_param": "ventricle_mask"
+    }
+  }
+}

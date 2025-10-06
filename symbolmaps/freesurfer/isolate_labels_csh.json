@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "isolate_labels_csh",
+  "properties": {
+    "label_volume": {
+      "var_param": "label_volume"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "label_option": {
+      "var_param": "label_option"
+    },
+    "lowercase_label_option": {
+      "var_param": "lowercase_label_option"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "keepval": {
+      "var_param": "keepval"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

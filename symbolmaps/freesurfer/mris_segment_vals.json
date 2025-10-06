@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_segment_vals",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "input_curv_file": {
+      "var_param": "input_curv_file"
+    },
+    "output_curv_file": {
+      "var_param": "output_curv_file"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "area_thresh": {
+      "var_param": "area_thresh"
+    }
+  }
+}

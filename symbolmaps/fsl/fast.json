@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "fast",
+  "properties": {
+    "number_classes": {
+      "var_param": "number_classes"
+    },
+    "bias_iters": {
+      "var_param": "bias_iters"
+    },
+    "bias_lowpass": {
+      "var_param": "bias_lowpass"
+    },
+    "img_type": {
+      "var_param": "img_type"
+    },
+    "init_seg_smooth": {
+      "var_param": "init_seg_smooth"
+    },
+    "segments": {
+      "var_param": "segments"
+    },
+    "init_transform": {
+      "var_param": "init_transform"
+    },
+    "other_priors": {
+      "var_param": "other_priors"
+    },
+    "output_biasfield": {
+      "var_param": "output_biasfield"
+    },
+    "output_biascorrected": {
+      "var_param": "output_biascorrected"
+    },
+    "no_bias": {
+      "var_param": "no_bias"
+    },
+    "channels": {
+      "var_param": "channels"
+    },
+    "out_basename": {
+      "var_param": "out_basename"
+    },
+    "use_priors": {
+      "var_param": "use_priors"
+    },
+    "no_pve": {
+      "var_param": "no_pve"
+    },
+    "segment_iters": {
+      "var_param": "segment_iters"
+    },
+    "mixel_smooth": {
+      "var_param": "mixel_smooth"
+    },
+    "hyper": {
+      "var_param": "hyper"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "manual_seg": {
+      "var_param": "manual_seg"
+    },
+    "iters_afterbias": {
+      "var_param": "iters_afterbias"
+    },
+    "in_files": {
+      "var_param": "in_files"
+    }
+  }
+}

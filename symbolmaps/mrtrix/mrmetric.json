@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "mrmetric",
+  "properties": {
+    "space": {
+      "var_param": "space"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "mask1": {
+      "var_param": "mask1"
+    },
+    "mask2": {
+      "var_param": "mask2"
+    },
+    "nonormalisation": {
+      "var_param": "nonormalisation"
+    },
+    "overlap": {
+      "var_param": "overlap"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrmetric_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "image1": {
+      "var_param": "image1"
+    },
+    "image2": {
+      "var_param": "image2"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "test_tutorials_sh",
+  "properties": {
+    "all_tutorials": {
+      "var_param": "all_tutorials"
+    },
+    "quick_test": {
+      "var_param": "quick_test"
+    },
+    "auto_quit_freeview": {
+      "var_param": "auto_quit_freeview"
+    },
+    "skip_all_guis": {
+      "var_param": "skip_all_guis"
+    },
+    "skip_tk_guis": {
+      "var_param": "skip_tk_guis"
+    },
+    "skip_qdec_guis": {
+      "var_param": "skip_qdec_guis"
+    },
+    "individual_subject": {
+      "var_param": "individual_subject"
+    },
+    "troubleshooting": {
+      "var_param": "troubleshooting"
+    },
+    "group_analysis": {
+      "var_param": "group_analysis"
+    },
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "longitudinal": {
+      "var_param": "longitudinal"
+    },
+    "roi_analysis": {
+      "var_param": "roi_analysis"
+    },
+    "diffusion": {
+      "var_param": "diffusion"
+    },
+    "tracula": {
+      "var_param": "tracula"
+    },
+    "fsfast": {
+      "var_param": "fsfast"
+    },
+    "multimodal": {
+      "var_param": "multimodal"
+    }
+  }
+}

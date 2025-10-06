@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "bayesian_group_ana_py",
+  "properties": {
+    "dataTable": {
+      "var_param": "data_table"
+    },
+    "y_variable": {
+      "var_param": "y_variable"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "x_variables": {
+      "var_param": "x_variables"
+    },
+    "no_center": {
+      "var_param": "no_center"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "chains": {
+      "var_param": "chains"
+    },
+    "control_list": {
+      "var_param": "control_list"
+    },
+    "plot": {
+      "var_param": "plot"
+    },
+    "more_plots": {
+      "var_param": "more_plots"
+    },
+    "RData": {
+      "var_param": "rdata"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

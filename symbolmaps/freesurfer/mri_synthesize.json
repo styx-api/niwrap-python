@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mri_synthesize",
+  "properties": {
+    "tr": {
+      "var_param": "tr"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "t1_volume": {
+      "var_param": "t1_volume"
+    },
+    "pd_volume": {
+      "var_param": "pd_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "fixed_weight": {
+      "var_param": "fixed_weight"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "fn_root_make_params_and_execute": "gdcmconv_fs",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "explicit_flag": {
+      "var_param": "explicit_flag"
+    },
+    "implicit_flag": {
+      "var_param": "implicit_flag"
+    },
+    "use_dict_flag": {
+      "var_param": "use_dict_flag"
+    },
+    "with_private_dict_flag": {
+      "var_param": "with_private_dict_flag"
+    },
+    "check_meta_flag": {
+      "var_param": "check_meta_flag"
+    },
+    "root_uid": {
+      "var_param": "root_uid"
+    },
+    "remove_gl_flag": {
+      "var_param": "remove_gl_flag"
+    },
+    "remove_private_tags_flag": {
+      "var_param": "remove_private_tags_flag"
+    },
+    "remove_retired_flag": {
+      "var_param": "remove_retired_flag"
+    },
+    "apply_lut_flag": {
+      "var_param": "apply_lut_flag"
+    },
+    "photometric_interpretation": {
+      "var_param": "photometric_interpretation"
+    },
+    "raw_flag": {
+      "var_param": "raw_flag"
+    },
+    "deflated_flag": {
+      "var_param": "deflated_flag"
+    },
+    "jpeg_flag": {
+      "var_param": "jpeg_flag"
+    },
+    "j2k_flag": {
+      "var_param": "j2k_flag"
+    },
+    "jpegls_flag": {
+      "var_param": "jpegls_flag"
+    },
+    "rle_flag": {
+      "var_param": "rle_flag"
+    },
+    "force_flag": {
+      "var_param": "force_flag"
+    },
+    "generate_icon_flag": {
+      "var_param": "generate_icon_flag"
+    },
+    "icon_minmax": {
+      "var_param": "icon_minmax"
+    },
+    "icon_auto_minmax_flag": {
+      "var_param": "icon_auto_minmax_flag"
+    },
+    "compress_icon_flag": {
+      "var_param": "compress_icon_flag"
+    },
+    "planar_configuration": {
+      "var_param": "planar_configuration"
+    },
+    "lossy_flag": {
+      "var_param": "lossy_flag"
+    },
+    "split": {
+      "var_param": "split"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "warning_flag": {
+      "var_param": "warning_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "error_flag": {
+      "var_param": "error_flag"
+    },
+    "quiet_flag": {
+      "var_param": "quiet_flag"
+    },
+    "jpeg_quality": {
+      "var_param": "jpeg_quality"
+    },
+    "lossy_error": {
+      "var_param": "lossy_error"
+    },
+    "rate": {
+      "var_param": "rate"
+    },
+    "j2k_quality": {
+      "var_param": "j2k_quality"
+    },
+    "tile": {
+      "var_param": "tile"
+    },
+    "number_resolution": {
+      "var_param": "number_resolution"
+    },
+    "irreversible_flag": {
+      "var_param": "irreversible_flag"
+    },
+    "ignore_errors_flag": {
+      "var_param": "ignore_errors_flag"
+    }
+  }
+}

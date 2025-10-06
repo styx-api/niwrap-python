@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "betsurf",
+  "properties": {
+    "t1_image": {
+      "var_param": "t1_image"
+    },
+    "t2_image": {
+      "var_param": "t2_image"
+    },
+    "bet_mesh": {
+      "var_param": "bet_mesh"
+    },
+    "t1_to_standard_mat": {
+      "var_param": "t1_to_standard_mat"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "t1only_flag": {
+      "var_param": "t1only_flag"
+    },
+    "outline_flag": {
+      "var_param": "outline_flag"
+    },
+    "mask_flag": {
+      "var_param": "mask_flag"
+    },
+    "skull_mask_flag": {
+      "var_param": "skull_mask_flag"
+    },
+    "increased_precision": {
+      "var_param": "increased_precision"
+    }
+  }
+}

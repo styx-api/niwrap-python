@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mris_entropy",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "wfile": {
+      "var_param": "wfile"
+    },
+    "curvfile": {
+      "var_param": "curvfile"
+    },
+    "average_iterations": {
+      "var_param": "average_iterations"
+    },
+    "normalize": {
+      "var_param": "normalize"
+    }
+  }
+}

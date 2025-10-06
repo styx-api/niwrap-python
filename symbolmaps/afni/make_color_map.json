@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "make_color_map",
+  "properties": {
+    "fiducials_ncol": {
+      "var_param": "fiducials_ncol"
+    },
+    "fiducials": {
+      "var_param": "fiducials"
+    },
+    "num_colors": {
+      "var_param": "num_colors"
+    },
+    "std_mapname": {
+      "var_param": "std_mapname"
+    },
+    "palette_file": {
+      "var_param": "palette_file"
+    },
+    "cmap_name": {
+      "var_param": "cmap_name"
+    },
+    "fscolut_labels": {
+      "var_param": "fscolut_labels"
+    },
+    "fscolut_file": {
+      "var_param": "fscolut_file"
+    },
+    "afni_hex": {
+      "var_param": "afni_hex"
+    },
+    "afni_hex_complete": {
+      "var_param": "afni_hex_complete"
+    },
+    "suma_colormap": {
+      "var_param": "suma_colormap"
+    },
+    "user_colut_file": {
+      "var_param": "user_colut_file"
+    },
+    "sdset": {
+      "var_param": "sdset"
+    },
+    "sdset_prefix": {
+      "var_param": "sdset_prefix"
+    },
+    "flipupdown": {
+      "var_param": "flipupdown"
+    },
+    "skip_last": {
+      "var_param": "skip_last"
+    },
+    "show_fscolut": {
+      "var_param": "show_fscolut"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "help_full_flag": {
+      "var_param": "help_full_flag"
+    },
+    "flip_map_updside_down": {
+      "var_param": "flip_map_updside_down"
+    }
+  }
+}

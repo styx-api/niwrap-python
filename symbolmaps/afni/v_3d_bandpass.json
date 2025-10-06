@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_bandpass",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "blur": {
+      "var_param": "blur"
+    },
+    "despike": {
+      "var_param": "despike"
+    },
+    "highpass": {
+      "var_param": "highpass"
+    },
+    "lowpass": {
+      "var_param": "lowpass"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "localPV": {
+      "var_param": "local_pv"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "nfft": {
+      "var_param": "nfft"
+    },
+    "no_detrend": {
+      "var_param": "no_detrend"
+    },
+    "normalize": {
+      "var_param": "normalize"
+    },
+    "notrans": {
+      "var_param": "notrans"
+    },
+    "orthogonalize_dset": {
+      "var_param": "orthogonalize_dset"
+    },
+    "orthogonalize_file": {
+      "var_param": "orthogonalize_file"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "tr": {
+      "var_param": "tr"
+    }
+  }
+}

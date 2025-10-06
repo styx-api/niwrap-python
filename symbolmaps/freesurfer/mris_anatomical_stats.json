@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mris_anatomical_stats",
+  "properties": {
+    "subjectname": {
+      "var_param": "subjectname"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "surfacename": {
+      "var_param": "surfacename"
+    },
+    "thickness_range": {
+      "var_param": "thickness_range"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "thickness_file": {
+      "var_param": "thickness_file"
+    },
+    "annotation_file": {
+      "var_param": "annotation_file"
+    },
+    "tabular_output": {
+      "var_param": "tabular_output"
+    },
+    "tablefile": {
+      "var_param": "tablefile"
+    },
+    "logfile": {
+      "var_param": "logfile"
+    },
+    "nsmooth": {
+      "var_param": "nsmooth"
+    },
+    "color_table": {
+      "var_param": "color_table"
+    },
+    "noglobal": {
+      "var_param": "noglobal"
+    },
+    "th3_computation": {
+      "var_param": "th3_computation"
+    }
+  }
+}

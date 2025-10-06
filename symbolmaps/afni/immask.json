@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "immask",
+  "properties": {
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "positive_only": {
+      "var_param": "positive_only"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    }
+  }
+}

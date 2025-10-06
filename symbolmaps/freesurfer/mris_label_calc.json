@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_label_calc",
+  "properties": {
+    "command": {
+      "var_param": "command"
+    },
+    "input1": {
+      "var_param": "input1"
+    },
+    "input2": {
+      "var_param": "input2"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    }
+  }
+}

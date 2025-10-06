@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_local_acf",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "neighborhood": {
+      "var_param": "neighborhood"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "auto_mask": {
+      "var_param": "auto_mask"
+    }
+  }
+}

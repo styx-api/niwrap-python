@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_empty",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "geometry": {
+      "var_param": "geometry"
+    },
+    "nxyz": {
+      "var_param": "nxyz"
+    },
+    "nt": {
+      "var_param": "nt_"
+    }
+  }
+}

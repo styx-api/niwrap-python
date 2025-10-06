@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "annot2std",
+  "properties": {
+    "output_annot_path": {
+      "var_param": "output_annot_path"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "fsgd_file": {
+      "var_param": "fsgd_file"
+    },
+    "subject_list_file": {
+      "var_param": "subject_list_file"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "left_hemisphere": {
+      "var_param": "left_hemisphere"
+    },
+    "right_hemisphere": {
+      "var_param": "right_hemisphere"
+    },
+    "xhemi": {
+      "var_param": "xhemi"
+    },
+    "surfreg": {
+      "var_param": "surfreg"
+    },
+    "srcsurfreg": {
+      "var_param": "srcsurfreg"
+    },
+    "trgsurfreg": {
+      "var_param": "trgsurfreg"
+    },
+    "annotname": {
+      "var_param": "annotname"
+    },
+    "aparc": {
+      "var_param": "aparc"
+    },
+    "a2009s": {
+      "var_param": "a2009s"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "stack": {
+      "var_param": "stack"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

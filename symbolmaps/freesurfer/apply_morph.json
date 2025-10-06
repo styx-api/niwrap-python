@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "apply_morph",
+  "properties": {
+    "inputs": {
+      "var_param": "inputs"
+    },
+    "template": {
+      "var_param": "template"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "zlib_buffer": {
+      "var_param": "zlib_buffer"
+    },
+    "dbg_coords": {
+      "var_param": "dbg_coords"
+    }
+  }
+}

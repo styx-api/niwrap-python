@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v__djunct_4d_imager",
+  "properties": {
+    "inset": {
+      "var_param": "inset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "do_movie": {
+      "var_param": "do_movie"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    }
+  }
+}

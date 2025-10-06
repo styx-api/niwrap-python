@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "fslvbm_1_bet",
+  "properties": {
+    "default_bet": {
+      "var_param": "default_bet"
+    },
+    "increased_robustness": {
+      "var_param": "increased_robustness"
+    },
+    "bet_parameters": {
+      "var_param": "bet_parameters"
+    }
+  }
+}

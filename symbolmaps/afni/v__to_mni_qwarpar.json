@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__to_mni_qwarpar",
+  "properties": {
+    "numcpu": {
+      "var_param": "numcpu"
+    },
+    "numjob": {
+      "var_param": "numjob"
+    }
+  }
+}

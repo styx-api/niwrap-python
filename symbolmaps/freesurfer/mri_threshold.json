@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mri_threshold",
+  "properties": {
+    "input_vol": {
+      "var_param": "input_vol"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "output_vol": {
+      "var_param": "output_vol"
+    },
+    "binarize": {
+      "var_param": "binarize"
+    },
+    "upper_threshold": {
+      "var_param": "upper_threshold"
+    },
+    "frame_number": {
+      "var_param": "frame_number"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__extract_meica_ortvec",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "meica_dir": {
+      "var_param": "meica_dir"
+    },
+    "reject_ignored": {
+      "var_param": "reject_ignored"
+    },
+    "reject_midk": {
+      "var_param": "reject_midk"
+    },
+    "work_dir": {
+      "var_param": "work_dir"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

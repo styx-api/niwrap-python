@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "samseg2recon",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "samseg_dir": {
+      "var_param": "samseg_dir"
+    },
+    "no_cc": {
+      "var_param": "no_cc"
+    },
+    "fill": {
+      "var_param": "fill"
+    },
+    "normalization2": {
+      "var_param": "normalization2"
+    },
+    "uchar": {
+      "var_param": "uchar"
+    },
+    "no_keep_exc": {
+      "var_param": "no_keep_exc"
+    },
+    "long_tp": {
+      "var_param": "long_tp"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "from_recon_all": {
+      "var_param": "from_recon_all"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    }
+  }
+}

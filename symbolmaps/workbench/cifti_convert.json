@@ -1,0 +1,167 @@
+{
+  "fn_root_make_params_and_execute": "cifti_convert",
+  "properties": {
+    "to_gifti_ext": {
+      "var_param": "to_gifti_ext",
+      "fn_struct_make_params": "cifti_convert_to_gifti_ext_params",
+      "properties": {
+        "cifti_in": {
+          "var_param": "cifti_in"
+        },
+        "gifti_out": {
+          "var_param": "gifti_out"
+        }
+      }
+    },
+    "from_gifti_ext": {
+      "var_param": "from_gifti_ext",
+      "fn_struct_make_params": "cifti_convert_from_gifti_ext_params",
+      "properties": {
+        "gifti_in": {
+          "var_param": "gifti_in"
+        },
+        "cifti_out": {
+          "var_param": "cifti_out"
+        },
+        "reset_timepoints": {
+          "var_param": "reset_timepoints",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints_params",
+          "properties": {
+            "timestep": {
+              "var_param": "timestep"
+            },
+            "timestart": {
+              "var_param": "timestart"
+            },
+            "opt_unit_unit": {
+              "var_param": "opt_unit_unit"
+            }
+          }
+        },
+        "opt_reset_scalars": {
+          "var_param": "opt_reset_scalars"
+        },
+        "opt_column_reset_scalars": {
+          "var_param": "opt_column_reset_scalars"
+        },
+        "replace_binary": {
+          "var_param": "replace_binary",
+          "fn_struct_make_params": "cifti_convert_replace_binary_params",
+          "properties": {
+            "binary_in": {
+              "var_param": "binary_in"
+            },
+            "opt_flip_endian": {
+              "var_param": "opt_flip_endian"
+            },
+            "opt_transpose": {
+              "var_param": "opt_transpose"
+            }
+          }
+        }
+      }
+    },
+    "to_nifti": {
+      "var_param": "to_nifti",
+      "fn_struct_make_params": "cifti_convert_to_nifti_params",
+      "properties": {
+        "cifti_in": {
+          "var_param": "cifti_in"
+        },
+        "nifti_out": {
+          "var_param": "nifti_out"
+        },
+        "opt_smaller_file": {
+          "var_param": "opt_smaller_file"
+        },
+        "opt_smaller_dims": {
+          "var_param": "opt_smaller_dims"
+        }
+      }
+    },
+    "from_nifti": {
+      "var_param": "from_nifti",
+      "fn_struct_make_params": "cifti_convert_from_nifti_params",
+      "properties": {
+        "nifti_in": {
+          "var_param": "nifti_in"
+        },
+        "cifti_template": {
+          "var_param": "cifti_template"
+        },
+        "cifti_out": {
+          "var_param": "cifti_out"
+        },
+        "reset_timepoints": {
+          "var_param": "reset_timepoints",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints_1_params",
+          "properties": {
+            "timestep": {
+              "var_param": "timestep"
+            },
+            "timestart": {
+              "var_param": "timestart"
+            },
+            "opt_unit_unit": {
+              "var_param": "opt_unit_unit"
+            }
+          }
+        },
+        "opt_reset_scalars": {
+          "var_param": "opt_reset_scalars"
+        }
+      }
+    },
+    "to_text": {
+      "var_param": "to_text",
+      "fn_struct_make_params": "cifti_convert_to_text_params",
+      "properties": {
+        "cifti_in": {
+          "var_param": "cifti_in"
+        },
+        "text_out": {
+          "var_param": "text_out"
+        },
+        "opt_col_delim_delim_string": {
+          "var_param": "opt_col_delim_delim_string"
+        }
+      }
+    },
+    "from_text": {
+      "var_param": "from_text",
+      "fn_struct_make_params": "cifti_convert_from_text_params",
+      "properties": {
+        "text_in": {
+          "var_param": "text_in"
+        },
+        "cifti_template": {
+          "var_param": "cifti_template"
+        },
+        "cifti_out": {
+          "var_param": "cifti_out"
+        },
+        "opt_col_delim_delim_string": {
+          "var_param": "opt_col_delim_delim_string"
+        },
+        "reset_timepoints": {
+          "var_param": "reset_timepoints",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints_2_params",
+          "properties": {
+            "timestep": {
+              "var_param": "timestep"
+            },
+            "timestart": {
+              "var_param": "timestart"
+            },
+            "opt_unit_unit": {
+              "var_param": "opt_unit_unit"
+            }
+          }
+        },
+        "opt_reset_scalars": {
+          "var_param": "opt_reset_scalars"
+        }
+      }
+    }
+  }
+}

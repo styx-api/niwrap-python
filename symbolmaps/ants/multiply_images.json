@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "multiply_images",
+  "properties": {
+    "dimension": {
+      "var_param": "dimension"
+    },
+    "first_input": {
+      "var_param": "first_input"
+    },
+    "second_input": {
+      "var_param": "second_input"
+    },
+    "second_input_2": {
+      "var_param": "second_input_2"
+    },
+    "output_product_image": {
+      "var_param": "output_product_image"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    }
+  }
+}

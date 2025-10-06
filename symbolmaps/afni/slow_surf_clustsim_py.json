@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "slow_surf_clustsim_py",
+  "properties": {
+    "on_surface": {
+      "var_param": "on_surface"
+    },
+    "save_script": {
+      "var_param": "save_script"
+    },
+    "print_script": {
+      "var_param": "print_script"
+    },
+    "uvar": {
+      "var_param": "uvar"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "show_default_cvars": {
+      "var_param": "show_default_cvars"
+    },
+    "show_default_uvars": {
+      "var_param": "show_default_uvars"
+    },
+    "show_valid_opts": {
+      "var_param": "show_valid_opts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

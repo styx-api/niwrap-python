@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "extracttxt",
+  "properties": {
+    "search_word": {
+      "var_param": "search_word"
+    },
+    "file": {
+      "var_param": "file"
+    },
+    "num_trailing_lines": {
+      "var_param": "num_trailing_lines"
+    },
+    "relative_start": {
+      "var_param": "relative_start"
+    }
+  }
+}

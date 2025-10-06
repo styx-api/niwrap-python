@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "map_all_labels_lh",
+  "properties": {
+    "which": {
+      "var_param": "which"
+    },
+    "fname": {
+      "var_param": "fname"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "spherical_surf": {
+      "var_param": "spherical_surf"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

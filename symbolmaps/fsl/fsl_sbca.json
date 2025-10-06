@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "fsl_sbca",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "reg_flag": {
+      "var_param": "reg_flag"
+    },
+    "conf_files": {
+      "var_param": "conf_files"
+    },
+    "seed_data": {
+      "var_param": "seed_data"
+    },
+    "binarise_flag": {
+      "var_param": "binarise_flag"
+    },
+    "mean_flag": {
+      "var_param": "mean_flag"
+    },
+    "abs_cc_flag": {
+      "var_param": "abs_cc_flag"
+    },
+    "order": {
+      "var_param": "order"
+    },
+    "out_seeds_flag": {
+      "var_param": "out_seeds_flag"
+    },
+    "out_seedmask_flag": {
+      "var_param": "out_seedmask_flag"
+    },
+    "out_ttcs_flag": {
+      "var_param": "out_ttcs_flag"
+    },
+    "out_conf_flag": {
+      "var_param": "out_conf_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

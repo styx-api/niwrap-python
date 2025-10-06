@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "talairach_afd",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "xfm_file": {
+      "var_param": "xfm_file"
+    },
+    "p_value_threshold": {
+      "var_param": "p_value_threshold"
+    },
+    "afd_directory": {
+      "var_param": "afd_directory"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

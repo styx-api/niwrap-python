@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "ants_landmark_based_transform_initializer",
+  "properties": {
+    "dimension": {
+      "var_param": "dimension"
+    },
+    "fixed_image": {
+      "var_param": "fixed_image"
+    },
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "transform_type": {
+      "var_param": "transform_type"
+    },
+    "output_transform": {
+      "var_param": "output_transform"
+    },
+    "mesh_size": {
+      "var_param": "mesh_size"
+    },
+    "number_of_levels": {
+      "var_param": "number_of_levels"
+    },
+    "order": {
+      "var_param": "order"
+    },
+    "enforce_stationary_boundaries": {
+      "var_param": "enforce_stationary_boundaries"
+    },
+    "landmark_weights": {
+      "var_param": "landmark_weights"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_anova",
+  "properties": {
+    "levels": {
+      "var_param": "levels"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "voxel": {
+      "var_param": "voxel"
+    },
+    "diskspace": {
+      "var_param": "diskspace"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "ftr": {
+      "var_param": "ftr"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "diff": {
+      "var_param": "diff"
+    },
+    "contr": {
+      "var_param": "contr"
+    },
+    "old_method": {
+      "var_param": "old_method"
+    },
+    "ok": {
+      "var_param": "ok"
+    },
+    "assume_sph": {
+      "var_param": "assume_sph"
+    },
+    "bucket": {
+      "var_param": "bucket"
+    }
+  }
+}

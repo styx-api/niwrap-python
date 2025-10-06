@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "asl_file",
+  "properties": {
+    "datafile": {
+      "var_param": "datafile"
+    },
+    "ntis": {
+      "var_param": "ntis"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "inblockform": {
+      "var_param": "inblockform"
+    },
+    "inaslform": {
+      "var_param": "inaslform"
+    },
+    "rpts": {
+      "var_param": "rpts"
+    },
+    "pairs": {
+      "var_param": "pairs"
+    },
+    "spairs": {
+      "var_param": "spairs"
+    },
+    "diff": {
+      "var_param": "diff"
+    },
+    "surrdiff": {
+      "var_param": "surrdiff"
+    },
+    "extrapolate": {
+      "var_param": "extrapolate"
+    },
+    "neighbour": {
+      "var_param": "neighbour"
+    },
+    "pvgm": {
+      "var_param": "pvgm"
+    },
+    "pvwm": {
+      "var_param": "pvwm"
+    },
+    "kernel": {
+      "var_param": "kernel"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "outblockform": {
+      "var_param": "outblockform"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "split": {
+      "var_param": "split"
+    },
+    "epoch": {
+      "var_param": "epoch"
+    },
+    "epoch_length": {
+      "var_param": "epoch_length"
+    },
+    "epoch_overlap": {
+      "var_param": "epoch_overlap"
+    },
+    "epoch_unit": {
+      "var_param": "epoch_unit"
+    },
+    "deconv": {
+      "var_param": "deconv"
+    },
+    "aif": {
+      "var_param": "aif"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

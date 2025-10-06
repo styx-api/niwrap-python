@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "vecreg",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "reference_volume": {
+      "var_param": "reference_volume"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "secondary_affine": {
+      "var_param": "secondary_affine"
+    },
+    "secondary_warp": {
+      "var_param": "secondary_warp"
+    },
+    "interp_method": {
+      "var_param": "interp_method"
+    },
+    "brain_mask": {
+      "var_param": "brain_mask"
+    },
+    "ref_brain_mask": {
+      "var_param": "ref_brain_mask"
+    }
+  }
+}

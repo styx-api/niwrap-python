@@ -1,0 +1,227 @@
+{
+  "fn_root_make_params_and_execute": "tckgen",
+  "properties": {
+    "algorithm": {
+      "var_param": "algorithm"
+    },
+    "select": {
+      "var_param": "select_"
+    },
+    "step": {
+      "var_param": "step"
+    },
+    "angle": {
+      "var_param": "angle"
+    },
+    "minlength": {
+      "var_param": "minlength"
+    },
+    "maxlength": {
+      "var_param": "maxlength"
+    },
+    "cutoff": {
+      "var_param": "cutoff"
+    },
+    "trials": {
+      "var_param": "trials"
+    },
+    "noprecomputed": {
+      "var_param": "noprecomputed"
+    },
+    "rk4": {
+      "var_param": "rk4"
+    },
+    "stop": {
+      "var_param": "stop"
+    },
+    "downsample": {
+      "var_param": "downsample"
+    },
+    "seed_image": {
+      "var_param": "seed_image",
+      "fn_struct_make_params": "tckgen_seed_image_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        }
+      }
+    },
+    "seed_sphere": {
+      "var_param": "seed_sphere",
+      "fn_struct_make_params": "tckgen_seed_sphere_params",
+      "properties": {
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "seed_random_per_voxel": {
+      "var_param": "seed_random_per_voxel",
+      "fn_struct_make_params": "tckgen_seed_random_per_voxel_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        },
+        "num_per_voxel": {
+          "var_param": "num_per_voxel"
+        }
+      }
+    },
+    "seed_grid_per_voxel": {
+      "var_param": "seed_grid_per_voxel",
+      "fn_struct_make_params": "tckgen_seed_grid_per_voxel_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        },
+        "grid_size": {
+          "var_param": "grid_size"
+        }
+      }
+    },
+    "seed_rejection": {
+      "var_param": "seed_rejection",
+      "fn_struct_make_params": "tckgen_seed_rejection_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        }
+      }
+    },
+    "seed_gmwmi": {
+      "var_param": "seed_gmwmi",
+      "fn_struct_make_params": "tckgen_seed_gmwmi_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        }
+      }
+    },
+    "seed_dynamic": {
+      "var_param": "seed_dynamic"
+    },
+    "seeds": {
+      "var_param": "seeds"
+    },
+    "max_attempts_per_seed": {
+      "var_param": "max_attempts_per_seed"
+    },
+    "seed_cutoff": {
+      "var_param": "seed_cutoff"
+    },
+    "seed_unidirectional": {
+      "var_param": "seed_unidirectional"
+    },
+    "seed_direction": {
+      "var_param": "seed_direction"
+    },
+    "output_seeds": {
+      "var_param": "output_seeds"
+    },
+    "include": {
+      "var_param": "include",
+      "fn_struct_make_params": "tckgen_include_params",
+      "properties": {
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "include_ordered": {
+      "var_param": "include_ordered",
+      "fn_struct_make_params": "tckgen_include_ordered_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        }
+      }
+    },
+    "exclude": {
+      "var_param": "exclude",
+      "fn_struct_make_params": "tckgen_exclude_params",
+      "properties": {
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "mask": {
+      "var_param": "mask",
+      "fn_struct_make_params": "tckgen_mask_params",
+      "properties": {
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "act": {
+      "var_param": "act"
+    },
+    "backtrack": {
+      "var_param": "backtrack"
+    },
+    "crop_at_gmwmi": {
+      "var_param": "crop_at_gmwmi"
+    },
+    "power": {
+      "var_param": "power"
+    },
+    "samples": {
+      "var_param": "samples"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "tckgen_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tckgen_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "source": {
+      "var_param": "source"
+    },
+    "tracks": {
+      "var_param": "tracks"
+    }
+  }
+}

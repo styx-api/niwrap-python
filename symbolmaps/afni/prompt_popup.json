@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "prompt_popup",
+  "properties": {
+    "message": {
+      "var_param": "message"
+    },
+    "message_pause": {
+      "var_param": "message_pause"
+    },
+    "buttons": {
+      "var_param": "buttons"
+    },
+    "buttons_b": {
+      "var_param": "buttons_b"
+    },
+    "timeout": {
+      "var_param": "timeout"
+    },
+    "timeout_to": {
+      "var_param": "timeout_to"
+    }
+  }
+}

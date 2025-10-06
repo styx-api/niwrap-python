@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "border_merge",
+  "properties": {
+    "border_file_out": {
+      "var_param": "border_file_out"
+    },
+    "border": {
+      "var_param": "border",
+      "fn_struct_make_params": "border_merge_border_params",
+      "properties": {
+        "border_file_in": {
+          "var_param": "border_file_in"
+        },
+        "select": {
+          "var_param": "select_",
+          "fn_struct_make_params": "border_merge_select_params",
+          "properties": {
+            "border": {
+              "var_param": "border"
+            },
+            "up_to": {
+              "var_param": "up_to",
+              "fn_struct_make_params": "border_merge_up_to_params",
+              "properties": {
+                "last_border": {
+                  "var_param": "last_border"
+                },
+                "opt_reverse": {
+                  "var_param": "opt_reverse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

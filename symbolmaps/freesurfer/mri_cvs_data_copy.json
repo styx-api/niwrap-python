@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_cvs_data_copy",
+  "properties": {
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "olddir": {
+      "var_param": "olddir"
+    },
+    "newdir": {
+      "var_param": "newdir"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

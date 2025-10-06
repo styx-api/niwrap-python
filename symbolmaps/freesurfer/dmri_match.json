@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "dmri_match",
+  "properties": {
+    "parcellation1": {
+      "var_param": "parcellation1"
+    },
+    "parcellation2": {
+      "var_param": "parcellation2"
+    },
+    "num_clusters": {
+      "var_param": "num_clusters"
+    },
+    "clustering_path1": {
+      "var_param": "clustering_path1"
+    },
+    "clustering_path2": {
+      "var_param": "clustering_path2"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "euclidean": {
+      "var_param": "euclidean"
+    },
+    "bounding_box": {
+      "var_param": "bounding_box"
+    },
+    "symmetry": {
+      "var_param": "symmetry"
+    },
+    "inter_hemi_ratio_removal": {
+      "var_param": "inter_hemi_ratio_removal"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

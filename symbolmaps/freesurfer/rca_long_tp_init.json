@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "rca_long_tp_init",
+  "properties": {
+    "timepoint": {
+      "var_param": "timepoint"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "use_long_base_ctrl_vol": {
+      "var_param": "use_long_base_ctrl_vol"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "expert_opts": {
+      "var_param": "expert_opts"
+    },
+    "subject": {
+      "var_param": "subject"
+    }
+  }
+}

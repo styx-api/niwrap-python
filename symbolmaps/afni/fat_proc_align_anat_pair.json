@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_align_anat_pair",
+  "properties": {
+    "input_t1w": {
+      "var_param": "input_t1w"
+    },
+    "input_t2w": {
+      "var_param": "input_t2w"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "output_grid": {
+      "var_param": "output_grid"
+    },
+    "out_t2w_grid": {
+      "var_param": "out_t2w_grid"
+    },
+    "input_t2w_mask": {
+      "var_param": "input_t2w_mask"
+    },
+    "do_ss_tmp_t1w": {
+      "var_param": "do_ss_tmp_t1w"
+    },
+    "warp": {
+      "var_param": "warp"
+    },
+    "matrix": {
+      "var_param": "matrix"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    }
+  }
+}

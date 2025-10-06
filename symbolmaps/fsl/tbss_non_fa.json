@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "tbss_non_fa",
+  "properties": {
+    "concat_auto": {
+      "var_param": "concat_auto"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "concat_x": {
+      "var_param": "concat_x"
+    },
+    "concat_y": {
+      "var_param": "concat_y"
+    },
+    "concat_z": {
+      "var_param": "concat_z"
+    },
+    "concat_t": {
+      "var_param": "concat_t"
+    },
+    "concat_tr": {
+      "var_param": "concat_tr"
+    },
+    "volume_number": {
+      "var_param": "volume_number"
+    }
+  }
+}

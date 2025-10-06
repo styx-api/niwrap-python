@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "first_mult_bcorr",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "corrected_4d_labels": {
+      "var_param": "corrected_4d_labels"
+    },
+    "uncorrected_4d_labels": {
+      "var_param": "uncorrected_4d_labels"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

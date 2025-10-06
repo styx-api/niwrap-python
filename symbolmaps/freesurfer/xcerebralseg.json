@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "xcerebralseg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "atlas": {
+      "var_param": "atlas"
+    },
+    "mergevol": {
+      "var_param": "mergevol"
+    },
+    "source_volume": {
+      "var_param": "source_volume"
+    },
+    "no_stats": {
+      "var_param": "no_stats"
+    },
+    "seg1_name": {
+      "var_param": "seg1_name"
+    },
+    "no_pons": {
+      "var_param": "no_pons"
+    },
+    "no_vermis": {
+      "var_param": "no_vermis"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

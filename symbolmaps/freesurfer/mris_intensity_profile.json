@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mris_intensity_profile",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "volume": {
+      "var_param": "volume"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "write_surf": {
+      "var_param": "write_surf"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "white": {
+      "var_param": "white"
+    },
+    "pial": {
+      "var_param": "pial"
+    },
+    "normalize_flag": {
+      "var_param": "normalize_flag"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "src": {
+      "var_param": "src"
+    },
+    "dst": {
+      "var_param": "dst"
+    },
+    "invert_flag": {
+      "var_param": "invert_flag"
+    }
+  }
+}

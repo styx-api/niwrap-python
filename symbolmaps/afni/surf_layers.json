@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "surf_layers",
+  "properties": {
+    "spec_dset": {
+      "var_param": "spec_dset"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "states": {
+      "var_param": "states"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "n_intermed_surfs": {
+      "var_param": "n_intermed_surfs"
+    },
+    "surf_a": {
+      "var_param": "surf_a"
+    },
+    "surf_b": {
+      "var_param": "surf_b"
+    },
+    "surf_intermed_pref": {
+      "var_param": "surf_intermed_pref"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    }
+  }
+}

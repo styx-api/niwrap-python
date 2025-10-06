@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "ztop",
+  "properties": {
+    "z_score": {
+      "var_param": "z_score"
+    },
+    "tail_flag": {
+      "var_param": "tail_flag"
+    },
+    "grf_flag": {
+      "var_param": "grf_flag"
+    },
+    "number_of_resels": {
+      "var_param": "number_of_resels"
+    }
+  }
+}

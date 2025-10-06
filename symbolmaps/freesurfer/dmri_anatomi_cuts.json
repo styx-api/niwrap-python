@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "dmri_anatomi_cuts",
+  "properties": {
+    "segmentation_file": {
+      "var_param": "segmentation_file"
+    },
+    "fiber_file": {
+      "var_param": "fiber_file"
+    },
+    "clusters": {
+      "var_param": "clusters"
+    },
+    "points": {
+      "var_param": "points"
+    },
+    "fibers_eigen": {
+      "var_param": "fibers_eigen"
+    },
+    "output_folder": {
+      "var_param": "output_folder"
+    },
+    "direction_flag": {
+      "var_param": "direction_flag"
+    }
+  }
+}

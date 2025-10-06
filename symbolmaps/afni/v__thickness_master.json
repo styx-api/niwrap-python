@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__thickness_master",
+  "properties": {
+    "maskset": {
+      "var_param": "maskset"
+    },
+    "surfset": {
+      "var_param": "surfset"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mri_vol2surf",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "registration_file": {
+      "var_param": "registration_file"
+    },
+    "output_path": {
+      "var_param": "output_path"
+    },
+    "reference_volume": {
+      "var_param": "reference_volume"
+    },
+    "regheader_subject": {
+      "var_param": "regheader_subject"
+    },
+    "mni152reg_flag": {
+      "var_param": "mni152reg_flag"
+    },
+    "target_subject": {
+      "var_param": "target_subject"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "surface": {
+      "var_param": "surface"
+    }
+  }
+}

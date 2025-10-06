@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_lfcd",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "autoclip": {
+      "var_param": "autoclip"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    }
+  }
+}

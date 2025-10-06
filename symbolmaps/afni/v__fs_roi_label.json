@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v__fs_roi_label",
+  "properties": {
+    "label_int": {
+      "var_param": "label_int"
+    },
+    "lab_flag": {
+      "var_param": "lab_flag"
+    },
+    "rank_int": {
+      "var_param": "rank_int"
+    },
+    "rankmap_file": {
+      "var_param": "rankmap_file"
+    },
+    "name": {
+      "var_param": "name"
+    },
+    "labeltable_file": {
+      "var_param": "labeltable_file"
+    },
+    "surf_annot_cmap": {
+      "var_param": "surf_annot_cmap"
+    },
+    "slab_int": {
+      "var_param": "slab_int"
+    },
+    "sname_name": {
+      "var_param": "sname_name"
+    }
+  }
+}

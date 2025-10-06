@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v__djunct_ssw_intermed_edge_imgs",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "ulay": {
+      "var_param": "ulay"
+    },
+    "olay": {
+      "var_param": "olay"
+    },
+    "box_focus_slices": {
+      "var_param": "box_focus_slices"
+    },
+    "montgap": {
+      "var_param": "montgap"
+    },
+    "cbar": {
+      "var_param": "cbar"
+    },
+    "ulay_range": {
+      "var_param": "ulay_range"
+    },
+    "montx": {
+      "var_param": "montx"
+    },
+    "monty": {
+      "var_param": "monty"
+    },
+    "help_view": {
+      "var_param": "help_view"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    }
+  }
+}

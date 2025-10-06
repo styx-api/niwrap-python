@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "rmsdiff",
+  "properties": {
+    "matrixfile1": {
+      "var_param": "matrixfile1"
+    },
+    "matrixfile2": {
+      "var_param": "matrixfile2"
+    },
+    "refvol": {
+      "var_param": "refvol"
+    },
+    "mask": {
+      "var_param": "mask"
+    }
+  }
+}

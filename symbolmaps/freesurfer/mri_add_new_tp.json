@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "mri_add_new_tp",
+  "properties": {
+    "base_id": {
+      "var_param": "base_id"
+    },
+    "newtp_id": {
+      "var_param": "newtp_id"
+    }
+  }
+}

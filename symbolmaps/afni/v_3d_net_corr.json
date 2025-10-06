@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_net_corr",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "inset": {
+      "var_param": "inset"
+    },
+    "in_rois": {
+      "var_param": "in_rois"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "fish_z": {
+      "var_param": "fish_z"
+    },
+    "part_corr": {
+      "var_param": "part_corr"
+    },
+    "ts_out": {
+      "var_param": "ts_out"
+    },
+    "ts_label": {
+      "var_param": "ts_label"
+    },
+    "ts_indiv": {
+      "var_param": "ts_indiv"
+    },
+    "ts_wb_corr": {
+      "var_param": "ts_wb_corr"
+    },
+    "ts_wb_Z": {
+      "var_param": "ts_wb_z"
+    },
+    "weight_ts": {
+      "var_param": "weight_ts"
+    },
+    "weight_corr": {
+      "var_param": "weight_corr"
+    },
+    "ts_wb_strlabel": {
+      "var_param": "ts_wb_strlabel"
+    },
+    "nifti": {
+      "var_param": "nifti"
+    },
+    "output_mask_nonnull": {
+      "var_param": "output_mask_nonnull"
+    },
+    "push_thru_many_zeros": {
+      "var_param": "push_thru_many_zeros"
+    },
+    "allow_roi_zeros": {
+      "var_param": "allow_roi_zeros"
+    },
+    "automask_off": {
+      "var_param": "automask_off"
+    },
+    "ignore_LT": {
+      "var_param": "ignore_lt"
+    }
+  }
+}

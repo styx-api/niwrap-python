@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "mris_make_average_surface",
+  "properties": {
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "outsurfname": {
+      "var_param": "outsurfname"
+    },
+    "cansurfname": {
+      "var_param": "cansurfname"
+    },
+    "outsubject": {
+      "var_param": "outsubject"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "sdir_out": {
+      "var_param": "sdir_out"
+    },
+    "nonorm_flag": {
+      "var_param": "nonorm_flag"
+    },
+    "icoorder": {
+      "var_param": "icoorder"
+    },
+    "xfmname": {
+      "var_param": "xfmname"
+    },
+    "templatename": {
+      "var_param": "templatename"
+    },
+    "surfname": {
+      "var_param": "surfname"
+    },
+    "surf2surf_flag": {
+      "var_param": "surf2surf_flag"
+    },
+    "simple": {
+      "var_param": "simple"
+    },
+    "diagno": {
+      "var_param": "diagno"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mist_fa_reg",
+  "properties": {
+    "fa_volume": {
+      "var_param": "fa_volume"
+    },
+    "s0_volume": {
+      "var_param": "s0_volume"
+    },
+    "reference_t1_volume": {
+      "var_param": "reference_t1_volume"
+    },
+    "output_filename": {
+      "var_param": "output_filename"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "hiam_register",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "average_surface": {
+      "var_param": "average_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    }
+  }
+}

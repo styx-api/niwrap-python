@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "cifti_tool",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "as_cext": {
+      "var_param": "as_cext"
+    },
+    "disp_cext": {
+      "var_param": "disp_cext"
+    },
+    "eval_cext": {
+      "var_param": "eval_cext"
+    },
+    "eval_type": {
+      "var_param": "eval_type"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "verbose_level": {
+      "var_param": "verbose_level"
+    },
+    "verbose_read_level": {
+      "var_param": "verbose_read_level"
+    },
+    "both_verbose_levels": {
+      "var_param": "both_verbose_levels"
+    }
+  }
+}

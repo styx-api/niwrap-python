@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_deface",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "brain_template": {
+      "var_param": "brain_template"
+    },
+    "face_template": {
+      "var_param": "face_template"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    }
+  }
+}

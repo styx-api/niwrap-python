@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "mris_surface_stats",
+  "properties": {
+    "nsmooth": {
+      "var_param": "nsmooth"
+    },
+    "surf_name": {
+      "var_param": "surf_name"
+    },
+    "mask_name": {
+      "var_param": "mask_name"
+    },
+    "out_name": {
+      "var_param": "out_name"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "absmean": {
+      "var_param": "absmean"
+    },
+    "absstd": {
+      "var_param": "absstd"
+    },
+    "zscore": {
+      "var_param": "zscore"
+    },
+    "first_group_size": {
+      "var_param": "first_group_size"
+    },
+    "src_type": {
+      "var_param": "src_type"
+    },
+    "trg_type": {
+      "var_param": "trg_type"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "data_files": {
+      "var_param": "data_files"
+    }
+  }
+}

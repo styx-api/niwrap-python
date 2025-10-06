@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_validate_skull_stripped",
+  "properties": {
+    "mri_reference": {
+      "var_param": "mri_reference"
+    },
+    "mri_test": {
+      "var_param": "mri_test"
+    },
+    "weight": {
+      "var_param": "weight"
+    }
+  }
+}

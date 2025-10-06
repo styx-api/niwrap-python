@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mris_multimodal",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "target_surface": {
+      "var_param": "target_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "fill_holes": {
+      "var_param": "fill_holes"
+    },
+    "curvature": {
+      "var_param": "curvature"
+    },
+    "thickness": {
+      "var_param": "thickness"
+    },
+    "annotation_output": {
+      "var_param": "annotation_output"
+    },
+    "overlay_output": {
+      "var_param": "overlay_output"
+    },
+    "csv_output": {
+      "var_param": "csv_output"
+    },
+    "vtk_output": {
+      "var_param": "vtk_output"
+    }
+  }
+}

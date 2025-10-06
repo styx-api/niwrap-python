@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "probtrackx_dot_convert",
+  "properties": {
+    "dot_file": {
+      "var_param": "dot_file"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "row_voxels": {
+      "var_param": "row_voxels",
+      "fn_struct_make_params": "probtrackx_dot_convert_row_voxels_params",
+      "properties": {
+        "voxel_list_file": {
+          "var_param": "voxel_list_file"
+        },
+        "label_vol": {
+          "var_param": "label_vol"
+        }
+      }
+    },
+    "opt_row_surface_roi_metric": {
+      "var_param": "opt_row_surface_roi_metric"
+    },
+    "row_cifti": {
+      "var_param": "row_cifti",
+      "fn_struct_make_params": "probtrackx_dot_convert_row_cifti_params",
+      "properties": {
+        "cifti": {
+          "var_param": "cifti"
+        },
+        "direction": {
+          "var_param": "direction"
+        }
+      }
+    },
+    "col_voxels": {
+      "var_param": "col_voxels",
+      "fn_struct_make_params": "probtrackx_dot_convert_col_voxels_params",
+      "properties": {
+        "voxel_list_file": {
+          "var_param": "voxel_list_file"
+        },
+        "label_vol": {
+          "var_param": "label_vol"
+        }
+      }
+    },
+    "opt_col_surface_roi_metric": {
+      "var_param": "opt_col_surface_roi_metric"
+    },
+    "col_cifti": {
+      "var_param": "col_cifti",
+      "fn_struct_make_params": "probtrackx_dot_convert_col_cifti_params",
+      "properties": {
+        "cifti": {
+          "var_param": "cifti"
+        },
+        "direction": {
+          "var_param": "direction"
+        }
+      }
+    },
+    "opt_transpose": {
+      "var_param": "opt_transpose"
+    },
+    "opt_make_symmetric": {
+      "var_param": "opt_make_symmetric"
+    }
+  }
+}

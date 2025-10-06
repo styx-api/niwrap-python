@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_rsfc",
+  "properties": {
+    "fbot": {
+      "var_param": "fbot"
+    },
+    "ftop": {
+      "var_param": "ftop"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "despike": {
+      "var_param": "despike"
+    },
+    "ort_file": {
+      "var_param": "ort_file"
+    },
+    "dsort_file": {
+      "var_param": "dsort_file"
+    },
+    "nodetrend": {
+      "var_param": "nodetrend"
+    },
+    "time_step": {
+      "var_param": "time_step"
+    },
+    "nfft": {
+      "var_param": "nfft"
+    },
+    "norm": {
+      "var_param": "norm"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "blur": {
+      "var_param": "blur"
+    },
+    "localpv": {
+      "var_param": "localpv"
+    },
+    "input_alt": {
+      "var_param": "input_alt"
+    },
+    "band": {
+      "var_param": "band"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "no_rs_out": {
+      "var_param": "no_rs_out"
+    },
+    "un_bandpass_out": {
+      "var_param": "un_bandpass_out"
+    },
+    "no_rsfa": {
+      "var_param": "no_rsfa"
+    },
+    "bp_at_end": {
+      "var_param": "bp_at_end"
+    },
+    "notrans": {
+      "var_param": "notrans"
+    },
+    "nosat": {
+      "var_param": "nosat"
+    }
+  }
+}

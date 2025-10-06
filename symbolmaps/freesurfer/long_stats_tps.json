@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "long_stats_tps",
+  "properties": {
+    "qdec_table": {
+      "var_param": "qdec_table"
+    },
+    "stats_file": {
+      "var_param": "stats_file"
+    },
+    "measure": {
+      "var_param": "measure"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "time_point": {
+      "var_param": "time_point"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "qcolumn": {
+      "var_param": "qcolumn"
+    },
+    "cross_sectional": {
+      "var_param": "cross_sectional"
+    }
+  }
+}

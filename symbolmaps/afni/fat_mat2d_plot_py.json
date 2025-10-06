@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "fat_mat2d_plot_py",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "matrices": {
+      "var_param": "matrices"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "file_type": {
+      "var_param": "file_type"
+    },
+    "dpi": {
+      "var_param": "dpi"
+    },
+    "min_colorbar": {
+      "var_param": "min_colorbar"
+    },
+    "max_colorbar": {
+      "var_param": "max_colorbar"
+    },
+    "fs_xticks": {
+      "var_param": "fs_xticks"
+    },
+    "fs_yticks": {
+      "var_param": "fs_yticks"
+    },
+    "fs_title": {
+      "var_param": "fs_title"
+    },
+    "fs_cbar": {
+      "var_param": "fs_cbar"
+    },
+    "cbar_n_intervals": {
+      "var_param": "cbar_n_intervals"
+    },
+    "cbar": {
+      "var_param": "cbar"
+    },
+    "cbar_width_perc": {
+      "var_param": "cbar_width_perc"
+    },
+    "no_colorbar": {
+      "var_param": "no_colorbar"
+    },
+    "figsize_x": {
+      "var_param": "figsize_x"
+    },
+    "figsize_y": {
+      "var_param": "figsize_y"
+    },
+    "hold_image": {
+      "var_param": "hold_image"
+    },
+    "tight_layout": {
+      "var_param": "tight_layout"
+    },
+    "xticks_off": {
+      "var_param": "xticks_off"
+    },
+    "yticks_off": {
+      "var_param": "yticks_off"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "date": {
+      "var_param": "date"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "help_view": {
+      "var_param": "help_view"
+    }
+  }
+}

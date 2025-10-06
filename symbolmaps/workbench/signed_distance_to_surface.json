@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "signed_distance_to_surface",
+  "properties": {
+    "surface_comp": {
+      "var_param": "surface_comp"
+    },
+    "surface_ref": {
+      "var_param": "surface_ref"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "opt_winding_method": {
+      "var_param": "opt_winding_method"
+    }
+  }
+}

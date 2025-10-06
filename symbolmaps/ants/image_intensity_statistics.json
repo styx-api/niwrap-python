@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "image_intensity_statistics",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "label_image": {
+      "var_param": "label_image"
+    }
+  }
+}

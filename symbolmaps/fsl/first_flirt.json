@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "first_flirt",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_basename": {
+      "var_param": "output_basename"
+    },
+    "already_brain_extracted_flag": {
+      "var_param": "already_brain_extracted_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "inweight_flag": {
+      "var_param": "inweight_flag"
+    },
+    "strucweight_mask": {
+      "var_param": "strucweight_mask"
+    },
+    "cort_flag": {
+      "var_param": "cort_flag"
+    },
+    "cost_function": {
+      "var_param": "cost_function"
+    }
+  }
+}

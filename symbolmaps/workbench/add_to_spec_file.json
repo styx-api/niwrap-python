@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "add_to_spec_file",
+  "properties": {
+    "specfile": {
+      "var_param": "specfile"
+    },
+    "structure": {
+      "var_param": "structure"
+    },
+    "filename": {
+      "var_param": "filename"
+    }
+  }
+}

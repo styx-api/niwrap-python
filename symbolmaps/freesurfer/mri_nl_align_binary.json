@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_nl_align_binary",
+  "properties": {
+    "source_file": {
+      "var_param": "source_file"
+    },
+    "target_file": {
+      "var_param": "target_file"
+    },
+    "warp_file": {
+      "var_param": "warp_file"
+    }
+  }
+}

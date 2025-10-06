@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "antsintegrate_vector_field",
+  "properties": {
+    "vector_field_input": {
+      "var_param": "vector_field_input"
+    },
+    "roi_mask_input": {
+      "var_param": "roi_mask_input"
+    },
+    "fibers_output": {
+      "var_param": "fibers_output"
+    },
+    "length_image_output": {
+      "var_param": "length_image_output"
+    }
+  }
+}

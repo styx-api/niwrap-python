@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_xclust_sim",
+  "properties": {
+    "inset": {
+      "var_param": "inset"
+    },
+    "insdat": {
+      "var_param": "insdat"
+    },
+    "nn": {
+      "var_param": "nn"
+    },
+    "sid": {
+      "var_param": "sid"
+    },
+    "hpow": {
+      "var_param": "hpow"
+    },
+    "ncase": {
+      "var_param": "ncase"
+    },
+    "pthr": {
+      "var_param": "pthr"
+    },
+    "fpr": {
+      "var_param": "fpr"
+    },
+    "multiFPR": {
+      "var_param": "multi_fpr"
+    },
+    "minclust": {
+      "var_param": "minclust"
+    },
+    "local": {
+      "var_param": "local"
+    },
+    "global": {
+      "var_param": "global_"
+    },
+    "nolocal": {
+      "var_param": "nolocal"
+    },
+    "noglobal": {
+      "var_param": "noglobal"
+    },
+    "splitfrac": {
+      "var_param": "splitfrac"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

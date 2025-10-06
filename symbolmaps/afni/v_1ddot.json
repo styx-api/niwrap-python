@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_1ddot",
+  "properties": {
+    "one_flag": {
+      "var_param": "one_flag"
+    },
+    "dem_flag": {
+      "var_param": "dem_flag"
+    },
+    "cov_flag": {
+      "var_param": "cov_flag"
+    },
+    "inn_flag": {
+      "var_param": "inn_flag"
+    },
+    "rank_flag": {
+      "var_param": "rank_flag"
+    },
+    "terse_flag": {
+      "var_param": "terse_flag"
+    },
+    "okzero_flag": {
+      "var_param": "okzero_flag"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

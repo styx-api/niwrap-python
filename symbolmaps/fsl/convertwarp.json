@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "convertwarp",
+  "properties": {
+    "abswarp": {
+      "var_param": "abswarp"
+    },
+    "cons_jacobian": {
+      "var_param": "cons_jacobian"
+    },
+    "jacobian_max": {
+      "var_param": "jacobian_max"
+    },
+    "jacobian_min": {
+      "var_param": "jacobian_min"
+    },
+    "midmat": {
+      "var_param": "midmat"
+    },
+    "out_abswarp": {
+      "var_param": "out_abswarp"
+    },
+    "out_relwarp": {
+      "var_param": "out_relwarp"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "postmat": {
+      "var_param": "postmat"
+    },
+    "premat": {
+      "var_param": "premat"
+    },
+    "reference": {
+      "var_param": "reference"
+    },
+    "relwarp": {
+      "var_param": "relwarp"
+    },
+    "shift_direction": {
+      "var_param": "shift_direction"
+    },
+    "shift_in_file": {
+      "var_param": "shift_in_file"
+    },
+    "warp1": {
+      "var_param": "warp1"
+    },
+    "warp2": {
+      "var_param": "warp2"
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "fn_root_make_params_and_execute": "mri_label2label",
+  "properties": {
+    "src_label": {
+      "var_param": "src_label"
+    },
+    "trg_label": {
+      "var_param": "trg_label"
+    },
+    "erode": {
+      "var_param": "erode"
+    },
+    "open": {
+      "var_param": "open_"
+    },
+    "close": {
+      "var_param": "close"
+    },
+    "dilate": {
+      "var_param": "dilate"
+    },
+    "ring": {
+      "var_param": "ring"
+    },
+    "src_subject": {
+      "var_param": "src_subject"
+    },
+    "trg_subject": {
+      "var_param": "trg_subject"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "outmask": {
+      "var_param": "outmask"
+    },
+    "outstat": {
+      "var_param": "outstat"
+    },
+    "sample": {
+      "var_param": "sample"
+    },
+    "regmethod": {
+      "var_param": "regmethod"
+    },
+    "usepathfiles": {
+      "var_param": "usepathfiles"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "src_hemi": {
+      "var_param": "src_hemi"
+    },
+    "trg_hemi": {
+      "var_param": "trg_hemi"
+    },
+    "src_ico_order": {
+      "var_param": "src_ico_order"
+    },
+    "trg_ico_order": {
+      "var_param": "trg_ico_order"
+    },
+    "direct": {
+      "var_param": "direct"
+    },
+    "trgsurf": {
+      "var_param": "trgsurf"
+    },
+    "surfreg": {
+      "var_param": "surfreg"
+    },
+    "srcsurfreg": {
+      "var_param": "srcsurfreg"
+    },
+    "trgsurfreg": {
+      "var_param": "trgsurfreg"
+    },
+    "srcsurfreg_file": {
+      "var_param": "srcsurfreg_file"
+    },
+    "trgsurfreg_file": {
+      "var_param": "trgsurfreg_file"
+    },
+    "paint": {
+      "var_param": "paint"
+    },
+    "dmindmin": {
+      "var_param": "dmindmin"
+    },
+    "baryfill": {
+      "var_param": "baryfill"
+    },
+    "label_cortex": {
+      "var_param": "label_cortex"
+    },
+    "surf_label2mask": {
+      "var_param": "surf_label2mask"
+    },
+    "srcmask": {
+      "var_param": "srcmask"
+    },
+    "srcmasksign": {
+      "var_param": "srcmasksign"
+    },
+    "srcmaskframe": {
+      "var_param": "srcmaskframe"
+    },
+    "xfm": {
+      "var_param": "xfm"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "xfm_invert": {
+      "var_param": "xfm_invert"
+    },
+    "projabs": {
+      "var_param": "projabs"
+    },
+    "projfrac": {
+      "var_param": "projfrac"
+    },
+    "sd": {
+      "var_param": "sd"
+    },
+    "nohash": {
+      "var_param": "nohash"
+    },
+    "norevmap": {
+      "var_param": "norevmap"
+    },
+    "to_scanner": {
+      "var_param": "to_scanner"
+    },
+    "to_tkr": {
+      "var_param": "to_tkr"
+    },
+    "scanner": {
+      "var_param": "scanner"
+    }
+  }
+}

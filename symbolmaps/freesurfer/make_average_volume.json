@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "make_average_volume",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "fsgd": {
+      "var_param": "fsgd"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "topdir": {
+      "var_param": "topdir"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "sd_flag": {
+      "var_param": "sd_flag"
+    },
+    "force_flag": {
+      "var_param": "force_flag"
+    },
+    "keep_all_orig_flag": {
+      "var_param": "keep_all_orig_flag"
+    },
+    "no_aseg_flag": {
+      "var_param": "no_aseg_flag"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "ctab_default_flag": {
+      "var_param": "ctab_default_flag"
+    },
+    "echo_flag": {
+      "var_param": "echo_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "nocleanup_flag": {
+      "var_param": "nocleanup_flag"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "fscalc",
+  "properties": {
+    "input1": {
+      "var_param": "input1"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "input2": {
+      "var_param": "input2"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "output_data_type": {
+      "var_param": "output_data_type"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "tmpdir": {
+      "var_param": "tmpdir"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    }
+  }
+}

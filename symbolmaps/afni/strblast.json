@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "strblast",
+  "properties": {
+    "targetstring": {
+      "var_param": "targetstring"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "new_char": {
+      "var_param": "new_char"
+    },
+    "new_string": {
+      "var_param": "new_string"
+    },
+    "unescape": {
+      "var_param": "unescape"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

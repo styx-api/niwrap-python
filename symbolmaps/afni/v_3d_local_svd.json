@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_local_svd",
+  "properties": {
+    "auto_mask": {
+      "var_param": "auto_mask"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "nbhd": {
+      "var_param": "nbhd"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "vnorm": {
+      "var_param": "vnorm"
+    },
+    "vproj": {
+      "var_param": "vproj"
+    }
+  }
+}

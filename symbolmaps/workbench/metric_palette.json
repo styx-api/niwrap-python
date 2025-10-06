@@ -1,0 +1,98 @@
+{
+  "fn_root_make_params_and_execute": "metric_palette",
+  "properties": {
+    "metric": {
+      "var_param": "metric"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    },
+    "pos_percent": {
+      "var_param": "pos_percent",
+      "fn_struct_make_params": "metric_palette_pos_percent_params",
+      "properties": {
+        "pos_min__": {
+          "var_param": "pos_min__"
+        },
+        "pos_max__": {
+          "var_param": "pos_max__"
+        }
+      }
+    },
+    "neg_percent": {
+      "var_param": "neg_percent",
+      "fn_struct_make_params": "metric_palette_neg_percent_params",
+      "properties": {
+        "neg_min__": {
+          "var_param": "neg_min__"
+        },
+        "neg_max__": {
+          "var_param": "neg_max__"
+        }
+      }
+    },
+    "pos_user": {
+      "var_param": "pos_user",
+      "fn_struct_make_params": "metric_palette_pos_user_params",
+      "properties": {
+        "pos_min_user": {
+          "var_param": "pos_min_user"
+        },
+        "pos_max_user": {
+          "var_param": "pos_max_user"
+        }
+      }
+    },
+    "neg_user": {
+      "var_param": "neg_user",
+      "fn_struct_make_params": "metric_palette_neg_user_params",
+      "properties": {
+        "neg_min_user": {
+          "var_param": "neg_min_user"
+        },
+        "neg_max_user": {
+          "var_param": "neg_max_user"
+        }
+      }
+    },
+    "opt_interpolate_interpolate": {
+      "var_param": "opt_interpolate_interpolate"
+    },
+    "opt_disp_pos_display": {
+      "var_param": "opt_disp_pos_display"
+    },
+    "opt_disp_neg_display": {
+      "var_param": "opt_disp_neg_display"
+    },
+    "opt_disp_zero_display": {
+      "var_param": "opt_disp_zero_display"
+    },
+    "opt_palette_name_name": {
+      "var_param": "opt_palette_name_name"
+    },
+    "thresholding": {
+      "var_param": "thresholding",
+      "fn_struct_make_params": "metric_palette_thresholding_params",
+      "properties": {
+        "type": {
+          "var_param": "type_"
+        },
+        "test": {
+          "var_param": "test"
+        },
+        "min": {
+          "var_param": "min_"
+        },
+        "max": {
+          "var_param": "max_"
+        }
+      }
+    },
+    "opt_inversion_type": {
+      "var_param": "opt_inversion_type"
+    }
+  }
+}

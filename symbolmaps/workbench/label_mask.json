@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "label_mask",
+  "properties": {
+    "label": {
+      "var_param": "label"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "label_out": {
+      "var_param": "label_out"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "dwibiascorrect",
+  "properties": {
+    "algorithm": {
+      "var_param": "algorithm"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "dwibiascorrect_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "bias_image": {
+      "var_param": "bias_image"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "scratch_dir": {
+      "var_param": "scratch_dir"
+    },
+    "continue_scratch_dir": {
+      "var_param": "continue_scratch_dir"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "dwibiascorrect_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "ants_b": {
+      "var_param": "ants_b"
+    },
+    "ants_c": {
+      "var_param": "ants_c"
+    },
+    "ants_s": {
+      "var_param": "ants_s"
+    }
+  }
+}

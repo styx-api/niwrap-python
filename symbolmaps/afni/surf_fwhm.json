@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "surf_fwhm",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "surf_1": {
+      "var_param": "surf_1"
+    },
+    "surf_sphere": {
+      "var_param": "surf_sphere"
+    },
+    "clean": {
+      "var_param": "clean"
+    },
+    "detrend": {
+      "var_param": "detrend"
+    },
+    "detpoly": {
+      "var_param": "detpoly"
+    },
+    "detprefix": {
+      "var_param": "detprefix"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "vox_size": {
+      "var_param": "vox_size"
+    },
+    "neighborhood": {
+      "var_param": "neighborhood"
+    },
+    "ok_warn": {
+      "var_param": "ok_warn"
+    },
+    "examples": {
+      "var_param": "examples"
+    },
+    "slice": {
+      "var_param": "slice_"
+    }
+  }
+}

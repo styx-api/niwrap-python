@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "run_first",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "transformation_matrix": {
+      "var_param": "transformation_matrix"
+    },
+    "n_modes": {
+      "var_param": "n_modes"
+    },
+    "output_basename": {
+      "var_param": "output_basename"
+    },
+    "model_name": {
+      "var_param": "model_name"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "intref_model_name": {
+      "var_param": "intref_model_name"
+    },
+    "load_bvars": {
+      "var_param": "load_bvars"
+    },
+    "multiple_images_flag": {
+      "var_param": "multiple_images_flag"
+    }
+  }
+}

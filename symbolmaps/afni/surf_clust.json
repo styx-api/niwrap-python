@@ -1,0 +1,122 @@
+{
+  "fn_root_make_params_and_execute": "surf_clust",
+  "properties": {
+    "specfile": {
+      "var_param": "specfile"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "input_surf_name": {
+      "var_param": "input_surf_name"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "rmm": {
+      "var_param": "rmm"
+    },
+    "amm2": {
+      "var_param": "amm2"
+    },
+    "min_nodes": {
+      "var_param": "min_nodes"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "out_clusterdset": {
+      "var_param": "out_clusterdset"
+    },
+    "out_roidset": {
+      "var_param": "out_roidset"
+    },
+    "out_fulllist": {
+      "var_param": "out_fulllist"
+    },
+    "sort_none": {
+      "var_param": "sort_none"
+    },
+    "sort_n_nodes": {
+      "var_param": "sort_n_nodes"
+    },
+    "sort_area": {
+      "var_param": "sort_area"
+    },
+    "thresh_col": {
+      "var_param": "thresh_col"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "athresh": {
+      "var_param": "athresh"
+    },
+    "ir_range": {
+      "var_param": "ir_range"
+    },
+    "ex_range": {
+      "var_param": "ex_range"
+    },
+    "prepend_node_index": {
+      "var_param": "prepend_node_index"
+    },
+    "update": {
+      "var_param": "update_"
+    },
+    "no_cent": {
+      "var_param": "no_cent"
+    },
+    "cent": {
+      "var_param": "cent"
+    },
+    "novolreg": {
+      "var_param": "novolreg"
+    },
+    "noxform": {
+      "var_param": "noxform"
+    },
+    "set_env": {
+      "var_param": "set_env"
+    },
+    "trace": {
+      "var_param": "trace_"
+    },
+    "trace_extreme": {
+      "var_param": "trace_extreme"
+    },
+    "no_memory_trace": {
+      "var_param": "no_memory_trace"
+    },
+    "yes_memory_trace": {
+      "var_param": "yes_memory_trace"
+    },
+    "mini_help": {
+      "var_param": "mini_help"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "extreme_help": {
+      "var_param": "extreme_help"
+    },
+    "view_help": {
+      "var_param": "view_help"
+    },
+    "web_help": {
+      "var_param": "web_help"
+    },
+    "find_help": {
+      "var_param": "find_help"
+    },
+    "raw_help": {
+      "var_param": "raw_help"
+    },
+    "spx_help": {
+      "var_param": "spx_help"
+    },
+    "aspx_help": {
+      "var_param": "aspx_help"
+    }
+  }
+}

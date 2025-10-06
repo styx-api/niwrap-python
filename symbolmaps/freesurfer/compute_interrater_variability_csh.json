@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "compute_interrater_variability_csh",
+  "properties": {
+    "label_vol1": {
+      "var_param": "label_vol1"
+    },
+    "label_vol2": {
+      "var_param": "label_vol2"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

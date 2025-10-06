@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "convert_affine",
+  "properties": {
+    "from_world": {
+      "var_param": "from_world",
+      "fn_struct_make_params": "convert_affine_from_world_params",
+      "properties": {
+        "input": {
+          "var_param": "input_"
+        },
+        "opt_inverse": {
+          "var_param": "opt_inverse"
+        }
+      }
+    },
+    "opt_from_itk_input": {
+      "var_param": "opt_from_itk_input"
+    },
+    "from_flirt": {
+      "var_param": "from_flirt",
+      "fn_struct_make_params": "convert_affine_from_flirt_params",
+      "properties": {
+        "input": {
+          "var_param": "input_"
+        },
+        "source_volume": {
+          "var_param": "source_volume"
+        },
+        "target_volume": {
+          "var_param": "target_volume"
+        }
+      }
+    },
+    "to_world": {
+      "var_param": "to_world",
+      "fn_struct_make_params": "convert_affine_to_world_params",
+      "properties": {
+        "output": {
+          "var_param": "output"
+        },
+        "opt_inverse": {
+          "var_param": "opt_inverse"
+        }
+      }
+    },
+    "opt_to_itk_output": {
+      "var_param": "opt_to_itk_output"
+    },
+    "to_flirt": {
+      "var_param": "to_flirt",
+      "fn_struct_make_params": "convert_affine_to_flirt_params",
+      "properties": {
+        "output": {
+          "var_param": "output"
+        },
+        "source_volume": {
+          "var_param": "source_volume"
+        },
+        "target_volume": {
+          "var_param": "target_volume"
+        }
+      }
+    }
+  }
+}

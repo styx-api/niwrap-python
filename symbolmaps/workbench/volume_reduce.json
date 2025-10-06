@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "volume_reduce",
+  "properties": {
+    "volume_in": {
+      "var_param": "volume_in"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "exclude_outliers": {
+      "var_param": "exclude_outliers",
+      "fn_struct_make_params": "volume_reduce_exclude_outliers_params",
+      "properties": {
+        "sigma_below": {
+          "var_param": "sigma_below"
+        },
+        "sigma_above": {
+          "var_param": "sigma_above"
+        }
+      }
+    },
+    "opt_only_numeric": {
+      "var_param": "opt_only_numeric"
+    }
+  }
+}

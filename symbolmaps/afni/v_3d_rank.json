@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_rank",
+  "properties": {
+    "input_datasets": {
+      "var_param": "input_datasets"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "version_info": {
+      "var_param": "version_info"
+    },
+    "help_info": {
+      "var_param": "help_info"
+    }
+  }
+}

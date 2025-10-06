@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "aparcstats2table",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "subjectsfile": {
+      "var_param": "subjectsfile"
+    },
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "qdec_long": {
+      "var_param": "qdec_long"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "tablefile": {
+      "var_param": "tablefile"
+    },
+    "parcellation": {
+      "var_param": "parcellation"
+    },
+    "measure": {
+      "var_param": "measure"
+    },
+    "delimiter": {
+      "var_param": "delimiter"
+    },
+    "skip_missing": {
+      "var_param": "skip_missing"
+    },
+    "parcid_only": {
+      "var_param": "parcid_only"
+    },
+    "common_parcs": {
+      "var_param": "common_parcs"
+    },
+    "parcs_file": {
+      "var_param": "parcs_file"
+    },
+    "report_rois": {
+      "var_param": "report_rois"
+    },
+    "transpose": {
+      "var_param": "transpose"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "etiv": {
+      "var_param": "etiv"
+    },
+    "scale": {
+      "var_param": "scale"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_fwhmx",
+  "properties": {
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "demed": {
+      "var_param": "demed"
+    },
+    "unif": {
+      "var_param": "unif"
+    },
+    "detrend": {
+      "var_param": "detrend"
+    },
+    "detprefix": {
+      "var_param": "detprefix"
+    },
+    "geom": {
+      "var_param": "geom"
+    },
+    "arith": {
+      "var_param": "arith"
+    },
+    "combine": {
+      "var_param": "combine"
+    },
+    "out": {
+      "var_param": "out"
+    },
+    "compat": {
+      "var_param": "compat"
+    },
+    "acf": {
+      "var_param": "acf"
+    },
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

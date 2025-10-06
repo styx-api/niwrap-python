@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "lpcregister",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "mov_volume": {
+      "var_param": "mov_volume"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "dof_9": {
+      "var_param": "dof_9"
+    },
+    "dof_12": {
+      "var_param": "dof_12"
+    },
+    "frame_number": {
+      "var_param": "frame_number"
+    },
+    "mid_frame": {
+      "var_param": "mid_frame"
+    },
+    "fsvol": {
+      "var_param": "fsvol"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "tmp_dir": {
+      "var_param": "tmp_dir"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

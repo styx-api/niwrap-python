@@ -1,0 +1,116 @@
+{
+  "fn_root_make_params_and_execute": "tcksift2",
+  "properties": {
+    "proc_mask": {
+      "var_param": "proc_mask"
+    },
+    "act": {
+      "var_param": "act"
+    },
+    "fd_scale_gm": {
+      "var_param": "fd_scale_gm"
+    },
+    "no_dilate_lut": {
+      "var_param": "no_dilate_lut"
+    },
+    "make_null_lobes": {
+      "var_param": "make_null_lobes"
+    },
+    "remove_untracked": {
+      "var_param": "remove_untracked"
+    },
+    "fd_thresh": {
+      "var_param": "fd_thresh"
+    },
+    "csv": {
+      "var_param": "csv_"
+    },
+    "out_mu": {
+      "var_param": "out_mu"
+    },
+    "output_debug": {
+      "var_param": "output_debug"
+    },
+    "out_coeffs": {
+      "var_param": "out_coeffs"
+    },
+    "reg_tikhonov": {
+      "var_param": "reg_tikhonov"
+    },
+    "reg_tv": {
+      "var_param": "reg_tv"
+    },
+    "min_td_frac": {
+      "var_param": "min_td_frac"
+    },
+    "min_iters": {
+      "var_param": "min_iters"
+    },
+    "max_iters": {
+      "var_param": "max_iters"
+    },
+    "min_factor": {
+      "var_param": "min_factor"
+    },
+    "min_coeff": {
+      "var_param": "min_coeff"
+    },
+    "max_factor": {
+      "var_param": "max_factor"
+    },
+    "max_coeff": {
+      "var_param": "max_coeff"
+    },
+    "max_coeff_step": {
+      "var_param": "max_coeff_step"
+    },
+    "min_cf_decrease": {
+      "var_param": "min_cf_decrease"
+    },
+    "linear": {
+      "var_param": "linear"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tcksift2_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "in_tracks": {
+      "var_param": "in_tracks"
+    },
+    "in_fod": {
+      "var_param": "in_fod"
+    },
+    "out_weights": {
+      "var_param": "out_weights"
+    }
+  }
+}

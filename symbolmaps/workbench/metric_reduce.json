@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "metric_reduce",
+  "properties": {
+    "metric_in": {
+      "var_param": "metric_in"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "exclude_outliers": {
+      "var_param": "exclude_outliers",
+      "fn_struct_make_params": "metric_reduce_exclude_outliers_params",
+      "properties": {
+        "sigma_below": {
+          "var_param": "sigma_below"
+        },
+        "sigma_above": {
+          "var_param": "sigma_above"
+        }
+      }
+    },
+    "opt_only_numeric": {
+      "var_param": "opt_only_numeric"
+    }
+  }
+}

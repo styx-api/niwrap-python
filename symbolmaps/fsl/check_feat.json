@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "check_feat",
+  "properties": {
+    "report_file": {
+      "var_param": "report_file"
+    },
+    "report_log_file": {
+      "var_param": "report_log_file"
+    }
+  }
+}

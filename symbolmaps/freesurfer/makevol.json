@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "makevol",
+  "properties": {
+    "filename": {
+      "var_param": "filename"
+    },
+    "width": {
+      "var_param": "width"
+    },
+    "height": {
+      "var_param": "height"
+    },
+    "depth": {
+      "var_param": "depth"
+    },
+    "sizex": {
+      "var_param": "sizex"
+    },
+    "sizey": {
+      "var_param": "sizey"
+    },
+    "sizez": {
+      "var_param": "sizez"
+    },
+    "set_method": {
+      "var_param": "set_method"
+    }
+  }
+}

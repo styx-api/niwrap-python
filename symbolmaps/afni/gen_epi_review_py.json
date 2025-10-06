@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "gen_epi_review_py",
+  "properties": {
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "script_name": {
+      "var_param": "script_name"
+    },
+    "windows": {
+      "var_param": "windows"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    },
+    "image_size": {
+      "var_param": "image_size"
+    },
+    "image_xoffset": {
+      "var_param": "image_xoffset"
+    },
+    "image_yoffset": {
+      "var_param": "image_yoffset"
+    },
+    "graph_size": {
+      "var_param": "graph_size"
+    },
+    "graph_xoffset": {
+      "var_param": "graph_xoffset"
+    },
+    "graph_yoffset": {
+      "var_param": "graph_yoffset"
+    }
+  }
+}

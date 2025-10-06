@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3dmatmult",
+  "properties": {
+    "inputA": {
+      "var_param": "input_a"
+    },
+    "inputB": {
+      "var_param": "input_b"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

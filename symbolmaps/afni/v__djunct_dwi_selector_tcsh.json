@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__djunct_dwi_selector_tcsh",
+  "properties": {
+    "dwi": {
+      "var_param": "dwi"
+    },
+    "png": {
+      "var_param": "png"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    }
+  }
+}

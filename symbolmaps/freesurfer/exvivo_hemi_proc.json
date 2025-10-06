@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "exvivo_hemi_proc",
+  "properties": {
+    "flashdir": {
+      "var_param": "flashdir"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "left_hemi": {
+      "var_param": "left_hemi"
+    },
+    "right_hemi": {
+      "var_param": "right_hemi"
+    },
+    "suptent": {
+      "var_param": "suptent"
+    },
+    "no_rotate": {
+      "var_param": "no_rotate"
+    },
+    "t1thresh": {
+      "var_param": "t1thresh"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "check_only": {
+      "var_param": "check_only"
+    },
+    "prep_only": {
+      "var_param": "prep_only"
+    },
+    "mask_only": {
+      "var_param": "mask_only"
+    },
+    "samseg_only": {
+      "var_param": "samseg_only"
+    },
+    "stop_mmppsp_after": {
+      "var_param": "stop_mmppsp_after"
+    },
+    "force": {
+      "var_param": "force"
+    }
+  }
+}

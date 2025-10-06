@@ -1,0 +1,161 @@
+{
+  "fn_root_make_params_and_execute": "mri_info",
+  "properties": {
+    "input1": {
+      "var_param": "input1"
+    },
+    "input2": {
+      "var_param": "input2"
+    },
+    "conformed": {
+      "var_param": "conformed"
+    },
+    "conformed_to_min": {
+      "var_param": "conformed_to_min"
+    },
+    "is_1mm_iso": {
+      "var_param": "is_1mm_iso"
+    },
+    "type": {
+      "var_param": "type_"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "ti": {
+      "var_param": "ti"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "pedir": {
+      "var_param": "pedir"
+    },
+    "res": {
+      "var_param": "res"
+    },
+    "cres": {
+      "var_param": "cres"
+    },
+    "rres": {
+      "var_param": "rres"
+    },
+    "sres": {
+      "var_param": "sres"
+    },
+    "voxvol": {
+      "var_param": "voxvol"
+    },
+    "voxvolsum": {
+      "var_param": "voxvolsum"
+    },
+    "ncols": {
+      "var_param": "ncols"
+    },
+    "nrows": {
+      "var_param": "nrows"
+    },
+    "nslices": {
+      "var_param": "nslices"
+    },
+    "dim": {
+      "var_param": "dim"
+    },
+    "cdc": {
+      "var_param": "cdc"
+    },
+    "rdc": {
+      "var_param": "rdc"
+    },
+    "sdc": {
+      "var_param": "sdc"
+    },
+    "vox2ras": {
+      "var_param": "vox2ras"
+    },
+    "ras2vox": {
+      "var_param": "ras2vox"
+    },
+    "vox2ras_tkr": {
+      "var_param": "vox2ras_tkr"
+    },
+    "ras2vox_tkr": {
+      "var_param": "ras2vox_tkr"
+    },
+    "vox2ras_fsl": {
+      "var_param": "vox2ras_fsl"
+    },
+    "tkr2scanner": {
+      "var_param": "tkr2scanner"
+    },
+    "scanner2tkr": {
+      "var_param": "scanner2tkr"
+    },
+    "ras_good": {
+      "var_param": "ras_good"
+    },
+    "cras": {
+      "var_param": "cras"
+    },
+    "center": {
+      "var_param": "center"
+    },
+    "zero_cras": {
+      "var_param": "zero_cras"
+    },
+    "p0": {
+      "var_param": "p0"
+    },
+    "det": {
+      "var_param": "det"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "nframes": {
+      "var_param": "nframes"
+    },
+    "mid_frame": {
+      "var_param": "mid_frame"
+    },
+    "format": {
+      "var_param": "format_"
+    },
+    "orientation": {
+      "var_param": "orientation"
+    },
+    "slicedirection": {
+      "var_param": "slicedirection"
+    },
+    "autoalign": {
+      "var_param": "autoalign"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "cmds": {
+      "var_param": "cmds"
+    },
+    "dump": {
+      "var_param": "dump"
+    },
+    "voxel_crs": {
+      "var_param": "voxel_crs"
+    },
+    "entropy": {
+      "var_param": "entropy"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "orig_ras2vox": {
+      "var_param": "orig_ras2vox"
+    },
+    "in_type": {
+      "var_param": "in_type"
+    }
+  }
+}

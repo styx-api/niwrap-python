@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v__roi_corr_mat",
+  "properties": {
+    "ts_vol": {
+      "var_param": "ts_vol"
+    },
+    "roi_vol": {
+      "var_param": "roi_vol"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "roisel": {
+      "var_param": "roisel"
+    },
+    "zval": {
+      "var_param": "zval"
+    },
+    "mat_opt": {
+      "var_param": "mat_opt"
+    },
+    "dirty": {
+      "var_param": "dirty"
+    },
+    "keep_tmp": {
+      "var_param": "keep_tmp"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

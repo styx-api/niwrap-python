@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mris_refine_surfaces",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "hires_volume": {
+      "var_param": "hires_volume"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "low_to_hires_xfm": {
+      "var_param": "low_to_hires_xfm"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "use_mgz": {
+      "var_param": "use_mgz"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    }
+  }
+}

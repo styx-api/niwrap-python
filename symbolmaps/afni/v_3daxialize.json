@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3daxialize",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "sagittal": {
+      "var_param": "sagittal"
+    },
+    "coronal": {
+      "var_param": "coronal"
+    },
+    "axial": {
+      "var_param": "axial"
+    },
+    "orient_code": {
+      "var_param": "orient_code"
+    },
+    "frugal": {
+      "var_param": "frugal"
+    }
+  }
+}

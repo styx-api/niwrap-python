@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "convert_surface",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "surface_volume": {
+      "var_param": "surface_volume"
+    },
+    "transform_tlrc": {
+      "var_param": "transform_tlrc"
+    },
+    "mni_rai": {
+      "var_param": "mni_rai"
+    },
+    "mni_lpi": {
+      "var_param": "mni_lpi"
+    },
+    "xmat_1D": {
+      "var_param": "xmat_1_d"
+    },
+    "ixmat_1D": {
+      "var_param": "ixmat_1_d"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "native": {
+      "var_param": "native"
+    }
+  }
+}

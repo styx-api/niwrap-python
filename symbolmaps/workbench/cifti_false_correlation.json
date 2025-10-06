@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "cifti_false_correlation",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "3d_dist": {
+      "var_param": "v_3d_dist"
+    },
+    "geo_outer": {
+      "var_param": "geo_outer"
+    },
+    "geo_inner": {
+      "var_param": "geo_inner"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "left_surface": {
+      "var_param": "left_surface",
+      "fn_struct_make_params": "cifti_false_correlation_left_surface_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "opt_dump_text_text_out": {
+          "var_param": "opt_dump_text_text_out"
+        }
+      }
+    },
+    "right_surface": {
+      "var_param": "right_surface",
+      "fn_struct_make_params": "cifti_false_correlation_right_surface_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "opt_dump_text_text_out": {
+          "var_param": "opt_dump_text_text_out"
+        }
+      }
+    },
+    "cerebellum_surface": {
+      "var_param": "cerebellum_surface",
+      "fn_struct_make_params": "cifti_false_correlation_cerebellum_surface_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "opt_dump_text_text_out": {
+          "var_param": "opt_dump_text_text_out"
+        }
+      }
+    }
+  }
+}

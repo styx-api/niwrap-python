@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "flirt_average",
+  "properties": {
+    "ninputs": {
+      "var_param": "ninputs"
+    },
+    "input1": {
+      "var_param": "input1"
+    },
+    "input2": {
+      "var_param": "input2"
+    },
+    "input3": {
+      "var_param": "input3"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "flirt_options": {
+      "var_param": "flirt_options"
+    }
+  }
+}

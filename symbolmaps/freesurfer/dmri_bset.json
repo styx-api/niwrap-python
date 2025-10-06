@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "dmri_bset",
+  "properties": {
+    "input_dwi": {
+      "var_param": "input_dwi"
+    },
+    "output_dwi": {
+      "var_param": "output_dwi"
+    },
+    "b_values": {
+      "var_param": "b_values"
+    },
+    "btol": {
+      "var_param": "btol"
+    },
+    "bsort": {
+      "var_param": "bsort"
+    },
+    "bmax": {
+      "var_param": "bmax"
+    },
+    "input_b_table": {
+      "var_param": "input_b_table"
+    },
+    "input_g_table": {
+      "var_param": "input_g_table"
+    },
+    "output_b_table": {
+      "var_param": "output_b_table"
+    },
+    "output_g_table": {
+      "var_param": "output_g_table"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "trac_preproc",
+  "properties": {
+    "dmrirc_file": {
+      "var_param": "dmrirc_file"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "nolog": {
+      "var_param": "nolog"
+    },
+    "cmd_file": {
+      "var_param": "cmd_file"
+    },
+    "nocmd": {
+      "var_param": "nocmd"
+    },
+    "no_isrunning": {
+      "var_param": "no_isrunning"
+    },
+    "umask": {
+      "var_param": "umask"
+    },
+    "group_id": {
+      "var_param": "group_id"
+    },
+    "allow_core_dump": {
+      "var_param": "allow_core_dump"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "dontrun": {
+      "var_param": "dontrun"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

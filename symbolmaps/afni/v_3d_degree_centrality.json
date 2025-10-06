@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_degree_centrality",
+  "properties": {
+    "autoclip": {
+      "var_param": "autoclip"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "oned_file": {
+      "var_param": "oned_file"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "sparsity": {
+      "var_param": "sparsity"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    }
+  }
+}

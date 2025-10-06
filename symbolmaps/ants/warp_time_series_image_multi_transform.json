@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "warp_time_series_image_multi_transform",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "transforms": {
+      "var_param": "transforms"
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_mi",
+  "properties": {
+    "input_file1": {
+      "var_param": "input_file1"
+    },
+    "input_file2": {
+      "var_param": "input_file2"
+    },
+    "bins": {
+      "var_param": "bins"
+    },
+    "silent": {
+      "var_param": "silent"
+    }
+  }
+}

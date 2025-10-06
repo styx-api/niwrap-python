@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "mris_label2annot",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "ctabfile": {
+      "var_param": "ctabfile"
+    },
+    "annotname": {
+      "var_param": "annotname"
+    },
+    "index_offset": {
+      "var_param": "index_offset"
+    },
+    "label_files": {
+      "var_param": "label_files"
+    },
+    "annot_path": {
+      "var_param": "annot_path"
+    },
+    "labeldir": {
+      "var_param": "labeldir"
+    },
+    "ldir_default": {
+      "var_param": "ldir_default"
+    },
+    "no_unknown": {
+      "var_param": "no_unknown"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "maxstatwinner": {
+      "var_param": "maxstatwinner"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    }
+  }
+}

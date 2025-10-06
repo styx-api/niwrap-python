@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "match_smoothing",
+  "properties": {
+    "example_func": {
+      "var_param": "example_func"
+    },
+    "func_smoothing_FWHM": {
+      "var_param": "func_smoothing_fwhm"
+    },
+    "example_structural": {
+      "var_param": "example_structural"
+    },
+    "standard_space_resolution": {
+      "var_param": "standard_space_resolution"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "mri_normalize",
+  "properties": {
+    "input_vol": {
+      "var_param": "input_vol"
+    },
+    "output_vol": {
+      "var_param": "output_vol"
+    },
+    "norm_iters": {
+      "var_param": "norm_iters"
+    },
+    "disable_1d": {
+      "var_param": "disable_1d"
+    },
+    "nonmax_suppress": {
+      "var_param": "nonmax_suppress"
+    },
+    "conform": {
+      "var_param": "conform"
+    },
+    "nonconform": {
+      "var_param": "nonconform"
+    },
+    "gentle": {
+      "var_param": "gentle"
+    },
+    "control_points": {
+      "var_param": "control_points"
+    },
+    "fonly_control_points": {
+      "var_param": "fonly_control_points"
+    },
+    "lonly_labels": {
+      "var_param": "lonly_labels"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "write_volumes": {
+      "var_param": "write_volumes"
+    },
+    "intensity_above": {
+      "var_param": "intensity_above"
+    },
+    "intensity_below": {
+      "var_param": "intensity_below"
+    },
+    "intensity_gradient": {
+      "var_param": "intensity_gradient"
+    },
+    "prune": {
+      "var_param": "prune"
+    },
+    "no_gentle_cp": {
+      "var_param": "no_gentle_cp"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "atlas_transform": {
+      "var_param": "atlas_transform"
+    },
+    "noskull": {
+      "var_param": "noskull"
+    },
+    "monkey": {
+      "var_param": "monkey"
+    },
+    "nosnr": {
+      "var_param": "nosnr"
+    },
+    "sigma_smooth": {
+      "var_param": "sigma_smooth"
+    },
+    "aseg_file": {
+      "var_param": "aseg_file"
+    },
+    "debug_v": {
+      "var_param": "debug_v"
+    },
+    "debug_d": {
+      "var_param": "debug_d"
+    },
+    "renorm_vol": {
+      "var_param": "renorm_vol"
+    },
+    "checknorm_vol": {
+      "var_param": "checknorm_vol"
+    },
+    "load_read_cp": {
+      "var_param": "load_read_cp"
+    },
+    "cp_output_vol": {
+      "var_param": "cp_output_vol"
+    },
+    "surface_transform": {
+      "var_param": "surface_transform"
+    },
+    "seed_value": {
+      "var_param": "seed_value"
+    },
+    "print_help": {
+      "var_param": "print_help"
+    }
+  }
+}

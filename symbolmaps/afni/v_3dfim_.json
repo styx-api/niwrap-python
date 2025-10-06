@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_3dfim_",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "input1dfile": {
+      "var_param": "input1dfile"
+    },
+    "maskfile": {
+      "var_param": "maskfile"
+    },
+    "first_image": {
+      "var_param": "first_image"
+    },
+    "last_image": {
+      "var_param": "last_image"
+    },
+    "baseline_polynomial": {
+      "var_param": "baseline_polynomial"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "cdisp_value": {
+      "var_param": "cdisp_value"
+    },
+    "ort_file": {
+      "var_param": "ort_file"
+    },
+    "ideal_file": {
+      "var_param": "ideal_file"
+    },
+    "output_params": {
+      "var_param": "output_params"
+    },
+    "output_bucket": {
+      "var_param": "output_bucket"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "make_upright",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "transformation_map": {
+      "var_param": "transformation_map"
+    }
+  }
+}

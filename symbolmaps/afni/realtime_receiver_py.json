@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "realtime_receiver_py",
+  "properties": {
+    "show_data": {
+      "var_param": "show_data"
+    },
+    "write_text_data": {
+      "var_param": "write_text_data"
+    },
+    "data_choice": {
+      "var_param": "data_choice"
+    },
+    "serial_port": {
+      "var_param": "serial_port"
+    },
+    "show_demo_gui": {
+      "var_param": "show_demo_gui"
+    },
+    "dc_params": {
+      "var_param": "dc_params"
+    },
+    "extras_on_one_line": {
+      "var_param": "extras_on_one_line"
+    },
+    "show_comm_times": {
+      "var_param": "show_comm_times"
+    },
+    "show_demo_data": {
+      "var_param": "show_demo_data"
+    },
+    "swap": {
+      "var_param": "swap"
+    },
+    "tcp_port": {
+      "var_param": "tcp_port"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

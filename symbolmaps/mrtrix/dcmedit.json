@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "dcmedit",
+  "properties": {
+    "anonymise": {
+      "var_param": "anonymise"
+    },
+    "id": {
+      "var_param": "id_"
+    },
+    "tag": {
+      "var_param": "tag",
+      "fn_struct_make_params": "dcmedit_tag_params",
+      "properties": {
+        "group": {
+          "var_param": "group"
+        },
+        "element": {
+          "var_param": "element"
+        },
+        "newvalue": {
+          "var_param": "newvalue"
+        }
+      }
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "dcmedit_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "file": {
+      "var_param": "file"
+    }
+  }
+}

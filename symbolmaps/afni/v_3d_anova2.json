@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_anova2",
+  "properties": {
+    "type": {
+      "var_param": "type_"
+    },
+    "alevels": {
+      "var_param": "alevels"
+    },
+    "blevels": {
+      "var_param": "blevels"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "voxel": {
+      "var_param": "voxel"
+    },
+    "diskspace": {
+      "var_param": "diskspace"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "ftr": {
+      "var_param": "ftr"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "fb": {
+      "var_param": "fb"
+    },
+    "fab": {
+      "var_param": "fab"
+    },
+    "amean": {
+      "var_param": "amean"
+    },
+    "bmean": {
+      "var_param": "bmean"
+    },
+    "xmean": {
+      "var_param": "xmean"
+    },
+    "adiff": {
+      "var_param": "adiff"
+    },
+    "bdiff": {
+      "var_param": "bdiff"
+    },
+    "xdiff": {
+      "var_param": "xdiff"
+    },
+    "acontr": {
+      "var_param": "acontr"
+    },
+    "bcontr": {
+      "var_param": "bcontr"
+    },
+    "xcontr": {
+      "var_param": "xcontr"
+    },
+    "bucket": {
+      "var_param": "bucket"
+    },
+    "old_method": {
+      "var_param": "old_method"
+    },
+    "ok": {
+      "var_param": "ok"
+    },
+    "assume_sph": {
+      "var_param": "assume_sph"
+    }
+  }
+}

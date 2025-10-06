@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "ants_registration_sy_n_sh",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "fixed_image": {
+      "var_param": "fixed_image"
+    },
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "initial_transform": {
+      "var_param": "initial_transform"
+    },
+    "transform_type": {
+      "var_param": "transform_type"
+    },
+    "radius": {
+      "var_param": "radius"
+    },
+    "spline_distance": {
+      "var_param": "spline_distance"
+    },
+    "gradient_step": {
+      "var_param": "gradient_step"
+    },
+    "masks": {
+      "var_param": "masks"
+    },
+    "precision_type": {
+      "var_param": "precision_type"
+    },
+    "use_histogram_matching": {
+      "var_param": "use_histogram_matching"
+    },
+    "use_repro_mode": {
+      "var_param": "use_repro_mode"
+    },
+    "collapse_output_transforms": {
+      "var_param": "collapse_output_transforms"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    }
+  }
+}

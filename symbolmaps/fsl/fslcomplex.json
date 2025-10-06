@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "fslcomplex",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "start_vol": {
+      "var_param": "start_vol"
+    },
+    "end_vol": {
+      "var_param": "end_vol"
+    }
+  }
+}

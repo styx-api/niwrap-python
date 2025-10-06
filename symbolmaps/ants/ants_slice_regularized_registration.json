@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "ants_slice_regularized_registration",
+  "properties": {
+    "polydegree": {
+      "var_param": "polydegree"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "shrink_factors": {
+      "var_param": "shrink_factors"
+    },
+    "smoothing_sigmas": {
+      "var_param": "smoothing_sigmas"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

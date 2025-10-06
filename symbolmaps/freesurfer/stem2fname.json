@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "stem2fname",
+  "properties": {
+    "stem": {
+      "var_param": "stem"
+    }
+  }
+}

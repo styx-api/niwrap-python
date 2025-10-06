@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "count",
+  "properties": {
+    "bot": {
+      "var_param": "bot"
+    },
+    "top": {
+      "var_param": "top"
+    },
+    "step": {
+      "var_param": "step"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "sseed": {
+      "var_param": "sseed"
+    },
+    "column": {
+      "var_param": "column"
+    },
+    "digits": {
+      "var_param": "digits"
+    },
+    "form": {
+      "var_param": "form"
+    },
+    "root": {
+      "var_param": "root"
+    },
+    "sep": {
+      "var_param": "sep"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "comma": {
+      "var_param": "comma"
+    },
+    "skipnmodm": {
+      "var_param": "skipnmodm"
+    }
+  }
+}

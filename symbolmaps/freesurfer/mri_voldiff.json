@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mri_voldiff",
+  "properties": {
+    "volume1": {
+      "var_param": "volume1"
+    },
+    "volume2": {
+      "var_param": "volume2"
+    },
+    "vox2ras_thresh": {
+      "var_param": "vox2ras_thresh"
+    },
+    "pix_thresh": {
+      "var_param": "pix_thresh"
+    },
+    "allow_precision": {
+      "var_param": "allow_precision"
+    },
+    "allow_resolution": {
+      "var_param": "allow_resolution"
+    },
+    "allow_vox2ras": {
+      "var_param": "allow_vox2ras"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    }
+  }
+}

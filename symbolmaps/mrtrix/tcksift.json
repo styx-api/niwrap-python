@@ -1,0 +1,95 @@
+{
+  "fn_root_make_params_and_execute": "tcksift",
+  "properties": {
+    "nofilter": {
+      "var_param": "nofilter"
+    },
+    "output_at_counts": {
+      "var_param": "output_at_counts"
+    },
+    "proc_mask": {
+      "var_param": "proc_mask"
+    },
+    "act": {
+      "var_param": "act"
+    },
+    "fd_scale_gm": {
+      "var_param": "fd_scale_gm"
+    },
+    "no_dilate_lut": {
+      "var_param": "no_dilate_lut"
+    },
+    "make_null_lobes": {
+      "var_param": "make_null_lobes"
+    },
+    "remove_untracked": {
+      "var_param": "remove_untracked"
+    },
+    "fd_thresh": {
+      "var_param": "fd_thresh"
+    },
+    "csv": {
+      "var_param": "csv_"
+    },
+    "out_mu": {
+      "var_param": "out_mu"
+    },
+    "output_debug": {
+      "var_param": "output_debug"
+    },
+    "out_selection": {
+      "var_param": "out_selection"
+    },
+    "term_number": {
+      "var_param": "term_number"
+    },
+    "term_ratio": {
+      "var_param": "term_ratio"
+    },
+    "term_mu": {
+      "var_param": "term_mu"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tcksift_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "in_tracks": {
+      "var_param": "in_tracks"
+    },
+    "in_fod": {
+      "var_param": "in_fod"
+    },
+    "out_tracks": {
+      "var_param": "out_tracks"
+    }
+  }
+}

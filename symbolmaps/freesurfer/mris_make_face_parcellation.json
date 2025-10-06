@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mris_make_face_parcellation",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "ico_file": {
+      "var_param": "ico_file"
+    },
+    "output_annot": {
+      "var_param": "output_annot"
+    },
+    "colortable": {
+      "var_param": "colortable"
+    }
+  }
+}

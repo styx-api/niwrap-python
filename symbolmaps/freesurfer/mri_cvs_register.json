@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "mri_cvs_register",
+  "properties": {
+    "mov_subjid": {
+      "var_param": "mov_subjid"
+    },
+    "template_subjid": {
+      "var_param": "template_subjid"
+    },
+    "templatedir": {
+      "var_param": "templatedir"
+    },
+    "mni_flag": {
+      "var_param": "mni_flag"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "asegfname": {
+      "var_param": "asegfname"
+    },
+    "voltype": {
+      "var_param": "voltype"
+    },
+    "step1_flag": {
+      "var_param": "step1_flag"
+    },
+    "step2_flag": {
+      "var_param": "step2_flag"
+    },
+    "step3_flag": {
+      "var_param": "step3_flag"
+    },
+    "noaseg_flag": {
+      "var_param": "noaseg_flag"
+    },
+    "nointensity_flag": {
+      "var_param": "nointensity_flag"
+    },
+    "hemi_flag": {
+      "var_param": "hemi_flag"
+    },
+    "masktargethemi_flag": {
+      "var_param": "masktargethemi_flag"
+    },
+    "maskmovinghemi_flag": {
+      "var_param": "maskmovinghemi_flag"
+    },
+    "nocleanup_flag": {
+      "var_param": "nocleanup_flag"
+    },
+    "keepelreg_flag": {
+      "var_param": "keepelreg_flag"
+    },
+    "keepallm3z_flag": {
+      "var_param": "keepallm3z_flag"
+    },
+    "cleanall_flag": {
+      "var_param": "cleanall_flag"
+    },
+    "cleansurfreg_flag": {
+      "var_param": "cleansurfreg_flag"
+    },
+    "cleanelreg_flag": {
+      "var_param": "cleanelreg_flag"
+    },
+    "cleanvolreg_flag": {
+      "var_param": "cleanvolreg_flag"
+    },
+    "m3d_flag": {
+      "var_param": "m3d_flag"
+    },
+    "openmp": {
+      "var_param": "openmp"
+    },
+    "nolog_flag": {
+      "var_param": "nolog_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

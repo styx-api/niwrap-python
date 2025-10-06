@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "aparc2feat",
+  "properties": {
+    "feat_directories": {
+      "var_param": "feat_directories"
+    },
+    "featdirfile": {
+      "var_param": "featdirfile"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "annot": {
+      "var_param": "annot"
+    },
+    "annot_a2005s_flag": {
+      "var_param": "annot_a2005s_flag"
+    },
+    "annot_a2009s_flag": {
+      "var_param": "annot_a2009s_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

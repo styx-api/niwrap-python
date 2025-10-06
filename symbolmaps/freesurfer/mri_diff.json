@@ -1,0 +1,98 @@
+{
+  "fn_root_make_params_and_execute": "mri_diff",
+  "properties": {
+    "vol1file": {
+      "var_param": "vol1file"
+    },
+    "vol2file": {
+      "var_param": "vol2file"
+    },
+    "resolution_check": {
+      "var_param": "resolution_check"
+    },
+    "acquisition_param_check": {
+      "var_param": "acquisition_param_check"
+    },
+    "geometry_check": {
+      "var_param": "geometry_check"
+    },
+    "precision_check": {
+      "var_param": "precision_check"
+    },
+    "pixel_check": {
+      "var_param": "pixel_check"
+    },
+    "orientation_check": {
+      "var_param": "orientation_check"
+    },
+    "file_type_diff_check": {
+      "var_param": "file_type_diff_check"
+    },
+    "no_exit_on_diff": {
+      "var_param": "no_exit_on_diff"
+    },
+    "quality_assurance": {
+      "var_param": "quality_assurance"
+    },
+    "pixel_only": {
+      "var_param": "pixel_only"
+    },
+    "abs_difference": {
+      "var_param": "abs_difference"
+    },
+    "no_abs_difference": {
+      "var_param": "no_abs_difference"
+    },
+    "difference_abs": {
+      "var_param": "difference_abs"
+    },
+    "percentage_difference": {
+      "var_param": "percentage_difference"
+    },
+    "rss_save": {
+      "var_param": "rss_save"
+    },
+    "ssd_print": {
+      "var_param": "ssd_print"
+    },
+    "rms_print": {
+      "var_param": "rms_print"
+    },
+    "count_diff_voxels": {
+      "var_param": "count_diff_voxels"
+    },
+    "pixel_threshold": {
+      "var_param": "pixel_threshold"
+    },
+    "count_thresh_voxels": {
+      "var_param": "count_thresh_voxels"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "difference_image": {
+      "var_param": "difference_image"
+    },
+    "suspicious_diff_volume": {
+      "var_param": "suspicious_diff_volume"
+    },
+    "segmentation_diff": {
+      "var_param": "segmentation_diff"
+    },
+    "merge_edits": {
+      "var_param": "merge_edits"
+    },
+    "average_difference": {
+      "var_param": "average_difference"
+    },
+    "debug_mode": {
+      "var_param": "debug_mode"
+    },
+    "verbose_mode": {
+      "var_param": "verbose_mode"
+    },
+    "check_options": {
+      "var_param": "check_options"
+    }
+  }
+}

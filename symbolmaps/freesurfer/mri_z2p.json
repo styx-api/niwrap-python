@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "mri_z2p",
+  "properties": {
+    "z_volume": {
+      "var_param": "z_volume"
+    },
+    "p_volume": {
+      "var_param": "p_volume"
+    },
+    "sig_volume": {
+      "var_param": "sig_volume"
+    },
+    "mask_volume": {
+      "var_param": "mask_volume"
+    },
+    "two_sided": {
+      "var_param": "two_sided"
+    },
+    "one_sided": {
+      "var_param": "one_sided"
+    },
+    "signed": {
+      "var_param": "signed"
+    },
+    "feat": {
+      "var_param": "feat"
+    },
+    "feat_format": {
+      "var_param": "feat_format"
+    },
+    "nii_format": {
+      "var_param": "nii_format"
+    },
+    "niigz_format": {
+      "var_param": "niigz_format"
+    },
+    "mgh_format": {
+      "var_param": "mgh_format"
+    },
+    "mgz_format": {
+      "var_param": "mgz_format"
+    },
+    "img_format": {
+      "var_param": "img_format"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "check_opts": {
+      "var_param": "check_opts"
+    }
+  }
+}

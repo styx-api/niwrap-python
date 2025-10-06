@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "cifti_average",
+  "properties": {
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "exclude_outliers": {
+      "var_param": "exclude_outliers",
+      "fn_struct_make_params": "cifti_average_exclude_outliers_params",
+      "properties": {
+        "sigma_below": {
+          "var_param": "sigma_below"
+        },
+        "sigma_above": {
+          "var_param": "sigma_above"
+        }
+      }
+    },
+    "opt_mem_limit_limit_gb": {
+      "var_param": "opt_mem_limit_limit_gb"
+    },
+    "cifti": {
+      "var_param": "cifti",
+      "fn_struct_make_params": "cifti_average_cifti_params",
+      "properties": {
+        "cifti_in": {
+          "var_param": "cifti_in"
+        },
+        "opt_weight_weight": {
+          "var_param": "opt_weight_weight"
+        }
+      }
+    }
+  }
+}

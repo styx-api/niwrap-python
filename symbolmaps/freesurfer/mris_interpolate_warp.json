@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mris_interpolate_warp",
+  "properties": {
+    "start_surface": {
+      "var_param": "start_surface"
+    },
+    "end_surface": {
+      "var_param": "end_surface"
+    },
+    "warp_field": {
+      "var_param": "warp_field"
+    }
+  }
+}

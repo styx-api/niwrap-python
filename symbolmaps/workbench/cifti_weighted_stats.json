@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "cifti_weighted_stats",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "spatial_weights": {
+      "var_param": "spatial_weights",
+      "fn_struct_make_params": "cifti_weighted_stats_spatial_weights_params",
+      "properties": {
+        "opt_left_area_surf_left_surf": {
+          "var_param": "opt_left_area_surf_left_surf"
+        },
+        "opt_right_area_surf_right_surf": {
+          "var_param": "opt_right_area_surf_right_surf"
+        },
+        "opt_cerebellum_area_surf_cerebellum_surf": {
+          "var_param": "opt_cerebellum_area_surf_cerebellum_surf"
+        },
+        "opt_left_area_metric_left_metric": {
+          "var_param": "opt_left_area_metric_left_metric"
+        },
+        "opt_right_area_metric_right_metric": {
+          "var_param": "opt_right_area_metric_right_metric"
+        },
+        "opt_cerebellum_area_metric_cerebellum_metric": {
+          "var_param": "opt_cerebellum_area_metric_cerebellum_metric"
+        }
+      }
+    },
+    "opt_cifti_weights_weight_cifti": {
+      "var_param": "opt_cifti_weights_weight_cifti"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    },
+    "roi": {
+      "var_param": "roi",
+      "fn_struct_make_params": "cifti_weighted_stats_roi_params",
+      "properties": {
+        "roi_cifti": {
+          "var_param": "roi_cifti"
+        },
+        "opt_match_maps": {
+          "var_param": "opt_match_maps"
+        }
+      }
+    },
+    "opt_mean": {
+      "var_param": "opt_mean"
+    },
+    "stdev": {
+      "var_param": "stdev",
+      "fn_struct_make_params": "cifti_weighted_stats_stdev_params",
+      "properties": {
+        "opt_sample": {
+          "var_param": "opt_sample"
+        }
+      }
+    },
+    "opt_percentile_percent": {
+      "var_param": "opt_percentile_percent"
+    },
+    "opt_sum": {
+      "var_param": "opt_sum"
+    },
+    "opt_show_map_name": {
+      "var_param": "opt_show_map_name"
+    }
+  }
+}

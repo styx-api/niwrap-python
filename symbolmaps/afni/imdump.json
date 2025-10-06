@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "imdump",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    }
+  }
+}

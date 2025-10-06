@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "nsize",
+  "properties": {
+    "image_in": {
+      "var_param": "image_in"
+    },
+    "image_out": {
+      "var_param": "image_out"
+    }
+  }
+}

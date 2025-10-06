@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "estimate_fiber_binghams",
+  "properties": {
+    "merged_f1samples": {
+      "var_param": "merged_f1samples"
+    },
+    "merged_th1samples": {
+      "var_param": "merged_th1samples"
+    },
+    "merged_ph1samples": {
+      "var_param": "merged_ph1samples"
+    },
+    "merged_f2samples": {
+      "var_param": "merged_f2samples"
+    },
+    "merged_th2samples": {
+      "var_param": "merged_th2samples"
+    },
+    "merged_ph2samples": {
+      "var_param": "merged_ph2samples"
+    },
+    "merged_f3samples": {
+      "var_param": "merged_f3samples"
+    },
+    "merged_th3samples": {
+      "var_param": "merged_th3samples"
+    },
+    "merged_ph3samples": {
+      "var_param": "merged_ph3samples"
+    },
+    "label_volume": {
+      "var_param": "label_volume"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    }
+  }
+}

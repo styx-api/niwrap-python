@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mris_seg2annot",
+  "properties": {
+    "surfseg": {
+      "var_param": "surfseg"
+    },
+    "colortable": {
+      "var_param": "colortable"
+    },
+    "auto_ctab": {
+      "var_param": "auto_ctab"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "output_annotation": {
+      "var_param": "output_annotation"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "debug_vertex": {
+      "var_param": "debug_vertex"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

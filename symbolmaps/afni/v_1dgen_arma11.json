@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_1dgen_arma11",
+  "properties": {
+    "length": {
+      "var_param": "length"
+    },
+    "length_alt": {
+      "var_param": "length_alt"
+    },
+    "num_series": {
+      "var_param": "num_series"
+    },
+    "param_a": {
+      "var_param": "param_a"
+    },
+    "param_b": {
+      "var_param": "param_b"
+    },
+    "param_lam": {
+      "var_param": "param_lam"
+    },
+    "std_dev": {
+      "var_param": "std_dev"
+    },
+    "normalize": {
+      "var_param": "normalize"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "corcut": {
+      "var_param": "corcut"
+    },
+    "arma31": {
+      "var_param": "arma31"
+    },
+    "arma51": {
+      "var_param": "arma51"
+    }
+  }
+}

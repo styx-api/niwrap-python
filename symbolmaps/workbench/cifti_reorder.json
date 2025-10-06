@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "cifti_reorder",
+  "properties": {
+    "cifti_in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "reorder_list": {
+      "var_param": "reorder_list"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    }
+  }
+}

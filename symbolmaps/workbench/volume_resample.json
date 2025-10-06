@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "volume_resample",
+  "properties": {
+    "volume_in": {
+      "var_param": "volume_in"
+    },
+    "volume_space": {
+      "var_param": "volume_space"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "affine": {
+      "var_param": "affine",
+      "fn_struct_make_params": "volume_resample_affine_params",
+      "properties": {
+        "affine": {
+          "var_param": "affine"
+        },
+        "flirt": {
+          "var_param": "flirt",
+          "fn_struct_make_params": "volume_resample_flirt_params",
+          "properties": {
+            "source_volume": {
+              "var_param": "source_volume"
+            },
+            "target_volume": {
+              "var_param": "target_volume"
+            }
+          }
+        }
+      }
+    },
+    "affine_series": {
+      "var_param": "affine_series",
+      "fn_struct_make_params": "volume_resample_affine_series_params",
+      "properties": {
+        "affine_series": {
+          "var_param": "affine_series"
+        },
+        "flirt": {
+          "var_param": "flirt",
+          "fn_struct_make_params": "volume_resample_flirt_1_params",
+          "properties": {
+            "source_volume": {
+              "var_param": "source_volume"
+            },
+            "target_volume": {
+              "var_param": "target_volume"
+            }
+          }
+        }
+      }
+    },
+    "warp": {
+      "var_param": "warp",
+      "fn_struct_make_params": "volume_resample_warp_params",
+      "properties": {
+        "warpfield": {
+          "var_param": "warpfield"
+        },
+        "opt_fnirt_source_volume": {
+          "var_param": "opt_fnirt_source_volume"
+        }
+      }
+    }
+  }
+}

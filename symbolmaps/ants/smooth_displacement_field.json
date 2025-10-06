@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "smooth_displacement_field",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_field": {
+      "var_param": "input_field"
+    },
+    "output_field": {
+      "var_param": "output_field"
+    },
+    "variance_or_mesh_size_base_level": {
+      "var_param": "variance_or_mesh_size_base_level"
+    },
+    "number_of_levels": {
+      "var_param": "number_of_levels"
+    },
+    "spline_order": {
+      "var_param": "spline_order"
+    },
+    "estimate_inverse": {
+      "var_param": "estimate_inverse"
+    },
+    "confidence_image": {
+      "var_param": "confidence_image"
+    }
+  }
+}

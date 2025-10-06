@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "annotation_resample",
+  "properties": {
+    "annotation_in": {
+      "var_param": "annotation_in"
+    },
+    "annotation_out": {
+      "var_param": "annotation_out"
+    },
+    "surface_pair": {
+      "var_param": "surface_pair",
+      "fn_struct_make_params": "annotation_resample_surface_pair_params",
+      "properties": {
+        "source_surface": {
+          "var_param": "source_surface"
+        },
+        "target_surface": {
+          "var_param": "target_surface"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "resample_image",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "size_spacing": {
+      "var_param": "size_spacing"
+    },
+    "interpolate_type": {
+      "var_param": "interpolate_type"
+    },
+    "pixeltype": {
+      "var_param": "pixeltype"
+    }
+  }
+}

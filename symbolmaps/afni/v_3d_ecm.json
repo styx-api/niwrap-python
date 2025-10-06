@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_ecm",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "autoclip": {
+      "var_param": "autoclip"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "eps": {
+      "var_param": "eps"
+    },
+    "fecm": {
+      "var_param": "fecm"
+    },
+    "full": {
+      "var_param": "full"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "max_iter": {
+      "var_param": "max_iter"
+    },
+    "memory": {
+      "var_param": "memory"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "shift": {
+      "var_param": "shift"
+    },
+    "sparsity": {
+      "var_param": "sparsity"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    }
+  }
+}

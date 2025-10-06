@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_2d_im_reg",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "base_file": {
+      "var_param": "base_file"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "nofine": {
+      "var_param": "nofine"
+    },
+    "fine_blur": {
+      "var_param": "fine_blur"
+    },
+    "fine_dxy": {
+      "var_param": "fine_dxy"
+    },
+    "fine_dphi": {
+      "var_param": "fine_dphi"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dprefix": {
+      "var_param": "dprefix"
+    },
+    "dmm": {
+      "var_param": "dmm"
+    },
+    "rprefix": {
+      "var_param": "rprefix"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

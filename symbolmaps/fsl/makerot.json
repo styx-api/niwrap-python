@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "makerot",
+  "properties": {
+    "axis": {
+      "var_param": "axis"
+    },
+    "cov": {
+      "var_param": "cov"
+    },
+    "center": {
+      "var_param": "center"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "theta": {
+      "var_param": "theta"
+    }
+  }
+}

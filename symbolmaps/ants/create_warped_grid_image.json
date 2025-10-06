@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "create_warped_grid_image",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "deformation_field": {
+      "var_param": "deformation_field"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "directions": {
+      "var_param": "directions"
+    },
+    "grid_spacing": {
+      "var_param": "grid_spacing"
+    },
+    "grid_sigma": {
+      "var_param": "grid_sigma"
+    }
+  }
+}

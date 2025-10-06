@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_qwarp",
+  "properties": {
+    "base_dataset": {
+      "var_param": "base_dataset"
+    },
+    "source_dataset": {
+      "var_param": "source_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "no_warp": {
+      "var_param": "no_warp"
+    },
+    "inverse_warp": {
+      "var_param": "inverse_warp"
+    },
+    "no_dataset": {
+      "var_param": "no_dataset"
+    },
+    "a_warp": {
+      "var_param": "a_warp"
+    },
+    "pcl": {
+      "var_param": "pcl"
+    },
+    "pear": {
+      "var_param": "pear"
+    },
+    "hel": {
+      "var_param": "hel"
+    },
+    "mi": {
+      "var_param": "mi"
+    },
+    "nmi": {
+      "var_param": "nmi"
+    },
+    "lpc": {
+      "var_param": "lpc"
+    },
+    "lpa": {
+      "var_param": "lpa"
+    },
+    "noneg": {
+      "var_param": "noneg"
+    },
+    "nopenalty": {
+      "var_param": "nopenalty"
+    },
+    "minpatch": {
+      "var_param": "minpatch"
+    },
+    "maxlev": {
+      "var_param": "maxlev"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

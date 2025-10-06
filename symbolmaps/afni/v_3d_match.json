@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_match",
+  "properties": {
+    "inset": {
+      "var_param": "inset"
+    },
+    "refset": {
+      "var_param": "refset"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "in_min": {
+      "var_param": "in_min"
+    },
+    "in_max": {
+      "var_param": "in_max"
+    },
+    "ref_min": {
+      "var_param": "ref_min"
+    },
+    "ref_max": {
+      "var_param": "ref_max"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "only_dice_thr": {
+      "var_param": "only_dice_thr"
+    }
+  }
+}

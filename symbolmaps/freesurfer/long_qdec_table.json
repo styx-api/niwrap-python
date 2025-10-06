@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "long_qdec_table",
+  "properties": {
+    "qdec_table": {
+      "var_param": "qdec_table"
+    },
+    "split": {
+      "var_param": "split"
+    },
+    "cross_flag": {
+      "var_param": "cross_flag"
+    },
+    "sort": {
+      "var_param": "sort"
+    },
+    "out": {
+      "var_param": "out"
+    }
+  }
+}

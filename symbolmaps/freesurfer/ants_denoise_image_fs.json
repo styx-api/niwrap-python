@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "ants_denoise_image_fs",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "rician_flag": {
+      "var_param": "rician_flag"
+    }
+  }
+}

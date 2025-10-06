@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "segment_subject_sc",
+  "properties": {
+    "invol": {
+      "var_param": "invol"
+    },
+    "outxfm": {
+      "var_param": "outxfm"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

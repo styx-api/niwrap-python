@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_automask",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "apply_prefix": {
+      "var_param": "apply_prefix"
+    },
+    "clfrac": {
+      "var_param": "clfrac"
+    },
+    "dilate": {
+      "var_param": "dilate"
+    },
+    "erode": {
+      "var_param": "erode"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    }
+  }
+}

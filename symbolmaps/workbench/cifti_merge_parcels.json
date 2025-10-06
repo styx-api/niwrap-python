@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "cifti_merge_parcels",
+  "properties": {
+    "direction": {
+      "var_param": "direction"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "cifti": {
+      "var_param": "cifti",
+      "fn_struct_make_params": "cifti_merge_parcels_cifti_params",
+      "properties": {
+        "cifti_in": {
+          "var_param": "cifti_in"
+        }
+      }
+    }
+  }
+}

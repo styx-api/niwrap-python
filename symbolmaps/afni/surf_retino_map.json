@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "surf_retino_map",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "polar": {
+      "var_param": "polar"
+    },
+    "eccentricity": {
+      "var_param": "eccentricity"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "node_debug": {
+      "var_param": "node_debug"
+    }
+  }
+}

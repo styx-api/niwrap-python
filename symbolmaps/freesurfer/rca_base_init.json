@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "rca_base_init",
+  "properties": {
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "status_file": {
+      "var_param": "status_file"
+    },
+    "cmd_file": {
+      "var_param": "cmd_file"
+    }
+  }
+}

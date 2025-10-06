@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "fsl_prepare_fieldmap",
+  "properties": {
+    "scanner": {
+      "var_param": "scanner"
+    },
+    "phase_image": {
+      "var_param": "phase_image"
+    },
+    "magnitude_image": {
+      "var_param": "magnitude_image"
+    },
+    "out_image": {
+      "var_param": "out_image"
+    },
+    "delta_te": {
+      "var_param": "delta_te"
+    },
+    "nocheck_flag": {
+      "var_param": "nocheck_flag"
+    }
+  }
+}

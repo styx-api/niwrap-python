@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "foci_get_projection_vertex",
+  "properties": {
+    "foci": {
+      "var_param": "foci"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "opt_name_name": {
+      "var_param": "opt_name_name"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "v_3dkmeans",
+  "properties": {
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_range": {
+      "var_param": "mask_range"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    },
+    "jobname": {
+      "var_param": "jobname"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "distance_measure": {
+      "var_param": "distance_measure"
+    },
+    "num_clusters": {
+      "var_param": "num_clusters"
+    },
+    "remap_method": {
+      "var_param": "remap_method"
+    },
+    "labeltable": {
+      "var_param": "labeltable"
+    },
+    "clabels": {
+      "var_param": "clabels"
+    },
+    "clust_init": {
+      "var_param": "clust_init"
+    },
+    "num_repeats": {
+      "var_param": "num_repeats"
+    },
+    "rsigs": {
+      "var_param": "rsigs"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "write_dists": {
+      "var_param": "write_dists"
+    },
+    "voxdbg": {
+      "var_param": "voxdbg"
+    },
+    "seed": {
+      "var_param": "seed"
+    }
+  }
+}

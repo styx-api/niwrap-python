@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "align_epi_anat_py",
+  "properties": {
+    "epi": {
+      "var_param": "epi"
+    },
+    "anat": {
+      "var_param": "anat"
+    },
+    "epi_base": {
+      "var_param": "epi_base"
+    },
+    "anat2epi": {
+      "var_param": "anat2epi"
+    },
+    "epi2anat": {
+      "var_param": "epi2anat"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "AddEdge": {
+      "var_param": "add_edge"
+    },
+    "big_move": {
+      "var_param": "big_move"
+    },
+    "giant_move": {
+      "var_param": "giant_move"
+    },
+    "ginormous_move": {
+      "var_param": "ginormous_move"
+    },
+    "keep_rm_files": {
+      "var_param": "keep_rm_files"
+    },
+    "prep_only": {
+      "var_param": "prep_only"
+    },
+    "ana_has_skull": {
+      "var_param": "ana_has_skull"
+    },
+    "epi_strip": {
+      "var_param": "epi_strip"
+    },
+    "volreg_method": {
+      "var_param": "volreg_method"
+    },
+    "ex_mode": {
+      "var_param": "ex_mode"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    }
+  }
+}

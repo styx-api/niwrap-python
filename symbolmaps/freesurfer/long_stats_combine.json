@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "long_stats_combine",
+  "properties": {
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "stats": {
+      "var_param": "stats"
+    },
+    "measure": {
+      "var_param": "measure"
+    },
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "output_qdec": {
+      "var_param": "output_qdec"
+    },
+    "output_stats": {
+      "var_param": "output_stats"
+    },
+    "input_stats": {
+      "var_param": "input_stats"
+    },
+    "cross_sectional": {
+      "var_param": "cross_sectional"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "avscale",
+  "properties": {
+    "allparams_flag": {
+      "var_param": "allparams_flag"
+    },
+    "inverteddies_flag": {
+      "var_param": "inverteddies_flag"
+    },
+    "matrix_file": {
+      "var_param": "matrix_file"
+    },
+    "non_reference_volume": {
+      "var_param": "non_reference_volume"
+    }
+  }
+}

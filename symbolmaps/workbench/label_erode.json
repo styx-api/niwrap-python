@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "label_erode",
+  "properties": {
+    "label": {
+      "var_param": "label"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "erode_dist": {
+      "var_param": "erode_dist"
+    },
+    "label_out": {
+      "var_param": "label_out"
+    },
+    "opt_roi_roi_metric": {
+      "var_param": "opt_roi_roi_metric"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    },
+    "opt_corrected_areas_area_metric": {
+      "var_param": "opt_corrected_areas_area_metric"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "help_format",
+  "properties": {
+    "stdin": {
+      "var_param": "stdin"
+    }
+  }
+}

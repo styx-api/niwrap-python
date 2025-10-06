@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "reinflate_subject_lh",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    }
+  }
+}

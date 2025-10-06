@@ -1,0 +1,83 @@
+{
+  "fn_root_make_params_and_execute": "ants_atropos_n4_sh",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "number_of_classes": {
+      "var_param": "number_of_classes"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "max_n4_atropos_iterations": {
+      "var_param": "max_n4_atropos_iterations"
+    },
+    "max_atropos_iterations": {
+      "var_param": "max_atropos_iterations"
+    },
+    "segmentation_priors": {
+      "var_param": "segmentation_priors",
+      "fn_struct_make_params": "ants_atropos_n4_sh_segmentation_priors_params",
+      "properties": {
+        "segmentation_priors_pattern": {
+          "var_param": "segmentation_priors_pattern"
+        },
+        "segmentation_priors_folder": {
+          "var_param": "segmentation_priors_folder"
+        }
+      }
+    },
+    "mrf": {
+      "var_param": "mrf"
+    },
+    "denoise_anatomical_images": {
+      "var_param": "denoise_anatomical_images"
+    },
+    "posterior_formulation": {
+      "var_param": "posterior_formulation"
+    },
+    "label_propagation": {
+      "var_param": "label_propagation"
+    },
+    "posterior_label_for_n4_weight_mask": {
+      "var_param": "posterior_label_for_n4_weight_mask"
+    },
+    "image_file_suffix": {
+      "var_param": "image_file_suffix"
+    },
+    "keep_temporary_files": {
+      "var_param": "keep_temporary_files"
+    },
+    "use_random_seeding": {
+      "var_param": "use_random_seeding"
+    },
+    "atropos_segmentation_prior_weight": {
+      "var_param": "atropos_segmentation_prior_weight"
+    },
+    "n4_convergence": {
+      "var_param": "n4_convergence"
+    },
+    "n4_shrink_factor": {
+      "var_param": "n4_shrink_factor"
+    },
+    "n4_bspline_params": {
+      "var_param": "n4_bspline_params"
+    },
+    "atropos_segmentation_icm": {
+      "var_param": "atropos_segmentation_icm"
+    },
+    "atropos_segmentation_use_euclidean_distance": {
+      "var_param": "atropos_segmentation_use_euclidean_distance"
+    },
+    "test_debug_mode": {
+      "var_param": "test_debug_mode"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v__dice_metric",
+  "properties": {
+    "base": {
+      "var_param": "base"
+    },
+    "dsets": {
+      "var_param": "dsets"
+    },
+    "max_roi": {
+      "var_param": "max_roi"
+    },
+    "labeltable": {
+      "var_param": "labeltable"
+    },
+    "forceoutput": {
+      "var_param": "forceoutput"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "save_match": {
+      "var_param": "save_match"
+    },
+    "save_diff": {
+      "var_param": "save_diff"
+    },
+    "do_not_mask_by_base": {
+      "var_param": "do_not_mask_by_base"
+    },
+    "mask_by_base": {
+      "var_param": "mask_by_base"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "ignore_bad": {
+      "var_param": "ignore_bad"
+    },
+    "keep_tmp": {
+      "var_param": "keep_tmp"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "volume_all_labels_to_rois",
+  "properties": {
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "map": {
+      "var_param": "map_"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    }
+  }
+}

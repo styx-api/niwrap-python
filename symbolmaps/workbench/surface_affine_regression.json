@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "surface_affine_regression",
+  "properties": {
+    "source": {
+      "var_param": "source"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "affine_out": {
+      "var_param": "affine_out"
+    }
+  }
+}

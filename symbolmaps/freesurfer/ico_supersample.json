@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "ico_supersample",
+  "properties": {
+    "refine": {
+      "var_param": "refine"
+    },
+    "radius": {
+      "var_param": "radius"
+    },
+    "projection_point": {
+      "var_param": "projection_point"
+    }
+  }
+}

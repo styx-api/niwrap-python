@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tsgen",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "in_tr_flag": {
+      "var_param": "in_tr_flag"
+    },
+    "signal_label": {
+      "var_param": "signal_label"
+    },
+    "noise_label": {
+      "var_param": "noise_label"
+    },
+    "signal_constr": {
+      "var_param": "signal_constr"
+    },
+    "noise_constr": {
+      "var_param": "noise_constr"
+    },
+    "sigma_value": {
+      "var_param": "sigma_value"
+    },
+    "voxel_number": {
+      "var_param": "voxel_number"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "signal_coef": {
+      "var_param": "signal_coef"
+    },
+    "noise_coef": {
+      "var_param": "noise_coef"
+    },
+    "bucket_config": {
+      "var_param": "bucket_config"
+    },
+    "brick_config": {
+      "var_param": "brick_config"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "samseg_long",
+  "properties": {
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "align_mc": {
+      "var_param": "align_mc"
+    },
+    "align_no_mc": {
+      "var_param": "align_no_mc"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "save_posteriors": {
+      "var_param": "save_posteriors"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    }
+  }
+}

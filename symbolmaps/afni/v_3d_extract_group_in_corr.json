@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_extract_group_in_corr",
+  "properties": {
+    "group_in_corr_file": {
+      "var_param": "group_in_corr_file"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

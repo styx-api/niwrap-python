@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "volume_copy_extensions",
+  "properties": {
+    "data_volume": {
+      "var_param": "data_volume"
+    },
+    "extension_volume": {
+      "var_param": "extension_volume"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "opt_drop_unknown": {
+      "var_param": "opt_drop_unknown"
+    }
+  }
+}

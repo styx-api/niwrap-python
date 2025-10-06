@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mri_fuse_segmentations",
+  "properties": {
+    "asegs": {
+      "var_param": "asegs"
+    },
+    "nocc_asegs": {
+      "var_param": "nocc_asegs"
+    },
+    "norm_volumes": {
+      "var_param": "norm_volumes"
+    },
+    "transforms": {
+      "var_param": "transforms"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

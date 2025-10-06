@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v__find_afni_dset_path",
+  "properties": {
+    "dsetname": {
+      "var_param": "dsetname"
+    },
+    "append_file": {
+      "var_param": "append_file"
+    },
+    "full_path": {
+      "var_param": "full_path"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

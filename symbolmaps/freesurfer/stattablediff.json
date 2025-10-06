@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "stattablediff",
+  "properties": {
+    "t1": {
+      "var_param": "t1"
+    },
+    "t2": {
+      "var_param": "t2"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "percent_diff": {
+      "var_param": "percent_diff"
+    },
+    "percent_diff_t1": {
+      "var_param": "percent_diff_t1"
+    },
+    "percent_diff_t2": {
+      "var_param": "percent_diff_t2"
+    },
+    "multiply": {
+      "var_param": "multiply"
+    },
+    "divide": {
+      "var_param": "divide"
+    },
+    "common": {
+      "var_param": "common"
+    },
+    "remove_exvivo": {
+      "var_param": "remove_exvivo"
+    },
+    "diff_subjects": {
+      "var_param": "diff_subjects"
+    },
+    "noreplace53": {
+      "var_param": "noreplace53"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "metric_dilate",
+  "properties": {
+    "metric": {
+      "var_param": "metric"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "opt_bad_vertex_roi_roi_metric": {
+      "var_param": "opt_bad_vertex_roi_roi_metric"
+    },
+    "opt_data_roi_roi_metric": {
+      "var_param": "opt_data_roi_roi_metric"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    },
+    "opt_nearest": {
+      "var_param": "opt_nearest"
+    },
+    "opt_linear": {
+      "var_param": "opt_linear"
+    },
+    "opt_exponent_exponent": {
+      "var_param": "opt_exponent_exponent"
+    },
+    "opt_corrected_areas_area_metric": {
+      "var_param": "opt_corrected_areas_area_metric"
+    },
+    "opt_legacy_cutoff": {
+      "var_param": "opt_legacy_cutoff"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "defect_seg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "lh_only": {
+      "var_param": "lh_only"
+    },
+    "rh_only": {
+      "var_param": "rh_only"
+    }
+  }
+}

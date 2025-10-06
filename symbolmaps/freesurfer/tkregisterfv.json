@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "tkregisterfv",
+  "properties": {
+    "mov": {
+      "var_param": "mov"
+    },
+    "targ": {
+      "var_param": "targ"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "fstarg": {
+      "var_param": "fstarg"
+    },
+    "sd": {
+      "var_param": "sd"
+    },
+    "seg": {
+      "var_param": "seg"
+    },
+    "aseg_flag": {
+      "var_param": "aseg_flag"
+    },
+    "aparc_aseg_flag": {
+      "var_param": "aparc_aseg_flag"
+    },
+    "opacity": {
+      "var_param": "opacity"
+    },
+    "surfs_flag": {
+      "var_param": "surfs_flag"
+    },
+    "pial_surfs_flag": {
+      "var_param": "pial_surfs_flag"
+    },
+    "all_surfs_flag": {
+      "var_param": "all_surfs_flag"
+    },
+    "no_surfs_flag": {
+      "var_param": "no_surfs_flag"
+    },
+    "lh_only_flag": {
+      "var_param": "lh_only_flag"
+    },
+    "rh_only_flag": {
+      "var_param": "rh_only_flag"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "aux_s": {
+      "var_param": "aux_s"
+    },
+    "plane": {
+      "var_param": "plane"
+    },
+    "no_config_flag": {
+      "var_param": "no_config_flag"
+    },
+    "mov2": {
+      "var_param": "mov2"
+    },
+    "reg2": {
+      "var_param": "reg2"
+    },
+    "mov3": {
+      "var_param": "mov3"
+    },
+    "reg3": {
+      "var_param": "reg3"
+    },
+    "heat_flag": {
+      "var_param": "heat_flag"
+    },
+    "regheader_flag": {
+      "var_param": "regheader_flag"
+    },
+    "params": {
+      "var_param": "params_"
+    },
+    "flip_x_flag": {
+      "var_param": "flip_x_flag"
+    },
+    "flip_y_flag": {
+      "var_param": "flip_y_flag"
+    },
+    "flip_z_flag": {
+      "var_param": "flip_z_flag"
+    },
+    "fstal": {
+      "var_param": "fstal"
+    },
+    "aux": {
+      "var_param": "aux"
+    }
+  }
+}

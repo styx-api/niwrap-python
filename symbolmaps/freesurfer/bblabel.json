@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "bblabel",
+  "properties": {
+    "labelfile": {
+      "var_param": "labelfile"
+    },
+    "xmin": {
+      "var_param": "xmin"
+    },
+    "xmax": {
+      "var_param": "xmax"
+    },
+    "ymin": {
+      "var_param": "ymin"
+    },
+    "ymax": {
+      "var_param": "ymax"
+    },
+    "zmin": {
+      "var_param": "zmin"
+    },
+    "zmax": {
+      "var_param": "zmax"
+    },
+    "outlabelfile": {
+      "var_param": "outlabelfile"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "umask": {
+      "var_param": "umask"
+    }
+  }
+}

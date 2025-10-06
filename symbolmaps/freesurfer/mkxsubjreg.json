@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mkxsubjreg",
+  "properties": {
+    "srcreg": {
+      "var_param": "srcreg"
+    },
+    "targreg": {
+      "var_param": "targreg"
+    },
+    "targsubj": {
+      "var_param": "targsubj"
+    },
+    "xfm": {
+      "var_param": "xfm"
+    },
+    "sd": {
+      "var_param": "sd"
+    },
+    "fvol": {
+      "var_param": "fvol"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

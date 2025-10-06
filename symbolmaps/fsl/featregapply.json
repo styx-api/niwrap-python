@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "featregapply",
+  "properties": {
+    "feat_directory": {
+      "var_param": "feat_directory"
+    },
+    "force_flag": {
+      "var_param": "force_flag"
+    },
+    "cleanup_flag": {
+      "var_param": "cleanup_flag"
+    },
+    "upsample_trilinear": {
+      "var_param": "upsample_trilinear"
+    },
+    "upsample_spline": {
+      "var_param": "upsample_spline"
+    },
+    "standard_space_res": {
+      "var_param": "standard_space_res"
+    },
+    "exclude_filtered_func_flag": {
+      "var_param": "exclude_filtered_func_flag"
+    }
+  }
+}

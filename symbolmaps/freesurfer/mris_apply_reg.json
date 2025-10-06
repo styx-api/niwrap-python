@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "mris_apply_reg",
+  "properties": {
+    "src_input": {
+      "var_param": "src_input"
+    },
+    "trg_output": {
+      "var_param": "trg_output"
+    },
+    "streg_pair": {
+      "var_param": "streg_pair"
+    },
+    "src_label": {
+      "var_param": "src_label"
+    },
+    "src_annotation": {
+      "var_param": "src_annotation"
+    },
+    "src_xyz": {
+      "var_param": "src_xyz"
+    },
+    "jacobian": {
+      "var_param": "jacobian"
+    },
+    "no_reverse": {
+      "var_param": "no_reverse"
+    },
+    "rand_noise": {
+      "var_param": "rand_noise"
+    },
+    "replace_ones": {
+      "var_param": "replace_ones"
+    },
+    "center_output": {
+      "var_param": "center_output"
+    },
+    "curv_format": {
+      "var_param": "curv_format"
+    },
+    "lta_transform": {
+      "var_param": "lta_transform"
+    },
+    "lta_patch_transform": {
+      "var_param": "lta_patch_transform"
+    },
+    "reverse_surface": {
+      "var_param": "reverse_surface"
+    },
+    "patch_apply": {
+      "var_param": "patch_apply"
+    },
+    "save_vertex_pair": {
+      "var_param": "save_vertex_pair"
+    },
+    "m3z_transform": {
+      "var_param": "m3z_transform"
+    },
+    "inv_m3z_transform": {
+      "var_param": "inv_m3z_transform"
+    },
+    "src_reg_scale": {
+      "var_param": "src_reg_scale"
+    },
+    "trg_reg_scale": {
+      "var_param": "trg_reg_scale"
+    },
+    "debug_mode": {
+      "var_param": "debug_mode"
+    },
+    "check_options": {
+      "var_param": "check_options"
+    }
+  }
+}

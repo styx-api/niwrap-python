@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "v_2dcat",
+  "properties": {
+    "filenames": {
+      "var_param": "filenames"
+    },
+    "scale_image": {
+      "var_param": "scale_image"
+    },
+    "scale_pixels": {
+      "var_param": "scale_pixels"
+    },
+    "scale_intensity": {
+      "var_param": "scale_intensity"
+    },
+    "gscale": {
+      "var_param": "gscale"
+    },
+    "rgb_out": {
+      "var_param": "rgb_out"
+    },
+    "res_in": {
+      "var_param": "res_in"
+    },
+    "respad_in": {
+      "var_param": "respad_in"
+    },
+    "pad_val": {
+      "var_param": "pad_val"
+    },
+    "crop": {
+      "var_param": "crop"
+    },
+    "autocrop_ctol": {
+      "var_param": "autocrop_ctol"
+    },
+    "autocrop_atol": {
+      "var_param": "autocrop_atol"
+    },
+    "autocrop": {
+      "var_param": "autocrop"
+    },
+    "zero_wrap": {
+      "var_param": "zero_wrap"
+    },
+    "white_wrap": {
+      "var_param": "white_wrap"
+    },
+    "gray_wrap": {
+      "var_param": "gray_wrap"
+    },
+    "image_wrap": {
+      "var_param": "image_wrap"
+    },
+    "rand_wrap": {
+      "var_param": "rand_wrap"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "matrix": {
+      "var_param": "matrix"
+    },
+    "nx": {
+      "var_param": "nx"
+    },
+    "ny": {
+      "var_param": "ny"
+    },
+    "matrix_from_scale": {
+      "var_param": "matrix_from_scale"
+    },
+    "gap": {
+      "var_param": "gap"
+    },
+    "gap_col": {
+      "var_param": "gap_col"
+    }
+  }
+}

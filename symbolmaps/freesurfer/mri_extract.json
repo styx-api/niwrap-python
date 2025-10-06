@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_extract",
+  "properties": {
+    "like_template": {
+      "var_param": "like_template"
+    },
+    "src_volume": {
+      "var_param": "src_volume"
+    },
+    "dst_volume": {
+      "var_param": "dst_volume"
+    },
+    "coordinates": {
+      "var_param": "coordinates"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tcorrelate",
+  "properties": {
+    "xset": {
+      "var_param": "xset"
+    },
+    "yset": {
+      "var_param": "yset"
+    },
+    "pearson": {
+      "var_param": "pearson"
+    },
+    "spearman": {
+      "var_param": "spearman"
+    },
+    "quadrant": {
+      "var_param": "quadrant"
+    },
+    "ktaub": {
+      "var_param": "ktaub"
+    },
+    "covariance": {
+      "var_param": "covariance"
+    },
+    "partial": {
+      "var_param": "partial"
+    },
+    "ycoef": {
+      "var_param": "ycoef"
+    },
+    "fisher": {
+      "var_param": "fisher"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "ort": {
+      "var_param": "ort"
+    },
+    "autoclip": {
+      "var_param": "autoclip"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "zcensor": {
+      "var_param": "zcensor"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

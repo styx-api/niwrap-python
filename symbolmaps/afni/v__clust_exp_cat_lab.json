@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__clust_exp_cat_lab",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

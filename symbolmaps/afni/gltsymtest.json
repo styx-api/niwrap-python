@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "gltsymtest",
+  "properties": {
+    "badonly": {
+      "var_param": "badonly"
+    },
+    "varlist": {
+      "var_param": "varlist"
+    },
+    "expr": {
+      "var_param": "expr"
+    }
+  }
+}

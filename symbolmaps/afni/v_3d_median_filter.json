@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_median_filter",
+  "properties": {
+    "irad": {
+      "var_param": "irad"
+    },
+    "iter": {
+      "var_param": "iter_"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    }
+  }
+}

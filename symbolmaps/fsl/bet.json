@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "bet",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "maskfile": {
+      "var_param": "maskfile"
+    },
+    "fractional_intensity": {
+      "var_param": "fractional_intensity"
+    },
+    "vg_fractional_intensity": {
+      "var_param": "vg_fractional_intensity"
+    },
+    "center_of_gravity": {
+      "var_param": "center_of_gravity"
+    },
+    "overlay": {
+      "var_param": "overlay"
+    },
+    "binary_mask": {
+      "var_param": "binary_mask"
+    },
+    "approx_skull": {
+      "var_param": "approx_skull"
+    },
+    "no_seg_output": {
+      "var_param": "no_seg_output"
+    },
+    "vtk_mesh": {
+      "var_param": "vtk_mesh"
+    },
+    "head_radius": {
+      "var_param": "head_radius"
+    },
+    "thresholding": {
+      "var_param": "thresholding"
+    },
+    "robust_iters": {
+      "var_param": "robust_iters"
+    },
+    "residual_optic_cleanup": {
+      "var_param": "residual_optic_cleanup"
+    },
+    "reduce_bias": {
+      "var_param": "reduce_bias"
+    },
+    "slice_padding": {
+      "var_param": "slice_padding"
+    },
+    "whole_set_mask": {
+      "var_param": "whole_set_mask"
+    },
+    "additional_surfaces": {
+      "var_param": "additional_surfaces"
+    },
+    "additional_surfaces_t2": {
+      "var_param": "additional_surfaces_t2"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

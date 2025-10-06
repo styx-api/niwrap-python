@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fs_update",
+  "properties": {
+    "update_path": {
+      "var_param": "update_path"
+    },
+    "help_short": {
+      "var_param": "help_short"
+    },
+    "help_medium": {
+      "var_param": "help_medium"
+    },
+    "help_long": {
+      "var_param": "help_long"
+    }
+  }
+}

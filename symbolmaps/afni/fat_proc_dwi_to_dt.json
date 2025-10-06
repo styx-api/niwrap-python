@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_dwi_to_dt",
+  "properties": {
+    "in_dwi": {
+      "var_param": "in_dwi"
+    },
+    "in_gradmat": {
+      "var_param": "in_gradmat"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "in_bvals": {
+      "var_param": "in_bvals"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_from_struc": {
+      "var_param": "mask_from_struc"
+    },
+    "in_struc_res": {
+      "var_param": "in_struc_res"
+    },
+    "in_ref_orig": {
+      "var_param": "in_ref_orig"
+    },
+    "prefix_dti": {
+      "var_param": "prefix_dti"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    },
+    "no_flip": {
+      "var_param": "no_flip"
+    },
+    "no_scale_out_1000": {
+      "var_param": "no_scale_out_1000"
+    },
+    "no_reweight": {
+      "var_param": "no_reweight"
+    },
+    "no_cumulative_wts": {
+      "var_param": "no_cumulative_wts"
+    },
+    "qc_fa_thr": {
+      "var_param": "qc_fa_thr"
+    },
+    "qc_fa_max": {
+      "var_param": "qc_fa_max"
+    },
+    "qc_fa_unc_max": {
+      "var_param": "qc_fa_unc_max"
+    },
+    "qc_v12_unc_max": {
+      "var_param": "qc_v12_unc_max"
+    },
+    "qc_prefix": {
+      "var_param": "qc_prefix"
+    },
+    "no_qc_view": {
+      "var_param": "no_qc_view"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "uncert_off": {
+      "var_param": "uncert_off"
+    },
+    "uncert_iters": {
+      "var_param": "uncert_iters"
+    },
+    "uncert_extra_cmds": {
+      "var_param": "uncert_extra_cmds"
+    },
+    "check_abs_min": {
+      "var_param": "check_abs_min"
+    }
+  }
+}

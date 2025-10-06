@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "mri_defacer",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "headmask": {
+      "var_param": "headmask"
+    },
+    "tempsurf": {
+      "var_param": "tempsurf"
+    },
+    "templabel": {
+      "var_param": "templabel"
+    },
+    "watermark": {
+      "var_param": "watermark"
+    },
+    "defaced_volume": {
+      "var_param": "defaced_volume"
+    },
+    "facemask": {
+      "var_param": "facemask"
+    },
+    "fill_constants": {
+      "var_param": "fill_constants"
+    },
+    "exclude_mask": {
+      "var_param": "exclude_mask"
+    },
+    "tempreg": {
+      "var_param": "tempreg"
+    },
+    "minsurfpath": {
+      "var_param": "minsurfpath"
+    },
+    "maxsurfpath": {
+      "var_param": "maxsurfpath"
+    },
+    "distbounds": {
+      "var_param": "distbounds"
+    },
+    "distoverlay": {
+      "var_param": "distoverlay"
+    },
+    "distdat": {
+      "var_param": "distdat"
+    },
+    "statspath": {
+      "var_param": "statspath"
+    },
+    "output_tempsurf": {
+      "var_param": "output_tempsurf"
+    },
+    "apply_to_volume": {
+      "var_param": "apply_to_volume"
+    },
+    "ripple_center": {
+      "var_param": "ripple_center"
+    },
+    "apply_ripple": {
+      "var_param": "apply_ripple"
+    },
+    "diagnostic_level": {
+      "var_param": "diagnostic_level"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "bianca",
+  "properties": {
+    "master_file": {
+      "var_param": "master_file"
+    },
+    "label_feature_num": {
+      "var_param": "label_feature_num"
+    },
+    "brain_mask_feature_num": {
+      "var_param": "brain_mask_feature_num"
+    },
+    "query_subject_num": {
+      "var_param": "query_subject_num"
+    },
+    "training_nums": {
+      "var_param": "training_nums"
+    },
+    "feature_subset": {
+      "var_param": "feature_subset"
+    },
+    "mat_feature_num": {
+      "var_param": "mat_feature_num"
+    },
+    "spatial_weight": {
+      "var_param": "spatial_weight"
+    },
+    "patch_sizes": {
+      "var_param": "patch_sizes"
+    },
+    "patch_3d": {
+      "var_param": "patch_3d"
+    },
+    "select_pts": {
+      "var_param": "select_pts"
+    },
+    "training_pts": {
+      "var_param": "training_pts"
+    },
+    "non_les_pts": {
+      "var_param": "non_les_pts"
+    },
+    "load_classifier_data": {
+      "var_param": "load_classifier_data"
+    },
+    "save_classifier_data": {
+      "var_param": "save_classifier_data"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "out_name": {
+      "var_param": "out_name"
+    }
+  }
+}

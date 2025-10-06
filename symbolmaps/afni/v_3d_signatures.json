@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_signatures",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "filter": {
+      "var_param": "filter_"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "smoothing": {
+      "var_param": "smoothing"
+    }
+  }
+}

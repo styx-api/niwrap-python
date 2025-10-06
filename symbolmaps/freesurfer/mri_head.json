@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mri_head",
+  "properties": {
+    "identify": {
+      "var_param": "identify"
+    },
+    "read": {
+      "var_param": "read"
+    },
+    "filename": {
+      "var_param": "filename"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "usage": {
+      "var_param": "usage"
+    },
+    "question_mark_help": {
+      "var_param": "question_mark_help"
+    }
+  }
+}

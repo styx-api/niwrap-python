@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "metric_convert",
+  "properties": {
+    "to_nifti": {
+      "var_param": "to_nifti",
+      "fn_struct_make_params": "metric_convert_to_nifti_params",
+      "properties": {
+        "metric_in": {
+          "var_param": "metric_in"
+        },
+        "nifti_out": {
+          "var_param": "nifti_out"
+        }
+      }
+    },
+    "from_nifti": {
+      "var_param": "from_nifti",
+      "fn_struct_make_params": "metric_convert_from_nifti_params",
+      "properties": {
+        "nifti_in": {
+          "var_param": "nifti_in"
+        },
+        "surface_in": {
+          "var_param": "surface_in"
+        },
+        "metric_out": {
+          "var_param": "metric_out"
+        }
+      }
+    }
+  }
+}

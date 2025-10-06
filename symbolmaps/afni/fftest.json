@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fftest",
+  "properties": {
+    "length": {
+      "var_param": "length"
+    },
+    "num_tests": {
+      "var_param": "num_tests"
+    },
+    "vector_size": {
+      "var_param": "vector_size"
+    },
+    "quiet_mode": {
+      "var_param": "quiet_mode"
+    }
+  }
+}

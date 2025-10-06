@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "tridec",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "fine_file": {
+      "var_param": "fine_file"
+    },
+    "ico_file": {
+      "var_param": "ico_file"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    }
+  }
+}

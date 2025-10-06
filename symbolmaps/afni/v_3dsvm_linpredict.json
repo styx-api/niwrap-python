@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3dsvm_linpredict",
+  "properties": {
+    "mask_dataset": {
+      "var_param": "mask_dataset"
+    },
+    "weight_vector": {
+      "var_param": "weight_vector"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    }
+  }
+}

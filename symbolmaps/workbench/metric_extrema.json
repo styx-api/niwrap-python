@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "metric_extrema",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric_in": {
+      "var_param": "metric_in"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "presmooth": {
+      "var_param": "presmooth",
+      "fn_struct_make_params": "metric_extrema_presmooth_params",
+      "properties": {
+        "kernel": {
+          "var_param": "kernel"
+        },
+        "opt_fwhm": {
+          "var_param": "opt_fwhm"
+        }
+      }
+    },
+    "opt_roi_roi_metric": {
+      "var_param": "opt_roi_roi_metric"
+    },
+    "threshold": {
+      "var_param": "threshold",
+      "fn_struct_make_params": "metric_extrema_threshold_params",
+      "properties": {
+        "low": {
+          "var_param": "low"
+        },
+        "high": {
+          "var_param": "high"
+        }
+      }
+    },
+    "opt_sum_columns": {
+      "var_param": "opt_sum_columns"
+    },
+    "opt_consolidate_mode": {
+      "var_param": "opt_consolidate_mode"
+    },
+    "opt_only_maxima": {
+      "var_param": "opt_only_maxima"
+    },
+    "opt_only_minima": {
+      "var_param": "opt_only_minima"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    }
+  }
+}

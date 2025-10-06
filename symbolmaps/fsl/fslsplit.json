@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "fslsplit",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "output_basename": {
+      "var_param": "output_basename"
+    },
+    "separation_x": {
+      "var_param": "separation_x"
+    },
+    "separation_y": {
+      "var_param": "separation_y"
+    },
+    "separation_z": {
+      "var_param": "separation_z"
+    },
+    "separation_time": {
+      "var_param": "separation_time"
+    }
+  }
+}

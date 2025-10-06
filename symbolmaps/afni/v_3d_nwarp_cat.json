@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_nwarp_cat",
+  "properties": {
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "space_marker": {
+      "var_param": "space_marker"
+    },
+    "warp1": {
+      "var_param": "warp1"
+    },
+    "warp2": {
+      "var_param": "warp2"
+    },
+    "additional_warps": {
+      "var_param": "additional_warps"
+    },
+    "invert_final_warp": {
+      "var_param": "invert_final_warp"
+    },
+    "extra_padding": {
+      "var_param": "extra_padding"
+    }
+  }
+}

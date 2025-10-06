@@ -1,0 +1,95 @@
+{
+  "fn_root_make_params_and_execute": "fslregister",
+  "properties": {
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "mov_vol": {
+      "var_param": "mov_vol"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "fsl_matrix": {
+      "var_param": "fsl_matrix"
+    },
+    "init_fsl_matrix": {
+      "var_param": "init_fsl_matrix"
+    },
+    "no_init_xfm": {
+      "var_param": "no_init_xfm"
+    },
+    "niters": {
+      "var_param": "niters"
+    },
+    "dof": {
+      "var_param": "dof"
+    },
+    "bins": {
+      "var_param": "bins"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "max_angle": {
+      "var_param": "max_angle"
+    },
+    "no_new_schedule": {
+      "var_param": "no_new_schedule"
+    },
+    "no_allow_swap": {
+      "var_param": "no_allow_swap"
+    },
+    "no_trans": {
+      "var_param": "no_trans"
+    },
+    "bet_mov": {
+      "var_param": "bet_mov"
+    },
+    "bet_fvalue": {
+      "var_param": "bet_fvalue"
+    },
+    "bet_func": {
+      "var_param": "bet_func"
+    },
+    "bet_ref": {
+      "var_param": "bet_ref"
+    },
+    "frame": {
+      "var_param": "frame"
+    },
+    "mid_frame": {
+      "var_param": "mid_frame"
+    },
+    "freesurfer_volume": {
+      "var_param": "freesurfer_volume"
+    },
+    "template_output": {
+      "var_param": "template_output"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "tmp_dir": {
+      "var_param": "tmp_dir"
+    },
+    "no_cleanup": {
+      "var_param": "no_cleanup"
+    },
+    "no_log": {
+      "var_param": "no_log"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "lta_format": {
+      "var_param": "lta_format"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "swi_process",
+  "properties": {
+    "magnitude_image": {
+      "var_param": "magnitude_image"
+    },
+    "phase_image": {
+      "var_param": "phase_image"
+    },
+    "swi_output": {
+      "var_param": "swi_output"
+    },
+    "stddev": {
+      "var_param": "stddev"
+    },
+    "phase_mask_cutoff": {
+      "var_param": "phase_mask_cutoff"
+    },
+    "phase_mask_right_cutoff": {
+      "var_param": "phase_mask_right_cutoff"
+    },
+    "sigmoid_a": {
+      "var_param": "sigmoid_a"
+    },
+    "sigmoid_b": {
+      "var_param": "sigmoid_b"
+    },
+    "phase_multiplications": {
+      "var_param": "phase_multiplications"
+    },
+    "mip_level": {
+      "var_param": "mip_level"
+    },
+    "phase_mask_method": {
+      "var_param": "phase_mask_method"
+    }
+  }
+}

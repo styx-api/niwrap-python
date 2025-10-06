@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "mba",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "chains": {
+      "var_param": "chains"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "eoi": {
+      "var_param": "eoi"
+    },
+    "data_table": {
+      "var_param": "data_table"
+    },
+    "cvars": {
+      "var_param": "cvars"
+    },
+    "qvars": {
+      "var_param": "qvars"
+    },
+    "qcvar": {
+      "var_param": "qcvar"
+    },
+    "stdz": {
+      "var_param": "stdz"
+    },
+    "wcp": {
+      "var_param": "wcp"
+    },
+    "disty": {
+      "var_param": "disty"
+    },
+    "se": {
+      "var_param": "se"
+    },
+    "dbgArgs": {
+      "var_param": "dbg_args"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

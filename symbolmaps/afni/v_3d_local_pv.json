@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_local_pv",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "prefix2": {
+      "var_param": "prefix2"
+    },
+    "evprefix": {
+      "var_param": "evprefix"
+    },
+    "neighborhood": {
+      "var_param": "neighborhood"
+    },
+    "despike": {
+      "var_param": "despike"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "vnorm": {
+      "var_param": "vnorm"
+    },
+    "vproj": {
+      "var_param": "vproj"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_remove_intersection",
+  "properties": {
+    "surface_in_file": {
+      "var_param": "surface_in_file"
+    },
+    "corrected_surface_out_file": {
+      "var_param": "corrected_surface_out_file"
+    },
+    "fill_holes": {
+      "var_param": "fill_holes"
+    },
+    "map_option": {
+      "var_param": "map_option"
+    },
+    "projdistmm": {
+      "var_param": "projdistmm"
+    }
+  }
+}

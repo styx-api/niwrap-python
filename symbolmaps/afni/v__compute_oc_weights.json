@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v__compute_oc_weights",
+  "properties": {
+    "echo_times": {
+      "var_param": "echo_times"
+    },
+    "echo_times_file": {
+      "var_param": "echo_times_file"
+    },
+    "echo_dsets": {
+      "var_param": "echo_dsets"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "def_to_equal": {
+      "var_param": "def_to_equal"
+    },
+    "oc_method": {
+      "var_param": "oc_method"
+    },
+    "sum_weight_tolerance": {
+      "var_param": "sum_weight_tolerance"
+    },
+    "t2_star_limit": {
+      "var_param": "t2_star_limit"
+    },
+    "work_dir": {
+      "var_param": "work_dir"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

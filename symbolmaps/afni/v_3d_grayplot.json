@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_grayplot",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dimensions": {
+      "var_param": "dimensions"
+    },
+    "resample_old": {
+      "var_param": "resample_old"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "pvorder": {
+      "var_param": "pvorder"
+    },
+    "LJorder": {
+      "var_param": "ljorder"
+    },
+    "peelorder": {
+      "var_param": "peelorder"
+    },
+    "ijkorder": {
+      "var_param": "ijkorder"
+    },
+    "range": {
+      "var_param": "range_"
+    },
+    "percent": {
+      "var_param": "percent"
+    },
+    "raw_with_bounds": {
+      "var_param": "raw_with_bounds"
+    }
+  }
+}

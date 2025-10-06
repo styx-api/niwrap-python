@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mris_rf_label",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "rf_classifier": {
+      "var_param": "rf_classifier"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surf": {
+      "var_param": "surf"
+    }
+  }
+}

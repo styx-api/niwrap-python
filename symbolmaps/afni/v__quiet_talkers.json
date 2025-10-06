@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v__quiet_talkers",
+  "properties": {
+    "sudo": {
+      "var_param": "sudo"
+    },
+    "prog": {
+      "var_param": "prog"
+    },
+    "npb_val": {
+      "var_param": "npb_val"
+    },
+    "npb_range": {
+      "var_param": "npb_range"
+    },
+    "pif_key": {
+      "var_param": "pif_key"
+    },
+    "no_npb": {
+      "var_param": "no_npb"
+    },
+    "list": {
+      "var_param": "list_"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

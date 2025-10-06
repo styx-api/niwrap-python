@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "bianca_overlap_measures",
+  "properties": {
+    "lesion_mask": {
+      "var_param": "lesion_mask"
+    },
+    "manual_mask": {
+      "var_param": "manual_mask"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    }
+  }
+}

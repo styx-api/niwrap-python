@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "label_subject_mixed",
+  "properties": {
+    "brain_mask": {
+      "var_param": "brain_mask"
+    },
+    "norm_volume": {
+      "var_param": "norm_volume"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "gca_file": {
+      "var_param": "gca_file"
+    },
+    "aseg_output": {
+      "var_param": "aseg_output"
+    }
+  }
+}

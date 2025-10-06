@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "afni_open",
+  "properties": {
+    "files": {
+      "var_param": "files"
+    },
+    "method": {
+      "var_param": "method"
+    },
+    "editor": {
+      "var_param": "editor"
+    },
+    "downloader": {
+      "var_param": "downloader"
+    },
+    "examinexmat": {
+      "var_param": "examinexmat"
+    },
+    "browser": {
+      "var_param": "browser"
+    },
+    "readme": {
+      "var_param": "readme"
+    },
+    "afniweb": {
+      "var_param": "afniweb"
+    },
+    "global_help": {
+      "var_param": "global_help"
+    },
+    "gopts_help": {
+      "var_param": "gopts_help"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "mini_help": {
+      "var_param": "mini_help"
+    },
+    "extreme_help": {
+      "var_param": "extreme_help"
+    },
+    "h_view": {
+      "var_param": "h_view"
+    },
+    "h_web": {
+      "var_param": "h_web"
+    }
+  }
+}

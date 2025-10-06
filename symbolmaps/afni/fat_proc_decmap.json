@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_decmap",
+  "properties": {
+    "in_fa": {
+      "var_param": "in_fa"
+    },
+    "in_v1": {
+      "var_param": "in_v1"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "fa_thr": {
+      "var_param": "fa_thr"
+    },
+    "fa_sca": {
+      "var_param": "fa_sca"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "qc_prefix": {
+      "var_param": "qc_prefix"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    },
+    "no_qc_view": {
+      "var_param": "no_qc_view"
+    }
+  }
+}

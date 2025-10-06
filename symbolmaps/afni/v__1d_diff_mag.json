@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__1d_diff_mag",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

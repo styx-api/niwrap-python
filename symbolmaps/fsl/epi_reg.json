@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "epi_reg",
+  "properties": {
+    "epi": {
+      "var_param": "epi"
+    },
+    "t1_head": {
+      "var_param": "t1_head"
+    },
+    "t1_brain": {
+      "var_param": "t1_brain"
+    },
+    "out_base_name": {
+      "var_param": "out_base_name"
+    },
+    "echospacing": {
+      "var_param": "echospacing"
+    },
+    "fmap": {
+      "var_param": "fmap"
+    },
+    "fmapmag": {
+      "var_param": "fmapmag"
+    },
+    "fmapmagbrain": {
+      "var_param": "fmapmagbrain"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "no_fmapreg": {
+      "var_param": "no_fmapreg"
+    },
+    "pedir": {
+      "var_param": "pedir"
+    },
+    "weight_image": {
+      "var_param": "weight_image"
+    },
+    "wmseg": {
+      "var_param": "wmseg"
+    }
+  }
+}

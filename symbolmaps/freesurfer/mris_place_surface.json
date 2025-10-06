@@ -1,0 +1,137 @@
+{
+  "fn_root_make_params_and_execute": "mris_place_surface",
+  "properties": {
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "autodetect_gray_white_stats": {
+      "var_param": "autodetect_gray_white_stats"
+    },
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "surface_type_group": {
+      "var_param": "surface_type_group"
+    },
+    "hemi_group": {
+      "var_param": "hemi_group"
+    },
+    "wm_segment": {
+      "var_param": "wm_segment"
+    },
+    "out_volume": {
+      "var_param": "out_volume"
+    },
+    "out_volume_only": {
+      "var_param": "out_volume_only"
+    },
+    "restore_255": {
+      "var_param": "restore_255"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "cortical_parcellation": {
+      "var_param": "cortical_parcellation"
+    },
+    "nsmooth": {
+      "var_param": "nsmooth"
+    },
+    "smooth_after_rip": {
+      "var_param": "smooth_after_rip"
+    },
+    "max_cbv_dist": {
+      "var_param": "max_cbv_dist"
+    },
+    "rip_label": {
+      "var_param": "rip_label"
+    },
+    "rip_midline": {
+      "var_param": "rip_midline"
+    },
+    "rip_bg": {
+      "var_param": "rip_bg"
+    },
+    "rip_bg_no_annot": {
+      "var_param": "rip_bg_no_annot"
+    },
+    "no_rip_freeze": {
+      "var_param": "no_rip_freeze"
+    },
+    "rip_wmsa": {
+      "var_param": "rip_wmsa"
+    },
+    "rip_lesion": {
+      "var_param": "rip_lesion"
+    },
+    "no_rip": {
+      "var_param": "no_rip"
+    },
+    "rip_overlay": {
+      "var_param": "rip_overlay"
+    },
+    "rip_surface": {
+      "var_param": "rip_surface"
+    },
+    "rip_projection": {
+      "var_param": "rip_projection"
+    },
+    "repulse_surface": {
+      "var_param": "repulse_surface"
+    },
+    "white_surface": {
+      "var_param": "white_surface"
+    },
+    "blend_surface": {
+      "var_param": "blend_surface"
+    },
+    "multimodal_input": {
+      "var_param": "multimodal_input"
+    },
+    "mm_refine": {
+      "var_param": "mm_refine"
+    },
+    "pin_medial_wall": {
+      "var_param": "pin_medial_wall"
+    },
+    "no_intensity_proc": {
+      "var_param": "no_intensity_proc"
+    },
+    "debug_vertex": {
+      "var_param": "debug_vertex"
+    },
+    "ripflag_out": {
+      "var_param": "ripflag_out"
+    },
+    "local_max": {
+      "var_param": "local_max"
+    },
+    "target_surf": {
+      "var_param": "target_surf"
+    },
+    "stop_mask": {
+      "var_param": "stop_mask"
+    },
+    "mm_intensity_limits": {
+      "var_param": "mm_intensity_limits"
+    },
+    "cover_seg": {
+      "var_param": "cover_seg"
+    },
+    "first_peak_d1": {
+      "var_param": "first_peak_d1"
+    },
+    "first_peak_d2": {
+      "var_param": "first_peak_d2"
+    },
+    "white_border_low_factor": {
+      "var_param": "white_border_low_factor"
+    },
+    "fill_lateral_ventricles": {
+      "var_param": "fill_lateral_ventricles"
+    }
+  }
+}

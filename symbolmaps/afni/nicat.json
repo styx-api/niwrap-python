@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "nicat",
+  "properties": {
+    "stream_spec": {
+      "var_param": "stream_spec"
+    },
+    "reopen": {
+      "var_param": "reopen"
+    },
+    "copy_stream": {
+      "var_param": "copy_stream"
+    },
+    "read_only": {
+      "var_param": "read_only"
+    }
+  }
+}

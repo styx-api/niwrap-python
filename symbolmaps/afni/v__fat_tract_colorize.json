@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v__fat_tract_colorize",
+  "properties": {
+    "in_fa": {
+      "var_param": "in_fa"
+    },
+    "in_v1": {
+      "var_param": "in_v1"
+    },
+    "in_tracts": {
+      "var_param": "in_tracts"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "in_ulay": {
+      "var_param": "in_ulay"
+    },
+    "no_view": {
+      "var_param": "no_view"
+    },
+    "only_view": {
+      "var_param": "only_view"
+    }
+  }
+}

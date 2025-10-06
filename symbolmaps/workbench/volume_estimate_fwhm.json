@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "volume_estimate_fwhm",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "opt_roi_roivol": {
+      "var_param": "opt_roi_roivol"
+    },
+    "opt_subvolume_subvol": {
+      "var_param": "opt_subvolume_subvol"
+    },
+    "whole_file": {
+      "var_param": "whole_file",
+      "fn_struct_make_params": "volume_estimate_fwhm_whole_file_params",
+      "properties": {
+        "opt_demean": {
+          "var_param": "opt_demean"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mris_morph_stats",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "morphed_surface": {
+      "var_param": "morphed_surface"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    }
+  }
+}

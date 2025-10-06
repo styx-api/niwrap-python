@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mris_compute_lgi",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "close_sphere_size": {
+      "var_param": "close_sphere_size"
+    },
+    "smooth_iters": {
+      "var_param": "smooth_iters"
+    },
+    "step_size": {
+      "var_param": "step_size"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "dontrun": {
+      "var_param": "dontrun"
+    }
+  }
+}

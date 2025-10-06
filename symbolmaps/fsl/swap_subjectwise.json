@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "swap_subjectwise",
+  "properties": {
+    "dyads": {
+      "var_param": "dyads"
+    },
+    "fmean": {
+      "var_param": "fmean"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "obasename": {
+      "var_param": "obasename"
+    },
+    "xthresh": {
+      "var_param": "xthresh"
+    },
+    "averageonly_flag": {
+      "var_param": "averageonly_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    }
+  }
+}

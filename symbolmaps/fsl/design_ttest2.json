@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "design_ttest2",
+  "properties": {
+    "design_files_rootname": {
+      "var_param": "design_files_rootname"
+    },
+    "ngroupa": {
+      "var_param": "ngroupa"
+    },
+    "ngroupb": {
+      "var_param": "ngroupb"
+    },
+    "include_mean_contrasts": {
+      "var_param": "include_mean_contrasts"
+    }
+  }
+}

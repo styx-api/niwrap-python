@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "make_pq_script_py",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "brick_index": {
+      "var_param": "brick_index"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "out_script": {
+      "var_param": "out_script"
+    }
+  }
+}

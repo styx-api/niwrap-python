@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "analyzeto4dfp",
+  "properties": {
+    "analyze_image": {
+      "var_param": "analyze_image"
+    },
+    "rois_scale": {
+      "var_param": "rois_scale"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    },
+    "endian": {
+      "var_param": "endian"
+    },
+    "orientation": {
+      "var_param": "orientation"
+    }
+  }
+}

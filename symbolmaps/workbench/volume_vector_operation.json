@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "volume_vector_operation",
+  "properties": {
+    "vectors_a": {
+      "var_param": "vectors_a"
+    },
+    "vectors_b": {
+      "var_param": "vectors_b"
+    },
+    "operation": {
+      "var_param": "operation"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "opt_normalize_a": {
+      "var_param": "opt_normalize_a"
+    },
+    "opt_normalize_b": {
+      "var_param": "opt_normalize_b"
+    },
+    "opt_normalize_output": {
+      "var_param": "opt_normalize_output"
+    },
+    "opt_magnitude": {
+      "var_param": "opt_magnitude"
+    }
+  }
+}

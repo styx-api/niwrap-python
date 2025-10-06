@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_pfm",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "algorithm": {
+      "var_param": "algorithm"
+    },
+    "criteria": {
+      "var_param": "criteria"
+    },
+    "nonzeros": {
+      "var_param": "nonzeros"
+    },
+    "maxiter": {
+      "var_param": "maxiter"
+    },
+    "maxiterfactor": {
+      "var_param": "maxiterfactor"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "hrf": {
+      "var_param": "hrf"
+    },
+    "hrf_vol": {
+      "var_param": "hrf_vol"
+    },
+    "idx_hrf": {
+      "var_param": "idx_hrf"
+    },
+    "LHS": {
+      "var_param": "lhs"
+    },
+    "jobs": {
+      "var_param": "jobs"
+    },
+    "nSeg": {
+      "var_param": "n_seg"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "atlasquery",
+  "properties": {
+    "dumpatlases_flag": {
+      "var_param": "dumpatlases_flag"
+    },
+    "atlas": {
+      "var_param": "atlas"
+    },
+    "coord": {
+      "var_param": "coord"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

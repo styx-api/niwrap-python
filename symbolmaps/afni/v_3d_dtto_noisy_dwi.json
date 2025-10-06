@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_dtto_noisy_dwi",
+  "properties": {
+    "dt_file": {
+      "var_param": "dt_file"
+    },
+    "grad_file": {
+      "var_param": "grad_file"
+    },
+    "noise_dwi": {
+      "var_param": "noise_dwi"
+    },
+    "noise_b0": {
+      "var_param": "noise_b0"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "bval": {
+      "var_param": "bval"
+    },
+    "s0": {
+      "var_param": "s0"
+    }
+  }
+}

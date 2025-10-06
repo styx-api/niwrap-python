@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "tckresample",
+  "properties": {
+    "upsample": {
+      "var_param": "upsample"
+    },
+    "downsample": {
+      "var_param": "downsample"
+    },
+    "step_size": {
+      "var_param": "step_size"
+    },
+    "num_points": {
+      "var_param": "num_points"
+    },
+    "endpoints": {
+      "var_param": "endpoints"
+    },
+    "line": {
+      "var_param": "line",
+      "fn_struct_make_params": "tckresample_line_params",
+      "properties": {
+        "num": {
+          "var_param": "num"
+        },
+        "start": {
+          "var_param": "start"
+        },
+        "end": {
+          "var_param": "end"
+        }
+      }
+    },
+    "arc": {
+      "var_param": "arc",
+      "fn_struct_make_params": "tckresample_arc_params",
+      "properties": {
+        "num": {
+          "var_param": "num"
+        },
+        "start": {
+          "var_param": "start"
+        },
+        "mid": {
+          "var_param": "mid"
+        },
+        "end": {
+          "var_param": "end"
+        }
+      }
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tckresample_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "in_tracks": {
+      "var_param": "in_tracks"
+    },
+    "out_tracks": {
+      "var_param": "out_tracks"
+    }
+  }
+}

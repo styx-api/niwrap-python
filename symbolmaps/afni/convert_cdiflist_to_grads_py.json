@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "convert_cdiflist_to_grads_py",
+  "properties": {
+    "cdiflist": {
+      "var_param": "cdiflist"
+    },
+    "bval_max": {
+      "var_param": "bval_max"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "ver": {
+      "var_param": "ver"
+    },
+    "date": {
+      "var_param": "date"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "hview": {
+      "var_param": "hview"
+    }
+  }
+}

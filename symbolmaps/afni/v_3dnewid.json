@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3dnewid",
+  "properties": {
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "fun": {
+      "var_param": "fun"
+    },
+    "fun11": {
+      "var_param": "fun11"
+    },
+    "int": {
+      "var_param": "int_"
+    },
+    "hash": {
+      "var_param": "hash_"
+    },
+    "MD5": {
+      "var_param": "md5"
+    }
+  }
+}

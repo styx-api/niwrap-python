@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "segment_ha_t1_long_sh",
+  "properties": {
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    }
+  }
+}

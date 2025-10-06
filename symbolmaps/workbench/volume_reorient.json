@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "volume_reorient",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "orient_string": {
+      "var_param": "orient_string"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    }
+  }
+}

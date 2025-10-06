@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mni152reg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "register_1mm": {
+      "var_param": "register_1mm"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "symmetric": {
+      "var_param": "symmetric"
+    },
+    "save_volume": {
+      "var_param": "save_volume"
+    }
+  }
+}

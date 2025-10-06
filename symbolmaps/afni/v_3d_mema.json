@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_mema",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "jobs": {
+      "var_param": "jobs"
+    },
+    "set": {
+      "var_param": "set_"
+    },
+    "covariates": {
+      "var_param": "covariates"
+    },
+    "covariates_center": {
+      "var_param": "covariates_center"
+    },
+    "covariates_model": {
+      "var_param": "covariates_model"
+    },
+    "covariates_name": {
+      "var_param": "covariates_name"
+    },
+    "groups": {
+      "var_param": "groups"
+    },
+    "cio": {
+      "var_param": "cio"
+    },
+    "HKtest": {
+      "var_param": "hktest"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "max_zeros": {
+      "var_param": "max_zeros"
+    },
+    "missing_data": {
+      "var_param": "missing_data"
+    },
+    "model_outliers": {
+      "var_param": "model_outliers"
+    },
+    "n_nonzero": {
+      "var_param": "n_nonzero"
+    },
+    "no_HKtest": {
+      "var_param": "no_hktest"
+    },
+    "no_model_outliers": {
+      "var_param": "no_model_outliers"
+    },
+    "no_residual_Z": {
+      "var_param": "no_residual_z"
+    },
+    "residual_Z": {
+      "var_param": "residual_z"
+    },
+    "Rio": {
+      "var_param": "rio"
+    },
+    "equal_variance": {
+      "var_param": "equal_variance"
+    },
+    "unequal_variance": {
+      "var_param": "unequal_variance"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "dbgArgs": {
+      "var_param": "dbg_args"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "conditions": {
+      "var_param": "conditions"
+    },
+    "no_tstat": {
+      "var_param": "no_tstat"
+    }
+  }
+}

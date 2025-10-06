@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v_3dinfill",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "niter": {
+      "var_param": "niter"
+    },
+    "blend": {
+      "var_param": "blend"
+    },
+    "minhits": {
+      "var_param": "minhits"
+    },
+    "ed": {
+      "var_param": "ed"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask_range": {
+      "var_param": "mask_range"
+    },
+    "mrange": {
+      "var_param": "mrange"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    }
+  }
+}

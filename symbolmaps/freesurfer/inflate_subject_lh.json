@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "inflate_subject_lh",
+  "properties": {
+    "input_folder": {
+      "var_param": "input_folder"
+    },
+    "hostname_flag": {
+      "var_param": "hostname_flag"
+    }
+  }
+}

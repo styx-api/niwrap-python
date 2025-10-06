@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_1dnorm",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "norm1": {
+      "var_param": "norm1"
+    },
+    "normx": {
+      "var_param": "normx"
+    },
+    "demean": {
+      "var_param": "demean"
+    },
+    "demed": {
+      "var_param": "demed"
+    }
+  }
+}

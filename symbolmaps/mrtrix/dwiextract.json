@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "dwiextract",
+  "properties": {
+    "bzero": {
+      "var_param": "bzero"
+    },
+    "no_bzero": {
+      "var_param": "no_bzero"
+    },
+    "singleshell": {
+      "var_param": "singleshell"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "dwiextract_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "shells": {
+      "var_param": "shells"
+    },
+    "export_grad_mrtrix": {
+      "var_param": "export_grad_mrtrix"
+    },
+    "export_grad_fsl": {
+      "var_param": "export_grad_fsl",
+      "fn_struct_make_params": "dwiextract_export_grad_fsl_params",
+      "properties": {
+        "bvecs_path": {
+          "var_param": "bvecs_path"
+        },
+        "bvals_path": {
+          "var_param": "bvals_path"
+        }
+      }
+    },
+    "import_pe_table": {
+      "var_param": "import_pe_table"
+    },
+    "import_pe_eddy": {
+      "var_param": "import_pe_eddy",
+      "fn_struct_make_params": "dwiextract_import_pe_eddy_params",
+      "properties": {
+        "config": {
+          "var_param": "config"
+        },
+        "indices": {
+          "var_param": "indices"
+        }
+      }
+    },
+    "pe": {
+      "var_param": "pe"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "dwiextract_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

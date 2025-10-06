@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mris_transmantle_dysplasia_paths",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "aseg_volume": {
+      "var_param": "aseg_volume"
+    },
+    "intensity_volume": {
+      "var_param": "intensity_volume"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "filter": {
+      "var_param": "filter_"
+    },
+    "noise_sensitivity": {
+      "var_param": "noise_sensitivity"
+    }
+  }
+}

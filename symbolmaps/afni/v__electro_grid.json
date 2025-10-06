@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__electro_grid",
+  "properties": {
+    "strip": {
+      "var_param": "strip"
+    },
+    "grid": {
+      "var_param": "grid"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "coords": {
+      "var_param": "coords"
+    },
+    "with_markers": {
+      "var_param": "with_markers"
+    },
+    "echo": {
+      "var_param": "echo"
+    }
+  }
+}

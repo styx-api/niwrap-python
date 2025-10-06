@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "surface_flip_lr",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "surface_out": {
+      "var_param": "surface_out"
+    }
+  }
+}

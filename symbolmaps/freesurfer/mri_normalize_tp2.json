@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mri_normalize_tp2",
+  "properties": {
+    "input_vol": {
+      "var_param": "input_vol"
+    },
+    "normalized_vol": {
+      "var_param": "normalized_vol"
+    },
+    "t1_volume": {
+      "var_param": "t1_volume"
+    },
+    "mask1": {
+      "var_param": "mask1"
+    },
+    "mask2": {
+      "var_param": "mask2"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "ctrl": {
+      "var_param": "ctrl"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "invert_flag": {
+      "var_param": "invert_flag"
+    },
+    "lta_src": {
+      "var_param": "lta_src"
+    },
+    "lta_dst": {
+      "var_param": "lta_dst"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "non_local_super_resolution",
+  "properties": {
+    "image_dimensionality": {
+      "var_param": "image_dimensionality"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "interpolated_image": {
+      "var_param": "interpolated_image"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "patch_radius": {
+      "var_param": "patch_radius"
+    },
+    "search_radius": {
+      "var_param": "search_radius"
+    },
+    "intensity_difference_sigma": {
+      "var_param": "intensity_difference_sigma"
+    },
+    "patch_similarity_sigma": {
+      "var_param": "patch_similarity_sigma"
+    },
+    "scale_levels": {
+      "var_param": "scale_levels"
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

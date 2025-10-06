@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "polyorder",
+  "properties": {
+    "ntp": {
+      "var_param": "ntp"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "cutoff": {
+      "var_param": "cutoff"
+    }
+  }
+}

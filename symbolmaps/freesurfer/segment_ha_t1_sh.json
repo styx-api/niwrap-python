@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "segment_ha_t1_sh",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "brain_mask": {
+      "var_param": "brain_mask"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

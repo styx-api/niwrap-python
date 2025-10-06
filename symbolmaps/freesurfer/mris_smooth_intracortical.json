@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mris_smooth_intracortical",
+  "properties": {
+    "surf_dir": {
+      "var_param": "surf_dir"
+    },
+    "surf_name": {
+      "var_param": "surf_name"
+    },
+    "overlay_dir": {
+      "var_param": "overlay_dir"
+    },
+    "overlay_name": {
+      "var_param": "overlay_name"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "output_name": {
+      "var_param": "output_name"
+    },
+    "tan_size": {
+      "var_param": "tan_size"
+    },
+    "rad_size": {
+      "var_param": "rad_size"
+    },
+    "rad_start": {
+      "var_param": "rad_start"
+    },
+    "tan_weights": {
+      "var_param": "tan_weights"
+    }
+  }
+}

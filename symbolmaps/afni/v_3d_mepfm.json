@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_mepfm",
+  "properties": {
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "dbgArgs": {
+      "var_param": "dbg_args"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "hrf_model": {
+      "var_param": "hrf_model"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

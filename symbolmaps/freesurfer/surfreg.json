@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "surfreg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "cross_hemi": {
+      "var_param": "cross_hemi"
+    },
+    "reg_lh": {
+      "var_param": "reg_lh"
+    },
+    "reg_rh": {
+      "var_param": "reg_rh"
+    },
+    "reg_both": {
+      "var_param": "reg_both"
+    },
+    "no_annot": {
+      "var_param": "no_annot"
+    },
+    "annot": {
+      "var_param": "annot"
+    },
+    "aparc": {
+      "var_param": "aparc"
+    },
+    "noneg": {
+      "var_param": "noneg"
+    },
+    "init_reg": {
+      "var_param": "init_reg"
+    },
+    "lta": {
+      "var_param": "lta"
+    },
+    "init_from_tal": {
+      "var_param": "init_from_tal"
+    },
+    "outsurf": {
+      "var_param": "outsurf"
+    },
+    "no_set_vol_geom": {
+      "var_param": "no_set_vol_geom"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

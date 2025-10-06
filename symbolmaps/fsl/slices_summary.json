@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "slices_summary",
+  "properties": {
+    "4d_input_file": {
+      "var_param": "v_4d_input_file"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "background_image": {
+      "var_param": "background_image"
+    },
+    "pictures_sum": {
+      "var_param": "pictures_sum"
+    },
+    "single_slice_flag": {
+      "var_param": "single_slice_flag"
+    },
+    "darker_background_flag": {
+      "var_param": "darker_background_flag"
+    },
+    "dumb_rule_flag": {
+      "var_param": "dumb_rule_flag"
+    },
+    "pictures_sum_second": {
+      "var_param": "pictures_sum_second"
+    },
+    "output_png": {
+      "var_param": "output_png"
+    },
+    "timepoints": {
+      "var_param": "timepoints"
+    }
+  }
+}

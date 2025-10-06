@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "pairreg",
+  "properties": {
+    "brain1": {
+      "var_param": "brain1"
+    },
+    "brain2": {
+      "var_param": "brain2"
+    },
+    "skull1": {
+      "var_param": "skull1"
+    },
+    "skull2": {
+      "var_param": "skull2"
+    },
+    "outputmatrix": {
+      "var_param": "outputmatrix"
+    },
+    "extra_flirt_args": {
+      "var_param": "extra_flirt_args"
+    }
+  }
+}

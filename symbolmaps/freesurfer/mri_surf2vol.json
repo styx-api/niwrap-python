@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "mri_surf2vol",
+  "properties": {
+    "surface_overlay": {
+      "var_param": "surface_overlay"
+    },
+    "ltafile": {
+      "var_param": "ltafile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "ribbonfile": {
+      "var_param": "ribbonfile"
+    },
+    "merge_volume": {
+      "var_param": "merge_volume"
+    },
+    "surface_values": {
+      "var_param": "surface_values"
+    },
+    "mkmask": {
+      "var_param": "mkmask"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "surfname": {
+      "var_param": "surfname"
+    },
+    "projfrac": {
+      "var_param": "projfrac"
+    },
+    "fill_ribbon": {
+      "var_param": "fill_ribbon"
+    },
+    "fill_projfrac": {
+      "var_param": "fill_projfrac"
+    },
+    "reg_volume": {
+      "var_param": "reg_volume"
+    },
+    "identity": {
+      "var_param": "identity"
+    },
+    "template_volume": {
+      "var_param": "template_volume"
+    },
+    "fstal_res": {
+      "var_param": "fstal_res"
+    },
+    "vtxvol": {
+      "var_param": "vtxvol"
+    },
+    "flat2mri": {
+      "var_param": "flat2mri"
+    },
+    "sphpvf": {
+      "var_param": "sphpvf"
+    },
+    "mask_to_cortex": {
+      "var_param": "mask_to_cortex"
+    },
+    "mask_to_label": {
+      "var_param": "mask_to_label"
+    },
+    "surface_mask": {
+      "var_param": "surface_mask"
+    },
+    "add_const": {
+      "var_param": "add_const"
+    },
+    "copy_ctab": {
+      "var_param": "copy_ctab"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "gdiagno": {
+      "var_param": "gdiagno"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

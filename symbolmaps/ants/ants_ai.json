@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "ants_ai",
+  "properties": {
+    "dimensionality": {
+      "var_param": "dimensionality"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "align_principal_axes": {
+      "var_param": "align_principal_axes"
+    },
+    "align_blobs": {
+      "var_param": "align_blobs"
+    },
+    "search_factor": {
+      "var_param": "search_factor"
+    },
+    "translation_search_grid": {
+      "var_param": "translation_search_grid"
+    },
+    "convergence": {
+      "var_param": "convergence"
+    },
+    "masks": {
+      "var_param": "masks"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_extrema",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "output_session": {
+      "var_param": "output_session"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "mask_threshold": {
+      "var_param": "mask_threshold"
+    },
+    "data_threshold": {
+      "var_param": "data_threshold"
+    },
+    "n_best": {
+      "var_param": "n_best"
+    },
+    "separation_distance": {
+      "var_param": "separation_distance"
+    },
+    "minima": {
+      "var_param": "minima"
+    },
+    "maxima": {
+      "var_param": "maxima"
+    },
+    "strict": {
+      "var_param": "strict"
+    },
+    "partial": {
+      "var_param": "partial"
+    },
+    "interior": {
+      "var_param": "interior"
+    },
+    "closure": {
+      "var_param": "closure"
+    },
+    "slice": {
+      "var_param": "slice_"
+    },
+    "volume": {
+      "var_param": "volume"
+    },
+    "remove": {
+      "var_param": "remove"
+    },
+    "average": {
+      "var_param": "average"
+    },
+    "weight": {
+      "var_param": "weight"
+    }
+  }
+}

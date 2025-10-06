@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "run_segment_subject_sh",
+  "properties": {
+    "deployedMCRroot": {
+      "var_param": "deployed_mcrroot"
+    },
+    "arguments": {
+      "var_param": "arguments"
+    }
+  }
+}

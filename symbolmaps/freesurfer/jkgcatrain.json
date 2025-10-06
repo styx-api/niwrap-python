@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "jkgcatrain",
+  "properties": {
+    "gca_directory": {
+      "var_param": "gca_directory"
+    },
+    "iteration_number": {
+      "var_param": "iteration_number"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "no_submit": {
+      "var_param": "no_submit"
+    },
+    "mail_flag": {
+      "var_param": "mail_flag"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "fat_proc_select_vols",
+  "properties": {
+    "dwi_input": {
+      "var_param": "dwi_input"
+    },
+    "img_input": {
+      "var_param": "img_input"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "in_bads": {
+      "var_param": "in_bads"
+    },
+    "apply_to_vols": {
+      "var_param": "apply_to_vols"
+    },
+    "do_movie": {
+      "var_param": "do_movie"
+    },
+    "workdir": {
+      "var_param": "workdir"
+    },
+    "no_cmd_out": {
+      "var_param": "no_cmd_out"
+    }
+  }
+}

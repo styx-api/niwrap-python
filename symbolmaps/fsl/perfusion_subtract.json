@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "perfusion_subtract",
+  "properties": {
+    "four_d_input": {
+      "var_param": "four_d_input"
+    },
+    "four_d_output": {
+      "var_param": "four_d_output"
+    },
+    "control_first_flag": {
+      "var_param": "control_first_flag"
+    }
+  }
+}

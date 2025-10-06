@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "surface_apply_warpfield",
+  "properties": {
+    "in_surf": {
+      "var_param": "in_surf"
+    },
+    "warpfield": {
+      "var_param": "warpfield"
+    },
+    "out_surf": {
+      "var_param": "out_surf"
+    },
+    "opt_fnirt_forward_warp": {
+      "var_param": "opt_fnirt_forward_warp"
+    }
+  }
+}

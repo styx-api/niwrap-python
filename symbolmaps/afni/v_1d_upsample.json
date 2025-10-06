@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_upsample",
+  "properties": {
+    "upsample_factor": {
+      "var_param": "upsample_factor"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "linear_interpolation": {
+      "var_param": "linear_interpolation"
+    }
+  }
+}

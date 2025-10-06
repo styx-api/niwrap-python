@@ -1,0 +1,317 @@
+{
+  "fn_root_make_params_and_execute": "greedy_",
+  "properties": {
+    "dimensions": {
+      "var_param": "dimensions"
+    },
+    "input_images": {
+      "var_param": "input_images",
+      "fn_struct_make_params": "greedy_input_images_params",
+      "properties": {
+        "fixed": {
+          "var_param": "fixed"
+        },
+        "moving": {
+          "var_param": "moving"
+        }
+      }
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
+    "brute": {
+      "var_param": "brute"
+    },
+    "moments": {
+      "var_param": "moments"
+    },
+    "reslice": {
+      "var_param": "reslice"
+    },
+    "invert": {
+      "var_param": "invert",
+      "fn_struct_make_params": "greedy_invert_params",
+      "properties": {
+        "inwarp": {
+          "var_param": "inwarp"
+        },
+        "outwarp": {
+          "var_param": "outwarp"
+        }
+      }
+    },
+    "root": {
+      "var_param": "root",
+      "fn_struct_make_params": "greedy_root_params",
+      "properties": {
+        "inwarp": {
+          "var_param": "inwarp"
+        },
+        "outwarp": {
+          "var_param": "outwarp"
+        },
+        "n": {
+          "var_param": "n"
+        }
+      }
+    },
+    "jacobian": {
+      "var_param": "jacobian",
+      "fn_struct_make_params": "greedy_jacobian_params",
+      "properties": {
+        "inwarp": {
+          "var_param": "inwarp"
+        },
+        "outjac": {
+          "var_param": "outjac"
+        }
+      }
+    },
+    "metric_mode": {
+      "var_param": "metric_mode"
+    },
+    "defopt": {
+      "var_param": "defopt"
+    },
+    "weight": {
+      "var_param": "weight"
+    },
+    "metric": {
+      "var_param": "metric",
+      "fn_struct_make_params": "greedy_metric_params",
+      "properties": {
+        "metric_type": {
+          "var_param": "metric_type"
+        },
+        "metric_param": {
+          "var_param": "metric_param"
+        }
+      }
+    },
+    "step_size": {
+      "var_param": "step_size"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "fixed_mask": {
+      "var_param": "fixed_mask"
+    },
+    "gm_trim": {
+      "var_param": "gm_trim"
+    },
+    "moving_mask": {
+      "var_param": "moving_mask"
+    },
+    "wncc_mask_dilate": {
+      "var_param": "wncc_mask_dilate"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "ref_pad": {
+      "var_param": "ref_pad"
+    },
+    "background": {
+      "var_param": "background"
+    },
+    "input_transform": {
+      "var_param": "input_transform"
+    },
+    "zero_last_dimension": {
+      "var_param": "zero_last_dimension"
+    },
+    "time_step_mode": {
+      "var_param": "time_step_mode"
+    },
+    "smoothing": {
+      "var_param": "smoothing"
+    },
+    "inverse_warp": {
+      "var_param": "inverse_warp"
+    },
+    "root_warp": {
+      "var_param": "root_warp"
+    },
+    "warp_precision": {
+      "var_param": "warp_precision"
+    },
+    "noise": {
+      "var_param": "noise"
+    },
+    "exponent": {
+      "var_param": "exponent"
+    },
+    "svf_mode": {
+      "var_param": "svf_mode"
+    },
+    "svlb": {
+      "var_param": "svlb"
+    },
+    "sv_incompr": {
+      "var_param": "sv_incompr"
+    },
+    "initial_warp": {
+      "var_param": "initial_warp"
+    },
+    "tjr": {
+      "var_param": "tjr",
+      "fn_struct_make_params": "greedy_tjr_params",
+      "properties": {
+        "mesh": {
+          "var_param": "mesh"
+        },
+        "weight": {
+          "var_param": "weight"
+        }
+      }
+    },
+    "wr": {
+      "var_param": "wr"
+    },
+    "initial_affine": {
+      "var_param": "initial_affine"
+    },
+    "ia_identity": {
+      "var_param": "ia_identity"
+    },
+    "ia_voxel_grid": {
+      "var_param": "ia_voxel_grid"
+    },
+    "ia_image_centers": {
+      "var_param": "ia_image_centers"
+    },
+    "ia_image_side": {
+      "var_param": "ia_image_side"
+    },
+    "ia_moments": {
+      "var_param": "ia_moments"
+    },
+    "affine_dof": {
+      "var_param": "affine_dof"
+    },
+    "jitter": {
+      "var_param": "jitter"
+    },
+    "search": {
+      "var_param": "search",
+      "fn_struct_make_params": "greedy_search_params",
+      "properties": {
+        "n": {
+          "var_param": "n"
+        },
+        "rot": {
+          "var_param": "rot"
+        },
+        "tran": {
+          "var_param": "tran"
+        }
+      }
+    },
+    "det": {
+      "var_param": "det"
+    },
+    "cov_id": {
+      "var_param": "cov_id"
+    },
+    "fixed_reslicing_image": {
+      "var_param": "fixed_reslicing_image"
+    },
+    "reslice_moving_image": {
+      "var_param": "reslice_moving_image",
+      "fn_struct_make_params": "greedy_reslice_moving_image_params",
+      "properties": {
+        "moving": {
+          "var_param": "moving"
+        },
+        "output": {
+          "var_param": "output"
+        }
+      }
+    },
+    "reslice_surface": {
+      "var_param": "reslice_surface",
+      "fn_struct_make_params": "greedy_reslice_surface_params",
+      "properties": {
+        "inmesh": {
+          "var_param": "inmesh"
+        },
+        "outmesh": {
+          "var_param": "outmesh"
+        }
+      }
+    },
+    "interpolation": {
+      "var_param": "interpolation"
+    },
+    "reslice_background": {
+      "var_param": "reslice_background"
+    },
+    "reslice_datatype": {
+      "var_param": "reslice_datatype"
+    },
+    "reslice_composite": {
+      "var_param": "reslice_composite"
+    },
+    "reslice_jacobian": {
+      "var_param": "reslice_jacobian"
+    },
+    "reslice_simplex_jacobian": {
+      "var_param": "reslice_simplex_jacobian",
+      "fn_struct_make_params": "greedy_reslice_simplex_jacobian_params",
+      "properties": {
+        "inmesh": {
+          "var_param": "inmesh"
+        },
+        "outmesh": {
+          "var_param": "outmesh"
+        }
+      }
+    },
+    "reslice_mask": {
+      "var_param": "reslice_mask"
+    },
+    "metric_gradient": {
+      "var_param": "metric_gradient"
+    },
+    "debug_deriv": {
+      "var_param": "debug_deriv"
+    },
+    "debug_deriv_eps": {
+      "var_param": "debug_deriv_eps"
+    },
+    "debug_aff_obj": {
+      "var_param": "debug_aff_obj"
+    },
+    "dump_pyramid": {
+      "var_param": "dump_pyramid"
+    },
+    "dump_moving": {
+      "var_param": "dump_moving"
+    },
+    "dump_frequency": {
+      "var_param": "dump_frequency"
+    },
+    "dump_prefix": {
+      "var_param": "dump_prefix"
+    },
+    "powell": {
+      "var_param": "powell"
+    },
+    "float": {
+      "var_param": "float_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

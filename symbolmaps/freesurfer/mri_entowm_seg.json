@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "mri_entowm_seg",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_segmentation": {
+      "var_param": "output_segmentation"
+    },
+    "recon_subjects": {
+      "var_param": "recon_subjects"
+    },
+    "subjects_directory": {
+      "var_param": "subjects_directory"
+    },
+    "conform": {
+      "var_param": "conform"
+    },
+    "etiv": {
+      "var_param": "etiv"
+    },
+    "tal": {
+      "var_param": "tal"
+    },
+    "write_posteriors": {
+      "var_param": "write_posteriors"
+    },
+    "write_volumes": {
+      "var_param": "write_volumes"
+    },
+    "write_qa_stats": {
+      "var_param": "write_qa_stats"
+    },
+    "exclude_labels": {
+      "var_param": "exclude_labels"
+    },
+    "keep_ac": {
+      "var_param": "keep_ac"
+    },
+    "vox_count_volumes": {
+      "var_param": "vox_count_volumes"
+    },
+    "model_weights": {
+      "var_param": "model_weights"
+    },
+    "color_table": {
+      "var_param": "color_table"
+    },
+    "population_stats": {
+      "var_param": "population_stats"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "vmp": {
+      "var_param": "vmp"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "seven_tesla": {
+      "var_param": "seven_tesla"
+    },
+    "percentile": {
+      "var_param": "percentile"
+    },
+    "cuda_device": {
+      "var_param": "cuda_device"
+    },
+    "output_base": {
+      "var_param": "output_base"
+    },
+    "no_cite_sclimbic": {
+      "var_param": "no_cite_sclimbic"
+    },
+    "nchannels": {
+      "var_param": "nchannels"
+    }
+  }
+}

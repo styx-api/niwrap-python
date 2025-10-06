@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v__measure_erosion_thick",
+  "properties": {
+    "maskset": {
+      "var_param": "maskset"
+    },
+    "surfset": {
+      "var_param": "surfset"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "resample": {
+      "var_param": "resample"
+    },
+    "surfsmooth": {
+      "var_param": "surfsmooth"
+    },
+    "smoothmm": {
+      "var_param": "smoothmm"
+    },
+    "maxthick": {
+      "var_param": "maxthick"
+    },
+    "depthsearch": {
+      "var_param": "depthsearch"
+    },
+    "keep_temp_files": {
+      "var_param": "keep_temp_files"
+    },
+    "surfsmooth_method": {
+      "var_param": "surfsmooth_method"
+    }
+  }
+}

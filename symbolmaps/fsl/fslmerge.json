@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "fslmerge",
+  "properties": {
+    "merge_time": {
+      "var_param": "merge_time"
+    },
+    "merge_x": {
+      "var_param": "merge_x"
+    },
+    "merge_y": {
+      "var_param": "merge_y"
+    },
+    "merge_z": {
+      "var_param": "merge_z"
+    },
+    "auto_choose": {
+      "var_param": "auto_choose"
+    },
+    "merge_set_tr": {
+      "var_param": "merge_set_tr"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    },
+    "volume_number": {
+      "var_param": "volume_number"
+    },
+    "tr_value": {
+      "var_param": "tr_value"
+    }
+  }
+}

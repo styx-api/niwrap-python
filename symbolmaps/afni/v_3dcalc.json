@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v_3dcalc",
+  "properties": {
+    "in_file_a": {
+      "var_param": "in_file_a"
+    },
+    "in_file_b": {
+      "var_param": "in_file_b"
+    },
+    "in_file_c": {
+      "var_param": "in_file_c"
+    },
+    "other": {
+      "var_param": "other"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "single_idx": {
+      "var_param": "single_idx"
+    },
+    "start_idx": {
+      "var_param": "start_idx"
+    },
+    "stop_idx": {
+      "var_param": "stop_idx"
+    },
+    "expr": {
+      "var_param": "expr"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "split_parts_gpu",
+  "properties": {
+    "datafile": {
+      "var_param": "datafile"
+    },
+    "maskfile": {
+      "var_param": "maskfile"
+    },
+    "bvals_file": {
+      "var_param": "bvals_file"
+    },
+    "bvecs_file": {
+      "var_param": "bvecs_file"
+    },
+    "grad_file": {
+      "var_param": "grad_file"
+    },
+    "use_grad_file": {
+      "var_param": "use_grad_file"
+    },
+    "total_num_parts": {
+      "var_param": "total_num_parts"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    }
+  }
+}

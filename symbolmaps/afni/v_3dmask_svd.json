@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3dmask_svd",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "vnorm": {
+      "var_param": "vnorm"
+    },
+    "sval": {
+      "var_param": "sval"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "bandpass": {
+      "var_param": "bandpass"
+    },
+    "ort": {
+      "var_param": "ort"
+    },
+    "alt_input": {
+      "var_param": "alt_input"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "meshconvert",
+  "properties": {
+    "binary": {
+      "var_param": "binary"
+    },
+    "transform": {
+      "var_param": "transform",
+      "fn_struct_make_params": "meshconvert_transform_params",
+      "properties": {
+        "mode": {
+          "var_param": "mode"
+        },
+        "image": {
+          "var_param": "image"
+        }
+      }
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "meshconvert_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "samp_bias",
+  "properties": {
+    "specfile": {
+      "var_param": "specfile"
+    },
+    "surfname": {
+      "var_param": "surfname"
+    },
+    "plimit": {
+      "var_param": "plimit"
+    },
+    "dlimit": {
+      "var_param": "dlimit"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "segdo": {
+      "var_param": "segdo"
+    }
+  }
+}

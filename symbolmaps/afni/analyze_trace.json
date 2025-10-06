@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "analyze_trace",
+  "properties": {
+    "tracefile": {
+      "var_param": "tracefile"
+    },
+    "max_func_lines": {
+      "var_param": "max_func_lines"
+    },
+    "suma_c": {
+      "var_param": "suma_c"
+    },
+    "max_err": {
+      "var_param": "max_err"
+    },
+    "novolreg": {
+      "var_param": "novolreg"
+    },
+    "noxform": {
+      "var_param": "noxform"
+    },
+    "setenv": {
+      "var_param": "setenv"
+    },
+    "trace": {
+      "var_param": "trace_"
+    },
+    "extreme_trace": {
+      "var_param": "extreme_trace"
+    },
+    "nomall": {
+      "var_param": "nomall"
+    },
+    "yesmall": {
+      "var_param": "yesmall"
+    }
+  }
+}

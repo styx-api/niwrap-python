@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "mri_gradient_info",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    }
+  }
+}

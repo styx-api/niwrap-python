@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "fslorient",
+  "properties": {
+    "get_orient": {
+      "var_param": "get_orient"
+    },
+    "get_sform": {
+      "var_param": "get_sform"
+    },
+    "get_qform": {
+      "var_param": "get_qform"
+    },
+    "set_sform": {
+      "var_param": "set_sform"
+    },
+    "set_qform": {
+      "var_param": "set_qform"
+    },
+    "set_sform_code": {
+      "var_param": "set_sform_code"
+    },
+    "set_qform_code": {
+      "var_param": "set_qform_code"
+    },
+    "get_qform_code": {
+      "var_param": "get_qform_code"
+    },
+    "get_sform_code": {
+      "var_param": "get_sform_code"
+    },
+    "copy_qform_to_sform": {
+      "var_param": "copy_qform_to_sform"
+    },
+    "copy_sform_to_qform": {
+      "var_param": "copy_sform_to_qform"
+    },
+    "delete_orient": {
+      "var_param": "delete_orient"
+    },
+    "force_neurological": {
+      "var_param": "force_neurological"
+    },
+    "force_radiological": {
+      "var_param": "force_radiological"
+    },
+    "swap_orient": {
+      "var_param": "swap_orient"
+    },
+    "filename": {
+      "var_param": "filename"
+    }
+  }
+}

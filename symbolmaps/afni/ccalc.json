@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "ccalc",
+  "properties": {
+    "format": {
+      "var_param": "format_"
+    },
+    "expr": {
+      "var_param": "expr"
+    }
+  }
+}

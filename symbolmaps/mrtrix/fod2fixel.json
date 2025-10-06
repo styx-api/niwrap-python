@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "fod2fixel",
+  "properties": {
+    "afd": {
+      "var_param": "afd"
+    },
+    "peak_amp": {
+      "var_param": "peak_amp"
+    },
+    "disp": {
+      "var_param": "disp"
+    },
+    "fmls_integral": {
+      "var_param": "fmls_integral"
+    },
+    "fmls_peak_value": {
+      "var_param": "fmls_peak_value"
+    },
+    "fmls_no_thresholds": {
+      "var_param": "fmls_no_thresholds"
+    },
+    "fmls_lobe_merge_ratio": {
+      "var_param": "fmls_lobe_merge_ratio"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "maxnum": {
+      "var_param": "maxnum"
+    },
+    "nii": {
+      "var_param": "nii"
+    },
+    "dirpeak": {
+      "var_param": "dirpeak"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "fod2fixel_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "fod": {
+      "var_param": "fod"
+    },
+    "fixel_directory": {
+      "var_param": "fixel_directory"
+    }
+  }
+}

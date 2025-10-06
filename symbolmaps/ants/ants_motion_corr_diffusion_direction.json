@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "ants_motion_corr_diffusion_direction",
+  "properties": {
+    "scheme": {
+      "var_param": "scheme"
+    },
+    "bvec": {
+      "var_param": "bvec"
+    },
+    "physical": {
+      "var_param": "physical"
+    },
+    "moco": {
+      "var_param": "moco"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

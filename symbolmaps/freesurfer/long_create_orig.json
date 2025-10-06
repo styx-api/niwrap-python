@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "long_create_orig",
+  "properties": {
+    "base_id": {
+      "var_param": "base_id"
+    },
+    "tp_id": {
+      "var_param": "tp_id"
+    }
+  }
+}

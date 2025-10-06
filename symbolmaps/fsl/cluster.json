@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "cluster",
+  "properties": {
+    "connectivity": {
+      "var_param": "connectivity"
+    },
+    "cope_file": {
+      "var_param": "cope_file"
+    },
+    "dlh": {
+      "var_param": "dlh"
+    },
+    "find_min": {
+      "var_param": "find_min"
+    },
+    "fractional": {
+      "var_param": "fractional"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "minclustersize": {
+      "var_param": "minclustersize"
+    },
+    "no_table": {
+      "var_param": "no_table"
+    },
+    "num_maxima": {
+      "var_param": "num_maxima"
+    },
+    "out_index_file": {
+      "var_param": "out_index_file"
+    },
+    "out_index_file_2": {
+      "var_param": "out_index_file_2"
+    },
+    "out_localmax_txt_file": {
+      "var_param": "out_localmax_txt_file"
+    },
+    "out_localmax_txt_file_2": {
+      "var_param": "out_localmax_txt_file_2"
+    },
+    "out_localmax_vol_file": {
+      "var_param": "out_localmax_vol_file"
+    },
+    "out_localmax_vol_file_2": {
+      "var_param": "out_localmax_vol_file_2"
+    },
+    "out_max_file": {
+      "var_param": "out_max_file"
+    },
+    "out_max_file_2": {
+      "var_param": "out_max_file_2"
+    },
+    "out_mean_file": {
+      "var_param": "out_mean_file"
+    },
+    "out_mean_file_2": {
+      "var_param": "out_mean_file_2"
+    },
+    "out_pval_file": {
+      "var_param": "out_pval_file"
+    },
+    "out_pval_file_2": {
+      "var_param": "out_pval_file_2"
+    },
+    "out_size_file": {
+      "var_param": "out_size_file"
+    },
+    "out_size_file_2": {
+      "var_param": "out_size_file_2"
+    },
+    "out_threshold_file": {
+      "var_param": "out_threshold_file"
+    },
+    "out_threshold_file_2": {
+      "var_param": "out_threshold_file_2"
+    },
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "peak_distance": {
+      "var_param": "peak_distance"
+    },
+    "pthreshold": {
+      "var_param": "pthreshold"
+    },
+    "std_space_file": {
+      "var_param": "std_space_file"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "use_mm": {
+      "var_param": "use_mm"
+    },
+    "volume": {
+      "var_param": "volume"
+    },
+    "warpfield_file": {
+      "var_param": "warpfield_file"
+    },
+    "xfm_file": {
+      "var_param": "xfm_file"
+    }
+  }
+}

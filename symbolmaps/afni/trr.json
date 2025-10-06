@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "trr",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "chains": {
+      "var_param": "chains"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "response_var": {
+      "var_param": "response_var"
+    },
+    "subject_var": {
+      "var_param": "subject_var"
+    },
+    "repetition_var": {
+      "var_param": "repetition_var"
+    },
+    "condition_var": {
+      "var_param": "condition_var"
+    },
+    "data_table": {
+      "var_param": "data_table"
+    },
+    "categorical_vars": {
+      "var_param": "categorical_vars"
+    },
+    "quantitative_vars": {
+      "var_param": "quantitative_vars"
+    },
+    "response_dist": {
+      "var_param": "response_dist"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "plot_size": {
+      "var_param": "plot_size"
+    },
+    "standard_error": {
+      "var_param": "standard_error"
+    },
+    "t_stat": {
+      "var_param": "t_stat"
+    },
+    "within_chain_parallelization": {
+      "var_param": "within_chain_parallelization"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

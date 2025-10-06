@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "afni_system_check_py",
+  "properties": {
+    "check_all": {
+      "var_param": "check_all"
+    },
+    "find_prog": {
+      "var_param": "find_prog"
+    },
+    "exact": {
+      "var_param": "exact"
+    },
+    "disp_num_cpu": {
+      "var_param": "disp_num_cpu"
+    },
+    "disp_ver_matplotlib": {
+      "var_param": "disp_ver_matplotlib"
+    },
+    "dot_file_list": {
+      "var_param": "dot_file_list"
+    },
+    "dot_file_show": {
+      "var_param": "dot_file_show"
+    },
+    "dot_file_pack": {
+      "var_param": "dot_file_pack"
+    },
+    "casematch": {
+      "var_param": "casematch"
+    },
+    "data_root": {
+      "var_param": "data_root"
+    }
+  }
+}

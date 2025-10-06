@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tsort",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "inc": {
+      "var_param": "inc"
+    },
+    "dec": {
+      "var_param": "dec"
+    },
+    "rank": {
+      "var_param": "rank"
+    },
+    "ind": {
+      "var_param": "ind"
+    },
+    "val": {
+      "var_param": "val"
+    },
+    "random": {
+      "var_param": "random_"
+    },
+    "ranfft": {
+      "var_param": "ranfft"
+    },
+    "randft": {
+      "var_param": "randft"
+    },
+    "datum": {
+      "var_param": "datum"
+    }
+  }
+}

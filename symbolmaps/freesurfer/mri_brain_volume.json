@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_brain_volume",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "force_param": {
+      "var_param": "force_param"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

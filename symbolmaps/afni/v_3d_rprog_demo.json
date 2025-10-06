@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_rprog_demo",
+  "properties": {
+    "input_dsets": {
+      "var_param": "input_dsets"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "scale": {
+      "var_param": "scale"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "help_aspx": {
+      "var_param": "help_aspx"
+    },
+    "help_raw": {
+      "var_param": "help_raw"
+    },
+    "help_spx": {
+      "var_param": "help_spx"
+    },
+    "help_txt": {
+      "var_param": "help_txt"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "show_allowed_options": {
+      "var_param": "show_allowed_options"
+    },
+    "verbosity_level": {
+      "var_param": "verbosity_level"
+    }
+  }
+}

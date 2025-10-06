@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__afni_refacer_make_master",
+  "properties": {
+    "input_datasets": {
+      "var_param": "input_datasets"
+    }
+  }
+}

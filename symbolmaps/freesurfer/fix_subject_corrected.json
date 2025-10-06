@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "fix_subject_corrected",
+  "properties": {
+    "subject_directory": {
+      "var_param": "subject_directory"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    }
+  }
+}

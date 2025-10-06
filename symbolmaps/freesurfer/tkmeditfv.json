@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "tkmeditfv",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "mainvol": {
+      "var_param": "mainvol"
+    },
+    "aux_volume": {
+      "var_param": "aux_volume"
+    },
+    "seg_volume": {
+      "var_param": "seg_volume"
+    },
+    "overlay": {
+      "var_param": "overlay"
+    },
+    "timecourse": {
+      "var_param": "timecourse"
+    },
+    "overlay_registration": {
+      "var_param": "overlay_registration"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "extra_volumes": {
+      "var_param": "extra_volumes"
+    },
+    "crs_location": {
+      "var_param": "crs_location"
+    },
+    "zoom_level": {
+      "var_param": "zoom_level"
+    },
+    "additional_segments": {
+      "var_param": "additional_segments"
+    },
+    "load_white": {
+      "var_param": "load_white"
+    },
+    "load_pial": {
+      "var_param": "load_pial"
+    },
+    "load_orig": {
+      "var_param": "load_orig"
+    },
+    "load_orig_nofix": {
+      "var_param": "load_orig_nofix"
+    },
+    "load_smoothwm_nofix": {
+      "var_param": "load_smoothwm_nofix"
+    },
+    "load_white_preaparc": {
+      "var_param": "load_white_preaparc"
+    },
+    "load_inflated": {
+      "var_param": "load_inflated"
+    },
+    "annot": {
+      "var_param": "annot"
+    },
+    "load_aparc": {
+      "var_param": "load_aparc"
+    },
+    "surfext": {
+      "var_param": "surfext"
+    },
+    "seg_outline": {
+      "var_param": "seg_outline"
+    },
+    "intensity_minmax": {
+      "var_param": "intensity_minmax"
+    },
+    "load_defects": {
+      "var_param": "load_defects"
+    },
+    "load_defect_pointset": {
+      "var_param": "load_defect_pointset"
+    },
+    "trilin_interpolation": {
+      "var_param": "trilin_interpolation"
+    },
+    "neurological_orientation": {
+      "var_param": "neurological_orientation"
+    },
+    "rotate_around_cursor": {
+      "var_param": "rotate_around_cursor"
+    },
+    "vgl_display": {
+      "var_param": "vgl_display"
+    },
+    "use_tkmedit": {
+      "var_param": "use_tkmedit"
+    },
+    "load_aparc_aseg": {
+      "var_param": "load_aparc_aseg"
+    }
+  }
+}

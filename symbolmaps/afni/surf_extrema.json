@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "surf_extrema",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "hood": {
+      "var_param": "hood"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "gthresh": {
+      "var_param": "gthresh"
+    },
+    "gscale": {
+      "var_param": "gscale"
+    },
+    "extype": {
+      "var_param": "extype"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "table": {
+      "var_param": "table"
+    }
+  }
+}

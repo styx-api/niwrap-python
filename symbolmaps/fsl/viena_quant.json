@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "viena_quant",
+  "properties": {
+    "input1": {
+      "var_param": "input1"
+    },
+    "input2": {
+      "var_param": "input2"
+    },
+    "ventricle_mask": {
+      "var_param": "ventricle_mask"
+    }
+  }
+}

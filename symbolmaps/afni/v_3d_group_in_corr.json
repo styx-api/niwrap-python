@@ -1,0 +1,89 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_group_in_corr",
+  "properties": {
+    "set_a": {
+      "var_param": "set_a"
+    },
+    "set_b": {
+      "var_param": "set_b"
+    },
+    "apair": {
+      "var_param": "apair"
+    },
+    "label_a": {
+      "var_param": "label_a"
+    },
+    "label_b": {
+      "var_param": "label_b"
+    },
+    "pooled": {
+      "var_param": "pooled"
+    },
+    "unpooled": {
+      "var_param": "unpooled"
+    },
+    "paired": {
+      "var_param": "paired"
+    },
+    "nosix": {
+      "var_param": "nosix"
+    },
+    "covariates_file": {
+      "var_param": "covariates_file"
+    },
+    "center": {
+      "var_param": "center"
+    },
+    "seed_radius": {
+      "var_param": "seed_radius"
+    },
+    "sendall": {
+      "var_param": "sendall"
+    },
+    "donocov": {
+      "var_param": "donocov"
+    },
+    "dospcov": {
+      "var_param": "dospcov"
+    },
+    "cluster": {
+      "var_param": "cluster"
+    },
+    "read": {
+      "var_param": "read"
+    },
+    "ztest": {
+      "var_param": "ztest"
+    },
+    "ah": {
+      "var_param": "ah"
+    },
+    "port_offset": {
+      "var_param": "port_offset"
+    },
+    "port_offset_quiet": {
+      "var_param": "port_offset_quiet"
+    },
+    "port_bloc": {
+      "var_param": "port_bloc"
+    },
+    "suma": {
+      "var_param": "suma"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "very_verbose": {
+      "var_param": "very_verbose"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "batch": {
+      "var_param": "batch"
+    }
+  }
+}

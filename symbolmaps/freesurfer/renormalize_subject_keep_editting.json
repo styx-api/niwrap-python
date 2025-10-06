@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "renormalize_subject_keep_editting",
+  "properties": {
+    "placeholder_input": {
+      "var_param": "placeholder_input"
+    }
+  }
+}

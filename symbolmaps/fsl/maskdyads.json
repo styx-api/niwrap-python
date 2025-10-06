@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "maskdyads",
+  "properties": {
+    "dyads": {
+      "var_param": "dyads"
+    },
+    "fsamples": {
+      "var_param": "fsamples"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "mris_curvature2image",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "output_overlay": {
+      "var_param": "output_overlay"
+    },
+    "output_distance": {
+      "var_param": "output_distance"
+    },
+    "overlay": {
+      "var_param": "overlay"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "invert_flag": {
+      "var_param": "invert_flag"
+    },
+    "radius": {
+      "var_param": "radius"
+    }
+  }
+}

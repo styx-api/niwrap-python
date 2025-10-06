@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_edu_01_scale",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mult_factors": {
+      "var_param": "mult_factors"
+    },
+    "option_flag": {
+      "var_param": "option_flag"
+    }
+  }
+}

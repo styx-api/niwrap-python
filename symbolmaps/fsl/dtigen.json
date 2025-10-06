@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "dtigen",
+  "properties": {
+    "tensor": {
+      "var_param": "tensor"
+    },
+    "s0": {
+      "var_param": "s0"
+    },
+    "output_data": {
+      "var_param": "output_data"
+    },
+    "bvecs": {
+      "var_param": "bvecs"
+    },
+    "bvals": {
+      "var_param": "bvals"
+    },
+    "brainmask": {
+      "var_param": "brainmask"
+    },
+    "kurtosis": {
+      "var_param": "kurtosis"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

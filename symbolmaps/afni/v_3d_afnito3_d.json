@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_afnito3_d",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "binary": {
+      "var_param": "binary"
+    },
+    "text": {
+      "var_param": "text"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "fvcompare",
+  "properties": {
+    "subject1": {
+      "var_param": "subject1"
+    },
+    "subject2": {
+      "var_param": "subject2"
+    },
+    "subject_dir1": {
+      "var_param": "subject_dir1"
+    },
+    "subject_dir2": {
+      "var_param": "subject_dir2"
+    },
+    "name1": {
+      "var_param": "name1"
+    },
+    "name2": {
+      "var_param": "name2"
+    },
+    "color1": {
+      "var_param": "color1"
+    },
+    "volume": {
+      "var_param": "volume"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "aseg": {
+      "var_param": "aseg"
+    },
+    "no_seg": {
+      "var_param": "no_seg"
+    },
+    "left_hemi": {
+      "var_param": "left_hemi"
+    },
+    "right_hemi": {
+      "var_param": "right_hemi"
+    },
+    "no_surf": {
+      "var_param": "no_surf"
+    },
+    "gray_levels": {
+      "var_param": "gray_levels"
+    },
+    "cursor_position": {
+      "var_param": "cursor_position"
+    },
+    "zoom_level": {
+      "var_param": "zoom_level"
+    },
+    "annotation": {
+      "var_param": "annotation"
+    },
+    "aparc": {
+      "var_param": "aparc"
+    },
+    "inflated": {
+      "var_param": "inflated"
+    },
+    "white": {
+      "var_param": "white"
+    },
+    "orig": {
+      "var_param": "orig"
+    },
+    "surf_name": {
+      "var_param": "surf_name"
+    },
+    "pointset": {
+      "var_param": "pointset"
+    },
+    "wot2": {
+      "var_param": "wot2"
+    }
+  }
+}

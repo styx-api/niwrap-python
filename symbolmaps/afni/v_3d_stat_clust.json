@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_stat_clust",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "session_dir": {
+      "var_param": "session_dir"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "dist_euc": {
+      "var_param": "dist_euc"
+    },
+    "dist_ind": {
+      "var_param": "dist_ind"
+    },
+    "dist_cor": {
+      "var_param": "dist_cor"
+    },
+    "thresh": {
+      "var_param": "thresh"
+    },
+    "nclust": {
+      "var_param": "nclust"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    }
+  }
+}

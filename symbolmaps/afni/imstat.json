@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "imstat",
+  "properties": {
+    "no_label": {
+      "var_param": "no_label"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "pixstat_prefix": {
+      "var_param": "pixstat_prefix"
+    },
+    "image_files": {
+      "var_param": "image_files"
+    }
+  }
+}

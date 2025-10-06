@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v__djunct_montage_coordinator",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "montx": {
+      "var_param": "montx"
+    },
+    "monty": {
+      "var_param": "monty"
+    },
+    "out_ijk": {
+      "var_param": "out_ijk"
+    },
+    "out_xyz": {
+      "var_param": "out_xyz"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

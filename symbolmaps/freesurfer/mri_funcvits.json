@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_funcvits",
+  "properties": {
+    "stem": {
+      "var_param": "stem"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "reg": {
+      "var_param": "reg"
+    },
+    "paintsurf": {
+      "var_param": "paintsurf"
+    },
+    "sphere": {
+      "var_param": "sphere"
+    },
+    "icosize": {
+      "var_param": "icosize"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "svitdir": {
+      "var_param": "svitdir"
+    },
+    "icodir": {
+      "var_param": "icodir"
+    },
+    "umask": {
+      "var_param": "umask"
+    },
+    "mail": {
+      "var_param": "mail"
+    },
+    "noforce": {
+      "var_param": "noforce"
+    }
+  }
+}

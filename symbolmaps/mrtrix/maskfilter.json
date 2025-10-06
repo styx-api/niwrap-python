@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "maskfilter",
+  "properties": {
+    "scale": {
+      "var_param": "scale"
+    },
+    "axes": {
+      "var_param": "axes"
+    },
+    "largest": {
+      "var_param": "largest"
+    },
+    "connectivity": {
+      "var_param": "connectivity"
+    },
+    "npass": {
+      "var_param": "npass"
+    },
+    "extent": {
+      "var_param": "extent"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "maskfilter_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "filter": {
+      "var_param": "filter_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

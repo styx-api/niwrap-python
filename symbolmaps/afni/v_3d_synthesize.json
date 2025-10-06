@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_synthesize",
+  "properties": {
+    "c_bucket": {
+      "var_param": "c_bucket"
+    },
+    "matrix": {
+      "var_param": "matrix"
+    },
+    "select": {
+      "var_param": "select_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "dry_flag": {
+      "var_param": "dry_flag"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "cenfill": {
+      "var_param": "cenfill"
+    }
+  }
+}

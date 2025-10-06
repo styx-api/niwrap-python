@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "apas2aseg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "input_aparc_aseg": {
+      "var_param": "input_aparc_aseg"
+    },
+    "output_seg": {
+      "var_param": "output_seg"
+    }
+  }
+}

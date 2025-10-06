@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "suma_change_spec",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "state": {
+      "var_param": "state"
+    },
+    "domainparent": {
+      "var_param": "domainparent"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "remove": {
+      "var_param": "remove"
+    },
+    "anatomical": {
+      "var_param": "anatomical"
+    }
+  }
+}

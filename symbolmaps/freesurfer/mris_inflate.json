@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mris_inflate",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "snapshot_interval": {
+      "var_param": "snapshot_interval"
+    },
+    "dist_coefficient": {
+      "var_param": "dist_coefficient"
+    },
+    "no_save_sulc": {
+      "var_param": "no_save_sulc"
+    },
+    "sulcname": {
+      "var_param": "sulcname"
+    },
+    "mm_flag": {
+      "var_param": "mm_flag"
+    },
+    "scale_flag": {
+      "var_param": "scale_flag"
+    }
+  }
+}

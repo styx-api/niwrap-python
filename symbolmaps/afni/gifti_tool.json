@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "gifti_tool",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "new_numda": {
+      "var_param": "new_numda"
+    },
+    "new_dtype": {
+      "var_param": "new_dtype"
+    },
+    "new_intent": {
+      "var_param": "new_intent"
+    },
+    "new_ndim": {
+      "var_param": "new_ndim"
+    },
+    "new_dims": {
+      "var_param": "new_dims"
+    },
+    "write_gifti": {
+      "var_param": "write_gifti"
+    },
+    "set_extern_filelist": {
+      "var_param": "set_extern_filelist"
+    },
+    "mod_add_data": {
+      "var_param": "mod_add_data"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "show_gifti": {
+      "var_param": "show_gifti"
+    },
+    "read_das": {
+      "var_param": "read_das"
+    },
+    "mod_gim_atr": {
+      "var_param": "mod_gim_atr"
+    },
+    "mod_gim_meta": {
+      "var_param": "mod_gim_meta"
+    },
+    "mod_da_atr": {
+      "var_param": "mod_da_atr"
+    },
+    "mod_da_meta": {
+      "var_param": "mod_da_meta"
+    },
+    "mod_das": {
+      "var_param": "mod_das"
+    },
+    "new_dset": {
+      "var_param": "new_dset"
+    },
+    "compare_gifti": {
+      "var_param": "compare_gifti"
+    },
+    "compare_data": {
+      "var_param": "compare_data"
+    },
+    "compare_verb": {
+      "var_param": "compare_verb"
+    },
+    "approx_gifti": {
+      "var_param": "approx_gifti"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "fn_root_make_params_and_execute": "mris_curvature_stats",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "curvature_files": {
+      "var_param": "curvature_files"
+    },
+    "number_of_averages": {
+      "var_param": "number_of_averages"
+    },
+    "principal_curvatures": {
+      "var_param": "principal_curvatures"
+    },
+    "discrete_method": {
+      "var_param": "discrete_method"
+    },
+    "continuous_method": {
+      "var_param": "continuous_method"
+    },
+    "signed_principals": {
+      "var_param": "signed_principals"
+    },
+    "vertex_area_weigh": {
+      "var_param": "vertex_area_weigh"
+    },
+    "vertex_area_normalize": {
+      "var_param": "vertex_area_normalize"
+    },
+    "vertex_area_weigh_frac": {
+      "var_param": "vertex_area_weigh_frac"
+    },
+    "vertex_area_normalize_frac": {
+      "var_param": "vertex_area_normalize_frac"
+    },
+    "post_scale": {
+      "var_param": "post_scale"
+    },
+    "write_curvature_files": {
+      "var_param": "write_curvature_files"
+    },
+    "shape_index": {
+      "var_param": "shape_index"
+    },
+    "output_file_stem": {
+      "var_param": "output_file_stem"
+    },
+    "histogram_bins": {
+      "var_param": "histogram_bins"
+    },
+    "percentage_histogram_bins": {
+      "var_param": "percentage_histogram_bins"
+    },
+    "bin_size": {
+      "var_param": "bin_size"
+    },
+    "bin_start_curvature": {
+      "var_param": "bin_start_curvature"
+    },
+    "bin_end_curvature": {
+      "var_param": "bin_end_curvature"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "regional_percentages": {
+      "var_param": "regional_percentages"
+    },
+    "high_pass_filter": {
+      "var_param": "high_pass_filter"
+    },
+    "low_pass_filter": {
+      "var_param": "low_pass_filter"
+    },
+    "high_pass_filter_gaussian": {
+      "var_param": "high_pass_filter_gaussian"
+    },
+    "low_pass_filter_gaussian": {
+      "var_param": "low_pass_filter_gaussian"
+    },
+    "filter_label": {
+      "var_param": "filter_label"
+    },
+    "min_max_info": {
+      "var_param": "min_max_info"
+    },
+    "normalize_curvature": {
+      "var_param": "normalize_curvature"
+    },
+    "summary_condition": {
+      "var_param": "summary_condition"
+    },
+    "min_curvature_scale": {
+      "var_param": "min_curvature_scale"
+    },
+    "max_curvature_scale": {
+      "var_param": "max_curvature_scale"
+    },
+    "scale_factor": {
+      "var_param": "scale_factor"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "set_zero_vertex": {
+      "var_param": "set_zero_vertex"
+    },
+    "max_ulps": {
+      "var_param": "max_ulps"
+    }
+  }
+}

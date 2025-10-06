@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "surface_curvature",
+  "properties": {
+    "filename_in": {
+      "var_param": "filename_in"
+    },
+    "filename_out": {
+      "var_param": "filename_out"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    },
+    "option": {
+      "var_param": "option"
+    }
+  }
+}

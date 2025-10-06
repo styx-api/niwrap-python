@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "lta_diff",
+  "properties": {
+    "transform1": {
+      "var_param": "transform1"
+    },
+    "transform2": {
+      "var_param": "transform2"
+    },
+    "dist_type": {
+      "var_param": "dist_type"
+    },
+    "invert1": {
+      "var_param": "invert1"
+    },
+    "invert2": {
+      "var_param": "invert2"
+    },
+    "vox": {
+      "var_param": "vox"
+    },
+    "normdiv": {
+      "var_param": "normdiv"
+    },
+    "radius": {
+      "var_param": "radius"
+    }
+  }
+}

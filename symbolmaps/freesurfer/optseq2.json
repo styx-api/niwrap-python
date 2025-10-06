@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "optseq2",
+  "properties": {
+    "ntp": {
+      "var_param": "ntp"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "tprescan": {
+      "var_param": "tprescan"
+    },
+    "psdwin": {
+      "var_param": "psdwin"
+    },
+    "event": {
+      "var_param": "event"
+    },
+    "repvar": {
+      "var_param": "repvar"
+    },
+    "polyfit": {
+      "var_param": "polyfit"
+    },
+    "tnullmin": {
+      "var_param": "tnullmin"
+    },
+    "tnullmax": {
+      "var_param": "tnullmax"
+    },
+    "nsearch": {
+      "var_param": "nsearch"
+    },
+    "tsearch": {
+      "var_param": "tsearch"
+    },
+    "first_order_cb": {
+      "var_param": "first_order_cb"
+    },
+    "ar1": {
+      "var_param": "ar1"
+    },
+    "penalize": {
+      "var_param": "penalize"
+    },
+    "evc": {
+      "var_param": "evc"
+    },
+    "cmtx": {
+      "var_param": "cmtx"
+    },
+    "cost": {
+      "var_param": "cost"
+    },
+    "sumdelays": {
+      "var_param": "sumdelays"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "nkeep": {
+      "var_param": "nkeep"
+    },
+    "outstem": {
+      "var_param": "outstem"
+    },
+    "mtxstem": {
+      "var_param": "mtxstem"
+    },
+    "cmtxfile": {
+      "var_param": "cmtxfile"
+    },
+    "summaryfile": {
+      "var_param": "summaryfile"
+    },
+    "logfile": {
+      "var_param": "logfile"
+    },
+    "pctupdate": {
+      "var_param": "pctupdate"
+    },
+    "sviterfile": {
+      "var_param": "sviterfile"
+    },
+    "instem": {
+      "var_param": "instem"
+    },
+    "input_schedule": {
+      "var_param": "input_schedule"
+    },
+    "nosearch": {
+      "var_param": "nosearch"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

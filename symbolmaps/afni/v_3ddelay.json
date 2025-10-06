@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "v_3ddelay",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "reference_file": {
+      "var_param": "reference_file"
+    },
+    "sampling_freq": {
+      "var_param": "sampling_freq"
+    },
+    "stim_period": {
+      "var_param": "stim_period"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "nodtrnd": {
+      "var_param": "nodtrnd"
+    },
+    "units_seconds": {
+      "var_param": "units_seconds"
+    },
+    "units_degrees": {
+      "var_param": "units_degrees"
+    },
+    "units_radians": {
+      "var_param": "units_radians"
+    },
+    "phzwrp": {
+      "var_param": "phzwrp"
+    },
+    "nophzwrp": {
+      "var_param": "nophzwrp"
+    },
+    "phzreverse": {
+      "var_param": "phzreverse"
+    },
+    "phzscale": {
+      "var_param": "phzscale"
+    },
+    "bias": {
+      "var_param": "bias"
+    },
+    "nobias": {
+      "var_param": "nobias"
+    },
+    "dsamp": {
+      "var_param": "dsamp"
+    },
+    "nodsamp": {
+      "var_param": "nodsamp"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "nfirst": {
+      "var_param": "nfirst"
+    },
+    "nlast": {
+      "var_param": "nlast"
+    },
+    "co": {
+      "var_param": "co"
+    },
+    "asc": {
+      "var_param": "asc"
+    },
+    "ascts": {
+      "var_param": "ascts"
+    }
+  }
+}

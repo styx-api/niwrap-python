@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_evaluate_morph",
+  "properties": {
+    "xform_name": {
+      "var_param": "xform_name"
+    },
+    "segmentation_files": {
+      "var_param": "segmentation_files"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

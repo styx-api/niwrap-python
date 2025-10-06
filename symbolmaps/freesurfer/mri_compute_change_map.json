@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mri_compute_change_map",
+  "properties": {
+    "mean_filter": {
+      "var_param": "mean_filter"
+    },
+    "gaussian_sigma": {
+      "var_param": "gaussian_sigma"
+    },
+    "volume1": {
+      "var_param": "volume1"
+    },
+    "volume2": {
+      "var_param": "volume2"
+    },
+    "transform": {
+      "var_param": "transform"
+    },
+    "outvolume": {
+      "var_param": "outvolume"
+    }
+  }
+}

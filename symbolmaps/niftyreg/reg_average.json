@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "reg_average",
+  "properties": {
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

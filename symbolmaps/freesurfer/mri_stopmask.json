@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mri_stopmask",
+  "properties": {
+    "output_mask": {
+      "var_param": "output_mask"
+    },
+    "filled": {
+      "var_param": "filled"
+    },
+    "aseg_presurf": {
+      "var_param": "aseg_presurf"
+    },
+    "lateral_ventricles": {
+      "var_param": "lateral_ventricles"
+    },
+    "wmsa": {
+      "var_param": "wmsa"
+    },
+    "wm_voxels": {
+      "var_param": "wm_voxels"
+    },
+    "brain_final_surfs": {
+      "var_param": "brain_final_surfs"
+    },
+    "no_filled": {
+      "var_param": "no_filled"
+    },
+    "no_lv": {
+      "var_param": "no_lv"
+    },
+    "no_wmsa": {
+      "var_param": "no_wmsa"
+    },
+    "no_wm": {
+      "var_param": "no_wm"
+    },
+    "no_bfs": {
+      "var_param": "no_bfs"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "setlabelstat",
+  "properties": {
+    "inlabelfile": {
+      "var_param": "inlabelfile"
+    },
+    "outlabelfile": {
+      "var_param": "outlabelfile"
+    },
+    "statval": {
+      "var_param": "statval"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

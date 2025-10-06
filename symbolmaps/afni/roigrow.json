@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "roigrow",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "roi_labels": {
+      "var_param": "roi_labels"
+    },
+    "lim_distance": {
+      "var_param": "lim_distance"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "full_list": {
+      "var_param": "full_list"
+    },
+    "grow_from_edge": {
+      "var_param": "grow_from_edge"
+    },
+    "insphere_diameter": {
+      "var_param": "insphere_diameter"
+    },
+    "inbox_edges": {
+      "var_param": "inbox_edges"
+    }
+  }
+}

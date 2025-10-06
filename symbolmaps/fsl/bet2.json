@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "bet2",
+  "properties": {
+    "input_fileroot": {
+      "var_param": "input_fileroot"
+    },
+    "output_fileroot": {
+      "var_param": "output_fileroot"
+    },
+    "fractional_intensity": {
+      "var_param": "fractional_intensity"
+    },
+    "vertical_gradient": {
+      "var_param": "vertical_gradient"
+    },
+    "center_of_gravity": {
+      "var_param": "center_of_gravity"
+    },
+    "outline_flag": {
+      "var_param": "outline_flag"
+    },
+    "mask_flag": {
+      "var_param": "mask_flag"
+    },
+    "skull_flag": {
+      "var_param": "skull_flag"
+    },
+    "no_output_flag": {
+      "var_param": "no_output_flag"
+    },
+    "mesh_flag": {
+      "var_param": "mesh_flag"
+    },
+    "head_radius": {
+      "var_param": "head_radius"
+    },
+    "smooth_factor": {
+      "var_param": "smooth_factor"
+    },
+    "threshold_flag": {
+      "var_param": "threshold_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "fn_root_make_params_and_execute": "mri_em_register",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "template_gca": {
+      "var_param": "template_gca"
+    },
+    "output_transform": {
+      "var_param": "output_transform"
+    },
+    "distance": {
+      "var_param": "distance"
+    },
+    "nomap": {
+      "var_param": "nomap"
+    },
+    "flash": {
+      "var_param": "flash"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "skull": {
+      "var_param": "skull"
+    },
+    "uns": {
+      "var_param": "uns"
+    },
+    "diag": {
+      "var_param": "diag"
+    },
+    "debug_voxel": {
+      "var_param": "debug_voxel"
+    },
+    "debug_label": {
+      "var_param": "debug_label"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "te": {
+      "var_param": "te"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "example": {
+      "var_param": "example"
+    },
+    "samples": {
+      "var_param": "samples"
+    },
+    "fsamples": {
+      "var_param": "fsamples"
+    },
+    "nsamples": {
+      "var_param": "nsamples"
+    },
+    "contrast": {
+      "var_param": "contrast"
+    },
+    "flash_parms": {
+      "var_param": "flash_parms"
+    },
+    "transonly": {
+      "var_param": "transonly"
+    },
+    "write_mean": {
+      "var_param": "write_mean"
+    },
+    "prior": {
+      "var_param": "prior"
+    },
+    "spacing": {
+      "var_param": "spacing"
+    },
+    "scales": {
+      "var_param": "scales"
+    },
+    "novar": {
+      "var_param": "novar"
+    },
+    "dt": {
+      "var_param": "dt"
+    },
+    "tol": {
+      "var_param": "tol"
+    },
+    "center": {
+      "var_param": "center"
+    },
+    "noscale": {
+      "var_param": "noscale"
+    },
+    "noiscale": {
+      "var_param": "noiscale"
+    },
+    "num_transforms": {
+      "var_param": "num_transforms"
+    },
+    "area": {
+      "var_param": "area"
+    },
+    "nlarea": {
+      "var_param": "nlarea"
+    },
+    "levels": {
+      "var_param": "levels"
+    },
+    "intensity": {
+      "var_param": "intensity"
+    },
+    "reduce": {
+      "var_param": "reduce"
+    },
+    "n_samples": {
+      "var_param": "n_samples"
+    },
+    "norm": {
+      "var_param": "norm"
+    },
+    "trans": {
+      "var_param": "trans"
+    },
+    "steps": {
+      "var_param": "steps"
+    },
+    "long_reg": {
+      "var_param": "long_reg"
+    },
+    "cpfile": {
+      "var_param": "cpfile"
+    },
+    "translation_vector": {
+      "var_param": "translation_vector"
+    },
+    "rotation_vector": {
+      "var_param": "rotation_vector"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "blur": {
+      "var_param": "blur"
+    },
+    "diagno": {
+      "var_param": "diagno"
+    },
+    "s": {
+      "var_param": "s"
+    },
+    "max_angle": {
+      "var_param": "max_angle"
+    },
+    "niters": {
+      "var_param": "niters"
+    },
+    "write_iters": {
+      "var_param": "write_iters"
+    },
+    "ctl_point_pct": {
+      "var_param": "ctl_point_pct"
+    },
+    "momentum": {
+      "var_param": "momentum"
+    },
+    "threads": {
+      "var_param": "threads"
+    }
+  }
+}

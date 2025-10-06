@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "meica_py",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "echo_times": {
+      "var_param": "echo_times"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
+    "output_directory": {
+      "var_param": "output_directory"
+    },
+    "components": {
+      "var_param": "components"
+    },
+    "talairach": {
+      "var_param": "talairach"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

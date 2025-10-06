@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_mask_to_ascii",
+  "properties": {
+    "tobin_flag": {
+      "var_param": "tobin_flag"
+    },
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "outputfile": {
+      "var_param": "outputfile"
+    }
+  }
+}

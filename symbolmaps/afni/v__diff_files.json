@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v__diff_files",
+  "properties": {
+    "files": {
+      "var_param": "files"
+    },
+    "old_dir": {
+      "var_param": "old_dir"
+    },
+    "diff_opts": {
+      "var_param": "diff_opts"
+    },
+    "diff_prog": {
+      "var_param": "diff_prog"
+    },
+    "ignore_missing": {
+      "var_param": "ignore_missing"
+    },
+    "longlist": {
+      "var_param": "longlist"
+    },
+    "save": {
+      "var_param": "save"
+    },
+    "show": {
+      "var_param": "show"
+    },
+    "xxdiff": {
+      "var_param": "xxdiff"
+    },
+    "X_flag": {
+      "var_param": "x_flag"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    }
+  }
+}

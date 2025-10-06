@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "volume_capture_plane",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "subvolume": {
+      "var_param": "subvolume"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "h_dim": {
+      "var_param": "h_dim"
+    },
+    "v_dim": {
+      "var_param": "v_dim"
+    },
+    "scale_min": {
+      "var_param": "scale_min"
+    },
+    "scale_max": {
+      "var_param": "scale_max"
+    },
+    "bottom_left_x": {
+      "var_param": "bottom_left_x"
+    },
+    "bottom_left_y": {
+      "var_param": "bottom_left_y"
+    },
+    "bottom_left_z": {
+      "var_param": "bottom_left_z"
+    },
+    "bottom_right_x": {
+      "var_param": "bottom_right_x"
+    },
+    "bottom_right_y": {
+      "var_param": "bottom_right_y"
+    },
+    "bottom_right_z": {
+      "var_param": "bottom_right_z"
+    },
+    "top_left_x": {
+      "var_param": "top_left_x"
+    },
+    "top_left_y": {
+      "var_param": "top_left_y"
+    },
+    "top_left_z": {
+      "var_param": "top_left_z"
+    },
+    "image": {
+      "var_param": "image"
+    }
+  }
+}

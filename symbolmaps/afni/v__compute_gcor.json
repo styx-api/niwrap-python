@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v__compute_gcor",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "corr_vol_prefix": {
+      "var_param": "corr_vol_prefix"
+    },
+    "initial_trs": {
+      "var_param": "initial_trs"
+    },
+    "no_demean": {
+      "var_param": "no_demean"
+    },
+    "save_tmp": {
+      "var_param": "save_tmp"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

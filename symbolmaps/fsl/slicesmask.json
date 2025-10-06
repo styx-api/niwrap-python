@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "slicesmask",
+  "properties": {
+    "image": {
+      "var_param": "image"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

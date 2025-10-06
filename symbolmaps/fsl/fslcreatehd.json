@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "fslcreatehd",
+  "properties": {
+    "xsize": {
+      "var_param": "xsize"
+    },
+    "ysize": {
+      "var_param": "ysize"
+    },
+    "zsize": {
+      "var_param": "zsize"
+    },
+    "tsize": {
+      "var_param": "tsize"
+    },
+    "xvoxsize": {
+      "var_param": "xvoxsize"
+    },
+    "yvoxsize": {
+      "var_param": "yvoxsize"
+    },
+    "zvoxsize": {
+      "var_param": "zvoxsize"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "xorigin": {
+      "var_param": "xorigin"
+    },
+    "yorigin": {
+      "var_param": "yorigin"
+    },
+    "zorigin": {
+      "var_param": "zorigin"
+    },
+    "datatype": {
+      "var_param": "datatype"
+    },
+    "headername": {
+      "var_param": "headername"
+    },
+    "nifti_xml_file": {
+      "var_param": "nifti_xml_file"
+    }
+  }
+}

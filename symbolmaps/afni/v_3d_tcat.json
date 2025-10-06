@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tcat",
+  "properties": {
+    "rlt": {
+      "var_param": "rlt"
+    },
+    "in_files": {
+      "var_param": "in_files"
+    },
+    "out_file": {
+      "var_param": "out_file"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

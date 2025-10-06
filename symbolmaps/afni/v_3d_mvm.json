@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_mvm",
+  "properties": {
+    "dbgArgs": {
+      "var_param": "dbg_args"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "jobs": {
+      "var_param": "jobs"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "bsVars": {
+      "var_param": "bs_vars"
+    },
+    "wsVars": {
+      "var_param": "ws_vars"
+    },
+    "qVars": {
+      "var_param": "q_vars"
+    },
+    "qVarCenters": {
+      "var_param": "q_var_centers"
+    },
+    "num_glt": {
+      "var_param": "num_glt"
+    },
+    "gltLabel": {
+      "var_param": "glt_label"
+    },
+    "gltCode": {
+      "var_param": "glt_code"
+    },
+    "num_glf": {
+      "var_param": "num_glf"
+    },
+    "glfLabel": {
+      "var_param": "glf_label"
+    },
+    "glfCode": {
+      "var_param": "glf_code"
+    },
+    "dataTable": {
+      "var_param": "data_table"
+    }
+  }
+}

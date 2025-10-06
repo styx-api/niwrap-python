@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "convert_fiber_orientations",
+  "properties": {
+    "label_volume": {
+      "var_param": "label_volume"
+    },
+    "fiber_out": {
+      "var_param": "fiber_out"
+    },
+    "fiber": {
+      "var_param": "fiber",
+      "fn_struct_make_params": "convert_fiber_orientations_fiber_params",
+      "properties": {
+        "mean_f": {
+          "var_param": "mean_f"
+        },
+        "stdev_f": {
+          "var_param": "stdev_f"
+        },
+        "theta": {
+          "var_param": "theta"
+        },
+        "phi": {
+          "var_param": "phi"
+        },
+        "psi": {
+          "var_param": "psi"
+        },
+        "ka": {
+          "var_param": "ka"
+        },
+        "kb": {
+          "var_param": "kb"
+        }
+      }
+    }
+  }
+}

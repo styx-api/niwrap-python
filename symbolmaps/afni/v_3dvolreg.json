@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "v_3dvolreg",
+  "properties": {
+    "copyorigin": {
+      "var_param": "copyorigin"
+    },
+    "twopass": {
+      "var_param": "twopass"
+    },
+    "Fourier": {
+      "var_param": "fourier"
+    },
+    "in_weight_volume": {
+      "var_param": "in_weight_volume"
+    },
+    "in_weight_volume_2": {
+      "var_param": "in_weight_volume_2"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "timeshift": {
+      "var_param": "timeshift"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "basefile": {
+      "var_param": "basefile"
+    },
+    "zpad": {
+      "var_param": "zpad"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "Maxdisp1d": {
+      "var_param": "maxdisp1d"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    }
+  }
+}

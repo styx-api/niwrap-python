@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "imaver",
+  "properties": {
+    "out_ave": {
+      "var_param": "out_ave"
+    },
+    "out_sig": {
+      "var_param": "out_sig"
+    },
+    "input_images": {
+      "var_param": "input_images"
+    }
+  }
+}

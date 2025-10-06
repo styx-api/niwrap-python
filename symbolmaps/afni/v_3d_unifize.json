@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_unifize",
+  "properties": {
+    "cl_frac": {
+      "var_param": "cl_frac"
+    },
+    "epi": {
+      "var_param": "epi"
+    },
+    "gm": {
+      "var_param": "gm"
+    },
+    "no_duplo": {
+      "var_param": "no_duplo"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "rbt": {
+      "var_param": "rbt"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "scale_file": {
+      "var_param": "scale_file"
+    },
+    "t2": {
+      "var_param": "t2"
+    },
+    "t2_up": {
+      "var_param": "t2_up"
+    },
+    "urad": {
+      "var_param": "urad"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    }
+  }
+}

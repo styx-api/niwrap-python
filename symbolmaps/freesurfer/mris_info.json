@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "mris_info",
+  "properties": {
+    "surfacefile": {
+      "var_param": "surfacefile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "subject_hemi_surfname": {
+      "var_param": "subject_hemi_surfname"
+    },
+    "talairach_xfm_flag": {
+      "var_param": "talairach_xfm_flag"
+    },
+    "rescale_flag": {
+      "var_param": "rescale_flag"
+    },
+    "patchfile": {
+      "var_param": "patchfile"
+    },
+    "vertex_number": {
+      "var_param": "vertex_number"
+    },
+    "extended_vertex_number": {
+      "var_param": "extended_vertex_number"
+    },
+    "curvfile": {
+      "var_param": "curvfile"
+    },
+    "annotfile": {
+      "var_param": "annotfile"
+    },
+    "area_stats_flag": {
+      "var_param": "area_stats_flag"
+    },
+    "edge_stats_id": {
+      "var_param": "edge_stats_id"
+    },
+    "edge_number": {
+      "var_param": "edge_number"
+    },
+    "vtxno": {
+      "var_param": "vtxno"
+    },
+    "matrix_format": {
+      "var_param": "matrix_format"
+    },
+    "quality_stats_flag": {
+      "var_param": "quality_stats_flag"
+    },
+    "intersections_flag": {
+      "var_param": "intersections_flag"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "edge_file": {
+      "var_param": "edge_file"
+    },
+    "nogifti_flag": {
+      "var_param": "nogifti_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

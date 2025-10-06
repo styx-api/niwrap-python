@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "tractstats2table",
+  "properties": {
+    "inputs": {
+      "var_param": "inputs"
+    },
+    "load_pathstats_from_file": {
+      "var_param": "load_pathstats_from_file"
+    },
+    "overall": {
+      "var_param": "overall"
+    },
+    "byvoxel": {
+      "var_param": "byvoxel"
+    },
+    "byvoxel_measure": {
+      "var_param": "byvoxel_measure"
+    },
+    "tablefile": {
+      "var_param": "tablefile"
+    },
+    "delimiter": {
+      "var_param": "delimiter"
+    },
+    "transpose": {
+      "var_param": "transpose"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

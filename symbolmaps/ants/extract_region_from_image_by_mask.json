@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "extract_region_from_image_by_mask",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "label_mask_image": {
+      "var_param": "label_mask_image"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "pad_radius": {
+      "var_param": "pad_radius"
+    }
+  }
+}

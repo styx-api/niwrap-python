@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_bport",
+  "properties": {
+    "band": {
+      "var_param": "band"
+    },
+    "invert": {
+      "var_param": "invert"
+    },
+    "nozero": {
+      "var_param": "nozero"
+    },
+    "noconst": {
+      "var_param": "noconst"
+    },
+    "quad": {
+      "var_param": "quad"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "input_1d_file": {
+      "var_param": "input_1d_file"
+    },
+    "nodata": {
+      "var_param": "nodata"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "concat": {
+      "var_param": "concat"
+    }
+  }
+}

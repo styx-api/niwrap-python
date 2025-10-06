@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "gen_ss_review_scripts_py",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "rm_trs": {
+      "var_param": "rm_trs"
+    },
+    "num_stim": {
+      "var_param": "num_stim"
+    },
+    "mb_level": {
+      "var_param": "mb_level"
+    },
+    "slice_pattern": {
+      "var_param": "slice_pattern"
+    },
+    "motion_dset": {
+      "var_param": "motion_dset"
+    },
+    "outlier_dset": {
+      "var_param": "outlier_dset"
+    },
+    "enorm_dset": {
+      "var_param": "enorm_dset"
+    },
+    "mot_limit": {
+      "var_param": "mot_limit"
+    },
+    "out_limit": {
+      "var_param": "out_limit"
+    },
+    "xmat_regress": {
+      "var_param": "xmat_regress"
+    },
+    "xmat_uncensored": {
+      "var_param": "xmat_uncensored"
+    },
+    "stats_dset": {
+      "var_param": "stats_dset"
+    },
+    "final_anat": {
+      "var_param": "final_anat"
+    },
+    "final_view": {
+      "var_param": "final_view"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "verbosity": {
+      "var_param": "verbosity"
+    },
+    "uvars_json": {
+      "var_param": "uvars_json"
+    },
+    "init_uvars_json": {
+      "var_param": "init_uvars_json"
+    }
+  }
+}

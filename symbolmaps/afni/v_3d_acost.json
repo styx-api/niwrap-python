@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_acost",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "basefile": {
+      "var_param": "basefile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "all_cost": {
+      "var_param": "all_cost"
+    }
+  }
+}

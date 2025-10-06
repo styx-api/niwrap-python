@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__suma_fsvol_to_brik",
+  "properties": {
+    "fs_vol_data": {
+      "var_param": "fs_vol_data"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

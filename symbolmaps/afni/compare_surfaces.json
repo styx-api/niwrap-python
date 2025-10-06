@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "compare_surfaces",
+  "properties": {
+    "spec_file": {
+      "var_param": "spec_file"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "volume_parent_1": {
+      "var_param": "volume_parent_1"
+    },
+    "volume_parent_2": {
+      "var_param": "volume_parent_2"
+    },
+    "file_prefix": {
+      "var_param": "file_prefix"
+    },
+    "one_node": {
+      "var_param": "one_node"
+    },
+    "node_range": {
+      "var_param": "node_range"
+    },
+    "no_consistency_check": {
+      "var_param": "no_consistency_check"
+    },
+    "no_volreg": {
+      "var_param": "no_volreg"
+    },
+    "no_transform": {
+      "var_param": "no_transform"
+    },
+    "set_environment_variable": {
+      "var_param": "set_environment_variable"
+    },
+    "trace": {
+      "var_param": "trace_"
+    },
+    "extreme_trace": {
+      "var_param": "extreme_trace"
+    },
+    "no_memory_trace": {
+      "var_param": "no_memory_trace"
+    },
+    "yes_memory_trace": {
+      "var_param": "yes_memory_trace"
+    }
+  }
+}

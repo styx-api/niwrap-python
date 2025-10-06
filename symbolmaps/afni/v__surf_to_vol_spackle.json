@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v__surf_to_vol_spackle",
+  "properties": {
+    "maskset": {
+      "var_param": "maskset"
+    },
+    "spec": {
+      "var_param": "spec"
+    },
+    "surfA": {
+      "var_param": "surf_a"
+    },
+    "surfB": {
+      "var_param": "surf_b"
+    },
+    "surfset": {
+      "var_param": "surfset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "normal_vector_length": {
+      "var_param": "normal_vector_length"
+    },
+    "search_radius": {
+      "var_param": "search_radius"
+    },
+    "num_steps": {
+      "var_param": "num_steps"
+    },
+    "keep_temp_files": {
+      "var_param": "keep_temp_files"
+    },
+    "max_iters": {
+      "var_param": "max_iters"
+    },
+    "use_mode": {
+      "var_param": "use_mode"
+    },
+    "datum_type": {
+      "var_param": "datum_type"
+    },
+    "ignore_unknown_options": {
+      "var_param": "ignore_unknown_options"
+    }
+  }
+}

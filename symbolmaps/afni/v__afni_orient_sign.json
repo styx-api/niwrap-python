@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v__afni_orient_sign",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

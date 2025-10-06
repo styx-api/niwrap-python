@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "c3d_affine_tool",
+  "properties": {
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "reference_file": {
+      "var_param": "reference_file"
+    },
+    "source_file": {
+      "var_param": "source_file"
+    },
+    "sform_file": {
+      "var_param": "sform_file"
+    },
+    "invert": {
+      "var_param": "invert"
+    },
+    "determinant": {
+      "var_param": "determinant"
+    },
+    "multiply": {
+      "var_param": "multiply"
+    },
+    "sqrt": {
+      "var_param": "sqrt"
+    },
+    "itk_transform": {
+      "var_param": "itk_transform"
+    },
+    "irtk_transform": {
+      "var_param": "irtk_transform"
+    },
+    "fsl2ras": {
+      "var_param": "fsl2ras"
+    },
+    "ras2fsl": {
+      "var_param": "ras2fsl"
+    },
+    "out_itk_transform": {
+      "var_param": "out_itk_transform"
+    },
+    "out_irtk_transform": {
+      "var_param": "out_irtk_transform"
+    },
+    "out_matfile": {
+      "var_param": "out_matfile"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "info_full": {
+      "var_param": "info_full"
+    }
+  }
+}

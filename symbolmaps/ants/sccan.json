@@ -1,0 +1,86 @@
+{
+  "fn_root_make_params_and_execute": "sccan",
+  "properties": {
+    "output": {
+      "var_param": "output"
+    },
+    "n_permutations": {
+      "var_param": "n_permutations"
+    },
+    "smoother": {
+      "var_param": "smoother"
+    },
+    "row_sparseness": {
+      "var_param": "row_sparseness"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "n_eigenvectors": {
+      "var_param": "n_eigenvectors"
+    },
+    "robustify": {
+      "var_param": "robustify"
+    },
+    "covering": {
+      "var_param": "covering"
+    },
+    "uselong": {
+      "var_param": "uselong"
+    },
+    "l1": {
+      "var_param": "l1"
+    },
+    "pclusterthresh": {
+      "var_param": "pclusterthresh"
+    },
+    "qclusterthresh": {
+      "var_param": "qclusterthresh"
+    },
+    "ridge_cca": {
+      "var_param": "ridge_cca"
+    },
+    "initialization": {
+      "var_param": "initialization"
+    },
+    "initialization2": {
+      "var_param": "initialization2"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mask2": {
+      "var_param": "mask2"
+    },
+    "partial_scca_option": {
+      "var_param": "partial_scca_option"
+    },
+    "prior_weight": {
+      "var_param": "prior_weight"
+    },
+    "get_small": {
+      "var_param": "get_small"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "imageset_to_matrix": {
+      "var_param": "imageset_to_matrix"
+    },
+    "timeseriesimage_to_matrix": {
+      "var_param": "timeseriesimage_to_matrix"
+    },
+    "vector_to_image": {
+      "var_param": "vector_to_image"
+    },
+    "imageset_to_projections": {
+      "var_param": "imageset_to_projections"
+    },
+    "scca": {
+      "var_param": "scca"
+    },
+    "svd": {
+      "var_param": "svd"
+    }
+  }
+}

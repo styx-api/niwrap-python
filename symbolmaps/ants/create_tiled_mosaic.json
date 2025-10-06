@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "create_tiled_mosaic",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "rgb_image": {
+      "var_param": "rgb_image"
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "functional_overlay": {
+      "var_param": "functional_overlay"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "tile_geometry": {
+      "var_param": "tile_geometry"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "pad_or_crop": {
+      "var_param": "pad_or_crop"
+    },
+    "slices": {
+      "var_param": "slices"
+    },
+    "flip_slice": {
+      "var_param": "flip_slice"
+    },
+    "permute_axes": {
+      "var_param": "permute_axes"
+    }
+  }
+}

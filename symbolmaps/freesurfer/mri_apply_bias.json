@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_apply_bias",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "bias_volume": {
+      "var_param": "bias_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    }
+  }
+}

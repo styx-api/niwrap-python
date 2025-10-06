@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "groupstats",
+  "properties": {
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "group_fsgd": {
+      "var_param": "group_fsgd"
+    },
+    "subjectfile": {
+      "var_param": "subjectfile"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "mapname": {
+      "var_param": "mapname"
+    },
+    "srcsurfreg": {
+      "var_param": "srcsurfreg"
+    },
+    "no_maps": {
+      "var_param": "no_maps"
+    },
+    "lh_only": {
+      "var_param": "lh_only"
+    },
+    "rh_only": {
+      "var_param": "rh_only"
+    },
+    "no_aparcstats": {
+      "var_param": "no_aparcstats"
+    },
+    "no_asegstats": {
+      "var_param": "no_asegstats"
+    },
+    "no_wparcstats": {
+      "var_param": "no_wparcstats"
+    },
+    "no_stats": {
+      "var_param": "no_stats"
+    },
+    "new": {
+      "var_param": "new"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "keep53": {
+      "var_param": "keep53"
+    }
+  }
+}

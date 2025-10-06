@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_compare_affine",
+  "properties": {
+    "mask": {
+      "var_param": "mask"
+    },
+    "dset": {
+      "var_param": "dset"
+    },
+    "affine": {
+      "var_param": "affine"
+    }
+  }
+}

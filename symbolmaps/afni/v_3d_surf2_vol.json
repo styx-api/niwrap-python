@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_surf2_vol",
+  "properties": {
+    "spec": {
+      "var_param": "spec"
+    },
+    "surface_volume": {
+      "var_param": "surface_volume"
+    },
+    "surf_a": {
+      "var_param": "surf_a"
+    },
+    "surf_b": {
+      "var_param": "surf_b"
+    },
+    "grid_parent": {
+      "var_param": "grid_parent"
+    },
+    "map_func": {
+      "var_param": "map_func"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "surf_xyz_1d": {
+      "var_param": "surf_xyz_1d"
+    },
+    "sdata_1d": {
+      "var_param": "sdata_1d"
+    },
+    "sdata": {
+      "var_param": "sdata"
+    },
+    "f_steps": {
+      "var_param": "f_steps"
+    },
+    "f_index": {
+      "var_param": "f_index"
+    },
+    "f_p1_fr": {
+      "var_param": "f_p1_fr"
+    },
+    "f_pn_fr": {
+      "var_param": "f_pn_fr"
+    },
+    "f_p1_mm": {
+      "var_param": "f_p1_mm"
+    },
+    "f_pn_mm": {
+      "var_param": "f_pn_mm"
+    },
+    "stop_gap": {
+      "var_param": "stop_gap"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    },
+    "data_expr": {
+      "var_param": "data_expr"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "dnode": {
+      "var_param": "dnode"
+    },
+    "dvoxel": {
+      "var_param": "dvoxel"
+    },
+    "noscale": {
+      "var_param": "noscale"
+    },
+    "sxyz_orient_as_gpar": {
+      "var_param": "sxyz_orient_as_gpar"
+    }
+  }
+}

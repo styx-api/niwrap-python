@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "mris_register_to_label",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "regfile": {
+      "var_param": "regfile"
+    },
+    "mri_reg": {
+      "var_param": "mri_reg"
+    },
+    "mov_volume": {
+      "var_param": "mov_volume"
+    },
+    "resolution": {
+      "var_param": "resolution"
+    },
+    "max_rot": {
+      "var_param": "max_rot"
+    },
+    "max_trans": {
+      "var_param": "max_trans"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "out_reg": {
+      "var_param": "out_reg"
+    },
+    "downsample": {
+      "var_param": "downsample"
+    },
+    "cost_file": {
+      "var_param": "cost_file"
+    }
+  }
+}

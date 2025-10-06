@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "fsl_histogram",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "input_file_duplicate": {
+      "var_param": "input_file_duplicate"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "output_file_duplicate": {
+      "var_param": "output_file_duplicate"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "mask_file_duplicate": {
+      "var_param": "mask_file_duplicate"
+    },
+    "gmmfit_file": {
+      "var_param": "gmmfit_file"
+    },
+    "gmmfit_file_duplicate": {
+      "var_param": "gmmfit_file_duplicate"
+    },
+    "plot_title": {
+      "var_param": "plot_title"
+    },
+    "plot_title_duplicate": {
+      "var_param": "plot_title_duplicate"
+    },
+    "legend_file": {
+      "var_param": "legend_file"
+    },
+    "legend_file_duplicate": {
+      "var_param": "legend_file_duplicate"
+    },
+    "xlabel": {
+      "var_param": "xlabel"
+    },
+    "xlabel_duplicate": {
+      "var_param": "xlabel_duplicate"
+    },
+    "ylabel": {
+      "var_param": "ylabel"
+    },
+    "ylabel_duplicate": {
+      "var_param": "ylabel_duplicate"
+    },
+    "plot_height": {
+      "var_param": "plot_height"
+    },
+    "plot_height_duplicate": {
+      "var_param": "plot_height_duplicate"
+    },
+    "plot_width": {
+      "var_param": "plot_width"
+    },
+    "plot_width_duplicate": {
+      "var_param": "plot_width_duplicate"
+    },
+    "num_bins": {
+      "var_param": "num_bins"
+    },
+    "num_bins_duplicate": {
+      "var_param": "num_bins_duplicate"
+    },
+    "zoom_factor": {
+      "var_param": "zoom_factor"
+    },
+    "zoom_factor_duplicate": {
+      "var_param": "zoom_factor_duplicate"
+    },
+    "use_gmm_flag": {
+      "var_param": "use_gmm_flag"
+    }
+  }
+}

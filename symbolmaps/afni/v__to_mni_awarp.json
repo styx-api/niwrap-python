@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__to_mni_awarp",
+  "properties": {
+    "directory": {
+      "var_param": "directory"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    }
+  }
+}

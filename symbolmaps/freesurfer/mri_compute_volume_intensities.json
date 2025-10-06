@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_compute_volume_intensities",
+  "properties": {
+    "input_intensity": {
+      "var_param": "input_intensity"
+    },
+    "volume_fraction_stem": {
+      "var_param": "volume_fraction_stem"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    }
+  }
+}

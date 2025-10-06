@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "read_matlab_files_py",
+  "properties": {
+    "infiles": {
+      "var_param": "infiles"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

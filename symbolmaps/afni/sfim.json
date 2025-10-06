@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "sfim",
+  "properties": {
+    "input_images": {
+      "var_param": "input_images"
+    },
+    "sfint_file": {
+      "var_param": "sfint_file"
+    },
+    "baseline_state": {
+      "var_param": "baseline_state"
+    },
+    "local_base_option": {
+      "var_param": "local_base_option"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "slices",
+  "properties": {
+    "primary_input": {
+      "var_param": "primary_input"
+    },
+    "secondary_input": {
+      "var_param": "secondary_input"
+    },
+    "scale_factor": {
+      "var_param": "scale_factor"
+    },
+    "intensity_range": {
+      "var_param": "intensity_range"
+    },
+    "output_gif": {
+      "var_param": "output_gif"
+    }
+  }
+}

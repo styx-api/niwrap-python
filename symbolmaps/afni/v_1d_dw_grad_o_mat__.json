@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_dw_grad_o_mat__",
+  "properties": {
+    "in_row_vec": {
+      "var_param": "in_row_vec"
+    },
+    "in_col_vec": {
+      "var_param": "in_col_vec"
+    },
+    "in_col_matA": {
+      "var_param": "in_col_mat_a"
+    },
+    "in_col_matT": {
+      "var_param": "in_col_mat_t"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    },
+    "no_flip": {
+      "var_param": "no_flip"
+    },
+    "out_row_vec": {
+      "var_param": "out_row_vec"
+    },
+    "out_col_vec": {
+      "var_param": "out_col_vec"
+    },
+    "out_col_matA": {
+      "var_param": "out_col_mat_a"
+    },
+    "out_col_matT": {
+      "var_param": "out_col_mat_t"
+    },
+    "in_bvals": {
+      "var_param": "in_bvals"
+    },
+    "out_col_bval": {
+      "var_param": "out_col_bval"
+    },
+    "out_row_bval_sep": {
+      "var_param": "out_row_bval_sep"
+    },
+    "out_col_bval_sep": {
+      "var_param": "out_col_bval_sep"
+    },
+    "unit_mag_out": {
+      "var_param": "unit_mag_out"
+    },
+    "check_abs_min": {
+      "var_param": "check_abs_min"
+    },
+    "bref_mean_top": {
+      "var_param": "bref_mean_top"
+    },
+    "put_zeros_top": {
+      "var_param": "put_zeros_top"
+    },
+    "bmax_ref": {
+      "var_param": "bmax_ref"
+    }
+  }
+}

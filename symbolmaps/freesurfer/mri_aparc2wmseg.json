@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_aparc2wmseg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "wmseg_file": {
+      "var_param": "wmseg_file"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

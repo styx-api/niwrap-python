@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "surface_closest_vertex",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "coord_list_file": {
+      "var_param": "coord_list_file"
+    },
+    "vertex_list_out": {
+      "var_param": "vertex_list_out"
+    }
+  }
+}

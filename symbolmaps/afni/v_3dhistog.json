@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "v_3dhistog",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "nbin": {
+      "var_param": "nbin"
+    },
+    "dind": {
+      "var_param": "dind"
+    },
+    "omit": {
+      "var_param": "omit"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "roi_mask": {
+      "var_param": "roi_mask"
+    },
+    "doall": {
+      "var_param": "doall"
+    },
+    "noempty": {
+      "var_param": "noempty"
+    },
+    "notitle": {
+      "var_param": "notitle"
+    },
+    "log10": {
+      "var_param": "log10"
+    },
+    "pdf": {
+      "var_param": "pdf"
+    },
+    "min": {
+      "var_param": "min_"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "igfac": {
+      "var_param": "igfac"
+    },
+    "int": {
+      "var_param": "int_"
+    },
+    "float": {
+      "var_param": "float_"
+    },
+    "unq": {
+      "var_param": "unq"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    }
+  }
+}

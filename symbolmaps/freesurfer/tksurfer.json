@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "tksurfer",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "surface_name": {
+      "var_param": "surface_name"
+    },
+    "options": {
+      "var_param": "options"
+    }
+  }
+}

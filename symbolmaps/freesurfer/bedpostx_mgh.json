@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "bedpostx_mgh",
+  "properties": {
+    "subject_directory": {
+      "var_param": "subject_directory"
+    },
+    "fibres": {
+      "var_param": "fibres"
+    },
+    "ard_weight": {
+      "var_param": "ard_weight"
+    },
+    "burnin": {
+      "var_param": "burnin"
+    },
+    "jumps": {
+      "var_param": "jumps"
+    },
+    "sample_every": {
+      "var_param": "sample_every"
+    },
+    "deconv_model": {
+      "var_param": "deconv_model"
+    },
+    "gradient_nonlin": {
+      "var_param": "gradient_nonlin"
+    }
+  }
+}

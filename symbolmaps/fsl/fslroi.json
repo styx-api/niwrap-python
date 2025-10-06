@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "fslroi",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "xmin": {
+      "var_param": "xmin"
+    },
+    "xsize": {
+      "var_param": "xsize"
+    },
+    "ymin": {
+      "var_param": "ymin"
+    },
+    "ysize": {
+      "var_param": "ysize"
+    },
+    "zmin": {
+      "var_param": "zmin"
+    },
+    "zsize": {
+      "var_param": "zsize"
+    },
+    "tmin": {
+      "var_param": "tmin"
+    },
+    "tsize": {
+      "var_param": "tsize"
+    }
+  }
+}

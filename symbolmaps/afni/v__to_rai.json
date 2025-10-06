@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "v__to_rai",
+  "properties": {
+    "coordinates": {
+      "var_param": "coordinates"
+    },
+    "orientation": {
+      "var_param": "orientation"
+    }
+  }
+}

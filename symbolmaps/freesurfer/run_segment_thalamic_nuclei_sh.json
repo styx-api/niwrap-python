@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "run_segment_thalamic_nuclei_sh",
+  "properties": {
+    "mcr_root": {
+      "var_param": "mcr_root"
+    },
+    "args": {
+      "var_param": "args"
+    }
+  }
+}

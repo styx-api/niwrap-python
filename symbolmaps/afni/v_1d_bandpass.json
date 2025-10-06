@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_bandpass",
+  "properties": {
+    "fbot": {
+      "var_param": "fbot"
+    },
+    "ftop": {
+      "var_param": "ftop"
+    },
+    "infile": {
+      "var_param": "infile"
+    },
+    "timestep": {
+      "var_param": "timestep"
+    },
+    "ortfile": {
+      "var_param": "ortfile"
+    },
+    "nodetrend": {
+      "var_param": "nodetrend"
+    },
+    "norm": {
+      "var_param": "norm"
+    }
+  }
+}

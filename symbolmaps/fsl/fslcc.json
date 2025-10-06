@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "fslcc",
+  "properties": {
+    "first_input": {
+      "var_param": "first_input"
+    },
+    "second_input": {
+      "var_param": "second_input"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "noabs_flag": {
+      "var_param": "noabs_flag"
+    },
+    "nodemean_flag": {
+      "var_param": "nodemean_flag"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "decimal_places": {
+      "var_param": "decimal_places"
+    }
+  }
+}

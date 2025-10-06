@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "dmri_group",
+  "properties": {
+    "input_list": {
+      "var_param": "input_list"
+    },
+    "reference_volume": {
+      "var_param": "reference_volume"
+    },
+    "output_base": {
+      "var_param": "output_base"
+    },
+    "no_interpolation": {
+      "var_param": "no_interpolation"
+    },
+    "sections_num": {
+      "var_param": "sections_num"
+    },
+    "debug_mode": {
+      "var_param": "debug_mode"
+    },
+    "check_options": {
+      "var_param": "check_options"
+    }
+  }
+}

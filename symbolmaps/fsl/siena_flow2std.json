@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "siena_flow2std",
+  "properties": {
+    "fileroot1": {
+      "var_param": "fileroot1"
+    },
+    "fileroot2": {
+      "var_param": "fileroot2"
+    },
+    "sigma": {
+      "var_param": "sigma"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

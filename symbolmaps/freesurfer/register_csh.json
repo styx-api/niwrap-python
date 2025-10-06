@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "register_csh",
+  "properties": {
+    "base_image": {
+      "var_param": "base_image"
+    },
+    "new_image": {
+      "var_param": "new_image"
+    },
+    "options": {
+      "var_param": "options"
+    }
+  }
+}

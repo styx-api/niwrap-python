@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_4dfptoanalyze",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "scale_factor": {
+      "var_param": "scale_factor"
+    },
+    "output_8bit": {
+      "var_param": "output_8bit"
+    },
+    "spm99": {
+      "var_param": "spm99"
+    },
+    "endianness": {
+      "var_param": "endianness"
+    }
+  }
+}

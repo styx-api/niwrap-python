@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_exchange",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "infile": {
+      "var_param": "infile"
+    },
+    "mapfile": {
+      "var_param": "mapfile"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

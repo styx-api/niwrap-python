@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "midtrans",
+  "properties": {
+    "transforms": {
+      "var_param": "transforms"
+    },
+    "output_matrix": {
+      "var_param": "output_matrix"
+    },
+    "template_image": {
+      "var_param": "template_image"
+    },
+    "separate_basename": {
+      "var_param": "separate_basename"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    }
+  }
+}

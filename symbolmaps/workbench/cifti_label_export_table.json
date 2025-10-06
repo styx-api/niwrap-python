@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "cifti_label_export_table",
+  "properties": {
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "map": {
+      "var_param": "map_"
+    },
+    "table_out": {
+      "var_param": "table_out"
+    }
+  }
+}

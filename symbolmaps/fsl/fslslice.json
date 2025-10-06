@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "fslslice",
+  "properties": {
+    "volume": {
+      "var_param": "volume"
+    },
+    "output_basename": {
+      "var_param": "output_basename"
+    }
+  }
+}

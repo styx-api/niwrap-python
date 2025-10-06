@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "mri_synthmorph",
+  "properties": {
+    "moving_image": {
+      "var_param": "moving_image"
+    },
+    "fixed_image": {
+      "var_param": "fixed_image"
+    },
+    "moved_output": {
+      "var_param": "moved_output"
+    },
+    "transform_output": {
+      "var_param": "transform_output"
+    },
+    "header_only": {
+      "var_param": "header_only"
+    },
+    "transformation_model": {
+      "var_param": "transformation_model"
+    },
+    "init_transform": {
+      "var_param": "init_transform"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "gpu_flag": {
+      "var_param": "gpu_flag"
+    },
+    "smooth": {
+      "var_param": "smooth"
+    },
+    "extent": {
+      "var_param": "extent"
+    },
+    "model_weights": {
+      "var_param": "model_weights"
+    },
+    "inspect_directory": {
+      "var_param": "inspect_directory"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "metric_rois_from_extrema",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric": {
+      "var_param": "metric"
+    },
+    "limit": {
+      "var_param": "limit"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "opt_gaussian_sigma": {
+      "var_param": "opt_gaussian_sigma"
+    },
+    "opt_roi_roi_metric": {
+      "var_param": "opt_roi_roi_metric"
+    },
+    "opt_overlap_logic_method": {
+      "var_param": "opt_overlap_logic_method"
+    },
+    "opt_column_column": {
+      "var_param": "opt_column_column"
+    }
+  }
+}

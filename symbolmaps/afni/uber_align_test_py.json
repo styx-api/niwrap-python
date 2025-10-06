@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "uber_align_test_py",
+  "properties": {
+    "no_gui": {
+      "var_param": "no_gui"
+    },
+    "print_script": {
+      "var_param": "print_script"
+    },
+    "save_script": {
+      "var_param": "save_script"
+    },
+    "user_variable": {
+      "var_param": "user_variable"
+    },
+    "qt_opts": {
+      "var_param": "qt_opts"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "help_gui": {
+      "var_param": "help_gui"
+    },
+    "history": {
+      "var_param": "history"
+    },
+    "show_valid_opts": {
+      "var_param": "show_valid_opts"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

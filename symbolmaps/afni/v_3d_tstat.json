@@ -1,0 +1,188 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tstat",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "options": {
+      "var_param": "options"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "sum": {
+      "var_param": "sum_"
+    },
+    "abssum": {
+      "var_param": "abssum"
+    },
+    "sos": {
+      "var_param": "sos"
+    },
+    "l2norm": {
+      "var_param": "l2norm"
+    },
+    "mean": {
+      "var_param": "mean"
+    },
+    "slope": {
+      "var_param": "slope"
+    },
+    "stdev": {
+      "var_param": "stdev"
+    },
+    "stdevNOD": {
+      "var_param": "stdev_nod"
+    },
+    "cvar": {
+      "var_param": "cvar"
+    },
+    "cvarNOD": {
+      "var_param": "cvar_nod"
+    },
+    "cvarinv": {
+      "var_param": "cvarinv"
+    },
+    "cvarinvNOD": {
+      "var_param": "cvarinv_nod"
+    },
+    "tsnr": {
+      "var_param": "tsnr"
+    },
+    "MAD": {
+      "var_param": "mad"
+    },
+    "DW": {
+      "var_param": "dw"
+    },
+    "median": {
+      "var_param": "median"
+    },
+    "nzmedian": {
+      "var_param": "nzmedian"
+    },
+    "nzstdev": {
+      "var_param": "nzstdev"
+    },
+    "bmv": {
+      "var_param": "bmv"
+    },
+    "MSSD": {
+      "var_param": "mssd"
+    },
+    "MSSDsqrt": {
+      "var_param": "mssdsqrt"
+    },
+    "MASDx": {
+      "var_param": "masdx"
+    },
+    "min": {
+      "var_param": "min_"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "absmax": {
+      "var_param": "absmax"
+    },
+    "signed_absmax": {
+      "var_param": "signed_absmax"
+    },
+    "percentile": {
+      "var_param": "percentile"
+    },
+    "argmin": {
+      "var_param": "argmin"
+    },
+    "argmin1": {
+      "var_param": "argmin1"
+    },
+    "argmax": {
+      "var_param": "argmax"
+    },
+    "argmax1": {
+      "var_param": "argmax1"
+    },
+    "argabsmax": {
+      "var_param": "argabsmax"
+    },
+    "argabsmax1": {
+      "var_param": "argabsmax1"
+    },
+    "duration": {
+      "var_param": "duration"
+    },
+    "onset": {
+      "var_param": "onset"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "centroid": {
+      "var_param": "centroid"
+    },
+    "centduration": {
+      "var_param": "centduration"
+    },
+    "nzmean": {
+      "var_param": "nzmean"
+    },
+    "zcount": {
+      "var_param": "zcount"
+    },
+    "nzcount": {
+      "var_param": "nzcount"
+    },
+    "autocorr": {
+      "var_param": "autocorr"
+    },
+    "autoreg": {
+      "var_param": "autoreg"
+    },
+    "accumulate": {
+      "var_param": "accumulate"
+    },
+    "centromean": {
+      "var_param": "centromean"
+    },
+    "skewness": {
+      "var_param": "skewness"
+    },
+    "kurtosis": {
+      "var_param": "kurtosis"
+    },
+    "firstvalue": {
+      "var_param": "firstvalue"
+    },
+    "tdiff": {
+      "var_param": "tdiff"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "nscale": {
+      "var_param": "nscale"
+    },
+    "basepercent": {
+      "var_param": "basepercent"
+    },
+    "mask_mset": {
+      "var_param": "mask_mset"
+    },
+    "mrange": {
+      "var_param": "mrange"
+    },
+    "cmask": {
+      "var_param": "cmask"
+    }
+  }
+}

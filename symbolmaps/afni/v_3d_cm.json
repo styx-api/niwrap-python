@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_cm",
+  "properties": {
+    "dset": {
+      "var_param": "dset"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "set_origin": {
+      "var_param": "set_origin"
+    },
+    "local_ijk": {
+      "var_param": "local_ijk"
+    },
+    "roi_vals": {
+      "var_param": "roi_vals"
+    },
+    "all_rois": {
+      "var_param": "all_rois"
+    },
+    "icent": {
+      "var_param": "icent"
+    },
+    "dcent": {
+      "var_param": "dcent"
+    }
+  }
+}

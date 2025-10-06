@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__afni_run_me",
+  "properties": {
+    "go": {
+      "var_param": "go"
+    },
+    "curl": {
+      "var_param": "curl"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

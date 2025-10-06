@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "antsuse_deformation_field_to_get_affine_transform",
+  "properties": {
+    "deformation_field": {
+      "var_param": "deformation_field"
+    },
+    "load_ratio": {
+      "var_param": "load_ratio"
+    },
+    "transform_type": {
+      "var_param": "transform_type"
+    },
+    "output_affine": {
+      "var_param": "output_affine"
+    },
+    "mask": {
+      "var_param": "mask"
+    }
+  }
+}

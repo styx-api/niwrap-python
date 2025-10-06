@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "dcmsplit",
+  "properties": {
+    "dcm_dir": {
+      "var_param": "dcm_dir"
+    },
+    "out_dir": {
+      "var_param": "out_dir"
+    },
+    "copy": {
+      "var_param": "copy_"
+    },
+    "link": {
+      "var_param": "link"
+    },
+    "split_name": {
+      "var_param": "split_name"
+    },
+    "split_uid": {
+      "var_param": "split_uid"
+    },
+    "series_no": {
+      "var_param": "series_no"
+    },
+    "series_plus": {
+      "var_param": "series_plus"
+    },
+    "dicom_tag": {
+      "var_param": "dicom_tag"
+    },
+    "study_description": {
+      "var_param": "study_description"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_5tt2gmwmi",
+  "properties": {
+    "mask_in": {
+      "var_param": "mask_in"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "v_5tt2gmwmi_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "5tt_in": {
+      "var_param": "v_5tt_in"
+    },
+    "mask_out": {
+      "var_param": "mask_out"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "label_export_table",
+  "properties": {
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "table_out": {
+      "var_param": "table_out"
+    }
+  }
+}

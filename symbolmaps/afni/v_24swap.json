@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v_24swap",
+  "properties": {
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "pattern": {
+      "var_param": "pattern"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "spec_file_merge",
+  "properties": {
+    "spec_1": {
+      "var_param": "spec_1"
+    },
+    "spec_2": {
+      "var_param": "spec_2"
+    },
+    "out_spec": {
+      "var_param": "out_spec"
+    }
+  }
+}

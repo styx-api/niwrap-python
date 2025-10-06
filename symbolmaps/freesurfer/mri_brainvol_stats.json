@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_brainvol_stats",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "xml_string": {
+      "var_param": "xml_string"
+    },
+    "no_surface": {
+      "var_param": "no_surface"
+    },
+    "include_segmentation": {
+      "var_param": "include_segmentation"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

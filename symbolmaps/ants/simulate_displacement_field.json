@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "simulate_displacement_field",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "displacement_field_type": {
+      "var_param": "displacement_field_type"
+    },
+    "domain_image": {
+      "var_param": "domain_image"
+    },
+    "output_field": {
+      "var_param": "output_field"
+    },
+    "number_of_random_points": {
+      "var_param": "number_of_random_points"
+    },
+    "standard_deviation_displacement_field": {
+      "var_param": "standard_deviation_displacement_field"
+    },
+    "enforce_stationary_boundary": {
+      "var_param": "enforce_stationary_boundary"
+    },
+    "displacement_specific_options": {
+      "var_param": "displacement_specific_options"
+    }
+  }
+}

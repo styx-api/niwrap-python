@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "feat2segstats",
+  "properties": {
+    "feat_dir": {
+      "var_param": "feat_dir"
+    },
+    "featdirfile": {
+      "var_param": "featdirfile"
+    },
+    "seg_vol": {
+      "var_param": "seg_vol"
+    },
+    "aseg_flag": {
+      "var_param": "aseg_flag"
+    },
+    "aparc_aseg_flag": {
+      "var_param": "aparc_aseg_flag"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "all_segs_flag": {
+      "var_param": "all_segs_flag"
+    },
+    "copes_flag": {
+      "var_param": "copes_flag"
+    },
+    "varcopes_flag": {
+      "var_param": "varcopes_flag"
+    },
+    "zstats_flag": {
+      "var_param": "zstats_flag"
+    },
+    "pes_flag": {
+      "var_param": "pes_flag"
+    },
+    "rvar": {
+      "var_param": "rvar"
+    },
+    "example_func": {
+      "var_param": "example_func"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "mean_func": {
+      "var_param": "mean_func"
+    },
+    "stat": {
+      "var_param": "stat_"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    },
+    "nolog_flag": {
+      "var_param": "nolog_flag"
+    }
+  }
+}

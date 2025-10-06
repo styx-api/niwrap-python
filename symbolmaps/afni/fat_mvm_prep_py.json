@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "fat_mvm_prep_py",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "csv_file": {
+      "var_param": "csv_file"
+    },
+    "matrix_files": {
+      "var_param": "matrix_files"
+    },
+    "list_match": {
+      "var_param": "list_match"
+    },
+    "unionize_rois": {
+      "var_param": "unionize_rois"
+    },
+    "na_warn_off": {
+      "var_param": "na_warn_off"
+    },
+    "extern_labels_no": {
+      "var_param": "extern_labels_no"
+    }
+  }
+}

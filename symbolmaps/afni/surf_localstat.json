@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "surf_localstat",
+  "properties": {
+    "hood": {
+      "var_param": "hood"
+    },
+    "nbhd_rad": {
+      "var_param": "nbhd_rad"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "stat": {
+      "var_param": "stat_"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "surface": {
+      "var_param": "surface"
+    }
+  }
+}

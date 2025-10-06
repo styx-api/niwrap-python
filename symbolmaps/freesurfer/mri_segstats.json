@@ -1,0 +1,185 @@
+{
+  "fn_root_make_params_and_execute": "mri_segstats",
+  "properties": {
+    "segvol": {
+      "var_param": "segvol"
+    },
+    "annot_subject": {
+      "var_param": "annot_subject"
+    },
+    "annot_hemisphere": {
+      "var_param": "annot_hemisphere"
+    },
+    "annot_parcellation": {
+      "var_param": "annot_parcellation"
+    },
+    "slabel_subject": {
+      "var_param": "slabel_subject"
+    },
+    "slabel_hemisphere": {
+      "var_param": "slabel_hemisphere"
+    },
+    "slabel_label": {
+      "var_param": "slabel_label"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "partial_vol_comp": {
+      "var_param": "partial_vol_comp"
+    },
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "seg_erode": {
+      "var_param": "seg_erode"
+    },
+    "frame": {
+      "var_param": "frame"
+    },
+    "robust": {
+      "var_param": "robust"
+    },
+    "square_input": {
+      "var_param": "square_input"
+    },
+    "sqrt_input": {
+      "var_param": "sqrt_input"
+    },
+    "multiply_input": {
+      "var_param": "multiply_input"
+    },
+    "divide_input": {
+      "var_param": "divide_input"
+    },
+    "snr_column": {
+      "var_param": "snr_column"
+    },
+    "absolute_value": {
+      "var_param": "absolute_value"
+    },
+    "accumulate_mean": {
+      "var_param": "accumulate_mean"
+    },
+    "color_table": {
+      "var_param": "color_table"
+    },
+    "default_color_table": {
+      "var_param": "default_color_table"
+    },
+    "gca_color_table": {
+      "var_param": "gca_color_table"
+    },
+    "ids": {
+      "var_param": "ids"
+    },
+    "exclude_ids": {
+      "var_param": "exclude_ids"
+    },
+    "exclude_gm_wm": {
+      "var_param": "exclude_gm_wm"
+    },
+    "surf_wm_vol": {
+      "var_param": "surf_wm_vol"
+    },
+    "surf_ctx_vol": {
+      "var_param": "surf_ctx_vol"
+    },
+    "no_global_stats": {
+      "var_param": "no_global_stats"
+    },
+    "empty_segments": {
+      "var_param": "empty_segments"
+    },
+    "ctab_output": {
+      "var_param": "ctab_output"
+    },
+    "mask_volume": {
+      "var_param": "mask_volume"
+    },
+    "mask_threshold": {
+      "var_param": "mask_threshold"
+    },
+    "mask_sign": {
+      "var_param": "mask_sign"
+    },
+    "mask_frame": {
+      "var_param": "mask_frame"
+    },
+    "invert_mask": {
+      "var_param": "invert_mask"
+    },
+    "mask_erode": {
+      "var_param": "mask_erode"
+    },
+    "brain_vol_seg": {
+      "var_param": "brain_vol_seg"
+    },
+    "brain_mask_vol": {
+      "var_param": "brain_mask_vol"
+    },
+    "subcortical_gray": {
+      "var_param": "subcortical_gray"
+    },
+    "total_gray": {
+      "var_param": "total_gray"
+    },
+    "intracranial_volume": {
+      "var_param": "intracranial_volume"
+    },
+    "intracranial_volume_only": {
+      "var_param": "intracranial_volume_only"
+    },
+    "old_intracranial_volume_only": {
+      "var_param": "old_intracranial_volume_only"
+    },
+    "talairach_transform": {
+      "var_param": "talairach_transform"
+    },
+    "xfm_to_etiv": {
+      "var_param": "xfm_to_etiv"
+    },
+    "euler_hole_count": {
+      "var_param": "euler_hole_count"
+    },
+    "avg_waveform": {
+      "var_param": "avg_waveform"
+    },
+    "sum_waveform": {
+      "var_param": "sum_waveform"
+    },
+    "avg_waveform_vol": {
+      "var_param": "avg_waveform_vol"
+    },
+    "remove_avgwf_mean": {
+      "var_param": "remove_avgwf_mean"
+    },
+    "spatial_frame_avg": {
+      "var_param": "spatial_frame_avg"
+    },
+    "voxel_crs": {
+      "var_param": "voxel_crs"
+    },
+    "replace_ids": {
+      "var_param": "replace_ids"
+    },
+    "replace_ids_file": {
+      "var_param": "replace_ids_file"
+    },
+    "gtm_default_seg_merge": {
+      "var_param": "gtm_default_seg_merge"
+    },
+    "gtm_default_seg_merge_choroid": {
+      "var_param": "gtm_default_seg_merge_choroid"
+    },
+    "qa_stats_file": {
+      "var_param": "qa_stats_file"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "v__snapshot_volreg",
+  "properties": {
+    "anatdataset": {
+      "var_param": "anatdataset"
+    },
+    "epidataset": {
+      "var_param": "epidataset"
+    },
+    "jname": {
+      "var_param": "jname"
+    },
+    "xdisplay": {
+      "var_param": "xdisplay"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "mri_mcsim",
+  "properties": {
+    "top_output_dir": {
+      "var_param": "top_output_dir"
+    },
+    "base_name": {
+      "var_param": "base_name"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "num_repetitions": {
+      "var_param": "num_repetitions"
+    },
+    "fwhm_values": {
+      "var_param": "fwhm_values"
+    },
+    "fwhm_max": {
+      "var_param": "fwhm_max"
+    },
+    "avg_vertex_area": {
+      "var_param": "avg_vertex_area"
+    },
+    "random_seed": {
+      "var_param": "random_seed"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "no_label": {
+      "var_param": "no_label"
+    },
+    "no_save_mask": {
+      "var_param": "no_save_mask"
+    },
+    "surface_name": {
+      "var_param": "surface_name"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "done_file": {
+      "var_param": "done_file"
+    },
+    "stop_file": {
+      "var_param": "stop_file"
+    },
+    "save_file": {
+      "var_param": "save_file"
+    },
+    "save_iter": {
+      "var_param": "save_iter"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "check_opts": {
+      "var_param": "check_opts"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

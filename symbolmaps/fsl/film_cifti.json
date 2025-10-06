@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "film_cifti",
+  "properties": {
+    "input_filename": {
+      "var_param": "input_filename"
+    },
+    "basename": {
+      "var_param": "basename"
+    },
+    "left_surface": {
+      "var_param": "left_surface"
+    },
+    "right_surface": {
+      "var_param": "right_surface"
+    },
+    "susan_threshold": {
+      "var_param": "susan_threshold"
+    },
+    "susan_extent": {
+      "var_param": "susan_extent"
+    },
+    "surface_sigma": {
+      "var_param": "surface_sigma"
+    },
+    "surface_extent": {
+      "var_param": "surface_extent"
+    },
+    "film_options": {
+      "var_param": "film_options"
+    }
+  }
+}

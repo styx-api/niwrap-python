@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "tkregister2",
+  "properties": {
+    "fixed_volume": {
+      "var_param": "fixed_volume"
+    },
+    "moving_volume": {
+      "var_param": "moving_volume"
+    },
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "noedit": {
+      "var_param": "noedit"
+    },
+    "lta": {
+      "var_param": "lta"
+    },
+    "surf_reg": {
+      "var_param": "surf_reg"
+    },
+    "reg_only": {
+      "var_param": "reg_only"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

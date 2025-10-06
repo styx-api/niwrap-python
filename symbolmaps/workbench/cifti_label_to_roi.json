@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "cifti_label_to_roi",
+  "properties": {
+    "label_in": {
+      "var_param": "label_in"
+    },
+    "scalar_out": {
+      "var_param": "scalar_out"
+    },
+    "opt_name_label_name": {
+      "var_param": "opt_name_label_name"
+    },
+    "opt_key_label_key": {
+      "var_param": "opt_key_label_key"
+    },
+    "opt_map_map": {
+      "var_param": "opt_map_map"
+    }
+  }
+}

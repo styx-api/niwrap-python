@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "rtfeedme",
+  "properties": {
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "host": {
+      "var_param": "host"
+    },
+    "interval_ms": {
+      "var_param": "interval_ms"
+    },
+    "send_3d": {
+      "var_param": "send_3d"
+    },
+    "buffer_mb": {
+      "var_param": "buffer_mb"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "swap_bytes": {
+      "var_param": "swap_bytes"
+    },
+    "nz_fake": {
+      "var_param": "nz_fake"
+    },
+    "drive_cmd": {
+      "var_param": "drive_cmd"
+    },
+    "note": {
+      "var_param": "note"
+    },
+    "yrange": {
+      "var_param": "yrange"
+    }
+  }
+}

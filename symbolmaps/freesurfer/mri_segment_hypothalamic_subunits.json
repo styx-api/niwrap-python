@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mri_segment_hypothalamic_subunits",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "write_posteriors": {
+      "var_param": "write_posteriors"
+    },
+    "image_input": {
+      "var_param": "image_input"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "posteriors": {
+      "var_param": "posteriors"
+    },
+    "resample": {
+      "var_param": "resample"
+    },
+    "volume_output": {
+      "var_param": "volume_output"
+    },
+    "crop_size": {
+      "var_param": "crop_size"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "cpu": {
+      "var_param": "cpu"
+    }
+  }
+}

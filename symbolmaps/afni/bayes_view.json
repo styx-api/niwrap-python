@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "bayes_view",
+  "properties": {
+    "input_folder": {
+      "var_param": "input_folder"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "shiny_folder": {
+      "var_param": "shiny_folder"
+    }
+  }
+}

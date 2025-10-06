@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "gca_apply",
+  "properties": {
+    "gcafile": {
+      "var_param": "gcafile"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "no_segstats": {
+      "var_param": "no_segstats"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "dice_seg": {
+      "var_param": "dice_seg"
+    },
+    "dice_file": {
+      "var_param": "dice_file"
+    },
+    "lta": {
+      "var_param": "lta"
+    },
+    "norm": {
+      "var_param": "norm"
+    },
+    "input_mgz": {
+      "var_param": "input_mgz"
+    },
+    "brainmask": {
+      "var_param": "brainmask"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "no_v6labopts": {
+      "var_param": "no_v6labopts"
+    },
+    "m3z_file": {
+      "var_param": "m3z_file"
+    },
+    "gca_rb_2016": {
+      "var_param": "gca_rb_2016"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    },
+    "gcareg_iters": {
+      "var_param": "gcareg_iters"
+    }
+  }
+}

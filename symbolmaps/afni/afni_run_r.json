@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "afni_run_r",
+  "properties": {
+    "r_script": {
+      "var_param": "r_script"
+    },
+    "r_args": {
+      "var_param": "r_args"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v_1dsound",
+  "properties": {
+    "tsfile": {
+      "var_param": "tsfile"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "encoding_16PCM": {
+      "var_param": "encoding_16_pcm"
+    },
+    "encoding_8PCM": {
+      "var_param": "encoding_8_pcm"
+    },
+    "encoding_8ulaw": {
+      "var_param": "encoding_8ulaw"
+    },
+    "tper_option": {
+      "var_param": "tper_option"
+    },
+    "fm_option": {
+      "var_param": "fm_option"
+    },
+    "notes_option": {
+      "var_param": "notes_option"
+    },
+    "notewave_option": {
+      "var_param": "notewave_option"
+    },
+    "despike_option": {
+      "var_param": "despike_option"
+    },
+    "play_option": {
+      "var_param": "play_option"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "dwi2response",
+  "properties": {
+    "algorithm": {
+      "var_param": "algorithm"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "dwi2response_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "voxels": {
+      "var_param": "voxels"
+    },
+    "shells": {
+      "var_param": "shells"
+    },
+    "lmax": {
+      "var_param": "lmax"
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "scratch": {
+      "var_param": "scratch"
+    },
+    "continue": {
+      "var_param": "continue_"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "dwi2response_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

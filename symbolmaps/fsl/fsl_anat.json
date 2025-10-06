@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "fsl_anat",
+  "properties": {
+    "structural_image": {
+      "var_param": "structural_image"
+    },
+    "existing_anat_dir": {
+      "var_param": "existing_anat_dir"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "clobber_flag": {
+      "var_param": "clobber_flag"
+    },
+    "strongbias_flag": {
+      "var_param": "strongbias_flag"
+    },
+    "weakbias_flag": {
+      "var_param": "weakbias_flag"
+    },
+    "noreorient_flag": {
+      "var_param": "noreorient_flag"
+    },
+    "nocrop_flag": {
+      "var_param": "nocrop_flag"
+    },
+    "nobias_flag": {
+      "var_param": "nobias_flag"
+    },
+    "noreg_flag": {
+      "var_param": "noreg_flag"
+    },
+    "nononlinreg_flag": {
+      "var_param": "nononlinreg_flag"
+    },
+    "noseg_flag": {
+      "var_param": "noseg_flag"
+    },
+    "nosubcortseg_flag": {
+      "var_param": "nosubcortseg_flag"
+    },
+    "bias_smoothing": {
+      "var_param": "bias_smoothing"
+    },
+    "image_type": {
+      "var_param": "image_type"
+    },
+    "nosearch_flag": {
+      "var_param": "nosearch_flag"
+    },
+    "bet_f_param": {
+      "var_param": "bet_f_param"
+    },
+    "nocleanup_flag": {
+      "var_param": "nocleanup_flag"
+    }
+  }
+}

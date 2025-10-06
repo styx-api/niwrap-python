@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_3dedgedog",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "sigma_rad": {
+      "var_param": "sigma_rad"
+    },
+    "sigma_nvox": {
+      "var_param": "sigma_nvox"
+    },
+    "ratio_sigma": {
+      "var_param": "ratio_sigma"
+    },
+    "output_intermed": {
+      "var_param": "output_intermed"
+    },
+    "edge_bnd_nn": {
+      "var_param": "edge_bnd_nn"
+    },
+    "edge_bnd_side": {
+      "var_param": "edge_bnd_side"
+    },
+    "edge_bnd_scale": {
+      "var_param": "edge_bnd_scale"
+    },
+    "only2d": {
+      "var_param": "only2d"
+    }
+  }
+}

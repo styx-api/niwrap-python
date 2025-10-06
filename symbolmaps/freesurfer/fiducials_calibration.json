@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "fiducials_calibration",
+  "properties": {
+    "qt_plugin_installation": {
+      "var_param": "qt_plugin_installation"
+    }
+  }
+}

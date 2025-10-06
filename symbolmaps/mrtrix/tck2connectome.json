@@ -1,0 +1,95 @@
+{
+  "fn_root_make_params_and_execute": "tck2connectome",
+  "properties": {
+    "assignment_end_voxels": {
+      "var_param": "assignment_end_voxels"
+    },
+    "assignment_radial_search": {
+      "var_param": "assignment_radial_search"
+    },
+    "assignment_reverse_search": {
+      "var_param": "assignment_reverse_search"
+    },
+    "assignment_forward_search": {
+      "var_param": "assignment_forward_search"
+    },
+    "assignment_all_voxels": {
+      "var_param": "assignment_all_voxels"
+    },
+    "scale_length": {
+      "var_param": "scale_length"
+    },
+    "scale_invlength": {
+      "var_param": "scale_invlength"
+    },
+    "scale_invnodevol": {
+      "var_param": "scale_invnodevol"
+    },
+    "scale_file": {
+      "var_param": "scale_file"
+    },
+    "symmetric": {
+      "var_param": "symmetric"
+    },
+    "zero_diagonal": {
+      "var_param": "zero_diagonal"
+    },
+    "stat_edge": {
+      "var_param": "stat_edge"
+    },
+    "tck_weights_in": {
+      "var_param": "tck_weights_in"
+    },
+    "keep_unassigned": {
+      "var_param": "keep_unassigned"
+    },
+    "out_assignments": {
+      "var_param": "out_assignments"
+    },
+    "vector": {
+      "var_param": "vector"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tck2connectome_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "tracks_in": {
+      "var_param": "tracks_in"
+    },
+    "nodes_in": {
+      "var_param": "nodes_in"
+    },
+    "connectome_out": {
+      "var_param": "connectome_out"
+    }
+  }
+}

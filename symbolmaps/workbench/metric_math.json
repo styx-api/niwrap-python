@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "metric_math",
+  "properties": {
+    "expression": {
+      "var_param": "expression"
+    },
+    "metric_out": {
+      "var_param": "metric_out"
+    },
+    "opt_fixnan_replace": {
+      "var_param": "opt_fixnan_replace"
+    },
+    "var": {
+      "var_param": "var",
+      "fn_struct_make_params": "metric_math_var_params",
+      "properties": {
+        "name": {
+          "var_param": "name"
+        },
+        "metric": {
+          "var_param": "metric"
+        },
+        "opt_column_column": {
+          "var_param": "opt_column_column"
+        },
+        "opt_repeat": {
+          "var_param": "opt_repeat"
+        }
+      }
+    }
+  }
+}

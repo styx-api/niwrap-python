@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "v__atlasize",
+  "properties": {
+    "dset": {
+      "var_param": "dset"
+    },
+    "space": {
+      "var_param": "space"
+    },
+    "lab_file": {
+      "var_param": "lab_file"
+    },
+    "lab_file_delim": {
+      "var_param": "lab_file_delim"
+    },
+    "longnames": {
+      "var_param": "longnames"
+    },
+    "last_longname_col": {
+      "var_param": "last_longname_col"
+    },
+    "atlas_type": {
+      "var_param": "atlas_type"
+    },
+    "atlas_description": {
+      "var_param": "atlas_description"
+    },
+    "atlas_name": {
+      "var_param": "atlas_name"
+    },
+    "auto_backup": {
+      "var_param": "auto_backup"
+    },
+    "centers": {
+      "var_param": "centers"
+    },
+    "centertype": {
+      "var_param": "centertype"
+    },
+    "centermask": {
+      "var_param": "centermask"
+    },
+    "skip_novoxels": {
+      "var_param": "skip_novoxels"
+    },
+    "h_web": {
+      "var_param": "h_web"
+    },
+    "h_view": {
+      "var_param": "h_view"
+    },
+    "all_opts": {
+      "var_param": "all_opts"
+    },
+    "h_find": {
+      "var_param": "h_find"
+    }
+  }
+}

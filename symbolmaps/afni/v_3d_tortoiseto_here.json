@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tortoiseto_here",
+  "properties": {
+    "dt_tort": {
+      "var_param": "dt_tort"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "scale_factor": {
+      "var_param": "scale_factor"
+    },
+    "flip_x": {
+      "var_param": "flip_x"
+    },
+    "flip_y": {
+      "var_param": "flip_y"
+    },
+    "flip_z": {
+      "var_param": "flip_z"
+    }
+  }
+}

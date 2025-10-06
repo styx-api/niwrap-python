@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "mri_segment_thalamic_nuclei_dti_cnn",
+  "properties": {
+    "t1_images": {
+      "var_param": "t1_images"
+    },
+    "aseg": {
+      "var_param": "aseg"
+    },
+    "fa": {
+      "var_param": "fa"
+    },
+    "v1": {
+      "var_param": "v1"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "volume_output": {
+      "var_param": "volume_output"
+    },
+    "posteriors_output": {
+      "var_param": "posteriors_output"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "force_cpu": {
+      "var_param": "force_cpu"
+    },
+    "model": {
+      "var_param": "model"
+    }
+  }
+}

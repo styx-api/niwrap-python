@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tfitter",
+  "properties": {
+    "RHS": {
+      "var_param": "rhs"
+    },
+    "LHS": {
+      "var_param": "lhs"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "vthr": {
+      "var_param": "vthr"
+    },
+    "FALTUNG": {
+      "var_param": "faltung"
+    },
+    "lsqfit": {
+      "var_param": "lsqfit"
+    },
+    "l1fit": {
+      "var_param": "l1fit"
+    },
+    "l2lasso": {
+      "var_param": "l2lasso"
+    },
+    "lasso_centro_block": {
+      "var_param": "lasso_centro_block"
+    },
+    "l2sqrtlasso": {
+      "var_param": "l2sqrtlasso"
+    },
+    "consign": {
+      "var_param": "consign"
+    },
+    "consFAL": {
+      "var_param": "cons_fal"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "fitts": {
+      "var_param": "fitts"
+    },
+    "errsum": {
+      "var_param": "errsum"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    }
+  }
+}

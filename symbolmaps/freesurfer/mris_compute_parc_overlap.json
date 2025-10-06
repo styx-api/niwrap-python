@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "mris_compute_parc_overlap",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "annot1": {
+      "var_param": "annot1"
+    },
+    "annot2": {
+      "var_param": "annot2"
+    },
+    "label1": {
+      "var_param": "label1"
+    },
+    "label2": {
+      "var_param": "label2"
+    },
+    "subj_dir": {
+      "var_param": "subj_dir"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "label_list": {
+      "var_param": "label_list"
+    },
+    "nocheck_label1_xyz": {
+      "var_param": "nocheck_label1_xyz"
+    },
+    "nocheck_label2_xyz": {
+      "var_param": "nocheck_label2_xyz"
+    },
+    "nocheck_label_xyz": {
+      "var_param": "nocheck_label_xyz"
+    },
+    "use_label1_xyz": {
+      "var_param": "use_label1_xyz"
+    },
+    "use_label2_xyz": {
+      "var_param": "use_label2_xyz"
+    },
+    "use_label_xyz": {
+      "var_param": "use_label_xyz"
+    },
+    "debug_overlap": {
+      "var_param": "debug_overlap"
+    }
+  }
+}

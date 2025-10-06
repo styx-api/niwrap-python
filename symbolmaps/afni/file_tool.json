@@ -1,0 +1,131 @@
+{
+  "fn_root_make_params_and_execute": "file_tool",
+  "properties": {
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "hist": {
+      "var_param": "hist"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "infiles": {
+      "var_param": "infiles"
+    },
+    "ge_all": {
+      "var_param": "ge_all"
+    },
+    "ge_header": {
+      "var_param": "ge_header"
+    },
+    "ge_extras": {
+      "var_param": "ge_extras"
+    },
+    "ge_uv17": {
+      "var_param": "ge_uv17"
+    },
+    "ge_run": {
+      "var_param": "ge_run"
+    },
+    "ge_off": {
+      "var_param": "ge_off"
+    },
+    "ge4_all": {
+      "var_param": "ge4_all"
+    },
+    "ge4_image": {
+      "var_param": "ge4_image"
+    },
+    "ge4_series": {
+      "var_param": "ge4_series"
+    },
+    "ge4_study": {
+      "var_param": "ge4_study"
+    },
+    "def_ana_hdr": {
+      "var_param": "def_ana_hdr"
+    },
+    "diff_ana_hdrs": {
+      "var_param": "diff_ana_hdrs"
+    },
+    "disp_ana_hdr": {
+      "var_param": "disp_ana_hdr"
+    },
+    "hex": {
+      "var_param": "hex_"
+    },
+    "mod_ana_hdr": {
+      "var_param": "mod_ana_hdr"
+    },
+    "mod_field": {
+      "var_param": "mod_field"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "show_bad_all": {
+      "var_param": "show_bad_all"
+    },
+    "show_bad_backslash": {
+      "var_param": "show_bad_backslash"
+    },
+    "show_bad_char": {
+      "var_param": "show_bad_char"
+    },
+    "show_file_type": {
+      "var_param": "show_file_type"
+    },
+    "fix_rich_quotes": {
+      "var_param": "fix_rich_quotes"
+    },
+    "test": {
+      "var_param": "test"
+    },
+    "length": {
+      "var_param": "length"
+    },
+    "mod_data": {
+      "var_param": "mod_data"
+    },
+    "mod_type": {
+      "var_param": "mod_type"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "disp_hex": {
+      "var_param": "disp_hex"
+    },
+    "disp_hex1": {
+      "var_param": "disp_hex1"
+    },
+    "disp_hex2": {
+      "var_param": "disp_hex2"
+    },
+    "disp_hex4": {
+      "var_param": "disp_hex4"
+    },
+    "disp_int2": {
+      "var_param": "disp_int2"
+    },
+    "disp_int4": {
+      "var_param": "disp_int4"
+    },
+    "disp_real4": {
+      "var_param": "disp_real4"
+    },
+    "swap_bytes": {
+      "var_param": "swap_bytes"
+    }
+  }
+}

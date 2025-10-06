@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "make_average_subject",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "fsgd_file": {
+      "var_param": "fsgd_file"
+    },
+    "subject_list_file": {
+      "var_param": "subject_list_file"
+    },
+    "average_subject_name": {
+      "var_param": "average_subject_name"
+    },
+    "sd_out": {
+      "var_param": "sd_out"
+    },
+    "no_link": {
+      "var_param": "no_link"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "ico_order": {
+      "var_param": "ico_order"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "surface_registration": {
+      "var_param": "surface_registration"
+    },
+    "no_surfaces": {
+      "var_param": "no_surfaces"
+    },
+    "no_volumes": {
+      "var_param": "no_volumes"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "keep_all_orig": {
+      "var_param": "keep_all_orig"
+    },
+    "no_symlink": {
+      "var_param": "no_symlink"
+    },
+    "no_ribbon": {
+      "var_param": "no_ribbon"
+    },
+    "no_surf2surf": {
+      "var_param": "no_surf2surf"
+    },
+    "rca_threads": {
+      "var_param": "rca_threads"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

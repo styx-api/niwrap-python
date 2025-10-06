@@ -1,0 +1,77 @@
+{
+  "fn_root_make_params_and_execute": "dwigradcheck",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "grad": {
+      "var_param": "grad"
+    },
+    "fslgrad": {
+      "var_param": "fslgrad",
+      "fn_struct_make_params": "dwigradcheck_fslgrad_params",
+      "properties": {
+        "bvecs": {
+          "var_param": "bvecs"
+        },
+        "bvals": {
+          "var_param": "bvals"
+        }
+      }
+    },
+    "mask_image": {
+      "var_param": "mask_image"
+    },
+    "number": {
+      "var_param": "number"
+    },
+    "export_grad_mrtrix": {
+      "var_param": "export_grad_mrtrix"
+    },
+    "export_grad_fsl": {
+      "var_param": "export_grad_fsl",
+      "fn_struct_make_params": "dwigradcheck_export_grad_fsl_params",
+      "properties": {
+        "bvecs_path": {
+          "var_param": "bvecs_path"
+        },
+        "bvals_path": {
+          "var_param": "bvals_path"
+        }
+      }
+    },
+    "nocleanup": {
+      "var_param": "nocleanup"
+    },
+    "scratch_dir": {
+      "var_param": "scratch_dir"
+    },
+    "continue_scratch_dir": {
+      "var_param": "continue_scratch_dir"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

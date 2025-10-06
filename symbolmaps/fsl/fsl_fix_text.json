@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "fsl_fix_text",
+  "properties": {
+    "input_text_file": {
+      "var_param": "input_text_file"
+    },
+    "output_text_file": {
+      "var_param": "output_text_file"
+    }
+  }
+}

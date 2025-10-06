@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "adjunct_aw_tableize_roi_info_py",
+  "properties": {
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "warped_atlas": {
+      "var_param": "warped_atlas"
+    },
+    "warped_mask": {
+      "var_param": "warped_mask"
+    },
+    "reference_atlas": {
+      "var_param": "reference_atlas"
+    },
+    "reference_mask": {
+      "var_param": "reference_mask"
+    },
+    "modesmooth_value": {
+      "var_param": "modesmooth_value"
+    }
+  }
+}

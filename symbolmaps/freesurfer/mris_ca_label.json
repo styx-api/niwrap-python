@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "mris_ca_label",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "canonsurf": {
+      "var_param": "canonsurf"
+    },
+    "classifier": {
+      "var_param": "classifier"
+    },
+    "outputfile": {
+      "var_param": "outputfile"
+    },
+    "seed": {
+      "var_param": "seed"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "orig": {
+      "var_param": "orig"
+    },
+    "long_flag": {
+      "var_param": "long_flag"
+    },
+    "r": {
+      "var_param": "r"
+    },
+    "novar_flag": {
+      "var_param": "novar_flag"
+    },
+    "nbrs": {
+      "var_param": "nbrs"
+    },
+    "f": {
+      "var_param": "f"
+    },
+    "t": {
+      "var_param": "t"
+    },
+    "p": {
+      "var_param": "p"
+    },
+    "v": {
+      "var_param": "v"
+    },
+    "w": {
+      "var_param": "w"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

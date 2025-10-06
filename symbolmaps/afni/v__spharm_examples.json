@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__spharm_examples",
+  "properties": {
+    "help_web": {
+      "var_param": "help_web"
+    },
+    "help_web_alias": {
+      "var_param": "help_web_alias"
+    },
+    "help_view": {
+      "var_param": "help_view"
+    },
+    "help_view_alias": {
+      "var_param": "help_view_alias"
+    },
+    "all_opts": {
+      "var_param": "all_opts"
+    },
+    "help_find": {
+      "var_param": "help_find"
+    }
+  }
+}

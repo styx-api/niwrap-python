@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "histo_compute_joint_density",
+  "properties": {
+    "volume1": {
+      "var_param": "volume1"
+    },
+    "volume2": {
+      "var_param": "volume2"
+    },
+    "joint_density_file": {
+      "var_param": "joint_density_file"
+    }
+  }
+}

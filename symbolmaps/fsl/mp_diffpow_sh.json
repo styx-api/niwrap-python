@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "mp_diffpow_sh",
+  "properties": {
+    "reg_file": {
+      "var_param": "reg_file"
+    },
+    "diff_reg_file": {
+      "var_param": "diff_reg_file"
+    }
+  }
+}

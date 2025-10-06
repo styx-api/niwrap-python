@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "aseg2feat",
+  "properties": {
+    "feat": {
+      "var_param": "feat"
+    },
+    "featdirfile": {
+      "var_param": "featdirfile"
+    },
+    "seg": {
+      "var_param": "seg"
+    },
+    "aparc_aseg": {
+      "var_param": "aparc_aseg"
+    },
+    "svstats": {
+      "var_param": "svstats"
+    },
+    "standard": {
+      "var_param": "standard"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

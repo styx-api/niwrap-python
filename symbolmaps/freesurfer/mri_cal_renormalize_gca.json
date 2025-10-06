@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_cal_renormalize_gca",
+  "properties": {
+    "timepoint_file": {
+      "var_param": "timepoint_file"
+    },
+    "in_vol": {
+      "var_param": "in_vol"
+    },
+    "input_atlas": {
+      "var_param": "input_atlas"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "output_atlas": {
+      "var_param": "output_atlas"
+    }
+  }
+}

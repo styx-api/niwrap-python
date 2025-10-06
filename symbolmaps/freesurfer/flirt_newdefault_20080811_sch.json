@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "flirt_newdefault_20080811_sch",
+  "properties": {
+    "term_option": {
+      "var_param": "term_option"
+    },
+    "curses_flag": {
+      "var_param": "curses_flag"
+    },
+    "scrollback_flag": {
+      "var_param": "scrollback_flag"
+    }
+  }
+}

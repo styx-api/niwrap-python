@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "wfilemask",
+  "properties": {
+    "w_file": {
+      "var_param": "w_file"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "permission_mask": {
+      "var_param": "permission_mask"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    },
+    "version_flag": {
+      "var_param": "version_flag"
+    }
+  }
+}

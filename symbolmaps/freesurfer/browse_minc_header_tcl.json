@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "browse_minc_header_tcl",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

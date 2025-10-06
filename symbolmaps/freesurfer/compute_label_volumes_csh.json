@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "compute_label_volumes_csh",
+  "properties": {
+    "label_vol": {
+      "var_param": "label_vol"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "label_L": {
+      "var_param": "label_l",
+      "fn_struct_make_params": "compute_label_volumes_csh_label_l_params",
+      "properties": {
+        "upper_L": {
+          "var_param": "upper_l"
+        },
+        "lower_L": {
+          "var_param": "lower_l"
+        }
+      }
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "fat_mat_sel_py",
+  "properties": {
+    "parameters": {
+      "var_param": "parameters"
+    },
+    "matr_in": {
+      "var_param": "matr_in"
+    },
+    "list_match": {
+      "var_param": "list_match"
+    },
+    "out_ind_matr": {
+      "var_param": "out_ind_matr"
+    },
+    "out_ind_1ddset": {
+      "var_param": "out_ind_1ddset"
+    },
+    "hold_image": {
+      "var_param": "hold_image"
+    },
+    "extern_labs_no": {
+      "var_param": "extern_labs_no"
+    },
+    "type_file": {
+      "var_param": "type_file"
+    },
+    "dpi_file": {
+      "var_param": "dpi_file"
+    },
+    "xlen_file": {
+      "var_param": "xlen_file"
+    },
+    "ylen_file": {
+      "var_param": "ylen_file"
+    },
+    "tight_layout_on": {
+      "var_param": "tight_layout_on"
+    },
+    "fig_off": {
+      "var_param": "fig_off"
+    },
+    "size_font": {
+      "var_param": "size_font"
+    },
+    "lab_size_font": {
+      "var_param": "lab_size_font"
+    },
+    "a_plotmin": {
+      "var_param": "a_plotmin"
+    },
+    "b_plotmax": {
+      "var_param": "b_plotmax"
+    },
+    "cbar_off": {
+      "var_param": "cbar_off"
+    },
+    "map_of_colors": {
+      "var_param": "map_of_colors"
+    },
+    "cbar_int_num": {
+      "var_param": "cbar_int_num"
+    },
+    "width_cbar_perc": {
+      "var_param": "width_cbar_perc"
+    },
+    "specifier": {
+      "var_param": "specifier"
+    },
+    "xtick_lab_off": {
+      "var_param": "xtick_lab_off"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "surface_apply_affine",
+  "properties": {
+    "in_surf": {
+      "var_param": "in_surf"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
+    "out_surf": {
+      "var_param": "out_surf"
+    },
+    "flirt": {
+      "var_param": "flirt",
+      "fn_struct_make_params": "surface_apply_affine_flirt_params",
+      "properties": {
+        "source_volume": {
+          "var_param": "source_volume"
+        },
+        "target_volume": {
+          "var_param": "target_volume"
+        }
+      }
+    }
+  }
+}

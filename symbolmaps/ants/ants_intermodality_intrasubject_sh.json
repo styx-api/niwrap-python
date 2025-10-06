@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "ants_intermodality_intrasubject_sh",
+  "properties": {
+    "dimension": {
+      "var_param": "dimension"
+    },
+    "anatomical_t1_image": {
+      "var_param": "anatomical_t1_image"
+    },
+    "anatomical_reference_image": {
+      "var_param": "anatomical_reference_image"
+    },
+    "scalar_image_to_match": {
+      "var_param": "scalar_image_to_match"
+    },
+    "anatomical_t1brainmask": {
+      "var_param": "anatomical_t1brainmask"
+    },
+    "transform_type": {
+      "var_param": "transform_type"
+    },
+    "t1_to_template_prefix": {
+      "var_param": "t1_to_template_prefix"
+    },
+    "template_space": {
+      "var_param": "template_space"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "labels_in_template_space": {
+      "var_param": "labels_in_template_space"
+    },
+    "auxiliary_scalar_images": {
+      "var_param": "auxiliary_scalar_images"
+    },
+    "auxiliary_dt_image": {
+      "var_param": "auxiliary_dt_image"
+    }
+  }
+}

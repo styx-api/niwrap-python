@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "xtract_stats",
+  "properties": {
+    "folder_basename": {
+      "var_param": "folder_basename"
+    },
+    "XTRACT_dir": {
+      "var_param": "xtract_dir"
+    },
+    "xtract2diff": {
+      "var_param": "xtract2diff"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "structures_file": {
+      "var_param": "structures_file"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "measurements": {
+      "var_param": "measurements"
+    },
+    "keep_temp_files": {
+      "var_param": "keep_temp_files"
+    }
+  }
+}

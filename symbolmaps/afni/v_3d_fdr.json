@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_fdr",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "input1d_file": {
+      "var_param": "input1d_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "mask_threshold": {
+      "var_param": "mask_threshold"
+    },
+    "constant_type": {
+      "var_param": "constant_type"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "list": {
+      "var_param": "list_"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mode_option": {
+      "var_param": "mode_option"
+    },
+    "pmask": {
+      "var_param": "pmask"
+    },
+    "nopmask": {
+      "var_param": "nopmask"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "float": {
+      "var_param": "float_"
+    },
+    "qval": {
+      "var_param": "qval"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_dtto_dwi",
+  "properties": {
+    "gradient_file": {
+      "var_param": "gradient_file"
+    },
+    "i0_dataset": {
+      "var_param": "i0_dataset"
+    },
+    "dt_dataset": {
+      "var_param": "dt_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "datum_type": {
+      "var_param": "datum_type"
+    },
+    "scale_out_1000": {
+      "var_param": "scale_out_1000"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "imcp",
+  "properties": {
+    "infiles": {
+      "var_param": "infiles"
+    },
+    "output_location": {
+      "var_param": "output_location"
+    }
+  }
+}

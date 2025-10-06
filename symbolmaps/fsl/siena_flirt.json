@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "siena_flirt",
+  "properties": {
+    "input1_fileroot": {
+      "var_param": "input1_fileroot"
+    },
+    "input2_fileroot": {
+      "var_param": "input2_fileroot"
+    }
+  }
+}

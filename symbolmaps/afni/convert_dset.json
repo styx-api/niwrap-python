@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "convert_dset",
+  "properties": {
+    "output_type": {
+      "var_param": "output_type"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "input_type": {
+      "var_param": "input_type"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "dset_labels": {
+      "var_param": "dset_labels"
+    },
+    "add_node_index": {
+      "var_param": "add_node_index"
+    },
+    "node_index_file": {
+      "var_param": "node_index_file"
+    },
+    "node_select_file": {
+      "var_param": "node_select_file"
+    },
+    "prepend_node_index": {
+      "var_param": "prepend_node_index"
+    },
+    "pad_to_node": {
+      "var_param": "pad_to_node"
+    },
+    "labelize": {
+      "var_param": "labelize"
+    },
+    "graphize": {
+      "var_param": "graphize"
+    },
+    "graph_nodelist": {
+      "var_param": "graph_nodelist"
+    },
+    "graph_full_nodelist": {
+      "var_param": "graph_full_nodelist"
+    },
+    "graph_named_nodelist": {
+      "var_param": "graph_named_nodelist"
+    },
+    "graph_xyz_lpi": {
+      "var_param": "graph_xyz_lpi"
+    },
+    "graph_edgelist": {
+      "var_param": "graph_edgelist"
+    },
+    "onegraph": {
+      "var_param": "onegraph"
+    },
+    "multigraph": {
+      "var_param": "multigraph"
+    },
+    "split": {
+      "var_param": "split"
+    },
+    "no_history": {
+      "var_param": "no_history"
+    }
+  }
+}

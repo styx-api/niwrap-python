@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "volume_rois_from_extrema",
+  "properties": {
+    "volume_in": {
+      "var_param": "volume_in"
+    },
+    "limit": {
+      "var_param": "limit"
+    },
+    "volume_out": {
+      "var_param": "volume_out"
+    },
+    "opt_gaussian_sigma": {
+      "var_param": "opt_gaussian_sigma"
+    },
+    "opt_roi_roi_volume": {
+      "var_param": "opt_roi_roi_volume"
+    },
+    "opt_overlap_logic_method": {
+      "var_param": "opt_overlap_logic_method"
+    },
+    "opt_subvolume_subvol": {
+      "var_param": "opt_subvolume_subvol"
+    }
+  }
+}

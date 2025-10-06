@@ -1,0 +1,71 @@
+{
+  "fn_root_make_params_and_execute": "connectome2tck",
+  "properties": {
+    "nodes": {
+      "var_param": "nodes"
+    },
+    "exclusive": {
+      "var_param": "exclusive"
+    },
+    "files": {
+      "var_param": "files"
+    },
+    "exemplars": {
+      "var_param": "exemplars"
+    },
+    "keep_unassigned": {
+      "var_param": "keep_unassigned"
+    },
+    "keep_self": {
+      "var_param": "keep_self"
+    },
+    "tck_weights_in": {
+      "var_param": "tck_weights_in"
+    },
+    "prefix_tck_weights_out": {
+      "var_param": "prefix_tck_weights_out"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "connectome2tck_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "tracks_in": {
+      "var_param": "tracks_in"
+    },
+    "assignments_in": {
+      "var_param": "assignments_in"
+    },
+    "prefix_out": {
+      "var_param": "prefix_out"
+    }
+  }
+}

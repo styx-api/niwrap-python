@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_roistats",
+  "properties": {
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "format1D": {
+      "var_param": "format1_d"
+    },
+    "format1DR": {
+      "var_param": "format1_dr"
+    },
+    "mask_f2short": {
+      "var_param": "mask_f2short"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "nobriklab": {
+      "var_param": "nobriklab"
+    },
+    "nomeanout": {
+      "var_param": "nomeanout"
+    },
+    "num_roi": {
+      "var_param": "num_roi"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "roisel": {
+      "var_param": "roisel"
+    },
+    "stat": {
+      "var_param": "stat_"
+    },
+    "zerofill": {
+      "var_param": "zerofill"
+    }
+  }
+}

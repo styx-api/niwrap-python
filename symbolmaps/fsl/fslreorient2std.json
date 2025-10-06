@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "fslreorient2std",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    },
+    "matrix_file": {
+      "var_param": "matrix_file"
+    }
+  }
+}

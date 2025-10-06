@@ -1,0 +1,212 @@
+{
+  "fn_root_make_params_and_execute": "recon_all",
+  "properties": {
+    "subjid": {
+      "var_param": "subjid"
+    },
+    "all_flag": {
+      "var_param": "all_flag"
+    },
+    "autorecon_all_flag": {
+      "var_param": "autorecon_all_flag"
+    },
+    "autorecon1_flag": {
+      "var_param": "autorecon1_flag"
+    },
+    "autorecon2_flag": {
+      "var_param": "autorecon2_flag"
+    },
+    "autorecon2_cp_flag": {
+      "var_param": "autorecon2_cp_flag"
+    },
+    "autorecon2_wm_flag": {
+      "var_param": "autorecon2_wm_flag"
+    },
+    "autorecon2_inflate1_flag": {
+      "var_param": "autorecon2_inflate1_flag"
+    },
+    "autorecon2_perhemi_flag": {
+      "var_param": "autorecon2_perhemi_flag"
+    },
+    "autorecon3_flag": {
+      "var_param": "autorecon3_flag"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "pons_crs": {
+      "var_param": "pons_crs"
+    },
+    "cc_crs": {
+      "var_param": "cc_crs"
+    },
+    "lh_crs": {
+      "var_param": "lh_crs"
+    },
+    "rh_crs": {
+      "var_param": "rh_crs"
+    },
+    "nofill": {
+      "var_param": "nofill"
+    },
+    "watershed": {
+      "var_param": "watershed"
+    },
+    "external_brain_mask": {
+      "var_param": "external_brain_mask"
+    },
+    "wsless": {
+      "var_param": "wsless"
+    },
+    "wsmore": {
+      "var_param": "wsmore"
+    },
+    "wsatlas": {
+      "var_param": "wsatlas"
+    },
+    "no_wsatlas": {
+      "var_param": "no_wsatlas"
+    },
+    "no_wsgcaatlas": {
+      "var_param": "no_wsgcaatlas"
+    },
+    "wsthresh": {
+      "var_param": "wsthresh"
+    },
+    "wsseed": {
+      "var_param": "wsseed"
+    },
+    "norm_3d_iters": {
+      "var_param": "norm_3d_iters"
+    },
+    "norm_max_grad": {
+      "var_param": "norm_max_grad"
+    },
+    "norm1_b": {
+      "var_param": "norm1_b"
+    },
+    "norm2_b": {
+      "var_param": "norm2_b"
+    },
+    "norm1_n": {
+      "var_param": "norm1_n"
+    },
+    "norm2_n": {
+      "var_param": "norm2_n"
+    },
+    "cm": {
+      "var_param": "cm"
+    },
+    "no_fix_with_ga": {
+      "var_param": "no_fix_with_ga"
+    },
+    "fix_diag_only": {
+      "var_param": "fix_diag_only"
+    },
+    "seg_wlo": {
+      "var_param": "seg_wlo"
+    },
+    "seg_ghi": {
+      "var_param": "seg_ghi"
+    },
+    "nothicken": {
+      "var_param": "nothicken"
+    },
+    "no_ca_align_after": {
+      "var_param": "no_ca_align_after"
+    },
+    "no_ca_align": {
+      "var_param": "no_ca_align"
+    },
+    "deface": {
+      "var_param": "deface"
+    },
+    "expert_file": {
+      "var_param": "expert_file"
+    },
+    "xopts_use": {
+      "var_param": "xopts_use"
+    },
+    "xopts_clean": {
+      "var_param": "xopts_clean"
+    },
+    "xopts_overwrite": {
+      "var_param": "xopts_overwrite"
+    },
+    "termscript_file": {
+      "var_param": "termscript_file"
+    },
+    "mprage": {
+      "var_param": "mprage"
+    },
+    "washu_mprage": {
+      "var_param": "washu_mprage"
+    },
+    "schwartzya3t_atlas": {
+      "var_param": "schwartzya3t_atlas"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "waitfor_file": {
+      "var_param": "waitfor_file"
+    },
+    "notify_file": {
+      "var_param": "notify_file"
+    },
+    "log_file": {
+      "var_param": "log_file"
+    },
+    "status_file": {
+      "var_param": "status_file"
+    },
+    "noappend": {
+      "var_param": "noappend"
+    },
+    "no_isrunning": {
+      "var_param": "no_isrunning"
+    },
+    "hippocampal_subfields_t1": {
+      "var_param": "hippocampal_subfields_t1"
+    },
+    "hippocampal_subfields_t2": {
+      "var_param": "hippocampal_subfields_t2"
+    },
+    "hippocampal_subfields_t1t2": {
+      "var_param": "hippocampal_subfields_t1t2"
+    },
+    "brainstem_structures": {
+      "var_param": "brainstem_structures"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "mail_user": {
+      "var_param": "mail_user"
+    },
+    "umask": {
+      "var_param": "umask"
+    },
+    "group_id": {
+      "var_param": "group_id"
+    },
+    "only_versions": {
+      "var_param": "only_versions"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "allow_coredump": {
+      "var_param": "allow_coredump"
+    },
+    "dontrun": {
+      "var_param": "dontrun"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

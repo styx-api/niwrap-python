@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "mris_estimate_wm",
+  "properties": {
+    "subjs": {
+      "var_param": "subjs"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "model": {
+      "var_param": "model"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "gpu": {
+      "var_param": "gpu"
+    },
+    "rsi": {
+      "var_param": "rsi"
+    },
+    "single_iter": {
+      "var_param": "single_iter"
+    },
+    "vol": {
+      "var_param": "vol"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "spline3_test",
+  "properties": {
+    "x_values": {
+      "var_param": "x_values"
+    },
+    "y_values": {
+      "var_param": "y_values"
+    },
+    "x_new_values": {
+      "var_param": "x_new_values"
+    }
+  }
+}

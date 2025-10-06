@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "dmri_ac_sh",
+  "properties": {
+    "additional_args": {
+      "var_param": "additional_args"
+    }
+  }
+}

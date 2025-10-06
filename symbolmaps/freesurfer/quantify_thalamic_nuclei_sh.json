@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "quantify_thalamic_nuclei_sh",
+  "properties": {
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "analysis_id": {
+      "var_param": "analysis_id"
+    },
+    "subjects_directory": {
+      "var_param": "subjects_directory"
+    }
+  }
+}

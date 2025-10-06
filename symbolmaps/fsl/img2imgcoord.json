@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "img2imgcoord",
+  "properties": {
+    "coordinates_file": {
+      "var_param": "coordinates_file"
+    },
+    "source_image": {
+      "var_param": "source_image"
+    },
+    "dest_image": {
+      "var_param": "dest_image"
+    },
+    "affine_transform": {
+      "var_param": "affine_transform"
+    },
+    "warp_field": {
+      "var_param": "warp_field"
+    },
+    "pre_warp_affine": {
+      "var_param": "pre_warp_affine"
+    },
+    "coords_in_voxels": {
+      "var_param": "coords_in_voxels"
+    },
+    "coords_in_mm": {
+      "var_param": "coords_in_mm"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

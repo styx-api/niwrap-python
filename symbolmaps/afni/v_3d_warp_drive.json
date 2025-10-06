@@ -1,0 +1,113 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_warp_drive",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "base_dataset": {
+      "var_param": "base_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "shift_only": {
+      "var_param": "shift_only"
+    },
+    "shift_rotate": {
+      "var_param": "shift_rotate"
+    },
+    "shift_rotate_scale": {
+      "var_param": "shift_rotate_scale"
+    },
+    "affine_general": {
+      "var_param": "affine_general"
+    },
+    "bilinear_general": {
+      "var_param": "bilinear_general"
+    },
+    "linear": {
+      "var_param": "linear"
+    },
+    "cubic": {
+      "var_param": "cubic"
+    },
+    "NN": {
+      "var_param": "nn"
+    },
+    "quintic": {
+      "var_param": "quintic"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "verbosity_flag": {
+      "var_param": "verbosity_flag"
+    },
+    "summary_file": {
+      "var_param": "summary_file"
+    },
+    "max_iterations": {
+      "var_param": "max_iterations"
+    },
+    "delta": {
+      "var_param": "delta"
+    },
+    "weight": {
+      "var_param": "weight"
+    },
+    "convergence_thresh": {
+      "var_param": "convergence_thresh"
+    },
+    "twopass": {
+      "var_param": "twopass"
+    },
+    "final_mode": {
+      "var_param": "final_mode"
+    },
+    "parfix": {
+      "var_param": "parfix"
+    },
+    "oned_file": {
+      "var_param": "oned_file"
+    },
+    "float_format": {
+      "var_param": "float_format"
+    },
+    "coarserot_init": {
+      "var_param": "coarserot_init"
+    },
+    "oned_matrix_save": {
+      "var_param": "oned_matrix_save"
+    },
+    "sdu_order": {
+      "var_param": "sdu_order"
+    },
+    "sud_order": {
+      "var_param": "sud_order"
+    },
+    "dsu_order": {
+      "var_param": "dsu_order"
+    },
+    "dus_order": {
+      "var_param": "dus_order"
+    },
+    "usd_order": {
+      "var_param": "usd_order"
+    },
+    "uds_order": {
+      "var_param": "uds_order"
+    },
+    "supper_s_matrix": {
+      "var_param": "supper_s_matrix"
+    },
+    "slower_s_matrix": {
+      "var_param": "slower_s_matrix"
+    },
+    "ashift": {
+      "var_param": "ashift"
+    },
+    "bshift": {
+      "var_param": "bshift"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "groupstatsdiff",
+  "properties": {
+    "group1_dir": {
+      "var_param": "group1_dir"
+    },
+    "group2_dir": {
+      "var_param": "group2_dir"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "no_maps": {
+      "var_param": "no_maps"
+    },
+    "osgm": {
+      "var_param": "osgm"
+    },
+    "no_common": {
+      "var_param": "no_common"
+    },
+    "allow_subj_diff": {
+      "var_param": "allow_subj_diff"
+    },
+    "no_area": {
+      "var_param": "no_area"
+    },
+    "no_volume": {
+      "var_param": "no_volume"
+    },
+    "no_ba": {
+      "var_param": "no_ba"
+    },
+    "no_aparcstats": {
+      "var_param": "no_aparcstats"
+    },
+    "no_asegstats": {
+      "var_param": "no_asegstats"
+    },
+    "no_wparcstats": {
+      "var_param": "no_wparcstats"
+    },
+    "no_stats": {
+      "var_param": "no_stats"
+    },
+    "no_prune": {
+      "var_param": "no_prune"
+    },
+    "fwhm_value": {
+      "var_param": "fwhm_value"
+    },
+    "subjects_dir1": {
+      "var_param": "subjects_dir1"
+    },
+    "subjects_dir2": {
+      "var_param": "subjects_dir2"
+    },
+    "no_dice": {
+      "var_param": "no_dice"
+    },
+    "dice_ctab": {
+      "var_param": "dice_ctab"
+    }
+  }
+}

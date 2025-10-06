@@ -1,0 +1,110 @@
+{
+  "fn_root_make_params_and_execute": "tckedit",
+  "properties": {
+    "include": {
+      "var_param": "include",
+      "fn_struct_make_params": "tckedit_include_params",
+      "properties": {
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "include_ordered": {
+      "var_param": "include_ordered",
+      "fn_struct_make_params": "tckedit_include_ordered_params",
+      "properties": {
+        "image": {
+          "var_param": "image"
+        }
+      }
+    },
+    "exclude": {
+      "var_param": "exclude",
+      "fn_struct_make_params": "tckedit_exclude_params",
+      "properties": {
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "mask": {
+      "var_param": "mask",
+      "fn_struct_make_params": "tckedit_mask_params",
+      "properties": {
+        "spec": {
+          "var_param": "spec"
+        }
+      }
+    },
+    "maxlength": {
+      "var_param": "maxlength"
+    },
+    "minlength": {
+      "var_param": "minlength"
+    },
+    "number": {
+      "var_param": "number"
+    },
+    "skip": {
+      "var_param": "skip"
+    },
+    "maxweight": {
+      "var_param": "maxweight"
+    },
+    "minweight": {
+      "var_param": "minweight"
+    },
+    "inverse": {
+      "var_param": "inverse"
+    },
+    "ends_only": {
+      "var_param": "ends_only"
+    },
+    "tck_weights_in": {
+      "var_param": "tck_weights_in"
+    },
+    "tck_weights_out": {
+      "var_param": "tck_weights_out"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "tckedit_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "tracks_in": {
+      "var_param": "tracks_in"
+    },
+    "tracks_out": {
+      "var_param": "tracks_out"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "surface_average",
+  "properties": {
+    "surface_out": {
+      "var_param": "surface_out"
+    },
+    "opt_stddev_stddev_metric_out": {
+      "var_param": "opt_stddev_stddev_metric_out"
+    },
+    "opt_uncertainty_uncert_metric_out": {
+      "var_param": "opt_uncertainty_uncert_metric_out"
+    },
+    "surf": {
+      "var_param": "surf",
+      "fn_struct_make_params": "surface_average_surf_params",
+      "properties": {
+        "surface": {
+          "var_param": "surface"
+        },
+        "opt_weight_weight": {
+          "var_param": "opt_weight_weight"
+        }
+      }
+    }
+  }
+}

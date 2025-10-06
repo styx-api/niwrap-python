@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "fslmeants",
+  "properties": {
+    "input_image": {
+      "var_param": "input_image"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "coordinates": {
+      "var_param": "coordinates"
+    },
+    "usemm_flag": {
+      "var_param": "usemm_flag"
+    },
+    "showall_flag": {
+      "var_param": "showall_flag"
+    },
+    "eigenv_flag": {
+      "var_param": "eigenv_flag"
+    },
+    "eigenvariates_order": {
+      "var_param": "eigenvariates_order"
+    },
+    "no_bin_flag": {
+      "var_param": "no_bin_flag"
+    },
+    "label_image": {
+      "var_param": "label_image"
+    },
+    "transpose_flag": {
+      "var_param": "transpose_flag"
+    },
+    "weighted_mean_flag": {
+      "var_param": "weighted_mean_flag"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

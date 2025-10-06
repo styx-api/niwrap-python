@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "fix_subject_corrected_rh",
+  "properties": {
+    "subject_dir": {
+      "var_param": "subject_dir"
+    }
+  }
+}

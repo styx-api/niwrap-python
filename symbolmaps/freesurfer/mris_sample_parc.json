@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "mris_sample_parc",
+  "properties": {
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "parc_name": {
+      "var_param": "parc_name"
+    },
+    "output_annot": {
+      "var_param": "output_annot"
+    },
+    "sdir": {
+      "var_param": "sdir"
+    },
+    "surf": {
+      "var_param": "surf"
+    },
+    "fix": {
+      "var_param": "fix"
+    },
+    "replace": {
+      "var_param": "replace"
+    },
+    "trans": {
+      "var_param": "trans"
+    },
+    "cortex": {
+      "var_param": "cortex"
+    },
+    "projmm": {
+      "var_param": "projmm"
+    },
+    "proj": {
+      "var_param": "proj"
+    },
+    "projfrac": {
+      "var_param": "projfrac"
+    },
+    "file": {
+      "var_param": "file"
+    },
+    "ct": {
+      "var_param": "ct"
+    },
+    "v_level": {
+      "var_param": "v_level"
+    },
+    "filter": {
+      "var_param": "filter_"
+    },
+    "smooth": {
+      "var_param": "smooth"
+    },
+    "w_size": {
+      "var_param": "w_size"
+    },
+    "thickness": {
+      "var_param": "thickness"
+    },
+    "change_unknown": {
+      "var_param": "change_unknown"
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    }
+  }
+}

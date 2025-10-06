@@ -1,0 +1,68 @@
+{
+  "fn_root_make_params_and_execute": "rbox",
+  "properties": {
+    "number_points": {
+      "var_param": "number_points"
+    },
+    "dimension": {
+      "var_param": "dimension"
+    },
+    "unit_cube": {
+      "var_param": "unit_cube"
+    },
+    "unit_diamond": {
+      "var_param": "unit_diamond"
+    },
+    "spiral": {
+      "var_param": "spiral"
+    },
+    "regular_polygon": {
+      "var_param": "regular_polygon"
+    },
+    "cospherical_points": {
+      "var_param": "cospherical_points"
+    },
+    "simplex_points": {
+      "var_param": "simplex_points"
+    },
+    "simplex_plus_points": {
+      "var_param": "simplex_plus_points"
+    },
+    "add_point": {
+      "var_param": "add_point"
+    },
+    "lens_distribution": {
+      "var_param": "lens_distribution"
+    },
+    "random_within": {
+      "var_param": "random_within"
+    },
+    "random_disk": {
+      "var_param": "random_disk"
+    },
+    "bounding_box": {
+      "var_param": "bounding_box"
+    },
+    "homogeneous_coordinates": {
+      "var_param": "homogeneous_coordinates"
+    },
+    "remove_command_line": {
+      "var_param": "remove_command_line"
+    },
+    "time_seed": {
+      "var_param": "time_seed"
+    },
+    "integer_coordinates": {
+      "var_param": "integer_coordinates"
+    },
+    "offset": {
+      "var_param": "offset"
+    },
+    "user_seed": {
+      "var_param": "user_seed"
+    },
+    "mesh_lattice": {
+      "var_param": "mesh_lattice"
+    }
+  }
+}

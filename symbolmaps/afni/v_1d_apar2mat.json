@@ -1,0 +1,41 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_apar2mat",
+  "properties": {
+    "x_shift": {
+      "var_param": "x_shift"
+    },
+    "y_shift": {
+      "var_param": "y_shift"
+    },
+    "z_shift": {
+      "var_param": "z_shift"
+    },
+    "z_angle": {
+      "var_param": "z_angle"
+    },
+    "x_angle": {
+      "var_param": "x_angle"
+    },
+    "y_angle": {
+      "var_param": "y_angle"
+    },
+    "x_scale": {
+      "var_param": "x_scale"
+    },
+    "y_scale": {
+      "var_param": "y_scale"
+    },
+    "z_scale": {
+      "var_param": "z_scale"
+    },
+    "y_x_shear": {
+      "var_param": "y_x_shear"
+    },
+    "z_x_shear": {
+      "var_param": "z_x_shear"
+    },
+    "z_y_shear": {
+      "var_param": "z_y_shear"
+    }
+  }
+}

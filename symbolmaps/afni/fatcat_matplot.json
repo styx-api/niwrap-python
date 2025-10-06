@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "fatcat_matplot",
+  "properties": {
+    "directory": {
+      "var_param": "directory"
+    },
+    "shiny_folder": {
+      "var_param": "shiny_folder"
+    }
+  }
+}

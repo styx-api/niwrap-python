@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "mris_smooth",
+  "properties": {
+    "input_surface": {
+      "var_param": "input_surface"
+    },
+    "output_surface": {
+      "var_param": "output_surface"
+    },
+    "average_iters": {
+      "var_param": "average_iters"
+    },
+    "smoothing_iters": {
+      "var_param": "smoothing_iters"
+    },
+    "no_write": {
+      "var_param": "no_write"
+    },
+    "curvature_name": {
+      "var_param": "curvature_name"
+    },
+    "area_name": {
+      "var_param": "area_name"
+    },
+    "gaussian_params": {
+      "var_param": "gaussian_params"
+    },
+    "normalize_area": {
+      "var_param": "normalize_area"
+    },
+    "momentum": {
+      "var_param": "momentum"
+    },
+    "snapshot_interval": {
+      "var_param": "snapshot_interval"
+    }
+  }
+}

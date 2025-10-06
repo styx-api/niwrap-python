@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "rca_config2csh",
+  "properties": {
+    "configfile": {
+      "var_param": "configfile"
+    }
+  }
+}

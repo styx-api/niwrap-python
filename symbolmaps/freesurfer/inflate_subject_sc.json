@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "inflate_subject_sc",
+  "properties": {
+    "subject_dir": {
+      "var_param": "subject_dir"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

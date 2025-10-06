@@ -1,0 +1,50 @@
+{
+  "fn_root_make_params_and_execute": "merge_stats_tables",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "subject": {
+      "var_param": "subject"
+    },
+    "subjectsfile": {
+      "var_param": "subjectsfile"
+    },
+    "inputs": {
+      "var_param": "inputs"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "outputfile": {
+      "var_param": "outputfile"
+    },
+    "meas": {
+      "var_param": "meas"
+    },
+    "common_segs": {
+      "var_param": "common_segs"
+    },
+    "all_segs": {
+      "var_param": "all_segs"
+    },
+    "intable": {
+      "var_param": "intable"
+    },
+    "subdir": {
+      "var_param": "subdir"
+    },
+    "delimiter": {
+      "var_param": "delimiter"
+    },
+    "transpose": {
+      "var_param": "transpose"
+    },
+    "skip": {
+      "var_param": "skip"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

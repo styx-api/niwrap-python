@@ -1,0 +1,98 @@
+{
+  "fn_root_make_params_and_execute": "mri_watershed",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "weight": {
+      "var_param": "weight"
+    },
+    "no_wta_flag": {
+      "var_param": "no_wta_flag"
+    },
+    "proba_merging": {
+      "var_param": "proba_merging"
+    },
+    "preflooding_height": {
+      "var_param": "preflooding_height"
+    },
+    "no_seedpt_flag": {
+      "var_param": "no_seedpt_flag"
+    },
+    "no_ta_flag": {
+      "var_param": "no_ta_flag"
+    },
+    "copy_flag": {
+      "var_param": "copy_flag"
+    },
+    "atlas_flag": {
+      "var_param": "atlas_flag"
+    },
+    "surf_name": {
+      "var_param": "surf_name"
+    },
+    "usesurf_ras_flag": {
+      "var_param": "usesurf_ras_flag"
+    },
+    "no_t1_analysis_flag": {
+      "var_param": "no_t1_analysis_flag"
+    },
+    "shrink_surface_flag": {
+      "var_param": "shrink_surface_flag"
+    },
+    "expand_surface_flag": {
+      "var_param": "expand_surface_flag"
+    },
+    "use_watershed_flag": {
+      "var_param": "use_watershed_flag"
+    },
+    "t1_volume": {
+      "var_param": "t1_volume"
+    },
+    "wat_temp_flag": {
+      "var_param": "wat_temp_flag"
+    },
+    "first_temp_flag": {
+      "var_param": "first_temp_flag"
+    },
+    "surf_debug_flag": {
+      "var_param": "surf_debug_flag"
+    },
+    "brain_surf_name": {
+      "var_param": "brain_surf_name"
+    },
+    "shrink_brain_surf": {
+      "var_param": "shrink_brain_surf"
+    },
+    "seed_point": {
+      "var_param": "seed_point"
+    },
+    "center_brain": {
+      "var_param": "center_brain"
+    },
+    "brain_radius": {
+      "var_param": "brain_radius"
+    },
+    "watershed_threshold": {
+      "var_param": "watershed_threshold"
+    },
+    "no_watershed_analysis_flag": {
+      "var_param": "no_watershed_analysis_flag"
+    },
+    "label_flag": {
+      "var_param": "label_flag"
+    },
+    "manual_params": {
+      "var_param": "manual_params"
+    },
+    "xthresh": {
+      "var_param": "xthresh"
+    },
+    "mask_flag": {
+      "var_param": "mask_flag"
+    }
+  }
+}

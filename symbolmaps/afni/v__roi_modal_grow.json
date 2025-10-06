@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__roi_modal_grow",
+  "properties": {
+    "input_dset": {
+      "var_param": "input_dset"
+    },
+    "niters": {
+      "var_param": "niters"
+    },
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "neighborhood_type": {
+      "var_param": "neighborhood_type"
+    }
+  }
+}

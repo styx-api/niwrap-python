@@ -1,0 +1,125 @@
+{
+  "fn_root_make_params_and_execute": "fixelcfestats",
+  "properties": {
+    "mask": {
+      "var_param": "mask"
+    },
+    "notest": {
+      "var_param": "notest"
+    },
+    "errors": {
+      "var_param": "errors"
+    },
+    "exchange_within": {
+      "var_param": "exchange_within"
+    },
+    "exchange_whole": {
+      "var_param": "exchange_whole"
+    },
+    "strong": {
+      "var_param": "strong"
+    },
+    "nshuffles": {
+      "var_param": "nshuffles"
+    },
+    "permutations": {
+      "var_param": "permutations"
+    },
+    "nonstationarity": {
+      "var_param": "nonstationarity"
+    },
+    "skew_nonstationarity": {
+      "var_param": "skew_nonstationarity"
+    },
+    "nshuffles_nonstationarity": {
+      "var_param": "nshuffles_nonstationarity"
+    },
+    "permutations_nonstationarity": {
+      "var_param": "permutations_nonstationarity"
+    },
+    "cfe_dh": {
+      "var_param": "cfe_dh"
+    },
+    "cfe_e": {
+      "var_param": "cfe_e"
+    },
+    "cfe_h": {
+      "var_param": "cfe_h"
+    },
+    "cfe_c": {
+      "var_param": "cfe_c"
+    },
+    "cfe_legacy": {
+      "var_param": "cfe_legacy"
+    },
+    "variance": {
+      "var_param": "variance"
+    },
+    "ftests": {
+      "var_param": "ftests"
+    },
+    "fonly": {
+      "var_param": "fonly"
+    },
+    "column": {
+      "var_param": "column",
+      "fn_struct_make_params": "fixelcfestats_column_params",
+      "properties": {
+        "path": {
+          "var_param": "path"
+        }
+      }
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "fixelcfestats_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "in_fixel_directory": {
+      "var_param": "in_fixel_directory"
+    },
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "design": {
+      "var_param": "design"
+    },
+    "contrast": {
+      "var_param": "contrast"
+    },
+    "connectivity": {
+      "var_param": "connectivity"
+    },
+    "out_fixel_directory": {
+      "var_param": "out_fixel_directory"
+    }
+  }
+}

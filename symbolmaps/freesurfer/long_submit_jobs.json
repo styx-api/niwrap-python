@@ -1,0 +1,80 @@
+{
+  "fn_root_make_params_and_execute": "long_submit_jobs",
+  "properties": {
+    "qdec": {
+      "var_param": "qdec"
+    },
+    "cdir": {
+      "var_param": "cdir"
+    },
+    "bdir": {
+      "var_param": "bdir"
+    },
+    "ldir": {
+      "var_param": "ldir"
+    },
+    "scriptsdir": {
+      "var_param": "scriptsdir"
+    },
+    "cross": {
+      "var_param": "cross"
+    },
+    "base": {
+      "var_param": "base"
+    },
+    "long": {
+      "var_param": "long"
+    },
+    "cflags": {
+      "var_param": "cflags"
+    },
+    "bflags": {
+      "var_param": "bflags"
+    },
+    "lflags": {
+      "var_param": "lflags"
+    },
+    "affine": {
+      "var_param": "affine"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "simulate": {
+      "var_param": "simulate"
+    },
+    "simfiles": {
+      "var_param": "simfiles"
+    },
+    "check": {
+      "var_param": "check"
+    },
+    "pause": {
+      "var_param": "pause"
+    },
+    "max": {
+      "var_param": "max_"
+    },
+    "queue": {
+      "var_param": "queue_"
+    },
+    "cmem": {
+      "var_param": "cmem"
+    },
+    "bmem": {
+      "var_param": "bmem"
+    },
+    "lmem": {
+      "var_param": "lmem"
+    },
+    "cnodes": {
+      "var_param": "cnodes"
+    },
+    "bnodes": {
+      "var_param": "bnodes"
+    },
+    "lnodes": {
+      "var_param": "lnodes"
+    }
+  }
+}

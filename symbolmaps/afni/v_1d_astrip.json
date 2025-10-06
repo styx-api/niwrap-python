@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_astrip",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    }
+  }
+}

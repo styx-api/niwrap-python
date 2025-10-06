@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "cifti_rois_from_extrema",
+  "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "surf_limit": {
+      "var_param": "surf_limit"
+    },
+    "vol_limit": {
+      "var_param": "vol_limit"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "opt_left_surface_surface": {
+      "var_param": "opt_left_surface_surface"
+    },
+    "opt_right_surface_surface": {
+      "var_param": "opt_right_surface_surface"
+    },
+    "opt_cerebellum_surface_surface": {
+      "var_param": "opt_cerebellum_surface_surface"
+    },
+    "gaussian": {
+      "var_param": "gaussian",
+      "fn_struct_make_params": "cifti_rois_from_extrema_gaussian_params",
+      "properties": {
+        "surf_sigma": {
+          "var_param": "surf_sigma"
+        },
+        "vol_sigma": {
+          "var_param": "vol_sigma"
+        }
+      }
+    },
+    "opt_overlap_logic_method": {
+      "var_param": "opt_overlap_logic_method"
+    },
+    "opt_merged_volume": {
+      "var_param": "opt_merged_volume"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "imln",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "link_name": {
+      "var_param": "link_name"
+    }
+  }
+}

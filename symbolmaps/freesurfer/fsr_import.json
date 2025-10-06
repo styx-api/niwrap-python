@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "fsr_import",
+  "properties": {
+    "outdir": {
+      "var_param": "outdir"
+    },
+    "t1w_input": {
+      "var_param": "t1w_input"
+    },
+    "t2w_input": {
+      "var_param": "t2w_input"
+    },
+    "flair_input": {
+      "var_param": "flair_input"
+    },
+    "custom_mode_input": {
+      "var_param": "custom_mode_input"
+    },
+    "force_update": {
+      "var_param": "force_update"
+    },
+    "no_conform": {
+      "var_param": "no_conform"
+    },
+    "hires": {
+      "var_param": "hires"
+    }
+  }
+}

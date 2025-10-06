@@ -1,0 +1,122 @@
+{
+  "fn_root_make_params_and_execute": "v__auto_tlrc",
+  "properties": {
+    "base_template": {
+      "var_param": "base_template"
+    },
+    "input_anat": {
+      "var_param": "input_anat"
+    },
+    "no_ss": {
+      "var_param": "no_ss"
+    },
+    "warp_orig_vol": {
+      "var_param": "warp_orig_vol"
+    },
+    "dxyz": {
+      "var_param": "dxyz"
+    },
+    "dx": {
+      "var_param": "dx"
+    },
+    "dy": {
+      "var_param": "dy"
+    },
+    "dz": {
+      "var_param": "dz"
+    },
+    "pad_base": {
+      "var_param": "pad_base"
+    },
+    "keep_tmp": {
+      "var_param": "keep_tmp"
+    },
+    "clean": {
+      "var_param": "clean"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "no_avoid_eyes": {
+      "var_param": "no_avoid_eyes"
+    },
+    "ncr": {
+      "var_param": "ncr"
+    },
+    "onepass": {
+      "var_param": "onepass"
+    },
+    "twopass": {
+      "var_param": "twopass"
+    },
+    "maxite": {
+      "var_param": "maxite"
+    },
+    "not_OK_maxite": {
+      "var_param": "not_ok_maxite"
+    },
+    "inweight": {
+      "var_param": "inweight"
+    },
+    "rigid_equiv": {
+      "var_param": "rigid_equiv"
+    },
+    "init_xform": {
+      "var_param": "init_xform"
+    },
+    "no_pre": {
+      "var_param": "no_pre"
+    },
+    "out_space": {
+      "var_param": "out_space"
+    },
+    "3dAllineate": {
+      "var_param": "v_3d_allineate"
+    },
+    "3dAlcost": {
+      "var_param": "v_3d_alcost"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "apar": {
+      "var_param": "apar"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "pad_input": {
+      "var_param": "pad_input"
+    },
+    "onewarp": {
+      "var_param": "onewarp"
+    },
+    "twowarp": {
+      "var_param": "twowarp"
+    },
+    "rmode": {
+      "var_param": "rmode"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "keep_view": {
+      "var_param": "keep_view"
+    },
+    "base_copy": {
+      "var_param": "base_copy"
+    },
+    "base_list": {
+      "var_param": "base_list"
+    },
+    "use_gz": {
+      "var_param": "use_gz"
+    },
+    "verb": {
+      "var_param": "verb"
+    }
+  }
+}

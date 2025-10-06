@@ -1,0 +1,11 @@
+{
+  "fn_root_make_params_and_execute": "unpackimadir",
+  "properties": {
+    "source_directory": {
+      "var_param": "source_directory"
+    },
+    "target_directory": {
+      "var_param": "target_directory"
+    }
+  }
+}

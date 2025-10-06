@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "ccops",
+  "properties": {
+    "basename": {
+      "var_param": "basename"
+    },
+    "infile": {
+      "var_param": "infile"
+    },
+    "tract_dir": {
+      "var_param": "tract_dir"
+    },
+    "exclusion_mask": {
+      "var_param": "exclusion_mask"
+    },
+    "reorder_seedspace": {
+      "var_param": "reorder_seedspace"
+    },
+    "reorder_tractspace": {
+      "var_param": "reorder_tractspace"
+    },
+    "tract_reord": {
+      "var_param": "tract_reord"
+    },
+    "connexity_constraint": {
+      "var_param": "connexity_constraint"
+    },
+    "binarise_val": {
+      "var_param": "binarise_val"
+    },
+    "matrix_power": {
+      "var_param": "matrix_power"
+    },
+    "brain_mask": {
+      "var_param": "brain_mask"
+    },
+    "scheme": {
+      "var_param": "scheme"
+    },
+    "nclusters": {
+      "var_param": "nclusters"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

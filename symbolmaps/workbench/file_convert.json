@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "file_convert",
+  "properties": {
+    "border_version_convert": {
+      "var_param": "border_version_convert",
+      "fn_struct_make_params": "file_convert_border_version_convert_params",
+      "properties": {
+        "border_in": {
+          "var_param": "border_in"
+        },
+        "out_version": {
+          "var_param": "out_version"
+        },
+        "border_out": {
+          "var_param": "border_out"
+        },
+        "opt_surface_surface": {
+          "var_param": "opt_surface_surface"
+        }
+      }
+    },
+    "nifti_version_convert": {
+      "var_param": "nifti_version_convert",
+      "fn_struct_make_params": "file_convert_nifti_version_convert_params",
+      "properties": {
+        "input": {
+          "var_param": "input_"
+        },
+        "version": {
+          "var_param": "version"
+        },
+        "output": {
+          "var_param": "output"
+        }
+      }
+    },
+    "cifti_version_convert": {
+      "var_param": "cifti_version_convert",
+      "fn_struct_make_params": "file_convert_cifti_version_convert_params",
+      "properties": {
+        "cifti_in": {
+          "var_param": "cifti_in"
+        },
+        "version": {
+          "var_param": "version"
+        },
+        "cifti_out": {
+          "var_param": "cifti_out"
+        }
+      }
+    }
+  }
+}

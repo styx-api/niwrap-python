@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "morph_rgb_lh",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    }
+  }
+}

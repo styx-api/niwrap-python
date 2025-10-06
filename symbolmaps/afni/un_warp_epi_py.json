@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "un_warp_epi_py",
+  "properties": {
+    "forward": {
+      "var_param": "forward"
+    },
+    "reverse": {
+      "var_param": "reverse"
+    },
+    "anat4warp": {
+      "var_param": "anat4warp"
+    },
+    "data": {
+      "var_param": "data"
+    },
+    "subjID": {
+      "var_param": "subj_id"
+    },
+    "giant_move": {
+      "var_param": "giant_move"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "fn_root_make_params_and_execute": "v_3drefit",
+  "properties": {
+    "atrcopy": {
+      "var_param": "atrcopy"
+    },
+    "atrfloat": {
+      "var_param": "atrfloat"
+    },
+    "atrint": {
+      "var_param": "atrint"
+    },
+    "atrstring": {
+      "var_param": "atrstring"
+    },
+    "deoblique": {
+      "var_param": "deoblique"
+    },
+    "duporigin_file": {
+      "var_param": "duporigin_file"
+    },
+    "in_file": {
+      "var_param": "in_file"
+    },
+    "nosaveatr": {
+      "var_param": "nosaveatr"
+    },
+    "saveatr": {
+      "var_param": "saveatr"
+    },
+    "space": {
+      "var_param": "space"
+    },
+    "xdel": {
+      "var_param": "xdel"
+    },
+    "xorigin": {
+      "var_param": "xorigin"
+    },
+    "xyzscale": {
+      "var_param": "xyzscale"
+    },
+    "ydel": {
+      "var_param": "ydel"
+    },
+    "yorigin": {
+      "var_param": "yorigin"
+    },
+    "zdel": {
+      "var_param": "zdel"
+    },
+    "zorigin": {
+      "var_param": "zorigin"
+    }
+  }
+}

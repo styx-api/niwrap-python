@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_distance_transform",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "max_distance": {
+      "var_param": "max_distance"
+    },
+    "mode": {
+      "var_param": "mode"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    }
+  }
+}

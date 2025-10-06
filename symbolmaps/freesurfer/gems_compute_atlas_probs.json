@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "gems_compute_atlas_probs",
+  "properties": {
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "mesh_collections": {
+      "var_param": "mesh_collections"
+    },
+    "out_dir": {
+      "var_param": "out_dir"
+    },
+    "segmentations_dir": {
+      "var_param": "segmentations_dir"
+    },
+    "gt_from_fs": {
+      "var_param": "gt_from_fs"
+    },
+    "segmentation_name": {
+      "var_param": "segmentation_name"
+    },
+    "multi_structure": {
+      "var_param": "multi_structure"
+    },
+    "labels": {
+      "var_param": "labels"
+    },
+    "from_samseg": {
+      "var_param": "from_samseg"
+    },
+    "em_iterations": {
+      "var_param": "em_iterations"
+    },
+    "show_figs": {
+      "var_param": "show_figs"
+    },
+    "save_figs": {
+      "var_param": "save_figs"
+    },
+    "save_average_figs": {
+      "var_param": "save_average_figs"
+    },
+    "subjects_file": {
+      "var_param": "subjects_file"
+    },
+    "labels_file": {
+      "var_param": "labels_file"
+    },
+    "samseg_subdir": {
+      "var_param": "samseg_subdir"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "fn_root_make_params_and_execute": "v_3dclust",
+  "properties": {
+    "rmm": {
+      "var_param": "rmm"
+    },
+    "vmul": {
+      "var_param": "vmul"
+    },
+    "datasets": {
+      "var_param": "datasets"
+    },
+    "nn1": {
+      "var_param": "nn1"
+    },
+    "nn2": {
+      "var_param": "nn2"
+    },
+    "nn3": {
+      "var_param": "nn3"
+    },
+    "noabs": {
+      "var_param": "noabs"
+    },
+    "summarize": {
+      "var_param": "summarize"
+    },
+    "nosum": {
+      "var_param": "nosum"
+    },
+    "verb": {
+      "var_param": "verb"
+    },
+    "oned_format": {
+      "var_param": "oned_format"
+    },
+    "no_oned_format": {
+      "var_param": "no_oned_format"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "mni": {
+      "var_param": "mni"
+    },
+    "isovalue": {
+      "var_param": "isovalue"
+    },
+    "isomerge": {
+      "var_param": "isomerge"
+    },
+    "inmask": {
+      "var_param": "inmask"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "savemask": {
+      "var_param": "savemask"
+    },
+    "binary": {
+      "var_param": "binary"
+    }
+  }
+}

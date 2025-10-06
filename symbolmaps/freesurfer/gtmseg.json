@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "gtmseg",
+  "properties": {
+    "subject": {
+      "var_param": "subject"
+    },
+    "outvol": {
+      "var_param": "outvol"
+    },
+    "usf": {
+      "var_param": "usf"
+    },
+    "subsegwm": {
+      "var_param": "subsegwm"
+    },
+    "keep_hypo": {
+      "var_param": "keep_hypo"
+    },
+    "keep_cc": {
+      "var_param": "keep_cc"
+    },
+    "dmax": {
+      "var_param": "dmax"
+    },
+    "ctx_annot": {
+      "var_param": "ctx_annot"
+    },
+    "wm_annot": {
+      "var_param": "wm_annot"
+    },
+    "output_usf": {
+      "var_param": "output_usf"
+    },
+    "head": {
+      "var_param": "head"
+    },
+    "subseg_cbwm": {
+      "var_param": "subseg_cbwm"
+    },
+    "no_pons": {
+      "var_param": "no_pons"
+    },
+    "no_vermis": {
+      "var_param": "no_vermis"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    },
+    "no_seg_stats": {
+      "var_param": "no_seg_stats"
+    },
+    "xcerseg": {
+      "var_param": "xcerseg"
+    },
+    "debug": {
+      "var_param": "debug"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "volume_label_import",
+  "properties": {
+    "input": {
+      "var_param": "input_"
+    },
+    "label_list_file": {
+      "var_param": "label_list_file"
+    },
+    "output": {
+      "var_param": "output"
+    },
+    "opt_discard_others": {
+      "var_param": "opt_discard_others"
+    },
+    "opt_unlabeled_value_value": {
+      "var_param": "opt_unlabeled_value_value"
+    },
+    "opt_subvolume_subvol": {
+      "var_param": "opt_subvolume_subvol"
+    },
+    "opt_drop_unused_labels": {
+      "var_param": "opt_drop_unused_labels"
+    }
+  }
+}

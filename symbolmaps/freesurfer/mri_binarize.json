@@ -1,0 +1,107 @@
+{
+  "fn_root_make_params_and_execute": "mri_binarize",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "output_volume": {
+      "var_param": "output_volume"
+    },
+    "min_threshold": {
+      "var_param": "min_threshold"
+    },
+    "max_threshold": {
+      "var_param": "max_threshold"
+    },
+    "pct_threshold": {
+      "var_param": "pct_threshold"
+    },
+    "rmin": {
+      "var_param": "rmin"
+    },
+    "rmax": {
+      "var_param": "rmax"
+    },
+    "fdr_threshold": {
+      "var_param": "fdr_threshold"
+    },
+    "match_values": {
+      "var_param": "match_values"
+    },
+    "replace_values": {
+      "var_param": "replace_values"
+    },
+    "binval": {
+      "var_param": "binval"
+    },
+    "binval_not": {
+      "var_param": "binval_not"
+    },
+    "frame": {
+      "var_param": "frame"
+    },
+    "merge_volume": {
+      "var_param": "merge_volume"
+    },
+    "mask_volume": {
+      "var_param": "mask_volume"
+    },
+    "mask_threshold": {
+      "var_param": "mask_threshold"
+    },
+    "surf_name": {
+      "var_param": "surf_name"
+    },
+    "surf_smooth": {
+      "var_param": "surf_smooth"
+    },
+    "threads": {
+      "var_param": "threads"
+    },
+    "ctx_wm_flag": {
+      "var_param": "ctx_wm_flag"
+    },
+    "all_wm_flag": {
+      "var_param": "all_wm_flag"
+    },
+    "ventricles_flag": {
+      "var_param": "ventricles_flag"
+    },
+    "wm_vcsf_flag": {
+      "var_param": "wm_vcsf_flag"
+    },
+    "gm_flag": {
+      "var_param": "gm_flag"
+    },
+    "subcort_gm_flag": {
+      "var_param": "subcort_gm_flag"
+    },
+    "scm_lh_flag": {
+      "var_param": "scm_lh_flag"
+    },
+    "scm_rh_flag": {
+      "var_param": "scm_rh_flag"
+    },
+    "zero_edges_flag": {
+      "var_param": "zero_edges_flag"
+    },
+    "zero_slice_edges_flag": {
+      "var_param": "zero_slice_edges_flag"
+    },
+    "dilate_vertex": {
+      "var_param": "dilate_vertex"
+    },
+    "remove_islands_flag": {
+      "var_param": "remove_islands_flag"
+    },
+    "fill_holes_flag": {
+      "var_param": "fill_holes_flag"
+    },
+    "noverbose_flag": {
+      "var_param": "noverbose_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "metadata_string_replace",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "find_string": {
+      "var_param": "find_string"
+    },
+    "replace_string": {
+      "var_param": "replace_string"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "opt_case_insensitive": {
+      "var_param": "opt_case_insensitive"
+    }
+  }
+}

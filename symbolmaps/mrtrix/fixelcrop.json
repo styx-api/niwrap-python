@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "fixelcrop",
+  "properties": {
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "fixelcrop_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input_fixel_directory": {
+      "var_param": "input_fixel_directory"
+    },
+    "input_fixel_mask": {
+      "var_param": "input_fixel_mask"
+    },
+    "output_fixel_directory": {
+      "var_param": "output_fixel_directory"
+    }
+  }
+}

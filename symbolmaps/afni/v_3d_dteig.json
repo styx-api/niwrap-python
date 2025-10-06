@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_dteig",
+  "properties": {
+    "input_dataset": {
+      "var_param": "input_dataset"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "datum": {
+      "var_param": "datum"
+    },
+    "sep_dsets": {
+      "var_param": "sep_dsets"
+    },
+    "uddata": {
+      "var_param": "uddata"
+    }
+  }
+}

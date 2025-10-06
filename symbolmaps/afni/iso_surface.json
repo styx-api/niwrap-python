@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "iso_surface",
+  "properties": {
+    "input_vol": {
+      "var_param": "input_vol"
+    },
+    "shape_spec": {
+      "var_param": "shape_spec"
+    },
+    "isorois": {
+      "var_param": "isorois"
+    },
+    "isoval": {
+      "var_param": "isoval"
+    },
+    "isorange": {
+      "var_param": "isorange"
+    },
+    "isocmask": {
+      "var_param": "isocmask"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "tsmooth": {
+      "var_param": "tsmooth"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "autocrop": {
+      "var_param": "autocrop"
+    },
+    "remesh": {
+      "var_param": "remesh"
+    },
+    "xform": {
+      "var_param": "xform"
+    },
+    "novolreg": {
+      "var_param": "novolreg"
+    },
+    "noxform": {
+      "var_param": "noxform"
+    }
+  }
+}

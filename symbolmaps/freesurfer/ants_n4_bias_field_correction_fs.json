@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "ants_n4_bias_field_correction_fs",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "shrink_factor": {
+      "var_param": "shrink_factor"
+    },
+    "iterations": {
+      "var_param": "iterations"
+    },
+    "output_dtype": {
+      "var_param": "output_dtype"
+    },
+    "replace_zeros": {
+      "var_param": "replace_zeros"
+    }
+  }
+}

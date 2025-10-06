@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "mergeseg",
+  "properties": {
+    "src_seg": {
+      "var_param": "src_seg"
+    },
+    "merge_seg": {
+      "var_param": "merge_seg"
+    },
+    "out_seg": {
+      "var_param": "out_seg"
+    },
+    "segid": {
+      "var_param": "segid"
+    },
+    "segid_only": {
+      "var_param": "segid_only"
+    },
+    "segid_erode": {
+      "var_param": "segid_erode"
+    },
+    "ctab": {
+      "var_param": "ctab"
+    }
+  }
+}

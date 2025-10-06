@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_1d_correlate",
+  "properties": {
+    "ktaub": {
+      "var_param": "ktaub"
+    },
+    "nboot": {
+      "var_param": "nboot"
+    },
+    "alpha": {
+      "var_param": "alpha"
+    },
+    "block": {
+      "var_param": "block"
+    },
+    "blk": {
+      "var_param": "blk"
+    },
+    "pearson": {
+      "var_param": "pearson"
+    },
+    "spearman": {
+      "var_param": "spearman"
+    },
+    "quadrant": {
+      "var_param": "quadrant"
+    },
+    "input_files": {
+      "var_param": "input_files"
+    }
+  }
+}

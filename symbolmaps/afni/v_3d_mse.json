@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_mse",
+  "properties": {
+    "polynomial_order": {
+      "var_param": "polynomial_order"
+    },
+    "autoclip": {
+      "var_param": "autoclip"
+    },
+    "automask": {
+      "var_param": "automask"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "scales": {
+      "var_param": "scales"
+    },
+    "entwin": {
+      "var_param": "entwin"
+    },
+    "rthresh": {
+      "var_param": "rthresh"
+    },
+    "dset": {
+      "var_param": "dset"
+    }
+  }
+}

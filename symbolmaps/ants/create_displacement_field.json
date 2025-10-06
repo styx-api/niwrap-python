@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "create_displacement_field",
+  "properties": {
+    "image_dimension": {
+      "var_param": "image_dimension"
+    },
+    "enforce_zero_boundary_flag": {
+      "var_param": "enforce_zero_boundary_flag"
+    },
+    "component_images": {
+      "var_param": "component_images"
+    },
+    "output_image": {
+      "var_param": "output_image"
+    }
+  }
+}

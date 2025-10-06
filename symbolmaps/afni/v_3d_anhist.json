@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_anhist",
+  "properties": {
+    "dataset": {
+      "var_param": "dataset"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "dump_histogram": {
+      "var_param": "dump_histogram"
+    },
+    "no_scurve": {
+      "var_param": "no_scurve"
+    },
+    "winsorize": {
+      "var_param": "winsorize"
+    },
+    "top_2peaks": {
+      "var_param": "top_2peaks"
+    },
+    "label": {
+      "var_param": "label"
+    },
+    "filename": {
+      "var_param": "filename"
+    }
+  }
+}

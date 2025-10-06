@@ -1,0 +1,101 @@
+{
+  "fn_root_make_params_and_execute": "mrfilter",
+  "properties": {
+    "axes": {
+      "var_param": "axes"
+    },
+    "inverse": {
+      "var_param": "inverse"
+    },
+    "magnitude": {
+      "var_param": "magnitude"
+    },
+    "centre_zero": {
+      "var_param": "centre_zero"
+    },
+    "stdev": {
+      "var_param": "stdev"
+    },
+    "magnitude_1": {
+      "var_param": "magnitude_1"
+    },
+    "scanner": {
+      "var_param": "scanner"
+    },
+    "extent": {
+      "var_param": "extent"
+    },
+    "extent_1": {
+      "var_param": "extent_1"
+    },
+    "stdev_1": {
+      "var_param": "stdev_1"
+    },
+    "fwhm": {
+      "var_param": "fwhm"
+    },
+    "extent_2": {
+      "var_param": "extent_2"
+    },
+    "zupper": {
+      "var_param": "zupper"
+    },
+    "zlower": {
+      "var_param": "zlower"
+    },
+    "bridge": {
+      "var_param": "bridge"
+    },
+    "maskin": {
+      "var_param": "maskin"
+    },
+    "maskout": {
+      "var_param": "maskout"
+    },
+    "strides": {
+      "var_param": "strides"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrfilter_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "filter": {
+      "var_param": "filter_"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}

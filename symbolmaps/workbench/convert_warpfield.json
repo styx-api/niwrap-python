@@ -1,0 +1,53 @@
+{
+  "fn_root_make_params_and_execute": "convert_warpfield",
+  "properties": {
+    "from_world": {
+      "var_param": "from_world",
+      "fn_struct_make_params": "convert_warpfield_from_world_params",
+      "properties": {
+        "input": {
+          "var_param": "input_"
+        },
+        "opt_absolute": {
+          "var_param": "opt_absolute"
+        }
+      }
+    },
+    "opt_from_itk_input": {
+      "var_param": "opt_from_itk_input"
+    },
+    "from_fnirt": {
+      "var_param": "from_fnirt",
+      "fn_struct_make_params": "convert_warpfield_from_fnirt_params",
+      "properties": {
+        "input": {
+          "var_param": "input_"
+        },
+        "source_volume": {
+          "var_param": "source_volume"
+        },
+        "opt_absolute": {
+          "var_param": "opt_absolute"
+        }
+      }
+    },
+    "opt_to_world_output": {
+      "var_param": "opt_to_world_output"
+    },
+    "opt_to_itk_output": {
+      "var_param": "opt_to_itk_output"
+    },
+    "to_fnirt": {
+      "var_param": "to_fnirt",
+      "fn_struct_make_params": "convert_warpfield_to_fnirt_params",
+      "properties": {
+        "output": {
+          "var_param": "output"
+        },
+        "source_volume": {
+          "var_param": "source_volume"
+        }
+      }
+    }
+  }
+}

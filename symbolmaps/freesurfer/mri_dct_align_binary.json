@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "mri_dct_align_binary",
+  "properties": {
+    "source_image": {
+      "var_param": "source_image"
+    },
+    "destination_image": {
+      "var_param": "destination_image"
+    },
+    "output_transformation": {
+      "var_param": "output_transformation"
+    }
+  }
+}

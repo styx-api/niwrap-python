@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "cifti_correlation",
+  "properties": {
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "cifti_out": {
+      "var_param": "cifti_out"
+    },
+    "roi_override": {
+      "var_param": "roi_override",
+      "fn_struct_make_params": "cifti_correlation_roi_override_params",
+      "properties": {
+        "opt_left_roi_roi_metric": {
+          "var_param": "opt_left_roi_roi_metric"
+        },
+        "opt_right_roi_roi_metric": {
+          "var_param": "opt_right_roi_roi_metric"
+        },
+        "opt_cerebellum_roi_roi_metric": {
+          "var_param": "opt_cerebellum_roi_roi_metric"
+        },
+        "opt_vol_roi_roi_vol": {
+          "var_param": "opt_vol_roi_roi_vol"
+        },
+        "opt_cifti_roi_roi_cifti": {
+          "var_param": "opt_cifti_roi_roi_cifti"
+        }
+      }
+    },
+    "opt_weights_weight_file": {
+      "var_param": "opt_weights_weight_file"
+    },
+    "opt_fisher_z": {
+      "var_param": "opt_fisher_z"
+    },
+    "opt_no_demean": {
+      "var_param": "opt_no_demean"
+    },
+    "opt_covariance": {
+      "var_param": "opt_covariance"
+    },
+    "opt_mem_limit_limit_gb": {
+      "var_param": "opt_mem_limit_limit_gb"
+    }
+  }
+}

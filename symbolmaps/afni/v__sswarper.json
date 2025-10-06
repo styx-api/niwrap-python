@@ -1,0 +1,74 @@
+{
+  "fn_root_make_params_and_execute": "v__sswarper",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "base_template": {
+      "var_param": "base_template"
+    },
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "min_patch_size": {
+      "var_param": "min_patch_size"
+    },
+    "no_lite": {
+      "var_param": "no_lite"
+    },
+    "skip_warp": {
+      "var_param": "skip_warp"
+    },
+    "unifize_off": {
+      "var_param": "unifize_off"
+    },
+    "init_skullstr_off": {
+      "var_param": "init_skullstr_off"
+    },
+    "extra_qc_off": {
+      "var_param": "extra_qc_off"
+    },
+    "jump_to_extra_qc": {
+      "var_param": "jump_to_extra_qc"
+    },
+    "cost_nl_init": {
+      "var_param": "cost_nl_init"
+    },
+    "cost_nl_final": {
+      "var_param": "cost_nl_final"
+    },
+    "deoblique": {
+      "var_param": "deoblique"
+    },
+    "deoblique_refitly": {
+      "var_param": "deoblique_refitly"
+    },
+    "warp_scale": {
+      "var_param": "warp_scale"
+    },
+    "ssopt_flag": {
+      "var_param": "ssopt_flag"
+    },
+    "aniso_off": {
+      "var_param": "aniso_off"
+    },
+    "ceil_off": {
+      "var_param": "ceil_off"
+    },
+    "tmp_name_nice": {
+      "var_param": "tmp_name_nice"
+    },
+    "echo": {
+      "var_param": "echo"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "noclean": {
+      "var_param": "noclean"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_space_time_corr",
+  "properties": {
+    "insetA": {
+      "var_param": "inset_a"
+    },
+    "insetB": {
+      "var_param": "inset_b"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "out_Zcorr": {
+      "var_param": "out_zcorr"
+    },
+    "freeze_insetA_ijk": {
+      "var_param": "freeze_inset_a_ijk"
+    },
+    "freeze_insetA_xyz": {
+      "var_param": "freeze_inset_a_xyz"
+    }
+  }
+}

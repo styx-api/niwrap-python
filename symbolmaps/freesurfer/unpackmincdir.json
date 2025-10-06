@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "unpackmincdir",
+  "properties": {
+    "source_directory": {
+      "var_param": "source_directory"
+    },
+    "target_directory": {
+      "var_param": "target_directory"
+    },
+    "scan_sequence_info": {
+      "var_param": "scan_sequence_info"
+    },
+    "functional_sequence": {
+      "var_param": "functional_sequence"
+    },
+    "functional_subdirectory": {
+      "var_param": "functional_subdirectory"
+    },
+    "minc_only": {
+      "var_param": "minc_only"
+    },
+    "no_copy": {
+      "var_param": "no_copy"
+    },
+    "umask": {
+      "var_param": "umask"
+    }
+  }
+}

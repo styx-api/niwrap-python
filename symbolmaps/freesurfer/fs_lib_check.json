@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "fs_lib_check",
+  "properties": {
+    "use_ldconfig": {
+      "var_param": "use_ldconfig"
+    },
+    "use_rpm": {
+      "var_param": "use_rpm"
+    },
+    "show_help": {
+      "var_param": "show_help"
+    },
+    "show_version": {
+      "var_param": "show_version"
+    }
+  }
+}

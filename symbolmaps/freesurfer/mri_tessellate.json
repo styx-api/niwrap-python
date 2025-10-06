@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mri_tessellate",
+  "properties": {
+    "input_volume": {
+      "var_param": "input_volume"
+    },
+    "label_value": {
+      "var_param": "label_value"
+    },
+    "output_surf": {
+      "var_param": "output_surf"
+    },
+    "different_labels": {
+      "var_param": "different_labels"
+    },
+    "max_vertices": {
+      "var_param": "max_vertices"
+    },
+    "real_ras": {
+      "var_param": "real_ras"
+    }
+  }
+}

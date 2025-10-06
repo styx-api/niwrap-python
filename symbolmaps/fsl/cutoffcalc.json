@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "cutoffcalc",
+  "properties": {
+    "input_design": {
+      "var_param": "input_design"
+    },
+    "threshold": {
+      "var_param": "threshold"
+    },
+    "tr": {
+      "var_param": "tr"
+    },
+    "lower_limit": {
+      "var_param": "lower_limit"
+    },
+    "example_sigma": {
+      "var_param": "example_sigma"
+    },
+    "verbose_flag": {
+      "var_param": "verbose_flag"
+    },
+    "debug_flag": {
+      "var_param": "debug_flag"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "surf_dist",
+  "properties": {
+    "surface": {
+      "var_param": "surface"
+    },
+    "nodepairs": {
+      "var_param": "nodepairs"
+    },
+    "node_path_do": {
+      "var_param": "node_path_do"
+    },
+    "euclidean": {
+      "var_param": "euclidean"
+    },
+    "euclidian": {
+      "var_param": "euclidian"
+    },
+    "graph": {
+      "var_param": "graph"
+    },
+    "from_node": {
+      "var_param": "from_node"
+    },
+    "to_nodes": {
+      "var_param": "to_nodes"
+    }
+  }
+}

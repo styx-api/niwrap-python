@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "longmc",
+  "properties": {
+    "cross_tp_name": {
+      "var_param": "cross_tp_name"
+    },
+    "base_name": {
+      "var_param": "base_name"
+    },
+    "conform_to_hires": {
+      "var_param": "conform_to_hires"
+    },
+    "no_conform_to_hires": {
+      "var_param": "no_conform_to_hires"
+    },
+    "subjects_dir": {
+      "var_param": "subjects_dir"
+    },
+    "subject_name": {
+      "var_param": "subject_name"
+    },
+    "no_force_update": {
+      "var_param": "no_force_update"
+    }
+  }
+}

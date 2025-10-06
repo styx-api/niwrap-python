@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "thickdiffmap",
+  "properties": {
+    "subjscan1": {
+      "var_param": "subjscan1"
+    },
+    "subjscan2": {
+      "var_param": "subjscan2"
+    },
+    "commonsubj": {
+      "var_param": "commonsubj"
+    },
+    "hemi": {
+      "var_param": "hemi"
+    },
+    "steps": {
+      "var_param": "steps"
+    }
+  }
+}

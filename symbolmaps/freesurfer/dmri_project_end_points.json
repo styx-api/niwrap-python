@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "dmri_project_end_points",
+  "properties": {
+    "streamline_file": {
+      "var_param": "streamline_file"
+    },
+    "left_surface_file": {
+      "var_param": "left_surface_file"
+    },
+    "right_surface_file": {
+      "var_param": "right_surface_file"
+    },
+    "left_overlay_file": {
+      "var_param": "left_overlay_file"
+    },
+    "right_overlay_file": {
+      "var_param": "right_overlay_file"
+    },
+    "reference_image": {
+      "var_param": "reference_image"
+    }
+  }
+}

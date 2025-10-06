@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "grad_unwarp",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "seriesno": {
+      "var_param": "seriesno"
+    },
+    "unwarp_type": {
+      "var_param": "unwarp_type"
+    },
+    "nojac": {
+      "var_param": "nojac"
+    },
+    "corfov": {
+      "var_param": "corfov"
+    },
+    "cor": {
+      "var_param": "cor"
+    },
+    "interp": {
+      "var_param": "interp"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "matlab_binary": {
+      "var_param": "matlab_binary"
+    }
+  }
+}

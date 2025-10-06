@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mri_relabel_nonwm_hypos",
+  "properties": {
+    "inputseg": {
+      "var_param": "inputseg"
+    },
+    "outputseg": {
+      "var_param": "outputseg"
+    },
+    "segments": {
+      "var_param": "segments"
+    },
+    "seg_default": {
+      "var_param": "seg_default"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tnorm",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "norm2": {
+      "var_param": "norm2"
+    },
+    "normR": {
+      "var_param": "norm_r"
+    },
+    "norm1": {
+      "var_param": "norm1"
+    },
+    "normx": {
+      "var_param": "normx"
+    },
+    "polort": {
+      "var_param": "polort"
+    },
+    "L1fit": {
+      "var_param": "l1fit"
+    },
+    "input_dataset": {
+      "var_param": "input_dataset"
+    }
+  }
+}

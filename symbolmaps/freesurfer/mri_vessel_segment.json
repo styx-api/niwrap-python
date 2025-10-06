@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "mri_vessel_segment",
+  "properties": {
+    "t1_image": {
+      "var_param": "t1_image"
+    },
+    "t2_image": {
+      "var_param": "t2_image"
+    },
+    "aseg_file": {
+      "var_param": "aseg_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "shape_flag": {
+      "var_param": "shape_flag"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "fn_root_make_params_and_execute": "fs_tutorial_data",
+  "properties": {
+    "rsync_options": {
+      "var_param": "rsync_options"
+    }
+  }
+}

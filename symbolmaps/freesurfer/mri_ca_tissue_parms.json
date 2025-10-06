@@ -1,0 +1,17 @@
+{
+  "fn_root_make_params_and_execute": "mri_ca_tissue_parms",
+  "properties": {
+    "subjects": {
+      "var_param": "subjects"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "spacing_flag": {
+      "var_param": "spacing_flag"
+    },
+    "gradient_flag": {
+      "var_param": "gradient_flag"
+    }
+  }
+}

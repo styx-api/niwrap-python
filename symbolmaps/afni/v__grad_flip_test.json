@@ -1,0 +1,47 @@
+{
+  "fn_root_make_params_and_execute": "v__grad_flip_test",
+  "properties": {
+    "dwi": {
+      "var_param": "dwi"
+    },
+    "grad_row_vec": {
+      "var_param": "grad_row_vec"
+    },
+    "grad_col_vec": {
+      "var_param": "grad_col_vec"
+    },
+    "grad_col_matA": {
+      "var_param": "grad_col_mat_a"
+    },
+    "grad_col_matT": {
+      "var_param": "grad_col_mat_t"
+    },
+    "mask": {
+      "var_param": "mask"
+    },
+    "bvals": {
+      "var_param": "bvals"
+    },
+    "thresh_fa": {
+      "var_param": "thresh_fa"
+    },
+    "thresh_len": {
+      "var_param": "thresh_len"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "check_abs_min": {
+      "var_param": "check_abs_min"
+    },
+    "scale_out_1000": {
+      "var_param": "scale_out_1000"
+    },
+    "wdir": {
+      "var_param": "wdir"
+    },
+    "do_clean": {
+      "var_param": "do_clean"
+    }
+  }
+}

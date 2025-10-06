@@ -1,0 +1,62 @@
+{
+  "fn_root_make_params_and_execute": "mri_convert",
+  "properties": {
+    "inp_volume": {
+      "var_param": "inp_volume"
+    },
+    "out_volume": {
+      "var_param": "out_volume"
+    },
+    "read_only": {
+      "var_param": "read_only"
+    },
+    "no_write": {
+      "var_param": "no_write"
+    },
+    "in_info": {
+      "var_param": "in_info"
+    },
+    "out_info": {
+      "var_param": "out_info"
+    },
+    "in_stats": {
+      "var_param": "in_stats"
+    },
+    "out_stats": {
+      "var_param": "out_stats"
+    },
+    "upsample": {
+      "var_param": "upsample"
+    },
+    "force_ras_good": {
+      "var_param": "force_ras_good"
+    },
+    "apply_transform": {
+      "var_param": "apply_transform"
+    },
+    "apply_inverse_transform": {
+      "var_param": "apply_inverse_transform"
+    },
+    "in_type": {
+      "var_param": "in_type"
+    },
+    "out_type": {
+      "var_param": "out_type"
+    },
+    "in_orientation": {
+      "var_param": "in_orientation"
+    },
+    "out_orientation": {
+      "var_param": "out_orientation"
+    },
+    "scale_factor": {
+      "var_param": "scale_factor"
+    },
+    "bfile_little_endian": {
+      "var_param": "bfile_little_endian"
+    },
+    "sphinx": {
+      "var_param": "sphinx"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "table2map",
+  "properties": {
+    "input_table": {
+      "var_param": "input_table"
+    },
+    "output_map": {
+      "var_param": "output_map"
+    },
+    "segmentation": {
+      "var_param": "segmentation"
+    },
+    "parcellation": {
+      "var_param": "parcellation"
+    },
+    "columns": {
+      "var_param": "columns"
+    },
+    "lookup_table": {
+      "var_param": "lookup_table"
+    }
+  }
+}

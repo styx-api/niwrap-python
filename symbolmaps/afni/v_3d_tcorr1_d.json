@@ -1,0 +1,29 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_tcorr1_d",
+  "properties": {
+    "ktaub": {
+      "var_param": "ktaub"
+    },
+    "num_threads": {
+      "var_param": "num_threads"
+    },
+    "outputtype": {
+      "var_param": "outputtype"
+    },
+    "pearson": {
+      "var_param": "pearson"
+    },
+    "quadrant": {
+      "var_param": "quadrant"
+    },
+    "spearman": {
+      "var_param": "spearman"
+    },
+    "xset": {
+      "var_param": "xset"
+    },
+    "y_1d": {
+      "var_param": "y_1d"
+    }
+  }
+}

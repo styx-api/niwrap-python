@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "myget",
+  "properties": {
+    "protocol_version": {
+      "var_param": "protocol_version"
+    },
+    "url": {
+      "var_param": "url"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    }
+  }
+}

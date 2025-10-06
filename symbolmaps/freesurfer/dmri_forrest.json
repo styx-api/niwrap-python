@@ -1,0 +1,32 @@
+{
+  "fn_root_make_params_and_execute": "dmri_forrest",
+  "properties": {
+    "test_dir": {
+      "var_param": "test_dir"
+    },
+    "train_file": {
+      "var_param": "train_file"
+    },
+    "mask_file": {
+      "var_param": "mask_file"
+    },
+    "tract_files": {
+      "var_param": "tract_files"
+    },
+    "seg_file": {
+      "var_param": "seg_file"
+    },
+    "diff_file": {
+      "var_param": "diff_file"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "checkopts": {
+      "var_param": "checkopts"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

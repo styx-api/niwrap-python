@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "mri_map_cpdat",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "output_file": {
+      "var_param": "output_file"
+    },
+    "lta_file": {
+      "var_param": "lta_file"
+    },
+    "to_mni305": {
+      "var_param": "to_mni305"
+    },
+    "from_mni305": {
+      "var_param": "from_mni305"
+    },
+    "subject_list_file": {
+      "var_param": "subject_list_file"
+    }
+  }
+}

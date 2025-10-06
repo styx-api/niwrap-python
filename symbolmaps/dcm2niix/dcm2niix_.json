@@ -1,0 +1,92 @@
+{
+  "fn_root_make_params_and_execute": "dcm2niix_",
+  "properties": {
+    "compression_level": {
+      "var_param": "compression_level"
+    },
+    "adjacent": {
+      "var_param": "adjacent"
+    },
+    "bids": {
+      "var_param": "bids"
+    },
+    "bids_anon": {
+      "var_param": "bids_anon"
+    },
+    "comment": {
+      "var_param": "comment"
+    },
+    "depth": {
+      "var_param": "depth"
+    },
+    "export_format": {
+      "var_param": "export_format"
+    },
+    "filename": {
+      "var_param": "filename"
+    },
+    "defaults": {
+      "var_param": "defaults"
+    },
+    "ignore_derived": {
+      "var_param": "ignore_derived"
+    },
+    "scaling": {
+      "var_param": "scaling"
+    },
+    "merge_2d": {
+      "var_param": "merge_2d"
+    },
+    "series_number": {
+      "var_param": "series_number"
+    },
+    "output_dir": {
+      "var_param": "output_dir"
+    },
+    "philips_scaling": {
+      "var_param": "philips_scaling"
+    },
+    "search_mode": {
+      "var_param": "search_mode"
+    },
+    "rename": {
+      "var_param": "rename"
+    },
+    "single_file": {
+      "var_param": "single_file"
+    },
+    "update_check": {
+      "var_param": "update_check"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    },
+    "conflict_behavior": {
+      "var_param": "conflict_behavior"
+    },
+    "crop_3d": {
+      "var_param": "crop_3d"
+    },
+    "compression": {
+      "var_param": "compression"
+    },
+    "endian": {
+      "var_param": "endian"
+    },
+    "progress": {
+      "var_param": "progress"
+    },
+    "ignore_trigger": {
+      "var_param": "ignore_trigger"
+    },
+    "terse": {
+      "var_param": "terse"
+    },
+    "xml": {
+      "var_param": "xml_"
+    },
+    "input_dir": {
+      "var_param": "input_dir"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_nwarp_funcs",
+  "properties": {
+    "input_warp": {
+      "var_param": "input_warp"
+    },
+    "output_prefix": {
+      "var_param": "output_prefix"
+    },
+    "bulk_flag": {
+      "var_param": "bulk_flag"
+    },
+    "shear_flag": {
+      "var_param": "shear_flag"
+    },
+    "vorticity_flag": {
+      "var_param": "vorticity_flag"
+    },
+    "all_flag": {
+      "var_param": "all_flag"
+    }
+  }
+}

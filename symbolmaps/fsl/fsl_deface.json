@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "fsl_deface",
+  "properties": {
+    "infile": {
+      "var_param": "infile"
+    },
+    "outfile": {
+      "var_param": "outfile"
+    },
+    "cropped_defacing_flag": {
+      "var_param": "cropped_defacing_flag"
+    },
+    "defacing_mask": {
+      "var_param": "defacing_mask"
+    },
+    "cropped_struc": {
+      "var_param": "cropped_struc"
+    },
+    "orig_to_std_mat": {
+      "var_param": "orig_to_std_mat"
+    },
+    "orig_to_cropped_mat": {
+      "var_param": "orig_to_cropped_mat"
+    },
+    "cropped_to_std_mat": {
+      "var_param": "cropped_to_std_mat"
+    },
+    "shift_nud": {
+      "var_param": "shift_nud"
+    },
+    "fractional_intensity": {
+      "var_param": "fractional_intensity"
+    },
+    "bias_correct_flag": {
+      "var_param": "bias_correct_flag"
+    },
+    "center_of_gravity": {
+      "var_param": "center_of_gravity"
+    },
+    "qc_images": {
+      "var_param": "qc_images"
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "fn_root_make_params_and_execute": "mri_volcluster",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "summary_file": {
+      "var_param": "summary_file"
+    },
+    "output_volid": {
+      "var_param": "output_volid"
+    },
+    "output_cluster_num_volid": {
+      "var_param": "output_cluster_num_volid"
+    },
+    "cwsig_volid": {
+      "var_param": "cwsig_volid"
+    },
+    "pointset_file": {
+      "var_param": "pointset_file"
+    },
+    "min_threshold": {
+      "var_param": "min_threshold"
+    },
+    "max_threshold": {
+      "var_param": "max_threshold"
+    },
+    "sign": {
+      "var_param": "sign"
+    },
+    "no_adjust_flag": {
+      "var_param": "no_adjust_flag"
+    },
+    "match_value": {
+      "var_param": "match_value"
+    },
+    "cwpval_threshold": {
+      "var_param": "cwpval_threshold"
+    },
+    "registration_file": {
+      "var_param": "registration_file"
+    },
+    "mni152reg_flag": {
+      "var_param": "mni152reg_flag"
+    },
+    "regheader_subject": {
+      "var_param": "regheader_subject"
+    },
+    "fsaverage_flag": {
+      "var_param": "fsaverage_flag"
+    },
+    "frame_number": {
+      "var_param": "frame_number"
+    },
+    "csd_files": {
+      "var_param": "csd_files"
+    },
+    "cwsig_map": {
+      "var_param": "cwsig_map"
+    },
+    "vwsig_map": {
+      "var_param": "vwsig_map"
+    },
+    "max_cwpval_file": {
+      "var_param": "max_cwpval_file"
+    },
+    "csdpdf_file": {
+      "var_param": "csdpdf_file"
+    },
+    "csdpdf_only_flag": {
+      "var_param": "csdpdf_only_flag"
+    },
+    "fwhm_value": {
+      "var_param": "fwhm_value"
+    },
+    "fwhm_file": {
+      "var_param": "fwhm_file"
+    },
+    "min_size": {
+      "var_param": "min_size"
+    },
+    "min_size_vox": {
+      "var_param": "min_size_vox"
+    },
+    "min_distance": {
+      "var_param": "min_distance"
+    },
+    "allow_diag_flag": {
+      "var_param": "allow_diag_flag"
+    },
+    "bonferroni_number": {
+      "var_param": "bonferroni_number"
+    },
+    "bonferroni_max_number": {
+      "var_param": "bonferroni_max_number"
+    },
+    "sig2p_max_flag": {
+      "var_param": "sig2p_max_flag"
+    },
+    "gte_flag": {
+      "var_param": "gte_flag"
+    },
+    "mask_volid": {
+      "var_param": "mask_volid"
+    },
+    "mask_type": {
+      "var_param": "mask_type"
+    },
+    "mask_frame": {
+      "var_param": "mask_frame"
+    },
+    "mask_threshold": {
+      "var_param": "mask_threshold"
+    },
+    "mask_sign": {
+      "var_param": "mask_sign"
+    },
+    "mask_invert_flag": {
+      "var_param": "mask_invert_flag"
+    },
+    "out_mask_volid": {
+      "var_param": "out_mask_volid"
+    },
+    "out_mask_type": {
+      "var_param": "out_mask_type"
+    },
+    "label_file": {
+      "var_param": "label_file"
+    },
+    "nlabel_cluster": {
+      "var_param": "nlabel_cluster"
+    },
+    "label_base": {
+      "var_param": "label_base"
+    },
+    "synth_func": {
+      "var_param": "synth_func"
+    },
+    "diagnostic_level": {
+      "var_param": "diagnostic_level"
+    },
+    "fill_params": {
+      "var_param": "fill_params"
+    },
+    "help_flag": {
+      "var_param": "help_flag"
+    }
+  }
+}

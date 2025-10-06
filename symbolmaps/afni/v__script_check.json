@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "v__script_check",
+  "properties": {
+    "clean": {
+      "var_param": "clean"
+    },
+    "suffix": {
+      "var_param": "suffix"
+    },
+    "scripts": {
+      "var_param": "scripts"
+    }
+  }
+}

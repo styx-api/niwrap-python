@@ -1,0 +1,38 @@
+{
+  "fn_root_make_params_and_execute": "v_3d_multi_thresh",
+  "properties": {
+    "mthresh_file": {
+      "var_param": "mthresh_file"
+    },
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "index": {
+      "var_param": "index"
+    },
+    "signed_flag": {
+      "var_param": "signed_flag"
+    },
+    "positive_sign_flag": {
+      "var_param": "positive_sign_flag"
+    },
+    "negative_sign_flag": {
+      "var_param": "negative_sign_flag"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "mask_only_flag": {
+      "var_param": "mask_only_flag"
+    },
+    "all_mask": {
+      "var_param": "all_mask"
+    },
+    "no_zero_flag": {
+      "var_param": "no_zero_flag"
+    },
+    "quiet_flag": {
+      "var_param": "quiet_flag"
+    }
+  }
+}

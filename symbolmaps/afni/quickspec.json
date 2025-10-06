@@ -1,0 +1,26 @@
+{
+  "fn_root_make_params_and_execute": "quickspec",
+  "properties": {
+    "tn": {
+      "var_param": "tn"
+    },
+    "tsn": {
+      "var_param": "tsn"
+    },
+    "tsnad": {
+      "var_param": "tsnad"
+    },
+    "tsnadm": {
+      "var_param": "tsnadm"
+    },
+    "tsnadl": {
+      "var_param": "tsnadl"
+    },
+    "spec": {
+      "var_param": "spec"
+    },
+    "help": {
+      "var_param": "help_"
+    }
+  }
+}

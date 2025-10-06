@@ -1,0 +1,23 @@
+{
+  "fn_root_make_params_and_execute": "v__help_afni",
+  "properties": {
+    "match": {
+      "var_param": "match"
+    },
+    "lynx": {
+      "var_param": "lynx"
+    },
+    "vi": {
+      "var_param": "vi"
+    },
+    "less": {
+      "var_param": "less"
+    },
+    "nedit": {
+      "var_param": "nedit"
+    },
+    "noview": {
+      "var_param": "noview"
+    }
+  }
+}

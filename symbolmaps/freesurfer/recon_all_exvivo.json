@@ -1,0 +1,14 @@
+{
+  "fn_root_make_params_and_execute": "recon_all_exvivo",
+  "properties": {
+    "subject_id": {
+      "var_param": "subject_id"
+    },
+    "hemisphere": {
+      "var_param": "hemisphere"
+    },
+    "nocerebellum": {
+      "var_param": "nocerebellum"
+    }
+  }
+}

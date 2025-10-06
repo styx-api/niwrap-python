@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "fat_mvm_scripter_py",
+  "properties": {
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "table": {
+      "var_param": "table"
+    },
+    "log": {
+      "var_param": "log"
+    },
+    "vars": {
+      "var_param": "vars_"
+    },
+    "file_vars": {
+      "var_param": "file_vars"
+    },
+    "Pars": {
+      "var_param": "pars"
+    },
+    "file_Pars": {
+      "var_param": "file_pars"
+    },
+    "rois": {
+      "var_param": "rois"
+    },
+    "file_rois": {
+      "var_param": "file_rois"
+    },
+    "no_posthoc": {
+      "var_param": "no_posthoc"
+    },
+    "NA_warn_off": {
+      "var_param": "na_warn_off"
+    },
+    "subnet_pref": {
+      "var_param": "subnet_pref"
+    },
+    "cat_pair_off": {
+      "var_param": "cat_pair_off"
+    }
+  }
+}

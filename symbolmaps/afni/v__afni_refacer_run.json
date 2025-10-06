@@ -1,0 +1,44 @@
+{
+  "fn_root_make_params_and_execute": "v__afni_refacer_run",
+  "properties": {
+    "input_file": {
+      "var_param": "input_file"
+    },
+    "mode_deface": {
+      "var_param": "mode_deface"
+    },
+    "mode_reface": {
+      "var_param": "mode_reface"
+    },
+    "mode_reface_plus": {
+      "var_param": "mode_reface_plus"
+    },
+    "mode_all": {
+      "var_param": "mode_all"
+    },
+    "prefix": {
+      "var_param": "prefix"
+    },
+    "anonymize_output": {
+      "var_param": "anonymize_output"
+    },
+    "cost_function": {
+      "var_param": "cost_function"
+    },
+    "shell_option": {
+      "var_param": "shell_option"
+    },
+    "no_clean": {
+      "var_param": "no_clean"
+    },
+    "no_images": {
+      "var_param": "no_images"
+    },
+    "overwrite": {
+      "var_param": "overwrite"
+    },
+    "verbose": {
+      "var_param": "verbose"
+    }
+  }
+}

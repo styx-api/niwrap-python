@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "label_subject_flash",
+  "properties": {
+    "tissue_params": {
+      "var_param": "tissue_params"
+    },
+    "norm_volume": {
+      "var_param": "norm_volume"
+    },
+    "transform_file": {
+      "var_param": "transform_file"
+    },
+    "classifier_array": {
+      "var_param": "classifier_array"
+    },
+    "aseg_output": {
+      "var_param": "aseg_output"
+    }
+  }
+}

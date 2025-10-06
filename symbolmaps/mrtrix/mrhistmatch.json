@@ -1,0 +1,59 @@
+{
+  "fn_root_make_params_and_execute": "mrhistmatch",
+  "properties": {
+    "mask_input": {
+      "var_param": "mask_input"
+    },
+    "mask_target": {
+      "var_param": "mask_target"
+    },
+    "bins": {
+      "var_param": "bins"
+    },
+    "info": {
+      "var_param": "info"
+    },
+    "quiet": {
+      "var_param": "quiet"
+    },
+    "debug": {
+      "var_param": "debug"
+    },
+    "force": {
+      "var_param": "force"
+    },
+    "nthreads": {
+      "var_param": "nthreads"
+    },
+    "config": {
+      "var_param": "config",
+      "fn_struct_make_params": "mrhistmatch_config_params",
+      "properties": {
+        "key": {
+          "var_param": "key"
+        },
+        "value": {
+          "var_param": "value"
+        }
+      }
+    },
+    "help": {
+      "var_param": "help_"
+    },
+    "version": {
+      "var_param": "version"
+    },
+    "type": {
+      "var_param": "type_"
+    },
+    "input": {
+      "var_param": "input_"
+    },
+    "target": {
+      "var_param": "target"
+    },
+    "output": {
+      "var_param": "output"
+    }
+  }
+}
