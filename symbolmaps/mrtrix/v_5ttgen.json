@@ -2,7 +2,77 @@
   "fn_root_make_params_and_execute": "v_5ttgen",
   "properties": {
     "algorithm": {
-      "var_param": "algorithm"
+      "var_param": "algorithm",
+      "variants": {
+        "freesurfer": {
+          "fn_struct_make_params": "v_5ttgen_freesurfer_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "output": {
+              "var_param": "output"
+            },
+            "lut": {
+              "var_param": "lut"
+            }
+          }
+        },
+        "fsl": {
+          "fn_struct_make_params": "v_5ttgen_fsl_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "output": {
+              "var_param": "output"
+            },
+            "t2": {
+              "var_param": "t2"
+            },
+            "mask": {
+              "var_param": "mask"
+            },
+            "premasked": {
+              "var_param": "premasked"
+            }
+          }
+        },
+        "gif": {
+          "fn_struct_make_params": "v_5ttgen_gif_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "output": {
+              "var_param": "output"
+            }
+          }
+        },
+        "hsvs": {
+          "fn_struct_make_params": "v_5ttgen_hsvs_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "output": {
+              "var_param": "output"
+            },
+            "template": {
+              "var_param": "template"
+            },
+            "hippocampi": {
+              "var_param": "hippocampi"
+            },
+            "thalami": {
+              "var_param": "thalami"
+            },
+            "white_stem": {
+              "var_param": "white_stem"
+            }
+          }
+        }
+      }
     },
     "nocrop": {
       "var_param": "nocrop"

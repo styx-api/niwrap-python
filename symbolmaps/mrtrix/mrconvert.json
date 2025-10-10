@@ -62,10 +62,46 @@
       }
     },
     "copy_properties": {
-      "var_param": "copy_properties"
+      "var_param": "copy_properties",
+      "variants": {
+        "VariousString": {
+          "fn_struct_make_params": "mrconvert_various_string_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile": {
+          "fn_struct_make_params": "mrconvert_various_file_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     },
     "strides": {
-      "var_param": "strides"
+      "var_param": "strides",
+      "variants": {
+        "VariousString_1": {
+          "fn_struct_make_params": "mrconvert_various_string_1_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile_1": {
+          "fn_struct_make_params": "mrconvert_various_file_1_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     },
     "datatype": {
       "var_param": "datatype"

@@ -26,7 +26,28 @@
       "var_param": "input_image"
     },
     "output": {
-      "var_param": "output"
+      "var_param": "output",
+      "variants": {
+        "correctedOutput": {
+          "fn_struct_make_params": "denoise_image_corrected_output_params",
+          "properties": {
+            "correctedOutputFileName": {
+              "var_param": "corrected_output_file_name"
+            }
+          }
+        },
+        "correctedOutputNoise": {
+          "fn_struct_make_params": "denoise_image_corrected_output_noise_params",
+          "properties": {
+            "correctedOutputFileName": {
+              "var_param": "corrected_output_file_name"
+            },
+            "noiseFile": {
+              "var_param": "noise_file"
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -41,7 +41,25 @@
       "var_param": "input_"
     },
     "output": {
-      "var_param": "output"
+      "var_param": "output",
+      "variants": {
+        "VariousString": {
+          "fn_struct_make_params": "transformcompose_various_string_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile": {
+          "fn_struct_make_params": "transformcompose_various_file_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     }
   }
 }

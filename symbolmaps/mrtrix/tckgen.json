@@ -123,7 +123,25 @@
       "fn_struct_make_params": "tckgen_include_params",
       "properties": {
         "spec": {
-          "var_param": "spec"
+          "var_param": "spec",
+          "variants": {
+            "VariousString": {
+              "fn_struct_make_params": "tckgen_various_string_params",
+              "properties": {
+                "obj": {
+                  "var_param": "obj"
+                }
+              }
+            },
+            "VariousFile": {
+              "fn_struct_make_params": "tckgen_various_file_params",
+              "properties": {
+                "obj": {
+                  "var_param": "obj"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -141,7 +159,25 @@
       "fn_struct_make_params": "tckgen_exclude_params",
       "properties": {
         "spec": {
-          "var_param": "spec"
+          "var_param": "spec",
+          "variants": {
+            "VariousString_1": {
+              "fn_struct_make_params": "tckgen_various_string_1_params",
+              "properties": {
+                "obj": {
+                  "var_param": "obj"
+                }
+              }
+            },
+            "VariousFile_1": {
+              "fn_struct_make_params": "tckgen_various_file_1_params",
+              "properties": {
+                "obj": {
+                  "var_param": "obj"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -150,7 +186,25 @@
       "fn_struct_make_params": "tckgen_mask_params",
       "properties": {
         "spec": {
-          "var_param": "spec"
+          "var_param": "spec",
+          "variants": {
+            "VariousString_2": {
+              "fn_struct_make_params": "tckgen_various_string_2_params",
+              "properties": {
+                "obj": {
+                  "var_param": "obj"
+                }
+              }
+            },
+            "VariousFile_2": {
+              "fn_struct_make_params": "tckgen_various_file_2_params",
+              "properties": {
+                "obj": {
+                  "var_param": "obj"
+                }
+              }
+            }
+          }
         }
       }
     },

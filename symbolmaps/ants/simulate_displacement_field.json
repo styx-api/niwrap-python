@@ -23,7 +23,28 @@
       "var_param": "enforce_stationary_boundary"
     },
     "displacement_specific_options": {
-      "var_param": "displacement_specific_options"
+      "var_param": "displacement_specific_options",
+      "variants": {
+        "bspline_options": {
+          "fn_struct_make_params": "simulate_displacement_field_bspline_options_params",
+          "properties": {
+            "number_of_fitting_levels": {
+              "var_param": "number_of_fitting_levels"
+            },
+            "number_of_control_points": {
+              "var_param": "number_of_control_points"
+            }
+          }
+        },
+        "exponential_options": {
+          "fn_struct_make_params": "simulate_displacement_field_exponential_options_params",
+          "properties": {
+            "smoothing_standard_deviation": {
+              "var_param": "smoothing_standard_deviation"
+            }
+          }
+        }
+      }
     }
   }
 }

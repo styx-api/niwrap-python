@@ -248,7 +248,25 @@
       }
     },
     "interpolation": {
-      "var_param": "interpolation"
+      "var_param": "interpolation",
+      "variants": {
+        "nn": {
+          "fn_struct_make_params": "greedy_nn_params",
+          "properties": {}
+        },
+        "linear": {
+          "fn_struct_make_params": "greedy_linear_params",
+          "properties": {}
+        },
+        "label": {
+          "fn_struct_make_params": "greedy_label_params",
+          "properties": {
+            "sigma_spec": {
+              "var_param": "sigma_spec"
+            }
+          }
+        }
+      }
     },
     "reslice_background": {
       "var_param": "reslice_background"

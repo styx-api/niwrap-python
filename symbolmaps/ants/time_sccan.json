@@ -50,7 +50,31 @@
       "var_param": "labelsimage_to_matrix"
     },
     "network": {
-      "var_param": "network"
+      "var_param": "network",
+      "variants": {
+        "network_scca": {
+          "fn_struct_make_params": "time_sccan_network_scca_params",
+          "properties": {
+            "time_matrix": {
+              "var_param": "time_matrix"
+            },
+            "label_matrix": {
+              "var_param": "label_matrix"
+            }
+          }
+        },
+        "network_region_averaging": {
+          "fn_struct_make_params": "time_sccan_network_region_averaging_params",
+          "properties": {
+            "time_matrix": {
+              "var_param": "time_matrix"
+            },
+            "label_matrix": {
+              "var_param": "label_matrix"
+            }
+          }
+        }
+      }
     }
   }
 }

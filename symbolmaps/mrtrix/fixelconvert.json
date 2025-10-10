@@ -53,10 +53,46 @@
       "var_param": "version"
     },
     "fixel_in": {
-      "var_param": "fixel_in"
+      "var_param": "fixel_in",
+      "variants": {
+        "VariousString": {
+          "fn_struct_make_params": "fixelconvert_various_string_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile": {
+          "fn_struct_make_params": "fixelconvert_various_file_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     },
     "fixel_out": {
-      "var_param": "fixel_out"
+      "var_param": "fixel_out",
+      "variants": {
+        "VariousString_1": {
+          "fn_struct_make_params": "fixelconvert_various_string_1_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile_1": {
+          "fn_struct_make_params": "fixelconvert_various_file_1_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -41,7 +41,25 @@
       "var_param": "version"
     },
     "in": {
-      "var_param": "in_"
+      "var_param": "in_",
+      "variants": {
+        "VariousString": {
+          "fn_struct_make_params": "fixel2peaks_various_string_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile": {
+          "fn_struct_make_params": "fixel2peaks_various_file_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     },
     "out": {
       "var_param": "out"

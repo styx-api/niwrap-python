@@ -11,7 +11,47 @@
       "var_param": "output_image"
     },
     "region_specification": {
-      "var_param": "region_specification"
+      "var_param": "region_specification",
+      "variants": {
+        "region_min_max_index": {
+          "fn_struct_make_params": "extract_region_from_image_region_min_max_index_params",
+          "properties": {
+            "min_index": {
+              "var_param": "min_index"
+            },
+            "max_index": {
+              "var_param": "max_index"
+            }
+          }
+        },
+        "region_label": {
+          "fn_struct_make_params": "extract_region_from_image_region_label_params",
+          "properties": {
+            "label": {
+              "var_param": "label"
+            }
+          }
+        },
+        "region_domain_image": {
+          "fn_struct_make_params": "extract_region_from_image_region_domain_image_params",
+          "properties": {
+            "domain_image": {
+              "var_param": "domain_image"
+            }
+          }
+        },
+        "region_label_with_image": {
+          "fn_struct_make_params": "extract_region_from_image_region_label_with_image_params",
+          "properties": {
+            "label": {
+              "var_param": "label"
+            },
+            "label_image": {
+              "var_param": "label_image"
+            }
+          }
+        }
+      }
     }
   }
 }

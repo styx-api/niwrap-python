@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_afni"
-version = "0.6.3"
+version = "0.7.0"
 description = "Neuroimaging wrappers."
 license = "MIT"
 authors = [{ name = "CMI DAIR" }]

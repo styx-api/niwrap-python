@@ -5,7 +5,1441 @@
       "var_param": "input_"
     },
     "operations": {
-      "var_param": "operations"
+      "var_param": "operations",
+      "variants": {
+        "accum": {
+          "fn_struct_make_params": "c3d_accum_params",
+          "properties": {
+            "accum": {
+              "var_param": "accum"
+            }
+          }
+        },
+        "acos": {
+          "fn_struct_make_params": "c3d_acos_params",
+          "properties": {
+            "acos": {
+              "var_param": "acos"
+            }
+          }
+        },
+        "add": {
+          "fn_struct_make_params": "c3d_add_params",
+          "properties": {
+            "add": {
+              "var_param": "add"
+            }
+          }
+        },
+        "align_landmarks": {
+          "fn_struct_make_params": "c3d_align_landmarks_params",
+          "properties": {
+            "align_landmarks": {
+              "var_param": "align_landmarks"
+            }
+          }
+        },
+        "anisotropic_diffusion": {
+          "fn_struct_make_params": "c3d_anisotropic_diffusion_params",
+          "properties": {
+            "anisotropic_diffusion": {
+              "var_param": "anisotropic_diffusion"
+            }
+          }
+        },
+        "antialias": {
+          "fn_struct_make_params": "c3d_antialias_params",
+          "properties": {
+            "antialias": {
+              "var_param": "antialias"
+            }
+          }
+        },
+        "set": {
+          "fn_struct_make_params": "c3d_set_params",
+          "properties": {
+            "set": {
+              "var_param": "set_"
+            }
+          }
+        },
+        "asin": {
+          "fn_struct_make_params": "c3d_asin_params",
+          "properties": {
+            "asin": {
+              "var_param": "asin"
+            }
+          }
+        },
+        "atan2": {
+          "fn_struct_make_params": "c3d_atan2_params",
+          "properties": {
+            "atan2": {
+              "var_param": "atan2"
+            }
+          }
+        },
+        "background": {
+          "fn_struct_make_params": "c3d_background_params",
+          "properties": {
+            "background": {
+              "var_param": "background"
+            }
+          }
+        },
+        "n4_bias_correction": {
+          "fn_struct_make_params": "c3d_n4_bias_correction_params",
+          "properties": {
+            "n4_bias_correction": {
+              "var_param": "n4_bias_correction"
+            }
+          }
+        },
+        "binarize": {
+          "fn_struct_make_params": "c3d_binarize_params",
+          "properties": {
+            "binarize": {
+              "var_param": "binarize"
+            }
+          }
+        },
+        "canny": {
+          "fn_struct_make_params": "c3d_canny_params",
+          "properties": {
+            "canny": {
+              "var_param": "canny"
+            }
+          }
+        },
+        "ceil": {
+          "fn_struct_make_params": "c3d_ceil_params",
+          "properties": {
+            "ceil": {
+              "var_param": "ceil"
+            }
+          }
+        },
+        "centroid": {
+          "fn_struct_make_params": "c3d_centroid_params",
+          "properties": {
+            "centroid": {
+              "var_param": "centroid"
+            }
+          }
+        },
+        "centroid_mark": {
+          "fn_struct_make_params": "c3d_centroid_mark_params",
+          "properties": {
+            "centroid_mark": {
+              "var_param": "centroid_mark"
+            }
+          }
+        },
+        "connected_components": {
+          "fn_struct_make_params": "c3d_connected_components_params",
+          "properties": {
+            "connected_components": {
+              "var_param": "connected_components"
+            }
+          }
+        },
+        "clear": {
+          "fn_struct_make_params": "c3d_clear_params",
+          "properties": {
+            "clear": {
+              "var_param": "clear_"
+            }
+          }
+        },
+        "clip": {
+          "fn_struct_make_params": "c3d_clip_params",
+          "properties": {
+            "clip": {
+              "var_param": "clip"
+            }
+          }
+        },
+        "color_map": {
+          "fn_struct_make_params": "c3d_color_map_params",
+          "properties": {
+            "color_map": {
+              "var_param": "color_map"
+            }
+          }
+        },
+        "compress": {
+          "fn_struct_make_params": "c3d_compress_params",
+          "properties": {
+            "compress": {
+              "var_param": "compress"
+            }
+          }
+        },
+        "no_compress": {
+          "fn_struct_make_params": "c3d_no_compress_params",
+          "properties": {
+            "no_compress": {
+              "var_param": "no_compress"
+            }
+          }
+        },
+        "conv": {
+          "fn_struct_make_params": "c3d_conv_params",
+          "properties": {
+            "conv": {
+              "var_param": "conv"
+            }
+          }
+        },
+        "coordinate_map_voxel": {
+          "fn_struct_make_params": "c3d_coordinate_map_voxel_params",
+          "properties": {
+            "coordinate_map_voxel": {
+              "var_param": "coordinate_map_voxel"
+            }
+          }
+        },
+        "coordinate_map_physical": {
+          "fn_struct_make_params": "c3d_coordinate_map_physical_params",
+          "properties": {
+            "coordinate_map_physical": {
+              "var_param": "coordinate_map_physical"
+            }
+          }
+        },
+        "copy_transform": {
+          "fn_struct_make_params": "c3d_copy_transform_params",
+          "properties": {
+            "copy_transform": {
+              "var_param": "copy_transform"
+            }
+          }
+        },
+        "cos": {
+          "fn_struct_make_params": "c3d_cos_params",
+          "properties": {
+            "cos": {
+              "var_param": "cos"
+            }
+          }
+        },
+        "create": {
+          "fn_struct_make_params": "c3d_create_params",
+          "properties": {
+            "create": {
+              "var_param": "create"
+            }
+          }
+        },
+        "dicom_series_list": {
+          "fn_struct_make_params": "c3d_dicom_series_list_params",
+          "properties": {
+            "dicom_series_list": {
+              "var_param": "dicom_series_list"
+            }
+          }
+        },
+        "dicom_series_read": {
+          "fn_struct_make_params": "c3d_dicom_series_read_params",
+          "properties": {
+            "dicom_series_read": {
+              "var_param": "dicom_series_read"
+            }
+          }
+        },
+        "dilate": {
+          "fn_struct_make_params": "c3d_dilate_params",
+          "properties": {
+            "dilate": {
+              "var_param": "dilate"
+            }
+          }
+        },
+        "divide": {
+          "fn_struct_make_params": "c3d_divide_params",
+          "properties": {
+            "divide": {
+              "var_param": "divide"
+            }
+          }
+        },
+        "duplicate": {
+          "fn_struct_make_params": "c3d_duplicate_params",
+          "properties": {
+            "duplicate": {
+              "var_param": "duplicate"
+            }
+          }
+        },
+        "endaccum": {
+          "fn_struct_make_params": "c3d_endaccum_params",
+          "properties": {
+            "endaccum": {
+              "var_param": "endaccum"
+            }
+          }
+        },
+        "endfor": {
+          "fn_struct_make_params": "c3d_endfor_params",
+          "properties": {
+            "endfor": {
+              "var_param": "endfor"
+            }
+          }
+        },
+        "erode": {
+          "fn_struct_make_params": "c3d_erode_params",
+          "properties": {
+            "erode": {
+              "var_param": "erode"
+            }
+          }
+        },
+        "erf": {
+          "fn_struct_make_params": "c3d_erf_params",
+          "properties": {
+            "erf": {
+              "var_param": "erf"
+            }
+          }
+        },
+        "exp": {
+          "fn_struct_make_params": "c3d_exp_params",
+          "properties": {
+            "exp": {
+              "var_param": "exp"
+            }
+          }
+        },
+        "export_patches": {
+          "fn_struct_make_params": "c3d_export_patches_params",
+          "properties": {
+            "export_patches": {
+              "var_param": "export_patches"
+            }
+          }
+        },
+        "export_patches_aug": {
+          "fn_struct_make_params": "c3d_export_patches_aug_params",
+          "properties": {
+            "export_patches_aug": {
+              "var_param": "export_patches_aug"
+            }
+          }
+        },
+        "extrude_seg": {
+          "fn_struct_make_params": "c3d_extrude_seg_params",
+          "properties": {
+            "extrude_seg": {
+              "var_param": "extrude_seg"
+            }
+          }
+        },
+        "fill_background_with_noise": {
+          "fn_struct_make_params": "c3d_fill_background_with_noise_params",
+          "properties": {
+            "fill_background_with_noise": {
+              "var_param": "fill_background_with_noise"
+            }
+          }
+        },
+        "fft": {
+          "fn_struct_make_params": "c3d_fft_params",
+          "properties": {
+            "fft": {
+              "var_param": "fft"
+            }
+          }
+        },
+        "flip": {
+          "fn_struct_make_params": "c3d_flip_params",
+          "properties": {
+            "flip": {
+              "var_param": "flip"
+            }
+          }
+        },
+        "floor": {
+          "fn_struct_make_params": "c3d_floor_params",
+          "properties": {
+            "floor": {
+              "var_param": "floor"
+            }
+          }
+        },
+        "foreach": {
+          "fn_struct_make_params": "c3d_foreach_params",
+          "properties": {
+            "foreach": {
+              "var_param": "foreach"
+            }
+          }
+        },
+        "foreach_comp": {
+          "fn_struct_make_params": "c3d_foreach_comp_params",
+          "properties": {
+            "foreach_comp": {
+              "var_param": "foreach_comp"
+            }
+          }
+        },
+        "glm": {
+          "fn_struct_make_params": "c3d_glm_params",
+          "properties": {
+            "glm": {
+              "var_param": "glm"
+            }
+          }
+        },
+        "gradient": {
+          "fn_struct_make_params": "c3d_gradient_params",
+          "properties": {
+            "gradient": {
+              "var_param": "gradient"
+            }
+          }
+        },
+        "_help": {
+          "fn_struct_make_params": "c3d__help_params",
+          "properties": {
+            "_help": {
+              "var_param": "v__help"
+            }
+          }
+        },
+        "holefill": {
+          "fn_struct_make_params": "c3d_holefill_params",
+          "properties": {
+            "holefill": {
+              "var_param": "holefill"
+            }
+          }
+        },
+        "hessian_eigenvalues": {
+          "fn_struct_make_params": "c3d_hessian_eigenvalues_params",
+          "properties": {
+            "hessian_eigenvalues": {
+              "var_param": "hessian_eigenvalues"
+            }
+          }
+        },
+        "hessian_objectness": {
+          "fn_struct_make_params": "c3d_hessian_objectness_params",
+          "properties": {
+            "hessian_objectness": {
+              "var_param": "hessian_objectness"
+            }
+          }
+        },
+        "histogram_match": {
+          "fn_struct_make_params": "c3d_histogram_match_params",
+          "properties": {
+            "histogram_match": {
+              "var_param": "histogram_match"
+            }
+          }
+        },
+        "info": {
+          "fn_struct_make_params": "c3d_info_params",
+          "properties": {
+            "info": {
+              "var_param": "info"
+            }
+          }
+        },
+        "info_full": {
+          "fn_struct_make_params": "c3d_info_full_params",
+          "properties": {
+            "info_full": {
+              "var_param": "info_full"
+            }
+          }
+        },
+        "insert": {
+          "fn_struct_make_params": "c3d_insert_params",
+          "properties": {
+            "insert": {
+              "var_param": "insert"
+            }
+          }
+        },
+        "interpolation": {
+          "fn_struct_make_params": "c3d_interpolation_params",
+          "properties": {
+            "interpolation": {
+              "var_param": "interpolation"
+            }
+          }
+        },
+        "iterations": {
+          "fn_struct_make_params": "c3d_iterations_params",
+          "properties": {
+            "iterations": {
+              "var_param": "iterations"
+            }
+          }
+        },
+        "label_overlap": {
+          "fn_struct_make_params": "c3d_label_overlap_params",
+          "properties": {
+            "label_overlap": {
+              "var_param": "label_overlap"
+            }
+          }
+        },
+        "label_statistics": {
+          "fn_struct_make_params": "c3d_label_statistics_params",
+          "properties": {
+            "label_statistics": {
+              "var_param": "label_statistics"
+            }
+          }
+        },
+        "landmarks_to_spheres": {
+          "fn_struct_make_params": "c3d_landmarks_to_spheres_params",
+          "properties": {
+            "landmarks_to_spheres": {
+              "var_param": "landmarks_to_spheres"
+            }
+          }
+        },
+        "laplacian": {
+          "fn_struct_make_params": "c3d_laplacian_params",
+          "properties": {
+            "laplacian": {
+              "var_param": "laplacian"
+            }
+          }
+        },
+        "levelset": {
+          "fn_struct_make_params": "c3d_levelset_params",
+          "properties": {
+            "levelset": {
+              "var_param": "levelset"
+            }
+          }
+        },
+        "levelset_curvature": {
+          "fn_struct_make_params": "c3d_levelset_curvature_params",
+          "properties": {
+            "levelset_curvature": {
+              "var_param": "levelset_curvature"
+            }
+          }
+        },
+        "levelset_advection": {
+          "fn_struct_make_params": "c3d_levelset_advection_params",
+          "properties": {
+            "levelset_advection": {
+              "var_param": "levelset_advection"
+            }
+          }
+        },
+        "log": {
+          "fn_struct_make_params": "c3d_log_params",
+          "properties": {
+            "log": {
+              "var_param": "log"
+            }
+          }
+        },
+        "log10": {
+          "fn_struct_make_params": "c3d_log10_params",
+          "properties": {
+            "log10": {
+              "var_param": "log10"
+            }
+          }
+        },
+        "manual": {
+          "fn_struct_make_params": "c3d_manual_params",
+          "properties": {
+            "manual": {
+              "var_param": "manual"
+            }
+          }
+        },
+        "match_bounding_box": {
+          "fn_struct_make_params": "c3d_match_bounding_box_params",
+          "properties": {
+            "match_bounding_box": {
+              "var_param": "match_bounding_box"
+            }
+          }
+        },
+        "maximum": {
+          "fn_struct_make_params": "c3d_maximum_params",
+          "properties": {
+            "maximum": {
+              "var_param": "maximum"
+            }
+          }
+        },
+        "multicomponent_split": {
+          "fn_struct_make_params": "c3d_multicomponent_split_params",
+          "properties": {
+            "multicomponent_split": {
+              "var_param": "multicomponent_split"
+            }
+          }
+        },
+        "mean": {
+          "fn_struct_make_params": "c3d_mean_params",
+          "properties": {
+            "mean": {
+              "var_param": "mean"
+            }
+          }
+        },
+        "median_filter": {
+          "fn_struct_make_params": "c3d_median_filter_params",
+          "properties": {
+            "median_filter": {
+              "var_param": "median_filter"
+            }
+          }
+        },
+        "merge": {
+          "fn_struct_make_params": "c3d_merge_params",
+          "properties": {
+            "merge": {
+              "var_param": "merge"
+            }
+          }
+        },
+        "mean_filter": {
+          "fn_struct_make_params": "c3d_mean_filter_params",
+          "properties": {
+            "mean_filter": {
+              "var_param": "mean_filter"
+            }
+          }
+        },
+        "mutual_info": {
+          "fn_struct_make_params": "c3d_mutual_info_params",
+          "properties": {
+            "mutual_info": {
+              "var_param": "mutual_info"
+            }
+          }
+        },
+        "minimum": {
+          "fn_struct_make_params": "c3d_minimum_params",
+          "properties": {
+            "minimum": {
+              "var_param": "minimum"
+            }
+          }
+        },
+        "mixture_model": {
+          "fn_struct_make_params": "c3d_mixture_model_params",
+          "properties": {
+            "mixture_model": {
+              "var_param": "mixture_model"
+            }
+          }
+        },
+        "moments": {
+          "fn_struct_make_params": "c3d_moments_params",
+          "properties": {
+            "moments": {
+              "var_param": "moments"
+            }
+          }
+        },
+        "mattes_mutual_info": {
+          "fn_struct_make_params": "c3d_mattes_mutual_info_params",
+          "properties": {
+            "mattes_mutual_info": {
+              "var_param": "mattes_mutual_info"
+            }
+          }
+        },
+        "mean_square": {
+          "fn_struct_make_params": "c3d_mean_square_params",
+          "properties": {
+            "mean_square": {
+              "var_param": "mean_square"
+            }
+          }
+        },
+        "multiply": {
+          "fn_struct_make_params": "c3d_multiply_params",
+          "properties": {
+            "multiply": {
+              "var_param": "multiply"
+            }
+          }
+        },
+        "normalized_cross_correlation": {
+          "fn_struct_make_params": "c3d_normalized_cross_correlation_params",
+          "properties": {
+            "normalized_cross_correlation": {
+              "var_param": "normalized_cross_correlation"
+            }
+          }
+        },
+        "normalized_correlation": {
+          "fn_struct_make_params": "c3d_normalized_correlation_params",
+          "properties": {
+            "normalized_correlation": {
+              "var_param": "normalized_correlation"
+            }
+          }
+        },
+        "normalized_mutual_info": {
+          "fn_struct_make_params": "c3d_normalized_mutual_info_params",
+          "properties": {
+            "normalized_mutual_info": {
+              "var_param": "normalized_mutual_info"
+            }
+          }
+        },
+        "noise_gaussian": {
+          "fn_struct_make_params": "c3d_noise_gaussian_params",
+          "properties": {
+            "noise_gaussian": {
+              "var_param": "noise_gaussian"
+            }
+          }
+        },
+        "noise_poisson": {
+          "fn_struct_make_params": "c3d_noise_poisson_params",
+          "properties": {
+            "noise_poisson": {
+              "var_param": "noise_poisson"
+            }
+          }
+        },
+        "noise_speckle": {
+          "fn_struct_make_params": "c3d_noise_speckle_params",
+          "properties": {
+            "noise_speckle": {
+              "var_param": "noise_speckle"
+            }
+          }
+        },
+        "noise_salt_pepper": {
+          "fn_struct_make_params": "c3d_noise_salt_pepper_params",
+          "properties": {
+            "noise_salt_pepper": {
+              "var_param": "noise_salt_pepper"
+            }
+          }
+        },
+        "no_multicomponent_split": {
+          "fn_struct_make_params": "c3d_no_multicomponent_split_params",
+          "properties": {
+            "no_multicomponent_split": {
+              "var_param": "no_multicomponent_split"
+            }
+          }
+        },
+        "normalize_local_window": {
+          "fn_struct_make_params": "c3d_normalize_local_window_params",
+          "properties": {
+            "normalize_local_window": {
+              "var_param": "normalize_local_window"
+            }
+          }
+        },
+        "normpdf": {
+          "fn_struct_make_params": "c3d_normpdf_params",
+          "properties": {
+            "normpdf": {
+              "var_param": "normpdf"
+            }
+          }
+        },
+        "noround": {
+          "fn_struct_make_params": "c3d_noround_params",
+          "properties": {
+            "noround": {
+              "var_param": "noround"
+            }
+          }
+        },
+        "nospm": {
+          "fn_struct_make_params": "c3d_nospm_params",
+          "properties": {
+            "nospm": {
+              "var_param": "nospm"
+            }
+          }
+        },
+        "output": {
+          "fn_struct_make_params": "c3d_output_params",
+          "properties": {
+            "output": {
+              "var_param": "output"
+            }
+          }
+        },
+        "output_multicomponent": {
+          "fn_struct_make_params": "c3d_output_multicomponent_params",
+          "properties": {
+            "output_multicomponent": {
+              "var_param": "output_multicomponent"
+            }
+          }
+        },
+        "output_multiple_multicomponent": {
+          "fn_struct_make_params": "c3d_output_multiple_multicomponent_params",
+          "properties": {
+            "output_multiple_multicomponent": {
+              "var_param": "output_multiple_multicomponent"
+            }
+          }
+        },
+        "orient": {
+          "fn_struct_make_params": "c3d_orient_params",
+          "properties": {
+            "orient": {
+              "var_param": "orient"
+            }
+          }
+        },
+        "output_multiple": {
+          "fn_struct_make_params": "c3d_output_multiple_params",
+          "properties": {
+            "output_multiple": {
+              "var_param": "output_multiple"
+            }
+          }
+        },
+        "orient_1": {
+          "fn_struct_make_params": "c3d_orient_1_params",
+          "properties": {
+            "orient": {
+              "var_param": "orient"
+            }
+          }
+        },
+        "origin": {
+          "fn_struct_make_params": "c3d_origin_params",
+          "properties": {
+            "origin": {
+              "var_param": "origin"
+            }
+          }
+        },
+        "origin_voxel": {
+          "fn_struct_make_params": "c3d_origin_voxel_params",
+          "properties": {
+            "origin_voxel": {
+              "var_param": "origin_voxel"
+            }
+          }
+        },
+        "origin_voxel_coord": {
+          "fn_struct_make_params": "c3d_origin_voxel_coord_params",
+          "properties": {
+            "origin_voxel_coord": {
+              "var_param": "origin_voxel_coord"
+            }
+          }
+        },
+        "overlap": {
+          "fn_struct_make_params": "c3d_overlap_params",
+          "properties": {
+            "overlap": {
+              "var_param": "overlap"
+            }
+          }
+        },
+        "overlay_label_image": {
+          "fn_struct_make_params": "c3d_overlay_label_image_params",
+          "properties": {
+            "overlay_label_image": {
+              "var_param": "overlay_label_image"
+            }
+          }
+        },
+        "pad": {
+          "fn_struct_make_params": "c3d_pad_params",
+          "properties": {
+            "pad": {
+              "var_param": "pad"
+            }
+          }
+        },
+        "pad_to": {
+          "fn_struct_make_params": "c3d_pad_to_params",
+          "properties": {
+            "pad_to": {
+              "var_param": "pad_to"
+            }
+          }
+        },
+        "pca": {
+          "fn_struct_make_params": "c3d_pca_params",
+          "properties": {
+            "pca": {
+              "var_param": "pca"
+            }
+          }
+        },
+        "percent_intensity_mode": {
+          "fn_struct_make_params": "c3d_percent_intensity_mode_params",
+          "properties": {
+            "percent_intensity_mode": {
+              "var_param": "percent_intensity_mode"
+            }
+          }
+        },
+        "pixel": {
+          "fn_struct_make_params": "c3d_pixel_params",
+          "properties": {
+            "pixel": {
+              "var_param": "pixel"
+            }
+          }
+        },
+        "pop": {
+          "fn_struct_make_params": "c3d_pop_params",
+          "properties": {
+            "pop": {
+              "var_param": "pop_"
+            }
+          }
+        },
+        "popas": {
+          "fn_struct_make_params": "c3d_popas_params",
+          "properties": {
+            "popas": {
+              "var_param": "popas"
+            }
+          }
+        },
+        "probe": {
+          "fn_struct_make_params": "c3d_probe_params",
+          "properties": {
+            "probe": {
+              "var_param": "probe"
+            }
+          }
+        },
+        "push": {
+          "fn_struct_make_params": "c3d_push_params",
+          "properties": {
+            "push": {
+              "var_param": "push"
+            }
+          }
+        },
+        "rank": {
+          "fn_struct_make_params": "c3d_rank_params",
+          "properties": {
+            "rank": {
+              "var_param": "rank"
+            }
+          }
+        },
+        "reciprocal": {
+          "fn_struct_make_params": "c3d_reciprocal_params",
+          "properties": {
+            "reciprocal": {
+              "var_param": "reciprocal"
+            }
+          }
+        },
+        "region": {
+          "fn_struct_make_params": "c3d_region_params",
+          "properties": {
+            "region": {
+              "var_param": "region"
+            }
+          }
+        },
+        "reorder": {
+          "fn_struct_make_params": "c3d_reorder_params",
+          "properties": {
+            "reorder": {
+              "var_param": "reorder"
+            }
+          }
+        },
+        "retain_labels": {
+          "fn_struct_make_params": "c3d_retain_labels_params",
+          "properties": {
+            "retain_labels": {
+              "var_param": "retain_labels"
+            }
+          }
+        },
+        "rf_apply": {
+          "fn_struct_make_params": "c3d_rf_apply_params",
+          "properties": {
+            "rf_apply": {
+              "var_param": "rf_apply"
+            }
+          }
+        },
+        "rf_train": {
+          "fn_struct_make_params": "c3d_rf_train_params",
+          "properties": {
+            "rf_train": {
+              "var_param": "rf_train"
+            }
+          }
+        },
+        "rf_param_patch": {
+          "fn_struct_make_params": "c3d_rf_param_patch_params",
+          "properties": {
+            "rf_param_patch": {
+              "var_param": "rf_param_patch"
+            }
+          }
+        },
+        "rf_param_usexyz": {
+          "fn_struct_make_params": "c3d_rf_param_usexyz_params",
+          "properties": {
+            "rf_param_usexyz": {
+              "var_param": "rf_param_usexyz"
+            }
+          }
+        },
+        "rf_param_nousexyz": {
+          "fn_struct_make_params": "c3d_rf_param_nousexyz_params",
+          "properties": {
+            "rf_param_nousexyz": {
+              "var_param": "rf_param_nousexyz"
+            }
+          }
+        },
+        "rf_param_ntrees": {
+          "fn_struct_make_params": "c3d_rf_param_ntrees_params",
+          "properties": {
+            "rf_param_ntrees": {
+              "var_param": "rf_param_ntrees"
+            }
+          }
+        },
+        "rf_param_treedepth": {
+          "fn_struct_make_params": "c3d_rf_param_treedepth_params",
+          "properties": {
+            "rf_param_treedepth": {
+              "var_param": "rf_param_treedepth"
+            }
+          }
+        },
+        "set_sform": {
+          "fn_struct_make_params": "c3d_set_sform_params",
+          "properties": {
+            "set_sform": {
+              "var_param": "set_sform"
+            }
+          }
+        },
+        "replace": {
+          "fn_struct_make_params": "c3d_replace_params",
+          "properties": {
+            "replace": {
+              "var_param": "replace"
+            }
+          }
+        },
+        "resample": {
+          "fn_struct_make_params": "c3d_resample_params",
+          "properties": {
+            "resample": {
+              "var_param": "resample"
+            }
+          }
+        },
+        "resample_iso": {
+          "fn_struct_make_params": "c3d_resample_iso_params",
+          "properties": {
+            "resample_iso": {
+              "var_param": "resample_iso"
+            }
+          }
+        },
+        "resample_mm": {
+          "fn_struct_make_params": "c3d_resample_mm_params",
+          "properties": {
+            "resample_mm": {
+              "var_param": "resample_mm"
+            }
+          }
+        },
+        "reslice_itk": {
+          "fn_struct_make_params": "c3d_reslice_itk_params",
+          "properties": {
+            "reslice_itk": {
+              "var_param": "reslice_itk"
+            }
+          }
+        },
+        "reslice_matrix": {
+          "fn_struct_make_params": "c3d_reslice_matrix_params",
+          "properties": {
+            "reslice_matrix": {
+              "var_param": "reslice_matrix"
+            }
+          }
+        },
+        "reslice_identity": {
+          "fn_struct_make_params": "c3d_reslice_identity_params",
+          "properties": {
+            "reslice_identity": {
+              "var_param": "reslice_identity"
+            }
+          }
+        },
+        "rgb2hsv": {
+          "fn_struct_make_params": "c3d_rgb2hsv_params",
+          "properties": {
+            "rgb2hsv": {
+              "var_param": "rgb2hsv"
+            }
+          }
+        },
+        "rms": {
+          "fn_struct_make_params": "c3d_rms_params",
+          "properties": {
+            "rms": {
+              "var_param": "rms"
+            }
+          }
+        },
+        "round": {
+          "fn_struct_make_params": "c3d_round_params",
+          "properties": {
+            "round": {
+              "var_param": "round_"
+            }
+          }
+        },
+        "scale": {
+          "fn_struct_make_params": "c3d_scale_params",
+          "properties": {
+            "scale": {
+              "var_param": "scale"
+            }
+          }
+        },
+        "set_sform_1": {
+          "fn_struct_make_params": "c3d_set_sform_1_params",
+          "properties": {
+            "set_sform": {
+              "var_param": "set_sform"
+            }
+          }
+        },
+        "sin": {
+          "fn_struct_make_params": "c3d_sin_params",
+          "properties": {
+            "sin": {
+              "var_param": "sin"
+            }
+          }
+        },
+        "slice": {
+          "fn_struct_make_params": "c3d_slice_params",
+          "properties": {
+            "slice": {
+              "var_param": "slice_"
+            }
+          }
+        },
+        "slice_all": {
+          "fn_struct_make_params": "c3d_slice_all_params",
+          "properties": {
+            "slice_all": {
+              "var_param": "slice_all"
+            }
+          }
+        },
+        "sharpen": {
+          "fn_struct_make_params": "c3d_sharpen_params",
+          "properties": {
+            "sharpen": {
+              "var_param": "sharpen"
+            }
+          }
+        },
+        "shift": {
+          "fn_struct_make_params": "c3d_shift_params",
+          "properties": {
+            "shift": {
+              "var_param": "shift"
+            }
+          }
+        },
+        "signed_distance_transform": {
+          "fn_struct_make_params": "c3d_signed_distance_transform_params",
+          "properties": {
+            "signed_distance_transform": {
+              "var_param": "signed_distance_transform"
+            }
+          }
+        },
+        "smooth": {
+          "fn_struct_make_params": "c3d_smooth_params",
+          "properties": {
+            "smooth": {
+              "var_param": "smooth"
+            }
+          }
+        },
+        "smooth_fast": {
+          "fn_struct_make_params": "c3d_smooth_fast_params",
+          "properties": {
+            "smooth_fast": {
+              "var_param": "smooth_fast"
+            }
+          }
+        },
+        "spacing": {
+          "fn_struct_make_params": "c3d_spacing_params",
+          "properties": {
+            "spacing": {
+              "var_param": "spacing"
+            }
+          }
+        },
+        "split": {
+          "fn_struct_make_params": "c3d_split_params",
+          "properties": {
+            "split": {
+              "var_param": "split"
+            }
+          }
+        },
+        "sqrt": {
+          "fn_struct_make_params": "c3d_sqrt_params",
+          "properties": {
+            "sqrt": {
+              "var_param": "sqrt"
+            }
+          }
+        },
+        "staple": {
+          "fn_struct_make_params": "c3d_staple_params",
+          "properties": {
+            "staple": {
+              "var_param": "staple"
+            }
+          }
+        },
+        "structure_tensor_eigenvalues": {
+          "fn_struct_make_params": "c3d_structure_tensor_eigenvalues_params",
+          "properties": {
+            "structure_tensor_eigenvalues": {
+              "var_param": "structure_tensor_eigenvalues"
+            }
+          }
+        },
+        "spm": {
+          "fn_struct_make_params": "c3d_spm_params",
+          "properties": {
+            "spm": {
+              "var_param": "spm"
+            }
+          }
+        },
+        "subtract": {
+          "fn_struct_make_params": "c3d_subtract_params",
+          "properties": {
+            "subtract": {
+              "var_param": "subtract"
+            }
+          }
+        },
+        "supervoxel": {
+          "fn_struct_make_params": "c3d_supervoxel_params",
+          "properties": {
+            "supervoxel": {
+              "var_param": "supervoxel"
+            }
+          }
+        },
+        "stretch": {
+          "fn_struct_make_params": "c3d_stretch_params",
+          "properties": {
+            "stretch": {
+              "var_param": "stretch"
+            }
+          }
+        },
+        "swapdim": {
+          "fn_struct_make_params": "c3d_swapdim_params",
+          "properties": {
+            "swapdim": {
+              "var_param": "swapdim"
+            }
+          }
+        },
+        "test_image": {
+          "fn_struct_make_params": "c3d_test_image_params",
+          "properties": {
+            "test_image": {
+              "var_param": "test_image"
+            }
+          }
+        },
+        "test_probe": {
+          "fn_struct_make_params": "c3d_test_probe_params",
+          "properties": {
+            "test_probe": {
+              "var_param": "test_probe"
+            }
+          }
+        },
+        "threshold": {
+          "fn_struct_make_params": "c3d_threshold_params",
+          "properties": {
+            "threshold": {
+              "var_param": "threshold"
+            }
+          }
+        },
+        "tile": {
+          "fn_struct_make_params": "c3d_tile_params",
+          "properties": {
+            "tile": {
+              "var_param": "tile"
+            }
+          }
+        },
+        "trim": {
+          "fn_struct_make_params": "c3d_trim_params",
+          "properties": {
+            "trim": {
+              "var_param": "trim"
+            }
+          }
+        },
+        "trim_to_size": {
+          "fn_struct_make_params": "c3d_trim_to_size_params",
+          "properties": {
+            "trim_to_size": {
+              "var_param": "trim_to_size"
+            }
+          }
+        },
+        "type": {
+          "fn_struct_make_params": "c3d_type_params",
+          "properties": {
+            "type": {
+              "var_param": "type_"
+            }
+          }
+        },
+        "verbose": {
+          "fn_struct_make_params": "c3d_verbose_params",
+          "properties": {
+            "verbose": {
+              "var_param": "verbose"
+            }
+          }
+        },
+        "noverbose": {
+          "fn_struct_make_params": "c3d_noverbose_params",
+          "properties": {
+            "noverbose": {
+              "var_param": "noverbose"
+            }
+          }
+        },
+        "version": {
+          "fn_struct_make_params": "c3d_version_params",
+          "properties": {
+            "version": {
+              "var_param": "version"
+            }
+          }
+        },
+        "vote": {
+          "fn_struct_make_params": "c3d_vote_params",
+          "properties": {
+            "vote": {
+              "var_param": "vote"
+            }
+          }
+        },
+        "vote_mrf": {
+          "fn_struct_make_params": "c3d_vote_mrf_params",
+          "properties": {
+            "vote_mrf": {
+              "var_param": "vote_mrf"
+            }
+          }
+        },
+        "vote_label": {
+          "fn_struct_make_params": "c3d_vote_label_params",
+          "properties": {
+            "vote_label": {
+              "var_param": "vote_label"
+            }
+          }
+        },
+        "voxel_sum": {
+          "fn_struct_make_params": "c3d_voxel_sum_params",
+          "properties": {
+            "voxel_sum": {
+              "var_param": "voxel_sum"
+            }
+          }
+        },
+        "voxel_integral": {
+          "fn_struct_make_params": "c3d_voxel_integral_params",
+          "properties": {
+            "voxel_integral": {
+              "var_param": "voxel_integral"
+            }
+          }
+        },
+        "voxelwise_regression": {
+          "fn_struct_make_params": "c3d_voxelwise_regression_params",
+          "properties": {
+            "voxelwise_regression": {
+              "var_param": "voxelwise_regression"
+            }
+          }
+        },
+        "warp": {
+          "fn_struct_make_params": "c3d_warp_params",
+          "properties": {
+            "warp": {
+              "var_param": "warp"
+            }
+          }
+        },
+        "warp_label": {
+          "fn_struct_make_params": "c3d_warp_label_params",
+          "properties": {
+            "warp_label": {
+              "var_param": "warp_label"
+            }
+          }
+        },
+        "wrap": {
+          "fn_struct_make_params": "c3d_wrap_params",
+          "properties": {
+            "wrap": {
+              "var_param": "wrap"
+            }
+          }
+        },
+        "weighted_sum": {
+          "fn_struct_make_params": "c3d_weighted_sum_params",
+          "properties": {
+            "weighted_sum": {
+              "var_param": "weighted_sum"
+            }
+          }
+        },
+        "weighted_sum_voxelwise": {
+          "fn_struct_make_params": "c3d_weighted_sum_voxelwise_params",
+          "properties": {
+            "weighted_sum_voxelwise": {
+              "var_param": "weighted_sum_voxelwise"
+            }
+          }
+        }
+      }
     },
     "output": {
       "var_param": "output"

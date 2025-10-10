@@ -288,7 +288,25 @@
       "var_param": "version"
     },
     "operand": {
-      "var_param": "operand"
+      "var_param": "operand",
+      "variants": {
+        "VariousString": {
+          "fn_struct_make_params": "mrcalc_various_string_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile": {
+          "fn_struct_make_params": "mrcalc_various_file_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     }
   }
 }

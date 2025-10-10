@@ -2,7 +2,159 @@
   "fn_root_make_params_and_execute": "dwi2response",
   "properties": {
     "algorithm": {
-      "var_param": "algorithm"
+      "var_param": "algorithm",
+      "variants": {
+        "dhollander": {
+          "fn_struct_make_params": "dwi2response_dhollander_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "out_sfwm": {
+              "var_param": "out_sfwm"
+            },
+            "out_gm": {
+              "var_param": "out_gm"
+            },
+            "out_csf": {
+              "var_param": "out_csf"
+            },
+            "erode": {
+              "var_param": "erode"
+            },
+            "fa": {
+              "var_param": "fa"
+            },
+            "sfwm": {
+              "var_param": "sfwm"
+            },
+            "gm": {
+              "var_param": "gm"
+            },
+            "csf": {
+              "var_param": "csf"
+            },
+            "wm_algo": {
+              "var_param": "wm_algo"
+            }
+          }
+        },
+        "fa": {
+          "fn_struct_make_params": "dwi2response_fa_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "output": {
+              "var_param": "output"
+            },
+            "erode": {
+              "var_param": "erode"
+            },
+            "number": {
+              "var_param": "number"
+            },
+            "threshold": {
+              "var_param": "threshold"
+            }
+          }
+        },
+        "manual": {
+          "fn_struct_make_params": "dwi2response_manual_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "in_voxels": {
+              "var_param": "in_voxels"
+            },
+            "output": {
+              "var_param": "output"
+            },
+            "dirs": {
+              "var_param": "dirs"
+            }
+          }
+        },
+        "msmt_5tt": {
+          "fn_struct_make_params": "dwi2response_msmt_5tt_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "in_5tt": {
+              "var_param": "in_5tt"
+            },
+            "out_wm": {
+              "var_param": "out_wm"
+            },
+            "out_gm": {
+              "var_param": "out_gm"
+            },
+            "out_csf": {
+              "var_param": "out_csf"
+            },
+            "dirs": {
+              "var_param": "dirs"
+            },
+            "fa": {
+              "var_param": "fa"
+            },
+            "pvf": {
+              "var_param": "pvf"
+            },
+            "wm_algo": {
+              "var_param": "wm_algo"
+            },
+            "sfwm_fa_threshold": {
+              "var_param": "sfwm_fa_threshold"
+            }
+          }
+        },
+        "tax": {
+          "fn_struct_make_params": "dwi2response_tax_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "output": {
+              "var_param": "output"
+            },
+            "peak_ratio": {
+              "var_param": "peak_ratio"
+            },
+            "max_iters": {
+              "var_param": "max_iters"
+            },
+            "convergence": {
+              "var_param": "convergence"
+            }
+          }
+        },
+        "tournier": {
+          "fn_struct_make_params": "dwi2response_tournier_params",
+          "properties": {
+            "input": {
+              "var_param": "input_"
+            },
+            "output": {
+              "var_param": "output"
+            },
+            "number": {
+              "var_param": "number"
+            },
+            "iter_voxels": {
+              "var_param": "iter_voxels"
+            },
+            "dilate": {
+              "var_param": "dilate"
+            },
+            "max_iters": {
+              "var_param": "max_iters"
+            }
+          }
+        }
+      }
     },
     "grad": {
       "var_param": "grad"

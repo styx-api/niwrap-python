@@ -20,7 +20,25 @@
       "var_param": "extent"
     },
     "strides": {
-      "var_param": "strides"
+      "var_param": "strides",
+      "variants": {
+        "VariousString": {
+          "fn_struct_make_params": "maskfilter_various_string_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        },
+        "VariousFile": {
+          "fn_struct_make_params": "maskfilter_various_file_params",
+          "properties": {
+            "obj": {
+              "var_param": "obj"
+            }
+          }
+        }
+      }
     },
     "info": {
       "var_param": "info"

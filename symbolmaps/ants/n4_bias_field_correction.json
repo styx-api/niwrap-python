@@ -62,7 +62,28 @@
       "var_param": "input_image"
     },
     "output": {
-      "var_param": "output"
+      "var_param": "output",
+      "variants": {
+        "correctedOutput": {
+          "fn_struct_make_params": "n4_bias_field_correction_corrected_output_params",
+          "properties": {
+            "correctedOutputFileName": {
+              "var_param": "corrected_output_file_name"
+            }
+          }
+        },
+        "correctedOutputNoise": {
+          "fn_struct_make_params": "n4_bias_field_correction_corrected_output_noise_params",
+          "properties": {
+            "correctedOutputFileName": {
+              "var_param": "corrected_output_file_name"
+            },
+            "biasFile": {
+              "var_param": "bias_file"
+            }
+          }
+        }
+      }
     }
   }
 }
