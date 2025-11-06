@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 ZIP_SPEC_FILE_METADATA = Metadata(
-    id="5bc4445351c0f8efed67b439599fb8b5b4042e41.boutiques",
+    id="06edf7f38703ef83935a1b2ad9fc02acb523add6.workbench",
     name="zip-spec-file",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 ZipSpecFileParameters = typing.TypedDict('ZipSpecFileParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/zip-spec-file"]],
-    "spec_file": str,
-    "extract_folder": str,
-    "zip_file": str,
-    "opt_base_dir_directory": typing.NotRequired[str | None],
-    "opt_skip_missing": bool,
+    "directory": typing.NotRequired[str | None],
+    "skip-missing": bool,
+    "spec-file": str,
+    "extract-folder": str,
+    "zip-file": str,
 })
 ZipSpecFileParametersTagged = typing.TypedDict('ZipSpecFileParametersTagged', {
     "@type": typing.Literal["workbench/zip-spec-file"],
-    "spec_file": str,
-    "extract_folder": str,
-    "zip_file": str,
-    "opt_base_dir_directory": typing.NotRequired[str | None],
-    "opt_skip_missing": bool,
+    "directory": typing.NotRequired[str | None],
+    "skip-missing": bool,
+    "spec-file": str,
+    "extract-folder": str,
+    "zip-file": str,
 })
 
 
@@ -40,37 +39,38 @@ class ZipSpecFileOutputs(typing.NamedTuple):
 
 
 def zip_spec_file_params(
+    directory: str | None,
     spec_file: str,
     extract_folder: str,
     zip_file: str,
-    opt_base_dir_directory: str | None = None,
-    opt_skip_missing: bool = False,
+    skip_missing: bool = False,
 ) -> ZipSpecFileParametersTagged:
     """
     Build parameters.
     
     Args:
+        directory: specify a directory that all data files are somewhere\
+            within, this will become the root of the zipfile's directory structure\
+            \
+            the directory.
         spec_file: the specification file to add to zip file.
         extract_folder: the name of the folder created when the zip file is\
             unzipped.
         zip_file: out - the zip file that will be created.
-        opt_base_dir_directory: specify a directory that all data files are\
-            somewhere within, this will become the root of the zipfile's directory\
-            structure: the directory.
-        opt_skip_missing: any missing files will generate only warnings, and\
-            the zip file will be created anyway.
+        skip_missing: any missing files will generate only warnings, and the\
+            zip file will be created anyway.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/zip-spec-file",
-        "spec_file": spec_file,
-        "extract_folder": extract_folder,
-        "zip_file": zip_file,
-        "opt_skip_missing": opt_skip_missing,
+        "skip-missing": skip_missing,
+        "spec-file": spec_file,
+        "extract-folder": extract_folder,
+        "zip-file": zip_file,
     }
-    if opt_base_dir_directory is not None:
-        params["opt_base_dir_directory"] = opt_base_dir_directory
+    if directory is not None:
+        params["directory"] = directory
     return params
 
 
@@ -88,18 +88,17 @@ def zip_spec_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-zip-spec-file")
-    cargs.append(params.get("spec_file", None))
-    cargs.append(params.get("extract_folder", None))
-    cargs.append(params.get("zip_file", None))
-    if params.get("opt_base_dir_directory", None) is not None:
+    if params.get("directory", None) is not None or params.get("skip-missing", False):
         cargs.extend([
+            "wb_command",
+            "-zip-spec-file",
             "-base-dir",
-            params.get("opt_base_dir_directory", None)
+            (params.get("directory", None) if (params.get("directory", None) is not None) else ""),
+            ("-skip-missing" if (params.get("skip-missing", False)) else "")
         ])
-    if params.get("opt_skip_missing", False):
-        cargs.append("-skip-missing")
+    cargs.append(params.get("spec-file", None))
+    cargs.append(params.get("extract-folder", None))
+    cargs.append(params.get("zip-file", None))
     return cargs
 
 
@@ -127,9 +126,7 @@ def zip_spec_file_execute(
     runner: Runner | None = None,
 ) -> ZipSpecFileOutputs:
     """
-    zip-spec-file
-    
-    Zip a spec file and its data files.
+    ZIP A SPEC FILE AND ITS DATA FILES.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not
     specified, the directory containing the spec file is used for the base
@@ -137,10 +134,6 @@ def zip_spec_file_execute(
     may be outside the base directory. Scene files inside spec files are not
     checked for what files they reference, ensure that all data files referenced
     by the scene files are also referenced by the spec file.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -158,17 +151,15 @@ def zip_spec_file_execute(
 
 
 def zip_spec_file(
+    directory: str | None,
     spec_file: str,
     extract_folder: str,
     zip_file: str,
-    opt_base_dir_directory: str | None = None,
-    opt_skip_missing: bool = False,
+    skip_missing: bool = False,
     runner: Runner | None = None,
 ) -> ZipSpecFileOutputs:
     """
-    zip-spec-file
-    
-    Zip a spec file and its data files.
+    ZIP A SPEC FILE AND ITS DATA FILES.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not
     specified, the directory containing the spec file is used for the base
@@ -177,30 +168,27 @@ def zip_spec_file(
     checked for what files they reference, ensure that all data files referenced
     by the scene files are also referenced by the spec file.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        directory: specify a directory that all data files are somewhere\
+            within, this will become the root of the zipfile's directory structure\
+            \
+            the directory.
         spec_file: the specification file to add to zip file.
         extract_folder: the name of the folder created when the zip file is\
             unzipped.
         zip_file: out - the zip file that will be created.
-        opt_base_dir_directory: specify a directory that all data files are\
-            somewhere within, this will become the root of the zipfile's directory\
-            structure: the directory.
-        opt_skip_missing: any missing files will generate only warnings, and\
-            the zip file will be created anyway.
+        skip_missing: any missing files will generate only warnings, and the\
+            zip file will be created anyway.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ZipSpecFileOutputs`).
     """
     params = zip_spec_file_params(
+        directory=directory,
+        skip_missing=skip_missing,
         spec_file=spec_file,
         extract_folder=extract_folder,
         zip_file=zip_file,
-        opt_base_dir_directory=opt_base_dir_directory,
-        opt_skip_missing=opt_skip_missing,
     )
     return zip_spec_file_execute(params, runner)
 

@@ -1,10 +1,7 @@
 {
   "fn_root_make_params_and_execute": "cifti_create_dense_from_template",
   "properties": {
-    "template_cifti": {
-      "var_param": "template_cifti"
-    },
-    "cifti_out": {
+    "cifti-out": {
       "var_param": "cifti_out"
     },
     "series": {
@@ -17,31 +14,31 @@
         "start": {
           "var_param": "start"
         },
-        "opt_unit_unit": {
-          "var_param": "opt_unit_unit"
+        "unit": {
+          "var_param": "unit"
         }
       }
     },
-    "volume_all": {
+    "volume-all": {
       "var_param": "volume_all",
       "fn_struct_make_params": "cifti_create_dense_from_template_volume_all_params",
       "properties": {
-        "volume_in": {
+        "volume-in": {
           "var_param": "volume_in"
         },
-        "opt_from_cropped": {
-          "var_param": "opt_from_cropped"
+        "from-cropped": {
+          "var_param": "from_cropped"
         }
       }
     },
-    "opt_label_collision_action": {
-      "var_param": "opt_label_collision_action"
+    "action": {
+      "var_param": "action"
     },
     "cifti": {
       "var_param": "cifti",
       "fn_struct_make_params": "cifti_create_dense_from_template_cifti_params",
       "properties": {
-        "cifti_in": {
+        "cifti-in": {
           "var_param": "cifti_in"
         }
       }
@@ -53,7 +50,7 @@
         "structure": {
           "var_param": "structure"
         },
-        "metric_in": {
+        "metric-in": {
           "var_param": "metric_in"
         }
       }
@@ -65,7 +62,7 @@
         "structure": {
           "var_param": "structure"
         },
-        "label_in": {
+        "label-in": {
           "var_param": "label_in"
         }
       }
@@ -77,13 +74,16 @@
         "structure": {
           "var_param": "structure"
         },
-        "volume_in": {
+        "volume-in": {
           "var_param": "volume_in"
         },
-        "opt_from_cropped": {
-          "var_param": "opt_from_cropped"
+        "from-cropped": {
+          "var_param": "from_cropped"
         }
       }
+    },
+    "template-cifti": {
+      "var_param": "template_cifti"
     }
   }
 }

@@ -26,7 +26,7 @@ NonLocalSuperResolutionParameters = typing.TypedDict('NonLocalSuperResolutionPar
     "scale_levels": typing.NotRequired[str | None],
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 NonLocalSuperResolutionParametersTagged = typing.TypedDict('NonLocalSuperResolutionParametersTagged', {
     "@type": typing.Literal["ants/NonLocalSuperResolution"],
@@ -41,7 +41,7 @@ NonLocalSuperResolutionParametersTagged = typing.TypedDict('NonLocalSuperResolut
     "scale_levels": typing.NotRequired[str | None],
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -67,7 +67,7 @@ def non_local_super_resolution_params(
     patch_similarity_sigma: float | None = None,
     scale_levels: str | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> NonLocalSuperResolutionParametersTagged:
     """
     Build parameters.
@@ -194,7 +194,7 @@ def non_local_super_resolution_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -260,7 +260,7 @@ def non_local_super_resolution(
     patch_similarity_sigma: float | None = None,
     scale_levels: str | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> NonLocalSuperResolutionOutputs:
     """

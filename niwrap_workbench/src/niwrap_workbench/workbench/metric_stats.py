@@ -6,63 +6,62 @@ import pathlib
 from styxdefs import *
 
 METRIC_STATS_METADATA = Metadata(
-    id="537d50b53c1ebc80f222429b42e08e62ddc3f0e8.boutiques",
+    id="0e12ce38a883534ee44f0de43d440a9587a5a4b6.workbench",
     name="metric-stats",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricStatsRoiParameters = typing.TypedDict('MetricStatsRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
-    "roi_metric": InputPathType,
-    "opt_match_maps": bool,
+    "roi-metric": InputPathType,
+    "match-maps": bool,
 })
 MetricStatsRoiParametersTagged = typing.TypedDict('MetricStatsRoiParametersTagged', {
     "@type": typing.Literal["roi"],
-    "roi_metric": InputPathType,
-    "opt_match_maps": bool,
+    "roi-metric": InputPathType,
+    "match-maps": bool,
 })
 
 
 MetricStatsParameters = typing.TypedDict('MetricStatsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-stats"]],
-    "metric_in": InputPathType,
-    "opt_reduce_operation": typing.NotRequired[str | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "operation": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "roi": typing.NotRequired[MetricStatsRoiParameters | None],
-    "opt_show_map_name": bool,
+    "show-map-name": bool,
+    "metric-in": InputPathType,
 })
 MetricStatsParametersTagged = typing.TypedDict('MetricStatsParametersTagged', {
     "@type": typing.Literal["workbench/metric-stats"],
-    "metric_in": InputPathType,
-    "opt_reduce_operation": typing.NotRequired[str | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "operation": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "roi": typing.NotRequired[MetricStatsRoiParameters | None],
-    "opt_show_map_name": bool,
+    "show-map-name": bool,
+    "metric-in": InputPathType,
 })
 
 
 def metric_stats_roi_params(
     roi_metric: InputPathType,
-    opt_match_maps: bool = False,
+    match_maps: bool = False,
 ) -> MetricStatsRoiParametersTagged:
     """
     Build parameters.
     
     Args:
         roi_metric: the roi, as a metric file.
-        opt_match_maps: each column of input uses the corresponding column from\
-            the roi file.
+        match_maps: each column of input uses the corresponding column from the\
+            roi file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "roi",
-        "roi_metric": roi_metric,
-        "opt_match_maps": opt_match_maps,
+        "roi-metric": roi_metric,
+        "match-maps": match_maps,
     }
     return params
 
@@ -81,10 +80,12 @@ def metric_stats_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_metric", None)))
-    if params.get("opt_match_maps", False):
-        cargs.append("-match-maps")
+    if params.get("match-maps", False):
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None)),
+            "-match-maps"
+        ])
     return cargs
 
 
@@ -97,40 +98,43 @@ class MetricStatsOutputs(typing.NamedTuple):
 
 
 def metric_stats_params(
+    operation: str | None,
+    percent: float | None,
+    column: str | None,
     metric_in: InputPathType,
-    opt_reduce_operation: str | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_column_column: str | None = None,
     roi: MetricStatsRoiParameters | None = None,
-    opt_show_map_name: bool = False,
+    show_map_name: bool = False,
 ) -> MetricStatsParametersTagged:
     """
     Build parameters.
     
     Args:
+        operation: use a reduction operation\
+            \
+            the reduction operation.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        column: only display output for one column\
+            \
+            the column number or name.
         metric_in: the input metric.
-        opt_reduce_operation: use a reduction operation: the reduction\
-            operation.
-        opt_percentile_percent: give the value at a percentile: the percentile\
-            to find, must be between 0 and 100.
-        opt_column_column: only display output for one column: the column\
-            number or name.
         roi: only consider data inside an roi.
-        opt_show_map_name: print map index and name before each output.
+        show_map_name: print map index and name before each output.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-stats",
-        "metric_in": metric_in,
-        "opt_show_map_name": opt_show_map_name,
+        "show-map-name": show_map_name,
+        "metric-in": metric_in,
     }
-    if opt_reduce_operation is not None:
-        params["opt_reduce_operation"] = opt_reduce_operation
-    if opt_percentile_percent is not None:
-        params["opt_percentile_percent"] = opt_percentile_percent
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if operation is not None:
+        params["operation"] = operation
+    if percent is not None:
+        params["percent"] = percent
+    if column is not None:
+        params["column"] = column
     if roi is not None:
         params["roi"] = roi
     return params
@@ -150,28 +154,20 @@ def metric_stats_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-stats")
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    if params.get("opt_reduce_operation", None) is not None:
+    if params.get("operation", None) is not None or params.get("percent", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("show-map-name", False):
         cargs.extend([
+            "wb_command",
+            "-metric-stats",
             "-reduce",
-            params.get("opt_reduce_operation", None)
-        ])
-    if params.get("opt_percentile_percent", None) is not None:
-        cargs.extend([
+            (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
             "-percentile",
-            str(params.get("opt_percentile_percent", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             "-column",
-            params.get("opt_column_column", None)
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            *(metric_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+            ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])
-    if params.get("roi", None) is not None:
-        cargs.extend(metric_stats_roi_cargs(params.get("roi", None), execution))
-    if params.get("opt_show_map_name", False):
-        cargs.append("-show-map-name")
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -199,9 +195,7 @@ def metric_stats_execute(
     runner: Runner | None = None,
 ) -> MetricStatsOutputs:
     """
-    metric-stats
-    
-    Spatial statistics on a metric file.
+    SPATIAL STATISTICS ON A METRIC FILE.
     
     For each column of the input, a line of text is printed, resulting from the
     specified reduction or percentile operation. Use -column to only give output
@@ -229,10 +223,6 @@ def metric_stats_execute(
     MODE: the mode of the data
     COUNT_NONZERO: the number of nonzero elements in the data
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -250,18 +240,16 @@ def metric_stats_execute(
 
 
 def metric_stats(
+    operation: str | None,
+    percent: float | None,
+    column: str | None,
     metric_in: InputPathType,
-    opt_reduce_operation: str | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_column_column: str | None = None,
     roi: MetricStatsRoiParameters | None = None,
-    opt_show_map_name: bool = False,
+    show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> MetricStatsOutputs:
     """
-    metric-stats
-    
-    Spatial statistics on a metric file.
+    SPATIAL STATISTICS ON A METRIC FILE.
     
     For each column of the input, a line of text is printed, resulting from the
     specified reduction or percentile operation. Use -column to only give output
@@ -290,31 +278,30 @@ def metric_stats(
     COUNT_NONZERO: the number of nonzero elements in the data
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        operation: use a reduction operation\
+            \
+            the reduction operation.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        column: only display output for one column\
+            \
+            the column number or name.
         metric_in: the input metric.
-        opt_reduce_operation: use a reduction operation: the reduction\
-            operation.
-        opt_percentile_percent: give the value at a percentile: the percentile\
-            to find, must be between 0 and 100.
-        opt_column_column: only display output for one column: the column\
-            number or name.
         roi: only consider data inside an roi.
-        opt_show_map_name: print map index and name before each output.
+        show_map_name: print map index and name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricStatsOutputs`).
     """
     params = metric_stats_params(
-        metric_in=metric_in,
-        opt_reduce_operation=opt_reduce_operation,
-        opt_percentile_percent=opt_percentile_percent,
-        opt_column_column=opt_column_column,
+        operation=operation,
+        percent=percent,
+        column=column,
         roi=roi,
-        opt_show_map_name=opt_show_map_name,
+        show_map_name=show_map_name,
+        metric_in=metric_in,
     )
     return metric_stats_execute(params, runner)
 

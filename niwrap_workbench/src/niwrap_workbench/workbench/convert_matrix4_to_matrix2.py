@@ -6,40 +6,39 @@ import pathlib
 from styxdefs import *
 
 CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
-    id="0051a9c07cc746b7e076751b20f94d4b5687f120.boutiques",
+    id="6b1c39b77ea63d80e9eaa7d762e583b3aa47688b.workbench",
     name="convert-matrix4-to-matrix2",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParameters', {
-    "@type": typing.NotRequired[typing.Literal["individual_fibers"]],
-    "fiber_1": str,
-    "fiber_2": str,
-    "fiber_3": str,
+    "@type": typing.NotRequired[typing.Literal["individual-fibers"]],
+    "fiber-1": str,
+    "fiber-2": str,
+    "fiber-3": str,
 })
 ConvertMatrix4ToMatrix2IndividualFibersParametersTagged = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParametersTagged', {
-    "@type": typing.Literal["individual_fibers"],
-    "fiber_1": str,
-    "fiber_2": str,
-    "fiber_3": str,
+    "@type": typing.Literal["individual-fibers"],
+    "fiber-1": str,
+    "fiber-2": str,
+    "fiber-3": str,
 })
 
 
 ConvertMatrix4ToMatrix2Parameters = typing.TypedDict('ConvertMatrix4ToMatrix2Parameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-matrix4-to-matrix2"]],
-    "matrix4_wbsparse": str,
-    "counts_out": str,
-    "opt_distances_distance_out": typing.NotRequired[str | None],
-    "individual_fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
+    "counts-out": str,
+    "distance-out": typing.NotRequired[str | None],
+    "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
+    "matrix4-wbsparse": str,
 })
 ConvertMatrix4ToMatrix2ParametersTagged = typing.TypedDict('ConvertMatrix4ToMatrix2ParametersTagged', {
     "@type": typing.Literal["workbench/convert-matrix4-to-matrix2"],
-    "matrix4_wbsparse": str,
-    "counts_out": str,
-    "opt_distances_distance_out": typing.NotRequired[str | None],
-    "individual_fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
+    "counts-out": str,
+    "distance-out": typing.NotRequired[str | None],
+    "individual-fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
+    "matrix4-wbsparse": str,
 })
 
 
@@ -73,10 +72,10 @@ def convert_matrix4_to_matrix2_individual_fibers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "individual_fibers",
-        "fiber_1": fiber_1,
-        "fiber_2": fiber_2,
-        "fiber_3": fiber_3,
+        "@type": "individual-fibers",
+        "fiber-1": fiber_1,
+        "fiber-2": fiber_2,
+        "fiber-3": fiber_3,
     }
     return params
 
@@ -95,10 +94,12 @@ def convert_matrix4_to_matrix2_individual_fibers_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-individual-fibers")
-    cargs.append(params.get("fiber_1", None))
-    cargs.append(params.get("fiber_2", None))
-    cargs.append(params.get("fiber_3", None))
+    cargs.extend([
+        "-individual-fibers",
+        params.get("fiber-1", None),
+        params.get("fiber-2", None),
+        params.get("fiber-3", None)
+    ])
     return cargs
 
 
@@ -117,9 +118,9 @@ def convert_matrix4_to_matrix2_individual_fibers_outputs(
     """
     ret = ConvertMatrix4ToMatrix2IndividualFibersOutputs(
         root=execution.output_file("."),
-        fiber_1=execution.output_file(params.get("fiber_1", None)),
-        fiber_2=execution.output_file(params.get("fiber_2", None)),
-        fiber_3=execution.output_file(params.get("fiber_3", None)),
+        fiber_1=execution.output_file(params.get("fiber-1", None)),
+        fiber_2=execution.output_file(params.get("fiber-2", None)),
+        fiber_3=execution.output_file(params.get("fiber-3", None)),
     )
     return ret
 
@@ -132,39 +133,38 @@ class ConvertMatrix4ToMatrix2Outputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     counts_out: OutputPathType
     """the total fiber counts, as a cifti file"""
-    opt_distances_distance_out: OutputPathType | None
-    """output average trajectory distance: the distances, as a cifti file"""
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersOutputs | None
     """Outputs from `convert_matrix4_to_matrix2_individual_fibers_outputs`."""
 
 
 def convert_matrix4_to_matrix2_params(
-    matrix4_wbsparse: str,
     counts_out: str,
-    opt_distances_distance_out: str | None = None,
+    distance_out: str | None,
+    matrix4_wbsparse: str,
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParameters | None = None,
 ) -> ConvertMatrix4ToMatrix2ParametersTagged:
     """
     Build parameters.
     
     Args:
-        matrix4_wbsparse: a wbsparse matrix4 file.
         counts_out: the total fiber counts, as a cifti file.
-        opt_distances_distance_out: output average trajectory distance: the\
-            distances, as a cifti file.
+        distance_out: output average trajectory distance\
+            \
+            the distances, as a cifti file.
+        matrix4_wbsparse: a wbsparse matrix4 file.
         individual_fibers: output files for each fiber direction.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/convert-matrix4-to-matrix2",
-        "matrix4_wbsparse": matrix4_wbsparse,
-        "counts_out": counts_out,
+        "counts-out": counts_out,
+        "matrix4-wbsparse": matrix4_wbsparse,
     }
-    if opt_distances_distance_out is not None:
-        params["opt_distances_distance_out"] = opt_distances_distance_out
+    if distance_out is not None:
+        params["distance-out"] = distance_out
     if individual_fibers is not None:
-        params["individual_fibers"] = individual_fibers
+        params["individual-fibers"] = individual_fibers
     return params
 
 
@@ -182,17 +182,16 @@ def convert_matrix4_to_matrix2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-convert-matrix4-to-matrix2")
-    cargs.append(params.get("matrix4_wbsparse", None))
-    cargs.append(params.get("counts_out", None))
-    if params.get("opt_distances_distance_out", None) is not None:
+    if params.get("distance-out", None) is not None or params.get("individual-fibers", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-convert-matrix4-to-matrix2",
+            params.get("counts-out", None),
             "-distances",
-            params.get("opt_distances_distance_out", None)
+            (params.get("distance-out", None) if (params.get("distance-out", None) is not None) else ""),
+            *(convert_matrix4_to_matrix2_individual_fibers_cargs(params.get("individual-fibers", None), execution) if (params.get("individual-fibers", None) is not None) else [])
         ])
-    if params.get("individual_fibers", None) is not None:
-        cargs.extend(convert_matrix4_to_matrix2_individual_fibers_cargs(params.get("individual_fibers", None), execution))
+    cargs.append(params.get("matrix4-wbsparse", None))
     return cargs
 
 
@@ -211,9 +210,8 @@ def convert_matrix4_to_matrix2_outputs(
     """
     ret = ConvertMatrix4ToMatrix2Outputs(
         root=execution.output_file("."),
-        counts_out=execution.output_file(params.get("counts_out", None)),
-        opt_distances_distance_out=execution.output_file(params.get("opt_distances_distance_out", None)) if (params.get("opt_distances_distance_out") is not None) else None,
-        individual_fibers=convert_matrix4_to_matrix2_individual_fibers_outputs(params.get("individual_fibers"), execution) if params.get("individual_fibers") else None,
+        counts_out=execution.output_file(params.get("counts-out", None)),
+        individual_fibers=convert_matrix4_to_matrix2_individual_fibers_outputs(params.get("individual-fibers"), execution) if params.get("individual-fibers") else None,
     )
     return ret
 
@@ -223,19 +221,13 @@ def convert_matrix4_to_matrix2_execute(
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
-    convert-matrix4-to-matrix2
-    
-    Generates a matrix2 cifti from matrix4 wbsparse.
+    GENERATES A MATRIX2 CIFTI FROM MATRIX4 WBSPARSE.
     
     This command makes a cifti file from the fiber counts in a matrix4 wbsparse
     file, and optionally a second cifti file from the distances. Note that while
     the total count is stored exactly, the per-fiber counts are stored as
     approximate fractions, so the output of -individual-fibers will contain
     nonintegers.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -253,16 +245,14 @@ def convert_matrix4_to_matrix2_execute(
 
 
 def convert_matrix4_to_matrix2(
-    matrix4_wbsparse: str,
     counts_out: str,
-    opt_distances_distance_out: str | None = None,
+    distance_out: str | None,
+    matrix4_wbsparse: str,
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParameters | None = None,
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
-    convert-matrix4-to-matrix2
-    
-    Generates a matrix2 cifti from matrix4 wbsparse.
+    GENERATES A MATRIX2 CIFTI FROM MATRIX4 WBSPARSE.
     
     This command makes a cifti file from the fiber counts in a matrix4 wbsparse
     file, and optionally a second cifti file from the distances. Note that while
@@ -270,25 +260,22 @@ def convert_matrix4_to_matrix2(
     approximate fractions, so the output of -individual-fibers will contain
     nonintegers.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        matrix4_wbsparse: a wbsparse matrix4 file.
         counts_out: the total fiber counts, as a cifti file.
-        opt_distances_distance_out: output average trajectory distance: the\
-            distances, as a cifti file.
+        distance_out: output average trajectory distance\
+            \
+            the distances, as a cifti file.
+        matrix4_wbsparse: a wbsparse matrix4 file.
         individual_fibers: output files for each fiber direction.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToMatrix2Outputs`).
     """
     params = convert_matrix4_to_matrix2_params(
-        matrix4_wbsparse=matrix4_wbsparse,
         counts_out=counts_out,
-        opt_distances_distance_out=opt_distances_distance_out,
+        distance_out=distance_out,
         individual_fibers=individual_fibers,
+        matrix4_wbsparse=matrix4_wbsparse,
     )
     return convert_matrix4_to_matrix2_execute(params, runner)
 

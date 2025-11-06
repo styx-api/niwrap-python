@@ -1,17 +1,11 @@
 {
   "fn_root_make_params_and_execute": "volume_resample",
   "properties": {
-    "volume_in": {
-      "var_param": "volume_in"
-    },
-    "volume_space": {
-      "var_param": "volume_space"
-    },
-    "method": {
-      "var_param": "method"
-    },
-    "volume_out": {
+    "volume-out": {
       "var_param": "volume_out"
+    },
+    "value": {
+      "var_param": "value"
     },
     "affine": {
       "var_param": "affine",
@@ -24,31 +18,31 @@
           "var_param": "flirt",
           "fn_struct_make_params": "volume_resample_flirt_params",
           "properties": {
-            "source_volume": {
+            "source-volume": {
               "var_param": "source_volume"
             },
-            "target_volume": {
+            "target-volume": {
               "var_param": "target_volume"
             }
           }
         }
       }
     },
-    "affine_series": {
+    "affine-series": {
       "var_param": "affine_series",
       "fn_struct_make_params": "volume_resample_affine_series_params",
       "properties": {
-        "affine_series": {
+        "affine-series": {
           "var_param": "affine_series"
         },
         "flirt": {
           "var_param": "flirt",
-          "fn_struct_make_params": "volume_resample_flirt_1_params",
+          "fn_struct_make_params": "volume_resample_flirt_params_",
           "properties": {
-            "source_volume": {
+            "source-volume": {
               "var_param": "source_volume"
             },
-            "target_volume": {
+            "target-volume": {
               "var_param": "target_volume"
             }
           }
@@ -62,10 +56,19 @@
         "warpfield": {
           "var_param": "warpfield"
         },
-        "opt_fnirt_source_volume": {
-          "var_param": "opt_fnirt_source_volume"
+        "source-volume": {
+          "var_param": "source_volume"
         }
       }
+    },
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "volume-space": {
+      "var_param": "volume_space"
+    },
+    "method": {
+      "var_param": "method"
     }
   }
 }

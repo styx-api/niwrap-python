@@ -6,40 +6,39 @@ import pathlib
 from styxdefs import *
 
 METRIC_REDUCE_METADATA = Metadata(
-    id="1d37ac901662d6962e04b6b12face19d11c30fc5.boutiques",
+    id="16a5b7e816fece45188696cd1530041a0b700afe.workbench",
     name="metric-reduce",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricReduceExcludeOutliersParameters = typing.TypedDict('MetricReduceExcludeOutliersParameters', {
-    "@type": typing.NotRequired[typing.Literal["exclude_outliers"]],
-    "sigma_below": float,
-    "sigma_above": float,
+    "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
+    "sigma-below": float,
+    "sigma-above": float,
 })
 MetricReduceExcludeOutliersParametersTagged = typing.TypedDict('MetricReduceExcludeOutliersParametersTagged', {
-    "@type": typing.Literal["exclude_outliers"],
-    "sigma_below": float,
-    "sigma_above": float,
+    "@type": typing.Literal["exclude-outliers"],
+    "sigma-below": float,
+    "sigma-above": float,
 })
 
 
 MetricReduceParameters = typing.TypedDict('MetricReduceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-reduce"]],
-    "metric_in": InputPathType,
+    "metric-out": str,
+    "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParameters | None],
+    "only-numeric": bool,
+    "metric-in": InputPathType,
     "operation": str,
-    "metric_out": str,
-    "exclude_outliers": typing.NotRequired[MetricReduceExcludeOutliersParameters | None],
-    "opt_only_numeric": bool,
 })
 MetricReduceParametersTagged = typing.TypedDict('MetricReduceParametersTagged', {
     "@type": typing.Literal["workbench/metric-reduce"],
-    "metric_in": InputPathType,
+    "metric-out": str,
+    "exclude-outliers": typing.NotRequired[MetricReduceExcludeOutliersParameters | None],
+    "only-numeric": bool,
+    "metric-in": InputPathType,
     "operation": str,
-    "metric_out": str,
-    "exclude_outliers": typing.NotRequired[MetricReduceExcludeOutliersParameters | None],
-    "opt_only_numeric": bool,
 })
 
 
@@ -57,9 +56,9 @@ def metric_reduce_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "exclude_outliers",
-        "sigma_below": sigma_below,
-        "sigma_above": sigma_above,
+        "@type": "exclude-outliers",
+        "sigma-below": sigma_below,
+        "sigma-above": sigma_above,
     }
     return params
 
@@ -78,9 +77,11 @@ def metric_reduce_exclude_outliers_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-exclude-outliers")
-    cargs.append(str(params.get("sigma_below", None)))
-    cargs.append(str(params.get("sigma_above", None)))
+    cargs.extend([
+        "-exclude-outliers",
+        str(params.get("sigma-below", None)),
+        str(params.get("sigma-above", None))
+    ])
     return cargs
 
 
@@ -95,34 +96,34 @@ class MetricReduceOutputs(typing.NamedTuple):
 
 
 def metric_reduce_params(
+    metric_out: str,
     metric_in: InputPathType,
     operation: str,
-    metric_out: str,
     exclude_outliers: MetricReduceExcludeOutliersParameters | None = None,
-    opt_only_numeric: bool = False,
+    only_numeric: bool = False,
 ) -> MetricReduceParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
         metric_in: the metric to reduce.
         operation: the reduction operator to use.
-        metric_out: the output metric.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
-        opt_only_numeric: exclude non-numeric values.
+        only_numeric: exclude non-numeric values.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-reduce",
-        "metric_in": metric_in,
+        "metric-out": metric_out,
+        "only-numeric": only_numeric,
+        "metric-in": metric_in,
         "operation": operation,
-        "metric_out": metric_out,
-        "opt_only_numeric": opt_only_numeric,
     }
     if exclude_outliers is not None:
-        params["exclude_outliers"] = exclude_outliers
+        params["exclude-outliers"] = exclude_outliers
     return params
 
 
@@ -140,15 +141,16 @@ def metric_reduce_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-reduce")
-    cargs.append(execution.input_file(params.get("metric_in", None)))
+    if params.get("exclude-outliers", None) is not None or params.get("only-numeric", False):
+        cargs.extend([
+            "wb_command",
+            "-metric-reduce",
+            params.get("metric-out", None),
+            *(metric_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
+            ("-only-numeric" if (params.get("only-numeric", False)) else "")
+        ])
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     cargs.append(params.get("operation", None))
-    cargs.append(params.get("metric_out", None))
-    if params.get("exclude_outliers", None) is not None:
-        cargs.extend(metric_reduce_exclude_outliers_cargs(params.get("exclude_outliers", None), execution))
-    if params.get("opt_only_numeric", False):
-        cargs.append("-only-numeric")
     return cargs
 
 
@@ -167,7 +169,7 @@ def metric_reduce_outputs(
     """
     ret = MetricReduceOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -177,9 +179,7 @@ def metric_reduce_execute(
     runner: Runner | None = None,
 ) -> MetricReduceOutputs:
     """
-    metric-reduce
-    
-    Perform reduction operation across metric columns.
+    PERFORM REDUCTION OPERATION ACROSS METRIC COLUMNS.
     
     For each surface vertex, takes the data across columns as a vector, and
     performs the specified reduction on it, putting the result into the single
@@ -202,10 +202,6 @@ def metric_reduce_execute(
     MODE: the mode of the data
     COUNT_NONZERO: the number of nonzero elements in the data
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -223,17 +219,15 @@ def metric_reduce_execute(
 
 
 def metric_reduce(
+    metric_out: str,
     metric_in: InputPathType,
     operation: str,
-    metric_out: str,
     exclude_outliers: MetricReduceExcludeOutliersParameters | None = None,
-    opt_only_numeric: bool = False,
+    only_numeric: bool = False,
     runner: Runner | None = None,
 ) -> MetricReduceOutputs:
     """
-    metric-reduce
-    
-    Perform reduction operation across metric columns.
+    PERFORM REDUCTION OPERATION ACROSS METRIC COLUMNS.
     
     For each surface vertex, takes the data across columns as a vector, and
     performs the specified reduction on it, putting the result into the single
@@ -257,27 +251,23 @@ def metric_reduce(
     COUNT_NONZERO: the number of nonzero elements in the data
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
         metric_in: the metric to reduce.
         operation: the reduction operator to use.
-        metric_out: the output metric.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
-        opt_only_numeric: exclude non-numeric values.
+        only_numeric: exclude non-numeric values.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricReduceOutputs`).
     """
     params = metric_reduce_params(
-        metric_in=metric_in,
-        operation=operation,
         metric_out=metric_out,
         exclude_outliers=exclude_outliers,
-        opt_only_numeric=opt_only_numeric,
+        only_numeric=only_numeric,
+        metric_in=metric_in,
+        operation=operation,
     )
     return metric_reduce_execute(params, runner)
 

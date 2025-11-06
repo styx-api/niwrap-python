@@ -6,17 +6,16 @@ import pathlib
 from styxdefs import *
 
 CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
-    id="848dea6b577ee4b94a5e883dc7976a17d71a95af.boutiques",
+    id="c03f58871879950a5d06809f88add9efe24fe896.workbench",
     name="convert-fiber-orientations",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientationsFiberParameters', {
     "@type": typing.NotRequired[typing.Literal["fiber"]],
-    "mean_f": InputPathType,
-    "stdev_f": InputPathType,
+    "mean-f": InputPathType,
+    "stdev-f": InputPathType,
     "theta": InputPathType,
     "phi": InputPathType,
     "psi": InputPathType,
@@ -25,8 +24,8 @@ ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientat
 })
 ConvertFiberOrientationsFiberParametersTagged = typing.TypedDict('ConvertFiberOrientationsFiberParametersTagged', {
     "@type": typing.Literal["fiber"],
-    "mean_f": InputPathType,
-    "stdev_f": InputPathType,
+    "mean-f": InputPathType,
+    "stdev-f": InputPathType,
     "theta": InputPathType,
     "phi": InputPathType,
     "psi": InputPathType,
@@ -37,15 +36,15 @@ ConvertFiberOrientationsFiberParametersTagged = typing.TypedDict('ConvertFiberOr
 
 ConvertFiberOrientationsParameters = typing.TypedDict('ConvertFiberOrientationsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-fiber-orientations"]],
-    "label_volume": InputPathType,
-    "fiber_out": str,
+    "fiber-out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],
+    "label-volume": InputPathType,
 })
 ConvertFiberOrientationsParametersTagged = typing.TypedDict('ConvertFiberOrientationsParametersTagged', {
     "@type": typing.Literal["workbench/convert-fiber-orientations"],
-    "label_volume": InputPathType,
-    "fiber_out": str,
+    "fiber-out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],
+    "label-volume": InputPathType,
 })
 
 
@@ -74,8 +73,8 @@ def convert_fiber_orientations_fiber_params(
     """
     params = {
         "@type": "fiber",
-        "mean_f": mean_f,
-        "stdev_f": stdev_f,
+        "mean-f": mean_f,
+        "stdev-f": stdev_f,
         "theta": theta,
         "phi": phi,
         "psi": psi,
@@ -99,14 +98,16 @@ def convert_fiber_orientations_fiber_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-fiber")
-    cargs.append(execution.input_file(params.get("mean_f", None)))
-    cargs.append(execution.input_file(params.get("stdev_f", None)))
-    cargs.append(execution.input_file(params.get("theta", None)))
-    cargs.append(execution.input_file(params.get("phi", None)))
-    cargs.append(execution.input_file(params.get("psi", None)))
-    cargs.append(execution.input_file(params.get("ka", None)))
-    cargs.append(execution.input_file(params.get("kb", None)))
+    cargs.extend([
+        "-fiber",
+        execution.input_file(params.get("mean-f", None)),
+        execution.input_file(params.get("stdev-f", None)),
+        execution.input_file(params.get("theta", None)),
+        execution.input_file(params.get("phi", None)),
+        execution.input_file(params.get("psi", None)),
+        execution.input_file(params.get("ka", None)),
+        execution.input_file(params.get("kb", None))
+    ])
     return cargs
 
 
@@ -121,24 +122,24 @@ class ConvertFiberOrientationsOutputs(typing.NamedTuple):
 
 
 def convert_fiber_orientations_params(
-    label_volume: InputPathType,
     fiber_out: str,
+    label_volume: InputPathType,
     fiber: list[ConvertFiberOrientationsFiberParameters] | None = None,
 ) -> ConvertFiberOrientationsParametersTagged:
     """
     Build parameters.
     
     Args:
-        label_volume: volume of cifti structure labels.
         fiber_out: the output fiber orientation file.
+        label_volume: volume of cifti structure labels.
         fiber: specify the parameter volumes for a fiber.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/convert-fiber-orientations",
-        "label_volume": label_volume,
-        "fiber_out": fiber_out,
+        "fiber-out": fiber_out,
+        "label-volume": label_volume,
     }
     if fiber is not None:
         params["fiber"] = fiber
@@ -159,12 +160,14 @@ def convert_fiber_orientations_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-convert-fiber-orientations")
-    cargs.append(execution.input_file(params.get("label_volume", None)))
-    cargs.append(params.get("fiber_out", None))
     if params.get("fiber", None) is not None:
-        cargs.extend([a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c])
+        cargs.extend([
+            "wb_command",
+            "-convert-fiber-orientations",
+            params.get("fiber-out", None),
+            *[a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c]
+        ])
+    cargs.append(execution.input_file(params.get("label-volume", None)))
     return cargs
 
 
@@ -183,7 +186,7 @@ def convert_fiber_orientations_outputs(
     """
     ret = ConvertFiberOrientationsOutputs(
         root=execution.output_file("."),
-        fiber_out=execution.output_file(params.get("fiber_out", None)),
+        fiber_out=execution.output_file(params.get("fiber-out", None)),
     )
     return ret
 
@@ -193,9 +196,7 @@ def convert_fiber_orientations_execute(
     runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
     """
-    convert-fiber-orientations
-    
-    Convert bingham parameter volumes to fiber orientation file.
+    CONVERT BINGHAM PARAMETER VOLUMES TO FIBER ORIENTATION FILE.
     
     Takes precomputed bingham parameters from volume files and converts them to
     the format workbench uses for display. The <label-volume> argument must be a
@@ -225,6 +226,8 @@ def convert_fiber_orientations_execute(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -235,10 +238,6 @@ def convert_fiber_orientations_execute(
     PUTAMEN_RIGHT
     THALAMUS_LEFT
     THALAMUS_RIGHT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -256,15 +255,13 @@ def convert_fiber_orientations_execute(
 
 
 def convert_fiber_orientations(
-    label_volume: InputPathType,
     fiber_out: str,
+    label_volume: InputPathType,
     fiber: list[ConvertFiberOrientationsFiberParameters] | None = None,
     runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
     """
-    convert-fiber-orientations
-    
-    Convert bingham parameter volumes to fiber orientation file.
+    CONVERT BINGHAM PARAMETER VOLUMES TO FIBER ORIENTATION FILE.
     
     Takes precomputed bingham parameters from volume files and converts them to
     the format workbench uses for display. The <label-volume> argument must be a
@@ -294,6 +291,8 @@ def convert_fiber_orientations(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -305,22 +304,18 @@ def convert_fiber_orientations(
     THALAMUS_LEFT
     THALAMUS_RIGHT.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        label_volume: volume of cifti structure labels.
         fiber_out: the output fiber orientation file.
+        label_volume: volume of cifti structure labels.
         fiber: specify the parameter volumes for a fiber.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertFiberOrientationsOutputs`).
     """
     params = convert_fiber_orientations_params(
-        label_volume=label_volume,
         fiber_out=fiber_out,
         fiber=fiber,
+        label_volume=label_volume,
     )
     return convert_fiber_orientations_execute(params, runner)
 

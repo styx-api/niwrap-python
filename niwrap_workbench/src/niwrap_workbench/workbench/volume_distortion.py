@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 VOLUME_DISTORTION_METADATA = Metadata(
-    id="84c6e150f3059b96bf719ca37696b114cc3add00.boutiques",
+    id="71b5b8e30a3f86c052e4af8965fbf9041a247504.workbench",
     name="volume-distortion",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeDistortionParameters = typing.TypedDict('VolumeDistortionParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-distortion"]],
+    "volume-out": str,
+    "source-volume": typing.NotRequired[str | None],
+    "circular": bool,
+    "log2": bool,
     "warpfield": str,
-    "volume_out": str,
-    "opt_fnirt_source_volume": typing.NotRequired[str | None],
-    "opt_circular": bool,
-    "opt_log2": bool,
 })
 VolumeDistortionParametersTagged = typing.TypedDict('VolumeDistortionParametersTagged', {
     "@type": typing.Literal["workbench/volume-distortion"],
+    "volume-out": str,
+    "source-volume": typing.NotRequired[str | None],
+    "circular": bool,
+    "log2": bool,
     "warpfield": str,
-    "volume_out": str,
-    "opt_fnirt_source_volume": typing.NotRequired[str | None],
-    "opt_circular": bool,
-    "opt_log2": bool,
 })
 
 
@@ -42,34 +41,35 @@ class VolumeDistortionOutputs(typing.NamedTuple):
 
 
 def volume_distortion_params(
-    warpfield: str,
     volume_out: str,
-    opt_fnirt_source_volume: str | None = None,
-    opt_circular: bool = False,
-    opt_log2: bool = False,
+    source_volume: str | None,
+    warpfield: str,
+    circular: bool = False,
+    log2: bool = False,
 ) -> VolumeDistortionParametersTagged:
     """
     Build parameters.
     
     Args:
-        warpfield: the warpfield to compute the distortion of.
         volume_out: the output distortion measures.
-        opt_fnirt_source_volume: MUST be used if using a fnirt warpfield: the\
-            source volume used when generating the warpfield.
-        opt_circular: use the circle-based formula for the anisotropic measure.
-        opt_log2: apply base-2 log transform.
+        source_volume: MUST be used if using a fnirt warpfield\
+            \
+            the source volume used when generating the warpfield.
+        warpfield: the warpfield to compute the distortion of.
+        circular: use the circle-based formula for the anisotropic measure.
+        log2: apply base-2 log transform.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-distortion",
+        "volume-out": volume_out,
+        "circular": circular,
+        "log2": log2,
         "warpfield": warpfield,
-        "volume_out": volume_out,
-        "opt_circular": opt_circular,
-        "opt_log2": opt_log2,
     }
-    if opt_fnirt_source_volume is not None:
-        params["opt_fnirt_source_volume"] = opt_fnirt_source_volume
+    if source_volume is not None:
+        params["source-volume"] = source_volume
     return params
 
 
@@ -87,19 +87,17 @@ def volume_distortion_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-distortion")
-    cargs.append(params.get("warpfield", None))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_fnirt_source_volume", None) is not None:
+    if params.get("source-volume", None) is not None or params.get("circular", False) or params.get("log2", False):
         cargs.extend([
+            "wb_command",
+            "-volume-distortion",
+            params.get("volume-out", None),
             "-fnirt",
-            params.get("opt_fnirt_source_volume", None)
+            (params.get("source-volume", None) if (params.get("source-volume", None) is not None) else ""),
+            ("-circular" if (params.get("circular", False)) else ""),
+            ("-log2" if (params.get("log2", False)) else "")
         ])
-    if params.get("opt_circular", False):
-        cargs.append("-circular")
-    if params.get("opt_log2", False):
-        cargs.append("-log2")
+    cargs.append(params.get("warpfield", None))
     return cargs
 
 
@@ -118,7 +116,7 @@ def volume_distortion_outputs(
     """
     ret = VolumeDistortionOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -128,9 +126,7 @@ def volume_distortion_execute(
     runner: Runner | None = None,
 ) -> VolumeDistortionOutputs:
     """
-    volume-distortion
-    
-    Calculate volume warpfield distortion.
+    CALCULATE VOLUME WARPFIELD DISTORTION.
     
     Calculates isotropic and anisotropic distortions in the volume warpfield. At
     each voxel, the gradient of the absolute warpfield is computed to obtain the
@@ -144,10 +140,6 @@ def volume_distortion_execute(
     transforming the principal strains into log space, considering them as
     x-values of points on a circle 120 degrees apart, finds the circle's
     diameter, and transforms that back to a ratio.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -165,17 +157,15 @@ def volume_distortion_execute(
 
 
 def volume_distortion(
-    warpfield: str,
     volume_out: str,
-    opt_fnirt_source_volume: str | None = None,
-    opt_circular: bool = False,
-    opt_log2: bool = False,
+    source_volume: str | None,
+    warpfield: str,
+    circular: bool = False,
+    log2: bool = False,
     runner: Runner | None = None,
 ) -> VolumeDistortionOutputs:
     """
-    volume-distortion
-    
-    Calculate volume warpfield distortion.
+    CALCULATE VOLUME WARPFIELD DISTORTION.
     
     Calculates isotropic and anisotropic distortions in the volume warpfield. At
     each voxel, the gradient of the absolute warpfield is computed to obtain the
@@ -190,27 +180,24 @@ def volume_distortion(
     x-values of points on a circle 120 degrees apart, finds the circle's
     diameter, and transforms that back to a ratio.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        warpfield: the warpfield to compute the distortion of.
         volume_out: the output distortion measures.
-        opt_fnirt_source_volume: MUST be used if using a fnirt warpfield: the\
-            source volume used when generating the warpfield.
-        opt_circular: use the circle-based formula for the anisotropic measure.
-        opt_log2: apply base-2 log transform.
+        source_volume: MUST be used if using a fnirt warpfield\
+            \
+            the source volume used when generating the warpfield.
+        warpfield: the warpfield to compute the distortion of.
+        circular: use the circle-based formula for the anisotropic measure.
+        log2: apply base-2 log transform.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeDistortionOutputs`).
     """
     params = volume_distortion_params(
-        warpfield=warpfield,
         volume_out=volume_out,
-        opt_fnirt_source_volume=opt_fnirt_source_volume,
-        opt_circular=opt_circular,
-        opt_log2=opt_log2,
+        source_volume=source_volume,
+        circular=circular,
+        log2=log2,
+        warpfield=warpfield,
     )
     return volume_distortion_execute(params, runner)
 

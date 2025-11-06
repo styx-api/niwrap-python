@@ -19,9 +19,9 @@ AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultiv
     "output_prefix": typing.NotRequired[str | None],
     "image_statistic": typing.NotRequired[typing.Literal[0, 1, 2] | None],
     "sharpening": typing.NotRequired[typing.Literal[0, 1, 2] | None],
-    "backup_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "backup_images": typing.NotRequired[bool | None],
     "parallel_control": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
-    "single_precision": typing.NotRequired[typing.Literal[0, 1] | None],
+    "single_precision": typing.NotRequired[bool | None],
     "gradient_step": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[int | None],
     "cpu_cores": typing.NotRequired[int | None],
@@ -30,16 +30,16 @@ AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultiv
     "max_iterations": typing.NotRequired[str | None],
     "shrink_factors": typing.NotRequired[str | None],
     "smoothing_kernels": typing.NotRequired[str | None],
-    "n4_bias_correction": typing.NotRequired[typing.Literal[0, 1] | None],
+    "n4_bias_correction": typing.NotRequired[bool | None],
     "prepend_commands": typing.NotRequired[str | None],
-    "rigid_registration": typing.NotRequired[typing.Literal[0, 1] | None],
-    "linear_registration": typing.NotRequired[typing.Literal[0, 1] | None],
+    "rigid_registration": typing.NotRequired[bool | None],
+    "linear_registration": typing.NotRequired[bool | None],
     "similarity_metric": typing.NotRequired[str | None],
     "transformation_type": typing.NotRequired[str | None],
     "walltime": typing.NotRequired[str | None],
     "memory_limit": typing.NotRequired[str | None],
     "xgrid_args": typing.NotRequired[str | None],
-    "update_template": typing.NotRequired[typing.Literal[0, 1] | None],
+    "update_template": typing.NotRequired[bool | None],
     "target_volume": typing.NotRequired[list[InputPathType] | None],
     "input_images": list[InputPathType],
 })
@@ -49,9 +49,9 @@ AntsMultivariateTemplateConstruction2ShParametersTagged = typing.TypedDict('Ants
     "output_prefix": typing.NotRequired[str | None],
     "image_statistic": typing.NotRequired[typing.Literal[0, 1, 2] | None],
     "sharpening": typing.NotRequired[typing.Literal[0, 1, 2] | None],
-    "backup_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "backup_images": typing.NotRequired[bool | None],
     "parallel_control": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
-    "single_precision": typing.NotRequired[typing.Literal[0, 1] | None],
+    "single_precision": typing.NotRequired[bool | None],
     "gradient_step": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[int | None],
     "cpu_cores": typing.NotRequired[int | None],
@@ -60,16 +60,16 @@ AntsMultivariateTemplateConstruction2ShParametersTagged = typing.TypedDict('Ants
     "max_iterations": typing.NotRequired[str | None],
     "shrink_factors": typing.NotRequired[str | None],
     "smoothing_kernels": typing.NotRequired[str | None],
-    "n4_bias_correction": typing.NotRequired[typing.Literal[0, 1] | None],
+    "n4_bias_correction": typing.NotRequired[bool | None],
     "prepend_commands": typing.NotRequired[str | None],
-    "rigid_registration": typing.NotRequired[typing.Literal[0, 1] | None],
-    "linear_registration": typing.NotRequired[typing.Literal[0, 1] | None],
+    "rigid_registration": typing.NotRequired[bool | None],
+    "linear_registration": typing.NotRequired[bool | None],
     "similarity_metric": typing.NotRequired[str | None],
     "transformation_type": typing.NotRequired[str | None],
     "walltime": typing.NotRequired[str | None],
     "memory_limit": typing.NotRequired[str | None],
     "xgrid_args": typing.NotRequired[str | None],
-    "update_template": typing.NotRequired[typing.Literal[0, 1] | None],
+    "update_template": typing.NotRequired[bool | None],
     "target_volume": typing.NotRequired[list[InputPathType] | None],
     "input_images": list[InputPathType],
 })
@@ -92,9 +92,9 @@ def ants_multivariate_template_construction2_sh_params(
     output_prefix: str | None = None,
     image_statistic: typing.Literal[0, 1, 2] | None = None,
     sharpening: typing.Literal[0, 1, 2] | None = None,
-    backup_images: typing.Literal[0, 1] | None = None,
+    backup_images: bool | None = None,
     parallel_control: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
-    single_precision: typing.Literal[0, 1] | None = None,
+    single_precision: bool | None = None,
     gradient_step: float | None = None,
     iterations: int | None = None,
     cpu_cores: int | None = None,
@@ -103,16 +103,16 @@ def ants_multivariate_template_construction2_sh_params(
     max_iterations: str | None = None,
     shrink_factors: str | None = None,
     smoothing_kernels: str | None = None,
-    n4_bias_correction: typing.Literal[0, 1] | None = None,
+    n4_bias_correction: bool | None = None,
     prepend_commands: str | None = None,
-    rigid_registration: typing.Literal[0, 1] | None = None,
-    linear_registration: typing.Literal[0, 1] | None = None,
+    rigid_registration: bool | None = None,
+    linear_registration: bool | None = None,
     similarity_metric: str | None = None,
     transformation_type: str | None = None,
     walltime: str | None = None,
     memory_limit: str | None = None,
     xgrid_args: str | None = None,
-    update_template: typing.Literal[0, 1] | None = None,
+    update_template: bool | None = None,
     target_volume: list[InputPathType] | None = None,
 ) -> AntsMultivariateTemplateConstruction2ShParametersTagged:
     """
@@ -311,7 +311,7 @@ def ants_multivariate_template_construction2_sh_cargs(
     if params.get("backup_images", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("backup_images", None))
+            ("1" if params.get("backup_images", None) else "0")
         ])
     if params.get("parallel_control", None) is not None:
         cargs.extend([
@@ -321,7 +321,7 @@ def ants_multivariate_template_construction2_sh_cargs(
     if params.get("single_precision", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("single_precision", None))
+            ("1" if params.get("single_precision", None) else "0")
         ])
     if params.get("gradient_step", None) is not None:
         cargs.extend([
@@ -366,7 +366,7 @@ def ants_multivariate_template_construction2_sh_cargs(
     if params.get("n4_bias_correction", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n4_bias_correction", None))
+            ("1" if params.get("n4_bias_correction", None) else "0")
         ])
     if params.get("prepend_commands", None) is not None:
         cargs.extend([
@@ -376,12 +376,12 @@ def ants_multivariate_template_construction2_sh_cargs(
     if params.get("rigid_registration", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("rigid_registration", None))
+            ("1" if params.get("rigid_registration", None) else "0")
         ])
     if params.get("linear_registration", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("linear_registration", None))
+            ("1" if params.get("linear_registration", None) else "0")
         ])
     if params.get("similarity_metric", None) is not None:
         cargs.extend([
@@ -411,7 +411,7 @@ def ants_multivariate_template_construction2_sh_cargs(
     if params.get("update_template", None) is not None:
         cargs.extend([
             "-y",
-            str(params.get("update_template", None))
+            ("1" if params.get("update_template", None) else "0")
         ])
     if params.get("target_volume", None) is not None:
         cargs.extend([
@@ -478,9 +478,9 @@ def ants_multivariate_template_construction2_sh(
     output_prefix: str | None = None,
     image_statistic: typing.Literal[0, 1, 2] | None = None,
     sharpening: typing.Literal[0, 1, 2] | None = None,
-    backup_images: typing.Literal[0, 1] | None = None,
+    backup_images: bool | None = None,
     parallel_control: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
-    single_precision: typing.Literal[0, 1] | None = None,
+    single_precision: bool | None = None,
     gradient_step: float | None = None,
     iterations: int | None = None,
     cpu_cores: int | None = None,
@@ -489,16 +489,16 @@ def ants_multivariate_template_construction2_sh(
     max_iterations: str | None = None,
     shrink_factors: str | None = None,
     smoothing_kernels: str | None = None,
-    n4_bias_correction: typing.Literal[0, 1] | None = None,
+    n4_bias_correction: bool | None = None,
     prepend_commands: str | None = None,
-    rigid_registration: typing.Literal[0, 1] | None = None,
-    linear_registration: typing.Literal[0, 1] | None = None,
+    rigid_registration: bool | None = None,
+    linear_registration: bool | None = None,
     similarity_metric: str | None = None,
     transformation_type: str | None = None,
     walltime: str | None = None,
     memory_limit: str | None = None,
     xgrid_args: str | None = None,
-    update_template: typing.Literal[0, 1] | None = None,
+    update_template: bool | None = None,
     target_volume: list[InputPathType] | None = None,
     runner: Runner | None = None,
 ) -> AntsMultivariateTemplateConstruction2ShOutputs:

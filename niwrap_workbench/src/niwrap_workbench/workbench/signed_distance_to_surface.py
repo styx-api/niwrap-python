@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
-    id="8c819d933d40718709f36a80f07be61f04dd0058.boutiques",
+    id="344a7869e0c667f1b8e4af3135dc6ab6eadc0253.workbench",
     name="signed-distance-to-surface",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SignedDistanceToSurfaceParameters = typing.TypedDict('SignedDistanceToSurfaceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/signed-distance-to-surface"]],
-    "surface_comp": InputPathType,
-    "surface_ref": InputPathType,
     "metric": str,
-    "opt_winding_method": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "surface-comp": InputPathType,
+    "surface-ref": InputPathType,
 })
 SignedDistanceToSurfaceParametersTagged = typing.TypedDict('SignedDistanceToSurfaceParametersTagged', {
     "@type": typing.Literal["workbench/signed-distance-to-surface"],
-    "surface_comp": InputPathType,
-    "surface_ref": InputPathType,
     "metric": str,
-    "opt_winding_method": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "surface-comp": InputPathType,
+    "surface-ref": InputPathType,
 })
 
 
@@ -40,32 +39,33 @@ class SignedDistanceToSurfaceOutputs(typing.NamedTuple):
 
 
 def signed_distance_to_surface_params(
+    metric: str,
+    method: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
-    metric: str,
-    opt_winding_method: str | None = None,
 ) -> SignedDistanceToSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric: the output metric.
+        method: winding method for point inside surface test\
+            \
+            name of the method (default EVEN_ODD).
         surface_comp: the comparison surface to measure the signed distance on.
         surface_ref: the reference surface that defines the signed distance\
             function.
-        metric: the output metric.
-        opt_winding_method: winding method for point inside surface test: name\
-            of the method (default EVEN_ODD).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/signed-distance-to-surface",
-        "surface_comp": surface_comp,
-        "surface_ref": surface_ref,
         "metric": metric,
+        "surface-comp": surface_comp,
+        "surface-ref": surface_ref,
     }
-    if opt_winding_method is not None:
-        params["opt_winding_method"] = opt_winding_method
+    if method is not None:
+        params["method"] = method
     return params
 
 
@@ -83,16 +83,16 @@ def signed_distance_to_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-signed-distance-to-surface")
-    cargs.append(execution.input_file(params.get("surface_comp", None)))
-    cargs.append(execution.input_file(params.get("surface_ref", None)))
-    cargs.append(params.get("metric", None))
-    if params.get("opt_winding_method", None) is not None:
+    if params.get("method", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-signed-distance-to-surface",
+            params.get("metric", None),
             "-winding",
-            params.get("opt_winding_method", None)
+            params.get("method", None)
         ])
+    cargs.append(execution.input_file(params.get("surface-comp", None)))
+    cargs.append(execution.input_file(params.get("surface-ref", None)))
     return cargs
 
 
@@ -121,9 +121,7 @@ def signed_distance_to_surface_execute(
     runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
     """
-    signed-distance-to-surface
-    
-    Compute signed distance from one surface to another.
+    COMPUTE SIGNED DISTANCE FROM ONE SURFACE TO ANOTHER.
     
     Compute the signed distance function of the reference surface at every
     vertex on the comparison surface. NOTE: this relation is NOT symmetric, the
@@ -142,10 +140,6 @@ def signed_distance_to_surface_execute(
     itself. All other methods count entry (positive) and exit (negative)
     crossings of a vertical ray from the point, then counts as inside if the
     total is odd, negative, or nonzero, respectively.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -163,16 +157,14 @@ def signed_distance_to_surface_execute(
 
 
 def signed_distance_to_surface(
+    metric: str,
+    method: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
-    metric: str,
-    opt_winding_method: str | None = None,
     runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
     """
-    signed-distance-to-surface
-    
-    Compute signed distance from one surface to another.
+    COMPUTE SIGNED DISTANCE FROM ONE SURFACE TO ANOTHER.
     
     Compute the signed distance function of the reference surface at every
     vertex on the comparison surface. NOTE: this relation is NOT symmetric, the
@@ -192,26 +184,23 @@ def signed_distance_to_surface(
     crossings of a vertical ray from the point, then counts as inside if the
     total is odd, negative, or nonzero, respectively.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric: the output metric.
+        method: winding method for point inside surface test\
+            \
+            name of the method (default EVEN_ODD).
         surface_comp: the comparison surface to measure the signed distance on.
         surface_ref: the reference surface that defines the signed distance\
             function.
-        metric: the output metric.
-        opt_winding_method: winding method for point inside surface test: name\
-            of the method (default EVEN_ODD).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SignedDistanceToSurfaceOutputs`).
     """
     params = signed_distance_to_surface_params(
+        metric=metric,
+        method=method,
         surface_comp=surface_comp,
         surface_ref=surface_ref,
-        metric=metric,
-        opt_winding_method=opt_winding_method,
     )
     return signed_distance_to_surface_execute(params, runner)
 

@@ -10,43 +10,43 @@
     "interp": {
       "var_param": "interp"
     },
-    "h_dim": {
+    "h-dim": {
       "var_param": "h_dim"
     },
-    "v_dim": {
+    "v-dim": {
       "var_param": "v_dim"
     },
-    "scale_min": {
+    "scale-min": {
       "var_param": "scale_min"
     },
-    "scale_max": {
+    "scale-max": {
       "var_param": "scale_max"
     },
-    "bottom_left_x": {
+    "bottom-left-x": {
       "var_param": "bottom_left_x"
     },
-    "bottom_left_y": {
+    "bottom-left-y": {
       "var_param": "bottom_left_y"
     },
-    "bottom_left_z": {
+    "bottom-left-z": {
       "var_param": "bottom_left_z"
     },
-    "bottom_right_x": {
+    "bottom-right-x": {
       "var_param": "bottom_right_x"
     },
-    "bottom_right_y": {
+    "bottom-right-y": {
       "var_param": "bottom_right_y"
     },
-    "bottom_right_z": {
+    "bottom-right-z": {
       "var_param": "bottom_right_z"
     },
-    "top_left_x": {
+    "top-left-x": {
       "var_param": "top_left_x"
     },
-    "top_left_y": {
+    "top-left-y": {
       "var_param": "top_left_y"
     },
-    "top_left_z": {
+    "top-left-z": {
       "var_param": "top_left_z"
     },
     "image": {

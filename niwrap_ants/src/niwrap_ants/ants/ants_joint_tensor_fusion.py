@@ -21,17 +21,17 @@ AntsJointTensorFusionParameters = typing.TypedDict('AntsJointTensorFusionParamet
     "atlas_segmentation": InputPathType,
     "alpha": typing.NotRequired[float | None],
     "beta": typing.NotRequired[float | None],
-    "retain_label_posterior_images": typing.NotRequired[typing.Literal[0, 1] | None],
-    "retain_atlas_voting_images": typing.NotRequired[typing.Literal[0, 1] | None],
-    "constrain_nonnegative": typing.NotRequired[typing.Literal[0, 1] | None],
-    "log_euclidean": typing.NotRequired[typing.Literal[0, 1] | None],
+    "retain_label_posterior_images": typing.NotRequired[bool | None],
+    "retain_atlas_voting_images": typing.NotRequired[bool | None],
+    "constrain_nonnegative": typing.NotRequired[bool | None],
+    "log_euclidean": typing.NotRequired[bool | None],
     "patch_radius": typing.NotRequired[str | None],
     "patch_metric": typing.NotRequired[typing.Literal["PC", "MSQ"] | None],
     "search_radius": typing.NotRequired[str | None],
     "exclusion_image": typing.NotRequired[str | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 AntsJointTensorFusionParametersTagged = typing.TypedDict('AntsJointTensorFusionParametersTagged', {
     "@type": typing.Literal["ants/antsJointTensorFusion"],
@@ -41,17 +41,17 @@ AntsJointTensorFusionParametersTagged = typing.TypedDict('AntsJointTensorFusionP
     "atlas_segmentation": InputPathType,
     "alpha": typing.NotRequired[float | None],
     "beta": typing.NotRequired[float | None],
-    "retain_label_posterior_images": typing.NotRequired[typing.Literal[0, 1] | None],
-    "retain_atlas_voting_images": typing.NotRequired[typing.Literal[0, 1] | None],
-    "constrain_nonnegative": typing.NotRequired[typing.Literal[0, 1] | None],
-    "log_euclidean": typing.NotRequired[typing.Literal[0, 1] | None],
+    "retain_label_posterior_images": typing.NotRequired[bool | None],
+    "retain_atlas_voting_images": typing.NotRequired[bool | None],
+    "constrain_nonnegative": typing.NotRequired[bool | None],
+    "log_euclidean": typing.NotRequired[bool | None],
     "patch_radius": typing.NotRequired[str | None],
     "patch_metric": typing.NotRequired[typing.Literal["PC", "MSQ"] | None],
     "search_radius": typing.NotRequired[str | None],
     "exclusion_image": typing.NotRequired[str | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -79,16 +79,16 @@ def ants_joint_tensor_fusion_params(
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     alpha: float | None = None,
     beta: float | None = None,
-    retain_label_posterior_images: typing.Literal[0, 1] | None = None,
-    retain_atlas_voting_images: typing.Literal[0, 1] | None = None,
-    constrain_nonnegative: typing.Literal[0, 1] | None = None,
-    log_euclidean: typing.Literal[0, 1] | None = None,
+    retain_label_posterior_images: bool | None = None,
+    retain_atlas_voting_images: bool | None = None,
+    constrain_nonnegative: bool | None = None,
+    log_euclidean: bool | None = None,
     patch_radius: str | None = None,
     patch_metric: typing.Literal["PC", "MSQ"] | None = None,
     search_radius: str | None = None,
     exclusion_image: str | None = None,
     mask_image: InputPathType | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> AntsJointTensorFusionParametersTagged:
     """
     Build parameters.
@@ -209,22 +209,22 @@ def ants_joint_tensor_fusion_cargs(
     if params.get("retain_label_posterior_images", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("retain_label_posterior_images", None))
+            ("1" if params.get("retain_label_posterior_images", None) else "0")
         ])
     if params.get("retain_atlas_voting_images", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("retain_atlas_voting_images", None))
+            ("1" if params.get("retain_atlas_voting_images", None) else "0")
         ])
     if params.get("constrain_nonnegative", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("constrain_nonnegative", None))
+            ("1" if params.get("constrain_nonnegative", None) else "0")
         ])
     if params.get("log_euclidean", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("log_euclidean", None))
+            ("1" if params.get("log_euclidean", None) else "0")
         ])
     if params.get("patch_radius", None) is not None:
         cargs.extend([
@@ -258,7 +258,7 @@ def ants_joint_tensor_fusion_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -326,16 +326,16 @@ def ants_joint_tensor_fusion(
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     alpha: float | None = None,
     beta: float | None = None,
-    retain_label_posterior_images: typing.Literal[0, 1] | None = None,
-    retain_atlas_voting_images: typing.Literal[0, 1] | None = None,
-    constrain_nonnegative: typing.Literal[0, 1] | None = None,
-    log_euclidean: typing.Literal[0, 1] | None = None,
+    retain_label_posterior_images: bool | None = None,
+    retain_atlas_voting_images: bool | None = None,
+    constrain_nonnegative: bool | None = None,
+    log_euclidean: bool | None = None,
     patch_radius: str | None = None,
     patch_metric: typing.Literal["PC", "MSQ"] | None = None,
     search_radius: str | None = None,
     exclusion_image: str | None = None,
     mask_image: InputPathType | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> AntsJointTensorFusionOutputs:
     """

@@ -6,52 +6,52 @@ import pathlib
 from styxdefs import *
 
 SURFACE_AVERAGE_METADATA = Metadata(
-    id="eb8455e8a7cbe64873a585671039f835b925b8e1.boutiques",
+    id="3cbdda68e7c781752cdffcc794c5ac24ffea464a.workbench",
     name="surface-average",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceAverageSurfParameters = typing.TypedDict('SurfaceAverageSurfParameters', {
     "@type": typing.NotRequired[typing.Literal["surf"]],
     "surface": InputPathType,
-    "opt_weight_weight": typing.NotRequired[float | None],
+    "weight": typing.NotRequired[float | None],
 })
 SurfaceAverageSurfParametersTagged = typing.TypedDict('SurfaceAverageSurfParametersTagged', {
     "@type": typing.Literal["surf"],
     "surface": InputPathType,
-    "opt_weight_weight": typing.NotRequired[float | None],
+    "weight": typing.NotRequired[float | None],
 })
 
 
 SurfaceAverageParameters = typing.TypedDict('SurfaceAverageParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-average"]],
-    "surface_out": str,
-    "opt_stddev_stddev_metric_out": typing.NotRequired[str | None],
-    "opt_uncertainty_uncert_metric_out": typing.NotRequired[str | None],
+    "surface-out": str,
+    "stddev-metric-out": typing.NotRequired[str | None],
+    "uncert-metric-out": typing.NotRequired[str | None],
     "surf": typing.NotRequired[list[SurfaceAverageSurfParameters] | None],
 })
 SurfaceAverageParametersTagged = typing.TypedDict('SurfaceAverageParametersTagged', {
     "@type": typing.Literal["workbench/surface-average"],
-    "surface_out": str,
-    "opt_stddev_stddev_metric_out": typing.NotRequired[str | None],
-    "opt_uncertainty_uncert_metric_out": typing.NotRequired[str | None],
+    "surface-out": str,
+    "stddev-metric-out": typing.NotRequired[str | None],
+    "uncert-metric-out": typing.NotRequired[str | None],
     "surf": typing.NotRequired[list[SurfaceAverageSurfParameters] | None],
 })
 
 
 def surface_average_surf_params(
     surface: InputPathType,
-    opt_weight_weight: float | None = None,
+    weight: float | None,
 ) -> SurfaceAverageSurfParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: a surface file to average.
-        opt_weight_weight: specify a weighted average: the weight to use\
-            (default 1).
+        weight: specify a weighted average\
+            \
+            the weight to use (default 1).
     Returns:
         Parameter dictionary
     """
@@ -59,8 +59,8 @@ def surface_average_surf_params(
         "@type": "surf",
         "surface": surface,
     }
-    if opt_weight_weight is not None:
-        params["opt_weight_weight"] = opt_weight_weight
+    if weight is not None:
+        params["weight"] = weight
     return params
 
 
@@ -78,12 +78,12 @@ def surface_average_surf_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-surf")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_weight_weight", None) is not None:
+    if params.get("weight", None) is not None:
         cargs.extend([
+            "-surf",
+            execution.input_file(params.get("surface", None)),
             "-weight",
-            str(params.get("opt_weight_weight", None))
+            str(params.get("weight", None))
         ])
     return cargs
 
@@ -96,17 +96,12 @@ class SurfaceAverageOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     surface_out: OutputPathType
     """the output averaged surface"""
-    opt_stddev_stddev_metric_out: OutputPathType | None
-    """compute 3D sample standard deviation: the output metric for 3D sample
-    standard deviation"""
-    opt_uncertainty_uncert_metric_out: OutputPathType | None
-    """compute caret5 'uncertainty': the output metric for uncertainty"""
 
 
 def surface_average_params(
     surface_out: str,
-    opt_stddev_stddev_metric_out: str | None = None,
-    opt_uncertainty_uncert_metric_out: str | None = None,
+    stddev_metric_out: str | None,
+    uncert_metric_out: str | None,
     surf: list[SurfaceAverageSurfParameters] | None = None,
 ) -> SurfaceAverageParametersTagged:
     """
@@ -114,22 +109,24 @@ def surface_average_params(
     
     Args:
         surface_out: the output averaged surface.
-        opt_stddev_stddev_metric_out: compute 3D sample standard deviation: the\
-            output metric for 3D sample standard deviation.
-        opt_uncertainty_uncert_metric_out: compute caret5 'uncertainty': the\
-            output metric for uncertainty.
+        stddev_metric_out: compute 3D sample standard deviation\
+            \
+            the output metric for 3D sample standard deviation.
+        uncert_metric_out: compute caret5 'uncertainty'\
+            \
+            the output metric for uncertainty.
         surf: specify a surface to include in the average.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-average",
-        "surface_out": surface_out,
+        "surface-out": surface_out,
     }
-    if opt_stddev_stddev_metric_out is not None:
-        params["opt_stddev_stddev_metric_out"] = opt_stddev_stddev_metric_out
-    if opt_uncertainty_uncert_metric_out is not None:
-        params["opt_uncertainty_uncert_metric_out"] = opt_uncertainty_uncert_metric_out
+    if stddev_metric_out is not None:
+        params["stddev-metric-out"] = stddev_metric_out
+    if uncert_metric_out is not None:
+        params["uncert-metric-out"] = uncert_metric_out
     if surf is not None:
         params["surf"] = surf
     return params
@@ -149,21 +146,17 @@ def surface_average_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-average")
-    cargs.append(params.get("surface_out", None))
-    if params.get("opt_stddev_stddev_metric_out", None) is not None:
+    if params.get("stddev-metric-out", None) is not None or params.get("uncert-metric-out", None) is not None or params.get("surf", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-surface-average",
+            params.get("surface-out", None),
             "-stddev",
-            params.get("opt_stddev_stddev_metric_out", None)
-        ])
-    if params.get("opt_uncertainty_uncert_metric_out", None) is not None:
-        cargs.extend([
+            (params.get("stddev-metric-out", None) if (params.get("stddev-metric-out", None) is not None) else ""),
             "-uncertainty",
-            params.get("opt_uncertainty_uncert_metric_out", None)
+            (params.get("uncert-metric-out", None) if (params.get("uncert-metric-out", None) is not None) else ""),
+            *([a for c in [surface_average_surf_cargs(s, execution) for s in params.get("surf", None)] for a in c] if (params.get("surf", None) is not None) else [])
         ])
-    if params.get("surf", None) is not None:
-        cargs.extend([a for c in [surface_average_surf_cargs(s, execution) for s in params.get("surf", None)] for a in c])
     return cargs
 
 
@@ -182,9 +175,7 @@ def surface_average_outputs(
     """
     ret = SurfaceAverageOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
-        opt_stddev_stddev_metric_out=execution.output_file(params.get("opt_stddev_stddev_metric_out", None)) if (params.get("opt_stddev_stddev_metric_out") is not None) else None,
-        opt_uncertainty_uncert_metric_out=execution.output_file(params.get("opt_uncertainty_uncert_metric_out", None)) if (params.get("opt_uncertainty_uncert_metric_out") is not None) else None,
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -194,9 +185,7 @@ def surface_average_execute(
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
     """
-    surface-average
-    
-    Average surface files together.
+    AVERAGE SURFACE FILES TOGETHER.
     
     The 3D sample standard deviation is computed as 'sqrt(sum(squaredlength(xyz
     - mean(xyz)))/(n - 1))'.
@@ -206,10 +195,6 @@ def surface_average_execute(
     
     When weights are used, the 3D sample standard deviation treats them as
     reliability weights.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -228,15 +213,13 @@ def surface_average_execute(
 
 def surface_average(
     surface_out: str,
-    opt_stddev_stddev_metric_out: str | None = None,
-    opt_uncertainty_uncert_metric_out: str | None = None,
+    stddev_metric_out: str | None,
+    uncert_metric_out: str | None,
     surf: list[SurfaceAverageSurfParameters] | None = None,
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
     """
-    surface-average
-    
-    Average surface files together.
+    AVERAGE SURFACE FILES TOGETHER.
     
     The 3D sample standard deviation is computed as 'sqrt(sum(squaredlength(xyz
     - mean(xyz)))/(n - 1))'.
@@ -247,16 +230,14 @@ def surface_average(
     When weights are used, the 3D sample standard deviation treats them as
     reliability weights.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         surface_out: the output averaged surface.
-        opt_stddev_stddev_metric_out: compute 3D sample standard deviation: the\
-            output metric for 3D sample standard deviation.
-        opt_uncertainty_uncert_metric_out: compute caret5 'uncertainty': the\
-            output metric for uncertainty.
+        stddev_metric_out: compute 3D sample standard deviation\
+            \
+            the output metric for 3D sample standard deviation.
+        uncert_metric_out: compute caret5 'uncertainty'\
+            \
+            the output metric for uncertainty.
         surf: specify a surface to include in the average.
         runner: Command runner.
     Returns:
@@ -264,8 +245,8 @@ def surface_average(
     """
     params = surface_average_params(
         surface_out=surface_out,
-        opt_stddev_stddev_metric_out=opt_stddev_stddev_metric_out,
-        opt_uncertainty_uncert_metric_out=opt_uncertainty_uncert_metric_out,
+        stddev_metric_out=stddev_metric_out,
+        uncert_metric_out=uncert_metric_out,
         surf=surf,
     )
     return surface_average_execute(params, runner)

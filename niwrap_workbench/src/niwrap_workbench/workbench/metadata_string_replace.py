@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 METADATA_STRING_REPLACE_METADATA = Metadata(
-    id="64839919f0abce1435877772c78bd57e1db01436.boutiques",
+    id="28580214d2e8a263c11d2757b02229cfd3b15b21.workbench",
     name="metadata-string-replace",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetadataStringReplaceParameters = typing.TypedDict('MetadataStringReplaceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metadata-string-replace"]],
-    "input_file": str,
-    "find_string": str,
-    "replace_string": str,
-    "output_file": str,
-    "opt_case_insensitive": bool,
+    "case-insensitive": bool,
+    "input-file": str,
+    "find-string": str,
+    "replace-string": str,
+    "output-file": str,
 })
 MetadataStringReplaceParametersTagged = typing.TypedDict('MetadataStringReplaceParametersTagged', {
     "@type": typing.Literal["workbench/metadata-string-replace"],
-    "input_file": str,
-    "find_string": str,
-    "replace_string": str,
-    "output_file": str,
-    "opt_case_insensitive": bool,
+    "case-insensitive": bool,
+    "input-file": str,
+    "find-string": str,
+    "replace-string": str,
+    "output-file": str,
 })
 
 
@@ -44,7 +43,7 @@ def metadata_string_replace_params(
     find_string: str,
     replace_string: str,
     output_file: str,
-    opt_case_insensitive: bool = False,
+    case_insensitive: bool = False,
 ) -> MetadataStringReplaceParametersTagged:
     """
     Build parameters.
@@ -54,17 +53,17 @@ def metadata_string_replace_params(
         find_string: the string to find.
         replace_string: the string to replace <find-string> with.
         output_file: output - the name to save the modified file as.
-        opt_case_insensitive: match with case variation also.
+        case_insensitive: match with case variation also.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metadata-string-replace",
-        "input_file": input_file,
-        "find_string": find_string,
-        "replace_string": replace_string,
-        "output_file": output_file,
-        "opt_case_insensitive": opt_case_insensitive,
+        "case-insensitive": case_insensitive,
+        "input-file": input_file,
+        "find-string": find_string,
+        "replace-string": replace_string,
+        "output-file": output_file,
     }
     return params
 
@@ -83,14 +82,16 @@ def metadata_string_replace_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metadata-string-replace")
-    cargs.append(params.get("input_file", None))
-    cargs.append(params.get("find_string", None))
-    cargs.append(params.get("replace_string", None))
-    cargs.append(params.get("output_file", None))
-    if params.get("opt_case_insensitive", False):
-        cargs.append("-case-insensitive")
+    if params.get("case-insensitive", False):
+        cargs.extend([
+            "wb_command",
+            "-metadata-string-replace",
+            "-case-insensitive"
+        ])
+    cargs.append(params.get("input-file", None))
+    cargs.append(params.get("find-string", None))
+    cargs.append(params.get("replace-string", None))
+    cargs.append(params.get("output-file", None))
     return cargs
 
 
@@ -118,16 +119,10 @@ def metadata_string_replace_execute(
     runner: Runner | None = None,
 ) -> MetadataStringReplaceOutputs:
     """
-    metadata-string-replace
-    
-    Replace a string in all metadata of a file.
+    REPLACE A STRING IN ALL METADATA OF A FILE.
     
     Replaces all occurrences of <find-string> in the metadata and map names of
     <input-file> with <replace-string>.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -149,37 +144,31 @@ def metadata_string_replace(
     find_string: str,
     replace_string: str,
     output_file: str,
-    opt_case_insensitive: bool = False,
+    case_insensitive: bool = False,
     runner: Runner | None = None,
 ) -> MetadataStringReplaceOutputs:
     """
-    metadata-string-replace
-    
-    Replace a string in all metadata of a file.
+    REPLACE A STRING IN ALL METADATA OF A FILE.
     
     Replaces all occurrences of <find-string> in the metadata and map names of
     <input-file> with <replace-string>.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         input_file: the file to replace metadata in.
         find_string: the string to find.
         replace_string: the string to replace <find-string> with.
         output_file: output - the name to save the modified file as.
-        opt_case_insensitive: match with case variation also.
+        case_insensitive: match with case variation also.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetadataStringReplaceOutputs`).
     """
     params = metadata_string_replace_params(
+        case_insensitive=case_insensitive,
         input_file=input_file,
         find_string=find_string,
         replace_string=replace_string,
         output_file=output_file,
-        opt_case_insensitive=opt_case_insensitive,
     )
     return metadata_string_replace_execute(params, runner)
 

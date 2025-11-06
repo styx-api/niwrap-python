@@ -6,32 +6,31 @@ import pathlib
 from styxdefs import *
 
 LABEL_DILATE_METADATA = Metadata(
-    id="73edd274bc940fb62891aa8ff3534fdafc214402.boutiques",
+    id="e02283fd8307f04426742148eee8e3e920bc3fac.workbench",
     name="label-dilate",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelDilateParameters = typing.TypedDict('LabelDilateParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-dilate"]],
+    "label-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
-    "dilate_dist": float,
-    "label_out": str,
-    "opt_bad_vertex_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "dilate-dist": float,
 })
 LabelDilateParametersTagged = typing.TypedDict('LabelDilateParametersTagged', {
     "@type": typing.Literal["workbench/label-dilate"],
+    "label-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
-    "dilate_dist": float,
-    "label_out": str,
-    "opt_bad_vertex_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "dilate-dist": float,
 })
 
 
@@ -46,46 +45,50 @@ class LabelDilateOutputs(typing.NamedTuple):
 
 
 def label_dilate_params(
+    label_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     dilate_dist: float,
-    label_out: str,
-    opt_bad_vertex_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
 ) -> LabelDilateParametersTagged:
     """
     Build parameters.
     
     Args:
+        label_out: the output label file.
+        roi_metric: specify an roi of vertices to overwrite, rather than\
+            vertices with the unlabeled key\
+            \
+            metric file, positive values denote vertices to have their values\
+            replaced.
+        column: select a single column to dilate\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         label: the input label.
         surface: the surface to dilate on.
         dilate_dist: distance in mm to dilate the labels.
-        label_out: the output label file.
-        opt_bad_vertex_roi_roi_metric: specify an roi of vertices to overwrite,\
-            rather than vertices with the unlabeled key: metric file, positive\
-            values denote vertices to have their values replaced.
-        opt_column_column: select a single column to dilate: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-dilate",
+        "label-out": label_out,
         "label": label,
         "surface": surface,
-        "dilate_dist": dilate_dist,
-        "label_out": label_out,
+        "dilate-dist": dilate_dist,
     }
-    if opt_bad_vertex_roi_roi_metric is not None:
-        params["opt_bad_vertex_roi_roi_metric"] = opt_bad_vertex_roi_roi_metric
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if column is not None:
+        params["column"] = column
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -103,27 +106,21 @@ def label_dilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-dilate")
+    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("area-metric", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-label-dilate",
+            params.get("label-out", None),
+            "-bad-vertex-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(str(params.get("dilate_dist", None)))
-    cargs.append(params.get("label_out", None))
-    if params.get("opt_bad_vertex_roi_roi_metric", None) is not None:
-        cargs.extend([
-            "-bad-vertex-roi",
-            execution.input_file(params.get("opt_bad_vertex_roi_roi_metric", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
-            "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
+    cargs.append(str(params.get("dilate-dist", None)))
     return cargs
 
 
@@ -142,7 +139,7 @@ def label_dilate_outputs(
     """
     ret = LabelDilateOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out", None)),
+        label_out=execution.output_file(params.get("label-out", None)),
     )
     return ret
 
@@ -152,19 +149,13 @@ def label_dilate_execute(
     runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
-    label-dilate
-    
-    Dilate a label file.
+    DILATE A LABEL FILE.
     
     Fills in label information for all vertices designated as bad, up to the
     specified distance away from other labels. If -bad-vertex-roi is specified,
     all vertices, including those with the unlabeled key, are good, except for
     vertices with a positive value in the ROI. If it is not specified, only
     vertices with the unlabeled key are bad.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -182,19 +173,17 @@ def label_dilate_execute(
 
 
 def label_dilate(
+    label_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     dilate_dist: float,
-    label_out: str,
-    opt_bad_vertex_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
-    label-dilate
-    
-    Dilate a label file.
+    DILATE A LABEL FILE.
     
     Fills in label information for all vertices designated as bad, up to the
     specified distance away from other labels. If -bad-vertex-roi is specified,
@@ -202,35 +191,35 @@ def label_dilate(
     vertices with a positive value in the ROI. If it is not specified, only
     vertices with the unlabeled key are bad.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        label_out: the output label file.
+        roi_metric: specify an roi of vertices to overwrite, rather than\
+            vertices with the unlabeled key\
+            \
+            metric file, positive values denote vertices to have their values\
+            replaced.
+        column: select a single column to dilate\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         label: the input label.
         surface: the surface to dilate on.
         dilate_dist: distance in mm to dilate the labels.
-        label_out: the output label file.
-        opt_bad_vertex_roi_roi_metric: specify an roi of vertices to overwrite,\
-            rather than vertices with the unlabeled key: metric file, positive\
-            values denote vertices to have their values replaced.
-        opt_column_column: select a single column to dilate: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelDilateOutputs`).
     """
     params = label_dilate_params(
+        label_out=label_out,
+        roi_metric=roi_metric,
+        column=column,
+        area_metric=area_metric,
         label=label,
         surface=surface,
         dilate_dist=dilate_dist,
-        label_out=label_out,
-        opt_bad_vertex_roi_roi_metric=opt_bad_vertex_roi_roi_metric,
-        opt_column_column=opt_column_column,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
     return label_dilate_execute(params, runner)
 

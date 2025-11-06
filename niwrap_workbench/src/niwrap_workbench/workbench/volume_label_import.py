@@ -6,32 +6,33 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_IMPORT_METADATA = Metadata(
-    id="fd15dc2f6291be132cb199977df9b1c5b85a16ab.boutiques",
+    id="8ebfebc97768bf77ee4f3467a6f745021a8c3a59.workbench",
     name="volume-label-import",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeLabelImportParameters = typing.TypedDict('VolumeLabelImportParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-import"]],
-    "input": InputPathType,
-    "label_list_file": str,
     "output": str,
-    "opt_discard_others": bool,
-    "opt_unlabeled_value_value": typing.NotRequired[int | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_drop_unused_labels": bool,
+    "discard-others": bool,
+    "value": typing.NotRequired[int | None],
+    "subvol": typing.NotRequired[str | None],
+    "drop-unused-labels": bool,
+    "file": typing.NotRequired[str | None],
+    "input": InputPathType,
+    "label-list-file": str,
 })
 VolumeLabelImportParametersTagged = typing.TypedDict('VolumeLabelImportParametersTagged', {
     "@type": typing.Literal["workbench/volume-label-import"],
-    "input": InputPathType,
-    "label_list_file": str,
     "output": str,
-    "opt_discard_others": bool,
-    "opt_unlabeled_value_value": typing.NotRequired[int | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_drop_unused_labels": bool,
+    "discard-others": bool,
+    "value": typing.NotRequired[int | None],
+    "subvol": typing.NotRequired[str | None],
+    "drop-unused-labels": bool,
+    "file": typing.NotRequired[str | None],
+    "input": InputPathType,
+    "label-list-file": str,
 })
 
 
@@ -46,44 +47,51 @@ class VolumeLabelImportOutputs(typing.NamedTuple):
 
 
 def volume_label_import_params(
+    output: str,
+    value: int | None,
+    subvol: str | None,
+    file: str | None,
     input_: InputPathType,
     label_list_file: str,
-    output: str,
-    opt_discard_others: bool = False,
-    opt_unlabeled_value_value: int | None = None,
-    opt_subvolume_subvol: str | None = None,
-    opt_drop_unused_labels: bool = False,
+    discard_others: bool = False,
+    drop_unused_labels: bool = False,
 ) -> VolumeLabelImportParametersTagged:
     """
     Build parameters.
     
     Args:
+        output: the output workbench label volume.
+        value: set the value that will be interpreted as unlabeled\
+            \
+            the numeric value for unlabeled (default 0).
+        subvol: select a single subvolume to import\
+            \
+            the subvolume number or name.
+        file: read label name hierarchy from a json file\
+            \
+            the input json file.
         input_: the input volume file.
         label_list_file: text file containing the values and names for labels.
-        output: the output workbench label volume.
-        opt_discard_others: set any voxels with values not mentioned in the\
-            label list to the ??? label.
-        opt_unlabeled_value_value: set the value that will be interpreted as\
-            unlabeled: the numeric value for unlabeled (default 0).
-        opt_subvolume_subvol: select a single subvolume to import: the\
-            subvolume number or name.
-        opt_drop_unused_labels: remove any unused label values from the label\
-            table.
+        discard_others: set any voxels with values not mentioned in the label\
+            list to the ??? label.
+        drop_unused_labels: remove any unused label values from the label table.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-label-import",
-        "input": input_,
-        "label_list_file": label_list_file,
         "output": output,
-        "opt_discard_others": opt_discard_others,
-        "opt_drop_unused_labels": opt_drop_unused_labels,
+        "discard-others": discard_others,
+        "drop-unused-labels": drop_unused_labels,
+        "input": input_,
+        "label-list-file": label_list_file,
     }
-    if opt_unlabeled_value_value is not None:
-        params["opt_unlabeled_value_value"] = opt_unlabeled_value_value
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if value is not None:
+        params["value"] = value
+    if subvol is not None:
+        params["subvol"] = subvol
+    if file is not None:
+        params["file"] = file
     return params
 
 
@@ -101,25 +109,22 @@ def volume_label_import_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-label-import")
-    cargs.append(execution.input_file(params.get("input", None)))
-    cargs.append(params.get("label_list_file", None))
-    cargs.append(params.get("output", None))
-    if params.get("opt_discard_others", False):
-        cargs.append("-discard-others")
-    if params.get("opt_unlabeled_value_value", None) is not None:
+    if params.get("discard-others", False) or params.get("value", None) is not None or params.get("subvol", None) is not None or params.get("drop-unused-labels", False) or params.get("file", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-label-import",
+            params.get("output", None),
+            ("-discard-others" if (params.get("discard-others", False)) else ""),
             "-unlabeled-value",
-            str(params.get("opt_unlabeled_value_value", None))
-        ])
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
+            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
+            ("-drop-unused-labels" if (params.get("drop-unused-labels", False)) else ""),
+            "-hierarchy",
+            (params.get("file", None) if (params.get("file", None) is not None) else "")
         ])
-    if params.get("opt_drop_unused_labels", False):
-        cargs.append("-drop-unused-labels")
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("label-list-file", None))
     return cargs
 
 
@@ -148,9 +153,7 @@ def volume_label_import_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
-    volume-label-import
-    
-    Import a label volume to workbench format.
+    IMPORT A LABEL VOLUME TO WORKBENCH FORMAT.
     
     Creates a label volume from an integer-valued volume file. The label name
     and color information is stored in the volume header in a nifti extension,
@@ -177,10 +180,6 @@ def volume_label_import_execute(
     By default, it will create new label names with names like LABEL_5 for any
     values encountered that are not mentioned in the list file, specify
     -discard-others to instead set these values to the "unlabeled" key.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -198,19 +197,18 @@ def volume_label_import_execute(
 
 
 def volume_label_import(
+    output: str,
+    value: int | None,
+    subvol: str | None,
+    file: str | None,
     input_: InputPathType,
     label_list_file: str,
-    output: str,
-    opt_discard_others: bool = False,
-    opt_unlabeled_value_value: int | None = None,
-    opt_subvolume_subvol: str | None = None,
-    opt_drop_unused_labels: bool = False,
+    discard_others: bool = False,
+    drop_unused_labels: bool = False,
     runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
-    volume-label-import
-    
-    Import a label volume to workbench format.
+    IMPORT A LABEL VOLUME TO WORKBENCH FORMAT.
     
     Creates a label volume from an integer-valued volume file. The label name
     and color information is stored in the volume header in a nifti extension,
@@ -238,34 +236,35 @@ def volume_label_import(
     values encountered that are not mentioned in the list file, specify
     -discard-others to instead set these values to the "unlabeled" key.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        output: the output workbench label volume.
+        value: set the value that will be interpreted as unlabeled\
+            \
+            the numeric value for unlabeled (default 0).
+        subvol: select a single subvolume to import\
+            \
+            the subvolume number or name.
+        file: read label name hierarchy from a json file\
+            \
+            the input json file.
         input_: the input volume file.
         label_list_file: text file containing the values and names for labels.
-        output: the output workbench label volume.
-        opt_discard_others: set any voxels with values not mentioned in the\
-            label list to the ??? label.
-        opt_unlabeled_value_value: set the value that will be interpreted as\
-            unlabeled: the numeric value for unlabeled (default 0).
-        opt_subvolume_subvol: select a single subvolume to import: the\
-            subvolume number or name.
-        opt_drop_unused_labels: remove any unused label values from the label\
-            table.
+        discard_others: set any voxels with values not mentioned in the label\
+            list to the ??? label.
+        drop_unused_labels: remove any unused label values from the label table.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelImportOutputs`).
     """
     params = volume_label_import_params(
+        output=output,
+        discard_others=discard_others,
+        value=value,
+        subvol=subvol,
+        drop_unused_labels=drop_unused_labels,
+        file=file,
         input_=input_,
         label_list_file=label_list_file,
-        output=output,
-        opt_discard_others=opt_discard_others,
-        opt_unlabeled_value_value=opt_unlabeled_value_value,
-        opt_subvolume_subvol=opt_subvolume_subvol,
-        opt_drop_unused_labels=opt_drop_unused_labels,
     )
     return volume_label_import_execute(params, runner)
 

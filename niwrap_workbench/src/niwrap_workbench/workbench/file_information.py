@@ -6,68 +6,68 @@ import pathlib
 from styxdefs import *
 
 FILE_INFORMATION_METADATA = Metadata(
-    id="e3813c3642722f68debee824d157b7d426ca7f32.boutiques",
+    id="c64f1cc09da72b367adf8dd817016952eac8d776.workbench",
     name="file-information",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 FileInformationOnlyMetadataParameters = typing.TypedDict('FileInformationOnlyMetadataParameters', {
-    "@type": typing.NotRequired[typing.Literal["only_metadata"]],
-    "opt_key_key": typing.NotRequired[str | None],
+    "@type": typing.NotRequired[typing.Literal["only-metadata"]],
+    "key": typing.NotRequired[str | None],
 })
 FileInformationOnlyMetadataParametersTagged = typing.TypedDict('FileInformationOnlyMetadataParametersTagged', {
-    "@type": typing.Literal["only_metadata"],
-    "opt_key_key": typing.NotRequired[str | None],
+    "@type": typing.Literal["only-metadata"],
+    "key": typing.NotRequired[str | None],
 })
 
 
 FileInformationParameters = typing.TypedDict('FileInformationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/file-information"]],
-    "data_file": str,
-    "opt_no_map_info": bool,
-    "opt_only_step_interval": bool,
-    "opt_only_number_of_maps": bool,
-    "opt_only_map_names": bool,
-    "only_metadata": typing.NotRequired[FileInformationOnlyMetadataParameters | None],
-    "opt_only_cifti_xml": bool,
-    "opt_czi": bool,
-    "opt_czi_all_sub_blocks": bool,
-    "opt_czi_xml": bool,
+    "no-map-info": bool,
+    "only-step-interval": bool,
+    "only-number-of-maps": bool,
+    "only-map-names": bool,
+    "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParameters | None],
+    "only-cifti-xml": bool,
+    "czi": bool,
+    "czi-all-sub-blocks": bool,
+    "czi-xml": bool,
+    "data-file": str,
 })
 FileInformationParametersTagged = typing.TypedDict('FileInformationParametersTagged', {
     "@type": typing.Literal["workbench/file-information"],
-    "data_file": str,
-    "opt_no_map_info": bool,
-    "opt_only_step_interval": bool,
-    "opt_only_number_of_maps": bool,
-    "opt_only_map_names": bool,
-    "only_metadata": typing.NotRequired[FileInformationOnlyMetadataParameters | None],
-    "opt_only_cifti_xml": bool,
-    "opt_czi": bool,
-    "opt_czi_all_sub_blocks": bool,
-    "opt_czi_xml": bool,
+    "no-map-info": bool,
+    "only-step-interval": bool,
+    "only-number-of-maps": bool,
+    "only-map-names": bool,
+    "only-metadata": typing.NotRequired[FileInformationOnlyMetadataParameters | None],
+    "only-cifti-xml": bool,
+    "czi": bool,
+    "czi-all-sub-blocks": bool,
+    "czi-xml": bool,
+    "data-file": str,
 })
 
 
 def file_information_only_metadata_params(
-    opt_key_key: str | None = None,
+    key: str | None,
 ) -> FileInformationOnlyMetadataParametersTagged:
     """
     Build parameters.
     
     Args:
-        opt_key_key: only print the metadata for one key, with no formatting:\
+        key: only print the metadata for one key, with no formatting\
+            \
             the metadata key.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "only_metadata",
+        "@type": "only-metadata",
     }
-    if opt_key_key is not None:
-        params["opt_key_key"] = opt_key_key
+    if key is not None:
+        params["key"] = key
     return params
 
 
@@ -85,11 +85,11 @@ def file_information_only_metadata_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-only-metadata")
-    if params.get("opt_key_key", None) is not None:
+    if params.get("key", None) is not None:
         cargs.extend([
+            "-only-metadata",
             "-key",
-            params.get("opt_key_key", None)
+            params.get("key", None)
         ])
     return cargs
 
@@ -104,53 +104,51 @@ class FileInformationOutputs(typing.NamedTuple):
 
 def file_information_params(
     data_file: str,
-    opt_no_map_info: bool = False,
-    opt_only_step_interval: bool = False,
-    opt_only_number_of_maps: bool = False,
-    opt_only_map_names: bool = False,
+    no_map_info: bool = False,
+    only_step_interval: bool = False,
+    only_number_of_maps: bool = False,
+    only_map_names: bool = False,
     only_metadata: FileInformationOnlyMetadataParameters | None = None,
-    opt_only_cifti_xml: bool = False,
-    opt_czi: bool = False,
-    opt_czi_all_sub_blocks: bool = False,
-    opt_czi_xml: bool = False,
+    only_cifti_xml: bool = False,
+    czi: bool = False,
+    czi_all_sub_blocks: bool = False,
+    czi_xml: bool = False,
 ) -> FileInformationParametersTagged:
     """
     Build parameters.
     
     Args:
         data_file: data file.
-        opt_no_map_info: do not show map information for files that support\
+        no_map_info: do not show map information for files that support maps.
+        only_step_interval: suppress normal output, print the interval between\
             maps.
-        opt_only_step_interval: suppress normal output, print the interval\
-            between maps.
-        opt_only_number_of_maps: suppress normal output, print the number of\
-            maps.
-        opt_only_map_names: suppress normal output, print the names of all maps.
+        only_number_of_maps: suppress normal output, print the number of maps.
+        only_map_names: suppress normal output, print the names of all maps.
         only_metadata: suppress normal output, print file metadata.
-        opt_only_cifti_xml: suppress normal output, print the cifti xml if the\
-            file type has it.
-        opt_czi: For a CZI file, show information from the libCZI Info Command\
+        only_cifti_xml: suppress normal output, print the cifti xml if the file\
+            type has it.
+        czi: For a CZI file, show information from the libCZI Info Command\
             instead of the Workbench CZI File.
-        opt_czi_all_sub_blocks: show all sub-blocks in CZI file (may produce\
-            long output).
-        opt_czi_xml: show XML from CZI file.
+        czi_all_sub_blocks: show all sub-blocks in CZI file (may produce long\
+            output).
+        czi_xml: show XML from CZI file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/file-information",
-        "data_file": data_file,
-        "opt_no_map_info": opt_no_map_info,
-        "opt_only_step_interval": opt_only_step_interval,
-        "opt_only_number_of_maps": opt_only_number_of_maps,
-        "opt_only_map_names": opt_only_map_names,
-        "opt_only_cifti_xml": opt_only_cifti_xml,
-        "opt_czi": opt_czi,
-        "opt_czi_all_sub_blocks": opt_czi_all_sub_blocks,
-        "opt_czi_xml": opt_czi_xml,
+        "no-map-info": no_map_info,
+        "only-step-interval": only_step_interval,
+        "only-number-of-maps": only_number_of_maps,
+        "only-map-names": only_map_names,
+        "only-cifti-xml": only_cifti_xml,
+        "czi": czi,
+        "czi-all-sub-blocks": czi_all_sub_blocks,
+        "czi-xml": czi_xml,
+        "data-file": data_file,
     }
     if only_metadata is not None:
-        params["only_metadata"] = only_metadata
+        params["only-metadata"] = only_metadata
     return params
 
 
@@ -168,27 +166,21 @@ def file_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-file-information")
-    cargs.append(params.get("data_file", None))
-    if params.get("opt_no_map_info", False):
-        cargs.append("-no-map-info")
-    if params.get("opt_only_step_interval", False):
-        cargs.append("-only-step-interval")
-    if params.get("opt_only_number_of_maps", False):
-        cargs.append("-only-number-of-maps")
-    if params.get("opt_only_map_names", False):
-        cargs.append("-only-map-names")
-    if params.get("only_metadata", None) is not None:
-        cargs.extend(file_information_only_metadata_cargs(params.get("only_metadata", None), execution))
-    if params.get("opt_only_cifti_xml", False):
-        cargs.append("-only-cifti-xml")
-    if params.get("opt_czi", False):
-        cargs.append("-czi")
-    if params.get("opt_czi_all_sub_blocks", False):
-        cargs.append("-czi-all-sub-blocks")
-    if params.get("opt_czi_xml", False):
-        cargs.append("-czi-xml")
+    if params.get("no-map-info", False) or params.get("only-step-interval", False) or params.get("only-number-of-maps", False) or params.get("only-map-names", False) or params.get("only-metadata", None) is not None or params.get("only-cifti-xml", False) or params.get("czi", False) or params.get("czi-all-sub-blocks", False) or params.get("czi-xml", False):
+        cargs.extend([
+            "wb_command",
+            "-file-information",
+            ("-no-map-info" if (params.get("no-map-info", False)) else ""),
+            ("-only-step-interval" if (params.get("only-step-interval", False)) else ""),
+            ("-only-number-of-maps" if (params.get("only-number-of-maps", False)) else ""),
+            ("-only-map-names" if (params.get("only-map-names", False)) else ""),
+            *(file_information_only_metadata_cargs(params.get("only-metadata", None), execution) if (params.get("only-metadata", None) is not None) else []),
+            ("-only-cifti-xml" if (params.get("only-cifti-xml", False)) else ""),
+            ("-czi" if (params.get("czi", False)) else ""),
+            ("-czi-all-sub-blocks" if (params.get("czi-all-sub-blocks", False)) else ""),
+            ("-czi-xml" if (params.get("czi-xml", False)) else "")
+        ])
+    cargs.append(params.get("data-file", None))
     return cargs
 
 
@@ -216,9 +208,7 @@ def file_information_execute(
     runner: Runner | None = None,
 ) -> FileInformationOutputs:
     """
-    file-information
-    
-    List information about a file's content.
+    LIST INFORMATION ABOUT A FILE'S CONTENT.
     
     List information about the content of a data file. Only one -only option may
     be specified. The information listed when no -only option is present is
@@ -226,8 +216,7 @@ def file_information_execute(
     
     Library paths:
     /usr/lib/x86_64-linux-gnu/qt5/plugins
-    
-    /mnt/c/Users/floru/Projects/cmi/nopype/extraction/workbench/source/build/CommandLine
+    /workspace/source/build/CommandLine
     
     
     File and extensions for reading and writing:
@@ -241,6 +230,7 @@ def file_information_execute(
     CIFTI - Dense Data Series: dtseries.nii
     CIFTI - Fiber Orientations TEMPORARY: fiberTEMP.nii
     CIFTI - Fiber Trajectory TEMPORARY: trajTEMP.wbsparse
+    CIFTI - Fiber Trajectory Maps: trajMaps.wbsparse
     CIFTI - Parcel: pconn.nii
     CIFTI - Parcel Dense: pdconn.nii
     CIFTI - Parcel Label: plabel.nii
@@ -254,6 +244,7 @@ def file_information_execute(
     Write: bmp, jpeg, jpg, png, ppm
     Label: label.gii
     Metric: func.gii, shape.gii
+    OME-ZARR Image File: ome.zarr, ome.zarr.zip
     Palette: palette, wb_palette
     RGBA: rgba.gii
     Samples: wb_samples
@@ -262,10 +253,6 @@ def file_information_execute(
     Surface: surf.gii
     Volume: nii, nii.gz
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -284,21 +271,19 @@ def file_information_execute(
 
 def file_information(
     data_file: str,
-    opt_no_map_info: bool = False,
-    opt_only_step_interval: bool = False,
-    opt_only_number_of_maps: bool = False,
-    opt_only_map_names: bool = False,
+    no_map_info: bool = False,
+    only_step_interval: bool = False,
+    only_number_of_maps: bool = False,
+    only_map_names: bool = False,
     only_metadata: FileInformationOnlyMetadataParameters | None = None,
-    opt_only_cifti_xml: bool = False,
-    opt_czi: bool = False,
-    opt_czi_all_sub_blocks: bool = False,
-    opt_czi_xml: bool = False,
+    only_cifti_xml: bool = False,
+    czi: bool = False,
+    czi_all_sub_blocks: bool = False,
+    czi_xml: bool = False,
     runner: Runner | None = None,
 ) -> FileInformationOutputs:
     """
-    file-information
-    
-    List information about a file's content.
+    LIST INFORMATION ABOUT A FILE'S CONTENT.
     
     List information about the content of a data file. Only one -only option may
     be specified. The information listed when no -only option is present is
@@ -306,8 +291,7 @@ def file_information(
     
     Library paths:
     /usr/lib/x86_64-linux-gnu/qt5/plugins
-    
-    /mnt/c/Users/floru/Projects/cmi/nopype/extraction/workbench/source/build/CommandLine
+    /workspace/source/build/CommandLine
     
     
     File and extensions for reading and writing:
@@ -321,6 +305,7 @@ def file_information(
     CIFTI - Dense Data Series: dtseries.nii
     CIFTI - Fiber Orientations TEMPORARY: fiberTEMP.nii
     CIFTI - Fiber Trajectory TEMPORARY: trajTEMP.wbsparse
+    CIFTI - Fiber Trajectory Maps: trajMaps.wbsparse
     CIFTI - Parcel: pconn.nii
     CIFTI - Parcel Dense: pdconn.nii
     CIFTI - Parcel Label: plabel.nii
@@ -334,6 +319,7 @@ def file_information(
     Write: bmp, jpeg, jpg, png, ppm
     Label: label.gii
     Metric: func.gii, shape.gii
+    OME-ZARR Image File: ome.zarr, ome.zarr.zip
     Palette: palette, wb_palette
     RGBA: rgba.gii
     Samples: wb_samples
@@ -343,42 +329,36 @@ def file_information(
     Volume: nii, nii.gz
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         data_file: data file.
-        opt_no_map_info: do not show map information for files that support\
+        no_map_info: do not show map information for files that support maps.
+        only_step_interval: suppress normal output, print the interval between\
             maps.
-        opt_only_step_interval: suppress normal output, print the interval\
-            between maps.
-        opt_only_number_of_maps: suppress normal output, print the number of\
-            maps.
-        opt_only_map_names: suppress normal output, print the names of all maps.
+        only_number_of_maps: suppress normal output, print the number of maps.
+        only_map_names: suppress normal output, print the names of all maps.
         only_metadata: suppress normal output, print file metadata.
-        opt_only_cifti_xml: suppress normal output, print the cifti xml if the\
-            file type has it.
-        opt_czi: For a CZI file, show information from the libCZI Info Command\
+        only_cifti_xml: suppress normal output, print the cifti xml if the file\
+            type has it.
+        czi: For a CZI file, show information from the libCZI Info Command\
             instead of the Workbench CZI File.
-        opt_czi_all_sub_blocks: show all sub-blocks in CZI file (may produce\
-            long output).
-        opt_czi_xml: show XML from CZI file.
+        czi_all_sub_blocks: show all sub-blocks in CZI file (may produce long\
+            output).
+        czi_xml: show XML from CZI file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FileInformationOutputs`).
     """
     params = file_information_params(
-        data_file=data_file,
-        opt_no_map_info=opt_no_map_info,
-        opt_only_step_interval=opt_only_step_interval,
-        opt_only_number_of_maps=opt_only_number_of_maps,
-        opt_only_map_names=opt_only_map_names,
+        no_map_info=no_map_info,
+        only_step_interval=only_step_interval,
+        only_number_of_maps=only_number_of_maps,
+        only_map_names=only_map_names,
         only_metadata=only_metadata,
-        opt_only_cifti_xml=opt_only_cifti_xml,
-        opt_czi=opt_czi,
-        opt_czi_all_sub_blocks=opt_czi_all_sub_blocks,
-        opt_czi_xml=opt_czi_xml,
+        only_cifti_xml=only_cifti_xml,
+        czi=czi,
+        czi_all_sub_blocks=czi_all_sub_blocks,
+        czi_xml=czi_xml,
+        data_file=data_file,
     )
     return file_information_execute(params, runner)
 

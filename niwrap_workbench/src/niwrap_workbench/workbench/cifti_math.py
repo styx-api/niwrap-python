@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 CIFTI_MATH_METADATA = Metadata(
-    id="452fbf26e7e7dec769a52f1743e09cb940aeff81.boutiques",
+    id="78bc304aa1a0ed74c8c953b7728762dcccfadd4c.workbench",
     name="cifti-math",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -17,13 +16,13 @@ CiftiMathSelectParameters = typing.TypedDict('CiftiMathSelectParameters', {
     "@type": typing.NotRequired[typing.Literal["select"]],
     "dim": int,
     "index": str,
-    "opt_repeat": bool,
+    "repeat": bool,
 })
 CiftiMathSelectParametersTagged = typing.TypedDict('CiftiMathSelectParametersTagged', {
     "@type": typing.Literal["select"],
     "dim": int,
     "index": str,
-    "opt_repeat": bool,
+    "repeat": bool,
 })
 
 
@@ -43,26 +42,26 @@ CiftiMathVarParametersTagged = typing.TypedDict('CiftiMathVarParametersTagged', 
 
 CiftiMathParameters = typing.TypedDict('CiftiMathParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-math"]],
-    "expression": str,
-    "cifti_out": str,
-    "opt_fixnan_replace": typing.NotRequired[float | None],
-    "opt_override_mapping_check": bool,
+    "cifti-out": str,
+    "replace": typing.NotRequired[float | None],
+    "override-mapping-check": bool,
     "var": typing.NotRequired[list[CiftiMathVarParameters] | None],
+    "expression": str,
 })
 CiftiMathParametersTagged = typing.TypedDict('CiftiMathParametersTagged', {
     "@type": typing.Literal["workbench/cifti-math"],
-    "expression": str,
-    "cifti_out": str,
-    "opt_fixnan_replace": typing.NotRequired[float | None],
-    "opt_override_mapping_check": bool,
+    "cifti-out": str,
+    "replace": typing.NotRequired[float | None],
+    "override-mapping-check": bool,
     "var": typing.NotRequired[list[CiftiMathVarParameters] | None],
+    "expression": str,
 })
 
 
 def cifti_math_select_params(
     dim: int,
     index: str,
-    opt_repeat: bool = False,
+    repeat: bool = False,
 ) -> CiftiMathSelectParametersTagged:
     """
     Build parameters.
@@ -70,7 +69,7 @@ def cifti_math_select_params(
     Args:
         dim: the dimension to select from (1-based).
         index: the index number (1-based) or map name to use.
-        opt_repeat: repeat the selected values for each index of output in this\
+        repeat: repeat the selected values for each index of output in this\
             dimension.
     Returns:
         Parameter dictionary
@@ -79,7 +78,7 @@ def cifti_math_select_params(
         "@type": "select",
         "dim": dim,
         "index": index,
-        "opt_repeat": opt_repeat,
+        "repeat": repeat,
     }
     return params
 
@@ -98,11 +97,13 @@ def cifti_math_select_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-select")
-    cargs.append(str(params.get("dim", None)))
-    cargs.append(params.get("index", None))
-    if params.get("opt_repeat", False):
-        cargs.append("-repeat")
+    if params.get("repeat", False):
+        cargs.extend([
+            "-select",
+            str(params.get("dim", None)),
+            params.get("index", None),
+            "-repeat"
+        ])
     return cargs
 
 
@@ -145,11 +146,13 @@ def cifti_math_var_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-var")
-    cargs.append(params.get("name", None))
-    cargs.append(execution.input_file(params.get("cifti", None)))
     if params.get("select", None) is not None:
-        cargs.extend([a for c in [cifti_math_select_cargs(s, execution) for s in params.get("select", None)] for a in c])
+        cargs.extend([
+            "-var",
+            params.get("name", None),
+            execution.input_file(params.get("cifti", None)),
+            *[a for c in [cifti_math_select_cargs(s, execution) for s in params.get("select", None)] for a in c]
+        ])
     return cargs
 
 
@@ -164,21 +167,22 @@ class CiftiMathOutputs(typing.NamedTuple):
 
 
 def cifti_math_params(
-    expression: str,
     cifti_out: str,
-    opt_fixnan_replace: float | None = None,
-    opt_override_mapping_check: bool = False,
+    replace: float | None,
+    expression: str,
+    override_mapping_check: bool = False,
     var: list[CiftiMathVarParameters] | None = None,
 ) -> CiftiMathParametersTagged:
     """
     Build parameters.
     
     Args:
-        expression: the expression to evaluate, in quotes.
         cifti_out: the output cifti file.
-        opt_fixnan_replace: replace NaN results with a value: value to replace\
-            NaN with.
-        opt_override_mapping_check: don't check the mappings for compatibility,\
+        replace: replace NaN results with a value\
+            \
+            value to replace NaN with.
+        expression: the expression to evaluate, in quotes.
+        override_mapping_check: don't check the mappings for compatibility,\
             only check length.
         var: a cifti file to use as a variable.
     Returns:
@@ -186,12 +190,12 @@ def cifti_math_params(
     """
     params = {
         "@type": "workbench/cifti-math",
+        "cifti-out": cifti_out,
+        "override-mapping-check": override_mapping_check,
         "expression": expression,
-        "cifti_out": cifti_out,
-        "opt_override_mapping_check": opt_override_mapping_check,
     }
-    if opt_fixnan_replace is not None:
-        params["opt_fixnan_replace"] = opt_fixnan_replace
+    if replace is not None:
+        params["replace"] = replace
     if var is not None:
         params["var"] = var
     return params
@@ -211,19 +215,17 @@ def cifti_math_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-math")
-    cargs.append(params.get("expression", None))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("opt_fixnan_replace", None) is not None:
+    if params.get("replace", None) is not None or params.get("override-mapping-check", False) or params.get("var", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-math",
+            params.get("cifti-out", None),
             "-fixnan",
-            str(params.get("opt_fixnan_replace", None))
+            (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
+            ("-override-mapping-check" if (params.get("override-mapping-check", False)) else ""),
+            *([a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
         ])
-    if params.get("opt_override_mapping_check", False):
-        cargs.append("-override-mapping-check")
-    if params.get("var", None) is not None:
-        cargs.extend([a for c in [cifti_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c])
+    cargs.append(params.get("expression", None))
     return cargs
 
 
@@ -242,7 +244,7 @@ def cifti_math_outputs(
     """
     ret = CiftiMathOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -252,9 +254,7 @@ def cifti_math_execute(
     runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
-    cifti-math
-    
-    Evaluate expression on cifti files.
+    EVALUATE EXPRESSION ON CIFTI FILES.
     
     This command evaluates <expression> at each matrix element independently.
     There must be at least one -var option (to get the output layout from), even
@@ -328,10 +328,6 @@ def cifti_math_execute(
     mod: 2 arguments, mod(x, y) = x - y * floor(x / y), or 0 if y == 0
     clamp: 3 arguments, clamp(x, low, high) = min(max(x, low), high)
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -349,17 +345,15 @@ def cifti_math_execute(
 
 
 def cifti_math(
-    expression: str,
     cifti_out: str,
-    opt_fixnan_replace: float | None = None,
-    opt_override_mapping_check: bool = False,
+    replace: float | None,
+    expression: str,
+    override_mapping_check: bool = False,
     var: list[CiftiMathVarParameters] | None = None,
     runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
-    cifti-math
-    
-    Evaluate expression on cifti files.
+    EVALUATE EXPRESSION ON CIFTI FILES.
     
     This command evaluates <expression> at each matrix element independently.
     There must be at least one -var option (to get the output layout from), even
@@ -434,16 +428,13 @@ def cifti_math(
     clamp: 3 arguments, clamp(x, low, high) = min(max(x, low), high)
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        expression: the expression to evaluate, in quotes.
         cifti_out: the output cifti file.
-        opt_fixnan_replace: replace NaN results with a value: value to replace\
-            NaN with.
-        opt_override_mapping_check: don't check the mappings for compatibility,\
+        replace: replace NaN results with a value\
+            \
+            value to replace NaN with.
+        expression: the expression to evaluate, in quotes.
+        override_mapping_check: don't check the mappings for compatibility,\
             only check length.
         var: a cifti file to use as a variable.
         runner: Command runner.
@@ -451,11 +442,11 @@ def cifti_math(
         NamedTuple of outputs (described in `CiftiMathOutputs`).
     """
     params = cifti_math_params(
-        expression=expression,
         cifti_out=cifti_out,
-        opt_fixnan_replace=opt_fixnan_replace,
-        opt_override_mapping_check=opt_override_mapping_check,
+        replace=replace,
+        override_mapping_check=override_mapping_check,
         var=var,
+        expression=expression,
     )
     return cifti_math_execute(params, runner)
 

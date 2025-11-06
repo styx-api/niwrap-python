@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SURFACE_VERTEX_AREAS_METADATA = Metadata(
-    id="2ce95b755322be2b857b320aad4cfef1152d88c0.boutiques",
+    id="38c1eece6b324d7db2ee50b9cf77f58d586aed39.workbench",
     name="surface-vertex-areas",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceVertexAreasParameters = typing.TypedDict('SurfaceVertexAreasParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-vertex-areas"]],
-    "surface": InputPathType,
     "metric": str,
+    "surface": InputPathType,
 })
 SurfaceVertexAreasParametersTagged = typing.TypedDict('SurfaceVertexAreasParametersTagged', {
     "@type": typing.Literal["workbench/surface-vertex-areas"],
-    "surface": InputPathType,
     "metric": str,
+    "surface": InputPathType,
 })
 
 
@@ -36,22 +35,22 @@ class SurfaceVertexAreasOutputs(typing.NamedTuple):
 
 
 def surface_vertex_areas_params(
-    surface: InputPathType,
     metric: str,
+    surface: InputPathType,
 ) -> SurfaceVertexAreasParametersTagged:
     """
     Build parameters.
     
     Args:
-        surface: the surface to measure.
         metric: the output metric.
+        surface: the surface to measure.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-vertex-areas",
-        "surface": surface,
         "metric": metric,
+        "surface": surface,
     }
     return params
 
@@ -70,10 +69,12 @@ def surface_vertex_areas_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-vertex-areas")
+    cargs.extend([
+        "wb_command",
+        "-surface-vertex-areas",
+        params.get("metric", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("metric", None))
     return cargs
 
 
@@ -102,16 +103,10 @@ def surface_vertex_areas_execute(
     runner: Runner | None = None,
 ) -> SurfaceVertexAreasOutputs:
     """
-    surface-vertex-areas
-    
-    Measure surface area each vertex is responsible for.
+    MEASURE SURFACE AREA EACH VERTEX IS RESPONSIBLE FOR.
     
     Each vertex gets one third of the area of each triangle it is a part of.
     Units are mm^2.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -129,32 +124,26 @@ def surface_vertex_areas_execute(
 
 
 def surface_vertex_areas(
-    surface: InputPathType,
     metric: str,
+    surface: InputPathType,
     runner: Runner | None = None,
 ) -> SurfaceVertexAreasOutputs:
     """
-    surface-vertex-areas
-    
-    Measure surface area each vertex is responsible for.
+    MEASURE SURFACE AREA EACH VERTEX IS RESPONSIBLE FOR.
     
     Each vertex gets one third of the area of each triangle it is a part of.
     Units are mm^2.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        surface: the surface to measure.
         metric: the output metric.
+        surface: the surface to measure.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceVertexAreasOutputs`).
     """
     params = surface_vertex_areas_params(
-        surface=surface,
         metric=metric,
+        surface=surface,
     )
     return surface_vertex_areas_execute(params, runner)
 

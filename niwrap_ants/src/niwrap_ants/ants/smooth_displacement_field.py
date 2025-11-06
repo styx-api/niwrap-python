@@ -21,7 +21,7 @@ SmoothDisplacementFieldParameters = typing.TypedDict('SmoothDisplacementFieldPar
     "variance_or_mesh_size_base_level": float,
     "number_of_levels": typing.NotRequired[int | None],
     "spline_order": typing.NotRequired[int | None],
-    "estimate_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
+    "estimate_inverse": typing.NotRequired[bool | None],
     "confidence_image": typing.NotRequired[InputPathType | None],
 })
 SmoothDisplacementFieldParametersTagged = typing.TypedDict('SmoothDisplacementFieldParametersTagged', {
@@ -32,7 +32,7 @@ SmoothDisplacementFieldParametersTagged = typing.TypedDict('SmoothDisplacementFi
     "variance_or_mesh_size_base_level": float,
     "number_of_levels": typing.NotRequired[int | None],
     "spline_order": typing.NotRequired[int | None],
-    "estimate_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
+    "estimate_inverse": typing.NotRequired[bool | None],
     "confidence_image": typing.NotRequired[InputPathType | None],
 })
 
@@ -57,7 +57,7 @@ def smooth_displacement_field_params(
     variance_or_mesh_size_base_level: float,
     number_of_levels: int | None = None,
     spline_order: int | None = None,
-    estimate_inverse: typing.Literal[0, 1] | None = None,
+    estimate_inverse: bool | None = None,
     confidence_image: InputPathType | None = None,
 ) -> SmoothDisplacementFieldParametersTagged:
     """
@@ -120,7 +120,7 @@ def smooth_displacement_field_cargs(
     if params.get("spline_order", None) is not None:
         cargs.append(str(params.get("spline_order", None)))
     if params.get("estimate_inverse", None) is not None:
-        cargs.append(str(params.get("estimate_inverse", None)))
+        cargs.append(("1" if params.get("estimate_inverse", None) else "0"))
     if params.get("confidence_image", None) is not None:
         cargs.append(execution.input_file(params.get("confidence_image", None)))
     return cargs
@@ -184,7 +184,7 @@ def smooth_displacement_field(
     variance_or_mesh_size_base_level: float,
     number_of_levels: int | None = None,
     spline_order: int | None = None,
-    estimate_inverse: typing.Literal[0, 1] | None = None,
+    estimate_inverse: bool | None = None,
     confidence_image: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> SmoothDisplacementFieldOutputs:

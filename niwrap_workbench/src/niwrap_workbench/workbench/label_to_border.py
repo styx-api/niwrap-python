@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 LABEL_TO_BORDER_METADATA = Metadata(
-    id="d4004186995df7f49b52041b9843cbc52cd71c97.boutiques",
+    id="73238edbf5a2ddc85d7db5f72cf5459fa04f8d95.workbench",
     name="label-to-border",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelToBorderParameters = typing.TypedDict('LabelToBorderParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-to-border"]],
+    "border-out": str,
+    "fraction": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "surface": InputPathType,
-    "label_in": InputPathType,
-    "border_out": str,
-    "opt_placement_fraction": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 LabelToBorderParametersTagged = typing.TypedDict('LabelToBorderParametersTagged', {
     "@type": typing.Literal["workbench/label-to-border"],
+    "border-out": str,
+    "fraction": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "surface": InputPathType,
-    "label_in": InputPathType,
-    "border_out": str,
-    "opt_placement_fraction": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 
 
@@ -42,35 +41,38 @@ class LabelToBorderOutputs(typing.NamedTuple):
 
 
 def label_to_border_params(
+    border_out: str,
+    fraction: float | None,
+    column: str | None,
     surface: InputPathType,
     label_in: InputPathType,
-    border_out: str,
-    opt_placement_fraction: float | None = None,
-    opt_column_column: str | None = None,
 ) -> LabelToBorderParametersTagged:
     """
     Build parameters.
     
     Args:
+        border_out: the output border file.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
+        column: select a single column\
+            \
+            the column number or name.
         surface: the surface to use for neighbor information.
         label_in: the input label file.
-        border_out: the output border file.
-        opt_placement_fraction: set how far along the edge border points are\
-            drawn: fraction along edge from inside vertex (default 0.33).
-        opt_column_column: select a single column: the column number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-to-border",
+        "border-out": border_out,
         "surface": surface,
-        "label_in": label_in,
-        "border_out": border_out,
+        "label-in": label_in,
     }
-    if opt_placement_fraction is not None:
-        params["opt_placement_fraction"] = opt_placement_fraction
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if fraction is not None:
+        params["fraction"] = fraction
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -88,21 +90,18 @@ def label_to_border_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-to-border")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(params.get("border_out", None))
-    if params.get("opt_placement_fraction", None) is not None:
+    if params.get("fraction", None) is not None or params.get("column", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-label-to-border",
+            params.get("border-out", None),
             "-placement",
-            str(params.get("opt_placement_fraction", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
             "-column",
-            params.get("opt_column_column", None)
+            (params.get("column", None) if (params.get("column", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -121,7 +120,7 @@ def label_to_border_outputs(
     """
     ret = LabelToBorderOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out", None)),
+        border_out=execution.output_file(params.get("border-out", None)),
     )
     return ret
 
@@ -131,18 +130,12 @@ def label_to_border_execute(
     runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
-    label-to-border
-    
-    Draw borders around labels.
+    DRAW BORDERS AROUND LABELS.
     
     For each label, finds all edges on the mesh that cross the boundary of the
     label, and draws borders through them. By default, this is done on all
     columns in the input file, using the map name as the class name for the
     border.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -160,44 +153,41 @@ def label_to_border_execute(
 
 
 def label_to_border(
+    border_out: str,
+    fraction: float | None,
+    column: str | None,
     surface: InputPathType,
     label_in: InputPathType,
-    border_out: str,
-    opt_placement_fraction: float | None = None,
-    opt_column_column: str | None = None,
     runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
-    label-to-border
-    
-    Draw borders around labels.
+    DRAW BORDERS AROUND LABELS.
     
     For each label, finds all edges on the mesh that cross the boundary of the
     label, and draws borders through them. By default, this is done on all
     columns in the input file, using the map name as the class name for the
     border.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        border_out: the output border file.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
+        column: select a single column\
+            \
+            the column number or name.
         surface: the surface to use for neighbor information.
         label_in: the input label file.
-        border_out: the output border file.
-        opt_placement_fraction: set how far along the edge border points are\
-            drawn: fraction along edge from inside vertex (default 0.33).
-        opt_column_column: select a single column: the column number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelToBorderOutputs`).
     """
     params = label_to_border_params(
+        border_out=border_out,
+        fraction=fraction,
+        column=column,
         surface=surface,
         label_in=label_in,
-        border_out=border_out,
-        opt_placement_fraction=opt_placement_fraction,
-        opt_column_column=opt_column_column,
     )
     return label_to_border_execute(params, runner)
 

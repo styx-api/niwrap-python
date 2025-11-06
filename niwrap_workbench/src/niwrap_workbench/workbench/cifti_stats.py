@@ -6,63 +6,62 @@ import pathlib
 from styxdefs import *
 
 CIFTI_STATS_METADATA = Metadata(
-    id="852ba0d83f7d875e846bb1d014e2f98430b0a0ae.boutiques",
+    id="f349676d3d092156442226a065fb86440603b2ac.workbench",
     name="cifti-stats",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiStatsRoiParameters = typing.TypedDict('CiftiStatsRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
-    "roi_cifti": InputPathType,
-    "opt_match_maps": bool,
+    "roi-cifti": InputPathType,
+    "match-maps": bool,
 })
 CiftiStatsRoiParametersTagged = typing.TypedDict('CiftiStatsRoiParametersTagged', {
     "@type": typing.Literal["roi"],
-    "roi_cifti": InputPathType,
-    "opt_match_maps": bool,
+    "roi-cifti": InputPathType,
+    "match-maps": bool,
 })
 
 
 CiftiStatsParameters = typing.TypedDict('CiftiStatsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-stats"]],
-    "cifti_in": InputPathType,
-    "opt_reduce_operation": typing.NotRequired[str | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[int | None],
+    "operation": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiStatsRoiParameters | None],
-    "opt_show_map_name": bool,
+    "show-map-name": bool,
+    "cifti-in": InputPathType,
 })
 CiftiStatsParametersTagged = typing.TypedDict('CiftiStatsParametersTagged', {
     "@type": typing.Literal["workbench/cifti-stats"],
-    "cifti_in": InputPathType,
-    "opt_reduce_operation": typing.NotRequired[str | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[int | None],
+    "operation": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiStatsRoiParameters | None],
-    "opt_show_map_name": bool,
+    "show-map-name": bool,
+    "cifti-in": InputPathType,
 })
 
 
 def cifti_stats_roi_params(
     roi_cifti: InputPathType,
-    opt_match_maps: bool = False,
+    match_maps: bool = False,
 ) -> CiftiStatsRoiParametersTagged:
     """
     Build parameters.
     
     Args:
         roi_cifti: the roi, as a cifti file.
-        opt_match_maps: each column of input uses the corresponding column from\
-            the roi file.
+        match_maps: each column of input uses the corresponding column from the\
+            roi file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "roi",
-        "roi_cifti": roi_cifti,
-        "opt_match_maps": opt_match_maps,
+        "roi-cifti": roi_cifti,
+        "match-maps": match_maps,
     }
     return params
 
@@ -81,10 +80,12 @@ def cifti_stats_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_cifti", None)))
-    if params.get("opt_match_maps", False):
-        cargs.append("-match-maps")
+    if params.get("match-maps", False):
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-cifti", None)),
+            "-match-maps"
+        ])
     return cargs
 
 
@@ -97,40 +98,43 @@ class CiftiStatsOutputs(typing.NamedTuple):
 
 
 def cifti_stats_params(
+    operation: str | None,
+    percent: float | None,
+    column: int | None,
     cifti_in: InputPathType,
-    opt_reduce_operation: str | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_column_column: int | None = None,
     roi: CiftiStatsRoiParameters | None = None,
-    opt_show_map_name: bool = False,
+    show_map_name: bool = False,
 ) -> CiftiStatsParametersTagged:
     """
     Build parameters.
     
     Args:
+        operation: use a reduction operation\
+            \
+            the reduction operation.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        column: only display output for one column\
+            \
+            the column index (starting from 1).
         cifti_in: the input cifti.
-        opt_reduce_operation: use a reduction operation: the reduction\
-            operation.
-        opt_percentile_percent: give the value at a percentile: the percentile\
-            to find, must be between 0 and 100.
-        opt_column_column: only display output for one column: the column index\
-            (starting from 1).
         roi: only consider data inside an roi.
-        opt_show_map_name: print column index and name before each output.
+        show_map_name: print column index and name before each output.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-stats",
-        "cifti_in": cifti_in,
-        "opt_show_map_name": opt_show_map_name,
+        "show-map-name": show_map_name,
+        "cifti-in": cifti_in,
     }
-    if opt_reduce_operation is not None:
-        params["opt_reduce_operation"] = opt_reduce_operation
-    if opt_percentile_percent is not None:
-        params["opt_percentile_percent"] = opt_percentile_percent
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if operation is not None:
+        params["operation"] = operation
+    if percent is not None:
+        params["percent"] = percent
+    if column is not None:
+        params["column"] = column
     if roi is not None:
         params["roi"] = roi
     return params
@@ -150,28 +154,20 @@ def cifti_stats_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-stats")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
-    if params.get("opt_reduce_operation", None) is not None:
+    if params.get("operation", None) is not None or params.get("percent", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("show-map-name", False):
         cargs.extend([
+            "wb_command",
+            "-cifti-stats",
             "-reduce",
-            params.get("opt_reduce_operation", None)
-        ])
-    if params.get("opt_percentile_percent", None) is not None:
-        cargs.extend([
+            (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
             "-percentile",
-            str(params.get("opt_percentile_percent", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             "-column",
-            str(params.get("opt_column_column", None))
+            (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
+            *(cifti_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+            ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])
-    if params.get("roi", None) is not None:
-        cargs.extend(cifti_stats_roi_cargs(params.get("roi", None), execution))
-    if params.get("opt_show_map_name", False):
-        cargs.append("-show-map-name")
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
 
@@ -199,9 +195,7 @@ def cifti_stats_execute(
     runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
     """
-    cifti-stats
-    
-    Statistics along cifti columns.
+    STATISTICS ALONG CIFTI COLUMNS.
     
     For each column of the input, a line of text is printed, resulting from the
     specified reduction or percentile operation. If -roi is specified without
@@ -229,10 +223,6 @@ def cifti_stats_execute(
     MODE: the mode of the data
     COUNT_NONZERO: the number of nonzero elements in the data
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -250,18 +240,16 @@ def cifti_stats_execute(
 
 
 def cifti_stats(
+    operation: str | None,
+    percent: float | None,
+    column: int | None,
     cifti_in: InputPathType,
-    opt_reduce_operation: str | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_column_column: int | None = None,
     roi: CiftiStatsRoiParameters | None = None,
-    opt_show_map_name: bool = False,
+    show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
     """
-    cifti-stats
-    
-    Statistics along cifti columns.
+    STATISTICS ALONG CIFTI COLUMNS.
     
     For each column of the input, a line of text is printed, resulting from the
     specified reduction or percentile operation. If -roi is specified without
@@ -290,31 +278,30 @@ def cifti_stats(
     COUNT_NONZERO: the number of nonzero elements in the data
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        operation: use a reduction operation\
+            \
+            the reduction operation.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        column: only display output for one column\
+            \
+            the column index (starting from 1).
         cifti_in: the input cifti.
-        opt_reduce_operation: use a reduction operation: the reduction\
-            operation.
-        opt_percentile_percent: give the value at a percentile: the percentile\
-            to find, must be between 0 and 100.
-        opt_column_column: only display output for one column: the column index\
-            (starting from 1).
         roi: only consider data inside an roi.
-        opt_show_map_name: print column index and name before each output.
+        show_map_name: print column index and name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiStatsOutputs`).
     """
     params = cifti_stats_params(
-        cifti_in=cifti_in,
-        opt_reduce_operation=opt_reduce_operation,
-        opt_percentile_percent=opt_percentile_percent,
-        opt_column_column=opt_column_column,
+        operation=operation,
+        percent=percent,
+        column=column,
         roi=roi,
-        opt_show_map_name=opt_show_map_name,
+        show_map_name=show_map_name,
+        cifti_in=cifti_in,
     )
     return cifti_stats_execute(params, runner)
 

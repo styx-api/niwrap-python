@@ -1,0 +1,35 @@
+{
+  "fn_root_make_params_and_execute": "spec_file_modify",
+  "properties": {
+    "add": {
+      "var_param": "add",
+      "fn_struct_make_params": "spec_file_modify_add_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "file": {
+          "var_param": "file"
+        }
+      }
+    },
+    "remove": {
+      "var_param": "remove",
+      "fn_struct_make_params": "spec_file_modify_remove_params",
+      "properties": {
+        "filename": {
+          "var_param": "filename"
+        },
+        "recursive": {
+          "var_param": "recursive"
+        },
+        "suffix": {
+          "var_param": "suffix"
+        }
+      }
+    },
+    "spec-file": {
+      "var_param": "spec_file"
+    }
+  }
+}

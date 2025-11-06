@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
-    id="1105ee211cb759964c59c0d9326f8fd29db4b9a2.boutiques",
+    id="ce53186c774fd3df17402a86376908e43ca4e439.workbench",
     name="volume-copy-extensions",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeCopyExtensionsParameters = typing.TypedDict('VolumeCopyExtensionsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-copy-extensions"]],
-    "data_volume": InputPathType,
-    "extension_volume": InputPathType,
-    "volume_out": str,
-    "opt_drop_unknown": bool,
+    "volume-out": str,
+    "drop-unknown": bool,
+    "data-volume": InputPathType,
+    "extension-volume": InputPathType,
 })
 VolumeCopyExtensionsParametersTagged = typing.TypedDict('VolumeCopyExtensionsParametersTagged', {
     "@type": typing.Literal["workbench/volume-copy-extensions"],
-    "data_volume": InputPathType,
-    "extension_volume": InputPathType,
-    "volume_out": str,
-    "opt_drop_unknown": bool,
+    "volume-out": str,
+    "drop-unknown": bool,
+    "data-volume": InputPathType,
+    "extension-volume": InputPathType,
 })
 
 
@@ -40,29 +39,28 @@ class VolumeCopyExtensionsOutputs(typing.NamedTuple):
 
 
 def volume_copy_extensions_params(
+    volume_out: str,
     data_volume: InputPathType,
     extension_volume: InputPathType,
-    volume_out: str,
-    opt_drop_unknown: bool = False,
+    drop_unknown: bool = False,
 ) -> VolumeCopyExtensionsParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
         data_volume: the volume file containing the voxel data to use.
         extension_volume: the volume file containing the extensions to use.
-        volume_out: the output volume.
-        opt_drop_unknown: don't copy extensions that workbench doesn't\
-            understand.
+        drop_unknown: don't copy extensions that workbench doesn't understand.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-copy-extensions",
-        "data_volume": data_volume,
-        "extension_volume": extension_volume,
-        "volume_out": volume_out,
-        "opt_drop_unknown": opt_drop_unknown,
+        "volume-out": volume_out,
+        "drop-unknown": drop_unknown,
+        "data-volume": data_volume,
+        "extension-volume": extension_volume,
     }
     return params
 
@@ -81,13 +79,15 @@ def volume_copy_extensions_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-copy-extensions")
-    cargs.append(execution.input_file(params.get("data_volume", None)))
-    cargs.append(execution.input_file(params.get("extension_volume", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_drop_unknown", False):
-        cargs.append("-drop-unknown")
+    if params.get("drop-unknown", False):
+        cargs.extend([
+            "wb_command",
+            "-volume-copy-extensions",
+            params.get("volume-out", None),
+            "-drop-unknown"
+        ])
+    cargs.append(execution.input_file(params.get("data-volume", None)))
+    cargs.append(execution.input_file(params.get("extension-volume", None)))
     return cargs
 
 
@@ -106,7 +106,7 @@ def volume_copy_extensions_outputs(
     """
     ret = VolumeCopyExtensionsOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -116,18 +116,12 @@ def volume_copy_extensions_execute(
     runner: Runner | None = None,
 ) -> VolumeCopyExtensionsOutputs:
     """
-    volume-copy-extensions
-    
-    Copy extended data to another volume file.
+    COPY EXTENDED DATA TO ANOTHER VOLUME FILE.
     
     This command copies the information in a volume file that isn't a critical
     part of the standard header or data matrix, e.g. map names, palette
     settings, label tables. If -drop-unknown is not specified, it also copies
     similar kinds of information set by other software.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -145,41 +139,34 @@ def volume_copy_extensions_execute(
 
 
 def volume_copy_extensions(
+    volume_out: str,
     data_volume: InputPathType,
     extension_volume: InputPathType,
-    volume_out: str,
-    opt_drop_unknown: bool = False,
+    drop_unknown: bool = False,
     runner: Runner | None = None,
 ) -> VolumeCopyExtensionsOutputs:
     """
-    volume-copy-extensions
-    
-    Copy extended data to another volume file.
+    COPY EXTENDED DATA TO ANOTHER VOLUME FILE.
     
     This command copies the information in a volume file that isn't a critical
     part of the standard header or data matrix, e.g. map names, palette
     settings, label tables. If -drop-unknown is not specified, it also copies
     similar kinds of information set by other software.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
         data_volume: the volume file containing the voxel data to use.
         extension_volume: the volume file containing the extensions to use.
-        volume_out: the output volume.
-        opt_drop_unknown: don't copy extensions that workbench doesn't\
-            understand.
+        drop_unknown: don't copy extensions that workbench doesn't understand.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeCopyExtensionsOutputs`).
     """
     params = volume_copy_extensions_params(
+        volume_out=volume_out,
+        drop_unknown=drop_unknown,
         data_volume=data_volume,
         extension_volume=extension_volume,
-        volume_out=volume_out,
-        opt_drop_unknown=opt_drop_unknown,
     )
     return volume_copy_extensions_execute(params, runner)
 

@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
-    id="cb66e6f1207807e8529312a550ed72acdff594ee.boutiques",
+    id="eaeddcfbdd465eca8821f3fb34094dfb589855c3.workbench",
     name="surface-sphere-triangular-patches",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -17,13 +16,13 @@ SurfaceSphereTriangularPatchesParameters = typing.TypedDict('SurfaceSphereTriang
     "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-triangular-patches"]],
     "sphere": InputPathType,
     "divisions": int,
-    "text_out": str,
+    "text-out": str,
 })
 SurfaceSphereTriangularPatchesParametersTagged = typing.TypedDict('SurfaceSphereTriangularPatchesParametersTagged', {
     "@type": typing.Literal["workbench/surface-sphere-triangular-patches"],
     "sphere": InputPathType,
     "divisions": int,
-    "text_out": str,
+    "text-out": str,
 })
 
 
@@ -55,7 +54,7 @@ def surface_sphere_triangular_patches_params(
         "@type": "workbench/surface-sphere-triangular-patches",
         "sphere": sphere,
         "divisions": divisions,
-        "text_out": text_out,
+        "text-out": text_out,
     }
     return params
 
@@ -74,11 +73,13 @@ def surface_sphere_triangular_patches_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-sphere-triangular-patches")
+    cargs.extend([
+        "wb_command",
+        "-surface-sphere-triangular-patches"
+    ])
     cargs.append(execution.input_file(params.get("sphere", None)))
     cargs.append(str(params.get("divisions", None)))
-    cargs.append(params.get("text_out", None))
+    cargs.append(params.get("text-out", None))
     return cargs
 
 
@@ -106,16 +107,10 @@ def surface_sphere_triangular_patches_execute(
     runner: Runner | None = None,
 ) -> SurfaceSphereTriangularPatchesOutputs:
     """
-    surface-sphere-triangular-patches
-    
-    Divide standard sphere into patches.
+    DIVIDE STANDARD SPHERE INTO PATCHES.
     
     Divide the given undistorted sphere into equally-sized triangular patches.
     Patches overlap by a border of 1 vertex.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -139,16 +134,10 @@ def surface_sphere_triangular_patches(
     runner: Runner | None = None,
 ) -> SurfaceSphereTriangularPatchesOutputs:
     """
-    surface-sphere-triangular-patches
-    
-    Divide standard sphere into patches.
+    DIVIDE STANDARD SPHERE INTO PATCHES.
     
     Divide the given undistorted sphere into equally-sized triangular patches.
     Patches overlap by a border of 1 vertex.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         sphere: an undistorted, regularly divided icosahedral sphere.

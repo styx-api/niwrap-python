@@ -6,36 +6,35 @@ import pathlib
 from styxdefs import *
 
 CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
-    id="a3c155c43199f00044e684ccce6c00d843dcec5a.boutiques",
+    id="4d61fcbc40072b03f96c88c490ff99bbafba1379.workbench",
     name="create-signed-distance-volume",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CreateSignedDistanceVolumeParameters = typing.TypedDict('CreateSignedDistanceVolumeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/create-signed-distance-volume"]],
+    "outvol": str,
+    "roi-vol": typing.NotRequired[str | None],
+    "value": typing.NotRequired[float | None],
+    "dist": typing.NotRequired[float | None],
+    "dist": typing.NotRequired[float | None],
+    "num": typing.NotRequired[int | None],
+    "method": typing.NotRequired[str | None],
     "surface": InputPathType,
     "refspace": str,
-    "outvol": str,
-    "opt_roi_out_roi_vol": typing.NotRequired[str | None],
-    "opt_fill_value_value": typing.NotRequired[float | None],
-    "opt_exact_limit_dist": typing.NotRequired[float | None],
-    "opt_approx_limit_dist": typing.NotRequired[float | None],
-    "opt_approx_neighborhood_num": typing.NotRequired[int | None],
-    "opt_winding_method": typing.NotRequired[str | None],
 })
 CreateSignedDistanceVolumeParametersTagged = typing.TypedDict('CreateSignedDistanceVolumeParametersTagged', {
     "@type": typing.Literal["workbench/create-signed-distance-volume"],
+    "outvol": str,
+    "roi-vol": typing.NotRequired[str | None],
+    "value": typing.NotRequired[float | None],
+    "dist": typing.NotRequired[float | None],
+    "dist": typing.NotRequired[float | None],
+    "num": typing.NotRequired[int | None],
+    "method": typing.NotRequired[str | None],
     "surface": InputPathType,
     "refspace": str,
-    "outvol": str,
-    "opt_roi_out_roi_vol": typing.NotRequired[str | None],
-    "opt_fill_value_value": typing.NotRequired[float | None],
-    "opt_exact_limit_dist": typing.NotRequired[float | None],
-    "opt_approx_limit_dist": typing.NotRequired[float | None],
-    "opt_approx_neighborhood_num": typing.NotRequired[int | None],
-    "opt_winding_method": typing.NotRequired[str | None],
 })
 
 
@@ -47,63 +46,67 @@ class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     outvol: OutputPathType
     """the output volume"""
-    opt_roi_out_roi_vol: OutputPathType | None
-    """output an roi volume of where the output has a computed value: the output
-    roi volume"""
 
 
 def create_signed_distance_volume_params(
+    outvol: str,
+    roi_vol: str | None,
+    value: float | None,
+    dist: float | None,
+    dist_: float | None,
+    num: int | None,
+    method: str | None,
     surface: InputPathType,
     refspace: str,
-    outvol: str,
-    opt_roi_out_roi_vol: str | None = None,
-    opt_fill_value_value: float | None = None,
-    opt_exact_limit_dist: float | None = None,
-    opt_approx_limit_dist: float | None = None,
-    opt_approx_neighborhood_num: int | None = None,
-    opt_winding_method: str | None = None,
 ) -> CreateSignedDistanceVolumeParametersTagged:
     """
     Build parameters.
     
     Args:
+        outvol: the output volume.
+        roi_vol: output an roi volume of where the output has a computed value\
+            \
+            the output roi volume.
+        value: specify a value to put in all voxels that don't get assigned a\
+            distance\
+            \
+            value to fill with (default 0).
+        dist: specify distance for exact output\
+            \
+            distance in mm (default 5).
+        dist_: specify distance for approximate output\
+            \
+            distance in mm (default 20).
+        num: voxel neighborhood for approximate calculation\
+            \
+            size of neighborhood cube measured from center to face, in voxels\
+            (default 2 = 5x5x5).
+        method: winding method for point inside surface test\
+            \
+            name of the method (default EVEN_ODD).
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
-        outvol: the output volume.
-        opt_roi_out_roi_vol: output an roi volume of where the output has a\
-            computed value: the output roi volume.
-        opt_fill_value_value: specify a value to put in all voxels that don't\
-            get assigned a distance: value to fill with (default 0).
-        opt_exact_limit_dist: specify distance for exact output: distance in mm\
-            (default 5).
-        opt_approx_limit_dist: specify distance for approximate output:\
-            distance in mm (default 20).
-        opt_approx_neighborhood_num: voxel neighborhood for approximate\
-            calculation: size of neighborhood cube measured from center to face, in\
-            voxels (default 2 = 5x5x5).
-        opt_winding_method: winding method for point inside surface test: name\
-            of the method (default EVEN_ODD).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/create-signed-distance-volume",
+        "outvol": outvol,
         "surface": surface,
         "refspace": refspace,
-        "outvol": outvol,
     }
-    if opt_roi_out_roi_vol is not None:
-        params["opt_roi_out_roi_vol"] = opt_roi_out_roi_vol
-    if opt_fill_value_value is not None:
-        params["opt_fill_value_value"] = opt_fill_value_value
-    if opt_exact_limit_dist is not None:
-        params["opt_exact_limit_dist"] = opt_exact_limit_dist
-    if opt_approx_limit_dist is not None:
-        params["opt_approx_limit_dist"] = opt_approx_limit_dist
-    if opt_approx_neighborhood_num is not None:
-        params["opt_approx_neighborhood_num"] = opt_approx_neighborhood_num
-    if opt_winding_method is not None:
-        params["opt_winding_method"] = opt_winding_method
+    if roi_vol is not None:
+        params["roi-vol"] = roi_vol
+    if value is not None:
+        params["value"] = value
+    if dist is not None:
+        params["dist"] = dist
+    if dist_ is not None:
+        params["dist"] = dist_
+    if num is not None:
+        params["num"] = num
+    if method is not None:
+        params["method"] = method
     return params
 
 
@@ -121,41 +124,26 @@ def create_signed_distance_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-create-signed-distance-volume")
+    if params.get("roi-vol", None) is not None or params.get("value", None) is not None or params.get("dist", None) is not None or params.get("dist", None) is not None or params.get("num", None) is not None or params.get("method", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-create-signed-distance-volume",
+            params.get("outvol", None),
+            "-roi-out",
+            (params.get("roi-vol", None) if (params.get("roi-vol", None) is not None) else ""),
+            "-fill-value",
+            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
+            "-exact-limit",
+            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
+            "-approx-limit",
+            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
+            "-approx-neighborhood",
+            (str(params.get("num", None)) if (params.get("num", None) is not None) else ""),
+            "-winding",
+            (params.get("method", None) if (params.get("method", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(params.get("refspace", None))
-    cargs.append(params.get("outvol", None))
-    if params.get("opt_roi_out_roi_vol", None) is not None:
-        cargs.extend([
-            "-roi-out",
-            params.get("opt_roi_out_roi_vol", None)
-        ])
-    if params.get("opt_fill_value_value", None) is not None:
-        cargs.extend([
-            "-fill-value",
-            str(params.get("opt_fill_value_value", None))
-        ])
-    if params.get("opt_exact_limit_dist", None) is not None:
-        cargs.extend([
-            "-exact-limit",
-            str(params.get("opt_exact_limit_dist", None))
-        ])
-    if params.get("opt_approx_limit_dist", None) is not None:
-        cargs.extend([
-            "-approx-limit",
-            str(params.get("opt_approx_limit_dist", None))
-        ])
-    if params.get("opt_approx_neighborhood_num", None) is not None:
-        cargs.extend([
-            "-approx-neighborhood",
-            str(params.get("opt_approx_neighborhood_num", None))
-        ])
-    if params.get("opt_winding_method", None) is not None:
-        cargs.extend([
-            "-winding",
-            params.get("opt_winding_method", None)
-        ])
     return cargs
 
 
@@ -175,7 +163,6 @@ def create_signed_distance_volume_outputs(
     ret = CreateSignedDistanceVolumeOutputs(
         root=execution.output_file("."),
         outvol=execution.output_file(params.get("outvol", None)),
-        opt_roi_out_roi_vol=execution.output_file(params.get("opt_roi_out_roi_vol", None)) if (params.get("opt_roi_out_roi_vol") is not None) else None,
     )
     return ret
 
@@ -185,9 +172,7 @@ def create_signed_distance_volume_execute(
     runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
-    create-signed-distance-volume
-    
-    Create signed distance volume from surface.
+    CREATE SIGNED DISTANCE VOLUME FROM SURFACE.
     
     Computes the signed distance function of the surface. Exact distance is
     calculated by finding the closest point on any surface triangle to the
@@ -207,10 +192,6 @@ def create_signed_distance_volume_execute(
     itself. All other methods count entry (positive) and exit (negative)
     crossings of a vertical ray from the point, then counts as inside if the
     total is odd, negative, or nonzero, respectively.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -228,21 +209,19 @@ def create_signed_distance_volume_execute(
 
 
 def create_signed_distance_volume(
+    outvol: str,
+    roi_vol: str | None,
+    value: float | None,
+    dist: float | None,
+    dist_: float | None,
+    num: int | None,
+    method: str | None,
     surface: InputPathType,
     refspace: str,
-    outvol: str,
-    opt_roi_out_roi_vol: str | None = None,
-    opt_fill_value_value: float | None = None,
-    opt_exact_limit_dist: float | None = None,
-    opt_approx_limit_dist: float | None = None,
-    opt_approx_neighborhood_num: int | None = None,
-    opt_winding_method: str | None = None,
     runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
-    create-signed-distance-volume
-    
-    Create signed distance volume from surface.
+    CREATE SIGNED DISTANCE VOLUME FROM SURFACE.
     
     Computes the signed distance function of the surface. Exact distance is
     calculated by finding the closest point on any surface triangle to the
@@ -263,41 +242,44 @@ def create_signed_distance_volume(
     crossings of a vertical ray from the point, then counts as inside if the
     total is odd, negative, or nonzero, respectively.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        outvol: the output volume.
+        roi_vol: output an roi volume of where the output has a computed value\
+            \
+            the output roi volume.
+        value: specify a value to put in all voxels that don't get assigned a\
+            distance\
+            \
+            value to fill with (default 0).
+        dist: specify distance for exact output\
+            \
+            distance in mm (default 5).
+        dist_: specify distance for approximate output\
+            \
+            distance in mm (default 20).
+        num: voxel neighborhood for approximate calculation\
+            \
+            size of neighborhood cube measured from center to face, in voxels\
+            (default 2 = 5x5x5).
+        method: winding method for point inside surface test\
+            \
+            name of the method (default EVEN_ODD).
         surface: the input surface.
         refspace: a volume in the desired output space (dims, spacing, origin).
-        outvol: the output volume.
-        opt_roi_out_roi_vol: output an roi volume of where the output has a\
-            computed value: the output roi volume.
-        opt_fill_value_value: specify a value to put in all voxels that don't\
-            get assigned a distance: value to fill with (default 0).
-        opt_exact_limit_dist: specify distance for exact output: distance in mm\
-            (default 5).
-        opt_approx_limit_dist: specify distance for approximate output:\
-            distance in mm (default 20).
-        opt_approx_neighborhood_num: voxel neighborhood for approximate\
-            calculation: size of neighborhood cube measured from center to face, in\
-            voxels (default 2 = 5x5x5).
-        opt_winding_method: winding method for point inside surface test: name\
-            of the method (default EVEN_ODD).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateSignedDistanceVolumeOutputs`).
     """
     params = create_signed_distance_volume_params(
+        outvol=outvol,
+        roi_vol=roi_vol,
+        value=value,
+        dist=dist,
+        dist_=dist_,
+        num=num,
+        method=method,
         surface=surface,
         refspace=refspace,
-        outvol=outvol,
-        opt_roi_out_roi_vol=opt_roi_out_roi_vol,
-        opt_fill_value_value=opt_fill_value_value,
-        opt_exact_limit_dist=opt_exact_limit_dist,
-        opt_approx_limit_dist=opt_approx_limit_dist,
-        opt_approx_neighborhood_num=opt_approx_neighborhood_num,
-        opt_winding_method=opt_winding_method,
     )
     return create_signed_distance_volume_execute(params, runner)
 

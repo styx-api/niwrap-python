@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 SURFACE_MATCH_METADATA = Metadata(
-    id="975e55b50cc859adc6088f990f927b4229a7b26c.boutiques",
+    id="6335c2c3b01da0e8439ffac4c9d4032ef21fd455.workbench",
     name="surface-match",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceMatchParameters = typing.TypedDict('SurfaceMatchParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-match"]],
-    "match_surface_file": InputPathType,
-    "input_surface_file": InputPathType,
-    "output_surface_name": str,
+    "Match Surface File": InputPathType,
+    "Input Surface File": InputPathType,
+    "Output Surface Name": str,
 })
 SurfaceMatchParametersTagged = typing.TypedDict('SurfaceMatchParametersTagged', {
     "@type": typing.Literal["workbench/surface-match"],
-    "match_surface_file": InputPathType,
-    "input_surface_file": InputPathType,
-    "output_surface_name": str,
+    "Match Surface File": InputPathType,
+    "Input Surface File": InputPathType,
+    "Output Surface Name": str,
 })
 
 
@@ -52,9 +51,9 @@ def surface_match_params(
     """
     params = {
         "@type": "workbench/surface-match",
-        "match_surface_file": match_surface_file,
-        "input_surface_file": input_surface_file,
-        "output_surface_name": output_surface_name,
+        "Match Surface File": match_surface_file,
+        "Input Surface File": input_surface_file,
+        "Output Surface Name": output_surface_name,
     }
     return params
 
@@ -73,11 +72,13 @@ def surface_match_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-match")
-    cargs.append(execution.input_file(params.get("match_surface_file", None)))
-    cargs.append(execution.input_file(params.get("input_surface_file", None)))
-    cargs.append(params.get("output_surface_name", None))
+    cargs.extend([
+        "wb_command",
+        "-surface-match"
+    ])
+    cargs.append(execution.input_file(params.get("Match Surface File", None)))
+    cargs.append(execution.input_file(params.get("Input Surface File", None)))
+    cargs.append(params.get("Output Surface Name", None))
     return cargs
 
 
@@ -105,16 +106,10 @@ def surface_match_execute(
     runner: Runner | None = None,
 ) -> SurfaceMatchOutputs:
     """
-    surface-match
-    
-    Surface match.
+    SURFACE MATCH.
     
     The Input Surface File will be transformed so that its coordinate ranges
     (bounding box) match that of the Match Surface File.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -138,16 +133,10 @@ def surface_match(
     runner: Runner | None = None,
 ) -> SurfaceMatchOutputs:
     """
-    surface-match
-    
-    Surface match.
+    SURFACE MATCH.
     
     The Input Surface File will be transformed so that its coordinate ranges
     (bounding box) match that of the Match Surface File.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         match_surface_file: Match (Reference) Surface.

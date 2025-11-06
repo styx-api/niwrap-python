@@ -1,29 +1,29 @@
 {
   "fn_root_make_params_and_execute": "cifti_convert",
   "properties": {
-    "to_gifti_ext": {
+    "to-gifti-ext": {
       "var_param": "to_gifti_ext",
       "fn_struct_make_params": "cifti_convert_to_gifti_ext_params",
       "properties": {
-        "cifti_in": {
+        "cifti-in": {
           "var_param": "cifti_in"
         },
-        "gifti_out": {
+        "gifti-out": {
           "var_param": "gifti_out"
         }
       }
     },
-    "from_gifti_ext": {
+    "from-gifti-ext": {
       "var_param": "from_gifti_ext",
       "fn_struct_make_params": "cifti_convert_from_gifti_ext_params",
       "properties": {
-        "gifti_in": {
+        "gifti-in": {
           "var_param": "gifti_in"
         },
-        "cifti_out": {
+        "cifti-out": {
           "var_param": "cifti_out"
         },
-        "reset_timepoints": {
+        "reset-timepoints": {
           "var_param": "reset_timepoints",
           "fn_struct_make_params": "cifti_convert_reset_timepoints_params",
           "properties": {
@@ -33,68 +33,68 @@
             "timestart": {
               "var_param": "timestart"
             },
-            "opt_unit_unit": {
-              "var_param": "opt_unit_unit"
+            "unit": {
+              "var_param": "unit"
             }
           }
         },
-        "opt_reset_scalars": {
-          "var_param": "opt_reset_scalars"
+        "reset-scalars": {
+          "var_param": "reset_scalars"
         },
-        "opt_column_reset_scalars": {
-          "var_param": "opt_column_reset_scalars"
+        "column-reset-scalars": {
+          "var_param": "column_reset_scalars"
         },
-        "replace_binary": {
+        "replace-binary": {
           "var_param": "replace_binary",
           "fn_struct_make_params": "cifti_convert_replace_binary_params",
           "properties": {
-            "binary_in": {
+            "binary-in": {
               "var_param": "binary_in"
             },
-            "opt_flip_endian": {
-              "var_param": "opt_flip_endian"
+            "flip-endian": {
+              "var_param": "flip_endian"
             },
-            "opt_transpose": {
-              "var_param": "opt_transpose"
+            "transpose": {
+              "var_param": "transpose"
             }
           }
         }
       }
     },
-    "to_nifti": {
+    "to-nifti": {
       "var_param": "to_nifti",
       "fn_struct_make_params": "cifti_convert_to_nifti_params",
       "properties": {
-        "cifti_in": {
+        "cifti-in": {
           "var_param": "cifti_in"
         },
-        "nifti_out": {
+        "nifti-out": {
           "var_param": "nifti_out"
         },
-        "opt_smaller_file": {
-          "var_param": "opt_smaller_file"
+        "smaller-file": {
+          "var_param": "smaller_file"
         },
-        "opt_smaller_dims": {
-          "var_param": "opt_smaller_dims"
+        "smaller-dims": {
+          "var_param": "smaller_dims"
         }
       }
     },
-    "from_nifti": {
+    "from-nifti": {
       "var_param": "from_nifti",
       "fn_struct_make_params": "cifti_convert_from_nifti_params",
       "properties": {
-        "nifti_in": {
+        "nifti-in": {
           "var_param": "nifti_in"
         },
-        "cifti_template": {
+        "cifti-template": {
           "var_param": "cifti_template"
         },
-        "cifti_out": {
+        "cifti-out": {
           "var_param": "cifti_out"
         },
-        "reset_timepoints": {
+        "reset-timepoints": {
           "var_param": "reset_timepoints",
-          "fn_struct_make_params": "cifti_convert_reset_timepoints_1_params",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints_params_",
           "properties": {
             "timestep": {
               "var_param": "timestep"
@@ -102,50 +102,50 @@
             "timestart": {
               "var_param": "timestart"
             },
-            "opt_unit_unit": {
-              "var_param": "opt_unit_unit"
+            "unit": {
+              "var_param": "unit"
             }
           }
         },
-        "opt_reset_scalars": {
-          "var_param": "opt_reset_scalars"
+        "reset-scalars": {
+          "var_param": "reset_scalars"
         }
       }
     },
-    "to_text": {
+    "to-text": {
       "var_param": "to_text",
       "fn_struct_make_params": "cifti_convert_to_text_params",
       "properties": {
-        "cifti_in": {
+        "cifti-in": {
           "var_param": "cifti_in"
         },
-        "text_out": {
+        "text-out": {
           "var_param": "text_out"
         },
-        "opt_col_delim_delim_string": {
-          "var_param": "opt_col_delim_delim_string"
+        "delim-string": {
+          "var_param": "delim_string"
         }
       }
     },
-    "from_text": {
+    "from-text": {
       "var_param": "from_text",
       "fn_struct_make_params": "cifti_convert_from_text_params",
       "properties": {
-        "text_in": {
+        "text-in": {
           "var_param": "text_in"
         },
-        "cifti_template": {
+        "cifti-template": {
           "var_param": "cifti_template"
         },
-        "cifti_out": {
+        "cifti-out": {
           "var_param": "cifti_out"
         },
-        "opt_col_delim_delim_string": {
-          "var_param": "opt_col_delim_delim_string"
+        "delim-string": {
+          "var_param": "delim_string"
         },
-        "reset_timepoints": {
+        "reset-timepoints": {
           "var_param": "reset_timepoints",
-          "fn_struct_make_params": "cifti_convert_reset_timepoints_2_params",
+          "fn_struct_make_params": "cifti_convert_reset_timepoints_params_2",
           "properties": {
             "timestep": {
               "var_param": "timestep"
@@ -153,13 +153,13 @@
             "timestart": {
               "var_param": "timestart"
             },
-            "opt_unit_unit": {
-              "var_param": "opt_unit_unit"
+            "unit": {
+              "var_param": "unit"
             }
           }
         },
-        "opt_reset_scalars": {
-          "var_param": "opt_reset_scalars"
+        "reset-scalars": {
+          "var_param": "reset_scalars"
         }
       }
     }

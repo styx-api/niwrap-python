@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
-    id="5cba1432e52e6cde1dfbf6613fe3e4f9bb95feee.boutiques",
+    id="8854ebdafebd2ec6672ea73ead63ee985ee25822.workbench",
     name="surface-coordinates-to-metric",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceCoordinatesToMetricParameters = typing.TypedDict('SurfaceCoordinatesToMetricParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-coordinates-to-metric"]],
+    "metric-out": str,
     "surface": InputPathType,
-    "metric_out": str,
 })
 SurfaceCoordinatesToMetricParametersTagged = typing.TypedDict('SurfaceCoordinatesToMetricParametersTagged', {
     "@type": typing.Literal["workbench/surface-coordinates-to-metric"],
+    "metric-out": str,
     "surface": InputPathType,
-    "metric_out": str,
 })
 
 
@@ -36,22 +35,22 @@ class SurfaceCoordinatesToMetricOutputs(typing.NamedTuple):
 
 
 def surface_coordinates_to_metric_params(
-    surface: InputPathType,
     metric_out: str,
+    surface: InputPathType,
 ) -> SurfaceCoordinatesToMetricParametersTagged:
     """
     Build parameters.
     
     Args:
-        surface: the surface to use the coordinates of.
         metric_out: the output metric.
+        surface: the surface to use the coordinates of.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-coordinates-to-metric",
+        "metric-out": metric_out,
         "surface": surface,
-        "metric_out": metric_out,
     }
     return params
 
@@ -70,10 +69,12 @@ def surface_coordinates_to_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-coordinates-to-metric")
+    cargs.extend([
+        "wb_command",
+        "-surface-coordinates-to-metric",
+        params.get("metric-out", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("metric_out", None))
     return cargs
 
 
@@ -92,7 +93,7 @@ def surface_coordinates_to_metric_outputs(
     """
     ret = SurfaceCoordinatesToMetricOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -102,15 +103,9 @@ def surface_coordinates_to_metric_execute(
     runner: Runner | None = None,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
-    surface-coordinates-to-metric
-    
-    Make metric file of surface coordinates.
+    MAKE METRIC FILE OF SURFACE COORDINATES.
     
     Puts the coordinates of the surface into a 3-map metric file, as x, y, z.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -128,31 +123,25 @@ def surface_coordinates_to_metric_execute(
 
 
 def surface_coordinates_to_metric(
-    surface: InputPathType,
     metric_out: str,
+    surface: InputPathType,
     runner: Runner | None = None,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
-    surface-coordinates-to-metric
-    
-    Make metric file of surface coordinates.
+    MAKE METRIC FILE OF SURFACE COORDINATES.
     
     Puts the coordinates of the surface into a 3-map metric file, as x, y, z.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        surface: the surface to use the coordinates of.
         metric_out: the output metric.
+        surface: the surface to use the coordinates of.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCoordinatesToMetricOutputs`).
     """
     params = surface_coordinates_to_metric_params(
-        surface=surface,
         metric_out=metric_out,
+        surface=surface,
     )
     return surface_coordinates_to_metric_execute(params, runner)
 

@@ -6,58 +6,57 @@ import pathlib
 from styxdefs import *
 
 SURFACE_RESAMPLE_METADATA = Metadata(
-    id="41e7032c2642e2cae7204e42a36f44dcbf767095.boutiques",
+    id="7444b5037afcb50035450f5b834be135d744ef02.workbench",
     name="surface-resample",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceResampleAreaSurfsParameters = typing.TypedDict('SurfaceResampleAreaSurfsParameters', {
-    "@type": typing.NotRequired[typing.Literal["area_surfs"]],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["area-surfs"]],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 SurfaceResampleAreaSurfsParametersTagged = typing.TypedDict('SurfaceResampleAreaSurfsParametersTagged', {
-    "@type": typing.Literal["area_surfs"],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.Literal["area-surfs"],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 
 
 SurfaceResampleAreaMetricsParameters = typing.TypedDict('SurfaceResampleAreaMetricsParameters', {
-    "@type": typing.NotRequired[typing.Literal["area_metrics"]],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["area-metrics"]],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 SurfaceResampleAreaMetricsParametersTagged = typing.TypedDict('SurfaceResampleAreaMetricsParametersTagged', {
-    "@type": typing.Literal["area_metrics"],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.Literal["area-metrics"],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 
 
 SurfaceResampleParameters = typing.TypedDict('SurfaceResampleParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-resample"]],
-    "surface_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
+    "surface-out": str,
+    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParameters | None],
+    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParameters | None],
+    "bypass-sphere-check": bool,
+    "surface-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
     "method": str,
-    "surface_out": str,
-    "area_surfs": typing.NotRequired[SurfaceResampleAreaSurfsParameters | None],
-    "area_metrics": typing.NotRequired[SurfaceResampleAreaMetricsParameters | None],
-    "opt_bypass_sphere_check": bool,
 })
 SurfaceResampleParametersTagged = typing.TypedDict('SurfaceResampleParametersTagged', {
     "@type": typing.Literal["workbench/surface-resample"],
-    "surface_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
+    "surface-out": str,
+    "area-surfs": typing.NotRequired[SurfaceResampleAreaSurfsParameters | None],
+    "area-metrics": typing.NotRequired[SurfaceResampleAreaMetricsParameters | None],
+    "bypass-sphere-check": bool,
+    "surface-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
     "method": str,
-    "surface_out": str,
-    "area_surfs": typing.NotRequired[SurfaceResampleAreaSurfsParameters | None],
-    "area_metrics": typing.NotRequired[SurfaceResampleAreaMetricsParameters | None],
-    "opt_bypass_sphere_check": bool,
 })
 
 
@@ -75,9 +74,9 @@ def surface_resample_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "area_surfs",
-        "current_area": current_area,
-        "new_area": new_area,
+        "@type": "area-surfs",
+        "current-area": current_area,
+        "new-area": new_area,
     }
     return params
 
@@ -96,9 +95,11 @@ def surface_resample_area_surfs_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-area-surfs")
-    cargs.append(execution.input_file(params.get("current_area", None)))
-    cargs.append(execution.input_file(params.get("new_area", None)))
+    cargs.extend([
+        "-area-surfs",
+        execution.input_file(params.get("current-area", None)),
+        execution.input_file(params.get("new-area", None))
+    ])
     return cargs
 
 
@@ -116,9 +117,9 @@ def surface_resample_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "area_metrics",
-        "current_area": current_area,
-        "new_area": new_area,
+        "@type": "area-metrics",
+        "current-area": current_area,
+        "new-area": new_area,
     }
     return params
 
@@ -137,9 +138,11 @@ def surface_resample_area_metrics_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-area-metrics")
-    cargs.append(execution.input_file(params.get("current_area", None)))
-    cargs.append(execution.input_file(params.get("new_area", None)))
+    cargs.extend([
+        "-area-metrics",
+        execution.input_file(params.get("current-area", None)),
+        execution.input_file(params.get("new-area", None))
+    ])
     return cargs
 
 
@@ -154,47 +157,47 @@ class SurfaceResampleOutputs(typing.NamedTuple):
 
 
 def surface_resample_params(
+    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    surface_out: str,
     area_surfs: SurfaceResampleAreaSurfsParameters | None = None,
     area_metrics: SurfaceResampleAreaMetricsParameters | None = None,
-    opt_bypass_sphere_check: bool = False,
+    bypass_sphere_check: bool = False,
 ) -> SurfaceResampleParametersTagged:
     """
     Build parameters.
     
     Args:
+        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
-        surface_out: the output surface file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
-        opt_bypass_sphere_check: ADVANCED: allow the current and new 'spheres'\
-            to have arbitrary shape as long as they follow the same contour.
+        bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
+            have arbitrary shape as long as they follow the same contour.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-resample",
-        "surface_in": surface_in,
-        "current_sphere": current_sphere,
-        "new_sphere": new_sphere,
+        "surface-out": surface_out,
+        "bypass-sphere-check": bypass_sphere_check,
+        "surface-in": surface_in,
+        "current-sphere": current_sphere,
+        "new-sphere": new_sphere,
         "method": method,
-        "surface_out": surface_out,
-        "opt_bypass_sphere_check": opt_bypass_sphere_check,
     }
     if area_surfs is not None:
-        params["area_surfs"] = area_surfs
+        params["area-surfs"] = area_surfs
     if area_metrics is not None:
-        params["area_metrics"] = area_metrics
+        params["area-metrics"] = area_metrics
     return params
 
 
@@ -212,19 +215,19 @@ def surface_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-resample")
-    cargs.append(execution.input_file(params.get("surface_in", None)))
-    cargs.append(execution.input_file(params.get("current_sphere", None)))
-    cargs.append(execution.input_file(params.get("new_sphere", None)))
+    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("bypass-sphere-check", False):
+        cargs.extend([
+            "wb_command",
+            "-surface-resample",
+            params.get("surface-out", None),
+            *(surface_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
+            *(surface_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
+            ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
+        ])
+    cargs.append(execution.input_file(params.get("surface-in", None)))
+    cargs.append(execution.input_file(params.get("current-sphere", None)))
+    cargs.append(execution.input_file(params.get("new-sphere", None)))
     cargs.append(params.get("method", None))
-    cargs.append(params.get("surface_out", None))
-    if params.get("area_surfs", None) is not None:
-        cargs.extend(surface_resample_area_surfs_cargs(params.get("area_surfs", None), execution))
-    if params.get("area_metrics", None) is not None:
-        cargs.extend(surface_resample_area_metrics_cargs(params.get("area_metrics", None), execution))
-    if params.get("opt_bypass_sphere_check", False):
-        cargs.append("-bypass-sphere-check")
     return cargs
 
 
@@ -243,7 +246,7 @@ def surface_resample_outputs(
     """
     ret = SurfaceResampleOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -253,9 +256,7 @@ def surface_resample_execute(
     runner: Runner | None = None,
 ) -> SurfaceResampleOutputs:
     """
-    surface-resample
-    
-    Resample a surface to a different mesh.
+    RESAMPLE A SURFACE TO A DIFFERENT MESH.
     
     Resamples a surface file, given two spherical surfaces that are in register.
     If ADAP_BARY_AREA is used, exactly one of -area-surfs or -area-metrics must
@@ -275,10 +276,6 @@ def surface_resample_execute(
     ADAP_BARY_AREA
     BARYCENTRIC
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -296,20 +293,18 @@ def surface_resample_execute(
 
 
 def surface_resample(
+    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    surface_out: str,
     area_surfs: SurfaceResampleAreaSurfsParameters | None = None,
     area_metrics: SurfaceResampleAreaMetricsParameters | None = None,
-    opt_bypass_sphere_check: bool = False,
+    bypass_sphere_check: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceResampleOutputs:
     """
-    surface-resample
-    
-    Resample a surface to a different mesh.
+    RESAMPLE A SURFACE TO A DIFFERENT MESH.
     
     Resamples a surface file, given two spherical surfaces that are in register.
     If ADAP_BARY_AREA is used, exactly one of -area-surfs or -area-metrics must
@@ -330,36 +325,32 @@ def surface_resample(
     BARYCENTRIC
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
-        surface_out: the output surface file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
-        opt_bypass_sphere_check: ADVANCED: allow the current and new 'spheres'\
-            to have arbitrary shape as long as they follow the same contour.
+        bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
+            have arbitrary shape as long as they follow the same contour.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceResampleOutputs`).
     """
     params = surface_resample_params(
+        surface_out=surface_out,
+        area_surfs=area_surfs,
+        area_metrics=area_metrics,
+        bypass_sphere_check=bypass_sphere_check,
         surface_in=surface_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
         method=method,
-        surface_out=surface_out,
-        area_surfs=area_surfs,
-        area_metrics=area_metrics,
-        opt_bypass_sphere_check=opt_bypass_sphere_check,
     )
     return surface_resample_execute(params, runner)
 

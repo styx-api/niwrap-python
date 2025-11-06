@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SCENE_FILE_RELOCATE_METADATA = Metadata(
-    id="ee7549becea0a121742cbf71c1a05cdf8f39b4ed.boutiques",
+    id="cce9293384c531d31f6ab6adfc95c967b2740fd1.workbench",
     name="scene-file-relocate",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SceneFileRelocateParameters = typing.TypedDict('SceneFileRelocateParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-file-relocate"]],
-    "input_scene": str,
-    "output_scene": str,
+    "input-scene": str,
+    "output-scene": str,
 })
 SceneFileRelocateParametersTagged = typing.TypedDict('SceneFileRelocateParametersTagged', {
     "@type": typing.Literal["workbench/scene-file-relocate"],
-    "input_scene": str,
-    "output_scene": str,
+    "input-scene": str,
+    "output-scene": str,
 })
 
 
@@ -48,8 +47,8 @@ def scene_file_relocate_params(
     """
     params = {
         "@type": "workbench/scene-file-relocate",
-        "input_scene": input_scene,
-        "output_scene": output_scene,
+        "input-scene": input_scene,
+        "output-scene": output_scene,
     }
     return params
 
@@ -68,10 +67,12 @@ def scene_file_relocate_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-scene-file-relocate")
-    cargs.append(params.get("input_scene", None))
-    cargs.append(params.get("output_scene", None))
+    cargs.extend([
+        "wb_command",
+        "-scene-file-relocate"
+    ])
+    cargs.append(params.get("input-scene", None))
+    cargs.append(params.get("output-scene", None))
     return cargs
 
 
@@ -99,18 +100,12 @@ def scene_file_relocate_execute(
     runner: Runner | None = None,
 ) -> SceneFileRelocateOutputs:
     """
-    scene-file-relocate
-    
-    Recreate scene file in new location.
+    RECREATE SCENE FILE IN NEW LOCATION.
     
     Scene files contain internal relative paths, such that moving or copying a
     scene file will cause it to lose track of the files it refers to. This
     command makes a modified copy of the scene file, changing the relative paths
     to refer to the new relative locations of the files.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -133,18 +128,12 @@ def scene_file_relocate(
     runner: Runner | None = None,
 ) -> SceneFileRelocateOutputs:
     """
-    scene-file-relocate
-    
-    Recreate scene file in new location.
+    RECREATE SCENE FILE IN NEW LOCATION.
     
     Scene files contain internal relative paths, such that moving or copying a
     scene file will cause it to lose track of the files it refers to. This
     command makes a modified copy of the scene file, changing the relative paths
     to refer to the new relative locations of the files.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         input_scene: the scene file to use.

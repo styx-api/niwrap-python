@@ -1,54 +1,69 @@
 {
   "fn_root_make_params_and_execute": "cifti_create_label",
   "properties": {
-    "cifti_out": {
+    "cifti-out": {
       "var_param": "cifti_out"
     },
     "volume": {
       "var_param": "volume",
       "fn_struct_make_params": "cifti_create_label_volume_params",
       "properties": {
-        "label_volume": {
+        "label-volume": {
           "var_param": "label_volume"
         },
-        "structure_label_volume": {
+        "structure-label-volume": {
           "var_param": "structure_label_volume"
         }
       }
     },
-    "left_label": {
+    "left-label": {
       "var_param": "left_label",
       "fn_struct_make_params": "cifti_create_label_left_label_params",
       "properties": {
         "label": {
           "var_param": "label"
         },
-        "opt_roi_left_roi_metric": {
-          "var_param": "opt_roi_left_roi_metric"
+        "roi-metric": {
+          "var_param": "roi_metric"
         }
       }
     },
-    "right_label": {
+    "right-label": {
       "var_param": "right_label",
       "fn_struct_make_params": "cifti_create_label_right_label_params",
       "properties": {
         "label": {
           "var_param": "label"
         },
-        "opt_roi_right_roi_metric": {
-          "var_param": "opt_roi_right_roi_metric"
+        "roi-metric": {
+          "var_param": "roi_metric"
         }
       }
     },
-    "cerebellum_label": {
+    "cerebellum-label": {
       "var_param": "cerebellum_label",
       "fn_struct_make_params": "cifti_create_label_cerebellum_label_params",
       "properties": {
         "label": {
           "var_param": "label"
         },
-        "opt_roi_cerebellum_roi_metric": {
-          "var_param": "opt_roi_cerebellum_roi_metric"
+        "roi-metric": {
+          "var_param": "roi_metric"
+        }
+      }
+    },
+    "label": {
+      "var_param": "label",
+      "fn_struct_make_params": "cifti_create_label_label_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "label": {
+          "var_param": "label"
+        },
+        "roi-metric": {
+          "var_param": "roi_metric"
         }
       }
     }

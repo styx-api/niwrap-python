@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 VOLUME_EXTREMA_METADATA = Metadata(
-    id="35ad3fc8fea052df6bc06cbe31e38898ec741593.boutiques",
+    id="bde4b9ab2a53737d37cd5c4267bc185877f0a3aa.workbench",
     name="volume-extrema",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeExtremaPresmoothParameters = typing.TypedDict('VolumeExtremaPresmoothParameters', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 VolumeExtremaPresmoothParametersTagged = typing.TypedDict('VolumeExtremaPresmoothParametersTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 
 
@@ -39,37 +38,37 @@ VolumeExtremaThresholdParametersTagged = typing.TypedDict('VolumeExtremaThreshol
 
 VolumeExtremaParameters = typing.TypedDict('VolumeExtremaParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-extrema"]],
-    "volume_in": InputPathType,
-    "distance": float,
-    "volume_out": str,
+    "volume-out": str,
     "presmooth": typing.NotRequired[VolumeExtremaPresmoothParameters | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[VolumeExtremaThresholdParameters | None],
-    "opt_sum_subvols": bool,
-    "opt_consolidate_mode": bool,
-    "opt_only_maxima": bool,
-    "opt_only_minima": bool,
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "sum-subvols": bool,
+    "consolidate-mode": bool,
+    "only-maxima": bool,
+    "only-minima": bool,
+    "subvolume": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
+    "distance": float,
 })
 VolumeExtremaParametersTagged = typing.TypedDict('VolumeExtremaParametersTagged', {
     "@type": typing.Literal["workbench/volume-extrema"],
-    "volume_in": InputPathType,
-    "distance": float,
-    "volume_out": str,
+    "volume-out": str,
     "presmooth": typing.NotRequired[VolumeExtremaPresmoothParameters | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[VolumeExtremaThresholdParameters | None],
-    "opt_sum_subvols": bool,
-    "opt_consolidate_mode": bool,
-    "opt_only_maxima": bool,
-    "opt_only_minima": bool,
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "sum-subvols": bool,
+    "consolidate-mode": bool,
+    "only-maxima": bool,
+    "only-minima": bool,
+    "subvolume": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
+    "distance": float,
 })
 
 
 def volume_extrema_presmooth_params(
     kernel: float,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
 ) -> VolumeExtremaPresmoothParametersTagged:
     """
     Build parameters.
@@ -77,14 +76,14 @@ def volume_extrema_presmooth_params(
     Args:
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "presmooth",
         "kernel": kernel,
-        "opt_fwhm": opt_fwhm,
+        "fwhm": fwhm,
     }
     return params
 
@@ -103,10 +102,12 @@ def volume_extrema_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel", None)))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
+    if params.get("fwhm", False):
+        cargs.extend([
+            "-presmooth",
+            str(params.get("kernel", None)),
+            "-fwhm"
+        ])
     return cargs
 
 
@@ -145,9 +146,11 @@ def volume_extrema_threshold_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-threshold")
-    cargs.append(str(params.get("low", None)))
-    cargs.append(str(params.get("high", None)))
+    cargs.extend([
+        "-threshold",
+        str(params.get("low", None)),
+        str(params.get("high", None))
+    ])
     return cargs
 
 
@@ -162,59 +165,61 @@ class VolumeExtremaOutputs(typing.NamedTuple):
 
 
 def volume_extrema_params(
+    volume_out: str,
+    roi_volume: InputPathType | None,
+    subvolume: str | None,
     volume_in: InputPathType,
     distance: float,
-    volume_out: str,
     presmooth: VolumeExtremaPresmoothParameters | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
     threshold: VolumeExtremaThresholdParameters | None = None,
-    opt_sum_subvols: bool = False,
-    opt_consolidate_mode: bool = False,
-    opt_only_maxima: bool = False,
-    opt_only_minima: bool = False,
-    opt_subvolume_subvolume: str | None = None,
+    sum_subvols: bool = False,
+    consolidate_mode: bool = False,
+    only_maxima: bool = False,
+    only_minima: bool = False,
 ) -> VolumeExtremaParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output extrema volume.
+        roi_volume: ignore values outside the selected area\
+            \
+            the area to find extrema in.
+        subvolume: select a single subvolume to find extrema in\
+            \
+            the subvolume number or name.
         volume_in: volume file to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
-        volume_out: the output extrema volume.
         presmooth: smooth the volume before finding extrema.
-        opt_roi_roi_volume: ignore values outside the selected area: the area\
-            to find extrema in.
         threshold: ignore small extrema.
-        opt_sum_subvols: output the sum of the extrema subvolumes instead of\
-            each subvolume separately.
-        opt_consolidate_mode: use consolidation of local minima instead of a\
-            large neighborhood.
-        opt_only_maxima: only find the maxima.
-        opt_only_minima: only find the minima.
-        opt_subvolume_subvolume: select a single subvolume to find extrema in:\
-            the subvolume number or name.
+        sum_subvols: output the sum of the extrema subvolumes instead of each\
+            subvolume separately.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        only_maxima: only find the maxima.
+        only_minima: only find the minima.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-extrema",
-        "volume_in": volume_in,
+        "volume-out": volume_out,
+        "sum-subvols": sum_subvols,
+        "consolidate-mode": consolidate_mode,
+        "only-maxima": only_maxima,
+        "only-minima": only_minima,
+        "volume-in": volume_in,
         "distance": distance,
-        "volume_out": volume_out,
-        "opt_sum_subvols": opt_sum_subvols,
-        "opt_consolidate_mode": opt_consolidate_mode,
-        "opt_only_maxima": opt_only_maxima,
-        "opt_only_minima": opt_only_minima,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
-    if opt_roi_roi_volume is not None:
-        params["opt_roi_roi_volume"] = opt_roi_roi_volume
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
     if threshold is not None:
         params["threshold"] = threshold
-    if opt_subvolume_subvolume is not None:
-        params["opt_subvolume_subvolume"] = opt_subvolume_subvolume
+    if subvolume is not None:
+        params["subvolume"] = subvolume
     return params
 
 
@@ -232,33 +237,24 @@ def volume_extrema_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-extrema")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(str(params.get("distance", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("presmooth", None) is not None:
-        cargs.extend(volume_extrema_presmooth_cargs(params.get("presmooth", None), execution))
-    if params.get("opt_roi_roi_volume", None) is not None:
+    if params.get("presmooth", None) is not None or params.get("roi-volume", None) is not None or params.get("threshold", None) is not None or params.get("sum-subvols", False) or params.get("consolidate-mode", False) or params.get("only-maxima", False) or params.get("only-minima", False) or params.get("subvolume", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-extrema",
+            params.get("volume-out", None),
+            *(volume_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume", None))
-        ])
-    if params.get("threshold", None) is not None:
-        cargs.extend(volume_extrema_threshold_cargs(params.get("threshold", None), execution))
-    if params.get("opt_sum_subvols", False):
-        cargs.append("-sum-subvols")
-    if params.get("opt_consolidate_mode", False):
-        cargs.append("-consolidate-mode")
-    if params.get("opt_only_maxima", False):
-        cargs.append("-only-maxima")
-    if params.get("opt_only_minima", False):
-        cargs.append("-only-minima")
-    if params.get("opt_subvolume_subvolume", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            *(volume_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
+            ("-sum-subvols" if (params.get("sum-subvols", False)) else ""),
+            ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
+            ("-only-maxima" if (params.get("only-maxima", False)) else ""),
+            ("-only-minima" if (params.get("only-minima", False)) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvolume", None)
+            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(str(params.get("distance", None)))
     return cargs
 
 
@@ -277,7 +273,7 @@ def volume_extrema_outputs(
     """
     ret = VolumeExtremaOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -287,9 +283,7 @@ def volume_extrema_execute(
     runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
-    volume-extrema
-    
-    Find extrema in a volume file.
+    FIND EXTREMA IN A VOLUME FILE.
     
     Finds extrema in a volume file, such that no two extrema of the same type
     are within <distance> of each other. The extrema are labeled as -1 for
@@ -311,10 +305,6 @@ def volume_extrema_execute(
     By default, all input subvolumes are used with no smoothing, use -subvolume
     to specify a single subvolume to use, and -presmooth to smooth the input
     before finding the extrema.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -332,23 +322,21 @@ def volume_extrema_execute(
 
 
 def volume_extrema(
+    volume_out: str,
+    roi_volume: InputPathType | None,
+    subvolume: str | None,
     volume_in: InputPathType,
     distance: float,
-    volume_out: str,
     presmooth: VolumeExtremaPresmoothParameters | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
     threshold: VolumeExtremaThresholdParameters | None = None,
-    opt_sum_subvols: bool = False,
-    opt_consolidate_mode: bool = False,
-    opt_only_maxima: bool = False,
-    opt_only_minima: bool = False,
-    opt_subvolume_subvolume: str | None = None,
+    sum_subvols: bool = False,
+    consolidate_mode: bool = False,
+    only_maxima: bool = False,
+    only_minima: bool = False,
     runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
-    volume-extrema
-    
-    Find extrema in a volume file.
+    FIND EXTREMA IN A VOLUME FILE.
     
     Finds extrema in a volume file, such that no two extrema of the same type
     are within <distance> of each other. The extrema are labeled as -1 for
@@ -371,43 +359,41 @@ def volume_extrema(
     to specify a single subvolume to use, and -presmooth to smooth the input
     before finding the extrema.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output extrema volume.
+        roi_volume: ignore values outside the selected area\
+            \
+            the area to find extrema in.
+        subvolume: select a single subvolume to find extrema in\
+            \
+            the subvolume number or name.
         volume_in: volume file to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
-        volume_out: the output extrema volume.
         presmooth: smooth the volume before finding extrema.
-        opt_roi_roi_volume: ignore values outside the selected area: the area\
-            to find extrema in.
         threshold: ignore small extrema.
-        opt_sum_subvols: output the sum of the extrema subvolumes instead of\
-            each subvolume separately.
-        opt_consolidate_mode: use consolidation of local minima instead of a\
-            large neighborhood.
-        opt_only_maxima: only find the maxima.
-        opt_only_minima: only find the minima.
-        opt_subvolume_subvolume: select a single subvolume to find extrema in:\
-            the subvolume number or name.
+        sum_subvols: output the sum of the extrema subvolumes instead of each\
+            subvolume separately.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        only_maxima: only find the maxima.
+        only_minima: only find the minima.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeExtremaOutputs`).
     """
     params = volume_extrema_params(
-        volume_in=volume_in,
-        distance=distance,
         volume_out=volume_out,
         presmooth=presmooth,
-        opt_roi_roi_volume=opt_roi_roi_volume,
+        roi_volume=roi_volume,
         threshold=threshold,
-        opt_sum_subvols=opt_sum_subvols,
-        opt_consolidate_mode=opt_consolidate_mode,
-        opt_only_maxima=opt_only_maxima,
-        opt_only_minima=opt_only_minima,
-        opt_subvolume_subvolume=opt_subvolume_subvolume,
+        sum_subvols=sum_subvols,
+        consolidate_mode=consolidate_mode,
+        only_maxima=only_maxima,
+        only_minima=only_minima,
+        subvolume=subvolume,
+        volume_in=volume_in,
+        distance=distance,
     )
     return volume_extrema_execute(params, runner)
 

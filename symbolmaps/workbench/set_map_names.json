@@ -1,14 +1,8 @@
 {
   "fn_root_make_params_and_execute": "set_map_names",
   "properties": {
-    "data_file": {
-      "var_param": "data_file"
-    },
-    "opt_name_file_file": {
-      "var_param": "opt_name_file_file"
-    },
-    "opt_from_data_file_file": {
-      "var_param": "opt_from_data_file_file"
+    "file": {
+      "var_param": "file_"
     },
     "map": {
       "var_param": "map_",
@@ -17,10 +11,13 @@
         "index": {
           "var_param": "index"
         },
-        "new_name": {
+        "new-name": {
           "var_param": "new_name"
         }
       }
+    },
+    "data-file": {
+      "var_param": "data_file"
     }
   }
 }

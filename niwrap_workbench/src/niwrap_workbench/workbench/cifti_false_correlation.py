@@ -6,93 +6,93 @@ import pathlib
 from styxdefs import *
 
 CIFTI_FALSE_CORRELATION_METADATA = Metadata(
-    id="1eacf54b399e5ccb46fa2416a02ea0a697253276.boutiques",
+    id="4934b43c48754a15f2680766bf60fde0c8338b6e.workbench",
     name="cifti-false-correlation",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiFalseCorrelationLeftSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["left_surface"]],
+    "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "text-out": typing.NotRequired[str | None],
 })
 CiftiFalseCorrelationLeftSurfaceParametersTagged = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParametersTagged', {
-    "@type": typing.Literal["left_surface"],
+    "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "text-out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationRightSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["right_surface"]],
+    "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "text-out": typing.NotRequired[str | None],
 })
 CiftiFalseCorrelationRightSurfaceParametersTagged = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParametersTagged', {
-    "@type": typing.Literal["right_surface"],
+    "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "text-out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationCerebellumSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum_surface"]],
+    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "text-out": typing.NotRequired[str | None],
 })
 CiftiFalseCorrelationCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParametersTagged', {
-    "@type": typing.Literal["cerebellum_surface"],
+    "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "text-out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationParameters = typing.TypedDict('CiftiFalseCorrelationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-false-correlation"]],
-    "cifti_in": InputPathType,
-    "3d_dist": float,
-    "geo_outer": float,
-    "geo_inner": float,
-    "cifti_out": str,
-    "left_surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParameters | None],
-    "right_surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParameters | None],
-    "cerebellum_surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParameters | None],
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParameters | None],
+    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParameters | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParameters | None],
+    "cifti-in": InputPathType,
+    "3D-dist": float,
+    "geo-outer": float,
+    "geo-inner": float,
 })
 CiftiFalseCorrelationParametersTagged = typing.TypedDict('CiftiFalseCorrelationParametersTagged', {
     "@type": typing.Literal["workbench/cifti-false-correlation"],
-    "cifti_in": InputPathType,
-    "3d_dist": float,
-    "geo_outer": float,
-    "geo_inner": float,
-    "cifti_out": str,
-    "left_surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParameters | None],
-    "right_surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParameters | None],
-    "cerebellum_surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParameters | None],
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiFalseCorrelationLeftSurfaceParameters | None],
+    "right-surface": typing.NotRequired[CiftiFalseCorrelationRightSurfaceParameters | None],
+    "cerebellum-surface": typing.NotRequired[CiftiFalseCorrelationCerebellumSurfaceParameters | None],
+    "cifti-in": InputPathType,
+    "3D-dist": float,
+    "geo-outer": float,
+    "geo-inner": float,
 })
 
 
 def cifti_false_correlation_left_surface_params(
     surface: InputPathType,
-    opt_dump_text_text_out: str | None = None,
+    text_out: str | None,
 ) -> CiftiFalseCorrelationLeftSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the left surface file.
-        opt_dump_text_text_out: dump the raw measures used to a text file: the\
-            output text file.
+        text_out: dump the raw measures used to a text file\
+            \
+            the output text file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "left_surface",
+        "@type": "left-surface",
         "surface": surface,
     }
-    if opt_dump_text_text_out is not None:
-        params["opt_dump_text_text_out"] = opt_dump_text_text_out
+    if text_out is not None:
+        params["text-out"] = text_out
     return params
 
 
@@ -110,36 +110,37 @@ def cifti_false_correlation_left_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-left-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_dump_text_text_out", None) is not None:
+    if params.get("text-out", None) is not None:
         cargs.extend([
+            "-left-surface",
+            execution.input_file(params.get("surface", None)),
             "-dump-text",
-            params.get("opt_dump_text_text_out", None)
+            params.get("text-out", None)
         ])
     return cargs
 
 
 def cifti_false_correlation_right_surface_params(
     surface: InputPathType,
-    opt_dump_text_text_out: str | None = None,
+    text_out: str | None,
 ) -> CiftiFalseCorrelationRightSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the right surface file.
-        opt_dump_text_text_out: dump the raw measures used to a text file: the\
-            output text file.
+        text_out: dump the raw measures used to a text file\
+            \
+            the output text file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "right_surface",
+        "@type": "right-surface",
         "surface": surface,
     }
-    if opt_dump_text_text_out is not None:
-        params["opt_dump_text_text_out"] = opt_dump_text_text_out
+    if text_out is not None:
+        params["text-out"] = text_out
     return params
 
 
@@ -157,36 +158,37 @@ def cifti_false_correlation_right_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-right-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_dump_text_text_out", None) is not None:
+    if params.get("text-out", None) is not None:
         cargs.extend([
+            "-right-surface",
+            execution.input_file(params.get("surface", None)),
             "-dump-text",
-            params.get("opt_dump_text_text_out", None)
+            params.get("text-out", None)
         ])
     return cargs
 
 
 def cifti_false_correlation_cerebellum_surface_params(
     surface: InputPathType,
-    opt_dump_text_text_out: str | None = None,
+    text_out: str | None,
 ) -> CiftiFalseCorrelationCerebellumSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the cerebellum surface file.
-        opt_dump_text_text_out: dump the raw measures used to a text file: the\
-            output text file.
+        text_out: dump the raw measures used to a text file\
+            \
+            the output text file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "cerebellum_surface",
+        "@type": "cerebellum-surface",
         "surface": surface,
     }
-    if opt_dump_text_text_out is not None:
-        params["opt_dump_text_text_out"] = opt_dump_text_text_out
+    if text_out is not None:
+        params["text-out"] = text_out
     return params
 
 
@@ -204,12 +206,12 @@ def cifti_false_correlation_cerebellum_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-cerebellum-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_dump_text_text_out", None) is not None:
+    if params.get("text-out", None) is not None:
         cargs.extend([
+            "-cerebellum-surface",
+            execution.input_file(params.get("surface", None)),
             "-dump-text",
-            params.get("opt_dump_text_text_out", None)
+            params.get("text-out", None)
         ])
     return cargs
 
@@ -225,11 +227,11 @@ class CiftiFalseCorrelationOutputs(typing.NamedTuple):
 
 
 def cifti_false_correlation_params(
+    cifti_out: str,
     cifti_in: InputPathType,
-    v_3d_dist: float,
+    v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
-    cifti_out: str,
     left_surface: CiftiFalseCorrelationLeftSurfaceParameters | None = None,
     right_surface: CiftiFalseCorrelationRightSurfaceParameters | None = None,
     cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParameters | None = None,
@@ -238,11 +240,11 @@ def cifti_false_correlation_params(
     Build parameters.
     
     Args:
+        cifti_out: the output cifti dscalar file.
         cifti_in: the cifti file to use for correlation.
-        v_3d_dist: maximum 3D distance to check around each vertex.
+        v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
-        cifti_out: the output cifti dscalar file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -251,18 +253,18 @@ def cifti_false_correlation_params(
     """
     params = {
         "@type": "workbench/cifti-false-correlation",
-        "cifti_in": cifti_in,
-        "3d_dist": v_3d_dist,
-        "geo_outer": geo_outer,
-        "geo_inner": geo_inner,
-        "cifti_out": cifti_out,
+        "cifti-out": cifti_out,
+        "cifti-in": cifti_in,
+        "3D-dist": v_3_d_dist,
+        "geo-outer": geo_outer,
+        "geo-inner": geo_inner,
     }
     if left_surface is not None:
-        params["left_surface"] = left_surface
+        params["left-surface"] = left_surface
     if right_surface is not None:
-        params["right_surface"] = right_surface
+        params["right-surface"] = right_surface
     if cerebellum_surface is not None:
-        params["cerebellum_surface"] = cerebellum_surface
+        params["cerebellum-surface"] = cerebellum_surface
     return params
 
 
@@ -280,19 +282,19 @@ def cifti_false_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-false-correlation")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
-    cargs.append(str(params.get("3d_dist", None)))
-    cargs.append(str(params.get("geo_outer", None)))
-    cargs.append(str(params.get("geo_inner", None)))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("left_surface", None) is not None:
-        cargs.extend(cifti_false_correlation_left_surface_cargs(params.get("left_surface", None), execution))
-    if params.get("right_surface", None) is not None:
-        cargs.extend(cifti_false_correlation_right_surface_cargs(params.get("right_surface", None), execution))
-    if params.get("cerebellum_surface", None) is not None:
-        cargs.extend(cifti_false_correlation_cerebellum_surface_cargs(params.get("cerebellum_surface", None), execution))
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-cifti-false-correlation",
+            params.get("cifti-out", None),
+            *(cifti_false_correlation_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_false_correlation_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_false_correlation_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else [])
+        ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(str(params.get("3D-dist", None)))
+    cargs.append(str(params.get("geo-outer", None)))
+    cargs.append(str(params.get("geo-inner", None)))
     return cargs
 
 
@@ -311,7 +313,7 @@ def cifti_false_correlation_outputs(
     """
     ret = CiftiFalseCorrelationOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -321,9 +323,7 @@ def cifti_false_correlation_execute(
     runner: Runner | None = None,
 ) -> CiftiFalseCorrelationOutputs:
     """
-    cifti-false-correlation
-    
-    Compare correlation locally and across/through sulci/gyri.
+    COMPARE CORRELATION LOCALLY AND ACROSS/THROUGH SULCI/GYRI.
     
     For each vertex, compute the average correlation within a range of geodesic
     distances that don't cross a sulcus/gyrus, and the correlation to the
@@ -331,10 +331,6 @@ def cifti_false_correlation_execute(
     sulcus/gyrus if the 3D distance is less than a third of the geodesic
     distance. The output file contains the ratio between these correlations, and
     some additional maps to help explain the ratio.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -352,20 +348,18 @@ def cifti_false_correlation_execute(
 
 
 def cifti_false_correlation(
+    cifti_out: str,
     cifti_in: InputPathType,
-    v_3d_dist: float,
+    v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
-    cifti_out: str,
     left_surface: CiftiFalseCorrelationLeftSurfaceParameters | None = None,
     right_surface: CiftiFalseCorrelationRightSurfaceParameters | None = None,
     cerebellum_surface: CiftiFalseCorrelationCerebellumSurfaceParameters | None = None,
     runner: Runner | None = None,
 ) -> CiftiFalseCorrelationOutputs:
     """
-    cifti-false-correlation
-    
-    Compare correlation locally and across/through sulci/gyri.
+    COMPARE CORRELATION LOCALLY AND ACROSS/THROUGH SULCI/GYRI.
     
     For each vertex, compute the average correlation within a range of geodesic
     distances that don't cross a sulcus/gyrus, and the correlation to the
@@ -374,16 +368,12 @@ def cifti_false_correlation(
     distance. The output file contains the ratio between these correlations, and
     some additional maps to help explain the ratio.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: the output cifti dscalar file.
         cifti_in: the cifti file to use for correlation.
-        v_3d_dist: maximum 3D distance to check around each vertex.
+        v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
-        cifti_out: the output cifti dscalar file.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
@@ -392,14 +382,14 @@ def cifti_false_correlation(
         NamedTuple of outputs (described in `CiftiFalseCorrelationOutputs`).
     """
     params = cifti_false_correlation_params(
-        cifti_in=cifti_in,
-        v_3d_dist=v_3d_dist,
-        geo_outer=geo_outer,
-        geo_inner=geo_inner,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
+        cifti_in=cifti_in,
+        v_3_d_dist=v_3_d_dist,
+        geo_outer=geo_outer,
+        geo_inner=geo_inner,
     )
     return cifti_false_correlation_execute(params, runner)
 

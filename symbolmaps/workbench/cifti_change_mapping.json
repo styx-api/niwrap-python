@@ -1,13 +1,7 @@
 {
   "fn_root_make_params_and_execute": "cifti_change_mapping",
   "properties": {
-    "data_cifti": {
-      "var_param": "data_cifti"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "cifti_out": {
+    "cifti-out": {
       "var_param": "cifti_out"
     },
     "series": {
@@ -20,8 +14,8 @@
         "start": {
           "var_param": "start"
         },
-        "opt_unit_unit": {
-          "var_param": "opt_unit_unit"
+        "unit": {
+          "var_param": "unit"
         }
       }
     },
@@ -29,22 +23,28 @@
       "var_param": "scalar",
       "fn_struct_make_params": "cifti_change_mapping_scalar_params",
       "properties": {
-        "opt_name_file_file": {
-          "var_param": "opt_name_file_file"
+        "file": {
+          "var_param": "file"
         }
       }
     },
-    "from_cifti": {
+    "from-cifti": {
       "var_param": "from_cifti",
       "fn_struct_make_params": "cifti_change_mapping_from_cifti_params",
       "properties": {
-        "template_cifti": {
+        "template-cifti": {
           "var_param": "template_cifti"
         },
         "direction": {
           "var_param": "direction"
         }
       }
+    },
+    "data-cifti": {
+      "var_param": "data_cifti"
+    },
+    "direction": {
+      "var_param": "direction"
     }
   }
 }

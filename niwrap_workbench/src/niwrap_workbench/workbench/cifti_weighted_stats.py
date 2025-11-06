@@ -6,125 +6,120 @@ import pathlib
 from styxdefs import *
 
 CIFTI_WEIGHTED_STATS_METADATA = Metadata(
-    id="c29a27c55897b9b33cfccfdd394f55a82bf8f22f.boutiques",
+    id="014a1bf95b4718c304bf3aa95e26fa00e131122c.workbench",
     name="cifti-weighted-stats",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiWeightedStatsSpatialWeightsParameters = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParameters', {
-    "@type": typing.NotRequired[typing.Literal["spatial_weights"]],
-    "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
-    "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
-    "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
-    "opt_left_area_metric_left_metric": typing.NotRequired[InputPathType | None],
-    "opt_right_area_metric_right_metric": typing.NotRequired[InputPathType | None],
-    "opt_cerebellum_area_metric_cerebellum_metric": typing.NotRequired[InputPathType | None],
+    "@type": typing.NotRequired[typing.Literal["spatial-weights"]],
+    "left-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "left-metric": typing.NotRequired[InputPathType | None],
+    "right-metric": typing.NotRequired[InputPathType | None],
+    "cerebellum-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiWeightedStatsSpatialWeightsParametersTagged = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParametersTagged', {
-    "@type": typing.Literal["spatial_weights"],
-    "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
-    "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
-    "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
-    "opt_left_area_metric_left_metric": typing.NotRequired[InputPathType | None],
-    "opt_right_area_metric_right_metric": typing.NotRequired[InputPathType | None],
-    "opt_cerebellum_area_metric_cerebellum_metric": typing.NotRequired[InputPathType | None],
+    "@type": typing.Literal["spatial-weights"],
+    "left-surf": typing.NotRequired[InputPathType | None],
+    "right-surf": typing.NotRequired[InputPathType | None],
+    "cerebellum-surf": typing.NotRequired[InputPathType | None],
+    "left-metric": typing.NotRequired[InputPathType | None],
+    "right-metric": typing.NotRequired[InputPathType | None],
+    "cerebellum-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiWeightedStatsRoiParameters = typing.TypedDict('CiftiWeightedStatsRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
-    "roi_cifti": InputPathType,
-    "opt_match_maps": bool,
+    "roi-cifti": InputPathType,
+    "match-maps": bool,
 })
 CiftiWeightedStatsRoiParametersTagged = typing.TypedDict('CiftiWeightedStatsRoiParametersTagged', {
     "@type": typing.Literal["roi"],
-    "roi_cifti": InputPathType,
-    "opt_match_maps": bool,
-})
-
-
-CiftiWeightedStatsStdevParameters = typing.TypedDict('CiftiWeightedStatsStdevParameters', {
-    "@type": typing.NotRequired[typing.Literal["stdev"]],
-    "opt_sample": bool,
-})
-CiftiWeightedStatsStdevParametersTagged = typing.TypedDict('CiftiWeightedStatsStdevParametersTagged', {
-    "@type": typing.Literal["stdev"],
-    "opt_sample": bool,
+    "roi-cifti": InputPathType,
+    "match-maps": bool,
 })
 
 
 CiftiWeightedStatsParameters = typing.TypedDict('CiftiWeightedStatsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-weighted-stats"]],
-    "cifti_in": InputPathType,
-    "spatial_weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
-    "opt_cifti_weights_weight_cifti": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[int | None],
+    "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
+    "weight-cifti": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiWeightedStatsRoiParameters | None],
-    "opt_mean": bool,
-    "stdev": typing.NotRequired[CiftiWeightedStatsStdevParameters | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_sum": bool,
-    "opt_show_map_name": bool,
+    "mean": bool,
+    "sample": typing.NotRequired[bool | None],
+    "percent": typing.NotRequired[float | None],
+    "sum": bool,
+    "show-map-name": bool,
+    "cifti-in": InputPathType,
 })
 CiftiWeightedStatsParametersTagged = typing.TypedDict('CiftiWeightedStatsParametersTagged', {
     "@type": typing.Literal["workbench/cifti-weighted-stats"],
-    "cifti_in": InputPathType,
-    "spatial_weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
-    "opt_cifti_weights_weight_cifti": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[int | None],
+    "spatial-weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
+    "weight-cifti": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[int | None],
     "roi": typing.NotRequired[CiftiWeightedStatsRoiParameters | None],
-    "opt_mean": bool,
-    "stdev": typing.NotRequired[CiftiWeightedStatsStdevParameters | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_sum": bool,
-    "opt_show_map_name": bool,
+    "mean": bool,
+    "sample": typing.NotRequired[bool | None],
+    "percent": typing.NotRequired[float | None],
+    "sum": bool,
+    "show-map-name": bool,
+    "cifti-in": InputPathType,
 })
 
 
 def cifti_weighted_stats_spatial_weights_params(
-    opt_left_area_surf_left_surf: InputPathType | None = None,
-    opt_right_area_surf_right_surf: InputPathType | None = None,
-    opt_cerebellum_area_surf_cerebellum_surf: InputPathType | None = None,
-    opt_left_area_metric_left_metric: InputPathType | None = None,
-    opt_right_area_metric_right_metric: InputPathType | None = None,
-    opt_cerebellum_area_metric_cerebellum_metric: InputPathType | None = None,
+    left_surf: InputPathType | None,
+    right_surf: InputPathType | None,
+    cerebellum_surf: InputPathType | None,
+    left_metric: InputPathType | None,
+    right_metric: InputPathType | None,
+    cerebellum_metric: InputPathType | None,
 ) -> CiftiWeightedStatsSpatialWeightsParametersTagged:
     """
     Build parameters.
     
     Args:
-        opt_left_area_surf_left_surf: use a surface for left vertex areas: the\
-            left surface to use, areas are in mm^2.
-        opt_right_area_surf_right_surf: use a surface for right vertex areas:\
+        left_surf: use a surface for left vertex areas\
+            \
+            the left surface to use, areas are in mm^2.
+        right_surf: use a surface for right vertex areas\
+            \
             the right surface to use, areas are in mm^2.
-        opt_cerebellum_area_surf_cerebellum_surf: use a surface for cerebellum\
-            vertex areas: the cerebellum surface to use, areas are in mm^2.
-        opt_left_area_metric_left_metric: use a metric file for left vertex\
-            areas: metric file containing left vertex areas.
-        opt_right_area_metric_right_metric: use a metric file for right vertex\
-            areas: metric file containing right vertex areas.
-        opt_cerebellum_area_metric_cerebellum_metric: use a metric file for\
-            cerebellum vertex areas: metric file containing cerebellum vertex areas.
+        cerebellum_surf: use a surface for cerebellum vertex areas\
+            \
+            the cerebellum surface to use, areas are in mm^2.
+        left_metric: use a metric file for left vertex areas\
+            \
+            metric file containing left vertex areas.
+        right_metric: use a metric file for right vertex areas\
+            \
+            metric file containing right vertex areas.
+        cerebellum_metric: use a metric file for cerebellum vertex areas\
+            \
+            metric file containing cerebellum vertex areas.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "spatial_weights",
+        "@type": "spatial-weights",
     }
-    if opt_left_area_surf_left_surf is not None:
-        params["opt_left_area_surf_left_surf"] = opt_left_area_surf_left_surf
-    if opt_right_area_surf_right_surf is not None:
-        params["opt_right_area_surf_right_surf"] = opt_right_area_surf_right_surf
-    if opt_cerebellum_area_surf_cerebellum_surf is not None:
-        params["opt_cerebellum_area_surf_cerebellum_surf"] = opt_cerebellum_area_surf_cerebellum_surf
-    if opt_left_area_metric_left_metric is not None:
-        params["opt_left_area_metric_left_metric"] = opt_left_area_metric_left_metric
-    if opt_right_area_metric_right_metric is not None:
-        params["opt_right_area_metric_right_metric"] = opt_right_area_metric_right_metric
-    if opt_cerebellum_area_metric_cerebellum_metric is not None:
-        params["opt_cerebellum_area_metric_cerebellum_metric"] = opt_cerebellum_area_metric_cerebellum_metric
+    if left_surf is not None:
+        params["left-surf"] = left_surf
+    if right_surf is not None:
+        params["right-surf"] = right_surf
+    if cerebellum_surf is not None:
+        params["cerebellum-surf"] = cerebellum_surf
+    if left_metric is not None:
+        params["left-metric"] = left_metric
+    if right_metric is not None:
+        params["right-metric"] = right_metric
+    if cerebellum_metric is not None:
+        params["cerebellum-metric"] = cerebellum_metric
     return params
 
 
@@ -142,58 +137,43 @@ def cifti_weighted_stats_spatial_weights_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-spatial-weights")
-    if params.get("opt_left_area_surf_left_surf", None) is not None:
+    if params.get("left-surf", None) is not None or params.get("right-surf", None) is not None or params.get("cerebellum-surf", None) is not None or params.get("left-metric", None) is not None or params.get("right-metric", None) is not None or params.get("cerebellum-metric", None) is not None:
         cargs.extend([
+            "-spatial-weights",
             "-left-area-surf",
-            execution.input_file(params.get("opt_left_area_surf_left_surf", None))
-        ])
-    if params.get("opt_right_area_surf_right_surf", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("left-surf", None)) if (params.get("left-surf", None) is not None) else ""),
             "-right-area-surf",
-            execution.input_file(params.get("opt_right_area_surf_right_surf", None))
-        ])
-    if params.get("opt_cerebellum_area_surf_cerebellum_surf", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("right-surf", None)) if (params.get("right-surf", None) is not None) else ""),
             "-cerebellum-area-surf",
-            execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf", None))
-        ])
-    if params.get("opt_left_area_metric_left_metric", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("cerebellum-surf", None)) if (params.get("cerebellum-surf", None) is not None) else ""),
             "-left-area-metric",
-            execution.input_file(params.get("opt_left_area_metric_left_metric", None))
-        ])
-    if params.get("opt_right_area_metric_right_metric", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("left-metric", None)) if (params.get("left-metric", None) is not None) else ""),
             "-right-area-metric",
-            execution.input_file(params.get("opt_right_area_metric_right_metric", None))
-        ])
-    if params.get("opt_cerebellum_area_metric_cerebellum_metric", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("right-metric", None)) if (params.get("right-metric", None) is not None) else ""),
             "-cerebellum-area-metric",
-            execution.input_file(params.get("opt_cerebellum_area_metric_cerebellum_metric", None))
+            (execution.input_file(params.get("cerebellum-metric", None)) if (params.get("cerebellum-metric", None) is not None) else "")
         ])
     return cargs
 
 
 def cifti_weighted_stats_roi_params(
     roi_cifti: InputPathType,
-    opt_match_maps: bool = False,
+    match_maps: bool = False,
 ) -> CiftiWeightedStatsRoiParametersTagged:
     """
     Build parameters.
     
     Args:
         roi_cifti: the roi, as a cifti file.
-        opt_match_maps: each column of input uses the corresponding column from\
-            the roi file.
+        match_maps: each column of input uses the corresponding column from the\
+            roi file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "roi",
-        "roi_cifti": roi_cifti,
-        "opt_match_maps": opt_match_maps,
+        "roi-cifti": roi_cifti,
+        "match-maps": match_maps,
     }
     return params
 
@@ -212,48 +192,12 @@ def cifti_weighted_stats_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_cifti", None)))
-    if params.get("opt_match_maps", False):
-        cargs.append("-match-maps")
-    return cargs
-
-
-def cifti_weighted_stats_stdev_params(
-    opt_sample: bool = False,
-) -> CiftiWeightedStatsStdevParametersTagged:
-    """
-    Build parameters.
-    
-    Args:
-        opt_sample: estimate population stdev from the sample.
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "stdev",
-        "opt_sample": opt_sample,
-    }
-    return params
-
-
-def cifti_weighted_stats_stdev_cargs(
-    params: CiftiWeightedStatsStdevParameters,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-stdev")
-    if params.get("opt_sample", False):
-        cargs.append("-sample")
+    if params.get("match-maps", False):
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-cifti", None)),
+            "-match-maps"
+        ])
     return cargs
 
 
@@ -266,56 +210,61 @@ class CiftiWeightedStatsOutputs(typing.NamedTuple):
 
 
 def cifti_weighted_stats_params(
+    weight_cifti: InputPathType | None,
+    column: int | None,
+    percent: float | None,
     cifti_in: InputPathType,
     spatial_weights: CiftiWeightedStatsSpatialWeightsParameters | None = None,
-    opt_cifti_weights_weight_cifti: InputPathType | None = None,
-    opt_column_column: int | None = None,
     roi: CiftiWeightedStatsRoiParameters | None = None,
-    opt_mean: bool = False,
-    stdev: CiftiWeightedStatsStdevParameters | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_sum: bool = False,
-    opt_show_map_name: bool = False,
+    mean: bool = False,
+    sample: bool | None = False,
+    sum_: bool = False,
+    show_map_name: bool = False,
 ) -> CiftiWeightedStatsParametersTagged:
     """
     Build parameters.
     
     Args:
+        weight_cifti: use a cifti file containing weights\
+            \
+            the weights to use, as a cifti file.
+        column: only display output for one column\
+            \
+            the column to use (1-based).
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         cifti_in: the input cifti.
         spatial_weights: use vertex area and voxel volume as weights.
-        opt_cifti_weights_weight_cifti: use a cifti file containing weights:\
-            the weights to use, as a cifti file.
-        opt_column_column: only display output for one column: the column to\
-            use (1-based).
         roi: only consider data inside an roi.
-        opt_mean: compute weighted mean.
-        stdev: compute weighted standard deviation.
-        opt_percentile_percent: compute weighted percentile: the percentile to\
-            find, must be between 0 and 100.
-        opt_sum: compute weighted sum.
-        opt_show_map_name: print map index and name before each output.
+        mean: compute weighted mean.
+        sample: compute weighted standard deviation\
+            \
+            estimate population stdev from the sample.
+        sum_: compute weighted sum.
+        show_map_name: print map index and name before each output.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-weighted-stats",
-        "cifti_in": cifti_in,
-        "opt_mean": opt_mean,
-        "opt_sum": opt_sum,
-        "opt_show_map_name": opt_show_map_name,
+        "mean": mean,
+        "sum": sum_,
+        "show-map-name": show_map_name,
+        "cifti-in": cifti_in,
     }
     if spatial_weights is not None:
-        params["spatial_weights"] = spatial_weights
-    if opt_cifti_weights_weight_cifti is not None:
-        params["opt_cifti_weights_weight_cifti"] = opt_cifti_weights_weight_cifti
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+        params["spatial-weights"] = spatial_weights
+    if weight_cifti is not None:
+        params["weight-cifti"] = weight_cifti
+    if column is not None:
+        params["column"] = column
     if roi is not None:
         params["roi"] = roi
-    if stdev is not None:
-        params["stdev"] = stdev
-    if opt_percentile_percent is not None:
-        params["opt_percentile_percent"] = opt_percentile_percent
+    if sample is not None:
+        params["sample"] = sample
+    if percent is not None:
+        params["percent"] = percent
     return params
 
 
@@ -333,36 +282,25 @@ def cifti_weighted_stats_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-weighted-stats")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
-    if params.get("spatial_weights", None) is not None:
-        cargs.extend(cifti_weighted_stats_spatial_weights_cargs(params.get("spatial_weights", None), execution))
-    if params.get("opt_cifti_weights_weight_cifti", None) is not None:
+    if params.get("spatial-weights", None) is not None or params.get("weight-cifti", None) is not None or params.get("column", None) is not None or params.get("roi", None) is not None or params.get("mean", False) or params.get("sample", False) is not None or params.get("percent", None) is not None or params.get("sum", False) or params.get("show-map-name", False):
         cargs.extend([
+            "wb_command",
+            "-cifti-weighted-stats",
+            *(cifti_weighted_stats_spatial_weights_cargs(params.get("spatial-weights", None), execution) if (params.get("spatial-weights", None) is not None) else []),
             "-cifti-weights",
-            execution.input_file(params.get("opt_cifti_weights_weight_cifti", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("weight-cifti", None)) if (params.get("weight-cifti", None) is not None) else ""),
             "-column",
-            str(params.get("opt_column_column", None))
-        ])
-    if params.get("roi", None) is not None:
-        cargs.extend(cifti_weighted_stats_roi_cargs(params.get("roi", None), execution))
-    if params.get("opt_mean", False):
-        cargs.append("-mean")
-    if params.get("stdev", None) is not None:
-        cargs.extend(cifti_weighted_stats_stdev_cargs(params.get("stdev", None), execution))
-    if params.get("opt_percentile_percent", None) is not None:
-        cargs.extend([
+            (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
+            *(cifti_weighted_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+            ("-mean" if (params.get("mean", False)) else ""),
+            "-stdev",
+            ("-sample" if (params.get("sample", False) is not None) else ""),
             "-percentile",
-            str(params.get("opt_percentile_percent", None))
+            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
+            ("-sum" if (params.get("sum", False)) else ""),
+            ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])
-    if params.get("opt_sum", False):
-        cargs.append("-sum")
-    if params.get("opt_show_map_name", False):
-        cargs.append("-show-map-name")
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
 
@@ -390,9 +328,7 @@ def cifti_weighted_stats_execute(
     runner: Runner | None = None,
 ) -> CiftiWeightedStatsOutputs:
     """
-    cifti-weighted-stats
-    
-    Weighted statistics along cifti columns.
+    WEIGHTED STATISTICS ALONG CIFTI COLUMNS.
     
     If the mapping along column is brain models, for each column of the input,
     the specified operation is done on each surface and across all voxels, and
@@ -408,10 +344,6 @@ def cifti_weighted_stats_execute(
     containing weights of similar meaning) is equivalent to integrating with
     respect to area and volume. When the input is binary ROIs, this will
     therefore output the area or volume of each ROI.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -429,22 +361,20 @@ def cifti_weighted_stats_execute(
 
 
 def cifti_weighted_stats(
+    weight_cifti: InputPathType | None,
+    column: int | None,
+    percent: float | None,
     cifti_in: InputPathType,
     spatial_weights: CiftiWeightedStatsSpatialWeightsParameters | None = None,
-    opt_cifti_weights_weight_cifti: InputPathType | None = None,
-    opt_column_column: int | None = None,
     roi: CiftiWeightedStatsRoiParameters | None = None,
-    opt_mean: bool = False,
-    stdev: CiftiWeightedStatsStdevParameters | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_sum: bool = False,
-    opt_show_map_name: bool = False,
+    mean: bool = False,
+    sample: bool | None = False,
+    sum_: bool = False,
+    show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> CiftiWeightedStatsOutputs:
     """
-    cifti-weighted-stats
-    
-    Weighted statistics along cifti columns.
+    WEIGHTED STATISTICS ALONG CIFTI COLUMNS.
     
     If the mapping along column is brain models, for each column of the input,
     the specified operation is done on each surface and across all voxels, and
@@ -461,39 +391,40 @@ def cifti_weighted_stats(
     respect to area and volume. When the input is binary ROIs, this will
     therefore output the area or volume of each ROI.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        weight_cifti: use a cifti file containing weights\
+            \
+            the weights to use, as a cifti file.
+        column: only display output for one column\
+            \
+            the column to use (1-based).
+        percent: compute weighted percentile\
+            \
+            the percentile to find, must be between 0 and 100.
         cifti_in: the input cifti.
         spatial_weights: use vertex area and voxel volume as weights.
-        opt_cifti_weights_weight_cifti: use a cifti file containing weights:\
-            the weights to use, as a cifti file.
-        opt_column_column: only display output for one column: the column to\
-            use (1-based).
         roi: only consider data inside an roi.
-        opt_mean: compute weighted mean.
-        stdev: compute weighted standard deviation.
-        opt_percentile_percent: compute weighted percentile: the percentile to\
-            find, must be between 0 and 100.
-        opt_sum: compute weighted sum.
-        opt_show_map_name: print map index and name before each output.
+        mean: compute weighted mean.
+        sample: compute weighted standard deviation\
+            \
+            estimate population stdev from the sample.
+        sum_: compute weighted sum.
+        show_map_name: print map index and name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiWeightedStatsOutputs`).
     """
     params = cifti_weighted_stats_params(
-        cifti_in=cifti_in,
         spatial_weights=spatial_weights,
-        opt_cifti_weights_weight_cifti=opt_cifti_weights_weight_cifti,
-        opt_column_column=opt_column_column,
+        weight_cifti=weight_cifti,
+        column=column,
         roi=roi,
-        opt_mean=opt_mean,
-        stdev=stdev,
-        opt_percentile_percent=opt_percentile_percent,
-        opt_sum=opt_sum,
-        opt_show_map_name=opt_show_map_name,
+        mean=mean,
+        sample=sample,
+        percent=percent,
+        sum_=sum_,
+        show_map_name=show_map_name,
+        cifti_in=cifti_in,
     )
     return cifti_weighted_stats_execute(params, runner)
 
@@ -506,5 +437,4 @@ __all__ = [
     "cifti_weighted_stats_params",
     "cifti_weighted_stats_roi_params",
     "cifti_weighted_stats_spatial_weights_params",
-    "cifti_weighted_stats_stdev_params",
 ]

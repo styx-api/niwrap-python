@@ -18,28 +18,28 @@ N3BiasFieldCorrectionParameters = typing.TypedDict('N3BiasFieldCorrectionParamet
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "mask_image": typing.NotRequired[InputPathType | None],
-    "rescale_intensities": typing.NotRequired[typing.Literal[0, 1] | None],
+    "rescale_intensities": typing.NotRequired[bool | None],
     "weight_image": typing.NotRequired[InputPathType | None],
     "shrink_factor": typing.NotRequired[int | None],
     "convergence": typing.NotRequired[str | None],
     "bspline_fitting": typing.NotRequired[str | None],
     "histogram_sharpening": typing.NotRequired[str | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 N3BiasFieldCorrectionParametersTagged = typing.TypedDict('N3BiasFieldCorrectionParametersTagged', {
     "@type": typing.Literal["ants/N3BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "mask_image": typing.NotRequired[InputPathType | None],
-    "rescale_intensities": typing.NotRequired[typing.Literal[0, 1] | None],
+    "rescale_intensities": typing.NotRequired[bool | None],
     "weight_image": typing.NotRequired[InputPathType | None],
     "shrink_factor": typing.NotRequired[int | None],
     "convergence": typing.NotRequired[str | None],
     "bspline_fitting": typing.NotRequired[str | None],
     "histogram_sharpening": typing.NotRequired[str | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -60,13 +60,13 @@ def n3_bias_field_correction_params(
     output: str,
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     mask_image: InputPathType | None = None,
-    rescale_intensities: typing.Literal[0, 1] | None = None,
+    rescale_intensities: bool | None = None,
     weight_image: InputPathType | None = None,
     shrink_factor: int | None = None,
     convergence: str | None = None,
     bspline_fitting: str | None = None,
     histogram_sharpening: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> N3BiasFieldCorrectionParametersTagged:
     """
     Build parameters.
@@ -158,7 +158,7 @@ def n3_bias_field_correction_cargs(
     if params.get("rescale_intensities", None) is not None:
         cargs.extend([
             "--rescale-intensities",
-            str(params.get("rescale_intensities", None))
+            ("1" if params.get("rescale_intensities", None) else "0")
         ])
     if params.get("weight_image", None) is not None:
         cargs.extend([
@@ -192,7 +192,7 @@ def n3_bias_field_correction_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -257,13 +257,13 @@ def n3_bias_field_correction(
     output: str,
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     mask_image: InputPathType | None = None,
-    rescale_intensities: typing.Literal[0, 1] | None = None,
+    rescale_intensities: bool | None = None,
     weight_image: InputPathType | None = None,
     shrink_factor: int | None = None,
     convergence: str | None = None,
     bspline_fitting: str | None = None,
     histogram_sharpening: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> N3BiasFieldCorrectionOutputs:
     """

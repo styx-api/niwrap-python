@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 METRIC_EXTREMA_METADATA = Metadata(
-    id="a62651df948001aa8493b5d383ecb5de960f26cc.boutiques",
+    id="fb4c43ba07a28fe93481caee84a1b4079b198219.workbench",
     name="metric-extrema",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricExtremaPresmoothParameters = typing.TypedDict('MetricExtremaPresmoothParameters', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 MetricExtremaPresmoothParametersTagged = typing.TypedDict('MetricExtremaPresmoothParametersTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 
 
@@ -39,39 +38,39 @@ MetricExtremaThresholdParametersTagged = typing.TypedDict('MetricExtremaThreshol
 
 MetricExtremaParameters = typing.TypedDict('MetricExtremaParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-extrema"]],
-    "surface": InputPathType,
-    "metric_in": InputPathType,
-    "distance": float,
-    "metric_out": str,
+    "metric-out": str,
     "presmooth": typing.NotRequired[MetricExtremaPresmoothParameters | None],
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[MetricExtremaThresholdParameters | None],
-    "opt_sum_columns": bool,
-    "opt_consolidate_mode": bool,
-    "opt_only_maxima": bool,
-    "opt_only_minima": bool,
-    "opt_column_column": typing.NotRequired[str | None],
+    "sum-columns": bool,
+    "consolidate-mode": bool,
+    "only-maxima": bool,
+    "only-minima": bool,
+    "column": typing.NotRequired[str | None],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "distance": float,
 })
 MetricExtremaParametersTagged = typing.TypedDict('MetricExtremaParametersTagged', {
     "@type": typing.Literal["workbench/metric-extrema"],
-    "surface": InputPathType,
-    "metric_in": InputPathType,
-    "distance": float,
-    "metric_out": str,
+    "metric-out": str,
     "presmooth": typing.NotRequired[MetricExtremaPresmoothParameters | None],
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "threshold": typing.NotRequired[MetricExtremaThresholdParameters | None],
-    "opt_sum_columns": bool,
-    "opt_consolidate_mode": bool,
-    "opt_only_maxima": bool,
-    "opt_only_minima": bool,
-    "opt_column_column": typing.NotRequired[str | None],
+    "sum-columns": bool,
+    "consolidate-mode": bool,
+    "only-maxima": bool,
+    "only-minima": bool,
+    "column": typing.NotRequired[str | None],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "distance": float,
 })
 
 
 def metric_extrema_presmooth_params(
     kernel: float,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
 ) -> MetricExtremaPresmoothParametersTagged:
     """
     Build parameters.
@@ -79,14 +78,14 @@ def metric_extrema_presmooth_params(
     Args:
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "presmooth",
         "kernel": kernel,
-        "opt_fwhm": opt_fwhm,
+        "fwhm": fwhm,
     }
     return params
 
@@ -105,10 +104,12 @@ def metric_extrema_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel", None)))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
+    if params.get("fwhm", False):
+        cargs.extend([
+            "-presmooth",
+            str(params.get("kernel", None)),
+            "-fwhm"
+        ])
     return cargs
 
 
@@ -147,9 +148,11 @@ def metric_extrema_threshold_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-threshold")
-    cargs.append(str(params.get("low", None)))
-    cargs.append(str(params.get("high", None)))
+    cargs.extend([
+        "-threshold",
+        str(params.get("low", None)),
+        str(params.get("high", None))
+    ])
     return cargs
 
 
@@ -164,62 +167,64 @@ class MetricExtremaOutputs(typing.NamedTuple):
 
 
 def metric_extrema_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
-    metric_out: str,
     presmooth: MetricExtremaPresmoothParameters | None = None,
-    opt_roi_roi_metric: InputPathType | None = None,
     threshold: MetricExtremaThresholdParameters | None = None,
-    opt_sum_columns: bool = False,
-    opt_consolidate_mode: bool = False,
-    opt_only_maxima: bool = False,
-    opt_only_minima: bool = False,
-    opt_column_column: str | None = None,
+    sum_columns: bool = False,
+    consolidate_mode: bool = False,
+    only_maxima: bool = False,
+    only_minima: bool = False,
 ) -> MetricExtremaParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output extrema metric.
+        roi_metric: ignore values outside the selected area\
+            \
+            the area to find extrema in, as a metric.
+        column: select a single column to find extrema in\
+            \
+            the column number or name.
         surface: the surface to use for distance information.
         metric_in: the metric to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
-        metric_out: the output extrema metric.
         presmooth: smooth the metric before finding extrema.
-        opt_roi_roi_metric: ignore values outside the selected area: the area\
-            to find extrema in, as a metric.
         threshold: ignore small extrema.
-        opt_sum_columns: output the sum of the extrema columns instead of each\
+        sum_columns: output the sum of the extrema columns instead of each\
             column separately.
-        opt_consolidate_mode: use consolidation of local minima instead of a\
-            large neighborhood.
-        opt_only_maxima: only find the maxima.
-        opt_only_minima: only find the minima.
-        opt_column_column: select a single column to find extrema in: the\
-            column number or name.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        only_maxima: only find the maxima.
+        only_minima: only find the minima.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-extrema",
+        "metric-out": metric_out,
+        "sum-columns": sum_columns,
+        "consolidate-mode": consolidate_mode,
+        "only-maxima": only_maxima,
+        "only-minima": only_minima,
         "surface": surface,
-        "metric_in": metric_in,
+        "metric-in": metric_in,
         "distance": distance,
-        "metric_out": metric_out,
-        "opt_sum_columns": opt_sum_columns,
-        "opt_consolidate_mode": opt_consolidate_mode,
-        "opt_only_maxima": opt_only_maxima,
-        "opt_only_minima": opt_only_minima,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     if threshold is not None:
         params["threshold"] = threshold
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -237,34 +242,25 @@ def metric_extrema_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-extrema")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(str(params.get("distance", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("presmooth", None) is not None:
-        cargs.extend(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution))
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("presmooth", None) is not None or params.get("roi-metric", None) is not None or params.get("threshold", None) is not None or params.get("sum-columns", False) or params.get("consolidate-mode", False) or params.get("only-maxima", False) or params.get("only-minima", False) or params.get("column", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-extrema",
+            params.get("metric-out", None),
+            *(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("threshold", None) is not None:
-        cargs.extend(metric_extrema_threshold_cargs(params.get("threshold", None), execution))
-    if params.get("opt_sum_columns", False):
-        cargs.append("-sum-columns")
-    if params.get("opt_consolidate_mode", False):
-        cargs.append("-consolidate-mode")
-    if params.get("opt_only_maxima", False):
-        cargs.append("-only-maxima")
-    if params.get("opt_only_minima", False):
-        cargs.append("-only-minima")
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            *(metric_extrema_threshold_cargs(params.get("threshold", None), execution) if (params.get("threshold", None) is not None) else []),
+            ("-sum-columns" if (params.get("sum-columns", False)) else ""),
+            ("-consolidate-mode" if (params.get("consolidate-mode", False)) else ""),
+            ("-only-maxima" if (params.get("only-maxima", False)) else ""),
+            ("-only-minima" if (params.get("only-minima", False)) else ""),
             "-column",
-            params.get("opt_column_column", None)
+            (params.get("column", None) if (params.get("column", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("distance", None)))
     return cargs
 
 
@@ -283,7 +279,7 @@ def metric_extrema_outputs(
     """
     ret = MetricExtremaOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -293,9 +289,7 @@ def metric_extrema_execute(
     runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
-    metric-extrema
-    
-    Find extrema in a metric file.
+    FIND EXTREMA IN A METRIC FILE.
     
     Finds extrema in a metric file, such that no two extrema of the same type
     are within <distance> of each other. The extrema are labeled as -1 for
@@ -322,10 +316,6 @@ def metric_extrema_execute(
     By default, all input columns are used with no smoothing, use -column to
     specify a single column to use, and -presmooth to smooth the input before
     finding the extrema.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -343,24 +333,22 @@ def metric_extrema_execute(
 
 
 def metric_extrema(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     distance: float,
-    metric_out: str,
     presmooth: MetricExtremaPresmoothParameters | None = None,
-    opt_roi_roi_metric: InputPathType | None = None,
     threshold: MetricExtremaThresholdParameters | None = None,
-    opt_sum_columns: bool = False,
-    opt_consolidate_mode: bool = False,
-    opt_only_maxima: bool = False,
-    opt_only_minima: bool = False,
-    opt_column_column: str | None = None,
+    sum_columns: bool = False,
+    consolidate_mode: bool = False,
+    only_maxima: bool = False,
+    only_minima: bool = False,
     runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
-    metric-extrema
-    
-    Find extrema in a metric file.
+    FIND EXTREMA IN A METRIC FILE.
     
     Finds extrema in a metric file, such that no two extrema of the same type
     are within <distance> of each other. The extrema are labeled as -1 for
@@ -388,45 +376,43 @@ def metric_extrema(
     specify a single column to use, and -presmooth to smooth the input before
     finding the extrema.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output extrema metric.
+        roi_metric: ignore values outside the selected area\
+            \
+            the area to find extrema in, as a metric.
+        column: select a single column to find extrema in\
+            \
+            the column number or name.
         surface: the surface to use for distance information.
         metric_in: the metric to find the extrema of.
         distance: the minimum distance between identified extrema of the same\
             type.
-        metric_out: the output extrema metric.
         presmooth: smooth the metric before finding extrema.
-        opt_roi_roi_metric: ignore values outside the selected area: the area\
-            to find extrema in, as a metric.
         threshold: ignore small extrema.
-        opt_sum_columns: output the sum of the extrema columns instead of each\
+        sum_columns: output the sum of the extrema columns instead of each\
             column separately.
-        opt_consolidate_mode: use consolidation of local minima instead of a\
-            large neighborhood.
-        opt_only_maxima: only find the maxima.
-        opt_only_minima: only find the minima.
-        opt_column_column: select a single column to find extrema in: the\
-            column number or name.
+        consolidate_mode: use consolidation of local minima instead of a large\
+            neighborhood.
+        only_maxima: only find the maxima.
+        only_minima: only find the minima.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricExtremaOutputs`).
     """
     params = metric_extrema_params(
+        metric_out=metric_out,
+        presmooth=presmooth,
+        roi_metric=roi_metric,
+        threshold=threshold,
+        sum_columns=sum_columns,
+        consolidate_mode=consolidate_mode,
+        only_maxima=only_maxima,
+        only_minima=only_minima,
+        column=column,
         surface=surface,
         metric_in=metric_in,
         distance=distance,
-        metric_out=metric_out,
-        presmooth=presmooth,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        threshold=threshold,
-        opt_sum_columns=opt_sum_columns,
-        opt_consolidate_mode=opt_consolidate_mode,
-        opt_only_maxima=opt_only_maxima,
-        opt_only_minima=opt_only_minima,
-        opt_column_column=opt_column_column,
     )
     return metric_extrema_execute(params, runner)
 

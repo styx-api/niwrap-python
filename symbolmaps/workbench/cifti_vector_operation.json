@@ -1,29 +1,29 @@
 {
   "fn_root_make_params_and_execute": "cifti_vector_operation",
   "properties": {
-    "vectors_a": {
+    "cifti-out": {
+      "var_param": "cifti_out"
+    },
+    "normalize-a": {
+      "var_param": "normalize_a"
+    },
+    "normalize-b": {
+      "var_param": "normalize_b"
+    },
+    "normalize-output": {
+      "var_param": "normalize_output"
+    },
+    "magnitude": {
+      "var_param": "magnitude"
+    },
+    "vectors-a": {
       "var_param": "vectors_a"
     },
-    "vectors_b": {
+    "vectors-b": {
       "var_param": "vectors_b"
     },
     "operation": {
       "var_param": "operation"
-    },
-    "cifti_out": {
-      "var_param": "cifti_out"
-    },
-    "opt_normalize_a": {
-      "var_param": "opt_normalize_a"
-    },
-    "opt_normalize_b": {
-      "var_param": "opt_normalize_b"
-    },
-    "opt_normalize_output": {
-      "var_param": "opt_normalize_output"
-    },
-    "opt_magnitude": {
-      "var_param": "opt_magnitude"
     }
   }
 }

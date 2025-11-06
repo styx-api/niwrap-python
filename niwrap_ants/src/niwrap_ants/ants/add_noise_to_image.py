@@ -19,7 +19,7 @@ AddNoiseToImageParameters = typing.TypedDict('AddNoiseToImageParameters', {
     "input_image": InputPathType,
     "noise_model": typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 AddNoiseToImageParametersTagged = typing.TypedDict('AddNoiseToImageParametersTagged', {
     "@type": typing.Literal["ants/AddNoiseToImage"],
@@ -27,7 +27,7 @@ AddNoiseToImageParametersTagged = typing.TypedDict('AddNoiseToImageParametersTag
     "input_image": InputPathType,
     "noise_model": typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -46,7 +46,7 @@ def add_noise_to_image_params(
     noise_model: typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
     output: str,
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> AddNoiseToImageParametersTagged:
     """
     Build parameters.
@@ -112,7 +112,7 @@ def add_noise_to_image_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -170,7 +170,7 @@ def add_noise_to_image(
     noise_model: typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
     output: str,
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> AddNoiseToImageOutputs:
     """

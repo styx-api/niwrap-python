@@ -6,75 +6,26 @@ import pathlib
 from styxdefs import *
 
 VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
-    id="8594e5f631aa822147389c791fdc81f4fc470354.boutiques",
+    id="25607ae5dff68c55973abc5a13016a50bb089e8e.workbench",
     name="volume-estimate-fwhm",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
-
-
-VolumeEstimateFwhmWholeFileParameters = typing.TypedDict('VolumeEstimateFwhmWholeFileParameters', {
-    "@type": typing.NotRequired[typing.Literal["whole_file"]],
-    "opt_demean": bool,
-})
-VolumeEstimateFwhmWholeFileParametersTagged = typing.TypedDict('VolumeEstimateFwhmWholeFileParametersTagged', {
-    "@type": typing.Literal["whole_file"],
-    "opt_demean": bool,
-})
 
 
 VolumeEstimateFwhmParameters = typing.TypedDict('VolumeEstimateFwhmParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-estimate-fwhm"]],
+    "roivol": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
+    "demean": typing.NotRequired[bool | None],
     "volume": InputPathType,
-    "opt_roi_roivol": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "whole_file": typing.NotRequired[VolumeEstimateFwhmWholeFileParameters | None],
 })
 VolumeEstimateFwhmParametersTagged = typing.TypedDict('VolumeEstimateFwhmParametersTagged', {
     "@type": typing.Literal["workbench/volume-estimate-fwhm"],
+    "roivol": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
+    "demean": typing.NotRequired[bool | None],
     "volume": InputPathType,
-    "opt_roi_roivol": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "whole_file": typing.NotRequired[VolumeEstimateFwhmWholeFileParameters | None],
 })
-
-
-def volume_estimate_fwhm_whole_file_params(
-    opt_demean: bool = False,
-) -> VolumeEstimateFwhmWholeFileParametersTagged:
-    """
-    Build parameters.
-    
-    Args:
-        opt_demean: subtract the mean image before estimating smoothness.
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "whole_file",
-        "opt_demean": opt_demean,
-    }
-    return params
-
-
-def volume_estimate_fwhm_whole_file_cargs(
-    params: VolumeEstimateFwhmWholeFileParameters,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-whole-file")
-    if params.get("opt_demean", False):
-        cargs.append("-demean")
-    return cargs
 
 
 class VolumeEstimateFwhmOutputs(typing.NamedTuple):
@@ -86,22 +37,26 @@ class VolumeEstimateFwhmOutputs(typing.NamedTuple):
 
 
 def volume_estimate_fwhm_params(
+    roivol: InputPathType | None,
+    subvol: str | None,
     volume: InputPathType,
-    opt_roi_roivol: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
-    whole_file: VolumeEstimateFwhmWholeFileParameters | None = None,
+    demean: bool | None = False,
 ) -> VolumeEstimateFwhmParametersTagged:
     """
     Build parameters.
     
     Args:
+        roivol: use only data within an ROI\
+            \
+            the volume to use as an ROI.
+        subvol: select a single subvolume to estimate smoothness of\
+            \
+            the subvolume number or name.
         volume: the input volume.
-        opt_roi_roivol: use only data within an ROI: the volume to use as an\
-            ROI.
-        opt_subvolume_subvol: select a single subvolume to estimate smoothness\
-            of: the subvolume number or name.
-        whole_file: estimate for the whole file at once, not each subvolume\
-            separately.
+        demean: estimate for the whole file at once, not each subvolume\
+            separately\
+            \
+            subtract the mean image before estimating smoothness.
     Returns:
         Parameter dictionary
     """
@@ -109,12 +64,12 @@ def volume_estimate_fwhm_params(
         "@type": "workbench/volume-estimate-fwhm",
         "volume": volume,
     }
-    if opt_roi_roivol is not None:
-        params["opt_roi_roivol"] = opt_roi_roivol
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
-    if whole_file is not None:
-        params["whole_file"] = whole_file
+    if roivol is not None:
+        params["roivol"] = roivol
+    if subvol is not None:
+        params["subvol"] = subvol
+    if demean is not None:
+        params["demean"] = demean
     return params
 
 
@@ -132,21 +87,18 @@ def volume_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-estimate-fwhm")
-    cargs.append(execution.input_file(params.get("volume", None)))
-    if params.get("opt_roi_roivol", None) is not None:
+    if params.get("roivol", None) is not None or params.get("subvol", None) is not None or params.get("demean", False) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-estimate-fwhm",
             "-roi",
-            execution.input_file(params.get("opt_roi_roivol", None))
-        ])
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
+            "-whole-file",
+            ("-demean" if (params.get("demean", False) is not None) else "")
         ])
-    if params.get("whole_file", None) is not None:
-        cargs.extend(volume_estimate_fwhm_whole_file_cargs(params.get("whole_file", None), execution))
+    cargs.append(execution.input_file(params.get("volume", None)))
     return cargs
 
 
@@ -174,18 +126,12 @@ def volume_estimate_fwhm_execute(
     runner: Runner | None = None,
 ) -> VolumeEstimateFwhmOutputs:
     """
-    volume-estimate-fwhm
-    
-    Estimate fwhm smoothness of a volume.
+    ESTIMATE FWHM SMOOTHNESS OF A VOLUME.
     
     Estimates the smoothness of the input volume in X, Y, and Z directions
     separately, printing the estimates to standard output, in mm as FWHM. If
     -subvolume or -whole-file are not specified, each subvolume is estimated and
     displayed separately.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -203,43 +149,41 @@ def volume_estimate_fwhm_execute(
 
 
 def volume_estimate_fwhm(
+    roivol: InputPathType | None,
+    subvol: str | None,
     volume: InputPathType,
-    opt_roi_roivol: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
-    whole_file: VolumeEstimateFwhmWholeFileParameters | None = None,
+    demean: bool | None = False,
     runner: Runner | None = None,
 ) -> VolumeEstimateFwhmOutputs:
     """
-    volume-estimate-fwhm
-    
-    Estimate fwhm smoothness of a volume.
+    ESTIMATE FWHM SMOOTHNESS OF A VOLUME.
     
     Estimates the smoothness of the input volume in X, Y, and Z directions
     separately, printing the estimates to standard output, in mm as FWHM. If
     -subvolume or -whole-file are not specified, each subvolume is estimated and
     displayed separately.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        roivol: use only data within an ROI\
+            \
+            the volume to use as an ROI.
+        subvol: select a single subvolume to estimate smoothness of\
+            \
+            the subvolume number or name.
         volume: the input volume.
-        opt_roi_roivol: use only data within an ROI: the volume to use as an\
-            ROI.
-        opt_subvolume_subvol: select a single subvolume to estimate smoothness\
-            of: the subvolume number or name.
-        whole_file: estimate for the whole file at once, not each subvolume\
-            separately.
+        demean: estimate for the whole file at once, not each subvolume\
+            separately\
+            \
+            subtract the mean image before estimating smoothness.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeEstimateFwhmOutputs`).
     """
     params = volume_estimate_fwhm_params(
+        roivol=roivol,
+        subvol=subvol,
+        demean=demean,
         volume=volume,
-        opt_roi_roivol=opt_roi_roivol,
-        opt_subvolume_subvol=opt_subvolume_subvol,
-        whole_file=whole_file,
     )
     return volume_estimate_fwhm_execute(params, runner)
 
@@ -250,5 +194,4 @@ __all__ = [
     "volume_estimate_fwhm",
     "volume_estimate_fwhm_execute",
     "volume_estimate_fwhm_params",
-    "volume_estimate_fwhm_whole_file_params",
 ]

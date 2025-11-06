@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
-    id="ec00569346766fa83a8b274b19856b08f237baba.boutiques",
+    id="142e37fc5627ecfadf24cbd4bebe0d1242646548.workbench",
     name="surface-sphere-project-unproject",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceSphereProjectUnprojectParameters = typing.TypedDict('SurfaceSphereProjectUnprojectParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-project-unproject"]],
-    "sphere_in": InputPathType,
-    "sphere_project_to": InputPathType,
-    "sphere_unproject_from": InputPathType,
-    "sphere_out": str,
+    "sphere-out": str,
+    "sphere-in": InputPathType,
+    "sphere-project-to": InputPathType,
+    "sphere-unproject-from": InputPathType,
 })
 SurfaceSphereProjectUnprojectParametersTagged = typing.TypedDict('SurfaceSphereProjectUnprojectParametersTagged', {
     "@type": typing.Literal["workbench/surface-sphere-project-unproject"],
-    "sphere_in": InputPathType,
-    "sphere_project_to": InputPathType,
-    "sphere_unproject_from": InputPathType,
-    "sphere_out": str,
+    "sphere-out": str,
+    "sphere-in": InputPathType,
+    "sphere-project-to": InputPathType,
+    "sphere-unproject-from": InputPathType,
 })
 
 
@@ -40,29 +39,29 @@ class SurfaceSphereProjectUnprojectOutputs(typing.NamedTuple):
 
 
 def surface_sphere_project_unproject_params(
+    sphere_out: str,
     sphere_in: InputPathType,
     sphere_project_to: InputPathType,
     sphere_unproject_from: InputPathType,
-    sphere_out: str,
 ) -> SurfaceSphereProjectUnprojectParametersTagged:
     """
     Build parameters.
     
     Args:
+        sphere_out: the output sphere.
         sphere_in: a sphere with the desired output mesh.
         sphere_project_to: a sphere that aligns with sphere-in.
         sphere_unproject_from: <sphere-project-to> deformed to the desired\
             output space.
-        sphere_out: the output sphere.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-sphere-project-unproject",
-        "sphere_in": sphere_in,
-        "sphere_project_to": sphere_project_to,
-        "sphere_unproject_from": sphere_unproject_from,
-        "sphere_out": sphere_out,
+        "sphere-out": sphere_out,
+        "sphere-in": sphere_in,
+        "sphere-project-to": sphere_project_to,
+        "sphere-unproject-from": sphere_unproject_from,
     }
     return params
 
@@ -81,12 +80,14 @@ def surface_sphere_project_unproject_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-sphere-project-unproject")
-    cargs.append(execution.input_file(params.get("sphere_in", None)))
-    cargs.append(execution.input_file(params.get("sphere_project_to", None)))
-    cargs.append(execution.input_file(params.get("sphere_unproject_from", None)))
-    cargs.append(params.get("sphere_out", None))
+    cargs.extend([
+        "wb_command",
+        "-surface-sphere-project-unproject",
+        params.get("sphere-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("sphere-in", None)))
+    cargs.append(execution.input_file(params.get("sphere-project-to", None)))
+    cargs.append(execution.input_file(params.get("sphere-unproject-from", None)))
     return cargs
 
 
@@ -105,7 +106,7 @@ def surface_sphere_project_unproject_outputs(
     """
     ret = SurfaceSphereProjectUnprojectOutputs(
         root=execution.output_file("."),
-        sphere_out=execution.output_file(params.get("sphere_out", None)),
+        sphere_out=execution.output_file(params.get("sphere-out", None)),
     )
     return ret
 
@@ -115,9 +116,7 @@ def surface_sphere_project_unproject_execute(
     runner: Runner | None = None,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
-    surface-sphere-project-unproject
-    
-    Copy registration deformations to different sphere.
+    COPY REGISTRATION DEFORMATIONS TO DIFFERENT SPHERE.
     
     Background: A surface registration starts with an input sphere, and moves
     its vertices around on the sphere until it matches the template data. This
@@ -173,10 +172,6 @@ def surface_sphere_project_unproject_execute(
     deformation from <sphere-project-to> to <sphere-unproject-from>.
     <sphere-project-to> and <sphere-unproject-from> must have the same topology
     as each other, but <sphere-in> may have any topology.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -194,16 +189,14 @@ def surface_sphere_project_unproject_execute(
 
 
 def surface_sphere_project_unproject(
+    sphere_out: str,
     sphere_in: InputPathType,
     sphere_project_to: InputPathType,
     sphere_unproject_from: InputPathType,
-    sphere_out: str,
     runner: Runner | None = None,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
-    surface-sphere-project-unproject
-    
-    Copy registration deformations to different sphere.
+    COPY REGISTRATION DEFORMATIONS TO DIFFERENT SPHERE.
     
     Background: A surface registration starts with an input sphere, and moves
     its vertices around on the sphere until it matches the template data. This
@@ -260,25 +253,21 @@ def surface_sphere_project_unproject(
     <sphere-project-to> and <sphere-unproject-from> must have the same topology
     as each other, but <sphere-in> may have any topology.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        sphere_out: the output sphere.
         sphere_in: a sphere with the desired output mesh.
         sphere_project_to: a sphere that aligns with sphere-in.
         sphere_unproject_from: <sphere-project-to> deformed to the desired\
             output space.
-        sphere_out: the output sphere.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSphereProjectUnprojectOutputs`).
     """
     params = surface_sphere_project_unproject_params(
+        sphere_out=sphere_out,
         sphere_in=sphere_in,
         sphere_project_to=sphere_project_to,
         sphere_unproject_from=sphere_unproject_from,
-        sphere_out=sphere_out,
     )
     return surface_sphere_project_unproject_execute(params, runner)
 

@@ -6,32 +6,31 @@ import pathlib
 from styxdefs import *
 
 SURFACE_INFLATION_METADATA = Metadata(
-    id="8d8e7af8d80a5930fe793979c523d20e13520896.boutiques",
+    id="9461f44d7d7d0b826502df0acb5b89588faca185.workbench",
     name="surface-inflation",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceInflationParameters = typing.TypedDict('SurfaceInflationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-inflation"]],
-    "anatomical_surface_in": InputPathType,
-    "surface_in": InputPathType,
-    "number_of_smoothing_cycles": int,
-    "smoothing_strength": float,
-    "smoothing_iterations": int,
-    "inflation_factor": float,
-    "surface_out": str,
+    "surface-out": str,
+    "anatomical-surface-in": InputPathType,
+    "surface-in": InputPathType,
+    "number-of-smoothing-cycles": int,
+    "smoothing-strength": float,
+    "smoothing-iterations": int,
+    "inflation-factor": float,
 })
 SurfaceInflationParametersTagged = typing.TypedDict('SurfaceInflationParametersTagged', {
     "@type": typing.Literal["workbench/surface-inflation"],
-    "anatomical_surface_in": InputPathType,
-    "surface_in": InputPathType,
-    "number_of_smoothing_cycles": int,
-    "smoothing_strength": float,
-    "smoothing_iterations": int,
-    "inflation_factor": float,
-    "surface_out": str,
+    "surface-out": str,
+    "anatomical-surface-in": InputPathType,
+    "surface-in": InputPathType,
+    "number-of-smoothing-cycles": int,
+    "smoothing-strength": float,
+    "smoothing-iterations": int,
+    "inflation-factor": float,
 })
 
 
@@ -46,37 +45,37 @@ class SurfaceInflationOutputs(typing.NamedTuple):
 
 
 def surface_inflation_params(
+    surface_out: str,
     anatomical_surface_in: InputPathType,
     surface_in: InputPathType,
     number_of_smoothing_cycles: int,
     smoothing_strength: float,
     smoothing_iterations: int,
     inflation_factor: float,
-    surface_out: str,
 ) -> SurfaceInflationParametersTagged:
     """
     Build parameters.
     
     Args:
+        surface_out: output surface file.
         anatomical_surface_in: the anatomical surface.
         surface_in: the surface file to inflate.
         number_of_smoothing_cycles: number of smoothing cycles.
         smoothing_strength: smoothing strength (ranges [0.0 - 1.0]).
         smoothing_iterations: smoothing iterations.
         inflation_factor: inflation factor.
-        surface_out: output surface file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-inflation",
-        "anatomical_surface_in": anatomical_surface_in,
-        "surface_in": surface_in,
-        "number_of_smoothing_cycles": number_of_smoothing_cycles,
-        "smoothing_strength": smoothing_strength,
-        "smoothing_iterations": smoothing_iterations,
-        "inflation_factor": inflation_factor,
-        "surface_out": surface_out,
+        "surface-out": surface_out,
+        "anatomical-surface-in": anatomical_surface_in,
+        "surface-in": surface_in,
+        "number-of-smoothing-cycles": number_of_smoothing_cycles,
+        "smoothing-strength": smoothing_strength,
+        "smoothing-iterations": smoothing_iterations,
+        "inflation-factor": inflation_factor,
     }
     return params
 
@@ -95,15 +94,17 @@ def surface_inflation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-inflation")
-    cargs.append(execution.input_file(params.get("anatomical_surface_in", None)))
-    cargs.append(execution.input_file(params.get("surface_in", None)))
-    cargs.append(str(params.get("number_of_smoothing_cycles", None)))
-    cargs.append(str(params.get("smoothing_strength", None)))
-    cargs.append(str(params.get("smoothing_iterations", None)))
-    cargs.append(str(params.get("inflation_factor", None)))
-    cargs.append(params.get("surface_out", None))
+    cargs.extend([
+        "wb_command",
+        "-surface-inflation",
+        params.get("surface-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("anatomical-surface-in", None)))
+    cargs.append(execution.input_file(params.get("surface-in", None)))
+    cargs.append(str(params.get("number-of-smoothing-cycles", None)))
+    cargs.append(str(params.get("smoothing-strength", None)))
+    cargs.append(str(params.get("smoothing-iterations", None)))
+    cargs.append(str(params.get("inflation-factor", None)))
     return cargs
 
 
@@ -122,7 +123,7 @@ def surface_inflation_outputs(
     """
     ret = SurfaceInflationOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -132,16 +133,10 @@ def surface_inflation_execute(
     runner: Runner | None = None,
 ) -> SurfaceInflationOutputs:
     """
-    surface-inflation
-    
-    Surface inflation.
+    SURFACE INFLATION.
     
     Inflate a surface by performing cycles that consist of smoothing followed by
     inflation (to correct shrinkage caused by smoothing).
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -159,47 +154,41 @@ def surface_inflation_execute(
 
 
 def surface_inflation(
+    surface_out: str,
     anatomical_surface_in: InputPathType,
     surface_in: InputPathType,
     number_of_smoothing_cycles: int,
     smoothing_strength: float,
     smoothing_iterations: int,
     inflation_factor: float,
-    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceInflationOutputs:
     """
-    surface-inflation
-    
-    Surface inflation.
+    SURFACE INFLATION.
     
     Inflate a surface by performing cycles that consist of smoothing followed by
     inflation (to correct shrinkage caused by smoothing).
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        surface_out: output surface file.
         anatomical_surface_in: the anatomical surface.
         surface_in: the surface file to inflate.
         number_of_smoothing_cycles: number of smoothing cycles.
         smoothing_strength: smoothing strength (ranges [0.0 - 1.0]).
         smoothing_iterations: smoothing iterations.
         inflation_factor: inflation factor.
-        surface_out: output surface file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceInflationOutputs`).
     """
     params = surface_inflation_params(
+        surface_out=surface_out,
         anatomical_surface_in=anatomical_surface_in,
         surface_in=surface_in,
         number_of_smoothing_cycles=number_of_smoothing_cycles,
         smoothing_strength=smoothing_strength,
         smoothing_iterations=smoothing_iterations,
         inflation_factor=inflation_factor,
-        surface_out=surface_out,
     )
     return surface_inflation_execute(params, runner)
 

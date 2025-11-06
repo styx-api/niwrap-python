@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
-    id="1bcb2eb82887a4d5a5737e8b723dfa3e56ab0d0b.boutiques",
+    id="6f0777ef0f6c477c81ddf6a694255d974aa7d61a.workbench",
     name="volume-label-modify-keys",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeLabelModifyKeysParameters = typing.TypedDict('VolumeLabelModifyKeysParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-modify-keys"]],
-    "volume_in": InputPathType,
-    "remap_file": str,
-    "volume_out": str,
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "volume-out": str,
+    "subvolume": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
+    "remap-file": str,
 })
 VolumeLabelModifyKeysParametersTagged = typing.TypedDict('VolumeLabelModifyKeysParametersTagged', {
     "@type": typing.Literal["workbench/volume-label-modify-keys"],
-    "volume_in": InputPathType,
-    "remap_file": str,
-    "volume_out": str,
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "volume-out": str,
+    "subvolume": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
+    "remap-file": str,
 })
 
 
@@ -40,31 +39,32 @@ class VolumeLabelModifyKeysOutputs(typing.NamedTuple):
 
 
 def volume_label_modify_keys_params(
+    volume_out: str,
+    subvolume: str | None,
     volume_in: InputPathType,
     remap_file: str,
-    volume_out: str,
-    opt_subvolume_subvolume: str | None = None,
 ) -> VolumeLabelModifyKeysParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume label file.
+        subvolume: select a single subvolume\
+            \
+            the subvolume number or name.
         volume_in: the input volume label file.
         remap_file: text file with old and new key values.
-        volume_out: the output volume label file.
-        opt_subvolume_subvolume: select a single subvolume: the subvolume\
-            number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-label-modify-keys",
-        "volume_in": volume_in,
-        "remap_file": remap_file,
-        "volume_out": volume_out,
+        "volume-out": volume_out,
+        "volume-in": volume_in,
+        "remap-file": remap_file,
     }
-    if opt_subvolume_subvolume is not None:
-        params["opt_subvolume_subvolume"] = opt_subvolume_subvolume
+    if subvolume is not None:
+        params["subvolume"] = subvolume
     return params
 
 
@@ -82,16 +82,16 @@ def volume_label_modify_keys_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-label-modify-keys")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(params.get("remap_file", None))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_subvolume_subvolume", None) is not None:
+    if params.get("subvolume", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-label-modify-keys",
+            params.get("volume-out", None),
             "-subvolume",
-            params.get("opt_subvolume_subvolume", None)
+            params.get("subvolume", None)
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(params.get("remap-file", None))
     return cargs
 
 
@@ -110,7 +110,7 @@ def volume_label_modify_keys_outputs(
     """
     ret = VolumeLabelModifyKeysOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -120,9 +120,7 @@ def volume_label_modify_keys_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
     """
-    volume-label-modify-keys
-    
-    Change key values in a volume label file.
+    CHANGE KEY VALUES IN A VOLUME LABEL FILE.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
     
@@ -137,10 +135,6 @@ def volume_label_modify_keys_execute(
     the same key to more than one new key, results in an error. This will not
     change the appearance of the file when displayed, as it will change the key
     values in the data at the same time.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -158,16 +152,14 @@ def volume_label_modify_keys_execute(
 
 
 def volume_label_modify_keys(
+    volume_out: str,
+    subvolume: str | None,
     volume_in: InputPathType,
     remap_file: str,
-    volume_out: str,
-    opt_subvolume_subvolume: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
     """
-    volume-label-modify-keys
-    
-    Change key values in a volume label file.
+    CHANGE KEY VALUES IN A VOLUME LABEL FILE.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
     
@@ -183,25 +175,22 @@ def volume_label_modify_keys(
     change the appearance of the file when displayed, as it will change the key
     values in the data at the same time.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume label file.
+        subvolume: select a single subvolume\
+            \
+            the subvolume number or name.
         volume_in: the input volume label file.
         remap_file: text file with old and new key values.
-        volume_out: the output volume label file.
-        opt_subvolume_subvolume: select a single subvolume: the subvolume\
-            number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelModifyKeysOutputs`).
     """
     params = volume_label_modify_keys_params(
+        volume_out=volume_out,
+        subvolume=subvolume,
         volume_in=volume_in,
         remap_file=remap_file,
-        volume_out=volume_out,
-        opt_subvolume_subvolume=opt_subvolume_subvolume,
     )
     return volume_label_modify_keys_execute(params, runner)
 

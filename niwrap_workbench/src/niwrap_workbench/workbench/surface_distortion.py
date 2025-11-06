@@ -6,74 +6,75 @@ import pathlib
 from styxdefs import *
 
 SURFACE_DISTORTION_METADATA = Metadata(
-    id="fa15f46e1a24623dca8c79bbbc906531f7c5b4c3.boutiques",
+    id="6b557cde1c22a8589b67dd2c10b7db6b8b4df56a.workbench",
     name="surface-distortion",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceDistortionSmoothParameters = typing.TypedDict('SurfaceDistortionSmoothParameters', {
     "@type": typing.NotRequired[typing.Literal["smooth"]],
     "sigma": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 SurfaceDistortionSmoothParametersTagged = typing.TypedDict('SurfaceDistortionSmoothParametersTagged', {
     "@type": typing.Literal["smooth"],
     "sigma": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 
 
-SurfaceDistortionLocalAffineMethodParameters = typing.TypedDict('SurfaceDistortionLocalAffineMethodParameters', {
-    "@type": typing.NotRequired[typing.Literal["local_affine_method"]],
-    "opt_log2": bool,
+SurfaceDistortionMatchSurfaceAreaParameters = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParameters', {
+    "@type": typing.NotRequired[typing.Literal["match-surface-area"]],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
-SurfaceDistortionLocalAffineMethodParametersTagged = typing.TypedDict('SurfaceDistortionLocalAffineMethodParametersTagged', {
-    "@type": typing.Literal["local_affine_method"],
-    "opt_log2": bool,
+SurfaceDistortionMatchSurfaceAreaParametersTagged = typing.TypedDict('SurfaceDistortionMatchSurfaceAreaParametersTagged', {
+    "@type": typing.Literal["match-surface-area"],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 SurfaceDistortionParameters = typing.TypedDict('SurfaceDistortionParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-distortion"]],
-    "surface_reference": InputPathType,
-    "surface_distorted": InputPathType,
-    "metric_out": str,
+    "metric-out": str,
     "smooth": typing.NotRequired[SurfaceDistortionSmoothParameters | None],
-    "opt_caret5_method": bool,
-    "opt_edge_method": bool,
-    "local_affine_method": typing.NotRequired[SurfaceDistortionLocalAffineMethodParameters | None],
+    "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParameters | None],
+    "caret5-method": bool,
+    "edge-method": bool,
+    "log2": typing.NotRequired[bool | None],
+    "surface-reference": InputPathType,
+    "surface-distorted": InputPathType,
 })
 SurfaceDistortionParametersTagged = typing.TypedDict('SurfaceDistortionParametersTagged', {
     "@type": typing.Literal["workbench/surface-distortion"],
-    "surface_reference": InputPathType,
-    "surface_distorted": InputPathType,
-    "metric_out": str,
+    "metric-out": str,
     "smooth": typing.NotRequired[SurfaceDistortionSmoothParameters | None],
-    "opt_caret5_method": bool,
-    "opt_edge_method": bool,
-    "local_affine_method": typing.NotRequired[SurfaceDistortionLocalAffineMethodParameters | None],
+    "match-surface-area": typing.NotRequired[SurfaceDistortionMatchSurfaceAreaParameters | None],
+    "caret5-method": bool,
+    "edge-method": bool,
+    "log2": typing.NotRequired[bool | None],
+    "surface-reference": InputPathType,
+    "surface-distorted": InputPathType,
 })
 
 
 def surface_distortion_smooth_params(
     sigma: float,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
 ) -> SurfaceDistortionSmoothParametersTagged:
     """
     Build parameters.
     
     Args:
         sigma: the size of the smoothing kernel in mm, as sigma by default.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "smooth",
         "sigma": sigma,
-        "opt_fwhm": opt_fwhm,
+        "fwhm": fwhm,
     }
     return params
 
@@ -92,33 +93,39 @@ def surface_distortion_smooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-smooth")
-    cargs.append(str(params.get("sigma", None)))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
+    if params.get("fwhm", False):
+        cargs.extend([
+            "-smooth",
+            str(params.get("sigma", None)),
+            "-fwhm"
+        ])
     return cargs
 
 
-def surface_distortion_local_affine_method_params(
-    opt_log2: bool = False,
-) -> SurfaceDistortionLocalAffineMethodParametersTagged:
+def surface_distortion_match_surface_area_params(
+    roi_metric: InputPathType | None,
+) -> SurfaceDistortionMatchSurfaceAreaParametersTagged:
     """
     Build parameters.
     
     Args:
-        opt_log2: apply base-2 log transform.
+        roi_metric: only use the surface area within a given ROI (e.g., to\
+            exclude the medial wall)\
+            \
+            the ROI to use, as a metric file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "local_affine_method",
-        "opt_log2": opt_log2,
+        "@type": "match-surface-area",
     }
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
-def surface_distortion_local_affine_method_cargs(
-    params: SurfaceDistortionLocalAffineMethodParameters,
+def surface_distortion_match_surface_area_cargs(
+    params: SurfaceDistortionMatchSurfaceAreaParameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -131,9 +138,12 @@ def surface_distortion_local_affine_method_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-local-affine-method")
-    if params.get("opt_log2", False):
-        cargs.append("-log2")
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-match-surface-area",
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
+        ])
     return cargs
 
 
@@ -148,41 +158,47 @@ class SurfaceDistortionOutputs(typing.NamedTuple):
 
 
 def surface_distortion_params(
+    metric_out: str,
     surface_reference: InputPathType,
     surface_distorted: InputPathType,
-    metric_out: str,
     smooth: SurfaceDistortionSmoothParameters | None = None,
-    opt_caret5_method: bool = False,
-    opt_edge_method: bool = False,
-    local_affine_method: SurfaceDistortionLocalAffineMethodParameters | None = None,
+    match_surface_area: SurfaceDistortionMatchSurfaceAreaParameters | None = None,
+    caret5_method: bool = False,
+    edge_method: bool = False,
+    log2: bool | None = False,
 ) -> SurfaceDistortionParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output distortion metric.
         surface_reference: the reference surface.
         surface_distorted: the distorted surface.
-        metric_out: the output distortion metric.
         smooth: smooth the area data.
-        opt_caret5_method: use the surface distortion method from caret5.
-        opt_edge_method: calculate distortion of edge lengths rather than areas.
-        local_affine_method: calculate distortion by the local affines between\
-            triangles.
+        match_surface_area: isotropically rescale the distorted surface so that\
+            it has the same surface area as the reference surface.
+        caret5_method: use the surface distortion method from caret5.
+        edge_method: calculate distortion of edge lengths rather than areas.
+        log2: calculate distortion by the local affines between triangles\
+            \
+            apply base-2 log transform.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-distortion",
-        "surface_reference": surface_reference,
-        "surface_distorted": surface_distorted,
-        "metric_out": metric_out,
-        "opt_caret5_method": opt_caret5_method,
-        "opt_edge_method": opt_edge_method,
+        "metric-out": metric_out,
+        "caret5-method": caret5_method,
+        "edge-method": edge_method,
+        "surface-reference": surface_reference,
+        "surface-distorted": surface_distorted,
     }
     if smooth is not None:
         params["smooth"] = smooth
-    if local_affine_method is not None:
-        params["local_affine_method"] = local_affine_method
+    if match_surface_area is not None:
+        params["match-surface-area"] = match_surface_area
+    if log2 is not None:
+        params["log2"] = log2
     return params
 
 
@@ -200,19 +216,20 @@ def surface_distortion_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-distortion")
-    cargs.append(execution.input_file(params.get("surface_reference", None)))
-    cargs.append(execution.input_file(params.get("surface_distorted", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("smooth", None) is not None:
-        cargs.extend(surface_distortion_smooth_cargs(params.get("smooth", None), execution))
-    if params.get("opt_caret5_method", False):
-        cargs.append("-caret5-method")
-    if params.get("opt_edge_method", False):
-        cargs.append("-edge-method")
-    if params.get("local_affine_method", None) is not None:
-        cargs.extend(surface_distortion_local_affine_method_cargs(params.get("local_affine_method", None), execution))
+    if params.get("smooth", None) is not None or params.get("match-surface-area", None) is not None or params.get("caret5-method", False) or params.get("edge-method", False) or params.get("log2", False) is not None:
+        cargs.extend([
+            "wb_command",
+            "-surface-distortion",
+            params.get("metric-out", None),
+            *(surface_distortion_smooth_cargs(params.get("smooth", None), execution) if (params.get("smooth", None) is not None) else []),
+            *(surface_distortion_match_surface_area_cargs(params.get("match-surface-area", None), execution) if (params.get("match-surface-area", None) is not None) else []),
+            ("-caret5-method" if (params.get("caret5-method", False)) else ""),
+            ("-edge-method" if (params.get("edge-method", False)) else ""),
+            "-local-affine-method",
+            ("-log2" if (params.get("log2", False) is not None) else "")
+        ])
+    cargs.append(execution.input_file(params.get("surface-reference", None)))
+    cargs.append(execution.input_file(params.get("surface-distorted", None)))
     return cargs
 
 
@@ -231,7 +248,7 @@ def surface_distortion_outputs(
     """
     ret = SurfaceDistortionOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -241,9 +258,7 @@ def surface_distortion_execute(
     runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """
-    surface-distortion
-    
-    Measure distortion between surfaces.
+    MEASURE DISTORTION BETWEEN SURFACES.
     
     This command, when not using -caret5-method, -edge-method, or
     -local-affine-method, is equivalent to using -surface-vertex-areas on each
@@ -264,10 +279,6 @@ def surface_distortion_execute(
     is two columns, the first is the area distortion ratio, and the second is
     anisotropic strain. These are calculated by an affine transform between
     matching triangles, and then averaged across the triangles of a vertex.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -285,19 +296,18 @@ def surface_distortion_execute(
 
 
 def surface_distortion(
+    metric_out: str,
     surface_reference: InputPathType,
     surface_distorted: InputPathType,
-    metric_out: str,
     smooth: SurfaceDistortionSmoothParameters | None = None,
-    opt_caret5_method: bool = False,
-    opt_edge_method: bool = False,
-    local_affine_method: SurfaceDistortionLocalAffineMethodParameters | None = None,
+    match_surface_area: SurfaceDistortionMatchSurfaceAreaParameters | None = None,
+    caret5_method: bool = False,
+    edge_method: bool = False,
+    log2: bool | None = False,
     runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """
-    surface-distortion
-    
-    Measure distortion between surfaces.
+    MEASURE DISTORTION BETWEEN SURFACES.
     
     This command, when not using -caret5-method, -edge-method, or
     -local-affine-method, is equivalent to using -surface-vertex-areas on each
@@ -319,31 +329,31 @@ def surface_distortion(
     anisotropic strain. These are calculated by an affine transform between
     matching triangles, and then averaged across the triangles of a vertex.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output distortion metric.
         surface_reference: the reference surface.
         surface_distorted: the distorted surface.
-        metric_out: the output distortion metric.
         smooth: smooth the area data.
-        opt_caret5_method: use the surface distortion method from caret5.
-        opt_edge_method: calculate distortion of edge lengths rather than areas.
-        local_affine_method: calculate distortion by the local affines between\
-            triangles.
+        match_surface_area: isotropically rescale the distorted surface so that\
+            it has the same surface area as the reference surface.
+        caret5_method: use the surface distortion method from caret5.
+        edge_method: calculate distortion of edge lengths rather than areas.
+        log2: calculate distortion by the local affines between triangles\
+            \
+            apply base-2 log transform.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceDistortionOutputs`).
     """
     params = surface_distortion_params(
-        surface_reference=surface_reference,
-        surface_distorted=surface_distorted,
         metric_out=metric_out,
         smooth=smooth,
-        opt_caret5_method=opt_caret5_method,
-        opt_edge_method=opt_edge_method,
-        local_affine_method=local_affine_method,
+        match_surface_area=match_surface_area,
+        caret5_method=caret5_method,
+        edge_method=edge_method,
+        log2=log2,
+        surface_reference=surface_reference,
+        surface_distorted=surface_distorted,
     )
     return surface_distortion_execute(params, runner)
 
@@ -353,7 +363,7 @@ __all__ = [
     "SurfaceDistortionOutputs",
     "surface_distortion",
     "surface_distortion_execute",
-    "surface_distortion_local_affine_method_params",
+    "surface_distortion_match_surface_area_params",
     "surface_distortion_params",
     "surface_distortion_smooth_params",
 ]

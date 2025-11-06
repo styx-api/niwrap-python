@@ -1,9 +1,9 @@
 {
-  "niftyreg/reg_aladin": "niftyreg/reg_aladin.json",
-  "niftyreg/reg_average": "niftyreg/reg_average.json",
-  "niftyreg/reg_f3d": "niftyreg/reg_f3d.json",
-  "niftyreg/reg_jacobian": "niftyreg/reg_jacobian.json",
   "niftyreg/reg_resample": "niftyreg/reg_resample.json",
   "niftyreg/reg_tools": "niftyreg/reg_tools.json",
-  "niftyreg/reg_transform": "niftyreg/reg_transform.json"
+  "niftyreg/reg_f3d": "niftyreg/reg_f3d.json",
+  "niftyreg/reg_average": "niftyreg/reg_average.json",
+  "niftyreg/reg_jacobian": "niftyreg/reg_jacobian.json",
+  "niftyreg/reg_transform": "niftyreg/reg_transform.json",
+  "niftyreg/reg_aladin": "niftyreg/reg_aladin.json"
 }

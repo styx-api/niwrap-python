@@ -26,7 +26,7 @@ CreateTiledMosaicParameters = typing.TypedDict('CreateTiledMosaicParameters', {
     "pad_or_crop": typing.NotRequired[str | None],
     "slices": typing.NotRequired[str | None],
     "flip_slice": typing.NotRequired[str | None],
-    "permute_axes": typing.NotRequired[typing.Literal[0, 1] | None],
+    "permute_axes": typing.NotRequired[bool | None],
 })
 CreateTiledMosaicParametersTagged = typing.TypedDict('CreateTiledMosaicParametersTagged', {
     "@type": typing.Literal["ants/CreateTiledMosaic"],
@@ -41,7 +41,7 @@ CreateTiledMosaicParametersTagged = typing.TypedDict('CreateTiledMosaicParameter
     "pad_or_crop": typing.NotRequired[str | None],
     "slices": typing.NotRequired[str | None],
     "flip_slice": typing.NotRequired[str | None],
-    "permute_axes": typing.NotRequired[typing.Literal[0, 1] | None],
+    "permute_axes": typing.NotRequired[bool | None],
 })
 
 
@@ -67,7 +67,7 @@ def create_tiled_mosaic_params(
     pad_or_crop: str | None = None,
     slices: str | None = None,
     flip_slice: str | None = None,
-    permute_axes: typing.Literal[0, 1] | None = None,
+    permute_axes: bool | None = None,
 ) -> CreateTiledMosaicParametersTagged:
     """
     Build parameters.
@@ -203,7 +203,7 @@ def create_tiled_mosaic_cargs(
     if params.get("permute_axes", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("permute_axes", None))
+            ("1" if params.get("permute_axes", None) else "0")
         ])
     return cargs
 
@@ -268,7 +268,7 @@ def create_tiled_mosaic(
     pad_or_crop: str | None = None,
     slices: str | None = None,
     flip_slice: str | None = None,
-    permute_axes: typing.Literal[0, 1] | None = None,
+    permute_axes: bool | None = None,
     runner: Runner | None = None,
 ) -> CreateTiledMosaicOutputs:
     """

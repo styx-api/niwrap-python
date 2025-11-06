@@ -6,38 +6,37 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA = Metadata(
-    id="5ab4304888f5759b5c4b5e4ccb61651a79d1f737.boutiques",
+    id="3f274d723b32862f2a3c97e709a1481f947e0288.workbench",
     name="cifti-create-parcellated-from-template",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiCreateParcellatedFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParameters', {
     "@type": typing.NotRequired[typing.Literal["cifti"]],
-    "cifti_in": InputPathType,
+    "cifti-in": InputPathType,
 })
 CiftiCreateParcellatedFromTemplateCiftiParametersTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParametersTagged', {
     "@type": typing.Literal["cifti"],
-    "cifti_in": InputPathType,
+    "cifti-in": InputPathType,
 })
 
 
 CiftiCreateParcellatedFromTemplateParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-parcellated-from-template"]],
-    "cifti_template": InputPathType,
-    "modify_direction": str,
-    "cifti_out": str,
-    "opt_fill_value_value": typing.NotRequired[float | None],
+    "cifti-out": str,
+    "value": typing.NotRequired[float | None],
     "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None],
+    "cifti-template": InputPathType,
+    "modify-direction": str,
 })
 CiftiCreateParcellatedFromTemplateParametersTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateParametersTagged', {
     "@type": typing.Literal["workbench/cifti-create-parcellated-from-template"],
-    "cifti_template": InputPathType,
-    "modify_direction": str,
-    "cifti_out": str,
-    "opt_fill_value_value": typing.NotRequired[float | None],
+    "cifti-out": str,
+    "value": typing.NotRequired[float | None],
     "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None],
+    "cifti-template": InputPathType,
+    "modify-direction": str,
 })
 
 
@@ -54,7 +53,7 @@ def cifti_create_parcellated_from_template_cifti_params(
     """
     params = {
         "@type": "cifti",
-        "cifti_in": cifti_in,
+        "cifti-in": cifti_in,
     }
     return params
 
@@ -73,8 +72,10 @@ def cifti_create_parcellated_from_template_cifti_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-cifti")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.extend([
+        "-cifti",
+        execution.input_file(params.get("cifti-in", None))
+    ])
     return cargs
 
 
@@ -89,35 +90,36 @@ class CiftiCreateParcellatedFromTemplateOutputs(typing.NamedTuple):
 
 
 def cifti_create_parcellated_from_template_params(
+    cifti_out: str,
+    value: float | None,
     cifti_template: InputPathType,
     modify_direction: str,
-    cifti_out: str,
-    opt_fill_value_value: float | None = None,
     cifti: list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None = None,
 ) -> CiftiCreateParcellatedFromTemplateParametersTagged:
     """
     Build parameters.
     
     Args:
+        cifti_out: the output cifti file.
+        value: specify value to be used in parcels that don't match\
+            \
+            value to use (default 0).
         cifti_template: a cifti file with the template parcel mapping along\
             column.
         modify_direction: which dimension of the output file should match the\
             template (integer, 'ROW', or 'COLUMN').
-        cifti_out: the output cifti file.
-        opt_fill_value_value: specify value to be used in parcels that don't\
-            match: value to use (default 0).
         cifti: specify an input cifti file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-create-parcellated-from-template",
-        "cifti_template": cifti_template,
-        "modify_direction": modify_direction,
-        "cifti_out": cifti_out,
+        "cifti-out": cifti_out,
+        "cifti-template": cifti_template,
+        "modify-direction": modify_direction,
     }
-    if opt_fill_value_value is not None:
-        params["opt_fill_value_value"] = opt_fill_value_value
+    if value is not None:
+        params["value"] = value
     if cifti is not None:
         params["cifti"] = cifti
     return params
@@ -137,18 +139,17 @@ def cifti_create_parcellated_from_template_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-create-parcellated-from-template")
-    cargs.append(execution.input_file(params.get("cifti_template", None)))
-    cargs.append(params.get("modify_direction", None))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("opt_fill_value_value", None) is not None:
+    if params.get("value", None) is not None or params.get("cifti", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-create-parcellated-from-template",
+            params.get("cifti-out", None),
             "-fill-value",
-            str(params.get("opt_fill_value_value", None))
+            (str(params.get("value", None)) if (params.get("value", None) is not None) else ""),
+            *([a for c in [cifti_create_parcellated_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c] if (params.get("cifti", None) is not None) else [])
         ])
-    if params.get("cifti", None) is not None:
-        cargs.extend([a for c in [cifti_create_parcellated_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
+    cargs.append(execution.input_file(params.get("cifti-template", None)))
+    cargs.append(params.get("modify-direction", None))
     return cargs
 
 
@@ -167,7 +168,7 @@ def cifti_create_parcellated_from_template_outputs(
     """
     ret = CiftiCreateParcellatedFromTemplateOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -177,19 +178,13 @@ def cifti_create_parcellated_from_template_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
-    cifti-create-parcellated-from-template
-    
-    Match parcels to template by name.
+    MATCH PARCELS TO TEMPLATE BY NAME.
     
     For each parcel name in the template mapping, find that name in an input
     cifti file and use its data in the output file. All input cifti files must
     have a parcels mapping along <modify-direction> and matching mappings along
     other dimensions. The direction can be either an integer starting from 1, or
     the strings 'ROW' or 'COLUMN'.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -207,17 +202,15 @@ def cifti_create_parcellated_from_template_execute(
 
 
 def cifti_create_parcellated_from_template(
+    cifti_out: str,
+    value: float | None,
     cifti_template: InputPathType,
     modify_direction: str,
-    cifti_out: str,
-    opt_fill_value_value: float | None = None,
     cifti: list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
-    cifti-create-parcellated-from-template
-    
-    Match parcels to template by name.
+    MATCH PARCELS TO TEMPLATE BY NAME.
     
     For each parcel name in the template mapping, find that name in an input
     cifti file and use its data in the output file. All input cifti files must
@@ -225,29 +218,26 @@ def cifti_create_parcellated_from_template(
     other dimensions. The direction can be either an integer starting from 1, or
     the strings 'ROW' or 'COLUMN'.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: the output cifti file.
+        value: specify value to be used in parcels that don't match\
+            \
+            value to use (default 0).
         cifti_template: a cifti file with the template parcel mapping along\
             column.
         modify_direction: which dimension of the output file should match the\
             template (integer, 'ROW', or 'COLUMN').
-        cifti_out: the output cifti file.
-        opt_fill_value_value: specify value to be used in parcels that don't\
-            match: value to use (default 0).
         cifti: specify an input cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateParcellatedFromTemplateOutputs`).
     """
     params = cifti_create_parcellated_from_template_params(
+        cifti_out=cifti_out,
+        value=value,
+        cifti=cifti,
         cifti_template=cifti_template,
         modify_direction=modify_direction,
-        cifti_out=cifti_out,
-        opt_fill_value_value=opt_fill_value_value,
-        cifti=cifti,
     )
     return cifti_create_parcellated_from_template_execute(params, runner)
 

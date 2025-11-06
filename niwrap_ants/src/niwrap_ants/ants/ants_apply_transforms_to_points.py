@@ -34,8 +34,8 @@ AntsApplyTransformsToPointsInverseTransformParametersTagged = typing.TypedDict('
 AntsApplyTransformsToPointsParameters = typing.TypedDict('AntsApplyTransformsToPointsParameters', {
     "@type": typing.NotRequired[typing.Literal["ants/antsApplyTransformsToPoints"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
-    "precision": typing.NotRequired[typing.Literal[0, 1] | None],
-    "forantsr": typing.NotRequired[typing.Literal[0, 1] | None],
+    "precision": typing.NotRequired[bool | None],
+    "forantsr": typing.NotRequired[bool | None],
     "input": InputPathType,
     "output": str,
     "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None],
@@ -43,8 +43,8 @@ AntsApplyTransformsToPointsParameters = typing.TypedDict('AntsApplyTransformsToP
 AntsApplyTransformsToPointsParametersTagged = typing.TypedDict('AntsApplyTransformsToPointsParametersTagged', {
     "@type": typing.Literal["ants/antsApplyTransformsToPoints"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
-    "precision": typing.NotRequired[typing.Literal[0, 1] | None],
-    "forantsr": typing.NotRequired[typing.Literal[0, 1] | None],
+    "precision": typing.NotRequired[bool | None],
+    "forantsr": typing.NotRequired[bool | None],
     "input": InputPathType,
     "output": str,
     "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None],
@@ -166,8 +166,8 @@ def ants_apply_transforms_to_points_params(
     input_: InputPathType,
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
-    precision: typing.Literal[0, 1] | None = None,
-    forantsr: typing.Literal[0, 1] | None = None,
+    precision: bool | None = None,
+    forantsr: bool | None = None,
     transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None = None,
 ) -> AntsApplyTransformsToPointsParametersTagged:
     """
@@ -225,12 +225,12 @@ def ants_apply_transforms_to_points_cargs(
     if params.get("precision", None) is not None:
         cargs.extend([
             "--precision",
-            str(params.get("precision", None))
+            ("1" if params.get("precision", None) else "0")
         ])
     if params.get("forantsr", None) is not None:
         cargs.extend([
             "--forantsr",
-            str(params.get("forantsr", None))
+            ("1" if params.get("forantsr", None) else "0")
         ])
     cargs.extend([
         "-i",
@@ -304,8 +304,8 @@ def ants_apply_transforms_to_points(
     input_: InputPathType,
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
-    precision: typing.Literal[0, 1] | None = None,
-    forantsr: typing.Literal[0, 1] | None = None,
+    precision: bool | None = None,
+    forantsr: bool | None = None,
     transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None = None,
     runner: Runner | None = None,
 ) -> AntsApplyTransformsToPointsOutputs:

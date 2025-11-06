@@ -1,29 +1,23 @@
 {
   "fn_root_make_params_and_execute": "cifti_replace_structure",
   "properties": {
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "volume_all": {
+    "volume-all": {
       "var_param": "volume_all",
       "fn_struct_make_params": "cifti_replace_structure_volume_all_params",
       "properties": {
         "volume": {
           "var_param": "volume"
         },
-        "opt_from_cropped": {
-          "var_param": "opt_from_cropped"
+        "from-cropped": {
+          "var_param": "from_cropped"
         }
       }
     },
-    "opt_discard_unused_labels": {
-      "var_param": "opt_discard_unused_labels"
+    "discard-unused-labels": {
+      "var_param": "discard_unused_labels"
     },
-    "opt_label_collision_action": {
-      "var_param": "opt_label_collision_action"
+    "action": {
+      "var_param": "action"
     },
     "label": {
       "var_param": "label",
@@ -59,10 +53,16 @@
         "volume": {
           "var_param": "volume"
         },
-        "opt_from_cropped": {
-          "var_param": "opt_from_cropped"
+        "from-cropped": {
+          "var_param": "from_cropped"
         }
       }
+    },
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "direction": {
+      "var_param": "direction"
     }
   }
 }

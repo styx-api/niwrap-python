@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
-    id="b2a8a58ea9018d7169641e6e86ac24e4e6afcab8.boutiques",
+    id="2050683cc2a3ac8267565a6d11706197f084954a.workbench",
     name="gifti-label-add-prefix",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 GiftiLabelAddPrefixParameters = typing.TypedDict('GiftiLabelAddPrefixParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-label-add-prefix"]],
-    "label_in": InputPathType,
+    "label-out": str,
+    "label-in": InputPathType,
     "prefix": str,
-    "label_out": str,
 })
 GiftiLabelAddPrefixParametersTagged = typing.TypedDict('GiftiLabelAddPrefixParametersTagged', {
     "@type": typing.Literal["workbench/gifti-label-add-prefix"],
-    "label_in": InputPathType,
+    "label-out": str,
+    "label-in": InputPathType,
     "prefix": str,
-    "label_out": str,
 })
 
 
@@ -38,25 +37,25 @@ class GiftiLabelAddPrefixOutputs(typing.NamedTuple):
 
 
 def gifti_label_add_prefix_params(
+    label_out: str,
     label_in: InputPathType,
     prefix: str,
-    label_out: str,
 ) -> GiftiLabelAddPrefixParametersTagged:
     """
     Build parameters.
     
     Args:
+        label_out: the output label file.
         label_in: the input label file.
         prefix: the prefix string to add.
-        label_out: the output label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/gifti-label-add-prefix",
-        "label_in": label_in,
+        "label-out": label_out,
+        "label-in": label_in,
         "prefix": prefix,
-        "label_out": label_out,
     }
     return params
 
@@ -75,11 +74,13 @@ def gifti_label_add_prefix_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-gifti-label-add-prefix")
-    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.extend([
+        "wb_command",
+        "-gifti-label-add-prefix",
+        params.get("label-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("prefix", None))
-    cargs.append(params.get("label_out", None))
     return cargs
 
 
@@ -98,7 +99,7 @@ def gifti_label_add_prefix_outputs(
     """
     ret = GiftiLabelAddPrefixOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out", None)),
+        label_out=execution.output_file(params.get("label-out", None)),
     )
     return ret
 
@@ -108,15 +109,9 @@ def gifti_label_add_prefix_execute(
     runner: Runner | None = None,
 ) -> GiftiLabelAddPrefixOutputs:
     """
-    gifti-label-add-prefix
-    
-    Add prefix to all label names in a gifti label file.
+    ADD PREFIX TO ALL LABEL NAMES IN A GIFTI LABEL FILE.
     
     For each label other than '???', prepend <prefix> to the label name.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -134,34 +129,28 @@ def gifti_label_add_prefix_execute(
 
 
 def gifti_label_add_prefix(
+    label_out: str,
     label_in: InputPathType,
     prefix: str,
-    label_out: str,
     runner: Runner | None = None,
 ) -> GiftiLabelAddPrefixOutputs:
     """
-    gifti-label-add-prefix
-    
-    Add prefix to all label names in a gifti label file.
+    ADD PREFIX TO ALL LABEL NAMES IN A GIFTI LABEL FILE.
     
     For each label other than '???', prepend <prefix> to the label name.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        label_out: the output label file.
         label_in: the input label file.
         prefix: the prefix string to add.
-        label_out: the output label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiLabelAddPrefixOutputs`).
     """
     params = gifti_label_add_prefix_params(
+        label_out=label_out,
         label_in=label_in,
         prefix=prefix,
-        label_out=label_out,
     )
     return gifti_label_add_prefix_execute(params, runner)
 

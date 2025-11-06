@@ -6,78 +6,77 @@ import pathlib
 from styxdefs import *
 
 BORDER_MERGE_METADATA = Metadata(
-    id="7be2470075824ac407debd55d81755eb8f1ddd15.boutiques",
+    id="2b501fbb7f7c4f9515ae97ae16a101a97a54eaab.workbench",
     name="border-merge",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BorderMergeUpToParameters = typing.TypedDict('BorderMergeUpToParameters', {
-    "@type": typing.NotRequired[typing.Literal["up_to"]],
-    "last_border": str,
-    "opt_reverse": bool,
+    "@type": typing.NotRequired[typing.Literal["up-to"]],
+    "last-border": str,
+    "reverse": bool,
 })
 BorderMergeUpToParametersTagged = typing.TypedDict('BorderMergeUpToParametersTagged', {
-    "@type": typing.Literal["up_to"],
-    "last_border": str,
-    "opt_reverse": bool,
+    "@type": typing.Literal["up-to"],
+    "last-border": str,
+    "reverse": bool,
 })
 
 
 BorderMergeSelectParameters = typing.TypedDict('BorderMergeSelectParameters', {
     "@type": typing.NotRequired[typing.Literal["select"]],
     "border": str,
-    "up_to": typing.NotRequired[BorderMergeUpToParameters | None],
+    "up-to": typing.NotRequired[BorderMergeUpToParameters | None],
 })
 BorderMergeSelectParametersTagged = typing.TypedDict('BorderMergeSelectParametersTagged', {
     "@type": typing.Literal["select"],
     "border": str,
-    "up_to": typing.NotRequired[BorderMergeUpToParameters | None],
+    "up-to": typing.NotRequired[BorderMergeUpToParameters | None],
 })
 
 
 BorderMergeBorderParameters = typing.TypedDict('BorderMergeBorderParameters', {
     "@type": typing.NotRequired[typing.Literal["border"]],
-    "border_file_in": InputPathType,
+    "border-file-in": InputPathType,
     "select": typing.NotRequired[list[BorderMergeSelectParameters] | None],
 })
 BorderMergeBorderParametersTagged = typing.TypedDict('BorderMergeBorderParametersTagged', {
     "@type": typing.Literal["border"],
-    "border_file_in": InputPathType,
+    "border-file-in": InputPathType,
     "select": typing.NotRequired[list[BorderMergeSelectParameters] | None],
 })
 
 
 BorderMergeParameters = typing.TypedDict('BorderMergeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-merge"]],
-    "border_file_out": str,
+    "border-file-out": str,
     "border": typing.NotRequired[list[BorderMergeBorderParameters] | None],
 })
 BorderMergeParametersTagged = typing.TypedDict('BorderMergeParametersTagged', {
     "@type": typing.Literal["workbench/border-merge"],
-    "border_file_out": str,
+    "border-file-out": str,
     "border": typing.NotRequired[list[BorderMergeBorderParameters] | None],
 })
 
 
 def border_merge_up_to_params(
     last_border: str,
-    opt_reverse: bool = False,
+    reverse: bool = False,
 ) -> BorderMergeUpToParametersTagged:
     """
     Build parameters.
     
     Args:
         last_border: the number or name of the last column to include.
-        opt_reverse: use the range in reverse order.
+        reverse: use the range in reverse order.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "up_to",
-        "last_border": last_border,
-        "opt_reverse": opt_reverse,
+        "@type": "up-to",
+        "last-border": last_border,
+        "reverse": reverse,
     }
     return params
 
@@ -96,10 +95,12 @@ def border_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-up-to")
-    cargs.append(params.get("last_border", None))
-    if params.get("opt_reverse", False):
-        cargs.append("-reverse")
+    if params.get("reverse", False):
+        cargs.extend([
+            "-up-to",
+            params.get("last-border", None),
+            "-reverse"
+        ])
     return cargs
 
 
@@ -121,7 +122,7 @@ def border_merge_select_params(
         "border": border,
     }
     if up_to is not None:
-        params["up_to"] = up_to
+        params["up-to"] = up_to
     return params
 
 
@@ -139,10 +140,12 @@ def border_merge_select_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-select")
-    cargs.append(params.get("border", None))
-    if params.get("up_to", None) is not None:
-        cargs.extend(border_merge_up_to_cargs(params.get("up_to", None), execution))
+    if params.get("up-to", None) is not None:
+        cargs.extend([
+            "-select",
+            params.get("border", None),
+            *border_merge_up_to_cargs(params.get("up-to", None), execution)
+        ])
     return cargs
 
 
@@ -161,7 +164,7 @@ def border_merge_border_params(
     """
     params = {
         "@type": "border",
-        "border_file_in": border_file_in,
+        "border-file-in": border_file_in,
     }
     if select_ is not None:
         params["select"] = select_
@@ -182,10 +185,12 @@ def border_merge_border_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-border")
-    cargs.append(execution.input_file(params.get("border_file_in", None)))
     if params.get("select", None) is not None:
-        cargs.extend([a for c in [border_merge_select_cargs(s, execution) for s in params.get("select", None)] for a in c])
+        cargs.extend([
+            "-border",
+            execution.input_file(params.get("border-file-in", None)),
+            *[a for c in [border_merge_select_cargs(s, execution) for s in params.get("select", None)] for a in c]
+        ])
     return cargs
 
 
@@ -214,7 +219,7 @@ def border_merge_params(
     """
     params = {
         "@type": "workbench/border-merge",
-        "border_file_out": border_file_out,
+        "border-file-out": border_file_out,
     }
     if border is not None:
         params["border"] = border
@@ -235,11 +240,13 @@ def border_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-border-merge")
-    cargs.append(params.get("border_file_out", None))
     if params.get("border", None) is not None:
-        cargs.extend([a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c])
+        cargs.extend([
+            "wb_command",
+            "-border-merge",
+            params.get("border-file-out", None),
+            *[a for c in [border_merge_border_cargs(s, execution) for s in params.get("border", None)] for a in c]
+        ])
     return cargs
 
 
@@ -258,7 +265,7 @@ def border_merge_outputs(
     """
     ret = BorderMergeOutputs(
         root=execution.output_file("."),
-        border_file_out=execution.output_file(params.get("border_file_out", None)),
+        border_file_out=execution.output_file(params.get("border-file-out", None)),
     )
     return ret
 
@@ -268,9 +275,7 @@ def border_merge_execute(
     runner: Runner | None = None,
 ) -> BorderMergeOutputs:
     """
-    border-merge
-    
-    Merge border files into a new file.
+    MERGE BORDER FILES INTO A NEW FILE.
     
     Takes one or more border files and makes a new border file from the borders
     in them.
@@ -280,10 +285,6 @@ def border_merge_execute(
     
     This example would take the first border from first.border, followed by all
     borders from second.border, and write these to out.border.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -306,9 +307,7 @@ def border_merge(
     runner: Runner | None = None,
 ) -> BorderMergeOutputs:
     """
-    border-merge
-    
-    Merge border files into a new file.
+    MERGE BORDER FILES INTO A NEW FILE.
     
     Takes one or more border files and makes a new border file from the borders
     in them.
@@ -318,10 +317,6 @@ def border_merge(
     
     This example would take the first border from first.border, followed by all
     borders from second.border, and write these to out.border.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         border_file_out: the output border file.

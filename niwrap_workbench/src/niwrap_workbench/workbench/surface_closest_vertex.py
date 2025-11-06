@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
-    id="1424c0e261ad28fcc53735d9c94a66297aa77546.boutiques",
+    id="8e2994073dcddf2123edc18251adf084b07af842.workbench",
     name="surface-closest-vertex",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceClosestVertexParameters = typing.TypedDict('SurfaceClosestVertexParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-closest-vertex"]],
     "surface": InputPathType,
-    "coord_list_file": str,
-    "vertex_list_out": str,
+    "coord-list-file": str,
+    "vertex-list-out": str,
 })
 SurfaceClosestVertexParametersTagged = typing.TypedDict('SurfaceClosestVertexParametersTagged', {
     "@type": typing.Literal["workbench/surface-closest-vertex"],
     "surface": InputPathType,
-    "coord_list_file": str,
-    "vertex_list_out": str,
+    "coord-list-file": str,
+    "vertex-list-out": str,
 })
 
 
@@ -53,8 +52,8 @@ def surface_closest_vertex_params(
     params = {
         "@type": "workbench/surface-closest-vertex",
         "surface": surface,
-        "coord_list_file": coord_list_file,
-        "vertex_list_out": vertex_list_out,
+        "coord-list-file": coord_list_file,
+        "vertex-list-out": vertex_list_out,
     }
     return params
 
@@ -73,11 +72,13 @@ def surface_closest_vertex_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-closest-vertex")
+    cargs.extend([
+        "wb_command",
+        "-surface-closest-vertex"
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("coord_list_file", None))
-    cargs.append(params.get("vertex_list_out", None))
+    cargs.append(params.get("coord-list-file", None))
+    cargs.append(params.get("vertex-list-out", None))
     return cargs
 
 
@@ -105,9 +106,7 @@ def surface_closest_vertex_execute(
     runner: Runner | None = None,
 ) -> SurfaceClosestVertexOutputs:
     """
-    surface-closest-vertex
-    
-    Find closest surface vertex to coordinates.
+    FIND CLOSEST SURFACE VERTEX TO COORDINATES.
     
     For each coordinate XYZ triple, find the closest vertex in the surface, and
     output its vertex number into a text file. The input file should only use
@@ -115,10 +114,6 @@ def surface_closest_vertex_execute(
     
     20 30 25
     30 -20 10.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -142,9 +137,7 @@ def surface_closest_vertex(
     runner: Runner | None = None,
 ) -> SurfaceClosestVertexOutputs:
     """
-    surface-closest-vertex
-    
-    Find closest surface vertex to coordinates.
+    FIND CLOSEST SURFACE VERTEX TO COORDINATES.
     
     For each coordinate XYZ triple, find the closest vertex in the surface, and
     output its vertex number into a text file. The input file should only use
@@ -152,10 +145,6 @@ def surface_closest_vertex(
     
     20 30 25
     30 -20 10.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         surface: the surface to use.

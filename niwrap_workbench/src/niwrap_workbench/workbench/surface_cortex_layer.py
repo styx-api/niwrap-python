@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CORTEX_LAYER_METADATA = Metadata(
-    id="0a46e1e069f0f2907566d8c22a87a309eba5009b.boutiques",
+    id="1f7274373b18590446afbc6e9b2ac5914d86c611.workbench",
     name="surface-cortex-layer",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceCortexLayerParameters = typing.TypedDict('SurfaceCortexLayerParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-cortex-layer"]],
-    "white_surface": InputPathType,
-    "pial_surface": InputPathType,
+    "out-surface": str,
+    "placement-metric": typing.NotRequired[str | None],
+    "white-surface": InputPathType,
+    "pial-surface": InputPathType,
     "location": float,
-    "out_surface": str,
-    "opt_placement_out_placement_metric": typing.NotRequired[str | None],
 })
 SurfaceCortexLayerParametersTagged = typing.TypedDict('SurfaceCortexLayerParametersTagged', {
     "@type": typing.Literal["workbench/surface-cortex-layer"],
-    "white_surface": InputPathType,
-    "pial_surface": InputPathType,
+    "out-surface": str,
+    "placement-metric": typing.NotRequired[str | None],
+    "white-surface": InputPathType,
+    "pial-surface": InputPathType,
     "location": float,
-    "out_surface": str,
-    "opt_placement_out_placement_metric": typing.NotRequired[str | None],
 })
 
 
@@ -39,40 +38,39 @@ class SurfaceCortexLayerOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     out_surface: OutputPathType
     """the output surface"""
-    opt_placement_out_placement_metric: OutputPathType | None
-    """output the placement as a volume fraction from pial to white: output
-    metric"""
 
 
 def surface_cortex_layer_params(
+    out_surface: str,
+    placement_metric: str | None,
     white_surface: InputPathType,
     pial_surface: InputPathType,
     location: float,
-    out_surface: str,
-    opt_placement_out_placement_metric: str | None = None,
 ) -> SurfaceCortexLayerParametersTagged:
     """
     Build parameters.
     
     Args:
+        out_surface: the output surface.
+        placement_metric: output the placement as a volume fraction from pial\
+            to white\
+            \
+            output metric.
         white_surface: the white matter surface.
         pial_surface: the pial surface.
         location: what volume fraction to place the layer at.
-        out_surface: the output surface.
-        opt_placement_out_placement_metric: output the placement as a volume\
-            fraction from pial to white: output metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-cortex-layer",
-        "white_surface": white_surface,
-        "pial_surface": pial_surface,
+        "out-surface": out_surface,
+        "white-surface": white_surface,
+        "pial-surface": pial_surface,
         "location": location,
-        "out_surface": out_surface,
     }
-    if opt_placement_out_placement_metric is not None:
-        params["opt_placement_out_placement_metric"] = opt_placement_out_placement_metric
+    if placement_metric is not None:
+        params["placement-metric"] = placement_metric
     return params
 
 
@@ -90,17 +88,17 @@ def surface_cortex_layer_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-cortex-layer")
-    cargs.append(execution.input_file(params.get("white_surface", None)))
-    cargs.append(execution.input_file(params.get("pial_surface", None)))
-    cargs.append(str(params.get("location", None)))
-    cargs.append(params.get("out_surface", None))
-    if params.get("opt_placement_out_placement_metric", None) is not None:
+    if params.get("placement-metric", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-surface-cortex-layer",
+            params.get("out-surface", None),
             "-placement-out",
-            params.get("opt_placement_out_placement_metric", None)
+            params.get("placement-metric", None)
         ])
+    cargs.append(execution.input_file(params.get("white-surface", None)))
+    cargs.append(execution.input_file(params.get("pial-surface", None)))
+    cargs.append(str(params.get("location", None)))
     return cargs
 
 
@@ -119,8 +117,7 @@ def surface_cortex_layer_outputs(
     """
     ret = SurfaceCortexLayerOutputs(
         root=execution.output_file("."),
-        out_surface=execution.output_file(params.get("out_surface", None)),
-        opt_placement_out_placement_metric=execution.output_file(params.get("opt_placement_out_placement_metric", None)) if (params.get("opt_placement_out_placement_metric") is not None) else None,
+        out_surface=execution.output_file(params.get("out-surface", None)),
     )
     return ret
 
@@ -130,9 +127,7 @@ def surface_cortex_layer_execute(
     runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
-    surface-cortex-layer
-    
-    Create surface approximating a cortical layer.
+    CREATE SURFACE APPROXIMATING A CORTICAL LAYER.
     
     The input surfaces must have vertex correspondence. The output surface is
     generated by placing vertices between the two surfaces such that the
@@ -140,10 +135,6 @@ def surface_cortex_layer_execute(
     given fraction of the volume of the same patch between the pial and white
     surfaces (i.e., specifying 0 would give the white surface, 1 would give the
     pial surface). .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -161,17 +152,15 @@ def surface_cortex_layer_execute(
 
 
 def surface_cortex_layer(
+    out_surface: str,
+    placement_metric: str | None,
     white_surface: InputPathType,
     pial_surface: InputPathType,
     location: float,
-    out_surface: str,
-    opt_placement_out_placement_metric: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
-    surface-cortex-layer
-    
-    Create surface approximating a cortical layer.
+    CREATE SURFACE APPROXIMATING A CORTICAL LAYER.
     
     The input surfaces must have vertex correspondence. The output surface is
     generated by placing vertices between the two surfaces such that the
@@ -180,27 +169,25 @@ def surface_cortex_layer(
     surfaces (i.e., specifying 0 would give the white surface, 1 would give the
     pial surface). .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        out_surface: the output surface.
+        placement_metric: output the placement as a volume fraction from pial\
+            to white\
+            \
+            output metric.
         white_surface: the white matter surface.
         pial_surface: the pial surface.
         location: what volume fraction to place the layer at.
-        out_surface: the output surface.
-        opt_placement_out_placement_metric: output the placement as a volume\
-            fraction from pial to white: output metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCortexLayerOutputs`).
     """
     params = surface_cortex_layer_params(
+        out_surface=out_surface,
+        placement_metric=placement_metric,
         white_surface=white_surface,
         pial_surface=pial_surface,
         location=location,
-        out_surface=out_surface,
-        opt_placement_out_placement_metric=opt_placement_out_placement_metric,
     )
     return surface_cortex_layer_execute(params, runner)
 

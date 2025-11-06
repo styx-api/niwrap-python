@@ -6,21 +6,10 @@ import pathlib
 from styxdefs import *
 
 CIFTI_ESTIMATE_FWHM_METADATA = Metadata(
-    id="406da450dd413b66fe869bedf1e3287559817350.boutiques",
+    id="bfd040551c3a70785cb9174fd0ff584bb1326d8a.workbench",
     name="cifti-estimate-fwhm",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
-
-
-CiftiEstimateFwhmWholeFileParameters = typing.TypedDict('CiftiEstimateFwhmWholeFileParameters', {
-    "@type": typing.NotRequired[typing.Literal["whole_file"]],
-    "opt_demean": bool,
-})
-CiftiEstimateFwhmWholeFileParametersTagged = typing.TypedDict('CiftiEstimateFwhmWholeFileParametersTagged', {
-    "@type": typing.Literal["whole_file"],
-    "opt_demean": bool,
-})
 
 
 CiftiEstimateFwhmSurfaceParameters = typing.TypedDict('CiftiEstimateFwhmSurfaceParameters', {
@@ -37,58 +26,20 @@ CiftiEstimateFwhmSurfaceParametersTagged = typing.TypedDict('CiftiEstimateFwhmSu
 
 CiftiEstimateFwhmParameters = typing.TypedDict('CiftiEstimateFwhmParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-estimate-fwhm"]],
-    "cifti": InputPathType,
-    "opt_merged_volume": bool,
-    "opt_column_column": typing.NotRequired[int | None],
-    "whole_file": typing.NotRequired[CiftiEstimateFwhmWholeFileParameters | None],
+    "merged-volume": bool,
+    "column": typing.NotRequired[int | None],
+    "demean": typing.NotRequired[bool | None],
     "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParameters] | None],
+    "cifti": InputPathType,
 })
 CiftiEstimateFwhmParametersTagged = typing.TypedDict('CiftiEstimateFwhmParametersTagged', {
     "@type": typing.Literal["workbench/cifti-estimate-fwhm"],
-    "cifti": InputPathType,
-    "opt_merged_volume": bool,
-    "opt_column_column": typing.NotRequired[int | None],
-    "whole_file": typing.NotRequired[CiftiEstimateFwhmWholeFileParameters | None],
+    "merged-volume": bool,
+    "column": typing.NotRequired[int | None],
+    "demean": typing.NotRequired[bool | None],
     "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParameters] | None],
+    "cifti": InputPathType,
 })
-
-
-def cifti_estimate_fwhm_whole_file_params(
-    opt_demean: bool = False,
-) -> CiftiEstimateFwhmWholeFileParametersTagged:
-    """
-    Build parameters.
-    
-    Args:
-        opt_demean: subtract the mean image before estimating smoothness.
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "whole_file",
-        "opt_demean": opt_demean,
-    }
-    return params
-
-
-def cifti_estimate_fwhm_whole_file_cargs(
-    params: CiftiEstimateFwhmWholeFileParameters,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-whole-file")
-    if params.get("opt_demean", False):
-        cargs.append("-demean")
-    return cargs
 
 
 def cifti_estimate_fwhm_surface_params(
@@ -126,9 +77,11 @@ def cifti_estimate_fwhm_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-surface")
-    cargs.append(params.get("structure", None))
-    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.extend([
+        "-surface",
+        params.get("structure", None),
+        execution.input_file(params.get("surface", None))
+    ])
     return cargs
 
 
@@ -141,36 +94,38 @@ class CiftiEstimateFwhmOutputs(typing.NamedTuple):
 
 
 def cifti_estimate_fwhm_params(
+    column: int | None,
     cifti: InputPathType,
-    opt_merged_volume: bool = False,
-    opt_column_column: int | None = None,
-    whole_file: CiftiEstimateFwhmWholeFileParameters | None = None,
+    merged_volume: bool = False,
+    demean: bool | None = False,
     surface: list[CiftiEstimateFwhmSurfaceParameters] | None = None,
 ) -> CiftiEstimateFwhmParametersTagged:
     """
     Build parameters.
     
     Args:
+        column: only output estimates for one column\
+            \
+            the column number.
         cifti: the input cifti file.
-        opt_merged_volume: treat volume components as if they were a single\
+        merged_volume: treat volume components as if they were a single\
             component.
-        opt_column_column: only output estimates for one column: the column\
-            number.
-        whole_file: estimate for the whole file at once, not each column\
-            separately.
+        demean: estimate for the whole file at once, not each column separately\
+            \
+            subtract the mean image before estimating smoothness.
         surface: specify an input surface.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-estimate-fwhm",
+        "merged-volume": merged_volume,
         "cifti": cifti,
-        "opt_merged_volume": opt_merged_volume,
     }
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if whole_file is not None:
-        params["whole_file"] = whole_file
+    if column is not None:
+        params["column"] = column
+    if demean is not None:
+        params["demean"] = demean
     if surface is not None:
         params["surface"] = surface
     return params
@@ -190,20 +145,18 @@ def cifti_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-estimate-fwhm")
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    if params.get("opt_merged_volume", False):
-        cargs.append("-merged-volume")
-    if params.get("opt_column_column", None) is not None:
+    if params.get("merged-volume", False) or params.get("column", None) is not None or params.get("demean", False) is not None or params.get("surface", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-estimate-fwhm",
+            ("-merged-volume" if (params.get("merged-volume", False)) else ""),
             "-column",
-            str(params.get("opt_column_column", None))
+            (str(params.get("column", None)) if (params.get("column", None) is not None) else ""),
+            "-whole-file",
+            ("-demean" if (params.get("demean", False) is not None) else ""),
+            *([a for c in [cifti_estimate_fwhm_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
         ])
-    if params.get("whole_file", None) is not None:
-        cargs.extend(cifti_estimate_fwhm_whole_file_cargs(params.get("whole_file", None), execution))
-    if params.get("surface", None) is not None:
-        cargs.extend([a for c in [cifti_estimate_fwhm_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
+    cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs
 
 
@@ -231,9 +184,7 @@ def cifti_estimate_fwhm_execute(
     runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
     """
-    cifti-estimate-fwhm
-    
-    Estimate fwhm smoothness of a cifti file.
+    ESTIMATE FWHM SMOOTHNESS OF A CIFTI FILE.
     
     Estimate the smoothness of the components of the cifti file, printing the
     estimates to standard output. If -merged-volume is used, all voxels are used
@@ -264,6 +215,8 @@ def cifti_estimate_fwhm_execute(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -274,10 +227,6 @@ def cifti_estimate_fwhm_execute(
     PUTAMEN_RIGHT
     THALAMUS_LEFT
     THALAMUS_RIGHT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -295,17 +244,15 @@ def cifti_estimate_fwhm_execute(
 
 
 def cifti_estimate_fwhm(
+    column: int | None,
     cifti: InputPathType,
-    opt_merged_volume: bool = False,
-    opt_column_column: int | None = None,
-    whole_file: CiftiEstimateFwhmWholeFileParameters | None = None,
+    merged_volume: bool = False,
+    demean: bool | None = False,
     surface: list[CiftiEstimateFwhmSurfaceParameters] | None = None,
     runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
     """
-    cifti-estimate-fwhm
-    
-    Estimate fwhm smoothness of a cifti file.
+    ESTIMATE FWHM SMOOTHNESS OF A CIFTI FILE.
     
     Estimate the smoothness of the components of the cifti file, printing the
     estimates to standard output. If -merged-volume is used, all voxels are used
@@ -336,6 +283,8 @@ def cifti_estimate_fwhm(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -347,29 +296,27 @@ def cifti_estimate_fwhm(
     THALAMUS_LEFT
     THALAMUS_RIGHT.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        column: only output estimates for one column\
+            \
+            the column number.
         cifti: the input cifti file.
-        opt_merged_volume: treat volume components as if they were a single\
+        merged_volume: treat volume components as if they were a single\
             component.
-        opt_column_column: only output estimates for one column: the column\
-            number.
-        whole_file: estimate for the whole file at once, not each column\
-            separately.
+        demean: estimate for the whole file at once, not each column separately\
+            \
+            subtract the mean image before estimating smoothness.
         surface: specify an input surface.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiEstimateFwhmOutputs`).
     """
     params = cifti_estimate_fwhm_params(
-        cifti=cifti,
-        opt_merged_volume=opt_merged_volume,
-        opt_column_column=opt_column_column,
-        whole_file=whole_file,
+        merged_volume=merged_volume,
+        column=column,
+        demean=demean,
         surface=surface,
+        cifti=cifti,
     )
     return cifti_estimate_fwhm_execute(params, runner)
 
@@ -381,5 +328,4 @@ __all__ = [
     "cifti_estimate_fwhm_execute",
     "cifti_estimate_fwhm_params",
     "cifti_estimate_fwhm_surface_params",
-    "cifti_estimate_fwhm_whole_file_params",
 ]

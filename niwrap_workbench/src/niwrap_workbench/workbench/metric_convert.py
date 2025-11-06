@@ -6,48 +6,47 @@ import pathlib
 from styxdefs import *
 
 METRIC_CONVERT_METADATA = Metadata(
-    id="5c246decade01d0e869276d986b6a0431ecb382d.boutiques",
+    id="4df60d9d341bdad2b06cad65892590415be630ec.workbench",
     name="metric-convert",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricConvertToNiftiParameters = typing.TypedDict('MetricConvertToNiftiParameters', {
-    "@type": typing.NotRequired[typing.Literal["to_nifti"]],
-    "metric_in": InputPathType,
-    "nifti_out": str,
+    "@type": typing.NotRequired[typing.Literal["to-nifti"]],
+    "metric-in": InputPathType,
+    "nifti-out": str,
 })
 MetricConvertToNiftiParametersTagged = typing.TypedDict('MetricConvertToNiftiParametersTagged', {
-    "@type": typing.Literal["to_nifti"],
-    "metric_in": InputPathType,
-    "nifti_out": str,
+    "@type": typing.Literal["to-nifti"],
+    "metric-in": InputPathType,
+    "nifti-out": str,
 })
 
 
 MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParameters', {
-    "@type": typing.NotRequired[typing.Literal["from_nifti"]],
-    "nifti_in": InputPathType,
-    "surface_in": InputPathType,
-    "metric_out": str,
+    "@type": typing.NotRequired[typing.Literal["from-nifti"]],
+    "nifti-in": InputPathType,
+    "surface-in": InputPathType,
+    "metric-out": str,
 })
 MetricConvertFromNiftiParametersTagged = typing.TypedDict('MetricConvertFromNiftiParametersTagged', {
-    "@type": typing.Literal["from_nifti"],
-    "nifti_in": InputPathType,
-    "surface_in": InputPathType,
-    "metric_out": str,
+    "@type": typing.Literal["from-nifti"],
+    "nifti-in": InputPathType,
+    "surface-in": InputPathType,
+    "metric-out": str,
 })
 
 
 MetricConvertParameters = typing.TypedDict('MetricConvertParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-convert"]],
-    "to_nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
-    "from_nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
+    "to-nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
+    "from-nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
 })
 MetricConvertParametersTagged = typing.TypedDict('MetricConvertParametersTagged', {
     "@type": typing.Literal["workbench/metric-convert"],
-    "to_nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
-    "from_nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
+    "to-nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
+    "from-nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
 })
 
 
@@ -75,9 +74,9 @@ def metric_convert_to_nifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "to_nifti",
-        "metric_in": metric_in,
-        "nifti_out": nifti_out,
+        "@type": "to-nifti",
+        "metric-in": metric_in,
+        "nifti-out": nifti_out,
     }
     return params
 
@@ -96,9 +95,11 @@ def metric_convert_to_nifti_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-to-nifti")
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(params.get("nifti_out", None))
+    cargs.extend([
+        "-to-nifti",
+        execution.input_file(params.get("metric-in", None)),
+        params.get("nifti-out", None)
+    ])
     return cargs
 
 
@@ -117,7 +118,7 @@ def metric_convert_to_nifti_outputs(
     """
     ret = MetricConvertToNiftiOutputs(
         root=execution.output_file("."),
-        nifti_out=execution.output_file(params.get("nifti_out", None)),
+        nifti_out=execution.output_file(params.get("nifti-out", None)),
     )
     return ret
 
@@ -148,10 +149,10 @@ def metric_convert_from_nifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "from_nifti",
-        "nifti_in": nifti_in,
-        "surface_in": surface_in,
-        "metric_out": metric_out,
+        "@type": "from-nifti",
+        "nifti-in": nifti_in,
+        "surface-in": surface_in,
+        "metric-out": metric_out,
     }
     return params
 
@@ -170,10 +171,12 @@ def metric_convert_from_nifti_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-from-nifti")
-    cargs.append(execution.input_file(params.get("nifti_in", None)))
-    cargs.append(execution.input_file(params.get("surface_in", None)))
-    cargs.append(params.get("metric_out", None))
+    cargs.extend([
+        "-from-nifti",
+        execution.input_file(params.get("nifti-in", None)),
+        execution.input_file(params.get("surface-in", None)),
+        params.get("metric-out", None)
+    ])
     return cargs
 
 
@@ -192,7 +195,7 @@ def metric_convert_from_nifti_outputs(
     """
     ret = MetricConvertFromNiftiOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -226,9 +229,9 @@ def metric_convert_params(
         "@type": "workbench/metric-convert",
     }
     if to_nifti is not None:
-        params["to_nifti"] = to_nifti
+        params["to-nifti"] = to_nifti
     if from_nifti is not None:
-        params["from_nifti"] = from_nifti
+        params["from-nifti"] = from_nifti
     return params
 
 
@@ -246,12 +249,13 @@ def metric_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-convert")
-    if params.get("to_nifti", None) is not None:
-        cargs.extend(metric_convert_to_nifti_cargs(params.get("to_nifti", None), execution))
-    if params.get("from_nifti", None) is not None:
-        cargs.extend(metric_convert_from_nifti_cargs(params.get("from_nifti", None), execution))
+    if params.get("to-nifti", None) is not None or params.get("from-nifti", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-metric-convert",
+            *(metric_convert_to_nifti_cargs(params.get("to-nifti", None), execution) if (params.get("to-nifti", None) is not None) else []),
+            *(metric_convert_from_nifti_cargs(params.get("from-nifti", None), execution) if (params.get("from-nifti", None) is not None) else [])
+        ])
     return cargs
 
 
@@ -270,8 +274,8 @@ def metric_convert_outputs(
     """
     ret = MetricConvertOutputs(
         root=execution.output_file("."),
-        to_nifti=metric_convert_to_nifti_outputs(params.get("to_nifti"), execution) if params.get("to_nifti") else None,
-        from_nifti=metric_convert_from_nifti_outputs(params.get("from_nifti"), execution) if params.get("from_nifti") else None,
+        to_nifti=metric_convert_to_nifti_outputs(params.get("to-nifti"), execution) if params.get("to-nifti") else None,
+        from_nifti=metric_convert_from_nifti_outputs(params.get("from-nifti"), execution) if params.get("from-nifti") else None,
     )
     return ret
 
@@ -281,17 +285,11 @@ def metric_convert_execute(
     runner: Runner | None = None,
 ) -> MetricConvertOutputs:
     """
-    metric-convert
-    
-    Convert metric file to fake nifti.
+    CONVERT METRIC FILE TO FAKE NIFTI.
     
     The purpose of this command is to convert between metric files and nifti1 so
     that gifti-unaware programs can operate on the data. You must specify
     exactly one of the options.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -314,17 +312,11 @@ def metric_convert(
     runner: Runner | None = None,
 ) -> MetricConvertOutputs:
     """
-    metric-convert
-    
-    Convert metric file to fake nifti.
+    CONVERT METRIC FILE TO FAKE NIFTI.
     
     The purpose of this command is to convert between metric files and nifti1 so
     that gifti-unaware programs can operate on the data. You must specify
     exactly one of the options.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         to_nifti: convert metric to nifti.

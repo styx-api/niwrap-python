@@ -6,71 +6,70 @@ import pathlib
 from styxdefs import *
 
 METRIC_SMOOTHING_METADATA = Metadata(
-    id="0a396b41d5717355e9d6de5fcc33e96e22014d30.boutiques",
+    id="4cac13b0419558d62931d434fd4c5540aac0f7fe.workbench",
     name="metric-smoothing",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricSmoothingRoiParameters = typing.TypedDict('MetricSmoothingRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
-    "roi_metric": InputPathType,
-    "opt_match_columns": bool,
+    "roi-metric": InputPathType,
+    "match-columns": bool,
 })
 MetricSmoothingRoiParametersTagged = typing.TypedDict('MetricSmoothingRoiParametersTagged', {
     "@type": typing.Literal["roi"],
-    "roi_metric": InputPathType,
-    "opt_match_columns": bool,
+    "roi-metric": InputPathType,
+    "match-columns": bool,
 })
 
 
 MetricSmoothingParameters = typing.TypedDict('MetricSmoothingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-smoothing"]],
-    "surface": InputPathType,
-    "metric_in": InputPathType,
-    "smoothing_kernel": float,
-    "metric_out": str,
-    "opt_fwhm": bool,
+    "metric-out": str,
+    "fwhm": bool,
     "roi": typing.NotRequired[MetricSmoothingRoiParameters | None],
-    "opt_fix_zeros": bool,
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_method_method": typing.NotRequired[str | None],
+    "fix-zeros": bool,
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "method": typing.NotRequired[str | None],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "smoothing-kernel": float,
 })
 MetricSmoothingParametersTagged = typing.TypedDict('MetricSmoothingParametersTagged', {
     "@type": typing.Literal["workbench/metric-smoothing"],
-    "surface": InputPathType,
-    "metric_in": InputPathType,
-    "smoothing_kernel": float,
-    "metric_out": str,
-    "opt_fwhm": bool,
+    "metric-out": str,
+    "fwhm": bool,
     "roi": typing.NotRequired[MetricSmoothingRoiParameters | None],
-    "opt_fix_zeros": bool,
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_method_method": typing.NotRequired[str | None],
+    "fix-zeros": bool,
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "method": typing.NotRequired[str | None],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
+    "smoothing-kernel": float,
 })
 
 
 def metric_smoothing_roi_params(
     roi_metric: InputPathType,
-    opt_match_columns: bool = False,
+    match_columns: bool = False,
 ) -> MetricSmoothingRoiParametersTagged:
     """
     Build parameters.
     
     Args:
         roi_metric: the roi to smooth within, as a metric.
-        opt_match_columns: for each input column, use the corresponding column\
-            from the roi.
+        match_columns: for each input column, use the corresponding column from\
+            the roi.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "roi",
-        "roi_metric": roi_metric,
-        "opt_match_columns": opt_match_columns,
+        "roi-metric": roi_metric,
+        "match-columns": match_columns,
     }
     return params
 
@@ -89,10 +88,12 @@ def metric_smoothing_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_metric", None)))
-    if params.get("opt_match_columns", False):
-        cargs.append("-match-columns")
+    if params.get("match-columns", False):
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-metric", None)),
+            "-match-columns"
+        ])
     return cargs
 
 
@@ -107,56 +108,59 @@ class MetricSmoothingOutputs(typing.NamedTuple):
 
 
 def metric_smoothing_params(
+    metric_out: str,
+    column: str | None,
+    area_metric: InputPathType | None,
+    method: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     smoothing_kernel: float,
-    metric_out: str,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
     roi: MetricSmoothingRoiParameters | None = None,
-    opt_fix_zeros: bool = False,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_method_method: str | None = None,
+    fix_zeros: bool = False,
 ) -> MetricSmoothingParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        column: select a single column to smooth\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        method: select smoothing method, default GEO_GAUSS_AREA\
+            \
+            the name of the smoothing method.
         surface: the surface to smooth on.
         metric_in: the metric to smooth.
         smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
             sigma by default.
-        metric_out: the output metric.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
         roi: select a region of interest to smooth.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_column_column: select a single column to smooth: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_method_method: select smoothing method, default GEO_GAUSS_AREA: the\
-            name of the smoothing method.
+        fix_zeros: treat zero values as not being data.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-smoothing",
+        "metric-out": metric_out,
+        "fwhm": fwhm,
+        "fix-zeros": fix_zeros,
         "surface": surface,
-        "metric_in": metric_in,
-        "smoothing_kernel": smoothing_kernel,
-        "metric_out": metric_out,
-        "opt_fwhm": opt_fwhm,
-        "opt_fix_zeros": opt_fix_zeros,
+        "metric-in": metric_in,
+        "smoothing-kernel": smoothing_kernel,
     }
     if roi is not None:
         params["roi"] = roi
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
-    if opt_method_method is not None:
-        params["opt_method_method"] = opt_method_method
+    if column is not None:
+        params["column"] = column
+    if area_metric is not None:
+        params["area-metric"] = area_metric
+    if method is not None:
+        params["method"] = method
     return params
 
 
@@ -174,33 +178,24 @@ def metric_smoothing_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-smoothing")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(str(params.get("smoothing_kernel", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
-    if params.get("roi", None) is not None:
-        cargs.extend(metric_smoothing_roi_cargs(params.get("roi", None), execution))
-    if params.get("opt_fix_zeros", False):
-        cargs.append("-fix-zeros")
-    if params.get("opt_column_column", None) is not None:
+    if params.get("fwhm", False) or params.get("roi", None) is not None or params.get("fix-zeros", False) or params.get("column", None) is not None or params.get("area-metric", None) is not None or params.get("method", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-smoothing",
+            params.get("metric-out", None),
+            ("-fwhm" if (params.get("fwhm", False)) else ""),
+            *(metric_smoothing_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+            ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
             "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
-    if params.get("opt_method_method", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
             "-method",
-            params.get("opt_method_method", None)
+            (params.get("method", None) if (params.get("method", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("smoothing-kernel", None)))
     return cargs
 
 
@@ -219,7 +214,7 @@ def metric_smoothing_outputs(
     """
     ret = MetricSmoothingOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -229,9 +224,7 @@ def metric_smoothing_execute(
     runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
     """
-    metric-smoothing
-    
-    Smooth a metric file.
+    SMOOTH A METRIC FILE.
     
     Smooth a metric file on a surface. By default, smooths all input columns on
     the entire surface, specify -column to use only one input column, and -roi
@@ -276,10 +269,6 @@ def metric_smoothing_execute(
     surface area, while the surface integral is the sum of squares of the vertex
     areas). The GEO_GAUSS method is not recommended, it exists mainly to
     replicate methods of studies done with caret5's geodesic smoothing.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -297,22 +286,20 @@ def metric_smoothing_execute(
 
 
 def metric_smoothing(
+    metric_out: str,
+    column: str | None,
+    area_metric: InputPathType | None,
+    method: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
     smoothing_kernel: float,
-    metric_out: str,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
     roi: MetricSmoothingRoiParameters | None = None,
-    opt_fix_zeros: bool = False,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_method_method: str | None = None,
+    fix_zeros: bool = False,
     runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
     """
-    metric-smoothing
-    
-    Smooth a metric file.
+    SMOOTH A METRIC FILE.
     
     Smooth a metric file on a surface. By default, smooths all input columns on
     the entire surface, specify -column to use only one input column, and -roi
@@ -358,41 +345,40 @@ def metric_smoothing(
     areas). The GEO_GAUSS method is not recommended, it exists mainly to
     replicate methods of studies done with caret5's geodesic smoothing.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        column: select a single column to smooth\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        method: select smoothing method, default GEO_GAUSS_AREA\
+            \
+            the name of the smoothing method.
         surface: the surface to smooth on.
         metric_in: the metric to smooth.
         smoothing_kernel: the size of the gaussian smoothing kernel in mm, as\
             sigma by default.
-        metric_out: the output metric.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
         roi: select a region of interest to smooth.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_column_column: select a single column to smooth: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_method_method: select smoothing method, default GEO_GAUSS_AREA: the\
-            name of the smoothing method.
+        fix_zeros: treat zero values as not being data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricSmoothingOutputs`).
     """
     params = metric_smoothing_params(
+        metric_out=metric_out,
+        fwhm=fwhm,
+        roi=roi,
+        fix_zeros=fix_zeros,
+        column=column,
+        area_metric=area_metric,
+        method=method,
         surface=surface,
         metric_in=metric_in,
         smoothing_kernel=smoothing_kernel,
-        metric_out=metric_out,
-        opt_fwhm=opt_fwhm,
-        roi=roi,
-        opt_fix_zeros=opt_fix_zeros,
-        opt_column_column=opt_column_column,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
-        opt_method_method=opt_method_method,
     )
     return metric_smoothing_execute(params, runner)
 

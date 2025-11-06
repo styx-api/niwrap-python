@@ -6,38 +6,37 @@ import pathlib
 from styxdefs import *
 
 SURFACE_APPLY_AFFINE_METADATA = Metadata(
-    id="cbfa656451c57232ac09b2c71b92b95ea9448401.boutiques",
+    id="248f32501c3003298999c7da69bba8ad26520e39.workbench",
     name="surface-apply-affine",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceApplyAffineFlirtParameters = typing.TypedDict('SurfaceApplyAffineFlirtParameters', {
     "@type": typing.NotRequired[typing.Literal["flirt"]],
-    "source_volume": str,
-    "target_volume": str,
+    "source-volume": str,
+    "target-volume": str,
 })
 SurfaceApplyAffineFlirtParametersTagged = typing.TypedDict('SurfaceApplyAffineFlirtParametersTagged', {
     "@type": typing.Literal["flirt"],
-    "source_volume": str,
-    "target_volume": str,
+    "source-volume": str,
+    "target-volume": str,
 })
 
 
 SurfaceApplyAffineParameters = typing.TypedDict('SurfaceApplyAffineParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-affine"]],
-    "in_surf": InputPathType,
-    "affine": str,
-    "out_surf": str,
+    "out-surf": str,
     "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParameters | None],
+    "in-surf": InputPathType,
+    "affine": str,
 })
 SurfaceApplyAffineParametersTagged = typing.TypedDict('SurfaceApplyAffineParametersTagged', {
     "@type": typing.Literal["workbench/surface-apply-affine"],
-    "in_surf": InputPathType,
-    "affine": str,
-    "out_surf": str,
+    "out-surf": str,
     "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParameters | None],
+    "in-surf": InputPathType,
+    "affine": str,
 })
 
 
@@ -56,8 +55,8 @@ def surface_apply_affine_flirt_params(
     """
     params = {
         "@type": "flirt",
-        "source_volume": source_volume,
-        "target_volume": target_volume,
+        "source-volume": source_volume,
+        "target-volume": target_volume,
     }
     return params
 
@@ -76,9 +75,11 @@ def surface_apply_affine_flirt_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-flirt")
-    cargs.append(params.get("source_volume", None))
-    cargs.append(params.get("target_volume", None))
+    cargs.extend([
+        "-flirt",
+        params.get("source-volume", None),
+        params.get("target-volume", None)
+    ])
     return cargs
 
 
@@ -93,27 +94,27 @@ class SurfaceApplyAffineOutputs(typing.NamedTuple):
 
 
 def surface_apply_affine_params(
+    out_surf: str,
     in_surf: InputPathType,
     affine: str,
-    out_surf: str,
     flirt: SurfaceApplyAffineFlirtParameters | None = None,
 ) -> SurfaceApplyAffineParametersTagged:
     """
     Build parameters.
     
     Args:
+        out_surf: the output transformed surface.
         in_surf: the surface to transform.
         affine: the affine file.
-        out_surf: the output transformed surface.
         flirt: MUST be used if affine is a flirt affine.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-apply-affine",
-        "in_surf": in_surf,
+        "out-surf": out_surf,
+        "in-surf": in_surf,
         "affine": affine,
-        "out_surf": out_surf,
     }
     if flirt is not None:
         params["flirt"] = flirt
@@ -134,13 +135,15 @@ def surface_apply_affine_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-apply-affine")
-    cargs.append(execution.input_file(params.get("in_surf", None)))
-    cargs.append(params.get("affine", None))
-    cargs.append(params.get("out_surf", None))
     if params.get("flirt", None) is not None:
-        cargs.extend(surface_apply_affine_flirt_cargs(params.get("flirt", None), execution))
+        cargs.extend([
+            "wb_command",
+            "-surface-apply-affine",
+            params.get("out-surf", None),
+            *surface_apply_affine_flirt_cargs(params.get("flirt", None), execution)
+        ])
+    cargs.append(execution.input_file(params.get("in-surf", None)))
+    cargs.append(params.get("affine", None))
     return cargs
 
 
@@ -159,7 +162,7 @@ def surface_apply_affine_outputs(
     """
     ret = SurfaceApplyAffineOutputs(
         root=execution.output_file("."),
-        out_surf=execution.output_file(params.get("out_surf", None)),
+        out_surf=execution.output_file(params.get("out-surf", None)),
     )
     return ret
 
@@ -169,19 +172,13 @@ def surface_apply_affine_execute(
     runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
     """
-    surface-apply-affine
-    
-    Apply affine transform to surface file.
+    APPLY AFFINE TRANSFORM TO SURFACE FILE.
     
     For flirt matrices, you must use the -flirt option, because flirt matrices
     are not a complete description of the coordinate transform they represent.
     If the -flirt option is not present, the affine must be a nifti 'world'
     affine, which can be obtained with the -convert-affine command, or aff_conv
     from the 4dfp suite.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -199,16 +196,14 @@ def surface_apply_affine_execute(
 
 
 def surface_apply_affine(
+    out_surf: str,
     in_surf: InputPathType,
     affine: str,
-    out_surf: str,
     flirt: SurfaceApplyAffineFlirtParameters | None = None,
     runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
     """
-    surface-apply-affine
-    
-    Apply affine transform to surface file.
+    APPLY AFFINE TRANSFORM TO SURFACE FILE.
     
     For flirt matrices, you must use the -flirt option, because flirt matrices
     are not a complete description of the coordinate transform they represent.
@@ -216,24 +211,20 @@ def surface_apply_affine(
     affine, which can be obtained with the -convert-affine command, or aff_conv
     from the 4dfp suite.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        out_surf: the output transformed surface.
         in_surf: the surface to transform.
         affine: the affine file.
-        out_surf: the output transformed surface.
         flirt: MUST be used if affine is a flirt affine.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyAffineOutputs`).
     """
     params = surface_apply_affine_params(
-        in_surf=in_surf,
-        affine=affine,
         out_surf=out_surf,
         flirt=flirt,
+        in_surf=in_surf,
+        affine=affine,
     )
     return surface_apply_affine_execute(params, runner)
 

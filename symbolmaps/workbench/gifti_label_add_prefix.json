@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "gifti_label_add_prefix",
   "properties": {
-    "label_in": {
+    "label-out": {
+      "var_param": "label_out"
+    },
+    "label-in": {
       "var_param": "label_in"
     },
     "prefix": {
       "var_param": "prefix"
-    },
-    "label_out": {
-      "var_param": "label_out"
     }
   }
 }

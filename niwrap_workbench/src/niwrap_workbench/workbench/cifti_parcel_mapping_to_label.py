@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
-    id="0bf15c8c4c3f06d434147770f8cfca4d5d152ae9.boutiques",
+    id="ce08a74db6f042fde95fefc290e8baf47feda5cc.workbench",
     name="cifti-parcel-mapping-to-label",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiParcelMappingToLabelParameters = typing.TypedDict('CiftiParcelMappingToLabelParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-parcel-mapping-to-label"]],
-    "cifti_in": InputPathType,
+    "dlabel-out": str,
+    "cifti-in": InputPathType,
     "direction": str,
-    "template_cifti": InputPathType,
-    "dlabel_out": str,
+    "template-cifti": InputPathType,
 })
 CiftiParcelMappingToLabelParametersTagged = typing.TypedDict('CiftiParcelMappingToLabelParametersTagged', {
     "@type": typing.Literal["workbench/cifti-parcel-mapping-to-label"],
-    "cifti_in": InputPathType,
+    "dlabel-out": str,
+    "cifti-in": InputPathType,
     "direction": str,
-    "template_cifti": InputPathType,
-    "dlabel_out": str,
+    "template-cifti": InputPathType,
 })
 
 
@@ -40,29 +39,29 @@ class CiftiParcelMappingToLabelOutputs(typing.NamedTuple):
 
 
 def cifti_parcel_mapping_to_label_params(
+    dlabel_out: str,
     cifti_in: InputPathType,
     direction: str,
     template_cifti: InputPathType,
-    dlabel_out: str,
 ) -> CiftiParcelMappingToLabelParametersTagged:
     """
     Build parameters.
     
     Args:
+        dlabel_out: the output dense label file.
         cifti_in: the input parcellated file.
         direction: which dimension to take the parcel map from, ROW or COLUMN.
         template_cifti: a cifti file with the desired dense mapping along\
             column.
-        dlabel_out: the output dense label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-parcel-mapping-to-label",
-        "cifti_in": cifti_in,
+        "dlabel-out": dlabel_out,
+        "cifti-in": cifti_in,
         "direction": direction,
-        "template_cifti": template_cifti,
-        "dlabel_out": dlabel_out,
+        "template-cifti": template_cifti,
     }
     return params
 
@@ -81,12 +80,14 @@ def cifti_parcel_mapping_to_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-parcel-mapping-to-label")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.extend([
+        "wb_command",
+        "-cifti-parcel-mapping-to-label",
+        params.get("dlabel-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
-    cargs.append(execution.input_file(params.get("template_cifti", None)))
-    cargs.append(params.get("dlabel_out", None))
+    cargs.append(execution.input_file(params.get("template-cifti", None)))
     return cargs
 
 
@@ -105,7 +106,7 @@ def cifti_parcel_mapping_to_label_outputs(
     """
     ret = CiftiParcelMappingToLabelOutputs(
         root=execution.output_file("."),
-        dlabel_out=execution.output_file(params.get("dlabel_out", None)),
+        dlabel_out=execution.output_file(params.get("dlabel-out", None)),
     )
     return ret
 
@@ -115,19 +116,13 @@ def cifti_parcel_mapping_to_label_execute(
     runner: Runner | None = None,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
-    cifti-parcel-mapping-to-label
-    
-    Create dlabel from parcellated file.
+    CREATE DLABEL FROM PARCELLATED FILE.
     
     This command will output a dlabel file, useful for doing the same
     parcellation to another dense file.
     
     For ptseries, pscalar, plabel, pconn, and pdconn, using COLUMN for
     <direction> will work.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -145,16 +140,14 @@ def cifti_parcel_mapping_to_label_execute(
 
 
 def cifti_parcel_mapping_to_label(
+    dlabel_out: str,
     cifti_in: InputPathType,
     direction: str,
     template_cifti: InputPathType,
-    dlabel_out: str,
     runner: Runner | None = None,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
-    cifti-parcel-mapping-to-label
-    
-    Create dlabel from parcellated file.
+    CREATE DLABEL FROM PARCELLATED FILE.
     
     This command will output a dlabel file, useful for doing the same
     parcellation to another dense file.
@@ -162,25 +155,21 @@ def cifti_parcel_mapping_to_label(
     For ptseries, pscalar, plabel, pconn, and pdconn, using COLUMN for
     <direction> will work.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        dlabel_out: the output dense label file.
         cifti_in: the input parcellated file.
         direction: which dimension to take the parcel map from, ROW or COLUMN.
         template_cifti: a cifti file with the desired dense mapping along\
             column.
-        dlabel_out: the output dense label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiParcelMappingToLabelOutputs`).
     """
     params = cifti_parcel_mapping_to_label_params(
+        dlabel_out=dlabel_out,
         cifti_in=cifti_in,
         direction=direction,
         template_cifti=template_cifti,
-        dlabel_out=dlabel_out,
     )
     return cifti_parcel_mapping_to_label_execute(params, runner)
 

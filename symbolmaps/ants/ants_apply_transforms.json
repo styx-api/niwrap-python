@@ -68,26 +68,20 @@
           "properties": {
             "params": {
               "var_param": "params_",
-              "fn_struct_make_params": "ants_apply_transforms_param_params",
-              "properties": {
-                "params": {
-                  "var_param": "params_",
-                  "variants": {
+              "variants": {
+                "sigma": {
+                  "fn_struct_make_params": "ants_apply_transforms_sigma_params",
+                  "properties": {
                     "sigma": {
-                      "fn_struct_make_params": "ants_apply_transforms_sigma_params",
-                      "properties": {
-                        "sigma": {
-                          "var_param": "sigma"
-                        }
-                      }
-                    },
+                      "var_param": "sigma"
+                    }
+                  }
+                },
+                "alpha": {
+                  "fn_struct_make_params": "ants_apply_transforms_alpha_params",
+                  "properties": {
                     "alpha": {
-                      "fn_struct_make_params": "ants_apply_transforms_alpha_params",
-                      "properties": {
-                        "alpha": {
-                          "var_param": "alpha"
-                        }
-                      }
+                      "var_param": "alpha"
                     }
                   }
                 }

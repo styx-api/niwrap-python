@@ -1,24 +1,18 @@
 {
   "fn_root_make_params_and_execute": "cifti_export_dense_mapping",
   "properties": {
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "volume_all": {
+    "volume-all": {
       "var_param": "volume_all",
       "fn_struct_make_params": "cifti_export_dense_mapping_volume_all_params",
       "properties": {
-        "text_out": {
+        "text-out": {
           "var_param": "text_out"
         },
-        "opt_no_cifti_index": {
-          "var_param": "opt_no_cifti_index"
+        "no-cifti-index": {
+          "var_param": "no_cifti_index"
         },
-        "opt_structure": {
-          "var_param": "opt_structure"
+        "structure": {
+          "var_param": "structure"
         }
       }
     },
@@ -29,11 +23,11 @@
         "structure": {
           "var_param": "structure"
         },
-        "text_out": {
+        "text-out": {
           "var_param": "text_out"
         },
-        "opt_no_cifti_index": {
-          "var_param": "opt_no_cifti_index"
+        "no-cifti-index": {
+          "var_param": "no_cifti_index"
         }
       }
     },
@@ -44,13 +38,19 @@
         "structure": {
           "var_param": "structure"
         },
-        "text_out": {
+        "text-out": {
           "var_param": "text_out"
         },
-        "opt_no_cifti_index": {
-          "var_param": "opt_no_cifti_index"
+        "no-cifti-index": {
+          "var_param": "no_cifti_index"
         }
       }
+    },
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "direction": {
+      "var_param": "direction"
     }
   }
 }

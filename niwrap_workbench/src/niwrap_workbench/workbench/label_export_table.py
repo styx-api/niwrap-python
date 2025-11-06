@@ -6,22 +6,23 @@ import pathlib
 from styxdefs import *
 
 LABEL_EXPORT_TABLE_METADATA = Metadata(
-    id="685eb5ec17a869040ae1ee0ac3283a5b460783d0.boutiques",
+    id="f87a6cb5ac13c0fb001a38de1f733f6c74e325bc.workbench",
     name="label-export-table",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelExportTableParameters = typing.TypedDict('LabelExportTableParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-export-table"]],
-    "label_in": InputPathType,
-    "table_out": str,
+    "json-out": typing.NotRequired[str | None],
+    "label-in": InputPathType,
+    "table-out": str,
 })
 LabelExportTableParametersTagged = typing.TypedDict('LabelExportTableParametersTagged', {
     "@type": typing.Literal["workbench/label-export-table"],
-    "label_in": InputPathType,
-    "table_out": str,
+    "json-out": typing.NotRequired[str | None],
+    "label-in": InputPathType,
+    "table-out": str,
 })
 
 
@@ -34,6 +35,7 @@ class LabelExportTableOutputs(typing.NamedTuple):
 
 
 def label_export_table_params(
+    json_out: str | None,
     label_in: InputPathType,
     table_out: str,
 ) -> LabelExportTableParametersTagged:
@@ -41,6 +43,9 @@ def label_export_table_params(
     Build parameters.
     
     Args:
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
         label_in: the input label file.
         table_out: output - the output text file.
     Returns:
@@ -48,9 +53,11 @@ def label_export_table_params(
     """
     params = {
         "@type": "workbench/label-export-table",
-        "label_in": label_in,
-        "table_out": table_out,
+        "label-in": label_in,
+        "table-out": table_out,
     }
+    if json_out is not None:
+        params["json-out"] = json_out
     return params
 
 
@@ -68,10 +75,15 @@ def label_export_table_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-export-table")
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(params.get("table_out", None))
+    if params.get("json-out", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-label-export-table",
+            "-hierarchy",
+            params.get("json-out", None)
+        ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
+    cargs.append(params.get("table-out", None))
     return cargs
 
 
@@ -99,16 +111,10 @@ def label_export_table_execute(
     runner: Runner | None = None,
 ) -> LabelExportTableOutputs:
     """
-    label-export-table
-    
-    Export label table from gifti as text.
+    EXPORT LABEL TABLE FROM GIFTI AS TEXT.
     
     Takes the label table from the gifti label file, and writes it to a text
     format matching what is expected by -metric-label-import.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -126,23 +132,21 @@ def label_export_table_execute(
 
 
 def label_export_table(
+    json_out: str | None,
     label_in: InputPathType,
     table_out: str,
     runner: Runner | None = None,
 ) -> LabelExportTableOutputs:
     """
-    label-export-table
-    
-    Export label table from gifti as text.
+    EXPORT LABEL TABLE FROM GIFTI AS TEXT.
     
     Takes the label table from the gifti label file, and writes it to a text
     format matching what is expected by -metric-label-import.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
         label_in: the input label file.
         table_out: output - the output text file.
         runner: Command runner.
@@ -150,6 +154,7 @@ def label_export_table(
         NamedTuple of outputs (described in `LabelExportTableOutputs`).
     """
     params = label_export_table_params(
+        json_out=json_out,
         label_in=label_in,
         table_out=table_out,
     )

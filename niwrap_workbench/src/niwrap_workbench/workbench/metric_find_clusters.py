@@ -6,42 +6,41 @@ import pathlib
 from styxdefs import *
 
 METRIC_FIND_CLUSTERS_METADATA = Metadata(
-    id="bad1c1bcb6a58fa1b8a2f5e514a762cf71edc56a.boutiques",
+    id="7e590372c8ad9ee4a954f1f091435601a39d86ba.workbench",
     name="metric-find-clusters",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricFindClustersParameters = typing.TypedDict('MetricFindClustersParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-find-clusters"]],
+    "metric-out": str,
+    "less-than": bool,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "ratio": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "startval": typing.NotRequired[int | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "value_threshold": float,
-    "minimum_area": float,
-    "metric_out": str,
-    "opt_less_than": bool,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_size_ratio_ratio": typing.NotRequired[float | None],
-    "opt_distance_distance": typing.NotRequired[float | None],
-    "opt_start_startval": typing.NotRequired[int | None],
+    "metric-in": InputPathType,
+    "value-threshold": float,
+    "minimum-area": float,
 })
 MetricFindClustersParametersTagged = typing.TypedDict('MetricFindClustersParametersTagged', {
     "@type": typing.Literal["workbench/metric-find-clusters"],
+    "metric-out": str,
+    "less-than": bool,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "ratio": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "startval": typing.NotRequired[int | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "value_threshold": float,
-    "minimum_area": float,
-    "metric_out": str,
-    "opt_less_than": bool,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_size_ratio_ratio": typing.NotRequired[float | None],
-    "opt_distance_distance": typing.NotRequired[float | None],
-    "opt_start_startval": typing.NotRequired[int | None],
+    "metric-in": InputPathType,
+    "value-threshold": float,
+    "minimum-area": float,
 })
 
 
@@ -56,66 +55,75 @@ class MetricFindClustersOutputs(typing.NamedTuple):
 
 
 def metric_find_clusters_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    area_metric: InputPathType | None,
+    column: str | None,
+    ratio: float | None,
+    distance: float | None,
+    startval: int | None,
     surface: InputPathType,
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
-    metric_out: str,
-    opt_less_than: bool = False,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_size_ratio_ratio: float | None = None,
-    opt_distance_distance: float | None = None,
-    opt_start_startval: int | None = None,
+    less_than: bool = False,
 ) -> MetricFindClustersParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        roi_metric: select a region of interest\
+            \
+            the roi, as a metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        column: select a single column\
+            \
+            the column number or name.
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
+            \
+            fraction of the largest cluster's area.
+        distance: ignore clusters further than a given distance from the\
+            largest cluster\
+            \
+            how far from the largest cluster a cluster can be, edge to edge, in\
+            mm.
+        startval: start labeling clusters from a value other than 1\
+            \
+            the value to give the first cluster found.
         surface: the surface to compute on.
         metric_in: the input metric.
         value_threshold: threshold for data values.
         minimum_area: threshold for cluster area, in mm^2.
-        metric_out: the output metric.
-        opt_less_than: find values less than <value-threshold>, rather than\
-            greater.
-        opt_roi_roi_metric: select a region of interest: the roi, as a metric.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_column_column: select a single column: the column number or name.
-        opt_size_ratio_ratio: ignore clusters smaller than a given fraction of\
-            the largest cluster in map: fraction of the largest cluster's area.
-        opt_distance_distance: ignore clusters further than a given distance\
-            from the largest cluster: how far from the largest cluster a cluster\
-            can be, edge to edge, in mm.
-        opt_start_startval: start labeling clusters from a value other than 1:\
-            the value to give the first cluster found.
+        less_than: find values less than <value-threshold>, rather than greater.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-find-clusters",
+        "metric-out": metric_out,
+        "less-than": less_than,
         "surface": surface,
-        "metric_in": metric_in,
-        "value_threshold": value_threshold,
-        "minimum_area": minimum_area,
-        "metric_out": metric_out,
-        "opt_less_than": opt_less_than,
+        "metric-in": metric_in,
+        "value-threshold": value_threshold,
+        "minimum-area": minimum_area,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if opt_size_ratio_ratio is not None:
-        params["opt_size_ratio_ratio"] = opt_size_ratio_ratio
-    if opt_distance_distance is not None:
-        params["opt_distance_distance"] = opt_distance_distance
-    if opt_start_startval is not None:
-        params["opt_start_startval"] = opt_start_startval
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
+    if column is not None:
+        params["column"] = column
+    if ratio is not None:
+        params["ratio"] = ratio
+    if distance is not None:
+        params["distance"] = distance
+    if startval is not None:
+        params["startval"] = startval
     return params
 
 
@@ -133,45 +141,29 @@ def metric_find_clusters_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-find-clusters")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(str(params.get("value_threshold", None)))
-    cargs.append(str(params.get("minimum_area", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_less_than", False):
-        cargs.append("-less-than")
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("less-than", False) or params.get("roi-metric", None) is not None or params.get("area-metric", None) is not None or params.get("column", None) is not None or params.get("ratio", None) is not None or params.get("distance", None) is not None or params.get("startval", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-find-clusters",
+            params.get("metric-out", None),
+            ("-less-than" if (params.get("less-than", False)) else ""),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
             "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("opt_size_ratio_ratio", None) is not None:
-        cargs.extend([
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             "-size-ratio",
-            str(params.get("opt_size_ratio_ratio", None))
-        ])
-    if params.get("opt_distance_distance", None) is not None:
-        cargs.extend([
+            (str(params.get("ratio", None)) if (params.get("ratio", None) is not None) else ""),
             "-distance",
-            str(params.get("opt_distance_distance", None))
-        ])
-    if params.get("opt_start_startval", None) is not None:
-        cargs.extend([
+            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
             "-start",
-            str(params.get("opt_start_startval", None))
+            (str(params.get("startval", None)) if (params.get("startval", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("value-threshold", None)))
+    cargs.append(str(params.get("minimum-area", None)))
     return cargs
 
 
@@ -190,7 +182,7 @@ def metric_find_clusters_outputs(
     """
     ret = MetricFindClustersOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -200,9 +192,7 @@ def metric_find_clusters_execute(
     runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
-    metric-find-clusters
-    
-    Filter clusters by surface area.
+    FILTER CLUSTERS BY SURFACE AREA.
     
     Outputs a metric with nonzero integers for all vertices within a large
     enough cluster, and zeros elsewhere. The integers denote cluster membership
@@ -212,10 +202,6 @@ def metric_find_clusters_execute(
     considered to be in a cluster, use -less-than to test for values less than
     the threshold. To apply this as a mask to the data, or to do more
     complicated thresholding, see -metric-math.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -233,24 +219,22 @@ def metric_find_clusters_execute(
 
 
 def metric_find_clusters(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    area_metric: InputPathType | None,
+    column: str | None,
+    ratio: float | None,
+    distance: float | None,
+    startval: int | None,
     surface: InputPathType,
     metric_in: InputPathType,
     value_threshold: float,
     minimum_area: float,
-    metric_out: str,
-    opt_less_than: bool = False,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_size_ratio_ratio: float | None = None,
-    opt_distance_distance: float | None = None,
-    opt_start_startval: int | None = None,
+    less_than: bool = False,
     runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
-    metric-find-clusters
-    
-    Filter clusters by surface area.
+    FILTER CLUSTERS BY SURFACE AREA.
     
     Outputs a metric with nonzero integers for all vertices within a large
     enough cluster, and zeros elsewhere. The integers denote cluster membership
@@ -261,47 +245,52 @@ def metric_find_clusters(
     the threshold. To apply this as a mask to the data, or to do more
     complicated thresholding, see -metric-math.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        roi_metric: select a region of interest\
+            \
+            the roi, as a metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+        column: select a single column\
+            \
+            the column number or name.
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
+            \
+            fraction of the largest cluster's area.
+        distance: ignore clusters further than a given distance from the\
+            largest cluster\
+            \
+            how far from the largest cluster a cluster can be, edge to edge, in\
+            mm.
+        startval: start labeling clusters from a value other than 1\
+            \
+            the value to give the first cluster found.
         surface: the surface to compute on.
         metric_in: the input metric.
         value_threshold: threshold for data values.
         minimum_area: threshold for cluster area, in mm^2.
-        metric_out: the output metric.
-        opt_less_than: find values less than <value-threshold>, rather than\
-            greater.
-        opt_roi_roi_metric: select a region of interest: the roi, as a metric.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_column_column: select a single column: the column number or name.
-        opt_size_ratio_ratio: ignore clusters smaller than a given fraction of\
-            the largest cluster in map: fraction of the largest cluster's area.
-        opt_distance_distance: ignore clusters further than a given distance\
-            from the largest cluster: how far from the largest cluster a cluster\
-            can be, edge to edge, in mm.
-        opt_start_startval: start labeling clusters from a value other than 1:\
-            the value to give the first cluster found.
+        less_than: find values less than <value-threshold>, rather than greater.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFindClustersOutputs`).
     """
     params = metric_find_clusters_params(
+        metric_out=metric_out,
+        less_than=less_than,
+        roi_metric=roi_metric,
+        area_metric=area_metric,
+        column=column,
+        ratio=ratio,
+        distance=distance,
+        startval=startval,
         surface=surface,
         metric_in=metric_in,
         value_threshold=value_threshold,
         minimum_area=minimum_area,
-        metric_out=metric_out,
-        opt_less_than=opt_less_than,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
-        opt_column_column=opt_column_column,
-        opt_size_ratio_ratio=opt_size_ratio_ratio,
-        opt_distance_distance=opt_distance_distance,
-        opt_start_startval=opt_start_startval,
     )
     return metric_find_clusters_execute(params, runner)
 

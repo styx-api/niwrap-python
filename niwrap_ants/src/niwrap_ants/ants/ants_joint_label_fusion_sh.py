@@ -22,7 +22,7 @@ AntsJointLabelFusionShParameters = typing.TypedDict('AntsJointLabelFusionShParam
     "rigid_transform": typing.NotRequired[str | None],
     "similarity_metric": typing.NotRequired[str | None],
     "other_options": typing.NotRequired[str | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
     "target_image": str,
     "mask_image": str,
     "rigid_transform_additional_options": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ AntsJointLabelFusionShParametersTagged = typing.TypedDict('AntsJointLabelFusionS
     "rigid_transform": typing.NotRequired[str | None],
     "similarity_metric": typing.NotRequired[str | None],
     "other_options": typing.NotRequired[str | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
     "target_image": str,
     "mask_image": str,
     "rigid_transform_additional_options": typing.NotRequired[str | None],
@@ -65,7 +65,7 @@ def ants_joint_label_fusion_sh_params(
     rigid_transform: str | None = None,
     similarity_metric: str | None = None,
     other_options: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     rigid_transform_additional_options: str | None = None,
     similarity_metric_additional_options: str | None = None,
 ) -> AntsJointLabelFusionShParametersTagged:
@@ -172,7 +172,7 @@ def ants_joint_label_fusion_sh_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     cargs.extend([
         "-i",
@@ -254,7 +254,7 @@ def ants_joint_label_fusion_sh(
     rigid_transform: str | None = None,
     similarity_metric: str | None = None,
     other_options: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     rigid_transform_additional_options: str | None = None,
     similarity_metric_additional_options: str | None = None,
     runner: Runner | None = None,

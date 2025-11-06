@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
-    id="6a441ba1d393e5ce7c0331880f44291c415f3d62.boutiques",
+    id="81f972736bb6af1bd37bc10b9a2daf65cf08fc89.workbench",
     name="surface-apply-warpfield",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceApplyWarpfieldParameters = typing.TypedDict('SurfaceApplyWarpfieldParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-warpfield"]],
-    "in_surf": InputPathType,
+    "out-surf": str,
+    "forward-warp": typing.NotRequired[str | None],
+    "in-surf": InputPathType,
     "warpfield": str,
-    "out_surf": str,
-    "opt_fnirt_forward_warp": typing.NotRequired[str | None],
 })
 SurfaceApplyWarpfieldParametersTagged = typing.TypedDict('SurfaceApplyWarpfieldParametersTagged', {
     "@type": typing.Literal["workbench/surface-apply-warpfield"],
-    "in_surf": InputPathType,
+    "out-surf": str,
+    "forward-warp": typing.NotRequired[str | None],
+    "in-surf": InputPathType,
     "warpfield": str,
-    "out_surf": str,
-    "opt_fnirt_forward_warp": typing.NotRequired[str | None],
 })
 
 
@@ -40,31 +39,32 @@ class SurfaceApplyWarpfieldOutputs(typing.NamedTuple):
 
 
 def surface_apply_warpfield_params(
+    out_surf: str,
+    forward_warp: str | None,
     in_surf: InputPathType,
     warpfield: str,
-    out_surf: str,
-    opt_fnirt_forward_warp: str | None = None,
 ) -> SurfaceApplyWarpfieldParametersTagged:
     """
     Build parameters.
     
     Args:
+        out_surf: the output transformed surface.
+        forward_warp: MUST be used if using a fnirt warpfield\
+            \
+            the forward warpfield.
         in_surf: the surface to transform.
         warpfield: the INVERSE warpfield.
-        out_surf: the output transformed surface.
-        opt_fnirt_forward_warp: MUST be used if using a fnirt warpfield: the\
-            forward warpfield.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-apply-warpfield",
-        "in_surf": in_surf,
+        "out-surf": out_surf,
+        "in-surf": in_surf,
         "warpfield": warpfield,
-        "out_surf": out_surf,
     }
-    if opt_fnirt_forward_warp is not None:
-        params["opt_fnirt_forward_warp"] = opt_fnirt_forward_warp
+    if forward_warp is not None:
+        params["forward-warp"] = forward_warp
     return params
 
 
@@ -82,16 +82,16 @@ def surface_apply_warpfield_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-apply-warpfield")
-    cargs.append(execution.input_file(params.get("in_surf", None)))
-    cargs.append(params.get("warpfield", None))
-    cargs.append(params.get("out_surf", None))
-    if params.get("opt_fnirt_forward_warp", None) is not None:
+    if params.get("forward-warp", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-surface-apply-warpfield",
+            params.get("out-surf", None),
             "-fnirt",
-            params.get("opt_fnirt_forward_warp", None)
+            params.get("forward-warp", None)
         ])
+    cargs.append(execution.input_file(params.get("in-surf", None)))
+    cargs.append(params.get("warpfield", None))
     return cargs
 
 
@@ -110,7 +110,7 @@ def surface_apply_warpfield_outputs(
     """
     ret = SurfaceApplyWarpfieldOutputs(
         root=execution.output_file("."),
-        out_surf=execution.output_file(params.get("out_surf", None)),
+        out_surf=execution.output_file(params.get("out-surf", None)),
     )
     return ret
 
@@ -120,9 +120,7 @@ def surface_apply_warpfield_execute(
     runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
-    surface-apply-warpfield
-    
-    Apply warpfield to surface file.
+    APPLY WARPFIELD TO SURFACE FILE.
     
     NOTE: warping a surface requires the INVERSE of the warpfield used to warp
     the volume it lines up with. The header of the forward warp is needed by the
@@ -131,10 +129,6 @@ def surface_apply_warpfield_execute(
     
     If the -fnirt option is not present, the warpfield must be a nifti 'world'
     warpfield, which can be obtained with the -convert-warpfield command.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -152,16 +146,14 @@ def surface_apply_warpfield_execute(
 
 
 def surface_apply_warpfield(
+    out_surf: str,
+    forward_warp: str | None,
     in_surf: InputPathType,
     warpfield: str,
-    out_surf: str,
-    opt_fnirt_forward_warp: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
-    surface-apply-warpfield
-    
-    Apply warpfield to surface file.
+    APPLY WARPFIELD TO SURFACE FILE.
     
     NOTE: warping a surface requires the INVERSE of the warpfield used to warp
     the volume it lines up with. The header of the forward warp is needed by the
@@ -171,25 +163,22 @@ def surface_apply_warpfield(
     If the -fnirt option is not present, the warpfield must be a nifti 'world'
     warpfield, which can be obtained with the -convert-warpfield command.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        out_surf: the output transformed surface.
+        forward_warp: MUST be used if using a fnirt warpfield\
+            \
+            the forward warpfield.
         in_surf: the surface to transform.
         warpfield: the INVERSE warpfield.
-        out_surf: the output transformed surface.
-        opt_fnirt_forward_warp: MUST be used if using a fnirt warpfield: the\
-            forward warpfield.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyWarpfieldOutputs`).
     """
     params = surface_apply_warpfield_params(
+        out_surf=out_surf,
+        forward_warp=forward_warp,
         in_surf=in_surf,
         warpfield=warpfield,
-        out_surf=out_surf,
-        opt_fnirt_forward_warp=opt_fnirt_forward_warp,
     )
     return surface_apply_warpfield_execute(params, runner)
 

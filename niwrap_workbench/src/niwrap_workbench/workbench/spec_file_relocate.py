@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SPEC_FILE_RELOCATE_METADATA = Metadata(
-    id="749f2233af5a8f3e4bd24c29117982578dc8bf47.boutiques",
+    id="18d002a145082ef00fd24f099aca16f95fc0b29a.workbench",
     name="spec-file-relocate",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SpecFileRelocateParameters = typing.TypedDict('SpecFileRelocateParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/spec-file-relocate"]],
-    "input_spec": str,
-    "output_spec": str,
+    "input-spec": str,
+    "output-spec": str,
 })
 SpecFileRelocateParametersTagged = typing.TypedDict('SpecFileRelocateParametersTagged', {
     "@type": typing.Literal["workbench/spec-file-relocate"],
-    "input_spec": str,
-    "output_spec": str,
+    "input-spec": str,
+    "output-spec": str,
 })
 
 
@@ -48,8 +47,8 @@ def spec_file_relocate_params(
     """
     params = {
         "@type": "workbench/spec-file-relocate",
-        "input_spec": input_spec,
-        "output_spec": output_spec,
+        "input-spec": input_spec,
+        "output-spec": output_spec,
     }
     return params
 
@@ -68,10 +67,12 @@ def spec_file_relocate_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-spec-file-relocate")
-    cargs.append(params.get("input_spec", None))
-    cargs.append(params.get("output_spec", None))
+    cargs.extend([
+        "wb_command",
+        "-spec-file-relocate"
+    ])
+    cargs.append(params.get("input-spec", None))
+    cargs.append(params.get("output-spec", None))
     return cargs
 
 
@@ -99,18 +100,12 @@ def spec_file_relocate_execute(
     runner: Runner | None = None,
 ) -> SpecFileRelocateOutputs:
     """
-    spec-file-relocate
-    
-    Recreate spec file in new location.
+    RECREATE SPEC FILE IN NEW LOCATION.
     
     Spec files contain internal relative paths, such that moving or copying a
     spec file will cause it to lose track of the files it refers to. This
     command makes a modified copy of the spec file, changing the relative paths
     to refer to the new relative locations of the files.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -133,18 +128,12 @@ def spec_file_relocate(
     runner: Runner | None = None,
 ) -> SpecFileRelocateOutputs:
     """
-    spec-file-relocate
-    
-    Recreate spec file in new location.
+    RECREATE SPEC FILE IN NEW LOCATION.
     
     Spec files contain internal relative paths, such that moving or copying a
     spec file will cause it to lose track of the files it refers to. This
     command makes a modified copy of the spec file, changing the relative paths
     to refer to the new relative locations of the files.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         input_spec: the spec file to use.

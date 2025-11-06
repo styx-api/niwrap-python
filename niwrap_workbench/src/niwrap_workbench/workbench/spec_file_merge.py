@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 SPEC_FILE_MERGE_METADATA = Metadata(
-    id="dc8ed74b03797d25ba546c4df5d98037f0153fa7.boutiques",
+    id="85ecceaff1fc0a1530a0d4627dab53d2a72a20ea.workbench",
     name="spec-file-merge",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SpecFileMergeParameters = typing.TypedDict('SpecFileMergeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/spec-file-merge"]],
-    "spec_1": str,
-    "spec_2": str,
-    "out_spec": str,
+    "spec-1": str,
+    "spec-2": str,
+    "out-spec": str,
 })
 SpecFileMergeParametersTagged = typing.TypedDict('SpecFileMergeParametersTagged', {
     "@type": typing.Literal["workbench/spec-file-merge"],
-    "spec_1": str,
-    "spec_2": str,
-    "out_spec": str,
+    "spec-1": str,
+    "spec-2": str,
+    "out-spec": str,
 })
 
 
@@ -52,9 +51,9 @@ def spec_file_merge_params(
     """
     params = {
         "@type": "workbench/spec-file-merge",
-        "spec_1": spec_1,
-        "spec_2": spec_2,
-        "out_spec": out_spec,
+        "spec-1": spec_1,
+        "spec-2": spec_2,
+        "out-spec": out_spec,
     }
     return params
 
@@ -73,11 +72,13 @@ def spec_file_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-spec-file-merge")
-    cargs.append(params.get("spec_1", None))
-    cargs.append(params.get("spec_2", None))
-    cargs.append(params.get("out_spec", None))
+    cargs.extend([
+        "wb_command",
+        "-spec-file-merge"
+    ])
+    cargs.append(params.get("spec-1", None))
+    cargs.append(params.get("spec-2", None))
+    cargs.append(params.get("out-spec", None))
     return cargs
 
 
@@ -105,16 +106,10 @@ def spec_file_merge_execute(
     runner: Runner | None = None,
 ) -> SpecFileMergeOutputs:
     """
-    spec-file-merge
-    
-    Merge two spec files into one.
+    MERGE TWO SPEC FILES INTO ONE.
     
     The output spec file contains every file that is in either of the input spec
     files.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -138,16 +133,10 @@ def spec_file_merge(
     runner: Runner | None = None,
 ) -> SpecFileMergeOutputs:
     """
-    spec-file-merge
-    
-    Merge two spec files into one.
+    MERGE TWO SPEC FILES INTO ONE.
     
     The output spec file contains every file that is in either of the input spec
     files.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         spec_1: first spec file to merge.

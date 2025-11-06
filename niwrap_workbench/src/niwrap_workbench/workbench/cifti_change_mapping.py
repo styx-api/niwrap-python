@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CHANGE_MAPPING_METADATA = Metadata(
-    id="ab237d77e9bc26eb5d7275bd370215569ec47142.boutiques",
+    id="98052ea0462fd3e196a00f6d6e0bcbac9ddc17e4.workbench",
     name="cifti-change-mapping",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -17,62 +16,62 @@ CiftiChangeMappingSeriesParameters = typing.TypedDict('CiftiChangeMappingSeriesP
     "@type": typing.NotRequired[typing.Literal["series"]],
     "step": float,
     "start": float,
-    "opt_unit_unit": typing.NotRequired[str | None],
+    "unit": typing.NotRequired[str | None],
 })
 CiftiChangeMappingSeriesParametersTagged = typing.TypedDict('CiftiChangeMappingSeriesParametersTagged', {
     "@type": typing.Literal["series"],
     "step": float,
     "start": float,
-    "opt_unit_unit": typing.NotRequired[str | None],
+    "unit": typing.NotRequired[str | None],
 })
 
 
 CiftiChangeMappingScalarParameters = typing.TypedDict('CiftiChangeMappingScalarParameters', {
     "@type": typing.NotRequired[typing.Literal["scalar"]],
-    "opt_name_file_file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
 })
 CiftiChangeMappingScalarParametersTagged = typing.TypedDict('CiftiChangeMappingScalarParametersTagged', {
     "@type": typing.Literal["scalar"],
-    "opt_name_file_file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
 })
 
 
 CiftiChangeMappingFromCiftiParameters = typing.TypedDict('CiftiChangeMappingFromCiftiParameters', {
-    "@type": typing.NotRequired[typing.Literal["from_cifti"]],
-    "template_cifti": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["from-cifti"]],
+    "template-cifti": InputPathType,
     "direction": str,
 })
 CiftiChangeMappingFromCiftiParametersTagged = typing.TypedDict('CiftiChangeMappingFromCiftiParametersTagged', {
-    "@type": typing.Literal["from_cifti"],
-    "template_cifti": InputPathType,
+    "@type": typing.Literal["from-cifti"],
+    "template-cifti": InputPathType,
     "direction": str,
 })
 
 
 CiftiChangeMappingParameters = typing.TypedDict('CiftiChangeMappingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-change-mapping"]],
-    "data_cifti": InputPathType,
-    "direction": str,
-    "cifti_out": str,
+    "cifti-out": str,
     "series": typing.NotRequired[CiftiChangeMappingSeriesParameters | None],
     "scalar": typing.NotRequired[CiftiChangeMappingScalarParameters | None],
-    "from_cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParameters | None],
+    "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParameters | None],
+    "data-cifti": InputPathType,
+    "direction": str,
 })
 CiftiChangeMappingParametersTagged = typing.TypedDict('CiftiChangeMappingParametersTagged', {
     "@type": typing.Literal["workbench/cifti-change-mapping"],
-    "data_cifti": InputPathType,
-    "direction": str,
-    "cifti_out": str,
+    "cifti-out": str,
     "series": typing.NotRequired[CiftiChangeMappingSeriesParameters | None],
     "scalar": typing.NotRequired[CiftiChangeMappingScalarParameters | None],
-    "from_cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParameters | None],
+    "from-cifti": typing.NotRequired[CiftiChangeMappingFromCiftiParameters | None],
+    "data-cifti": InputPathType,
+    "direction": str,
 })
 
 
 def cifti_change_mapping_series_params(
     step: float,
     start: float,
-    opt_unit_unit: str | None = None,
+    unit: str | None,
 ) -> CiftiChangeMappingSeriesParametersTagged:
     """
     Build parameters.
@@ -80,7 +79,9 @@ def cifti_change_mapping_series_params(
     Args:
         step: increment between series points.
         start: start value of the series.
-        opt_unit_unit: select unit for series (default SECOND): unit identifier.
+        unit: select unit for series (default SECOND)\
+            \
+            unit identifier.
     Returns:
         Parameter dictionary
     """
@@ -89,8 +90,8 @@ def cifti_change_mapping_series_params(
         "step": step,
         "start": start,
     }
-    if opt_unit_unit is not None:
-        params["opt_unit_unit"] = opt_unit_unit
+    if unit is not None:
+        params["unit"] = unit
     return params
 
 
@@ -108,34 +109,35 @@ def cifti_change_mapping_series_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-series")
-    cargs.append(str(params.get("step", None)))
-    cargs.append(str(params.get("start", None)))
-    if params.get("opt_unit_unit", None) is not None:
+    if params.get("unit", None) is not None:
         cargs.extend([
+            "-series",
+            str(params.get("step", None)),
+            str(params.get("start", None)),
             "-unit",
-            params.get("opt_unit_unit", None)
+            params.get("unit", None)
         ])
     return cargs
 
 
 def cifti_change_mapping_scalar_params(
-    opt_name_file_file: str | None = None,
+    file: str | None,
 ) -> CiftiChangeMappingScalarParametersTagged:
     """
     Build parameters.
     
     Args:
-        opt_name_file_file: specify names for the maps: text file containing\
-            map names, one per line.
+        file: specify names for the maps\
+            \
+            text file containing map names, one per line.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "scalar",
     }
-    if opt_name_file_file is not None:
-        params["opt_name_file_file"] = opt_name_file_file
+    if file is not None:
+        params["file"] = file
     return params
 
 
@@ -153,11 +155,11 @@ def cifti_change_mapping_scalar_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-scalar")
-    if params.get("opt_name_file_file", None) is not None:
+    if params.get("file", None) is not None:
         cargs.extend([
+            "-scalar",
             "-name-file",
-            params.get("opt_name_file_file", None)
+            params.get("file", None)
         ])
     return cargs
 
@@ -176,8 +178,8 @@ def cifti_change_mapping_from_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "from_cifti",
-        "template_cifti": template_cifti,
+        "@type": "from-cifti",
+        "template-cifti": template_cifti,
         "direction": direction,
     }
     return params
@@ -197,9 +199,11 @@ def cifti_change_mapping_from_cifti_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-from-cifti")
-    cargs.append(execution.input_file(params.get("template_cifti", None)))
-    cargs.append(params.get("direction", None))
+    cargs.extend([
+        "-from-cifti",
+        execution.input_file(params.get("template-cifti", None)),
+        params.get("direction", None)
+    ])
     return cargs
 
 
@@ -214,9 +218,9 @@ class CiftiChangeMappingOutputs(typing.NamedTuple):
 
 
 def cifti_change_mapping_params(
+    cifti_out: str,
     data_cifti: InputPathType,
     direction: str,
-    cifti_out: str,
     series: CiftiChangeMappingSeriesParameters | None = None,
     scalar: CiftiChangeMappingScalarParameters | None = None,
     from_cifti: CiftiChangeMappingFromCiftiParameters | None = None,
@@ -225,9 +229,9 @@ def cifti_change_mapping_params(
     Build parameters.
     
     Args:
+        cifti_out: the output cifti file.
         data_cifti: the cifti file to use the data from.
         direction: which direction on <data-cifti> to replace the mapping.
-        cifti_out: the output cifti file.
         series: set the mapping to series.
         scalar: set the mapping to scalar.
         from_cifti: copy mapping from another cifti file.
@@ -236,16 +240,16 @@ def cifti_change_mapping_params(
     """
     params = {
         "@type": "workbench/cifti-change-mapping",
-        "data_cifti": data_cifti,
+        "cifti-out": cifti_out,
+        "data-cifti": data_cifti,
         "direction": direction,
-        "cifti_out": cifti_out,
     }
     if series is not None:
         params["series"] = series
     if scalar is not None:
         params["scalar"] = scalar
     if from_cifti is not None:
-        params["from_cifti"] = from_cifti
+        params["from-cifti"] = from_cifti
     return params
 
 
@@ -263,17 +267,17 @@ def cifti_change_mapping_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-change-mapping")
-    cargs.append(execution.input_file(params.get("data_cifti", None)))
+    if params.get("series", None) is not None or params.get("scalar", None) is not None or params.get("from-cifti", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-cifti-change-mapping",
+            params.get("cifti-out", None),
+            *(cifti_change_mapping_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else []),
+            *(cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution) if (params.get("scalar", None) is not None) else []),
+            *(cifti_change_mapping_from_cifti_cargs(params.get("from-cifti", None), execution) if (params.get("from-cifti", None) is not None) else [])
+        ])
+    cargs.append(execution.input_file(params.get("data-cifti", None)))
     cargs.append(params.get("direction", None))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("series", None) is not None:
-        cargs.extend(cifti_change_mapping_series_cargs(params.get("series", None), execution))
-    if params.get("scalar", None) is not None:
-        cargs.extend(cifti_change_mapping_scalar_cargs(params.get("scalar", None), execution))
-    if params.get("from_cifti", None) is not None:
-        cargs.extend(cifti_change_mapping_from_cifti_cargs(params.get("from_cifti", None), execution))
     return cargs
 
 
@@ -292,7 +296,7 @@ def cifti_change_mapping_outputs(
     """
     ret = CiftiChangeMappingOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -302,9 +306,7 @@ def cifti_change_mapping_execute(
     runner: Runner | None = None,
 ) -> CiftiChangeMappingOutputs:
     """
-    cifti-change-mapping
-    
-    Convert to scalar, copy mapping, etc.
+    CONVERT TO SCALAR, COPY MAPPING, ETC.
     
     Take an existing cifti file and change one of the mappings. Exactly one of
     -series, -scalar, or -from-cifti must be specified. The direction can be
@@ -316,10 +318,6 @@ def cifti_change_mapping_execute(
     HERTZ
     METER
     RADIAN.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -337,18 +335,16 @@ def cifti_change_mapping_execute(
 
 
 def cifti_change_mapping(
+    cifti_out: str,
     data_cifti: InputPathType,
     direction: str,
-    cifti_out: str,
     series: CiftiChangeMappingSeriesParameters | None = None,
     scalar: CiftiChangeMappingScalarParameters | None = None,
     from_cifti: CiftiChangeMappingFromCiftiParameters | None = None,
     runner: Runner | None = None,
 ) -> CiftiChangeMappingOutputs:
     """
-    cifti-change-mapping
-    
-    Convert to scalar, copy mapping, etc.
+    CONVERT TO SCALAR, COPY MAPPING, ETC.
     
     Take an existing cifti file and change one of the mappings. Exactly one of
     -series, -scalar, or -from-cifti must be specified. The direction can be
@@ -361,14 +357,10 @@ def cifti_change_mapping(
     METER
     RADIAN.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: the output cifti file.
         data_cifti: the cifti file to use the data from.
         direction: which direction on <data-cifti> to replace the mapping.
-        cifti_out: the output cifti file.
         series: set the mapping to series.
         scalar: set the mapping to scalar.
         from_cifti: copy mapping from another cifti file.
@@ -377,12 +369,12 @@ def cifti_change_mapping(
         NamedTuple of outputs (described in `CiftiChangeMappingOutputs`).
     """
     params = cifti_change_mapping_params(
-        data_cifti=data_cifti,
-        direction=direction,
         cifti_out=cifti_out,
         series=series,
         scalar=scalar,
         from_cifti=from_cifti,
+        data_cifti=data_cifti,
+        direction=direction,
     )
     return cifti_change_mapping_execute(params, runner)
 

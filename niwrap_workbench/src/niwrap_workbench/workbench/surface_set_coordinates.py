@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 SURFACE_SET_COORDINATES_METADATA = Metadata(
-    id="72e93a016bdeefa39870b1c99e99dc40793bcdc3.boutiques",
+    id="6300d8d0bb2424f11e6f8bc0f67e98142564cdff.workbench",
     name="surface-set-coordinates",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceSetCoordinatesParameters = typing.TypedDict('SurfaceSetCoordinatesParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-set-coordinates"]],
-    "surface_in": InputPathType,
-    "coord_metric": InputPathType,
-    "surface_out": str,
+    "surface-out": str,
+    "surface-in": InputPathType,
+    "coord-metric": InputPathType,
 })
 SurfaceSetCoordinatesParametersTagged = typing.TypedDict('SurfaceSetCoordinatesParametersTagged', {
     "@type": typing.Literal["workbench/surface-set-coordinates"],
-    "surface_in": InputPathType,
-    "coord_metric": InputPathType,
-    "surface_out": str,
+    "surface-out": str,
+    "surface-in": InputPathType,
+    "coord-metric": InputPathType,
 })
 
 
@@ -38,25 +37,25 @@ class SurfaceSetCoordinatesOutputs(typing.NamedTuple):
 
 
 def surface_set_coordinates_params(
+    surface_out: str,
     surface_in: InputPathType,
     coord_metric: InputPathType,
-    surface_out: str,
 ) -> SurfaceSetCoordinatesParametersTagged:
     """
     Build parameters.
     
     Args:
+        surface_out: the new surface.
         surface_in: the surface to use for the topology.
         coord_metric: the new coordinates, as a 3-column metric file.
-        surface_out: the new surface.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-set-coordinates",
-        "surface_in": surface_in,
-        "coord_metric": coord_metric,
-        "surface_out": surface_out,
+        "surface-out": surface_out,
+        "surface-in": surface_in,
+        "coord-metric": coord_metric,
     }
     return params
 
@@ -75,11 +74,13 @@ def surface_set_coordinates_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-set-coordinates")
-    cargs.append(execution.input_file(params.get("surface_in", None)))
-    cargs.append(execution.input_file(params.get("coord_metric", None)))
-    cargs.append(params.get("surface_out", None))
+    cargs.extend([
+        "wb_command",
+        "-surface-set-coordinates",
+        params.get("surface-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("surface-in", None)))
+    cargs.append(execution.input_file(params.get("coord-metric", None)))
     return cargs
 
 
@@ -98,7 +99,7 @@ def surface_set_coordinates_outputs(
     """
     ret = SurfaceSetCoordinatesOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -108,19 +109,13 @@ def surface_set_coordinates_execute(
     runner: Runner | None = None,
 ) -> SurfaceSetCoordinatesOutputs:
     """
-    surface-set-coordinates
-    
-    Modify coordinates of a surface.
+    MODIFY COORDINATES OF A SURFACE.
     
     Takes the topology from an existing surface file, and uses values from a
     metric file as coordinates to construct a new surface file.
     
     See -surface-coordinates-to-metric for how to get surface coordinates as a
     metric file, such that you can then modify them via metric commands, etc.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -138,15 +133,13 @@ def surface_set_coordinates_execute(
 
 
 def surface_set_coordinates(
+    surface_out: str,
     surface_in: InputPathType,
     coord_metric: InputPathType,
-    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceSetCoordinatesOutputs:
     """
-    surface-set-coordinates
-    
-    Modify coordinates of a surface.
+    MODIFY COORDINATES OF A SURFACE.
     
     Takes the topology from an existing surface file, and uses values from a
     metric file as coordinates to construct a new surface file.
@@ -154,22 +147,18 @@ def surface_set_coordinates(
     See -surface-coordinates-to-metric for how to get surface coordinates as a
     metric file, such that you can then modify them via metric commands, etc.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        surface_out: the new surface.
         surface_in: the surface to use for the topology.
         coord_metric: the new coordinates, as a 3-column metric file.
-        surface_out: the new surface.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSetCoordinatesOutputs`).
     """
     params = surface_set_coordinates_params(
+        surface_out=surface_out,
         surface_in=surface_in,
         coord_metric=coord_metric,
-        surface_out=surface_out,
     )
     return surface_set_coordinates_execute(params, runner)
 

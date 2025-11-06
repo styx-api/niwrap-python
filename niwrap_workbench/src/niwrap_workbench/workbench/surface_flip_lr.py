@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SURFACE_FLIP_LR_METADATA = Metadata(
-    id="40cffc47a1b0a452d60871c5a8697c2aec5d0f41.boutiques",
+    id="bdd0276d22f7add2db023bdd235def55dde8330f.workbench",
     name="surface-flip-lr",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceFlipLrParameters = typing.TypedDict('SurfaceFlipLrParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-lr"]],
+    "surface-out": str,
     "surface": InputPathType,
-    "surface_out": str,
 })
 SurfaceFlipLrParametersTagged = typing.TypedDict('SurfaceFlipLrParametersTagged', {
     "@type": typing.Literal["workbench/surface-flip-lr"],
+    "surface-out": str,
     "surface": InputPathType,
-    "surface_out": str,
 })
 
 
@@ -36,22 +35,22 @@ class SurfaceFlipLrOutputs(typing.NamedTuple):
 
 
 def surface_flip_lr_params(
-    surface: InputPathType,
     surface_out: str,
+    surface: InputPathType,
 ) -> SurfaceFlipLrParametersTagged:
     """
     Build parameters.
     
     Args:
-        surface: the surface to flip.
         surface_out: the output flipped surface.
+        surface: the surface to flip.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-flip-lr",
+        "surface-out": surface_out,
         "surface": surface,
-        "surface_out": surface_out,
     }
     return params
 
@@ -70,10 +69,12 @@ def surface_flip_lr_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-flip-lr")
+    cargs.extend([
+        "wb_command",
+        "-surface-flip-lr",
+        params.get("surface-out", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -92,7 +93,7 @@ def surface_flip_lr_outputs(
     """
     ret = SurfaceFlipLrOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -102,19 +103,13 @@ def surface_flip_lr_execute(
     runner: Runner | None = None,
 ) -> SurfaceFlipLrOutputs:
     """
-    surface-flip-lr
-    
-    Mirror a surface through the yz plane.
+    MIRROR A SURFACE THROUGH THE YZ PLANE.
     
     This command negates the x coordinate of each vertex, and flips the surface
     normals, so that you have a surface of opposite handedness with the same
     features and vertex correspondence, with normals consistent with the
     original surface. That is, if the input surface has normals facing outward,
     the output surface will also have normals facing outward.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -132,14 +127,12 @@ def surface_flip_lr_execute(
 
 
 def surface_flip_lr(
-    surface: InputPathType,
     surface_out: str,
+    surface: InputPathType,
     runner: Runner | None = None,
 ) -> SurfaceFlipLrOutputs:
     """
-    surface-flip-lr
-    
-    Mirror a surface through the yz plane.
+    MIRROR A SURFACE THROUGH THE YZ PLANE.
     
     This command negates the x coordinate of each vertex, and flips the surface
     normals, so that you have a surface of opposite handedness with the same
@@ -147,20 +140,16 @@ def surface_flip_lr(
     original surface. That is, if the input surface has normals facing outward,
     the output surface will also have normals facing outward.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        surface: the surface to flip.
         surface_out: the output flipped surface.
+        surface: the surface to flip.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceFlipLrOutputs`).
     """
     params = surface_flip_lr_params(
-        surface=surface,
         surface_out=surface_out,
+        surface=surface,
     )
     return surface_flip_lr_execute(params, runner)
 

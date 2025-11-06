@@ -6,34 +6,33 @@ import pathlib
 from styxdefs import *
 
 BORDER_FILE_EXPORT_TO_CARET5_METADATA = Metadata(
-    id="5bdb523cf35c997b31a3b9033a83e1125033b032.boutiques",
+    id="d4e6431becb0638cb3d2c64db0bbecb9e7a7b28c.workbench",
     name="border-file-export-to-caret5",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BorderFileExportToCaret5SurfaceParameters = typing.TypedDict('BorderFileExportToCaret5SurfaceParameters', {
     "@type": typing.NotRequired[typing.Literal["surface"]],
-    "surface_in": InputPathType,
+    "surface-in": InputPathType,
 })
 BorderFileExportToCaret5SurfaceParametersTagged = typing.TypedDict('BorderFileExportToCaret5SurfaceParametersTagged', {
     "@type": typing.Literal["surface"],
-    "surface_in": InputPathType,
+    "surface-in": InputPathType,
 })
 
 
 BorderFileExportToCaret5Parameters = typing.TypedDict('BorderFileExportToCaret5Parameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-file-export-to-caret5"]],
-    "border_file": str,
-    "output_file_prefix": str,
     "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParameters] | None],
+    "border-file": str,
+    "output-file-prefix": str,
 })
 BorderFileExportToCaret5ParametersTagged = typing.TypedDict('BorderFileExportToCaret5ParametersTagged', {
     "@type": typing.Literal["workbench/border-file-export-to-caret5"],
-    "border_file": str,
-    "output_file_prefix": str,
     "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParameters] | None],
+    "border-file": str,
+    "output-file-prefix": str,
 })
 
 
@@ -50,7 +49,7 @@ def border_file_export_to_caret5_surface_params(
     """
     params = {
         "@type": "surface",
-        "surface_in": surface_in,
+        "surface-in": surface_in,
     }
     return params
 
@@ -69,8 +68,10 @@ def border_file_export_to_caret5_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-surface")
-    cargs.append(execution.input_file(params.get("surface_in", None)))
+    cargs.extend([
+        "-surface",
+        execution.input_file(params.get("surface-in", None))
+    ])
     return cargs
 
 
@@ -100,8 +101,8 @@ def border_file_export_to_caret5_params(
     """
     params = {
         "@type": "workbench/border-file-export-to-caret5",
-        "border_file": border_file,
-        "output_file_prefix": output_file_prefix,
+        "border-file": border_file,
+        "output-file-prefix": output_file_prefix,
     }
     if surface is not None:
         params["surface"] = surface
@@ -122,12 +123,14 @@ def border_file_export_to_caret5_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-border-file-export-to-caret5")
-    cargs.append(params.get("border_file", None))
-    cargs.append(params.get("output_file_prefix", None))
     if params.get("surface", None) is not None:
-        cargs.extend([a for c in [border_file_export_to_caret5_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
+        cargs.extend([
+            "wb_command",
+            "-border-file-export-to-caret5",
+            *[a for c in [border_file_export_to_caret5_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c]
+        ])
+    cargs.append(params.get("border-file", None))
+    cargs.append(params.get("output-file-prefix", None))
     return cargs
 
 
@@ -155,9 +158,7 @@ def border_file_export_to_caret5_execute(
     runner: Runner | None = None,
 ) -> BorderFileExportToCaret5Outputs:
     """
-    border-file-export-to-caret5
-    
-    Export border file to caret5 file format.
+    EXPORT BORDER FILE TO CARET5 FILE FORMAT.
     
     A Workbench border file may contain borders for multiple structures and
     borders that are both projected and unprojected. It also contains a color
@@ -183,10 +184,6 @@ def border_file_export_to_caret5_execute(
     
     When writing new files, this command will overwrite a file with the same
     name. .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -210,9 +207,7 @@ def border_file_export_to_caret5(
     runner: Runner | None = None,
 ) -> BorderFileExportToCaret5Outputs:
     """
-    border-file-export-to-caret5
-    
-    Export border file to caret5 file format.
+    EXPORT BORDER FILE TO CARET5 FILE FORMAT.
     
     A Workbench border file may contain borders for multiple structures and
     borders that are both projected and unprojected. It also contains a color
@@ -239,10 +234,6 @@ def border_file_export_to_caret5(
     When writing new files, this command will overwrite a file with the same
     name. .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         border_file: workbench border file.
         output_file_prefix: prefix for name of output caret5\
@@ -253,9 +244,9 @@ def border_file_export_to_caret5(
         NamedTuple of outputs (described in `BorderFileExportToCaret5Outputs`).
     """
     params = border_file_export_to_caret5_params(
+        surface=surface,
         border_file=border_file,
         output_file_prefix=output_file_prefix,
-        surface=surface,
     )
     return border_file_export_to_caret5_execute(params, runner)
 

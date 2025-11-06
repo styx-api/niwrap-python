@@ -1,10 +1,10 @@
 {
   "fn_root_make_params_and_execute": "metadata_remove_provenance",
   "properties": {
-    "input_file": {
+    "input-file": {
       "var_param": "input_file"
     },
-    "output_file": {
+    "output-file": {
       "var_param": "output_file"
     }
   }

@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 VOLUME_ERODE_METADATA = Metadata(
-    id="e745724b943117f1bea44203e23d97dc9e188367.boutiques",
+    id="de54c7f54c6368999f264ce5975a56da07dfce18.workbench",
     name="volume-erode",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeErodeParameters = typing.TypedDict('VolumeErodeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-erode"]],
+    "volume-out": str,
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "distance": float,
-    "volume_out": str,
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 VolumeErodeParametersTagged = typing.TypedDict('VolumeErodeParametersTagged', {
     "@type": typing.Literal["workbench/volume-erode"],
+    "volume-out": str,
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "distance": float,
-    "volume_out": str,
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 
 
@@ -42,36 +41,38 @@ class VolumeErodeOutputs(typing.NamedTuple):
 
 
 def volume_erode_params(
+    volume_out: str,
+    roi_volume: InputPathType | None,
+    subvol: str | None,
     volume: InputPathType,
     distance: float,
-    volume_out: str,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
 ) -> VolumeErodeParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
+        roi_volume: assume voxels outside this roi are nonzero\
+            \
+            volume file, positive values denote voxels that have data.
+        subvol: select a single subvolume to dilate\
+            \
+            the subvolume number or name.
         volume: the volume to erode.
         distance: distance in mm to erode.
-        volume_out: the output volume.
-        opt_roi_roi_volume: assume voxels outside this roi are nonzero: volume\
-            file, positive values denote voxels that have data.
-        opt_subvolume_subvol: select a single subvolume to dilate: the\
-            subvolume number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-erode",
+        "volume-out": volume_out,
         "volume": volume,
         "distance": distance,
-        "volume_out": volume_out,
     }
-    if opt_roi_roi_volume is not None:
-        params["opt_roi_roi_volume"] = opt_roi_roi_volume
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -89,21 +90,18 @@ def volume_erode_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-erode")
+    if params.get("roi-volume", None) is not None or params.get("subvol", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-volume-erode",
+            params.get("volume-out", None),
+            "-roi",
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-subvolume",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(str(params.get("distance", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_roi_roi_volume", None) is not None:
-        cargs.extend([
-            "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume", None))
-        ])
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
-            "-subvolume",
-            params.get("opt_subvolume_subvol", None)
-        ])
     return cargs
 
 
@@ -122,7 +120,7 @@ def volume_erode_outputs(
     """
     ret = VolumeErodeOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -132,17 +130,11 @@ def volume_erode_execute(
     runner: Runner | None = None,
 ) -> VolumeErodeOutputs:
     """
-    volume-erode
-    
-    Erode a volume file.
+    ERODE A VOLUME FILE.
     
     Around each voxel with a value of zero, set surrounding voxels to zero. The
     surrounding voxels are all face neighbors and all voxels within the
     specified distance (center to center).
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -160,44 +152,40 @@ def volume_erode_execute(
 
 
 def volume_erode(
+    volume_out: str,
+    roi_volume: InputPathType | None,
+    subvol: str | None,
     volume: InputPathType,
     distance: float,
-    volume_out: str,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeErodeOutputs:
     """
-    volume-erode
-    
-    Erode a volume file.
+    ERODE A VOLUME FILE.
     
     Around each voxel with a value of zero, set surrounding voxels to zero. The
     surrounding voxels are all face neighbors and all voxels within the
     specified distance (center to center).
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
+        roi_volume: assume voxels outside this roi are nonzero\
+            \
+            volume file, positive values denote voxels that have data.
+        subvol: select a single subvolume to dilate\
+            \
+            the subvolume number or name.
         volume: the volume to erode.
         distance: distance in mm to erode.
-        volume_out: the output volume.
-        opt_roi_roi_volume: assume voxels outside this roi are nonzero: volume\
-            file, positive values denote voxels that have data.
-        opt_subvolume_subvol: select a single subvolume to dilate: the\
-            subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeErodeOutputs`).
     """
     params = volume_erode_params(
+        volume_out=volume_out,
+        roi_volume=roi_volume,
+        subvol=subvol,
         volume=volume,
         distance=distance,
-        volume_out=volume_out,
-        opt_roi_roi_volume=opt_roi_roi_volume,
-        opt_subvolume_subvol=opt_subvolume_subvol,
     )
     return volume_erode_execute(params, runner)
 

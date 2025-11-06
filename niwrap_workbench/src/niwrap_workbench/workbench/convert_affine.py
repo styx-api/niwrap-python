@@ -6,102 +6,101 @@ import pathlib
 from styxdefs import *
 
 CONVERT_AFFINE_METADATA = Metadata(
-    id="4cd37f69e7dc378d87a51d9e406bdba4fef416e6.boutiques",
+    id="f8f331e0186c1d179bf357df5d5eadf7019f39e3.workbench",
     name="convert-affine",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 ConvertAffineFromWorldParameters = typing.TypedDict('ConvertAffineFromWorldParameters', {
-    "@type": typing.NotRequired[typing.Literal["from_world"]],
+    "@type": typing.NotRequired[typing.Literal["from-world"]],
     "input": str,
-    "opt_inverse": bool,
+    "inverse": bool,
 })
 ConvertAffineFromWorldParametersTagged = typing.TypedDict('ConvertAffineFromWorldParametersTagged', {
-    "@type": typing.Literal["from_world"],
+    "@type": typing.Literal["from-world"],
     "input": str,
-    "opt_inverse": bool,
+    "inverse": bool,
 })
 
 
 ConvertAffineFromFlirtParameters = typing.TypedDict('ConvertAffineFromFlirtParameters', {
-    "@type": typing.NotRequired[typing.Literal["from_flirt"]],
+    "@type": typing.NotRequired[typing.Literal["from-flirt"]],
     "input": str,
-    "source_volume": str,
-    "target_volume": str,
+    "source-volume": str,
+    "target-volume": str,
 })
 ConvertAffineFromFlirtParametersTagged = typing.TypedDict('ConvertAffineFromFlirtParametersTagged', {
-    "@type": typing.Literal["from_flirt"],
+    "@type": typing.Literal["from-flirt"],
     "input": str,
-    "source_volume": str,
-    "target_volume": str,
+    "source-volume": str,
+    "target-volume": str,
 })
 
 
 ConvertAffineToWorldParameters = typing.TypedDict('ConvertAffineToWorldParameters', {
-    "@type": typing.NotRequired[typing.Literal["to_world"]],
+    "@type": typing.NotRequired[typing.Literal["to-world"]],
     "output": str,
-    "opt_inverse": bool,
+    "inverse": bool,
 })
 ConvertAffineToWorldParametersTagged = typing.TypedDict('ConvertAffineToWorldParametersTagged', {
-    "@type": typing.Literal["to_world"],
+    "@type": typing.Literal["to-world"],
     "output": str,
-    "opt_inverse": bool,
+    "inverse": bool,
 })
 
 
 ConvertAffineToFlirtParameters = typing.TypedDict('ConvertAffineToFlirtParameters', {
-    "@type": typing.NotRequired[typing.Literal["to_flirt"]],
+    "@type": typing.NotRequired[typing.Literal["to-flirt"]],
     "output": str,
-    "source_volume": str,
-    "target_volume": str,
+    "source-volume": str,
+    "target-volume": str,
 })
 ConvertAffineToFlirtParametersTagged = typing.TypedDict('ConvertAffineToFlirtParametersTagged', {
-    "@type": typing.Literal["to_flirt"],
+    "@type": typing.Literal["to-flirt"],
     "output": str,
-    "source_volume": str,
-    "target_volume": str,
+    "source-volume": str,
+    "target-volume": str,
 })
 
 
 ConvertAffineParameters = typing.TypedDict('ConvertAffineParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/convert-affine"]],
-    "from_world": typing.NotRequired[ConvertAffineFromWorldParameters | None],
-    "opt_from_itk_input": typing.NotRequired[str | None],
-    "from_flirt": typing.NotRequired[ConvertAffineFromFlirtParameters | None],
-    "to_world": typing.NotRequired[ConvertAffineToWorldParameters | None],
-    "opt_to_itk_output": typing.NotRequired[str | None],
-    "to_flirt": typing.NotRequired[list[ConvertAffineToFlirtParameters] | None],
+    "from-world": typing.NotRequired[ConvertAffineFromWorldParameters | None],
+    "input": typing.NotRequired[str | None],
+    "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParameters | None],
+    "to-world": typing.NotRequired[ConvertAffineToWorldParameters | None],
+    "output": typing.NotRequired[str | None],
+    "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParameters] | None],
 })
 ConvertAffineParametersTagged = typing.TypedDict('ConvertAffineParametersTagged', {
     "@type": typing.Literal["workbench/convert-affine"],
-    "from_world": typing.NotRequired[ConvertAffineFromWorldParameters | None],
-    "opt_from_itk_input": typing.NotRequired[str | None],
-    "from_flirt": typing.NotRequired[ConvertAffineFromFlirtParameters | None],
-    "to_world": typing.NotRequired[ConvertAffineToWorldParameters | None],
-    "opt_to_itk_output": typing.NotRequired[str | None],
-    "to_flirt": typing.NotRequired[list[ConvertAffineToFlirtParameters] | None],
+    "from-world": typing.NotRequired[ConvertAffineFromWorldParameters | None],
+    "input": typing.NotRequired[str | None],
+    "from-flirt": typing.NotRequired[ConvertAffineFromFlirtParameters | None],
+    "to-world": typing.NotRequired[ConvertAffineToWorldParameters | None],
+    "output": typing.NotRequired[str | None],
+    "to-flirt": typing.NotRequired[list[ConvertAffineToFlirtParameters] | None],
 })
 
 
 def convert_affine_from_world_params(
     input_: str,
-    opt_inverse: bool = False,
+    inverse: bool = False,
 ) -> ConvertAffineFromWorldParametersTagged:
     """
     Build parameters.
     
     Args:
         input_: the input affine.
-        opt_inverse: for files that use 'target to source' convention.
+        inverse: for files that use 'target to source' convention.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "from_world",
+        "@type": "from-world",
         "input": input_,
-        "opt_inverse": opt_inverse,
+        "inverse": inverse,
     }
     return params
 
@@ -120,10 +119,12 @@ def convert_affine_from_world_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-from-world")
-    cargs.append(params.get("input", None))
-    if params.get("opt_inverse", False):
-        cargs.append("-inverse")
+    if params.get("inverse", False):
+        cargs.extend([
+            "-from-world",
+            params.get("input", None),
+            "-inverse"
+        ])
     return cargs
 
 
@@ -143,10 +144,10 @@ def convert_affine_from_flirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "from_flirt",
+        "@type": "from-flirt",
         "input": input_,
-        "source_volume": source_volume,
-        "target_volume": target_volume,
+        "source-volume": source_volume,
+        "target-volume": target_volume,
     }
     return params
 
@@ -165,30 +166,32 @@ def convert_affine_from_flirt_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-from-flirt")
-    cargs.append(params.get("input", None))
-    cargs.append(params.get("source_volume", None))
-    cargs.append(params.get("target_volume", None))
+    cargs.extend([
+        "-from-flirt",
+        params.get("input", None),
+        params.get("source-volume", None),
+        params.get("target-volume", None)
+    ])
     return cargs
 
 
 def convert_affine_to_world_params(
     output: str,
-    opt_inverse: bool = False,
+    inverse: bool = False,
 ) -> ConvertAffineToWorldParametersTagged:
     """
     Build parameters.
     
     Args:
         output: output - the output affine.
-        opt_inverse: write file using 'target to source' convention.
+        inverse: write file using 'target to source' convention.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "to_world",
+        "@type": "to-world",
         "output": output,
-        "opt_inverse": opt_inverse,
+        "inverse": inverse,
     }
     return params
 
@@ -207,10 +210,12 @@ def convert_affine_to_world_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-to-world")
-    cargs.append(params.get("output", None))
-    if params.get("opt_inverse", False):
-        cargs.append("-inverse")
+    if params.get("inverse", False):
+        cargs.extend([
+            "-to-world",
+            params.get("output", None),
+            "-inverse"
+        ])
     return cargs
 
 
@@ -231,10 +236,10 @@ def convert_affine_to_flirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "to_flirt",
+        "@type": "to-flirt",
         "output": output,
-        "source_volume": source_volume,
-        "target_volume": target_volume,
+        "source-volume": source_volume,
+        "target-volume": target_volume,
     }
     return params
 
@@ -253,10 +258,12 @@ def convert_affine_to_flirt_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-to-flirt")
-    cargs.append(params.get("output", None))
-    cargs.append(params.get("source_volume", None))
-    cargs.append(params.get("target_volume", None))
+    cargs.extend([
+        "-to-flirt",
+        params.get("output", None),
+        params.get("source-volume", None),
+        params.get("target-volume", None)
+    ])
     return cargs
 
 
@@ -269,23 +276,26 @@ class ConvertAffineOutputs(typing.NamedTuple):
 
 
 def convert_affine_params(
+    input_: str | None,
+    output: str | None,
     from_world: ConvertAffineFromWorldParameters | None = None,
-    opt_from_itk_input: str | None = None,
     from_flirt: ConvertAffineFromFlirtParameters | None = None,
     to_world: ConvertAffineToWorldParameters | None = None,
-    opt_to_itk_output: str | None = None,
     to_flirt: list[ConvertAffineToFlirtParameters] | None = None,
 ) -> ConvertAffineParametersTagged:
     """
     Build parameters.
     
     Args:
+        input_: input is an ITK matrix\
+            \
+            the input affine.
+        output: write output as an ITK affine\
+            \
+            output - the output affine.
         from_world: input is a NIFTI 'world' affine.
-        opt_from_itk_input: input is an ITK matrix: the input affine.
         from_flirt: input is a flirt matrix.
         to_world: write output as a NIFTI 'world' affine.
-        opt_to_itk_output: write output as an ITK affine: output - the output\
-            affine.
         to_flirt: write output as a flirt matrix.
     Returns:
         Parameter dictionary
@@ -294,17 +304,17 @@ def convert_affine_params(
         "@type": "workbench/convert-affine",
     }
     if from_world is not None:
-        params["from_world"] = from_world
-    if opt_from_itk_input is not None:
-        params["opt_from_itk_input"] = opt_from_itk_input
+        params["from-world"] = from_world
+    if input_ is not None:
+        params["input"] = input_
     if from_flirt is not None:
-        params["from_flirt"] = from_flirt
+        params["from-flirt"] = from_flirt
     if to_world is not None:
-        params["to_world"] = to_world
-    if opt_to_itk_output is not None:
-        params["opt_to_itk_output"] = opt_to_itk_output
+        params["to-world"] = to_world
+    if output is not None:
+        params["output"] = output
     if to_flirt is not None:
-        params["to_flirt"] = to_flirt
+        params["to-flirt"] = to_flirt
     return params
 
 
@@ -322,26 +332,19 @@ def convert_affine_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-convert-affine")
-    if params.get("from_world", None) is not None:
-        cargs.extend(convert_affine_from_world_cargs(params.get("from_world", None), execution))
-    if params.get("opt_from_itk_input", None) is not None:
+    if params.get("from-world", None) is not None or params.get("input", None) is not None or params.get("from-flirt", None) is not None or params.get("to-world", None) is not None or params.get("output", None) is not None or params.get("to-flirt", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-convert-affine",
+            *(convert_affine_from_world_cargs(params.get("from-world", None), execution) if (params.get("from-world", None) is not None) else []),
             "-from-itk",
-            params.get("opt_from_itk_input", None)
-        ])
-    if params.get("from_flirt", None) is not None:
-        cargs.extend(convert_affine_from_flirt_cargs(params.get("from_flirt", None), execution))
-    if params.get("to_world", None) is not None:
-        cargs.extend(convert_affine_to_world_cargs(params.get("to_world", None), execution))
-    if params.get("opt_to_itk_output", None) is not None:
-        cargs.extend([
+            (params.get("input", None) if (params.get("input", None) is not None) else ""),
+            *(convert_affine_from_flirt_cargs(params.get("from-flirt", None), execution) if (params.get("from-flirt", None) is not None) else []),
+            *(convert_affine_to_world_cargs(params.get("to-world", None), execution) if (params.get("to-world", None) is not None) else []),
             "-to-itk",
-            params.get("opt_to_itk_output", None)
+            (params.get("output", None) if (params.get("output", None) is not None) else ""),
+            *([a for c in [convert_affine_to_flirt_cargs(s, execution) for s in params.get("to-flirt", None)] for a in c] if (params.get("to-flirt", None) is not None) else [])
         ])
-    if params.get("to_flirt", None) is not None:
-        cargs.extend([a for c in [convert_affine_to_flirt_cargs(s, execution) for s in params.get("to_flirt", None)] for a in c])
     return cargs
 
 
@@ -369,9 +372,7 @@ def convert_affine_execute(
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
-    convert-affine
-    
-    Convert an affine file between conventions.
+    CONVERT AN AFFINE FILE BETWEEN CONVENTIONS.
     
     NIFTI world matrices can be used directly on mm coordinates via matrix
     multiplication, they use the NIFTI coordinate system, that is, positive X is
@@ -384,10 +385,6 @@ def convert_affine_execute(
     
     You must specify exactly one -from option, but you may specify multiple -to
     options, and -to-flirt may be specified more than once.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -405,18 +402,16 @@ def convert_affine_execute(
 
 
 def convert_affine(
+    input_: str | None,
+    output: str | None,
     from_world: ConvertAffineFromWorldParameters | None = None,
-    opt_from_itk_input: str | None = None,
     from_flirt: ConvertAffineFromFlirtParameters | None = None,
     to_world: ConvertAffineToWorldParameters | None = None,
-    opt_to_itk_output: str | None = None,
     to_flirt: list[ConvertAffineToFlirtParameters] | None = None,
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
-    convert-affine
-    
-    Convert an affine file between conventions.
+    CONVERT AN AFFINE FILE BETWEEN CONVENTIONS.
     
     NIFTI world matrices can be used directly on mm coordinates via matrix
     multiplication, they use the NIFTI coordinate system, that is, positive X is
@@ -430,17 +425,16 @@ def convert_affine(
     You must specify exactly one -from option, but you may specify multiple -to
     options, and -to-flirt may be specified more than once.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        input_: input is an ITK matrix\
+            \
+            the input affine.
+        output: write output as an ITK affine\
+            \
+            output - the output affine.
         from_world: input is a NIFTI 'world' affine.
-        opt_from_itk_input: input is an ITK matrix: the input affine.
         from_flirt: input is a flirt matrix.
         to_world: write output as a NIFTI 'world' affine.
-        opt_to_itk_output: write output as an ITK affine: output - the output\
-            affine.
         to_flirt: write output as a flirt matrix.
         runner: Command runner.
     Returns:
@@ -448,10 +442,10 @@ def convert_affine(
     """
     params = convert_affine_params(
         from_world=from_world,
-        opt_from_itk_input=opt_from_itk_input,
+        input_=input_,
         from_flirt=from_flirt,
         to_world=to_world,
-        opt_to_itk_output=opt_to_itk_output,
+        output=output,
         to_flirt=to_flirt,
     )
     return convert_affine_execute(params, runner)

@@ -6,20 +6,19 @@ import pathlib
 from styxdefs import *
 
 SCENE_CAPTURE_IMAGE_METADATA = Metadata(
-    id="55af0e180213a5b9c01ff3c05ec7ffefe348871b.boutiques",
+    id="d7f78e620a92e4692790ceda0d24ff04fb837ed8.workbench",
     name="scene-capture-image",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SceneCaptureImageSizeWidthHeightParameters = typing.TypedDict('SceneCaptureImageSizeWidthHeightParameters', {
-    "@type": typing.NotRequired[typing.Literal["size_width_height"]],
+    "@type": typing.NotRequired[typing.Literal["size-width-height"]],
     "width": float,
     "height": float,
 })
 SceneCaptureImageSizeWidthHeightParametersTagged = typing.TypedDict('SceneCaptureImageSizeWidthHeightParametersTagged', {
-    "@type": typing.Literal["size_width_height"],
+    "@type": typing.Literal["size-width-height"],
     "width": float,
     "height": float,
 })
@@ -27,35 +26,35 @@ SceneCaptureImageSizeWidthHeightParametersTagged = typing.TypedDict('SceneCaptur
 
 SceneCaptureImageResolutionParameters = typing.TypedDict('SceneCaptureImageResolutionParameters', {
     "@type": typing.NotRequired[typing.Literal["resolution"]],
-    "number_of_pixels": float,
-    "units_name": str,
+    "Number of pixels": float,
+    "Units Name": str,
 })
 SceneCaptureImageResolutionParametersTagged = typing.TypedDict('SceneCaptureImageResolutionParametersTagged', {
     "@type": typing.Literal["resolution"],
-    "number_of_pixels": float,
-    "units_name": str,
+    "Number of pixels": float,
+    "Units Name": str,
 })
 
 
 SceneCaptureImageSetMapYokeParameters = typing.TypedDict('SceneCaptureImageSetMapYokeParameters', {
-    "@type": typing.NotRequired[typing.Literal["set_map_yoke"]],
-    "map_yoking_roman_numeral": str,
-    "map_undex": int,
+    "@type": typing.NotRequired[typing.Literal["set-map-yoke"]],
+    "map yoking roman numeral": str,
+    "map undex": int,
 })
 SceneCaptureImageSetMapYokeParametersTagged = typing.TypedDict('SceneCaptureImageSetMapYokeParametersTagged', {
-    "@type": typing.Literal["set_map_yoke"],
-    "map_yoking_roman_numeral": str,
-    "map_undex": int,
+    "@type": typing.Literal["set-map-yoke"],
+    "map yoking roman numeral": str,
+    "map undex": int,
 })
 
 
 SceneCaptureImageConnDbLoginParameters = typing.TypedDict('SceneCaptureImageConnDbLoginParameters', {
-    "@type": typing.NotRequired[typing.Literal["conn_db_login"]],
+    "@type": typing.NotRequired[typing.Literal["conn-db-login"]],
     "username": str,
     "password": str,
 })
 SceneCaptureImageConnDbLoginParametersTagged = typing.TypedDict('SceneCaptureImageConnDbLoginParametersTagged', {
-    "@type": typing.Literal["conn_db_login"],
+    "@type": typing.Literal["conn-db-login"],
     "username": str,
     "password": str,
 })
@@ -63,43 +62,43 @@ SceneCaptureImageConnDbLoginParametersTagged = typing.TypedDict('SceneCaptureIma
 
 SceneCaptureImageParameters = typing.TypedDict('SceneCaptureImageParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-capture-image"]],
-    "scene_file": str,
-    "scene_name_or_number": str,
-    "image_file_name": str,
-    "opt_size_window": bool,
-    "opt_size_capture": bool,
-    "size_width_height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParameters | None],
-    "opt_size_width_width": typing.NotRequired[float | None],
-    "opt_size_height_height": typing.NotRequired[float | None],
-    "opt_units_units": typing.NotRequired[str | None],
+    "size-window": bool,
+    "size-capture": bool,
+    "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParameters | None],
+    "width": typing.NotRequired[float | None],
+    "height": typing.NotRequired[float | None],
+    "units": typing.NotRequired[str | None],
     "resolution": typing.NotRequired[SceneCaptureImageResolutionParameters | None],
-    "opt_margin_size": typing.NotRequired[int | None],
-    "opt_no_scene_colors": bool,
-    "set_map_yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParameters | None],
-    "conn_db_login": typing.NotRequired[SceneCaptureImageConnDbLoginParameters | None],
-    "opt_show_capture_settings": bool,
-    "opt_renderer_renderer": typing.NotRequired[str | None],
-    "opt_print_image_info": bool,
+    "size": typing.NotRequired[int | None],
+    "no-scene-colors": bool,
+    "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParameters | None],
+    "conn-db-login": typing.NotRequired[SceneCaptureImageConnDbLoginParameters | None],
+    "show-capture-settings": bool,
+    "Renderer": typing.NotRequired[str | None],
+    "print-image-info": bool,
+    "scene-file": str,
+    "scene-name-or-number": str,
+    "image-file-name": str,
 })
 SceneCaptureImageParametersTagged = typing.TypedDict('SceneCaptureImageParametersTagged', {
     "@type": typing.Literal["workbench/scene-capture-image"],
-    "scene_file": str,
-    "scene_name_or_number": str,
-    "image_file_name": str,
-    "opt_size_window": bool,
-    "opt_size_capture": bool,
-    "size_width_height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParameters | None],
-    "opt_size_width_width": typing.NotRequired[float | None],
-    "opt_size_height_height": typing.NotRequired[float | None],
-    "opt_units_units": typing.NotRequired[str | None],
+    "size-window": bool,
+    "size-capture": bool,
+    "size-width-height": typing.NotRequired[SceneCaptureImageSizeWidthHeightParameters | None],
+    "width": typing.NotRequired[float | None],
+    "height": typing.NotRequired[float | None],
+    "units": typing.NotRequired[str | None],
     "resolution": typing.NotRequired[SceneCaptureImageResolutionParameters | None],
-    "opt_margin_size": typing.NotRequired[int | None],
-    "opt_no_scene_colors": bool,
-    "set_map_yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParameters | None],
-    "conn_db_login": typing.NotRequired[SceneCaptureImageConnDbLoginParameters | None],
-    "opt_show_capture_settings": bool,
-    "opt_renderer_renderer": typing.NotRequired[str | None],
-    "opt_print_image_info": bool,
+    "size": typing.NotRequired[int | None],
+    "no-scene-colors": bool,
+    "set-map-yoke": typing.NotRequired[SceneCaptureImageSetMapYokeParameters | None],
+    "conn-db-login": typing.NotRequired[SceneCaptureImageConnDbLoginParameters | None],
+    "show-capture-settings": bool,
+    "Renderer": typing.NotRequired[str | None],
+    "print-image-info": bool,
+    "scene-file": str,
+    "scene-name-or-number": str,
+    "image-file-name": str,
 })
 
 
@@ -117,7 +116,7 @@ def scene_capture_image_size_width_height_params(
         Parameter dictionary
     """
     params = {
-        "@type": "size_width_height",
+        "@type": "size-width-height",
         "width": width,
         "height": height,
     }
@@ -138,9 +137,11 @@ def scene_capture_image_size_width_height_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-size-width-height")
-    cargs.append(str(params.get("width", None)))
-    cargs.append(str(params.get("height", None)))
+    cargs.extend([
+        "-size-width-height",
+        str(params.get("width", None)),
+        str(params.get("height", None))
+    ])
     return cargs
 
 
@@ -163,8 +164,8 @@ def scene_capture_image_resolution_params(
     """
     params = {
         "@type": "resolution",
-        "number_of_pixels": number_of_pixels,
-        "units_name": units_name,
+        "Number of pixels": number_of_pixels,
+        "Units Name": units_name,
     }
     return params
 
@@ -183,9 +184,11 @@ def scene_capture_image_resolution_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-resolution")
-    cargs.append(str(params.get("number_of_pixels", None)))
-    cargs.append(params.get("units_name", None))
+    cargs.extend([
+        "-resolution",
+        str(params.get("Number of pixels", None)),
+        params.get("Units Name", None)
+    ])
     return cargs
 
 
@@ -204,9 +207,9 @@ def scene_capture_image_set_map_yoke_params(
         Parameter dictionary
     """
     params = {
-        "@type": "set_map_yoke",
-        "map_yoking_roman_numeral": map_yoking_roman_numeral,
-        "map_undex": map_undex,
+        "@type": "set-map-yoke",
+        "map yoking roman numeral": map_yoking_roman_numeral,
+        "map undex": map_undex,
     }
     return params
 
@@ -225,9 +228,11 @@ def scene_capture_image_set_map_yoke_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-set-map-yoke")
-    cargs.append(params.get("map_yoking_roman_numeral", None))
-    cargs.append(str(params.get("map_undex", None)))
+    cargs.extend([
+        "-set-map-yoke",
+        params.get("map yoking roman numeral", None),
+        str(params.get("map undex", None))
+    ])
     return cargs
 
 
@@ -245,7 +250,7 @@ def scene_capture_image_conn_db_login_params(
         Parameter dictionary
     """
     params = {
-        "@type": "conn_db_login",
+        "@type": "conn-db-login",
         "username": username,
         "password": password,
     }
@@ -266,9 +271,11 @@ def scene_capture_image_conn_db_login_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-conn-db-login")
-    cargs.append(params.get("username", None))
-    cargs.append(params.get("password", None))
+    cargs.extend([
+        "-conn-db-login",
+        params.get("username", None),
+        params.get("password", None)
+    ])
     return cargs
 
 
@@ -281,28 +288,54 @@ class SceneCaptureImageOutputs(typing.NamedTuple):
 
 
 def scene_capture_image_params(
+    width: float | None,
+    height: float | None,
+    units: str | None,
+    size: int | None,
+    renderer: str | None,
     scene_file: str,
     scene_name_or_number: str,
     image_file_name: str,
-    opt_size_window: bool = False,
-    opt_size_capture: bool = False,
+    size_window: bool = False,
+    size_capture: bool = False,
     size_width_height: SceneCaptureImageSizeWidthHeightParameters | None = None,
-    opt_size_width_width: float | None = None,
-    opt_size_height_height: float | None = None,
-    opt_units_units: str | None = None,
     resolution: SceneCaptureImageResolutionParameters | None = None,
-    opt_margin_size: int | None = None,
-    opt_no_scene_colors: bool = False,
+    no_scene_colors: bool = False,
     set_map_yoke: SceneCaptureImageSetMapYokeParameters | None = None,
     conn_db_login: SceneCaptureImageConnDbLoginParameters | None = None,
-    opt_show_capture_settings: bool = False,
-    opt_renderer_renderer: str | None = None,
-    opt_print_image_info: bool = False,
+    show_capture_settings: bool = False,
+    print_image_info: bool = False,
 ) -> SceneCaptureImageParametersTagged:
     """
     Build parameters.
     
     Args:
+        width: Width for output image. Height is computed using the aspect\
+            ratio from the window's width and height saved in the scene.\
+            \
+            Width for output image.
+        height: Height for output image. Width is computed using the aspect\
+            ratio from the window's width and height saved in the scene.\
+            \
+            Height for output image.
+        units: Units for image width/height\
+            Default is PIXELS\
+            \
+            Name of units for image width/height. Valid units are:\
+            INCHES\
+            CENTIMETERS\
+            MILLIMETERS\
+            METERS\
+            PIXELS.
+        size: Add a margin to sides of the image using the window's background\
+            color.\
+            \
+            size of margin, in pixels, added to all sides of output image.
+        renderer: Select renderer for drawing image\
+            \
+            Name of renderer to use for drawing image\
+            Available renderers are (first is default):\
+            OSMesa - Mesa3D OSMesa software renderer.
         scene_file: scene file.
         scene_name_or_number: name or number (starting at one) of the scene in\
             the scene file.
@@ -314,74 +347,54 @@ def scene_capture_image_params(
             If there is more than one window in the scene, multiple image files\
             are output with the window's number inserted into the name of the\
             image file immediately before the image file's extension.
-        opt_size_window: Output image is size of window's graphics region from\
-            when scene was created.
-        opt_size_capture: Output image uses size from Capture Dialog when scene\
-            was created.
+        size_window: Output image is size of window's graphics region from when\
+            scene was created.
+        size_capture: Output image uses size from Capture Dialog when scene was\
+            created.
         size_width_height: Width and height for output image.
-        opt_size_width_width: Width for output image. Height is computed using\
-            the aspect ratio from the window's width and height saved in the\
-            scene.: Width for output image.
-        opt_size_height_height: Height for output image. Width is computed\
-            using the aspect ratio from the window's width and height saved in the\
-            scene.: Height for output image.
-        opt_units_units: Units for image width/height\
-            Default is PIXELS: Name of units for image width/height. Valid\
-            units are:\
-            INCHES\
-            CENTIMETERS\
-            MILLIMETERS\
-            METERS\
-            PIXELS.
         resolution: Image resolution (number pixels per size unit)\
             Default is 300 PIXELS_PER_INCH.
-        opt_margin_size: Add a margin to sides of the image using the window's\
-            background color.: size of margin, in pixels, added to all sides of\
-            output image.
-        opt_no_scene_colors: Do not use background and foreground colors in\
-            scene.
+        no_scene_colors: Do not use background and foreground colors in scene.
         set_map_yoke: Override selected map index for a map yoking group.
         conn_db_login: Login for scenes with files in Connectome Database. If\
             this option is not specified, the login and password stored in the\
             user's preferences is used.
-        opt_show_capture_settings: Print settings from Capture Dialog only, DO\
-            NOT create image file(s).
-        opt_renderer_renderer: Select renderer for drawing image: Name of\
-            renderer to use for drawing image.
-        opt_print_image_info: Print the size and other information about output\
+        show_capture_settings: Print settings from Capture Dialog only, DO NOT\
+            create image file(s).
+        print_image_info: Print the size and other information about output\
             images only and DO NOT create any output images.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/scene-capture-image",
-        "scene_file": scene_file,
-        "scene_name_or_number": scene_name_or_number,
-        "image_file_name": image_file_name,
-        "opt_size_window": opt_size_window,
-        "opt_size_capture": opt_size_capture,
-        "opt_no_scene_colors": opt_no_scene_colors,
-        "opt_show_capture_settings": opt_show_capture_settings,
-        "opt_print_image_info": opt_print_image_info,
+        "size-window": size_window,
+        "size-capture": size_capture,
+        "no-scene-colors": no_scene_colors,
+        "show-capture-settings": show_capture_settings,
+        "print-image-info": print_image_info,
+        "scene-file": scene_file,
+        "scene-name-or-number": scene_name_or_number,
+        "image-file-name": image_file_name,
     }
     if size_width_height is not None:
-        params["size_width_height"] = size_width_height
-    if opt_size_width_width is not None:
-        params["opt_size_width_width"] = opt_size_width_width
-    if opt_size_height_height is not None:
-        params["opt_size_height_height"] = opt_size_height_height
-    if opt_units_units is not None:
-        params["opt_units_units"] = opt_units_units
+        params["size-width-height"] = size_width_height
+    if width is not None:
+        params["width"] = width
+    if height is not None:
+        params["height"] = height
+    if units is not None:
+        params["units"] = units
     if resolution is not None:
         params["resolution"] = resolution
-    if opt_margin_size is not None:
-        params["opt_margin_size"] = opt_margin_size
+    if size is not None:
+        params["size"] = size
     if set_map_yoke is not None:
-        params["set_map_yoke"] = set_map_yoke
+        params["set-map-yoke"] = set_map_yoke
     if conn_db_login is not None:
-        params["conn_db_login"] = conn_db_login
-    if opt_renderer_renderer is not None:
-        params["opt_renderer_renderer"] = opt_renderer_renderer
+        params["conn-db-login"] = conn_db_login
+    if renderer is not None:
+        params["Renderer"] = renderer
     return params
 
 
@@ -399,54 +412,33 @@ def scene_capture_image_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-scene-capture-image")
-    cargs.append(params.get("scene_file", None))
-    cargs.append(params.get("scene_name_or_number", None))
-    cargs.append(params.get("image_file_name", None))
-    if params.get("opt_size_window", False):
-        cargs.append("-size-window")
-    if params.get("opt_size_capture", False):
-        cargs.append("-size-capture")
-    if params.get("size_width_height", None) is not None:
-        cargs.extend(scene_capture_image_size_width_height_cargs(params.get("size_width_height", None), execution))
-    if params.get("opt_size_width_width", None) is not None:
+    if params.get("size-window", False) or params.get("size-capture", False) or params.get("size-width-height", None) is not None or params.get("width", None) is not None or params.get("height", None) is not None or params.get("units", None) is not None or params.get("resolution", None) is not None or params.get("size", None) is not None or params.get("no-scene-colors", False) or params.get("set-map-yoke", None) is not None or params.get("conn-db-login", None) is not None or params.get("show-capture-settings", False) or params.get("Renderer", None) is not None or params.get("print-image-info", False):
         cargs.extend([
+            "wb_command",
+            "-scene-capture-image",
+            ("-size-window" if (params.get("size-window", False)) else ""),
+            ("-size-capture" if (params.get("size-capture", False)) else ""),
+            *(scene_capture_image_size_width_height_cargs(params.get("size-width-height", None), execution) if (params.get("size-width-height", None) is not None) else []),
             "-size-width",
-            str(params.get("opt_size_width_width", None))
-        ])
-    if params.get("opt_size_height_height", None) is not None:
-        cargs.extend([
+            (str(params.get("width", None)) if (params.get("width", None) is not None) else ""),
             "-size-height",
-            str(params.get("opt_size_height_height", None))
-        ])
-    if params.get("opt_units_units", None) is not None:
-        cargs.extend([
+            (str(params.get("height", None)) if (params.get("height", None) is not None) else ""),
             "-units",
-            params.get("opt_units_units", None)
-        ])
-    if params.get("resolution", None) is not None:
-        cargs.extend(scene_capture_image_resolution_cargs(params.get("resolution", None), execution))
-    if params.get("opt_margin_size", None) is not None:
-        cargs.extend([
+            (params.get("units", None) if (params.get("units", None) is not None) else ""),
+            *(scene_capture_image_resolution_cargs(params.get("resolution", None), execution) if (params.get("resolution", None) is not None) else []),
             "-margin",
-            str(params.get("opt_margin_size", None))
-        ])
-    if params.get("opt_no_scene_colors", False):
-        cargs.append("-no-scene-colors")
-    if params.get("set_map_yoke", None) is not None:
-        cargs.extend(scene_capture_image_set_map_yoke_cargs(params.get("set_map_yoke", None), execution))
-    if params.get("conn_db_login", None) is not None:
-        cargs.extend(scene_capture_image_conn_db_login_cargs(params.get("conn_db_login", None), execution))
-    if params.get("opt_show_capture_settings", False):
-        cargs.append("-show-capture-settings")
-    if params.get("opt_renderer_renderer", None) is not None:
-        cargs.extend([
+            (str(params.get("size", None)) if (params.get("size", None) is not None) else ""),
+            ("-no-scene-colors" if (params.get("no-scene-colors", False)) else ""),
+            *(scene_capture_image_set_map_yoke_cargs(params.get("set-map-yoke", None), execution) if (params.get("set-map-yoke", None) is not None) else []),
+            *(scene_capture_image_conn_db_login_cargs(params.get("conn-db-login", None), execution) if (params.get("conn-db-login", None) is not None) else []),
+            ("-show-capture-settings" if (params.get("show-capture-settings", False)) else ""),
             "-renderer",
-            params.get("opt_renderer_renderer", None)
+            (params.get("Renderer", None) if (params.get("Renderer", None) is not None) else ""),
+            ("-print-image-info" if (params.get("print-image-info", False)) else "")
         ])
-    if params.get("opt_print_image_info", False):
-        cargs.append("-print-image-info")
+    cargs.append(params.get("scene-file", None))
+    cargs.append(params.get("scene-name-or-number", None))
+    cargs.append(params.get("image-file-name", None))
     return cargs
 
 
@@ -474,9 +466,7 @@ def scene_capture_image_execute(
     runner: Runner | None = None,
 ) -> SceneCaptureImageOutputs:
     """
-    scene-capture-image
-    
-    Offscreen rendering of scene to an image file.
+    OFFSCREEN RENDERING OF SCENE TO AN IMAGE FILE.
     
     ----------------------------------------------------------------------
     
@@ -519,21 +509,7 @@ def scene_capture_image_execute(
     -size-width 4.5 -units CENTIMETERS -print-image-info
     
     
-    
-    
-    NO OFF SCREEN RENDERERS AVAILABLE ON THIS SYSTEM. COMMAND WILL FAIL !!!!
-    
-    
-    ERROR: -scene-capture-image is not available !
-    A required library for this command, Mesa3D (software version of OpenGL),
-    was not available when this software was created. This command is not
-    available for the Windows version of this software but should always be
-    available in the Linux and MacOS versions.
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -551,29 +527,27 @@ def scene_capture_image_execute(
 
 
 def scene_capture_image(
+    width: float | None,
+    height: float | None,
+    units: str | None,
+    size: int | None,
+    renderer: str | None,
     scene_file: str,
     scene_name_or_number: str,
     image_file_name: str,
-    opt_size_window: bool = False,
-    opt_size_capture: bool = False,
+    size_window: bool = False,
+    size_capture: bool = False,
     size_width_height: SceneCaptureImageSizeWidthHeightParameters | None = None,
-    opt_size_width_width: float | None = None,
-    opt_size_height_height: float | None = None,
-    opt_units_units: str | None = None,
     resolution: SceneCaptureImageResolutionParameters | None = None,
-    opt_margin_size: int | None = None,
-    opt_no_scene_colors: bool = False,
+    no_scene_colors: bool = False,
     set_map_yoke: SceneCaptureImageSetMapYokeParameters | None = None,
     conn_db_login: SceneCaptureImageConnDbLoginParameters | None = None,
-    opt_show_capture_settings: bool = False,
-    opt_renderer_renderer: str | None = None,
-    opt_print_image_info: bool = False,
+    show_capture_settings: bool = False,
+    print_image_info: bool = False,
     runner: Runner | None = None,
 ) -> SceneCaptureImageOutputs:
     """
-    scene-capture-image
-    
-    Offscreen rendering of scene to an image file.
+    OFFSCREEN RENDERING OF SCENE TO AN IMAGE FILE.
     
     ----------------------------------------------------------------------
     
@@ -616,23 +590,35 @@ def scene_capture_image(
     -size-width 4.5 -units CENTIMETERS -print-image-info
     
     
-    
-    
-    NO OFF SCREEN RENDERERS AVAILABLE ON THIS SYSTEM. COMMAND WILL FAIL !!!!
-    
-    
-    ERROR: -scene-capture-image is not available !
-    A required library for this command, Mesa3D (software version of OpenGL),
-    was not available when this software was created. This command is not
-    available for the Windows version of this software but should always be
-    available in the Linux and MacOS versions.
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        width: Width for output image. Height is computed using the aspect\
+            ratio from the window's width and height saved in the scene.\
+            \
+            Width for output image.
+        height: Height for output image. Width is computed using the aspect\
+            ratio from the window's width and height saved in the scene.\
+            \
+            Height for output image.
+        units: Units for image width/height\
+            Default is PIXELS\
+            \
+            Name of units for image width/height. Valid units are:\
+            INCHES\
+            CENTIMETERS\
+            MILLIMETERS\
+            METERS\
+            PIXELS.
+        size: Add a margin to sides of the image using the window's background\
+            color.\
+            \
+            size of margin, in pixels, added to all sides of output image.
+        renderer: Select renderer for drawing image\
+            \
+            Name of renderer to use for drawing image\
+            Available renderers are (first is default):\
+            OSMesa - Mesa3D OSMesa software renderer.
         scene_file: scene file.
         scene_name_or_number: name or number (starting at one) of the scene in\
             the scene file.
@@ -644,64 +630,44 @@ def scene_capture_image(
             If there is more than one window in the scene, multiple image files\
             are output with the window's number inserted into the name of the\
             image file immediately before the image file's extension.
-        opt_size_window: Output image is size of window's graphics region from\
-            when scene was created.
-        opt_size_capture: Output image uses size from Capture Dialog when scene\
-            was created.
+        size_window: Output image is size of window's graphics region from when\
+            scene was created.
+        size_capture: Output image uses size from Capture Dialog when scene was\
+            created.
         size_width_height: Width and height for output image.
-        opt_size_width_width: Width for output image. Height is computed using\
-            the aspect ratio from the window's width and height saved in the\
-            scene.: Width for output image.
-        opt_size_height_height: Height for output image. Width is computed\
-            using the aspect ratio from the window's width and height saved in the\
-            scene.: Height for output image.
-        opt_units_units: Units for image width/height\
-            Default is PIXELS: Name of units for image width/height. Valid\
-            units are:\
-            INCHES\
-            CENTIMETERS\
-            MILLIMETERS\
-            METERS\
-            PIXELS.
         resolution: Image resolution (number pixels per size unit)\
             Default is 300 PIXELS_PER_INCH.
-        opt_margin_size: Add a margin to sides of the image using the window's\
-            background color.: size of margin, in pixels, added to all sides of\
-            output image.
-        opt_no_scene_colors: Do not use background and foreground colors in\
-            scene.
+        no_scene_colors: Do not use background and foreground colors in scene.
         set_map_yoke: Override selected map index for a map yoking group.
         conn_db_login: Login for scenes with files in Connectome Database. If\
             this option is not specified, the login and password stored in the\
             user's preferences is used.
-        opt_show_capture_settings: Print settings from Capture Dialog only, DO\
-            NOT create image file(s).
-        opt_renderer_renderer: Select renderer for drawing image: Name of\
-            renderer to use for drawing image.
-        opt_print_image_info: Print the size and other information about output\
+        show_capture_settings: Print settings from Capture Dialog only, DO NOT\
+            create image file(s).
+        print_image_info: Print the size and other information about output\
             images only and DO NOT create any output images.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SceneCaptureImageOutputs`).
     """
     params = scene_capture_image_params(
+        size_window=size_window,
+        size_capture=size_capture,
+        size_width_height=size_width_height,
+        width=width,
+        height=height,
+        units=units,
+        resolution=resolution,
+        size=size,
+        no_scene_colors=no_scene_colors,
+        set_map_yoke=set_map_yoke,
+        conn_db_login=conn_db_login,
+        show_capture_settings=show_capture_settings,
+        renderer=renderer,
+        print_image_info=print_image_info,
         scene_file=scene_file,
         scene_name_or_number=scene_name_or_number,
         image_file_name=image_file_name,
-        opt_size_window=opt_size_window,
-        opt_size_capture=opt_size_capture,
-        size_width_height=size_width_height,
-        opt_size_width_width=opt_size_width_width,
-        opt_size_height_height=opt_size_height_height,
-        opt_units_units=opt_units_units,
-        resolution=resolution,
-        opt_margin_size=opt_margin_size,
-        opt_no_scene_colors=opt_no_scene_colors,
-        set_map_yoke=set_map_yoke,
-        conn_db_login=conn_db_login,
-        opt_show_capture_settings=opt_show_capture_settings,
-        opt_renderer_renderer=opt_renderer_renderer,
-        opt_print_image_info=opt_print_image_info,
     )
     return scene_capture_image_execute(params, runner)
 

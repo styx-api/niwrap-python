@@ -6,32 +6,31 @@ import pathlib
 from styxdefs import *
 
 METRIC_ERODE_METADATA = Metadata(
-    id="13e8b65243f7eb68a8e3480c1d899b0d9d55567e.boutiques",
+    id="778174a7101c157fd44e9efd68314bd69963400f.workbench",
     name="metric-erode",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricErodeParameters = typing.TypedDict('MetricErodeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-erode"]],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 MetricErodeParametersTagged = typing.TypedDict('MetricErodeParametersTagged', {
     "@type": typing.Literal["workbench/metric-erode"],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
@@ -46,45 +45,48 @@ class MetricErodeOutputs(typing.NamedTuple):
 
 
 def metric_erode_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
-    metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
 ) -> MetricErodeParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        roi_metric: assume values outside this roi are nonzero\
+            \
+            metric file, positive values denote vertices that have data.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         metric: the metric file to erode.
         surface: the surface to compute on.
         distance: distance in mm to erode.
-        metric_out: the output metric.
-        opt_roi_roi_metric: assume values outside this roi are nonzero: metric\
-            file, positive values denote vertices that have data.
-        opt_column_column: select a single column to erode: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-erode",
+        "metric-out": metric_out,
         "metric": metric,
         "surface": surface,
         "distance": distance,
-        "metric_out": metric_out,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if column is not None:
+        params["column"] = column
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -102,27 +104,21 @@ def metric_erode_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-erode")
+    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("area-metric", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-metric-erode",
+            params.get("metric-out", None),
+            "-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("distance", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_roi_roi_metric", None) is not None:
-        cargs.extend([
-            "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
-            "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
     return cargs
 
 
@@ -141,7 +137,7 @@ def metric_erode_outputs(
     """
     ret = MetricErodeOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -151,9 +147,7 @@ def metric_erode_execute(
     runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
-    metric-erode
-    
-    Erode a metric file.
+    ERODE A METRIC FILE.
     
     Around each vertex with a value of zero, set surrounding vertices to zero.
     The surrounding vertices are all immediate neighbors and all vertices within
@@ -161,10 +155,6 @@ def metric_erode_execute(
     
     Note that the -corrected-areas option uses an approximate correction for
     distance along the surface.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -182,19 +172,17 @@ def metric_erode_execute(
 
 
 def metric_erode(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
-    metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
-    metric-erode
-    
-    Erode a metric file.
+    ERODE A METRIC FILE.
     
     Around each vertex with a value of zero, set surrounding vertices to zero.
     The surrounding vertices are all immediate neighbors and all vertices within
@@ -203,34 +191,33 @@ def metric_erode(
     Note that the -corrected-areas option uses an approximate correction for
     distance along the surface.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        roi_metric: assume values outside this roi are nonzero\
+            \
+            metric file, positive values denote vertices that have data.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         metric: the metric file to erode.
         surface: the surface to compute on.
         distance: distance in mm to erode.
-        metric_out: the output metric.
-        opt_roi_roi_metric: assume values outside this roi are nonzero: metric\
-            file, positive values denote vertices that have data.
-        opt_column_column: select a single column to erode: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricErodeOutputs`).
     """
     params = metric_erode_params(
+        metric_out=metric_out,
+        roi_metric=roi_metric,
+        column=column,
+        area_metric=area_metric,
         metric=metric,
         surface=surface,
         distance=distance,
-        metric_out=metric_out,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_column_column=opt_column_column,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
     return metric_erode_execute(params, runner)
 

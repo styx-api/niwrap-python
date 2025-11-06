@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "label_merge",
   "properties": {
-    "label_out": {
+    "label-out": {
       "var_param": "label_out"
     },
     "label": {
       "var_param": "label",
       "fn_struct_make_params": "label_merge_label_params",
       "properties": {
-        "label_in": {
+        "label-in": {
           "var_param": "label_in"
         },
         "column": {
@@ -18,15 +18,15 @@
             "column": {
               "var_param": "column"
             },
-            "up_to": {
+            "up-to": {
               "var_param": "up_to",
               "fn_struct_make_params": "label_merge_up_to_params",
               "properties": {
-                "last_column": {
+                "last-column": {
                   "var_param": "last_column"
                 },
-                "opt_reverse": {
-                  "var_param": "opt_reverse"
+                "reverse": {
+                  "var_param": "reverse"
                 }
               }
             }

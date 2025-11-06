@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
-    id="c626cddf06128e06492b24180056cbbcb098a4c4.boutiques",
+    id="8c740646d34e5a61db7e9f5f4bf71bcd927fb141.workbench",
     name="surface-to-surface-3d-distance",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceToSurface3dDistanceParameters = typing.TypedDict('SurfaceToSurface3dDistanceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-to-surface-3d-distance"]],
-    "surface_comp": InputPathType,
-    "surface_ref": InputPathType,
-    "dists_out": str,
-    "opt_vectors_vectors_out": typing.NotRequired[str | None],
+    "dists-out": str,
+    "vectors-out": typing.NotRequired[str | None],
+    "surface-comp": InputPathType,
+    "surface-ref": InputPathType,
 })
 SurfaceToSurface3dDistanceParametersTagged = typing.TypedDict('SurfaceToSurface3dDistanceParametersTagged', {
     "@type": typing.Literal["workbench/surface-to-surface-3d-distance"],
-    "surface_comp": InputPathType,
-    "surface_ref": InputPathType,
-    "dists_out": str,
-    "opt_vectors_vectors_out": typing.NotRequired[str | None],
+    "dists-out": str,
+    "vectors-out": typing.NotRequired[str | None],
+    "surface-comp": InputPathType,
+    "surface-ref": InputPathType,
 })
 
 
@@ -37,36 +36,35 @@ class SurfaceToSurface3dDistanceOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     dists_out: OutputPathType
     """the output distances"""
-    opt_vectors_vectors_out: OutputPathType | None
-    """output the displacement vectors: the output vectors"""
 
 
 def surface_to_surface_3d_distance_params(
+    dists_out: str,
+    vectors_out: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
-    dists_out: str,
-    opt_vectors_vectors_out: str | None = None,
 ) -> SurfaceToSurface3dDistanceParametersTagged:
     """
     Build parameters.
     
     Args:
+        dists_out: the output distances.
+        vectors_out: output the displacement vectors\
+            \
+            the output vectors.
         surface_comp: the surface to compare to the reference.
         surface_ref: the surface to use as the reference.
-        dists_out: the output distances.
-        opt_vectors_vectors_out: output the displacement vectors: the output\
-            vectors.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-to-surface-3d-distance",
-        "surface_comp": surface_comp,
-        "surface_ref": surface_ref,
-        "dists_out": dists_out,
+        "dists-out": dists_out,
+        "surface-comp": surface_comp,
+        "surface-ref": surface_ref,
     }
-    if opt_vectors_vectors_out is not None:
-        params["opt_vectors_vectors_out"] = opt_vectors_vectors_out
+    if vectors_out is not None:
+        params["vectors-out"] = vectors_out
     return params
 
 
@@ -84,16 +82,16 @@ def surface_to_surface_3d_distance_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-to-surface-3d-distance")
-    cargs.append(execution.input_file(params.get("surface_comp", None)))
-    cargs.append(execution.input_file(params.get("surface_ref", None)))
-    cargs.append(params.get("dists_out", None))
-    if params.get("opt_vectors_vectors_out", None) is not None:
+    if params.get("vectors-out", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-surface-to-surface-3d-distance",
+            params.get("dists-out", None),
             "-vectors",
-            params.get("opt_vectors_vectors_out", None)
+            params.get("vectors-out", None)
         ])
+    cargs.append(execution.input_file(params.get("surface-comp", None)))
+    cargs.append(execution.input_file(params.get("surface-ref", None)))
     return cargs
 
 
@@ -112,8 +110,7 @@ def surface_to_surface_3d_distance_outputs(
     """
     ret = SurfaceToSurface3dDistanceOutputs(
         root=execution.output_file("."),
-        dists_out=execution.output_file(params.get("dists_out", None)),
-        opt_vectors_vectors_out=execution.output_file(params.get("opt_vectors_vectors_out", None)) if (params.get("opt_vectors_vectors_out") is not None) else None,
+        dists_out=execution.output_file(params.get("dists-out", None)),
     )
     return ret
 
@@ -123,17 +120,11 @@ def surface_to_surface_3d_distance_execute(
     runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
-    surface-to-surface-3d-distance
-    
-    Compute distance between corresponding vertices.
+    COMPUTE DISTANCE BETWEEN CORRESPONDING VERTICES.
     
     Computes the vector difference between the vertices of each surface with the
     same index, as (comp - ref), and output the magnitudes, and optionally the
     displacement vectors.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -151,40 +142,35 @@ def surface_to_surface_3d_distance_execute(
 
 
 def surface_to_surface_3d_distance(
+    dists_out: str,
+    vectors_out: str | None,
     surface_comp: InputPathType,
     surface_ref: InputPathType,
-    dists_out: str,
-    opt_vectors_vectors_out: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
-    surface-to-surface-3d-distance
-    
-    Compute distance between corresponding vertices.
+    COMPUTE DISTANCE BETWEEN CORRESPONDING VERTICES.
     
     Computes the vector difference between the vertices of each surface with the
     same index, as (comp - ref), and output the magnitudes, and optionally the
     displacement vectors.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        dists_out: the output distances.
+        vectors_out: output the displacement vectors\
+            \
+            the output vectors.
         surface_comp: the surface to compare to the reference.
         surface_ref: the surface to use as the reference.
-        dists_out: the output distances.
-        opt_vectors_vectors_out: output the displacement vectors: the output\
-            vectors.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceToSurface3dDistanceOutputs`).
     """
     params = surface_to_surface_3d_distance_params(
+        dists_out=dists_out,
+        vectors_out=vectors_out,
         surface_comp=surface_comp,
         surface_ref=surface_ref,
-        dists_out=dists_out,
-        opt_vectors_vectors_out=opt_vectors_vectors_out,
     )
     return surface_to_surface_3d_distance_execute(params, runner)
 

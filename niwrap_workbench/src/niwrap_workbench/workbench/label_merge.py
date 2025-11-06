@@ -6,78 +6,77 @@ import pathlib
 from styxdefs import *
 
 LABEL_MERGE_METADATA = Metadata(
-    id="0ecf9e8d0dbbf764d34113468b73d18237947b26.boutiques",
+    id="791909e8270318bd504b97ada9b61a7c8e2898d1.workbench",
     name="label-merge",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelMergeUpToParameters = typing.TypedDict('LabelMergeUpToParameters', {
-    "@type": typing.NotRequired[typing.Literal["up_to"]],
-    "last_column": str,
-    "opt_reverse": bool,
+    "@type": typing.NotRequired[typing.Literal["up-to"]],
+    "last-column": str,
+    "reverse": bool,
 })
 LabelMergeUpToParametersTagged = typing.TypedDict('LabelMergeUpToParametersTagged', {
-    "@type": typing.Literal["up_to"],
-    "last_column": str,
-    "opt_reverse": bool,
+    "@type": typing.Literal["up-to"],
+    "last-column": str,
+    "reverse": bool,
 })
 
 
 LabelMergeColumnParameters = typing.TypedDict('LabelMergeColumnParameters', {
     "@type": typing.NotRequired[typing.Literal["column"]],
     "column": str,
-    "up_to": typing.NotRequired[LabelMergeUpToParameters | None],
+    "up-to": typing.NotRequired[LabelMergeUpToParameters | None],
 })
 LabelMergeColumnParametersTagged = typing.TypedDict('LabelMergeColumnParametersTagged', {
     "@type": typing.Literal["column"],
     "column": str,
-    "up_to": typing.NotRequired[LabelMergeUpToParameters | None],
+    "up-to": typing.NotRequired[LabelMergeUpToParameters | None],
 })
 
 
 LabelMergeLabelParameters = typing.TypedDict('LabelMergeLabelParameters', {
     "@type": typing.NotRequired[typing.Literal["label"]],
-    "label_in": InputPathType,
+    "label-in": InputPathType,
     "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
 })
 LabelMergeLabelParametersTagged = typing.TypedDict('LabelMergeLabelParametersTagged', {
     "@type": typing.Literal["label"],
-    "label_in": InputPathType,
+    "label-in": InputPathType,
     "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
 })
 
 
 LabelMergeParameters = typing.TypedDict('LabelMergeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-merge"]],
-    "label_out": str,
+    "label-out": str,
     "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
 })
 LabelMergeParametersTagged = typing.TypedDict('LabelMergeParametersTagged', {
     "@type": typing.Literal["workbench/label-merge"],
-    "label_out": str,
+    "label-out": str,
     "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
 })
 
 
 def label_merge_up_to_params(
     last_column: str,
-    opt_reverse: bool = False,
+    reverse: bool = False,
 ) -> LabelMergeUpToParametersTagged:
     """
     Build parameters.
     
     Args:
         last_column: the number or name of the last column to include.
-        opt_reverse: use the range in reverse order.
+        reverse: use the range in reverse order.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "up_to",
-        "last_column": last_column,
-        "opt_reverse": opt_reverse,
+        "@type": "up-to",
+        "last-column": last_column,
+        "reverse": reverse,
     }
     return params
 
@@ -96,10 +95,12 @@ def label_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-up-to")
-    cargs.append(params.get("last_column", None))
-    if params.get("opt_reverse", False):
-        cargs.append("-reverse")
+    if params.get("reverse", False):
+        cargs.extend([
+            "-up-to",
+            params.get("last-column", None),
+            "-reverse"
+        ])
     return cargs
 
 
@@ -121,7 +122,7 @@ def label_merge_column_params(
         "column": column,
     }
     if up_to is not None:
-        params["up_to"] = up_to
+        params["up-to"] = up_to
     return params
 
 
@@ -139,10 +140,12 @@ def label_merge_column_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-column")
-    cargs.append(params.get("column", None))
-    if params.get("up_to", None) is not None:
-        cargs.extend(label_merge_up_to_cargs(params.get("up_to", None), execution))
+    if params.get("up-to", None) is not None:
+        cargs.extend([
+            "-column",
+            params.get("column", None),
+            *label_merge_up_to_cargs(params.get("up-to", None), execution)
+        ])
     return cargs
 
 
@@ -161,7 +164,7 @@ def label_merge_label_params(
     """
     params = {
         "@type": "label",
-        "label_in": label_in,
+        "label-in": label_in,
     }
     if column is not None:
         params["column"] = column
@@ -182,10 +185,12 @@ def label_merge_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-label")
-    cargs.append(execution.input_file(params.get("label_in", None)))
     if params.get("column", None) is not None:
-        cargs.extend([a for c in [label_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c])
+        cargs.extend([
+            "-label",
+            execution.input_file(params.get("label-in", None)),
+            *[a for c in [label_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c]
+        ])
     return cargs
 
 
@@ -214,7 +219,7 @@ def label_merge_params(
     """
     params = {
         "@type": "workbench/label-merge",
-        "label_out": label_out,
+        "label-out": label_out,
     }
     if label is not None:
         params["label"] = label
@@ -235,11 +240,13 @@ def label_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-merge")
-    cargs.append(params.get("label_out", None))
     if params.get("label", None) is not None:
-        cargs.extend([a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c])
+        cargs.extend([
+            "wb_command",
+            "-label-merge",
+            params.get("label-out", None),
+            *[a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c]
+        ])
     return cargs
 
 
@@ -258,7 +265,7 @@ def label_merge_outputs(
     """
     ret = LabelMergeOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out", None)),
+        label_out=execution.output_file(params.get("label-out", None)),
     )
     return ret
 
@@ -268,9 +275,7 @@ def label_merge_execute(
     runner: Runner | None = None,
 ) -> LabelMergeOutputs:
     """
-    label-merge
-    
-    Merge label files into a new file.
+    MERGE LABEL FILES INTO A NEW FILE.
     
     Takes one or more label files and constructs a new label file by
     concatenating columns from them. The input files must have the same number
@@ -281,10 +286,6 @@ def label_merge_execute(
     
     This example would take the first column from first.label.gii and all
     subvolumes from second.label.gii, and write these to out.label.gii.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -307,9 +308,7 @@ def label_merge(
     runner: Runner | None = None,
 ) -> LabelMergeOutputs:
     """
-    label-merge
-    
-    Merge label files into a new file.
+    MERGE LABEL FILES INTO A NEW FILE.
     
     Takes one or more label files and constructs a new label file by
     concatenating columns from them. The input files must have the same number
@@ -320,10 +319,6 @@ def label_merge(
     
     This example would take the first column from first.label.gii and all
     subvolumes from second.label.gii, and write these to out.label.gii.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         label_out: the output label.

@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 SURFACE_AFFINE_REGRESSION_METADATA = Metadata(
-    id="250a34f2b42b75612a852d89d3d7eb774e8fa266.boutiques",
+    id="81e681b772379bf62c291d6e75c808098051eb2f.workbench",
     name="surface-affine-regression",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -17,13 +16,13 @@ SurfaceAffineRegressionParameters = typing.TypedDict('SurfaceAffineRegressionPar
     "@type": typing.NotRequired[typing.Literal["workbench/surface-affine-regression"]],
     "source": InputPathType,
     "target": InputPathType,
-    "affine_out": str,
+    "affine-out": str,
 })
 SurfaceAffineRegressionParametersTagged = typing.TypedDict('SurfaceAffineRegressionParametersTagged', {
     "@type": typing.Literal["workbench/surface-affine-regression"],
     "source": InputPathType,
     "target": InputPathType,
-    "affine_out": str,
+    "affine-out": str,
 })
 
 
@@ -54,7 +53,7 @@ def surface_affine_regression_params(
         "@type": "workbench/surface-affine-regression",
         "source": source,
         "target": target,
-        "affine_out": affine_out,
+        "affine-out": affine_out,
     }
     return params
 
@@ -73,11 +72,13 @@ def surface_affine_regression_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-affine-regression")
+    cargs.extend([
+        "wb_command",
+        "-surface-affine-regression"
+    ])
     cargs.append(execution.input_file(params.get("source", None)))
     cargs.append(execution.input_file(params.get("target", None)))
-    cargs.append(params.get("affine_out", None))
+    cargs.append(params.get("affine-out", None))
     return cargs
 
 
@@ -105,19 +106,13 @@ def surface_affine_regression_execute(
     runner: Runner | None = None,
 ) -> SurfaceAffineRegressionOutputs:
     """
-    surface-affine-regression
-    
-    Regress the affine transform between surfaces on the same mesh.
+    REGRESS THE AFFINE TRANSFORM BETWEEN SURFACES ON THE SAME MESH.
     
     Use linear regression to compute an affine that minimizes the sum of squares
     of the coordinate differences between the target surface and the warped
     source surface. Note that this has a bias to shrink the surface that is
     being warped. The output is written as a NIFTI 'world' matrix, see
     -convert-affine to convert it for use in other software.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -141,19 +136,13 @@ def surface_affine_regression(
     runner: Runner | None = None,
 ) -> SurfaceAffineRegressionOutputs:
     """
-    surface-affine-regression
-    
-    Regress the affine transform between surfaces on the same mesh.
+    REGRESS THE AFFINE TRANSFORM BETWEEN SURFACES ON THE SAME MESH.
     
     Use linear regression to compute an affine that minimizes the sum of squares
     of the coordinate differences between the target surface and the warped
     source surface. Note that this has a bias to shrink the surface that is
     being warped. The output is written as a NIFTI 'world' matrix, see
     -convert-affine to convert it for use in other software.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         source: the surface to warp.

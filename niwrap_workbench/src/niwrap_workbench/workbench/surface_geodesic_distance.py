@@ -6,30 +6,29 @@ import pathlib
 from styxdefs import *
 
 SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
-    id="b63b60aad75cad0af2e8476b6cd26a1b9f7a2e63.boutiques",
+    id="837e71cb509241e4094936fe5257e2f011b758dc.workbench",
     name="surface-geodesic-distance",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceGeodesicDistanceParameters = typing.TypedDict('SurfaceGeodesicDistanceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance"]],
+    "metric-out": str,
+    "naive": bool,
+    "limit-mm": typing.NotRequired[float | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "vertex": int,
-    "metric_out": str,
-    "opt_naive": bool,
-    "opt_limit_limit_mm": typing.NotRequired[float | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 SurfaceGeodesicDistanceParametersTagged = typing.TypedDict('SurfaceGeodesicDistanceParametersTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance"],
+    "metric-out": str,
+    "naive": bool,
+    "limit-mm": typing.NotRequired[float | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
     "vertex": int,
-    "metric_out": str,
-    "opt_naive": bool,
-    "opt_limit_limit_mm": typing.NotRequired[float | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
@@ -44,40 +43,42 @@ class SurfaceGeodesicDistanceOutputs(typing.NamedTuple):
 
 
 def surface_geodesic_distance_params(
+    metric_out: str,
+    limit_mm: float | None,
+    area_metric: InputPathType | None,
     surface: InputPathType,
     vertex: int,
-    metric_out: str,
-    opt_naive: bool = False,
-    opt_limit_limit_mm: float | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
+    naive: bool = False,
 ) -> SurfaceGeodesicDistanceParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        limit_mm: stop at a certain distance\
+            \
+            distance in mm to stop at.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         surface: the surface to compute on.
         vertex: the vertex to compute geodesic distance from.
-        metric_out: the output metric.
-        opt_naive: use only neighbors, don't crawl triangles (not recommended).
-        opt_limit_limit_mm: stop at a certain distance: distance in mm to stop\
-            at.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
+        naive: use only neighbors, don't crawl triangles (not recommended).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-geodesic-distance",
+        "metric-out": metric_out,
+        "naive": naive,
         "surface": surface,
         "vertex": vertex,
-        "metric_out": metric_out,
-        "opt_naive": opt_naive,
     }
-    if opt_limit_limit_mm is not None:
-        params["opt_limit_limit_mm"] = opt_limit_limit_mm
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if limit_mm is not None:
+        params["limit-mm"] = limit_mm
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -95,23 +96,19 @@ def surface_geodesic_distance_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-geodesic-distance")
+    if params.get("naive", False) or params.get("limit-mm", None) is not None or params.get("area-metric", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-surface-geodesic-distance",
+            params.get("metric-out", None),
+            ("-naive" if (params.get("naive", False)) else ""),
+            "-limit",
+            (str(params.get("limit-mm", None)) if (params.get("limit-mm", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("vertex", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_naive", False):
-        cargs.append("-naive")
-    if params.get("opt_limit_limit_mm", None) is not None:
-        cargs.extend([
-            "-limit",
-            str(params.get("opt_limit_limit_mm", None))
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
-            "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
     return cargs
 
 
@@ -130,7 +127,7 @@ def surface_geodesic_distance_outputs(
     """
     ret = SurfaceGeodesicDistanceOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -140,9 +137,7 @@ def surface_geodesic_distance_execute(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
-    surface-geodesic-distance
-    
-    Compute geodesic distance from one vertex to the entire surface.
+    COMPUTE GEODESIC DISTANCE FROM ONE VERTEX TO THE ENTIRE SURFACE.
     
     Unless -limit is specified, computes the geodesic distance from the
     specified vertex to all others. The result is output as a single column
@@ -159,10 +154,6 @@ def surface_geodesic_distance_execute(
     If -naive is not specified, the algorithm uses not just immediate neighbors,
     but also neighbors derived from crawling across pairs of triangles that
     share an edge.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -180,18 +171,16 @@ def surface_geodesic_distance_execute(
 
 
 def surface_geodesic_distance(
+    metric_out: str,
+    limit_mm: float | None,
+    area_metric: InputPathType | None,
     surface: InputPathType,
     vertex: int,
-    metric_out: str,
-    opt_naive: bool = False,
-    opt_limit_limit_mm: float | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
+    naive: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
-    surface-geodesic-distance
-    
-    Compute geodesic distance from one vertex to the entire surface.
+    COMPUTE GEODESIC DISTANCE FROM ONE VERTEX TO THE ENTIRE SURFACE.
     
     Unless -limit is specified, computes the geodesic distance from the
     specified vertex to all others. The result is output as a single column
@@ -209,31 +198,29 @@ def surface_geodesic_distance(
     but also neighbors derived from crawling across pairs of triangles that
     share an edge.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        limit_mm: stop at a certain distance\
+            \
+            distance in mm to stop at.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         surface: the surface to compute on.
         vertex: the vertex to compute geodesic distance from.
-        metric_out: the output metric.
-        opt_naive: use only neighbors, don't crawl triangles (not recommended).
-        opt_limit_limit_mm: stop at a certain distance: distance in mm to stop\
-            at.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
+        naive: use only neighbors, don't crawl triangles (not recommended).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceOutputs`).
     """
     params = surface_geodesic_distance_params(
+        metric_out=metric_out,
+        naive=naive,
+        limit_mm=limit_mm,
+        area_metric=area_metric,
         surface=surface,
         vertex=vertex,
-        metric_out=metric_out,
-        opt_naive=opt_naive,
-        opt_limit_limit_mm=opt_limit_limit_mm,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
     return surface_geodesic_distance_execute(params, runner)
 

@@ -6,124 +6,137 @@ import pathlib
 from styxdefs import *
 
 VOLUME_TO_SURFACE_MAPPING_METADATA = Metadata(
-    id="677cb03d3aef10ca7afb17c714f6c3c6f70b3a93.boutiques",
+    id="8506ce44812c4aebe401b46dcdf27231e04f47d0.workbench",
     name="volume-to-surface-mapping",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeToSurfaceMappingVolumeRoiParameters = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParameters', {
-    "@type": typing.NotRequired[typing.Literal["volume_roi"]],
-    "roi_volume": InputPathType,
-    "opt_weighted": bool,
+    "@type": typing.NotRequired[typing.Literal["volume-roi"]],
+    "roi-volume": InputPathType,
+    "weighted": bool,
 })
 VolumeToSurfaceMappingVolumeRoiParametersTagged = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParametersTagged', {
-    "@type": typing.Literal["volume_roi"],
-    "roi_volume": InputPathType,
-    "opt_weighted": bool,
+    "@type": typing.Literal["volume-roi"],
+    "roi-volume": InputPathType,
+    "weighted": bool,
+})
+
+
+VolumeToSurfaceMappingDilateMissingParameters = typing.TypedDict('VolumeToSurfaceMappingDilateMissingParameters', {
+    "@type": typing.NotRequired[typing.Literal["dilate-missing"]],
+    "dist": float,
+    "nearest": bool,
+})
+VolumeToSurfaceMappingDilateMissingParametersTagged = typing.TypedDict('VolumeToSurfaceMappingDilateMissingParametersTagged', {
+    "@type": typing.Literal["dilate-missing"],
+    "dist": float,
+    "nearest": bool,
 })
 
 
 VolumeToSurfaceMappingOutputWeightsParameters = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParameters', {
-    "@type": typing.NotRequired[typing.Literal["output_weights"]],
+    "@type": typing.NotRequired[typing.Literal["output-weights"]],
     "vertex": int,
-    "weights_out": str,
+    "weights-out": str,
 })
 VolumeToSurfaceMappingOutputWeightsParametersTagged = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParametersTagged', {
-    "@type": typing.Literal["output_weights"],
+    "@type": typing.Literal["output-weights"],
     "vertex": int,
-    "weights_out": str,
+    "weights-out": str,
 })
 
 
 VolumeToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParameters', {
-    "@type": typing.NotRequired[typing.Literal["ribbon_constrained"]],
-    "inner_surf": InputPathType,
-    "outer_surf": InputPathType,
-    "volume_roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
-    "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
-    "opt_thin_columns": bool,
-    "opt_gaussian_scale": typing.NotRequired[float | None],
-    "opt_interpolate_method": typing.NotRequired[str | None],
-    "opt_bad_vertices_out_roi_out": typing.NotRequired[str | None],
-    "output_weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParameters | None],
-    "opt_output_weights_text_text_out": typing.NotRequired[str | None],
+    "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
+    "inner-surf": InputPathType,
+    "outer-surf": InputPathType,
+    "volume-roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
+    "dilate-missing": typing.NotRequired[VolumeToSurfaceMappingDilateMissingParameters | None],
+    "subdiv-num": typing.NotRequired[int | None],
+    "thin-columns": bool,
+    "scale": typing.NotRequired[float | None],
+    "method": typing.NotRequired[str | None],
+    "roi-out": typing.NotRequired[str | None],
+    "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParameters | None],
+    "text-out": typing.NotRequired[str | None],
 })
 VolumeToSurfaceMappingRibbonConstrainedParametersTagged = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParametersTagged', {
-    "@type": typing.Literal["ribbon_constrained"],
-    "inner_surf": InputPathType,
-    "outer_surf": InputPathType,
-    "volume_roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
-    "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
-    "opt_thin_columns": bool,
-    "opt_gaussian_scale": typing.NotRequired[float | None],
-    "opt_interpolate_method": typing.NotRequired[str | None],
-    "opt_bad_vertices_out_roi_out": typing.NotRequired[str | None],
-    "output_weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParameters | None],
-    "opt_output_weights_text_text_out": typing.NotRequired[str | None],
+    "@type": typing.Literal["ribbon-constrained"],
+    "inner-surf": InputPathType,
+    "outer-surf": InputPathType,
+    "volume-roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
+    "dilate-missing": typing.NotRequired[VolumeToSurfaceMappingDilateMissingParameters | None],
+    "subdiv-num": typing.NotRequired[int | None],
+    "thin-columns": bool,
+    "scale": typing.NotRequired[float | None],
+    "method": typing.NotRequired[str | None],
+    "roi-out": typing.NotRequired[str | None],
+    "output-weights": typing.NotRequired[VolumeToSurfaceMappingOutputWeightsParameters | None],
+    "text-out": typing.NotRequired[str | None],
 })
 
 
 VolumeToSurfaceMappingMyelinStyleParameters = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParameters', {
-    "@type": typing.NotRequired[typing.Literal["myelin_style"]],
-    "ribbon_roi": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["myelin-style"]],
+    "ribbon-roi": InputPathType,
     "thickness": InputPathType,
     "sigma": float,
-    "opt_legacy_bug": bool,
+    "legacy-bug": bool,
 })
 VolumeToSurfaceMappingMyelinStyleParametersTagged = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParametersTagged', {
-    "@type": typing.Literal["myelin_style"],
-    "ribbon_roi": InputPathType,
+    "@type": typing.Literal["myelin-style"],
+    "ribbon-roi": InputPathType,
     "thickness": InputPathType,
     "sigma": float,
-    "opt_legacy_bug": bool,
+    "legacy-bug": bool,
 })
 
 
 VolumeToSurfaceMappingParameters = typing.TypedDict('VolumeToSurfaceMappingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-to-surface-mapping"]],
+    "metric-out": str,
+    "trilinear": bool,
+    "enclosing": bool,
+    "cubic": bool,
+    "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParameters | None],
+    "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParameters | None],
+    "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
-    "metric_out": str,
-    "opt_trilinear": bool,
-    "opt_enclosing": bool,
-    "opt_cubic": bool,
-    "ribbon_constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParameters | None],
-    "myelin_style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParameters | None],
-    "opt_subvol_select_subvol": typing.NotRequired[str | None],
 })
 VolumeToSurfaceMappingParametersTagged = typing.TypedDict('VolumeToSurfaceMappingParametersTagged', {
     "@type": typing.Literal["workbench/volume-to-surface-mapping"],
+    "metric-out": str,
+    "trilinear": bool,
+    "enclosing": bool,
+    "cubic": bool,
+    "ribbon-constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParameters | None],
+    "myelin-style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParameters | None],
+    "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
-    "metric_out": str,
-    "opt_trilinear": bool,
-    "opt_enclosing": bool,
-    "opt_cubic": bool,
-    "ribbon_constrained": typing.NotRequired[VolumeToSurfaceMappingRibbonConstrainedParameters | None],
-    "myelin_style": typing.NotRequired[VolumeToSurfaceMappingMyelinStyleParameters | None],
-    "opt_subvol_select_subvol": typing.NotRequired[str | None],
 })
 
 
 def volume_to_surface_mapping_volume_roi_params(
     roi_volume: InputPathType,
-    opt_weighted: bool = False,
+    weighted: bool = False,
 ) -> VolumeToSurfaceMappingVolumeRoiParametersTagged:
     """
     Build parameters.
     
     Args:
         roi_volume: the roi volume file.
-        opt_weighted: treat the roi values as weightings rather than binary.
+        weighted: treat the roi values as weightings rather than binary.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "volume_roi",
-        "roi_volume": roi_volume,
-        "opt_weighted": opt_weighted,
+        "@type": "volume-roi",
+        "roi-volume": roi_volume,
+        "weighted": weighted,
     }
     return params
 
@@ -142,10 +155,56 @@ def volume_to_surface_mapping_volume_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-volume-roi")
-    cargs.append(execution.input_file(params.get("roi_volume", None)))
-    if params.get("opt_weighted", False):
-        cargs.append("-weighted")
+    if params.get("weighted", False):
+        cargs.extend([
+            "-volume-roi",
+            execution.input_file(params.get("roi-volume", None)),
+            "-weighted"
+        ])
+    return cargs
+
+
+def volume_to_surface_mapping_dilate_missing_params(
+    dist: float,
+    nearest: bool = False,
+) -> VolumeToSurfaceMappingDilateMissingParametersTagged:
+    """
+    Build parameters.
+    
+    Args:
+        dist: distance in mm for dilation (can be small, like 1mm).
+        nearest: use nearest neighbor dilation (mainly useful for integer data).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "dilate-missing",
+        "dist": dist,
+        "nearest": nearest,
+    }
+    return params
+
+
+def volume_to_surface_mapping_dilate_missing_cargs(
+    params: VolumeToSurfaceMappingDilateMissingParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("nearest", False):
+        cargs.extend([
+            "-dilate-missing",
+            str(params.get("dist", None)),
+            "-nearest"
+        ])
     return cargs
 
 
@@ -173,9 +232,9 @@ def volume_to_surface_mapping_output_weights_params(
         Parameter dictionary
     """
     params = {
-        "@type": "output_weights",
+        "@type": "output-weights",
         "vertex": vertex,
-        "weights_out": weights_out,
+        "weights-out": weights_out,
     }
     return params
 
@@ -194,9 +253,11 @@ def volume_to_surface_mapping_output_weights_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-output-weights")
-    cargs.append(str(params.get("vertex", None)))
-    cargs.append(params.get("weights_out", None))
+    cargs.extend([
+        "-output-weights",
+        str(params.get("vertex", None)),
+        params.get("weights-out", None)
+    ])
     return cargs
 
 
@@ -215,7 +276,7 @@ def volume_to_surface_mapping_output_weights_outputs(
     """
     ret = VolumeToSurfaceMappingOutputWeightsOutputs(
         root=execution.output_file("."),
-        weights_out=execution.output_file(params.get("weights_out", None)),
+        weights_out=execution.output_file(params.get("weights-out", None)),
     )
     return ret
 
@@ -233,14 +294,15 @@ class VolumeToSurfaceMappingRibbonConstrainedOutputs(typing.NamedTuple):
 def volume_to_surface_mapping_ribbon_constrained_params(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
+    subdiv_num: int | None,
+    scale: float | None,
+    method: str | None,
+    roi_out: str | None,
+    text_out: str | None,
     volume_roi: VolumeToSurfaceMappingVolumeRoiParameters | None = None,
-    opt_voxel_subdiv_subdiv_num: int | None = None,
-    opt_thin_columns: bool = False,
-    opt_gaussian_scale: float | None = None,
-    opt_interpolate_method: str | None = None,
-    opt_bad_vertices_out_roi_out: str | None = None,
+    dilate_missing: VolumeToSurfaceMappingDilateMissingParameters | None = None,
+    thin_columns: bool = False,
     output_weights: VolumeToSurfaceMappingOutputWeightsParameters | None = None,
-    opt_output_weights_text_text_out: str | None = None,
 ) -> VolumeToSurfaceMappingRibbonConstrainedParametersTagged:
     """
     Build parameters.
@@ -248,44 +310,53 @@ def volume_to_surface_mapping_ribbon_constrained_params(
     Args:
         inner_surf: the inner surface of the ribbon.
         outer_surf: the outer surface of the ribbon.
-        volume_roi: use a volume roi.
-        opt_voxel_subdiv_subdiv_num: voxel divisions while estimating voxel\
-            weights: number of subdivisions, default 3.
-        opt_thin_columns: use non-overlapping polyhedra.
-        opt_gaussian_scale: reduce weight to voxels that aren't near <surface>:\
+        subdiv_num: voxel divisions while estimating voxel weights\
+            \
+            number of subdivisions, default 3.
+        scale: reduce weight to voxels that aren't near <surface>\
+            \
             value to multiply the local thickness by, to get the gaussian sigma.
-        opt_interpolate_method: instead of a weighted average of voxels,\
-            interpolate at subpoints inside the ribbon: interpolation method, must\
-            be CUBIC, ENCLOSING_VOXEL, or TRILINEAR.
-        opt_bad_vertices_out_roi_out: output an ROI of which vertices didn't\
-            intersect any valid voxels: the output metric file of vertices that\
-            have no data.
+        method: instead of a weighted average of voxels, interpolate at\
+            subpoints inside the ribbon\
+            \
+            interpolation method, must be CUBIC, ENCLOSING_VOXEL, or TRILINEAR.
+        roi_out: output an ROI of which vertices didn't intersect any valid\
+            voxels\
+            \
+            the output metric file of vertices that have no data.
+        text_out: write the voxel weights for all vertices to a text file\
+            \
+            output - the output text filename.
+        volume_roi: use a volume roi.
+        dilate_missing: use dilation for small vertices that 'missed' the\
+            geometry tests.
+        thin_columns: use non-overlapping polyhedra.
         output_weights: write the voxel weights for a vertex to a volume file.
-        opt_output_weights_text_text_out: write the voxel weights for all\
-            vertices to a text file: output - the output text filename.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "ribbon_constrained",
-        "inner_surf": inner_surf,
-        "outer_surf": outer_surf,
-        "opt_thin_columns": opt_thin_columns,
+        "@type": "ribbon-constrained",
+        "inner-surf": inner_surf,
+        "outer-surf": outer_surf,
+        "thin-columns": thin_columns,
     }
     if volume_roi is not None:
-        params["volume_roi"] = volume_roi
-    if opt_voxel_subdiv_subdiv_num is not None:
-        params["opt_voxel_subdiv_subdiv_num"] = opt_voxel_subdiv_subdiv_num
-    if opt_gaussian_scale is not None:
-        params["opt_gaussian_scale"] = opt_gaussian_scale
-    if opt_interpolate_method is not None:
-        params["opt_interpolate_method"] = opt_interpolate_method
-    if opt_bad_vertices_out_roi_out is not None:
-        params["opt_bad_vertices_out_roi_out"] = opt_bad_vertices_out_roi_out
+        params["volume-roi"] = volume_roi
+    if dilate_missing is not None:
+        params["dilate-missing"] = dilate_missing
+    if subdiv_num is not None:
+        params["subdiv-num"] = subdiv_num
+    if scale is not None:
+        params["scale"] = scale
+    if method is not None:
+        params["method"] = method
+    if roi_out is not None:
+        params["roi-out"] = roi_out
     if output_weights is not None:
-        params["output_weights"] = output_weights
-    if opt_output_weights_text_text_out is not None:
-        params["opt_output_weights_text_text_out"] = opt_output_weights_text_text_out
+        params["output-weights"] = output_weights
+    if text_out is not None:
+        params["text-out"] = text_out
     return params
 
 
@@ -303,39 +374,25 @@ def volume_to_surface_mapping_ribbon_constrained_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-ribbon-constrained")
-    cargs.append(execution.input_file(params.get("inner_surf", None)))
-    cargs.append(execution.input_file(params.get("outer_surf", None)))
-    if params.get("volume_roi", None) is not None:
-        cargs.extend(volume_to_surface_mapping_volume_roi_cargs(params.get("volume_roi", None), execution))
-    if params.get("opt_voxel_subdiv_subdiv_num", None) is not None:
+    if params.get("volume-roi", None) is not None or params.get("dilate-missing", None) is not None or params.get("subdiv-num", None) is not None or params.get("thin-columns", False) or params.get("scale", None) is not None or params.get("method", None) is not None or params.get("roi-out", None) is not None or params.get("output-weights", None) is not None or params.get("text-out", None) is not None:
         cargs.extend([
+            "-ribbon-constrained",
+            execution.input_file(params.get("inner-surf", None)),
+            execution.input_file(params.get("outer-surf", None)),
+            *(volume_to_surface_mapping_volume_roi_cargs(params.get("volume-roi", None), execution) if (params.get("volume-roi", None) is not None) else []),
+            *(volume_to_surface_mapping_dilate_missing_cargs(params.get("dilate-missing", None), execution) if (params.get("dilate-missing", None) is not None) else []),
             "-voxel-subdiv",
-            str(params.get("opt_voxel_subdiv_subdiv_num", None))
-        ])
-    if params.get("opt_thin_columns", False):
-        cargs.append("-thin-columns")
-    if params.get("opt_gaussian_scale", None) is not None:
-        cargs.extend([
+            (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
+            ("-thin-columns" if (params.get("thin-columns", False)) else ""),
             "-gaussian",
-            str(params.get("opt_gaussian_scale", None))
-        ])
-    if params.get("opt_interpolate_method", None) is not None:
-        cargs.extend([
+            (str(params.get("scale", None)) if (params.get("scale", None) is not None) else ""),
             "-interpolate",
-            params.get("opt_interpolate_method", None)
-        ])
-    if params.get("opt_bad_vertices_out_roi_out", None) is not None:
-        cargs.extend([
+            (params.get("method", None) if (params.get("method", None) is not None) else ""),
             "-bad-vertices-out",
-            params.get("opt_bad_vertices_out_roi_out", None)
-        ])
-    if params.get("output_weights", None) is not None:
-        cargs.extend(volume_to_surface_mapping_output_weights_cargs(params.get("output_weights", None), execution))
-    if params.get("opt_output_weights_text_text_out", None) is not None:
-        cargs.extend([
+            (params.get("roi-out", None) if (params.get("roi-out", None) is not None) else ""),
+            *(volume_to_surface_mapping_output_weights_cargs(params.get("output-weights", None), execution) if (params.get("output-weights", None) is not None) else []),
             "-output-weights-text",
-            params.get("opt_output_weights_text_text_out", None)
+            (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
         ])
     return cargs
 
@@ -355,7 +412,7 @@ def volume_to_surface_mapping_ribbon_constrained_outputs(
     """
     ret = VolumeToSurfaceMappingRibbonConstrainedOutputs(
         root=execution.output_file("."),
-        output_weights=volume_to_surface_mapping_output_weights_outputs(params.get("output_weights"), execution) if params.get("output_weights") else None,
+        output_weights=volume_to_surface_mapping_output_weights_outputs(params.get("output-weights"), execution) if params.get("output-weights") else None,
     )
     return ret
 
@@ -364,7 +421,7 @@ def volume_to_surface_mapping_myelin_style_params(
     ribbon_roi: InputPathType,
     thickness: InputPathType,
     sigma: float,
-    opt_legacy_bug: bool = False,
+    legacy_bug: bool = False,
 ) -> VolumeToSurfaceMappingMyelinStyleParametersTagged:
     """
     Build parameters.
@@ -373,17 +430,17 @@ def volume_to_surface_mapping_myelin_style_params(
         ribbon_roi: an roi volume of the cortical ribbon for this hemisphere.
         thickness: a metric file of cortical thickness.
         sigma: gaussian kernel in mm for weighting voxels within range.
-        opt_legacy_bug: emulate old v1.2.3 and earlier code that didn't follow\
-            a cylinder cutoff.
+        legacy_bug: emulate old v1.2.3 and earlier code that didn't follow a\
+            cylinder cutoff.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "myelin_style",
-        "ribbon_roi": ribbon_roi,
+        "@type": "myelin-style",
+        "ribbon-roi": ribbon_roi,
         "thickness": thickness,
         "sigma": sigma,
-        "opt_legacy_bug": opt_legacy_bug,
+        "legacy-bug": legacy_bug,
     }
     return params
 
@@ -402,12 +459,14 @@ def volume_to_surface_mapping_myelin_style_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-myelin-style")
-    cargs.append(execution.input_file(params.get("ribbon_roi", None)))
-    cargs.append(execution.input_file(params.get("thickness", None)))
-    cargs.append(str(params.get("sigma", None)))
-    if params.get("opt_legacy_bug", False):
-        cargs.append("-legacy-bug")
+    if params.get("legacy-bug", False):
+        cargs.extend([
+            "-myelin-style",
+            execution.input_file(params.get("ribbon-roi", None)),
+            execution.input_file(params.get("thickness", None)),
+            str(params.get("sigma", None)),
+            "-legacy-bug"
+        ])
     return cargs
 
 
@@ -424,48 +483,49 @@ class VolumeToSurfaceMappingOutputs(typing.NamedTuple):
 
 
 def volume_to_surface_mapping_params(
+    metric_out: str,
+    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
-    metric_out: str,
-    opt_trilinear: bool = False,
-    opt_enclosing: bool = False,
-    opt_cubic: bool = False,
+    trilinear: bool = False,
+    enclosing: bool = False,
+    cubic: bool = False,
     ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParameters | None = None,
     myelin_style: VolumeToSurfaceMappingMyelinStyleParameters | None = None,
-    opt_subvol_select_subvol: str | None = None,
 ) -> VolumeToSurfaceMappingParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric file.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
-        metric_out: the output metric file.
-        opt_trilinear: use trilinear volume interpolation.
-        opt_enclosing: use value of the enclosing voxel.
-        opt_cubic: use cubic splines.
+        trilinear: use trilinear volume interpolation.
+        enclosing: use value of the enclosing voxel.
+        cubic: use cubic splines.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         myelin_style: use the method from myelin mapping.
-        opt_subvol_select_subvol: select a single subvolume to map: the\
-            subvolume number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-to-surface-mapping",
+        "metric-out": metric_out,
+        "trilinear": trilinear,
+        "enclosing": enclosing,
+        "cubic": cubic,
         "volume": volume,
         "surface": surface,
-        "metric_out": metric_out,
-        "opt_trilinear": opt_trilinear,
-        "opt_enclosing": opt_enclosing,
-        "opt_cubic": opt_cubic,
     }
     if ribbon_constrained is not None:
-        params["ribbon_constrained"] = ribbon_constrained
+        params["ribbon-constrained"] = ribbon_constrained
     if myelin_style is not None:
-        params["myelin_style"] = myelin_style
-    if opt_subvol_select_subvol is not None:
-        params["opt_subvol_select_subvol"] = opt_subvol_select_subvol
+        params["myelin-style"] = myelin_style
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -483,26 +543,21 @@ def volume_to_surface_mapping_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-to-surface-mapping")
+    if params.get("trilinear", False) or params.get("enclosing", False) or params.get("cubic", False) or params.get("ribbon-constrained", None) is not None or params.get("myelin-style", None) is not None or params.get("subvol", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-volume-to-surface-mapping",
+            params.get("metric-out", None),
+            ("-trilinear" if (params.get("trilinear", False)) else ""),
+            ("-enclosing" if (params.get("enclosing", False)) else ""),
+            ("-cubic" if (params.get("cubic", False)) else ""),
+            *(volume_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
+            *(volume_to_surface_mapping_myelin_style_cargs(params.get("myelin-style", None), execution) if (params.get("myelin-style", None) is not None) else []),
+            "-subvol-select",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_trilinear", False):
-        cargs.append("-trilinear")
-    if params.get("opt_enclosing", False):
-        cargs.append("-enclosing")
-    if params.get("opt_cubic", False):
-        cargs.append("-cubic")
-    if params.get("ribbon_constrained", None) is not None:
-        cargs.extend(volume_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon_constrained", None), execution))
-    if params.get("myelin_style", None) is not None:
-        cargs.extend(volume_to_surface_mapping_myelin_style_cargs(params.get("myelin_style", None), execution))
-    if params.get("opt_subvol_select_subvol", None) is not None:
-        cargs.extend([
-            "-subvol-select",
-            params.get("opt_subvol_select_subvol", None)
-        ])
     return cargs
 
 
@@ -521,8 +576,8 @@ def volume_to_surface_mapping_outputs(
     """
     ret = VolumeToSurfaceMappingOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
-        ribbon_constrained=volume_to_surface_mapping_ribbon_constrained_outputs(params.get("ribbon_constrained"), execution) if params.get("ribbon_constrained") else None,
+        metric_out=execution.output_file(params.get("metric-out", None)),
+        ribbon_constrained=volume_to_surface_mapping_ribbon_constrained_outputs(params.get("ribbon-constrained"), execution) if params.get("ribbon-constrained") else None,
     )
     return ret
 
@@ -532,9 +587,7 @@ def volume_to_surface_mapping_execute(
     runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
-    volume-to-surface-mapping
-    
-    Map volume to surface.
+    MAP VOLUME TO SURFACE.
     
     You must specify exactly one mapping method. Enclosing voxel uses the value
     from the voxel the vertex lies inside, while trilinear does a 3D linear
@@ -573,10 +626,6 @@ def volume_to_surface_mapping_execute(
     present from the initial implementation up to and including v1.2.3, which
     had only the tangential cutoff and a bounding box intended to be larger than
     where the cylinder cutoff should have been.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -594,21 +643,19 @@ def volume_to_surface_mapping_execute(
 
 
 def volume_to_surface_mapping(
+    metric_out: str,
+    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
-    metric_out: str,
-    opt_trilinear: bool = False,
-    opt_enclosing: bool = False,
-    opt_cubic: bool = False,
+    trilinear: bool = False,
+    enclosing: bool = False,
+    cubic: bool = False,
     ribbon_constrained: VolumeToSurfaceMappingRibbonConstrainedParameters | None = None,
     myelin_style: VolumeToSurfaceMappingMyelinStyleParameters | None = None,
-    opt_subvol_select_subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
-    volume-to-surface-mapping
-    
-    Map volume to surface.
+    MAP VOLUME TO SURFACE.
     
     You must specify exactly one mapping method. Enclosing voxel uses the value
     from the voxel the vertex lies inside, while trilinear does a 3D linear
@@ -648,35 +695,32 @@ def volume_to_surface_mapping(
     had only the tangential cutoff and a bounding box intended to be larger than
     where the cylinder cutoff should have been.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric file.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
-        metric_out: the output metric file.
-        opt_trilinear: use trilinear volume interpolation.
-        opt_enclosing: use value of the enclosing voxel.
-        opt_cubic: use cubic splines.
+        trilinear: use trilinear volume interpolation.
+        enclosing: use value of the enclosing voxel.
+        cubic: use cubic splines.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         myelin_style: use the method from myelin mapping.
-        opt_subvol_select_subvol: select a single subvolume to map: the\
-            subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeToSurfaceMappingOutputs`).
     """
     params = volume_to_surface_mapping_params(
-        volume=volume,
-        surface=surface,
         metric_out=metric_out,
-        opt_trilinear=opt_trilinear,
-        opt_enclosing=opt_enclosing,
-        opt_cubic=opt_cubic,
+        trilinear=trilinear,
+        enclosing=enclosing,
+        cubic=cubic,
         ribbon_constrained=ribbon_constrained,
         myelin_style=myelin_style,
-        opt_subvol_select_subvol=opt_subvol_select_subvol,
+        subvol=subvol,
+        volume=volume,
+        surface=surface,
     )
     return volume_to_surface_mapping_execute(params, runner)
 
@@ -687,6 +731,7 @@ __all__ = [
     "VolumeToSurfaceMappingOutputs",
     "VolumeToSurfaceMappingRibbonConstrainedOutputs",
     "volume_to_surface_mapping",
+    "volume_to_surface_mapping_dilate_missing_params",
     "volume_to_surface_mapping_execute",
     "volume_to_surface_mapping_myelin_style_params",
     "volume_to_surface_mapping_output_weights_params",

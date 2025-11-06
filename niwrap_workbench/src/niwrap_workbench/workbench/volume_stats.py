@@ -6,63 +6,62 @@ import pathlib
 from styxdefs import *
 
 VOLUME_STATS_METADATA = Metadata(
-    id="aee8e35b38c06ea18eeb42aa6c5076216e3ebc0c.boutiques",
+    id="ec1af7e3dc9990ebe00878d35008f857657ae3d6.workbench",
     name="volume-stats",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeStatsRoiParameters = typing.TypedDict('VolumeStatsRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["roi"]],
-    "roi_volume": InputPathType,
-    "opt_match_maps": bool,
+    "roi-volume": InputPathType,
+    "match-maps": bool,
 })
 VolumeStatsRoiParametersTagged = typing.TypedDict('VolumeStatsRoiParametersTagged', {
     "@type": typing.Literal["roi"],
-    "roi_volume": InputPathType,
-    "opt_match_maps": bool,
+    "roi-volume": InputPathType,
+    "match-maps": bool,
 })
 
 
 VolumeStatsParameters = typing.TypedDict('VolumeStatsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-stats"]],
-    "volume_in": InputPathType,
-    "opt_reduce_operation": typing.NotRequired[str | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "operation": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "subvolume": typing.NotRequired[str | None],
     "roi": typing.NotRequired[VolumeStatsRoiParameters | None],
-    "opt_show_map_name": bool,
+    "show-map-name": bool,
+    "volume-in": InputPathType,
 })
 VolumeStatsParametersTagged = typing.TypedDict('VolumeStatsParametersTagged', {
     "@type": typing.Literal["workbench/volume-stats"],
-    "volume_in": InputPathType,
-    "opt_reduce_operation": typing.NotRequired[str | None],
-    "opt_percentile_percent": typing.NotRequired[float | None],
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "operation": typing.NotRequired[str | None],
+    "percent": typing.NotRequired[float | None],
+    "subvolume": typing.NotRequired[str | None],
     "roi": typing.NotRequired[VolumeStatsRoiParameters | None],
-    "opt_show_map_name": bool,
+    "show-map-name": bool,
+    "volume-in": InputPathType,
 })
 
 
 def volume_stats_roi_params(
     roi_volume: InputPathType,
-    opt_match_maps: bool = False,
+    match_maps: bool = False,
 ) -> VolumeStatsRoiParametersTagged:
     """
     Build parameters.
     
     Args:
         roi_volume: the roi, as a volume file.
-        opt_match_maps: each subvolume of input uses the corresponding\
-            subvolume from the roi file.
+        match_maps: each subvolume of input uses the corresponding subvolume\
+            from the roi file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "roi",
-        "roi_volume": roi_volume,
-        "opt_match_maps": opt_match_maps,
+        "roi-volume": roi_volume,
+        "match-maps": match_maps,
     }
     return params
 
@@ -81,10 +80,12 @@ def volume_stats_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_volume", None)))
-    if params.get("opt_match_maps", False):
-        cargs.append("-match-maps")
+    if params.get("match-maps", False):
+        cargs.extend([
+            "-roi",
+            execution.input_file(params.get("roi-volume", None)),
+            "-match-maps"
+        ])
     return cargs
 
 
@@ -97,40 +98,43 @@ class VolumeStatsOutputs(typing.NamedTuple):
 
 
 def volume_stats_params(
+    operation: str | None,
+    percent: float | None,
+    subvolume: str | None,
     volume_in: InputPathType,
-    opt_reduce_operation: str | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_subvolume_subvolume: str | None = None,
     roi: VolumeStatsRoiParameters | None = None,
-    opt_show_map_name: bool = False,
+    show_map_name: bool = False,
 ) -> VolumeStatsParametersTagged:
     """
     Build parameters.
     
     Args:
+        operation: use a reduction operation\
+            \
+            the reduction operation.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        subvolume: only display output for one subvolume\
+            \
+            the subvolume number or name.
         volume_in: the input volume.
-        opt_reduce_operation: use a reduction operation: the reduction\
-            operation.
-        opt_percentile_percent: give the value at a percentile: the percentile\
-            to find, must be between 0 and 100.
-        opt_subvolume_subvolume: only display output for one subvolume: the\
-            subvolume number or name.
         roi: only consider data inside an roi.
-        opt_show_map_name: print map index and name before each output.
+        show_map_name: print map index and name before each output.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-stats",
-        "volume_in": volume_in,
-        "opt_show_map_name": opt_show_map_name,
+        "show-map-name": show_map_name,
+        "volume-in": volume_in,
     }
-    if opt_reduce_operation is not None:
-        params["opt_reduce_operation"] = opt_reduce_operation
-    if opt_percentile_percent is not None:
-        params["opt_percentile_percent"] = opt_percentile_percent
-    if opt_subvolume_subvolume is not None:
-        params["opt_subvolume_subvolume"] = opt_subvolume_subvolume
+    if operation is not None:
+        params["operation"] = operation
+    if percent is not None:
+        params["percent"] = percent
+    if subvolume is not None:
+        params["subvolume"] = subvolume
     if roi is not None:
         params["roi"] = roi
     return params
@@ -150,28 +154,20 @@ def volume_stats_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-stats")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    if params.get("opt_reduce_operation", None) is not None:
+    if params.get("operation", None) is not None or params.get("percent", None) is not None or params.get("subvolume", None) is not None or params.get("roi", None) is not None or params.get("show-map-name", False):
         cargs.extend([
+            "wb_command",
+            "-volume-stats",
             "-reduce",
-            params.get("opt_reduce_operation", None)
-        ])
-    if params.get("opt_percentile_percent", None) is not None:
-        cargs.extend([
+            (params.get("operation", None) if (params.get("operation", None) is not None) else ""),
             "-percentile",
-            str(params.get("opt_percentile_percent", None))
-        ])
-    if params.get("opt_subvolume_subvolume", None) is not None:
-        cargs.extend([
+            (str(params.get("percent", None)) if (params.get("percent", None) is not None) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvolume", None)
+            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else ""),
+            *(volume_stats_roi_cargs(params.get("roi", None), execution) if (params.get("roi", None) is not None) else []),
+            ("-show-map-name" if (params.get("show-map-name", False)) else "")
         ])
-    if params.get("roi", None) is not None:
-        cargs.extend(volume_stats_roi_cargs(params.get("roi", None), execution))
-    if params.get("opt_show_map_name", False):
-        cargs.append("-show-map-name")
+    cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
 
@@ -199,9 +195,7 @@ def volume_stats_execute(
     runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
     """
-    volume-stats
-    
-    Spatial statistics on a volume file.
+    SPATIAL STATISTICS ON A VOLUME FILE.
     
     For each subvolume of the input, a line of text is printed, resulting from
     the specified reduction or percentile operation. Use -subvolume to only give
@@ -229,10 +223,6 @@ def volume_stats_execute(
     MODE: the mode of the data
     COUNT_NONZERO: the number of nonzero elements in the data
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -250,18 +240,16 @@ def volume_stats_execute(
 
 
 def volume_stats(
+    operation: str | None,
+    percent: float | None,
+    subvolume: str | None,
     volume_in: InputPathType,
-    opt_reduce_operation: str | None = None,
-    opt_percentile_percent: float | None = None,
-    opt_subvolume_subvolume: str | None = None,
     roi: VolumeStatsRoiParameters | None = None,
-    opt_show_map_name: bool = False,
+    show_map_name: bool = False,
     runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
     """
-    volume-stats
-    
-    Spatial statistics on a volume file.
+    SPATIAL STATISTICS ON A VOLUME FILE.
     
     For each subvolume of the input, a line of text is printed, resulting from
     the specified reduction or percentile operation. Use -subvolume to only give
@@ -290,31 +278,30 @@ def volume_stats(
     COUNT_NONZERO: the number of nonzero elements in the data
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        operation: use a reduction operation\
+            \
+            the reduction operation.
+        percent: give the value at a percentile\
+            \
+            the percentile to find, must be between 0 and 100.
+        subvolume: only display output for one subvolume\
+            \
+            the subvolume number or name.
         volume_in: the input volume.
-        opt_reduce_operation: use a reduction operation: the reduction\
-            operation.
-        opt_percentile_percent: give the value at a percentile: the percentile\
-            to find, must be between 0 and 100.
-        opt_subvolume_subvolume: only display output for one subvolume: the\
-            subvolume number or name.
         roi: only consider data inside an roi.
-        opt_show_map_name: print map index and name before each output.
+        show_map_name: print map index and name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeStatsOutputs`).
     """
     params = volume_stats_params(
-        volume_in=volume_in,
-        opt_reduce_operation=opt_reduce_operation,
-        opt_percentile_percent=opt_percentile_percent,
-        opt_subvolume_subvolume=opt_subvolume_subvolume,
+        operation=operation,
+        percent=percent,
+        subvolume=subvolume,
         roi=roi,
-        opt_show_map_name=opt_show_map_name,
+        show_map_name=show_map_name,
+        volume_in=volume_in,
     )
     return volume_stats_execute(params, runner)
 

@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 LABEL_PROBABILITY_METADATA = Metadata(
-    id="17883125fa07b84610948fe71508e3f8bf4671e0.boutiques",
+    id="3036af31e9086ad81e72bfa02cf68fef734a77c9.workbench",
     name="label-probability",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelProbabilityParameters = typing.TypedDict('LabelProbabilityParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-probability"]],
-    "label_maps": InputPathType,
-    "probability_metric_out": str,
-    "opt_exclude_unlabeled": bool,
+    "probability-metric-out": str,
+    "exclude-unlabeled": bool,
+    "label-maps": InputPathType,
 })
 LabelProbabilityParametersTagged = typing.TypedDict('LabelProbabilityParametersTagged', {
     "@type": typing.Literal["workbench/label-probability"],
-    "label_maps": InputPathType,
-    "probability_metric_out": str,
-    "opt_exclude_unlabeled": bool,
+    "probability-metric-out": str,
+    "exclude-unlabeled": bool,
+    "label-maps": InputPathType,
 })
 
 
@@ -38,28 +37,27 @@ class LabelProbabilityOutputs(typing.NamedTuple):
 
 
 def label_probability_params(
-    label_maps: InputPathType,
     probability_metric_out: str,
-    opt_exclude_unlabeled: bool = False,
+    label_maps: InputPathType,
+    exclude_unlabeled: bool = False,
 ) -> LabelProbabilityParametersTagged:
     """
     Build parameters.
     
     Args:
-        label_maps: label file containing individual label maps from many\
-            subjects.
         probability_metric_out: the relative frequencies of each label at each\
             vertex.
-        opt_exclude_unlabeled: don't make a probability map of the unlabeled\
-            key.
+        label_maps: label file containing individual label maps from many\
+            subjects.
+        exclude_unlabeled: don't make a probability map of the unlabeled key.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-probability",
-        "label_maps": label_maps,
-        "probability_metric_out": probability_metric_out,
-        "opt_exclude_unlabeled": opt_exclude_unlabeled,
+        "probability-metric-out": probability_metric_out,
+        "exclude-unlabeled": exclude_unlabeled,
+        "label-maps": label_maps,
     }
     return params
 
@@ -78,12 +76,14 @@ def label_probability_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-probability")
-    cargs.append(execution.input_file(params.get("label_maps", None)))
-    cargs.append(params.get("probability_metric_out", None))
-    if params.get("opt_exclude_unlabeled", False):
-        cargs.append("-exclude-unlabeled")
+    if params.get("exclude-unlabeled", False):
+        cargs.extend([
+            "wb_command",
+            "-label-probability",
+            params.get("probability-metric-out", None),
+            "-exclude-unlabeled"
+        ])
+    cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs
 
 
@@ -102,7 +102,7 @@ def label_probability_outputs(
     """
     ret = LabelProbabilityOutputs(
         root=execution.output_file("."),
-        probability_metric_out=execution.output_file(params.get("probability_metric_out", None)),
+        probability_metric_out=execution.output_file(params.get("probability-metric-out", None)),
     )
     return ret
 
@@ -112,17 +112,11 @@ def label_probability_execute(
     runner: Runner | None = None,
 ) -> LabelProbabilityOutputs:
     """
-    label-probability
-    
-    Find frequency of surface labels.
+    FIND FREQUENCY OF SURFACE LABELS.
     
     This command outputs a set of soft ROIs, one for each label in the input,
     where the value is how many of the input maps had that label at that vertex,
     divided by the number of input maps.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -140,39 +134,32 @@ def label_probability_execute(
 
 
 def label_probability(
-    label_maps: InputPathType,
     probability_metric_out: str,
-    opt_exclude_unlabeled: bool = False,
+    label_maps: InputPathType,
+    exclude_unlabeled: bool = False,
     runner: Runner | None = None,
 ) -> LabelProbabilityOutputs:
     """
-    label-probability
-    
-    Find frequency of surface labels.
+    FIND FREQUENCY OF SURFACE LABELS.
     
     This command outputs a set of soft ROIs, one for each label in the input,
     where the value is how many of the input maps had that label at that vertex,
     divided by the number of input maps.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        label_maps: label file containing individual label maps from many\
-            subjects.
         probability_metric_out: the relative frequencies of each label at each\
             vertex.
-        opt_exclude_unlabeled: don't make a probability map of the unlabeled\
-            key.
+        label_maps: label file containing individual label maps from many\
+            subjects.
+        exclude_unlabeled: don't make a probability map of the unlabeled key.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelProbabilityOutputs`).
     """
     params = label_probability_params(
-        label_maps=label_maps,
         probability_metric_out=probability_metric_out,
-        opt_exclude_unlabeled=opt_exclude_unlabeled,
+        exclude_unlabeled=exclude_unlabeled,
+        label_maps=label_maps,
     )
     return label_probability_execute(params, runner)
 

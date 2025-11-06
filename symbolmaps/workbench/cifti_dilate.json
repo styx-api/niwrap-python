@@ -1,68 +1,68 @@
 {
   "fn_root_make_params_and_execute": "cifti_dilate",
   "properties": {
-    "cifti_in": {
-      "var_param": "cifti_in"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "surface_distance": {
-      "var_param": "surface_distance"
-    },
-    "volume_distance": {
-      "var_param": "volume_distance"
-    },
-    "cifti_out": {
+    "cifti-out": {
       "var_param": "cifti_out"
     },
-    "left_surface": {
+    "left-surface": {
       "var_param": "left_surface",
       "fn_struct_make_params": "cifti_dilate_left_surface_params",
       "properties": {
         "surface": {
           "var_param": "surface"
         },
-        "opt_left_corrected_areas_area_metric": {
-          "var_param": "opt_left_corrected_areas_area_metric"
+        "area-metric": {
+          "var_param": "area_metric"
         }
       }
     },
-    "right_surface": {
+    "right-surface": {
       "var_param": "right_surface",
       "fn_struct_make_params": "cifti_dilate_right_surface_params",
       "properties": {
         "surface": {
           "var_param": "surface"
         },
-        "opt_right_corrected_areas_area_metric": {
-          "var_param": "opt_right_corrected_areas_area_metric"
+        "area-metric": {
+          "var_param": "area_metric"
         }
       }
     },
-    "cerebellum_surface": {
+    "cerebellum-surface": {
       "var_param": "cerebellum_surface",
       "fn_struct_make_params": "cifti_dilate_cerebellum_surface_params",
       "properties": {
         "surface": {
           "var_param": "surface"
         },
-        "opt_cerebellum_corrected_areas_area_metric": {
-          "var_param": "opt_cerebellum_corrected_areas_area_metric"
+        "area-metric": {
+          "var_param": "area_metric"
         }
       }
     },
-    "opt_bad_brainordinate_roi_roi_cifti": {
-      "var_param": "opt_bad_brainordinate_roi_roi_cifti"
+    "roi-cifti": {
+      "var_param": "roi_cifti"
     },
-    "opt_nearest": {
-      "var_param": "opt_nearest"
+    "nearest": {
+      "var_param": "nearest"
     },
-    "opt_merged_volume": {
-      "var_param": "opt_merged_volume"
+    "merged-volume": {
+      "var_param": "merged_volume"
     },
-    "opt_legacy_mode": {
-      "var_param": "opt_legacy_mode"
+    "legacy-mode": {
+      "var_param": "legacy_mode"
+    },
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
+    },
+    "surface-distance": {
+      "var_param": "surface_distance"
+    },
+    "volume-distance": {
+      "var_param": "volume_distance"
     }
   }
 }

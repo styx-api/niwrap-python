@@ -6,32 +6,31 @@ import pathlib
 from styxdefs import *
 
 VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
-    id="d9e82f37b708bec47857be4b7298c862173c768b.boutiques",
+    id="4531678f8f3118c9ec57f1efd95f5ab4ee4503d2.workbench",
     name="volume-parcel-smoothing",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeParcelSmoothingParameters = typing.TypedDict('VolumeParcelSmoothingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-smoothing"]],
-    "data_volume": InputPathType,
-    "label_volume": InputPathType,
+    "volume-out": str,
+    "fwhm": bool,
+    "fix-zeros": bool,
+    "subvol": typing.NotRequired[str | None],
+    "data-volume": InputPathType,
+    "label-volume": InputPathType,
     "kernel": float,
-    "volume_out": str,
-    "opt_fwhm": bool,
-    "opt_fix_zeros": bool,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 VolumeParcelSmoothingParametersTagged = typing.TypedDict('VolumeParcelSmoothingParametersTagged', {
     "@type": typing.Literal["workbench/volume-parcel-smoothing"],
-    "data_volume": InputPathType,
-    "label_volume": InputPathType,
+    "volume-out": str,
+    "fwhm": bool,
+    "fix-zeros": bool,
+    "subvol": typing.NotRequired[str | None],
+    "data-volume": InputPathType,
+    "label-volume": InputPathType,
     "kernel": float,
-    "volume_out": str,
-    "opt_fwhm": bool,
-    "opt_fix_zeros": bool,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 
 
@@ -46,41 +45,42 @@ class VolumeParcelSmoothingOutputs(typing.NamedTuple):
 
 
 def volume_parcel_smoothing_params(
+    volume_out: str,
+    subvol: str | None,
     data_volume: InputPathType,
     label_volume: InputPathType,
     kernel: float,
-    volume_out: str,
-    opt_fwhm: bool = False,
-    opt_fix_zeros: bool = False,
-    opt_subvolume_subvol: str | None = None,
+    fwhm: bool = False,
+    fix_zeros: bool = False,
 ) -> VolumeParcelSmoothingParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         data_volume: the volume to smooth.
         label_volume: a label volume containing the parcels to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        volume_out: the output volume.
-        opt_fwhm: smoothing kernel size is FWHM, not sigma.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_subvolume_subvol: select a single subvolume to smooth: the\
-            subvolume number or name.
+        fwhm: smoothing kernel size is FWHM, not sigma.
+        fix_zeros: treat zero values as not being data.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-parcel-smoothing",
-        "data_volume": data_volume,
-        "label_volume": label_volume,
+        "volume-out": volume_out,
+        "fwhm": fwhm,
+        "fix-zeros": fix_zeros,
+        "data-volume": data_volume,
+        "label-volume": label_volume,
         "kernel": kernel,
-        "volume_out": volume_out,
-        "opt_fwhm": opt_fwhm,
-        "opt_fix_zeros": opt_fix_zeros,
     }
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -98,21 +98,19 @@ def volume_parcel_smoothing_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-parcel-smoothing")
-    cargs.append(execution.input_file(params.get("data_volume", None)))
-    cargs.append(execution.input_file(params.get("label_volume", None)))
-    cargs.append(str(params.get("kernel", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
-    if params.get("opt_fix_zeros", False):
-        cargs.append("-fix-zeros")
-    if params.get("opt_subvolume_subvol", None) is not None:
+    if params.get("fwhm", False) or params.get("fix-zeros", False) or params.get("subvol", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-parcel-smoothing",
+            params.get("volume-out", None),
+            ("-fwhm" if (params.get("fwhm", False)) else ""),
+            ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("data-volume", None)))
+    cargs.append(execution.input_file(params.get("label-volume", None)))
+    cargs.append(str(params.get("kernel", None)))
     return cargs
 
 
@@ -131,7 +129,7 @@ def volume_parcel_smoothing_outputs(
     """
     ret = VolumeParcelSmoothingOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -141,18 +139,12 @@ def volume_parcel_smoothing_execute(
     runner: Runner | None = None,
 ) -> VolumeParcelSmoothingOutputs:
     """
-    volume-parcel-smoothing
-    
-    Smooth parcels in a volume separately.
+    SMOOTH PARCELS IN A VOLUME SEPARATELY.
     
     The volume is smoothed within each label in the label volume using data only
     from within the label. Equivalent to running volume smoothing with ROIs
     matching each label separately, then adding the resulting volumes, but
     faster.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -170,51 +162,46 @@ def volume_parcel_smoothing_execute(
 
 
 def volume_parcel_smoothing(
+    volume_out: str,
+    subvol: str | None,
     data_volume: InputPathType,
     label_volume: InputPathType,
     kernel: float,
-    volume_out: str,
-    opt_fwhm: bool = False,
-    opt_fix_zeros: bool = False,
-    opt_subvolume_subvol: str | None = None,
+    fwhm: bool = False,
+    fix_zeros: bool = False,
     runner: Runner | None = None,
 ) -> VolumeParcelSmoothingOutputs:
     """
-    volume-parcel-smoothing
-    
-    Smooth parcels in a volume separately.
+    SMOOTH PARCELS IN A VOLUME SEPARATELY.
     
     The volume is smoothed within each label in the label volume using data only
     from within the label. Equivalent to running volume smoothing with ROIs
     matching each label separately, then adding the resulting volumes, but
     faster.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         data_volume: the volume to smooth.
         label_volume: a label volume containing the parcels to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        volume_out: the output volume.
-        opt_fwhm: smoothing kernel size is FWHM, not sigma.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_subvolume_subvol: select a single subvolume to smooth: the\
-            subvolume number or name.
+        fwhm: smoothing kernel size is FWHM, not sigma.
+        fix_zeros: treat zero values as not being data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeParcelSmoothingOutputs`).
     """
     params = volume_parcel_smoothing_params(
+        volume_out=volume_out,
+        fwhm=fwhm,
+        fix_zeros=fix_zeros,
+        subvol=subvol,
         data_volume=data_volume,
         label_volume=label_volume,
         kernel=kernel,
-        volume_out=volume_out,
-        opt_fwhm=opt_fwhm,
-        opt_fix_zeros=opt_fix_zeros,
-        opt_subvolume_subvol=opt_subvolume_subvol,
     )
     return volume_parcel_smoothing_execute(params, runner)
 

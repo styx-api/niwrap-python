@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_TO_ROI_METADATA = Metadata(
-    id="8d2d6d169e7d55ce67c45c7e3bd6312716996961.boutiques",
+    id="f849408f8ec3fabb1a2cc5fda20d4180749ba643.workbench",
     name="volume-label-to-roi",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeLabelToRoiParameters = typing.TypedDict('VolumeLabelToRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-to-roi"]],
-    "label_in": InputPathType,
-    "volume_out": str,
-    "opt_name_label_name": typing.NotRequired[str | None],
-    "opt_key_label_key": typing.NotRequired[int | None],
-    "opt_map_map": typing.NotRequired[str | None],
+    "volume-out": str,
+    "label-name": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "map": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 VolumeLabelToRoiParametersTagged = typing.TypedDict('VolumeLabelToRoiParametersTagged', {
     "@type": typing.Literal["workbench/volume-label-to-roi"],
-    "label_in": InputPathType,
-    "volume_out": str,
-    "opt_name_label_name": typing.NotRequired[str | None],
-    "opt_key_label_key": typing.NotRequired[int | None],
-    "opt_map_map": typing.NotRequired[str | None],
+    "volume-out": str,
+    "label-name": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "map": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 
 
@@ -42,37 +41,41 @@ class VolumeLabelToRoiOutputs(typing.NamedTuple):
 
 
 def volume_label_to_roi_params(
-    label_in: InputPathType,
     volume_out: str,
-    opt_name_label_name: str | None = None,
-    opt_key_label_key: int | None = None,
-    opt_map_map: str | None = None,
+    label_name: str | None,
+    label_key: int | None,
+    map_: str | None,
+    label_in: InputPathType,
 ) -> VolumeLabelToRoiParametersTagged:
     """
     Build parameters.
     
     Args:
-        label_in: the input volume label file.
         volume_out: the output volume file.
-        opt_name_label_name: select label by name: the label name that you want\
-            an roi of.
-        opt_key_label_key: select label by key: the label key that you want an\
-            roi of.
-        opt_map_map: select a single label map to use: the map number or name.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        map_: select a single label map to use\
+            \
+            the map number or name.
+        label_in: the input volume label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-label-to-roi",
-        "label_in": label_in,
-        "volume_out": volume_out,
+        "volume-out": volume_out,
+        "label-in": label_in,
     }
-    if opt_name_label_name is not None:
-        params["opt_name_label_name"] = opt_name_label_name
-    if opt_key_label_key is not None:
-        params["opt_key_label_key"] = opt_key_label_key
-    if opt_map_map is not None:
-        params["opt_map_map"] = opt_map_map
+    if label_name is not None:
+        params["label-name"] = label_name
+    if label_key is not None:
+        params["label-key"] = label_key
+    if map_ is not None:
+        params["map"] = map_
     return params
 
 
@@ -90,25 +93,19 @@ def volume_label_to_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-label-to-roi")
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_name_label_name", None) is not None:
+    if params.get("label-name", None) is not None or params.get("label-key", None) is not None or params.get("map", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-label-to-roi",
+            params.get("volume-out", None),
             "-name",
-            params.get("opt_name_label_name", None)
-        ])
-    if params.get("opt_key_label_key", None) is not None:
-        cargs.extend([
+            (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
             "-key",
-            str(params.get("opt_key_label_key", None))
-        ])
-    if params.get("opt_map_map", None) is not None:
-        cargs.extend([
+            (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
             "-map",
-            params.get("opt_map_map", None)
+            (params.get("map", None) if (params.get("map", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -127,7 +124,7 @@ def volume_label_to_roi_outputs(
     """
     ret = VolumeLabelToRoiOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -137,18 +134,12 @@ def volume_label_to_roi_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelToRoiOutputs:
     """
-    volume-label-to-roi
-    
-    Make a volume label into an roi volume.
+    MAKE A VOLUME LABEL INTO AN ROI VOLUME.
     
     For each map in <label-in>, a map is created in <volume-out> where all
     locations labeled with <label-name> or with a key of <label-key> are given a
     value of 1, and all other locations are given 0. Exactly one of -name and
     -key must be specified. Specify -map to use only one map from <label-in>.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -166,45 +157,43 @@ def volume_label_to_roi_execute(
 
 
 def volume_label_to_roi(
-    label_in: InputPathType,
     volume_out: str,
-    opt_name_label_name: str | None = None,
-    opt_key_label_key: int | None = None,
-    opt_map_map: str | None = None,
+    label_name: str | None,
+    label_key: int | None,
+    map_: str | None,
+    label_in: InputPathType,
     runner: Runner | None = None,
 ) -> VolumeLabelToRoiOutputs:
     """
-    volume-label-to-roi
-    
-    Make a volume label into an roi volume.
+    MAKE A VOLUME LABEL INTO AN ROI VOLUME.
     
     For each map in <label-in>, a map is created in <volume-out> where all
     locations labeled with <label-name> or with a key of <label-key> are given a
     value of 1, and all other locations are given 0. Exactly one of -name and
     -key must be specified. Specify -map to use only one map from <label-in>.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        label_in: the input volume label file.
         volume_out: the output volume file.
-        opt_name_label_name: select label by name: the label name that you want\
-            an roi of.
-        opt_key_label_key: select label by key: the label key that you want an\
-            roi of.
-        opt_map_map: select a single label map to use: the map number or name.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        map_: select a single label map to use\
+            \
+            the map number or name.
+        label_in: the input volume label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelToRoiOutputs`).
     """
     params = volume_label_to_roi_params(
-        label_in=label_in,
         volume_out=volume_out,
-        opt_name_label_name=opt_name_label_name,
-        opt_key_label_key=opt_key_label_key,
-        opt_map_map=opt_map_map,
+        label_name=label_name,
+        label_key=label_key,
+        map_=map_,
+        label_in=label_in,
     )
     return volume_label_to_roi_execute(params, runner)
 

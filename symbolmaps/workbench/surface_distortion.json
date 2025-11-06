@@ -1,13 +1,7 @@
 {
   "fn_root_make_params_and_execute": "surface_distortion",
   "properties": {
-    "surface_reference": {
-      "var_param": "surface_reference"
-    },
-    "surface_distorted": {
-      "var_param": "surface_distorted"
-    },
-    "metric_out": {
+    "metric-out": {
       "var_param": "metric_out"
     },
     "smooth": {
@@ -17,25 +11,34 @@
         "sigma": {
           "var_param": "sigma"
         },
-        "opt_fwhm": {
-          "var_param": "opt_fwhm"
+        "fwhm": {
+          "var_param": "fwhm"
         }
       }
     },
-    "opt_caret5_method": {
-      "var_param": "opt_caret5_method"
-    },
-    "opt_edge_method": {
-      "var_param": "opt_edge_method"
-    },
-    "local_affine_method": {
-      "var_param": "local_affine_method",
-      "fn_struct_make_params": "surface_distortion_local_affine_method_params",
+    "match-surface-area": {
+      "var_param": "match_surface_area",
+      "fn_struct_make_params": "surface_distortion_match_surface_area_params",
       "properties": {
-        "opt_log2": {
-          "var_param": "opt_log2"
+        "roi-metric": {
+          "var_param": "roi_metric"
         }
       }
+    },
+    "caret5-method": {
+      "var_param": "caret5_method"
+    },
+    "edge-method": {
+      "var_param": "edge_method"
+    },
+    "log2": {
+      "var_param": "log2"
+    },
+    "surface-reference": {
+      "var_param": "surface_reference"
+    },
+    "surface-distorted": {
+      "var_param": "surface_distorted"
     }
   }
 }

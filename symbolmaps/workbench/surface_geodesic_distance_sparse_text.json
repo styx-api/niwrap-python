@@ -1,0 +1,20 @@
+{
+  "fn_root_make_params_and_execute": "surface_geodesic_distance_sparse_text",
+  "properties": {
+    "area-metric": {
+      "var_param": "area_metric"
+    },
+    "naive": {
+      "var_param": "naive"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "limit": {
+      "var_param": "limit"
+    },
+    "text-out": {
+      "var_param": "text_out"
+    }
+  }
+}

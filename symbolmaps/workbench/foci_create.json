@@ -8,10 +8,10 @@
       "var_param": "class_",
       "fn_struct_make_params": "foci_create_class_params",
       "properties": {
-        "class_name": {
+        "class-name": {
           "var_param": "class_name"
         },
-        "foci_list_file": {
+        "foci-list-file": {
           "var_param": "foci_list_file"
         },
         "surface": {

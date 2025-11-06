@@ -6,40 +6,39 @@ import pathlib
 from styxdefs import *
 
 VOLUME_REDUCE_METADATA = Metadata(
-    id="b2718ba70f250a6a0f620b99082f70f83dcd9fe0.boutiques",
+    id="640fab587d02e7f004bb3968f135463a35a2774a.workbench",
     name="volume-reduce",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeReduceExcludeOutliersParameters = typing.TypedDict('VolumeReduceExcludeOutliersParameters', {
-    "@type": typing.NotRequired[typing.Literal["exclude_outliers"]],
-    "sigma_below": float,
-    "sigma_above": float,
+    "@type": typing.NotRequired[typing.Literal["exclude-outliers"]],
+    "sigma-below": float,
+    "sigma-above": float,
 })
 VolumeReduceExcludeOutliersParametersTagged = typing.TypedDict('VolumeReduceExcludeOutliersParametersTagged', {
-    "@type": typing.Literal["exclude_outliers"],
-    "sigma_below": float,
-    "sigma_above": float,
+    "@type": typing.Literal["exclude-outliers"],
+    "sigma-below": float,
+    "sigma-above": float,
 })
 
 
 VolumeReduceParameters = typing.TypedDict('VolumeReduceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-reduce"]],
-    "volume_in": InputPathType,
+    "volume-out": str,
+    "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParameters | None],
+    "only-numeric": bool,
+    "volume-in": InputPathType,
     "operation": str,
-    "volume_out": str,
-    "exclude_outliers": typing.NotRequired[VolumeReduceExcludeOutliersParameters | None],
-    "opt_only_numeric": bool,
 })
 VolumeReduceParametersTagged = typing.TypedDict('VolumeReduceParametersTagged', {
     "@type": typing.Literal["workbench/volume-reduce"],
-    "volume_in": InputPathType,
+    "volume-out": str,
+    "exclude-outliers": typing.NotRequired[VolumeReduceExcludeOutliersParameters | None],
+    "only-numeric": bool,
+    "volume-in": InputPathType,
     "operation": str,
-    "volume_out": str,
-    "exclude_outliers": typing.NotRequired[VolumeReduceExcludeOutliersParameters | None],
-    "opt_only_numeric": bool,
 })
 
 
@@ -57,9 +56,9 @@ def volume_reduce_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "exclude_outliers",
-        "sigma_below": sigma_below,
-        "sigma_above": sigma_above,
+        "@type": "exclude-outliers",
+        "sigma-below": sigma_below,
+        "sigma-above": sigma_above,
     }
     return params
 
@@ -78,9 +77,11 @@ def volume_reduce_exclude_outliers_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-exclude-outliers")
-    cargs.append(str(params.get("sigma_below", None)))
-    cargs.append(str(params.get("sigma_above", None)))
+    cargs.extend([
+        "-exclude-outliers",
+        str(params.get("sigma-below", None)),
+        str(params.get("sigma-above", None))
+    ])
     return cargs
 
 
@@ -95,34 +96,34 @@ class VolumeReduceOutputs(typing.NamedTuple):
 
 
 def volume_reduce_params(
+    volume_out: str,
     volume_in: InputPathType,
     operation: str,
-    volume_out: str,
     exclude_outliers: VolumeReduceExcludeOutliersParameters | None = None,
-    opt_only_numeric: bool = False,
+    only_numeric: bool = False,
 ) -> VolumeReduceParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
         volume_in: the volume file to reduce.
         operation: the reduction operator to use.
-        volume_out: the output volume.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
-        opt_only_numeric: exclude non-numeric values.
+        only_numeric: exclude non-numeric values.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-reduce",
-        "volume_in": volume_in,
+        "volume-out": volume_out,
+        "only-numeric": only_numeric,
+        "volume-in": volume_in,
         "operation": operation,
-        "volume_out": volume_out,
-        "opt_only_numeric": opt_only_numeric,
     }
     if exclude_outliers is not None:
-        params["exclude_outliers"] = exclude_outliers
+        params["exclude-outliers"] = exclude_outliers
     return params
 
 
@@ -140,15 +141,16 @@ def volume_reduce_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-reduce")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
+    if params.get("exclude-outliers", None) is not None or params.get("only-numeric", False):
+        cargs.extend([
+            "wb_command",
+            "-volume-reduce",
+            params.get("volume-out", None),
+            *(volume_reduce_exclude_outliers_cargs(params.get("exclude-outliers", None), execution) if (params.get("exclude-outliers", None) is not None) else []),
+            ("-only-numeric" if (params.get("only-numeric", False)) else "")
+        ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
     cargs.append(params.get("operation", None))
-    cargs.append(params.get("volume_out", None))
-    if params.get("exclude_outliers", None) is not None:
-        cargs.extend(volume_reduce_exclude_outliers_cargs(params.get("exclude_outliers", None), execution))
-    if params.get("opt_only_numeric", False):
-        cargs.append("-only-numeric")
     return cargs
 
 
@@ -167,7 +169,7 @@ def volume_reduce_outputs(
     """
     ret = VolumeReduceOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -177,9 +179,7 @@ def volume_reduce_execute(
     runner: Runner | None = None,
 ) -> VolumeReduceOutputs:
     """
-    volume-reduce
-    
-    Perform reduction operation across subvolumes.
+    PERFORM REDUCTION OPERATION ACROSS SUBVOLUMES.
     
     For each voxel, takes the data across subvolumes as a vector, and performs
     the specified reduction on it, putting the result into the single output
@@ -202,10 +202,6 @@ def volume_reduce_execute(
     MODE: the mode of the data
     COUNT_NONZERO: the number of nonzero elements in the data
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -223,17 +219,15 @@ def volume_reduce_execute(
 
 
 def volume_reduce(
+    volume_out: str,
     volume_in: InputPathType,
     operation: str,
-    volume_out: str,
     exclude_outliers: VolumeReduceExcludeOutliersParameters | None = None,
-    opt_only_numeric: bool = False,
+    only_numeric: bool = False,
     runner: Runner | None = None,
 ) -> VolumeReduceOutputs:
     """
-    volume-reduce
-    
-    Perform reduction operation across subvolumes.
+    PERFORM REDUCTION OPERATION ACROSS SUBVOLUMES.
     
     For each voxel, takes the data across subvolumes as a vector, and performs
     the specified reduction on it, putting the result into the single output
@@ -257,27 +251,23 @@ def volume_reduce(
     COUNT_NONZERO: the number of nonzero elements in the data
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
         volume_in: the volume file to reduce.
         operation: the reduction operator to use.
-        volume_out: the output volume.
         exclude_outliers: exclude non-numeric values and outliers by standard\
             deviation.
-        opt_only_numeric: exclude non-numeric values.
+        only_numeric: exclude non-numeric values.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeReduceOutputs`).
     """
     params = volume_reduce_params(
-        volume_in=volume_in,
-        operation=operation,
         volume_out=volume_out,
         exclude_outliers=exclude_outliers,
-        opt_only_numeric=opt_only_numeric,
+        only_numeric=only_numeric,
+        volume_in=volume_in,
+        operation=operation,
     )
     return volume_reduce_execute(params, runner)
 

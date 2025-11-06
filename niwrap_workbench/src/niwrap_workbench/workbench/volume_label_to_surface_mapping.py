@@ -6,55 +6,57 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA = Metadata(
-    id="7b2c1281854788e8dba27a0d6884b9c1e7b7708e.boutiques",
+    id="e946cc13f052329cb404822b10b801d01f5c7e09.workbench",
     name="volume-label-to-surface-mapping",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeLabelToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParameters', {
-    "@type": typing.NotRequired[typing.Literal["ribbon_constrained"]],
-    "inner_surf": InputPathType,
-    "outer_surf": InputPathType,
-    "opt_volume_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
-    "opt_thin_columns": bool,
+    "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
+    "inner-surf": InputPathType,
+    "outer-surf": InputPathType,
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "dist": typing.NotRequired[float | None],
+    "subdiv-num": typing.NotRequired[int | None],
+    "thin-columns": bool,
 })
 VolumeLabelToSurfaceMappingRibbonConstrainedParametersTagged = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParametersTagged', {
-    "@type": typing.Literal["ribbon_constrained"],
-    "inner_surf": InputPathType,
-    "outer_surf": InputPathType,
-    "opt_volume_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
-    "opt_thin_columns": bool,
+    "@type": typing.Literal["ribbon-constrained"],
+    "inner-surf": InputPathType,
+    "outer-surf": InputPathType,
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "dist": typing.NotRequired[float | None],
+    "subdiv-num": typing.NotRequired[int | None],
+    "thin-columns": bool,
 })
 
 
 VolumeLabelToSurfaceMappingParameters = typing.TypedDict('VolumeLabelToSurfaceMappingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-to-surface-mapping"]],
+    "label-out": str,
+    "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None],
+    "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
-    "label_out": str,
-    "ribbon_constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None],
-    "opt_subvol_select_subvol": typing.NotRequired[str | None],
 })
 VolumeLabelToSurfaceMappingParametersTagged = typing.TypedDict('VolumeLabelToSurfaceMappingParametersTagged', {
     "@type": typing.Literal["workbench/volume-label-to-surface-mapping"],
+    "label-out": str,
+    "ribbon-constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None],
+    "subvol": typing.NotRequired[str | None],
     "volume": InputPathType,
     "surface": InputPathType,
-    "label_out": str,
-    "ribbon_constrained": typing.NotRequired[VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None],
-    "opt_subvol_select_subvol": typing.NotRequired[str | None],
 })
 
 
 def volume_label_to_surface_mapping_ribbon_constrained_params(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
-    opt_volume_roi_roi_volume: InputPathType | None = None,
-    opt_voxel_subdiv_subdiv_num: int | None = None,
-    opt_thin_columns: bool = False,
+    roi_volume: InputPathType | None,
+    dist: float | None,
+    subdiv_num: int | None,
+    thin_columns: bool = False,
 ) -> VolumeLabelToSurfaceMappingRibbonConstrainedParametersTagged:
     """
     Build parameters.
@@ -62,23 +64,31 @@ def volume_label_to_surface_mapping_ribbon_constrained_params(
     Args:
         inner_surf: the inner surface of the ribbon.
         outer_surf: the outer surface of the ribbon.
-        opt_volume_roi_roi_volume: use a volume roi: the volume file.
-        opt_voxel_subdiv_subdiv_num: voxel divisions while estimating voxel\
-            weights: number of subdivisions, default 3.
-        opt_thin_columns: use non-overlapping polyhedra.
+        roi_volume: use a volume roi\
+            \
+            the volume file.
+        dist: use dilation for small vertices that 'missed' the geometry tests\
+            \
+            distance in mm for dilation (can be small, like 1mm).
+        subdiv_num: voxel divisions while estimating voxel weights\
+            \
+            number of subdivisions, default 3.
+        thin_columns: use non-overlapping polyhedra.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "ribbon_constrained",
-        "inner_surf": inner_surf,
-        "outer_surf": outer_surf,
-        "opt_thin_columns": opt_thin_columns,
+        "@type": "ribbon-constrained",
+        "inner-surf": inner_surf,
+        "outer-surf": outer_surf,
+        "thin-columns": thin_columns,
     }
-    if opt_volume_roi_roi_volume is not None:
-        params["opt_volume_roi_roi_volume"] = opt_volume_roi_roi_volume
-    if opt_voxel_subdiv_subdiv_num is not None:
-        params["opt_voxel_subdiv_subdiv_num"] = opt_voxel_subdiv_subdiv_num
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
+    if dist is not None:
+        params["dist"] = dist
+    if subdiv_num is not None:
+        params["subdiv-num"] = subdiv_num
     return params
 
 
@@ -96,21 +106,19 @@ def volume_label_to_surface_mapping_ribbon_constrained_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-ribbon-constrained")
-    cargs.append(execution.input_file(params.get("inner_surf", None)))
-    cargs.append(execution.input_file(params.get("outer_surf", None)))
-    if params.get("opt_volume_roi_roi_volume", None) is not None:
+    if params.get("roi-volume", None) is not None or params.get("dist", None) is not None or params.get("subdiv-num", None) is not None or params.get("thin-columns", False):
         cargs.extend([
+            "-ribbon-constrained",
+            execution.input_file(params.get("inner-surf", None)),
+            execution.input_file(params.get("outer-surf", None)),
             "-volume-roi",
-            execution.input_file(params.get("opt_volume_roi_roi_volume", None))
-        ])
-    if params.get("opt_voxel_subdiv_subdiv_num", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-dilate-missing",
+            (str(params.get("dist", None)) if (params.get("dist", None) is not None) else ""),
             "-voxel-subdiv",
-            str(params.get("opt_voxel_subdiv_subdiv_num", None))
+            (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
+            ("-thin-columns" if (params.get("thin-columns", False)) else "")
         ])
-    if params.get("opt_thin_columns", False):
-        cargs.append("-thin-columns")
     return cargs
 
 
@@ -125,35 +133,36 @@ class VolumeLabelToSurfaceMappingOutputs(typing.NamedTuple):
 
 
 def volume_label_to_surface_mapping_params(
+    label_out: str,
+    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
-    label_out: str,
     ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None = None,
-    opt_subvol_select_subvol: str | None = None,
 ) -> VolumeLabelToSurfaceMappingParametersTagged:
     """
     Build parameters.
     
     Args:
+        label_out: the output gifti label file.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
-        label_out: the output gifti label file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
-        opt_subvol_select_subvol: select a single subvolume to map: the\
-            subvolume number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-label-to-surface-mapping",
+        "label-out": label_out,
         "volume": volume,
         "surface": surface,
-        "label_out": label_out,
     }
     if ribbon_constrained is not None:
-        params["ribbon_constrained"] = ribbon_constrained
-    if opt_subvol_select_subvol is not None:
-        params["opt_subvol_select_subvol"] = opt_subvol_select_subvol
+        params["ribbon-constrained"] = ribbon_constrained
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -171,18 +180,17 @@ def volume_label_to_surface_mapping_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-label-to-surface-mapping")
+    if params.get("ribbon-constrained", None) is not None or params.get("subvol", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-volume-label-to-surface-mapping",
+            params.get("label-out", None),
+            *(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else []),
+            "-subvol-select",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("label_out", None))
-    if params.get("ribbon_constrained", None) is not None:
-        cargs.extend(volume_label_to_surface_mapping_ribbon_constrained_cargs(params.get("ribbon_constrained", None), execution))
-    if params.get("opt_subvol_select_subvol", None) is not None:
-        cargs.extend([
-            "-subvol-select",
-            params.get("opt_subvol_select_subvol", None)
-        ])
     return cargs
 
 
@@ -201,7 +209,7 @@ def volume_label_to_surface_mapping_outputs(
     """
     ret = VolumeLabelToSurfaceMappingOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out", None)),
+        label_out=execution.output_file(params.get("label-out", None)),
     )
     return ret
 
@@ -211,9 +219,7 @@ def volume_label_to_surface_mapping_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
-    volume-label-to-surface-mapping
-    
-    Map a label volume to a surface label file.
+    MAP A LABEL VOLUME TO A SURFACE LABEL FILE.
     
     Map label volume data to a surface. If -ribbon-constrained is not specified,
     uses the enclosing voxel method. The ribbon mapping method constructs a
@@ -231,10 +237,6 @@ def volume_label_to_surface_mapping_execute(
     and checking whether the center of each piece is inside the polyhedron. If
     you have very large voxels, consider increasing this if you get unexpected
     unlabeled vertices in your output.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -252,17 +254,15 @@ def volume_label_to_surface_mapping_execute(
 
 
 def volume_label_to_surface_mapping(
+    label_out: str,
+    subvol: str | None,
     volume: InputPathType,
     surface: InputPathType,
-    label_out: str,
     ribbon_constrained: VolumeLabelToSurfaceMappingRibbonConstrainedParameters | None = None,
-    opt_subvol_select_subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
-    volume-label-to-surface-mapping
-    
-    Map a label volume to a surface label file.
+    MAP A LABEL VOLUME TO A SURFACE LABEL FILE.
     
     Map label volume data to a surface. If -ribbon-constrained is not specified,
     uses the enclosing voxel method. The ribbon mapping method constructs a
@@ -281,27 +281,24 @@ def volume_label_to_surface_mapping(
     you have very large voxels, consider increasing this if you get unexpected
     unlabeled vertices in your output.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        label_out: the output gifti label file.
+        subvol: select a single subvolume to map\
+            \
+            the subvolume number or name.
         volume: the volume to map data from.
         surface: the surface to map the data onto.
-        label_out: the output gifti label file.
         ribbon_constrained: use ribbon constrained mapping algorithm.
-        opt_subvol_select_subvol: select a single subvolume to map: the\
-            subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelToSurfaceMappingOutputs`).
     """
     params = volume_label_to_surface_mapping_params(
-        volume=volume,
-        surface=surface,
         label_out=label_out,
         ribbon_constrained=ribbon_constrained,
-        opt_subvol_select_subvol=opt_subvol_select_subvol,
+        subvol=subvol,
+        volume=volume,
+        surface=surface,
     )
     return volume_label_to_surface_mapping_execute(params, runner)
 

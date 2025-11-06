@@ -6,58 +6,57 @@ import pathlib
 from styxdefs import *
 
 METRIC_PALETTE_METADATA = Metadata(
-    id="060ccaaa0889c06957231f056645f3e123168bef.boutiques",
+    id="8d6cbb35e7b410dce378acf392873934c73456df.workbench",
     name="metric-palette",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricPalettePosPercentParameters = typing.TypedDict('MetricPalettePosPercentParameters', {
-    "@type": typing.NotRequired[typing.Literal["pos_percent"]],
-    "pos_min__": float,
-    "pos_max__": float,
+    "@type": typing.NotRequired[typing.Literal["pos-percent"]],
+    "pos-min-%": float,
+    "pos-max-%": float,
 })
 MetricPalettePosPercentParametersTagged = typing.TypedDict('MetricPalettePosPercentParametersTagged', {
-    "@type": typing.Literal["pos_percent"],
-    "pos_min__": float,
-    "pos_max__": float,
+    "@type": typing.Literal["pos-percent"],
+    "pos-min-%": float,
+    "pos-max-%": float,
 })
 
 
 MetricPaletteNegPercentParameters = typing.TypedDict('MetricPaletteNegPercentParameters', {
-    "@type": typing.NotRequired[typing.Literal["neg_percent"]],
-    "neg_min__": float,
-    "neg_max__": float,
+    "@type": typing.NotRequired[typing.Literal["neg-percent"]],
+    "neg-min-%": float,
+    "neg-max-%": float,
 })
 MetricPaletteNegPercentParametersTagged = typing.TypedDict('MetricPaletteNegPercentParametersTagged', {
-    "@type": typing.Literal["neg_percent"],
-    "neg_min__": float,
-    "neg_max__": float,
+    "@type": typing.Literal["neg-percent"],
+    "neg-min-%": float,
+    "neg-max-%": float,
 })
 
 
 MetricPalettePosUserParameters = typing.TypedDict('MetricPalettePosUserParameters', {
-    "@type": typing.NotRequired[typing.Literal["pos_user"]],
-    "pos_min_user": float,
-    "pos_max_user": float,
+    "@type": typing.NotRequired[typing.Literal["pos-user"]],
+    "pos-min-user": float,
+    "pos-max-user": float,
 })
 MetricPalettePosUserParametersTagged = typing.TypedDict('MetricPalettePosUserParametersTagged', {
-    "@type": typing.Literal["pos_user"],
-    "pos_min_user": float,
-    "pos_max_user": float,
+    "@type": typing.Literal["pos-user"],
+    "pos-min-user": float,
+    "pos-max-user": float,
 })
 
 
 MetricPaletteNegUserParameters = typing.TypedDict('MetricPaletteNegUserParameters', {
-    "@type": typing.NotRequired[typing.Literal["neg_user"]],
-    "neg_min_user": float,
-    "neg_max_user": float,
+    "@type": typing.NotRequired[typing.Literal["neg-user"]],
+    "neg-min-user": float,
+    "neg-max-user": float,
 })
 MetricPaletteNegUserParametersTagged = typing.TypedDict('MetricPaletteNegUserParametersTagged', {
-    "@type": typing.Literal["neg_user"],
-    "neg_min_user": float,
-    "neg_max_user": float,
+    "@type": typing.Literal["neg-user"],
+    "neg-min-user": float,
+    "neg-max-user": float,
 })
 
 
@@ -79,37 +78,39 @@ MetricPaletteThresholdingParametersTagged = typing.TypedDict('MetricPaletteThres
 
 MetricPaletteParameters = typing.TypedDict('MetricPaletteParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-palette"]],
+    "column": typing.NotRequired[str | None],
+    "pos-percent": typing.NotRequired[MetricPalettePosPercentParameters | None],
+    "neg-percent": typing.NotRequired[MetricPaletteNegPercentParameters | None],
+    "pos-user": typing.NotRequired[MetricPalettePosUserParameters | None],
+    "neg-user": typing.NotRequired[MetricPaletteNegUserParameters | None],
+    "interpolate": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "name": typing.NotRequired[str | None],
+    "thresholding": typing.NotRequired[MetricPaletteThresholdingParameters | None],
+    "type": typing.NotRequired[str | None],
+    "type": typing.NotRequired[str | None],
     "metric": str,
     "mode": str,
-    "opt_column_column": typing.NotRequired[str | None],
-    "pos_percent": typing.NotRequired[MetricPalettePosPercentParameters | None],
-    "neg_percent": typing.NotRequired[MetricPaletteNegPercentParameters | None],
-    "pos_user": typing.NotRequired[MetricPalettePosUserParameters | None],
-    "neg_user": typing.NotRequired[MetricPaletteNegUserParameters | None],
-    "opt_interpolate_interpolate": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_disp_pos_display": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_disp_neg_display": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_disp_zero_display": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_palette_name_name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[MetricPaletteThresholdingParameters | None],
-    "opt_inversion_type": typing.NotRequired[str | None],
 })
 MetricPaletteParametersTagged = typing.TypedDict('MetricPaletteParametersTagged', {
     "@type": typing.Literal["workbench/metric-palette"],
+    "column": typing.NotRequired[str | None],
+    "pos-percent": typing.NotRequired[MetricPalettePosPercentParameters | None],
+    "neg-percent": typing.NotRequired[MetricPaletteNegPercentParameters | None],
+    "pos-user": typing.NotRequired[MetricPalettePosUserParameters | None],
+    "neg-user": typing.NotRequired[MetricPaletteNegUserParameters | None],
+    "interpolate": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "display": typing.NotRequired[bool | None],
+    "name": typing.NotRequired[str | None],
+    "thresholding": typing.NotRequired[MetricPaletteThresholdingParameters | None],
+    "type": typing.NotRequired[str | None],
+    "type": typing.NotRequired[str | None],
     "metric": str,
     "mode": str,
-    "opt_column_column": typing.NotRequired[str | None],
-    "pos_percent": typing.NotRequired[MetricPalettePosPercentParameters | None],
-    "neg_percent": typing.NotRequired[MetricPaletteNegPercentParameters | None],
-    "pos_user": typing.NotRequired[MetricPalettePosUserParameters | None],
-    "neg_user": typing.NotRequired[MetricPaletteNegUserParameters | None],
-    "opt_interpolate_interpolate": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_disp_pos_display": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_disp_neg_display": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_disp_zero_display": typing.NotRequired[typing.Literal["true", "false"] | None],
-    "opt_palette_name_name": typing.NotRequired[str | None],
-    "thresholding": typing.NotRequired[MetricPaletteThresholdingParameters | None],
-    "opt_inversion_type": typing.NotRequired[str | None],
 })
 
 
@@ -127,9 +128,9 @@ def metric_palette_pos_percent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "pos_percent",
-        "pos_min__": pos_min__,
-        "pos_max__": pos_max__,
+        "@type": "pos-percent",
+        "pos-min-%": pos_min__,
+        "pos-max-%": pos_max__,
     }
     return params
 
@@ -148,9 +149,11 @@ def metric_palette_pos_percent_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-pos-percent")
-    cargs.append(str(params.get("pos_min__", None)))
-    cargs.append(str(params.get("pos_max__", None)))
+    cargs.extend([
+        "-pos-percent",
+        str(params.get("pos-min-%", None)),
+        str(params.get("pos-max-%", None))
+    ])
     return cargs
 
 
@@ -168,9 +171,9 @@ def metric_palette_neg_percent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "neg_percent",
-        "neg_min__": neg_min__,
-        "neg_max__": neg_max__,
+        "@type": "neg-percent",
+        "neg-min-%": neg_min__,
+        "neg-max-%": neg_max__,
     }
     return params
 
@@ -189,9 +192,11 @@ def metric_palette_neg_percent_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-neg-percent")
-    cargs.append(str(params.get("neg_min__", None)))
-    cargs.append(str(params.get("neg_max__", None)))
+    cargs.extend([
+        "-neg-percent",
+        str(params.get("neg-min-%", None)),
+        str(params.get("neg-max-%", None))
+    ])
     return cargs
 
 
@@ -209,9 +214,9 @@ def metric_palette_pos_user_params(
         Parameter dictionary
     """
     params = {
-        "@type": "pos_user",
-        "pos_min_user": pos_min_user,
-        "pos_max_user": pos_max_user,
+        "@type": "pos-user",
+        "pos-min-user": pos_min_user,
+        "pos-max-user": pos_max_user,
     }
     return params
 
@@ -230,9 +235,11 @@ def metric_palette_pos_user_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-pos-user")
-    cargs.append(str(params.get("pos_min_user", None)))
-    cargs.append(str(params.get("pos_max_user", None)))
+    cargs.extend([
+        "-pos-user",
+        str(params.get("pos-min-user", None)),
+        str(params.get("pos-max-user", None))
+    ])
     return cargs
 
 
@@ -250,9 +257,9 @@ def metric_palette_neg_user_params(
         Parameter dictionary
     """
     params = {
-        "@type": "neg_user",
-        "neg_min_user": neg_min_user,
-        "neg_max_user": neg_max_user,
+        "@type": "neg-user",
+        "neg-min-user": neg_min_user,
+        "neg-max-user": neg_max_user,
     }
     return params
 
@@ -271,9 +278,11 @@ def metric_palette_neg_user_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-neg-user")
-    cargs.append(str(params.get("neg_min_user", None)))
-    cargs.append(str(params.get("neg_max_user", None)))
+    cargs.extend([
+        "-neg-user",
+        str(params.get("neg-min-user", None)),
+        str(params.get("neg-max-user", None))
+    ])
     return cargs
 
 
@@ -318,11 +327,13 @@ def metric_palette_thresholding_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-thresholding")
-    cargs.append(params.get("type", None))
-    cargs.append(params.get("test", None))
-    cargs.append(str(params.get("min", None)))
-    cargs.append(str(params.get("max", None)))
+    cargs.extend([
+        "-thresholding",
+        params.get("type", None),
+        params.get("test", None),
+        str(params.get("min", None)),
+        str(params.get("max", None))
+    ])
     return cargs
 
 
@@ -335,43 +346,58 @@ class MetricPaletteOutputs(typing.NamedTuple):
 
 
 def metric_palette_params(
+    column: str | None,
+    interpolate: bool | None,
+    display: bool | None,
+    display_: bool | None,
+    display_2: bool | None,
+    name: str | None,
+    type_: str | None,
+    type_2: str | None,
     metric: str,
     mode: str,
-    opt_column_column: str | None = None,
     pos_percent: MetricPalettePosPercentParameters | None = None,
     neg_percent: MetricPaletteNegPercentParameters | None = None,
     pos_user: MetricPalettePosUserParameters | None = None,
     neg_user: MetricPaletteNegUserParameters | None = None,
-    opt_interpolate_interpolate: typing.Literal["true", "false"] | None = None,
-    opt_disp_pos_display: typing.Literal["true", "false"] | None = None,
-    opt_disp_neg_display: typing.Literal["true", "false"] | None = None,
-    opt_disp_zero_display: typing.Literal["true", "false"] | None = None,
-    opt_palette_name_name: str | None = None,
     thresholding: MetricPaletteThresholdingParameters | None = None,
-    opt_inversion_type: str | None = None,
 ) -> MetricPaletteParametersTagged:
     """
     Build parameters.
     
     Args:
+        column: select a single column\
+            \
+            the column number or name.
+        interpolate: interpolate colors\
+            \
+            boolean, whether to interpolate.
+        display: display positive data\
+            \
+            boolean, whether to display.
+        display_: display positive data\
+            \
+            boolean, whether to display.
+        display_2: display data closer to zero than the min cutoff\
+            \
+            boolean, whether to display.
+        name: set the palette used\
+            \
+            the name of the palette.
+        type_: specify palette inversion\
+            \
+            the type of inversion.
+        type_2: specify normalization mode (NOTE: this is always a file-wide\
+            setting, NOT per-map)\
+            \
+            the normalization mode.
         metric: the metric to modify.
         mode: the mapping mode.
-        opt_column_column: select a single column: the column number or name.
         pos_percent: percentage min/max for positive data coloring.
         neg_percent: percentage min/max for negative data coloring.
         pos_user: user min/max values for positive data coloring.
         neg_user: user min/max values for negative data coloring.
-        opt_interpolate_interpolate: interpolate colors: boolean, whether to\
-            interpolate.
-        opt_disp_pos_display: display positive data: boolean, whether to\
-            display.
-        opt_disp_neg_display: display positive data: boolean, whether to\
-            display.
-        opt_disp_zero_display: display data closer to zero than the min cutoff:\
-            boolean, whether to display.
-        opt_palette_name_name: set the palette used: the name of the palette.
         thresholding: set the thresholding.
-        opt_inversion_type: specify palette inversion: the type of inversion.
     Returns:
         Parameter dictionary
     """
@@ -380,30 +406,32 @@ def metric_palette_params(
         "metric": metric,
         "mode": mode,
     }
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if column is not None:
+        params["column"] = column
     if pos_percent is not None:
-        params["pos_percent"] = pos_percent
+        params["pos-percent"] = pos_percent
     if neg_percent is not None:
-        params["neg_percent"] = neg_percent
+        params["neg-percent"] = neg_percent
     if pos_user is not None:
-        params["pos_user"] = pos_user
+        params["pos-user"] = pos_user
     if neg_user is not None:
-        params["neg_user"] = neg_user
-    if opt_interpolate_interpolate is not None:
-        params["opt_interpolate_interpolate"] = opt_interpolate_interpolate
-    if opt_disp_pos_display is not None:
-        params["opt_disp_pos_display"] = opt_disp_pos_display
-    if opt_disp_neg_display is not None:
-        params["opt_disp_neg_display"] = opt_disp_neg_display
-    if opt_disp_zero_display is not None:
-        params["opt_disp_zero_display"] = opt_disp_zero_display
-    if opt_palette_name_name is not None:
-        params["opt_palette_name_name"] = opt_palette_name_name
+        params["neg-user"] = neg_user
+    if interpolate is not None:
+        params["interpolate"] = interpolate
+    if display is not None:
+        params["display"] = display
+    if display_ is not None:
+        params["display"] = display_
+    if display_2 is not None:
+        params["display"] = display_2
+    if name is not None:
+        params["name"] = name
     if thresholding is not None:
         params["thresholding"] = thresholding
-    if opt_inversion_type is not None:
-        params["opt_inversion_type"] = opt_inversion_type
+    if type_ is not None:
+        params["type"] = type_
+    if type_2 is not None:
+        params["type"] = type_2
     return params
 
 
@@ -421,55 +449,34 @@ def metric_palette_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-palette")
+    if params.get("column", None) is not None or params.get("pos-percent", None) is not None or params.get("neg-percent", None) is not None or params.get("pos-user", None) is not None or params.get("neg-user", None) is not None or params.get("interpolate", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("display", None) is not None or params.get("name", None) is not None or params.get("thresholding", None) is not None or params.get("type", None) is not None or params.get("type", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-metric-palette",
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            *(metric_palette_pos_percent_cargs(params.get("pos-percent", None), execution) if (params.get("pos-percent", None) is not None) else []),
+            *(metric_palette_neg_percent_cargs(params.get("neg-percent", None), execution) if (params.get("neg-percent", None) is not None) else []),
+            *(metric_palette_pos_user_cargs(params.get("pos-user", None), execution) if (params.get("pos-user", None) is not None) else []),
+            *(metric_palette_neg_user_cargs(params.get("neg-user", None), execution) if (params.get("neg-user", None) is not None) else []),
+            "-interpolate",
+            (("true" if params.get("interpolate", None) else "false") if (params.get("interpolate", None) is not None) else ""),
+            "-disp-pos",
+            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
+            "-disp-neg",
+            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
+            "-disp-zero",
+            (("true" if params.get("display", None) else "false") if (params.get("display", None) is not None) else ""),
+            "-palette-name",
+            (params.get("name", None) if (params.get("name", None) is not None) else ""),
+            *(metric_palette_thresholding_cargs(params.get("thresholding", None), execution) if (params.get("thresholding", None) is not None) else []),
+            "-inversion",
+            (params.get("type", None) if (params.get("type", None) is not None) else ""),
+            "-normalization",
+            (params.get("type", None) if (params.get("type", None) is not None) else "")
+        ])
     cargs.append(params.get("metric", None))
     cargs.append(params.get("mode", None))
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("pos_percent", None) is not None:
-        cargs.extend(metric_palette_pos_percent_cargs(params.get("pos_percent", None), execution))
-    if params.get("neg_percent", None) is not None:
-        cargs.extend(metric_palette_neg_percent_cargs(params.get("neg_percent", None), execution))
-    if params.get("pos_user", None) is not None:
-        cargs.extend(metric_palette_pos_user_cargs(params.get("pos_user", None), execution))
-    if params.get("neg_user", None) is not None:
-        cargs.extend(metric_palette_neg_user_cargs(params.get("neg_user", None), execution))
-    if params.get("opt_interpolate_interpolate", None) is not None:
-        cargs.extend([
-            "-interpolate",
-            params.get("opt_interpolate_interpolate", None)
-        ])
-    if params.get("opt_disp_pos_display", None) is not None:
-        cargs.extend([
-            "-disp-pos",
-            params.get("opt_disp_pos_display", None)
-        ])
-    if params.get("opt_disp_neg_display", None) is not None:
-        cargs.extend([
-            "-disp-neg",
-            params.get("opt_disp_neg_display", None)
-        ])
-    if params.get("opt_disp_zero_display", None) is not None:
-        cargs.extend([
-            "-disp-zero",
-            params.get("opt_disp_zero_display", None)
-        ])
-    if params.get("opt_palette_name_name", None) is not None:
-        cargs.extend([
-            "-palette-name",
-            params.get("opt_palette_name_name", None)
-        ])
-    if params.get("thresholding", None) is not None:
-        cargs.extend(metric_palette_thresholding_cargs(params.get("thresholding", None), execution))
-    if params.get("opt_inversion_type", None) is not None:
-        cargs.extend([
-            "-inversion",
-            params.get("opt_inversion_type", None)
-        ])
     return cargs
 
 
@@ -497,9 +504,7 @@ def metric_palette_execute(
     runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
-    metric-palette
-    
-    Set the palette of a metric file.
+    SET THE PALETTE OF A METRIC FILE.
     
     The original metric file is overwritten with the modified version. By
     default, all columns of the metric file are adjusted to the new settings,
@@ -575,11 +580,12 @@ def metric_palette_execute(
     OFF
     POSITIVE_WITH_NEGATIVE
     POSITIVE_NEGATIVE_SEPARATE
+    
+    The <type> argument to -normalization must be one of the following:
+    
+    NORMALIZATION_ALL_MAP_DATA
+    NORMALIZATION_SELECTED_MAP_DATA
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -597,26 +603,25 @@ def metric_palette_execute(
 
 
 def metric_palette(
+    column: str | None,
+    interpolate: bool | None,
+    display: bool | None,
+    display_: bool | None,
+    display_2: bool | None,
+    name: str | None,
+    type_: str | None,
+    type_2: str | None,
     metric: str,
     mode: str,
-    opt_column_column: str | None = None,
     pos_percent: MetricPalettePosPercentParameters | None = None,
     neg_percent: MetricPaletteNegPercentParameters | None = None,
     pos_user: MetricPalettePosUserParameters | None = None,
     neg_user: MetricPaletteNegUserParameters | None = None,
-    opt_interpolate_interpolate: typing.Literal["true", "false"] | None = None,
-    opt_disp_pos_display: typing.Literal["true", "false"] | None = None,
-    opt_disp_neg_display: typing.Literal["true", "false"] | None = None,
-    opt_disp_zero_display: typing.Literal["true", "false"] | None = None,
-    opt_palette_name_name: str | None = None,
     thresholding: MetricPaletteThresholdingParameters | None = None,
-    opt_inversion_type: str | None = None,
     runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
-    metric-palette
-    
-    Set the palette of a metric file.
+    SET THE PALETTE OF A METRIC FILE.
     
     The original metric file is overwritten with the modified version. By
     default, all columns of the metric file are adjusted to the new settings,
@@ -692,50 +697,66 @@ def metric_palette(
     OFF
     POSITIVE_WITH_NEGATIVE
     POSITIVE_NEGATIVE_SEPARATE
+    
+    The <type> argument to -normalization must be one of the following:
+    
+    NORMALIZATION_ALL_MAP_DATA
+    NORMALIZATION_SELECTED_MAP_DATA
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        column: select a single column\
+            \
+            the column number or name.
+        interpolate: interpolate colors\
+            \
+            boolean, whether to interpolate.
+        display: display positive data\
+            \
+            boolean, whether to display.
+        display_: display positive data\
+            \
+            boolean, whether to display.
+        display_2: display data closer to zero than the min cutoff\
+            \
+            boolean, whether to display.
+        name: set the palette used\
+            \
+            the name of the palette.
+        type_: specify palette inversion\
+            \
+            the type of inversion.
+        type_2: specify normalization mode (NOTE: this is always a file-wide\
+            setting, NOT per-map)\
+            \
+            the normalization mode.
         metric: the metric to modify.
         mode: the mapping mode.
-        opt_column_column: select a single column: the column number or name.
         pos_percent: percentage min/max for positive data coloring.
         neg_percent: percentage min/max for negative data coloring.
         pos_user: user min/max values for positive data coloring.
         neg_user: user min/max values for negative data coloring.
-        opt_interpolate_interpolate: interpolate colors: boolean, whether to\
-            interpolate.
-        opt_disp_pos_display: display positive data: boolean, whether to\
-            display.
-        opt_disp_neg_display: display positive data: boolean, whether to\
-            display.
-        opt_disp_zero_display: display data closer to zero than the min cutoff:\
-            boolean, whether to display.
-        opt_palette_name_name: set the palette used: the name of the palette.
         thresholding: set the thresholding.
-        opt_inversion_type: specify palette inversion: the type of inversion.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricPaletteOutputs`).
     """
     params = metric_palette_params(
-        metric=metric,
-        mode=mode,
-        opt_column_column=opt_column_column,
+        column=column,
         pos_percent=pos_percent,
         neg_percent=neg_percent,
         pos_user=pos_user,
         neg_user=neg_user,
-        opt_interpolate_interpolate=opt_interpolate_interpolate,
-        opt_disp_pos_display=opt_disp_pos_display,
-        opt_disp_neg_display=opt_disp_neg_display,
-        opt_disp_zero_display=opt_disp_zero_display,
-        opt_palette_name_name=opt_palette_name_name,
+        interpolate=interpolate,
+        display=display,
+        display_=display_,
+        display_2=display_2,
+        name=name,
         thresholding=thresholding,
-        opt_inversion_type=opt_inversion_type,
+        type_=type_,
+        type_2=type_2,
+        metric=metric,
+        mode=mode,
     )
     return metric_palette_execute(params, runner)
 

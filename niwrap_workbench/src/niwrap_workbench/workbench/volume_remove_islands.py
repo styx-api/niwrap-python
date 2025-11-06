@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
-    id="81844d49958471387b214e0c8ac10dc4603473e7.boutiques",
+    id="a370afa2e772151ea839c55863c1976554e9fbc1.workbench",
     name="volume-remove-islands",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeRemoveIslandsParameters = typing.TypedDict('VolumeRemoveIslandsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-remove-islands"]],
-    "volume_in": InputPathType,
-    "volume_out": str,
+    "volume-out": str,
+    "volume-in": InputPathType,
 })
 VolumeRemoveIslandsParametersTagged = typing.TypedDict('VolumeRemoveIslandsParametersTagged', {
     "@type": typing.Literal["workbench/volume-remove-islands"],
-    "volume_in": InputPathType,
-    "volume_out": str,
+    "volume-out": str,
+    "volume-in": InputPathType,
 })
 
 
@@ -36,22 +35,22 @@ class VolumeRemoveIslandsOutputs(typing.NamedTuple):
 
 
 def volume_remove_islands_params(
-    volume_in: InputPathType,
     volume_out: str,
+    volume_in: InputPathType,
 ) -> VolumeRemoveIslandsParametersTagged:
     """
     Build parameters.
     
     Args:
-        volume_in: the input ROI volume.
         volume_out: the output ROI volume.
+        volume_in: the input ROI volume.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-remove-islands",
-        "volume_in": volume_in,
-        "volume_out": volume_out,
+        "volume-out": volume_out,
+        "volume-in": volume_in,
     }
     return params
 
@@ -70,10 +69,12 @@ def volume_remove_islands_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-remove-islands")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(params.get("volume_out", None))
+    cargs.extend([
+        "wb_command",
+        "-volume-remove-islands",
+        params.get("volume-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
 
@@ -92,7 +93,7 @@ def volume_remove_islands_outputs(
     """
     ret = VolumeRemoveIslandsOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -102,16 +103,10 @@ def volume_remove_islands_execute(
     runner: Runner | None = None,
 ) -> VolumeRemoveIslandsOutputs:
     """
-    volume-remove-islands
-    
-    Remove islands from an roi volume.
+    REMOVE ISLANDS FROM AN ROI VOLUME.
     
     Finds all face-connected parts of the ROI, and zeros out all but the largest
     one.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -129,32 +124,26 @@ def volume_remove_islands_execute(
 
 
 def volume_remove_islands(
-    volume_in: InputPathType,
     volume_out: str,
+    volume_in: InputPathType,
     runner: Runner | None = None,
 ) -> VolumeRemoveIslandsOutputs:
     """
-    volume-remove-islands
-    
-    Remove islands from an roi volume.
+    REMOVE ISLANDS FROM AN ROI VOLUME.
     
     Finds all face-connected parts of the ROI, and zeros out all but the largest
     one.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        volume_in: the input ROI volume.
         volume_out: the output ROI volume.
+        volume_in: the input ROI volume.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeRemoveIslandsOutputs`).
     """
     params = volume_remove_islands_params(
-        volume_in=volume_in,
         volume_out=volume_out,
+        volume_in=volume_in,
     )
     return volume_remove_islands_execute(params, runner)
 

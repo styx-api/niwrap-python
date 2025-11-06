@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
-    id="c85f9eb68f2374346bb8a16f7c99697fee1153fa.boutiques",
+    id="0e399afa8268c4aa88310407830c9ce63af9480a.workbench",
     name="gifti-all-labels-to-rois",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 GiftiAllLabelsToRoisParameters = typing.TypedDict('GiftiAllLabelsToRoisParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-all-labels-to-rois"]],
-    "label_in": InputPathType,
+    "metric-out": str,
+    "label-in": InputPathType,
     "map": str,
-    "metric_out": str,
 })
 GiftiAllLabelsToRoisParametersTagged = typing.TypedDict('GiftiAllLabelsToRoisParametersTagged', {
     "@type": typing.Literal["workbench/gifti-all-labels-to-rois"],
-    "label_in": InputPathType,
+    "metric-out": str,
+    "label-in": InputPathType,
     "map": str,
-    "metric_out": str,
 })
 
 
@@ -38,25 +37,25 @@ class GiftiAllLabelsToRoisOutputs(typing.NamedTuple):
 
 
 def gifti_all_labels_to_rois_params(
+    metric_out: str,
     label_in: InputPathType,
     map_: str,
-    metric_out: str,
 ) -> GiftiAllLabelsToRoisParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric file.
         label_in: the input gifti label file.
         map_: the number or name of the label map to use.
-        metric_out: the output metric file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/gifti-all-labels-to-rois",
-        "label_in": label_in,
+        "metric-out": metric_out,
+        "label-in": label_in,
         "map": map_,
-        "metric_out": metric_out,
     }
     return params
 
@@ -75,11 +74,13 @@ def gifti_all_labels_to_rois_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-gifti-all-labels-to-rois")
-    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.extend([
+        "wb_command",
+        "-gifti-all-labels-to-rois",
+        params.get("metric-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
-    cargs.append(params.get("metric_out", None))
     return cargs
 
 
@@ -98,7 +99,7 @@ def gifti_all_labels_to_rois_outputs(
     """
     ret = GiftiAllLabelsToRoisOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -108,17 +109,11 @@ def gifti_all_labels_to_rois_execute(
     runner: Runner | None = None,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
-    gifti-all-labels-to-rois
-    
-    Make rois from all labels in a gifti column.
+    MAKE ROIS FROM ALL LABELS IN A GIFTI COLUMN.
     
     The output metric file has a column for each label in the specified input
     map, other than the ??? label, each of which contains an ROI of all vertices
     that are set to the corresponding label.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -136,36 +131,30 @@ def gifti_all_labels_to_rois_execute(
 
 
 def gifti_all_labels_to_rois(
+    metric_out: str,
     label_in: InputPathType,
     map_: str,
-    metric_out: str,
     runner: Runner | None = None,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
-    gifti-all-labels-to-rois
-    
-    Make rois from all labels in a gifti column.
+    MAKE ROIS FROM ALL LABELS IN A GIFTI COLUMN.
     
     The output metric file has a column for each label in the specified input
     map, other than the ??? label, each of which contains an ROI of all vertices
     that are set to the corresponding label.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric file.
         label_in: the input gifti label file.
         map_: the number or name of the label map to use.
-        metric_out: the output metric file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiAllLabelsToRoisOutputs`).
     """
     params = gifti_all_labels_to_rois_params(
+        metric_out=metric_out,
         label_in=label_in,
         map_=map_,
-        metric_out=metric_out,
     )
     return gifti_all_labels_to_rois_execute(params, runner)
 

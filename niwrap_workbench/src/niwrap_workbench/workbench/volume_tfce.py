@@ -6,60 +6,59 @@ import pathlib
 from styxdefs import *
 
 VOLUME_TFCE_METADATA = Metadata(
-    id="00af94a3601fb72ac5202dedc89a1c5c427cb460.boutiques",
+    id="88157dd1b5611c70b241d14e8a78bfe6302ab544.workbench",
     name="volume-tfce",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeTfcePresmoothParameters = typing.TypedDict('VolumeTfcePresmoothParameters', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 VolumeTfcePresmoothParametersTagged = typing.TypedDict('VolumeTfcePresmoothParametersTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 
 
 VolumeTfceParametersParameters = typing.TypedDict('VolumeTfceParametersParameters', {
     "@type": typing.NotRequired[typing.Literal["parameters"]],
-    "e": float,
-    "h": float,
+    "E": float,
+    "H": float,
 })
 VolumeTfceParametersParametersTagged = typing.TypedDict('VolumeTfceParametersParametersTagged', {
     "@type": typing.Literal["parameters"],
-    "e": float,
-    "h": float,
+    "E": float,
+    "H": float,
 })
 
 
 VolumeTfceParameters = typing.TypedDict('VolumeTfceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-tfce"]],
-    "volume_in": InputPathType,
-    "volume_out": str,
+    "volume-out": str,
     "presmooth": typing.NotRequired[VolumeTfcePresmoothParameters | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
     "parameters": typing.NotRequired[VolumeTfceParametersParameters | None],
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "subvolume": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
 })
 VolumeTfceParametersTagged = typing.TypedDict('VolumeTfceParametersTagged', {
     "@type": typing.Literal["workbench/volume-tfce"],
-    "volume_in": InputPathType,
-    "volume_out": str,
+    "volume-out": str,
     "presmooth": typing.NotRequired[VolumeTfcePresmoothParameters | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
     "parameters": typing.NotRequired[VolumeTfceParametersParameters | None],
-    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "subvolume": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
 })
 
 
 def volume_tfce_presmooth_params(
     kernel: float,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
 ) -> VolumeTfcePresmoothParametersTagged:
     """
     Build parameters.
@@ -67,14 +66,14 @@ def volume_tfce_presmooth_params(
     Args:
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        opt_fwhm: smoothing kernel size is FWHM, not sigma.
+        fwhm: smoothing kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "presmooth",
         "kernel": kernel,
-        "opt_fwhm": opt_fwhm,
+        "fwhm": fwhm,
     }
     return params
 
@@ -93,10 +92,12 @@ def volume_tfce_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel", None)))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
+    if params.get("fwhm", False):
+        cargs.extend([
+            "-presmooth",
+            str(params.get("kernel", None)),
+            "-fwhm"
+        ])
     return cargs
 
 
@@ -115,8 +116,8 @@ def volume_tfce_parameters_params(
     """
     params = {
         "@type": "parameters",
-        "e": e,
-        "h": h,
+        "E": e,
+        "H": h,
     }
     return params
 
@@ -135,9 +136,11 @@ def volume_tfce_parameters_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-parameters")
-    cargs.append(str(params.get("e", None)))
-    cargs.append(str(params.get("h", None)))
+    cargs.extend([
+        "-parameters",
+        str(params.get("E", None)),
+        str(params.get("H", None))
+    ])
     return cargs
 
 
@@ -152,41 +155,43 @@ class VolumeTfceOutputs(typing.NamedTuple):
 
 
 def volume_tfce_params(
-    volume_in: InputPathType,
     volume_out: str,
+    roi_volume: InputPathType | None,
+    subvolume: str | None,
+    volume_in: InputPathType,
     presmooth: VolumeTfcePresmoothParameters | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
     parameters: VolumeTfceParametersParameters | None = None,
-    opt_subvolume_subvolume: str | None = None,
 ) -> VolumeTfceParametersTagged:
     """
     Build parameters.
     
     Args:
-        volume_in: the volume to run TFCE on.
         volume_out: the output volume.
+        roi_volume: select a region of interest to run TFCE on\
+            \
+            the area to run TFCE on, as a volume.
+        subvolume: select a single subvolume\
+            \
+            the subvolume number or name.
+        volume_in: the volume to run TFCE on.
         presmooth: smooth the volume before running TFCE.
-        opt_roi_roi_volume: select a region of interest to run TFCE on: the\
-            area to run TFCE on, as a volume.
         parameters: set parameters for TFCE integral.
-        opt_subvolume_subvolume: select a single subvolume: the subvolume\
-            number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-tfce",
-        "volume_in": volume_in,
-        "volume_out": volume_out,
+        "volume-out": volume_out,
+        "volume-in": volume_in,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
-    if opt_roi_roi_volume is not None:
-        params["opt_roi_roi_volume"] = opt_roi_roi_volume
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
     if parameters is not None:
         params["parameters"] = parameters
-    if opt_subvolume_subvolume is not None:
-        params["opt_subvolume_subvolume"] = opt_subvolume_subvolume
+    if subvolume is not None:
+        params["subvolume"] = subvolume
     return params
 
 
@@ -204,24 +209,19 @@ def volume_tfce_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-tfce")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("presmooth", None) is not None:
-        cargs.extend(volume_tfce_presmooth_cargs(params.get("presmooth", None), execution))
-    if params.get("opt_roi_roi_volume", None) is not None:
+    if params.get("presmooth", None) is not None or params.get("roi-volume", None) is not None or params.get("parameters", None) is not None or params.get("subvolume", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-tfce",
+            params.get("volume-out", None),
+            *(volume_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume", None))
-        ])
-    if params.get("parameters", None) is not None:
-        cargs.extend(volume_tfce_parameters_cargs(params.get("parameters", None), execution))
-    if params.get("opt_subvolume_subvolume", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            *(volume_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else []),
             "-subvolume",
-            params.get("opt_subvolume_subvolume", None)
+            (params.get("subvolume", None) if (params.get("subvolume", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
 
@@ -240,7 +240,7 @@ def volume_tfce_outputs(
     """
     ret = VolumeTfceOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -250,9 +250,7 @@ def volume_tfce_execute(
     runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
-    volume-tfce
-    
-    Do tfce on a volume file.
+    DO TFCE ON A VOLUME FILE.
     
     This command does not do any statistical analysis. Please use something like
     PALM if you are just trying to do statistics on your data.
@@ -272,10 +270,6 @@ def volume_tfce_execute(
     enhancement: addressing problems of smoothing, threshold dependence and
     localisation in cluster inference." Neuroimage. 2009 Jan 1;44(1):83-98.
     PMID: 18501637.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -293,18 +287,16 @@ def volume_tfce_execute(
 
 
 def volume_tfce(
-    volume_in: InputPathType,
     volume_out: str,
+    roi_volume: InputPathType | None,
+    subvolume: str | None,
+    volume_in: InputPathType,
     presmooth: VolumeTfcePresmoothParameters | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
     parameters: VolumeTfceParametersParameters | None = None,
-    opt_subvolume_subvolume: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
-    volume-tfce
-    
-    Do tfce on a volume file.
+    DO TFCE ON A VOLUME FILE.
     
     This command does not do any statistical analysis. Please use something like
     PALM if you are just trying to do statistics on your data.
@@ -325,30 +317,28 @@ def volume_tfce(
     localisation in cluster inference." Neuroimage. 2009 Jan 1;44(1):83-98.
     PMID: 18501637.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        volume_in: the volume to run TFCE on.
         volume_out: the output volume.
+        roi_volume: select a region of interest to run TFCE on\
+            \
+            the area to run TFCE on, as a volume.
+        subvolume: select a single subvolume\
+            \
+            the subvolume number or name.
+        volume_in: the volume to run TFCE on.
         presmooth: smooth the volume before running TFCE.
-        opt_roi_roi_volume: select a region of interest to run TFCE on: the\
-            area to run TFCE on, as a volume.
         parameters: set parameters for TFCE integral.
-        opt_subvolume_subvolume: select a single subvolume: the subvolume\
-            number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeTfceOutputs`).
     """
     params = volume_tfce_params(
-        volume_in=volume_in,
         volume_out=volume_out,
         presmooth=presmooth,
-        opt_roi_roi_volume=opt_roi_roi_volume,
+        roi_volume=roi_volume,
         parameters=parameters,
-        opt_subvolume_subvolume=opt_subvolume_subvolume,
+        subvolume=subvolume,
+        volume_in=volume_in,
     )
     return volume_tfce_execute(params, runner)
 

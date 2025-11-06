@@ -26,12 +26,12 @@ AntsRegistrationInitialMovingTransformParametersTagged = typing.TypedDict('AntsR
 AntsRegistrationInitialMovingTransformUseInverseParameters = typing.TypedDict('AntsRegistrationInitialMovingTransformUseInverseParameters', {
     "@type": typing.NotRequired[typing.Literal["initial_moving_transform_use_inverse"]],
     "initial_moving_transform": InputPathType,
-    "use_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_inverse": typing.NotRequired[bool | None],
 })
 AntsRegistrationInitialMovingTransformUseInverseParametersTagged = typing.TypedDict('AntsRegistrationInitialMovingTransformUseInverseParametersTagged', {
     "@type": typing.Literal["initial_moving_transform_use_inverse"],
     "initial_moving_transform": InputPathType,
-    "use_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_inverse": typing.NotRequired[bool | None],
 })
 
 
@@ -249,7 +249,7 @@ AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters = typing.Typed
     "radius": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged = typing.TypedDict('AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged', {
     "@type": typing.Literal["metric_ants_neighbourhood_cross_correlation"],
@@ -259,7 +259,7 @@ AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged = typing
     "radius": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 
 
@@ -271,7 +271,7 @@ AntsRegistrationMetricMutualInformationParameters = typing.TypedDict('AntsRegist
     "number_of_bins": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 AntsRegistrationMetricMutualInformationParametersTagged = typing.TypedDict('AntsRegistrationMetricMutualInformationParametersTagged', {
     "@type": typing.Literal["metric_mutual_information"],
@@ -281,7 +281,7 @@ AntsRegistrationMetricMutualInformationParametersTagged = typing.TypedDict('Ants
     "number_of_bins": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 
 
@@ -293,7 +293,7 @@ AntsRegistrationMetricMattesParameters = typing.TypedDict('AntsRegistrationMetri
     "number_of_bins": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 AntsRegistrationMetricMattesParametersTagged = typing.TypedDict('AntsRegistrationMetricMattesParametersTagged', {
     "@type": typing.Literal["metric_mattes"],
@@ -303,7 +303,7 @@ AntsRegistrationMetricMattesParametersTagged = typing.TypedDict('AntsRegistratio
     "number_of_bins": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 
 
@@ -315,7 +315,7 @@ AntsRegistrationMetricMeanSquaresParameters = typing.TypedDict('AntsRegistration
     "radius": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 AntsRegistrationMetricMeanSquaresParametersTagged = typing.TypedDict('AntsRegistrationMetricMeanSquaresParametersTagged', {
     "@type": typing.Literal["metric_mean_squares"],
@@ -325,7 +325,7 @@ AntsRegistrationMetricMeanSquaresParametersTagged = typing.TypedDict('AntsRegist
     "radius": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 
 
@@ -337,7 +337,7 @@ AntsRegistrationMetricDemonsParameters = typing.TypedDict('AntsRegistrationMetri
     "number_of_bins": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 AntsRegistrationMetricDemonsParametersTagged = typing.TypedDict('AntsRegistrationMetricDemonsParametersTagged', {
     "@type": typing.Literal["metric_demons"],
@@ -347,7 +347,7 @@ AntsRegistrationMetricDemonsParametersTagged = typing.TypedDict('AntsRegistratio
     "number_of_bins": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 
 
@@ -359,7 +359,7 @@ AntsRegistrationMetricGlobalCorrelationParameters = typing.TypedDict('AntsRegist
     "radius": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 AntsRegistrationMetricGlobalCorrelationParametersTagged = typing.TypedDict('AntsRegistrationMetricGlobalCorrelationParametersTagged', {
     "@type": typing.Literal["metric_global_correlation"],
@@ -369,7 +369,7 @@ AntsRegistrationMetricGlobalCorrelationParametersTagged = typing.TypedDict('Ants
     "radius": typing.NotRequired[float | None],
     "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
     "sampling_percentage": typing.NotRequired[float | None],
-    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "use_gradient_filter": typing.NotRequired[bool | None],
 })
 
 
@@ -456,7 +456,7 @@ AntsRegistrationStageParameters = typing.TypedDict('AntsRegistrationStageParamet
     "convergence": AntsRegistrationConvergenceParameters,
     "smoothing_sigmas": str,
     "shrink_factors": str,
-    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_histogram_matching": typing.NotRequired[bool | None],
 })
 AntsRegistrationStageParametersTagged = typing.TypedDict('AntsRegistrationStageParametersTagged', {
     "@type": typing.Literal["stage"],
@@ -465,7 +465,7 @@ AntsRegistrationStageParametersTagged = typing.TypedDict('AntsRegistrationStageP
     "convergence": AntsRegistrationConvergenceParameters,
     "smoothing_sigmas": str,
     "shrink_factors": str,
-    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_histogram_matching": typing.NotRequired[bool | None],
 })
 
 
@@ -499,22 +499,22 @@ AntsRegistrationParameters = typing.TypedDict('AntsRegistrationParameters', {
     "output": typing.NotRequired[str | None],
     "save_state": typing.NotRequired[str | None],
     "restore_state": typing.NotRequired[str | None],
-    "write_composite_transform": typing.NotRequired[typing.Literal[0, 1] | None],
+    "write_composite_transform": typing.NotRequired[bool | None],
     "print_similarity_measure_interval": typing.NotRequired[int | None],
     "write_interval_volumes": typing.NotRequired[int | None],
-    "collapse_output_transforms": typing.NotRequired[typing.Literal[1, 0] | None],
-    "initialize_transforms_per_stage": typing.NotRequired[typing.Literal[1, 0] | None],
+    "collapse_output_transforms": typing.NotRequired[bool | None],
+    "initialize_transforms_per_stage": typing.NotRequired[bool | None],
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None],
-    "restrict_deformation": typing.NotRequired[list[typing.Literal[0, 1]] | None],
+    "restrict_deformation": typing.NotRequired[list[bool] | None],
     "initial_fixed_transform": typing.NotRequired[str | None],
     "initial_moving_transform": typing.NotRequired[typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None],
     "stages": list[AntsRegistrationStageParameters],
     "winsorize_image_intensities": typing.NotRequired[AntsRegistrationWinsorizeImageIntensitiesParameters | None],
     "masks": typing.NotRequired[AntsRegistrationMasksParameters | None],
-    "minc": typing.NotRequired[typing.Literal[0, 1] | None],
+    "minc": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
-    "float": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
+    "float": typing.NotRequired[bool | None],
 })
 AntsRegistrationParametersTagged = typing.TypedDict('AntsRegistrationParametersTagged', {
     "@type": typing.Literal["ants/antsRegistration"],
@@ -522,22 +522,22 @@ AntsRegistrationParametersTagged = typing.TypedDict('AntsRegistrationParametersT
     "output": typing.NotRequired[str | None],
     "save_state": typing.NotRequired[str | None],
     "restore_state": typing.NotRequired[str | None],
-    "write_composite_transform": typing.NotRequired[typing.Literal[0, 1] | None],
+    "write_composite_transform": typing.NotRequired[bool | None],
     "print_similarity_measure_interval": typing.NotRequired[int | None],
     "write_interval_volumes": typing.NotRequired[int | None],
-    "collapse_output_transforms": typing.NotRequired[typing.Literal[1, 0] | None],
-    "initialize_transforms_per_stage": typing.NotRequired[typing.Literal[1, 0] | None],
+    "collapse_output_transforms": typing.NotRequired[bool | None],
+    "initialize_transforms_per_stage": typing.NotRequired[bool | None],
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None],
-    "restrict_deformation": typing.NotRequired[list[typing.Literal[0, 1]] | None],
+    "restrict_deformation": typing.NotRequired[list[bool] | None],
     "initial_fixed_transform": typing.NotRequired[str | None],
     "initial_moving_transform": typing.NotRequired[typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None],
     "stages": list[AntsRegistrationStageParameters],
     "winsorize_image_intensities": typing.NotRequired[AntsRegistrationWinsorizeImageIntensitiesParameters | None],
     "masks": typing.NotRequired[AntsRegistrationMasksParameters | None],
-    "minc": typing.NotRequired[typing.Literal[0, 1] | None],
+    "minc": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
-    "float": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
+    "float": typing.NotRequired[bool | None],
 })
 
 
@@ -696,7 +696,7 @@ def ants_registration_initial_moving_transform_cargs(
 
 def ants_registration_initial_moving_transform_use_inverse_params(
     initial_moving_transform: InputPathType,
-    use_inverse: typing.Literal[0, 1] | None = None,
+    use_inverse: bool | None = None,
 ) -> AntsRegistrationInitialMovingTransformUseInverseParametersTagged:
     """
     Build parameters.
@@ -731,7 +731,7 @@ def ants_registration_initial_moving_transform_use_inverse_cargs(
     """
     cargs = []
     if params.get("use_inverse", None) is not None:
-        cargs.append("[" + execution.input_file(params.get("initial_moving_transform", None)) + "," + str(params.get("use_inverse", None)) + "]")
+        cargs.append("[" + execution.input_file(params.get("initial_moving_transform", None)) + "," + ("1" if params.get("use_inverse", None) else "0") + "]")
     return cargs
 
 
@@ -1380,7 +1380,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_params(
     radius: float | None = None,
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
-    use_gradient_filter: typing.Literal["true", "false"] | None = None,
+    use_gradient_filter: bool | None = None,
 ) -> AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged:
     """
     Build parameters.
@@ -1428,7 +1428,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_cargs(
     """
     cargs = []
     if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+        cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1439,7 +1439,7 @@ def ants_registration_metric_mutual_information_params(
     number_of_bins: float | None = None,
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
-    use_gradient_filter: typing.Literal["true", "false"] | None = None,
+    use_gradient_filter: bool | None = None,
 ) -> AntsRegistrationMetricMutualInformationParametersTagged:
     """
     Build parameters.
@@ -1487,7 +1487,7 @@ def ants_registration_metric_mutual_information_cargs(
     """
     cargs = []
     if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+        cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1498,7 +1498,7 @@ def ants_registration_metric_mattes_params(
     number_of_bins: float | None = None,
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
-    use_gradient_filter: typing.Literal["true", "false"] | None = None,
+    use_gradient_filter: bool | None = None,
 ) -> AntsRegistrationMetricMattesParametersTagged:
     """
     Build parameters.
@@ -1546,7 +1546,7 @@ def ants_registration_metric_mattes_cargs(
     """
     cargs = []
     if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+        cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1557,7 +1557,7 @@ def ants_registration_metric_mean_squares_params(
     radius: float | None = None,
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
-    use_gradient_filter: typing.Literal["true", "false"] | None = None,
+    use_gradient_filter: bool | None = None,
 ) -> AntsRegistrationMetricMeanSquaresParametersTagged:
     """
     Build parameters.
@@ -1605,7 +1605,7 @@ def ants_registration_metric_mean_squares_cargs(
     """
     cargs = []
     if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+        cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1616,7 +1616,7 @@ def ants_registration_metric_demons_params(
     number_of_bins: float | None = None,
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
-    use_gradient_filter: typing.Literal["true", "false"] | None = None,
+    use_gradient_filter: bool | None = None,
 ) -> AntsRegistrationMetricDemonsParametersTagged:
     """
     Build parameters.
@@ -1664,7 +1664,7 @@ def ants_registration_metric_demons_cargs(
     """
     cargs = []
     if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+        cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1675,7 +1675,7 @@ def ants_registration_metric_global_correlation_params(
     radius: float | None = None,
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
-    use_gradient_filter: typing.Literal["true", "false"] | None = None,
+    use_gradient_filter: bool | None = None,
 ) -> AntsRegistrationMetricGlobalCorrelationParametersTagged:
     """
     Build parameters.
@@ -1723,7 +1723,7 @@ def ants_registration_metric_global_correlation_cargs(
     """
     cargs = []
     if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
-        cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
+        cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (("true" if params.get("use_gradient_filter", None) else "false") if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1963,7 +1963,7 @@ def ants_registration_stage_params(
     convergence: AntsRegistrationConvergenceParameters,
     smoothing_sigmas: str,
     shrink_factors: str,
-    use_histogram_matching: typing.Literal[0, 1] | None = None,
+    use_histogram_matching: bool | None = None,
 ) -> AntsRegistrationStageParametersTagged:
     """
     Build parameters.
@@ -2054,7 +2054,7 @@ def ants_registration_stage_cargs(
     if params.get("use_histogram_matching", None) is not None:
         cargs.extend([
             "--use-histogram-matching",
-            str(params.get("use_histogram_matching", None))
+            ("1" if params.get("use_histogram_matching", None) else "0")
         ])
     return cargs
 
@@ -2164,21 +2164,21 @@ def ants_registration_params(
     output: str | None = None,
     save_state: str | None = None,
     restore_state: str | None = None,
-    write_composite_transform: typing.Literal[0, 1] | None = None,
+    write_composite_transform: bool | None = None,
     print_similarity_measure_interval: int | None = None,
     write_interval_volumes: int | None = None,
-    collapse_output_transforms: typing.Literal[1, 0] | None = None,
-    initialize_transforms_per_stage: typing.Literal[1, 0] | None = None,
+    collapse_output_transforms: bool | None = None,
+    initialize_transforms_per_stage: bool | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None = None,
-    restrict_deformation: list[typing.Literal[0, 1]] | None = None,
+    restrict_deformation: list[bool] | None = None,
     initial_fixed_transform: str | None = None,
     initial_moving_transform: typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None = None,
     winsorize_image_intensities: AntsRegistrationWinsorizeImageIntensitiesParameters | None = None,
     masks: AntsRegistrationMasksParameters | None = None,
-    minc: typing.Literal[0, 1] | None = None,
+    minc: bool | None = None,
     random_seed: int | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
-    float_: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
+    float_: bool | None = None,
 ) -> AntsRegistrationParametersTagged:
     """
     Build parameters.
@@ -2377,7 +2377,7 @@ def ants_registration_cargs(
     if params.get("write_composite_transform", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("write_composite_transform", None))
+            ("1" if params.get("write_composite_transform", None) else "0")
         ])
     if params.get("print_similarity_measure_interval", None) is not None:
         cargs.extend([
@@ -2392,12 +2392,12 @@ def ants_registration_cargs(
     if params.get("collapse_output_transforms", None) is not None:
         cargs.extend([
             "--collapse-output-transforms",
-            str(params.get("collapse_output_transforms", None))
+            ("1" if params.get("collapse_output_transforms", None) else "0")
         ])
     if params.get("initialize_transforms_per_stage", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("initialize_transforms_per_stage", None))
+            ("1" if params.get("initialize_transforms_per_stage", None) else "0")
         ])
     if params.get("interpolation", None) is not None:
         cargs.extend([
@@ -2407,7 +2407,7 @@ def ants_registration_cargs(
     if params.get("restrict_deformation", None) is not None:
         cargs.extend([
             "-g",
-            "x".join(map(str, params.get("restrict_deformation", None)))
+            *"x".join(["1" if v else "0" for v in params.get("restrict_deformation", None)])
         ])
     if params.get("initial_fixed_transform", None) is not None:
         cargs.extend([
@@ -2433,7 +2433,7 @@ def ants_registration_cargs(
     if params.get("minc", None) is not None:
         cargs.extend([
             "--minc",
-            str(params.get("minc", None))
+            ("1" if params.get("minc", None) else "0")
         ])
     if params.get("random_seed", None) is not None:
         cargs.extend([
@@ -2443,12 +2443,12 @@ def ants_registration_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     if params.get("float", None) is not None:
         cargs.extend([
             "--float",
-            str(params.get("float", None))
+            ("1" if params.get("float", None) else "0")
         ])
     return cargs
 
@@ -2516,21 +2516,21 @@ def ants_registration(
     output: str | None = None,
     save_state: str | None = None,
     restore_state: str | None = None,
-    write_composite_transform: typing.Literal[0, 1] | None = None,
+    write_composite_transform: bool | None = None,
     print_similarity_measure_interval: int | None = None,
     write_interval_volumes: int | None = None,
-    collapse_output_transforms: typing.Literal[1, 0] | None = None,
-    initialize_transforms_per_stage: typing.Literal[1, 0] | None = None,
+    collapse_output_transforms: bool | None = None,
+    initialize_transforms_per_stage: bool | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None = None,
-    restrict_deformation: list[typing.Literal[0, 1]] | None = None,
+    restrict_deformation: list[bool] | None = None,
     initial_fixed_transform: str | None = None,
     initial_moving_transform: typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None = None,
     winsorize_image_intensities: AntsRegistrationWinsorizeImageIntensitiesParameters | None = None,
     masks: AntsRegistrationMasksParameters | None = None,
-    minc: typing.Literal[0, 1] | None = None,
+    minc: bool | None = None,
     random_seed: int | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
-    float_: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
+    float_: bool | None = None,
     runner: Runner | None = None,
 ) -> AntsRegistrationOutputs:
     """

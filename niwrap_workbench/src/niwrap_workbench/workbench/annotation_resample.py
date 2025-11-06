@@ -6,36 +6,35 @@ import pathlib
 from styxdefs import *
 
 ANNOTATION_RESAMPLE_METADATA = Metadata(
-    id="d27a061127258ae972e19d738c9377d395c2db20.boutiques",
+    id="a7b40c2eabbd684e2841e97eb61c046f68f16b83.workbench",
     name="annotation-resample",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 AnnotationResampleSurfacePairParameters = typing.TypedDict('AnnotationResampleSurfacePairParameters', {
-    "@type": typing.NotRequired[typing.Literal["surface_pair"]],
-    "source_surface": InputPathType,
-    "target_surface": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["surface-pair"]],
+    "source-surface": InputPathType,
+    "target-surface": InputPathType,
 })
 AnnotationResampleSurfacePairParametersTagged = typing.TypedDict('AnnotationResampleSurfacePairParametersTagged', {
-    "@type": typing.Literal["surface_pair"],
-    "source_surface": InputPathType,
-    "target_surface": InputPathType,
+    "@type": typing.Literal["surface-pair"],
+    "source-surface": InputPathType,
+    "target-surface": InputPathType,
 })
 
 
 AnnotationResampleParameters = typing.TypedDict('AnnotationResampleParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/annotation-resample"]],
-    "annotation_in": InputPathType,
-    "annotation_out": str,
-    "surface_pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
+    "surface-pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
+    "annotation-in": InputPathType,
+    "annotation-out": str,
 })
 AnnotationResampleParametersTagged = typing.TypedDict('AnnotationResampleParametersTagged', {
     "@type": typing.Literal["workbench/annotation-resample"],
-    "annotation_in": InputPathType,
-    "annotation_out": str,
-    "surface_pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
+    "surface-pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
+    "annotation-in": InputPathType,
+    "annotation-out": str,
 })
 
 
@@ -55,9 +54,9 @@ def annotation_resample_surface_pair_params(
         Parameter dictionary
     """
     params = {
-        "@type": "surface_pair",
-        "source_surface": source_surface,
-        "target_surface": target_surface,
+        "@type": "surface-pair",
+        "source-surface": source_surface,
+        "target-surface": target_surface,
     }
     return params
 
@@ -76,9 +75,11 @@ def annotation_resample_surface_pair_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-surface-pair")
-    cargs.append(execution.input_file(params.get("source_surface", None)))
-    cargs.append(execution.input_file(params.get("target_surface", None)))
+    cargs.extend([
+        "-surface-pair",
+        execution.input_file(params.get("source-surface", None)),
+        execution.input_file(params.get("target-surface", None))
+    ])
     return cargs
 
 
@@ -108,11 +109,11 @@ def annotation_resample_params(
     """
     params = {
         "@type": "workbench/annotation-resample",
-        "annotation_in": annotation_in,
-        "annotation_out": annotation_out,
+        "annotation-in": annotation_in,
+        "annotation-out": annotation_out,
     }
     if surface_pair is not None:
-        params["surface_pair"] = surface_pair
+        params["surface-pair"] = surface_pair
     return params
 
 
@@ -130,12 +131,14 @@ def annotation_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-annotation-resample")
-    cargs.append(execution.input_file(params.get("annotation_in", None)))
-    cargs.append(params.get("annotation_out", None))
-    if params.get("surface_pair", None) is not None:
-        cargs.extend([a for c in [annotation_resample_surface_pair_cargs(s, execution) for s in params.get("surface_pair", None)] for a in c])
+    if params.get("surface-pair", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-annotation-resample",
+            *[a for c in [annotation_resample_surface_pair_cargs(s, execution) for s in params.get("surface-pair", None)] for a in c]
+        ])
+    cargs.append(execution.input_file(params.get("annotation-in", None)))
+    cargs.append(params.get("annotation-out", None))
     return cargs
 
 
@@ -163,19 +166,13 @@ def annotation_resample_execute(
     runner: Runner | None = None,
 ) -> AnnotationResampleOutputs:
     """
-    annotation-resample
-    
-    Resample an annotation file to different meshes.
+    RESAMPLE AN ANNOTATION FILE TO DIFFERENT MESHES.
     
     Resample an annotation file from the source mesh to the target mesh.
     
     Only annotations in surface space are modified, no changes are made to
     annotations in other spaces. The -surface-pair option may be repeated for
     additional structures used by surface space annotations.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -199,19 +196,13 @@ def annotation_resample(
     runner: Runner | None = None,
 ) -> AnnotationResampleOutputs:
     """
-    annotation-resample
-    
-    Resample an annotation file to different meshes.
+    RESAMPLE AN ANNOTATION FILE TO DIFFERENT MESHES.
     
     Resample an annotation file from the source mesh to the target mesh.
     
     Only annotations in surface space are modified, no changes are made to
     annotations in other spaces. The -surface-pair option may be repeated for
     additional structures used by surface space annotations.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         annotation_in: the annotation file to resample.
@@ -223,9 +214,9 @@ def annotation_resample(
         NamedTuple of outputs (described in `AnnotationResampleOutputs`).
     """
     params = annotation_resample_params(
+        surface_pair=surface_pair,
         annotation_in=annotation_in,
         annotation_out=annotation_out,
-        surface_pair=surface_pair,
     )
     return annotation_resample_execute(params, runner)
 

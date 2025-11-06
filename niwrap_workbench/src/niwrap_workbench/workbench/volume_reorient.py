@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 VOLUME_REORIENT_METADATA = Metadata(
-    id="993d128d1b8587b85bf89235de06096fbfc8baea.boutiques",
+    id="ac98f3ba2fd629f5cfa857bbbce2391858db0cba.workbench",
     name="volume-reorient",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeReorientParameters = typing.TypedDict('VolumeReorientParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-reorient"]],
     "volume": InputPathType,
-    "orient_string": str,
-    "volume_out": str,
+    "orient-string": str,
+    "volume-out": str,
 })
 VolumeReorientParametersTagged = typing.TypedDict('VolumeReorientParametersTagged', {
     "@type": typing.Literal["workbench/volume-reorient"],
     "volume": InputPathType,
-    "orient_string": str,
-    "volume_out": str,
+    "orient-string": str,
+    "volume-out": str,
 })
 
 
@@ -53,8 +52,8 @@ def volume_reorient_params(
     params = {
         "@type": "workbench/volume-reorient",
         "volume": volume,
-        "orient_string": orient_string,
-        "volume_out": volume_out,
+        "orient-string": orient_string,
+        "volume-out": volume_out,
     }
     return params
 
@@ -73,11 +72,13 @@ def volume_reorient_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-reorient")
+    cargs.extend([
+        "wb_command",
+        "-volume-reorient"
+    ])
     cargs.append(execution.input_file(params.get("volume", None)))
-    cargs.append(params.get("orient_string", None))
-    cargs.append(params.get("volume_out", None))
+    cargs.append(params.get("orient-string", None))
+    cargs.append(params.get("volume-out", None))
     return cargs
 
 
@@ -105,9 +106,7 @@ def volume_reorient_execute(
     runner: Runner | None = None,
 ) -> VolumeReorientOutputs:
     """
-    volume-reorient
-    
-    Change voxel order of a volume file.
+    CHANGE VOXEL ORDER OF A VOLUME FILE.
     
     Changes the voxel order and the header spacing/origin information such that
     the value of any spatial point is unchanged. Orientation strings look like
@@ -120,10 +119,6 @@ def volume_reorient_execute(
     A anterior to posterior
     I inferior to superior
     S superior to inferior.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -147,9 +142,7 @@ def volume_reorient(
     runner: Runner | None = None,
 ) -> VolumeReorientOutputs:
     """
-    volume-reorient
-    
-    Change voxel order of a volume file.
+    CHANGE VOXEL ORDER OF A VOLUME FILE.
     
     Changes the voxel order and the header spacing/origin information such that
     the value of any spatial point is unchanged. Orientation strings look like
@@ -162,10 +155,6 @@ def volume_reorient(
     A anterior to posterior
     I inferior to superior
     S superior to inferior.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         volume: the volume to reorient.

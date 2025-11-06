@@ -6,78 +6,77 @@ import pathlib
 from styxdefs import *
 
 SCENE_FILE_MERGE_METADATA = Metadata(
-    id="b75bdc86e379ec346063e577c5b0039d15d9a56a.boutiques",
+    id="72ce88135b0199024083ada6e5b4934b29d0f4bf.workbench",
     name="scene-file-merge",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SceneFileMergeUpToParameters = typing.TypedDict('SceneFileMergeUpToParameters', {
-    "@type": typing.NotRequired[typing.Literal["up_to"]],
-    "last_column": str,
-    "opt_reverse": bool,
+    "@type": typing.NotRequired[typing.Literal["up-to"]],
+    "last-column": str,
+    "reverse": bool,
 })
 SceneFileMergeUpToParametersTagged = typing.TypedDict('SceneFileMergeUpToParametersTagged', {
-    "@type": typing.Literal["up_to"],
-    "last_column": str,
-    "opt_reverse": bool,
+    "@type": typing.Literal["up-to"],
+    "last-column": str,
+    "reverse": bool,
 })
 
 
 SceneFileMergeSceneParameters = typing.TypedDict('SceneFileMergeSceneParameters', {
     "@type": typing.NotRequired[typing.Literal["scene"]],
     "scene": str,
-    "up_to": typing.NotRequired[SceneFileMergeUpToParameters | None],
+    "up-to": typing.NotRequired[SceneFileMergeUpToParameters | None],
 })
 SceneFileMergeSceneParametersTagged = typing.TypedDict('SceneFileMergeSceneParametersTagged', {
     "@type": typing.Literal["scene"],
     "scene": str,
-    "up_to": typing.NotRequired[SceneFileMergeUpToParameters | None],
+    "up-to": typing.NotRequired[SceneFileMergeUpToParameters | None],
 })
 
 
 SceneFileMergeSceneFileParameters = typing.TypedDict('SceneFileMergeSceneFileParameters', {
-    "@type": typing.NotRequired[typing.Literal["scene_file"]],
-    "scene_file": str,
+    "@type": typing.NotRequired[typing.Literal["scene-file"]],
+    "scene-file": str,
     "scene": typing.NotRequired[list[SceneFileMergeSceneParameters] | None],
 })
 SceneFileMergeSceneFileParametersTagged = typing.TypedDict('SceneFileMergeSceneFileParametersTagged', {
-    "@type": typing.Literal["scene_file"],
-    "scene_file": str,
+    "@type": typing.Literal["scene-file"],
+    "scene-file": str,
     "scene": typing.NotRequired[list[SceneFileMergeSceneParameters] | None],
 })
 
 
 SceneFileMergeParameters = typing.TypedDict('SceneFileMergeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-file-merge"]],
-    "scene_file_out": str,
-    "scene_file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
+    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
+    "scene-file-out": str,
 })
 SceneFileMergeParametersTagged = typing.TypedDict('SceneFileMergeParametersTagged', {
     "@type": typing.Literal["workbench/scene-file-merge"],
-    "scene_file_out": str,
-    "scene_file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
+    "scene-file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
+    "scene-file-out": str,
 })
 
 
 def scene_file_merge_up_to_params(
     last_column: str,
-    opt_reverse: bool = False,
+    reverse: bool = False,
 ) -> SceneFileMergeUpToParametersTagged:
     """
     Build parameters.
     
     Args:
         last_column: the number or name of the last scene to include.
-        opt_reverse: use the range in reverse order.
+        reverse: use the range in reverse order.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "up_to",
-        "last_column": last_column,
-        "opt_reverse": opt_reverse,
+        "@type": "up-to",
+        "last-column": last_column,
+        "reverse": reverse,
     }
     return params
 
@@ -96,10 +95,12 @@ def scene_file_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-up-to")
-    cargs.append(params.get("last_column", None))
-    if params.get("opt_reverse", False):
-        cargs.append("-reverse")
+    if params.get("reverse", False):
+        cargs.extend([
+            "-up-to",
+            params.get("last-column", None),
+            "-reverse"
+        ])
     return cargs
 
 
@@ -121,7 +122,7 @@ def scene_file_merge_scene_params(
         "scene": scene,
     }
     if up_to is not None:
-        params["up_to"] = up_to
+        params["up-to"] = up_to
     return params
 
 
@@ -139,10 +140,12 @@ def scene_file_merge_scene_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-scene")
-    cargs.append(params.get("scene", None))
-    if params.get("up_to", None) is not None:
-        cargs.extend(scene_file_merge_up_to_cargs(params.get("up_to", None), execution))
+    if params.get("up-to", None) is not None:
+        cargs.extend([
+            "-scene",
+            params.get("scene", None),
+            *scene_file_merge_up_to_cargs(params.get("up-to", None), execution)
+        ])
     return cargs
 
 
@@ -160,8 +163,8 @@ def scene_file_merge_scene_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "scene_file",
-        "scene_file": scene_file,
+        "@type": "scene-file",
+        "scene-file": scene_file,
     }
     if scene is not None:
         params["scene"] = scene
@@ -182,10 +185,12 @@ def scene_file_merge_scene_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-scene-file")
-    cargs.append(params.get("scene_file", None))
     if params.get("scene", None) is not None:
-        cargs.extend([a for c in [scene_file_merge_scene_cargs(s, execution) for s in params.get("scene", None)] for a in c])
+        cargs.extend([
+            "-scene-file",
+            params.get("scene-file", None),
+            *[a for c in [scene_file_merge_scene_cargs(s, execution) for s in params.get("scene", None)] for a in c]
+        ])
     return cargs
 
 
@@ -212,10 +217,10 @@ def scene_file_merge_params(
     """
     params = {
         "@type": "workbench/scene-file-merge",
-        "scene_file_out": scene_file_out,
+        "scene-file-out": scene_file_out,
     }
     if scene_file is not None:
-        params["scene_file"] = scene_file
+        params["scene-file"] = scene_file
     return params
 
 
@@ -233,11 +238,13 @@ def scene_file_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-scene-file-merge")
-    cargs.append(params.get("scene_file_out", None))
-    if params.get("scene_file", None) is not None:
-        cargs.extend([a for c in [scene_file_merge_scene_file_cargs(s, execution) for s in params.get("scene_file", None)] for a in c])
+    if params.get("scene-file", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-scene-file-merge",
+            *[a for c in [scene_file_merge_scene_file_cargs(s, execution) for s in params.get("scene-file", None)] for a in c]
+        ])
+    cargs.append(params.get("scene-file-out", None))
     return cargs
 
 
@@ -265,9 +272,7 @@ def scene_file_merge_execute(
     runner: Runner | None = None,
 ) -> SceneFileMergeOutputs:
     """
-    scene-file-merge
-    
-    Rearrange scenes into a new file.
+    REARRANGE SCENES INTO A NEW FILE.
     
     Takes one or more scene files and constructs a new scene file by
     concatenating specified scenes from them.
@@ -277,10 +282,6 @@ def scene_file_merge_execute(
     
     This example would take the first scene from first.scene, followed by all
     scenes from second.scene, and write these scenes to out.scene.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -303,9 +304,7 @@ def scene_file_merge(
     runner: Runner | None = None,
 ) -> SceneFileMergeOutputs:
     """
-    scene-file-merge
-    
-    Rearrange scenes into a new file.
+    REARRANGE SCENES INTO A NEW FILE.
     
     Takes one or more scene files and constructs a new scene file by
     concatenating specified scenes from them.
@@ -316,10 +315,6 @@ def scene_file_merge(
     This example would take the first scene from first.scene, followed by all
     scenes from second.scene, and write these scenes to out.scene.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         scene_file_out: output - the output scene file.
         scene_file: specify a scene file to use scenes from.
@@ -328,8 +323,8 @@ def scene_file_merge(
         NamedTuple of outputs (described in `SceneFileMergeOutputs`).
     """
     params = scene_file_merge_params(
-        scene_file_out=scene_file_out,
         scene_file=scene_file,
+        scene_file_out=scene_file_out,
     )
     return scene_file_merge_execute(params, runner)
 

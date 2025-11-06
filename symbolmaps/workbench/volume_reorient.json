@@ -4,10 +4,10 @@
     "volume": {
       "var_param": "volume"
     },
-    "orient_string": {
+    "orient-string": {
       "var_param": "orient_string"
     },
-    "volume_out": {
+    "volume-out": {
       "var_param": "volume_out"
     }
   }

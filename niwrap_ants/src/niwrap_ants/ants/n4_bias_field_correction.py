@@ -78,12 +78,12 @@ N4BiasFieldCorrectionParameters = typing.TypedDict('N4BiasFieldCorrectionParamet
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "shrink_factor": typing.NotRequired[int | None],
     "mask_image": typing.NotRequired[InputPathType | None],
-    "rescale_intensities": typing.NotRequired[typing.Literal[0, 1] | None],
+    "rescale_intensities": typing.NotRequired[bool | None],
     "weight_image": typing.NotRequired[InputPathType | None],
     "convergence": typing.NotRequired[N4BiasFieldCorrectionConvergenceParameters | None],
     "bspline_fitting": typing.NotRequired[N4BiasFieldCorrectionBsplineFittingParameters | None],
     "histogram_sharpening": typing.NotRequired[N4BiasFieldCorrectionHistogramSharpeningParameters | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
     "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParametersTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged],
 })
@@ -92,12 +92,12 @@ N4BiasFieldCorrectionParametersTagged = typing.TypedDict('N4BiasFieldCorrectionP
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "shrink_factor": typing.NotRequired[int | None],
     "mask_image": typing.NotRequired[InputPathType | None],
-    "rescale_intensities": typing.NotRequired[typing.Literal[0, 1] | None],
+    "rescale_intensities": typing.NotRequired[bool | None],
     "weight_image": typing.NotRequired[InputPathType | None],
     "convergence": typing.NotRequired[N4BiasFieldCorrectionConvergenceParameters | None],
     "bspline_fitting": typing.NotRequired[N4BiasFieldCorrectionBsplineFittingParameters | None],
     "histogram_sharpening": typing.NotRequired[N4BiasFieldCorrectionHistogramSharpeningParameters | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
     "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParametersTagged, N4BiasFieldCorrectionCorrectedOutputNoiseParametersTagged],
 })
@@ -422,12 +422,12 @@ def n4_bias_field_correction_params(
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     shrink_factor: int | None = None,
     mask_image: InputPathType | None = None,
-    rescale_intensities: typing.Literal[0, 1] | None = None,
+    rescale_intensities: bool | None = None,
     weight_image: InputPathType | None = None,
     convergence: N4BiasFieldCorrectionConvergenceParameters | None = None,
     bspline_fitting: N4BiasFieldCorrectionBsplineFittingParameters | None = None,
     histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParameters | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> N4BiasFieldCorrectionParametersTagged:
     """
     Build parameters.
@@ -564,7 +564,7 @@ def n4_bias_field_correction_cargs(
     if params.get("rescale_intensities", None) is not None:
         cargs.extend([
             "--rescale-intensities",
-            str(params.get("rescale_intensities", None))
+            ("1" if params.get("rescale_intensities", None) else "0")
         ])
     if params.get("weight_image", None) is not None:
         cargs.extend([
@@ -589,7 +589,7 @@ def n4_bias_field_correction_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     cargs.extend([
         "--input-image",
@@ -662,12 +662,12 @@ def n4_bias_field_correction(
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     shrink_factor: int | None = None,
     mask_image: InputPathType | None = None,
-    rescale_intensities: typing.Literal[0, 1] | None = None,
+    rescale_intensities: bool | None = None,
     weight_image: InputPathType | None = None,
     convergence: N4BiasFieldCorrectionConvergenceParameters | None = None,
     bspline_fitting: N4BiasFieldCorrectionBsplineFittingParameters | None = None,
     histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParameters | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> N4BiasFieldCorrectionOutputs:
     """

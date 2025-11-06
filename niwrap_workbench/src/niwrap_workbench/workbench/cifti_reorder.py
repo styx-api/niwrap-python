@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 CIFTI_REORDER_METADATA = Metadata(
-    id="0ad5648e651c6301fc696a16b14ed6ef9efc41a4.boutiques",
+    id="ffb7f63d2e3e825e9f4ce066509d90696e9b1cbd.workbench",
     name="cifti-reorder",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiReorderParameters = typing.TypedDict('CiftiReorderParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-reorder"]],
-    "cifti_in": InputPathType,
+    "cifti-out": str,
+    "cifti-in": InputPathType,
     "direction": str,
-    "reorder_list": str,
-    "cifti_out": str,
+    "reorder-list": str,
 })
 CiftiReorderParametersTagged = typing.TypedDict('CiftiReorderParametersTagged', {
     "@type": typing.Literal["workbench/cifti-reorder"],
-    "cifti_in": InputPathType,
+    "cifti-out": str,
+    "cifti-in": InputPathType,
     "direction": str,
-    "reorder_list": str,
-    "cifti_out": str,
+    "reorder-list": str,
 })
 
 
@@ -40,28 +39,28 @@ class CiftiReorderOutputs(typing.NamedTuple):
 
 
 def cifti_reorder_params(
+    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     reorder_list: str,
-    cifti_out: str,
 ) -> CiftiReorderParametersTagged:
     """
     Build parameters.
     
     Args:
+        cifti_out: the reordered cifti file.
         cifti_in: input cifti file.
         direction: which dimension to reorder along, ROW or COLUMN.
         reorder_list: a text file containing the desired order transformation.
-        cifti_out: the reordered cifti file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-reorder",
-        "cifti_in": cifti_in,
+        "cifti-out": cifti_out,
+        "cifti-in": cifti_in,
         "direction": direction,
-        "reorder_list": reorder_list,
-        "cifti_out": cifti_out,
+        "reorder-list": reorder_list,
     }
     return params
 
@@ -80,12 +79,14 @@ def cifti_reorder_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-reorder")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.extend([
+        "wb_command",
+        "-cifti-reorder",
+        params.get("cifti-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     cargs.append(params.get("direction", None))
-    cargs.append(params.get("reorder_list", None))
-    cargs.append(params.get("cifti_out", None))
+    cargs.append(params.get("reorder-list", None))
     return cargs
 
 
@@ -104,7 +105,7 @@ def cifti_reorder_outputs(
     """
     ret = CiftiReorderOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -114,9 +115,7 @@ def cifti_reorder_execute(
     runner: Runner | None = None,
 ) -> CiftiReorderOutputs:
     """
-    cifti-reorder
-    
-    Reorder the parcels or scalar/label maps in a cifti file.
+    REORDER THE PARCELS OR SCALAR/LABEL MAPS IN A CIFTI FILE.
     
     The mapping along the specified direction must be parcels, scalars, or
     labels. For pscalar or ptseries, use COLUMN to reorder the parcels. For
@@ -126,10 +125,6 @@ def cifti_reorder_execute(
     current index should end up in that position, for instance, if the current
     order is 'A B C D', and the desired order is 'D A B C', the text file should
     contain '4 1 2 3'.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -147,16 +142,14 @@ def cifti_reorder_execute(
 
 
 def cifti_reorder(
+    cifti_out: str,
     cifti_in: InputPathType,
     direction: str,
     reorder_list: str,
-    cifti_out: str,
     runner: Runner | None = None,
 ) -> CiftiReorderOutputs:
     """
-    cifti-reorder
-    
-    Reorder the parcels or scalar/label maps in a cifti file.
+    REORDER THE PARCELS OR SCALAR/LABEL MAPS IN A CIFTI FILE.
     
     The mapping along the specified direction must be parcels, scalars, or
     labels. For pscalar or ptseries, use COLUMN to reorder the parcels. For
@@ -167,24 +160,20 @@ def cifti_reorder(
     order is 'A B C D', and the desired order is 'D A B C', the text file should
     contain '4 1 2 3'.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: the reordered cifti file.
         cifti_in: input cifti file.
         direction: which dimension to reorder along, ROW or COLUMN.
         reorder_list: a text file containing the desired order transformation.
-        cifti_out: the reordered cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiReorderOutputs`).
     """
     params = cifti_reorder_params(
+        cifti_out=cifti_out,
         cifti_in=cifti_in,
         direction=direction,
         reorder_list=reorder_list,
-        cifti_out=cifti_out,
     )
     return cifti_reorder_execute(params, runner)
 

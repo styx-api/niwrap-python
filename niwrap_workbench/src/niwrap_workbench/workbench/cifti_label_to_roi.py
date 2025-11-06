@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 CIFTI_LABEL_TO_ROI_METADATA = Metadata(
-    id="404b13c7f6d3d80cd95caa08b411c3b50061d9cb.boutiques",
+    id="f8df8f1668719e2f4b21a3a0a4ebc21bb28c3c67.workbench",
     name="cifti-label-to-roi",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiLabelToRoiParameters = typing.TypedDict('CiftiLabelToRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-to-roi"]],
-    "label_in": InputPathType,
-    "scalar_out": str,
-    "opt_name_label_name": typing.NotRequired[str | None],
-    "opt_key_label_key": typing.NotRequired[int | None],
-    "opt_map_map": typing.NotRequired[str | None],
+    "scalar-out": str,
+    "label-name": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "map": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 CiftiLabelToRoiParametersTagged = typing.TypedDict('CiftiLabelToRoiParametersTagged', {
     "@type": typing.Literal["workbench/cifti-label-to-roi"],
-    "label_in": InputPathType,
-    "scalar_out": str,
-    "opt_name_label_name": typing.NotRequired[str | None],
-    "opt_key_label_key": typing.NotRequired[int | None],
-    "opt_map_map": typing.NotRequired[str | None],
+    "scalar-out": str,
+    "label-name": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "map": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 
 
@@ -42,37 +41,41 @@ class CiftiLabelToRoiOutputs(typing.NamedTuple):
 
 
 def cifti_label_to_roi_params(
-    label_in: InputPathType,
     scalar_out: str,
-    opt_name_label_name: str | None = None,
-    opt_key_label_key: int | None = None,
-    opt_map_map: str | None = None,
+    label_name: str | None,
+    label_key: int | None,
+    map_: str | None,
+    label_in: InputPathType,
 ) -> CiftiLabelToRoiParametersTagged:
     """
     Build parameters.
     
     Args:
-        label_in: the input cifti label file.
         scalar_out: the output cifti scalar file.
-        opt_name_label_name: select label by name: the label name that you want\
-            an roi of.
-        opt_key_label_key: select label by key: the label key that you want an\
-            roi of.
-        opt_map_map: select a single label map to use: the map number or name.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        map_: select a single label map to use\
+            \
+            the map number or name.
+        label_in: the input cifti label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-label-to-roi",
-        "label_in": label_in,
-        "scalar_out": scalar_out,
+        "scalar-out": scalar_out,
+        "label-in": label_in,
     }
-    if opt_name_label_name is not None:
-        params["opt_name_label_name"] = opt_name_label_name
-    if opt_key_label_key is not None:
-        params["opt_key_label_key"] = opt_key_label_key
-    if opt_map_map is not None:
-        params["opt_map_map"] = opt_map_map
+    if label_name is not None:
+        params["label-name"] = label_name
+    if label_key is not None:
+        params["label-key"] = label_key
+    if map_ is not None:
+        params["map"] = map_
     return params
 
 
@@ -90,25 +93,19 @@ def cifti_label_to_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-label-to-roi")
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(params.get("scalar_out", None))
-    if params.get("opt_name_label_name", None) is not None:
+    if params.get("label-name", None) is not None or params.get("label-key", None) is not None or params.get("map", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-label-to-roi",
+            params.get("scalar-out", None),
             "-name",
-            params.get("opt_name_label_name", None)
-        ])
-    if params.get("opt_key_label_key", None) is not None:
-        cargs.extend([
+            (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
             "-key",
-            str(params.get("opt_key_label_key", None))
-        ])
-    if params.get("opt_map_map", None) is not None:
-        cargs.extend([
+            (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
             "-map",
-            params.get("opt_map_map", None)
+            (params.get("map", None) if (params.get("map", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -127,7 +124,7 @@ def cifti_label_to_roi_outputs(
     """
     ret = CiftiLabelToRoiOutputs(
         root=execution.output_file("."),
-        scalar_out=execution.output_file(params.get("scalar_out", None)),
+        scalar_out=execution.output_file(params.get("scalar-out", None)),
     )
     return ret
 
@@ -137,18 +134,12 @@ def cifti_label_to_roi_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelToRoiOutputs:
     """
-    cifti-label-to-roi
-    
-    Make a cifti label into an roi.
+    MAKE A CIFTI LABEL INTO AN ROI.
     
     For each map in <label-in>, a map is created in <scalar-out> where all
     locations labeled with <label-name> or with a key of <label-key> are given a
     value of 1, and all other locations are given 0. Exactly one of -name and
     -key must be specified. Specify -map to use only one map from <label-in>.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -166,45 +157,43 @@ def cifti_label_to_roi_execute(
 
 
 def cifti_label_to_roi(
-    label_in: InputPathType,
     scalar_out: str,
-    opt_name_label_name: str | None = None,
-    opt_key_label_key: int | None = None,
-    opt_map_map: str | None = None,
+    label_name: str | None,
+    label_key: int | None,
+    map_: str | None,
+    label_in: InputPathType,
     runner: Runner | None = None,
 ) -> CiftiLabelToRoiOutputs:
     """
-    cifti-label-to-roi
-    
-    Make a cifti label into an roi.
+    MAKE A CIFTI LABEL INTO AN ROI.
     
     For each map in <label-in>, a map is created in <scalar-out> where all
     locations labeled with <label-name> or with a key of <label-key> are given a
     value of 1, and all other locations are given 0. Exactly one of -name and
     -key must be specified. Specify -map to use only one map from <label-in>.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        label_in: the input cifti label file.
         scalar_out: the output cifti scalar file.
-        opt_name_label_name: select label by name: the label name that you want\
-            an roi of.
-        opt_key_label_key: select label by key: the label key that you want an\
-            roi of.
-        opt_map_map: select a single label map to use: the map number or name.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        map_: select a single label map to use\
+            \
+            the map number or name.
+        label_in: the input cifti label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelToRoiOutputs`).
     """
     params = cifti_label_to_roi_params(
-        label_in=label_in,
         scalar_out=scalar_out,
-        opt_name_label_name=opt_name_label_name,
-        opt_key_label_key=opt_key_label_key,
-        opt_map_map=opt_map_map,
+        label_name=label_name,
+        label_key=label_key,
+        map_=map_,
+        label_in=label_in,
     )
     return cifti_label_to_roi_execute(params, runner)
 

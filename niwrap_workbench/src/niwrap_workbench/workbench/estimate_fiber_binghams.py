@@ -6,15 +6,15 @@ import pathlib
 from styxdefs import *
 
 ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
-    id="2c33f5d971543b2fe7a2401a0a23b45df09ab673.boutiques",
+    id="6ce86eb45c0ecdba0ec54fdba3ac609b406e8dcc.workbench",
     name="estimate-fiber-binghams",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/estimate-fiber-binghams"]],
+    "cifti-out": str,
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
     "merged_ph1samples": InputPathType,
@@ -24,11 +24,11 @@ EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParamet
     "merged_f3samples": InputPathType,
     "merged_th3samples": InputPathType,
     "merged_ph3samples": InputPathType,
-    "label_volume": InputPathType,
-    "cifti_out": str,
+    "label-volume": InputPathType,
 })
 EstimateFiberBinghamsParametersTagged = typing.TypedDict('EstimateFiberBinghamsParametersTagged', {
     "@type": typing.Literal["workbench/estimate-fiber-binghams"],
+    "cifti-out": str,
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
     "merged_ph1samples": InputPathType,
@@ -38,8 +38,7 @@ EstimateFiberBinghamsParametersTagged = typing.TypedDict('EstimateFiberBinghamsP
     "merged_f3samples": InputPathType,
     "merged_th3samples": InputPathType,
     "merged_ph3samples": InputPathType,
-    "label_volume": InputPathType,
-    "cifti_out": str,
+    "label-volume": InputPathType,
 })
 
 
@@ -54,6 +53,7 @@ class EstimateFiberBinghamsOutputs(typing.NamedTuple):
 
 
 def estimate_fiber_binghams_params(
+    cifti_out: str,
     merged_f1samples: InputPathType,
     merged_th1samples: InputPathType,
     merged_ph1samples: InputPathType,
@@ -64,12 +64,12 @@ def estimate_fiber_binghams_params(
     merged_th3samples: InputPathType,
     merged_ph3samples: InputPathType,
     label_volume: InputPathType,
-    cifti_out: str,
 ) -> EstimateFiberBinghamsParametersTagged:
     """
     Build parameters.
     
     Args:
+        cifti_out: output cifti fiber distributons file.
         merged_f1samples: fiber 1 strength samples.
         merged_th1samples: fiber 1 theta samples.
         merged_ph1samples: fiber 1 phi samples.
@@ -80,12 +80,12 @@ def estimate_fiber_binghams_params(
         merged_th3samples: fiber 3 theta samples.
         merged_ph3samples: fiber 3 phi samples.
         label_volume: volume of cifti structure labels.
-        cifti_out: output cifti fiber distributons file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/estimate-fiber-binghams",
+        "cifti-out": cifti_out,
         "merged_f1samples": merged_f1samples,
         "merged_th1samples": merged_th1samples,
         "merged_ph1samples": merged_ph1samples,
@@ -95,8 +95,7 @@ def estimate_fiber_binghams_params(
         "merged_f3samples": merged_f3samples,
         "merged_th3samples": merged_th3samples,
         "merged_ph3samples": merged_ph3samples,
-        "label_volume": label_volume,
-        "cifti_out": cifti_out,
+        "label-volume": label_volume,
     }
     return params
 
@@ -115,8 +114,11 @@ def estimate_fiber_binghams_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-estimate-fiber-binghams")
+    cargs.extend([
+        "wb_command",
+        "-estimate-fiber-binghams",
+        params.get("cifti-out", None)
+    ])
     cargs.append(execution.input_file(params.get("merged_f1samples", None)))
     cargs.append(execution.input_file(params.get("merged_th1samples", None)))
     cargs.append(execution.input_file(params.get("merged_ph1samples", None)))
@@ -126,8 +128,7 @@ def estimate_fiber_binghams_cargs(
     cargs.append(execution.input_file(params.get("merged_f3samples", None)))
     cargs.append(execution.input_file(params.get("merged_th3samples", None)))
     cargs.append(execution.input_file(params.get("merged_ph3samples", None)))
-    cargs.append(execution.input_file(params.get("label_volume", None)))
-    cargs.append(params.get("cifti_out", None))
+    cargs.append(execution.input_file(params.get("label-volume", None)))
     return cargs
 
 
@@ -146,7 +147,7 @@ def estimate_fiber_binghams_outputs(
     """
     ret = EstimateFiberBinghamsOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -156,9 +157,7 @@ def estimate_fiber_binghams_execute(
     runner: Runner | None = None,
 ) -> EstimateFiberBinghamsOutputs:
     """
-    estimate-fiber-binghams
-    
-    Estimate fiber orientation distributions from bedpostx samples.
+    ESTIMATE FIBER ORIENTATION DISTRIBUTIONS FROM BEDPOSTX SAMPLES.
     
     This command does an estimation of a bingham distribution for each fiber
     orientation in each voxel which is labeled a structure identifier. These
@@ -188,6 +187,8 @@ def estimate_fiber_binghams_execute(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -198,10 +199,6 @@ def estimate_fiber_binghams_execute(
     PUTAMEN_RIGHT
     THALAMUS_LEFT
     THALAMUS_RIGHT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -219,6 +216,7 @@ def estimate_fiber_binghams_execute(
 
 
 def estimate_fiber_binghams(
+    cifti_out: str,
     merged_f1samples: InputPathType,
     merged_th1samples: InputPathType,
     merged_ph1samples: InputPathType,
@@ -229,13 +227,10 @@ def estimate_fiber_binghams(
     merged_th3samples: InputPathType,
     merged_ph3samples: InputPathType,
     label_volume: InputPathType,
-    cifti_out: str,
     runner: Runner | None = None,
 ) -> EstimateFiberBinghamsOutputs:
     """
-    estimate-fiber-binghams
-    
-    Estimate fiber orientation distributions from bedpostx samples.
+    ESTIMATE FIBER ORIENTATION DISTRIBUTIONS FROM BEDPOSTX SAMPLES.
     
     This command does an estimation of a bingham distribution for each fiber
     orientation in each voxel which is labeled a structure identifier. These
@@ -265,6 +260,8 @@ def estimate_fiber_binghams(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -276,11 +273,8 @@ def estimate_fiber_binghams(
     THALAMUS_LEFT
     THALAMUS_RIGHT.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: output cifti fiber distributons file.
         merged_f1samples: fiber 1 strength samples.
         merged_th1samples: fiber 1 theta samples.
         merged_ph1samples: fiber 1 phi samples.
@@ -291,12 +285,12 @@ def estimate_fiber_binghams(
         merged_th3samples: fiber 3 theta samples.
         merged_ph3samples: fiber 3 phi samples.
         label_volume: volume of cifti structure labels.
-        cifti_out: output cifti fiber distributons file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EstimateFiberBinghamsOutputs`).
     """
     params = estimate_fiber_binghams_params(
+        cifti_out=cifti_out,
         merged_f1samples=merged_f1samples,
         merged_th1samples=merged_th1samples,
         merged_ph1samples=merged_ph1samples,
@@ -307,7 +301,6 @@ def estimate_fiber_binghams(
         merged_th3samples=merged_th3samples,
         merged_ph3samples=merged_ph3samples,
         label_volume=label_volume,
-        cifti_out=cifti_out,
     )
     return estimate_fiber_binghams_execute(params, runner)
 

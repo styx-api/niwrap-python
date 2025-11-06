@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SURFACE_FLIP_NORMALS_METADATA = Metadata(
-    id="8c4d88c8e5e251d057b6e23e7ae572f3f1462cc3.boutiques",
+    id="bd50d144fdc0e871fae85f49e492aee6de124549.workbench",
     name="surface-flip-normals",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceFlipNormalsParameters = typing.TypedDict('SurfaceFlipNormalsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-normals"]],
+    "surface-out": str,
     "surface": InputPathType,
-    "surface_out": str,
 })
 SurfaceFlipNormalsParametersTagged = typing.TypedDict('SurfaceFlipNormalsParametersTagged', {
     "@type": typing.Literal["workbench/surface-flip-normals"],
+    "surface-out": str,
     "surface": InputPathType,
-    "surface_out": str,
 })
 
 
@@ -36,22 +35,22 @@ class SurfaceFlipNormalsOutputs(typing.NamedTuple):
 
 
 def surface_flip_normals_params(
-    surface: InputPathType,
     surface_out: str,
+    surface: InputPathType,
 ) -> SurfaceFlipNormalsParametersTagged:
     """
     Build parameters.
     
     Args:
-        surface: the surface to flip the normals of.
         surface_out: the output surface.
+        surface: the surface to flip the normals of.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-flip-normals",
+        "surface-out": surface_out,
         "surface": surface,
-        "surface_out": surface_out,
     }
     return params
 
@@ -70,10 +69,12 @@ def surface_flip_normals_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-flip-normals")
+    cargs.extend([
+        "wb_command",
+        "-surface-flip-normals",
+        params.get("surface-out", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -92,7 +93,7 @@ def surface_flip_normals_outputs(
     """
     ret = SurfaceFlipNormalsOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -102,9 +103,7 @@ def surface_flip_normals_execute(
     runner: Runner | None = None,
 ) -> SurfaceFlipNormalsOutputs:
     """
-    surface-flip-normals
-    
-    Flip all tiles on a surface.
+    FLIP ALL TILES ON A SURFACE.
     
     Flips all triangles on a surface, resulting in surface normals being flipped
     the other direction (inward vs outward). If you transform a surface with an
@@ -112,10 +111,6 @@ def surface_flip_normals_execute(
     the surface, you may end up with a surface that has normals pointing
     inwards, which may have display problems. Using this command will solve that
     problem.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -133,14 +128,12 @@ def surface_flip_normals_execute(
 
 
 def surface_flip_normals(
-    surface: InputPathType,
     surface_out: str,
+    surface: InputPathType,
     runner: Runner | None = None,
 ) -> SurfaceFlipNormalsOutputs:
     """
-    surface-flip-normals
-    
-    Flip all tiles on a surface.
+    FLIP ALL TILES ON A SURFACE.
     
     Flips all triangles on a surface, resulting in surface normals being flipped
     the other direction (inward vs outward). If you transform a surface with an
@@ -149,20 +142,16 @@ def surface_flip_normals(
     inwards, which may have display problems. Using this command will solve that
     problem.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        surface: the surface to flip the normals of.
         surface_out: the output surface.
+        surface: the surface to flip the normals of.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceFlipNormalsOutputs`).
     """
     params = surface_flip_normals_params(
-        surface=surface,
         surface_out=surface_out,
+        surface=surface,
     )
     return surface_flip_normals_execute(params, runner)
 

@@ -6,23 +6,22 @@ import pathlib
 from styxdefs import *
 
 FOCI_CREATE_METADATA = Metadata(
-    id="2e6c039919782b63c07e5badc35659f838c016d5.boutiques",
+    id="1960245f5f1335cfba8188182bda09435e59d575.workbench",
     name="foci-create",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
     "@type": typing.NotRequired[typing.Literal["class"]],
-    "class_name": str,
-    "foci_list_file": str,
+    "class-name": str,
+    "foci-list-file": str,
     "surface": InputPathType,
 })
 FociCreateClassParametersTagged = typing.TypedDict('FociCreateClassParametersTagged', {
     "@type": typing.Literal["class"],
-    "class_name": str,
-    "foci_list_file": str,
+    "class-name": str,
+    "foci-list-file": str,
     "surface": InputPathType,
 })
 
@@ -57,8 +56,8 @@ def foci_create_class_params(
     """
     params = {
         "@type": "class",
-        "class_name": class_name,
-        "foci_list_file": foci_list_file,
+        "class-name": class_name,
+        "foci-list-file": foci_list_file,
         "surface": surface,
     }
     return params
@@ -78,10 +77,12 @@ def foci_create_class_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-class")
-    cargs.append(params.get("class_name", None))
-    cargs.append(params.get("foci_list_file", None))
-    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.extend([
+        "-class",
+        params.get("class-name", None),
+        params.get("foci-list-file", None),
+        execution.input_file(params.get("surface", None))
+    ])
     return cargs
 
 
@@ -131,11 +132,13 @@ def foci_create_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-foci-create")
-    cargs.append(params.get("output", None))
     if params.get("class", None) is not None:
-        cargs.extend([a for c in [foci_create_class_cargs(s, execution) for s in params.get("class", None)] for a in c])
+        cargs.extend([
+            "wb_command",
+            "-foci-create",
+            params.get("output", None),
+            *[a for c in [foci_create_class_cargs(s, execution) for s in params.get("class", None)] for a in c]
+        ])
     return cargs
 
 
@@ -164,9 +167,7 @@ def foci_create_execute(
     runner: Runner | None = None,
 ) -> FociCreateOutputs:
     """
-    foci-create
-    
-    Create a foci file.
+    CREATE A FOCI FILE.
     
     Creates a foci file from names, coordinates, and RGB values in a text file.
     The text file must have the following format (2 lines per focus):
@@ -186,10 +187,6 @@ def foci_create_execute(
     
     All foci within one text file must be associated with the structure
     contained in the <surface> parameter and are projected to that surface.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -212,9 +209,7 @@ def foci_create(
     runner: Runner | None = None,
 ) -> FociCreateOutputs:
     """
-    foci-create
-    
-    Create a foci file.
+    CREATE A FOCI FILE.
     
     Creates a foci file from names, coordinates, and RGB values in a text file.
     The text file must have the following format (2 lines per focus):
@@ -234,10 +229,6 @@ def foci_create(
     
     All foci within one text file must be associated with the structure
     contained in the <surface> parameter and are projected to that surface.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         output: the output foci file.

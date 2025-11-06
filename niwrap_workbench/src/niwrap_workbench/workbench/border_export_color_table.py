@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
-    id="c4fae465526913da9084677d6ed578ea3f03a993.boutiques",
+    id="55b7a978f9f49454807f669731d7622637a374b9.workbench",
     name="border-export-color-table",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BorderExportColorTableParameters = typing.TypedDict('BorderExportColorTableParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-export-color-table"]],
-    "border_file": InputPathType,
-    "table_out": str,
-    "opt_class_colors": bool,
+    "class-colors": bool,
+    "border-file": InputPathType,
+    "table-out": str,
 })
 BorderExportColorTableParametersTagged = typing.TypedDict('BorderExportColorTableParametersTagged', {
     "@type": typing.Literal["workbench/border-export-color-table"],
-    "border_file": InputPathType,
-    "table_out": str,
-    "opt_class_colors": bool,
+    "class-colors": bool,
+    "border-file": InputPathType,
+    "table-out": str,
 })
 
 
@@ -38,7 +37,7 @@ class BorderExportColorTableOutputs(typing.NamedTuple):
 def border_export_color_table_params(
     border_file: InputPathType,
     table_out: str,
-    opt_class_colors: bool = False,
+    class_colors: bool = False,
 ) -> BorderExportColorTableParametersTagged:
     """
     Build parameters.
@@ -46,15 +45,15 @@ def border_export_color_table_params(
     Args:
         border_file: the input border file.
         table_out: output - the output text file.
-        opt_class_colors: use class colors instead of the name colors.
+        class_colors: use class colors instead of the name colors.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/border-export-color-table",
-        "border_file": border_file,
-        "table_out": table_out,
-        "opt_class_colors": opt_class_colors,
+        "class-colors": class_colors,
+        "border-file": border_file,
+        "table-out": table_out,
     }
     return params
 
@@ -73,12 +72,14 @@ def border_export_color_table_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-border-export-color-table")
-    cargs.append(execution.input_file(params.get("border_file", None)))
-    cargs.append(params.get("table_out", None))
-    if params.get("opt_class_colors", False):
-        cargs.append("-class-colors")
+    if params.get("class-colors", False):
+        cargs.extend([
+            "wb_command",
+            "-border-export-color-table",
+            "-class-colors"
+        ])
+    cargs.append(execution.input_file(params.get("border-file", None)))
+    cargs.append(params.get("table-out", None))
     return cargs
 
 
@@ -106,18 +107,12 @@ def border_export_color_table_execute(
     runner: Runner | None = None,
 ) -> BorderExportColorTableOutputs:
     """
-    border-export-color-table
-    
-    Write border names and colors as text.
+    WRITE BORDER NAMES AND COLORS AS TEXT.
     
     Takes the names and colors of each border, and writes it to the same format
     as -metric-label-import expects. By default, the borders are colored by
     border name, specify -class-colors to color them by class instead. The key
     values start at 1 and follow the order of the borders in the file.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -137,35 +132,29 @@ def border_export_color_table_execute(
 def border_export_color_table(
     border_file: InputPathType,
     table_out: str,
-    opt_class_colors: bool = False,
+    class_colors: bool = False,
     runner: Runner | None = None,
 ) -> BorderExportColorTableOutputs:
     """
-    border-export-color-table
-    
-    Write border names and colors as text.
+    WRITE BORDER NAMES AND COLORS AS TEXT.
     
     Takes the names and colors of each border, and writes it to the same format
     as -metric-label-import expects. By default, the borders are colored by
     border name, specify -class-colors to color them by class instead. The key
     values start at 1 and follow the order of the borders in the file.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         border_file: the input border file.
         table_out: output - the output text file.
-        opt_class_colors: use class colors instead of the name colors.
+        class_colors: use class colors instead of the name colors.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderExportColorTableOutputs`).
     """
     params = border_export_color_table_params(
+        class_colors=class_colors,
         border_file=border_file,
         table_out=table_out,
-        opt_class_colors=opt_class_colors,
     )
     return border_export_color_table_execute(params, runner)
 

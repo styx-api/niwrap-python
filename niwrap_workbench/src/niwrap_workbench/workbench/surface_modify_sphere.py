@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SURFACE_MODIFY_SPHERE_METADATA = Metadata(
-    id="69965c5b4cd0399d7501f269ec55b50c372e008b.boutiques",
+    id="bd702111cb8b1766b63c379235de453d7fec39d5.workbench",
     name="surface-modify-sphere",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceModifySphereParameters = typing.TypedDict('SurfaceModifySphereParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-modify-sphere"]],
-    "sphere_in": InputPathType,
+    "sphere-out": str,
+    "recenter": bool,
+    "sphere-in": InputPathType,
     "radius": float,
-    "sphere_out": str,
-    "opt_recenter": bool,
 })
 SurfaceModifySphereParametersTagged = typing.TypedDict('SurfaceModifySphereParametersTagged', {
     "@type": typing.Literal["workbench/surface-modify-sphere"],
-    "sphere_in": InputPathType,
+    "sphere-out": str,
+    "recenter": bool,
+    "sphere-in": InputPathType,
     "radius": float,
-    "sphere_out": str,
-    "opt_recenter": bool,
 })
 
 
@@ -40,28 +39,28 @@ class SurfaceModifySphereOutputs(typing.NamedTuple):
 
 
 def surface_modify_sphere_params(
+    sphere_out: str,
     sphere_in: InputPathType,
     radius: float,
-    sphere_out: str,
-    opt_recenter: bool = False,
+    recenter: bool = False,
 ) -> SurfaceModifySphereParametersTagged:
     """
     Build parameters.
     
     Args:
+        sphere_out: the output sphere.
         sphere_in: the sphere to modify.
         radius: the radius the output sphere should have.
-        sphere_out: the output sphere.
-        opt_recenter: recenter the sphere by means of the bounding box.
+        recenter: recenter the sphere by means of the bounding box.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-modify-sphere",
-        "sphere_in": sphere_in,
+        "sphere-out": sphere_out,
+        "recenter": recenter,
+        "sphere-in": sphere_in,
         "radius": radius,
-        "sphere_out": sphere_out,
-        "opt_recenter": opt_recenter,
     }
     return params
 
@@ -80,13 +79,15 @@ def surface_modify_sphere_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-modify-sphere")
-    cargs.append(execution.input_file(params.get("sphere_in", None)))
+    if params.get("recenter", False):
+        cargs.extend([
+            "wb_command",
+            "-surface-modify-sphere",
+            params.get("sphere-out", None),
+            "-recenter"
+        ])
+    cargs.append(execution.input_file(params.get("sphere-in", None)))
     cargs.append(str(params.get("radius", None)))
-    cargs.append(params.get("sphere_out", None))
-    if params.get("opt_recenter", False):
-        cargs.append("-recenter")
     return cargs
 
 
@@ -105,7 +106,7 @@ def surface_modify_sphere_outputs(
     """
     ret = SurfaceModifySphereOutputs(
         root=execution.output_file("."),
-        sphere_out=execution.output_file(params.get("sphere_out", None)),
+        sphere_out=execution.output_file(params.get("sphere-out", None)),
     )
     return ret
 
@@ -115,9 +116,7 @@ def surface_modify_sphere_execute(
     runner: Runner | None = None,
 ) -> SurfaceModifySphereOutputs:
     """
-    surface-modify-sphere
-    
-    Change radius and optionally recenter a sphere.
+    CHANGE RADIUS AND OPTIONALLY RECENTER A SPHERE.
     
     This command may be useful if you have used -surface-resample to resample a
     sphere, which can suffer from problems generally not present in
@@ -127,10 +126,6 @@ def surface_modify_sphere_execute(
     
     If <sphere-in> is not close to spherical, or not centered around the origin
     and -recenter is not used, a warning is printed.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -148,16 +143,14 @@ def surface_modify_sphere_execute(
 
 
 def surface_modify_sphere(
+    sphere_out: str,
     sphere_in: InputPathType,
     radius: float,
-    sphere_out: str,
-    opt_recenter: bool = False,
+    recenter: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceModifySphereOutputs:
     """
-    surface-modify-sphere
-    
-    Change radius and optionally recenter a sphere.
+    CHANGE RADIUS AND OPTIONALLY RECENTER A SPHERE.
     
     This command may be useful if you have used -surface-resample to resample a
     sphere, which can suffer from problems generally not present in
@@ -168,24 +161,20 @@ def surface_modify_sphere(
     If <sphere-in> is not close to spherical, or not centered around the origin
     and -recenter is not used, a warning is printed.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        sphere_out: the output sphere.
         sphere_in: the sphere to modify.
         radius: the radius the output sphere should have.
-        sphere_out: the output sphere.
-        opt_recenter: recenter the sphere by means of the bounding box.
+        recenter: recenter the sphere by means of the bounding box.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceModifySphereOutputs`).
     """
     params = surface_modify_sphere_params(
+        sphere_out=sphere_out,
+        recenter=recenter,
         sphere_in=sphere_in,
         radius=radius,
-        sphere_out=sphere_out,
-        opt_recenter=opt_recenter,
     )
     return surface_modify_sphere_execute(params, runner)
 

@@ -21,14 +21,14 @@ AntsJointFusionParameters = typing.TypedDict('AntsJointFusionParameters', {
     "atlas_segmentation": InputPathType,
     "alpha": typing.NotRequired[float | None],
     "beta": typing.NotRequired[float | None],
-    "constrain_nonnegative": typing.NotRequired[typing.Literal[0, 1] | None],
+    "constrain_nonnegative": typing.NotRequired[bool | None],
     "patch_radius": typing.NotRequired[str | None],
     "patch_metric": typing.NotRequired[typing.Literal["PC", "MSQ"] | None],
     "search_radius": typing.NotRequired[str | None],
     "exclusion_image": typing.NotRequired[InputPathType | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 AntsJointFusionParametersTagged = typing.TypedDict('AntsJointFusionParametersTagged', {
     "@type": typing.Literal["ants/antsJointFusion"],
@@ -38,14 +38,14 @@ AntsJointFusionParametersTagged = typing.TypedDict('AntsJointFusionParametersTag
     "atlas_segmentation": InputPathType,
     "alpha": typing.NotRequired[float | None],
     "beta": typing.NotRequired[float | None],
-    "constrain_nonnegative": typing.NotRequired[typing.Literal[0, 1] | None],
+    "constrain_nonnegative": typing.NotRequired[bool | None],
     "patch_radius": typing.NotRequired[str | None],
     "patch_metric": typing.NotRequired[typing.Literal["PC", "MSQ"] | None],
     "search_radius": typing.NotRequired[str | None],
     "exclusion_image": typing.NotRequired[InputPathType | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -73,13 +73,13 @@ def ants_joint_fusion_params(
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     alpha: float | None = None,
     beta: float | None = None,
-    constrain_nonnegative: typing.Literal[0, 1] | None = None,
+    constrain_nonnegative: bool | None = None,
     patch_radius: str | None = None,
     patch_metric: typing.Literal["PC", "MSQ"] | None = None,
     search_radius: str | None = None,
     exclusion_image: InputPathType | None = None,
     mask_image: InputPathType | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> AntsJointFusionParametersTagged:
     """
     Build parameters.
@@ -192,7 +192,7 @@ def ants_joint_fusion_cargs(
     if params.get("constrain_nonnegative", None) is not None:
         cargs.extend([
             "--constrain-nonnegative",
-            str(params.get("constrain_nonnegative", None))
+            ("1" if params.get("constrain_nonnegative", None) else "0")
         ])
     if params.get("patch_radius", None) is not None:
         cargs.extend([
@@ -226,7 +226,7 @@ def ants_joint_fusion_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -293,13 +293,13 @@ def ants_joint_fusion(
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     alpha: float | None = None,
     beta: float | None = None,
-    constrain_nonnegative: typing.Literal[0, 1] | None = None,
+    constrain_nonnegative: bool | None = None,
     patch_radius: str | None = None,
     patch_metric: typing.Literal["PC", "MSQ"] | None = None,
     search_radius: str | None = None,
     exclusion_image: InputPathType | None = None,
     mask_image: InputPathType | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> AntsJointFusionOutputs:
     """

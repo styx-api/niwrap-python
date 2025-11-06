@@ -18,7 +18,7 @@ AntsMotionCorrParameters = typing.TypedDict('AntsMotionCorrParameters', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "n_images": typing.NotRequired[int | None],
     "metric": typing.NotRequired[str | None],
-    "use_fixed_reference_image": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_fixed_reference_image": typing.NotRequired[bool | None],
     "use_scales_estimator": bool,
     "transform": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[str | None],
@@ -27,17 +27,17 @@ AntsMotionCorrParameters = typing.TypedDict('AntsMotionCorrParameters', {
     "output": typing.NotRequired[str | None],
     "average_image": bool,
     "write_displacement": bool,
-    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_histogram_matching": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 AntsMotionCorrParametersTagged = typing.TypedDict('AntsMotionCorrParametersTagged', {
     "@type": typing.Literal["ants/antsMotionCorr"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "n_images": typing.NotRequired[int | None],
     "metric": typing.NotRequired[str | None],
-    "use_fixed_reference_image": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_fixed_reference_image": typing.NotRequired[bool | None],
     "use_scales_estimator": bool,
     "transform": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[str | None],
@@ -46,10 +46,10 @@ AntsMotionCorrParametersTagged = typing.TypedDict('AntsMotionCorrParametersTagge
     "output": typing.NotRequired[str | None],
     "average_image": bool,
     "write_displacement": bool,
-    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_histogram_matching": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -71,7 +71,7 @@ def ants_motion_corr_params(
     dimensionality: typing.Literal[2, 3] | None = None,
     n_images: int | None = None,
     metric: str | None = None,
-    use_fixed_reference_image: typing.Literal[0, 1] | None = None,
+    use_fixed_reference_image: bool | None = None,
     use_scales_estimator: bool = False,
     transform: str | None = None,
     iterations: str | None = None,
@@ -80,10 +80,10 @@ def ants_motion_corr_params(
     output: str | None = None,
     average_image: bool = False,
     write_displacement: bool = False,
-    use_histogram_matching: typing.Literal[0, 1] | None = None,
+    use_histogram_matching: bool | None = None,
     random_seed: int | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> AntsMotionCorrParametersTagged:
     """
     Build parameters.
@@ -192,7 +192,7 @@ def ants_motion_corr_cargs(
     if params.get("use_fixed_reference_image", None) is not None:
         cargs.extend([
             "--useFixedReferenceImage",
-            str(params.get("use_fixed_reference_image", None))
+            ("1" if params.get("use_fixed_reference_image", None) else "0")
         ])
     if params.get("use_scales_estimator", False):
         cargs.append("--useScalesEstimator")
@@ -228,7 +228,7 @@ def ants_motion_corr_cargs(
     if params.get("use_histogram_matching", None) is not None:
         cargs.extend([
             "--use-histogram-matching",
-            str(params.get("use_histogram_matching", None))
+            ("1" if params.get("use_histogram_matching", None) else "0")
         ])
     if params.get("random_seed", None) is not None:
         cargs.extend([
@@ -243,7 +243,7 @@ def ants_motion_corr_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -303,7 +303,7 @@ def ants_motion_corr(
     dimensionality: typing.Literal[2, 3] | None = None,
     n_images: int | None = None,
     metric: str | None = None,
-    use_fixed_reference_image: typing.Literal[0, 1] | None = None,
+    use_fixed_reference_image: bool | None = None,
     use_scales_estimator: bool = False,
     transform: str | None = None,
     iterations: str | None = None,
@@ -312,10 +312,10 @@ def ants_motion_corr(
     output: str | None = None,
     average_image: bool = False,
     write_displacement: bool = False,
-    use_histogram_matching: typing.Literal[0, 1] | None = None,
+    use_histogram_matching: bool | None = None,
     random_seed: int | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> AntsMotionCorrOutputs:
     """

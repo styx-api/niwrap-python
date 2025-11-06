@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
-    id="f07d6d6741808c71835239e6130a80db4872e584.boutiques",
+    id="0435d93a94c261bb607b4770626109d9ebab1571.workbench",
     name="cifti-label-probability",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiLabelProbabilityParameters = typing.TypedDict('CiftiLabelProbabilityParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-probability"]],
-    "label_maps": InputPathType,
-    "probability_dscalar_out": str,
-    "opt_exclude_unlabeled": bool,
+    "probability-dscalar-out": str,
+    "exclude-unlabeled": bool,
+    "label-maps": InputPathType,
 })
 CiftiLabelProbabilityParametersTagged = typing.TypedDict('CiftiLabelProbabilityParametersTagged', {
     "@type": typing.Literal["workbench/cifti-label-probability"],
-    "label_maps": InputPathType,
-    "probability_dscalar_out": str,
-    "opt_exclude_unlabeled": bool,
+    "probability-dscalar-out": str,
+    "exclude-unlabeled": bool,
+    "label-maps": InputPathType,
 })
 
 
@@ -38,28 +37,27 @@ class CiftiLabelProbabilityOutputs(typing.NamedTuple):
 
 
 def cifti_label_probability_params(
-    label_maps: InputPathType,
     probability_dscalar_out: str,
-    opt_exclude_unlabeled: bool = False,
+    label_maps: InputPathType,
+    exclude_unlabeled: bool = False,
 ) -> CiftiLabelProbabilityParametersTagged:
     """
     Build parameters.
     
     Args:
-        label_maps: cifti dlabel file containing individual label maps from\
-            many subjects.
         probability_dscalar_out: the relative frequencies of each label at each\
             vertex/voxel.
-        opt_exclude_unlabeled: don't make a probability map of the unlabeled\
-            key.
+        label_maps: cifti dlabel file containing individual label maps from\
+            many subjects.
+        exclude_unlabeled: don't make a probability map of the unlabeled key.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-label-probability",
-        "label_maps": label_maps,
-        "probability_dscalar_out": probability_dscalar_out,
-        "opt_exclude_unlabeled": opt_exclude_unlabeled,
+        "probability-dscalar-out": probability_dscalar_out,
+        "exclude-unlabeled": exclude_unlabeled,
+        "label-maps": label_maps,
     }
     return params
 
@@ -78,12 +76,14 @@ def cifti_label_probability_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-label-probability")
-    cargs.append(execution.input_file(params.get("label_maps", None)))
-    cargs.append(params.get("probability_dscalar_out", None))
-    if params.get("opt_exclude_unlabeled", False):
-        cargs.append("-exclude-unlabeled")
+    if params.get("exclude-unlabeled", False):
+        cargs.extend([
+            "wb_command",
+            "-cifti-label-probability",
+            params.get("probability-dscalar-out", None),
+            "-exclude-unlabeled"
+        ])
+    cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs
 
 
@@ -102,7 +102,7 @@ def cifti_label_probability_outputs(
     """
     ret = CiftiLabelProbabilityOutputs(
         root=execution.output_file("."),
-        probability_dscalar_out=execution.output_file(params.get("probability_dscalar_out", None)),
+        probability_dscalar_out=execution.output_file(params.get("probability-dscalar-out", None)),
     )
     return ret
 
@@ -112,17 +112,11 @@ def cifti_label_probability_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelProbabilityOutputs:
     """
-    cifti-label-probability
-    
-    Find frequency of cifti labels.
+    FIND FREQUENCY OF CIFTI LABELS.
     
     This command outputs a set of soft ROIs, one for each label in the input,
     where the value is how many of the input maps had that label at that
     vertex/voxel, divided by the number of input maps.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -140,39 +134,32 @@ def cifti_label_probability_execute(
 
 
 def cifti_label_probability(
-    label_maps: InputPathType,
     probability_dscalar_out: str,
-    opt_exclude_unlabeled: bool = False,
+    label_maps: InputPathType,
+    exclude_unlabeled: bool = False,
     runner: Runner | None = None,
 ) -> CiftiLabelProbabilityOutputs:
     """
-    cifti-label-probability
-    
-    Find frequency of cifti labels.
+    FIND FREQUENCY OF CIFTI LABELS.
     
     This command outputs a set of soft ROIs, one for each label in the input,
     where the value is how many of the input maps had that label at that
     vertex/voxel, divided by the number of input maps.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        label_maps: cifti dlabel file containing individual label maps from\
-            many subjects.
         probability_dscalar_out: the relative frequencies of each label at each\
             vertex/voxel.
-        opt_exclude_unlabeled: don't make a probability map of the unlabeled\
-            key.
+        label_maps: cifti dlabel file containing individual label maps from\
+            many subjects.
+        exclude_unlabeled: don't make a probability map of the unlabeled key.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelProbabilityOutputs`).
     """
     params = cifti_label_probability_params(
-        label_maps=label_maps,
         probability_dscalar_out=probability_dscalar_out,
-        opt_exclude_unlabeled=opt_exclude_unlabeled,
+        exclude_unlabeled=exclude_unlabeled,
+        label_maps=label_maps,
     )
     return cifti_label_probability_execute(params, runner)
 

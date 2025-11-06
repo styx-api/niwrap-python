@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
-    id="e0c244e89a233c2d2fc2fd062eb1b5f673b28511.boutiques",
+    id="c1b64c2a3ef6542f7a8f34965d349c950dd4cb74.workbench",
     name="cifti-label-modify-keys",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiLabelModifyKeysParameters = typing.TypedDict('CiftiLabelModifyKeysParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-modify-keys"]],
-    "cifti_in": InputPathType,
-    "remap_file": str,
-    "cifti_out": str,
-    "opt_column_column": typing.NotRequired[str | None],
+    "cifti-out": str,
+    "column": typing.NotRequired[str | None],
+    "cifti-in": InputPathType,
+    "remap-file": str,
 })
 CiftiLabelModifyKeysParametersTagged = typing.TypedDict('CiftiLabelModifyKeysParametersTagged', {
     "@type": typing.Literal["workbench/cifti-label-modify-keys"],
-    "cifti_in": InputPathType,
-    "remap_file": str,
-    "cifti_out": str,
-    "opt_column_column": typing.NotRequired[str | None],
+    "cifti-out": str,
+    "column": typing.NotRequired[str | None],
+    "cifti-in": InputPathType,
+    "remap-file": str,
 })
 
 
@@ -40,31 +39,32 @@ class CiftiLabelModifyKeysOutputs(typing.NamedTuple):
 
 
 def cifti_label_modify_keys_params(
+    cifti_out: str,
+    column: str | None,
     cifti_in: InputPathType,
     remap_file: str,
-    cifti_out: str,
-    opt_column_column: str | None = None,
 ) -> CiftiLabelModifyKeysParametersTagged:
     """
     Build parameters.
     
     Args:
+        cifti_out: the output dlabel file.
+        column: select a single column to use\
+            \
+            the column number or name.
         cifti_in: the input dlabel file.
         remap_file: text file with old and new key values.
-        cifti_out: the output dlabel file.
-        opt_column_column: select a single column to use: the column number or\
-            name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-label-modify-keys",
-        "cifti_in": cifti_in,
-        "remap_file": remap_file,
-        "cifti_out": cifti_out,
+        "cifti-out": cifti_out,
+        "cifti-in": cifti_in,
+        "remap-file": remap_file,
     }
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -82,16 +82,16 @@ def cifti_label_modify_keys_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-label-modify-keys")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
-    cargs.append(params.get("remap_file", None))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("opt_column_column", None) is not None:
+    if params.get("column", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-label-modify-keys",
+            params.get("cifti-out", None),
             "-column",
-            params.get("opt_column_column", None)
+            params.get("column", None)
         ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
+    cargs.append(params.get("remap-file", None))
     return cargs
 
 
@@ -110,7 +110,7 @@ def cifti_label_modify_keys_outputs(
     """
     ret = CiftiLabelModifyKeysOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -120,9 +120,7 @@ def cifti_label_modify_keys_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
     """
-    cifti-label-modify-keys
-    
-    Change key values in a dlabel file.
+    CHANGE KEY VALUES IN A DLABEL FILE.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
     
@@ -137,10 +135,6 @@ def cifti_label_modify_keys_execute(
     the same key to more than one new key, results in an error. This will not
     change the appearance of the file when displayed, as it will change the key
     values in the data at the same time.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -158,16 +152,14 @@ def cifti_label_modify_keys_execute(
 
 
 def cifti_label_modify_keys(
+    cifti_out: str,
+    column: str | None,
     cifti_in: InputPathType,
     remap_file: str,
-    cifti_out: str,
-    opt_column_column: str | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
     """
-    cifti-label-modify-keys
-    
-    Change key values in a dlabel file.
+    CHANGE KEY VALUES IN A DLABEL FILE.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
     
@@ -183,25 +175,22 @@ def cifti_label_modify_keys(
     change the appearance of the file when displayed, as it will change the key
     values in the data at the same time.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: the output dlabel file.
+        column: select a single column to use\
+            \
+            the column number or name.
         cifti_in: the input dlabel file.
         remap_file: text file with old and new key values.
-        cifti_out: the output dlabel file.
-        opt_column_column: select a single column to use: the column number or\
-            name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelModifyKeysOutputs`).
     """
     params = cifti_label_modify_keys_params(
+        cifti_out=cifti_out,
+        column=column,
         cifti_in=cifti_in,
         remap_file=remap_file,
-        cifti_out=cifti_out,
-        opt_column_column=opt_column_column,
     )
     return cifti_label_modify_keys_execute(params, runner)
 

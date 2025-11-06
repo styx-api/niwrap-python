@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 VOLUME_MATH_METADATA = Metadata(
-    id="a726aa1b4d69c5d8136af6cd6d227b61c7f03acf.boutiques",
+    id="ed80a7d73850df806877a40dcced769f42073178.workbench",
     name="volume-math",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -17,39 +16,39 @@ VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
     "@type": typing.NotRequired[typing.Literal["var"]],
     "name": str,
     "volume": InputPathType,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_repeat": bool,
+    "subvol": typing.NotRequired[str | None],
+    "repeat": bool,
 })
 VolumeMathVarParametersTagged = typing.TypedDict('VolumeMathVarParametersTagged', {
     "@type": typing.Literal["var"],
     "name": str,
     "volume": InputPathType,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_repeat": bool,
+    "subvol": typing.NotRequired[str | None],
+    "repeat": bool,
 })
 
 
 VolumeMathParameters = typing.TypedDict('VolumeMathParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-math"]],
-    "expression": str,
-    "volume_out": str,
-    "opt_fixnan_replace": typing.NotRequired[float | None],
+    "volume-out": str,
+    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[VolumeMathVarParameters] | None],
+    "expression": str,
 })
 VolumeMathParametersTagged = typing.TypedDict('VolumeMathParametersTagged', {
     "@type": typing.Literal["workbench/volume-math"],
-    "expression": str,
-    "volume_out": str,
-    "opt_fixnan_replace": typing.NotRequired[float | None],
+    "volume-out": str,
+    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[VolumeMathVarParameters] | None],
+    "expression": str,
 })
 
 
 def volume_math_var_params(
     name: str,
     volume: InputPathType,
-    opt_subvolume_subvol: str | None = None,
-    opt_repeat: bool = False,
+    subvol: str | None,
+    repeat: bool = False,
 ) -> VolumeMathVarParametersTagged:
     """
     Build parameters.
@@ -57,9 +56,10 @@ def volume_math_var_params(
     Args:
         name: the name of the variable, as used in the expression.
         volume: the volume file to use as this variable.
-        opt_subvolume_subvol: select a single subvolume: the subvolume number\
-            or name.
-        opt_repeat: reuse a single subvolume for each subvolume of calculation.
+        subvol: select a single subvolume\
+            \
+            the subvolume number or name.
+        repeat: reuse a single subvolume for each subvolume of calculation.
     Returns:
         Parameter dictionary
     """
@@ -67,10 +67,10 @@ def volume_math_var_params(
         "@type": "var",
         "name": name,
         "volume": volume,
-        "opt_repeat": opt_repeat,
+        "repeat": repeat,
     }
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -88,16 +88,15 @@ def volume_math_var_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-var")
-    cargs.append(params.get("name", None))
-    cargs.append(execution.input_file(params.get("volume", None)))
-    if params.get("opt_subvolume_subvol", None) is not None:
+    if params.get("subvol", None) is not None or params.get("repeat", False):
         cargs.extend([
+            "-var",
+            params.get("name", None),
+            execution.input_file(params.get("volume", None)),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
+            ("-repeat" if (params.get("repeat", False)) else "")
         ])
-    if params.get("opt_repeat", False):
-        cargs.append("-repeat")
     return cargs
 
 
@@ -112,30 +111,31 @@ class VolumeMathOutputs(typing.NamedTuple):
 
 
 def volume_math_params(
-    expression: str,
     volume_out: str,
-    opt_fixnan_replace: float | None = None,
+    replace: float | None,
+    expression: str,
     var: list[VolumeMathVarParameters] | None = None,
 ) -> VolumeMathParametersTagged:
     """
     Build parameters.
     
     Args:
-        expression: the expression to evaluate, in quotes.
         volume_out: the output volume.
-        opt_fixnan_replace: replace NaN results with a value: value to replace\
-            NaN with.
+        replace: replace NaN results with a value\
+            \
+            value to replace NaN with.
+        expression: the expression to evaluate, in quotes.
         var: a volume file to use as a variable.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-math",
+        "volume-out": volume_out,
         "expression": expression,
-        "volume_out": volume_out,
     }
-    if opt_fixnan_replace is not None:
-        params["opt_fixnan_replace"] = opt_fixnan_replace
+    if replace is not None:
+        params["replace"] = replace
     if var is not None:
         params["var"] = var
     return params
@@ -155,17 +155,16 @@ def volume_math_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-math")
-    cargs.append(params.get("expression", None))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_fixnan_replace", None) is not None:
+    if params.get("replace", None) is not None or params.get("var", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-math",
+            params.get("volume-out", None),
             "-fixnan",
-            str(params.get("opt_fixnan_replace", None))
+            (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
+            *([a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
         ])
-    if params.get("var", None) is not None:
-        cargs.extend([a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c])
+    cargs.append(params.get("expression", None))
     return cargs
 
 
@@ -184,7 +183,7 @@ def volume_math_outputs(
     """
     ret = VolumeMathOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -194,9 +193,7 @@ def volume_math_execute(
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
-    volume-math
-    
-    Evaluate expression on volume files.
+    EVALUATE EXPRESSION ON VOLUME FILES.
     
     This command evaluates <expression> at each voxel independently. There must
     be at least one -var option (to get the volume space from), even if the
@@ -266,10 +263,6 @@ def volume_math_execute(
     mod: 2 arguments, mod(x, y) = x - y * floor(x / y), or 0 if y == 0
     clamp: 3 arguments, clamp(x, low, high) = min(max(x, low), high)
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -287,16 +280,14 @@ def volume_math_execute(
 
 
 def volume_math(
-    expression: str,
     volume_out: str,
-    opt_fixnan_replace: float | None = None,
+    replace: float | None,
+    expression: str,
     var: list[VolumeMathVarParameters] | None = None,
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
-    volume-math
-    
-    Evaluate expression on volume files.
+    EVALUATE EXPRESSION ON VOLUME FILES.
     
     This command evaluates <expression> at each voxel independently. There must
     be at least one -var option (to get the volume space from), even if the
@@ -367,25 +358,22 @@ def volume_math(
     clamp: 3 arguments, clamp(x, low, high) = min(max(x, low), high)
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        expression: the expression to evaluate, in quotes.
         volume_out: the output volume.
-        opt_fixnan_replace: replace NaN results with a value: value to replace\
-            NaN with.
+        replace: replace NaN results with a value\
+            \
+            value to replace NaN with.
+        expression: the expression to evaluate, in quotes.
         var: a volume file to use as a variable.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeMathOutputs`).
     """
     params = volume_math_params(
-        expression=expression,
         volume_out=volume_out,
-        opt_fixnan_replace=opt_fixnan_replace,
+        replace=replace,
         var=var,
+        expression=expression,
     )
     return volume_math_execute(params, runner)
 

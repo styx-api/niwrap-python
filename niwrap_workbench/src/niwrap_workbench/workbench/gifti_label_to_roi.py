@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 GIFTI_LABEL_TO_ROI_METADATA = Metadata(
-    id="5c48bae6e2e86735376fa584af53363f5564f875.boutiques",
+    id="82549fa4f4d713245781e307c4dd75baad9fe47c.workbench",
     name="gifti-label-to-roi",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 GiftiLabelToRoiParameters = typing.TypedDict('GiftiLabelToRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-label-to-roi"]],
-    "label_in": InputPathType,
-    "metric_out": str,
-    "opt_name_label_name": typing.NotRequired[str | None],
-    "opt_key_label_key": typing.NotRequired[int | None],
-    "opt_map_map": typing.NotRequired[str | None],
+    "metric-out": str,
+    "label-name": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "map": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 GiftiLabelToRoiParametersTagged = typing.TypedDict('GiftiLabelToRoiParametersTagged', {
     "@type": typing.Literal["workbench/gifti-label-to-roi"],
-    "label_in": InputPathType,
-    "metric_out": str,
-    "opt_name_label_name": typing.NotRequired[str | None],
-    "opt_key_label_key": typing.NotRequired[int | None],
-    "opt_map_map": typing.NotRequired[str | None],
+    "metric-out": str,
+    "label-name": typing.NotRequired[str | None],
+    "label-key": typing.NotRequired[int | None],
+    "map": typing.NotRequired[str | None],
+    "label-in": InputPathType,
 })
 
 
@@ -42,37 +41,41 @@ class GiftiLabelToRoiOutputs(typing.NamedTuple):
 
 
 def gifti_label_to_roi_params(
-    label_in: InputPathType,
     metric_out: str,
-    opt_name_label_name: str | None = None,
-    opt_key_label_key: int | None = None,
-    opt_map_map: str | None = None,
+    label_name: str | None,
+    label_key: int | None,
+    map_: str | None,
+    label_in: InputPathType,
 ) -> GiftiLabelToRoiParametersTagged:
     """
     Build parameters.
     
     Args:
-        label_in: the input gifti label file.
         metric_out: the output metric file.
-        opt_name_label_name: select label by name: the label name that you want\
-            an roi of.
-        opt_key_label_key: select label by key: the label key that you want an\
-            roi of.
-        opt_map_map: select a single label map to use: the map number or name.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        map_: select a single label map to use\
+            \
+            the map number or name.
+        label_in: the input gifti label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/gifti-label-to-roi",
-        "label_in": label_in,
-        "metric_out": metric_out,
+        "metric-out": metric_out,
+        "label-in": label_in,
     }
-    if opt_name_label_name is not None:
-        params["opt_name_label_name"] = opt_name_label_name
-    if opt_key_label_key is not None:
-        params["opt_key_label_key"] = opt_key_label_key
-    if opt_map_map is not None:
-        params["opt_map_map"] = opt_map_map
+    if label_name is not None:
+        params["label-name"] = label_name
+    if label_key is not None:
+        params["label-key"] = label_key
+    if map_ is not None:
+        params["map"] = map_
     return params
 
 
@@ -90,25 +93,19 @@ def gifti_label_to_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-gifti-label-to-roi")
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_name_label_name", None) is not None:
+    if params.get("label-name", None) is not None or params.get("label-key", None) is not None or params.get("map", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-gifti-label-to-roi",
+            params.get("metric-out", None),
             "-name",
-            params.get("opt_name_label_name", None)
-        ])
-    if params.get("opt_key_label_key", None) is not None:
-        cargs.extend([
+            (params.get("label-name", None) if (params.get("label-name", None) is not None) else ""),
             "-key",
-            str(params.get("opt_key_label_key", None))
-        ])
-    if params.get("opt_map_map", None) is not None:
-        cargs.extend([
+            (str(params.get("label-key", None)) if (params.get("label-key", None) is not None) else ""),
             "-map",
-            params.get("opt_map_map", None)
+            (params.get("map", None) if (params.get("map", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -127,7 +124,7 @@ def gifti_label_to_roi_outputs(
     """
     ret = GiftiLabelToRoiOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -137,18 +134,12 @@ def gifti_label_to_roi_execute(
     runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
-    gifti-label-to-roi
-    
-    Make a gifti label into an roi metric.
+    MAKE A GIFTI LABEL INTO AN ROI METRIC.
     
     For each map in <label-in>, a map is created in <metric-out> where all
     locations labeled with <label-name> or with a key of <label-key> are given a
     value of 1, and all other locations are given 0. Exactly one of -name and
     -key must be specified. Specify -map to use only one map from <label-in>.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -166,45 +157,43 @@ def gifti_label_to_roi_execute(
 
 
 def gifti_label_to_roi(
-    label_in: InputPathType,
     metric_out: str,
-    opt_name_label_name: str | None = None,
-    opt_key_label_key: int | None = None,
-    opt_map_map: str | None = None,
+    label_name: str | None,
+    label_key: int | None,
+    map_: str | None,
+    label_in: InputPathType,
     runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
-    gifti-label-to-roi
-    
-    Make a gifti label into an roi metric.
+    MAKE A GIFTI LABEL INTO AN ROI METRIC.
     
     For each map in <label-in>, a map is created in <metric-out> where all
     locations labeled with <label-name> or with a key of <label-key> are given a
     value of 1, and all other locations are given 0. Exactly one of -name and
     -key must be specified. Specify -map to use only one map from <label-in>.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        label_in: the input gifti label file.
         metric_out: the output metric file.
-        opt_name_label_name: select label by name: the label name that you want\
-            an roi of.
-        opt_key_label_key: select label by key: the label key that you want an\
-            roi of.
-        opt_map_map: select a single label map to use: the map number or name.
+        label_name: select label by name\
+            \
+            the label name that you want an roi of.
+        label_key: select label by key\
+            \
+            the label key that you want an roi of.
+        map_: select a single label map to use\
+            \
+            the map number or name.
+        label_in: the input gifti label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiLabelToRoiOutputs`).
     """
     params = gifti_label_to_roi_params(
-        label_in=label_in,
         metric_out=metric_out,
-        opt_name_label_name=opt_name_label_name,
-        opt_key_label_key=opt_key_label_key,
-        opt_map_map=opt_map_map,
+        label_name=label_name,
+        label_key=label_key,
+        map_=map_,
+        label_in=label_in,
     )
     return gifti_label_to_roi_execute(params, runner)
 

@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "volume_merge",
   "properties": {
-    "volume_out": {
+    "volume-out": {
       "var_param": "volume_out"
     },
     "volume": {
       "var_param": "volume",
       "fn_struct_make_params": "volume_merge_volume_params",
       "properties": {
-        "volume_in": {
+        "volume-in": {
           "var_param": "volume_in"
         },
         "subvolume": {
@@ -18,15 +18,15 @@
             "subvol": {
               "var_param": "subvol"
             },
-            "up_to": {
+            "up-to": {
               "var_param": "up_to",
               "fn_struct_make_params": "volume_merge_up_to_params",
               "properties": {
-                "last_subvol": {
+                "last-subvol": {
                   "var_param": "last_subvol"
                 },
-                "opt_reverse": {
-                  "var_param": "opt_reverse"
+                "reverse": {
+                  "var_param": "reverse"
                 }
               }
             }

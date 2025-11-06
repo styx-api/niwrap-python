@@ -24,19 +24,19 @@ AntsCorticalThicknessShParameters = typing.TypedDict('AntsCorticalThicknessShPar
     "image_file_suffix": typing.NotRequired[str | None],
     "template_for_t1_registration": typing.NotRequired[InputPathType | None],
     "extraction_registration_mask": typing.NotRequired[InputPathType | None],
-    "keep_temporary_files": typing.NotRequired[typing.Literal[0, 1] | None],
-    "denoise_anatomical_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "keep_temporary_files": typing.NotRequired[bool | None],
+    "denoise_anatomical_images": typing.NotRequired[bool | None],
     "max_iterations_for_registration": typing.NotRequired[str | None],
     "atropos_prior_segmentation_weight": typing.NotRequired[float | None],
     "number_of_segmentation_iterations": typing.NotRequired[int | None],
     "posterior_formulation": typing.NotRequired[str | None],
-    "use_floating_point_precision": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_random_seeding": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_b_spline_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_floating_point_precision": typing.NotRequired[bool | None],
+    "use_random_seeding": typing.NotRequired[bool | None],
+    "use_b_spline_smoothing": typing.NotRequired[bool | None],
     "cortical_thickness_prior_image": typing.NotRequired[InputPathType | None],
     "label_propagation": typing.NotRequired[str | None],
     "additional_priors_for_thickness": typing.NotRequired[str | None],
-    "use_quick_registration_parameters": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_quick_registration_parameters": typing.NotRequired[bool | None],
     "atropos_iterations": typing.NotRequired[int | None],
     "script_stage_to_run": typing.NotRequired[int | None],
     "test_debug_mode": typing.NotRequired[int | None],
@@ -52,19 +52,19 @@ AntsCorticalThicknessShParametersTagged = typing.TypedDict('AntsCorticalThicknes
     "image_file_suffix": typing.NotRequired[str | None],
     "template_for_t1_registration": typing.NotRequired[InputPathType | None],
     "extraction_registration_mask": typing.NotRequired[InputPathType | None],
-    "keep_temporary_files": typing.NotRequired[typing.Literal[0, 1] | None],
-    "denoise_anatomical_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "keep_temporary_files": typing.NotRequired[bool | None],
+    "denoise_anatomical_images": typing.NotRequired[bool | None],
     "max_iterations_for_registration": typing.NotRequired[str | None],
     "atropos_prior_segmentation_weight": typing.NotRequired[float | None],
     "number_of_segmentation_iterations": typing.NotRequired[int | None],
     "posterior_formulation": typing.NotRequired[str | None],
-    "use_floating_point_precision": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_random_seeding": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_b_spline_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_floating_point_precision": typing.NotRequired[bool | None],
+    "use_random_seeding": typing.NotRequired[bool | None],
+    "use_b_spline_smoothing": typing.NotRequired[bool | None],
     "cortical_thickness_prior_image": typing.NotRequired[InputPathType | None],
     "label_propagation": typing.NotRequired[str | None],
     "additional_priors_for_thickness": typing.NotRequired[str | None],
-    "use_quick_registration_parameters": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_quick_registration_parameters": typing.NotRequired[bool | None],
     "atropos_iterations": typing.NotRequired[int | None],
     "script_stage_to_run": typing.NotRequired[int | None],
     "test_debug_mode": typing.NotRequired[int | None],
@@ -97,19 +97,19 @@ def ants_cortical_thickness_sh_params(
     image_file_suffix: str | None = None,
     template_for_t1_registration: InputPathType | None = None,
     extraction_registration_mask: InputPathType | None = None,
-    keep_temporary_files: typing.Literal[0, 1] | None = None,
-    denoise_anatomical_images: typing.Literal[0, 1] | None = None,
+    keep_temporary_files: bool | None = None,
+    denoise_anatomical_images: bool | None = None,
     max_iterations_for_registration: str | None = None,
     atropos_prior_segmentation_weight: float | None = None,
     number_of_segmentation_iterations: int | None = None,
     posterior_formulation: str | None = None,
-    use_floating_point_precision: typing.Literal[0, 1] | None = None,
-    use_random_seeding: typing.Literal[0, 1] | None = None,
-    use_b_spline_smoothing: typing.Literal[0, 1] | None = None,
+    use_floating_point_precision: bool | None = None,
+    use_random_seeding: bool | None = None,
+    use_b_spline_smoothing: bool | None = None,
     cortical_thickness_prior_image: InputPathType | None = None,
     label_propagation: str | None = None,
     additional_priors_for_thickness: str | None = None,
-    use_quick_registration_parameters: typing.Literal[0, 1] | None = None,
+    use_quick_registration_parameters: bool | None = None,
     atropos_iterations: int | None = None,
     script_stage_to_run: int | None = None,
     test_debug_mode: int | None = None,
@@ -276,12 +276,12 @@ def ants_cortical_thickness_sh_cargs(
     if params.get("keep_temporary_files", None) is not None:
         cargs.extend([
             "-k",
-            str(params.get("keep_temporary_files", None))
+            ("1" if params.get("keep_temporary_files", None) else "0")
         ])
     if params.get("denoise_anatomical_images", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("denoise_anatomical_images", None))
+            ("1" if params.get("denoise_anatomical_images", None) else "0")
         ])
     if params.get("max_iterations_for_registration", None) is not None:
         cargs.extend([
@@ -306,17 +306,17 @@ def ants_cortical_thickness_sh_cargs(
     if params.get("use_floating_point_precision", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("use_floating_point_precision", None))
+            ("1" if params.get("use_floating_point_precision", None) else "0")
         ])
     if params.get("use_random_seeding", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("use_random_seeding", None))
+            ("1" if params.get("use_random_seeding", None) else "0")
         ])
     if params.get("use_b_spline_smoothing", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("use_b_spline_smoothing", None))
+            ("1" if params.get("use_b_spline_smoothing", None) else "0")
         ])
     if params.get("cortical_thickness_prior_image", None) is not None:
         cargs.extend([
@@ -336,7 +336,7 @@ def ants_cortical_thickness_sh_cargs(
     if params.get("use_quick_registration_parameters", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("use_quick_registration_parameters", None))
+            ("1" if params.get("use_quick_registration_parameters", None) else "0")
         ])
     if params.get("atropos_iterations", None) is not None:
         cargs.extend([
@@ -419,19 +419,19 @@ def ants_cortical_thickness_sh(
     image_file_suffix: str | None = None,
     template_for_t1_registration: InputPathType | None = None,
     extraction_registration_mask: InputPathType | None = None,
-    keep_temporary_files: typing.Literal[0, 1] | None = None,
-    denoise_anatomical_images: typing.Literal[0, 1] | None = None,
+    keep_temporary_files: bool | None = None,
+    denoise_anatomical_images: bool | None = None,
     max_iterations_for_registration: str | None = None,
     atropos_prior_segmentation_weight: float | None = None,
     number_of_segmentation_iterations: int | None = None,
     posterior_formulation: str | None = None,
-    use_floating_point_precision: typing.Literal[0, 1] | None = None,
-    use_random_seeding: typing.Literal[0, 1] | None = None,
-    use_b_spline_smoothing: typing.Literal[0, 1] | None = None,
+    use_floating_point_precision: bool | None = None,
+    use_random_seeding: bool | None = None,
+    use_b_spline_smoothing: bool | None = None,
     cortical_thickness_prior_image: InputPathType | None = None,
     label_propagation: str | None = None,
     additional_priors_for_thickness: str | None = None,
-    use_quick_registration_parameters: typing.Literal[0, 1] | None = None,
+    use_quick_registration_parameters: bool | None = None,
     atropos_iterations: int | None = None,
     script_stage_to_run: int | None = None,
     test_debug_mode: int | None = None,

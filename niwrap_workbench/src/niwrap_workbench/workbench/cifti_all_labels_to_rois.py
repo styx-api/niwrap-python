@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
-    id="6faa7bc1774fe5d690eab193fadb4498d97e0945.boutiques",
+    id="b5d932e91b5ad5cb5d4e5be33f986a8e0158cb63.workbench",
     name="cifti-all-labels-to-rois",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiAllLabelsToRoisParameters = typing.TypedDict('CiftiAllLabelsToRoisParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-all-labels-to-rois"]],
-    "label_in": InputPathType,
+    "cifti-out": str,
+    "label-in": InputPathType,
     "map": str,
-    "cifti_out": str,
 })
 CiftiAllLabelsToRoisParametersTagged = typing.TypedDict('CiftiAllLabelsToRoisParametersTagged', {
     "@type": typing.Literal["workbench/cifti-all-labels-to-rois"],
-    "label_in": InputPathType,
+    "cifti-out": str,
+    "label-in": InputPathType,
     "map": str,
-    "cifti_out": str,
 })
 
 
@@ -38,25 +37,25 @@ class CiftiAllLabelsToRoisOutputs(typing.NamedTuple):
 
 
 def cifti_all_labels_to_rois_params(
+    cifti_out: str,
     label_in: InputPathType,
     map_: str,
-    cifti_out: str,
 ) -> CiftiAllLabelsToRoisParametersTagged:
     """
     Build parameters.
     
     Args:
+        cifti_out: the output cifti file.
         label_in: the input cifti label file.
         map_: the number or name of the label map to use.
-        cifti_out: the output cifti file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-all-labels-to-rois",
-        "label_in": label_in,
+        "cifti-out": cifti_out,
+        "label-in": label_in,
         "map": map_,
-        "cifti_out": cifti_out,
     }
     return params
 
@@ -75,11 +74,13 @@ def cifti_all_labels_to_rois_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-all-labels-to-rois")
-    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.extend([
+        "wb_command",
+        "-cifti-all-labels-to-rois",
+        params.get("cifti-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
-    cargs.append(params.get("cifti_out", None))
     return cargs
 
 
@@ -98,7 +99,7 @@ def cifti_all_labels_to_rois_outputs(
     """
     ret = CiftiAllLabelsToRoisOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -108,9 +109,7 @@ def cifti_all_labels_to_rois_execute(
     runner: Runner | None = None,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
-    cifti-all-labels-to-rois
-    
-    Make rois from all labels in a cifti label map.
+    MAKE ROIS FROM ALL LABELS IN A CIFTI LABEL MAP.
     
     The output cifti file is a dscalar file with a column (map) for each label
     in the specified input map, other than the ??? label, each of which contains
@@ -118,10 +117,6 @@ def cifti_all_labels_to_rois_execute(
     
     Most of the time, specifying '1' for the <map> argument will do what is
     desired.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -139,15 +134,13 @@ def cifti_all_labels_to_rois_execute(
 
 
 def cifti_all_labels_to_rois(
+    cifti_out: str,
     label_in: InputPathType,
     map_: str,
-    cifti_out: str,
     runner: Runner | None = None,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
-    cifti-all-labels-to-rois
-    
-    Make rois from all labels in a cifti label map.
+    MAKE ROIS FROM ALL LABELS IN A CIFTI LABEL MAP.
     
     The output cifti file is a dscalar file with a column (map) for each label
     in the specified input map, other than the ??? label, each of which contains
@@ -156,22 +149,18 @@ def cifti_all_labels_to_rois(
     Most of the time, specifying '1' for the <map> argument will do what is
     desired.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: the output cifti file.
         label_in: the input cifti label file.
         map_: the number or name of the label map to use.
-        cifti_out: the output cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiAllLabelsToRoisOutputs`).
     """
     params = cifti_all_labels_to_rois_params(
+        cifti_out=cifti_out,
         label_in=label_in,
         map_=map_,
-        cifti_out=cifti_out,
     )
     return cifti_all_labels_to_rois_execute(params, runner)
 

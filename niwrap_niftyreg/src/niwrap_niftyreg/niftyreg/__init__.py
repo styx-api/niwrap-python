@@ -34,11 +34,11 @@ def execute(
         runner: Command runner.
     """
     return {
-        "niftyreg/reg_aladin": reg_aladin_execute,
-        "niftyreg/reg_average": reg_average_execute,
-        "niftyreg/reg_f3d": reg_f3d_execute,
-        "niftyreg/reg_jacobian": reg_jacobian_execute,
         "niftyreg/reg_resample": reg_resample_execute,
         "niftyreg/reg_tools": reg_tools_execute,
+        "niftyreg/reg_f3d": reg_f3d_execute,
+        "niftyreg/reg_average": reg_average_execute,
+        "niftyreg/reg_jacobian": reg_jacobian_execute,
         "niftyreg/reg_transform": reg_transform_execute,
+        "niftyreg/reg_aladin": reg_aladin_execute,
     }[params["@type"]](params, runner)

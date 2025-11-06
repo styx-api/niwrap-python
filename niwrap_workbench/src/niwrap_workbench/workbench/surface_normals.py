@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SURFACE_NORMALS_METADATA = Metadata(
-    id="a04e63a81424932a907bb5d57ff1d5439a7a29aa.boutiques",
+    id="83e8a1501232a070f787b1bba983b4bc5b446ed2.workbench",
     name="surface-normals",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceNormalsParameters = typing.TypedDict('SurfaceNormalsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-normals"]],
+    "metric-out": str,
     "surface": InputPathType,
-    "metric_out": str,
 })
 SurfaceNormalsParametersTagged = typing.TypedDict('SurfaceNormalsParametersTagged', {
     "@type": typing.Literal["workbench/surface-normals"],
+    "metric-out": str,
     "surface": InputPathType,
-    "metric_out": str,
 })
 
 
@@ -36,22 +35,22 @@ class SurfaceNormalsOutputs(typing.NamedTuple):
 
 
 def surface_normals_params(
-    surface: InputPathType,
     metric_out: str,
+    surface: InputPathType,
 ) -> SurfaceNormalsParametersTagged:
     """
     Build parameters.
     
     Args:
-        surface: the surface to output the normals of.
         metric_out: the normal vectors.
+        surface: the surface to output the normals of.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-normals",
+        "metric-out": metric_out,
         "surface": surface,
-        "metric_out": metric_out,
     }
     return params
 
@@ -70,10 +69,12 @@ def surface_normals_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-normals")
+    cargs.extend([
+        "wb_command",
+        "-surface-normals",
+        params.get("metric-out", None)
+    ])
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("metric_out", None))
     return cargs
 
 
@@ -92,7 +93,7 @@ def surface_normals_outputs(
     """
     ret = SurfaceNormalsOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -102,16 +103,10 @@ def surface_normals_execute(
     runner: Runner | None = None,
 ) -> SurfaceNormalsOutputs:
     """
-    surface-normals
-    
-    Output vertex normals as metric file.
+    OUTPUT VERTEX NORMALS AS METRIC FILE.
     
     Computes the normal vectors of the surface file, and outputs them as a 3
     column metric file.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -129,32 +124,26 @@ def surface_normals_execute(
 
 
 def surface_normals(
-    surface: InputPathType,
     metric_out: str,
+    surface: InputPathType,
     runner: Runner | None = None,
 ) -> SurfaceNormalsOutputs:
     """
-    surface-normals
-    
-    Output vertex normals as metric file.
+    OUTPUT VERTEX NORMALS AS METRIC FILE.
     
     Computes the normal vectors of the surface file, and outputs them as a 3
     column metric file.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        surface: the surface to output the normals of.
         metric_out: the normal vectors.
+        surface: the surface to output the normals of.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceNormalsOutputs`).
     """
     params = surface_normals_params(
-        surface=surface,
         metric_out=metric_out,
+        surface=surface,
     )
     return surface_normals_execute(params, runner)
 

@@ -6,94 +6,92 @@ import pathlib
 from styxdefs import *
 
 CIFTI_EXPORT_DENSE_MAPPING_METADATA = Metadata(
-    id="afadf58bea912ea0926f8e689df519c578fbdafa.boutiques",
+    id="caf8dad8ae4809da9a7eb9ca3301a06449390ae2.workbench",
     name="cifti-export-dense-mapping",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiExportDenseMappingVolumeAllParameters = typing.TypedDict('CiftiExportDenseMappingVolumeAllParameters', {
-    "@type": typing.NotRequired[typing.Literal["volume_all"]],
-    "text_out": str,
-    "opt_no_cifti_index": bool,
-    "opt_structure": bool,
+    "@type": typing.NotRequired[typing.Literal["volume-all"]],
+    "text-out": str,
+    "no-cifti-index": bool,
+    "structure": bool,
 })
 CiftiExportDenseMappingVolumeAllParametersTagged = typing.TypedDict('CiftiExportDenseMappingVolumeAllParametersTagged', {
-    "@type": typing.Literal["volume_all"],
-    "text_out": str,
-    "opt_no_cifti_index": bool,
-    "opt_structure": bool,
+    "@type": typing.Literal["volume-all"],
+    "text-out": str,
+    "no-cifti-index": bool,
+    "structure": bool,
 })
 
 
 CiftiExportDenseMappingSurfaceParameters = typing.TypedDict('CiftiExportDenseMappingSurfaceParameters', {
     "@type": typing.NotRequired[typing.Literal["surface"]],
     "structure": str,
-    "text_out": str,
-    "opt_no_cifti_index": bool,
+    "text-out": str,
+    "no-cifti-index": bool,
 })
 CiftiExportDenseMappingSurfaceParametersTagged = typing.TypedDict('CiftiExportDenseMappingSurfaceParametersTagged', {
     "@type": typing.Literal["surface"],
     "structure": str,
-    "text_out": str,
-    "opt_no_cifti_index": bool,
+    "text-out": str,
+    "no-cifti-index": bool,
 })
 
 
 CiftiExportDenseMappingVolumeParameters = typing.TypedDict('CiftiExportDenseMappingVolumeParameters', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "structure": str,
-    "text_out": str,
-    "opt_no_cifti_index": bool,
+    "text-out": str,
+    "no-cifti-index": bool,
 })
 CiftiExportDenseMappingVolumeParametersTagged = typing.TypedDict('CiftiExportDenseMappingVolumeParametersTagged', {
     "@type": typing.Literal["volume"],
     "structure": str,
-    "text_out": str,
-    "opt_no_cifti_index": bool,
+    "text-out": str,
+    "no-cifti-index": bool,
 })
 
 
 CiftiExportDenseMappingParameters = typing.TypedDict('CiftiExportDenseMappingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-export-dense-mapping"]],
-    "cifti": InputPathType,
-    "direction": str,
-    "volume_all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],
+    "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],
     "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParameters] | None],
     "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParameters] | None],
+    "cifti": InputPathType,
+    "direction": str,
 })
 CiftiExportDenseMappingParametersTagged = typing.TypedDict('CiftiExportDenseMappingParametersTagged', {
     "@type": typing.Literal["workbench/cifti-export-dense-mapping"],
-    "cifti": InputPathType,
-    "direction": str,
-    "volume_all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],
+    "volume-all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],
     "surface": typing.NotRequired[list[CiftiExportDenseMappingSurfaceParameters] | None],
     "volume": typing.NotRequired[list[CiftiExportDenseMappingVolumeParameters] | None],
+    "cifti": InputPathType,
+    "direction": str,
 })
 
 
 def cifti_export_dense_mapping_volume_all_params(
     text_out: str,
-    opt_no_cifti_index: bool = False,
-    opt_structure: bool = False,
+    no_cifti_index: bool = False,
+    structure: bool = False,
 ) -> CiftiExportDenseMappingVolumeAllParametersTagged:
     """
     Build parameters.
     
     Args:
         text_out: output - the output text file.
-        opt_no_cifti_index: don't write the cifti index in the output file.
-        opt_structure: write the structure each voxel belongs to in the output\
-            file.
+        no_cifti_index: don't write the cifti index in the output file.
+        structure: write the structure each voxel belongs to in the output file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "volume_all",
-        "text_out": text_out,
-        "opt_no_cifti_index": opt_no_cifti_index,
-        "opt_structure": opt_structure,
+        "@type": "volume-all",
+        "text-out": text_out,
+        "no-cifti-index": no_cifti_index,
+        "structure": structure,
     }
     return params
 
@@ -112,19 +110,20 @@ def cifti_export_dense_mapping_volume_all_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-volume-all")
-    cargs.append(params.get("text_out", None))
-    if params.get("opt_no_cifti_index", False):
-        cargs.append("-no-cifti-index")
-    if params.get("opt_structure", False):
-        cargs.append("-structure")
+    if params.get("no-cifti-index", False) or params.get("structure", False):
+        cargs.extend([
+            "-volume-all",
+            params.get("text-out", None),
+            ("-no-cifti-index" if (params.get("no-cifti-index", False)) else ""),
+            ("-structure" if (params.get("structure", False)) else "")
+        ])
     return cargs
 
 
 def cifti_export_dense_mapping_surface_params(
     structure: str,
     text_out: str,
-    opt_no_cifti_index: bool = False,
+    no_cifti_index: bool = False,
 ) -> CiftiExportDenseMappingSurfaceParametersTagged:
     """
     Build parameters.
@@ -132,15 +131,15 @@ def cifti_export_dense_mapping_surface_params(
     Args:
         structure: the structure to output.
         text_out: output - the output text file.
-        opt_no_cifti_index: don't write the cifti index in the output file.
+        no_cifti_index: don't write the cifti index in the output file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "surface",
         "structure": structure,
-        "text_out": text_out,
-        "opt_no_cifti_index": opt_no_cifti_index,
+        "text-out": text_out,
+        "no-cifti-index": no_cifti_index,
     }
     return params
 
@@ -159,18 +158,20 @@ def cifti_export_dense_mapping_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-surface")
-    cargs.append(params.get("structure", None))
-    cargs.append(params.get("text_out", None))
-    if params.get("opt_no_cifti_index", False):
-        cargs.append("-no-cifti-index")
+    if params.get("no-cifti-index", False):
+        cargs.extend([
+            "-surface",
+            params.get("structure", None),
+            params.get("text-out", None),
+            "-no-cifti-index"
+        ])
     return cargs
 
 
 def cifti_export_dense_mapping_volume_params(
     structure: str,
     text_out: str,
-    opt_no_cifti_index: bool = False,
+    no_cifti_index: bool = False,
 ) -> CiftiExportDenseMappingVolumeParametersTagged:
     """
     Build parameters.
@@ -178,15 +179,15 @@ def cifti_export_dense_mapping_volume_params(
     Args:
         structure: the structure to output.
         text_out: output - the output text file.
-        opt_no_cifti_index: don't write the cifti index in the output file.
+        no_cifti_index: don't write the cifti index in the output file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "volume",
         "structure": structure,
-        "text_out": text_out,
-        "opt_no_cifti_index": opt_no_cifti_index,
+        "text-out": text_out,
+        "no-cifti-index": no_cifti_index,
     }
     return params
 
@@ -205,11 +206,13 @@ def cifti_export_dense_mapping_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-volume")
-    cargs.append(params.get("structure", None))
-    cargs.append(params.get("text_out", None))
-    if params.get("opt_no_cifti_index", False):
-        cargs.append("-no-cifti-index")
+    if params.get("no-cifti-index", False):
+        cargs.extend([
+            "-volume",
+            params.get("structure", None),
+            params.get("text-out", None),
+            "-no-cifti-index"
+        ])
     return cargs
 
 
@@ -246,7 +249,7 @@ def cifti_export_dense_mapping_params(
         "direction": direction,
     }
     if volume_all is not None:
-        params["volume_all"] = volume_all
+        params["volume-all"] = volume_all
     if surface is not None:
         params["surface"] = surface
     if volume is not None:
@@ -268,16 +271,16 @@ def cifti_export_dense_mapping_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-export-dense-mapping")
+    if params.get("volume-all", None) is not None or params.get("surface", None) is not None or params.get("volume", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-cifti-export-dense-mapping",
+            *(cifti_export_dense_mapping_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
+            *([a for c in [cifti_export_dense_mapping_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else []),
+            *([a for c in [cifti_export_dense_mapping_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
+        ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(params.get("direction", None))
-    if params.get("volume_all", None) is not None:
-        cargs.extend(cifti_export_dense_mapping_volume_all_cargs(params.get("volume_all", None), execution))
-    if params.get("surface", None) is not None:
-        cargs.extend([a for c in [cifti_export_dense_mapping_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
-    if params.get("volume", None) is not None:
-        cargs.extend([a for c in [cifti_export_dense_mapping_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c])
     return cargs
 
 
@@ -305,9 +308,7 @@ def cifti_export_dense_mapping_execute(
     runner: Runner | None = None,
 ) -> CiftiExportDenseMappingOutputs:
     """
-    cifti-export-dense-mapping
-    
-    Write index to element mapping as text.
+    WRITE INDEX TO ELEMENT MAPPING AS TEXT.
     
     This command produces text files that describe the mapping from cifti
     indices to surface vertices or voxels. All indices are zero-based. The
@@ -344,6 +345,8 @@ def cifti_export_dense_mapping_execute(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -354,10 +357,6 @@ def cifti_export_dense_mapping_execute(
     PUTAMEN_RIGHT
     THALAMUS_LEFT
     THALAMUS_RIGHT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -383,9 +382,7 @@ def cifti_export_dense_mapping(
     runner: Runner | None = None,
 ) -> CiftiExportDenseMappingOutputs:
     """
-    cifti-export-dense-mapping
-    
-    Write index to element mapping as text.
+    WRITE INDEX TO ELEMENT MAPPING AS TEXT.
     
     This command produces text files that describe the mapping from cifti
     indices to surface vertices or voxels. All indices are zero-based. The
@@ -422,6 +419,8 @@ def cifti_export_dense_mapping(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -432,10 +431,6 @@ def cifti_export_dense_mapping(
     PUTAMEN_RIGHT
     THALAMUS_LEFT
     THALAMUS_RIGHT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         cifti: the cifti file.
@@ -448,11 +443,11 @@ def cifti_export_dense_mapping(
         NamedTuple of outputs (described in `CiftiExportDenseMappingOutputs`).
     """
     params = cifti_export_dense_mapping_params(
-        cifti=cifti,
-        direction=direction,
         volume_all=volume_all,
         surface=surface,
         volume=volume,
+        cifti=cifti,
+        direction=direction,
     )
     return cifti_export_dense_mapping_execute(params, runner)
 

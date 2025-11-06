@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
-    id="b14d4ef91f39d8749a47f7c791bcd6bf8525bc4d.boutiques",
+    id="af0de4e5ef947f744f8051acd2cc8811f3f4cf73.workbench",
     name="backend-average-dense-roi",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BackendAverageDenseRoiParameters = typing.TypedDict('BackendAverageDenseRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/backend-average-dense-roi"]],
-    "index_list": str,
-    "out_file": str,
+    "index-list": str,
+    "out-file": str,
 })
 BackendAverageDenseRoiParametersTagged = typing.TypedDict('BackendAverageDenseRoiParametersTagged', {
     "@type": typing.Literal["workbench/backend-average-dense-roi"],
-    "index_list": str,
-    "out_file": str,
+    "index-list": str,
+    "out-file": str,
 })
 
 
@@ -48,8 +47,8 @@ def backend_average_dense_roi_params(
     """
     params = {
         "@type": "workbench/backend-average-dense-roi",
-        "index_list": index_list,
-        "out_file": out_file,
+        "index-list": index_list,
+        "out-file": out_file,
     }
     return params
 
@@ -68,10 +67,12 @@ def backend_average_dense_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-backend-average-dense-roi")
-    cargs.append(params.get("index_list", None))
-    cargs.append(params.get("out_file", None))
+    cargs.extend([
+        "wb_command",
+        "-backend-average-dense-roi"
+    ])
+    cargs.append(params.get("index-list", None))
+    cargs.append(params.get("out-file", None))
     return cargs
 
 
@@ -99,18 +100,12 @@ def backend_average_dense_roi_execute(
     runner: Runner | None = None,
 ) -> BackendAverageDenseRoiOutputs:
     """
-    backend-average-dense-roi
-    
-    Connectome db backend command for cifti average dense roi.
+    CONNECTOME DB BACKEND COMMAND FOR CIFTI AVERAGE DENSE ROI.
     
     This command is probably not the one you are looking for, try
     -cifti-average-dense-roi. It takes the list of cifti files to average from
     standard input, and writes its output as little endian, 32-bit integer of
     row size followed by the row as 32-bit floats.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -133,18 +128,12 @@ def backend_average_dense_roi(
     runner: Runner | None = None,
 ) -> BackendAverageDenseRoiOutputs:
     """
-    backend-average-dense-roi
-    
-    Connectome db backend command for cifti average dense roi.
+    CONNECTOME DB BACKEND COMMAND FOR CIFTI AVERAGE DENSE ROI.
     
     This command is probably not the one you are looking for, try
     -cifti-average-dense-roi. It takes the list of cifti files to average from
     standard input, and writes its output as little endian, 32-bit integer of
     row size followed by the row as 32-bit floats.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         index_list: comma separated list of cifti indexes to average.

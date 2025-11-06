@@ -6,30 +6,29 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CROSS_CORRELATION_METADATA = Metadata(
-    id="05c0db0d9a53210f00f60734da04cd0863715c7a.boutiques",
+    id="bbcfb85ed14069fc9f3ef9b6a868dfa5f987f0d4.workbench",
     name="cifti-cross-correlation",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiCrossCorrelationParameters = typing.TypedDict('CiftiCrossCorrelationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-cross-correlation"]],
-    "cifti_a": InputPathType,
-    "cifti_b": InputPathType,
-    "cifti_out": str,
-    "opt_weights_weight_file": typing.NotRequired[str | None],
-    "opt_fisher_z": bool,
-    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+    "cifti-out": str,
+    "weight-file": typing.NotRequired[str | None],
+    "fisher-z": bool,
+    "limit-GB": typing.NotRequired[float | None],
+    "cifti-a": InputPathType,
+    "cifti-b": InputPathType,
 })
 CiftiCrossCorrelationParametersTagged = typing.TypedDict('CiftiCrossCorrelationParametersTagged', {
     "@type": typing.Literal["workbench/cifti-cross-correlation"],
-    "cifti_a": InputPathType,
-    "cifti_b": InputPathType,
-    "cifti_out": str,
-    "opt_weights_weight_file": typing.NotRequired[str | None],
-    "opt_fisher_z": bool,
-    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+    "cifti-out": str,
+    "weight-file": typing.NotRequired[str | None],
+    "fisher-z": bool,
+    "limit-GB": typing.NotRequired[float | None],
+    "cifti-a": InputPathType,
+    "cifti-b": InputPathType,
 })
 
 
@@ -44,40 +43,41 @@ class CiftiCrossCorrelationOutputs(typing.NamedTuple):
 
 
 def cifti_cross_correlation_params(
+    cifti_out: str,
+    weight_file: str | None,
+    limit_gb: float | None,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
-    cifti_out: str,
-    opt_weights_weight_file: str | None = None,
-    opt_fisher_z: bool = False,
-    opt_mem_limit_limit_gb: float | None = None,
+    fisher_z: bool = False,
 ) -> CiftiCrossCorrelationParametersTagged:
     """
     Build parameters.
     
     Args:
+        cifti_out: output cifti file.
+        weight_file: specify column weights\
+            \
+            text file containing one weight per column.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
-        cifti_out: output cifti file.
-        opt_weights_weight_file: specify column weights: text file containing\
-            one weight per column.
-        opt_fisher_z: apply fisher small z transform (ie, artanh) to\
-            correlation.
-        opt_mem_limit_limit_gb: restrict memory usage: memory limit in\
-            gigabytes.
+        fisher_z: apply fisher small z transform (ie, artanh) to correlation.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-cross-correlation",
-        "cifti_a": cifti_a,
-        "cifti_b": cifti_b,
-        "cifti_out": cifti_out,
-        "opt_fisher_z": opt_fisher_z,
+        "cifti-out": cifti_out,
+        "fisher-z": fisher_z,
+        "cifti-a": cifti_a,
+        "cifti-b": cifti_b,
     }
-    if opt_weights_weight_file is not None:
-        params["opt_weights_weight_file"] = opt_weights_weight_file
-    if opt_mem_limit_limit_gb is not None:
-        params["opt_mem_limit_limit_gb"] = opt_mem_limit_limit_gb
+    if weight_file is not None:
+        params["weight-file"] = weight_file
+    if limit_gb is not None:
+        params["limit-GB"] = limit_gb
     return params
 
 
@@ -95,23 +95,19 @@ def cifti_cross_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-cross-correlation")
-    cargs.append(execution.input_file(params.get("cifti_a", None)))
-    cargs.append(execution.input_file(params.get("cifti_b", None)))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("opt_weights_weight_file", None) is not None:
+    if params.get("weight-file", None) is not None or params.get("fisher-z", False) or params.get("limit-GB", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-cross-correlation",
+            params.get("cifti-out", None),
             "-weights",
-            params.get("opt_weights_weight_file", None)
-        ])
-    if params.get("opt_fisher_z", False):
-        cargs.append("-fisher-z")
-    if params.get("opt_mem_limit_limit_gb", None) is not None:
-        cargs.extend([
+            (params.get("weight-file", None) if (params.get("weight-file", None) is not None) else ""),
+            ("-fisher-z" if (params.get("fisher-z", False)) else ""),
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb", None))
+            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("cifti-a", None)))
+    cargs.append(execution.input_file(params.get("cifti-b", None)))
     return cargs
 
 
@@ -130,7 +126,7 @@ def cifti_cross_correlation_outputs(
     """
     ret = CiftiCrossCorrelationOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -140,9 +136,7 @@ def cifti_cross_correlation_execute(
     runner: Runner | None = None,
 ) -> CiftiCrossCorrelationOutputs:
     """
-    cifti-cross-correlation
-    
-    Correlate a cifti file with another cifti file.
+    CORRELATE A CIFTI FILE WITH ANOTHER CIFTI FILE.
     
     Correlates every row in <cifti-a> with every row in <cifti-b>. The mapping
     along columns in <cifti-b> becomes the mapping along rows in the output.
@@ -152,10 +146,6 @@ def cifti_cross_correlation_execute(
     
     Restricting the memory usage will make it calculate the output in chunks, by
     reading through <cifti-b> multiple times.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -173,18 +163,16 @@ def cifti_cross_correlation_execute(
 
 
 def cifti_cross_correlation(
+    cifti_out: str,
+    weight_file: str | None,
+    limit_gb: float | None,
     cifti_a: InputPathType,
     cifti_b: InputPathType,
-    cifti_out: str,
-    opt_weights_weight_file: str | None = None,
-    opt_fisher_z: bool = False,
-    opt_mem_limit_limit_gb: float | None = None,
+    fisher_z: bool = False,
     runner: Runner | None = None,
 ) -> CiftiCrossCorrelationOutputs:
     """
-    cifti-cross-correlation
-    
-    Correlate a cifti file with another cifti file.
+    CORRELATE A CIFTI FILE WITH ANOTHER CIFTI FILE.
     
     Correlates every row in <cifti-a> with every row in <cifti-b>. The mapping
     along columns in <cifti-b> becomes the mapping along rows in the output.
@@ -195,31 +183,28 @@ def cifti_cross_correlation(
     Restricting the memory usage will make it calculate the output in chunks, by
     reading through <cifti-b> multiple times.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        cifti_out: output cifti file.
+        weight_file: specify column weights\
+            \
+            text file containing one weight per column.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
         cifti_a: first input cifti file.
         cifti_b: second input cifti file.
-        cifti_out: output cifti file.
-        opt_weights_weight_file: specify column weights: text file containing\
-            one weight per column.
-        opt_fisher_z: apply fisher small z transform (ie, artanh) to\
-            correlation.
-        opt_mem_limit_limit_gb: restrict memory usage: memory limit in\
-            gigabytes.
+        fisher_z: apply fisher small z transform (ie, artanh) to correlation.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCrossCorrelationOutputs`).
     """
     params = cifti_cross_correlation_params(
+        cifti_out=cifti_out,
+        weight_file=weight_file,
+        fisher_z=fisher_z,
+        limit_gb=limit_gb,
         cifti_a=cifti_a,
         cifti_b=cifti_b,
-        cifti_out=cifti_out,
-        opt_weights_weight_file=opt_weights_weight_file,
-        opt_fisher_z=opt_fisher_z,
-        opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
     )
     return cifti_cross_correlation_execute(params, runner)
 

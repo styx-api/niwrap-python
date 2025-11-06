@@ -6,100 +6,116 @@ import pathlib
 from styxdefs import *
 
 CIFTI_GRADIENT_METADATA = Metadata(
-    id="a8e5c3ed0a78482d9c66120c39db3f77c9a52343.boutiques",
+    id="d2460b1cd46e52f13e61657937e6834a86e13b49.workbench",
     name="cifti-gradient",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiGradientLeftSurfaceParameters = typing.TypedDict('CiftiGradientLeftSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["left_surface"]],
+    "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
-    "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiGradientLeftSurfaceParametersTagged = typing.TypedDict('CiftiGradientLeftSurfaceParametersTagged', {
-    "@type": typing.Literal["left_surface"],
+    "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
-    "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiGradientRightSurfaceParameters = typing.TypedDict('CiftiGradientRightSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["right_surface"]],
+    "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
-    "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiGradientRightSurfaceParametersTagged = typing.TypedDict('CiftiGradientRightSurfaceParametersTagged', {
-    "@type": typing.Literal["right_surface"],
+    "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
-    "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiGradientCerebellumSurfaceParameters = typing.TypedDict('CiftiGradientCerebellumSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum_surface"]],
+    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
-    "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiGradientCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiGradientCerebellumSurfaceParametersTagged', {
-    "@type": typing.Literal["cerebellum_surface"],
+    "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
-    "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+})
+
+
+CiftiGradientSurfaceParameters = typing.TypedDict('CiftiGradientSurfaceParameters', {
+    "@type": typing.NotRequired[typing.Literal["surface"]],
+    "structure": str,
+    "surface": InputPathType,
+    "area-metric": typing.NotRequired[InputPathType | None],
+})
+CiftiGradientSurfaceParametersTagged = typing.TypedDict('CiftiGradientSurfaceParametersTagged', {
+    "@type": typing.Literal["surface"],
+    "structure": str,
+    "surface": InputPathType,
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiGradientParameters = typing.TypedDict('CiftiGradientParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-gradient"]],
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiGradientLeftSurfaceParameters | None],
+    "right-surface": typing.NotRequired[CiftiGradientRightSurfaceParameters | None],
+    "cerebellum-surface": typing.NotRequired[CiftiGradientCerebellumSurfaceParameters | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "volume-kernel": typing.NotRequired[float | None],
+    "presmooth-fwhm": bool,
+    "average-output": bool,
+    "vectors-out": typing.NotRequired[str | None],
+    "surface": typing.NotRequired[list[CiftiGradientSurfaceParameters] | None],
     "cifti": InputPathType,
     "direction": str,
-    "cifti_out": str,
-    "left_surface": typing.NotRequired[CiftiGradientLeftSurfaceParameters | None],
-    "right_surface": typing.NotRequired[CiftiGradientRightSurfaceParameters | None],
-    "cerebellum_surface": typing.NotRequired[CiftiGradientCerebellumSurfaceParameters | None],
-    "opt_surface_presmooth_surface_kernel": typing.NotRequired[float | None],
-    "opt_volume_presmooth_volume_kernel": typing.NotRequired[float | None],
-    "opt_presmooth_fwhm": bool,
-    "opt_average_output": bool,
-    "opt_vectors_vectors_out": typing.NotRequired[str | None],
 })
 CiftiGradientParametersTagged = typing.TypedDict('CiftiGradientParametersTagged', {
     "@type": typing.Literal["workbench/cifti-gradient"],
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiGradientLeftSurfaceParameters | None],
+    "right-surface": typing.NotRequired[CiftiGradientRightSurfaceParameters | None],
+    "cerebellum-surface": typing.NotRequired[CiftiGradientCerebellumSurfaceParameters | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "volume-kernel": typing.NotRequired[float | None],
+    "presmooth-fwhm": bool,
+    "average-output": bool,
+    "vectors-out": typing.NotRequired[str | None],
+    "surface": typing.NotRequired[list[CiftiGradientSurfaceParameters] | None],
     "cifti": InputPathType,
     "direction": str,
-    "cifti_out": str,
-    "left_surface": typing.NotRequired[CiftiGradientLeftSurfaceParameters | None],
-    "right_surface": typing.NotRequired[CiftiGradientRightSurfaceParameters | None],
-    "cerebellum_surface": typing.NotRequired[CiftiGradientCerebellumSurfaceParameters | None],
-    "opt_surface_presmooth_surface_kernel": typing.NotRequired[float | None],
-    "opt_volume_presmooth_volume_kernel": typing.NotRequired[float | None],
-    "opt_presmooth_fwhm": bool,
-    "opt_average_output": bool,
-    "opt_vectors_vectors_out": typing.NotRequired[str | None],
 })
 
 
 def cifti_gradient_left_surface_params(
     surface: InputPathType,
-    opt_left_corrected_areas_area_metric: InputPathType | None = None,
+    area_metric: InputPathType | None,
 ) -> CiftiGradientLeftSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the left surface file.
-        opt_left_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the left surface: the corrected vertex areas, as a\
-            metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            left surface\
+            \
+            the corrected vertex areas, as a metric.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "left_surface",
+        "@type": "left-surface",
         "surface": surface,
     }
-    if opt_left_corrected_areas_area_metric is not None:
-        params["opt_left_corrected_areas_area_metric"] = opt_left_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -117,37 +133,38 @@ def cifti_gradient_left_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-left-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_left_corrected_areas_area_metric", None) is not None:
+    if params.get("area-metric", None) is not None:
         cargs.extend([
+            "-left-surface",
+            execution.input_file(params.get("surface", None)),
             "-left-corrected-areas",
-            execution.input_file(params.get("opt_left_corrected_areas_area_metric", None))
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
 
 def cifti_gradient_right_surface_params(
     surface: InputPathType,
-    opt_right_corrected_areas_area_metric: InputPathType | None = None,
+    area_metric: InputPathType | None,
 ) -> CiftiGradientRightSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the right surface file.
-        opt_right_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the right surface: the corrected vertex areas, as a\
-            metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            right surface\
+            \
+            the corrected vertex areas, as a metric.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "right_surface",
+        "@type": "right-surface",
         "surface": surface,
     }
-    if opt_right_corrected_areas_area_metric is not None:
-        params["opt_right_corrected_areas_area_metric"] = opt_right_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -165,37 +182,38 @@ def cifti_gradient_right_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-right-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_right_corrected_areas_area_metric", None) is not None:
+    if params.get("area-metric", None) is not None:
         cargs.extend([
+            "-right-surface",
+            execution.input_file(params.get("surface", None)),
             "-right-corrected-areas",
-            execution.input_file(params.get("opt_right_corrected_areas_area_metric", None))
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
 
 def cifti_gradient_cerebellum_surface_params(
     surface: InputPathType,
-    opt_cerebellum_corrected_areas_area_metric: InputPathType | None = None,
+    area_metric: InputPathType | None,
 ) -> CiftiGradientCerebellumSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the cerebellum surface file.
-        opt_cerebellum_corrected_areas_area_metric: vertex areas to use instead\
-            of computing them from the cerebellum surface: the corrected vertex\
-            areas, as a metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            cerebellum surface\
+            \
+            the corrected vertex areas, as a metric.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "cerebellum_surface",
+        "@type": "cerebellum-surface",
         "surface": surface,
     }
-    if opt_cerebellum_corrected_areas_area_metric is not None:
-        params["opt_cerebellum_corrected_areas_area_metric"] = opt_cerebellum_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -213,12 +231,65 @@ def cifti_gradient_cerebellum_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-cerebellum-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_cerebellum_corrected_areas_area_metric", None) is not None:
+    if params.get("area-metric", None) is not None:
         cargs.extend([
+            "-cerebellum-surface",
+            execution.input_file(params.get("surface", None)),
             "-cerebellum-corrected-areas",
-            execution.input_file(params.get("opt_cerebellum_corrected_areas_area_metric", None))
+            execution.input_file(params.get("area-metric", None))
+        ])
+    return cargs
+
+
+def cifti_gradient_surface_params(
+    structure: str,
+    surface: InputPathType,
+    area_metric: InputPathType | None,
+) -> CiftiGradientSurfaceParametersTagged:
+    """
+    Build parameters.
+    
+    Args:
+        structure: the surface structure name.
+        surface: the surface file.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "surface",
+        "structure": structure,
+        "surface": surface,
+    }
+    if area_metric is not None:
+        params["area-metric"] = area_metric
+    return params
+
+
+def cifti_gradient_surface_cargs(
+    params: CiftiGradientSurfaceParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("area-metric", None) is not None:
+        cargs.extend([
+            "-surface",
+            params.get("structure", None),
+            execution.input_file(params.get("surface", None)),
+            "-corrected-areas",
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
@@ -231,67 +302,72 @@ class CiftiGradientOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     cifti_out: OutputPathType
     """the output cifti"""
-    opt_vectors_vectors_out: OutputPathType | None
-    """output gradient vectors: the vectors, as a dscalar file"""
 
 
 def cifti_gradient_params(
+    cifti_out: str,
+    surface_kernel: float | None,
+    volume_kernel: float | None,
+    vectors_out: str | None,
     cifti: InputPathType,
     direction: str,
-    cifti_out: str,
     left_surface: CiftiGradientLeftSurfaceParameters | None = None,
     right_surface: CiftiGradientRightSurfaceParameters | None = None,
     cerebellum_surface: CiftiGradientCerebellumSurfaceParameters | None = None,
-    opt_surface_presmooth_surface_kernel: float | None = None,
-    opt_volume_presmooth_volume_kernel: float | None = None,
-    opt_presmooth_fwhm: bool = False,
-    opt_average_output: bool = False,
-    opt_vectors_vectors_out: str | None = None,
+    presmooth_fwhm: bool = False,
+    average_output: bool = False,
+    surface: list[CiftiGradientSurfaceParameters] | None = None,
 ) -> CiftiGradientParametersTagged:
     """
     Build parameters.
     
     Args:
+        cifti_out: the output cifti.
+        surface_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        volume_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian volume smoothing kernel in mm, as sigma by\
+            default.
+        vectors_out: output gradient vectors\
+            \
+            the vectors, as a dscalar file.
         cifti: the input cifti.
         direction: which dimension to take the gradient along, ROW or COLUMN.
-        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
-        opt_surface_presmooth_surface_kernel: smooth on the surface before\
-            computing the gradient: the size of the gaussian surface smoothing\
-            kernel in mm, as sigma by default.
-        opt_volume_presmooth_volume_kernel: smooth on the surface before\
-            computing the gradient: the size of the gaussian volume smoothing\
-            kernel in mm, as sigma by default.
-        opt_presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        opt_average_output: output the average of the gradient magnitude maps\
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
+        average_output: output the average of the gradient magnitude maps\
             instead of each gradient map separately.
-        opt_vectors_vectors_out: output gradient vectors: the vectors, as a\
-            dscalar file.
+        surface: specify a surface by structure name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-gradient",
+        "cifti-out": cifti_out,
+        "presmooth-fwhm": presmooth_fwhm,
+        "average-output": average_output,
         "cifti": cifti,
         "direction": direction,
-        "cifti_out": cifti_out,
-        "opt_presmooth_fwhm": opt_presmooth_fwhm,
-        "opt_average_output": opt_average_output,
     }
     if left_surface is not None:
-        params["left_surface"] = left_surface
+        params["left-surface"] = left_surface
     if right_surface is not None:
-        params["right_surface"] = right_surface
+        params["right-surface"] = right_surface
     if cerebellum_surface is not None:
-        params["cerebellum_surface"] = cerebellum_surface
-    if opt_surface_presmooth_surface_kernel is not None:
-        params["opt_surface_presmooth_surface_kernel"] = opt_surface_presmooth_surface_kernel
-    if opt_volume_presmooth_volume_kernel is not None:
-        params["opt_volume_presmooth_volume_kernel"] = opt_volume_presmooth_volume_kernel
-    if opt_vectors_vectors_out is not None:
-        params["opt_vectors_vectors_out"] = opt_vectors_vectors_out
+        params["cerebellum-surface"] = cerebellum_surface
+    if surface_kernel is not None:
+        params["surface-kernel"] = surface_kernel
+    if volume_kernel is not None:
+        params["volume-kernel"] = volume_kernel
+    if vectors_out is not None:
+        params["vectors-out"] = vectors_out
+    if surface is not None:
+        params["surface"] = surface
     return params
 
 
@@ -309,36 +385,26 @@ def cifti_gradient_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-gradient")
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("surface-kernel", None) is not None or params.get("volume-kernel", None) is not None or params.get("presmooth-fwhm", False) or params.get("average-output", False) or params.get("vectors-out", None) is not None or params.get("surface", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-cifti-gradient",
+            params.get("cifti-out", None),
+            *(cifti_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
+            "-surface-presmooth",
+            (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
+            "-volume-presmooth",
+            (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
+            ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
+            ("-average-output" if (params.get("average-output", False)) else ""),
+            "-vectors",
+            (params.get("vectors-out", None) if (params.get("vectors-out", None) is not None) else ""),
+            *([a for c in [cifti_gradient_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c] if (params.get("surface", None) is not None) else [])
+        ])
     cargs.append(execution.input_file(params.get("cifti", None)))
     cargs.append(params.get("direction", None))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("left_surface", None) is not None:
-        cargs.extend(cifti_gradient_left_surface_cargs(params.get("left_surface", None), execution))
-    if params.get("right_surface", None) is not None:
-        cargs.extend(cifti_gradient_right_surface_cargs(params.get("right_surface", None), execution))
-    if params.get("cerebellum_surface", None) is not None:
-        cargs.extend(cifti_gradient_cerebellum_surface_cargs(params.get("cerebellum_surface", None), execution))
-    if params.get("opt_surface_presmooth_surface_kernel", None) is not None:
-        cargs.extend([
-            "-surface-presmooth",
-            str(params.get("opt_surface_presmooth_surface_kernel", None))
-        ])
-    if params.get("opt_volume_presmooth_volume_kernel", None) is not None:
-        cargs.extend([
-            "-volume-presmooth",
-            str(params.get("opt_volume_presmooth_volume_kernel", None))
-        ])
-    if params.get("opt_presmooth_fwhm", False):
-        cargs.append("-presmooth-fwhm")
-    if params.get("opt_average_output", False):
-        cargs.append("-average-output")
-    if params.get("opt_vectors_vectors_out", None) is not None:
-        cargs.extend([
-            "-vectors",
-            params.get("opt_vectors_vectors_out", None)
-        ])
     return cargs
 
 
@@ -357,8 +423,7 @@ def cifti_gradient_outputs(
     """
     ret = CiftiGradientOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
-        opt_vectors_vectors_out=execution.output_file(params.get("opt_vectors_vectors_out", None)) if (params.get("opt_vectors_vectors_out") is not None) else None,
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -368,9 +433,7 @@ def cifti_gradient_execute(
     runner: Runner | None = None,
 ) -> CiftiGradientOutputs:
     """
-    cifti-gradient
-    
-    Take gradient of a cifti file.
+    TAKE GRADIENT OF A CIFTI FILE.
     
     Performs gradient calculation on each component of the cifti file, and
     optionally averages the resulting gradients. The -vectors and
@@ -379,9 +442,43 @@ def cifti_gradient_execute(
     faster, and is the direction that works on dtseries. For dconn, you probably
     want ROW, unless you are using -average-output.
     
-    Author: Connectome Workbench Developers
+    The <structure> argument to -surface must be one of the following strings:
     
-    URL: https://github.com/Washington-University/workbench
+    CORTEX_LEFT
+    CORTEX_RIGHT
+    CEREBELLUM
+    ACCUMBENS_LEFT
+    ACCUMBENS_RIGHT
+    ALL_GREY_MATTER
+    ALL_WHITE_MATTER
+    AMYGDALA_LEFT
+    AMYGDALA_RIGHT
+    BRAIN_STEM
+    CAUDATE_LEFT
+    CAUDATE_RIGHT
+    CEREBELLAR_WHITE_MATTER_LEFT
+    CEREBELLAR_WHITE_MATTER_RIGHT
+    CEREBELLUM_LEFT
+    CEREBELLUM_RIGHT
+    CEREBRAL_WHITE_MATTER_LEFT
+    CEREBRAL_WHITE_MATTER_RIGHT
+    CORTEX
+    DIENCEPHALON_VENTRAL_LEFT
+    DIENCEPHALON_VENTRAL_RIGHT
+    HIPPOCAMPUS_LEFT
+    HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
+    INVALID
+    OTHER
+    OTHER_GREY_MATTER
+    OTHER_WHITE_MATTER
+    PALLIDUM_LEFT
+    PALLIDUM_RIGHT
+    PUTAMEN_LEFT
+    PUTAMEN_RIGHT
+    THALAMUS_LEFT
+    THALAMUS_RIGHT.
     
     Args:
         params: The parameters.
@@ -399,23 +496,22 @@ def cifti_gradient_execute(
 
 
 def cifti_gradient(
+    cifti_out: str,
+    surface_kernel: float | None,
+    volume_kernel: float | None,
+    vectors_out: str | None,
     cifti: InputPathType,
     direction: str,
-    cifti_out: str,
     left_surface: CiftiGradientLeftSurfaceParameters | None = None,
     right_surface: CiftiGradientRightSurfaceParameters | None = None,
     cerebellum_surface: CiftiGradientCerebellumSurfaceParameters | None = None,
-    opt_surface_presmooth_surface_kernel: float | None = None,
-    opt_volume_presmooth_volume_kernel: float | None = None,
-    opt_presmooth_fwhm: bool = False,
-    opt_average_output: bool = False,
-    opt_vectors_vectors_out: str | None = None,
+    presmooth_fwhm: bool = False,
+    average_output: bool = False,
+    surface: list[CiftiGradientSurfaceParameters] | None = None,
     runner: Runner | None = None,
 ) -> CiftiGradientOutputs:
     """
-    cifti-gradient
-    
-    Take gradient of a cifti file.
+    TAKE GRADIENT OF A CIFTI FILE.
     
     Performs gradient calculation on each component of the cifti file, and
     optionally averages the resulting gradients. The -vectors and
@@ -424,44 +520,83 @@ def cifti_gradient(
     faster, and is the direction that works on dtseries. For dconn, you probably
     want ROW, unless you are using -average-output.
     
-    Author: Connectome Workbench Developers
+    The <structure> argument to -surface must be one of the following strings:
     
-    URL: https://github.com/Washington-University/workbench
+    CORTEX_LEFT
+    CORTEX_RIGHT
+    CEREBELLUM
+    ACCUMBENS_LEFT
+    ACCUMBENS_RIGHT
+    ALL_GREY_MATTER
+    ALL_WHITE_MATTER
+    AMYGDALA_LEFT
+    AMYGDALA_RIGHT
+    BRAIN_STEM
+    CAUDATE_LEFT
+    CAUDATE_RIGHT
+    CEREBELLAR_WHITE_MATTER_LEFT
+    CEREBELLAR_WHITE_MATTER_RIGHT
+    CEREBELLUM_LEFT
+    CEREBELLUM_RIGHT
+    CEREBRAL_WHITE_MATTER_LEFT
+    CEREBRAL_WHITE_MATTER_RIGHT
+    CORTEX
+    DIENCEPHALON_VENTRAL_LEFT
+    DIENCEPHALON_VENTRAL_RIGHT
+    HIPPOCAMPUS_LEFT
+    HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
+    INVALID
+    OTHER
+    OTHER_GREY_MATTER
+    OTHER_WHITE_MATTER
+    PALLIDUM_LEFT
+    PALLIDUM_RIGHT
+    PUTAMEN_LEFT
+    PUTAMEN_RIGHT
+    THALAMUS_LEFT
+    THALAMUS_RIGHT.
     
     Args:
+        cifti_out: the output cifti.
+        surface_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        volume_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian volume smoothing kernel in mm, as sigma by\
+            default.
+        vectors_out: output gradient vectors\
+            \
+            the vectors, as a dscalar file.
         cifti: the input cifti.
         direction: which dimension to take the gradient along, ROW or COLUMN.
-        cifti_out: the output cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
-        opt_surface_presmooth_surface_kernel: smooth on the surface before\
-            computing the gradient: the size of the gaussian surface smoothing\
-            kernel in mm, as sigma by default.
-        opt_volume_presmooth_volume_kernel: smooth on the surface before\
-            computing the gradient: the size of the gaussian volume smoothing\
-            kernel in mm, as sigma by default.
-        opt_presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        opt_average_output: output the average of the gradient magnitude maps\
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
+        average_output: output the average of the gradient magnitude maps\
             instead of each gradient map separately.
-        opt_vectors_vectors_out: output gradient vectors: the vectors, as a\
-            dscalar file.
+        surface: specify a surface by structure name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiGradientOutputs`).
     """
     params = cifti_gradient_params(
-        cifti=cifti,
-        direction=direction,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
-        opt_surface_presmooth_surface_kernel=opt_surface_presmooth_surface_kernel,
-        opt_volume_presmooth_volume_kernel=opt_volume_presmooth_volume_kernel,
-        opt_presmooth_fwhm=opt_presmooth_fwhm,
-        opt_average_output=opt_average_output,
-        opt_vectors_vectors_out=opt_vectors_vectors_out,
+        surface_kernel=surface_kernel,
+        volume_kernel=volume_kernel,
+        presmooth_fwhm=presmooth_fwhm,
+        average_output=average_output,
+        vectors_out=vectors_out,
+        surface=surface,
+        cifti=cifti,
+        direction=direction,
     )
     return cifti_gradient_execute(params, runner)
 
@@ -475,4 +610,5 @@ __all__ = [
     "cifti_gradient_left_surface_params",
     "cifti_gradient_params",
     "cifti_gradient_right_surface_params",
+    "cifti_gradient_surface_params",
 ]

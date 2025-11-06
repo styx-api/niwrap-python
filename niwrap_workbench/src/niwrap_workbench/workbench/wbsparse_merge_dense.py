@@ -6,34 +6,33 @@ import pathlib
 from styxdefs import *
 
 WBSPARSE_MERGE_DENSE_METADATA = Metadata(
-    id="678d6e48841edbd3b84295894b5e17d9b4f6d090.boutiques",
+    id="69e9cfff66f0dc37b20b5be7517c4b481e100f89.workbench",
     name="wbsparse-merge-dense",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 WbsparseMergeDenseWbsparseParameters = typing.TypedDict('WbsparseMergeDenseWbsparseParameters', {
     "@type": typing.NotRequired[typing.Literal["wbsparse"]],
-    "wbsparse_in": str,
+    "wbsparse-in": str,
 })
 WbsparseMergeDenseWbsparseParametersTagged = typing.TypedDict('WbsparseMergeDenseWbsparseParametersTagged', {
     "@type": typing.Literal["wbsparse"],
-    "wbsparse_in": str,
+    "wbsparse-in": str,
 })
 
 
 WbsparseMergeDenseParameters = typing.TypedDict('WbsparseMergeDenseParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/wbsparse-merge-dense"]],
-    "direction": str,
-    "wbsparse_out": str,
     "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],
+    "direction": str,
+    "wbsparse-out": str,
 })
 WbsparseMergeDenseParametersTagged = typing.TypedDict('WbsparseMergeDenseParametersTagged', {
     "@type": typing.Literal["workbench/wbsparse-merge-dense"],
-    "direction": str,
-    "wbsparse_out": str,
     "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],
+    "direction": str,
+    "wbsparse-out": str,
 })
 
 
@@ -50,7 +49,7 @@ def wbsparse_merge_dense_wbsparse_params(
     """
     params = {
         "@type": "wbsparse",
-        "wbsparse_in": wbsparse_in,
+        "wbsparse-in": wbsparse_in,
     }
     return params
 
@@ -69,8 +68,10 @@ def wbsparse_merge_dense_wbsparse_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-wbsparse")
-    cargs.append(params.get("wbsparse_in", None))
+    cargs.extend([
+        "-wbsparse",
+        params.get("wbsparse-in", None)
+    ])
     return cargs
 
 
@@ -100,7 +101,7 @@ def wbsparse_merge_dense_params(
     params = {
         "@type": "workbench/wbsparse-merge-dense",
         "direction": direction,
-        "wbsparse_out": wbsparse_out,
+        "wbsparse-out": wbsparse_out,
     }
     if wbsparse is not None:
         params["wbsparse"] = wbsparse
@@ -121,12 +122,14 @@ def wbsparse_merge_dense_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-wbsparse-merge-dense")
-    cargs.append(params.get("direction", None))
-    cargs.append(params.get("wbsparse_out", None))
     if params.get("wbsparse", None) is not None:
-        cargs.extend([a for c in [wbsparse_merge_dense_wbsparse_cargs(s, execution) for s in params.get("wbsparse", None)] for a in c])
+        cargs.extend([
+            "wb_command",
+            "-wbsparse-merge-dense",
+            *[a for c in [wbsparse_merge_dense_wbsparse_cargs(s, execution) for s in params.get("wbsparse", None)] for a in c]
+        ])
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("wbsparse-out", None))
     return cargs
 
 
@@ -154,17 +157,11 @@ def wbsparse_merge_dense_execute(
     runner: Runner | None = None,
 ) -> WbsparseMergeDenseOutputs:
     """
-    wbsparse-merge-dense
-    
-    Merge wbsparse files along dense dimension.
+    MERGE WBSPARSE FILES ALONG DENSE DIMENSION.
     
     The input wbsparse files must have matching mappings along the direction not
     specified, and the mapping along the specified direction must be brain
     models.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -188,17 +185,11 @@ def wbsparse_merge_dense(
     runner: Runner | None = None,
 ) -> WbsparseMergeDenseOutputs:
     """
-    wbsparse-merge-dense
-    
-    Merge wbsparse files along dense dimension.
+    MERGE WBSPARSE FILES ALONG DENSE DIMENSION.
     
     The input wbsparse files must have matching mappings along the direction not
     specified, and the mapping along the specified direction must be brain
     models.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         direction: which dimension to merge along, ROW or COLUMN.
@@ -209,9 +200,9 @@ def wbsparse_merge_dense(
         NamedTuple of outputs (described in `WbsparseMergeDenseOutputs`).
     """
     params = wbsparse_merge_dense_params(
+        wbsparse=wbsparse,
         direction=direction,
         wbsparse_out=wbsparse_out,
-        wbsparse=wbsparse,
     )
     return wbsparse_merge_dense_execute(params, runner)
 

@@ -6,122 +6,122 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CORRELATION_GRADIENT_METADATA = Metadata(
-    id="d806149417489bcd1887925649598dc5eb308a60.boutiques",
+    id="ee61d770d1b0dbf0c964ee821bf79b84aaac30f5.workbench",
     name="cifti-correlation-gradient",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiCorrelationGradientLeftSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["left_surface"]],
+    "@type": typing.NotRequired[typing.Literal["left-surface"]],
     "surface": InputPathType,
-    "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCorrelationGradientLeftSurfaceParametersTagged = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParametersTagged', {
-    "@type": typing.Literal["left_surface"],
+    "@type": typing.Literal["left-surface"],
     "surface": InputPathType,
-    "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCorrelationGradientRightSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["right_surface"]],
+    "@type": typing.NotRequired[typing.Literal["right-surface"]],
     "surface": InputPathType,
-    "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCorrelationGradientRightSurfaceParametersTagged = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParametersTagged', {
-    "@type": typing.Literal["right_surface"],
+    "@type": typing.Literal["right-surface"],
     "surface": InputPathType,
-    "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCorrelationGradientCerebellumSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParameters', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum_surface"]],
+    "@type": typing.NotRequired[typing.Literal["cerebellum-surface"]],
     "surface": InputPathType,
-    "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCorrelationGradientCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParametersTagged', {
-    "@type": typing.Literal["cerebellum_surface"],
+    "@type": typing.Literal["cerebellum-surface"],
     "surface": InputPathType,
-    "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCorrelationGradientDoubleCorrelationParameters = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParameters', {
-    "@type": typing.NotRequired[typing.Literal["double_correlation"]],
-    "opt_fisher_z_first": bool,
-    "opt_no_demean_first": bool,
-    "opt_covariance_first": bool,
+    "@type": typing.NotRequired[typing.Literal["double-correlation"]],
+    "fisher-z-first": bool,
+    "no-demean-first": bool,
+    "covariance-first": bool,
 })
 CiftiCorrelationGradientDoubleCorrelationParametersTagged = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParametersTagged', {
-    "@type": typing.Literal["double_correlation"],
-    "opt_fisher_z_first": bool,
-    "opt_no_demean_first": bool,
-    "opt_covariance_first": bool,
+    "@type": typing.Literal["double-correlation"],
+    "fisher-z-first": bool,
+    "no-demean-first": bool,
+    "covariance-first": bool,
 })
 
 
 CiftiCorrelationGradientParameters = typing.TypedDict('CiftiCorrelationGradientParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-correlation-gradient"]],
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParameters | None],
+    "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParameters | None],
+    "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParameters | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "volume-kernel": typing.NotRequired[float | None],
+    "presmooth-fwhm": bool,
+    "undo-fisher-z": bool,
+    "fisher-z": bool,
+    "distance": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "covariance": bool,
+    "limit-GB": typing.NotRequired[float | None],
+    "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParameters | None],
     "cifti": InputPathType,
-    "cifti_out": str,
-    "left_surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParameters | None],
-    "right_surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParameters | None],
-    "cerebellum_surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParameters | None],
-    "opt_surface_presmooth_surface_kernel": typing.NotRequired[float | None],
-    "opt_volume_presmooth_volume_kernel": typing.NotRequired[float | None],
-    "opt_presmooth_fwhm": bool,
-    "opt_undo_fisher_z": bool,
-    "opt_fisher_z": bool,
-    "opt_surface_exclude_distance": typing.NotRequired[float | None],
-    "opt_volume_exclude_distance": typing.NotRequired[float | None],
-    "opt_covariance": bool,
-    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
-    "double_correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParameters | None],
 })
 CiftiCorrelationGradientParametersTagged = typing.TypedDict('CiftiCorrelationGradientParametersTagged', {
     "@type": typing.Literal["workbench/cifti-correlation-gradient"],
+    "cifti-out": str,
+    "left-surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParameters | None],
+    "right-surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParameters | None],
+    "cerebellum-surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParameters | None],
+    "surface-kernel": typing.NotRequired[float | None],
+    "volume-kernel": typing.NotRequired[float | None],
+    "presmooth-fwhm": bool,
+    "undo-fisher-z": bool,
+    "fisher-z": bool,
+    "distance": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "covariance": bool,
+    "limit-GB": typing.NotRequired[float | None],
+    "double-correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParameters | None],
     "cifti": InputPathType,
-    "cifti_out": str,
-    "left_surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParameters | None],
-    "right_surface": typing.NotRequired[CiftiCorrelationGradientRightSurfaceParameters | None],
-    "cerebellum_surface": typing.NotRequired[CiftiCorrelationGradientCerebellumSurfaceParameters | None],
-    "opt_surface_presmooth_surface_kernel": typing.NotRequired[float | None],
-    "opt_volume_presmooth_volume_kernel": typing.NotRequired[float | None],
-    "opt_presmooth_fwhm": bool,
-    "opt_undo_fisher_z": bool,
-    "opt_fisher_z": bool,
-    "opt_surface_exclude_distance": typing.NotRequired[float | None],
-    "opt_volume_exclude_distance": typing.NotRequired[float | None],
-    "opt_covariance": bool,
-    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
-    "double_correlation": typing.NotRequired[CiftiCorrelationGradientDoubleCorrelationParameters | None],
 })
 
 
 def cifti_correlation_gradient_left_surface_params(
     surface: InputPathType,
-    opt_left_corrected_areas_area_metric: InputPathType | None = None,
+    area_metric: InputPathType | None,
 ) -> CiftiCorrelationGradientLeftSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the left surface file.
-        opt_left_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the left surface: the corrected vertex areas, as a\
-            metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            left surface\
+            \
+            the corrected vertex areas, as a metric.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "left_surface",
+        "@type": "left-surface",
         "surface": surface,
     }
-    if opt_left_corrected_areas_area_metric is not None:
-        params["opt_left_corrected_areas_area_metric"] = opt_left_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -139,37 +139,38 @@ def cifti_correlation_gradient_left_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-left-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_left_corrected_areas_area_metric", None) is not None:
+    if params.get("area-metric", None) is not None:
         cargs.extend([
+            "-left-surface",
+            execution.input_file(params.get("surface", None)),
             "-left-corrected-areas",
-            execution.input_file(params.get("opt_left_corrected_areas_area_metric", None))
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
 
 def cifti_correlation_gradient_right_surface_params(
     surface: InputPathType,
-    opt_right_corrected_areas_area_metric: InputPathType | None = None,
+    area_metric: InputPathType | None,
 ) -> CiftiCorrelationGradientRightSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the right surface file.
-        opt_right_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the right surface: the corrected vertex areas, as a\
-            metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            right surface\
+            \
+            the corrected vertex areas, as a metric.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "right_surface",
+        "@type": "right-surface",
         "surface": surface,
     }
-    if opt_right_corrected_areas_area_metric is not None:
-        params["opt_right_corrected_areas_area_metric"] = opt_right_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -187,37 +188,38 @@ def cifti_correlation_gradient_right_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-right-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_right_corrected_areas_area_metric", None) is not None:
+    if params.get("area-metric", None) is not None:
         cargs.extend([
+            "-right-surface",
+            execution.input_file(params.get("surface", None)),
             "-right-corrected-areas",
-            execution.input_file(params.get("opt_right_corrected_areas_area_metric", None))
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
 
 def cifti_correlation_gradient_cerebellum_surface_params(
     surface: InputPathType,
-    opt_cerebellum_corrected_areas_area_metric: InputPathType | None = None,
+    area_metric: InputPathType | None,
 ) -> CiftiCorrelationGradientCerebellumSurfaceParametersTagged:
     """
     Build parameters.
     
     Args:
         surface: the cerebellum surface file.
-        opt_cerebellum_corrected_areas_area_metric: vertex areas to use instead\
-            of computing them from the cerebellum surface: the corrected vertex\
-            areas, as a metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            cerebellum surface\
+            \
+            the corrected vertex areas, as a metric.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "cerebellum_surface",
+        "@type": "cerebellum-surface",
         "surface": surface,
     }
-    if opt_cerebellum_corrected_areas_area_metric is not None:
-        params["opt_cerebellum_corrected_areas_area_metric"] = opt_cerebellum_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -235,39 +237,39 @@ def cifti_correlation_gradient_cerebellum_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-cerebellum-surface")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_cerebellum_corrected_areas_area_metric", None) is not None:
+    if params.get("area-metric", None) is not None:
         cargs.extend([
+            "-cerebellum-surface",
+            execution.input_file(params.get("surface", None)),
             "-cerebellum-corrected-areas",
-            execution.input_file(params.get("opt_cerebellum_corrected_areas_area_metric", None))
+            execution.input_file(params.get("area-metric", None))
         ])
     return cargs
 
 
 def cifti_correlation_gradient_double_correlation_params(
-    opt_fisher_z_first: bool = False,
-    opt_no_demean_first: bool = False,
-    opt_covariance_first: bool = False,
+    fisher_z_first: bool = False,
+    no_demean_first: bool = False,
+    covariance_first: bool = False,
 ) -> CiftiCorrelationGradientDoubleCorrelationParametersTagged:
     """
     Build parameters.
     
     Args:
-        opt_fisher_z_first: after the FIRST correlation, apply fisher small z\
+        fisher_z_first: after the FIRST correlation, apply fisher small z\
             transform (ie, artanh).
-        opt_no_demean_first: instead of correlation for the FIRST operation, do\
-            dot product of rows, then normalize by diagonal.
-        opt_covariance_first: instead of correlation for the FIRST operation,\
+        no_demean_first: instead of correlation for the FIRST operation, do dot\
+            product of rows, then normalize by diagonal.
+        covariance_first: instead of correlation for the FIRST operation,\
             compute covariance.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "double_correlation",
-        "opt_fisher_z_first": opt_fisher_z_first,
-        "opt_no_demean_first": opt_no_demean_first,
-        "opt_covariance_first": opt_covariance_first,
+        "@type": "double-correlation",
+        "fisher-z-first": fisher_z_first,
+        "no-demean-first": no_demean_first,
+        "covariance-first": covariance_first,
     }
     return params
 
@@ -286,13 +288,13 @@ def cifti_correlation_gradient_double_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-double-correlation")
-    if params.get("opt_fisher_z_first", False):
-        cargs.append("-fisher-z-first")
-    if params.get("opt_no_demean_first", False):
-        cargs.append("-no-demean-first")
-    if params.get("opt_covariance_first", False):
-        cargs.append("-covariance-first")
+    if params.get("fisher-z-first", False) or params.get("no-demean-first", False) or params.get("covariance-first", False):
+        cargs.extend([
+            "-double-correlation",
+            ("-fisher-z-first" if (params.get("fisher-z-first", False)) else ""),
+            ("-no-demean-first" if (params.get("no-demean-first", False)) else ""),
+            ("-covariance-first" if (params.get("covariance-first", False)) else "")
+        ])
     return cargs
 
 
@@ -307,81 +309,84 @@ class CiftiCorrelationGradientOutputs(typing.NamedTuple):
 
 
 def cifti_correlation_gradient_params(
-    cifti: InputPathType,
     cifti_out: str,
+    surface_kernel: float | None,
+    volume_kernel: float | None,
+    distance: float | None,
+    distance_: float | None,
+    limit_gb: float | None,
+    cifti: InputPathType,
     left_surface: CiftiCorrelationGradientLeftSurfaceParameters | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParameters | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParameters | None = None,
-    opt_surface_presmooth_surface_kernel: float | None = None,
-    opt_volume_presmooth_volume_kernel: float | None = None,
-    opt_presmooth_fwhm: bool = False,
-    opt_undo_fisher_z: bool = False,
-    opt_fisher_z: bool = False,
-    opt_surface_exclude_distance: float | None = None,
-    opt_volume_exclude_distance: float | None = None,
-    opt_covariance: bool = False,
-    opt_mem_limit_limit_gb: float | None = None,
+    presmooth_fwhm: bool = False,
+    undo_fisher_z: bool = False,
+    fisher_z: bool = False,
+    covariance: bool = False,
     double_correlation: CiftiCorrelationGradientDoubleCorrelationParameters | None = None,
 ) -> CiftiCorrelationGradientParametersTagged:
     """
     Build parameters.
     
     Args:
-        cifti: the input cifti.
         cifti_out: the output cifti.
+        surface_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        volume_kernel: smooth the volume before computing the gradient\
+            \
+            the size of the gaussian volume smoothing kernel in mm, as sigma by\
+            default.
+        distance: exclude vertices near each seed vertex from computation\
+            \
+            geodesic distance from seed vertex for the exclusion zone, in mm.
+        distance_: exclude voxels near each seed voxel from computation\
+            \
+            distance from seed voxel for the exclusion zone, in mm.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
+        cifti: the input cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
-        opt_surface_presmooth_surface_kernel: smooth on the surface before\
-            computing the gradient: the size of the gaussian surface smoothing\
-            kernel in mm, as sigma by default.
-        opt_volume_presmooth_volume_kernel: smooth the volume before computing\
-            the gradient: the size of the gaussian volume smoothing kernel in mm,\
-            as sigma by default.
-        opt_presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        opt_undo_fisher_z: apply the inverse fisher small z transform to the\
-            input.
-        opt_fisher_z: apply the fisher small z transform to the correlations\
-            before taking the gradient.
-        opt_surface_exclude_distance: exclude vertices near each seed vertex\
-            from computation: geodesic distance from seed vertex for the exclusion\
-            zone, in mm.
-        opt_volume_exclude_distance: exclude voxels near each seed voxel from\
-            computation: distance from seed voxel for the exclusion zone, in mm.
-        opt_covariance: compute covariance instead of correlation.
-        opt_mem_limit_limit_gb: restrict memory usage: memory limit in\
-            gigabytes.
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
+        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        fisher_z: apply the fisher small z transform to the correlations before\
+            taking the gradient.
+        covariance: compute covariance instead of correlation.
         double_correlation: do two correlations before taking the gradient.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-correlation-gradient",
+        "cifti-out": cifti_out,
+        "presmooth-fwhm": presmooth_fwhm,
+        "undo-fisher-z": undo_fisher_z,
+        "fisher-z": fisher_z,
+        "covariance": covariance,
         "cifti": cifti,
-        "cifti_out": cifti_out,
-        "opt_presmooth_fwhm": opt_presmooth_fwhm,
-        "opt_undo_fisher_z": opt_undo_fisher_z,
-        "opt_fisher_z": opt_fisher_z,
-        "opt_covariance": opt_covariance,
     }
     if left_surface is not None:
-        params["left_surface"] = left_surface
+        params["left-surface"] = left_surface
     if right_surface is not None:
-        params["right_surface"] = right_surface
+        params["right-surface"] = right_surface
     if cerebellum_surface is not None:
-        params["cerebellum_surface"] = cerebellum_surface
-    if opt_surface_presmooth_surface_kernel is not None:
-        params["opt_surface_presmooth_surface_kernel"] = opt_surface_presmooth_surface_kernel
-    if opt_volume_presmooth_volume_kernel is not None:
-        params["opt_volume_presmooth_volume_kernel"] = opt_volume_presmooth_volume_kernel
-    if opt_surface_exclude_distance is not None:
-        params["opt_surface_exclude_distance"] = opt_surface_exclude_distance
-    if opt_volume_exclude_distance is not None:
-        params["opt_volume_exclude_distance"] = opt_volume_exclude_distance
-    if opt_mem_limit_limit_gb is not None:
-        params["opt_mem_limit_limit_gb"] = opt_mem_limit_limit_gb
+        params["cerebellum-surface"] = cerebellum_surface
+    if surface_kernel is not None:
+        params["surface-kernel"] = surface_kernel
+    if volume_kernel is not None:
+        params["volume-kernel"] = volume_kernel
+    if distance is not None:
+        params["distance"] = distance
+    if distance_ is not None:
+        params["distance"] = distance_
+    if limit_gb is not None:
+        params["limit-GB"] = limit_gb
     if double_correlation is not None:
-        params["double_correlation"] = double_correlation
+        params["double-correlation"] = double_correlation
     return params
 
 
@@ -399,51 +404,31 @@ def cifti_correlation_gradient_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-correlation-gradient")
-    cargs.append(execution.input_file(params.get("cifti", None)))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("left_surface", None) is not None:
-        cargs.extend(cifti_correlation_gradient_left_surface_cargs(params.get("left_surface", None), execution))
-    if params.get("right_surface", None) is not None:
-        cargs.extend(cifti_correlation_gradient_right_surface_cargs(params.get("right_surface", None), execution))
-    if params.get("cerebellum_surface", None) is not None:
-        cargs.extend(cifti_correlation_gradient_cerebellum_surface_cargs(params.get("cerebellum_surface", None), execution))
-    if params.get("opt_surface_presmooth_surface_kernel", None) is not None:
+    if params.get("left-surface", None) is not None or params.get("right-surface", None) is not None or params.get("cerebellum-surface", None) is not None or params.get("surface-kernel", None) is not None or params.get("volume-kernel", None) is not None or params.get("presmooth-fwhm", False) or params.get("undo-fisher-z", False) or params.get("fisher-z", False) or params.get("distance", None) is not None or params.get("distance", None) is not None or params.get("covariance", False) or params.get("limit-GB", None) is not None or params.get("double-correlation", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-correlation-gradient",
+            params.get("cifti-out", None),
+            *(cifti_correlation_gradient_left_surface_cargs(params.get("left-surface", None), execution) if (params.get("left-surface", None) is not None) else []),
+            *(cifti_correlation_gradient_right_surface_cargs(params.get("right-surface", None), execution) if (params.get("right-surface", None) is not None) else []),
+            *(cifti_correlation_gradient_cerebellum_surface_cargs(params.get("cerebellum-surface", None), execution) if (params.get("cerebellum-surface", None) is not None) else []),
             "-surface-presmooth",
-            str(params.get("opt_surface_presmooth_surface_kernel", None))
-        ])
-    if params.get("opt_volume_presmooth_volume_kernel", None) is not None:
-        cargs.extend([
+            (str(params.get("surface-kernel", None)) if (params.get("surface-kernel", None) is not None) else ""),
             "-volume-presmooth",
-            str(params.get("opt_volume_presmooth_volume_kernel", None))
-        ])
-    if params.get("opt_presmooth_fwhm", False):
-        cargs.append("-presmooth-fwhm")
-    if params.get("opt_undo_fisher_z", False):
-        cargs.append("-undo-fisher-z")
-    if params.get("opt_fisher_z", False):
-        cargs.append("-fisher-z")
-    if params.get("opt_surface_exclude_distance", None) is not None:
-        cargs.extend([
+            (str(params.get("volume-kernel", None)) if (params.get("volume-kernel", None) is not None) else ""),
+            ("-presmooth-fwhm" if (params.get("presmooth-fwhm", False)) else ""),
+            ("-undo-fisher-z" if (params.get("undo-fisher-z", False)) else ""),
+            ("-fisher-z" if (params.get("fisher-z", False)) else ""),
             "-surface-exclude",
-            str(params.get("opt_surface_exclude_distance", None))
-        ])
-    if params.get("opt_volume_exclude_distance", None) is not None:
-        cargs.extend([
+            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
             "-volume-exclude",
-            str(params.get("opt_volume_exclude_distance", None))
-        ])
-    if params.get("opt_covariance", False):
-        cargs.append("-covariance")
-    if params.get("opt_mem_limit_limit_gb", None) is not None:
-        cargs.extend([
+            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
+            ("-covariance" if (params.get("covariance", False)) else ""),
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb", None))
+            (str(params.get("limit-GB", None)) if (params.get("limit-GB", None) is not None) else ""),
+            *(cifti_correlation_gradient_double_correlation_cargs(params.get("double-correlation", None), execution) if (params.get("double-correlation", None) is not None) else [])
         ])
-    if params.get("double_correlation", None) is not None:
-        cargs.extend(cifti_correlation_gradient_double_correlation_cargs(params.get("double_correlation", None), execution))
+    cargs.append(execution.input_file(params.get("cifti", None)))
     return cargs
 
 
@@ -462,7 +447,7 @@ def cifti_correlation_gradient_outputs(
     """
     ret = CiftiCorrelationGradientOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -472,18 +457,12 @@ def cifti_correlation_gradient_execute(
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
-    cifti-correlation-gradient
-    
-    Correlate cifti rows and take gradient.
+    CORRELATE CIFTI ROWS AND TAKE GRADIENT.
     
     For each structure, compute the correlation of the rows in the structure,
     and take the gradients of the resulting rows, then average them. Memory
     limit does not need to be an integer, you may also specify 0 to use as
     little memory as possible (this may be very slow).
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -501,83 +480,80 @@ def cifti_correlation_gradient_execute(
 
 
 def cifti_correlation_gradient(
-    cifti: InputPathType,
     cifti_out: str,
+    surface_kernel: float | None,
+    volume_kernel: float | None,
+    distance: float | None,
+    distance_: float | None,
+    limit_gb: float | None,
+    cifti: InputPathType,
     left_surface: CiftiCorrelationGradientLeftSurfaceParameters | None = None,
     right_surface: CiftiCorrelationGradientRightSurfaceParameters | None = None,
     cerebellum_surface: CiftiCorrelationGradientCerebellumSurfaceParameters | None = None,
-    opt_surface_presmooth_surface_kernel: float | None = None,
-    opt_volume_presmooth_volume_kernel: float | None = None,
-    opt_presmooth_fwhm: bool = False,
-    opt_undo_fisher_z: bool = False,
-    opt_fisher_z: bool = False,
-    opt_surface_exclude_distance: float | None = None,
-    opt_volume_exclude_distance: float | None = None,
-    opt_covariance: bool = False,
-    opt_mem_limit_limit_gb: float | None = None,
+    presmooth_fwhm: bool = False,
+    undo_fisher_z: bool = False,
+    fisher_z: bool = False,
+    covariance: bool = False,
     double_correlation: CiftiCorrelationGradientDoubleCorrelationParameters | None = None,
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
-    cifti-correlation-gradient
-    
-    Correlate cifti rows and take gradient.
+    CORRELATE CIFTI ROWS AND TAKE GRADIENT.
     
     For each structure, compute the correlation of the rows in the structure,
     and take the gradients of the resulting rows, then average them. Memory
     limit does not need to be an integer, you may also specify 0 to use as
     little memory as possible (this may be very slow).
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        cifti: the input cifti.
         cifti_out: the output cifti.
+        surface_kernel: smooth on the surface before computing the gradient\
+            \
+            the size of the gaussian surface smoothing kernel in mm, as sigma\
+            by default.
+        volume_kernel: smooth the volume before computing the gradient\
+            \
+            the size of the gaussian volume smoothing kernel in mm, as sigma by\
+            default.
+        distance: exclude vertices near each seed vertex from computation\
+            \
+            geodesic distance from seed vertex for the exclusion zone, in mm.
+        distance_: exclude voxels near each seed voxel from computation\
+            \
+            distance from seed voxel for the exclusion zone, in mm.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
+        cifti: the input cifti.
         left_surface: specify the left surface to use.
         right_surface: specify the right surface to use.
         cerebellum_surface: specify the cerebellum surface to use.
-        opt_surface_presmooth_surface_kernel: smooth on the surface before\
-            computing the gradient: the size of the gaussian surface smoothing\
-            kernel in mm, as sigma by default.
-        opt_volume_presmooth_volume_kernel: smooth the volume before computing\
-            the gradient: the size of the gaussian volume smoothing kernel in mm,\
-            as sigma by default.
-        opt_presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
-        opt_undo_fisher_z: apply the inverse fisher small z transform to the\
-            input.
-        opt_fisher_z: apply the fisher small z transform to the correlations\
-            before taking the gradient.
-        opt_surface_exclude_distance: exclude vertices near each seed vertex\
-            from computation: geodesic distance from seed vertex for the exclusion\
-            zone, in mm.
-        opt_volume_exclude_distance: exclude voxels near each seed voxel from\
-            computation: distance from seed voxel for the exclusion zone, in mm.
-        opt_covariance: compute covariance instead of correlation.
-        opt_mem_limit_limit_gb: restrict memory usage: memory limit in\
-            gigabytes.
+        presmooth_fwhm: smoothing kernel sizes are FWHM, not sigma.
+        undo_fisher_z: apply the inverse fisher small z transform to the input.
+        fisher_z: apply the fisher small z transform to the correlations before\
+            taking the gradient.
+        covariance: compute covariance instead of correlation.
         double_correlation: do two correlations before taking the gradient.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationGradientOutputs`).
     """
     params = cifti_correlation_gradient_params(
-        cifti=cifti,
         cifti_out=cifti_out,
         left_surface=left_surface,
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
-        opt_surface_presmooth_surface_kernel=opt_surface_presmooth_surface_kernel,
-        opt_volume_presmooth_volume_kernel=opt_volume_presmooth_volume_kernel,
-        opt_presmooth_fwhm=opt_presmooth_fwhm,
-        opt_undo_fisher_z=opt_undo_fisher_z,
-        opt_fisher_z=opt_fisher_z,
-        opt_surface_exclude_distance=opt_surface_exclude_distance,
-        opt_volume_exclude_distance=opt_volume_exclude_distance,
-        opt_covariance=opt_covariance,
-        opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
+        surface_kernel=surface_kernel,
+        volume_kernel=volume_kernel,
+        presmooth_fwhm=presmooth_fwhm,
+        undo_fisher_z=undo_fisher_z,
+        fisher_z=fisher_z,
+        distance=distance,
+        distance_=distance_,
+        covariance=covariance,
+        limit_gb=limit_gb,
         double_correlation=double_correlation,
+        cifti=cifti,
     )
     return cifti_correlation_gradient_execute(params, runner)
 

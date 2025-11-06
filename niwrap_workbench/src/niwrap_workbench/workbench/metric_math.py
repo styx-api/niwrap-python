@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 METRIC_MATH_METADATA = Metadata(
-    id="81bd93d4c092b2d74f3bfcdeff9f5badd48945c1.boutiques",
+    id="c3f61d2cfe1af355592b15dccd2cddda61e44ce6.workbench",
     name="metric-math",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -17,39 +16,39 @@ MetricMathVarParameters = typing.TypedDict('MetricMathVarParameters', {
     "@type": typing.NotRequired[typing.Literal["var"]],
     "name": str,
     "metric": InputPathType,
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_repeat": bool,
+    "column": typing.NotRequired[str | None],
+    "repeat": bool,
 })
 MetricMathVarParametersTagged = typing.TypedDict('MetricMathVarParametersTagged', {
     "@type": typing.Literal["var"],
     "name": str,
     "metric": InputPathType,
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_repeat": bool,
+    "column": typing.NotRequired[str | None],
+    "repeat": bool,
 })
 
 
 MetricMathParameters = typing.TypedDict('MetricMathParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-math"]],
-    "expression": str,
-    "metric_out": str,
-    "opt_fixnan_replace": typing.NotRequired[float | None],
+    "metric-out": str,
+    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[MetricMathVarParameters] | None],
+    "expression": str,
 })
 MetricMathParametersTagged = typing.TypedDict('MetricMathParametersTagged', {
     "@type": typing.Literal["workbench/metric-math"],
-    "expression": str,
-    "metric_out": str,
-    "opt_fixnan_replace": typing.NotRequired[float | None],
+    "metric-out": str,
+    "replace": typing.NotRequired[float | None],
     "var": typing.NotRequired[list[MetricMathVarParameters] | None],
+    "expression": str,
 })
 
 
 def metric_math_var_params(
     name: str,
     metric: InputPathType,
-    opt_column_column: str | None = None,
-    opt_repeat: bool = False,
+    column: str | None,
+    repeat: bool = False,
 ) -> MetricMathVarParametersTagged:
     """
     Build parameters.
@@ -57,8 +56,10 @@ def metric_math_var_params(
     Args:
         name: the name of the variable, as used in the expression.
         metric: the metric file to use as this variable.
-        opt_column_column: select a single column: the column number or name.
-        opt_repeat: reuse a single column for each column of calculation.
+        column: select a single column\
+            \
+            the column number or name.
+        repeat: reuse a single column for each column of calculation.
     Returns:
         Parameter dictionary
     """
@@ -66,10 +67,10 @@ def metric_math_var_params(
         "@type": "var",
         "name": name,
         "metric": metric,
-        "opt_repeat": opt_repeat,
+        "repeat": repeat,
     }
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -87,16 +88,15 @@ def metric_math_var_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-var")
-    cargs.append(params.get("name", None))
-    cargs.append(execution.input_file(params.get("metric", None)))
-    if params.get("opt_column_column", None) is not None:
+    if params.get("column", None) is not None or params.get("repeat", False):
         cargs.extend([
+            "-var",
+            params.get("name", None),
+            execution.input_file(params.get("metric", None)),
             "-column",
-            params.get("opt_column_column", None)
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            ("-repeat" if (params.get("repeat", False)) else "")
         ])
-    if params.get("opt_repeat", False):
-        cargs.append("-repeat")
     return cargs
 
 
@@ -111,30 +111,31 @@ class MetricMathOutputs(typing.NamedTuple):
 
 
 def metric_math_params(
-    expression: str,
     metric_out: str,
-    opt_fixnan_replace: float | None = None,
+    replace: float | None,
+    expression: str,
     var: list[MetricMathVarParameters] | None = None,
 ) -> MetricMathParametersTagged:
     """
     Build parameters.
     
     Args:
-        expression: the expression to evaluate, in quotes.
         metric_out: the output metric.
-        opt_fixnan_replace: replace NaN results with a value: value to replace\
-            NaN with.
+        replace: replace NaN results with a value\
+            \
+            value to replace NaN with.
+        expression: the expression to evaluate, in quotes.
         var: a metric to use as a variable.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-math",
+        "metric-out": metric_out,
         "expression": expression,
-        "metric_out": metric_out,
     }
-    if opt_fixnan_replace is not None:
-        params["opt_fixnan_replace"] = opt_fixnan_replace
+    if replace is not None:
+        params["replace"] = replace
     if var is not None:
         params["var"] = var
     return params
@@ -154,17 +155,16 @@ def metric_math_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-math")
-    cargs.append(params.get("expression", None))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_fixnan_replace", None) is not None:
+    if params.get("replace", None) is not None or params.get("var", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-math",
+            params.get("metric-out", None),
             "-fixnan",
-            str(params.get("opt_fixnan_replace", None))
+            (str(params.get("replace", None)) if (params.get("replace", None) is not None) else ""),
+            *([a for c in [metric_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c] if (params.get("var", None) is not None) else [])
         ])
-    if params.get("var", None) is not None:
-        cargs.extend([a for c in [metric_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c])
+    cargs.append(params.get("expression", None))
     return cargs
 
 
@@ -183,7 +183,7 @@ def metric_math_outputs(
     """
     ret = MetricMathOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -193,9 +193,7 @@ def metric_math_execute(
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
-    metric-math
-    
-    Evaluate expression on metric files.
+    EVALUATE EXPRESSION ON METRIC FILES.
     
     This command evaluates <expression> at each surface vertex independently.
     There must be at least one -var option (to get the structure, number of
@@ -266,10 +264,6 @@ def metric_math_execute(
     mod: 2 arguments, mod(x, y) = x - y * floor(x / y), or 0 if y == 0
     clamp: 3 arguments, clamp(x, low, high) = min(max(x, low), high)
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -287,16 +281,14 @@ def metric_math_execute(
 
 
 def metric_math(
-    expression: str,
     metric_out: str,
-    opt_fixnan_replace: float | None = None,
+    replace: float | None,
+    expression: str,
     var: list[MetricMathVarParameters] | None = None,
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
-    metric-math
-    
-    Evaluate expression on metric files.
+    EVALUATE EXPRESSION ON METRIC FILES.
     
     This command evaluates <expression> at each surface vertex independently.
     There must be at least one -var option (to get the structure, number of
@@ -368,25 +360,22 @@ def metric_math(
     clamp: 3 arguments, clamp(x, low, high) = min(max(x, low), high)
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        expression: the expression to evaluate, in quotes.
         metric_out: the output metric.
-        opt_fixnan_replace: replace NaN results with a value: value to replace\
-            NaN with.
+        replace: replace NaN results with a value\
+            \
+            value to replace NaN with.
+        expression: the expression to evaluate, in quotes.
         var: a metric to use as a variable.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricMathOutputs`).
     """
     params = metric_math_params(
-        expression=expression,
         metric_out=metric_out,
-        opt_fixnan_replace=opt_fixnan_replace,
+        replace=replace,
         var=var,
+        expression=expression,
     )
     return metric_math_execute(params, runner)
 

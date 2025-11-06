@@ -6,20 +6,19 @@ import pathlib
 from styxdefs import *
 
 SURFACE_INFORMATION_METADATA = Metadata(
-    id="237f94d9fda300e4c808bf66e35bc7a6bf87f07a.boutiques",
+    id="87b1b891daeb7b0feeaa4cf02501f4785ccf44ce.workbench",
     name="surface-information",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceInformationParameters = typing.TypedDict('SurfaceInformationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-information"]],
-    "surface_file": InputPathType,
+    "Surface File": InputPathType,
 })
 SurfaceInformationParametersTagged = typing.TypedDict('SurfaceInformationParametersTagged', {
     "@type": typing.Literal["workbench/surface-information"],
-    "surface_file": InputPathType,
+    "Surface File": InputPathType,
 })
 
 
@@ -44,7 +43,7 @@ def surface_information_params(
     """
     params = {
         "@type": "workbench/surface-information",
-        "surface_file": surface_file,
+        "Surface File": surface_file,
     }
     return params
 
@@ -63,9 +62,11 @@ def surface_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-information")
-    cargs.append(execution.input_file(params.get("surface_file", None)))
+    cargs.extend([
+        "wb_command",
+        "-surface-information"
+    ])
+    cargs.append(execution.input_file(params.get("Surface File", None)))
     return cargs
 
 
@@ -93,16 +94,10 @@ def surface_information_execute(
     runner: Runner | None = None,
 ) -> SurfaceInformationOutputs:
     """
-    surface-information
-    
-    Display information about a surface.
+    DISPLAY INFORMATION ABOUT A SURFACE.
     
     Information about surface is displayed including vertices,
     triangles, bounding box, and spacing.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -124,16 +119,10 @@ def surface_information(
     runner: Runner | None = None,
 ) -> SurfaceInformationOutputs:
     """
-    surface-information
-    
-    Display information about a surface.
+    DISPLAY INFORMATION ABOUT A SURFACE.
     
     Information about surface is displayed including vertices,
     triangles, bounding box, and spacing.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         surface_file: Surface for which information is displayed.

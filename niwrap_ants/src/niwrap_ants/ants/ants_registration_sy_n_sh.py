@@ -27,9 +27,9 @@ AntsRegistrationSyNShParameters = typing.TypedDict('AntsRegistrationSyNShParamet
     "gradient_step": typing.NotRequired[float | None],
     "masks": typing.NotRequired[str | None],
     "precision_type": typing.NotRequired[typing.Literal["f", "d"] | None],
-    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_repro_mode": typing.NotRequired[typing.Literal[0, 1] | None],
-    "collapse_output_transforms": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_histogram_matching": typing.NotRequired[bool | None],
+    "use_repro_mode": typing.NotRequired[bool | None],
+    "collapse_output_transforms": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
 })
 AntsRegistrationSyNShParametersTagged = typing.TypedDict('AntsRegistrationSyNShParametersTagged', {
@@ -46,9 +46,9 @@ AntsRegistrationSyNShParametersTagged = typing.TypedDict('AntsRegistrationSyNShP
     "gradient_step": typing.NotRequired[float | None],
     "masks": typing.NotRequired[str | None],
     "precision_type": typing.NotRequired[typing.Literal["f", "d"] | None],
-    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_repro_mode": typing.NotRequired[typing.Literal[0, 1] | None],
-    "collapse_output_transforms": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_histogram_matching": typing.NotRequired[bool | None],
+    "use_repro_mode": typing.NotRequired[bool | None],
+    "collapse_output_transforms": typing.NotRequired[bool | None],
     "random_seed": typing.NotRequired[int | None],
 })
 
@@ -80,9 +80,9 @@ def ants_registration_sy_n_sh_params(
     gradient_step: float | None = None,
     masks: str | None = None,
     precision_type: typing.Literal["f", "d"] | None = None,
-    use_histogram_matching: typing.Literal[0, 1] | None = None,
-    use_repro_mode: typing.Literal[0, 1] | None = None,
-    collapse_output_transforms: typing.Literal[0, 1] | None = None,
+    use_histogram_matching: bool | None = None,
+    use_repro_mode: bool | None = None,
+    collapse_output_transforms: bool | None = None,
     random_seed: int | None = None,
 ) -> AntsRegistrationSyNShParametersTagged:
     """
@@ -246,17 +246,17 @@ def ants_registration_sy_n_sh_cargs(
     if params.get("use_histogram_matching", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("use_histogram_matching", None))
+            ("1" if params.get("use_histogram_matching", None) else "0")
         ])
     if params.get("use_repro_mode", None) is not None:
         cargs.extend([
             "-y",
-            str(params.get("use_repro_mode", None))
+            ("1" if params.get("use_repro_mode", None) else "0")
         ])
     if params.get("collapse_output_transforms", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("collapse_output_transforms", None))
+            ("1" if params.get("collapse_output_transforms", None) else "0")
         ])
     if params.get("random_seed", None) is not None:
         cargs.extend([
@@ -329,9 +329,9 @@ def ants_registration_sy_n_sh(
     gradient_step: float | None = None,
     masks: str | None = None,
     precision_type: typing.Literal["f", "d"] | None = None,
-    use_histogram_matching: typing.Literal[0, 1] | None = None,
-    use_repro_mode: typing.Literal[0, 1] | None = None,
-    collapse_output_transforms: typing.Literal[0, 1] | None = None,
+    use_histogram_matching: bool | None = None,
+    use_repro_mode: bool | None = None,
+    collapse_output_transforms: bool | None = None,
     random_seed: int | None = None,
     runner: Runner | None = None,
 ) -> AntsRegistrationSyNShOutputs:

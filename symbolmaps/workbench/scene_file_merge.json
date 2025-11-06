@@ -1,14 +1,11 @@
 {
   "fn_root_make_params_and_execute": "scene_file_merge",
   "properties": {
-    "scene_file_out": {
-      "var_param": "scene_file_out"
-    },
-    "scene_file": {
+    "scene-file": {
       "var_param": "scene_file",
       "fn_struct_make_params": "scene_file_merge_scene_file_params",
       "properties": {
-        "scene_file": {
+        "scene-file": {
           "var_param": "scene_file"
         },
         "scene": {
@@ -18,21 +15,24 @@
             "scene": {
               "var_param": "scene"
             },
-            "up_to": {
+            "up-to": {
               "var_param": "up_to",
               "fn_struct_make_params": "scene_file_merge_up_to_params",
               "properties": {
-                "last_column": {
+                "last-column": {
                   "var_param": "last_column"
                 },
-                "opt_reverse": {
-                  "var_param": "opt_reverse"
+                "reverse": {
+                  "var_param": "reverse"
                 }
               }
             }
           }
         }
       }
+    },
+    "scene-file-out": {
+      "var_param": "scene_file_out"
     }
   }
 }

@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
-    id="4b760afd4bd4e051700d48a7777f581e94a58d40.boutiques",
+    id="62835d3af56370841cd14095a4b69710f24db721.workbench",
     name="volume-components-to-frames",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeComponentsToFramesParameters = typing.TypedDict('VolumeComponentsToFramesParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-components-to-frames"]],
-    "input": InputPathType,
     "output": str,
+    "input": InputPathType,
 })
 VolumeComponentsToFramesParametersTagged = typing.TypedDict('VolumeComponentsToFramesParametersTagged', {
     "@type": typing.Literal["workbench/volume-components-to-frames"],
-    "input": InputPathType,
     "output": str,
+    "input": InputPathType,
 })
 
 
@@ -36,22 +35,22 @@ class VolumeComponentsToFramesOutputs(typing.NamedTuple):
 
 
 def volume_components_to_frames_params(
-    input_: InputPathType,
     output: str,
+    input_: InputPathType,
 ) -> VolumeComponentsToFramesParametersTagged:
     """
     Build parameters.
     
     Args:
-        input_: the RGB/complex-type volume.
         output: the input volume converted to multiple frames of scalar type.
+        input_: the RGB/complex-type volume.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-components-to-frames",
-        "input": input_,
         "output": output,
+        "input": input_,
     }
     return params
 
@@ -70,10 +69,12 @@ def volume_components_to_frames_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-components-to-frames")
+    cargs.extend([
+        "wb_command",
+        "-volume-components-to-frames",
+        params.get("output", None)
+    ])
     cargs.append(execution.input_file(params.get("input", None)))
-    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -102,16 +103,10 @@ def volume_components_to_frames_execute(
     runner: Runner | None = None,
 ) -> VolumeComponentsToFramesOutputs:
     """
-    volume-components-to-frames
-    
-    Convert rgb/complex volume to frames.
+    CONVERT RGB/COMPLEX VOLUME TO FRAMES.
     
     RGB and complex datatypes are not always well supported, this command allows
     separating them into standard subvolumes for better support.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -129,32 +124,26 @@ def volume_components_to_frames_execute(
 
 
 def volume_components_to_frames(
-    input_: InputPathType,
     output: str,
+    input_: InputPathType,
     runner: Runner | None = None,
 ) -> VolumeComponentsToFramesOutputs:
     """
-    volume-components-to-frames
-    
-    Convert rgb/complex volume to frames.
+    CONVERT RGB/COMPLEX VOLUME TO FRAMES.
     
     RGB and complex datatypes are not always well supported, this command allows
     separating them into standard subvolumes for better support.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        input_: the RGB/complex-type volume.
         output: the input volume converted to multiple frames of scalar type.
+        input_: the RGB/complex-type volume.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeComponentsToFramesOutputs`).
     """
     params = volume_components_to_frames_params(
-        input_=input_,
         output=output,
+        input_=input_,
     )
     return volume_components_to_frames_execute(params, runner)
 

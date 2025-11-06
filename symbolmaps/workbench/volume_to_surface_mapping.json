@@ -1,83 +1,89 @@
 {
   "fn_root_make_params_and_execute": "volume_to_surface_mapping",
   "properties": {
-    "volume": {
-      "var_param": "volume"
-    },
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric_out": {
+    "metric-out": {
       "var_param": "metric_out"
     },
-    "opt_trilinear": {
-      "var_param": "opt_trilinear"
+    "trilinear": {
+      "var_param": "trilinear"
     },
-    "opt_enclosing": {
-      "var_param": "opt_enclosing"
+    "enclosing": {
+      "var_param": "enclosing"
     },
-    "opt_cubic": {
-      "var_param": "opt_cubic"
+    "cubic": {
+      "var_param": "cubic"
     },
-    "ribbon_constrained": {
+    "ribbon-constrained": {
       "var_param": "ribbon_constrained",
       "fn_struct_make_params": "volume_to_surface_mapping_ribbon_constrained_params",
       "properties": {
-        "inner_surf": {
+        "inner-surf": {
           "var_param": "inner_surf"
         },
-        "outer_surf": {
+        "outer-surf": {
           "var_param": "outer_surf"
         },
-        "volume_roi": {
+        "volume-roi": {
           "var_param": "volume_roi",
           "fn_struct_make_params": "volume_to_surface_mapping_volume_roi_params",
           "properties": {
-            "roi_volume": {
+            "roi-volume": {
               "var_param": "roi_volume"
             },
-            "opt_weighted": {
-              "var_param": "opt_weighted"
+            "weighted": {
+              "var_param": "weighted"
             }
           }
         },
-        "opt_voxel_subdiv_subdiv_num": {
-          "var_param": "opt_voxel_subdiv_subdiv_num"
+        "dilate-missing": {
+          "var_param": "dilate_missing",
+          "fn_struct_make_params": "volume_to_surface_mapping_dilate_missing_params",
+          "properties": {
+            "dist": {
+              "var_param": "dist"
+            },
+            "nearest": {
+              "var_param": "nearest"
+            }
+          }
         },
-        "opt_thin_columns": {
-          "var_param": "opt_thin_columns"
+        "subdiv-num": {
+          "var_param": "subdiv_num"
         },
-        "opt_gaussian_scale": {
-          "var_param": "opt_gaussian_scale"
+        "thin-columns": {
+          "var_param": "thin_columns"
         },
-        "opt_interpolate_method": {
-          "var_param": "opt_interpolate_method"
+        "scale": {
+          "var_param": "scale"
         },
-        "opt_bad_vertices_out_roi_out": {
-          "var_param": "opt_bad_vertices_out_roi_out"
+        "method": {
+          "var_param": "method"
         },
-        "output_weights": {
+        "roi-out": {
+          "var_param": "roi_out"
+        },
+        "output-weights": {
           "var_param": "output_weights",
           "fn_struct_make_params": "volume_to_surface_mapping_output_weights_params",
           "properties": {
             "vertex": {
               "var_param": "vertex"
             },
-            "weights_out": {
+            "weights-out": {
               "var_param": "weights_out"
             }
           }
         },
-        "opt_output_weights_text_text_out": {
-          "var_param": "opt_output_weights_text_text_out"
+        "text-out": {
+          "var_param": "text_out"
         }
       }
     },
-    "myelin_style": {
+    "myelin-style": {
       "var_param": "myelin_style",
       "fn_struct_make_params": "volume_to_surface_mapping_myelin_style_params",
       "properties": {
-        "ribbon_roi": {
+        "ribbon-roi": {
           "var_param": "ribbon_roi"
         },
         "thickness": {
@@ -86,13 +92,19 @@
         "sigma": {
           "var_param": "sigma"
         },
-        "opt_legacy_bug": {
-          "var_param": "opt_legacy_bug"
+        "legacy-bug": {
+          "var_param": "legacy_bug"
         }
       }
     },
-    "opt_subvol_select_subvol": {
-      "var_param": "opt_subvol_select_subvol"
+    "subvol": {
+      "var_param": "subvol"
+    },
+    "volume": {
+      "var_param": "volume"
+    },
+    "surface": {
+      "var_param": "surface"
     }
   }
 }

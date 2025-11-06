@@ -6,68 +6,67 @@ import pathlib
 from styxdefs import *
 
 SCENE_FILE_UPDATE_METADATA = Metadata(
-    id="b53f9555bf7b49feaf8c70bbf947464884f01049.boutiques",
+    id="74fc5b736152760ce25b6a49aed11ec82a2d48ab.workbench",
     name="scene-file-update",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SceneFileUpdateCopyMapOnePaletteParameters = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParameters', {
-    "@type": typing.NotRequired[typing.Literal["copy_map_one_palette"]],
-    "data_file_name_suffix": str,
+    "@type": typing.NotRequired[typing.Literal["copy-map-one-palette"]],
+    "Data File Name Suffix": str,
 })
 SceneFileUpdateCopyMapOnePaletteParametersTagged = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParametersTagged', {
-    "@type": typing.Literal["copy_map_one_palette"],
-    "data_file_name_suffix": str,
+    "@type": typing.Literal["copy-map-one-palette"],
+    "Data File Name Suffix": str,
 })
 
 
 SceneFileUpdateDataFileAddParameters = typing.TypedDict('SceneFileUpdateDataFileAddParameters', {
-    "@type": typing.NotRequired[typing.Literal["data_file_add"]],
-    "name_of_data_file": str,
+    "@type": typing.NotRequired[typing.Literal["data-file-add"]],
+    "Name of data file": str,
 })
 SceneFileUpdateDataFileAddParametersTagged = typing.TypedDict('SceneFileUpdateDataFileAddParametersTagged', {
-    "@type": typing.Literal["data_file_add"],
-    "name_of_data_file": str,
+    "@type": typing.Literal["data-file-add"],
+    "Name of data file": str,
 })
 
 
 SceneFileUpdateDataFileRemoveParameters = typing.TypedDict('SceneFileUpdateDataFileRemoveParameters', {
-    "@type": typing.NotRequired[typing.Literal["data_file_remove"]],
-    "name_of_data_file": str,
+    "@type": typing.NotRequired[typing.Literal["data-file-remove"]],
+    "Name of data file": str,
 })
 SceneFileUpdateDataFileRemoveParametersTagged = typing.TypedDict('SceneFileUpdateDataFileRemoveParametersTagged', {
-    "@type": typing.Literal["data_file_remove"],
-    "name_of_data_file": str,
+    "@type": typing.Literal["data-file-remove"],
+    "Name of data file": str,
 })
 
 
 SceneFileUpdateParameters = typing.TypedDict('SceneFileUpdateParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/scene-file-update"]],
-    "input_scene_file": str,
-    "output_scene_file": str,
-    "scene_name_or_number": str,
-    "opt_fix_map_palette_settings": bool,
-    "opt_remove_missing_files": bool,
-    "opt_error": bool,
-    "opt_verbose": bool,
-    "copy_map_one_palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParameters] | None],
-    "data_file_add": typing.NotRequired[list[SceneFileUpdateDataFileAddParameters] | None],
-    "data_file_remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParameters] | None],
+    "fix-map-palette-settings": bool,
+    "remove-missing-files": bool,
+    "error": bool,
+    "verbose": bool,
+    "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParameters] | None],
+    "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParameters] | None],
+    "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParameters] | None],
+    "input-scene-file": str,
+    "output-scene-file": str,
+    "scene-name-or-number": str,
 })
 SceneFileUpdateParametersTagged = typing.TypedDict('SceneFileUpdateParametersTagged', {
     "@type": typing.Literal["workbench/scene-file-update"],
-    "input_scene_file": str,
-    "output_scene_file": str,
-    "scene_name_or_number": str,
-    "opt_fix_map_palette_settings": bool,
-    "opt_remove_missing_files": bool,
-    "opt_error": bool,
-    "opt_verbose": bool,
-    "copy_map_one_palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParameters] | None],
-    "data_file_add": typing.NotRequired[list[SceneFileUpdateDataFileAddParameters] | None],
-    "data_file_remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParameters] | None],
+    "fix-map-palette-settings": bool,
+    "remove-missing-files": bool,
+    "error": bool,
+    "verbose": bool,
+    "copy-map-one-palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParameters] | None],
+    "data-file-add": typing.NotRequired[list[SceneFileUpdateDataFileAddParameters] | None],
+    "data-file-remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParameters] | None],
+    "input-scene-file": str,
+    "output-scene-file": str,
+    "scene-name-or-number": str,
 })
 
 
@@ -84,8 +83,8 @@ def scene_file_update_copy_map_one_palette_params(
         Parameter dictionary
     """
     params = {
-        "@type": "copy_map_one_palette",
-        "data_file_name_suffix": data_file_name_suffix,
+        "@type": "copy-map-one-palette",
+        "Data File Name Suffix": data_file_name_suffix,
     }
     return params
 
@@ -104,8 +103,10 @@ def scene_file_update_copy_map_one_palette_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-copy-map-one-palette")
-    cargs.append(params.get("data_file_name_suffix", None))
+    cargs.extend([
+        "-copy-map-one-palette",
+        params.get("Data File Name Suffix", None)
+    ])
     return cargs
 
 
@@ -128,8 +129,8 @@ def scene_file_update_data_file_add_params(
         Parameter dictionary
     """
     params = {
-        "@type": "data_file_add",
-        "name_of_data_file": name_of_data_file,
+        "@type": "data-file-add",
+        "Name of data file": name_of_data_file,
     }
     return params
 
@@ -148,8 +149,10 @@ def scene_file_update_data_file_add_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-data-file-add")
-    cargs.append(params.get("name_of_data_file", None))
+    cargs.extend([
+        "-data-file-add",
+        params.get("Name of data file", None)
+    ])
     return cargs
 
 
@@ -172,8 +175,8 @@ def scene_file_update_data_file_remove_params(
         Parameter dictionary
     """
     params = {
-        "@type": "data_file_remove",
-        "name_of_data_file": name_of_data_file,
+        "@type": "data-file-remove",
+        "Name of data file": name_of_data_file,
     }
     return params
 
@@ -192,8 +195,10 @@ def scene_file_update_data_file_remove_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-data-file-remove")
-    cargs.append(params.get("name_of_data_file", None))
+    cargs.extend([
+        "-data-file-remove",
+        params.get("Name of data file", None)
+    ])
     return cargs
 
 
@@ -209,10 +214,10 @@ def scene_file_update_params(
     input_scene_file: str,
     output_scene_file: str,
     scene_name_or_number: str,
-    opt_fix_map_palette_settings: bool = False,
-    opt_remove_missing_files: bool = False,
-    opt_error: bool = False,
-    opt_verbose: bool = False,
+    fix_map_palette_settings: bool = False,
+    remove_missing_files: bool = False,
+    error: bool = False,
+    verbose: bool = False,
     copy_map_one_palette: list[SceneFileUpdateCopyMapOnePaletteParameters] | None = None,
     data_file_add: list[SceneFileUpdateDataFileAddParameters] | None = None,
     data_file_remove: list[SceneFileUpdateDataFileRemoveParameters] | None = None,
@@ -225,12 +230,12 @@ def scene_file_update_params(
         output_scene_file: the new scene file to create.
         scene_name_or_number: name or number (starting at one) of the scene in\
             the scene file.
-        opt_fix_map_palette_settings: Fix palette settings for files with\
-            change in number of maps.
-        opt_remove_missing_files: Remove missing files from SpecFile.
-        opt_error: Abort command if there is an error performing any of the\
+        fix_map_palette_settings: Fix palette settings for files with change in\
+            number of maps.
+        remove_missing_files: Remove missing files from SpecFile.
+        error: Abort command if there is an error performing any of the\
             operations on the scene file.
-        opt_verbose: Print names of files that have palettes updated.
+        verbose: Print names of files that have palettes updated.
         copy_map_one_palette: Copy palettes settings from first map to all maps\
             in a data file.
         data_file_add: Add a data file to scene's loaded files.
@@ -240,20 +245,20 @@ def scene_file_update_params(
     """
     params = {
         "@type": "workbench/scene-file-update",
-        "input_scene_file": input_scene_file,
-        "output_scene_file": output_scene_file,
-        "scene_name_or_number": scene_name_or_number,
-        "opt_fix_map_palette_settings": opt_fix_map_palette_settings,
-        "opt_remove_missing_files": opt_remove_missing_files,
-        "opt_error": opt_error,
-        "opt_verbose": opt_verbose,
+        "fix-map-palette-settings": fix_map_palette_settings,
+        "remove-missing-files": remove_missing_files,
+        "error": error,
+        "verbose": verbose,
+        "input-scene-file": input_scene_file,
+        "output-scene-file": output_scene_file,
+        "scene-name-or-number": scene_name_or_number,
     }
     if copy_map_one_palette is not None:
-        params["copy_map_one_palette"] = copy_map_one_palette
+        params["copy-map-one-palette"] = copy_map_one_palette
     if data_file_add is not None:
-        params["data_file_add"] = data_file_add
+        params["data-file-add"] = data_file_add
     if data_file_remove is not None:
-        params["data_file_remove"] = data_file_remove
+        params["data-file-remove"] = data_file_remove
     return params
 
 
@@ -271,25 +276,21 @@ def scene_file_update_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-scene-file-update")
-    cargs.append(params.get("input_scene_file", None))
-    cargs.append(params.get("output_scene_file", None))
-    cargs.append(params.get("scene_name_or_number", None))
-    if params.get("opt_fix_map_palette_settings", False):
-        cargs.append("-fix-map-palette-settings")
-    if params.get("opt_remove_missing_files", False):
-        cargs.append("-remove-missing-files")
-    if params.get("opt_error", False):
-        cargs.append("-error")
-    if params.get("opt_verbose", False):
-        cargs.append("-verbose")
-    if params.get("copy_map_one_palette", None) is not None:
-        cargs.extend([a for c in [scene_file_update_copy_map_one_palette_cargs(s, execution) for s in params.get("copy_map_one_palette", None)] for a in c])
-    if params.get("data_file_add", None) is not None:
-        cargs.extend([a for c in [scene_file_update_data_file_add_cargs(s, execution) for s in params.get("data_file_add", None)] for a in c])
-    if params.get("data_file_remove", None) is not None:
-        cargs.extend([a for c in [scene_file_update_data_file_remove_cargs(s, execution) for s in params.get("data_file_remove", None)] for a in c])
+    if params.get("fix-map-palette-settings", False) or params.get("remove-missing-files", False) or params.get("error", False) or params.get("verbose", False) or params.get("copy-map-one-palette", None) is not None or params.get("data-file-add", None) is not None or params.get("data-file-remove", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-scene-file-update",
+            ("-fix-map-palette-settings" if (params.get("fix-map-palette-settings", False)) else ""),
+            ("-remove-missing-files" if (params.get("remove-missing-files", False)) else ""),
+            ("-error" if (params.get("error", False)) else ""),
+            ("-verbose" if (params.get("verbose", False)) else ""),
+            *([a for c in [scene_file_update_copy_map_one_palette_cargs(s, execution) for s in params.get("copy-map-one-palette", None)] for a in c] if (params.get("copy-map-one-palette", None) is not None) else []),
+            *([a for c in [scene_file_update_data_file_add_cargs(s, execution) for s in params.get("data-file-add", None)] for a in c] if (params.get("data-file-add", None) is not None) else []),
+            *([a for c in [scene_file_update_data_file_remove_cargs(s, execution) for s in params.get("data-file-remove", None)] for a in c] if (params.get("data-file-remove", None) is not None) else [])
+        ])
+    cargs.append(params.get("input-scene-file", None))
+    cargs.append(params.get("output-scene-file", None))
+    cargs.append(params.get("scene-name-or-number", None))
     return cargs
 
 
@@ -317,9 +318,7 @@ def scene_file_update_execute(
     runner: Runner | None = None,
 ) -> SceneFileUpdateOutputs:
     """
-    scene-file-update
-    
-    Update scene file.
+    UPDATE SCENE FILE.
     
     This command will update a scene for specific changes in data files.
     
@@ -348,10 +347,6 @@ def scene_file_update_execute(
     and the output scene file will not be created. Otherwise any errors will be
     listed after the command finishes.
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -372,19 +367,17 @@ def scene_file_update(
     input_scene_file: str,
     output_scene_file: str,
     scene_name_or_number: str,
-    opt_fix_map_palette_settings: bool = False,
-    opt_remove_missing_files: bool = False,
-    opt_error: bool = False,
-    opt_verbose: bool = False,
+    fix_map_palette_settings: bool = False,
+    remove_missing_files: bool = False,
+    error: bool = False,
+    verbose: bool = False,
     copy_map_one_palette: list[SceneFileUpdateCopyMapOnePaletteParameters] | None = None,
     data_file_add: list[SceneFileUpdateDataFileAddParameters] | None = None,
     data_file_remove: list[SceneFileUpdateDataFileRemoveParameters] | None = None,
     runner: Runner | None = None,
 ) -> SceneFileUpdateOutputs:
     """
-    scene-file-update
-    
-    Update scene file.
+    UPDATE SCENE FILE.
     
     This command will update a scene for specific changes in data files.
     
@@ -414,21 +407,17 @@ def scene_file_update(
     listed after the command finishes.
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         input_scene_file: the input scene file.
         output_scene_file: the new scene file to create.
         scene_name_or_number: name or number (starting at one) of the scene in\
             the scene file.
-        opt_fix_map_palette_settings: Fix palette settings for files with\
-            change in number of maps.
-        opt_remove_missing_files: Remove missing files from SpecFile.
-        opt_error: Abort command if there is an error performing any of the\
+        fix_map_palette_settings: Fix palette settings for files with change in\
+            number of maps.
+        remove_missing_files: Remove missing files from SpecFile.
+        error: Abort command if there is an error performing any of the\
             operations on the scene file.
-        opt_verbose: Print names of files that have palettes updated.
+        verbose: Print names of files that have palettes updated.
         copy_map_one_palette: Copy palettes settings from first map to all maps\
             in a data file.
         data_file_add: Add a data file to scene's loaded files.
@@ -438,16 +427,16 @@ def scene_file_update(
         NamedTuple of outputs (described in `SceneFileUpdateOutputs`).
     """
     params = scene_file_update_params(
-        input_scene_file=input_scene_file,
-        output_scene_file=output_scene_file,
-        scene_name_or_number=scene_name_or_number,
-        opt_fix_map_palette_settings=opt_fix_map_palette_settings,
-        opt_remove_missing_files=opt_remove_missing_files,
-        opt_error=opt_error,
-        opt_verbose=opt_verbose,
+        fix_map_palette_settings=fix_map_palette_settings,
+        remove_missing_files=remove_missing_files,
+        error=error,
+        verbose=verbose,
         copy_map_one_palette=copy_map_one_palette,
         data_file_add=data_file_add,
         data_file_remove=data_file_remove,
+        input_scene_file=input_scene_file,
+        output_scene_file=output_scene_file,
+        scene_name_or_number=scene_name_or_number,
     )
     return scene_file_update_execute(params, runner)
 

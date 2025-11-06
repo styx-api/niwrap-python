@@ -6,48 +6,47 @@ import pathlib
 from styxdefs import *
 
 VOLUME_GRADIENT_METADATA = Metadata(
-    id="73cff8885780496a9b94b061ae3494c8870f981c.boutiques",
+    id="5a5d7ede042330cd65eec319159b5ecf75f94aed.workbench",
     name="volume-gradient",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeGradientPresmoothParameters = typing.TypedDict('VolumeGradientPresmoothParameters', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 VolumeGradientPresmoothParametersTagged = typing.TypedDict('VolumeGradientPresmoothParametersTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 
 
 VolumeGradientParameters = typing.TypedDict('VolumeGradientParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-gradient"]],
-    "volume_in": InputPathType,
-    "volume_out": str,
+    "volume-out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_vectors_vector_volume_out": typing.NotRequired[str | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "vector-volume-out": typing.NotRequired[str | None],
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
 })
 VolumeGradientParametersTagged = typing.TypedDict('VolumeGradientParametersTagged', {
     "@type": typing.Literal["workbench/volume-gradient"],
-    "volume_in": InputPathType,
-    "volume_out": str,
+    "volume-out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_vectors_vector_volume_out": typing.NotRequired[str | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "vector-volume-out": typing.NotRequired[str | None],
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
 })
 
 
 def volume_gradient_presmooth_params(
     kernel: float,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
 ) -> VolumeGradientPresmoothParametersTagged:
     """
     Build parameters.
@@ -55,14 +54,14 @@ def volume_gradient_presmooth_params(
     Args:
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "presmooth",
         "kernel": kernel,
-        "opt_fwhm": opt_fwhm,
+        "fwhm": fwhm,
     }
     return params
 
@@ -81,10 +80,12 @@ def volume_gradient_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel", None)))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
+    if params.get("fwhm", False):
+        cargs.extend([
+            "-presmooth",
+            str(params.get("kernel", None)),
+            "-fwhm"
+        ])
     return cargs
 
 
@@ -96,47 +97,48 @@ class VolumeGradientOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     volume_out: OutputPathType
     """the output gradient magnitude volume"""
-    opt_vectors_vector_volume_out: OutputPathType | None
-    """output vectors: the vectors as a volume file"""
 
 
 def volume_gradient_params(
-    volume_in: InputPathType,
     volume_out: str,
+    roi_volume: InputPathType | None,
+    vector_volume_out: str | None,
+    subvol: str | None,
+    volume_in: InputPathType,
     presmooth: VolumeGradientPresmoothParameters | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_vectors_vector_volume_out: str | None = None,
-    opt_subvolume_subvol: str | None = None,
 ) -> VolumeGradientParametersTagged:
     """
     Build parameters.
     
     Args:
-        volume_in: the input volume.
         volume_out: the output gradient magnitude volume.
+        roi_volume: select a region of interest to take the gradient of\
+            \
+            the region to take the gradient within.
+        vector_volume_out: output vectors\
+            \
+            the vectors as a volume file.
+        subvol: select a single subvolume to take the gradient of\
+            \
+            the subvolume number or name.
+        volume_in: the input volume.
         presmooth: smooth the volume before computing the gradient.
-        opt_roi_roi_volume: select a region of interest to take the gradient\
-            of: the region to take the gradient within.
-        opt_vectors_vector_volume_out: output vectors: the vectors as a volume\
-            file.
-        opt_subvolume_subvol: select a single subvolume to take the gradient\
-            of: the subvolume number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-gradient",
-        "volume_in": volume_in,
-        "volume_out": volume_out,
+        "volume-out": volume_out,
+        "volume-in": volume_in,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
-    if opt_roi_roi_volume is not None:
-        params["opt_roi_roi_volume"] = opt_roi_roi_volume
-    if opt_vectors_vector_volume_out is not None:
-        params["opt_vectors_vector_volume_out"] = opt_vectors_vector_volume_out
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
+    if vector_volume_out is not None:
+        params["vector-volume-out"] = vector_volume_out
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -154,27 +156,20 @@ def volume_gradient_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-gradient")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("presmooth", None) is not None:
-        cargs.extend(volume_gradient_presmooth_cargs(params.get("presmooth", None), execution))
-    if params.get("opt_roi_roi_volume", None) is not None:
+    if params.get("presmooth", None) is not None or params.get("roi-volume", None) is not None or params.get("vector-volume-out", None) is not None or params.get("subvol", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-gradient",
+            params.get("volume-out", None),
+            *(volume_gradient_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume", None))
-        ])
-    if params.get("opt_vectors_vector_volume_out", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
             "-vectors",
-            params.get("opt_vectors_vector_volume_out", None)
-        ])
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
+            (params.get("vector-volume-out", None) if (params.get("vector-volume-out", None) is not None) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
     return cargs
 
 
@@ -193,8 +188,7 @@ def volume_gradient_outputs(
     """
     ret = VolumeGradientOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
-        opt_vectors_vector_volume_out=execution.output_file(params.get("opt_vectors_vector_volume_out", None)) if (params.get("opt_vectors_vector_volume_out") is not None) else None,
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -204,9 +198,7 @@ def volume_gradient_execute(
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
-    volume-gradient
-    
-    Gradient of a volume file.
+    GRADIENT OF A VOLUME FILE.
     
     Computes the gradient of the volume by doing linear regressions for each
     voxel, considering only its face neighbors unless too few face neighbors
@@ -214,10 +206,6 @@ def volume_gradient_execute(
     the resulting linear function, and the magnitude of this vector is the
     output. If specified, the volume vector output is arranged with the x, y,
     and z components from a subvolume as consecutive subvolumes.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -235,18 +223,16 @@ def volume_gradient_execute(
 
 
 def volume_gradient(
-    volume_in: InputPathType,
     volume_out: str,
+    roi_volume: InputPathType | None,
+    vector_volume_out: str | None,
+    subvol: str | None,
+    volume_in: InputPathType,
     presmooth: VolumeGradientPresmoothParameters | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_vectors_vector_volume_out: str | None = None,
-    opt_subvolume_subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
-    volume-gradient
-    
-    Gradient of a volume file.
+    GRADIENT OF A VOLUME FILE.
     
     Computes the gradient of the volume by doing linear regressions for each
     voxel, considering only its face neighbors unless too few face neighbors
@@ -255,31 +241,30 @@ def volume_gradient(
     output. If specified, the volume vector output is arranged with the x, y,
     and z components from a subvolume as consecutive subvolumes.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        volume_in: the input volume.
         volume_out: the output gradient magnitude volume.
+        roi_volume: select a region of interest to take the gradient of\
+            \
+            the region to take the gradient within.
+        vector_volume_out: output vectors\
+            \
+            the vectors as a volume file.
+        subvol: select a single subvolume to take the gradient of\
+            \
+            the subvolume number or name.
+        volume_in: the input volume.
         presmooth: smooth the volume before computing the gradient.
-        opt_roi_roi_volume: select a region of interest to take the gradient\
-            of: the region to take the gradient within.
-        opt_vectors_vector_volume_out: output vectors: the vectors as a volume\
-            file.
-        opt_subvolume_subvol: select a single subvolume to take the gradient\
-            of: the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeGradientOutputs`).
     """
     params = volume_gradient_params(
-        volume_in=volume_in,
         volume_out=volume_out,
         presmooth=presmooth,
-        opt_roi_roi_volume=opt_roi_roi_volume,
-        opt_vectors_vector_volume_out=opt_vectors_vector_volume_out,
-        opt_subvolume_subvol=opt_subvolume_subvol,
+        roi_volume=roi_volume,
+        vector_volume_out=vector_volume_out,
+        subvol=subvol,
+        volume_in=volume_in,
     )
     return volume_gradient_execute(params, runner)
 

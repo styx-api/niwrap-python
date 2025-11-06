@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CREATE_SCALAR_SERIES_METADATA = Metadata(
-    id="89382f5dba10644cb62354103467cd5b9bd291f2.boutiques",
+    id="8d713a958679f48506f74cec988ea68de2166f03.workbench",
     name="cifti-create-scalar-series",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -29,19 +28,19 @@ CiftiCreateScalarSeriesSeriesParametersTagged = typing.TypedDict('CiftiCreateSca
 
 CiftiCreateScalarSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-scalar-series"]],
-    "input": str,
-    "cifti_out": str,
-    "opt_transpose": bool,
-    "opt_name_file_file": typing.NotRequired[str | None],
+    "cifti-out": str,
+    "transpose": bool,
+    "file": typing.NotRequired[str | None],
     "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParameters | None],
+    "input": str,
 })
 CiftiCreateScalarSeriesParametersTagged = typing.TypedDict('CiftiCreateScalarSeriesParametersTagged', {
     "@type": typing.Literal["workbench/cifti-create-scalar-series"],
-    "input": str,
-    "cifti_out": str,
-    "opt_transpose": bool,
-    "opt_name_file_file": typing.NotRequired[str | None],
+    "cifti-out": str,
+    "transpose": bool,
+    "file": typing.NotRequired[str | None],
     "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParameters | None],
+    "input": str,
 })
 
 
@@ -83,10 +82,12 @@ def cifti_create_scalar_series_series_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-series")
-    cargs.append(params.get("unit", None))
-    cargs.append(str(params.get("start", None)))
-    cargs.append(str(params.get("step", None)))
+    cargs.extend([
+        "-series",
+        params.get("unit", None),
+        str(params.get("start", None)),
+        str(params.get("step", None))
+    ])
     return cargs
 
 
@@ -101,34 +102,35 @@ class CiftiCreateScalarSeriesOutputs(typing.NamedTuple):
 
 
 def cifti_create_scalar_series_params(
-    input_: str,
     cifti_out: str,
-    opt_transpose: bool = False,
-    opt_name_file_file: str | None = None,
+    file: str | None,
+    input_: str,
+    transpose: bool = False,
     series: CiftiCreateScalarSeriesSeriesParameters | None = None,
 ) -> CiftiCreateScalarSeriesParametersTagged:
     """
     Build parameters.
     
     Args:
-        input_: input file.
         cifti_out: output cifti file.
-        opt_transpose: use if the rows of the text file are along the scalar\
-            dimension.
-        opt_name_file_file: use a text file to set names on scalar dimension:\
+        file: use a text file to set names on scalar dimension\
+            \
             text file containing names, one per line.
+        input_: input file.
+        transpose: use if the rows of the text file are along the scalar\
+            dimension.
         series: set the units and values of the series.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-create-scalar-series",
+        "cifti-out": cifti_out,
+        "transpose": transpose,
         "input": input_,
-        "cifti_out": cifti_out,
-        "opt_transpose": opt_transpose,
     }
-    if opt_name_file_file is not None:
-        params["opt_name_file_file"] = opt_name_file_file
+    if file is not None:
+        params["file"] = file
     if series is not None:
         params["series"] = series
     return params
@@ -148,19 +150,17 @@ def cifti_create_scalar_series_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-create-scalar-series")
-    cargs.append(params.get("input", None))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("opt_transpose", False):
-        cargs.append("-transpose")
-    if params.get("opt_name_file_file", None) is not None:
+    if params.get("transpose", False) or params.get("file", None) is not None or params.get("series", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-create-scalar-series",
+            params.get("cifti-out", None),
+            ("-transpose" if (params.get("transpose", False)) else ""),
             "-name-file",
-            params.get("opt_name_file_file", None)
+            (params.get("file", None) if (params.get("file", None) is not None) else ""),
+            *(cifti_create_scalar_series_series_cargs(params.get("series", None), execution) if (params.get("series", None) is not None) else [])
         ])
-    if params.get("series", None) is not None:
-        cargs.extend(cifti_create_scalar_series_series_cargs(params.get("series", None), execution))
+    cargs.append(params.get("input", None))
     return cargs
 
 
@@ -179,7 +179,7 @@ def cifti_create_scalar_series_outputs(
     """
     ret = CiftiCreateScalarSeriesOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -189,9 +189,7 @@ def cifti_create_scalar_series_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
-    cifti-create-scalar-series
-    
-    Import series data into cifti.
+    IMPORT SERIES DATA INTO CIFTI.
     
     Convert a text file containing series of equal length into a cifti file. The
     text file should have lines made up of numbers separated by whitespace, with
@@ -203,10 +201,6 @@ def cifti_create_scalar_series_execute(
     HERTZ
     METER
     RADIAN.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -224,17 +218,15 @@ def cifti_create_scalar_series_execute(
 
 
 def cifti_create_scalar_series(
-    input_: str,
     cifti_out: str,
-    opt_transpose: bool = False,
-    opt_name_file_file: str | None = None,
+    file: str | None,
+    input_: str,
+    transpose: bool = False,
     series: CiftiCreateScalarSeriesSeriesParameters | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
-    cifti-create-scalar-series
-    
-    Import series data into cifti.
+    IMPORT SERIES DATA INTO CIFTI.
     
     Convert a text file containing series of equal length into a cifti file. The
     text file should have lines made up of numbers separated by whitespace, with
@@ -247,28 +239,25 @@ def cifti_create_scalar_series(
     METER
     RADIAN.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        input_: input file.
         cifti_out: output cifti file.
-        opt_transpose: use if the rows of the text file are along the scalar\
-            dimension.
-        opt_name_file_file: use a text file to set names on scalar dimension:\
+        file: use a text file to set names on scalar dimension\
+            \
             text file containing names, one per line.
+        input_: input file.
+        transpose: use if the rows of the text file are along the scalar\
+            dimension.
         series: set the units and values of the series.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateScalarSeriesOutputs`).
     """
     params = cifti_create_scalar_series_params(
-        input_=input_,
         cifti_out=cifti_out,
-        opt_transpose=opt_transpose,
-        opt_name_file_file=opt_name_file_file,
+        transpose=transpose,
+        file=file,
         series=series,
+        input_=input_,
     )
     return cifti_create_scalar_series_execute(params, runner)
 

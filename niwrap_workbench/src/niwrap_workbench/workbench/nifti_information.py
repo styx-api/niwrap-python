@@ -6,104 +6,57 @@ import pathlib
 from styxdefs import *
 
 NIFTI_INFORMATION_METADATA = Metadata(
-    id="a23892d08c899f32fc5adc3d462a0e9f07f36b16.boutiques",
+    id="e9c11d632fc070fafb7efd4e280c2753fca13b1e.workbench",
     name="nifti-information",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
-NiftiInformationPrintHeaderParameters = typing.TypedDict('NiftiInformationPrintHeaderParameters', {
-    "@type": typing.NotRequired[typing.Literal["print_header"]],
-    "opt_allow_truncated": bool,
-})
-NiftiInformationPrintHeaderParametersTagged = typing.TypedDict('NiftiInformationPrintHeaderParametersTagged', {
-    "@type": typing.Literal["print_header"],
-    "opt_allow_truncated": bool,
-})
-
-
 NiftiInformationPrintXmlParameters = typing.TypedDict('NiftiInformationPrintXmlParameters', {
-    "@type": typing.NotRequired[typing.Literal["print_xml"]],
-    "opt_version_version": typing.NotRequired[str | None],
+    "@type": typing.NotRequired[typing.Literal["print-xml"]],
+    "version": typing.NotRequired[str | None],
 })
 NiftiInformationPrintXmlParametersTagged = typing.TypedDict('NiftiInformationPrintXmlParametersTagged', {
-    "@type": typing.Literal["print_xml"],
-    "opt_version_version": typing.NotRequired[str | None],
+    "@type": typing.Literal["print-xml"],
+    "version": typing.NotRequired[str | None],
 })
 
 
 NiftiInformationParameters = typing.TypedDict('NiftiInformationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/nifti-information"]],
-    "nifti_file": str,
-    "print_header": typing.NotRequired[NiftiInformationPrintHeaderParameters | None],
-    "opt_print_matrix": bool,
-    "print_xml": typing.NotRequired[NiftiInformationPrintXmlParameters | None],
+    "allow-truncated": typing.NotRequired[bool | None],
+    "print-matrix": bool,
+    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParameters | None],
+    "nifti-file": str,
 })
 NiftiInformationParametersTagged = typing.TypedDict('NiftiInformationParametersTagged', {
     "@type": typing.Literal["workbench/nifti-information"],
-    "nifti_file": str,
-    "print_header": typing.NotRequired[NiftiInformationPrintHeaderParameters | None],
-    "opt_print_matrix": bool,
-    "print_xml": typing.NotRequired[NiftiInformationPrintXmlParameters | None],
+    "allow-truncated": typing.NotRequired[bool | None],
+    "print-matrix": bool,
+    "print-xml": typing.NotRequired[NiftiInformationPrintXmlParameters | None],
+    "nifti-file": str,
 })
 
 
-def nifti_information_print_header_params(
-    opt_allow_truncated: bool = False,
-) -> NiftiInformationPrintHeaderParametersTagged:
-    """
-    Build parameters.
-    
-    Args:
-        opt_allow_truncated: print the header even if the data is truncated.
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "print_header",
-        "opt_allow_truncated": opt_allow_truncated,
-    }
-    return params
-
-
-def nifti_information_print_header_cargs(
-    params: NiftiInformationPrintHeaderParameters,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-print-header")
-    if params.get("opt_allow_truncated", False):
-        cargs.append("-allow-truncated")
-    return cargs
-
-
 def nifti_information_print_xml_params(
-    opt_version_version: str | None = None,
+    version: str | None,
 ) -> NiftiInformationPrintXmlParametersTagged:
     """
     Build parameters.
     
     Args:
-        opt_version_version: convert the XML to a specific CIFTI version\
-            (default is the file's cifti version): the CIFTI version to use.
+        version: convert the XML to a specific CIFTI version (default is the\
+            file's cifti version)\
+            \
+            the CIFTI version to use.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "print_xml",
+        "@type": "print-xml",
     }
-    if opt_version_version is not None:
-        params["opt_version_version"] = opt_version_version
+    if version is not None:
+        params["version"] = version
     return params
 
 
@@ -121,11 +74,11 @@ def nifti_information_print_xml_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-print-xml")
-    if params.get("opt_version_version", None) is not None:
+    if params.get("version", None) is not None:
         cargs.extend([
+            "-print-xml",
             "-version",
-            params.get("opt_version_version", None)
+            params.get("version", None)
         ])
     return cargs
 
@@ -140,8 +93,8 @@ class NiftiInformationOutputs(typing.NamedTuple):
 
 def nifti_information_params(
     nifti_file: str,
-    print_header: NiftiInformationPrintHeaderParameters | None = None,
-    opt_print_matrix: bool = False,
+    allow_truncated: bool | None = False,
+    print_matrix: bool = False,
     print_xml: NiftiInformationPrintXmlParameters | None = None,
 ) -> NiftiInformationParametersTagged:
     """
@@ -149,21 +102,23 @@ def nifti_information_params(
     
     Args:
         nifti_file: the nifti/cifti file to examine.
-        print_header: display the header contents.
-        opt_print_matrix: output the values in the matrix (cifti only).
+        allow_truncated: display the header contents\
+            \
+            print the header even if the data is truncated.
+        print_matrix: output the values in the matrix (cifti only).
         print_xml: print the cifti XML (cifti only).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/nifti-information",
-        "nifti_file": nifti_file,
-        "opt_print_matrix": opt_print_matrix,
+        "print-matrix": print_matrix,
+        "nifti-file": nifti_file,
     }
-    if print_header is not None:
-        params["print_header"] = print_header
+    if allow_truncated is not None:
+        params["allow-truncated"] = allow_truncated
     if print_xml is not None:
-        params["print_xml"] = print_xml
+        params["print-xml"] = print_xml
     return params
 
 
@@ -181,15 +136,16 @@ def nifti_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-nifti-information")
-    cargs.append(params.get("nifti_file", None))
-    if params.get("print_header", None) is not None:
-        cargs.extend(nifti_information_print_header_cargs(params.get("print_header", None), execution))
-    if params.get("opt_print_matrix", False):
-        cargs.append("-print-matrix")
-    if params.get("print_xml", None) is not None:
-        cargs.extend(nifti_information_print_xml_cargs(params.get("print_xml", None), execution))
+    if params.get("allow-truncated", False) is not None or params.get("print-matrix", False) or params.get("print-xml", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-nifti-information",
+            "-print-header",
+            ("-allow-truncated" if (params.get("allow-truncated", False) is not None) else ""),
+            ("-print-matrix" if (params.get("print-matrix", False)) else ""),
+            *(nifti_information_print_xml_cargs(params.get("print-xml", None), execution) if (params.get("print-xml", None) is not None) else [])
+        ])
+    cargs.append(params.get("nifti-file", None))
     return cargs
 
 
@@ -217,15 +173,9 @@ def nifti_information_execute(
     runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
-    nifti-information
-    
-    Display information about a nifti/cifti file.
+    DISPLAY INFORMATION ABOUT A NIFTI/CIFTI FILE.
     
     You must specify at least one -print-* option.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -244,36 +194,32 @@ def nifti_information_execute(
 
 def nifti_information(
     nifti_file: str,
-    print_header: NiftiInformationPrintHeaderParameters | None = None,
-    opt_print_matrix: bool = False,
+    allow_truncated: bool | None = False,
+    print_matrix: bool = False,
     print_xml: NiftiInformationPrintXmlParameters | None = None,
     runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
-    nifti-information
-    
-    Display information about a nifti/cifti file.
+    DISPLAY INFORMATION ABOUT A NIFTI/CIFTI FILE.
     
     You must specify at least one -print-* option.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         nifti_file: the nifti/cifti file to examine.
-        print_header: display the header contents.
-        opt_print_matrix: output the values in the matrix (cifti only).
+        allow_truncated: display the header contents\
+            \
+            print the header even if the data is truncated.
+        print_matrix: output the values in the matrix (cifti only).
         print_xml: print the cifti XML (cifti only).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NiftiInformationOutputs`).
     """
     params = nifti_information_params(
-        nifti_file=nifti_file,
-        print_header=print_header,
-        opt_print_matrix=opt_print_matrix,
+        allow_truncated=allow_truncated,
+        print_matrix=print_matrix,
         print_xml=print_xml,
+        nifti_file=nifti_file,
     )
     return nifti_information_execute(params, runner)
 
@@ -284,6 +230,5 @@ __all__ = [
     "nifti_information",
     "nifti_information_execute",
     "nifti_information_params",
-    "nifti_information_print_header_params",
     "nifti_information_print_xml_params",
 ]

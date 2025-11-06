@@ -1,27 +1,21 @@
 {
   "fn_root_make_params_and_execute": "cifti_separate",
   "properties": {
-    "cifti_in": {
-      "var_param": "cifti_in"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "volume_all": {
+    "volume-all": {
       "var_param": "volume_all",
       "fn_struct_make_params": "cifti_separate_volume_all_params",
       "properties": {
-        "volume_out": {
+        "volume-out": {
           "var_param": "volume_out"
         },
-        "opt_roi_roi_out": {
-          "var_param": "opt_roi_roi_out"
+        "roi-out": {
+          "var_param": "roi_out"
         },
-        "opt_label_label_out": {
-          "var_param": "opt_label_label_out"
+        "label-out": {
+          "var_param": "label_out"
         },
-        "opt_crop": {
-          "var_param": "opt_crop"
+        "crop": {
+          "var_param": "crop"
         }
       }
     },
@@ -32,11 +26,11 @@
         "structure": {
           "var_param": "structure"
         },
-        "label_out": {
+        "label-out": {
           "var_param": "label_out"
         },
-        "opt_roi_roi_out": {
-          "var_param": "opt_roi_roi_out"
+        "roi-out": {
+          "var_param": "roi_out"
         }
       }
     },
@@ -47,11 +41,11 @@
         "structure": {
           "var_param": "structure"
         },
-        "metric_out": {
+        "metric-out": {
           "var_param": "metric_out"
         },
-        "opt_roi_roi_out": {
-          "var_param": "opt_roi_roi_out"
+        "roi-out": {
+          "var_param": "roi_out"
         }
       }
     },
@@ -62,16 +56,22 @@
         "structure": {
           "var_param": "structure"
         },
-        "volume_out": {
+        "volume-out": {
           "var_param": "volume_out"
         },
-        "opt_roi_roi_out": {
-          "var_param": "opt_roi_roi_out"
+        "roi-out": {
+          "var_param": "roi_out"
         },
-        "opt_crop": {
-          "var_param": "opt_crop"
+        "crop": {
+          "var_param": "crop"
         }
       }
+    },
+    "cifti-in": {
+      "var_param": "cifti_in"
+    },
+    "direction": {
+      "var_param": "direction"
     }
   }
 }

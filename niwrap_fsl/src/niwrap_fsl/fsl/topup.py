@@ -30,7 +30,7 @@ TopupParameters = typing.TypedDict('TopupParameters', {
     "ssqlambda": bool,
     "regmod": typing.NotRequired[typing.Literal["membrane_energy", "bending_energy"] | None],
     "estmov": bool,
-    "minmet": typing.NotRequired[typing.Literal[0, 1] | None],
+    "minmet": typing.NotRequired[bool | None],
     "splineorder": typing.NotRequired[typing.Literal[2, 3] | None],
     "numprec": typing.NotRequired[typing.Literal["double", "float"] | None],
     "interp": typing.NotRequired[typing.Literal["linear", "spline"] | None],
@@ -56,7 +56,7 @@ TopupParametersTagged = typing.TypedDict('TopupParametersTagged', {
     "ssqlambda": bool,
     "regmod": typing.NotRequired[typing.Literal["membrane_energy", "bending_energy"] | None],
     "estmov": bool,
-    "minmet": typing.NotRequired[typing.Literal[0, 1] | None],
+    "minmet": typing.NotRequired[bool | None],
     "splineorder": typing.NotRequired[typing.Literal[2, 3] | None],
     "numprec": typing.NotRequired[typing.Literal["double", "float"] | None],
     "interp": typing.NotRequired[typing.Literal["linear", "spline"] | None],
@@ -101,7 +101,7 @@ def topup_params(
     ssqlambda: bool = False,
     regmod: typing.Literal["membrane_energy", "bending_energy"] | None = None,
     estmov: bool = False,
-    minmet: typing.Literal[0, 1] | None = None,
+    minmet: bool | None = None,
     splineorder: typing.Literal[2, 3] | None = None,
     numprec: typing.Literal["double", "float"] | None = None,
     interp: typing.Literal["linear", "spline"] | None = None,
@@ -239,7 +239,7 @@ def topup_cargs(
     if params.get("estmov", False):
         cargs.append("--estmov")
     if params.get("minmet", None) is not None:
-        cargs.append("--minmet=" + str(params.get("minmet", None)))
+        cargs.append("--minmet=" + ("1" if params.get("minmet", None) else "0"))
     if params.get("splineorder", None) is not None:
         cargs.append("--splineorder=" + str(params.get("splineorder", None)))
     if params.get("numprec", None) is not None:
@@ -326,7 +326,7 @@ def topup(
     ssqlambda: bool = False,
     regmod: typing.Literal["membrane_energy", "bending_energy"] | None = None,
     estmov: bool = False,
-    minmet: typing.Literal[0, 1] | None = None,
+    minmet: bool | None = None,
     splineorder: typing.Literal[2, 3] | None = None,
     numprec: typing.Literal["double", "float"] | None = None,
     interp: typing.Literal["linear", "spline"] | None = None,

@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 BACKEND_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
-    id="9178c51e54512af98ce12ec548335b4ce7759c19.boutiques",
+    id="b51c91b2c38d7ed3b698640355ba702a40cc04d8.workbench",
     name="backend-average-roi-correlation",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BackendAverageRoiCorrelationParameters = typing.TypedDict('BackendAverageRoiCorrelationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/backend-average-roi-correlation"]],
-    "index_list": str,
-    "out_file": str,
+    "index-list": str,
+    "out-file": str,
 })
 BackendAverageRoiCorrelationParametersTagged = typing.TypedDict('BackendAverageRoiCorrelationParametersTagged', {
     "@type": typing.Literal["workbench/backend-average-roi-correlation"],
-    "index_list": str,
-    "out_file": str,
+    "index-list": str,
+    "out-file": str,
 })
 
 
@@ -49,8 +48,8 @@ def backend_average_roi_correlation_params(
     """
     params = {
         "@type": "workbench/backend-average-roi-correlation",
-        "index_list": index_list,
-        "out_file": out_file,
+        "index-list": index_list,
+        "out-file": out_file,
     }
     return params
 
@@ -69,10 +68,12 @@ def backend_average_roi_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-backend-average-roi-correlation")
-    cargs.append(params.get("index_list", None))
-    cargs.append(params.get("out_file", None))
+    cargs.extend([
+        "wb_command",
+        "-backend-average-roi-correlation"
+    ])
+    cargs.append(params.get("index-list", None))
+    cargs.append(params.get("out-file", None))
     return cargs
 
 
@@ -100,18 +101,12 @@ def backend_average_roi_correlation_execute(
     runner: Runner | None = None,
 ) -> BackendAverageRoiCorrelationOutputs:
     """
-    backend-average-roi-correlation
-    
-    Connectome db backend command for cifti average roi correlation.
+    CONNECTOME DB BACKEND COMMAND FOR CIFTI AVERAGE ROI CORRELATION.
     
     This command is probably not the one you are looking for, try
     -cifti-average-roi-correlation. It takes the list of cifti files to average
     from standard input, and writes its output as little endian, 32-bit integer
     of row size followed by the row as 32-bit floats.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -134,18 +129,12 @@ def backend_average_roi_correlation(
     runner: Runner | None = None,
 ) -> BackendAverageRoiCorrelationOutputs:
     """
-    backend-average-roi-correlation
-    
-    Connectome db backend command for cifti average roi correlation.
+    CONNECTOME DB BACKEND COMMAND FOR CIFTI AVERAGE ROI CORRELATION.
     
     This command is probably not the one you are looking for, try
     -cifti-average-roi-correlation. It takes the list of cifti files to average
     from standard input, and writes its output as little endian, 32-bit integer
     of row size followed by the row as 32-bit floats.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         index_list: comma separated list of cifti indexes to average and then\

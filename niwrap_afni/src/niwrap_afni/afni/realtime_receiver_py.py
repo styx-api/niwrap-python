@@ -15,13 +15,13 @@ REALTIME_RECEIVER_PY_METADATA = Metadata(
 
 RealtimeReceiverPyParameters = typing.TypedDict('RealtimeReceiverPyParameters', {
     "@type": typing.NotRequired[typing.Literal["afni/realtime_receiver.py"]],
-    "show_data": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "show_data": typing.NotRequired[bool | None],
     "write_text_data": typing.NotRequired[str | None],
     "data_choice": typing.NotRequired[typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None],
     "serial_port": typing.NotRequired[str | None],
-    "show_demo_gui": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "show_demo_gui": typing.NotRequired[bool | None],
     "dc_params": typing.NotRequired[list[float] | None],
-    "extras_on_one_line": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "extras_on_one_line": typing.NotRequired[bool | None],
     "show_comm_times": bool,
     "show_demo_data": bool,
     "swap": bool,
@@ -30,13 +30,13 @@ RealtimeReceiverPyParameters = typing.TypedDict('RealtimeReceiverPyParameters', 
 })
 RealtimeReceiverPyParametersTagged = typing.TypedDict('RealtimeReceiverPyParametersTagged', {
     "@type": typing.Literal["afni/realtime_receiver.py"],
-    "show_data": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "show_data": typing.NotRequired[bool | None],
     "write_text_data": typing.NotRequired[str | None],
     "data_choice": typing.NotRequired[typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None],
     "serial_port": typing.NotRequired[str | None],
-    "show_demo_gui": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "show_demo_gui": typing.NotRequired[bool | None],
     "dc_params": typing.NotRequired[list[float] | None],
-    "extras_on_one_line": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "extras_on_one_line": typing.NotRequired[bool | None],
     "show_comm_times": bool,
     "show_demo_data": bool,
     "swap": bool,
@@ -54,13 +54,13 @@ class RealtimeReceiverPyOutputs(typing.NamedTuple):
 
 
 def realtime_receiver_py_params(
-    show_data: typing.Literal["yes", "no"] | None = None,
+    show_data: bool | None = None,
     write_text_data: str | None = None,
     data_choice: typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None = None,
     serial_port: str | None = None,
-    show_demo_gui: typing.Literal["yes", "no"] | None = None,
+    show_demo_gui: bool | None = None,
     dc_params: list[float] | None = None,
-    extras_on_one_line: typing.Literal["yes", "no"] | None = None,
+    extras_on_one_line: bool | None = None,
     show_comm_times: bool = False,
     show_demo_data: bool = False,
     swap: bool = False,
@@ -132,7 +132,7 @@ def realtime_receiver_py_cargs(
     if params.get("show_data", None) is not None:
         cargs.extend([
             "-show_data",
-            params.get("show_data", None)
+            ("yes" if params.get("show_data", None) else "no")
         ])
     if params.get("write_text_data", None) is not None:
         cargs.extend([
@@ -152,7 +152,7 @@ def realtime_receiver_py_cargs(
     if params.get("show_demo_gui", None) is not None:
         cargs.extend([
             "-show_demo_gui",
-            params.get("show_demo_gui", None)
+            ("yes" if params.get("show_demo_gui", None) else "no")
         ])
     if params.get("dc_params", None) is not None:
         cargs.extend([
@@ -162,7 +162,7 @@ def realtime_receiver_py_cargs(
     if params.get("extras_on_one_line", None) is not None:
         cargs.extend([
             "-extras_on_one_line",
-            params.get("extras_on_one_line", None)
+            ("yes" if params.get("extras_on_one_line", None) else "no")
         ])
     if params.get("show_comm_times", False):
         cargs.append("-show_comm_times")
@@ -231,13 +231,13 @@ def realtime_receiver_py_execute(
 
 
 def realtime_receiver_py(
-    show_data: typing.Literal["yes", "no"] | None = None,
+    show_data: bool | None = None,
     write_text_data: str | None = None,
     data_choice: typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None = None,
     serial_port: str | None = None,
-    show_demo_gui: typing.Literal["yes", "no"] | None = None,
+    show_demo_gui: bool | None = None,
     dc_params: list[float] | None = None,
-    extras_on_one_line: typing.Literal["yes", "no"] | None = None,
+    extras_on_one_line: bool | None = None,
     show_comm_times: bool = False,
     show_demo_data: bool = False,
     swap: bool = False,

@@ -6,78 +6,77 @@ import pathlib
 from styxdefs import *
 
 VOLUME_MERGE_METADATA = Metadata(
-    id="0484245a1d35b7ed32a01a9b8363c20b753b6141.boutiques",
+    id="fff7d7c8a2075faa5da5ccad34db6f9ba87459dd.workbench",
     name="volume-merge",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeMergeUpToParameters = typing.TypedDict('VolumeMergeUpToParameters', {
-    "@type": typing.NotRequired[typing.Literal["up_to"]],
-    "last_subvol": str,
-    "opt_reverse": bool,
+    "@type": typing.NotRequired[typing.Literal["up-to"]],
+    "last-subvol": str,
+    "reverse": bool,
 })
 VolumeMergeUpToParametersTagged = typing.TypedDict('VolumeMergeUpToParametersTagged', {
-    "@type": typing.Literal["up_to"],
-    "last_subvol": str,
-    "opt_reverse": bool,
+    "@type": typing.Literal["up-to"],
+    "last-subvol": str,
+    "reverse": bool,
 })
 
 
 VolumeMergeSubvolumeParameters = typing.TypedDict('VolumeMergeSubvolumeParameters', {
     "@type": typing.NotRequired[typing.Literal["subvolume"]],
     "subvol": str,
-    "up_to": typing.NotRequired[VolumeMergeUpToParameters | None],
+    "up-to": typing.NotRequired[VolumeMergeUpToParameters | None],
 })
 VolumeMergeSubvolumeParametersTagged = typing.TypedDict('VolumeMergeSubvolumeParametersTagged', {
     "@type": typing.Literal["subvolume"],
     "subvol": str,
-    "up_to": typing.NotRequired[VolumeMergeUpToParameters | None],
+    "up-to": typing.NotRequired[VolumeMergeUpToParameters | None],
 })
 
 
 VolumeMergeVolumeParameters = typing.TypedDict('VolumeMergeVolumeParameters', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
-    "volume_in": InputPathType,
+    "volume-in": InputPathType,
     "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
 })
 VolumeMergeVolumeParametersTagged = typing.TypedDict('VolumeMergeVolumeParametersTagged', {
     "@type": typing.Literal["volume"],
-    "volume_in": InputPathType,
+    "volume-in": InputPathType,
     "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
 })
 
 
 VolumeMergeParameters = typing.TypedDict('VolumeMergeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-merge"]],
-    "volume_out": str,
+    "volume-out": str,
     "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
 })
 VolumeMergeParametersTagged = typing.TypedDict('VolumeMergeParametersTagged', {
     "@type": typing.Literal["workbench/volume-merge"],
-    "volume_out": str,
+    "volume-out": str,
     "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
 })
 
 
 def volume_merge_up_to_params(
     last_subvol: str,
-    opt_reverse: bool = False,
+    reverse: bool = False,
 ) -> VolumeMergeUpToParametersTagged:
     """
     Build parameters.
     
     Args:
         last_subvol: the number or name of the last subvolume to include.
-        opt_reverse: use the range in reverse order.
+        reverse: use the range in reverse order.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "up_to",
-        "last_subvol": last_subvol,
-        "opt_reverse": opt_reverse,
+        "@type": "up-to",
+        "last-subvol": last_subvol,
+        "reverse": reverse,
     }
     return params
 
@@ -96,10 +95,12 @@ def volume_merge_up_to_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-up-to")
-    cargs.append(params.get("last_subvol", None))
-    if params.get("opt_reverse", False):
-        cargs.append("-reverse")
+    if params.get("reverse", False):
+        cargs.extend([
+            "-up-to",
+            params.get("last-subvol", None),
+            "-reverse"
+        ])
     return cargs
 
 
@@ -121,7 +122,7 @@ def volume_merge_subvolume_params(
         "subvol": subvol,
     }
     if up_to is not None:
-        params["up_to"] = up_to
+        params["up-to"] = up_to
     return params
 
 
@@ -139,10 +140,12 @@ def volume_merge_subvolume_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-subvolume")
-    cargs.append(params.get("subvol", None))
-    if params.get("up_to", None) is not None:
-        cargs.extend(volume_merge_up_to_cargs(params.get("up_to", None), execution))
+    if params.get("up-to", None) is not None:
+        cargs.extend([
+            "-subvolume",
+            params.get("subvol", None),
+            *volume_merge_up_to_cargs(params.get("up-to", None), execution)
+        ])
     return cargs
 
 
@@ -161,7 +164,7 @@ def volume_merge_volume_params(
     """
     params = {
         "@type": "volume",
-        "volume_in": volume_in,
+        "volume-in": volume_in,
     }
     if subvolume is not None:
         params["subvolume"] = subvolume
@@ -182,10 +185,12 @@ def volume_merge_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-volume")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
     if params.get("subvolume", None) is not None:
-        cargs.extend([a for c in [volume_merge_subvolume_cargs(s, execution) for s in params.get("subvolume", None)] for a in c])
+        cargs.extend([
+            "-volume",
+            execution.input_file(params.get("volume-in", None)),
+            *[a for c in [volume_merge_subvolume_cargs(s, execution) for s in params.get("subvolume", None)] for a in c]
+        ])
     return cargs
 
 
@@ -214,7 +219,7 @@ def volume_merge_params(
     """
     params = {
         "@type": "workbench/volume-merge",
-        "volume_out": volume_out,
+        "volume-out": volume_out,
     }
     if volume is not None:
         params["volume"] = volume
@@ -235,11 +240,13 @@ def volume_merge_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-merge")
-    cargs.append(params.get("volume_out", None))
     if params.get("volume", None) is not None:
-        cargs.extend([a for c in [volume_merge_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c])
+        cargs.extend([
+            "wb_command",
+            "-volume-merge",
+            params.get("volume-out", None),
+            *[a for c in [volume_merge_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c]
+        ])
     return cargs
 
 
@@ -258,7 +265,7 @@ def volume_merge_outputs(
     """
     ret = VolumeMergeOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -268,9 +275,7 @@ def volume_merge_execute(
     runner: Runner | None = None,
 ) -> VolumeMergeOutputs:
     """
-    volume-merge
-    
-    Merge volume files into a new file.
+    MERGE VOLUME FILES INTO A NEW FILE.
     
     Takes one or more volume files and constructs a new volume file by
     concatenating subvolumes from them. The input volume files must have the
@@ -281,10 +286,6 @@ def volume_merge_execute(
     
     This example would take the first subvolume from first.nii, followed by all
     subvolumes from second.nii, and write these to out.nii.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -307,9 +308,7 @@ def volume_merge(
     runner: Runner | None = None,
 ) -> VolumeMergeOutputs:
     """
-    volume-merge
-    
-    Merge volume files into a new file.
+    MERGE VOLUME FILES INTO A NEW FILE.
     
     Takes one or more volume files and constructs a new volume file by
     concatenating subvolumes from them. The input volume files must have the
@@ -320,10 +319,6 @@ def volume_merge(
     
     This example would take the first subvolume from first.nii, followed by all
     subvolumes from second.nii, and write these to out.nii.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         volume_out: the output volume file.

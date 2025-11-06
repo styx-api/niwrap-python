@@ -20,9 +20,9 @@ MriEditSegmentationWithSurfacesParameters = typing.TypedDict('MriEditSegmentatio
     "norm_volume": InputPathType,
     "output_volume": str,
     "label_file": typing.NotRequired[InputPathType | None],
-    "hypo_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
-    "cerebellum_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
-    "cortex_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
+    "hypo_flag": typing.NotRequired[bool | None],
+    "cerebellum_flag": typing.NotRequired[bool | None],
+    "cortex_flag": typing.NotRequired[bool | None],
     "annotation_file": typing.NotRequired[InputPathType | None],
 })
 MriEditSegmentationWithSurfacesParametersTagged = typing.TypedDict('MriEditSegmentationWithSurfacesParametersTagged', {
@@ -32,9 +32,9 @@ MriEditSegmentationWithSurfacesParametersTagged = typing.TypedDict('MriEditSegme
     "norm_volume": InputPathType,
     "output_volume": str,
     "label_file": typing.NotRequired[InputPathType | None],
-    "hypo_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
-    "cerebellum_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
-    "cortex_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
+    "hypo_flag": typing.NotRequired[bool | None],
+    "cerebellum_flag": typing.NotRequired[bool | None],
+    "cortex_flag": typing.NotRequired[bool | None],
     "annotation_file": typing.NotRequired[InputPathType | None],
 })
 
@@ -55,9 +55,9 @@ def mri_edit_segmentation_with_surfaces_params(
     norm_volume: InputPathType,
     output_volume: str,
     label_file: InputPathType | None = None,
-    hypo_flag: typing.Literal["1", "0"] | None = None,
-    cerebellum_flag: typing.Literal["1", "0"] | None = None,
-    cortex_flag: typing.Literal["1", "0"] | None = None,
+    hypo_flag: bool | None = None,
+    cerebellum_flag: bool | None = None,
+    cortex_flag: bool | None = None,
     annotation_file: InputPathType | None = None,
 ) -> MriEditSegmentationWithSurfacesParametersTagged:
     """
@@ -124,17 +124,17 @@ def mri_edit_segmentation_with_surfaces_cargs(
     if params.get("hypo_flag", None) is not None:
         cargs.extend([
             "-hypo",
-            params.get("hypo_flag", None)
+            ("1" if params.get("hypo_flag", None) else "0")
         ])
     if params.get("cerebellum_flag", None) is not None:
         cargs.extend([
             "-cerebellum",
-            params.get("cerebellum_flag", None)
+            ("1" if params.get("cerebellum_flag", None) else "0")
         ])
     if params.get("cortex_flag", None) is not None:
         cargs.extend([
             "-cortex",
-            params.get("cortex_flag", None)
+            ("1" if params.get("cortex_flag", None) else "0")
         ])
     if params.get("annotation_file", None) is not None:
         cargs.extend([
@@ -198,9 +198,9 @@ def mri_edit_segmentation_with_surfaces(
     norm_volume: InputPathType,
     output_volume: str,
     label_file: InputPathType | None = None,
-    hypo_flag: typing.Literal["1", "0"] | None = None,
-    cerebellum_flag: typing.Literal["1", "0"] | None = None,
-    cortex_flag: typing.Literal["1", "0"] | None = None,
+    hypo_flag: bool | None = None,
+    cerebellum_flag: bool | None = None,
+    cortex_flag: bool | None = None,
     annotation_file: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MriEditSegmentationWithSurfacesOutputs:

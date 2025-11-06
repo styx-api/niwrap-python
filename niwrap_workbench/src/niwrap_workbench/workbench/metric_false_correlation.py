@@ -6,34 +6,33 @@ import pathlib
 from styxdefs import *
 
 METRIC_FALSE_CORRELATION_METADATA = Metadata(
-    id="4210406d263a91fc208a58736487b73caec3c5a1.boutiques",
+    id="c5fa55ac073dd0a51eb97deb240c610fa9ebef79.workbench",
     name="metric-false-correlation",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricFalseCorrelationParameters = typing.TypedDict('MetricFalseCorrelationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-false-correlation"]],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "text-out": typing.NotRequired[str | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "3d_dist": float,
-    "geo_outer": float,
-    "geo_inner": float,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "metric-in": InputPathType,
+    "3D-dist": float,
+    "geo-outer": float,
+    "geo-inner": float,
 })
 MetricFalseCorrelationParametersTagged = typing.TypedDict('MetricFalseCorrelationParametersTagged', {
     "@type": typing.Literal["workbench/metric-false-correlation"],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "text-out": typing.NotRequired[str | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "3d_dist": float,
-    "geo_outer": float,
-    "geo_inner": float,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_dump_text_text_out": typing.NotRequired[str | None],
+    "metric-in": InputPathType,
+    "3D-dist": float,
+    "geo-outer": float,
+    "geo-inner": float,
 })
 
 
@@ -48,45 +47,47 @@ class MetricFalseCorrelationOutputs(typing.NamedTuple):
 
 
 def metric_false_correlation_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    text_out: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    v_3d_dist: float,
+    v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
-    metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_dump_text_text_out: str | None = None,
 ) -> MetricFalseCorrelationParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        roi_metric: select a region of interest that has data\
+            \
+            the region, as a metric file.
+        text_out: dump the raw measures used to a text file\
+            \
+            the output text file.
         surface: the surface to compute geodesic and 3D distance with.
         metric_in: the metric to correlate.
-        v_3d_dist: maximum 3D distance to check around each vertex.
+        v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
-        metric_out: the output metric.
-        opt_roi_roi_metric: select a region of interest that has data: the\
-            region, as a metric file.
-        opt_dump_text_text_out: dump the raw measures used to a text file: the\
-            output text file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-false-correlation",
+        "metric-out": metric_out,
         "surface": surface,
-        "metric_in": metric_in,
-        "3d_dist": v_3d_dist,
-        "geo_outer": geo_outer,
-        "geo_inner": geo_inner,
-        "metric_out": metric_out,
+        "metric-in": metric_in,
+        "3D-dist": v_3_d_dist,
+        "geo-outer": geo_outer,
+        "geo-inner": geo_inner,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_dump_text_text_out is not None:
-        params["opt_dump_text_text_out"] = opt_dump_text_text_out
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if text_out is not None:
+        params["text-out"] = text_out
     return params
 
 
@@ -104,24 +105,21 @@ def metric_false_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-false-correlation")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(str(params.get("3d_dist", None)))
-    cargs.append(str(params.get("geo_outer", None)))
-    cargs.append(str(params.get("geo_inner", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None or params.get("text-out", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-false-correlation",
+            params.get("metric-out", None),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_dump_text_text_out", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-dump-text",
-            params.get("opt_dump_text_text_out", None)
+            (params.get("text-out", None) if (params.get("text-out", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(str(params.get("3D-dist", None)))
+    cargs.append(str(params.get("geo-outer", None)))
+    cargs.append(str(params.get("geo-inner", None)))
     return cargs
 
 
@@ -140,7 +138,7 @@ def metric_false_correlation_outputs(
     """
     ret = MetricFalseCorrelationOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -150,9 +148,7 @@ def metric_false_correlation_execute(
     runner: Runner | None = None,
 ) -> MetricFalseCorrelationOutputs:
     """
-    metric-false-correlation
-    
-    Compare correlation locally and across/through sulci/gyri.
+    COMPARE CORRELATION LOCALLY AND ACROSS/THROUGH SULCI/GYRI.
     
     For each vertex, compute the average correlation within a range of geodesic
     distances that don't cross a sulcus/gyrus, and the correlation to the
@@ -160,10 +156,6 @@ def metric_false_correlation_execute(
     sulcus/gyrus if the 3D distance is less than a third of the geodesic
     distance. The output file contains the ratio between these correlations, and
     some additional maps to help explain the ratio.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -181,20 +173,18 @@ def metric_false_correlation_execute(
 
 
 def metric_false_correlation(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    text_out: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    v_3d_dist: float,
+    v_3_d_dist: float,
     geo_outer: float,
     geo_inner: float,
-    metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_dump_text_text_out: str | None = None,
     runner: Runner | None = None,
 ) -> MetricFalseCorrelationOutputs:
     """
-    metric-false-correlation
-    
-    Compare correlation locally and across/through sulci/gyri.
+    COMPARE CORRELATION LOCALLY AND ACROSS/THROUGH SULCI/GYRI.
     
     For each vertex, compute the average correlation within a range of geodesic
     distances that don't cross a sulcus/gyrus, and the correlation to the
@@ -203,34 +193,32 @@ def metric_false_correlation(
     distance. The output file contains the ratio between these correlations, and
     some additional maps to help explain the ratio.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        roi_metric: select a region of interest that has data\
+            \
+            the region, as a metric file.
+        text_out: dump the raw measures used to a text file\
+            \
+            the output text file.
         surface: the surface to compute geodesic and 3D distance with.
         metric_in: the metric to correlate.
-        v_3d_dist: maximum 3D distance to check around each vertex.
+        v_3_d_dist: maximum 3D distance to check around each vertex.
         geo_outer: maximum geodesic distance to use for neighboring correlation.
         geo_inner: minimum geodesic distance to use for neighboring correlation.
-        metric_out: the output metric.
-        opt_roi_roi_metric: select a region of interest that has data: the\
-            region, as a metric file.
-        opt_dump_text_text_out: dump the raw measures used to a text file: the\
-            output text file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFalseCorrelationOutputs`).
     """
     params = metric_false_correlation_params(
+        metric_out=metric_out,
+        roi_metric=roi_metric,
+        text_out=text_out,
         surface=surface,
         metric_in=metric_in,
-        v_3d_dist=v_3d_dist,
+        v_3_d_dist=v_3_d_dist,
         geo_outer=geo_outer,
         geo_inner=geo_inner,
-        metric_out=metric_out,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_dump_text_text_out=opt_dump_text_text_out,
     )
     return metric_false_correlation_execute(params, runner)
 

@@ -6,32 +6,31 @@ import pathlib
 from styxdefs import *
 
 LABEL_ERODE_METADATA = Metadata(
-    id="99712b5dfa61e349e4c3839ddd13dfb8b7032631.boutiques",
+    id="467892b0c56af1ac7a7fb22a622b70f03bfa2579.workbench",
     name="label-erode",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelErodeParameters = typing.TypedDict('LabelErodeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-erode"]],
+    "label-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
-    "erode_dist": float,
-    "label_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "erode-dist": float,
 })
 LabelErodeParametersTagged = typing.TypedDict('LabelErodeParametersTagged', {
     "@type": typing.Literal["workbench/label-erode"],
+    "label-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
     "label": InputPathType,
     "surface": InputPathType,
-    "erode_dist": float,
-    "label_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "erode-dist": float,
 })
 
 
@@ -46,45 +45,48 @@ class LabelErodeOutputs(typing.NamedTuple):
 
 
 def label_erode_params(
+    label_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     erode_dist: float,
-    label_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
 ) -> LabelErodeParametersTagged:
     """
     Build parameters.
     
     Args:
+        label_out: the output label file.
+        roi_metric: assume values outside this roi are labeled\
+            \
+            metric file, positive values denote vertices that have data.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         label: the input label.
         surface: the surface to erode on.
         erode_dist: distance in mm to erode the labels.
-        label_out: the output label file.
-        opt_roi_roi_metric: assume values outside this roi are labeled: metric\
-            file, positive values denote vertices that have data.
-        opt_column_column: select a single column to erode: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-erode",
+        "label-out": label_out,
         "label": label,
         "surface": surface,
-        "erode_dist": erode_dist,
-        "label_out": label_out,
+        "erode-dist": erode_dist,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if column is not None:
+        params["column"] = column
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -102,27 +104,21 @@ def label_erode_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-erode")
+    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("area-metric", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-label-erode",
+            params.get("label-out", None),
+            "-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(str(params.get("erode_dist", None)))
-    cargs.append(params.get("label_out", None))
-    if params.get("opt_roi_roi_metric", None) is not None:
-        cargs.extend([
-            "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
-            "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
+    cargs.append(str(params.get("erode-dist", None)))
     return cargs
 
 
@@ -141,7 +137,7 @@ def label_erode_outputs(
     """
     ret = LabelErodeOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out", None)),
+        label_out=execution.output_file(params.get("label-out", None)),
     )
     return ret
 
@@ -151,9 +147,7 @@ def label_erode_execute(
     runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
-    label-erode
-    
-    Erode a label file.
+    ERODE A LABEL FILE.
     
     Around each vertex that is unlabeled, set surrounding vertices to unlabeled.
     The surrounding vertices are all immediate neighbors and all vertices within
@@ -161,10 +155,6 @@ def label_erode_execute(
     
     Note that the -corrected-areas option uses an approximate correction for
     distance along the surface.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -182,19 +172,17 @@ def label_erode_execute(
 
 
 def label_erode(
+    label_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     label: InputPathType,
     surface: InputPathType,
     erode_dist: float,
-    label_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
-    label-erode
-    
-    Erode a label file.
+    ERODE A LABEL FILE.
     
     Around each vertex that is unlabeled, set surrounding vertices to unlabeled.
     The surrounding vertices are all immediate neighbors and all vertices within
@@ -203,34 +191,33 @@ def label_erode(
     Note that the -corrected-areas option uses an approximate correction for
     distance along the surface.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        label_out: the output label file.
+        roi_metric: assume values outside this roi are labeled\
+            \
+            metric file, positive values denote vertices that have data.
+        column: select a single column to erode\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         label: the input label.
         surface: the surface to erode on.
         erode_dist: distance in mm to erode the labels.
-        label_out: the output label file.
-        opt_roi_roi_metric: assume values outside this roi are labeled: metric\
-            file, positive values denote vertices that have data.
-        opt_column_column: select a single column to erode: the column number\
-            or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelErodeOutputs`).
     """
     params = label_erode_params(
+        label_out=label_out,
+        roi_metric=roi_metric,
+        column=column,
+        area_metric=area_metric,
         label=label,
         surface=surface,
         erode_dist=erode_dist,
-        label_out=label_out,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_column_column=opt_column_column,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
     return label_erode_execute(params, runner)
 

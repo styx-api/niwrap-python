@@ -7,7 +7,7 @@
     "divisions": {
       "var_param": "divisions"
     },
-    "text_out": {
+    "text-out": {
       "var_param": "text_out"
     }
   }

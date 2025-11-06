@@ -4,10 +4,10 @@
     "surface": {
       "var_param": "surface"
     },
-    "coord_list_file": {
+    "coord-list-file": {
       "var_param": "coord_list_file"
     },
-    "vertex_list_out": {
+    "vertex-list-out": {
       "var_param": "vertex_list_out"
     }
   }

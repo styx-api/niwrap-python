@@ -25,14 +25,14 @@ KellyKapowskiParameters = typing.TypedDict('KellyKapowskiParameters', {
     "gradient_step": typing.NotRequired[float | None],
     "smoothing_variance": typing.NotRequired[float | None],
     "smoothing_velocity_field_parameter": typing.NotRequired[str | None],
-    "use_bspline_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_masked_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_bspline_smoothing": typing.NotRequired[bool | None],
+    "use_masked_smoothing": typing.NotRequired[bool | None],
     "time_points": typing.NotRequired[str | None],
-    "restrict_deformation": typing.NotRequired[typing.Literal[0, 1] | None],
+    "restrict_deformation": typing.NotRequired[bool | None],
     "number_of_integration_points": typing.NotRequired[int | None],
     "maximum_number_of_invert_displacement_field_iterations": typing.NotRequired[int | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 KellyKapowskiParametersTagged = typing.TypedDict('KellyKapowskiParametersTagged', {
     "@type": typing.Literal["ants/KellyKapowski"],
@@ -46,14 +46,14 @@ KellyKapowskiParametersTagged = typing.TypedDict('KellyKapowskiParametersTagged'
     "gradient_step": typing.NotRequired[float | None],
     "smoothing_variance": typing.NotRequired[float | None],
     "smoothing_velocity_field_parameter": typing.NotRequired[str | None],
-    "use_bspline_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_masked_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_bspline_smoothing": typing.NotRequired[bool | None],
+    "use_masked_smoothing": typing.NotRequired[bool | None],
     "time_points": typing.NotRequired[str | None],
-    "restrict_deformation": typing.NotRequired[typing.Literal[0, 1] | None],
+    "restrict_deformation": typing.NotRequired[bool | None],
     "number_of_integration_points": typing.NotRequired[int | None],
     "maximum_number_of_invert_displacement_field_iterations": typing.NotRequired[int | None],
     "output": str,
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -79,13 +79,13 @@ def kelly_kapowski_params(
     gradient_step: float | None = None,
     smoothing_variance: float | None = None,
     smoothing_velocity_field_parameter: str | None = None,
-    use_bspline_smoothing: typing.Literal[0, 1] | None = None,
-    use_masked_smoothing: typing.Literal[0, 1] | None = None,
+    use_bspline_smoothing: bool | None = None,
+    use_masked_smoothing: bool | None = None,
     time_points: str | None = None,
-    restrict_deformation: typing.Literal[0, 1] | None = None,
+    restrict_deformation: bool | None = None,
     number_of_integration_points: int | None = None,
     maximum_number_of_invert_displacement_field_iterations: int | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> KellyKapowskiParametersTagged:
     """
     Build parameters.
@@ -248,12 +248,12 @@ def kelly_kapowski_cargs(
     if params.get("use_bspline_smoothing", None) is not None:
         cargs.extend([
             "--use-bspline-smoothing",
-            str(params.get("use_bspline_smoothing", None))
+            ("1" if params.get("use_bspline_smoothing", None) else "0")
         ])
     if params.get("use_masked_smoothing", None) is not None:
         cargs.extend([
             "--use-masked-smoothing",
-            str(params.get("use_masked_smoothing", None))
+            ("1" if params.get("use_masked_smoothing", None) else "0")
         ])
     if params.get("time_points", None) is not None:
         cargs.extend([
@@ -263,7 +263,7 @@ def kelly_kapowski_cargs(
     if params.get("restrict_deformation", None) is not None:
         cargs.extend([
             "--restrict-deformation",
-            str(params.get("restrict_deformation", None))
+            ("1" if params.get("restrict_deformation", None) else "0")
         ])
     if params.get("number_of_integration_points", None) is not None:
         cargs.extend([
@@ -282,7 +282,7 @@ def kelly_kapowski_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -350,13 +350,13 @@ def kelly_kapowski(
     gradient_step: float | None = None,
     smoothing_variance: float | None = None,
     smoothing_velocity_field_parameter: str | None = None,
-    use_bspline_smoothing: typing.Literal[0, 1] | None = None,
-    use_masked_smoothing: typing.Literal[0, 1] | None = None,
+    use_bspline_smoothing: bool | None = None,
+    use_masked_smoothing: bool | None = None,
     time_points: str | None = None,
-    restrict_deformation: typing.Literal[0, 1] | None = None,
+    restrict_deformation: bool | None = None,
     number_of_integration_points: int | None = None,
     maximum_number_of_invert_displacement_field_iterations: int | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> KellyKapowskiOutputs:
     """

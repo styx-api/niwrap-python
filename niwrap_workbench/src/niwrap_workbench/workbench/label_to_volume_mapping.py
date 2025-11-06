@@ -6,57 +6,56 @@ import pathlib
 from styxdefs import *
 
 LABEL_TO_VOLUME_MAPPING_METADATA = Metadata(
-    id="a8de8237605262064e9a5abfe0dd83ad86664dd4.boutiques",
+    id="fe59ab1deb4665e43a374960ee3b2ea00f5e999a.workbench",
     name="label-to-volume-mapping",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParameters', {
-    "@type": typing.NotRequired[typing.Literal["ribbon_constrained"]],
-    "inner_surf": InputPathType,
-    "outer_surf": InputPathType,
-    "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
-    "opt_greedy": bool,
-    "opt_thick_columns": bool,
+    "@type": typing.NotRequired[typing.Literal["ribbon-constrained"]],
+    "inner-surf": InputPathType,
+    "outer-surf": InputPathType,
+    "subdiv-num": typing.NotRequired[int | None],
+    "greedy": bool,
+    "thick-columns": bool,
 })
 LabelToVolumeMappingRibbonConstrainedParametersTagged = typing.TypedDict('LabelToVolumeMappingRibbonConstrainedParametersTagged', {
-    "@type": typing.Literal["ribbon_constrained"],
-    "inner_surf": InputPathType,
-    "outer_surf": InputPathType,
-    "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
-    "opt_greedy": bool,
-    "opt_thick_columns": bool,
+    "@type": typing.Literal["ribbon-constrained"],
+    "inner-surf": InputPathType,
+    "outer-surf": InputPathType,
+    "subdiv-num": typing.NotRequired[int | None],
+    "greedy": bool,
+    "thick-columns": bool,
 })
 
 
 LabelToVolumeMappingParameters = typing.TypedDict('LabelToVolumeMappingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-to-volume-mapping"]],
+    "volume-out": str,
+    "distance": typing.NotRequired[float | None],
+    "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParameters | None],
     "label": InputPathType,
     "surface": InputPathType,
-    "volume_space": InputPathType,
-    "volume_out": str,
-    "opt_nearest_vertex_distance": typing.NotRequired[float | None],
-    "ribbon_constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParameters | None],
+    "volume-space": InputPathType,
 })
 LabelToVolumeMappingParametersTagged = typing.TypedDict('LabelToVolumeMappingParametersTagged', {
     "@type": typing.Literal["workbench/label-to-volume-mapping"],
+    "volume-out": str,
+    "distance": typing.NotRequired[float | None],
+    "ribbon-constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParameters | None],
     "label": InputPathType,
     "surface": InputPathType,
-    "volume_space": InputPathType,
-    "volume_out": str,
-    "opt_nearest_vertex_distance": typing.NotRequired[float | None],
-    "ribbon_constrained": typing.NotRequired[LabelToVolumeMappingRibbonConstrainedParameters | None],
+    "volume-space": InputPathType,
 })
 
 
 def label_to_volume_mapping_ribbon_constrained_params(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
-    opt_voxel_subdiv_subdiv_num: int | None = None,
-    opt_greedy: bool = False,
-    opt_thick_columns: bool = False,
+    subdiv_num: int | None,
+    greedy: bool = False,
+    thick_columns: bool = False,
 ) -> LabelToVolumeMappingRibbonConstrainedParametersTagged:
     """
     Build parameters.
@@ -64,23 +63,24 @@ def label_to_volume_mapping_ribbon_constrained_params(
     Args:
         inner_surf: the inner surface of the ribbon.
         outer_surf: the outer surface of the ribbon.
-        opt_voxel_subdiv_subdiv_num: voxel divisions while estimating voxel\
-            weights: number of subdivisions, default 3.
-        opt_greedy: also put labels in voxels with less than 50% partial volume\
+        subdiv_num: voxel divisions while estimating voxel weights\
+            \
+            number of subdivisions, default 3.
+        greedy: also put labels in voxels with less than 50% partial volume\
             (legacy behavior).
-        opt_thick_columns: use overlapping columns (legacy method).
+        thick_columns: use overlapping columns (legacy method).
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "ribbon_constrained",
-        "inner_surf": inner_surf,
-        "outer_surf": outer_surf,
-        "opt_greedy": opt_greedy,
-        "opt_thick_columns": opt_thick_columns,
+        "@type": "ribbon-constrained",
+        "inner-surf": inner_surf,
+        "outer-surf": outer_surf,
+        "greedy": greedy,
+        "thick-columns": thick_columns,
     }
-    if opt_voxel_subdiv_subdiv_num is not None:
-        params["opt_voxel_subdiv_subdiv_num"] = opt_voxel_subdiv_subdiv_num
+    if subdiv_num is not None:
+        params["subdiv-num"] = subdiv_num
     return params
 
 
@@ -98,18 +98,16 @@ def label_to_volume_mapping_ribbon_constrained_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-ribbon-constrained")
-    cargs.append(execution.input_file(params.get("inner_surf", None)))
-    cargs.append(execution.input_file(params.get("outer_surf", None)))
-    if params.get("opt_voxel_subdiv_subdiv_num", None) is not None:
+    if params.get("subdiv-num", None) is not None or params.get("greedy", False) or params.get("thick-columns", False):
         cargs.extend([
+            "-ribbon-constrained",
+            execution.input_file(params.get("inner-surf", None)),
+            execution.input_file(params.get("outer-surf", None)),
             "-voxel-subdiv",
-            str(params.get("opt_voxel_subdiv_subdiv_num", None))
+            (str(params.get("subdiv-num", None)) if (params.get("subdiv-num", None) is not None) else ""),
+            ("-greedy" if (params.get("greedy", False)) else ""),
+            ("-thick-columns" if (params.get("thick-columns", False)) else "")
         ])
-    if params.get("opt_greedy", False):
-        cargs.append("-greedy")
-    if params.get("opt_thick_columns", False):
-        cargs.append("-thick-columns")
     return cargs
 
 
@@ -124,39 +122,39 @@ class LabelToVolumeMappingOutputs(typing.NamedTuple):
 
 
 def label_to_volume_mapping_params(
+    volume_out: str,
+    distance: float | None,
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    volume_out: str,
-    opt_nearest_vertex_distance: float | None = None,
     ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParameters | None = None,
 ) -> LabelToVolumeMappingParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume file.
+        distance: use the label from the vertex closest to the voxel center\
+            \
+            how far from the surface to map labels to voxels, in mm.
         label: the input label file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
-        volume_out: the output volume file.
-        opt_nearest_vertex_distance: use the label from the vertex closest to\
-            the voxel center: how far from the surface to map labels to voxels, in\
-            mm.
         ribbon_constrained: use ribbon constrained mapping algorithm.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-to-volume-mapping",
+        "volume-out": volume_out,
         "label": label,
         "surface": surface,
-        "volume_space": volume_space,
-        "volume_out": volume_out,
+        "volume-space": volume_space,
     }
-    if opt_nearest_vertex_distance is not None:
-        params["opt_nearest_vertex_distance"] = opt_nearest_vertex_distance
+    if distance is not None:
+        params["distance"] = distance
     if ribbon_constrained is not None:
-        params["ribbon_constrained"] = ribbon_constrained
+        params["ribbon-constrained"] = ribbon_constrained
     return params
 
 
@@ -174,19 +172,18 @@ def label_to_volume_mapping_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-to-volume-mapping")
+    if params.get("distance", None) is not None or params.get("ribbon-constrained", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-label-to-volume-mapping",
+            params.get("volume-out", None),
+            "-nearest-vertex",
+            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
+            *(label_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon-constrained", None), execution) if (params.get("ribbon-constrained", None) is not None) else [])
+        ])
     cargs.append(execution.input_file(params.get("label", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("volume_space", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_nearest_vertex_distance", None) is not None:
-        cargs.extend([
-            "-nearest-vertex",
-            str(params.get("opt_nearest_vertex_distance", None))
-        ])
-    if params.get("ribbon_constrained", None) is not None:
-        cargs.extend(label_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon_constrained", None), execution))
+    cargs.append(execution.input_file(params.get("volume-space", None)))
     return cargs
 
 
@@ -205,7 +202,7 @@ def label_to_volume_mapping_outputs(
     """
     ret = LabelToVolumeMappingOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -215,19 +212,13 @@ def label_to_volume_mapping_execute(
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
-    label-to-volume-mapping
-    
-    Map label file to volume.
+    MAP LABEL FILE TO VOLUME.
     
     Maps labels from a gifti label file into a volume file. You must specify
     exactly one mapping method option. The -nearest-vertex method uses the label
     from the vertex closest to the voxel center. The -ribbon-constrained method
     uses the same method as in -volume-to-surface-mapping, then uses the weights
     in reverse, with popularity logic to decide on a label to use.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -245,18 +236,16 @@ def label_to_volume_mapping_execute(
 
 
 def label_to_volume_mapping(
+    volume_out: str,
+    distance: float | None,
     label: InputPathType,
     surface: InputPathType,
     volume_space: InputPathType,
-    volume_out: str,
-    opt_nearest_vertex_distance: float | None = None,
     ribbon_constrained: LabelToVolumeMappingRibbonConstrainedParameters | None = None,
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
-    label-to-volume-mapping
-    
-    Map label file to volume.
+    MAP LABEL FILE TO VOLUME.
     
     Maps labels from a gifti label file into a volume file. You must specify
     exactly one mapping method option. The -nearest-vertex method uses the label
@@ -264,30 +253,26 @@ def label_to_volume_mapping(
     uses the same method as in -volume-to-surface-mapping, then uses the weights
     in reverse, with popularity logic to decide on a label to use.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume file.
+        distance: use the label from the vertex closest to the voxel center\
+            \
+            how far from the surface to map labels to voxels, in mm.
         label: the input label file.
         surface: the surface to use coordinates from.
         volume_space: a volume file in the desired output volume space.
-        volume_out: the output volume file.
-        opt_nearest_vertex_distance: use the label from the vertex closest to\
-            the voxel center: how far from the surface to map labels to voxels, in\
-            mm.
         ribbon_constrained: use ribbon constrained mapping algorithm.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelToVolumeMappingOutputs`).
     """
     params = label_to_volume_mapping_params(
+        volume_out=volume_out,
+        distance=distance,
+        ribbon_constrained=ribbon_constrained,
         label=label,
         surface=surface,
         volume_space=volume_space,
-        volume_out=volume_out,
-        opt_nearest_vertex_distance=opt_nearest_vertex_distance,
-        ribbon_constrained=ribbon_constrained,
     )
     return label_to_volume_mapping_execute(params, runner)
 

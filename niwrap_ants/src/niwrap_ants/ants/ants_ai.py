@@ -18,7 +18,7 @@ AntsAiParameters = typing.TypedDict('AntsAiParameters', {
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
     "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
-    "align_principal_axes": typing.NotRequired[typing.Literal[0, 1] | None],
+    "align_principal_axes": typing.NotRequired[bool | None],
     "align_blobs": typing.NotRequired[typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None],
     "search_factor": typing.NotRequired[typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None],
     "translation_search_grid": typing.NotRequired[typing.Literal["[stepSize, AxBxC]"] | None],
@@ -26,14 +26,14 @@ AntsAiParameters = typing.TypedDict('AntsAiParameters', {
     "masks": typing.NotRequired[typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None],
     "output": str,
     "random_seed": typing.NotRequired[int | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 AntsAiParametersTagged = typing.TypedDict('AntsAiParametersTagged', {
     "@type": typing.Literal["ants/antsAI"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
     "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
-    "align_principal_axes": typing.NotRequired[typing.Literal[0, 1] | None],
+    "align_principal_axes": typing.NotRequired[bool | None],
     "align_blobs": typing.NotRequired[typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None],
     "search_factor": typing.NotRequired[typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None],
     "translation_search_grid": typing.NotRequired[typing.Literal["[stepSize, AxBxC]"] | None],
@@ -41,7 +41,7 @@ AntsAiParametersTagged = typing.TypedDict('AntsAiParametersTagged', {
     "masks": typing.NotRequired[typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None],
     "output": str,
     "random_seed": typing.NotRequired[int | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -60,14 +60,14 @@ def ants_ai_params(
     transform: typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
-    align_principal_axes: typing.Literal[0, 1] | None = None,
+    align_principal_axes: bool | None = None,
     align_blobs: typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None = None,
     search_factor: typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None = None,
     translation_search_grid: typing.Literal["[stepSize, AxBxC]"] | None = None,
     convergence: typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None = None,
     masks: typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None = None,
     random_seed: int | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> AntsAiParametersTagged:
     """
     Build parameters.
@@ -157,7 +157,7 @@ def ants_ai_cargs(
     if params.get("align_principal_axes", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("align_principal_axes", None))
+            ("1" if params.get("align_principal_axes", None) else "0")
         ])
     if params.get("align_blobs", None) is not None:
         cargs.extend([
@@ -196,7 +196,7 @@ def ants_ai_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -255,14 +255,14 @@ def ants_ai(
     transform: typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
-    align_principal_axes: typing.Literal[0, 1] | None = None,
+    align_principal_axes: bool | None = None,
     align_blobs: typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None = None,
     search_factor: typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None = None,
     translation_search_grid: typing.Literal["[stepSize, AxBxC]"] | None = None,
     convergence: typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None = None,
     masks: typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None = None,
     random_seed: int | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> AntsAiOutputs:
     """

@@ -6,34 +6,33 @@ import pathlib
 from styxdefs import *
 
 METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
-    id="81f2e3d9eb7747f150a4127da8e7d52ba7efd320.boutiques",
+    id="f848c1442e1f12445caedd02a0679985ee1cf53c.workbench",
     name="metric-rois-from-extrema",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricRoisFromExtremaParameters = typing.TypedDict('MetricRoisFromExtremaParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-from-extrema"]],
+    "metric-out": str,
+    "sigma": typing.NotRequired[float | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "method": typing.NotRequired[str | None],
+    "column": typing.NotRequired[str | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "limit": float,
-    "metric_out": str,
-    "opt_gaussian_sigma": typing.NotRequired[float | None],
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_overlap_logic_method": typing.NotRequired[str | None],
-    "opt_column_column": typing.NotRequired[str | None],
 })
 MetricRoisFromExtremaParametersTagged = typing.TypedDict('MetricRoisFromExtremaParametersTagged', {
     "@type": typing.Literal["workbench/metric-rois-from-extrema"],
+    "metric-out": str,
+    "sigma": typing.NotRequired[float | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "method": typing.NotRequired[str | None],
+    "column": typing.NotRequired[str | None],
     "surface": InputPathType,
     "metric": InputPathType,
     "limit": float,
-    "metric_out": str,
-    "opt_gaussian_sigma": typing.NotRequired[float | None],
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_overlap_logic_method": typing.NotRequired[str | None],
-    "opt_column_column": typing.NotRequired[str | None],
 })
 
 
@@ -48,49 +47,53 @@ class MetricRoisFromExtremaOutputs(typing.NamedTuple):
 
 
 def metric_rois_from_extrema_params(
+    metric_out: str,
+    sigma: float | None,
+    roi_metric: InputPathType | None,
+    method: str | None,
+    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
-    metric_out: str,
-    opt_gaussian_sigma: float | None = None,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_overlap_logic_method: str | None = None,
-    opt_column_column: str | None = None,
 ) -> MetricRoisFromExtremaParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric file.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
+        roi_metric: select a region of interest to use\
+            \
+            the area to use, as a metric.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        column: select a single input column to use\
+            \
+            the column number or name.
         surface: the surface to use for geodesic distance.
         metric: the input metric file.
         limit: geodesic distance limit from vertex, in mm.
-        metric_out: the output metric file.
-        opt_gaussian_sigma: generate a gaussian kernel instead of a flat ROI:\
-            the sigma for the gaussian kernel, in mm.
-        opt_roi_roi_metric: select a region of interest to use: the area to\
-            use, as a metric.
-        opt_overlap_logic_method: how to handle overlapping ROIs, default\
-            ALLOW: the method of resolving overlaps.
-        opt_column_column: select a single input column to use: the column\
-            number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-rois-from-extrema",
+        "metric-out": metric_out,
         "surface": surface,
         "metric": metric,
         "limit": limit,
-        "metric_out": metric_out,
     }
-    if opt_gaussian_sigma is not None:
-        params["opt_gaussian_sigma"] = opt_gaussian_sigma
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_overlap_logic_method is not None:
-        params["opt_overlap_logic_method"] = opt_overlap_logic_method
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if sigma is not None:
+        params["sigma"] = sigma
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if method is not None:
+        params["method"] = method
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -108,32 +111,23 @@ def metric_rois_from_extrema_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-rois-from-extrema")
+    if params.get("sigma", None) is not None or params.get("roi-metric", None) is not None or params.get("method", None) is not None or params.get("column", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-metric-rois-from-extrema",
+            params.get("metric-out", None),
+            "-gaussian",
+            (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
+            "-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-overlap-logic",
+            (params.get("method", None) if (params.get("method", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(str(params.get("limit", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_gaussian_sigma", None) is not None:
-        cargs.extend([
-            "-gaussian",
-            str(params.get("opt_gaussian_sigma", None))
-        ])
-    if params.get("opt_roi_roi_metric", None) is not None:
-        cargs.extend([
-            "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_overlap_logic_method", None) is not None:
-        cargs.extend([
-            "-overlap-logic",
-            params.get("opt_overlap_logic_method", None)
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("opt_column_column", None)
-        ])
     return cargs
 
 
@@ -152,7 +146,7 @@ def metric_rois_from_extrema_outputs(
     """
     ret = MetricRoisFromExtremaOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -162,9 +156,7 @@ def metric_rois_from_extrema_execute(
     runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
-    metric-rois-from-extrema
-    
-    Create metric roi maps from extrema maps.
+    CREATE METRIC ROI MAPS FROM EXTREMA MAPS.
     
     For each nonzero value in each map, make a map with an ROI around that
     location. If the -gaussian option is specified, then normalized gaussian
@@ -174,10 +166,6 @@ def metric_rois_from_extrema_execute(
     may not overlap, and that no ROI contains vertices that are closer to a
     different seed vertex. EXCLUDE means that ROIs may not overlap, and that any
     vertex within range of more than one ROI does not belong to any ROI.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -195,20 +183,18 @@ def metric_rois_from_extrema_execute(
 
 
 def metric_rois_from_extrema(
+    metric_out: str,
+    sigma: float | None,
+    roi_metric: InputPathType | None,
+    method: str | None,
+    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     limit: float,
-    metric_out: str,
-    opt_gaussian_sigma: float | None = None,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_overlap_logic_method: str | None = None,
-    opt_column_column: str | None = None,
     runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
-    metric-rois-from-extrema
-    
-    Create metric roi maps from extrema maps.
+    CREATE METRIC ROI MAPS FROM EXTREMA MAPS.
     
     For each nonzero value in each map, make a map with an ROI around that
     location. If the -gaussian option is specified, then normalized gaussian
@@ -219,36 +205,36 @@ def metric_rois_from_extrema(
     different seed vertex. EXCLUDE means that ROIs may not overlap, and that any
     vertex within range of more than one ROI does not belong to any ROI.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric file.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
+        roi_metric: select a region of interest to use\
+            \
+            the area to use, as a metric.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        column: select a single input column to use\
+            \
+            the column number or name.
         surface: the surface to use for geodesic distance.
         metric: the input metric file.
         limit: geodesic distance limit from vertex, in mm.
-        metric_out: the output metric file.
-        opt_gaussian_sigma: generate a gaussian kernel instead of a flat ROI:\
-            the sigma for the gaussian kernel, in mm.
-        opt_roi_roi_metric: select a region of interest to use: the area to\
-            use, as a metric.
-        opt_overlap_logic_method: how to handle overlapping ROIs, default\
-            ALLOW: the method of resolving overlaps.
-        opt_column_column: select a single input column to use: the column\
-            number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisFromExtremaOutputs`).
     """
     params = metric_rois_from_extrema_params(
+        metric_out=metric_out,
+        sigma=sigma,
+        roi_metric=roi_metric,
+        method=method,
+        column=column,
         surface=surface,
         metric=metric,
         limit=limit,
-        metric_out=metric_out,
-        opt_gaussian_sigma=opt_gaussian_sigma,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_overlap_logic_method=opt_overlap_logic_method,
-        opt_column_column=opt_column_column,
     )
     return metric_rois_from_extrema_execute(params, runner)
 

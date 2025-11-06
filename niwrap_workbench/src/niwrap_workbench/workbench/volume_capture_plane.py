@@ -6,10 +6,9 @@ import pathlib
 from styxdefs import *
 
 VOLUME_CAPTURE_PLANE_METADATA = Metadata(
-    id="fce982f3ac61b3a6dc85a30dbe38533edd029421.boutiques",
+    id="fcda0671173456c7a0dc9ad4eeb91facd1507c4f.workbench",
     name="volume-capture-plane",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
@@ -18,19 +17,19 @@ VolumeCapturePlaneParameters = typing.TypedDict('VolumeCapturePlaneParameters', 
     "volume": InputPathType,
     "subvolume": str,
     "interp": str,
-    "h_dim": int,
-    "v_dim": int,
-    "scale_min": float,
-    "scale_max": float,
-    "bottom_left_x": float,
-    "bottom_left_y": float,
-    "bottom_left_z": float,
-    "bottom_right_x": float,
-    "bottom_right_y": float,
-    "bottom_right_z": float,
-    "top_left_x": float,
-    "top_left_y": float,
-    "top_left_z": float,
+    "h-dim": int,
+    "v-dim": int,
+    "scale-min": float,
+    "scale-max": float,
+    "bottom-left-x": float,
+    "bottom-left-y": float,
+    "bottom-left-z": float,
+    "bottom-right-x": float,
+    "bottom-right-y": float,
+    "bottom-right-z": float,
+    "top-left-x": float,
+    "top-left-y": float,
+    "top-left-z": float,
     "image": str,
 })
 VolumeCapturePlaneParametersTagged = typing.TypedDict('VolumeCapturePlaneParametersTagged', {
@@ -38,19 +37,19 @@ VolumeCapturePlaneParametersTagged = typing.TypedDict('VolumeCapturePlaneParamet
     "volume": InputPathType,
     "subvolume": str,
     "interp": str,
-    "h_dim": int,
-    "v_dim": int,
-    "scale_min": float,
-    "scale_max": float,
-    "bottom_left_x": float,
-    "bottom_left_y": float,
-    "bottom_left_z": float,
-    "bottom_right_x": float,
-    "bottom_right_y": float,
-    "bottom_right_z": float,
-    "top_left_x": float,
-    "top_left_y": float,
-    "top_left_z": float,
+    "h-dim": int,
+    "v-dim": int,
+    "scale-min": float,
+    "scale-max": float,
+    "bottom-left-x": float,
+    "bottom-left-y": float,
+    "bottom-left-z": float,
+    "bottom-right-x": float,
+    "bottom-right-y": float,
+    "bottom-right-z": float,
+    "top-left-x": float,
+    "top-left-y": float,
+    "top-left-z": float,
     "image": str,
 })
 
@@ -111,19 +110,19 @@ def volume_capture_plane_params(
         "volume": volume,
         "subvolume": subvolume,
         "interp": interp,
-        "h_dim": h_dim,
-        "v_dim": v_dim,
-        "scale_min": scale_min,
-        "scale_max": scale_max,
-        "bottom_left_x": bottom_left_x,
-        "bottom_left_y": bottom_left_y,
-        "bottom_left_z": bottom_left_z,
-        "bottom_right_x": bottom_right_x,
-        "bottom_right_y": bottom_right_y,
-        "bottom_right_z": bottom_right_z,
-        "top_left_x": top_left_x,
-        "top_left_y": top_left_y,
-        "top_left_z": top_left_z,
+        "h-dim": h_dim,
+        "v-dim": v_dim,
+        "scale-min": scale_min,
+        "scale-max": scale_max,
+        "bottom-left-x": bottom_left_x,
+        "bottom-left-y": bottom_left_y,
+        "bottom-left-z": bottom_left_z,
+        "bottom-right-x": bottom_right_x,
+        "bottom-right-y": bottom_right_y,
+        "bottom-right-z": bottom_right_z,
+        "top-left-x": top_left_x,
+        "top-left-y": top_left_y,
+        "top-left-z": top_left_z,
         "image": image,
     }
     return params
@@ -143,24 +142,26 @@ def volume_capture_plane_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-capture-plane")
+    cargs.extend([
+        "wb_command",
+        "-volume-capture-plane"
+    ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(params.get("subvolume", None))
     cargs.append(params.get("interp", None))
-    cargs.append(str(params.get("h_dim", None)))
-    cargs.append(str(params.get("v_dim", None)))
-    cargs.append(str(params.get("scale_min", None)))
-    cargs.append(str(params.get("scale_max", None)))
-    cargs.append(str(params.get("bottom_left_x", None)))
-    cargs.append(str(params.get("bottom_left_y", None)))
-    cargs.append(str(params.get("bottom_left_z", None)))
-    cargs.append(str(params.get("bottom_right_x", None)))
-    cargs.append(str(params.get("bottom_right_y", None)))
-    cargs.append(str(params.get("bottom_right_z", None)))
-    cargs.append(str(params.get("top_left_x", None)))
-    cargs.append(str(params.get("top_left_y", None)))
-    cargs.append(str(params.get("top_left_z", None)))
+    cargs.append(str(params.get("h-dim", None)))
+    cargs.append(str(params.get("v-dim", None)))
+    cargs.append(str(params.get("scale-min", None)))
+    cargs.append(str(params.get("scale-max", None)))
+    cargs.append(str(params.get("bottom-left-x", None)))
+    cargs.append(str(params.get("bottom-left-y", None)))
+    cargs.append(str(params.get("bottom-left-z", None)))
+    cargs.append(str(params.get("bottom-right-x", None)))
+    cargs.append(str(params.get("bottom-right-y", None)))
+    cargs.append(str(params.get("bottom-right-z", None)))
+    cargs.append(str(params.get("top-left-x", None)))
+    cargs.append(str(params.get("top-left-y", None)))
+    cargs.append(str(params.get("top-left-z", None)))
     cargs.append(params.get("image", None))
     return cargs
 
@@ -189,9 +190,7 @@ def volume_capture_plane_execute(
     runner: Runner | None = None,
 ) -> VolumeCapturePlaneOutputs:
     """
-    volume-capture-plane
-    
-    Interpolate image from plane through volume.
+    INTERPOLATE IMAGE FROM PLANE THROUGH VOLUME.
     
     NOTE: If you want to generate an image with all of the capabilities of the
     GUI rendering, see -show-scene.
@@ -202,10 +201,6 @@ def volume_capture_plane_execute(
     CUBIC
     ENCLOSING_VOXEL
     TRILINEAR.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -243,9 +238,7 @@ def volume_capture_plane(
     runner: Runner | None = None,
 ) -> VolumeCapturePlaneOutputs:
     """
-    volume-capture-plane
-    
-    Interpolate image from plane through volume.
+    INTERPOLATE IMAGE FROM PLANE THROUGH VOLUME.
     
     NOTE: If you want to generate an image with all of the capabilities of the
     GUI rendering, see -show-scene.
@@ -256,10 +249,6 @@ def volume_capture_plane(
     CUBIC
     ENCLOSING_VOXEL
     TRILINEAR.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         volume: the volume file to interpolate from.

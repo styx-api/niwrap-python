@@ -6,24 +6,25 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
-    id="8b2a5ebf37ad42d3896a841a48969f292d5ee628.boutiques",
+    id="5f455a5d649ff8b24bbab6cef88ad095666c466f.workbench",
     name="volume-label-export-table",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeLabelExportTableParameters = typing.TypedDict('VolumeLabelExportTableParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-export-table"]],
-    "label_in": InputPathType,
+    "json-out": typing.NotRequired[str | None],
+    "label-in": InputPathType,
     "map": str,
-    "table_out": str,
+    "table-out": str,
 })
 VolumeLabelExportTableParametersTagged = typing.TypedDict('VolumeLabelExportTableParametersTagged', {
     "@type": typing.Literal["workbench/volume-label-export-table"],
-    "label_in": InputPathType,
+    "json-out": typing.NotRequired[str | None],
+    "label-in": InputPathType,
     "map": str,
-    "table_out": str,
+    "table-out": str,
 })
 
 
@@ -36,6 +37,7 @@ class VolumeLabelExportTableOutputs(typing.NamedTuple):
 
 
 def volume_label_export_table_params(
+    json_out: str | None,
     label_in: InputPathType,
     map_: str,
     table_out: str,
@@ -44,6 +46,9 @@ def volume_label_export_table_params(
     Build parameters.
     
     Args:
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
         label_in: the input volume label file.
         map_: the number or name of the label map to use.
         table_out: output - the output text file.
@@ -52,10 +57,12 @@ def volume_label_export_table_params(
     """
     params = {
         "@type": "workbench/volume-label-export-table",
-        "label_in": label_in,
+        "label-in": label_in,
         "map": map_,
-        "table_out": table_out,
+        "table-out": table_out,
     }
+    if json_out is not None:
+        params["json-out"] = json_out
     return params
 
 
@@ -73,11 +80,16 @@ def volume_label_export_table_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-label-export-table")
-    cargs.append(execution.input_file(params.get("label_in", None)))
+    if params.get("json-out", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-volume-label-export-table",
+            "-hierarchy",
+            params.get("json-out", None)
+        ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     cargs.append(params.get("map", None))
-    cargs.append(params.get("table_out", None))
+    cargs.append(params.get("table-out", None))
     return cargs
 
 
@@ -105,16 +117,10 @@ def volume_label_export_table_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelExportTableOutputs:
     """
-    volume-label-export-table
-    
-    Export label table from volume as text.
+    EXPORT LABEL TABLE FROM VOLUME AS TEXT.
     
     Takes the label table from the volume label map, and writes it to a text
     format matching what is expected by -volume-label-import.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -132,24 +138,22 @@ def volume_label_export_table_execute(
 
 
 def volume_label_export_table(
+    json_out: str | None,
     label_in: InputPathType,
     map_: str,
     table_out: str,
     runner: Runner | None = None,
 ) -> VolumeLabelExportTableOutputs:
     """
-    volume-label-export-table
-    
-    Export label table from volume as text.
+    EXPORT LABEL TABLE FROM VOLUME AS TEXT.
     
     Takes the label table from the volume label map, and writes it to a text
     format matching what is expected by -volume-label-import.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        json_out: export the hierarchy as json\
+            \
+            output - filename to write hierarchy to.
         label_in: the input volume label file.
         map_: the number or name of the label map to use.
         table_out: output - the output text file.
@@ -158,6 +162,7 @@ def volume_label_export_table(
         NamedTuple of outputs (described in `VolumeLabelExportTableOutputs`).
     """
     params = volume_label_export_table_params(
+        json_out=json_out,
         label_in=label_in,
         map_=map_,
         table_out=table_out,

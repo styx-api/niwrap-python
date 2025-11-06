@@ -19,10 +19,10 @@ AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters'
     "moco_params": InputPathType,
     "output": str,
     "transform_index": typing.NotRequired[int | None],
-    "framewise": typing.NotRequired[typing.Literal[0, 1] | None],
+    "framewise": typing.NotRequired[bool | None],
     "spatial_map": bool,
     "timeseries_displacement": bool,
-    "help": typing.NotRequired[typing.Literal[0, 1] | None],
+    "help": typing.NotRequired[bool | None],
 })
 AntsMotionCorrStatsParametersTagged = typing.TypedDict('AntsMotionCorrStatsParametersTagged', {
     "@type": typing.Literal["ants/antsMotionCorrStats"],
@@ -30,10 +30,10 @@ AntsMotionCorrStatsParametersTagged = typing.TypedDict('AntsMotionCorrStatsParam
     "moco_params": InputPathType,
     "output": str,
     "transform_index": typing.NotRequired[int | None],
-    "framewise": typing.NotRequired[typing.Literal[0, 1] | None],
+    "framewise": typing.NotRequired[bool | None],
     "spatial_map": bool,
     "timeseries_displacement": bool,
-    "help": typing.NotRequired[typing.Literal[0, 1] | None],
+    "help": typing.NotRequired[bool | None],
 })
 
 
@@ -52,10 +52,10 @@ def ants_motion_corr_stats_params(
     moco_params: InputPathType,
     output: str,
     transform_index: int | None = None,
-    framewise: typing.Literal[0, 1] | None = None,
+    framewise: bool | None = None,
     spatial_map: bool = False,
     timeseries_displacement: bool = False,
-    help_: typing.Literal[0, 1] | None = None,
+    help_: bool | None = None,
 ) -> AntsMotionCorrStatsParametersTagged:
     """
     Build parameters.
@@ -125,7 +125,7 @@ def ants_motion_corr_stats_cargs(
     if params.get("framewise", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("framewise", None))
+            ("1" if params.get("framewise", None) else "0")
         ])
     if params.get("spatial_map", False):
         cargs.append("-s")
@@ -134,7 +134,7 @@ def ants_motion_corr_stats_cargs(
     if params.get("help", None) is not None:
         cargs.extend([
             "--help",
-            str(params.get("help", None))
+            ("1" if params.get("help", None) else "0")
         ])
     return cargs
 
@@ -197,10 +197,10 @@ def ants_motion_corr_stats(
     moco_params: InputPathType,
     output: str,
     transform_index: int | None = None,
-    framewise: typing.Literal[0, 1] | None = None,
+    framewise: bool | None = None,
     spatial_map: bool = False,
     timeseries_displacement: bool = False,
-    help_: typing.Literal[0, 1] | None = None,
+    help_: bool | None = None,
     runner: Runner | None = None,
 ) -> AntsMotionCorrStatsOutputs:
     """

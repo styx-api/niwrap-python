@@ -6,30 +6,29 @@ import pathlib
 from styxdefs import *
 
 ZIP_SCENE_FILE_METADATA = Metadata(
-    id="85d5fb1af707c34c6db735360187816616cc1dda.boutiques",
+    id="b259c5172b5ae3668ffcdba00a5b5a9f3c90cbb1.workbench",
     name="zip-scene-file",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 ZipSceneFileParameters = typing.TypedDict('ZipSceneFileParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/zip-scene-file"]],
-    "scene_file": str,
-    "extract_folder": str,
-    "zip_file": str,
-    "opt_base_dir_directory": typing.NotRequired[str | None],
-    "opt_skip_missing": bool,
-    "opt_write_scene_file": bool,
+    "directory": typing.NotRequired[str | None],
+    "skip-missing": bool,
+    "write-scene-file": bool,
+    "scene-file": str,
+    "extract-folder": str,
+    "zip-file": str,
 })
 ZipSceneFileParametersTagged = typing.TypedDict('ZipSceneFileParametersTagged', {
     "@type": typing.Literal["workbench/zip-scene-file"],
-    "scene_file": str,
-    "extract_folder": str,
-    "zip_file": str,
-    "opt_base_dir_directory": typing.NotRequired[str | None],
-    "opt_skip_missing": bool,
-    "opt_write_scene_file": bool,
+    "directory": typing.NotRequired[str | None],
+    "skip-missing": bool,
+    "write-scene-file": bool,
+    "scene-file": str,
+    "extract-folder": str,
+    "zip-file": str,
 })
 
 
@@ -42,41 +41,42 @@ class ZipSceneFileOutputs(typing.NamedTuple):
 
 
 def zip_scene_file_params(
+    directory: str | None,
     scene_file: str,
     extract_folder: str,
     zip_file: str,
-    opt_base_dir_directory: str | None = None,
-    opt_skip_missing: bool = False,
-    opt_write_scene_file: bool = False,
+    skip_missing: bool = False,
+    write_scene_file: bool = False,
 ) -> ZipSceneFileParametersTagged:
     """
     Build parameters.
     
     Args:
+        directory: specify a directory that all data files are somewhere\
+            within, this will become the root of the zipfile's directory structure\
+            \
+            the directory.
         scene_file: the scene file to make the zip file from.
         extract_folder: the name of the folder created when the zip file is\
             unzipped.
         zip_file: out - the zip file that will be created.
-        opt_base_dir_directory: specify a directory that all data files are\
-            somewhere within, this will become the root of the zipfile's directory\
-            structure: the directory.
-        opt_skip_missing: any missing files will generate only warnings, and\
-            the zip file will be created anyway.
-        opt_write_scene_file: rewrite the scene file before zipping, to store a\
-            new base path or fix extra '..'s in paths that might break.
+        skip_missing: any missing files will generate only warnings, and the\
+            zip file will be created anyway.
+        write_scene_file: rewrite the scene file before zipping, to store a new\
+            base path or fix extra '..'s in paths that might break.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/zip-scene-file",
-        "scene_file": scene_file,
-        "extract_folder": extract_folder,
-        "zip_file": zip_file,
-        "opt_skip_missing": opt_skip_missing,
-        "opt_write_scene_file": opt_write_scene_file,
+        "skip-missing": skip_missing,
+        "write-scene-file": write_scene_file,
+        "scene-file": scene_file,
+        "extract-folder": extract_folder,
+        "zip-file": zip_file,
     }
-    if opt_base_dir_directory is not None:
-        params["opt_base_dir_directory"] = opt_base_dir_directory
+    if directory is not None:
+        params["directory"] = directory
     return params
 
 
@@ -94,20 +94,18 @@ def zip_scene_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-zip-scene-file")
-    cargs.append(params.get("scene_file", None))
-    cargs.append(params.get("extract_folder", None))
-    cargs.append(params.get("zip_file", None))
-    if params.get("opt_base_dir_directory", None) is not None:
+    if params.get("directory", None) is not None or params.get("skip-missing", False) or params.get("write-scene-file", False):
         cargs.extend([
+            "wb_command",
+            "-zip-scene-file",
             "-base-dir",
-            params.get("opt_base_dir_directory", None)
+            (params.get("directory", None) if (params.get("directory", None) is not None) else ""),
+            ("-skip-missing" if (params.get("skip-missing", False)) else ""),
+            ("-write-scene-file" if (params.get("write-scene-file", False)) else "")
         ])
-    if params.get("opt_skip_missing", False):
-        cargs.append("-skip-missing")
-    if params.get("opt_write_scene_file", False):
-        cargs.append("-write-scene-file")
+    cargs.append(params.get("scene-file", None))
+    cargs.append(params.get("extract-folder", None))
+    cargs.append(params.get("zip-file", None))
     return cargs
 
 
@@ -135,18 +133,12 @@ def zip_scene_file_execute(
     runner: Runner | None = None,
 ) -> ZipSceneFileOutputs:
     """
-    zip-scene-file
-    
-    Zip a scene file and its data files.
+    ZIP A SCENE FILE AND ITS DATA FILES.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not
     specified, the base directory will be automatically set to the lowest level
     directory containing all files. The scene file must contain only relative
     paths, and no data files may be outside the base directory.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -164,51 +156,46 @@ def zip_scene_file_execute(
 
 
 def zip_scene_file(
+    directory: str | None,
     scene_file: str,
     extract_folder: str,
     zip_file: str,
-    opt_base_dir_directory: str | None = None,
-    opt_skip_missing: bool = False,
-    opt_write_scene_file: bool = False,
+    skip_missing: bool = False,
+    write_scene_file: bool = False,
     runner: Runner | None = None,
 ) -> ZipSceneFileOutputs:
     """
-    zip-scene-file
-    
-    Zip a scene file and its data files.
+    ZIP A SCENE FILE AND ITS DATA FILES.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not
     specified, the base directory will be automatically set to the lowest level
     directory containing all files. The scene file must contain only relative
     paths, and no data files may be outside the base directory.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        directory: specify a directory that all data files are somewhere\
+            within, this will become the root of the zipfile's directory structure\
+            \
+            the directory.
         scene_file: the scene file to make the zip file from.
         extract_folder: the name of the folder created when the zip file is\
             unzipped.
         zip_file: out - the zip file that will be created.
-        opt_base_dir_directory: specify a directory that all data files are\
-            somewhere within, this will become the root of the zipfile's directory\
-            structure: the directory.
-        opt_skip_missing: any missing files will generate only warnings, and\
-            the zip file will be created anyway.
-        opt_write_scene_file: rewrite the scene file before zipping, to store a\
-            new base path or fix extra '..'s in paths that might break.
+        skip_missing: any missing files will generate only warnings, and the\
+            zip file will be created anyway.
+        write_scene_file: rewrite the scene file before zipping, to store a new\
+            base path or fix extra '..'s in paths that might break.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ZipSceneFileOutputs`).
     """
     params = zip_scene_file_params(
+        directory=directory,
+        skip_missing=skip_missing,
+        write_scene_file=write_scene_file,
         scene_file=scene_file,
         extract_folder=extract_folder,
         zip_file=zip_file,
-        opt_base_dir_directory=opt_base_dir_directory,
-        opt_skip_missing=opt_skip_missing,
-        opt_write_scene_file=opt_write_scene_file,
     )
     return zip_scene_file_execute(params, runner)
 

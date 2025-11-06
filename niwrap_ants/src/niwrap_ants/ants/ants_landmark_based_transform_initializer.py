@@ -23,7 +23,7 @@ AntsLandmarkBasedTransformInitializerParameters = typing.TypedDict('AntsLandmark
     "mesh_size": typing.NotRequired[str | None],
     "number_of_levels": typing.NotRequired[int | None],
     "order": typing.NotRequired[int | None],
-    "enforce_stationary_boundaries": typing.NotRequired[typing.Literal[0, 1] | None],
+    "enforce_stationary_boundaries": typing.NotRequired[bool | None],
     "landmark_weights": typing.NotRequired[InputPathType | None],
 })
 AntsLandmarkBasedTransformInitializerParametersTagged = typing.TypedDict('AntsLandmarkBasedTransformInitializerParametersTagged', {
@@ -36,7 +36,7 @@ AntsLandmarkBasedTransformInitializerParametersTagged = typing.TypedDict('AntsLa
     "mesh_size": typing.NotRequired[str | None],
     "number_of_levels": typing.NotRequired[int | None],
     "order": typing.NotRequired[int | None],
-    "enforce_stationary_boundaries": typing.NotRequired[typing.Literal[0, 1] | None],
+    "enforce_stationary_boundaries": typing.NotRequired[bool | None],
     "landmark_weights": typing.NotRequired[InputPathType | None],
 })
 
@@ -60,7 +60,7 @@ def ants_landmark_based_transform_initializer_params(
     mesh_size: str | None = None,
     number_of_levels: int | None = None,
     order: int | None = None,
-    enforce_stationary_boundaries: typing.Literal[0, 1] | None = None,
+    enforce_stationary_boundaries: bool | None = None,
     landmark_weights: InputPathType | None = None,
 ) -> AntsLandmarkBasedTransformInitializerParametersTagged:
     """
@@ -134,7 +134,7 @@ def ants_landmark_based_transform_initializer_cargs(
     if params.get("order", None) is not None:
         cargs.append(str(params.get("order", None)))
     if params.get("enforce_stationary_boundaries", None) is not None:
-        cargs.append(str(params.get("enforce_stationary_boundaries", None)))
+        cargs.append(("1" if params.get("enforce_stationary_boundaries", None) else "0"))
     if params.get("landmark_weights", None) is not None:
         cargs.append(execution.input_file(params.get("landmark_weights", None)))
     return cargs
@@ -198,7 +198,7 @@ def ants_landmark_based_transform_initializer(
     mesh_size: str | None = None,
     number_of_levels: int | None = None,
     order: int | None = None,
-    enforce_stationary_boundaries: typing.Literal[0, 1] | None = None,
+    enforce_stationary_boundaries: bool | None = None,
     landmark_weights: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> AntsLandmarkBasedTransformInitializerOutputs:

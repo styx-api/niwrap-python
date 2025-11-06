@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 CIFTI_REPLACE_STRUCTURE_METADATA = Metadata(
-    id="9e5fab03b25c831c74fe583c424f6767cbc548ff.boutiques",
+    id="06b2d63161345b1accca9efe553084791baedc0f.workbench",
     name="cifti-replace-structure",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiReplaceStructureVolumeAllParameters = typing.TypedDict('CiftiReplaceStructureVolumeAllParameters', {
-    "@type": typing.NotRequired[typing.Literal["volume_all"]],
+    "@type": typing.NotRequired[typing.Literal["volume-all"]],
     "volume": InputPathType,
-    "opt_from_cropped": bool,
+    "from-cropped": bool,
 })
 CiftiReplaceStructureVolumeAllParametersTagged = typing.TypedDict('CiftiReplaceStructureVolumeAllParametersTagged', {
-    "@type": typing.Literal["volume_all"],
+    "@type": typing.Literal["volume-all"],
     "volume": InputPathType,
-    "opt_from_cropped": bool,
+    "from-cropped": bool,
 })
 
 
@@ -53,57 +52,57 @@ CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureV
     "@type": typing.NotRequired[typing.Literal["volume"]],
     "structure": str,
     "volume": InputPathType,
-    "opt_from_cropped": bool,
+    "from-cropped": bool,
 })
 CiftiReplaceStructureVolumeParametersTagged = typing.TypedDict('CiftiReplaceStructureVolumeParametersTagged', {
     "@type": typing.Literal["volume"],
     "structure": str,
     "volume": InputPathType,
-    "opt_from_cropped": bool,
+    "from-cropped": bool,
 })
 
 
 CiftiReplaceStructureParameters = typing.TypedDict('CiftiReplaceStructureParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-replace-structure"]],
-    "cifti": str,
-    "direction": str,
-    "volume_all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
-    "opt_discard_unused_labels": bool,
-    "opt_label_collision_action": typing.NotRequired[str | None],
+    "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
+    "discard-unused-labels": bool,
+    "action": typing.NotRequired[str | None],
     "label": typing.NotRequired[list[CiftiReplaceStructureLabelParameters] | None],
     "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParameters] | None],
     "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParameters] | None],
+    "cifti": str,
+    "direction": str,
 })
 CiftiReplaceStructureParametersTagged = typing.TypedDict('CiftiReplaceStructureParametersTagged', {
     "@type": typing.Literal["workbench/cifti-replace-structure"],
-    "cifti": str,
-    "direction": str,
-    "volume_all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
-    "opt_discard_unused_labels": bool,
-    "opt_label_collision_action": typing.NotRequired[str | None],
+    "volume-all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
+    "discard-unused-labels": bool,
+    "action": typing.NotRequired[str | None],
     "label": typing.NotRequired[list[CiftiReplaceStructureLabelParameters] | None],
     "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParameters] | None],
     "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParameters] | None],
+    "cifti": str,
+    "direction": str,
 })
 
 
 def cifti_replace_structure_volume_all_params(
     volume: InputPathType,
-    opt_from_cropped: bool = False,
+    from_cropped: bool = False,
 ) -> CiftiReplaceStructureVolumeAllParametersTagged:
     """
     Build parameters.
     
     Args:
         volume: the input volume.
-        opt_from_cropped: the input is cropped to the size of the data.
+        from_cropped: the input is cropped to the size of the data.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "volume_all",
+        "@type": "volume-all",
         "volume": volume,
-        "opt_from_cropped": opt_from_cropped,
+        "from-cropped": from_cropped,
     }
     return params
 
@@ -122,10 +121,12 @@ def cifti_replace_structure_volume_all_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-volume-all")
-    cargs.append(execution.input_file(params.get("volume", None)))
-    if params.get("opt_from_cropped", False):
-        cargs.append("-from-cropped")
+    if params.get("from-cropped", False):
+        cargs.extend([
+            "-volume-all",
+            execution.input_file(params.get("volume", None)),
+            "-from-cropped"
+        ])
     return cargs
 
 
@@ -164,9 +165,11 @@ def cifti_replace_structure_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-label")
-    cargs.append(params.get("structure", None))
-    cargs.append(execution.input_file(params.get("label", None)))
+    cargs.extend([
+        "-label",
+        params.get("structure", None),
+        execution.input_file(params.get("label", None))
+    ])
     return cargs
 
 
@@ -205,16 +208,18 @@ def cifti_replace_structure_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-metric")
-    cargs.append(params.get("structure", None))
-    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.extend([
+        "-metric",
+        params.get("structure", None),
+        execution.input_file(params.get("metric", None))
+    ])
     return cargs
 
 
 def cifti_replace_structure_volume_params(
     structure: str,
     volume: InputPathType,
-    opt_from_cropped: bool = False,
+    from_cropped: bool = False,
 ) -> CiftiReplaceStructureVolumeParametersTagged:
     """
     Build parameters.
@@ -222,7 +227,7 @@ def cifti_replace_structure_volume_params(
     Args:
         structure: the structure to replace the data of.
         volume: the input volume.
-        opt_from_cropped: the input is cropped to the size of the component.
+        from_cropped: the input is cropped to the size of the component.
     Returns:
         Parameter dictionary
     """
@@ -230,7 +235,7 @@ def cifti_replace_structure_volume_params(
         "@type": "volume",
         "structure": structure,
         "volume": volume,
-        "opt_from_cropped": opt_from_cropped,
+        "from-cropped": from_cropped,
     }
     return params
 
@@ -249,11 +254,13 @@ def cifti_replace_structure_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-volume")
-    cargs.append(params.get("structure", None))
-    cargs.append(execution.input_file(params.get("volume", None)))
-    if params.get("opt_from_cropped", False):
-        cargs.append("-from-cropped")
+    if params.get("from-cropped", False):
+        cargs.extend([
+            "-volume",
+            params.get("structure", None),
+            execution.input_file(params.get("volume", None)),
+            "-from-cropped"
+        ])
     return cargs
 
 
@@ -266,11 +273,11 @@ class CiftiReplaceStructureOutputs(typing.NamedTuple):
 
 
 def cifti_replace_structure_params(
+    action: str | None,
     cifti: str,
     direction: str,
     volume_all: CiftiReplaceStructureVolumeAllParameters | None = None,
-    opt_discard_unused_labels: bool = False,
-    opt_label_collision_action: str | None = None,
+    discard_unused_labels: bool = False,
     label: list[CiftiReplaceStructureLabelParameters] | None = None,
     metric: list[CiftiReplaceStructureMetricParameters] | None = None,
     volume: list[CiftiReplaceStructureVolumeParameters] | None = None,
@@ -279,14 +286,15 @@ def cifti_replace_structure_params(
     Build parameters.
     
     Args:
+        action: how to handle conflicts between label keys\
+            \
+            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
+            'LEGACY' to match v1.4.2 and earlier.
         cifti: the cifti to modify.
         direction: which dimension to interpret as a single map, ROW or COLUMN.
         volume_all: replace the data in all volume components.
-        opt_discard_unused_labels: when operating on a dlabel file, drop any\
-            unused label keys from the label table.
-        opt_label_collision_action: how to handle conflicts between label keys:\
-            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
-            'LEGACY' to match v1.4.2 and earlier.
+        discard_unused_labels: when operating on a dlabel file, drop any unused\
+            label keys from the label table.
         label: replace the data in a surface label component.
         metric: replace the data in a surface component.
         volume: replace the data in a volume component.
@@ -295,14 +303,14 @@ def cifti_replace_structure_params(
     """
     params = {
         "@type": "workbench/cifti-replace-structure",
+        "discard-unused-labels": discard_unused_labels,
         "cifti": cifti,
         "direction": direction,
-        "opt_discard_unused_labels": opt_discard_unused_labels,
     }
     if volume_all is not None:
-        params["volume_all"] = volume_all
-    if opt_label_collision_action is not None:
-        params["opt_label_collision_action"] = opt_label_collision_action
+        params["volume-all"] = volume_all
+    if action is not None:
+        params["action"] = action
     if label is not None:
         params["label"] = label
     if metric is not None:
@@ -326,25 +334,20 @@ def cifti_replace_structure_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-replace-structure")
+    if params.get("volume-all", None) is not None or params.get("discard-unused-labels", False) or params.get("action", None) is not None or params.get("label", None) is not None or params.get("metric", None) is not None or params.get("volume", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-cifti-replace-structure",
+            *(cifti_replace_structure_volume_all_cargs(params.get("volume-all", None), execution) if (params.get("volume-all", None) is not None) else []),
+            ("-discard-unused-labels" if (params.get("discard-unused-labels", False)) else ""),
+            "-label-collision",
+            (params.get("action", None) if (params.get("action", None) is not None) else ""),
+            *([a for c in [cifti_replace_structure_label_cargs(s, execution) for s in params.get("label", None)] for a in c] if (params.get("label", None) is not None) else []),
+            *([a for c in [cifti_replace_structure_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else []),
+            *([a for c in [cifti_replace_structure_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c] if (params.get("volume", None) is not None) else [])
+        ])
     cargs.append(params.get("cifti", None))
     cargs.append(params.get("direction", None))
-    if params.get("volume_all", None) is not None:
-        cargs.extend(cifti_replace_structure_volume_all_cargs(params.get("volume_all", None), execution))
-    if params.get("opt_discard_unused_labels", False):
-        cargs.append("-discard-unused-labels")
-    if params.get("opt_label_collision_action", None) is not None:
-        cargs.extend([
-            "-label-collision",
-            params.get("opt_label_collision_action", None)
-        ])
-    if params.get("label", None) is not None:
-        cargs.extend([a for c in [cifti_replace_structure_label_cargs(s, execution) for s in params.get("label", None)] for a in c])
-    if params.get("metric", None) is not None:
-        cargs.extend([a for c in [cifti_replace_structure_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c])
-    if params.get("volume", None) is not None:
-        cargs.extend([a for c in [cifti_replace_structure_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c])
     return cargs
 
 
@@ -372,9 +375,7 @@ def cifti_replace_structure_execute(
     runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
-    cifti-replace-structure
-    
-    Replace data in a structure in a cifti file.
+    REPLACE DATA IN A STRUCTURE IN A CIFTI FILE.
     
     This is a fairly low-level command, you probably want to use
     -cifti-create-dense-from-template instead.
@@ -411,6 +412,8 @@ def cifti_replace_structure_execute(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -421,10 +424,6 @@ def cifti_replace_structure_execute(
     PUTAMEN_RIGHT
     THALAMUS_LEFT
     THALAMUS_RIGHT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -442,20 +441,18 @@ def cifti_replace_structure_execute(
 
 
 def cifti_replace_structure(
+    action: str | None,
     cifti: str,
     direction: str,
     volume_all: CiftiReplaceStructureVolumeAllParameters | None = None,
-    opt_discard_unused_labels: bool = False,
-    opt_label_collision_action: str | None = None,
+    discard_unused_labels: bool = False,
     label: list[CiftiReplaceStructureLabelParameters] | None = None,
     metric: list[CiftiReplaceStructureMetricParameters] | None = None,
     volume: list[CiftiReplaceStructureVolumeParameters] | None = None,
     runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
-    cifti-replace-structure
-    
-    Replace data in a structure in a cifti file.
+    REPLACE DATA IN A STRUCTURE IN A CIFTI FILE.
     
     This is a fairly low-level command, you probably want to use
     -cifti-create-dense-from-template instead.
@@ -492,6 +489,8 @@ def cifti_replace_structure(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -503,19 +502,16 @@ def cifti_replace_structure(
     THALAMUS_LEFT
     THALAMUS_RIGHT.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        action: how to handle conflicts between label keys\
+            \
+            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
+            'LEGACY' to match v1.4.2 and earlier.
         cifti: the cifti to modify.
         direction: which dimension to interpret as a single map, ROW or COLUMN.
         volume_all: replace the data in all volume components.
-        opt_discard_unused_labels: when operating on a dlabel file, drop any\
-            unused label keys from the label table.
-        opt_label_collision_action: how to handle conflicts between label keys:\
-            'ERROR', 'LEFT_SURFACE_FIRST', or 'LEGACY', default 'ERROR', use\
-            'LEGACY' to match v1.4.2 and earlier.
+        discard_unused_labels: when operating on a dlabel file, drop any unused\
+            label keys from the label table.
         label: replace the data in a surface label component.
         metric: replace the data in a surface component.
         volume: replace the data in a volume component.
@@ -524,14 +520,14 @@ def cifti_replace_structure(
         NamedTuple of outputs (described in `CiftiReplaceStructureOutputs`).
     """
     params = cifti_replace_structure_params(
-        cifti=cifti,
-        direction=direction,
         volume_all=volume_all,
-        opt_discard_unused_labels=opt_discard_unused_labels,
-        opt_label_collision_action=opt_label_collision_action,
+        discard_unused_labels=discard_unused_labels,
+        action=action,
         label=label,
         metric=metric,
         volume=volume,
+        cifti=cifti,
+        direction=direction,
     )
     return cifti_replace_structure_execute(params, runner)
 

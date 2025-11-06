@@ -6,30 +6,29 @@ import pathlib
 from styxdefs import *
 
 METRIC_ROIS_TO_BORDER_METADATA = Metadata(
-    id="4a9c089ac2e77aebb94a3e0cd49e5786b1ab89ee.boutiques",
+    id="ae7c7bdc27fb14b4ccb473f0ba599b0647222c8f.workbench",
     name="metric-rois-to-border",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricRoisToBorderParameters = typing.TypedDict('MetricRoisToBorderParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-to-border"]],
+    "border-out": str,
+    "fraction": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "surface": InputPathType,
     "metric": InputPathType,
-    "class_name": str,
-    "border_out": str,
-    "opt_placement_fraction": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "class-name": str,
 })
 MetricRoisToBorderParametersTagged = typing.TypedDict('MetricRoisToBorderParametersTagged', {
     "@type": typing.Literal["workbench/metric-rois-to-border"],
+    "border-out": str,
+    "fraction": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "surface": InputPathType,
     "metric": InputPathType,
-    "class_name": str,
-    "border_out": str,
-    "opt_placement_fraction": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "class-name": str,
 })
 
 
@@ -44,38 +43,41 @@ class MetricRoisToBorderOutputs(typing.NamedTuple):
 
 
 def metric_rois_to_border_params(
+    border_out: str,
+    fraction: float | None,
+    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
-    border_out: str,
-    opt_placement_fraction: float | None = None,
-    opt_column_column: str | None = None,
 ) -> MetricRoisToBorderParametersTagged:
     """
     Build parameters.
     
     Args:
+        border_out: the output border file.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
+        column: select a single column\
+            \
+            the column number or name.
         surface: the surface to use for neighbor information.
         metric: the input metric containing ROIs.
         class_name: the name to use for the class of the output borders.
-        border_out: the output border file.
-        opt_placement_fraction: set how far along the edge border points are\
-            drawn: fraction along edge from inside vertex (default 0.33).
-        opt_column_column: select a single column: the column number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-rois-to-border",
+        "border-out": border_out,
         "surface": surface,
         "metric": metric,
-        "class_name": class_name,
-        "border_out": border_out,
+        "class-name": class_name,
     }
-    if opt_placement_fraction is not None:
-        params["opt_placement_fraction"] = opt_placement_fraction
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if fraction is not None:
+        params["fraction"] = fraction
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -93,22 +95,19 @@ def metric_rois_to_border_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-rois-to-border")
+    if params.get("fraction", None) is not None or params.get("column", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-metric-rois-to-border",
+            params.get("border-out", None),
+            "-placement",
+            (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else "")
+        ])
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(execution.input_file(params.get("metric", None)))
-    cargs.append(params.get("class_name", None))
-    cargs.append(params.get("border_out", None))
-    if params.get("opt_placement_fraction", None) is not None:
-        cargs.extend([
-            "-placement",
-            str(params.get("opt_placement_fraction", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("opt_column_column", None)
-        ])
+    cargs.append(params.get("class-name", None))
     return cargs
 
 
@@ -127,7 +126,7 @@ def metric_rois_to_border_outputs(
     """
     ret = MetricRoisToBorderOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out", None)),
+        border_out=execution.output_file(params.get("border-out", None)),
     )
     return ret
 
@@ -137,17 +136,11 @@ def metric_rois_to_border_execute(
     runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
-    metric-rois-to-border
-    
-    Draw borders around metric rois.
+    DRAW BORDERS AROUND METRIC ROIS.
     
     For each ROI column, finds all edges on the mesh that cross the boundary of
     the ROI, and draws borders through them. By default, this is done on all
     columns in the input file, using the map name as the name for the border.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -165,46 +158,43 @@ def metric_rois_to_border_execute(
 
 
 def metric_rois_to_border(
+    border_out: str,
+    fraction: float | None,
+    column: str | None,
     surface: InputPathType,
     metric: InputPathType,
     class_name: str,
-    border_out: str,
-    opt_placement_fraction: float | None = None,
-    opt_column_column: str | None = None,
     runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
-    metric-rois-to-border
-    
-    Draw borders around metric rois.
+    DRAW BORDERS AROUND METRIC ROIS.
     
     For each ROI column, finds all edges on the mesh that cross the boundary of
     the ROI, and draws borders through them. By default, this is done on all
     columns in the input file, using the map name as the name for the border.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        border_out: the output border file.
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
+        column: select a single column\
+            \
+            the column number or name.
         surface: the surface to use for neighbor information.
         metric: the input metric containing ROIs.
         class_name: the name to use for the class of the output borders.
-        border_out: the output border file.
-        opt_placement_fraction: set how far along the edge border points are\
-            drawn: fraction along edge from inside vertex (default 0.33).
-        opt_column_column: select a single column: the column number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisToBorderOutputs`).
     """
     params = metric_rois_to_border_params(
+        border_out=border_out,
+        fraction=fraction,
+        column=column,
         surface=surface,
         metric=metric,
         class_name=class_name,
-        border_out=border_out,
-        opt_placement_fraction=opt_placement_fraction,
-        opt_column_column=opt_column_column,
     )
     return metric_rois_to_border_execute(params, runner)
 

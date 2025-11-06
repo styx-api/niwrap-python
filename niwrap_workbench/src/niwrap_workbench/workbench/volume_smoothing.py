@@ -6,32 +6,31 @@ import pathlib
 from styxdefs import *
 
 VOLUME_SMOOTHING_METADATA = Metadata(
-    id="16d345c3991b1be3c6200b8b8d0e7e17cdd8c48a.boutiques",
+    id="d799671856dffbf8bcd37b5fc4f2635099c3c22c.workbench",
     name="volume-smoothing",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeSmoothingParameters = typing.TypedDict('VolumeSmoothingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-smoothing"]],
-    "volume_in": InputPathType,
+    "volume-out": str,
+    "fwhm": bool,
+    "roivol": typing.NotRequired[InputPathType | None],
+    "fix-zeros": bool,
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
     "kernel": float,
-    "volume_out": str,
-    "opt_fwhm": bool,
-    "opt_roi_roivol": typing.NotRequired[InputPathType | None],
-    "opt_fix_zeros": bool,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 VolumeSmoothingParametersTagged = typing.TypedDict('VolumeSmoothingParametersTagged', {
     "@type": typing.Literal["workbench/volume-smoothing"],
-    "volume_in": InputPathType,
+    "volume-out": str,
+    "fwhm": bool,
+    "roivol": typing.NotRequired[InputPathType | None],
+    "fix-zeros": bool,
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
     "kernel": float,
-    "volume_out": str,
-    "opt_fwhm": bool,
-    "opt_roi_roivol": typing.NotRequired[InputPathType | None],
-    "opt_fix_zeros": bool,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 
 
@@ -46,43 +45,45 @@ class VolumeSmoothingOutputs(typing.NamedTuple):
 
 
 def volume_smoothing_params(
+    volume_out: str,
+    roivol: InputPathType | None,
+    subvol: str | None,
     volume_in: InputPathType,
     kernel: float,
-    volume_out: str,
-    opt_fwhm: bool = False,
-    opt_roi_roivol: InputPathType | None = None,
-    opt_fix_zeros: bool = False,
-    opt_subvolume_subvol: str | None = None,
+    fwhm: bool = False,
+    fix_zeros: bool = False,
 ) -> VolumeSmoothingParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
+        roivol: smooth only from data within an ROI\
+            \
+            the volume to use as an ROI.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         volume_in: the volume to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        volume_out: the output volume.
-        opt_fwhm: kernel size is FWHM, not sigma.
-        opt_roi_roivol: smooth only from data within an ROI: the volume to use\
-            as an ROI.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_subvolume_subvol: select a single subvolume to smooth: the\
-            subvolume number or name.
+        fwhm: kernel size is FWHM, not sigma.
+        fix_zeros: treat zero values as not being data.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-smoothing",
-        "volume_in": volume_in,
+        "volume-out": volume_out,
+        "fwhm": fwhm,
+        "fix-zeros": fix_zeros,
+        "volume-in": volume_in,
         "kernel": kernel,
-        "volume_out": volume_out,
-        "opt_fwhm": opt_fwhm,
-        "opt_fix_zeros": opt_fix_zeros,
     }
-    if opt_roi_roivol is not None:
-        params["opt_roi_roivol"] = opt_roi_roivol
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if roivol is not None:
+        params["roivol"] = roivol
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -100,25 +101,20 @@ def volume_smoothing_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-smoothing")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(str(params.get("kernel", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
-    if params.get("opt_roi_roivol", None) is not None:
+    if params.get("fwhm", False) or params.get("roivol", None) is not None or params.get("fix-zeros", False) or params.get("subvol", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-smoothing",
+            params.get("volume-out", None),
+            ("-fwhm" if (params.get("fwhm", False)) else ""),
             "-roi",
-            execution.input_file(params.get("opt_roi_roivol", None))
-        ])
-    if params.get("opt_fix_zeros", False):
-        cargs.append("-fix-zeros")
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roivol", None)) if (params.get("roivol", None) is not None) else ""),
+            ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(str(params.get("kernel", None)))
     return cargs
 
 
@@ -137,7 +133,7 @@ def volume_smoothing_outputs(
     """
     ret = VolumeSmoothingOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -147,9 +143,7 @@ def volume_smoothing_execute(
     runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
-    volume-smoothing
-    
-    Smooth a volume file.
+    SMOOTH A VOLUME FILE.
     
     Gaussian smoothing for volumes. By default, smooths all subvolumes with no
     ROI, if ROI is given, only positive voxels in the ROI volume have their
@@ -162,10 +156,6 @@ def volume_smoothing_execute(
     is zero, but still write a smoothed value to the voxel. This is useful for
     zeros that indicate lack of information, preventing them from pulling down
     the intensity of nearby voxels, while giving the zero an extrapolated value.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -183,19 +173,17 @@ def volume_smoothing_execute(
 
 
 def volume_smoothing(
+    volume_out: str,
+    roivol: InputPathType | None,
+    subvol: str | None,
     volume_in: InputPathType,
     kernel: float,
-    volume_out: str,
-    opt_fwhm: bool = False,
-    opt_roi_roivol: InputPathType | None = None,
-    opt_fix_zeros: bool = False,
-    opt_subvolume_subvol: str | None = None,
+    fwhm: bool = False,
+    fix_zeros: bool = False,
     runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
-    volume-smoothing
-    
-    Smooth a volume file.
+    SMOOTH A VOLUME FILE.
     
     Gaussian smoothing for volumes. By default, smooths all subvolumes with no
     ROI, if ROI is given, only positive voxels in the ROI volume have their
@@ -209,33 +197,31 @@ def volume_smoothing(
     zeros that indicate lack of information, preventing them from pulling down
     the intensity of nearby voxels, while giving the zero an extrapolated value.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
+        roivol: smooth only from data within an ROI\
+            \
+            the volume to use as an ROI.
+        subvol: select a single subvolume to smooth\
+            \
+            the subvolume number or name.
         volume_in: the volume to smooth.
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        volume_out: the output volume.
-        opt_fwhm: kernel size is FWHM, not sigma.
-        opt_roi_roivol: smooth only from data within an ROI: the volume to use\
-            as an ROI.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_subvolume_subvol: select a single subvolume to smooth: the\
-            subvolume number or name.
+        fwhm: kernel size is FWHM, not sigma.
+        fix_zeros: treat zero values as not being data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeSmoothingOutputs`).
     """
     params = volume_smoothing_params(
+        volume_out=volume_out,
+        fwhm=fwhm,
+        roivol=roivol,
+        fix_zeros=fix_zeros,
+        subvol=subvol,
         volume_in=volume_in,
         kernel=kernel,
-        volume_out=volume_out,
-        opt_fwhm=opt_fwhm,
-        opt_roi_roivol=opt_roi_roivol,
-        opt_fix_zeros=opt_fix_zeros,
-        opt_subvolume_subvol=opt_subvolume_subvol,
     )
     return volume_smoothing_execute(params, runner)
 

@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 LABEL_MODIFY_KEYS_METADATA = Metadata(
-    id="d6011104900b541ac706e3e2a8d7222e98ae764f.boutiques",
+    id="e84f8183032da13712cc4d51e831efb848fef7f4.workbench",
     name="label-modify-keys",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelModifyKeysParameters = typing.TypedDict('LabelModifyKeysParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-modify-keys"]],
-    "label_in": InputPathType,
-    "remap_file": str,
-    "label_out": str,
-    "opt_column_column": typing.NotRequired[str | None],
+    "label-out": str,
+    "column": typing.NotRequired[str | None],
+    "label-in": InputPathType,
+    "remap-file": str,
 })
 LabelModifyKeysParametersTagged = typing.TypedDict('LabelModifyKeysParametersTagged', {
     "@type": typing.Literal["workbench/label-modify-keys"],
-    "label_in": InputPathType,
-    "remap_file": str,
-    "label_out": str,
-    "opt_column_column": typing.NotRequired[str | None],
+    "label-out": str,
+    "column": typing.NotRequired[str | None],
+    "label-in": InputPathType,
+    "remap-file": str,
 })
 
 
@@ -40,31 +39,32 @@ class LabelModifyKeysOutputs(typing.NamedTuple):
 
 
 def label_modify_keys_params(
+    label_out: str,
+    column: str | None,
     label_in: InputPathType,
     remap_file: str,
-    label_out: str,
-    opt_column_column: str | None = None,
 ) -> LabelModifyKeysParametersTagged:
     """
     Build parameters.
     
     Args:
+        label_out: output label file.
+        column: select a single column to use\
+            \
+            the column number or name.
         label_in: the input label file.
         remap_file: text file with old and new key values.
-        label_out: output label file.
-        opt_column_column: select a single column to use: the column number or\
-            name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-modify-keys",
-        "label_in": label_in,
-        "remap_file": remap_file,
-        "label_out": label_out,
+        "label-out": label_out,
+        "label-in": label_in,
+        "remap-file": remap_file,
     }
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -82,16 +82,16 @@ def label_modify_keys_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-modify-keys")
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(params.get("remap_file", None))
-    cargs.append(params.get("label_out", None))
-    if params.get("opt_column_column", None) is not None:
+    if params.get("column", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-label-modify-keys",
+            params.get("label-out", None),
             "-column",
-            params.get("opt_column_column", None)
+            params.get("column", None)
         ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
+    cargs.append(params.get("remap-file", None))
     return cargs
 
 
@@ -110,7 +110,7 @@ def label_modify_keys_outputs(
     """
     ret = LabelModifyKeysOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out", None)),
+        label_out=execution.output_file(params.get("label-out", None)),
     )
     return ret
 
@@ -120,9 +120,7 @@ def label_modify_keys_execute(
     runner: Runner | None = None,
 ) -> LabelModifyKeysOutputs:
     """
-    label-modify-keys
-    
-    Change key values in a label file.
+    CHANGE KEY VALUES IN A LABEL FILE.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
     
@@ -137,10 +135,6 @@ def label_modify_keys_execute(
     the same key to more than one new key, results in an error. This will not
     change the appearance of the file when displayed, as it will change the key
     values in the data at the same time.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -158,16 +152,14 @@ def label_modify_keys_execute(
 
 
 def label_modify_keys(
+    label_out: str,
+    column: str | None,
     label_in: InputPathType,
     remap_file: str,
-    label_out: str,
-    opt_column_column: str | None = None,
     runner: Runner | None = None,
 ) -> LabelModifyKeysOutputs:
     """
-    label-modify-keys
-    
-    Change key values in a label file.
+    CHANGE KEY VALUES IN A LABEL FILE.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
     
@@ -183,25 +175,22 @@ def label_modify_keys(
     change the appearance of the file when displayed, as it will change the key
     values in the data at the same time.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        label_out: output label file.
+        column: select a single column to use\
+            \
+            the column number or name.
         label_in: the input label file.
         remap_file: text file with old and new key values.
-        label_out: output label file.
-        opt_column_column: select a single column to use: the column number or\
-            name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelModifyKeysOutputs`).
     """
     params = label_modify_keys_params(
+        label_out=label_out,
+        column=column,
         label_in=label_in,
         remap_file=remap_file,
-        label_out=label_out,
-        opt_column_column=opt_column_column,
     )
     return label_modify_keys_execute(params, runner)
 

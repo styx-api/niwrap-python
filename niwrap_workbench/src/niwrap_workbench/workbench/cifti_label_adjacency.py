@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
-    id="bcb2ac9510f2329e36c8dab72f902febc2c62123.boutiques",
+    id="2e19cd8506381d00a3254296038c79a01dddd353.workbench",
     name="cifti-label-adjacency",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiLabelAdjacencyParameters = typing.TypedDict('CiftiLabelAdjacencyParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-adjacency"]],
-    "label_in": InputPathType,
-    "adjacency_out": str,
-    "opt_left_surface_surface": typing.NotRequired[InputPathType | None],
-    "opt_right_surface_surface": typing.NotRequired[InputPathType | None],
-    "opt_cerebellum_surface_surface": typing.NotRequired[InputPathType | None],
+    "adjacency-out": str,
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "label-in": InputPathType,
 })
 CiftiLabelAdjacencyParametersTagged = typing.TypedDict('CiftiLabelAdjacencyParametersTagged', {
     "@type": typing.Literal["workbench/cifti-label-adjacency"],
-    "label_in": InputPathType,
-    "adjacency_out": str,
-    "opt_left_surface_surface": typing.NotRequired[InputPathType | None],
-    "opt_right_surface_surface": typing.NotRequired[InputPathType | None],
-    "opt_cerebellum_surface_surface": typing.NotRequired[InputPathType | None],
+    "adjacency-out": str,
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[InputPathType | None],
+    "label-in": InputPathType,
 })
 
 
@@ -42,38 +41,41 @@ class CiftiLabelAdjacencyOutputs(typing.NamedTuple):
 
 
 def cifti_label_adjacency_params(
-    label_in: InputPathType,
     adjacency_out: str,
-    opt_left_surface_surface: InputPathType | None = None,
-    opt_right_surface_surface: InputPathType | None = None,
-    opt_cerebellum_surface_surface: InputPathType | None = None,
+    surface: InputPathType | None,
+    surface_: InputPathType | None,
+    surface_2: InputPathType | None,
+    label_in: InputPathType,
 ) -> CiftiLabelAdjacencyParametersTagged:
     """
     Build parameters.
     
     Args:
-        label_in: the input cifti label file.
         adjacency_out: the output cifti pconn adjacency matrix.
-        opt_left_surface_surface: specify the left surface to use: the left\
-            surface file.
-        opt_right_surface_surface: specify the right surface to use: the right\
-            surface file.
-        opt_cerebellum_surface_surface: specify the cerebellum surface to use:\
+        surface: specify the left surface to use\
+            \
+            the left surface file.
+        surface_: specify the right surface to use\
+            \
+            the right surface file.
+        surface_2: specify the cerebellum surface to use\
+            \
             the cerebellum surface file.
+        label_in: the input cifti label file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-label-adjacency",
-        "label_in": label_in,
-        "adjacency_out": adjacency_out,
+        "adjacency-out": adjacency_out,
+        "label-in": label_in,
     }
-    if opt_left_surface_surface is not None:
-        params["opt_left_surface_surface"] = opt_left_surface_surface
-    if opt_right_surface_surface is not None:
-        params["opt_right_surface_surface"] = opt_right_surface_surface
-    if opt_cerebellum_surface_surface is not None:
-        params["opt_cerebellum_surface_surface"] = opt_cerebellum_surface_surface
+    if surface is not None:
+        params["surface"] = surface
+    if surface_ is not None:
+        params["surface"] = surface_
+    if surface_2 is not None:
+        params["surface"] = surface_2
     return params
 
 
@@ -91,25 +93,19 @@ def cifti_label_adjacency_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-label-adjacency")
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(params.get("adjacency_out", None))
-    if params.get("opt_left_surface_surface", None) is not None:
+    if params.get("surface", None) is not None or params.get("surface", None) is not None or params.get("surface", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-label-adjacency",
+            params.get("adjacency-out", None),
             "-left-surface",
-            execution.input_file(params.get("opt_left_surface_surface", None))
-        ])
-    if params.get("opt_right_surface_surface", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
             "-right-surface",
-            execution.input_file(params.get("opt_right_surface_surface", None))
-        ])
-    if params.get("opt_cerebellum_surface_surface", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else ""),
             "-cerebellum-surface",
-            execution.input_file(params.get("opt_cerebellum_surface_surface", None))
+            (execution.input_file(params.get("surface", None)) if (params.get("surface", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("label-in", None)))
     return cargs
 
 
@@ -128,7 +124,7 @@ def cifti_label_adjacency_outputs(
     """
     ret = CiftiLabelAdjacencyOutputs(
         root=execution.output_file("."),
-        adjacency_out=execution.output_file(params.get("adjacency_out", None)),
+        adjacency_out=execution.output_file(params.get("adjacency-out", None)),
     )
     return ret
 
@@ -138,18 +134,12 @@ def cifti_label_adjacency_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelAdjacencyOutputs:
     """
-    cifti-label-adjacency
-    
-    Make adjacency matrix of a cifti label file.
+    MAKE ADJACENCY MATRIX OF A CIFTI LABEL FILE.
     
     Find face-adjacent voxels and connected vertices that have different label
     values, and count them for each pair. Put the resulting counts into a
     parcellated connectivity file, with the diagonal being zero. This gives a
     rough estimate of how long or expansive the border between two labels is.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -167,46 +157,43 @@ def cifti_label_adjacency_execute(
 
 
 def cifti_label_adjacency(
-    label_in: InputPathType,
     adjacency_out: str,
-    opt_left_surface_surface: InputPathType | None = None,
-    opt_right_surface_surface: InputPathType | None = None,
-    opt_cerebellum_surface_surface: InputPathType | None = None,
+    surface: InputPathType | None,
+    surface_: InputPathType | None,
+    surface_2: InputPathType | None,
+    label_in: InputPathType,
     runner: Runner | None = None,
 ) -> CiftiLabelAdjacencyOutputs:
     """
-    cifti-label-adjacency
-    
-    Make adjacency matrix of a cifti label file.
+    MAKE ADJACENCY MATRIX OF A CIFTI LABEL FILE.
     
     Find face-adjacent voxels and connected vertices that have different label
     values, and count them for each pair. Put the resulting counts into a
     parcellated connectivity file, with the diagonal being zero. This gives a
     rough estimate of how long or expansive the border between two labels is.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        label_in: the input cifti label file.
         adjacency_out: the output cifti pconn adjacency matrix.
-        opt_left_surface_surface: specify the left surface to use: the left\
-            surface file.
-        opt_right_surface_surface: specify the right surface to use: the right\
-            surface file.
-        opt_cerebellum_surface_surface: specify the cerebellum surface to use:\
+        surface: specify the left surface to use\
+            \
+            the left surface file.
+        surface_: specify the right surface to use\
+            \
+            the right surface file.
+        surface_2: specify the cerebellum surface to use\
+            \
             the cerebellum surface file.
+        label_in: the input cifti label file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelAdjacencyOutputs`).
     """
     params = cifti_label_adjacency_params(
-        label_in=label_in,
         adjacency_out=adjacency_out,
-        opt_left_surface_surface=opt_left_surface_surface,
-        opt_right_surface_surface=opt_right_surface_surface,
-        opt_cerebellum_surface_surface=opt_cerebellum_surface_surface,
+        surface=surface,
+        surface_=surface_,
+        surface_2=surface_2,
+        label_in=label_in,
     )
     return cifti_label_adjacency_execute(params, runner)
 

@@ -6,38 +6,37 @@ import pathlib
 from styxdefs import *
 
 CIFTI_LABEL_TO_BORDER_METADATA = Metadata(
-    id="47da628bfbf4e955d157fbb860fd530ed67ce718.boutiques",
+    id="ad9549859ecd3b88b8cca8704b00cceb77188e6a.workbench",
     name="cifti-label-to-border",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiLabelToBorderBorderParameters = typing.TypedDict('CiftiLabelToBorderBorderParameters', {
     "@type": typing.NotRequired[typing.Literal["border"]],
     "surface": InputPathType,
-    "border_out": str,
+    "border-out": str,
 })
 CiftiLabelToBorderBorderParametersTagged = typing.TypedDict('CiftiLabelToBorderBorderParametersTagged', {
     "@type": typing.Literal["border"],
     "surface": InputPathType,
-    "border_out": str,
+    "border-out": str,
 })
 
 
 CiftiLabelToBorderParameters = typing.TypedDict('CiftiLabelToBorderParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-to-border"]],
-    "cifti_in": InputPathType,
-    "opt_placement_fraction": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "border": typing.NotRequired[list[CiftiLabelToBorderBorderParameters] | None],
+    "cifti-in": InputPathType,
 })
 CiftiLabelToBorderParametersTagged = typing.TypedDict('CiftiLabelToBorderParametersTagged', {
     "@type": typing.Literal["workbench/cifti-label-to-border"],
-    "cifti_in": InputPathType,
-    "opt_placement_fraction": typing.NotRequired[float | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "fraction": typing.NotRequired[float | None],
+    "column": typing.NotRequired[str | None],
     "border": typing.NotRequired[list[CiftiLabelToBorderBorderParameters] | None],
+    "cifti-in": InputPathType,
 })
 
 
@@ -67,7 +66,7 @@ def cifti_label_to_border_border_params(
     params = {
         "@type": "border",
         "surface": surface,
-        "border_out": border_out,
+        "border-out": border_out,
     }
     return params
 
@@ -86,9 +85,11 @@ def cifti_label_to_border_border_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-border")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("border_out", None))
+    cargs.extend([
+        "-border",
+        execution.input_file(params.get("surface", None)),
+        params.get("border-out", None)
+    ])
     return cargs
 
 
@@ -107,7 +108,7 @@ def cifti_label_to_border_border_outputs(
     """
     ret = CiftiLabelToBorderBorderOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out", None)),
+        border_out=execution.output_file(params.get("border-out", None)),
     )
     return ret
 
@@ -124,31 +125,34 @@ class CiftiLabelToBorderOutputs(typing.NamedTuple):
 
 
 def cifti_label_to_border_params(
+    fraction: float | None,
+    column: str | None,
     cifti_in: InputPathType,
-    opt_placement_fraction: float | None = None,
-    opt_column_column: str | None = None,
     border: list[CiftiLabelToBorderBorderParameters] | None = None,
 ) -> CiftiLabelToBorderParametersTagged:
     """
     Build parameters.
     
     Args:
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
+        column: select a single column\
+            \
+            the column number or name.
         cifti_in: the input cifti dlabel file.
-        opt_placement_fraction: set how far along the edge border points are\
-            drawn: fraction along edge from inside vertex (default 0.33).
-        opt_column_column: select a single column: the column number or name.
         border: specify output file for a surface structure.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-label-to-border",
-        "cifti_in": cifti_in,
+        "cifti-in": cifti_in,
     }
-    if opt_placement_fraction is not None:
-        params["opt_placement_fraction"] = opt_placement_fraction
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if fraction is not None:
+        params["fraction"] = fraction
+    if column is not None:
+        params["column"] = column
     if border is not None:
         params["border"] = border
     return params
@@ -168,21 +172,17 @@ def cifti_label_to_border_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-label-to-border")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
-    if params.get("opt_placement_fraction", None) is not None:
+    if params.get("fraction", None) is not None or params.get("column", None) is not None or params.get("border", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-label-to-border",
             "-placement",
-            str(params.get("opt_placement_fraction", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (str(params.get("fraction", None)) if (params.get("fraction", None) is not None) else ""),
             "-column",
-            params.get("opt_column_column", None)
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            *([a for c in [cifti_label_to_border_border_cargs(s, execution) for s in params.get("border", None)] for a in c] if (params.get("border", None) is not None) else [])
         ])
-    if params.get("border", None) is not None:
-        cargs.extend([a for c in [cifti_label_to_border_border_cargs(s, execution) for s in params.get("border", None)] for a in c])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
 
@@ -211,17 +211,11 @@ def cifti_label_to_border_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelToBorderOutputs:
     """
-    cifti-label-to-border
-    
-    Draw borders around cifti labels.
+    DRAW BORDERS AROUND CIFTI LABELS.
     
     For each surface, takes the labels on the matching structure and draws
     borders around the labels. Use -column to only draw borders around one label
     map.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -239,40 +233,37 @@ def cifti_label_to_border_execute(
 
 
 def cifti_label_to_border(
+    fraction: float | None,
+    column: str | None,
     cifti_in: InputPathType,
-    opt_placement_fraction: float | None = None,
-    opt_column_column: str | None = None,
     border: list[CiftiLabelToBorderBorderParameters] | None = None,
     runner: Runner | None = None,
 ) -> CiftiLabelToBorderOutputs:
     """
-    cifti-label-to-border
-    
-    Draw borders around cifti labels.
+    DRAW BORDERS AROUND CIFTI LABELS.
     
     For each surface, takes the labels on the matching structure and draws
     borders around the labels. Use -column to only draw borders around one label
     map.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        fraction: set how far along the edge border points are drawn\
+            \
+            fraction along edge from inside vertex (default 0.33).
+        column: select a single column\
+            \
+            the column number or name.
         cifti_in: the input cifti dlabel file.
-        opt_placement_fraction: set how far along the edge border points are\
-            drawn: fraction along edge from inside vertex (default 0.33).
-        opt_column_column: select a single column: the column number or name.
         border: specify output file for a surface structure.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelToBorderOutputs`).
     """
     params = cifti_label_to_border_params(
-        cifti_in=cifti_in,
-        opt_placement_fraction=opt_placement_fraction,
-        opt_column_column=opt_column_column,
+        fraction=fraction,
+        column=column,
         border=border,
+        cifti_in=cifti_in,
     )
     return cifti_label_to_border_execute(params, runner)
 

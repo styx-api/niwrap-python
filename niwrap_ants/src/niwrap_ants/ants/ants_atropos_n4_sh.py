@@ -36,19 +36,19 @@ AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
     "max_atropos_iterations": typing.NotRequired[int | None],
     "segmentation_priors": AntsAtroposN4ShSegmentationPriorsParameters,
     "mrf": typing.NotRequired[str | None],
-    "denoise_anatomical_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "denoise_anatomical_images": typing.NotRequired[bool | None],
     "posterior_formulation": typing.NotRequired[typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None],
     "label_propagation": typing.NotRequired[str | None],
     "posterior_label_for_n4_weight_mask": typing.NotRequired[str | None],
     "image_file_suffix": typing.NotRequired[str | None],
-    "keep_temporary_files": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_random_seeding": typing.NotRequired[typing.Literal[0, 1] | None],
+    "keep_temporary_files": typing.NotRequired[bool | None],
+    "use_random_seeding": typing.NotRequired[bool | None],
     "atropos_segmentation_prior_weight": typing.NotRequired[float | None],
     "n4_convergence": typing.NotRequired[str | None],
     "n4_shrink_factor": typing.NotRequired[int | None],
     "n4_bspline_params": typing.NotRequired[str | None],
     "atropos_segmentation_icm": typing.NotRequired[str | None],
-    "atropos_segmentation_use_euclidean_distance": typing.NotRequired[typing.Literal[0, 1] | None],
+    "atropos_segmentation_use_euclidean_distance": typing.NotRequired[bool | None],
     "test_debug_mode": typing.NotRequired[int | None],
 })
 AntsAtroposN4ShParametersTagged = typing.TypedDict('AntsAtroposN4ShParametersTagged', {
@@ -62,19 +62,19 @@ AntsAtroposN4ShParametersTagged = typing.TypedDict('AntsAtroposN4ShParametersTag
     "max_atropos_iterations": typing.NotRequired[int | None],
     "segmentation_priors": AntsAtroposN4ShSegmentationPriorsParameters,
     "mrf": typing.NotRequired[str | None],
-    "denoise_anatomical_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "denoise_anatomical_images": typing.NotRequired[bool | None],
     "posterior_formulation": typing.NotRequired[typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None],
     "label_propagation": typing.NotRequired[str | None],
     "posterior_label_for_n4_weight_mask": typing.NotRequired[str | None],
     "image_file_suffix": typing.NotRequired[str | None],
-    "keep_temporary_files": typing.NotRequired[typing.Literal[0, 1] | None],
-    "use_random_seeding": typing.NotRequired[typing.Literal[0, 1] | None],
+    "keep_temporary_files": typing.NotRequired[bool | None],
+    "use_random_seeding": typing.NotRequired[bool | None],
     "atropos_segmentation_prior_weight": typing.NotRequired[float | None],
     "n4_convergence": typing.NotRequired[str | None],
     "n4_shrink_factor": typing.NotRequired[int | None],
     "n4_bspline_params": typing.NotRequired[str | None],
     "atropos_segmentation_icm": typing.NotRequired[str | None],
-    "atropos_segmentation_use_euclidean_distance": typing.NotRequired[typing.Literal[0, 1] | None],
+    "atropos_segmentation_use_euclidean_distance": typing.NotRequired[bool | None],
     "test_debug_mode": typing.NotRequired[int | None],
 })
 
@@ -148,19 +148,19 @@ def ants_atropos_n4_sh_params(
     max_n4_atropos_iterations: int | None = None,
     max_atropos_iterations: int | None = None,
     mrf: str | None = None,
-    denoise_anatomical_images: typing.Literal[0, 1] | None = None,
+    denoise_anatomical_images: bool | None = None,
     posterior_formulation: typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None = None,
     label_propagation: str | None = None,
     posterior_label_for_n4_weight_mask: str | None = None,
     image_file_suffix: str | None = None,
-    keep_temporary_files: typing.Literal[0, 1] | None = None,
-    use_random_seeding: typing.Literal[0, 1] | None = None,
+    keep_temporary_files: bool | None = None,
+    use_random_seeding: bool | None = None,
     atropos_segmentation_prior_weight: float | None = None,
     n4_convergence: str | None = None,
     n4_shrink_factor: int | None = None,
     n4_bspline_params: str | None = None,
     atropos_segmentation_icm: str | None = None,
-    atropos_segmentation_use_euclidean_distance: typing.Literal[0, 1] | None = None,
+    atropos_segmentation_use_euclidean_distance: bool | None = None,
     test_debug_mode: int | None = None,
 ) -> AntsAtroposN4ShParametersTagged:
     """
@@ -334,7 +334,7 @@ def ants_atropos_n4_sh_cargs(
     if params.get("denoise_anatomical_images", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("denoise_anatomical_images", None))
+            ("1" if params.get("denoise_anatomical_images", None) else "0")
         ])
     if params.get("posterior_formulation", None) is not None:
         cargs.extend([
@@ -359,12 +359,12 @@ def ants_atropos_n4_sh_cargs(
     if params.get("keep_temporary_files", None) is not None:
         cargs.extend([
             "-k",
-            str(params.get("keep_temporary_files", None))
+            ("1" if params.get("keep_temporary_files", None) else "0")
         ])
     if params.get("use_random_seeding", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("use_random_seeding", None))
+            ("1" if params.get("use_random_seeding", None) else "0")
         ])
     if params.get("atropos_segmentation_prior_weight", None) is not None:
         cargs.extend([
@@ -394,7 +394,7 @@ def ants_atropos_n4_sh_cargs(
     if params.get("atropos_segmentation_use_euclidean_distance", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("atropos_segmentation_use_euclidean_distance", None))
+            ("1" if params.get("atropos_segmentation_use_euclidean_distance", None) else "0")
         ])
     if params.get("test_debug_mode", None) is not None:
         cargs.extend([
@@ -465,19 +465,19 @@ def ants_atropos_n4_sh(
     max_n4_atropos_iterations: int | None = None,
     max_atropos_iterations: int | None = None,
     mrf: str | None = None,
-    denoise_anatomical_images: typing.Literal[0, 1] | None = None,
+    denoise_anatomical_images: bool | None = None,
     posterior_formulation: typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None = None,
     label_propagation: str | None = None,
     posterior_label_for_n4_weight_mask: str | None = None,
     image_file_suffix: str | None = None,
-    keep_temporary_files: typing.Literal[0, 1] | None = None,
-    use_random_seeding: typing.Literal[0, 1] | None = None,
+    keep_temporary_files: bool | None = None,
+    use_random_seeding: bool | None = None,
     atropos_segmentation_prior_weight: float | None = None,
     n4_convergence: str | None = None,
     n4_shrink_factor: int | None = None,
     n4_bspline_params: str | None = None,
     atropos_segmentation_icm: str | None = None,
-    atropos_segmentation_use_euclidean_distance: typing.Literal[0, 1] | None = None,
+    atropos_segmentation_use_euclidean_distance: bool | None = None,
     test_debug_mode: int | None = None,
     runner: Runner | None = None,
 ) -> AntsAtroposN4ShOutputs:

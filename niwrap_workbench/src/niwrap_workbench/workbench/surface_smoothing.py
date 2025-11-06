@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SURFACE_SMOOTHING_METADATA = Metadata(
-    id="637bed2038ffd3c4196fb7689a2277fcbe539159.boutiques",
+    id="ed8f3a670c4c85072256a932d9737b524da04f12.workbench",
     name="surface-smoothing",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceSmoothingParameters = typing.TypedDict('SurfaceSmoothingParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-smoothing"]],
-    "surface_in": InputPathType,
-    "smoothing_strength": float,
-    "smoothing_iterations": int,
-    "surface_out": str,
+    "surface-out": str,
+    "surface-in": InputPathType,
+    "smoothing-strength": float,
+    "smoothing-iterations": int,
 })
 SurfaceSmoothingParametersTagged = typing.TypedDict('SurfaceSmoothingParametersTagged', {
     "@type": typing.Literal["workbench/surface-smoothing"],
-    "surface_in": InputPathType,
-    "smoothing_strength": float,
-    "smoothing_iterations": int,
-    "surface_out": str,
+    "surface-out": str,
+    "surface-in": InputPathType,
+    "smoothing-strength": float,
+    "smoothing-iterations": int,
 })
 
 
@@ -40,28 +39,28 @@ class SurfaceSmoothingOutputs(typing.NamedTuple):
 
 
 def surface_smoothing_params(
+    surface_out: str,
     surface_in: InputPathType,
     smoothing_strength: float,
     smoothing_iterations: int,
-    surface_out: str,
 ) -> SurfaceSmoothingParametersTagged:
     """
     Build parameters.
     
     Args:
+        surface_out: output surface file.
         surface_in: the surface file to smooth.
         smoothing_strength: smoothing strength (ranges [0.0 - 1.0]).
         smoothing_iterations: smoothing iterations.
-        surface_out: output surface file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-smoothing",
-        "surface_in": surface_in,
-        "smoothing_strength": smoothing_strength,
-        "smoothing_iterations": smoothing_iterations,
-        "surface_out": surface_out,
+        "surface-out": surface_out,
+        "surface-in": surface_in,
+        "smoothing-strength": smoothing_strength,
+        "smoothing-iterations": smoothing_iterations,
     }
     return params
 
@@ -80,12 +79,14 @@ def surface_smoothing_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-smoothing")
-    cargs.append(execution.input_file(params.get("surface_in", None)))
-    cargs.append(str(params.get("smoothing_strength", None)))
-    cargs.append(str(params.get("smoothing_iterations", None)))
-    cargs.append(params.get("surface_out", None))
+    cargs.extend([
+        "wb_command",
+        "-surface-smoothing",
+        params.get("surface-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("surface-in", None)))
+    cargs.append(str(params.get("smoothing-strength", None)))
+    cargs.append(str(params.get("smoothing-iterations", None)))
     return cargs
 
 
@@ -104,7 +105,7 @@ def surface_smoothing_outputs(
     """
     ret = SurfaceSmoothingOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -114,16 +115,10 @@ def surface_smoothing_execute(
     runner: Runner | None = None,
 ) -> SurfaceSmoothingOutputs:
     """
-    surface-smoothing
-    
-    Surface smoothing.
+    SURFACE SMOOTHING.
     
     Smooths a surface by averaging vertex coordinates with those of the
     neighboring vertices.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -141,38 +136,32 @@ def surface_smoothing_execute(
 
 
 def surface_smoothing(
+    surface_out: str,
     surface_in: InputPathType,
     smoothing_strength: float,
     smoothing_iterations: int,
-    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceSmoothingOutputs:
     """
-    surface-smoothing
-    
-    Surface smoothing.
+    SURFACE SMOOTHING.
     
     Smooths a surface by averaging vertex coordinates with those of the
     neighboring vertices.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        surface_out: output surface file.
         surface_in: the surface file to smooth.
         smoothing_strength: smoothing strength (ranges [0.0 - 1.0]).
         smoothing_iterations: smoothing iterations.
-        surface_out: output surface file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSmoothingOutputs`).
     """
     params = surface_smoothing_params(
+        surface_out=surface_out,
         surface_in=surface_in,
         smoothing_strength=smoothing_strength,
         smoothing_iterations=smoothing_iterations,
-        surface_out=surface_out,
     )
     return surface_smoothing_execute(params, runner)
 

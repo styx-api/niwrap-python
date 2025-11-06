@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 METADATA_REMOVE_PROVENANCE_METADATA = Metadata(
-    id="4800e85a5fdc741153c992271baa48d72065973e.boutiques",
+    id="e8c16ad9420831ac3f90677352afe3ddc5dcbac7.workbench",
     name="metadata-remove-provenance",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetadataRemoveProvenanceParameters = typing.TypedDict('MetadataRemoveProvenanceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metadata-remove-provenance"]],
-    "input_file": str,
-    "output_file": str,
+    "input-file": str,
+    "output-file": str,
 })
 MetadataRemoveProvenanceParametersTagged = typing.TypedDict('MetadataRemoveProvenanceParametersTagged', {
     "@type": typing.Literal["workbench/metadata-remove-provenance"],
-    "input_file": str,
-    "output_file": str,
+    "input-file": str,
+    "output-file": str,
 })
 
 
@@ -48,8 +47,8 @@ def metadata_remove_provenance_params(
     """
     params = {
         "@type": "workbench/metadata-remove-provenance",
-        "input_file": input_file,
-        "output_file": output_file,
+        "input-file": input_file,
+        "output-file": output_file,
     }
     return params
 
@@ -68,10 +67,12 @@ def metadata_remove_provenance_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metadata-remove-provenance")
-    cargs.append(params.get("input_file", None))
-    cargs.append(params.get("output_file", None))
+    cargs.extend([
+        "wb_command",
+        "-metadata-remove-provenance"
+    ])
+    cargs.append(params.get("input-file", None))
+    cargs.append(params.get("output-file", None))
     return cargs
 
 
@@ -99,15 +100,9 @@ def metadata_remove_provenance_execute(
     runner: Runner | None = None,
 ) -> MetadataRemoveProvenanceOutputs:
     """
-    metadata-remove-provenance
-    
-    Remove provenance information from file metadata.
+    REMOVE PROVENANCE INFORMATION FROM FILE METADATA.
     
     Removes the provenance metadata fields added by workbench during processing.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -130,15 +125,9 @@ def metadata_remove_provenance(
     runner: Runner | None = None,
 ) -> MetadataRemoveProvenanceOutputs:
     """
-    metadata-remove-provenance
-    
-    Remove provenance information from file metadata.
+    REMOVE PROVENANCE INFORMATION FROM FILE METADATA.
     
     Removes the provenance metadata fields added by workbench during processing.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         input_file: the file to remove provenance information from.

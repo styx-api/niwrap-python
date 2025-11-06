@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
-    id="fa9f290a6c602982e012db429ea537b40f61be20.boutiques",
+    id="9698c37ae8d619d4e10d7f0fad13430ab0600e96.workbench",
     name="foci-get-projection-vertex",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 FociGetProjectionVertexParameters = typing.TypedDict('FociGetProjectionVertexParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/foci-get-projection-vertex"]],
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
     "foci": InputPathType,
     "surface": InputPathType,
-    "metric_out": str,
-    "opt_name_name": typing.NotRequired[str | None],
 })
 FociGetProjectionVertexParametersTagged = typing.TypedDict('FociGetProjectionVertexParametersTagged', {
     "@type": typing.Literal["workbench/foci-get-projection-vertex"],
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
     "foci": InputPathType,
     "surface": InputPathType,
-    "metric_out": str,
-    "opt_name_name": typing.NotRequired[str | None],
 })
 
 
@@ -40,30 +39,32 @@ class FociGetProjectionVertexOutputs(typing.NamedTuple):
 
 
 def foci_get_projection_vertex_params(
+    metric_out: str,
+    name: str | None,
     foci: InputPathType,
     surface: InputPathType,
-    metric_out: str,
-    opt_name_name: str | None = None,
 ) -> FociGetProjectionVertexParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric file.
+        name: select a focus by name\
+            \
+            the name of the focus.
         foci: the foci file.
         surface: the surface related to the foci file.
-        metric_out: the output metric file.
-        opt_name_name: select a focus by name: the name of the focus.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/foci-get-projection-vertex",
+        "metric-out": metric_out,
         "foci": foci,
         "surface": surface,
-        "metric_out": metric_out,
     }
-    if opt_name_name is not None:
-        params["opt_name_name"] = opt_name_name
+    if name is not None:
+        params["name"] = name
     return params
 
 
@@ -81,16 +82,16 @@ def foci_get_projection_vertex_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-foci-get-projection-vertex")
+    if params.get("name", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-foci-get-projection-vertex",
+            params.get("metric-out", None),
+            "-name",
+            params.get("name", None)
+        ])
     cargs.append(execution.input_file(params.get("foci", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_name_name", None) is not None:
-        cargs.extend([
-            "-name",
-            params.get("opt_name_name", None)
-        ])
     return cargs
 
 
@@ -109,7 +110,7 @@ def foci_get_projection_vertex_outputs(
     """
     ret = FociGetProjectionVertexOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -119,17 +120,11 @@ def foci_get_projection_vertex_execute(
     runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
     """
-    foci-get-projection-vertex
-    
-    Get projection vertex for foci.
+    GET PROJECTION VERTEX FOR FOCI.
     
     For each focus, a column is created in <metric-out>, and the vertex with the
     most influence on its projection is assigned a value of 1 in that column,
     with all other vertices 0. If -name is used, only one focus will be used.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -147,39 +142,35 @@ def foci_get_projection_vertex_execute(
 
 
 def foci_get_projection_vertex(
+    metric_out: str,
+    name: str | None,
     foci: InputPathType,
     surface: InputPathType,
-    metric_out: str,
-    opt_name_name: str | None = None,
     runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
     """
-    foci-get-projection-vertex
-    
-    Get projection vertex for foci.
+    GET PROJECTION VERTEX FOR FOCI.
     
     For each focus, a column is created in <metric-out>, and the vertex with the
     most influence on its projection is assigned a value of 1 in that column,
     with all other vertices 0. If -name is used, only one focus will be used.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric file.
+        name: select a focus by name\
+            \
+            the name of the focus.
         foci: the foci file.
         surface: the surface related to the foci file.
-        metric_out: the output metric file.
-        opt_name_name: select a focus by name: the name of the focus.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociGetProjectionVertexOutputs`).
     """
     params = foci_get_projection_vertex_params(
+        metric_out=metric_out,
+        name=name,
         foci=foci,
         surface=surface,
-        metric_out=metric_out,
-        opt_name_name=opt_name_name,
     )
     return foci_get_projection_vertex_execute(params, runner)
 

@@ -6,64 +6,63 @@ import pathlib
 from styxdefs import *
 
 METRIC_TFCE_METADATA = Metadata(
-    id="924978b01979428d340e99932f7ca7e01166c2fb.boutiques",
+    id="08ff0e7a57ecc93cc6a3d034347b01fa26e0507a.workbench",
     name="metric-tfce",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricTfcePresmoothParameters = typing.TypedDict('MetricTfcePresmoothParameters', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 MetricTfcePresmoothParametersTagged = typing.TypedDict('MetricTfcePresmoothParametersTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 
 
 MetricTfceParametersParameters = typing.TypedDict('MetricTfceParametersParameters', {
     "@type": typing.NotRequired[typing.Literal["parameters"]],
-    "e": float,
-    "h": float,
+    "E": float,
+    "H": float,
 })
 MetricTfceParametersParametersTagged = typing.TypedDict('MetricTfceParametersParametersTagged', {
     "@type": typing.Literal["parameters"],
-    "e": float,
-    "h": float,
+    "E": float,
+    "H": float,
 })
 
 
 MetricTfceParameters = typing.TypedDict('MetricTfceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-tfce"]],
-    "surface": InputPathType,
-    "metric_in": InputPathType,
-    "metric_out": str,
+    "metric-out": str,
     "presmooth": typing.NotRequired[MetricTfcePresmoothParameters | None],
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "parameters": typing.NotRequired[MetricTfceParametersParameters | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
 })
 MetricTfceParametersTagged = typing.TypedDict('MetricTfceParametersTagged', {
     "@type": typing.Literal["workbench/metric-tfce"],
-    "surface": InputPathType,
-    "metric_in": InputPathType,
-    "metric_out": str,
+    "metric-out": str,
     "presmooth": typing.NotRequired[MetricTfcePresmoothParameters | None],
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "parameters": typing.NotRequired[MetricTfceParametersParameters | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "surface": InputPathType,
+    "metric-in": InputPathType,
 })
 
 
 def metric_tfce_presmooth_params(
     kernel: float,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
 ) -> MetricTfcePresmoothParametersTagged:
     """
     Build parameters.
@@ -71,14 +70,14 @@ def metric_tfce_presmooth_params(
     Args:
         kernel: the size of the gaussian smoothing kernel in mm, as sigma by\
             default.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "presmooth",
         "kernel": kernel,
-        "opt_fwhm": opt_fwhm,
+        "fwhm": fwhm,
     }
     return params
 
@@ -97,10 +96,12 @@ def metric_tfce_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel", None)))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
+    if params.get("fwhm", False):
+        cargs.extend([
+            "-presmooth",
+            str(params.get("kernel", None)),
+            "-fwhm"
+        ])
     return cargs
 
 
@@ -119,8 +120,8 @@ def metric_tfce_parameters_params(
     """
     params = {
         "@type": "parameters",
-        "e": e,
-        "h": h,
+        "E": e,
+        "H": h,
     }
     return params
 
@@ -139,9 +140,11 @@ def metric_tfce_parameters_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-parameters")
-    cargs.append(str(params.get("e", None)))
-    cargs.append(str(params.get("h", None)))
+    cargs.extend([
+        "-parameters",
+        str(params.get("E", None)),
+        str(params.get("H", None))
+    ])
     return cargs
 
 
@@ -156,49 +159,53 @@ class MetricTfceOutputs(typing.NamedTuple):
 
 
 def metric_tfce_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    metric_out: str,
     presmooth: MetricTfcePresmoothParameters | None = None,
-    opt_roi_roi_metric: InputPathType | None = None,
     parameters: MetricTfceParametersParameters | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
 ) -> MetricTfceParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        roi_metric: select a region of interest to run TFCE on\
+            \
+            the area to run TFCE on, as a metric.
+        column: select a single column\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         surface: the surface to compute on.
         metric_in: the metric to run TFCE on.
-        metric_out: the output metric.
         presmooth: smooth the metric before running TFCE.
-        opt_roi_roi_metric: select a region of interest to run TFCE on: the\
-            area to run TFCE on, as a metric.
         parameters: set parameters for TFCE integral.
-        opt_column_column: select a single column: the column number or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-tfce",
+        "metric-out": metric_out,
         "surface": surface,
-        "metric_in": metric_in,
-        "metric_out": metric_out,
+        "metric-in": metric_in,
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     if parameters is not None:
         params["parameters"] = parameters
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if column is not None:
+        params["column"] = column
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -216,30 +223,22 @@ def metric_tfce_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-tfce")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("presmooth", None) is not None:
-        cargs.extend(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution))
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("presmooth", None) is not None or params.get("roi-metric", None) is not None or params.get("parameters", None) is not None or params.get("column", None) is not None or params.get("area-metric", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-tfce",
+            params.get("metric-out", None),
+            *(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution) if (params.get("presmooth", None) is not None) else []),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("parameters", None) is not None:
-        cargs.extend(metric_tfce_parameters_cargs(params.get("parameters", None), execution))
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            *(metric_tfce_parameters_cargs(params.get("parameters", None), execution) if (params.get("parameters", None) is not None) else []),
             "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -258,7 +257,7 @@ def metric_tfce_outputs(
     """
     ret = MetricTfceOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -268,9 +267,7 @@ def metric_tfce_execute(
     runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
-    metric-tfce
-    
-    Do tfce on a metric file.
+    DO TFCE ON A METRIC FILE.
     
     This command does not do any statistical analysis. Please use something like
     PALM if you are just trying to do statistics on your data.
@@ -296,10 +293,6 @@ def metric_tfce_execute(
     cluster enhancement: addressing problems of smoothing, threshold dependence
     and localisation in cluster inference." Neuroimage. 2009 Jan 1;44(1):83-98.
     PMID: 18501637.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -317,20 +310,18 @@ def metric_tfce_execute(
 
 
 def metric_tfce(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    metric_out: str,
     presmooth: MetricTfcePresmoothParameters | None = None,
-    opt_roi_roi_metric: InputPathType | None = None,
     parameters: MetricTfceParametersParameters | None = None,
-    opt_column_column: str | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
-    metric-tfce
-    
-    Do tfce on a metric file.
+    DO TFCE ON A METRIC FILE.
     
     This command does not do any statistical analysis. Please use something like
     PALM if you are just trying to do statistics on your data.
@@ -357,35 +348,35 @@ def metric_tfce(
     and localisation in cluster inference." Neuroimage. 2009 Jan 1;44(1):83-98.
     PMID: 18501637.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        roi_metric: select a region of interest to run TFCE on\
+            \
+            the area to run TFCE on, as a metric.
+        column: select a single column\
+            \
+            the column number or name.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         surface: the surface to compute on.
         metric_in: the metric to run TFCE on.
-        metric_out: the output metric.
         presmooth: smooth the metric before running TFCE.
-        opt_roi_roi_metric: select a region of interest to run TFCE on: the\
-            area to run TFCE on, as a metric.
         parameters: set parameters for TFCE integral.
-        opt_column_column: select a single column: the column number or name.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricTfceOutputs`).
     """
     params = metric_tfce_params(
-        surface=surface,
-        metric_in=metric_in,
         metric_out=metric_out,
         presmooth=presmooth,
-        opt_roi_roi_metric=opt_roi_roi_metric,
+        roi_metric=roi_metric,
         parameters=parameters,
-        opt_column_column=opt_column_column,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
+        column=column,
+        area_metric=area_metric,
+        surface=surface,
+        metric_in=metric_in,
     )
     return metric_tfce_execute(params, runner)
 

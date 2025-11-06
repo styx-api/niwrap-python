@@ -6,22 +6,21 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CREATE_SPHERE_METADATA = Metadata(
-    id="e9b682a64a3a4ad0a40ee2b17e295fcee37251d0.boutiques",
+    id="bed788743061812c1852a66ee0671bb89ebb21bd.workbench",
     name="surface-create-sphere",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceCreateSphereParameters = typing.TypedDict('SurfaceCreateSphereParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-create-sphere"]],
-    "num_vertices": int,
-    "sphere_out": str,
+    "sphere-out": str,
+    "num-vertices": int,
 })
 SurfaceCreateSphereParametersTagged = typing.TypedDict('SurfaceCreateSphereParametersTagged', {
     "@type": typing.Literal["workbench/surface-create-sphere"],
-    "num_vertices": int,
-    "sphere_out": str,
+    "sphere-out": str,
+    "num-vertices": int,
 })
 
 
@@ -36,22 +35,22 @@ class SurfaceCreateSphereOutputs(typing.NamedTuple):
 
 
 def surface_create_sphere_params(
-    num_vertices: int,
     sphere_out: str,
+    num_vertices: int,
 ) -> SurfaceCreateSphereParametersTagged:
     """
     Build parameters.
     
     Args:
-        num_vertices: desired number of vertices.
         sphere_out: the output sphere.
+        num_vertices: desired number of vertices.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-create-sphere",
-        "num_vertices": num_vertices,
-        "sphere_out": sphere_out,
+        "sphere-out": sphere_out,
+        "num-vertices": num_vertices,
     }
     return params
 
@@ -70,10 +69,12 @@ def surface_create_sphere_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-create-sphere")
-    cargs.append(str(params.get("num_vertices", None)))
-    cargs.append(params.get("sphere_out", None))
+    cargs.extend([
+        "wb_command",
+        "-surface-create-sphere",
+        params.get("sphere-out", None)
+    ])
+    cargs.append(str(params.get("num-vertices", None)))
     return cargs
 
 
@@ -92,7 +93,7 @@ def surface_create_sphere_outputs(
     """
     ret = SurfaceCreateSphereOutputs(
         root=execution.output_file("."),
-        sphere_out=execution.output_file(params.get("sphere_out", None)),
+        sphere_out=execution.output_file(params.get("sphere-out", None)),
     )
     return ret
 
@@ -102,9 +103,7 @@ def surface_create_sphere_execute(
     runner: Runner | None = None,
 ) -> SurfaceCreateSphereOutputs:
     """
-    surface-create-sphere
-    
-    Generate a sphere with consistent vertex areas.
+    GENERATE A SPHERE WITH CONSISTENT VERTEX AREAS.
     
     Generates a sphere by regularly dividing the triangles of an icosahedron, to
     come as close to the desired number of vertices as possible, and modifying
@@ -117,10 +116,6 @@ def surface_create_sphere_execute(
     $ wb_command -surface-flip-lr Sphere.6k.R.surf.gii Sphere.6k.L.surf.gii
     $ wb_command -set-structure Sphere.6k.R.surf.gii CORTEX_RIGHT
     $ wb_command -set-structure Sphere.6k.L.surf.gii CORTEX_LEFT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -138,14 +133,12 @@ def surface_create_sphere_execute(
 
 
 def surface_create_sphere(
-    num_vertices: int,
     sphere_out: str,
+    num_vertices: int,
     runner: Runner | None = None,
 ) -> SurfaceCreateSphereOutputs:
     """
-    surface-create-sphere
-    
-    Generate a sphere with consistent vertex areas.
+    GENERATE A SPHERE WITH CONSISTENT VERTEX AREAS.
     
     Generates a sphere by regularly dividing the triangles of an icosahedron, to
     come as close to the desired number of vertices as possible, and modifying
@@ -159,20 +152,16 @@ def surface_create_sphere(
     $ wb_command -set-structure Sphere.6k.R.surf.gii CORTEX_RIGHT
     $ wb_command -set-structure Sphere.6k.L.surf.gii CORTEX_LEFT.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        num_vertices: desired number of vertices.
         sphere_out: the output sphere.
+        num_vertices: desired number of vertices.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCreateSphereOutputs`).
     """
     params = surface_create_sphere_params(
-        num_vertices=num_vertices,
         sphere_out=sphere_out,
+        num_vertices=num_vertices,
     )
     return surface_create_sphere_execute(params, runner)
 

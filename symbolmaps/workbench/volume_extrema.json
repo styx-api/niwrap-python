@@ -1,13 +1,7 @@
 {
   "fn_root_make_params_and_execute": "volume_extrema",
   "properties": {
-    "volume_in": {
-      "var_param": "volume_in"
-    },
-    "distance": {
-      "var_param": "distance"
-    },
-    "volume_out": {
+    "volume-out": {
       "var_param": "volume_out"
     },
     "presmooth": {
@@ -17,13 +11,13 @@
         "kernel": {
           "var_param": "kernel"
         },
-        "opt_fwhm": {
-          "var_param": "opt_fwhm"
+        "fwhm": {
+          "var_param": "fwhm"
         }
       }
     },
-    "opt_roi_roi_volume": {
-      "var_param": "opt_roi_roi_volume"
+    "roi-volume": {
+      "var_param": "roi_volume"
     },
     "threshold": {
       "var_param": "threshold",
@@ -37,20 +31,26 @@
         }
       }
     },
-    "opt_sum_subvols": {
-      "var_param": "opt_sum_subvols"
+    "sum-subvols": {
+      "var_param": "sum_subvols"
     },
-    "opt_consolidate_mode": {
-      "var_param": "opt_consolidate_mode"
+    "consolidate-mode": {
+      "var_param": "consolidate_mode"
     },
-    "opt_only_maxima": {
-      "var_param": "opt_only_maxima"
+    "only-maxima": {
+      "var_param": "only_maxima"
     },
-    "opt_only_minima": {
-      "var_param": "opt_only_minima"
+    "only-minima": {
+      "var_param": "only_minima"
     },
-    "opt_subvolume_subvolume": {
-      "var_param": "opt_subvolume_subvolume"
+    "subvolume": {
+      "var_param": "subvolume"
+    },
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "distance": {
+      "var_param": "distance"
     }
   }
 }

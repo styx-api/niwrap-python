@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 GIFTI_CONVERT_METADATA = Metadata(
-    id="00ca05307d704bb4b72ca8d609e922d80aac69c0.boutiques",
+    id="d26d59cbf0d26ca7ba848af31d7c9fb624cd4747.workbench",
     name="gifti-convert",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 GiftiConvertParameters = typing.TypedDict('GiftiConvertParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/gifti-convert"]],
-    "gifti_encoding": str,
-    "input_gifti_file": str,
-    "output_gifti_file": str,
+    "gifti-encoding": str,
+    "input-gifti-file": str,
+    "output-gifti-file": str,
 })
 GiftiConvertParametersTagged = typing.TypedDict('GiftiConvertParametersTagged', {
     "@type": typing.Literal["workbench/gifti-convert"],
-    "gifti_encoding": str,
-    "input_gifti_file": str,
-    "output_gifti_file": str,
+    "gifti-encoding": str,
+    "input-gifti-file": str,
+    "output-gifti-file": str,
 })
 
 
@@ -52,9 +51,9 @@ def gifti_convert_params(
     """
     params = {
         "@type": "workbench/gifti-convert",
-        "gifti_encoding": gifti_encoding,
-        "input_gifti_file": input_gifti_file,
-        "output_gifti_file": output_gifti_file,
+        "gifti-encoding": gifti_encoding,
+        "input-gifti-file": input_gifti_file,
+        "output-gifti-file": output_gifti_file,
     }
     return params
 
@@ -73,11 +72,13 @@ def gifti_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-gifti-convert")
-    cargs.append(params.get("gifti_encoding", None))
-    cargs.append(params.get("input_gifti_file", None))
-    cargs.append(params.get("output_gifti_file", None))
+    cargs.extend([
+        "wb_command",
+        "-gifti-convert"
+    ])
+    cargs.append(params.get("gifti-encoding", None))
+    cargs.append(params.get("input-gifti-file", None))
+    cargs.append(params.get("output-gifti-file", None))
     return cargs
 
 
@@ -105,9 +106,7 @@ def gifti_convert_execute(
     runner: Runner | None = None,
 ) -> GiftiConvertOutputs:
     """
-    gifti-convert
-    
-    Convert a gifti file to a different encoding.
+    CONVERT A GIFTI FILE TO A DIFFERENT ENCODING.
     
     The value of <gifti-encoding> must be one of the following:
     
@@ -115,10 +114,6 @@ def gifti_convert_execute(
     BASE64_BINARY
     GZIP_BASE64_BINARY
     EXTERNAL_FILE_BINARY.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -142,9 +137,7 @@ def gifti_convert(
     runner: Runner | None = None,
 ) -> GiftiConvertOutputs:
     """
-    gifti-convert
-    
-    Convert a gifti file to a different encoding.
+    CONVERT A GIFTI FILE TO A DIFFERENT ENCODING.
     
     The value of <gifti-encoding> must be one of the following:
     
@@ -152,10 +145,6 @@ def gifti_convert(
     BASE64_BINARY
     GZIP_BASE64_BINARY
     EXTERNAL_FILE_BINARY.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         gifti_encoding: what the output encoding should be.

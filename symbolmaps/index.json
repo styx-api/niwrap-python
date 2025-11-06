@@ -1,14 +1,14 @@
 {
-  "freesurfer": "freesurfer.json",
-  "mrtrix3tissue": "mrtrix3tissue.json",
   "afni": "afni.json",
-  "c3d": "c3d.json",
-  "mrtrix": "mrtrix.json",
-  "workbench": "workbench.json",
-  "dcm2niix": "dcm2niix.json",
   "ants": "ants.json",
+  "c3d": "c3d.json",
+  "dcm2niix": "dcm2niix.json",
   "fastsurfer": "fastsurfer.json",
+  "freesurfer": "freesurfer.json",
   "fsl": "fsl.json",
   "greedy": "greedy.json",
-  "niftyreg": "niftyreg.json"
+  "mrtrix": "mrtrix.json",
+  "mrtrix3tissue": "mrtrix3tissue.json",
+  "niftyreg": "niftyreg.json",
+  "workbench": "workbench.json"
 }

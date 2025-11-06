@@ -6,30 +6,29 @@ import pathlib
 from styxdefs import *
 
 BORDER_TO_ROIS_METADATA = Metadata(
-    id="d27e55d16af9c127031efb25bfee0f3793658e98.boutiques",
+    id="3bfc45e6cda7bb869f41f04607d7a710d2fab5dd.workbench",
     name="border-to-rois",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BorderToRoisParameters = typing.TypedDict('BorderToRoisParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-to-rois"]],
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
+    "inverse": bool,
+    "include-border": bool,
     "surface": InputPathType,
-    "border_file": InputPathType,
-    "metric_out": str,
-    "opt_border_name": typing.NotRequired[str | None],
-    "opt_inverse": bool,
-    "opt_include_border": bool,
+    "border-file": InputPathType,
 })
 BorderToRoisParametersTagged = typing.TypedDict('BorderToRoisParametersTagged', {
     "@type": typing.Literal["workbench/border-to-rois"],
+    "metric-out": str,
+    "name": typing.NotRequired[str | None],
+    "inverse": bool,
+    "include-border": bool,
     "surface": InputPathType,
-    "border_file": InputPathType,
-    "metric_out": str,
-    "opt_border_name": typing.NotRequired[str | None],
-    "opt_inverse": bool,
-    "opt_include_border": bool,
+    "border-file": InputPathType,
 })
 
 
@@ -44,36 +43,38 @@ class BorderToRoisOutputs(typing.NamedTuple):
 
 
 def border_to_rois_params(
+    metric_out: str,
+    name: str | None,
     surface: InputPathType,
     border_file: InputPathType,
-    metric_out: str,
-    opt_border_name: str | None = None,
-    opt_inverse: bool = False,
-    opt_include_border: bool = False,
+    inverse: bool = False,
+    include_border: bool = False,
 ) -> BorderToRoisParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric file.
+        name: create ROI for only one border\
+            \
+            the name of the border.
         surface: the surface the borders are drawn on.
         border_file: the border file.
-        metric_out: the output metric file.
-        opt_border_name: create ROI for only one border: the name of the border.
-        opt_inverse: use inverse selection (outside border).
-        opt_include_border: include vertices the border is closest to.
+        inverse: use inverse selection (outside border).
+        include_border: include vertices the border is closest to.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/border-to-rois",
+        "metric-out": metric_out,
+        "inverse": inverse,
+        "include-border": include_border,
         "surface": surface,
-        "border_file": border_file,
-        "metric_out": metric_out,
-        "opt_inverse": opt_inverse,
-        "opt_include_border": opt_include_border,
+        "border-file": border_file,
     }
-    if opt_border_name is not None:
-        params["opt_border_name"] = opt_border_name
+    if name is not None:
+        params["name"] = name
     return params
 
 
@@ -91,20 +92,18 @@ def border_to_rois_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-border-to-rois")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("border_file", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_border_name", None) is not None:
+    if params.get("name", None) is not None or params.get("inverse", False) or params.get("include-border", False):
         cargs.extend([
+            "wb_command",
+            "-border-to-rois",
+            params.get("metric-out", None),
             "-border",
-            params.get("opt_border_name", None)
+            (params.get("name", None) if (params.get("name", None) is not None) else ""),
+            ("-inverse" if (params.get("inverse", False)) else ""),
+            ("-include-border" if (params.get("include-border", False)) else "")
         ])
-    if params.get("opt_inverse", False):
-        cargs.append("-inverse")
-    if params.get("opt_include_border", False):
-        cargs.append("-include-border")
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("border-file", None)))
     return cargs
 
 
@@ -123,7 +122,7 @@ def border_to_rois_outputs(
     """
     ret = BorderToRoisOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -133,16 +132,10 @@ def border_to_rois_execute(
     runner: Runner | None = None,
 ) -> BorderToRoisOutputs:
     """
-    border-to-rois
-    
-    Make metric rois from borders.
+    MAKE METRIC ROIS FROM BORDERS.
     
     By default, draws ROIs inside all borders in the border file, as separate
     metric columns.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -160,44 +153,40 @@ def border_to_rois_execute(
 
 
 def border_to_rois(
+    metric_out: str,
+    name: str | None,
     surface: InputPathType,
     border_file: InputPathType,
-    metric_out: str,
-    opt_border_name: str | None = None,
-    opt_inverse: bool = False,
-    opt_include_border: bool = False,
+    inverse: bool = False,
+    include_border: bool = False,
     runner: Runner | None = None,
 ) -> BorderToRoisOutputs:
     """
-    border-to-rois
-    
-    Make metric rois from borders.
+    MAKE METRIC ROIS FROM BORDERS.
     
     By default, draws ROIs inside all borders in the border file, as separate
     metric columns.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric file.
+        name: create ROI for only one border\
+            \
+            the name of the border.
         surface: the surface the borders are drawn on.
         border_file: the border file.
-        metric_out: the output metric file.
-        opt_border_name: create ROI for only one border: the name of the border.
-        opt_inverse: use inverse selection (outside border).
-        opt_include_border: include vertices the border is closest to.
+        inverse: use inverse selection (outside border).
+        include_border: include vertices the border is closest to.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderToRoisOutputs`).
     """
     params = border_to_rois_params(
+        metric_out=metric_out,
+        name=name,
+        inverse=inverse,
+        include_border=include_border,
         surface=surface,
         border_file=border_file,
-        metric_out=metric_out,
-        opt_border_name=opt_border_name,
-        opt_inverse=opt_inverse,
-        opt_include_border=opt_include_border,
     )
     return border_to_rois_execute(params, runner)
 

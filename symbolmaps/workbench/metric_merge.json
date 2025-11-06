@@ -1,14 +1,14 @@
 {
   "fn_root_make_params_and_execute": "metric_merge",
   "properties": {
-    "metric_out": {
+    "metric-out": {
       "var_param": "metric_out"
     },
     "metric": {
       "var_param": "metric",
       "fn_struct_make_params": "metric_merge_metric_params",
       "properties": {
-        "metric_in": {
+        "metric-in": {
           "var_param": "metric_in"
         },
         "column": {
@@ -18,15 +18,15 @@
             "column": {
               "var_param": "column"
             },
-            "up_to": {
+            "up-to": {
               "var_param": "up_to",
               "fn_struct_make_params": "metric_merge_up_to_params",
               "properties": {
-                "last_column": {
+                "last-column": {
                   "var_param": "last_column"
                 },
-                "opt_reverse": {
-                  "var_param": "opt_reverse"
+                "reverse": {
+                  "var_param": "reverse"
                 }
               }
             }

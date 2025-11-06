@@ -6,38 +6,37 @@ import pathlib
 from styxdefs import *
 
 SET_MAP_NAMES_METADATA = Metadata(
-    id="7f2099c8418ca1e3fe54b4ccfa0b3990d98a392d.boutiques",
+    id="05c23caac5c21808cadb7f27b12f6fd3f1d3c1f7.workbench",
     name="set-map-names",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SetMapNamesMapParameters = typing.TypedDict('SetMapNamesMapParameters', {
     "@type": typing.NotRequired[typing.Literal["map"]],
     "index": int,
-    "new_name": str,
+    "new-name": str,
 })
 SetMapNamesMapParametersTagged = typing.TypedDict('SetMapNamesMapParametersTagged', {
     "@type": typing.Literal["map"],
     "index": int,
-    "new_name": str,
+    "new-name": str,
 })
 
 
 SetMapNamesParameters = typing.TypedDict('SetMapNamesParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/set-map-names"]],
-    "data_file": str,
-    "opt_name_file_file": typing.NotRequired[str | None],
-    "opt_from_data_file_file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
     "map": typing.NotRequired[list[SetMapNamesMapParameters] | None],
+    "data-file": str,
 })
 SetMapNamesParametersTagged = typing.TypedDict('SetMapNamesParametersTagged', {
     "@type": typing.Literal["workbench/set-map-names"],
-    "data_file": str,
-    "opt_name_file_file": typing.NotRequired[str | None],
-    "opt_from_data_file_file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
+    "file": typing.NotRequired[str | None],
     "map": typing.NotRequired[list[SetMapNamesMapParameters] | None],
+    "data-file": str,
 })
 
 
@@ -57,7 +56,7 @@ def set_map_names_map_params(
     params = {
         "@type": "map",
         "index": index,
-        "new_name": new_name,
+        "new-name": new_name,
     }
     return params
 
@@ -76,9 +75,11 @@ def set_map_names_map_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-map")
-    cargs.append(str(params.get("index", None)))
-    cargs.append(params.get("new_name", None))
+    cargs.extend([
+        "-map",
+        str(params.get("index", None)),
+        params.get("new-name", None)
+    ])
     return cargs
 
 
@@ -91,32 +92,34 @@ class SetMapNamesOutputs(typing.NamedTuple):
 
 
 def set_map_names_params(
+    file: str | None,
+    file_: str | None,
     data_file: str,
-    opt_name_file_file: str | None = None,
-    opt_from_data_file_file: str | None = None,
     map_: list[SetMapNamesMapParameters] | None = None,
 ) -> SetMapNamesParametersTagged:
     """
     Build parameters.
     
     Args:
+        file: use a text file to replace all map names\
+            \
+            text file containing map names, one per line.
+        file_: use the map names from another data file\
+            \
+            a data file with the same number of maps.
         data_file: the file to set the map names of.
-        opt_name_file_file: use a text file to replace all map names: text file\
-            containing map names, one per line.
-        opt_from_data_file_file: use the map names from another data file: a\
-            data file with the same number of maps.
         map_: specify a map to set the name of.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/set-map-names",
-        "data_file": data_file,
+        "data-file": data_file,
     }
-    if opt_name_file_file is not None:
-        params["opt_name_file_file"] = opt_name_file_file
-    if opt_from_data_file_file is not None:
-        params["opt_from_data_file_file"] = opt_from_data_file_file
+    if file is not None:
+        params["file"] = file
+    if file_ is not None:
+        params["file"] = file_
     if map_ is not None:
         params["map"] = map_
     return params
@@ -136,21 +139,17 @@ def set_map_names_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-set-map-names")
-    cargs.append(params.get("data_file", None))
-    if params.get("opt_name_file_file", None) is not None:
+    if params.get("file", None) is not None or params.get("file", None) is not None or params.get("map", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-set-map-names",
             "-name-file",
-            params.get("opt_name_file_file", None)
-        ])
-    if params.get("opt_from_data_file_file", None) is not None:
-        cargs.extend([
+            (params.get("file", None) if (params.get("file", None) is not None) else ""),
             "-from-data-file",
-            params.get("opt_from_data_file_file", None)
+            (params.get("file", None) if (params.get("file", None) is not None) else ""),
+            *([a for c in [set_map_names_map_cargs(s, execution) for s in params.get("map", None)] for a in c] if (params.get("map", None) is not None) else [])
         ])
-    if params.get("map", None) is not None:
-        cargs.extend([a for c in [set_map_names_map_cargs(s, execution) for s in params.get("map", None)] for a in c])
+    cargs.append(params.get("data-file", None))
     return cargs
 
 
@@ -178,18 +177,12 @@ def set_map_names_execute(
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
-    set-map-names
-    
-    Set the name of one or more maps in a file.
+    SET THE NAME OF ONE OR MORE MAPS IN A FILE.
     
     Sets the name of one or more maps for metric, shape, label, volume, cifti
     scalar or cifti label files. You must specify either -name-file, or
     -from-data-file, or at least one -map option. The three option types are
     mutually exclusive.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -207,42 +200,38 @@ def set_map_names_execute(
 
 
 def set_map_names(
+    file: str | None,
+    file_: str | None,
     data_file: str,
-    opt_name_file_file: str | None = None,
-    opt_from_data_file_file: str | None = None,
     map_: list[SetMapNamesMapParameters] | None = None,
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
-    set-map-names
-    
-    Set the name of one or more maps in a file.
+    SET THE NAME OF ONE OR MORE MAPS IN A FILE.
     
     Sets the name of one or more maps for metric, shape, label, volume, cifti
     scalar or cifti label files. You must specify either -name-file, or
     -from-data-file, or at least one -map option. The three option types are
     mutually exclusive.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        file: use a text file to replace all map names\
+            \
+            text file containing map names, one per line.
+        file_: use the map names from another data file\
+            \
+            a data file with the same number of maps.
         data_file: the file to set the map names of.
-        opt_name_file_file: use a text file to replace all map names: text file\
-            containing map names, one per line.
-        opt_from_data_file_file: use the map names from another data file: a\
-            data file with the same number of maps.
         map_: specify a map to set the name of.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetMapNamesOutputs`).
     """
     params = set_map_names_params(
-        data_file=data_file,
-        opt_name_file_file=opt_name_file_file,
-        opt_from_data_file_file=opt_from_data_file_file,
+        file=file,
+        file_=file_,
         map_=map_,
+        data_file=data_file,
     )
     return set_map_names_execute(params, runner)
 

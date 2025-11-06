@@ -1,6 +1,9 @@
 {
   "fn_root_make_params_and_execute": "estimate_fiber_binghams",
   "properties": {
+    "cifti-out": {
+      "var_param": "cifti_out"
+    },
     "merged_f1samples": {
       "var_param": "merged_f1samples"
     },
@@ -28,11 +31,8 @@
     "merged_ph3samples": {
       "var_param": "merged_ph3samples"
     },
-    "label_volume": {
+    "label-volume": {
       "var_param": "label_volume"
-    },
-    "cifti_out": {
-      "var_param": "cifti_out"
     }
   }
 }

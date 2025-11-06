@@ -1,35 +1,29 @@
 {
   "fn_root_make_params_and_execute": "volume_set_space",
   "properties": {
-    "volume_in": {
-      "var_param": "volume_in"
-    },
-    "volume_out": {
-      "var_param": "volume_out"
-    },
     "plumb": {
       "var_param": "plumb",
       "fn_struct_make_params": "volume_set_space_plumb_params",
       "properties": {
-        "axis_order": {
+        "axis-order": {
           "var_param": "axis_order"
         },
-        "x_spacing": {
+        "x-spacing": {
           "var_param": "x_spacing"
         },
-        "y_spacing": {
+        "y-spacing": {
           "var_param": "y_spacing"
         },
-        "z_spacing": {
+        "z-spacing": {
           "var_param": "z_spacing"
         },
-        "x_offset": {
+        "x-offset": {
           "var_param": "x_offset"
         },
-        "y_offset": {
+        "y-offset": {
           "var_param": "y_offset"
         },
-        "z_offset": {
+        "z-offset": {
           "var_param": "z_offset"
         }
       }
@@ -38,40 +32,40 @@
       "var_param": "sform",
       "fn_struct_make_params": "volume_set_space_sform_params",
       "properties": {
-        "xi_spacing": {
+        "xi-spacing": {
           "var_param": "xi_spacing"
         },
-        "xj_spacing": {
+        "xj-spacing": {
           "var_param": "xj_spacing"
         },
-        "xk_spacing": {
+        "xk-spacing": {
           "var_param": "xk_spacing"
         },
-        "x_offset": {
+        "x-offset": {
           "var_param": "x_offset"
         },
-        "yi_spacing": {
+        "yi-spacing": {
           "var_param": "yi_spacing"
         },
-        "yj_spacing": {
+        "yj-spacing": {
           "var_param": "yj_spacing"
         },
-        "yk_spacing": {
+        "yk-spacing": {
           "var_param": "yk_spacing"
         },
-        "y_offset": {
+        "y-offset": {
           "var_param": "y_offset"
         },
-        "zi_spacing": {
+        "zi-spacing": {
           "var_param": "zi_spacing"
         },
-        "zj_spacing": {
+        "zj-spacing": {
           "var_param": "zj_spacing"
         },
-        "zk_spacing": {
+        "zk-spacing": {
           "var_param": "zk_spacing"
         },
-        "z_offset": {
+        "z-offset": {
           "var_param": "z_offset"
         }
       }
@@ -80,13 +74,19 @@
       "var_param": "file",
       "fn_struct_make_params": "volume_set_space_file_params",
       "properties": {
-        "volume_ref": {
+        "volume-ref": {
           "var_param": "volume_ref"
         },
-        "opt_ignore_dims": {
-          "var_param": "opt_ignore_dims"
+        "ignore-dims": {
+          "var_param": "ignore_dims"
         }
       }
+    },
+    "volume-in": {
+      "var_param": "volume_in"
+    },
+    "volume-out": {
+      "var_param": "volume_out"
     }
   }
 }

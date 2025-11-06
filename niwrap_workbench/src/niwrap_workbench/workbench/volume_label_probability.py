@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
-    id="b0631ce968096664259df70f04f3e4b719f4e66d.boutiques",
+    id="433915b90ed4936671e31ff5e9d775b5a9ffb4e9.workbench",
     name="volume-label-probability",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeLabelProbabilityParameters = typing.TypedDict('VolumeLabelProbabilityParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-label-probability"]],
-    "label_maps": InputPathType,
-    "probability_out": str,
-    "opt_exclude_unlabeled": bool,
+    "probability-out": str,
+    "exclude-unlabeled": bool,
+    "label-maps": InputPathType,
 })
 VolumeLabelProbabilityParametersTagged = typing.TypedDict('VolumeLabelProbabilityParametersTagged', {
     "@type": typing.Literal["workbench/volume-label-probability"],
-    "label_maps": InputPathType,
-    "probability_out": str,
-    "opt_exclude_unlabeled": bool,
+    "probability-out": str,
+    "exclude-unlabeled": bool,
+    "label-maps": InputPathType,
 })
 
 
@@ -38,27 +37,26 @@ class VolumeLabelProbabilityOutputs(typing.NamedTuple):
 
 
 def volume_label_probability_params(
-    label_maps: InputPathType,
     probability_out: str,
-    opt_exclude_unlabeled: bool = False,
+    label_maps: InputPathType,
+    exclude_unlabeled: bool = False,
 ) -> VolumeLabelProbabilityParametersTagged:
     """
     Build parameters.
     
     Args:
+        probability_out: the relative frequencies of each label at each voxel.
         label_maps: volume label file containing individual label maps from\
             many subjects.
-        probability_out: the relative frequencies of each label at each voxel.
-        opt_exclude_unlabeled: don't make a probability map of the unlabeled\
-            key.
+        exclude_unlabeled: don't make a probability map of the unlabeled key.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-label-probability",
-        "label_maps": label_maps,
-        "probability_out": probability_out,
-        "opt_exclude_unlabeled": opt_exclude_unlabeled,
+        "probability-out": probability_out,
+        "exclude-unlabeled": exclude_unlabeled,
+        "label-maps": label_maps,
     }
     return params
 
@@ -77,12 +75,14 @@ def volume_label_probability_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-label-probability")
-    cargs.append(execution.input_file(params.get("label_maps", None)))
-    cargs.append(params.get("probability_out", None))
-    if params.get("opt_exclude_unlabeled", False):
-        cargs.append("-exclude-unlabeled")
+    if params.get("exclude-unlabeled", False):
+        cargs.extend([
+            "wb_command",
+            "-volume-label-probability",
+            params.get("probability-out", None),
+            "-exclude-unlabeled"
+        ])
+    cargs.append(execution.input_file(params.get("label-maps", None)))
     return cargs
 
 
@@ -101,7 +101,7 @@ def volume_label_probability_outputs(
     """
     ret = VolumeLabelProbabilityOutputs(
         root=execution.output_file("."),
-        probability_out=execution.output_file(params.get("probability_out", None)),
+        probability_out=execution.output_file(params.get("probability-out", None)),
     )
     return ret
 
@@ -111,17 +111,11 @@ def volume_label_probability_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelProbabilityOutputs:
     """
-    volume-label-probability
-    
-    Find frequency of volume labels.
+    FIND FREQUENCY OF VOLUME LABELS.
     
     This command outputs a set of soft ROIs, one for each label in the input,
     where the value is how many of the input maps had that label at that voxel,
     divided by the number of input maps.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -139,38 +133,31 @@ def volume_label_probability_execute(
 
 
 def volume_label_probability(
-    label_maps: InputPathType,
     probability_out: str,
-    opt_exclude_unlabeled: bool = False,
+    label_maps: InputPathType,
+    exclude_unlabeled: bool = False,
     runner: Runner | None = None,
 ) -> VolumeLabelProbabilityOutputs:
     """
-    volume-label-probability
-    
-    Find frequency of volume labels.
+    FIND FREQUENCY OF VOLUME LABELS.
     
     This command outputs a set of soft ROIs, one for each label in the input,
     where the value is how many of the input maps had that label at that voxel,
     divided by the number of input maps.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        probability_out: the relative frequencies of each label at each voxel.
         label_maps: volume label file containing individual label maps from\
             many subjects.
-        probability_out: the relative frequencies of each label at each voxel.
-        opt_exclude_unlabeled: don't make a probability map of the unlabeled\
-            key.
+        exclude_unlabeled: don't make a probability map of the unlabeled key.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelProbabilityOutputs`).
     """
     params = volume_label_probability_params(
-        label_maps=label_maps,
         probability_out=probability_out,
-        opt_exclude_unlabeled=opt_exclude_unlabeled,
+        exclude_unlabeled=exclude_unlabeled,
+        label_maps=label_maps,
     )
     return volume_label_probability_execute(params, runner)
 

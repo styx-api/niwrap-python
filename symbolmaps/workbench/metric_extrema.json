@@ -1,16 +1,7 @@
 {
   "fn_root_make_params_and_execute": "metric_extrema",
   "properties": {
-    "surface": {
-      "var_param": "surface"
-    },
-    "metric_in": {
-      "var_param": "metric_in"
-    },
-    "distance": {
-      "var_param": "distance"
-    },
-    "metric_out": {
+    "metric-out": {
       "var_param": "metric_out"
     },
     "presmooth": {
@@ -20,13 +11,13 @@
         "kernel": {
           "var_param": "kernel"
         },
-        "opt_fwhm": {
-          "var_param": "opt_fwhm"
+        "fwhm": {
+          "var_param": "fwhm"
         }
       }
     },
-    "opt_roi_roi_metric": {
-      "var_param": "opt_roi_roi_metric"
+    "roi-metric": {
+      "var_param": "roi_metric"
     },
     "threshold": {
       "var_param": "threshold",
@@ -40,20 +31,29 @@
         }
       }
     },
-    "opt_sum_columns": {
-      "var_param": "opt_sum_columns"
+    "sum-columns": {
+      "var_param": "sum_columns"
     },
-    "opt_consolidate_mode": {
-      "var_param": "opt_consolidate_mode"
+    "consolidate-mode": {
+      "var_param": "consolidate_mode"
     },
-    "opt_only_maxima": {
-      "var_param": "opt_only_maxima"
+    "only-maxima": {
+      "var_param": "only_maxima"
     },
-    "opt_only_minima": {
-      "var_param": "opt_only_minima"
+    "only-minima": {
+      "var_param": "only_minima"
     },
-    "opt_column_column": {
-      "var_param": "opt_column_column"
+    "column": {
+      "var_param": "column"
+    },
+    "surface": {
+      "var_param": "surface"
+    },
+    "metric-in": {
+      "var_param": "metric_in"
+    },
+    "distance": {
+      "var_param": "distance"
     }
   }
 }

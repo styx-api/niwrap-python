@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SURFACE_GENERATE_INFLATED_METADATA = Metadata(
-    id="27b14fd47a41d6ad62e63cedcf7c0e24652ecc90.boutiques",
+    id="355a98e0d7f2dd37d2a8db3706f4c44d3c0fd8e8.workbench",
     name="surface-generate-inflated",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceGenerateInflatedParameters = typing.TypedDict('SurfaceGenerateInflatedParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-generate-inflated"]],
-    "anatomical_surface_in": InputPathType,
-    "inflated_surface_out": str,
-    "very_inflated_surface_out": str,
-    "opt_iterations_scale_iterations_scale_value": typing.NotRequired[float | None],
+    "inflated-surface-out": str,
+    "very-inflated-surface-out": str,
+    "iterations-scale-value": typing.NotRequired[float | None],
+    "anatomical-surface-in": InputPathType,
 })
 SurfaceGenerateInflatedParametersTagged = typing.TypedDict('SurfaceGenerateInflatedParametersTagged', {
     "@type": typing.Literal["workbench/surface-generate-inflated"],
-    "anatomical_surface_in": InputPathType,
-    "inflated_surface_out": str,
-    "very_inflated_surface_out": str,
-    "opt_iterations_scale_iterations_scale_value": typing.NotRequired[float | None],
+    "inflated-surface-out": str,
+    "very-inflated-surface-out": str,
+    "iterations-scale-value": typing.NotRequired[float | None],
+    "anatomical-surface-in": InputPathType,
 })
 
 
@@ -42,31 +41,32 @@ class SurfaceGenerateInflatedOutputs(typing.NamedTuple):
 
 
 def surface_generate_inflated_params(
-    anatomical_surface_in: InputPathType,
     inflated_surface_out: str,
     very_inflated_surface_out: str,
-    opt_iterations_scale_iterations_scale_value: float | None = None,
+    iterations_scale_value: float | None,
+    anatomical_surface_in: InputPathType,
 ) -> SurfaceGenerateInflatedParametersTagged:
     """
     Build parameters.
     
     Args:
-        anatomical_surface_in: the anatomical surface.
         inflated_surface_out: the output inflated surface.
         very_inflated_surface_out: the output very inflated surface.
-        opt_iterations_scale_iterations_scale_value: optional iterations\
-            scaling: iterations-scale value.
+        iterations_scale_value: optional iterations scaling\
+            \
+            iterations-scale value.
+        anatomical_surface_in: the anatomical surface.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-generate-inflated",
-        "anatomical_surface_in": anatomical_surface_in,
-        "inflated_surface_out": inflated_surface_out,
-        "very_inflated_surface_out": very_inflated_surface_out,
+        "inflated-surface-out": inflated_surface_out,
+        "very-inflated-surface-out": very_inflated_surface_out,
+        "anatomical-surface-in": anatomical_surface_in,
     }
-    if opt_iterations_scale_iterations_scale_value is not None:
-        params["opt_iterations_scale_iterations_scale_value"] = opt_iterations_scale_iterations_scale_value
+    if iterations_scale_value is not None:
+        params["iterations-scale-value"] = iterations_scale_value
     return params
 
 
@@ -84,16 +84,16 @@ def surface_generate_inflated_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-generate-inflated")
-    cargs.append(execution.input_file(params.get("anatomical_surface_in", None)))
-    cargs.append(params.get("inflated_surface_out", None))
-    cargs.append(params.get("very_inflated_surface_out", None))
-    if params.get("opt_iterations_scale_iterations_scale_value", None) is not None:
+    if params.get("iterations-scale-value", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-surface-generate-inflated",
+            params.get("inflated-surface-out", None),
+            params.get("very-inflated-surface-out", None),
             "-iterations-scale",
-            str(params.get("opt_iterations_scale_iterations_scale_value", None))
+            str(params.get("iterations-scale-value", None))
         ])
+    cargs.append(execution.input_file(params.get("anatomical-surface-in", None)))
     return cargs
 
 
@@ -112,8 +112,8 @@ def surface_generate_inflated_outputs(
     """
     ret = SurfaceGenerateInflatedOutputs(
         root=execution.output_file("."),
-        inflated_surface_out=execution.output_file(params.get("inflated_surface_out", None)),
-        very_inflated_surface_out=execution.output_file(params.get("very_inflated_surface_out", None)),
+        inflated_surface_out=execution.output_file(params.get("inflated-surface-out", None)),
+        very_inflated_surface_out=execution.output_file(params.get("very-inflated-surface-out", None)),
     )
     return ret
 
@@ -123,19 +123,13 @@ def surface_generate_inflated_execute(
     runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
     """
-    surface-generate-inflated
-    
-    Surface generate inflated.
+    SURFACE GENERATE INFLATED.
     
     Generate inflated and very inflated surfaces. The output surfaces are
     'matched' (have same XYZ range) to the anatomical surface. In most cases, an
     iterations-scale of 1.0 (default) is sufficient. However, if the surface
     contains a large number of vertices (150,000), try an iterations-scale of
     2.5.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -153,16 +147,14 @@ def surface_generate_inflated_execute(
 
 
 def surface_generate_inflated(
-    anatomical_surface_in: InputPathType,
     inflated_surface_out: str,
     very_inflated_surface_out: str,
-    opt_iterations_scale_iterations_scale_value: float | None = None,
+    iterations_scale_value: float | None,
+    anatomical_surface_in: InputPathType,
     runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
     """
-    surface-generate-inflated
-    
-    Surface generate inflated.
+    SURFACE GENERATE INFLATED.
     
     Generate inflated and very inflated surfaces. The output surfaces are
     'matched' (have same XYZ range) to the anatomical surface. In most cases, an
@@ -170,25 +162,22 @@ def surface_generate_inflated(
     contains a large number of vertices (150,000), try an iterations-scale of
     2.5.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        anatomical_surface_in: the anatomical surface.
         inflated_surface_out: the output inflated surface.
         very_inflated_surface_out: the output very inflated surface.
-        opt_iterations_scale_iterations_scale_value: optional iterations\
-            scaling: iterations-scale value.
+        iterations_scale_value: optional iterations scaling\
+            \
+            iterations-scale value.
+        anatomical_surface_in: the anatomical surface.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGenerateInflatedOutputs`).
     """
     params = surface_generate_inflated_params(
-        anatomical_surface_in=anatomical_surface_in,
         inflated_surface_out=inflated_surface_out,
         very_inflated_surface_out=very_inflated_surface_out,
-        opt_iterations_scale_iterations_scale_value=opt_iterations_scale_iterations_scale_value,
+        iterations_scale_value=iterations_scale_value,
+        anatomical_surface_in=anatomical_surface_in,
     )
     return surface_generate_inflated_execute(params, runner)
 

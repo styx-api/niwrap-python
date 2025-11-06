@@ -6,66 +6,65 @@ import pathlib
 from styxdefs import *
 
 VOLUME_DILATE_METADATA = Metadata(
-    id="c7cf27ddf3bd9107f4ebe78ae6eb1975ae7f12ba.boutiques",
+    id="63f0ca3ad59f9e1f8239c3ea5c2e72dfdc878c7e.workbench",
     name="volume-dilate",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeDilatePresmoothParameters = typing.TypedDict('VolumeDilatePresmoothParameters', {
     "@type": typing.NotRequired[typing.Literal["presmooth"]],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 VolumeDilatePresmoothParametersTagged = typing.TypedDict('VolumeDilatePresmoothParametersTagged', {
     "@type": typing.Literal["presmooth"],
     "kernel": float,
-    "opt_fwhm": bool,
+    "fwhm": bool,
 })
 
 
 VolumeDilateGradExtrapolateParameters = typing.TypedDict('VolumeDilateGradExtrapolateParameters', {
-    "@type": typing.NotRequired[typing.Literal["grad_extrapolate"]],
+    "@type": typing.NotRequired[typing.Literal["grad-extrapolate"]],
     "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
 })
 VolumeDilateGradExtrapolateParametersTagged = typing.TypedDict('VolumeDilateGradExtrapolateParametersTagged', {
-    "@type": typing.Literal["grad_extrapolate"],
+    "@type": typing.Literal["grad-extrapolate"],
     "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
 })
 
 
 VolumeDilateParameters = typing.TypedDict('VolumeDilateParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-dilate"]],
+    "volume-out": str,
+    "exponent": typing.NotRequired[float | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
+    "legacy-cutoff": bool,
+    "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParameters | None],
     "volume": InputPathType,
     "distance": float,
     "method": str,
-    "volume_out": str,
-    "opt_exponent_exponent": typing.NotRequired[float | None],
-    "opt_bad_voxel_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_data_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_legacy_cutoff": bool,
-    "grad_extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParameters | None],
 })
 VolumeDilateParametersTagged = typing.TypedDict('VolumeDilateParametersTagged', {
     "@type": typing.Literal["workbench/volume-dilate"],
+    "volume-out": str,
+    "exponent": typing.NotRequired[float | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
+    "legacy-cutoff": bool,
+    "grad-extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParameters | None],
     "volume": InputPathType,
     "distance": float,
     "method": str,
-    "volume_out": str,
-    "opt_exponent_exponent": typing.NotRequired[float | None],
-    "opt_bad_voxel_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_data_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_legacy_cutoff": bool,
-    "grad_extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParameters | None],
 })
 
 
 def volume_dilate_presmooth_params(
     kernel: float,
-    opt_fwhm: bool = False,
+    fwhm: bool = False,
 ) -> VolumeDilatePresmoothParametersTagged:
     """
     Build parameters.
@@ -73,14 +72,14 @@ def volume_dilate_presmooth_params(
     Args:
         kernel: the size of gaussian smoothing kernel in mm, as sigma by\
             default.
-        opt_fwhm: kernel size is FWHM, not sigma.
+        fwhm: kernel size is FWHM, not sigma.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "presmooth",
         "kernel": kernel,
-        "opt_fwhm": opt_fwhm,
+        "fwhm": fwhm,
     }
     return params
 
@@ -99,10 +98,12 @@ def volume_dilate_presmooth_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel", None)))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
+    if params.get("fwhm", False):
+        cargs.extend([
+            "-presmooth",
+            str(params.get("kernel", None)),
+            "-fwhm"
+        ])
     return cargs
 
 
@@ -119,7 +120,7 @@ def volume_dilate_grad_extrapolate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "grad_extrapolate",
+        "@type": "grad-extrapolate",
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
@@ -140,9 +141,11 @@ def volume_dilate_grad_extrapolate_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-grad-extrapolate")
     if params.get("presmooth", None) is not None:
-        cargs.extend(volume_dilate_presmooth_cargs(params.get("presmooth", None), execution))
+        cargs.extend([
+            "-grad-extrapolate",
+            *volume_dilate_presmooth_cargs(params.get("presmooth", None), execution)
+        ])
     return cargs
 
 
@@ -157,37 +160,42 @@ class VolumeDilateOutputs(typing.NamedTuple):
 
 
 def volume_dilate_params(
+    volume_out: str,
+    exponent: float | None,
+    roi_volume: InputPathType | None,
+    roi_volume_: InputPathType | None,
+    subvol: str | None,
     volume: InputPathType,
     distance: float,
     method: str,
-    volume_out: str,
-    opt_exponent_exponent: float | None = None,
-    opt_bad_voxel_roi_roi_volume: InputPathType | None = None,
-    opt_data_roi_roi_volume: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
-    opt_legacy_cutoff: bool = False,
+    legacy_cutoff: bool = False,
     grad_extrapolate: VolumeDilateGradExtrapolateParameters | None = None,
 ) -> VolumeDilateParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
+        exponent: use a different exponent in the weighting function\
+            \
+            exponent 'n' to use in (1 / (distance ^ n)) as the weighting\
+            function (default 7).
+        roi_volume: specify an roi of voxels to overwrite, rather than voxels\
+            with value zero\
+            \
+            volume file, positive values denote voxels to have their values\
+            replaced.
+        roi_volume_: specify an roi of where there is data\
+            \
+            volume file, positive values denote voxels that have data.
+        subvol: select a single subvolume to dilate\
+            \
+            the subvolume number or name.
         volume: the volume to dilate.
         distance: distance in mm to dilate.
         method: dilation method to use.
-        volume_out: the output volume.
-        opt_exponent_exponent: use a different exponent in the weighting\
-            function: exponent 'n' to use in (1 / (distance ^ n)) as the weighting\
-            function (default 7).
-        opt_bad_voxel_roi_roi_volume: specify an roi of voxels to overwrite,\
-            rather than voxels with value zero: volume file, positive values denote\
-            voxels to have their values replaced.
-        opt_data_roi_roi_volume: specify an roi of where there is data: volume\
-            file, positive values denote voxels that have data.
-        opt_subvolume_subvol: select a single subvolume to dilate: the\
-            subvolume number or name.
-        opt_legacy_cutoff: use the v1.3.2 method of excluding voxels further\
-            than the dilation distance when calculating the dilated value.
+        legacy_cutoff: use the v1.3.2 method of excluding voxels further than\
+            the dilation distance when calculating the dilated value.
         grad_extrapolate: additionally use the gradient to extrapolate,\
             intended to be used with WEIGHTED.
     Returns:
@@ -195,22 +203,22 @@ def volume_dilate_params(
     """
     params = {
         "@type": "workbench/volume-dilate",
+        "volume-out": volume_out,
+        "legacy-cutoff": legacy_cutoff,
         "volume": volume,
         "distance": distance,
         "method": method,
-        "volume_out": volume_out,
-        "opt_legacy_cutoff": opt_legacy_cutoff,
     }
-    if opt_exponent_exponent is not None:
-        params["opt_exponent_exponent"] = opt_exponent_exponent
-    if opt_bad_voxel_roi_roi_volume is not None:
-        params["opt_bad_voxel_roi_roi_volume"] = opt_bad_voxel_roi_roi_volume
-    if opt_data_roi_roi_volume is not None:
-        params["opt_data_roi_roi_volume"] = opt_data_roi_roi_volume
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if exponent is not None:
+        params["exponent"] = exponent
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
+    if roi_volume_ is not None:
+        params["roi-volume"] = roi_volume_
+    if subvol is not None:
+        params["subvol"] = subvol
     if grad_extrapolate is not None:
-        params["grad_extrapolate"] = grad_extrapolate
+        params["grad-extrapolate"] = grad_extrapolate
     return params
 
 
@@ -228,36 +236,25 @@ def volume_dilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-dilate")
+    if params.get("exponent", None) is not None or params.get("roi-volume", None) is not None or params.get("roi-volume", None) is not None or params.get("subvol", None) is not None or params.get("legacy-cutoff", False) or params.get("grad-extrapolate", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-volume-dilate",
+            params.get("volume-out", None),
+            "-exponent",
+            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
+            "-bad-voxel-roi",
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-data-roi",
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
+            "-subvolume",
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
+            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else ""),
+            *(volume_dilate_grad_extrapolate_cargs(params.get("grad-extrapolate", None), execution) if (params.get("grad-extrapolate", None) is not None) else [])
+        ])
     cargs.append(execution.input_file(params.get("volume", None)))
     cargs.append(str(params.get("distance", None)))
     cargs.append(params.get("method", None))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_exponent_exponent", None) is not None:
-        cargs.extend([
-            "-exponent",
-            str(params.get("opt_exponent_exponent", None))
-        ])
-    if params.get("opt_bad_voxel_roi_roi_volume", None) is not None:
-        cargs.extend([
-            "-bad-voxel-roi",
-            execution.input_file(params.get("opt_bad_voxel_roi_roi_volume", None))
-        ])
-    if params.get("opt_data_roi_roi_volume", None) is not None:
-        cargs.extend([
-            "-data-roi",
-            execution.input_file(params.get("opt_data_roi_roi_volume", None))
-        ])
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
-            "-subvolume",
-            params.get("opt_subvolume_subvol", None)
-        ])
-    if params.get("opt_legacy_cutoff", False):
-        cargs.append("-legacy-cutoff")
-    if params.get("grad_extrapolate", None) is not None:
-        cargs.extend(volume_dilate_grad_extrapolate_cargs(params.get("grad_extrapolate", None), execution))
     return cargs
 
 
@@ -276,7 +273,7 @@ def volume_dilate_outputs(
     """
     ret = VolumeDilateOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -286,9 +283,7 @@ def volume_dilate_execute(
     runner: Runner | None = None,
 ) -> VolumeDilateOutputs:
     """
-    volume-dilate
-    
-    Dilate a volume file.
+    DILATE A VOLUME FILE.
     
     For all voxels that are designated as bad, if they neighbor a non-bad voxel
     with data or are within the specified distance of such a voxel, replace the
@@ -307,10 +302,6 @@ def volume_dilate_execute(
     
     NEAREST - use the value from the nearest good voxel
     WEIGHTED - use a weighted average based on distance.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -328,22 +319,20 @@ def volume_dilate_execute(
 
 
 def volume_dilate(
+    volume_out: str,
+    exponent: float | None,
+    roi_volume: InputPathType | None,
+    roi_volume_: InputPathType | None,
+    subvol: str | None,
     volume: InputPathType,
     distance: float,
     method: str,
-    volume_out: str,
-    opt_exponent_exponent: float | None = None,
-    opt_bad_voxel_roi_roi_volume: InputPathType | None = None,
-    opt_data_roi_roi_volume: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
-    opt_legacy_cutoff: bool = False,
+    legacy_cutoff: bool = False,
     grad_extrapolate: VolumeDilateGradExtrapolateParameters | None = None,
     runner: Runner | None = None,
 ) -> VolumeDilateOutputs:
     """
-    volume-dilate
-    
-    Dilate a volume file.
+    DILATE A VOLUME FILE.
     
     For all voxels that are designated as bad, if they neighbor a non-bad voxel
     with data or are within the specified distance of such a voxel, replace the
@@ -363,27 +352,28 @@ def volume_dilate(
     NEAREST - use the value from the nearest good voxel
     WEIGHTED - use a weighted average based on distance.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
+        exponent: use a different exponent in the weighting function\
+            \
+            exponent 'n' to use in (1 / (distance ^ n)) as the weighting\
+            function (default 7).
+        roi_volume: specify an roi of voxels to overwrite, rather than voxels\
+            with value zero\
+            \
+            volume file, positive values denote voxels to have their values\
+            replaced.
+        roi_volume_: specify an roi of where there is data\
+            \
+            volume file, positive values denote voxels that have data.
+        subvol: select a single subvolume to dilate\
+            \
+            the subvolume number or name.
         volume: the volume to dilate.
         distance: distance in mm to dilate.
         method: dilation method to use.
-        volume_out: the output volume.
-        opt_exponent_exponent: use a different exponent in the weighting\
-            function: exponent 'n' to use in (1 / (distance ^ n)) as the weighting\
-            function (default 7).
-        opt_bad_voxel_roi_roi_volume: specify an roi of voxels to overwrite,\
-            rather than voxels with value zero: volume file, positive values denote\
-            voxels to have their values replaced.
-        opt_data_roi_roi_volume: specify an roi of where there is data: volume\
-            file, positive values denote voxels that have data.
-        opt_subvolume_subvol: select a single subvolume to dilate: the\
-            subvolume number or name.
-        opt_legacy_cutoff: use the v1.3.2 method of excluding voxels further\
-            than the dilation distance when calculating the dilated value.
+        legacy_cutoff: use the v1.3.2 method of excluding voxels further than\
+            the dilation distance when calculating the dilated value.
         grad_extrapolate: additionally use the gradient to extrapolate,\
             intended to be used with WEIGHTED.
         runner: Command runner.
@@ -391,16 +381,16 @@ def volume_dilate(
         NamedTuple of outputs (described in `VolumeDilateOutputs`).
     """
     params = volume_dilate_params(
+        volume_out=volume_out,
+        exponent=exponent,
+        roi_volume=roi_volume,
+        roi_volume_=roi_volume_,
+        subvol=subvol,
+        legacy_cutoff=legacy_cutoff,
+        grad_extrapolate=grad_extrapolate,
         volume=volume,
         distance=distance,
         method=method,
-        volume_out=volume_out,
-        opt_exponent_exponent=opt_exponent_exponent,
-        opt_bad_voxel_roi_roi_volume=opt_bad_voxel_roi_roi_volume,
-        opt_data_roi_roi_volume=opt_data_roi_roi_volume,
-        opt_subvolume_subvol=opt_subvolume_subvol,
-        opt_legacy_cutoff=opt_legacy_cutoff,
-        grad_extrapolate=grad_extrapolate,
     )
     return volume_dilate_execute(params, runner)
 

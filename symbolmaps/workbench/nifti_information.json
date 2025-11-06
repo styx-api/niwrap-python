@@ -1,29 +1,23 @@
 {
   "fn_root_make_params_and_execute": "nifti_information",
   "properties": {
-    "nifti_file": {
-      "var_param": "nifti_file"
+    "allow-truncated": {
+      "var_param": "allow_truncated"
     },
-    "print_header": {
-      "var_param": "print_header",
-      "fn_struct_make_params": "nifti_information_print_header_params",
-      "properties": {
-        "opt_allow_truncated": {
-          "var_param": "opt_allow_truncated"
-        }
-      }
+    "print-matrix": {
+      "var_param": "print_matrix"
     },
-    "opt_print_matrix": {
-      "var_param": "opt_print_matrix"
-    },
-    "print_xml": {
+    "print-xml": {
       "var_param": "print_xml",
       "fn_struct_make_params": "nifti_information_print_xml_params",
       "properties": {
-        "opt_version_version": {
-          "var_param": "opt_version_version"
+        "version": {
+          "var_param": "version"
         }
       }
+    },
+    "nifti-file": {
+      "var_param": "nifti_file"
     }
   }
 }

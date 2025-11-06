@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SET_STRUCTURE_METADATA = Metadata(
-    id="60f5a5ba046998d47b40d412b42f09c1a0bf64b8.boutiques",
+    id="3f017d3648fe7b335b883d3f5dcd0884cd807980.workbench",
     name="set-structure",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SetStructureParameters = typing.TypedDict('SetStructureParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/set-structure"]],
-    "data_file": str,
+    "type": typing.NotRequired[str | None],
+    "secondary type": typing.NotRequired[str | None],
+    "data-file": str,
     "structure": str,
-    "opt_surface_type_type": typing.NotRequired[str | None],
-    "opt_surface_secondary_type_secondary_type": typing.NotRequired[str | None],
 })
 SetStructureParametersTagged = typing.TypedDict('SetStructureParametersTagged', {
     "@type": typing.Literal["workbench/set-structure"],
-    "data_file": str,
+    "type": typing.NotRequired[str | None],
+    "secondary type": typing.NotRequired[str | None],
+    "data-file": str,
     "structure": str,
-    "opt_surface_type_type": typing.NotRequired[str | None],
-    "opt_surface_secondary_type_secondary_type": typing.NotRequired[str | None],
 })
 
 
@@ -38,34 +37,36 @@ class SetStructureOutputs(typing.NamedTuple):
 
 
 def set_structure_params(
+    type_: str | None,
+    secondary_type: str | None,
     data_file: str,
     structure: str,
-    opt_surface_type_type: str | None = None,
-    opt_surface_secondary_type_secondary_type: str | None = None,
 ) -> SetStructureParametersTagged:
     """
     Build parameters.
     
     Args:
+        type_: set the type of a surface (only used if file is a surface file)\
+            \
+            name of surface type.
+        secondary_type: set the secondary type of a surface (only used if file\
+            is a surface file)\
+            \
+            name of surface secondary type.
         data_file: the file to set the structure of.
         structure: the structure to set the file to.
-        opt_surface_type_type: set the type of a surface (only used if file is\
-            a surface file): name of surface type.
-        opt_surface_secondary_type_secondary_type: set the secondary type of a\
-            surface (only used if file is a surface file): name of surface\
-            secondary type.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/set-structure",
-        "data_file": data_file,
+        "data-file": data_file,
         "structure": structure,
     }
-    if opt_surface_type_type is not None:
-        params["opt_surface_type_type"] = opt_surface_type_type
-    if opt_surface_secondary_type_secondary_type is not None:
-        params["opt_surface_secondary_type_secondary_type"] = opt_surface_secondary_type_secondary_type
+    if type_ is not None:
+        params["type"] = type_
+    if secondary_type is not None:
+        params["secondary type"] = secondary_type
     return params
 
 
@@ -83,20 +84,17 @@ def set_structure_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-set-structure")
-    cargs.append(params.get("data_file", None))
-    cargs.append(params.get("structure", None))
-    if params.get("opt_surface_type_type", None) is not None:
+    if params.get("type", None) is not None or params.get("secondary type", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-set-structure",
             "-surface-type",
-            params.get("opt_surface_type_type", None)
-        ])
-    if params.get("opt_surface_secondary_type_secondary_type", None) is not None:
-        cargs.extend([
+            (params.get("type", None) if (params.get("type", None) is not None) else ""),
             "-surface-secondary-type",
-            params.get("opt_surface_secondary_type_secondary_type", None)
+            (params.get("secondary type", None) if (params.get("secondary type", None) is not None) else "")
         ])
+    cargs.append(params.get("data-file", None))
+    cargs.append(params.get("structure", None))
     return cargs
 
 
@@ -124,9 +122,7 @@ def set_structure_execute(
     runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
-    set-structure
-    
-    Set structure of a data file.
+    SET STRUCTURE OF A DATA FILE.
     
     The existing file is modified and rewritten to the same filename. Valid
     values for the structure name are:
@@ -154,6 +150,8 @@ def set_structure_execute(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -184,11 +182,9 @@ def set_structure_execute(
     GRAY_WHITE
     MIDTHICKNESS
     PIAL
+    INNER
+    OUTER
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -206,16 +202,14 @@ def set_structure_execute(
 
 
 def set_structure(
+    type_: str | None,
+    secondary_type: str | None,
     data_file: str,
     structure: str,
-    opt_surface_type_type: str | None = None,
-    opt_surface_secondary_type_secondary_type: str | None = None,
     runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
-    set-structure
-    
-    Set structure of a data file.
+    SET STRUCTURE OF A DATA FILE.
     
     The existing file is modified and rewritten to the same filename. Valid
     values for the structure name are:
@@ -243,6 +237,8 @@ def set_structure(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -273,29 +269,29 @@ def set_structure(
     GRAY_WHITE
     MIDTHICKNESS
     PIAL
+    INNER
+    OUTER
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        type_: set the type of a surface (only used if file is a surface file)\
+            \
+            name of surface type.
+        secondary_type: set the secondary type of a surface (only used if file\
+            is a surface file)\
+            \
+            name of surface secondary type.
         data_file: the file to set the structure of.
         structure: the structure to set the file to.
-        opt_surface_type_type: set the type of a surface (only used if file is\
-            a surface file): name of surface type.
-        opt_surface_secondary_type_secondary_type: set the secondary type of a\
-            surface (only used if file is a surface file): name of surface\
-            secondary type.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetStructureOutputs`).
     """
     params = set_structure_params(
+        type_=type_,
+        secondary_type=secondary_type,
         data_file=data_file,
         structure=structure,
-        opt_surface_type_type=opt_surface_type_type,
-        opt_surface_secondary_type_secondary_type=opt_surface_secondary_type_secondary_type,
     )
     return set_structure_execute(params, runner)
 

@@ -1,71 +1,86 @@
 {
   "fn_root_make_params_and_execute": "cifti_smoothing",
   "properties": {
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "surface_kernel": {
-      "var_param": "surface_kernel"
-    },
-    "volume_kernel": {
-      "var_param": "volume_kernel"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "cifti_out": {
+    "cifti-out": {
       "var_param": "cifti_out"
     },
-    "opt_fwhm": {
-      "var_param": "opt_fwhm"
+    "fwhm": {
+      "var_param": "fwhm"
     },
-    "left_surface": {
+    "left-surface": {
       "var_param": "left_surface",
       "fn_struct_make_params": "cifti_smoothing_left_surface_params",
       "properties": {
         "surface": {
           "var_param": "surface"
         },
-        "opt_left_corrected_areas_area_metric": {
-          "var_param": "opt_left_corrected_areas_area_metric"
+        "area-metric": {
+          "var_param": "area_metric"
         }
       }
     },
-    "right_surface": {
+    "right-surface": {
       "var_param": "right_surface",
       "fn_struct_make_params": "cifti_smoothing_right_surface_params",
       "properties": {
         "surface": {
           "var_param": "surface"
         },
-        "opt_right_corrected_areas_area_metric": {
-          "var_param": "opt_right_corrected_areas_area_metric"
+        "area-metric": {
+          "var_param": "area_metric"
         }
       }
     },
-    "cerebellum_surface": {
+    "cerebellum-surface": {
       "var_param": "cerebellum_surface",
       "fn_struct_make_params": "cifti_smoothing_cerebellum_surface_params",
       "properties": {
         "surface": {
           "var_param": "surface"
         },
-        "opt_cerebellum_corrected_areas_area_metric": {
-          "var_param": "opt_cerebellum_corrected_areas_area_metric"
+        "area-metric": {
+          "var_param": "area_metric"
         }
       }
     },
-    "opt_cifti_roi_roi_cifti": {
-      "var_param": "opt_cifti_roi_roi_cifti"
+    "roi-cifti": {
+      "var_param": "roi_cifti"
     },
-    "opt_fix_zeros_volume": {
-      "var_param": "opt_fix_zeros_volume"
+    "fix-zeros-volume": {
+      "var_param": "fix_zeros_volume"
     },
-    "opt_fix_zeros_surface": {
-      "var_param": "opt_fix_zeros_surface"
+    "fix-zeros-surface": {
+      "var_param": "fix_zeros_surface"
     },
-    "opt_merged_volume": {
-      "var_param": "opt_merged_volume"
+    "merged-volume": {
+      "var_param": "merged_volume"
+    },
+    "surface": {
+      "var_param": "surface",
+      "fn_struct_make_params": "cifti_smoothing_surface_params",
+      "properties": {
+        "structure": {
+          "var_param": "structure"
+        },
+        "surface": {
+          "var_param": "surface"
+        },
+        "area-metric": {
+          "var_param": "area_metric"
+        }
+      }
+    },
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "surface-kernel": {
+      "var_param": "surface_kernel"
+    },
+    "volume-kernel": {
+      "var_param": "volume_kernel"
+    },
+    "direction": {
+      "var_param": "direction"
     }
   }
 }

@@ -18,12 +18,12 @@ AntsIntroductionShParameters = typing.TypedDict('AntsIntroductionShParameters', 
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
     "input_image": InputPathType,
-    "force": typing.NotRequired[typing.Literal[0, 1] | None],
+    "force": typing.NotRequired[bool | None],
     "labels_in_fixed_image_space": typing.NotRequired[str | None],
     "max_iterations": typing.NotRequired[int | None],
-    "n4_bias_field_correction": typing.NotRequired[typing.Literal[0, 1] | None],
+    "n4_bias_field_correction": typing.NotRequired[bool | None],
     "outprefix": typing.NotRequired[str | None],
-    "quality_check": typing.NotRequired[typing.Literal[0, 1] | None],
+    "quality_check": typing.NotRequired[bool | None],
     "similarity_metric": typing.NotRequired[str | None],
     "transformation_model": typing.NotRequired[str | None],
 })
@@ -32,12 +32,12 @@ AntsIntroductionShParametersTagged = typing.TypedDict('AntsIntroductionShParamet
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
     "input_image": InputPathType,
-    "force": typing.NotRequired[typing.Literal[0, 1] | None],
+    "force": typing.NotRequired[bool | None],
     "labels_in_fixed_image_space": typing.NotRequired[str | None],
     "max_iterations": typing.NotRequired[int | None],
-    "n4_bias_field_correction": typing.NotRequired[typing.Literal[0, 1] | None],
+    "n4_bias_field_correction": typing.NotRequired[bool | None],
     "outprefix": typing.NotRequired[str | None],
-    "quality_check": typing.NotRequired[typing.Literal[0, 1] | None],
+    "quality_check": typing.NotRequired[bool | None],
     "similarity_metric": typing.NotRequired[str | None],
     "transformation_model": typing.NotRequired[str | None],
 })
@@ -55,12 +55,12 @@ def ants_introduction_sh_params(
     image_dimension: typing.Literal[2, 3],
     reference_image: InputPathType,
     input_image: InputPathType,
-    force: typing.Literal[0, 1] | None = None,
+    force: bool | None = None,
     labels_in_fixed_image_space: str | None = None,
     max_iterations: int | None = None,
-    n4_bias_field_correction: typing.Literal[0, 1] | None = None,
+    n4_bias_field_correction: bool | None = None,
     outprefix: str | None = None,
-    quality_check: typing.Literal[0, 1] | None = None,
+    quality_check: bool | None = None,
     similarity_metric: str | None = None,
     transformation_model: str | None = None,
 ) -> AntsIntroductionShParametersTagged:
@@ -141,7 +141,7 @@ def ants_introduction_sh_cargs(
     if params.get("force", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("force", None))
+            ("1" if params.get("force", None) else "0")
         ])
     if params.get("labels_in_fixed_image_space", None) is not None:
         cargs.extend([
@@ -156,7 +156,7 @@ def ants_introduction_sh_cargs(
     if params.get("n4_bias_field_correction", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n4_bias_field_correction", None))
+            ("1" if params.get("n4_bias_field_correction", None) else "0")
         ])
     if params.get("outprefix", None) is not None:
         cargs.extend([
@@ -166,7 +166,7 @@ def ants_introduction_sh_cargs(
     if params.get("quality_check", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("quality_check", None))
+            ("1" if params.get("quality_check", None) else "0")
         ])
     if params.get("similarity_metric", None) is not None:
         cargs.extend([
@@ -232,12 +232,12 @@ def ants_introduction_sh(
     image_dimension: typing.Literal[2, 3],
     reference_image: InputPathType,
     input_image: InputPathType,
-    force: typing.Literal[0, 1] | None = None,
+    force: bool | None = None,
     labels_in_fixed_image_space: str | None = None,
     max_iterations: int | None = None,
-    n4_bias_field_correction: typing.Literal[0, 1] | None = None,
+    n4_bias_field_correction: bool | None = None,
     outprefix: str | None = None,
-    quality_check: typing.Literal[0, 1] | None = None,
+    quality_check: bool | None = None,
     similarity_metric: str | None = None,
     transformation_model: str | None = None,
     runner: Runner | None = None,

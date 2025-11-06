@@ -6,28 +6,27 @@ import pathlib
 from styxdefs import *
 
 BORDER_LENGTH_METADATA = Metadata(
-    id="53685982ac0f6c80b96345649dc3d3bb8389bb5b.boutiques",
+    id="cb4f6a9883ab1f8156dad010df4a97753b4a5a6d.workbench",
     name="border-length",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BorderLengthParameters = typing.TypedDict('BorderLengthParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-length"]],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "separate-pieces": bool,
+    "hide-border-name": bool,
     "border": InputPathType,
     "surface": InputPathType,
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_separate_pieces": bool,
-    "opt_hide_border_name": bool,
 })
 BorderLengthParametersTagged = typing.TypedDict('BorderLengthParametersTagged', {
     "@type": typing.Literal["workbench/border-length"],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "separate-pieces": bool,
+    "hide-border-name": bool,
     "border": InputPathType,
     "surface": InputPathType,
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_separate_pieces": bool,
-    "opt_hide_border_name": bool,
 })
 
 
@@ -40,36 +39,37 @@ class BorderLengthOutputs(typing.NamedTuple):
 
 
 def border_length_params(
+    area_metric: InputPathType | None,
     border: InputPathType,
     surface: InputPathType,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_separate_pieces: bool = False,
-    opt_hide_border_name: bool = False,
+    separate_pieces: bool = False,
+    hide_border_name: bool = False,
 ) -> BorderLengthParametersTagged:
     """
     Build parameters.
     
     Args:
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         border: the input border file.
         surface: the surface to measure the borders on.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_separate_pieces: report lengths for multi-part borders as separate\
+        separate_pieces: report lengths for multi-part borders as separate\
             numbers.
-        opt_hide_border_name: don't print border name before each output.
+        hide_border_name: don't print border name before each output.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/border-length",
+        "separate-pieces": separate_pieces,
+        "hide-border-name": hide_border_name,
         "border": border,
         "surface": surface,
-        "opt_separate_pieces": opt_separate_pieces,
-        "opt_hide_border_name": opt_hide_border_name,
     }
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -87,19 +87,17 @@ def border_length_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-border-length")
+    if params.get("area-metric", None) is not None or params.get("separate-pieces", False) or params.get("hide-border-name", False):
+        cargs.extend([
+            "wb_command",
+            "-border-length",
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+            ("-separate-pieces" if (params.get("separate-pieces", False)) else ""),
+            ("-hide-border-name" if (params.get("hide-border-name", False)) else "")
+        ])
     cargs.append(execution.input_file(params.get("border", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
-            "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
-    if params.get("opt_separate_pieces", False):
-        cargs.append("-separate-pieces")
-    if params.get("opt_hide_border_name", False):
-        cargs.append("-hide-border-name")
     return cargs
 
 
@@ -127,9 +125,7 @@ def border_length_execute(
     runner: Runner | None = None,
 ) -> BorderLengthOutputs:
     """
-    border-length
-    
-    Report length of borders.
+    REPORT LENGTH OF BORDERS.
     
     For each border, print its length along the surface, in mm. If a border has
     multiple parts, their lengths are summed before printing, unless
@@ -138,10 +134,6 @@ def border_length_execute(
     The -corrected-areas option is intended for when the length is not
     meaningfully measurable on individual surfaces, it is only an approximate
     correction for the reduction in structure of a group average surface.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -159,17 +151,15 @@ def border_length_execute(
 
 
 def border_length(
+    area_metric: InputPathType | None,
     border: InputPathType,
     surface: InputPathType,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_separate_pieces: bool = False,
-    opt_hide_border_name: bool = False,
+    separate_pieces: bool = False,
+    hide_border_name: bool = False,
     runner: Runner | None = None,
 ) -> BorderLengthOutputs:
     """
-    border-length
-    
-    Report length of borders.
+    REPORT LENGTH OF BORDERS.
     
     For each border, print its length along the surface, in mm. If a border has
     multiple parts, their lengths are summed before printing, unless
@@ -179,29 +169,26 @@ def border_length(
     meaningfully measurable on individual surfaces, it is only an approximate
     correction for the reduction in structure of a group average surface.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         border: the input border file.
         surface: the surface to measure the borders on.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_separate_pieces: report lengths for multi-part borders as separate\
+        separate_pieces: report lengths for multi-part borders as separate\
             numbers.
-        opt_hide_border_name: don't print border name before each output.
+        hide_border_name: don't print border name before each output.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderLengthOutputs`).
     """
     params = border_length_params(
+        area_metric=area_metric,
+        separate_pieces=separate_pieces,
+        hide_border_name=hide_border_name,
         border=border,
         surface=surface,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
-        opt_separate_pieces=opt_separate_pieces,
-        opt_hide_border_name=opt_hide_border_name,
     )
     return border_length_execute(params, runner)
 

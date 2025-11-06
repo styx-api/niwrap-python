@@ -27,7 +27,7 @@ AlignEpiAnatPyParameters = typing.TypedDict('AlignEpiAnatPyParameters', {
     "ginormous_move": bool,
     "keep_rm_files": bool,
     "prep_only": bool,
-    "ana_has_skull": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "ana_has_skull": typing.NotRequired[bool | None],
     "epi_strip": typing.NotRequired[typing.Literal["3dSkullStrip", "3dAutomask", "None"] | None],
     "volreg_method": typing.NotRequired[typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None],
     "ex_mode": typing.NotRequired[typing.Literal["quiet", "echo", "dry_run", "script"] | None],
@@ -47,7 +47,7 @@ AlignEpiAnatPyParametersTagged = typing.TypedDict('AlignEpiAnatPyParametersTagge
     "ginormous_move": bool,
     "keep_rm_files": bool,
     "prep_only": bool,
-    "ana_has_skull": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "ana_has_skull": typing.NotRequired[bool | None],
     "epi_strip": typing.NotRequired[typing.Literal["3dSkullStrip", "3dAutomask", "None"] | None],
     "volreg_method": typing.NotRequired[typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None],
     "ex_mode": typing.NotRequired[typing.Literal["quiet", "echo", "dry_run", "script"] | None],
@@ -80,7 +80,7 @@ def align_epi_anat_py_params(
     ginormous_move: bool = False,
     keep_rm_files: bool = False,
     prep_only: bool = False,
-    ana_has_skull: typing.Literal["yes", "no"] | None = None,
+    ana_has_skull: bool | None = None,
     epi_strip: typing.Literal["3dSkullStrip", "3dAutomask", "None"] | None = None,
     volreg_method: typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None = None,
     ex_mode: typing.Literal["quiet", "echo", "dry_run", "script"] | None = None,
@@ -192,7 +192,7 @@ def align_epi_anat_py_cargs(
     if params.get("ana_has_skull", None) is not None:
         cargs.extend([
             "-anat_has_skull",
-            params.get("ana_has_skull", None)
+            ("yes" if params.get("ana_has_skull", None) else "no")
         ])
     if params.get("epi_strip", None) is not None:
         cargs.extend([
@@ -276,7 +276,7 @@ def align_epi_anat_py(
     ginormous_move: bool = False,
     keep_rm_files: bool = False,
     prep_only: bool = False,
-    ana_has_skull: typing.Literal["yes", "no"] | None = None,
+    ana_has_skull: bool | None = None,
     epi_strip: typing.Literal["3dSkullStrip", "3dAutomask", "None"] | None = None,
     volreg_method: typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None = None,
     ex_mode: typing.Literal["quiet", "echo", "dry_run", "script"] | None = None,

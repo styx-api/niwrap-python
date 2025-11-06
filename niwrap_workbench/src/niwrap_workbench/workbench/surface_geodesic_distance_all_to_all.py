@@ -6,30 +6,29 @@ import pathlib
 from styxdefs import *
 
 SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
-    id="7198c6400471913047c2af5e7257561969e48b2a.boutiques",
+    id="0be135c0c6479332f2fdfb0600eae50aaa990514.workbench",
     name="surface-geodesic-distance-all-to-all",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceGeodesicDistanceAllToAllParameters = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance-all-to-all"]],
+    "cifti-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "limit-mm": typing.NotRequired[float | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "naive": bool,
     "surface": InputPathType,
-    "cifti_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_limit_limit_mm": typing.NotRequired[float | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_naive": bool,
 })
 SurfaceGeodesicDistanceAllToAllParametersTagged = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParametersTagged', {
     "@type": typing.Literal["workbench/surface-geodesic-distance-all-to-all"],
+    "cifti-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "limit-mm": typing.NotRequired[float | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "naive": bool,
     "surface": InputPathType,
-    "cifti_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_limit_limit_mm": typing.NotRequired[float | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_naive": bool,
 })
 
 
@@ -44,42 +43,45 @@ class SurfaceGeodesicDistanceAllToAllOutputs(typing.NamedTuple):
 
 
 def surface_geodesic_distance_all_to_all_params(
-    surface: InputPathType,
     cifti_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_limit_limit_mm: float | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_naive: bool = False,
+    roi_metric: InputPathType | None,
+    limit_mm: float | None,
+    area_metric: InputPathType | None,
+    surface: InputPathType,
+    naive: bool = False,
 ) -> SurfaceGeodesicDistanceAllToAllParametersTagged:
     """
     Build parameters.
     
     Args:
-        surface: the surface to compute on.
         cifti_out: single-hemisphere dconn containing the distances.
-        opt_roi_roi_metric: only output distances for vertices inside an ROI:\
+        roi_metric: only output distances for vertices inside an ROI\
+            \
             the ROI as a metric file.
-        opt_limit_limit_mm: stop at a specified distance: distance in mm to\
-            stop at.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_naive: use only neighbors, don't crawl triangles (not recommended).
+        limit_mm: stop at a specified distance\
+            \
+            distance in mm to stop at.
+        area_metric: vertex areas to use to correct the distances on a\
+            group-average surface\
+            \
+            the corrected vertex areas, as a metric.
+        surface: the surface to compute on.
+        naive: use only neighbors, don't crawl triangles (not recommended).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-geodesic-distance-all-to-all",
+        "cifti-out": cifti_out,
+        "naive": naive,
         "surface": surface,
-        "cifti_out": cifti_out,
-        "opt_naive": opt_naive,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_limit_limit_mm is not None:
-        params["opt_limit_limit_mm"] = opt_limit_limit_mm
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if limit_mm is not None:
+        params["limit-mm"] = limit_mm
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -97,27 +99,20 @@ def surface_geodesic_distance_all_to_all_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-geodesic-distance-all-to-all")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None or params.get("limit-mm", None) is not None or params.get("area-metric", None) is not None or params.get("naive", False):
         cargs.extend([
+            "wb_command",
+            "-surface-geodesic-distance-all-to-all",
+            params.get("cifti-out", None),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_limit_limit_mm", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-limit",
-            str(params.get("opt_limit_limit_mm", None))
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
+            (str(params.get("limit-mm", None)) if (params.get("limit-mm", None) is not None) else ""),
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+            ("-naive" if (params.get("naive", False)) else "")
         ])
-    if params.get("opt_naive", False):
-        cargs.append("-naive")
+    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -136,7 +131,7 @@ def surface_geodesic_distance_all_to_all_outputs(
     """
     ret = SurfaceGeodesicDistanceAllToAllOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -146,9 +141,7 @@ def surface_geodesic_distance_all_to_all_execute(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
     """
-    surface-geodesic-distance-all-to-all
-    
-    Compute geodesic distances from all vertices.
+    COMPUTE GEODESIC DISTANCES FROM ALL VERTICES.
     
     Computes geodesic distance from every vertex to every vertex, outputting a
     single-hemisphere dconn file. If you are only interested in a few vertices,
@@ -169,10 +162,6 @@ def surface_geodesic_distance_all_to_all_execute(
     If -naive is not specified, the algorithm uses not just immediate neighbors,
     but also neighbors derived from crawling across pairs of triangles that
     share an edge.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -190,18 +179,16 @@ def surface_geodesic_distance_all_to_all_execute(
 
 
 def surface_geodesic_distance_all_to_all(
-    surface: InputPathType,
     cifti_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_limit_limit_mm: float | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_naive: bool = False,
+    roi_metric: InputPathType | None,
+    limit_mm: float | None,
+    area_metric: InputPathType | None,
+    surface: InputPathType,
+    naive: bool = False,
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
     """
-    surface-geodesic-distance-all-to-all
-    
-    Compute geodesic distances from all vertices.
+    COMPUTE GEODESIC DISTANCES FROM ALL VERTICES.
     
     Computes geodesic distance from every vertex to every vertex, outputting a
     single-hemisphere dconn file. If you are only interested in a few vertices,
@@ -223,32 +210,31 @@ def surface_geodesic_distance_all_to_all(
     but also neighbors derived from crawling across pairs of triangles that
     share an edge.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        surface: the surface to compute on.
         cifti_out: single-hemisphere dconn containing the distances.
-        opt_roi_roi_metric: only output distances for vertices inside an ROI:\
+        roi_metric: only output distances for vertices inside an ROI\
+            \
             the ROI as a metric file.
-        opt_limit_limit_mm: stop at a specified distance: distance in mm to\
-            stop at.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_naive: use only neighbors, don't crawl triangles (not recommended).
+        limit_mm: stop at a specified distance\
+            \
+            distance in mm to stop at.
+        area_metric: vertex areas to use to correct the distances on a\
+            group-average surface\
+            \
+            the corrected vertex areas, as a metric.
+        surface: the surface to compute on.
+        naive: use only neighbors, don't crawl triangles (not recommended).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceAllToAllOutputs`).
     """
     params = surface_geodesic_distance_all_to_all_params(
-        surface=surface,
         cifti_out=cifti_out,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_limit_limit_mm=opt_limit_limit_mm,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
-        opt_naive=opt_naive,
+        roi_metric=roi_metric,
+        limit_mm=limit_mm,
+        area_metric=area_metric,
+        naive=naive,
+        surface=surface,
     )
     return surface_geodesic_distance_all_to_all_execute(params, runner)
 

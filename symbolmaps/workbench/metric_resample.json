@@ -1,56 +1,56 @@
 {
   "fn_root_make_params_and_execute": "metric_resample",
   "properties": {
-    "metric_in": {
+    "metric-out": {
+      "var_param": "metric_out"
+    },
+    "area-surfs": {
+      "var_param": "area_surfs",
+      "fn_struct_make_params": "metric_resample_area_surfs_params",
+      "properties": {
+        "current-area": {
+          "var_param": "current_area"
+        },
+        "new-area": {
+          "var_param": "new_area"
+        }
+      }
+    },
+    "area-metrics": {
+      "var_param": "area_metrics",
+      "fn_struct_make_params": "metric_resample_area_metrics_params",
+      "properties": {
+        "current-area": {
+          "var_param": "current_area"
+        },
+        "new-area": {
+          "var_param": "new_area"
+        }
+      }
+    },
+    "roi-metric": {
+      "var_param": "roi_metric"
+    },
+    "roi-out": {
+      "var_param": "roi_out"
+    },
+    "largest": {
+      "var_param": "largest"
+    },
+    "bypass-sphere-check": {
+      "var_param": "bypass_sphere_check"
+    },
+    "metric-in": {
       "var_param": "metric_in"
     },
-    "current_sphere": {
+    "current-sphere": {
       "var_param": "current_sphere"
     },
-    "new_sphere": {
+    "new-sphere": {
       "var_param": "new_sphere"
     },
     "method": {
       "var_param": "method"
-    },
-    "metric_out": {
-      "var_param": "metric_out"
-    },
-    "area_surfs": {
-      "var_param": "area_surfs",
-      "fn_struct_make_params": "metric_resample_area_surfs_params",
-      "properties": {
-        "current_area": {
-          "var_param": "current_area"
-        },
-        "new_area": {
-          "var_param": "new_area"
-        }
-      }
-    },
-    "area_metrics": {
-      "var_param": "area_metrics",
-      "fn_struct_make_params": "metric_resample_area_metrics_params",
-      "properties": {
-        "current_area": {
-          "var_param": "current_area"
-        },
-        "new_area": {
-          "var_param": "new_area"
-        }
-      }
-    },
-    "opt_current_roi_roi_metric": {
-      "var_param": "opt_current_roi_roi_metric"
-    },
-    "opt_valid_roi_out_roi_out": {
-      "var_param": "opt_valid_roi_out_roi_out"
-    },
-    "opt_largest": {
-      "var_param": "opt_largest"
-    },
-    "opt_bypass_sphere_check": {
-      "var_param": "opt_bypass_sphere_check"
     }
   }
 }

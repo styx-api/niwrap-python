@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
-    id="6787be48822358a7213f746f7be34a018067adb3.boutiques",
+    id="57b8d61f61212b6239a54858cfc23c4862eead0f.workbench",
     name="metric-vector-toward-roi",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricVectorTowardRoiParameters = typing.TypedDict('MetricVectorTowardRoiParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-toward-roi"]],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
-    "target_roi": InputPathType,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "target-roi": InputPathType,
 })
 MetricVectorTowardRoiParametersTagged = typing.TypedDict('MetricVectorTowardRoiParametersTagged', {
     "@type": typing.Literal["workbench/metric-vector-toward-roi"],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
-    "target_roi": InputPathType,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "target-roi": InputPathType,
 })
 
 
@@ -40,31 +39,32 @@ class MetricVectorTowardRoiOutputs(typing.NamedTuple):
 
 
 def metric_vector_toward_roi_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
     surface: InputPathType,
     target_roi: InputPathType,
-    metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
 ) -> MetricVectorTowardRoiParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        roi_metric: don't compute for vertices outside an roi\
+            \
+            the region to compute inside, as a metric.
         surface: the surface to compute on.
         target_roi: the roi to find the shortest path to.
-        metric_out: the output metric.
-        opt_roi_roi_metric: don't compute for vertices outside an roi: the\
-            region to compute inside, as a metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-vector-toward-roi",
+        "metric-out": metric_out,
         "surface": surface,
-        "target_roi": target_roi,
-        "metric_out": metric_out,
+        "target-roi": target_roi,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -82,16 +82,16 @@ def metric_vector_toward_roi_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-vector-toward-roi")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("target_roi", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-vector-toward-roi",
+            params.get("metric-out", None),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
+            execution.input_file(params.get("roi-metric", None))
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("target-roi", None)))
     return cargs
 
 
@@ -110,7 +110,7 @@ def metric_vector_toward_roi_outputs(
     """
     ret = MetricVectorTowardRoiOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -120,16 +120,10 @@ def metric_vector_toward_roi_execute(
     runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
     """
-    metric-vector-toward-roi
-    
-    Find if vectors point toward an roi.
+    FIND IF VECTORS POINT TOWARD AN ROI.
     
     At each vertex, compute the vector along the start of the shortest path to
     the ROI.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -147,39 +141,34 @@ def metric_vector_toward_roi_execute(
 
 
 def metric_vector_toward_roi(
+    metric_out: str,
+    roi_metric: InputPathType | None,
     surface: InputPathType,
     target_roi: InputPathType,
-    metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
     """
-    metric-vector-toward-roi
-    
-    Find if vectors point toward an roi.
+    FIND IF VECTORS POINT TOWARD AN ROI.
     
     At each vertex, compute the vector along the start of the shortest path to
     the ROI.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        roi_metric: don't compute for vertices outside an roi\
+            \
+            the region to compute inside, as a metric.
         surface: the surface to compute on.
         target_roi: the roi to find the shortest path to.
-        metric_out: the output metric.
-        opt_roi_roi_metric: don't compute for vertices outside an roi: the\
-            region to compute inside, as a metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricVectorTowardRoiOutputs`).
     """
     params = metric_vector_toward_roi_params(
+        metric_out=metric_out,
+        roi_metric=roi_metric,
         surface=surface,
         target_roi=target_roi,
-        metric_out=metric_out,
-        opt_roi_roi_metric=opt_roi_roi_metric,
     )
     return metric_vector_toward_roi_execute(params, runner)
 

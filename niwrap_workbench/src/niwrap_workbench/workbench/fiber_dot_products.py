@@ -6,30 +6,29 @@ import pathlib
 from styxdefs import *
 
 FIBER_DOT_PRODUCTS_METADATA = Metadata(
-    id="1bea023ebc341c8821892b782bf2c571990af31a.boutiques",
+    id="59c62ac73c0dcf4d07840b26ea3183b46e8c89ab.workbench",
     name="fiber-dot-products",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 FiberDotProductsParameters = typing.TypedDict('FiberDotProductsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/fiber-dot-products"]],
-    "white_surf": InputPathType,
-    "fiber_file": InputPathType,
-    "max_dist": float,
+    "dot-metric": str,
+    "f-metric": str,
+    "white-surf": InputPathType,
+    "fiber-file": InputPathType,
+    "max-dist": float,
     "direction": str,
-    "dot_metric": str,
-    "f_metric": str,
 })
 FiberDotProductsParametersTagged = typing.TypedDict('FiberDotProductsParametersTagged', {
     "@type": typing.Literal["workbench/fiber-dot-products"],
-    "white_surf": InputPathType,
-    "fiber_file": InputPathType,
-    "max_dist": float,
+    "dot-metric": str,
+    "f-metric": str,
+    "white-surf": InputPathType,
+    "fiber-file": InputPathType,
+    "max-dist": float,
     "direction": str,
-    "dot_metric": str,
-    "f_metric": str,
 })
 
 
@@ -46,36 +45,36 @@ class FiberDotProductsOutputs(typing.NamedTuple):
 
 
 def fiber_dot_products_params(
+    dot_metric: str,
+    f_metric: str,
     white_surf: InputPathType,
     fiber_file: InputPathType,
     max_dist: float,
     direction: str,
-    dot_metric: str,
-    f_metric: str,
 ) -> FiberDotProductsParametersTagged:
     """
     Build parameters.
     
     Args:
+        dot_metric: the metric of dot products.
+        f_metric: a metric of the f values of the fiber distributions.
         white_surf: the white/gray boundary surface.
         fiber_file: the fiber orientation file.
         max_dist: the maximum distance from any surface vertex a fiber\
             population may be, in mm.
         direction: test against surface for whether a fiber population should\
             be used.
-        dot_metric: the metric of dot products.
-        f_metric: a metric of the f values of the fiber distributions.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/fiber-dot-products",
-        "white_surf": white_surf,
-        "fiber_file": fiber_file,
-        "max_dist": max_dist,
+        "dot-metric": dot_metric,
+        "f-metric": f_metric,
+        "white-surf": white_surf,
+        "fiber-file": fiber_file,
+        "max-dist": max_dist,
         "direction": direction,
-        "dot_metric": dot_metric,
-        "f_metric": f_metric,
     }
     return params
 
@@ -94,14 +93,16 @@ def fiber_dot_products_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-fiber-dot-products")
-    cargs.append(execution.input_file(params.get("white_surf", None)))
-    cargs.append(execution.input_file(params.get("fiber_file", None)))
-    cargs.append(str(params.get("max_dist", None)))
+    cargs.extend([
+        "wb_command",
+        "-fiber-dot-products",
+        params.get("dot-metric", None),
+        params.get("f-metric", None)
+    ])
+    cargs.append(execution.input_file(params.get("white-surf", None)))
+    cargs.append(execution.input_file(params.get("fiber-file", None)))
+    cargs.append(str(params.get("max-dist", None)))
     cargs.append(params.get("direction", None))
-    cargs.append(params.get("dot_metric", None))
-    cargs.append(params.get("f_metric", None))
     return cargs
 
 
@@ -120,8 +121,8 @@ def fiber_dot_products_outputs(
     """
     ret = FiberDotProductsOutputs(
         root=execution.output_file("."),
-        dot_metric=execution.output_file(params.get("dot_metric", None)),
-        f_metric=execution.output_file(params.get("f_metric", None)),
+        dot_metric=execution.output_file(params.get("dot-metric", None)),
+        f_metric=execution.output_file(params.get("f-metric", None)),
     )
     return ret
 
@@ -131,9 +132,7 @@ def fiber_dot_products_execute(
     runner: Runner | None = None,
 ) -> FiberDotProductsOutputs:
     """
-    fiber-dot-products
-    
-    Compute dot products of fiber orientations with surface normals.
+    COMPUTE DOT PRODUCTS OF FIBER ORIENTATIONS WITH SURFACE NORMALS.
     
     For each vertex, this command finds the closest fiber population that
     satisfies the <direction> test, and computes the absolute value of the dot
@@ -142,10 +141,6 @@ def fiber_dot_products_execute(
     causes the command to only use fiber populations that are inside the
     surface, outside the surface, or to not care which direction it is from the
     surface. Each fiber population is output in a separate metric column.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -163,18 +158,16 @@ def fiber_dot_products_execute(
 
 
 def fiber_dot_products(
+    dot_metric: str,
+    f_metric: str,
     white_surf: InputPathType,
     fiber_file: InputPathType,
     max_dist: float,
     direction: str,
-    dot_metric: str,
-    f_metric: str,
     runner: Runner | None = None,
 ) -> FiberDotProductsOutputs:
     """
-    fiber-dot-products
-    
-    Compute dot products of fiber orientations with surface normals.
+    COMPUTE DOT PRODUCTS OF FIBER ORIENTATIONS WITH SURFACE NORMALS.
     
     For each vertex, this command finds the closest fiber population that
     satisfies the <direction> test, and computes the absolute value of the dot
@@ -184,30 +177,26 @@ def fiber_dot_products(
     surface, outside the surface, or to not care which direction it is from the
     surface. Each fiber population is output in a separate metric column.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        dot_metric: the metric of dot products.
+        f_metric: a metric of the f values of the fiber distributions.
         white_surf: the white/gray boundary surface.
         fiber_file: the fiber orientation file.
         max_dist: the maximum distance from any surface vertex a fiber\
             population may be, in mm.
         direction: test against surface for whether a fiber population should\
             be used.
-        dot_metric: the metric of dot products.
-        f_metric: a metric of the f values of the fiber distributions.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FiberDotProductsOutputs`).
     """
     params = fiber_dot_products_params(
+        dot_metric=dot_metric,
+        f_metric=f_metric,
         white_surf=white_surf,
         fiber_file=fiber_file,
         max_dist=max_dist,
         direction=direction,
-        dot_metric=dot_metric,
-        f_metric=f_metric,
     )
     return fiber_dot_products_execute(params, runner)
 

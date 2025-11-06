@@ -1,38 +1,20 @@
 {
   "fn_root_make_params_and_execute": "cifti_extrema",
   "properties": {
-    "cifti": {
-      "var_param": "cifti"
-    },
-    "surface_distance": {
-      "var_param": "surface_distance"
-    },
-    "volume_distance": {
-      "var_param": "volume_distance"
-    },
-    "direction": {
-      "var_param": "direction"
-    },
-    "cifti_out": {
+    "cifti-out": {
       "var_param": "cifti_out"
     },
-    "opt_left_surface_surface": {
-      "var_param": "opt_left_surface_surface"
+    "surface": {
+      "var_param": "surface_2"
     },
-    "opt_right_surface_surface": {
-      "var_param": "opt_right_surface_surface"
+    "surface-kernel": {
+      "var_param": "surface_kernel"
     },
-    "opt_cerebellum_surface_surface": {
-      "var_param": "opt_cerebellum_surface_surface"
+    "volume-kernel": {
+      "var_param": "volume_kernel"
     },
-    "opt_surface_presmooth_surface_kernel": {
-      "var_param": "opt_surface_presmooth_surface_kernel"
-    },
-    "opt_volume_presmooth_volume_kernel": {
-      "var_param": "opt_volume_presmooth_volume_kernel"
-    },
-    "opt_presmooth_fwhm": {
-      "var_param": "opt_presmooth_fwhm"
+    "presmooth-fwhm": {
+      "var_param": "presmooth_fwhm"
     },
     "threshold": {
       "var_param": "threshold",
@@ -46,20 +28,32 @@
         }
       }
     },
-    "opt_merged_volume": {
-      "var_param": "opt_merged_volume"
+    "merged-volume": {
+      "var_param": "merged_volume"
     },
-    "opt_sum_maps": {
-      "var_param": "opt_sum_maps"
+    "sum-maps": {
+      "var_param": "sum_maps"
     },
-    "opt_consolidate_mode": {
-      "var_param": "opt_consolidate_mode"
+    "consolidate-mode": {
+      "var_param": "consolidate_mode"
     },
-    "opt_only_maxima": {
-      "var_param": "opt_only_maxima"
+    "only-maxima": {
+      "var_param": "only_maxima"
     },
-    "opt_only_minima": {
-      "var_param": "opt_only_minima"
+    "only-minima": {
+      "var_param": "only_minima"
+    },
+    "cifti": {
+      "var_param": "cifti"
+    },
+    "surface-distance": {
+      "var_param": "surface_distance"
+    },
+    "volume-distance": {
+      "var_param": "volume_distance"
+    },
+    "direction": {
+      "var_param": "direction"
     }
   }
 }

@@ -43,7 +43,7 @@ DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
     "mask_image": typing.NotRequired[InputPathType | None],
     "patch_radius": typing.NotRequired[str | None],
     "search_radius": typing.NotRequired[str | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
     "output": typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
 })
@@ -55,7 +55,7 @@ DenoiseImageParametersTagged = typing.TypedDict('DenoiseImageParametersTagged', 
     "mask_image": typing.NotRequired[InputPathType | None],
     "patch_radius": typing.NotRequired[str | None],
     "search_radius": typing.NotRequired[str | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
     "input_image": InputPathType,
     "output": typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
 })
@@ -255,7 +255,7 @@ def denoise_image_params(
     mask_image: InputPathType | None = None,
     patch_radius: str | None = None,
     search_radius: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> DenoiseImageParametersTagged:
     """
     Build parameters.
@@ -354,7 +354,7 @@ def denoise_image_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     cargs.extend([
         "--input-image",
@@ -427,7 +427,7 @@ def denoise_image(
     mask_image: InputPathType | None = None,
     patch_radius: str | None = None,
     search_radius: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> DenoiseImageOutputs:
     """

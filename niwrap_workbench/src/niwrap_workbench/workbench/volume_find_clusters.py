@@ -6,38 +6,37 @@ import pathlib
 from styxdefs import *
 
 VOLUME_FIND_CLUSTERS_METADATA = Metadata(
-    id="363fad6e10e9a750a43bad790cd94f3805484d5d.boutiques",
+    id="80ccd8653d75a12acc8bcc204d1a6379b0a31cfe.workbench",
     name="volume-find-clusters",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeFindClustersParameters = typing.TypedDict('VolumeFindClustersParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-find-clusters"]],
-    "volume_in": InputPathType,
-    "value_threshold": float,
-    "minimum_volume": float,
-    "volume_out": str,
-    "opt_less_than": bool,
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_size_ratio_ratio": typing.NotRequired[float | None],
-    "opt_distance_distance": typing.NotRequired[float | None],
-    "opt_start_startval": typing.NotRequired[int | None],
+    "volume-out": str,
+    "less-than": bool,
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
+    "ratio": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "startval": typing.NotRequired[int | None],
+    "volume-in": InputPathType,
+    "value-threshold": float,
+    "minimum-volume": float,
 })
 VolumeFindClustersParametersTagged = typing.TypedDict('VolumeFindClustersParametersTagged', {
     "@type": typing.Literal["workbench/volume-find-clusters"],
-    "volume_in": InputPathType,
-    "value_threshold": float,
-    "minimum_volume": float,
-    "volume_out": str,
-    "opt_less_than": bool,
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
-    "opt_size_ratio_ratio": typing.NotRequired[float | None],
-    "opt_distance_distance": typing.NotRequired[float | None],
-    "opt_start_startval": typing.NotRequired[int | None],
+    "volume-out": str,
+    "less-than": bool,
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "subvol": typing.NotRequired[str | None],
+    "ratio": typing.NotRequired[float | None],
+    "distance": typing.NotRequired[float | None],
+    "startval": typing.NotRequired[int | None],
+    "volume-in": InputPathType,
+    "value-threshold": float,
+    "minimum-volume": float,
 })
 
 
@@ -52,59 +51,65 @@ class VolumeFindClustersOutputs(typing.NamedTuple):
 
 
 def volume_find_clusters_params(
+    volume_out: str,
+    roi_volume: InputPathType | None,
+    subvol: str | None,
+    ratio: float | None,
+    distance: float | None,
+    startval: int | None,
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
-    volume_out: str,
-    opt_less_than: bool = False,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
-    opt_size_ratio_ratio: float | None = None,
-    opt_distance_distance: float | None = None,
-    opt_start_startval: int | None = None,
+    less_than: bool = False,
 ) -> VolumeFindClustersParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
+        roi_volume: select a region of interest\
+            \
+            the roi, as a volume file.
+        subvol: select a single subvolume\
+            \
+            the subvolume number or name.
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
+            \
+            fraction of the largest cluster's volume.
+        distance: ignore clusters further than a given distance from the\
+            largest cluster\
+            \
+            how far from the largest cluster a cluster can be, edge to edge, in\
+            mm.
+        startval: start labeling clusters from a value other than 1\
+            \
+            the value to give the first cluster found.
         volume_in: the input volume.
         value_threshold: threshold for data values.
         minimum_volume: threshold for cluster volume, in mm^3.
-        volume_out: the output volume.
-        opt_less_than: find values less than <value-threshold>, rather than\
-            greater.
-        opt_roi_roi_volume: select a region of interest: the roi, as a volume\
-            file.
-        opt_subvolume_subvol: select a single subvolume: the subvolume number\
-            or name.
-        opt_size_ratio_ratio: ignore clusters smaller than a given fraction of\
-            the largest cluster in map: fraction of the largest cluster's volume.
-        opt_distance_distance: ignore clusters further than a given distance\
-            from the largest cluster: how far from the largest cluster a cluster\
-            can be, edge to edge, in mm.
-        opt_start_startval: start labeling clusters from a value other than 1:\
-            the value to give the first cluster found.
+        less_than: find values less than <value-threshold>, rather than greater.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-find-clusters",
-        "volume_in": volume_in,
-        "value_threshold": value_threshold,
-        "minimum_volume": minimum_volume,
-        "volume_out": volume_out,
-        "opt_less_than": opt_less_than,
+        "volume-out": volume_out,
+        "less-than": less_than,
+        "volume-in": volume_in,
+        "value-threshold": value_threshold,
+        "minimum-volume": minimum_volume,
     }
-    if opt_roi_roi_volume is not None:
-        params["opt_roi_roi_volume"] = opt_roi_roi_volume
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
-    if opt_size_ratio_ratio is not None:
-        params["opt_size_ratio_ratio"] = opt_size_ratio_ratio
-    if opt_distance_distance is not None:
-        params["opt_distance_distance"] = opt_distance_distance
-    if opt_start_startval is not None:
-        params["opt_start_startval"] = opt_start_startval
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
+    if subvol is not None:
+        params["subvol"] = subvol
+    if ratio is not None:
+        params["ratio"] = ratio
+    if distance is not None:
+        params["distance"] = distance
+    if startval is not None:
+        params["startval"] = startval
     return params
 
 
@@ -122,39 +127,26 @@ def volume_find_clusters_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-find-clusters")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(str(params.get("value_threshold", None)))
-    cargs.append(str(params.get("minimum_volume", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_less_than", False):
-        cargs.append("-less-than")
-    if params.get("opt_roi_roi_volume", None) is not None:
+    if params.get("less-than", False) or params.get("roi-volume", None) is not None or params.get("subvol", None) is not None or params.get("ratio", None) is not None or params.get("distance", None) is not None or params.get("startval", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-find-clusters",
+            params.get("volume-out", None),
+            ("-less-than" if (params.get("less-than", False)) else ""),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume", None))
-        ])
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
-        ])
-    if params.get("opt_size_ratio_ratio", None) is not None:
-        cargs.extend([
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else ""),
             "-size-ratio",
-            str(params.get("opt_size_ratio_ratio", None))
-        ])
-    if params.get("opt_distance_distance", None) is not None:
-        cargs.extend([
+            (str(params.get("ratio", None)) if (params.get("ratio", None) is not None) else ""),
             "-distance",
-            str(params.get("opt_distance_distance", None))
-        ])
-    if params.get("opt_start_startval", None) is not None:
-        cargs.extend([
+            (str(params.get("distance", None)) if (params.get("distance", None) is not None) else ""),
             "-start",
-            str(params.get("opt_start_startval", None))
+            (str(params.get("startval", None)) if (params.get("startval", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(str(params.get("value-threshold", None)))
+    cargs.append(str(params.get("minimum-volume", None)))
     return cargs
 
 
@@ -173,7 +165,7 @@ def volume_find_clusters_outputs(
     """
     ret = VolumeFindClustersOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -183,9 +175,7 @@ def volume_find_clusters_execute(
     runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
-    volume-find-clusters
-    
-    Filter clusters by volume.
+    FILTER CLUSTERS BY VOLUME.
     
     Outputs a volume with nonzero integers for all voxels within a large enough
     cluster, and zeros elsewhere. The integers denote cluster membership (by
@@ -195,10 +185,6 @@ def volume_find_clusters_execute(
     considered to be in a cluster, use -less-than to test for values less than
     the threshold. To apply this as a mask to the data, or to do more
     complicated thresholding, see -volume-math.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -216,22 +202,20 @@ def volume_find_clusters_execute(
 
 
 def volume_find_clusters(
+    volume_out: str,
+    roi_volume: InputPathType | None,
+    subvol: str | None,
+    ratio: float | None,
+    distance: float | None,
+    startval: int | None,
     volume_in: InputPathType,
     value_threshold: float,
     minimum_volume: float,
-    volume_out: str,
-    opt_less_than: bool = False,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_subvolume_subvol: str | None = None,
-    opt_size_ratio_ratio: float | None = None,
-    opt_distance_distance: float | None = None,
-    opt_start_startval: int | None = None,
+    less_than: bool = False,
     runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
-    volume-find-clusters
-    
-    Filter clusters by volume.
+    FILTER CLUSTERS BY VOLUME.
     
     Outputs a volume with nonzero integers for all voxels within a large enough
     cluster, and zeros elsewhere. The integers denote cluster membership (by
@@ -242,43 +226,45 @@ def volume_find_clusters(
     the threshold. To apply this as a mask to the data, or to do more
     complicated thresholding, see -volume-math.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
+        roi_volume: select a region of interest\
+            \
+            the roi, as a volume file.
+        subvol: select a single subvolume\
+            \
+            the subvolume number or name.
+        ratio: ignore clusters smaller than a given fraction of the largest\
+            cluster in map\
+            \
+            fraction of the largest cluster's volume.
+        distance: ignore clusters further than a given distance from the\
+            largest cluster\
+            \
+            how far from the largest cluster a cluster can be, edge to edge, in\
+            mm.
+        startval: start labeling clusters from a value other than 1\
+            \
+            the value to give the first cluster found.
         volume_in: the input volume.
         value_threshold: threshold for data values.
         minimum_volume: threshold for cluster volume, in mm^3.
-        volume_out: the output volume.
-        opt_less_than: find values less than <value-threshold>, rather than\
-            greater.
-        opt_roi_roi_volume: select a region of interest: the roi, as a volume\
-            file.
-        opt_subvolume_subvol: select a single subvolume: the subvolume number\
-            or name.
-        opt_size_ratio_ratio: ignore clusters smaller than a given fraction of\
-            the largest cluster in map: fraction of the largest cluster's volume.
-        opt_distance_distance: ignore clusters further than a given distance\
-            from the largest cluster: how far from the largest cluster a cluster\
-            can be, edge to edge, in mm.
-        opt_start_startval: start labeling clusters from a value other than 1:\
-            the value to give the first cluster found.
+        less_than: find values less than <value-threshold>, rather than greater.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeFindClustersOutputs`).
     """
     params = volume_find_clusters_params(
+        volume_out=volume_out,
+        less_than=less_than,
+        roi_volume=roi_volume,
+        subvol=subvol,
+        ratio=ratio,
+        distance=distance,
+        startval=startval,
         volume_in=volume_in,
         value_threshold=value_threshold,
         minimum_volume=minimum_volume,
-        volume_out=volume_out,
-        opt_less_than=opt_less_than,
-        opt_roi_roi_volume=opt_roi_roi_volume,
-        opt_subvolume_subvol=opt_subvolume_subvol,
-        opt_size_ratio_ratio=opt_size_ratio_ratio,
-        opt_distance_distance=opt_distance_distance,
-        opt_start_startval=opt_start_startval,
     )
     return volume_find_clusters_execute(params, runner)
 

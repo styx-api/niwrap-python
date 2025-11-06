@@ -1,10 +1,7 @@
 {
   "fn_root_make_params_and_execute": "volume_gradient",
   "properties": {
-    "volume_in": {
-      "var_param": "volume_in"
-    },
-    "volume_out": {
+    "volume-out": {
       "var_param": "volume_out"
     },
     "presmooth": {
@@ -14,19 +11,22 @@
         "kernel": {
           "var_param": "kernel"
         },
-        "opt_fwhm": {
-          "var_param": "opt_fwhm"
+        "fwhm": {
+          "var_param": "fwhm"
         }
       }
     },
-    "opt_roi_roi_volume": {
-      "var_param": "opt_roi_roi_volume"
+    "roi-volume": {
+      "var_param": "roi_volume"
     },
-    "opt_vectors_vector_volume_out": {
-      "var_param": "opt_vectors_vector_volume_out"
+    "vector-volume-out": {
+      "var_param": "vector_volume_out"
     },
-    "opt_subvolume_subvol": {
-      "var_param": "opt_subvolume_subvol"
+    "subvol": {
+      "var_param": "subvol"
+    },
+    "volume-in": {
+      "var_param": "volume_in"
     }
   }
 }

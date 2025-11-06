@@ -1,32 +1,32 @@
 {
   "fn_root_make_params_and_execute": "volume_stats",
   "properties": {
-    "volume_in": {
-      "var_param": "volume_in"
+    "operation": {
+      "var_param": "operation"
     },
-    "opt_reduce_operation": {
-      "var_param": "opt_reduce_operation"
+    "percent": {
+      "var_param": "percent"
     },
-    "opt_percentile_percent": {
-      "var_param": "opt_percentile_percent"
-    },
-    "opt_subvolume_subvolume": {
-      "var_param": "opt_subvolume_subvolume"
+    "subvolume": {
+      "var_param": "subvolume"
     },
     "roi": {
       "var_param": "roi",
       "fn_struct_make_params": "volume_stats_roi_params",
       "properties": {
-        "roi_volume": {
+        "roi-volume": {
           "var_param": "roi_volume"
         },
-        "opt_match_maps": {
-          "var_param": "opt_match_maps"
+        "match-maps": {
+          "var_param": "match_maps"
         }
       }
     },
-    "opt_show_map_name": {
-      "var_param": "opt_show_map_name"
+    "show-map-name": {
+      "var_param": "show_map_name"
+    },
+    "volume-in": {
+      "var_param": "volume_in"
     }
   }
 }

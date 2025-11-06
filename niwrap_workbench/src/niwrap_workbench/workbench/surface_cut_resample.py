@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CUT_RESAMPLE_METADATA = Metadata(
-    id="3a00cf3f1b235001cfda81c5ab6186879f56a56c.boutiques",
+    id="4fdc0efb8ff92dfb91c639b6b9fe6d92fc4d0e35.workbench",
     name="surface-cut-resample",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceCutResampleParameters = typing.TypedDict('SurfaceCutResampleParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-cut-resample"]],
-    "surface_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
-    "surface_out": str,
+    "surface-out": str,
+    "surface-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
 })
 SurfaceCutResampleParametersTagged = typing.TypedDict('SurfaceCutResampleParametersTagged', {
     "@type": typing.Literal["workbench/surface-cut-resample"],
-    "surface_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
-    "surface_out": str,
+    "surface-out": str,
+    "surface-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
 })
 
 
@@ -40,30 +39,30 @@ class SurfaceCutResampleOutputs(typing.NamedTuple):
 
 
 def surface_cut_resample_params(
+    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    surface_out: str,
 ) -> SurfaceCutResampleParametersTagged:
     """
     Build parameters.
     
     Args:
+        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
-        surface_out: the output surface file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/surface-cut-resample",
-        "surface_in": surface_in,
-        "current_sphere": current_sphere,
-        "new_sphere": new_sphere,
-        "surface_out": surface_out,
+        "surface-out": surface_out,
+        "surface-in": surface_in,
+        "current-sphere": current_sphere,
+        "new-sphere": new_sphere,
     }
     return params
 
@@ -82,12 +81,14 @@ def surface_cut_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-cut-resample")
-    cargs.append(execution.input_file(params.get("surface_in", None)))
-    cargs.append(execution.input_file(params.get("current_sphere", None)))
-    cargs.append(execution.input_file(params.get("new_sphere", None)))
-    cargs.append(params.get("surface_out", None))
+    cargs.extend([
+        "wb_command",
+        "-surface-cut-resample",
+        params.get("surface-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("surface-in", None)))
+    cargs.append(execution.input_file(params.get("current-sphere", None)))
+    cargs.append(execution.input_file(params.get("new-sphere", None)))
     return cargs
 
 
@@ -106,7 +107,7 @@ def surface_cut_resample_outputs(
     """
     ret = SurfaceCutResampleOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out", None)),
+        surface_out=execution.output_file(params.get("surface-out", None)),
     )
     return ret
 
@@ -116,17 +117,11 @@ def surface_cut_resample_execute(
     runner: Runner | None = None,
 ) -> SurfaceCutResampleOutputs:
     """
-    surface-cut-resample
-    
-    Resample a cut surface.
+    RESAMPLE A CUT SURFACE.
     
     Resamples a surface file, given two spherical surfaces that are in register.
     Barycentric resampling is used, because it is usually better for resampling
     surfaces, and because it is needed to figure out the new topology anyway.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -144,41 +139,35 @@ def surface_cut_resample_execute(
 
 
 def surface_cut_resample(
+    surface_out: str,
     surface_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    surface_out: str,
     runner: Runner | None = None,
 ) -> SurfaceCutResampleOutputs:
     """
-    surface-cut-resample
-    
-    Resample a cut surface.
+    RESAMPLE A CUT SURFACE.
     
     Resamples a surface file, given two spherical surfaces that are in register.
     Barycentric resampling is used, because it is usually better for resampling
     surfaces, and because it is needed to figure out the new topology anyway.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        surface_out: the output surface file.
         surface_in: the surface file to resample.
         current_sphere: a sphere surface with the mesh that the input surface\
             is currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
-        surface_out: the output surface file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCutResampleOutputs`).
     """
     params = surface_cut_resample_params(
+        surface_out=surface_out,
         surface_in=surface_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
-        surface_out=surface_out,
     )
     return surface_cut_resample_execute(params, runner)
 

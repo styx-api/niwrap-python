@@ -6,82 +6,97 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CREATE_DENSE_TIMESERIES_METADATA = Metadata(
-    id="0c5c29de3b046d189f8d02590ac94b688fe175f9.boutiques",
+    id="f5d206eb0bc377ff0fe1029ae7f196cdc4e2d75c.workbench",
     name="cifti-create-dense-timeseries",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiCreateDenseTimeseriesVolumeParameters = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParameters', {
     "@type": typing.NotRequired[typing.Literal["volume"]],
-    "volume_data": InputPathType,
-    "structure_label_volume": InputPathType,
+    "volume-data": InputPathType,
+    "structure-label-volume": InputPathType,
 })
 CiftiCreateDenseTimeseriesVolumeParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParametersTagged', {
     "@type": typing.Literal["volume"],
-    "volume_data": InputPathType,
-    "structure_label_volume": InputPathType,
+    "volume-data": InputPathType,
+    "structure-label-volume": InputPathType,
 })
 
 
 CiftiCreateDenseTimeseriesLeftMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParameters', {
-    "@type": typing.NotRequired[typing.Literal["left_metric"]],
+    "@type": typing.NotRequired[typing.Literal["left-metric"]],
     "metric": InputPathType,
-    "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCreateDenseTimeseriesLeftMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParametersTagged', {
-    "@type": typing.Literal["left_metric"],
+    "@type": typing.Literal["left-metric"],
     "metric": InputPathType,
-    "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesRightMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParameters', {
-    "@type": typing.NotRequired[typing.Literal["right_metric"]],
+    "@type": typing.NotRequired[typing.Literal["right-metric"]],
     "metric": InputPathType,
-    "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCreateDenseTimeseriesRightMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParametersTagged', {
-    "@type": typing.Literal["right_metric"],
+    "@type": typing.Literal["right-metric"],
     "metric": InputPathType,
-    "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParameters', {
-    "@type": typing.NotRequired[typing.Literal["cerebellum_metric"]],
+    "@type": typing.NotRequired[typing.Literal["cerebellum-metric"]],
     "metric": InputPathType,
-    "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged', {
-    "@type": typing.Literal["cerebellum_metric"],
+    "@type": typing.Literal["cerebellum-metric"],
     "metric": InputPathType,
-    "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+})
+
+
+CiftiCreateDenseTimeseriesMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesMetricParameters', {
+    "@type": typing.NotRequired[typing.Literal["metric"]],
+    "structure": str,
+    "metric": InputPathType,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateDenseTimeseriesMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesMetricParametersTagged', {
+    "@type": typing.Literal["metric"],
+    "structure": str,
+    "metric": InputPathType,
+    "roi-metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesParameters = typing.TypedDict('CiftiCreateDenseTimeseriesParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-timeseries"]],
-    "cifti_out": str,
+    "cifti-out": str,
     "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParameters | None],
-    "left_metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
-    "right_metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParameters | None],
-    "cerebellum_metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParameters | None],
-    "opt_timestep_interval": typing.NotRequired[float | None],
-    "opt_timestart_start": typing.NotRequired[float | None],
-    "opt_unit_unit": typing.NotRequired[str | None],
+    "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
+    "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParameters | None],
+    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParameters | None],
+    "interval": typing.NotRequired[float | None],
+    "start": typing.NotRequired[float | None],
+    "unit": typing.NotRequired[str | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParameters] | None],
 })
 CiftiCreateDenseTimeseriesParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesParametersTagged', {
     "@type": typing.Literal["workbench/cifti-create-dense-timeseries"],
-    "cifti_out": str,
+    "cifti-out": str,
     "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParameters | None],
-    "left_metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
-    "right_metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParameters | None],
-    "cerebellum_metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParameters | None],
-    "opt_timestep_interval": typing.NotRequired[float | None],
-    "opt_timestart_start": typing.NotRequired[float | None],
-    "opt_unit_unit": typing.NotRequired[str | None],
+    "left-metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
+    "right-metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParameters | None],
+    "cerebellum-metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParameters | None],
+    "interval": typing.NotRequired[float | None],
+    "start": typing.NotRequired[float | None],
+    "unit": typing.NotRequired[str | None],
+    "metric": typing.NotRequired[list[CiftiCreateDenseTimeseriesMetricParameters] | None],
 })
 
 
@@ -102,8 +117,8 @@ def cifti_create_dense_timeseries_volume_params(
     """
     params = {
         "@type": "volume",
-        "volume_data": volume_data,
-        "structure_label_volume": structure_label_volume,
+        "volume-data": volume_data,
+        "structure-label-volume": structure_label_volume,
     }
     return params
 
@@ -122,32 +137,35 @@ def cifti_create_dense_timeseries_volume_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-volume")
-    cargs.append(execution.input_file(params.get("volume_data", None)))
-    cargs.append(execution.input_file(params.get("structure_label_volume", None)))
+    cargs.extend([
+        "-volume",
+        execution.input_file(params.get("volume-data", None)),
+        execution.input_file(params.get("structure-label-volume", None))
+    ])
     return cargs
 
 
 def cifti_create_dense_timeseries_left_metric_params(
     metric: InputPathType,
-    opt_roi_left_roi_metric: InputPathType | None = None,
+    roi_metric: InputPathType | None,
 ) -> CiftiCreateDenseTimeseriesLeftMetricParametersTagged:
     """
     Build parameters.
     
     Args:
         metric: the metric file.
-        opt_roi_left_roi_metric: roi of vertices to use from left surface: the\
-            ROI as a metric file.
+        roi_metric: roi of vertices to use from left surface\
+            \
+            the ROI as a metric file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "left_metric",
+        "@type": "left-metric",
         "metric": metric,
     }
-    if opt_roi_left_roi_metric is not None:
-        params["opt_roi_left_roi_metric"] = opt_roi_left_roi_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -165,36 +183,37 @@ def cifti_create_dense_timeseries_left_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-left-metric")
-    cargs.append(execution.input_file(params.get("metric", None)))
-    if params.get("opt_roi_left_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None:
         cargs.extend([
+            "-left-metric",
+            execution.input_file(params.get("metric", None)),
             "-roi-left",
-            execution.input_file(params.get("opt_roi_left_roi_metric", None))
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
 
 def cifti_create_dense_timeseries_right_metric_params(
     metric: InputPathType,
-    opt_roi_right_roi_metric: InputPathType | None = None,
+    roi_metric: InputPathType | None,
 ) -> CiftiCreateDenseTimeseriesRightMetricParametersTagged:
     """
     Build parameters.
     
     Args:
         metric: the metric file.
-        opt_roi_right_roi_metric: roi of vertices to use from right surface:\
+        roi_metric: roi of vertices to use from right surface\
+            \
             the ROI as a metric file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "right_metric",
+        "@type": "right-metric",
         "metric": metric,
     }
-    if opt_roi_right_roi_metric is not None:
-        params["opt_roi_right_roi_metric"] = opt_roi_right_roi_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -212,36 +231,37 @@ def cifti_create_dense_timeseries_right_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-right-metric")
-    cargs.append(execution.input_file(params.get("metric", None)))
-    if params.get("opt_roi_right_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None:
         cargs.extend([
+            "-right-metric",
+            execution.input_file(params.get("metric", None)),
             "-roi-right",
-            execution.input_file(params.get("opt_roi_right_roi_metric", None))
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
 
 def cifti_create_dense_timeseries_cerebellum_metric_params(
     metric: InputPathType,
-    opt_roi_cerebellum_roi_metric: InputPathType | None = None,
+    roi_metric: InputPathType | None,
 ) -> CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged:
     """
     Build parameters.
     
     Args:
         metric: the metric file.
-        opt_roi_cerebellum_roi_metric: roi of vertices to use from right\
-            surface: the ROI as a metric file.
+        roi_metric: roi of vertices to use from right surface\
+            \
+            the ROI as a metric file.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "cerebellum_metric",
+        "@type": "cerebellum-metric",
         "metric": metric,
     }
-    if opt_roi_cerebellum_roi_metric is not None:
-        params["opt_roi_cerebellum_roi_metric"] = opt_roi_cerebellum_roi_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
     return params
 
 
@@ -259,12 +279,64 @@ def cifti_create_dense_timeseries_cerebellum_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-cerebellum-metric")
-    cargs.append(execution.input_file(params.get("metric", None)))
-    if params.get("opt_roi_cerebellum_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None:
         cargs.extend([
+            "-cerebellum-metric",
+            execution.input_file(params.get("metric", None)),
             "-roi-cerebellum",
-            execution.input_file(params.get("opt_roi_cerebellum_roi_metric", None))
+            execution.input_file(params.get("roi-metric", None))
+        ])
+    return cargs
+
+
+def cifti_create_dense_timeseries_metric_params(
+    structure: str,
+    metric: InputPathType,
+    roi_metric: InputPathType | None,
+) -> CiftiCreateDenseTimeseriesMetricParametersTagged:
+    """
+    Build parameters.
+    
+    Args:
+        structure: the structure name.
+        metric: the metric file.
+        roi_metric: roi of vertices to use from this structure\
+            \
+            the ROI as a metric file.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "@type": "metric",
+        "structure": structure,
+        "metric": metric,
+    }
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    return params
+
+
+def cifti_create_dense_timeseries_metric_cargs(
+    params: CiftiCreateDenseTimeseriesMetricParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("roi-metric", None) is not None:
+        cargs.extend([
+            "-metric",
+            params.get("structure", None),
+            execution.input_file(params.get("metric", None)),
+            "-roi",
+            execution.input_file(params.get("roi-metric", None))
         ])
     return cargs
 
@@ -281,50 +353,57 @@ class CiftiCreateDenseTimeseriesOutputs(typing.NamedTuple):
 
 def cifti_create_dense_timeseries_params(
     cifti_out: str,
+    interval: float | None,
+    start: float | None,
+    unit: str | None,
     volume: CiftiCreateDenseTimeseriesVolumeParameters | None = None,
     left_metric: CiftiCreateDenseTimeseriesLeftMetricParameters | None = None,
     right_metric: CiftiCreateDenseTimeseriesRightMetricParameters | None = None,
     cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParameters | None = None,
-    opt_timestep_interval: float | None = None,
-    opt_timestart_start: float | None = None,
-    opt_unit_unit: str | None = None,
+    metric: list[CiftiCreateDenseTimeseriesMetricParameters] | None = None,
 ) -> CiftiCreateDenseTimeseriesParametersTagged:
     """
     Build parameters.
     
     Args:
         cifti_out: the output cifti file.
+        interval: set the timestep\
+            \
+            the timestep, in seconds (default 1.0).
+        start: set the start time\
+            \
+            the time at the first frame, in seconds (default 0.0).
+        unit: use a unit other than time\
+            \
+            unit identifier (default SECOND).
         volume: volume component.
-        left_metric: metric for left surface.
-        right_metric: metric for left surface.
+        left_metric: metric for the left cortical surface.
+        right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
-        opt_timestep_interval: set the timestep: the timestep, in seconds\
-            (default 1.0).
-        opt_timestart_start: set the start time: the time at the first frame,\
-            in seconds (default 0.0).
-        opt_unit_unit: use a unit other than time: unit identifier (default\
-            SECOND).
+        metric: metric for a specified surface structure.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-create-dense-timeseries",
-        "cifti_out": cifti_out,
+        "cifti-out": cifti_out,
     }
     if volume is not None:
         params["volume"] = volume
     if left_metric is not None:
-        params["left_metric"] = left_metric
+        params["left-metric"] = left_metric
     if right_metric is not None:
-        params["right_metric"] = right_metric
+        params["right-metric"] = right_metric
     if cerebellum_metric is not None:
-        params["cerebellum_metric"] = cerebellum_metric
-    if opt_timestep_interval is not None:
-        params["opt_timestep_interval"] = opt_timestep_interval
-    if opt_timestart_start is not None:
-        params["opt_timestart_start"] = opt_timestart_start
-    if opt_unit_unit is not None:
-        params["opt_unit_unit"] = opt_unit_unit
+        params["cerebellum-metric"] = cerebellum_metric
+    if interval is not None:
+        params["interval"] = interval
+    if start is not None:
+        params["start"] = start
+    if unit is not None:
+        params["unit"] = unit
+    if metric is not None:
+        params["metric"] = metric
     return params
 
 
@@ -342,31 +421,22 @@ def cifti_create_dense_timeseries_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-create-dense-timeseries")
-    cargs.append(params.get("cifti_out", None))
-    if params.get("volume", None) is not None:
-        cargs.extend(cifti_create_dense_timeseries_volume_cargs(params.get("volume", None), execution))
-    if params.get("left_metric", None) is not None:
-        cargs.extend(cifti_create_dense_timeseries_left_metric_cargs(params.get("left_metric", None), execution))
-    if params.get("right_metric", None) is not None:
-        cargs.extend(cifti_create_dense_timeseries_right_metric_cargs(params.get("right_metric", None), execution))
-    if params.get("cerebellum_metric", None) is not None:
-        cargs.extend(cifti_create_dense_timeseries_cerebellum_metric_cargs(params.get("cerebellum_metric", None), execution))
-    if params.get("opt_timestep_interval", None) is not None:
+    if params.get("volume", None) is not None or params.get("left-metric", None) is not None or params.get("right-metric", None) is not None or params.get("cerebellum-metric", None) is not None or params.get("interval", None) is not None or params.get("start", None) is not None or params.get("unit", None) is not None or params.get("metric", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-create-dense-timeseries",
+            params.get("cifti-out", None),
+            *(cifti_create_dense_timeseries_volume_cargs(params.get("volume", None), execution) if (params.get("volume", None) is not None) else []),
+            *(cifti_create_dense_timeseries_left_metric_cargs(params.get("left-metric", None), execution) if (params.get("left-metric", None) is not None) else []),
+            *(cifti_create_dense_timeseries_right_metric_cargs(params.get("right-metric", None), execution) if (params.get("right-metric", None) is not None) else []),
+            *(cifti_create_dense_timeseries_cerebellum_metric_cargs(params.get("cerebellum-metric", None), execution) if (params.get("cerebellum-metric", None) is not None) else []),
             "-timestep",
-            str(params.get("opt_timestep_interval", None))
-        ])
-    if params.get("opt_timestart_start", None) is not None:
-        cargs.extend([
+            (str(params.get("interval", None)) if (params.get("interval", None) is not None) else ""),
             "-timestart",
-            str(params.get("opt_timestart_start", None))
-        ])
-    if params.get("opt_unit_unit", None) is not None:
-        cargs.extend([
+            (str(params.get("start", None)) if (params.get("start", None) is not None) else ""),
             "-unit",
-            params.get("opt_unit_unit", None)
+            (params.get("unit", None) if (params.get("unit", None) is not None) else ""),
+            *([a for c in [cifti_create_dense_timeseries_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c] if (params.get("metric", None) is not None) else [])
         ])
     return cargs
 
@@ -386,7 +456,7 @@ def cifti_create_dense_timeseries_outputs(
     """
     ret = CiftiCreateDenseTimeseriesOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -396,17 +466,16 @@ def cifti_create_dense_timeseries_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
-    cifti-create-dense-timeseries
-    
-    Create a cifti dense timeseries.
+    CREATE A CIFTI DENSE TIMESERIES.
     
     All input files must have the same number of columns/subvolumes. Only the
     specified components will be in the output cifti. At least one component
     must be specified.
     
     See -volume-label-import and -volume-help for format details of label volume
-    files. The structure-label-volume should have some of the label names from
-    this list, all other label names will be ignored:
+    files. The -metric structure argument and labels in the
+    structure-label-volume must use names from the below list (labels with other
+    names are ignored, -metric arguments with other strings are an error):
     
     CORTEX_LEFT
     CORTEX_RIGHT
@@ -431,6 +500,8 @@ def cifti_create_dense_timeseries_execute(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -448,10 +519,6 @@ def cifti_create_dense_timeseries_execute(
     HERTZ
     METER
     RADIAN.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -470,27 +537,27 @@ def cifti_create_dense_timeseries_execute(
 
 def cifti_create_dense_timeseries(
     cifti_out: str,
+    interval: float | None,
+    start: float | None,
+    unit: str | None,
     volume: CiftiCreateDenseTimeseriesVolumeParameters | None = None,
     left_metric: CiftiCreateDenseTimeseriesLeftMetricParameters | None = None,
     right_metric: CiftiCreateDenseTimeseriesRightMetricParameters | None = None,
     cerebellum_metric: CiftiCreateDenseTimeseriesCerebellumMetricParameters | None = None,
-    opt_timestep_interval: float | None = None,
-    opt_timestart_start: float | None = None,
-    opt_unit_unit: str | None = None,
+    metric: list[CiftiCreateDenseTimeseriesMetricParameters] | None = None,
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
-    cifti-create-dense-timeseries
-    
-    Create a cifti dense timeseries.
+    CREATE A CIFTI DENSE TIMESERIES.
     
     All input files must have the same number of columns/subvolumes. Only the
     specified components will be in the output cifti. At least one component
     must be specified.
     
     See -volume-label-import and -volume-help for format details of label volume
-    files. The structure-label-volume should have some of the label names from
-    this list, all other label names will be ignored:
+    files. The -metric structure argument and labels in the
+    structure-label-volume must use names from the below list (labels with other
+    names are ignored, -metric arguments with other strings are an error):
     
     CORTEX_LEFT
     CORTEX_RIGHT
@@ -515,6 +582,8 @@ def cifti_create_dense_timeseries(
     DIENCEPHALON_VENTRAL_RIGHT
     HIPPOCAMPUS_LEFT
     HIPPOCAMPUS_RIGHT
+    HIPPOCAMPUS_DENTATE_LEFT
+    HIPPOCAMPUS_DENTATE_RIGHT
     INVALID
     OTHER
     OTHER_GREY_MATTER
@@ -533,22 +602,22 @@ def cifti_create_dense_timeseries(
     METER
     RADIAN.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
         cifti_out: the output cifti file.
+        interval: set the timestep\
+            \
+            the timestep, in seconds (default 1.0).
+        start: set the start time\
+            \
+            the time at the first frame, in seconds (default 0.0).
+        unit: use a unit other than time\
+            \
+            unit identifier (default SECOND).
         volume: volume component.
-        left_metric: metric for left surface.
-        right_metric: metric for left surface.
+        left_metric: metric for the left cortical surface.
+        right_metric: metric for the right cortical surface.
         cerebellum_metric: metric for the cerebellum.
-        opt_timestep_interval: set the timestep: the timestep, in seconds\
-            (default 1.0).
-        opt_timestart_start: set the start time: the time at the first frame,\
-            in seconds (default 0.0).
-        opt_unit_unit: use a unit other than time: unit identifier (default\
-            SECOND).
+        metric: metric for a specified surface structure.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseTimeseriesOutputs`).
@@ -559,9 +628,10 @@ def cifti_create_dense_timeseries(
         left_metric=left_metric,
         right_metric=right_metric,
         cerebellum_metric=cerebellum_metric,
-        opt_timestep_interval=opt_timestep_interval,
-        opt_timestart_start=opt_timestart_start,
-        opt_unit_unit=opt_unit_unit,
+        interval=interval,
+        start=start,
+        unit=unit,
+        metric=metric,
     )
     return cifti_create_dense_timeseries_execute(params, runner)
 
@@ -573,6 +643,7 @@ __all__ = [
     "cifti_create_dense_timeseries_cerebellum_metric_params",
     "cifti_create_dense_timeseries_execute",
     "cifti_create_dense_timeseries_left_metric_params",
+    "cifti_create_dense_timeseries_metric_params",
     "cifti_create_dense_timeseries_params",
     "cifti_create_dense_timeseries_right_metric_params",
     "cifti_create_dense_timeseries_volume_params",

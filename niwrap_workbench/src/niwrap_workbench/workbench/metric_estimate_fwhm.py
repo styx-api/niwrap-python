@@ -6,77 +6,28 @@ import pathlib
 from styxdefs import *
 
 METRIC_ESTIMATE_FWHM_METADATA = Metadata(
-    id="1dc8ef5c509e7c0da3d3148fdee937da14d79caf.boutiques",
+    id="9c0ae9d2b6ef7d3111a63f811feffe7ae9dde13f.workbench",
     name="metric-estimate-fwhm",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
-
-
-MetricEstimateFwhmWholeFileParameters = typing.TypedDict('MetricEstimateFwhmWholeFileParameters', {
-    "@type": typing.NotRequired[typing.Literal["whole_file"]],
-    "opt_demean": bool,
-})
-MetricEstimateFwhmWholeFileParametersTagged = typing.TypedDict('MetricEstimateFwhmWholeFileParametersTagged', {
-    "@type": typing.Literal["whole_file"],
-    "opt_demean": bool,
-})
 
 
 MetricEstimateFwhmParameters = typing.TypedDict('MetricEstimateFwhmParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-estimate-fwhm"]],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "demean": typing.NotRequired[bool | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "whole_file": typing.NotRequired[MetricEstimateFwhmWholeFileParameters | None],
+    "metric-in": InputPathType,
 })
 MetricEstimateFwhmParametersTagged = typing.TypedDict('MetricEstimateFwhmParametersTagged', {
     "@type": typing.Literal["workbench/metric-estimate-fwhm"],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "demean": typing.NotRequired[bool | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "whole_file": typing.NotRequired[MetricEstimateFwhmWholeFileParameters | None],
+    "metric-in": InputPathType,
 })
-
-
-def metric_estimate_fwhm_whole_file_params(
-    opt_demean: bool = False,
-) -> MetricEstimateFwhmWholeFileParametersTagged:
-    """
-    Build parameters.
-    
-    Args:
-        opt_demean: subtract the mean image before estimating smoothness.
-    Returns:
-        Parameter dictionary
-    """
-    params = {
-        "@type": "whole_file",
-        "opt_demean": opt_demean,
-    }
-    return params
-
-
-def metric_estimate_fwhm_whole_file_cargs(
-    params: MetricEstimateFwhmWholeFileParameters,
-    execution: Execution,
-) -> list[str]:
-    """
-    Build command-line arguments from parameters.
-    
-    Args:
-        params: The parameters.
-        execution: The execution object for resolving input paths.
-    Returns:
-        Command-line arguments.
-    """
-    cargs = []
-    cargs.append("-whole-file")
-    if params.get("opt_demean", False):
-        cargs.append("-demean")
-    return cargs
 
 
 class MetricEstimateFwhmOutputs(typing.NamedTuple):
@@ -88,38 +39,41 @@ class MetricEstimateFwhmOutputs(typing.NamedTuple):
 
 
 def metric_estimate_fwhm_params(
+    roi_metric: InputPathType | None,
+    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    whole_file: MetricEstimateFwhmWholeFileParameters | None = None,
+    demean: bool | None = False,
 ) -> MetricEstimateFwhmParametersTagged:
     """
     Build parameters.
     
     Args:
+        roi_metric: use only data within an ROI\
+            \
+            the metric file to use as an ROI.
+        column: select a single column to estimate smoothness of\
+            \
+            the column number or name.
         surface: the surface to use for distance and neighbor information.
         metric_in: the input metric.
-        opt_roi_roi_metric: use only data within an ROI: the metric file to use\
-            as an ROI.
-        opt_column_column: select a single column to estimate smoothness of:\
-            the column number or name.
-        whole_file: estimate for the whole file at once, not each column\
-            separately.
+        demean: estimate for the whole file at once, not each column separately\
+            \
+            subtract the mean image before estimating smoothness.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-estimate-fwhm",
         "surface": surface,
-        "metric_in": metric_in,
+        "metric-in": metric_in,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if whole_file is not None:
-        params["whole_file"] = whole_file
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if column is not None:
+        params["column"] = column
+    if demean is not None:
+        params["demean"] = demean
     return params
 
 
@@ -137,22 +91,19 @@ def metric_estimate_fwhm_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-estimate-fwhm")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("demean", False) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-estimate-fwhm",
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-column",
-            params.get("opt_column_column", None)
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            "-whole-file",
+            ("-demean" if (params.get("demean", False) is not None) else "")
         ])
-    if params.get("whole_file", None) is not None:
-        cargs.extend(metric_estimate_fwhm_whole_file_cargs(params.get("whole_file", None), execution))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -180,16 +131,10 @@ def metric_estimate_fwhm_execute(
     runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
-    metric-estimate-fwhm
-    
-    Estimate fwhm smoothness of a metric file.
+    ESTIMATE FWHM SMOOTHNESS OF A METRIC FILE.
     
     Estimates the smoothness of the metric columns, printing the estimates to
     standard output. These estimates ignore variation in vertex spacing.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -207,44 +152,41 @@ def metric_estimate_fwhm_execute(
 
 
 def metric_estimate_fwhm(
+    roi_metric: InputPathType | None,
+    column: str | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    whole_file: MetricEstimateFwhmWholeFileParameters | None = None,
+    demean: bool | None = False,
     runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
-    metric-estimate-fwhm
-    
-    Estimate fwhm smoothness of a metric file.
+    ESTIMATE FWHM SMOOTHNESS OF A METRIC FILE.
     
     Estimates the smoothness of the metric columns, printing the estimates to
     standard output. These estimates ignore variation in vertex spacing.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        roi_metric: use only data within an ROI\
+            \
+            the metric file to use as an ROI.
+        column: select a single column to estimate smoothness of\
+            \
+            the column number or name.
         surface: the surface to use for distance and neighbor information.
         metric_in: the input metric.
-        opt_roi_roi_metric: use only data within an ROI: the metric file to use\
-            as an ROI.
-        opt_column_column: select a single column to estimate smoothness of:\
-            the column number or name.
-        whole_file: estimate for the whole file at once, not each column\
-            separately.
+        demean: estimate for the whole file at once, not each column separately\
+            \
+            subtract the mean image before estimating smoothness.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricEstimateFwhmOutputs`).
     """
     params = metric_estimate_fwhm_params(
+        roi_metric=roi_metric,
+        column=column,
+        demean=demean,
         surface=surface,
         metric_in=metric_in,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_column_column=opt_column_column,
-        whole_file=whole_file,
     )
     return metric_estimate_fwhm_execute(params, runner)
 
@@ -255,5 +197,4 @@ __all__ = [
     "metric_estimate_fwhm",
     "metric_estimate_fwhm_execute",
     "metric_estimate_fwhm_params",
-    "metric_estimate_fwhm_whole_file_params",
 ]

@@ -1,10 +1,10 @@
 {
   "fn_root_make_params_and_execute": "spec_file_relocate",
   "properties": {
-    "input_spec": {
+    "input-spec": {
       "var_param": "input_spec"
     },
-    "output_spec": {
+    "output-spec": {
       "var_param": "output_spec"
     }
   }

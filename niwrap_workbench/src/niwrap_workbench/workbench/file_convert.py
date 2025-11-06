@@ -6,37 +6,36 @@ import pathlib
 from styxdefs import *
 
 FILE_CONVERT_METADATA = Metadata(
-    id="2ba9bfe538f65b507e6368c6504e85d0210593d5.boutiques",
+    id="955bdf431ca1cccbf73a19afbeac8667fbb4a28c.workbench",
     name="file-convert",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 FileConvertBorderVersionConvertParameters = typing.TypedDict('FileConvertBorderVersionConvertParameters', {
-    "@type": typing.NotRequired[typing.Literal["border_version_convert"]],
-    "border_in": InputPathType,
-    "out_version": int,
-    "border_out": str,
-    "opt_surface_surface": typing.NotRequired[InputPathType | None],
+    "@type": typing.NotRequired[typing.Literal["border-version-convert"]],
+    "border-in": InputPathType,
+    "out-version": int,
+    "border-out": str,
+    "surface": typing.NotRequired[InputPathType | None],
 })
 FileConvertBorderVersionConvertParametersTagged = typing.TypedDict('FileConvertBorderVersionConvertParametersTagged', {
-    "@type": typing.Literal["border_version_convert"],
-    "border_in": InputPathType,
-    "out_version": int,
-    "border_out": str,
-    "opt_surface_surface": typing.NotRequired[InputPathType | None],
+    "@type": typing.Literal["border-version-convert"],
+    "border-in": InputPathType,
+    "out-version": int,
+    "border-out": str,
+    "surface": typing.NotRequired[InputPathType | None],
 })
 
 
 FileConvertNiftiVersionConvertParameters = typing.TypedDict('FileConvertNiftiVersionConvertParameters', {
-    "@type": typing.NotRequired[typing.Literal["nifti_version_convert"]],
+    "@type": typing.NotRequired[typing.Literal["nifti-version-convert"]],
     "input": str,
     "version": int,
     "output": str,
 })
 FileConvertNiftiVersionConvertParametersTagged = typing.TypedDict('FileConvertNiftiVersionConvertParametersTagged', {
-    "@type": typing.Literal["nifti_version_convert"],
+    "@type": typing.Literal["nifti-version-convert"],
     "input": str,
     "version": int,
     "output": str,
@@ -44,30 +43,30 @@ FileConvertNiftiVersionConvertParametersTagged = typing.TypedDict('FileConvertNi
 
 
 FileConvertCiftiVersionConvertParameters = typing.TypedDict('FileConvertCiftiVersionConvertParameters', {
-    "@type": typing.NotRequired[typing.Literal["cifti_version_convert"]],
-    "cifti_in": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["cifti-version-convert"]],
+    "cifti-in": InputPathType,
     "version": str,
-    "cifti_out": str,
+    "cifti-out": str,
 })
 FileConvertCiftiVersionConvertParametersTagged = typing.TypedDict('FileConvertCiftiVersionConvertParametersTagged', {
-    "@type": typing.Literal["cifti_version_convert"],
-    "cifti_in": InputPathType,
+    "@type": typing.Literal["cifti-version-convert"],
+    "cifti-in": InputPathType,
     "version": str,
-    "cifti_out": str,
+    "cifti-out": str,
 })
 
 
 FileConvertParameters = typing.TypedDict('FileConvertParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/file-convert"]],
-    "border_version_convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
-    "nifti_version_convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
-    "cifti_version_convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],
+    "border-version-convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
+    "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
+    "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],
 })
 FileConvertParametersTagged = typing.TypedDict('FileConvertParametersTagged', {
     "@type": typing.Literal["workbench/file-convert"],
-    "border_version_convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
-    "nifti_version_convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
-    "cifti_version_convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],
+    "border-version-convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
+    "nifti-version-convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
+    "cifti-version-convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],
 })
 
 
@@ -75,7 +74,7 @@ def file_convert_border_version_convert_params(
     border_in: InputPathType,
     out_version: int,
     border_out: str,
-    opt_surface_surface: InputPathType | None = None,
+    surface: InputPathType | None,
 ) -> FileConvertBorderVersionConvertParametersTagged:
     """
     Build parameters.
@@ -84,20 +83,21 @@ def file_convert_border_version_convert_params(
         border_in: the input border file.
         out_version: the format version to write as, 1 or 3 (2 doesn't exist).
         border_out: output - the output border file.
-        opt_surface_surface: must be specified if the input is version 1: use\
-            this surface file for structure and number of vertices, ignore borders\
-            on other structures.
+        surface: must be specified if the input is version 1\
+            \
+            use this surface file for structure and number of vertices, ignore\
+            borders on other structures.
     Returns:
         Parameter dictionary
     """
     params = {
-        "@type": "border_version_convert",
-        "border_in": border_in,
-        "out_version": out_version,
-        "border_out": border_out,
+        "@type": "border-version-convert",
+        "border-in": border_in,
+        "out-version": out_version,
+        "border-out": border_out,
     }
-    if opt_surface_surface is not None:
-        params["opt_surface_surface"] = opt_surface_surface
+    if surface is not None:
+        params["surface"] = surface
     return params
 
 
@@ -115,14 +115,14 @@ def file_convert_border_version_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-border-version-convert")
-    cargs.append(execution.input_file(params.get("border_in", None)))
-    cargs.append(str(params.get("out_version", None)))
-    cargs.append(params.get("border_out", None))
-    if params.get("opt_surface_surface", None) is not None:
+    if params.get("surface", None) is not None:
         cargs.extend([
+            "-border-version-convert",
+            execution.input_file(params.get("border-in", None)),
+            str(params.get("out-version", None)),
+            params.get("border-out", None),
             "-surface",
-            execution.input_file(params.get("opt_surface_surface", None))
+            execution.input_file(params.get("surface", None))
         ])
     return cargs
 
@@ -143,7 +143,7 @@ def file_convert_nifti_version_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "nifti_version_convert",
+        "@type": "nifti-version-convert",
         "input": input_,
         "version": version,
         "output": output,
@@ -165,10 +165,12 @@ def file_convert_nifti_version_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-nifti-version-convert")
-    cargs.append(params.get("input", None))
-    cargs.append(str(params.get("version", None)))
-    cargs.append(params.get("output", None))
+    cargs.extend([
+        "-nifti-version-convert",
+        params.get("input", None),
+        str(params.get("version", None)),
+        params.get("output", None)
+    ])
     return cargs
 
 
@@ -188,10 +190,10 @@ def file_convert_cifti_version_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "cifti_version_convert",
-        "cifti_in": cifti_in,
+        "@type": "cifti-version-convert",
+        "cifti-in": cifti_in,
         "version": version,
-        "cifti_out": cifti_out,
+        "cifti-out": cifti_out,
     }
     return params
 
@@ -210,10 +212,12 @@ def file_convert_cifti_version_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-cifti-version-convert")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
-    cargs.append(params.get("version", None))
-    cargs.append(params.get("cifti_out", None))
+    cargs.extend([
+        "-cifti-version-convert",
+        execution.input_file(params.get("cifti-in", None)),
+        params.get("version", None),
+        params.get("cifti-out", None)
+    ])
     return cargs
 
 
@@ -244,11 +248,11 @@ def file_convert_params(
         "@type": "workbench/file-convert",
     }
     if border_version_convert is not None:
-        params["border_version_convert"] = border_version_convert
+        params["border-version-convert"] = border_version_convert
     if nifti_version_convert is not None:
-        params["nifti_version_convert"] = nifti_version_convert
+        params["nifti-version-convert"] = nifti_version_convert
     if cifti_version_convert is not None:
-        params["cifti_version_convert"] = cifti_version_convert
+        params["cifti-version-convert"] = cifti_version_convert
     return params
 
 
@@ -266,14 +270,14 @@ def file_convert_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-file-convert")
-    if params.get("border_version_convert", None) is not None:
-        cargs.extend(file_convert_border_version_convert_cargs(params.get("border_version_convert", None), execution))
-    if params.get("nifti_version_convert", None) is not None:
-        cargs.extend(file_convert_nifti_version_convert_cargs(params.get("nifti_version_convert", None), execution))
-    if params.get("cifti_version_convert", None) is not None:
-        cargs.extend(file_convert_cifti_version_convert_cargs(params.get("cifti_version_convert", None), execution))
+    if params.get("border-version-convert", None) is not None or params.get("nifti-version-convert", None) is not None or params.get("cifti-version-convert", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-file-convert",
+            *(file_convert_border_version_convert_cargs(params.get("border-version-convert", None), execution) if (params.get("border-version-convert", None) is not None) else []),
+            *(file_convert_nifti_version_convert_cargs(params.get("nifti-version-convert", None), execution) if (params.get("nifti-version-convert", None) is not None) else []),
+            *(file_convert_cifti_version_convert_cargs(params.get("cifti-version-convert", None), execution) if (params.get("cifti-version-convert", None) is not None) else [])
+        ])
     return cargs
 
 
@@ -301,15 +305,9 @@ def file_convert_execute(
     runner: Runner | None = None,
 ) -> FileConvertOutputs:
     """
-    file-convert
-    
-    Change version of file format.
+    CHANGE VERSION OF FILE FORMAT.
     
     You may only specify one top-level option.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -333,15 +331,9 @@ def file_convert(
     runner: Runner | None = None,
 ) -> FileConvertOutputs:
     """
-    file-convert
-    
-    Change version of file format.
+    CHANGE VERSION OF FILE FORMAT.
     
     You may only specify one top-level option.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         border_version_convert: write a border file with a different version.

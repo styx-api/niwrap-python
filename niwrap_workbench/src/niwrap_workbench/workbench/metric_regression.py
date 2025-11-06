@@ -6,68 +6,68 @@ import pathlib
 from styxdefs import *
 
 METRIC_REGRESSION_METADATA = Metadata(
-    id="478fb33cff7af2c028c82b1a87cc021ded62f90d.boutiques",
+    id="112cf7b9fc8784489485c6275842f1d2dadef8d8.workbench",
     name="metric-regression",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricRegressionRemoveParameters = typing.TypedDict('MetricRegressionRemoveParameters', {
     "@type": typing.NotRequired[typing.Literal["remove"]],
     "metric": InputPathType,
-    "opt_remove_column_column": typing.NotRequired[str | None],
+    "column": typing.NotRequired[str | None],
 })
 MetricRegressionRemoveParametersTagged = typing.TypedDict('MetricRegressionRemoveParametersTagged', {
     "@type": typing.Literal["remove"],
     "metric": InputPathType,
-    "opt_remove_column_column": typing.NotRequired[str | None],
+    "column": typing.NotRequired[str | None],
 })
 
 
 MetricRegressionKeepParameters = typing.TypedDict('MetricRegressionKeepParameters', {
     "@type": typing.NotRequired[typing.Literal["keep"]],
     "metric": InputPathType,
-    "opt_keep_column_column": typing.NotRequired[str | None],
+    "column": typing.NotRequired[str | None],
 })
 MetricRegressionKeepParametersTagged = typing.TypedDict('MetricRegressionKeepParametersTagged', {
     "@type": typing.Literal["keep"],
     "metric": InputPathType,
-    "opt_keep_column_column": typing.NotRequired[str | None],
+    "column": typing.NotRequired[str | None],
 })
 
 
 MetricRegressionParameters = typing.TypedDict('MetricRegressionParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-regression"]],
-    "metric_in": InputPathType,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
     "remove": typing.NotRequired[list[MetricRegressionRemoveParameters] | None],
     "keep": typing.NotRequired[list[MetricRegressionKeepParameters] | None],
+    "metric-in": InputPathType,
 })
 MetricRegressionParametersTagged = typing.TypedDict('MetricRegressionParametersTagged', {
     "@type": typing.Literal["workbench/metric-regression"],
-    "metric_in": InputPathType,
-    "metric_out": str,
-    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
     "remove": typing.NotRequired[list[MetricRegressionRemoveParameters] | None],
     "keep": typing.NotRequired[list[MetricRegressionKeepParameters] | None],
+    "metric-in": InputPathType,
 })
 
 
 def metric_regression_remove_params(
     metric: InputPathType,
-    opt_remove_column_column: str | None = None,
+    column: str | None,
 ) -> MetricRegressionRemoveParametersTagged:
     """
     Build parameters.
     
     Args:
         metric: the metric file to use.
-        opt_remove_column_column: select a column to use, rather than all: the\
-            column number or name.
+        column: select a column to use, rather than all\
+            \
+            the column number or name.
     Returns:
         Parameter dictionary
     """
@@ -75,8 +75,8 @@ def metric_regression_remove_params(
         "@type": "remove",
         "metric": metric,
     }
-    if opt_remove_column_column is not None:
-        params["opt_remove_column_column"] = opt_remove_column_column
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -94,27 +94,28 @@ def metric_regression_remove_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-remove")
-    cargs.append(execution.input_file(params.get("metric", None)))
-    if params.get("opt_remove_column_column", None) is not None:
+    if params.get("column", None) is not None:
         cargs.extend([
+            "-remove",
+            execution.input_file(params.get("metric", None)),
             "-remove-column",
-            params.get("opt_remove_column_column", None)
+            params.get("column", None)
         ])
     return cargs
 
 
 def metric_regression_keep_params(
     metric: InputPathType,
-    opt_keep_column_column: str | None = None,
+    column: str | None,
 ) -> MetricRegressionKeepParametersTagged:
     """
     Build parameters.
     
     Args:
         metric: the metric file to use.
-        opt_keep_column_column: select a column to use, rather than all: the\
-            column number or name.
+        column: select a column to use, rather than all\
+            \
+            the column number or name.
     Returns:
         Parameter dictionary
     """
@@ -122,8 +123,8 @@ def metric_regression_keep_params(
         "@type": "keep",
         "metric": metric,
     }
-    if opt_keep_column_column is not None:
-        params["opt_keep_column_column"] = opt_keep_column_column
+    if column is not None:
+        params["column"] = column
     return params
 
 
@@ -141,12 +142,12 @@ def metric_regression_keep_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-keep")
-    cargs.append(execution.input_file(params.get("metric", None)))
-    if params.get("opt_keep_column_column", None) is not None:
+    if params.get("column", None) is not None:
         cargs.extend([
+            "-keep",
+            execution.input_file(params.get("metric", None)),
             "-keep-column",
-            params.get("opt_keep_column_column", None)
+            params.get("column", None)
         ])
     return cargs
 
@@ -162,10 +163,10 @@ class MetricRegressionOutputs(typing.NamedTuple):
 
 
 def metric_regression_params(
-    metric_in: InputPathType,
     metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    metric_in: InputPathType,
     remove: list[MetricRegressionRemoveParameters] | None = None,
     keep: list[MetricRegressionKeepParameters] | None = None,
 ) -> MetricRegressionParametersTagged:
@@ -173,12 +174,14 @@ def metric_regression_params(
     Build parameters.
     
     Args:
-        metric_in: the metric to regress from.
         metric_out: the output metric.
-        opt_roi_roi_metric: only regress inside an roi: the area to use for\
-            regression, as a metric.
-        opt_column_column: select a single column to regress from: the column\
-            number or name.
+        roi_metric: only regress inside an roi\
+            \
+            the area to use for regression, as a metric.
+        column: select a single column to regress from\
+            \
+            the column number or name.
+        metric_in: the metric to regress from.
         remove: specify a metric to regress out.
         keep: specify a metric to include in regression, but not remove.
     Returns:
@@ -186,13 +189,13 @@ def metric_regression_params(
     """
     params = {
         "@type": "workbench/metric-regression",
-        "metric_in": metric_in,
-        "metric_out": metric_out,
+        "metric-out": metric_out,
+        "metric-in": metric_in,
     }
-    if opt_roi_roi_metric is not None:
-        params["opt_roi_roi_metric"] = opt_roi_roi_metric
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if column is not None:
+        params["column"] = column
     if remove is not None:
         params["remove"] = remove
     if keep is not None:
@@ -214,24 +217,19 @@ def metric_regression_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-regression")
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_roi_roi_metric", None) is not None:
+    if params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("remove", None) is not None or params.get("keep", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-regression",
+            params.get("metric-out", None),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-column",
-            params.get("opt_column_column", None)
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            *([a for c in [metric_regression_remove_cargs(s, execution) for s in params.get("remove", None)] for a in c] if (params.get("remove", None) is not None) else []),
+            *([a for c in [metric_regression_keep_cargs(s, execution) for s in params.get("keep", None)] for a in c] if (params.get("keep", None) is not None) else [])
         ])
-    if params.get("remove", None) is not None:
-        cargs.extend([a for c in [metric_regression_remove_cargs(s, execution) for s in params.get("remove", None)] for a in c])
-    if params.get("keep", None) is not None:
-        cargs.extend([a for c in [metric_regression_keep_cargs(s, execution) for s in params.get("keep", None)] for a in c])
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -250,7 +248,7 @@ def metric_regression_outputs(
     """
     ret = MetricRegressionOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -260,19 +258,13 @@ def metric_regression_execute(
     runner: Runner | None = None,
 ) -> MetricRegressionOutputs:
     """
-    metric-regression
-    
-    Regress spatial map out of a metric file.
+    REGRESS SPATIAL MAP OUT OF A METRIC FILE.
     
     For each regressor, its mean across the surface is subtracted from its data.
     Each input map is then regressed against these, and a constant term. The
     resulting regressed slopes of all regressors specified with -remove are
     multiplied with their respective regressor maps, and these are subtracted
     from the input map.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -290,18 +282,16 @@ def metric_regression_execute(
 
 
 def metric_regression(
-    metric_in: InputPathType,
     metric_out: str,
-    opt_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
+    roi_metric: InputPathType | None,
+    column: str | None,
+    metric_in: InputPathType,
     remove: list[MetricRegressionRemoveParameters] | None = None,
     keep: list[MetricRegressionKeepParameters] | None = None,
     runner: Runner | None = None,
 ) -> MetricRegressionOutputs:
     """
-    metric-regression
-    
-    Regress spatial map out of a metric file.
+    REGRESS SPATIAL MAP OUT OF A METRIC FILE.
     
     For each regressor, its mean across the surface is subtracted from its data.
     Each input map is then regressed against these, and a constant term. The
@@ -309,17 +299,15 @@ def metric_regression(
     multiplied with their respective regressor maps, and these are subtracted
     from the input map.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        metric_in: the metric to regress from.
         metric_out: the output metric.
-        opt_roi_roi_metric: only regress inside an roi: the area to use for\
-            regression, as a metric.
-        opt_column_column: select a single column to regress from: the column\
-            number or name.
+        roi_metric: only regress inside an roi\
+            \
+            the area to use for regression, as a metric.
+        column: select a single column to regress from\
+            \
+            the column number or name.
+        metric_in: the metric to regress from.
         remove: specify a metric to regress out.
         keep: specify a metric to include in regression, but not remove.
         runner: Command runner.
@@ -327,12 +315,12 @@ def metric_regression(
         NamedTuple of outputs (described in `MetricRegressionOutputs`).
     """
     params = metric_regression_params(
-        metric_in=metric_in,
         metric_out=metric_out,
-        opt_roi_roi_metric=opt_roi_roi_metric,
-        opt_column_column=opt_column_column,
+        roi_metric=roi_metric,
+        column=column,
         remove=remove,
         keep=keep,
+        metric_in=metric_in,
     )
     return metric_regression_execute(params, runner)
 

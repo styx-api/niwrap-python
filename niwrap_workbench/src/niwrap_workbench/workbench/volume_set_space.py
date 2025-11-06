@@ -6,94 +6,93 @@ import pathlib
 from styxdefs import *
 
 VOLUME_SET_SPACE_METADATA = Metadata(
-    id="8a2d5fe6bb459e834b704302eaed7589dbed6387.boutiques",
+    id="39cfd66daa80ee755b48163f61a64435ef0a12be.workbench",
     name="volume-set-space",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters', {
     "@type": typing.NotRequired[typing.Literal["plumb"]],
-    "axis_order": str,
-    "x_spacing": float,
-    "y_spacing": float,
-    "z_spacing": float,
-    "x_offset": float,
-    "y_offset": float,
-    "z_offset": float,
+    "axis-order": str,
+    "x-spacing": float,
+    "y-spacing": float,
+    "z-spacing": float,
+    "x-offset": float,
+    "y-offset": float,
+    "z-offset": float,
 })
 VolumeSetSpacePlumbParametersTagged = typing.TypedDict('VolumeSetSpacePlumbParametersTagged', {
     "@type": typing.Literal["plumb"],
-    "axis_order": str,
-    "x_spacing": float,
-    "y_spacing": float,
-    "z_spacing": float,
-    "x_offset": float,
-    "y_offset": float,
-    "z_offset": float,
+    "axis-order": str,
+    "x-spacing": float,
+    "y-spacing": float,
+    "z-spacing": float,
+    "x-offset": float,
+    "y-offset": float,
+    "z-offset": float,
 })
 
 
 VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters', {
     "@type": typing.NotRequired[typing.Literal["sform"]],
-    "xi_spacing": float,
-    "xj_spacing": float,
-    "xk_spacing": float,
-    "x_offset": float,
-    "yi_spacing": float,
-    "yj_spacing": float,
-    "yk_spacing": float,
-    "y_offset": float,
-    "zi_spacing": float,
-    "zj_spacing": float,
-    "zk_spacing": float,
-    "z_offset": float,
+    "xi-spacing": float,
+    "xj-spacing": float,
+    "xk-spacing": float,
+    "x-offset": float,
+    "yi-spacing": float,
+    "yj-spacing": float,
+    "yk-spacing": float,
+    "y-offset": float,
+    "zi-spacing": float,
+    "zj-spacing": float,
+    "zk-spacing": float,
+    "z-offset": float,
 })
 VolumeSetSpaceSformParametersTagged = typing.TypedDict('VolumeSetSpaceSformParametersTagged', {
     "@type": typing.Literal["sform"],
-    "xi_spacing": float,
-    "xj_spacing": float,
-    "xk_spacing": float,
-    "x_offset": float,
-    "yi_spacing": float,
-    "yj_spacing": float,
-    "yk_spacing": float,
-    "y_offset": float,
-    "zi_spacing": float,
-    "zj_spacing": float,
-    "zk_spacing": float,
-    "z_offset": float,
+    "xi-spacing": float,
+    "xj-spacing": float,
+    "xk-spacing": float,
+    "x-offset": float,
+    "yi-spacing": float,
+    "yj-spacing": float,
+    "yk-spacing": float,
+    "y-offset": float,
+    "zi-spacing": float,
+    "zj-spacing": float,
+    "zk-spacing": float,
+    "z-offset": float,
 })
 
 
 VolumeSetSpaceFileParameters = typing.TypedDict('VolumeSetSpaceFileParameters', {
     "@type": typing.NotRequired[typing.Literal["file"]],
-    "volume_ref": str,
-    "opt_ignore_dims": bool,
+    "volume-ref": str,
+    "ignore-dims": bool,
 })
 VolumeSetSpaceFileParametersTagged = typing.TypedDict('VolumeSetSpaceFileParametersTagged', {
     "@type": typing.Literal["file"],
-    "volume_ref": str,
-    "opt_ignore_dims": bool,
+    "volume-ref": str,
+    "ignore-dims": bool,
 })
 
 
 VolumeSetSpaceParameters = typing.TypedDict('VolumeSetSpaceParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-set-space"]],
-    "volume_in": InputPathType,
-    "volume_out": str,
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],
     "sform": typing.NotRequired[VolumeSetSpaceSformParameters | None],
     "file": typing.NotRequired[VolumeSetSpaceFileParameters | None],
+    "volume-in": InputPathType,
+    "volume-out": str,
 })
 VolumeSetSpaceParametersTagged = typing.TypedDict('VolumeSetSpaceParametersTagged', {
     "@type": typing.Literal["workbench/volume-set-space"],
-    "volume_in": InputPathType,
-    "volume_out": str,
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],
     "sform": typing.NotRequired[VolumeSetSpaceSformParameters | None],
     "file": typing.NotRequired[VolumeSetSpaceFileParameters | None],
+    "volume-in": InputPathType,
+    "volume-out": str,
 })
 
 
@@ -123,13 +122,13 @@ def volume_set_space_plumb_params(
     """
     params = {
         "@type": "plumb",
-        "axis_order": axis_order,
-        "x_spacing": x_spacing,
-        "y_spacing": y_spacing,
-        "z_spacing": z_spacing,
-        "x_offset": x_offset,
-        "y_offset": y_offset,
-        "z_offset": z_offset,
+        "axis-order": axis_order,
+        "x-spacing": x_spacing,
+        "y-spacing": y_spacing,
+        "z-spacing": z_spacing,
+        "x-offset": x_offset,
+        "y-offset": y_offset,
+        "z-offset": z_offset,
     }
     return params
 
@@ -148,14 +147,16 @@ def volume_set_space_plumb_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-plumb")
-    cargs.append(params.get("axis_order", None))
-    cargs.append(str(params.get("x_spacing", None)))
-    cargs.append(str(params.get("y_spacing", None)))
-    cargs.append(str(params.get("z_spacing", None)))
-    cargs.append(str(params.get("x_offset", None)))
-    cargs.append(str(params.get("y_offset", None)))
-    cargs.append(str(params.get("z_offset", None)))
+    cargs.extend([
+        "-plumb",
+        params.get("axis-order", None),
+        str(params.get("x-spacing", None)),
+        str(params.get("y-spacing", None)),
+        str(params.get("z-spacing", None)),
+        str(params.get("x-offset", None)),
+        str(params.get("y-offset", None)),
+        str(params.get("z-offset", None))
+    ])
     return cargs
 
 
@@ -194,18 +195,18 @@ def volume_set_space_sform_params(
     """
     params = {
         "@type": "sform",
-        "xi_spacing": xi_spacing,
-        "xj_spacing": xj_spacing,
-        "xk_spacing": xk_spacing,
-        "x_offset": x_offset,
-        "yi_spacing": yi_spacing,
-        "yj_spacing": yj_spacing,
-        "yk_spacing": yk_spacing,
-        "y_offset": y_offset,
-        "zi_spacing": zi_spacing,
-        "zj_spacing": zj_spacing,
-        "zk_spacing": zk_spacing,
-        "z_offset": z_offset,
+        "xi-spacing": xi_spacing,
+        "xj-spacing": xj_spacing,
+        "xk-spacing": xk_spacing,
+        "x-offset": x_offset,
+        "yi-spacing": yi_spacing,
+        "yj-spacing": yj_spacing,
+        "yk-spacing": yk_spacing,
+        "y-offset": y_offset,
+        "zi-spacing": zi_spacing,
+        "zj-spacing": zj_spacing,
+        "zk-spacing": zk_spacing,
+        "z-offset": z_offset,
     }
     return params
 
@@ -224,40 +225,41 @@ def volume_set_space_sform_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-sform")
-    cargs.append(str(params.get("xi_spacing", None)))
-    cargs.append(str(params.get("xj_spacing", None)))
-    cargs.append(str(params.get("xk_spacing", None)))
-    cargs.append(str(params.get("x_offset", None)))
-    cargs.append(str(params.get("yi_spacing", None)))
-    cargs.append(str(params.get("yj_spacing", None)))
-    cargs.append(str(params.get("yk_spacing", None)))
-    cargs.append(str(params.get("y_offset", None)))
-    cargs.append(str(params.get("zi_spacing", None)))
-    cargs.append(str(params.get("zj_spacing", None)))
-    cargs.append(str(params.get("zk_spacing", None)))
-    cargs.append(str(params.get("z_offset", None)))
+    cargs.extend([
+        "-sform",
+        str(params.get("xi-spacing", None)),
+        str(params.get("xj-spacing", None)),
+        str(params.get("xk-spacing", None)),
+        str(params.get("x-offset", None)),
+        str(params.get("yi-spacing", None)),
+        str(params.get("yj-spacing", None)),
+        str(params.get("yk-spacing", None)),
+        str(params.get("y-offset", None)),
+        str(params.get("zi-spacing", None)),
+        str(params.get("zj-spacing", None)),
+        str(params.get("zk-spacing", None)),
+        str(params.get("z-offset", None))
+    ])
     return cargs
 
 
 def volume_set_space_file_params(
     volume_ref: str,
-    opt_ignore_dims: bool = False,
+    ignore_dims: bool = False,
 ) -> VolumeSetSpaceFileParametersTagged:
     """
     Build parameters.
     
     Args:
         volume_ref: volume file to use for reference space.
-        opt_ignore_dims: copy the spacing info even if the dimensions don't\
-            match.
+        ignore_dims: copy the spacing info even if the dimensions don't match.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "file",
-        "volume_ref": volume_ref,
-        "opt_ignore_dims": opt_ignore_dims,
+        "volume-ref": volume_ref,
+        "ignore-dims": ignore_dims,
     }
     return params
 
@@ -276,10 +278,12 @@ def volume_set_space_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-file")
-    cargs.append(params.get("volume_ref", None))
-    if params.get("opt_ignore_dims", False):
-        cargs.append("-ignore-dims")
+    if params.get("ignore-dims", False):
+        cargs.extend([
+            "-file",
+            params.get("volume-ref", None),
+            "-ignore-dims"
+        ])
     return cargs
 
 
@@ -312,8 +316,8 @@ def volume_set_space_params(
     """
     params = {
         "@type": "workbench/volume-set-space",
-        "volume_in": volume_in,
-        "volume_out": volume_out,
+        "volume-in": volume_in,
+        "volume-out": volume_out,
     }
     if plumb is not None:
         params["plumb"] = plumb
@@ -338,16 +342,16 @@ def volume_set_space_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-set-space")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("plumb", None) is not None:
-        cargs.extend(volume_set_space_plumb_cargs(params.get("plumb", None), execution))
-    if params.get("sform", None) is not None:
-        cargs.extend(volume_set_space_sform_cargs(params.get("sform", None), execution))
-    if params.get("file", None) is not None:
-        cargs.extend(volume_set_space_file_cargs(params.get("file", None), execution))
+    if params.get("plumb", None) is not None or params.get("sform", None) is not None or params.get("file", None) is not None:
+        cargs.extend([
+            "wb_command",
+            "-volume-set-space",
+            *(volume_set_space_plumb_cargs(params.get("plumb", None), execution) if (params.get("plumb", None) is not None) else []),
+            *(volume_set_space_sform_cargs(params.get("sform", None), execution) if (params.get("sform", None) is not None) else []),
+            *(volume_set_space_file_cargs(params.get("file", None), execution) if (params.get("file", None) is not None) else [])
+        ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(params.get("volume-out", None))
     return cargs
 
 
@@ -375,18 +379,12 @@ def volume_set_space_execute(
     runner: Runner | None = None,
 ) -> VolumeSetSpaceOutputs:
     """
-    volume-set-space
-    
-    Change volume space information.
+    CHANGE VOLUME SPACE INFORMATION.
     
     Writes a copy of the volume file, with the spacing information changed as
     specified. No reordering of the voxel data occurs, see -volume-reorient to
     change the volume indexing order and reorder the voxels to match. Exactly
     one of -plumb, -sform, or -file must be specified.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -412,18 +410,12 @@ def volume_set_space(
     runner: Runner | None = None,
 ) -> VolumeSetSpaceOutputs:
     """
-    volume-set-space
-    
-    Change volume space information.
+    CHANGE VOLUME SPACE INFORMATION.
     
     Writes a copy of the volume file, with the spacing information changed as
     specified. No reordering of the voxel data occurs, see -volume-reorient to
     change the volume indexing order and reorder the voxels to match. Exactly
     one of -plumb, -sform, or -file must be specified.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         volume_in: the input volume.
@@ -436,11 +428,11 @@ def volume_set_space(
         NamedTuple of outputs (described in `VolumeSetSpaceOutputs`).
     """
     params = volume_set_space_params(
-        volume_in=volume_in,
-        volume_out=volume_out,
         plumb=plumb,
         sform=sform,
         file=file,
+        volume_in=volume_in,
+        volume_out=volume_out,
     )
     return volume_set_space_execute(params, runner)
 

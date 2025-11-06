@@ -6,64 +6,63 @@ import pathlib
 from styxdefs import *
 
 METRIC_RESAMPLE_METADATA = Metadata(
-    id="4d1e7adf2fc4fb2797a0f461eb652d3ebf3b8ce7.boutiques",
+    id="15cbd9ee4611659b2625a9bb44679901f4b387a8.workbench",
     name="metric-resample",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricResampleAreaSurfsParameters = typing.TypedDict('MetricResampleAreaSurfsParameters', {
-    "@type": typing.NotRequired[typing.Literal["area_surfs"]],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["area-surfs"]],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 MetricResampleAreaSurfsParametersTagged = typing.TypedDict('MetricResampleAreaSurfsParametersTagged', {
-    "@type": typing.Literal["area_surfs"],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.Literal["area-surfs"],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 
 
 MetricResampleAreaMetricsParameters = typing.TypedDict('MetricResampleAreaMetricsParameters', {
-    "@type": typing.NotRequired[typing.Literal["area_metrics"]],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["area-metrics"]],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 MetricResampleAreaMetricsParametersTagged = typing.TypedDict('MetricResampleAreaMetricsParametersTagged', {
-    "@type": typing.Literal["area_metrics"],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.Literal["area-metrics"],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 
 
 MetricResampleParameters = typing.TypedDict('MetricResampleParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-resample"]],
-    "metric_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
+    "metric-out": str,
+    "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParameters | None],
+    "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParameters | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-out": typing.NotRequired[str | None],
+    "largest": bool,
+    "bypass-sphere-check": bool,
+    "metric-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
     "method": str,
-    "metric_out": str,
-    "area_surfs": typing.NotRequired[MetricResampleAreaSurfsParameters | None],
-    "area_metrics": typing.NotRequired[MetricResampleAreaMetricsParameters | None],
-    "opt_current_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_valid_roi_out_roi_out": typing.NotRequired[str | None],
-    "opt_largest": bool,
-    "opt_bypass_sphere_check": bool,
 })
 MetricResampleParametersTagged = typing.TypedDict('MetricResampleParametersTagged', {
     "@type": typing.Literal["workbench/metric-resample"],
-    "metric_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
+    "metric-out": str,
+    "area-surfs": typing.NotRequired[MetricResampleAreaSurfsParameters | None],
+    "area-metrics": typing.NotRequired[MetricResampleAreaMetricsParameters | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-out": typing.NotRequired[str | None],
+    "largest": bool,
+    "bypass-sphere-check": bool,
+    "metric-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
     "method": str,
-    "metric_out": str,
-    "area_surfs": typing.NotRequired[MetricResampleAreaSurfsParameters | None],
-    "area_metrics": typing.NotRequired[MetricResampleAreaMetricsParameters | None],
-    "opt_current_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_valid_roi_out_roi_out": typing.NotRequired[str | None],
-    "opt_largest": bool,
-    "opt_bypass_sphere_check": bool,
 })
 
 
@@ -81,9 +80,9 @@ def metric_resample_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "area_surfs",
-        "current_area": current_area,
-        "new_area": new_area,
+        "@type": "area-surfs",
+        "current-area": current_area,
+        "new-area": new_area,
     }
     return params
 
@@ -102,9 +101,11 @@ def metric_resample_area_surfs_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-area-surfs")
-    cargs.append(execution.input_file(params.get("current_area", None)))
-    cargs.append(execution.input_file(params.get("new_area", None)))
+    cargs.extend([
+        "-area-surfs",
+        execution.input_file(params.get("current-area", None)),
+        execution.input_file(params.get("new-area", None))
+    ])
     return cargs
 
 
@@ -122,9 +123,9 @@ def metric_resample_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "area_metrics",
-        "current_area": current_area,
-        "new_area": new_area,
+        "@type": "area-metrics",
+        "current-area": current_area,
+        "new-area": new_area,
     }
     return params
 
@@ -143,9 +144,11 @@ def metric_resample_area_metrics_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-area-metrics")
-    cargs.append(execution.input_file(params.get("current_area", None)))
-    cargs.append(execution.input_file(params.get("new_area", None)))
+    cargs.extend([
+        "-area-metrics",
+        execution.input_file(params.get("current-area", None)),
+        execution.input_file(params.get("new-area", None))
+    ])
     return cargs
 
 
@@ -157,66 +160,67 @@ class MetricResampleOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     metric_out: OutputPathType
     """the output metric"""
-    opt_valid_roi_out_roi_out: OutputPathType | None
-    """output the ROI of vertices that got data from valid source vertices: the
-    output roi as a metric"""
 
 
 def metric_resample_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    roi_out: str | None,
     metric_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    metric_out: str,
     area_surfs: MetricResampleAreaSurfsParameters | None = None,
     area_metrics: MetricResampleAreaMetricsParameters | None = None,
-    opt_current_roi_roi_metric: InputPathType | None = None,
-    opt_valid_roi_out_roi_out: str | None = None,
-    opt_largest: bool = False,
-    opt_bypass_sphere_check: bool = False,
+    largest: bool = False,
+    bypass_sphere_check: bool = False,
 ) -> MetricResampleParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         metric_in: the metric file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
-        metric_out: the output metric.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
-        opt_current_roi_roi_metric: use an input roi on the current mesh to\
-            exclude non-data vertices: the roi, as a metric file.
-        opt_valid_roi_out_roi_out: output the ROI of vertices that got data\
-            from valid source vertices: the output roi as a metric.
-        opt_largest: use only the value of the vertex with the largest weight.
-        opt_bypass_sphere_check: ADVANCED: allow the current and new 'spheres'\
-            to have arbitrary shape as long as they follow the same contour.
+        largest: use only the value of the vertex with the largest weight.
+        bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
+            have arbitrary shape as long as they follow the same contour.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-resample",
-        "metric_in": metric_in,
-        "current_sphere": current_sphere,
-        "new_sphere": new_sphere,
+        "metric-out": metric_out,
+        "largest": largest,
+        "bypass-sphere-check": bypass_sphere_check,
+        "metric-in": metric_in,
+        "current-sphere": current_sphere,
+        "new-sphere": new_sphere,
         "method": method,
-        "metric_out": metric_out,
-        "opt_largest": opt_largest,
-        "opt_bypass_sphere_check": opt_bypass_sphere_check,
     }
     if area_surfs is not None:
-        params["area_surfs"] = area_surfs
+        params["area-surfs"] = area_surfs
     if area_metrics is not None:
-        params["area_metrics"] = area_metrics
-    if opt_current_roi_roi_metric is not None:
-        params["opt_current_roi_roi_metric"] = opt_current_roi_roi_metric
-    if opt_valid_roi_out_roi_out is not None:
-        params["opt_valid_roi_out_roi_out"] = opt_valid_roi_out_roi_out
+        params["area-metrics"] = area_metrics
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if roi_out is not None:
+        params["roi-out"] = roi_out
     return params
 
 
@@ -234,31 +238,24 @@ def metric_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-resample")
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(execution.input_file(params.get("current_sphere", None)))
-    cargs.append(execution.input_file(params.get("new_sphere", None)))
-    cargs.append(params.get("method", None))
-    cargs.append(params.get("metric_out", None))
-    if params.get("area_surfs", None) is not None:
-        cargs.extend(metric_resample_area_surfs_cargs(params.get("area_surfs", None), execution))
-    if params.get("area_metrics", None) is not None:
-        cargs.extend(metric_resample_area_metrics_cargs(params.get("area_metrics", None), execution))
-    if params.get("opt_current_roi_roi_metric", None) is not None:
+    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-out", None) is not None or params.get("largest", False) or params.get("bypass-sphere-check", False):
         cargs.extend([
+            "wb_command",
+            "-metric-resample",
+            params.get("metric-out", None),
+            *(metric_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
+            *(metric_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
             "-current-roi",
-            execution.input_file(params.get("opt_current_roi_roi_metric", None))
-        ])
-    if params.get("opt_valid_roi_out_roi_out", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-valid-roi-out",
-            params.get("opt_valid_roi_out_roi_out", None)
+            (params.get("roi-out", None) if (params.get("roi-out", None) is not None) else ""),
+            ("-largest" if (params.get("largest", False)) else ""),
+            ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
         ])
-    if params.get("opt_largest", False):
-        cargs.append("-largest")
-    if params.get("opt_bypass_sphere_check", False):
-        cargs.append("-bypass-sphere-check")
+    cargs.append(execution.input_file(params.get("metric-in", None)))
+    cargs.append(execution.input_file(params.get("current-sphere", None)))
+    cargs.append(execution.input_file(params.get("new-sphere", None)))
+    cargs.append(params.get("method", None))
     return cargs
 
 
@@ -277,8 +274,7 @@ def metric_resample_outputs(
     """
     ret = MetricResampleOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
-        opt_valid_roi_out_roi_out=execution.output_file(params.get("opt_valid_roi_out_roi_out", None)) if (params.get("opt_valid_roi_out_roi_out") is not None) else None,
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -288,9 +284,7 @@ def metric_resample_execute(
     runner: Runner | None = None,
 ) -> MetricResampleOutputs:
     """
-    metric-resample
-    
-    Resample a metric file to a different mesh.
+    RESAMPLE A METRIC FILE TO A DIFFERENT MESH.
     
     Resamples a metric file, given two spherical surfaces that are in register.
     If ADAP_BARY_AREA is used, exactly one of -area-surfs or -area-metrics must
@@ -315,10 +309,6 @@ def metric_resample_execute(
     ADAP_BARY_AREA
     BARYCENTRIC
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -336,23 +326,21 @@ def metric_resample_execute(
 
 
 def metric_resample(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    roi_out: str | None,
     metric_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    metric_out: str,
     area_surfs: MetricResampleAreaSurfsParameters | None = None,
     area_metrics: MetricResampleAreaMetricsParameters | None = None,
-    opt_current_roi_roi_metric: InputPathType | None = None,
-    opt_valid_roi_out_roi_out: str | None = None,
-    opt_largest: bool = False,
-    opt_bypass_sphere_check: bool = False,
+    largest: bool = False,
+    bypass_sphere_check: bool = False,
     runner: Runner | None = None,
 ) -> MetricResampleOutputs:
     """
-    metric-resample
-    
-    Resample a metric file to a different mesh.
+    RESAMPLE A METRIC FILE TO A DIFFERENT MESH.
     
     Resamples a metric file, given two spherical surfaces that are in register.
     If ADAP_BARY_AREA is used, exactly one of -area-surfs or -area-metrics must
@@ -378,44 +366,44 @@ def metric_resample(
     BARYCENTRIC
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         metric_in: the metric file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
-        metric_out: the output metric.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
-        opt_current_roi_roi_metric: use an input roi on the current mesh to\
-            exclude non-data vertices: the roi, as a metric file.
-        opt_valid_roi_out_roi_out: output the ROI of vertices that got data\
-            from valid source vertices: the output roi as a metric.
-        opt_largest: use only the value of the vertex with the largest weight.
-        opt_bypass_sphere_check: ADVANCED: allow the current and new 'spheres'\
-            to have arbitrary shape as long as they follow the same contour.
+        largest: use only the value of the vertex with the largest weight.
+        bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
+            have arbitrary shape as long as they follow the same contour.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricResampleOutputs`).
     """
     params = metric_resample_params(
+        metric_out=metric_out,
+        area_surfs=area_surfs,
+        area_metrics=area_metrics,
+        roi_metric=roi_metric,
+        roi_out=roi_out,
+        largest=largest,
+        bypass_sphere_check=bypass_sphere_check,
         metric_in=metric_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
         method=method,
-        metric_out=metric_out,
-        area_surfs=area_surfs,
-        area_metrics=area_metrics,
-        opt_current_roi_roi_metric=opt_current_roi_roi_metric,
-        opt_valid_roi_out_roi_out=opt_valid_roi_out_roi_out,
-        opt_largest=opt_largest,
-        opt_bypass_sphere_check=opt_bypass_sphere_check,
     )
     return metric_resample_execute(params, runner)
 

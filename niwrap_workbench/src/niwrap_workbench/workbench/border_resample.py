@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 BORDER_RESAMPLE_METADATA = Metadata(
-    id="9be294dad7cdf118a17d5ba9c35d2223b1ababca.boutiques",
+    id="323bcae88f347c08d0669f3360e5db16c8affb3e.workbench",
     name="border-resample",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 BorderResampleParameters = typing.TypedDict('BorderResampleParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/border-resample"]],
-    "border_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
-    "border_out": str,
+    "border-out": str,
+    "border-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
 })
 BorderResampleParametersTagged = typing.TypedDict('BorderResampleParametersTagged', {
     "@type": typing.Literal["workbench/border-resample"],
-    "border_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
-    "border_out": str,
+    "border-out": str,
+    "border-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
 })
 
 
@@ -40,30 +39,30 @@ class BorderResampleOutputs(typing.NamedTuple):
 
 
 def border_resample_params(
+    border_out: str,
     border_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    border_out: str,
 ) -> BorderResampleParametersTagged:
     """
     Build parameters.
     
     Args:
+        border_out: the output border file.
         border_in: the border file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
-        border_out: the output border file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/border-resample",
-        "border_in": border_in,
-        "current_sphere": current_sphere,
-        "new_sphere": new_sphere,
-        "border_out": border_out,
+        "border-out": border_out,
+        "border-in": border_in,
+        "current-sphere": current_sphere,
+        "new-sphere": new_sphere,
     }
     return params
 
@@ -82,12 +81,14 @@ def border_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-border-resample")
-    cargs.append(execution.input_file(params.get("border_in", None)))
-    cargs.append(execution.input_file(params.get("current_sphere", None)))
-    cargs.append(execution.input_file(params.get("new_sphere", None)))
-    cargs.append(params.get("border_out", None))
+    cargs.extend([
+        "wb_command",
+        "-border-resample",
+        params.get("border-out", None)
+    ])
+    cargs.append(execution.input_file(params.get("border-in", None)))
+    cargs.append(execution.input_file(params.get("current-sphere", None)))
+    cargs.append(execution.input_file(params.get("new-sphere", None)))
     return cargs
 
 
@@ -106,7 +107,7 @@ def border_resample_outputs(
     """
     ret = BorderResampleOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out", None)),
+        border_out=execution.output_file(params.get("border-out", None)),
     )
     return ret
 
@@ -116,17 +117,11 @@ def border_resample_execute(
     runner: Runner | None = None,
 ) -> BorderResampleOutputs:
     """
-    border-resample
-    
-    Resample a border file to a different mesh.
+    RESAMPLE A BORDER FILE TO A DIFFERENT MESH.
     
     Resamples a border file, given two spherical surfaces that are in register.
     Only borders that have the same structure as current-sphere will be
     resampled.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -144,41 +139,35 @@ def border_resample_execute(
 
 
 def border_resample(
+    border_out: str,
     border_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
-    border_out: str,
     runner: Runner | None = None,
 ) -> BorderResampleOutputs:
     """
-    border-resample
-    
-    Resample a border file to a different mesh.
+    RESAMPLE A BORDER FILE TO A DIFFERENT MESH.
     
     Resamples a border file, given two spherical surfaces that are in register.
     Only borders that have the same structure as current-sphere will be
     resampled.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        border_out: the output border file.
         border_in: the border file to resample.
         current_sphere: a sphere surface with the mesh that the metric is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
-        border_out: the output border file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderResampleOutputs`).
     """
     params = border_resample_params(
+        border_out=border_out,
         border_in=border_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
-        border_out=border_out,
     )
     return border_resample_execute(params, runner)
 

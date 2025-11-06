@@ -6,26 +6,25 @@ import pathlib
 from styxdefs import *
 
 METRIC_REMOVE_ISLANDS_METADATA = Metadata(
-    id="e985bca06df5a5d0c37e22c118468bf7cef4f5d3.boutiques",
+    id="e1ca1127c9380dc9d8ce9364a1b74e3cb9676753.workbench",
     name="metric-remove-islands",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricRemoveIslandsParameters = typing.TypedDict('MetricRemoveIslandsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-remove-islands"]],
+    "metric-out": str,
+    "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "metric_out": str,
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "metric-in": InputPathType,
 })
 MetricRemoveIslandsParametersTagged = typing.TypedDict('MetricRemoveIslandsParametersTagged', {
     "@type": typing.Literal["workbench/metric-remove-islands"],
+    "metric-out": str,
+    "area-metric": typing.NotRequired[InputPathType | None],
     "surface": InputPathType,
-    "metric_in": InputPathType,
-    "metric_out": str,
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "metric-in": InputPathType,
 })
 
 
@@ -40,32 +39,33 @@ class MetricRemoveIslandsOutputs(typing.NamedTuple):
 
 
 def metric_remove_islands_params(
+    metric_out: str,
+    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    metric_out: str,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
 ) -> MetricRemoveIslandsParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output ROI metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         surface: the surface to use for neighbor information.
         metric_in: the input ROI metric.
-        metric_out: the output ROI metric.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-remove-islands",
+        "metric-out": metric_out,
         "surface": surface,
-        "metric_in": metric_in,
-        "metric_out": metric_out,
+        "metric-in": metric_in,
     }
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -83,16 +83,16 @@ def metric_remove_islands_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-remove-islands")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    cargs.append(execution.input_file(params.get("metric_in", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
+    if params.get("area-metric", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-metric-remove-islands",
+            params.get("metric-out", None),
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
+            execution.input_file(params.get("area-metric", None))
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric-in", None)))
     return cargs
 
 
@@ -111,7 +111,7 @@ def metric_remove_islands_outputs(
     """
     ret = MetricRemoveIslandsOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -121,16 +121,10 @@ def metric_remove_islands_execute(
     runner: Runner | None = None,
 ) -> MetricRemoveIslandsOutputs:
     """
-    metric-remove-islands
-    
-    Remove islands from an roi metric.
+    REMOVE ISLANDS FROM AN ROI METRIC.
     
     Finds all connected areas in the ROI, and zeros out all but the largest one,
     in terms of surface area.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -148,40 +142,35 @@ def metric_remove_islands_execute(
 
 
 def metric_remove_islands(
+    metric_out: str,
+    area_metric: InputPathType | None,
     surface: InputPathType,
     metric_in: InputPathType,
-    metric_out: str,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> MetricRemoveIslandsOutputs:
     """
-    metric-remove-islands
-    
-    Remove islands from an roi metric.
+    REMOVE ISLANDS FROM AN ROI METRIC.
     
     Finds all connected areas in the ROI, and zeros out all but the largest one,
     in terms of surface area.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output ROI metric.
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         surface: the surface to use for neighbor information.
         metric_in: the input ROI metric.
-        metric_out: the output ROI metric.
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRemoveIslandsOutputs`).
     """
     params = metric_remove_islands_params(
+        metric_out=metric_out,
+        area_metric=area_metric,
         surface=surface,
         metric_in=metric_in,
-        metric_out=metric_out,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
     return metric_remove_islands_execute(params, runner)
 

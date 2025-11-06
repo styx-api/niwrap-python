@@ -6,32 +6,31 @@ import pathlib
 from styxdefs import *
 
 VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
-    id="fff039813d35484e8dfeace02e6d5c8748973490.boutiques",
+    id="9741081a1f9bdfe5deb553d7d2cb39c92eb6cafe.workbench",
     name="volume-rois-from-extrema",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeRoisFromExtremaParameters = typing.TypedDict('VolumeRoisFromExtremaParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-rois-from-extrema"]],
-    "volume_in": InputPathType,
+    "volume-out": str,
+    "sigma": typing.NotRequired[float | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "method": typing.NotRequired[str | None],
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
     "limit": float,
-    "volume_out": str,
-    "opt_gaussian_sigma": typing.NotRequired[float | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_overlap_logic_method": typing.NotRequired[str | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 VolumeRoisFromExtremaParametersTagged = typing.TypedDict('VolumeRoisFromExtremaParametersTagged', {
     "@type": typing.Literal["workbench/volume-rois-from-extrema"],
-    "volume_in": InputPathType,
+    "volume-out": str,
+    "sigma": typing.NotRequired[float | None],
+    "roi-volume": typing.NotRequired[InputPathType | None],
+    "method": typing.NotRequired[str | None],
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
     "limit": float,
-    "volume_out": str,
-    "opt_gaussian_sigma": typing.NotRequired[float | None],
-    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
-    "opt_overlap_logic_method": typing.NotRequired[str | None],
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 
 
@@ -46,46 +45,50 @@ class VolumeRoisFromExtremaOutputs(typing.NamedTuple):
 
 
 def volume_rois_from_extrema_params(
+    volume_out: str,
+    sigma: float | None,
+    roi_volume: InputPathType | None,
+    method: str | None,
+    subvol: str | None,
     volume_in: InputPathType,
     limit: float,
-    volume_out: str,
-    opt_gaussian_sigma: float | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_overlap_logic_method: str | None = None,
-    opt_subvolume_subvol: str | None = None,
 ) -> VolumeRoisFromExtremaParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: the output volume.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
+        roi_volume: select a region of interest to use\
+            \
+            the region to use.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        subvol: select a single subvolume to take the gradient of\
+            \
+            the subvolume number or name.
         volume_in: the input volume.
         limit: distance limit from voxel center, in mm.
-        volume_out: the output volume.
-        opt_gaussian_sigma: generate a gaussian kernel instead of a flat ROI:\
-            the sigma for the gaussian kernel, in mm.
-        opt_roi_roi_volume: select a region of interest to use: the region to\
-            use.
-        opt_overlap_logic_method: how to handle overlapping ROIs, default\
-            ALLOW: the method of resolving overlaps.
-        opt_subvolume_subvol: select a single subvolume to take the gradient\
-            of: the subvolume number or name.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-rois-from-extrema",
-        "volume_in": volume_in,
+        "volume-out": volume_out,
+        "volume-in": volume_in,
         "limit": limit,
-        "volume_out": volume_out,
     }
-    if opt_gaussian_sigma is not None:
-        params["opt_gaussian_sigma"] = opt_gaussian_sigma
-    if opt_roi_roi_volume is not None:
-        params["opt_roi_roi_volume"] = opt_roi_roi_volume
-    if opt_overlap_logic_method is not None:
-        params["opt_overlap_logic_method"] = opt_overlap_logic_method
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if sigma is not None:
+        params["sigma"] = sigma
+    if roi_volume is not None:
+        params["roi-volume"] = roi_volume
+    if method is not None:
+        params["method"] = method
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -103,31 +106,22 @@ def volume_rois_from_extrema_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-rois-from-extrema")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(str(params.get("limit", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_gaussian_sigma", None) is not None:
+    if params.get("sigma", None) is not None or params.get("roi-volume", None) is not None or params.get("method", None) is not None or params.get("subvol", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-rois-from-extrema",
+            params.get("volume-out", None),
             "-gaussian",
-            str(params.get("opt_gaussian_sigma", None))
-        ])
-    if params.get("opt_roi_roi_volume", None) is not None:
-        cargs.extend([
+            (str(params.get("sigma", None)) if (params.get("sigma", None) is not None) else ""),
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume", None))
-        ])
-    if params.get("opt_overlap_logic_method", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-volume", None)) if (params.get("roi-volume", None) is not None) else ""),
             "-overlap-logic",
-            params.get("opt_overlap_logic_method", None)
-        ])
-    if params.get("opt_subvolume_subvol", None) is not None:
-        cargs.extend([
+            (params.get("method", None) if (params.get("method", None) is not None) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(str(params.get("limit", None)))
     return cargs
 
 
@@ -146,7 +140,7 @@ def volume_rois_from_extrema_outputs(
     """
     ret = VolumeRoisFromExtremaOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -156,9 +150,7 @@ def volume_rois_from_extrema_execute(
     runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
-    volume-rois-from-extrema
-    
-    Create volume roi maps from extrema maps.
+    CREATE VOLUME ROI MAPS FROM EXTREMA MAPS.
     
     For each nonzero value in each map, make a map with an ROI around that
     location. If the -gaussian option is specified, then normalized gaussian
@@ -168,10 +160,6 @@ def volume_rois_from_extrema_execute(
     may not overlap, and that no ROI contains vertices that are closer to a
     different seed vertex. EXCLUDE means that ROIs may not overlap, and that any
     vertex within range of more than one ROI does not belong to any ROI.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -189,19 +177,17 @@ def volume_rois_from_extrema_execute(
 
 
 def volume_rois_from_extrema(
+    volume_out: str,
+    sigma: float | None,
+    roi_volume: InputPathType | None,
+    method: str | None,
+    subvol: str | None,
     volume_in: InputPathType,
     limit: float,
-    volume_out: str,
-    opt_gaussian_sigma: float | None = None,
-    opt_roi_roi_volume: InputPathType | None = None,
-    opt_overlap_logic_method: str | None = None,
-    opt_subvolume_subvol: str | None = None,
     runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
-    volume-rois-from-extrema
-    
-    Create volume roi maps from extrema maps.
+    CREATE VOLUME ROI MAPS FROM EXTREMA MAPS.
     
     For each nonzero value in each map, make a map with an ROI around that
     location. If the -gaussian option is specified, then normalized gaussian
@@ -212,34 +198,34 @@ def volume_rois_from_extrema(
     different seed vertex. EXCLUDE means that ROIs may not overlap, and that any
     vertex within range of more than one ROI does not belong to any ROI.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: the output volume.
+        sigma: generate a gaussian kernel instead of a flat ROI\
+            \
+            the sigma for the gaussian kernel, in mm.
+        roi_volume: select a region of interest to use\
+            \
+            the region to use.
+        method: how to handle overlapping ROIs, default ALLOW\
+            \
+            the method of resolving overlaps.
+        subvol: select a single subvolume to take the gradient of\
+            \
+            the subvolume number or name.
         volume_in: the input volume.
         limit: distance limit from voxel center, in mm.
-        volume_out: the output volume.
-        opt_gaussian_sigma: generate a gaussian kernel instead of a flat ROI:\
-            the sigma for the gaussian kernel, in mm.
-        opt_roi_roi_volume: select a region of interest to use: the region to\
-            use.
-        opt_overlap_logic_method: how to handle overlapping ROIs, default\
-            ALLOW: the method of resolving overlaps.
-        opt_subvolume_subvol: select a single subvolume to take the gradient\
-            of: the subvolume number or name.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeRoisFromExtremaOutputs`).
     """
     params = volume_rois_from_extrema_params(
+        volume_out=volume_out,
+        sigma=sigma,
+        roi_volume=roi_volume,
+        method=method,
+        subvol=subvol,
         volume_in=volume_in,
         limit=limit,
-        volume_out=volume_out,
-        opt_gaussian_sigma=opt_gaussian_sigma,
-        opt_roi_roi_volume=opt_roi_roi_volume,
-        opt_overlap_logic_method=opt_overlap_logic_method,
-        opt_subvolume_subvol=opt_subvolume_subvol,
     )
     return volume_rois_from_extrema_execute(params, runner)
 

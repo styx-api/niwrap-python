@@ -16,14 +16,14 @@ CREATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 CreateDisplacementFieldParameters = typing.TypedDict('CreateDisplacementFieldParameters', {
     "@type": typing.NotRequired[typing.Literal["ants/CreateDisplacementField"]],
     "image_dimension": int,
-    "enforce_zero_boundary_flag": typing.Literal[0, 1],
+    "enforce_zero_boundary_flag": bool,
     "component_images": list[InputPathType],
     "output_image": str,
 })
 CreateDisplacementFieldParametersTagged = typing.TypedDict('CreateDisplacementFieldParametersTagged', {
     "@type": typing.Literal["ants/CreateDisplacementField"],
     "image_dimension": int,
-    "enforce_zero_boundary_flag": typing.Literal[0, 1],
+    "enforce_zero_boundary_flag": bool,
     "component_images": list[InputPathType],
     "output_image": str,
 })
@@ -42,7 +42,7 @@ class CreateDisplacementFieldOutputs(typing.NamedTuple):
 
 def create_displacement_field_params(
     image_dimension: int,
-    enforce_zero_boundary_flag: typing.Literal[0, 1],
+    enforce_zero_boundary_flag: bool,
     component_images: list[InputPathType],
     output_image: str,
 ) -> CreateDisplacementFieldParametersTagged:
@@ -88,7 +88,7 @@ def create_displacement_field_cargs(
     cargs = []
     cargs.append("CreateDisplacementField")
     cargs.append(str(params.get("image_dimension", None)))
-    cargs.append(str(params.get("enforce_zero_boundary_flag", None)))
+    cargs.append(("1" if params.get("enforce_zero_boundary_flag", None) else "0"))
     cargs.extend([execution.input_file(f) for f in params.get("component_images", None)])
     cargs.append(params.get("output_image", None))
     return cargs
@@ -150,7 +150,7 @@ def create_displacement_field_execute(
 
 def create_displacement_field(
     image_dimension: int,
-    enforce_zero_boundary_flag: typing.Literal[0, 1],
+    enforce_zero_boundary_flag: bool,
     component_images: list[InputPathType],
     output_image: str,
     runner: Runner | None = None,

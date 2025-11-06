@@ -1,17 +1,14 @@
 {
   "fn_root_make_params_and_execute": "cifti_math",
   "properties": {
-    "expression": {
-      "var_param": "expression"
-    },
-    "cifti_out": {
+    "cifti-out": {
       "var_param": "cifti_out"
     },
-    "opt_fixnan_replace": {
-      "var_param": "opt_fixnan_replace"
+    "replace": {
+      "var_param": "replace"
     },
-    "opt_override_mapping_check": {
-      "var_param": "opt_override_mapping_check"
+    "override-mapping-check": {
+      "var_param": "override_mapping_check"
     },
     "var": {
       "var_param": "var",
@@ -33,12 +30,15 @@
             "index": {
               "var_param": "index"
             },
-            "opt_repeat": {
-              "var_param": "opt_repeat"
+            "repeat": {
+              "var_param": "repeat"
             }
           }
         }
       }
+    },
+    "expression": {
+      "var_param": "expression"
     }
   }
 }

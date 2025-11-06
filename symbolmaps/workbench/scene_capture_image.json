@@ -1,22 +1,13 @@
 {
   "fn_root_make_params_and_execute": "scene_capture_image",
   "properties": {
-    "scene_file": {
-      "var_param": "scene_file"
+    "size-window": {
+      "var_param": "size_window"
     },
-    "scene_name_or_number": {
-      "var_param": "scene_name_or_number"
+    "size-capture": {
+      "var_param": "size_capture"
     },
-    "image_file_name": {
-      "var_param": "image_file_name"
-    },
-    "opt_size_window": {
-      "var_param": "opt_size_window"
-    },
-    "opt_size_capture": {
-      "var_param": "opt_size_capture"
-    },
-    "size_width_height": {
+    "size-width-height": {
       "var_param": "size_width_height",
       "fn_struct_make_params": "scene_capture_image_size_width_height_params",
       "properties": {
@@ -28,46 +19,46 @@
         }
       }
     },
-    "opt_size_width_width": {
-      "var_param": "opt_size_width_width"
+    "width": {
+      "var_param": "width"
     },
-    "opt_size_height_height": {
-      "var_param": "opt_size_height_height"
+    "height": {
+      "var_param": "height"
     },
-    "opt_units_units": {
-      "var_param": "opt_units_units"
+    "units": {
+      "var_param": "units"
     },
     "resolution": {
       "var_param": "resolution",
       "fn_struct_make_params": "scene_capture_image_resolution_params",
       "properties": {
-        "number_of_pixels": {
+        "Number of pixels": {
           "var_param": "number_of_pixels"
         },
-        "units_name": {
+        "Units Name": {
           "var_param": "units_name"
         }
       }
     },
-    "opt_margin_size": {
-      "var_param": "opt_margin_size"
+    "size": {
+      "var_param": "size"
     },
-    "opt_no_scene_colors": {
-      "var_param": "opt_no_scene_colors"
+    "no-scene-colors": {
+      "var_param": "no_scene_colors"
     },
-    "set_map_yoke": {
+    "set-map-yoke": {
       "var_param": "set_map_yoke",
       "fn_struct_make_params": "scene_capture_image_set_map_yoke_params",
       "properties": {
-        "map_yoking_roman_numeral": {
+        "map yoking roman numeral": {
           "var_param": "map_yoking_roman_numeral"
         },
-        "map_undex": {
+        "map undex": {
           "var_param": "map_undex"
         }
       }
     },
-    "conn_db_login": {
+    "conn-db-login": {
       "var_param": "conn_db_login",
       "fn_struct_make_params": "scene_capture_image_conn_db_login_params",
       "properties": {
@@ -79,14 +70,23 @@
         }
       }
     },
-    "opt_show_capture_settings": {
-      "var_param": "opt_show_capture_settings"
+    "show-capture-settings": {
+      "var_param": "show_capture_settings"
     },
-    "opt_renderer_renderer": {
-      "var_param": "opt_renderer_renderer"
+    "Renderer": {
+      "var_param": "renderer"
     },
-    "opt_print_image_info": {
-      "var_param": "opt_print_image_info"
+    "print-image-info": {
+      "var_param": "print_image_info"
+    },
+    "scene-file": {
+      "var_param": "scene_file"
+    },
+    "scene-name-or-number": {
+      "var_param": "scene_name_or_number"
+    },
+    "image-file-name": {
+      "var_param": "image_file_name"
     }
   }
 }

@@ -6,34 +6,33 @@ import pathlib
 from styxdefs import *
 
 VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA = Metadata(
-    id="af4253f6abeeb8c49031f8d9530011d0fb4ffa9e.boutiques",
+    id="e32bbe9380f1fe73ba584da4cb72ecad324951cc.workbench",
     name="volume-parcel-resampling-generic",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 VolumeParcelResamplingGenericParameters = typing.TypedDict('VolumeParcelResamplingGenericParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-resampling-generic"]],
-    "volume_in": InputPathType,
-    "cur_parcels": InputPathType,
-    "new_parcels": InputPathType,
+    "volume-out": str,
+    "fwhm": bool,
+    "fix-zeros": bool,
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
+    "cur-parcels": InputPathType,
+    "new-parcels": InputPathType,
     "kernel": float,
-    "volume_out": str,
-    "opt_fwhm": bool,
-    "opt_fix_zeros": bool,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 VolumeParcelResamplingGenericParametersTagged = typing.TypedDict('VolumeParcelResamplingGenericParametersTagged', {
     "@type": typing.Literal["workbench/volume-parcel-resampling-generic"],
-    "volume_in": InputPathType,
-    "cur_parcels": InputPathType,
-    "new_parcels": InputPathType,
+    "volume-out": str,
+    "fwhm": bool,
+    "fix-zeros": bool,
+    "subvol": typing.NotRequired[str | None],
+    "volume-in": InputPathType,
+    "cur-parcels": InputPathType,
+    "new-parcels": InputPathType,
     "kernel": float,
-    "volume_out": str,
-    "opt_fwhm": bool,
-    "opt_fix_zeros": bool,
-    "opt_subvolume_subvol": typing.NotRequired[str | None],
 })
 
 
@@ -48,44 +47,45 @@ class VolumeParcelResamplingGenericOutputs(typing.NamedTuple):
 
 
 def volume_parcel_resampling_generic_params(
+    volume_out: str,
+    subvol: str | None,
     volume_in: InputPathType,
     cur_parcels: InputPathType,
     new_parcels: InputPathType,
     kernel: float,
-    volume_out: str,
-    opt_fwhm: bool = False,
-    opt_fix_zeros: bool = False,
-    opt_subvolume_subvol: str | None = None,
+    fwhm: bool = False,
+    fix_zeros: bool = False,
 ) -> VolumeParcelResamplingGenericParametersTagged:
     """
     Build parameters.
     
     Args:
+        volume_out: output volume.
+        subvol: select a single subvolume as input\
+            \
+            the subvolume number or name.
         volume_in: the input data volume.
         cur_parcels: label volume of where the parcels currently are.
         new_parcels: label volume of where the parcels should be.
         kernel: gaussian kernel size in mm to smooth by during resampling, as\
             sigma by default.
-        volume_out: output volume.
-        opt_fwhm: smoothing kernel size is FWHM, not sigma.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_subvolume_subvol: select a single subvolume as input: the subvolume\
-            number or name.
+        fwhm: smoothing kernel size is FWHM, not sigma.
+        fix_zeros: treat zero values as not being data.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/volume-parcel-resampling-generic",
-        "volume_in": volume_in,
-        "cur_parcels": cur_parcels,
-        "new_parcels": new_parcels,
+        "volume-out": volume_out,
+        "fwhm": fwhm,
+        "fix-zeros": fix_zeros,
+        "volume-in": volume_in,
+        "cur-parcels": cur_parcels,
+        "new-parcels": new_parcels,
         "kernel": kernel,
-        "volume_out": volume_out,
-        "opt_fwhm": opt_fwhm,
-        "opt_fix_zeros": opt_fix_zeros,
     }
-    if opt_subvolume_subvol is not None:
-        params["opt_subvolume_subvol"] = opt_subvolume_subvol
+    if subvol is not None:
+        params["subvol"] = subvol
     return params
 
 
@@ -103,22 +103,20 @@ def volume_parcel_resampling_generic_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-volume-parcel-resampling-generic")
-    cargs.append(execution.input_file(params.get("volume_in", None)))
-    cargs.append(execution.input_file(params.get("cur_parcels", None)))
-    cargs.append(execution.input_file(params.get("new_parcels", None)))
-    cargs.append(str(params.get("kernel", None)))
-    cargs.append(params.get("volume_out", None))
-    if params.get("opt_fwhm", False):
-        cargs.append("-fwhm")
-    if params.get("opt_fix_zeros", False):
-        cargs.append("-fix-zeros")
-    if params.get("opt_subvolume_subvol", None) is not None:
+    if params.get("fwhm", False) or params.get("fix-zeros", False) or params.get("subvol", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-volume-parcel-resampling-generic",
+            params.get("volume-out", None),
+            ("-fwhm" if (params.get("fwhm", False)) else ""),
+            ("-fix-zeros" if (params.get("fix-zeros", False)) else ""),
             "-subvolume",
-            params.get("opt_subvolume_subvol", None)
+            (params.get("subvol", None) if (params.get("subvol", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("volume-in", None)))
+    cargs.append(execution.input_file(params.get("cur-parcels", None)))
+    cargs.append(execution.input_file(params.get("new-parcels", None)))
+    cargs.append(str(params.get("kernel", None)))
     return cargs
 
 
@@ -137,7 +135,7 @@ def volume_parcel_resampling_generic_outputs(
     """
     ret = VolumeParcelResamplingGenericOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out", None)),
+        volume_out=execution.output_file(params.get("volume-out", None)),
     )
     return ret
 
@@ -147,9 +145,7 @@ def volume_parcel_resampling_generic_execute(
     runner: Runner | None = None,
 ) -> VolumeParcelResamplingGenericOutputs:
     """
-    volume-parcel-resampling-generic
-    
-    Smooth and resample volume parcels from different volume space.
+    SMOOTH AND RESAMPLE VOLUME PARCELS FROM DIFFERENT VOLUME SPACE.
     
     Smooths and resamples the region inside each label in cur-parcels to the
     region of the same label name in new-parcels. Any voxels in the output label
@@ -160,10 +156,6 @@ def volume_parcel_resampling_generic_execute(
     fill them in with extrapolated values. The output volume will use the volume
     space of new-parcels, which does not need to be in the same volume space as
     the input.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -181,20 +173,18 @@ def volume_parcel_resampling_generic_execute(
 
 
 def volume_parcel_resampling_generic(
+    volume_out: str,
+    subvol: str | None,
     volume_in: InputPathType,
     cur_parcels: InputPathType,
     new_parcels: InputPathType,
     kernel: float,
-    volume_out: str,
-    opt_fwhm: bool = False,
-    opt_fix_zeros: bool = False,
-    opt_subvolume_subvol: str | None = None,
+    fwhm: bool = False,
+    fix_zeros: bool = False,
     runner: Runner | None = None,
 ) -> VolumeParcelResamplingGenericOutputs:
     """
-    volume-parcel-resampling-generic
-    
-    Smooth and resample volume parcels from different volume space.
+    SMOOTH AND RESAMPLE VOLUME PARCELS FROM DIFFERENT VOLUME SPACE.
     
     Smooths and resamples the region inside each label in cur-parcels to the
     region of the same label name in new-parcels. Any voxels in the output label
@@ -206,34 +196,31 @@ def volume_parcel_resampling_generic(
     space of new-parcels, which does not need to be in the same volume space as
     the input.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        volume_out: output volume.
+        subvol: select a single subvolume as input\
+            \
+            the subvolume number or name.
         volume_in: the input data volume.
         cur_parcels: label volume of where the parcels currently are.
         new_parcels: label volume of where the parcels should be.
         kernel: gaussian kernel size in mm to smooth by during resampling, as\
             sigma by default.
-        volume_out: output volume.
-        opt_fwhm: smoothing kernel size is FWHM, not sigma.
-        opt_fix_zeros: treat zero values as not being data.
-        opt_subvolume_subvol: select a single subvolume as input: the subvolume\
-            number or name.
+        fwhm: smoothing kernel size is FWHM, not sigma.
+        fix_zeros: treat zero values as not being data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeParcelResamplingGenericOutputs`).
     """
     params = volume_parcel_resampling_generic_params(
+        volume_out=volume_out,
+        fwhm=fwhm,
+        fix_zeros=fix_zeros,
+        subvol=subvol,
         volume_in=volume_in,
         cur_parcels=cur_parcels,
         new_parcels=new_parcels,
         kernel=kernel,
-        volume_out=volume_out,
-        opt_fwhm=opt_fwhm,
-        opt_fix_zeros=opt_fix_zeros,
-        opt_subvolume_subvol=opt_subvolume_subvol,
     )
     return volume_parcel_resampling_generic_execute(params, runner)
 

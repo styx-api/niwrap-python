@@ -6,34 +6,33 @@ import pathlib
 from styxdefs import *
 
 METRIC_VECTOR_OPERATION_METADATA = Metadata(
-    id="b8b4b874885f0add6a529815e987670c96ebd34a.boutiques",
+    id="2ed0edf6d0f6355b8d747c848ce1f1d204659400.workbench",
     name="metric-vector-operation",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricVectorOperationParameters = typing.TypedDict('MetricVectorOperationParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-operation"]],
-    "vectors_a": InputPathType,
-    "vectors_b": InputPathType,
+    "metric-out": str,
+    "normalize-a": bool,
+    "normalize-b": bool,
+    "normalize-output": bool,
+    "magnitude": bool,
+    "vectors-a": InputPathType,
+    "vectors-b": InputPathType,
     "operation": str,
-    "metric_out": str,
-    "opt_normalize_a": bool,
-    "opt_normalize_b": bool,
-    "opt_normalize_output": bool,
-    "opt_magnitude": bool,
 })
 MetricVectorOperationParametersTagged = typing.TypedDict('MetricVectorOperationParametersTagged', {
     "@type": typing.Literal["workbench/metric-vector-operation"],
-    "vectors_a": InputPathType,
-    "vectors_b": InputPathType,
+    "metric-out": str,
+    "normalize-a": bool,
+    "normalize-b": bool,
+    "normalize-output": bool,
+    "magnitude": bool,
+    "vectors-a": InputPathType,
+    "vectors-b": InputPathType,
     "operation": str,
-    "metric_out": str,
-    "opt_normalize_a": bool,
-    "opt_normalize_b": bool,
-    "opt_normalize_output": bool,
-    "opt_magnitude": bool,
 })
 
 
@@ -48,42 +47,41 @@ class MetricVectorOperationOutputs(typing.NamedTuple):
 
 
 def metric_vector_operation_params(
+    metric_out: str,
     vectors_a: InputPathType,
     vectors_b: InputPathType,
     operation: str,
-    metric_out: str,
-    opt_normalize_a: bool = False,
-    opt_normalize_b: bool = False,
-    opt_normalize_output: bool = False,
-    opt_magnitude: bool = False,
+    normalize_a: bool = False,
+    normalize_b: bool = False,
+    normalize_output: bool = False,
+    magnitude: bool = False,
 ) -> MetricVectorOperationParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output file.
         vectors_a: first vector input file.
         vectors_b: second vector input file.
         operation: what vector operation to do.
-        metric_out: the output file.
-        opt_normalize_a: normalize vectors of first input.
-        opt_normalize_b: normalize vectors of second input.
-        opt_normalize_output: normalize output vectors (not valid for dot\
-            product).
-        opt_magnitude: output the magnitude of the result (not valid for dot\
+        normalize_a: normalize vectors of first input.
+        normalize_b: normalize vectors of second input.
+        normalize_output: normalize output vectors (not valid for dot product).
+        magnitude: output the magnitude of the result (not valid for dot\
             product).
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-vector-operation",
-        "vectors_a": vectors_a,
-        "vectors_b": vectors_b,
+        "metric-out": metric_out,
+        "normalize-a": normalize_a,
+        "normalize-b": normalize_b,
+        "normalize-output": normalize_output,
+        "magnitude": magnitude,
+        "vectors-a": vectors_a,
+        "vectors-b": vectors_b,
         "operation": operation,
-        "metric_out": metric_out,
-        "opt_normalize_a": opt_normalize_a,
-        "opt_normalize_b": opt_normalize_b,
-        "opt_normalize_output": opt_normalize_output,
-        "opt_magnitude": opt_magnitude,
     }
     return params
 
@@ -102,20 +100,19 @@ def metric_vector_operation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-vector-operation")
-    cargs.append(execution.input_file(params.get("vectors_a", None)))
-    cargs.append(execution.input_file(params.get("vectors_b", None)))
+    if params.get("normalize-a", False) or params.get("normalize-b", False) or params.get("normalize-output", False) or params.get("magnitude", False):
+        cargs.extend([
+            "wb_command",
+            "-metric-vector-operation",
+            params.get("metric-out", None),
+            ("-normalize-a" if (params.get("normalize-a", False)) else ""),
+            ("-normalize-b" if (params.get("normalize-b", False)) else ""),
+            ("-normalize-output" if (params.get("normalize-output", False)) else ""),
+            ("-magnitude" if (params.get("magnitude", False)) else "")
+        ])
+    cargs.append(execution.input_file(params.get("vectors-a", None)))
+    cargs.append(execution.input_file(params.get("vectors-b", None)))
     cargs.append(params.get("operation", None))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_normalize_a", False):
-        cargs.append("-normalize-a")
-    if params.get("opt_normalize_b", False):
-        cargs.append("-normalize-b")
-    if params.get("opt_normalize_output", False):
-        cargs.append("-normalize-output")
-    if params.get("opt_magnitude", False):
-        cargs.append("-magnitude")
     return cargs
 
 
@@ -134,7 +131,7 @@ def metric_vector_operation_outputs(
     """
     ret = MetricVectorOperationOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -144,9 +141,7 @@ def metric_vector_operation_execute(
     runner: Runner | None = None,
 ) -> MetricVectorOperationOutputs:
     """
-    metric-vector-operation
-    
-    Do a vector operation on metric files.
+    DO A VECTOR OPERATION ON METRIC FILES.
     
     Does a vector operation on two metric files (that must have a multiple of 3
     columns). Either of the inputs may have multiple vectors (more than 3
@@ -159,10 +154,6 @@ def metric_vector_operation_execute(
     CROSS
     ADD
     SUBTRACT.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -180,20 +171,18 @@ def metric_vector_operation_execute(
 
 
 def metric_vector_operation(
+    metric_out: str,
     vectors_a: InputPathType,
     vectors_b: InputPathType,
     operation: str,
-    metric_out: str,
-    opt_normalize_a: bool = False,
-    opt_normalize_b: bool = False,
-    opt_normalize_output: bool = False,
-    opt_magnitude: bool = False,
+    normalize_a: bool = False,
+    normalize_b: bool = False,
+    normalize_output: bool = False,
+    magnitude: bool = False,
     runner: Runner | None = None,
 ) -> MetricVectorOperationOutputs:
     """
-    metric-vector-operation
-    
-    Do a vector operation on metric files.
+    DO A VECTOR OPERATION ON METRIC FILES.
     
     Does a vector operation on two metric files (that must have a multiple of 3
     columns). Either of the inputs may have multiple vectors (more than 3
@@ -207,34 +196,29 @@ def metric_vector_operation(
     ADD
     SUBTRACT.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output file.
         vectors_a: first vector input file.
         vectors_b: second vector input file.
         operation: what vector operation to do.
-        metric_out: the output file.
-        opt_normalize_a: normalize vectors of first input.
-        opt_normalize_b: normalize vectors of second input.
-        opt_normalize_output: normalize output vectors (not valid for dot\
-            product).
-        opt_magnitude: output the magnitude of the result (not valid for dot\
+        normalize_a: normalize vectors of first input.
+        normalize_b: normalize vectors of second input.
+        normalize_output: normalize output vectors (not valid for dot product).
+        magnitude: output the magnitude of the result (not valid for dot\
             product).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricVectorOperationOutputs`).
     """
     params = metric_vector_operation_params(
+        metric_out=metric_out,
+        normalize_a=normalize_a,
+        normalize_b=normalize_b,
+        normalize_output=normalize_output,
+        magnitude=magnitude,
         vectors_a=vectors_a,
         vectors_b=vectors_b,
         operation=operation,
-        metric_out=metric_out,
-        opt_normalize_a=opt_normalize_a,
-        opt_normalize_b=opt_normalize_b,
-        opt_normalize_output=opt_normalize_output,
-        opt_magnitude=opt_magnitude,
     )
     return metric_vector_operation_execute(params, runner)
 

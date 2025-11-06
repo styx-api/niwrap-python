@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CURVATURE_METADATA = Metadata(
-    id="959b1a4fb2add4507cd3f4cc23eb187ef2dc3681.boutiques",
+    id="d5eee7e4c555970158a785c68fecd07f7b6649cb.workbench",
     name="surface-curvature",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/surface-curvature"]],
+    "mean-out": typing.NotRequired[str | None],
+    "gauss-out": typing.NotRequired[str | None],
     "surface": InputPathType,
-    "opt_mean_mean_out": typing.NotRequired[str | None],
-    "opt_gauss_gauss_out": typing.NotRequired[str | None],
 })
 SurfaceCurvatureParametersTagged = typing.TypedDict('SurfaceCurvatureParametersTagged', {
     "@type": typing.Literal["workbench/surface-curvature"],
+    "mean-out": typing.NotRequired[str | None],
+    "gauss-out": typing.NotRequired[str | None],
     "surface": InputPathType,
-    "opt_mean_mean_out": typing.NotRequired[str | None],
-    "opt_gauss_gauss_out": typing.NotRequired[str | None],
 })
 
 
@@ -33,25 +32,24 @@ class SurfaceCurvatureOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    opt_mean_mean_out: OutputPathType | None
-    """output mean curvature: mean curvature metric"""
-    opt_gauss_gauss_out: OutputPathType | None
-    """output gaussian curvature: gaussian curvature metric"""
 
 
 def surface_curvature_params(
+    mean_out: str | None,
+    gauss_out: str | None,
     surface: InputPathType,
-    opt_mean_mean_out: str | None = None,
-    opt_gauss_gauss_out: str | None = None,
 ) -> SurfaceCurvatureParametersTagged:
     """
     Build parameters.
     
     Args:
+        mean_out: output mean curvature\
+            \
+            mean curvature metric.
+        gauss_out: output gaussian curvature\
+            \
+            gaussian curvature metric.
         surface: the surface to compute the curvature of.
-        opt_mean_mean_out: output mean curvature: mean curvature metric.
-        opt_gauss_gauss_out: output gaussian curvature: gaussian curvature\
-            metric.
     Returns:
         Parameter dictionary
     """
@@ -59,10 +57,10 @@ def surface_curvature_params(
         "@type": "workbench/surface-curvature",
         "surface": surface,
     }
-    if opt_mean_mean_out is not None:
-        params["opt_mean_mean_out"] = opt_mean_mean_out
-    if opt_gauss_gauss_out is not None:
-        params["opt_gauss_gauss_out"] = opt_gauss_gauss_out
+    if mean_out is not None:
+        params["mean-out"] = mean_out
+    if gauss_out is not None:
+        params["gauss-out"] = gauss_out
     return params
 
 
@@ -80,19 +78,16 @@ def surface_curvature_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-surface-curvature")
-    cargs.append(execution.input_file(params.get("surface", None)))
-    if params.get("opt_mean_mean_out", None) is not None:
+    if params.get("mean-out", None) is not None or params.get("gauss-out", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-surface-curvature",
             "-mean",
-            params.get("opt_mean_mean_out", None)
-        ])
-    if params.get("opt_gauss_gauss_out", None) is not None:
-        cargs.extend([
+            (params.get("mean-out", None) if (params.get("mean-out", None) is not None) else ""),
             "-gauss",
-            params.get("opt_gauss_gauss_out", None)
+            (params.get("gauss-out", None) if (params.get("gauss-out", None) is not None) else "")
         ])
+    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
@@ -111,8 +106,6 @@ def surface_curvature_outputs(
     """
     ret = SurfaceCurvatureOutputs(
         root=execution.output_file("."),
-        opt_mean_mean_out=execution.output_file(params.get("opt_mean_mean_out", None)) if (params.get("opt_mean_mean_out") is not None) else None,
-        opt_gauss_gauss_out=execution.output_file(params.get("opt_gauss_gauss_out", None)) if (params.get("opt_gauss_gauss_out") is not None) else None,
     )
     return ret
 
@@ -122,17 +115,11 @@ def surface_curvature_execute(
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
-    surface-curvature
-    
-    Calculate curvature of surface.
+    CALCULATE CURVATURE OF SURFACE.
     
     Compute the curvature of the surface, using the method from:
     Interactive Texture Mapping by J. Maillot, Yahia, and Verroust, 1993.
     ACM-0-98791-601-8/93/008.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -150,37 +137,34 @@ def surface_curvature_execute(
 
 
 def surface_curvature(
+    mean_out: str | None,
+    gauss_out: str | None,
     surface: InputPathType,
-    opt_mean_mean_out: str | None = None,
-    opt_gauss_gauss_out: str | None = None,
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
-    surface-curvature
-    
-    Calculate curvature of surface.
+    CALCULATE CURVATURE OF SURFACE.
     
     Compute the curvature of the surface, using the method from:
     Interactive Texture Mapping by J. Maillot, Yahia, and Verroust, 1993.
     ACM-0-98791-601-8/93/008.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        mean_out: output mean curvature\
+            \
+            mean curvature metric.
+        gauss_out: output gaussian curvature\
+            \
+            gaussian curvature metric.
         surface: the surface to compute the curvature of.
-        opt_mean_mean_out: output mean curvature: mean curvature metric.
-        opt_gauss_gauss_out: output gaussian curvature: gaussian curvature\
-            metric.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).
     """
     params = surface_curvature_params(
+        mean_out=mean_out,
+        gauss_out=gauss_out,
         surface=surface,
-        opt_mean_mean_out=opt_mean_mean_out,
-        opt_gauss_gauss_out=opt_gauss_gauss_out,
     )
     return surface_curvature_execute(params, runner)
 

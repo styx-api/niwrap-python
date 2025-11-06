@@ -20,20 +20,20 @@ AtroposParameters = typing.TypedDict('AtroposParameters', {
     "bspline": typing.NotRequired[str | None],
     "initialization": str,
     "partial_volume_label_set": typing.NotRequired[str | None],
-    "use_partial_volume_likelihoods": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_partial_volume_likelihoods": typing.NotRequired[bool | None],
     "posterior_formulation": typing.NotRequired[str | None],
     "mask_image": InputPathType,
     "convergence": str,
     "likelihood_model": str,
     "mrf": typing.NotRequired[str | None],
     "icm": typing.NotRequired[str | None],
-    "use_random_seed": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_random_seed": typing.NotRequired[bool | None],
     "output": str,
-    "minimize_memory_usage": typing.NotRequired[typing.Literal[0, 1] | None],
+    "minimize_memory_usage": typing.NotRequired[bool | None],
     "winsorize_outliers": typing.NotRequired[str | None],
-    "use_euclidean_distance": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_euclidean_distance": typing.NotRequired[bool | None],
     "label_propagation": typing.NotRequired[str | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 AtroposParametersTagged = typing.TypedDict('AtroposParametersTagged', {
     "@type": typing.Literal["ants/Atropos"],
@@ -42,20 +42,20 @@ AtroposParametersTagged = typing.TypedDict('AtroposParametersTagged', {
     "bspline": typing.NotRequired[str | None],
     "initialization": str,
     "partial_volume_label_set": typing.NotRequired[str | None],
-    "use_partial_volume_likelihoods": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_partial_volume_likelihoods": typing.NotRequired[bool | None],
     "posterior_formulation": typing.NotRequired[str | None],
     "mask_image": InputPathType,
     "convergence": str,
     "likelihood_model": str,
     "mrf": typing.NotRequired[str | None],
     "icm": typing.NotRequired[str | None],
-    "use_random_seed": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_random_seed": typing.NotRequired[bool | None],
     "output": str,
-    "minimize_memory_usage": typing.NotRequired[typing.Literal[0, 1] | None],
+    "minimize_memory_usage": typing.NotRequired[bool | None],
     "winsorize_outliers": typing.NotRequired[str | None],
-    "use_euclidean_distance": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_euclidean_distance": typing.NotRequired[bool | None],
     "label_propagation": typing.NotRequired[str | None],
-    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "verbose": typing.NotRequired[bool | None],
 })
 
 
@@ -82,16 +82,16 @@ def atropos_params(
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     bspline: str | None = None,
     partial_volume_label_set: str | None = None,
-    use_partial_volume_likelihoods: typing.Literal[0, 1] | None = None,
+    use_partial_volume_likelihoods: bool | None = None,
     posterior_formulation: str | None = None,
     mrf: str | None = None,
     icm: str | None = None,
-    use_random_seed: typing.Literal[0, 1] | None = None,
-    minimize_memory_usage: typing.Literal[0, 1] | None = None,
+    use_random_seed: bool | None = None,
+    minimize_memory_usage: bool | None = None,
     winsorize_outliers: str | None = None,
-    use_euclidean_distance: typing.Literal[0, 1] | None = None,
+    use_euclidean_distance: bool | None = None,
     label_propagation: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
 ) -> AtroposParametersTagged:
     """
     Build parameters.
@@ -222,7 +222,7 @@ def atropos_cargs(
     if params.get("use_partial_volume_likelihoods", None) is not None:
         cargs.extend([
             "--use-partial-volume-likelihoods",
-            str(params.get("use_partial_volume_likelihoods", None))
+            ("1" if params.get("use_partial_volume_likelihoods", None) else "0")
         ])
     if params.get("posterior_formulation", None) is not None:
         cargs.extend([
@@ -254,7 +254,7 @@ def atropos_cargs(
     if params.get("use_random_seed", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("use_random_seed", None))
+            ("1" if params.get("use_random_seed", None) else "0")
         ])
     cargs.extend([
         "-o",
@@ -263,7 +263,7 @@ def atropos_cargs(
     if params.get("minimize_memory_usage", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("minimize_memory_usage", None))
+            ("1" if params.get("minimize_memory_usage", None) else "0")
         ])
     if params.get("winsorize_outliers", None) is not None:
         cargs.extend([
@@ -273,7 +273,7 @@ def atropos_cargs(
     if params.get("use_euclidean_distance", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("use_euclidean_distance", None))
+            ("1" if params.get("use_euclidean_distance", None) else "0")
         ])
     if params.get("label_propagation", None) is not None:
         cargs.extend([
@@ -283,7 +283,7 @@ def atropos_cargs(
     if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose", None))
+            ("1" if params.get("verbose", None) else "0")
         ])
     return cargs
 
@@ -349,16 +349,16 @@ def atropos(
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     bspline: str | None = None,
     partial_volume_label_set: str | None = None,
-    use_partial_volume_likelihoods: typing.Literal[0, 1] | None = None,
+    use_partial_volume_likelihoods: bool | None = None,
     posterior_formulation: str | None = None,
     mrf: str | None = None,
     icm: str | None = None,
-    use_random_seed: typing.Literal[0, 1] | None = None,
-    minimize_memory_usage: typing.Literal[0, 1] | None = None,
+    use_random_seed: bool | None = None,
+    minimize_memory_usage: bool | None = None,
     winsorize_outliers: str | None = None,
-    use_euclidean_distance: typing.Literal[0, 1] | None = None,
+    use_euclidean_distance: bool | None = None,
     label_propagation: str | None = None,
-    verbose: typing.Literal[0, 1] | None = None,
+    verbose: bool | None = None,
     runner: Runner | None = None,
 ) -> AtroposOutputs:
     """

@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 FOCI_LIST_COORDS_METADATA = Metadata(
-    id="d001c0626bd77c599fb298b784da2e1f848d9719.boutiques",
+    id="b16ceca59fb70119f927e417ec349a0afda6a816.workbench",
     name="foci-list-coords",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 FociListCoordsParameters = typing.TypedDict('FociListCoordsParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/foci-list-coords"]],
-    "foci_file": InputPathType,
-    "coord_file_out": str,
-    "opt_names_out_names_file_out": typing.NotRequired[str | None],
+    "names-file-out": typing.NotRequired[str | None],
+    "foci-file": InputPathType,
+    "coord-file-out": str,
 })
 FociListCoordsParametersTagged = typing.TypedDict('FociListCoordsParametersTagged', {
     "@type": typing.Literal["workbench/foci-list-coords"],
-    "foci_file": InputPathType,
-    "coord_file_out": str,
-    "opt_names_out_names_file_out": typing.NotRequired[str | None],
+    "names-file-out": typing.NotRequired[str | None],
+    "foci-file": InputPathType,
+    "coord-file-out": str,
 })
 
 
@@ -36,28 +35,29 @@ class FociListCoordsOutputs(typing.NamedTuple):
 
 
 def foci_list_coords_params(
+    names_file_out: str | None,
     foci_file: InputPathType,
     coord_file_out: str,
-    opt_names_out_names_file_out: str | None = None,
 ) -> FociListCoordsParametersTagged:
     """
     Build parameters.
     
     Args:
+        names_file_out: output the foci names\
+            \
+            output - text file to put foci names in.
         foci_file: input foci file.
         coord_file_out: output - the output coordinate text file.
-        opt_names_out_names_file_out: output the foci names: output - text file\
-            to put foci names in.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/foci-list-coords",
-        "foci_file": foci_file,
-        "coord_file_out": coord_file_out,
+        "foci-file": foci_file,
+        "coord-file-out": coord_file_out,
     }
-    if opt_names_out_names_file_out is not None:
-        params["opt_names_out_names_file_out"] = opt_names_out_names_file_out
+    if names_file_out is not None:
+        params["names-file-out"] = names_file_out
     return params
 
 
@@ -75,15 +75,15 @@ def foci_list_coords_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-foci-list-coords")
-    cargs.append(execution.input_file(params.get("foci_file", None)))
-    cargs.append(params.get("coord_file_out", None))
-    if params.get("opt_names_out_names_file_out", None) is not None:
+    if params.get("names-file-out", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-foci-list-coords",
             "-names-out",
-            params.get("opt_names_out_names_file_out", None)
+            params.get("names-file-out", None)
         ])
+    cargs.append(execution.input_file(params.get("foci-file", None)))
+    cargs.append(params.get("coord-file-out", None))
     return cargs
 
 
@@ -111,16 +111,10 @@ def foci_list_coords_execute(
     runner: Runner | None = None,
 ) -> FociListCoordsOutputs:
     """
-    foci-list-coords
-    
-    Output foci coordinates in a text file.
+    OUTPUT FOCI COORDINATES IN A TEXT FILE.
     
     Output the coordinates for every focus in the foci file, and optionally the
     focus names in a second text file.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -138,36 +132,31 @@ def foci_list_coords_execute(
 
 
 def foci_list_coords(
+    names_file_out: str | None,
     foci_file: InputPathType,
     coord_file_out: str,
-    opt_names_out_names_file_out: str | None = None,
     runner: Runner | None = None,
 ) -> FociListCoordsOutputs:
     """
-    foci-list-coords
-    
-    Output foci coordinates in a text file.
+    OUTPUT FOCI COORDINATES IN A TEXT FILE.
     
     Output the coordinates for every focus in the foci file, and optionally the
     focus names in a second text file.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        names_file_out: output the foci names\
+            \
+            output - text file to put foci names in.
         foci_file: input foci file.
         coord_file_out: output - the output coordinate text file.
-        opt_names_out_names_file_out: output the foci names: output - text file\
-            to put foci names in.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociListCoordsOutputs`).
     """
     params = foci_list_coords_params(
+        names_file_out=names_file_out,
         foci_file=foci_file,
         coord_file_out=coord_file_out,
-        opt_names_out_names_file_out=opt_names_out_names_file_out,
     )
     return foci_list_coords_execute(params, runner)
 

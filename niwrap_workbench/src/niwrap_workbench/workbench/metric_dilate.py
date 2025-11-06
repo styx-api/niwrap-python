@@ -6,42 +6,41 @@ import pathlib
 from styxdefs import *
 
 METRIC_DILATE_METADATA = Metadata(
-    id="228bae2c95e281c1ed3d0fb17aed811d10a80e3b.boutiques",
+    id="5f7bbed13558b8a40bfedd7f35e6b45da7a74ffa.workbench",
     name="metric-dilate",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 MetricDilateParameters = typing.TypedDict('MetricDilateParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/metric-dilate"]],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "nearest": bool,
+    "linear": bool,
+    "exponent": typing.NotRequired[float | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "legacy-cutoff": bool,
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
-    "metric_out": str,
-    "opt_bad_vertex_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_data_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_nearest": bool,
-    "opt_linear": bool,
-    "opt_exponent_exponent": typing.NotRequired[float | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_legacy_cutoff": bool,
 })
 MetricDilateParametersTagged = typing.TypedDict('MetricDilateParametersTagged', {
     "@type": typing.Literal["workbench/metric-dilate"],
+    "metric-out": str,
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "column": typing.NotRequired[str | None],
+    "nearest": bool,
+    "linear": bool,
+    "exponent": typing.NotRequired[float | None],
+    "area-metric": typing.NotRequired[InputPathType | None],
+    "legacy-cutoff": bool,
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
-    "metric_out": str,
-    "opt_bad_vertex_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_data_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_column_column": typing.NotRequired[str | None],
-    "opt_nearest": bool,
-    "opt_linear": bool,
-    "opt_exponent_exponent": typing.NotRequired[float | None],
-    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
-    "opt_legacy_cutoff": bool,
 })
 
 
@@ -56,68 +55,74 @@ class MetricDilateOutputs(typing.NamedTuple):
 
 
 def metric_dilate_params(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    roi_metric_: InputPathType | None,
+    column: str | None,
+    exponent: float | None,
+    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
-    metric_out: str,
-    opt_bad_vertex_roi_roi_metric: InputPathType | None = None,
-    opt_data_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_nearest: bool = False,
-    opt_linear: bool = False,
-    opt_exponent_exponent: float | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_legacy_cutoff: bool = False,
+    nearest: bool = False,
+    linear: bool = False,
+    legacy_cutoff: bool = False,
 ) -> MetricDilateParametersTagged:
     """
     Build parameters.
     
     Args:
+        metric_out: the output metric.
+        roi_metric: specify an roi of vertices to overwrite, rather than\
+            vertices with value zero\
+            \
+            metric file, positive values denote vertices to have their values\
+            replaced.
+        roi_metric_: specify an roi of where there is data\
+            \
+            metric file, positive values denote vertices that have data.
+        column: select a single column to dilate\
+            \
+            the column number or name.
+        exponent: use a different exponent in the weighting function\
+            \
+            exponent 'n' to use in (area / (distance ^ n)) as the weighting\
+            function (default 6).
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         metric: the metric to dilate.
         surface: the surface to compute on.
         distance: distance in mm to dilate.
-        metric_out: the output metric.
-        opt_bad_vertex_roi_roi_metric: specify an roi of vertices to overwrite,\
-            rather than vertices with value zero: metric file, positive values\
-            denote vertices to have their values replaced.
-        opt_data_roi_roi_metric: specify an roi of where there is data: metric\
-            file, positive values denote vertices that have data.
-        opt_column_column: select a single column to dilate: the column number\
-            or name.
-        opt_nearest: use the nearest good value instead of a weighted average.
-        opt_linear: fill in values with linear interpolation along strongest\
+        nearest: use the nearest good value instead of a weighted average.
+        linear: fill in values with linear interpolation along strongest\
             gradient.
-        opt_exponent_exponent: use a different exponent in the weighting\
-            function: exponent 'n' to use in (area / (distance ^ n)) as the\
-            weighting function (default 6).
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_legacy_cutoff: use the v1.3.2 method of choosing how many vertices\
-            to use when calulating the dilated value with weighted method.
+        legacy_cutoff: use the v1.3.2 method of choosing how many vertices to\
+            use when calulating the dilated value with weighted method.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/metric-dilate",
+        "metric-out": metric_out,
+        "nearest": nearest,
+        "linear": linear,
+        "legacy-cutoff": legacy_cutoff,
         "metric": metric,
         "surface": surface,
         "distance": distance,
-        "metric_out": metric_out,
-        "opt_nearest": opt_nearest,
-        "opt_linear": opt_linear,
-        "opt_legacy_cutoff": opt_legacy_cutoff,
     }
-    if opt_bad_vertex_roi_roi_metric is not None:
-        params["opt_bad_vertex_roi_roi_metric"] = opt_bad_vertex_roi_roi_metric
-    if opt_data_roi_roi_metric is not None:
-        params["opt_data_roi_roi_metric"] = opt_data_roi_roi_metric
-    if opt_column_column is not None:
-        params["opt_column_column"] = opt_column_column
-    if opt_exponent_exponent is not None:
-        params["opt_exponent_exponent"] = opt_exponent_exponent
-    if opt_corrected_areas_area_metric is not None:
-        params["opt_corrected_areas_area_metric"] = opt_corrected_areas_area_metric
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if roi_metric_ is not None:
+        params["roi-metric"] = roi_metric_
+    if column is not None:
+        params["column"] = column
+    if exponent is not None:
+        params["exponent"] = exponent
+    if area_metric is not None:
+        params["area-metric"] = area_metric
     return params
 
 
@@ -135,43 +140,28 @@ def metric_dilate_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-metric-dilate")
+    if params.get("roi-metric", None) is not None or params.get("roi-metric", None) is not None or params.get("column", None) is not None or params.get("nearest", False) or params.get("linear", False) or params.get("exponent", None) is not None or params.get("area-metric", None) is not None or params.get("legacy-cutoff", False):
+        cargs.extend([
+            "wb_command",
+            "-metric-dilate",
+            params.get("metric-out", None),
+            "-bad-vertex-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-data-roi",
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
+            "-column",
+            (params.get("column", None) if (params.get("column", None) is not None) else ""),
+            ("-nearest" if (params.get("nearest", False)) else ""),
+            ("-linear" if (params.get("linear", False)) else ""),
+            "-exponent",
+            (str(params.get("exponent", None)) if (params.get("exponent", None) is not None) else ""),
+            "-corrected-areas",
+            (execution.input_file(params.get("area-metric", None)) if (params.get("area-metric", None) is not None) else ""),
+            ("-legacy-cutoff" if (params.get("legacy-cutoff", False)) else "")
+        ])
     cargs.append(execution.input_file(params.get("metric", None)))
     cargs.append(execution.input_file(params.get("surface", None)))
     cargs.append(str(params.get("distance", None)))
-    cargs.append(params.get("metric_out", None))
-    if params.get("opt_bad_vertex_roi_roi_metric", None) is not None:
-        cargs.extend([
-            "-bad-vertex-roi",
-            execution.input_file(params.get("opt_bad_vertex_roi_roi_metric", None))
-        ])
-    if params.get("opt_data_roi_roi_metric", None) is not None:
-        cargs.extend([
-            "-data-roi",
-            execution.input_file(params.get("opt_data_roi_roi_metric", None))
-        ])
-    if params.get("opt_column_column", None) is not None:
-        cargs.extend([
-            "-column",
-            params.get("opt_column_column", None)
-        ])
-    if params.get("opt_nearest", False):
-        cargs.append("-nearest")
-    if params.get("opt_linear", False):
-        cargs.append("-linear")
-    if params.get("opt_exponent_exponent", None) is not None:
-        cargs.extend([
-            "-exponent",
-            str(params.get("opt_exponent_exponent", None))
-        ])
-    if params.get("opt_corrected_areas_area_metric", None) is not None:
-        cargs.extend([
-            "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
-        ])
-    if params.get("opt_legacy_cutoff", False):
-        cargs.append("-legacy-cutoff")
     return cargs
 
 
@@ -190,7 +180,7 @@ def metric_dilate_outputs(
     """
     ret = MetricDilateOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out", None)),
+        metric_out=execution.output_file(params.get("metric-out", None)),
     )
     return ret
 
@@ -200,9 +190,7 @@ def metric_dilate_execute(
     runner: Runner | None = None,
 ) -> MetricDilateOutputs:
     """
-    metric-dilate
-    
-    Dilate a metric file.
+    DILATE A METRIC FILE.
     
     For all metric vertices that are designated as bad, if they neighbor a
     non-bad vertex with data or are within the specified distance of such a
@@ -222,10 +210,6 @@ def metric_dilate_execute(
     
     To get the behavior of version 1.3.2 or earlier, use '-legacy-cutoff
     -exponent 2'.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -243,24 +227,22 @@ def metric_dilate_execute(
 
 
 def metric_dilate(
+    metric_out: str,
+    roi_metric: InputPathType | None,
+    roi_metric_: InputPathType | None,
+    column: str | None,
+    exponent: float | None,
+    area_metric: InputPathType | None,
     metric: InputPathType,
     surface: InputPathType,
     distance: float,
-    metric_out: str,
-    opt_bad_vertex_roi_roi_metric: InputPathType | None = None,
-    opt_data_roi_roi_metric: InputPathType | None = None,
-    opt_column_column: str | None = None,
-    opt_nearest: bool = False,
-    opt_linear: bool = False,
-    opt_exponent_exponent: float | None = None,
-    opt_corrected_areas_area_metric: InputPathType | None = None,
-    opt_legacy_cutoff: bool = False,
+    nearest: bool = False,
+    linear: bool = False,
+    legacy_cutoff: bool = False,
     runner: Runner | None = None,
 ) -> MetricDilateOutputs:
     """
-    metric-dilate
-    
-    Dilate a metric file.
+    DILATE A METRIC FILE.
     
     For all metric vertices that are designated as bad, if they neighbor a
     non-bad vertex with data or are within the specified distance of such a
@@ -281,50 +263,52 @@ def metric_dilate(
     To get the behavior of version 1.3.2 or earlier, use '-legacy-cutoff
     -exponent 2'.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        metric_out: the output metric.
+        roi_metric: specify an roi of vertices to overwrite, rather than\
+            vertices with value zero\
+            \
+            metric file, positive values denote vertices to have their values\
+            replaced.
+        roi_metric_: specify an roi of where there is data\
+            \
+            metric file, positive values denote vertices that have data.
+        column: select a single column to dilate\
+            \
+            the column number or name.
+        exponent: use a different exponent in the weighting function\
+            \
+            exponent 'n' to use in (area / (distance ^ n)) as the weighting\
+            function (default 6).
+        area_metric: vertex areas to use instead of computing them from the\
+            surface\
+            \
+            the corrected vertex areas, as a metric.
         metric: the metric to dilate.
         surface: the surface to compute on.
         distance: distance in mm to dilate.
-        metric_out: the output metric.
-        opt_bad_vertex_roi_roi_metric: specify an roi of vertices to overwrite,\
-            rather than vertices with value zero: metric file, positive values\
-            denote vertices to have their values replaced.
-        opt_data_roi_roi_metric: specify an roi of where there is data: metric\
-            file, positive values denote vertices that have data.
-        opt_column_column: select a single column to dilate: the column number\
-            or name.
-        opt_nearest: use the nearest good value instead of a weighted average.
-        opt_linear: fill in values with linear interpolation along strongest\
+        nearest: use the nearest good value instead of a weighted average.
+        linear: fill in values with linear interpolation along strongest\
             gradient.
-        opt_exponent_exponent: use a different exponent in the weighting\
-            function: exponent 'n' to use in (area / (distance ^ n)) as the\
-            weighting function (default 6).
-        opt_corrected_areas_area_metric: vertex areas to use instead of\
-            computing them from the surface: the corrected vertex areas, as a\
-            metric.
-        opt_legacy_cutoff: use the v1.3.2 method of choosing how many vertices\
-            to use when calulating the dilated value with weighted method.
+        legacy_cutoff: use the v1.3.2 method of choosing how many vertices to\
+            use when calulating the dilated value with weighted method.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricDilateOutputs`).
     """
     params = metric_dilate_params(
+        metric_out=metric_out,
+        roi_metric=roi_metric,
+        roi_metric_=roi_metric_,
+        column=column,
+        nearest=nearest,
+        linear=linear,
+        exponent=exponent,
+        area_metric=area_metric,
+        legacy_cutoff=legacy_cutoff,
         metric=metric,
         surface=surface,
         distance=distance,
-        metric_out=metric_out,
-        opt_bad_vertex_roi_roi_metric=opt_bad_vertex_roi_roi_metric,
-        opt_data_roi_roi_metric=opt_data_roi_roi_metric,
-        opt_column_column=opt_column_column,
-        opt_nearest=opt_nearest,
-        opt_linear=opt_linear,
-        opt_exponent_exponent=opt_exponent_exponent,
-        opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
-        opt_legacy_cutoff=opt_legacy_cutoff,
     )
     return metric_dilate_execute(params, runner)
 

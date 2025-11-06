@@ -1,14 +1,11 @@
 {
   "fn_root_make_params_and_execute": "volume_math",
   "properties": {
-    "expression": {
-      "var_param": "expression"
-    },
-    "volume_out": {
+    "volume-out": {
       "var_param": "volume_out"
     },
-    "opt_fixnan_replace": {
-      "var_param": "opt_fixnan_replace"
+    "replace": {
+      "var_param": "replace"
     },
     "var": {
       "var_param": "var",
@@ -20,13 +17,16 @@
         "volume": {
           "var_param": "volume"
         },
-        "opt_subvolume_subvol": {
-          "var_param": "opt_subvolume_subvol"
+        "subvol": {
+          "var_param": "subvol"
         },
-        "opt_repeat": {
-          "var_param": "opt_repeat"
+        "repeat": {
+          "var_param": "repeat"
         }
       }
+    },
+    "expression": {
+      "var_param": "expression"
     }
   }
 }

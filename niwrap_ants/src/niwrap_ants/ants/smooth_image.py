@@ -19,8 +19,8 @@ SmoothImageParameters = typing.TypedDict('SmoothImageParameters', {
     "image_ext": InputPathType,
     "smoothing_sigma": str,
     "out_image_ext": str,
-    "sigma_units": typing.NotRequired[typing.Literal[0, 1] | None],
-    "median_filter": typing.NotRequired[typing.Literal[0, 1] | None],
+    "sigma_units": typing.NotRequired[bool | None],
+    "median_filter": typing.NotRequired[bool | None],
 })
 SmoothImageParametersTagged = typing.TypedDict('SmoothImageParametersTagged', {
     "@type": typing.Literal["ants/SmoothImage"],
@@ -28,8 +28,8 @@ SmoothImageParametersTagged = typing.TypedDict('SmoothImageParametersTagged', {
     "image_ext": InputPathType,
     "smoothing_sigma": str,
     "out_image_ext": str,
-    "sigma_units": typing.NotRequired[typing.Literal[0, 1] | None],
-    "median_filter": typing.NotRequired[typing.Literal[0, 1] | None],
+    "sigma_units": typing.NotRequired[bool | None],
+    "median_filter": typing.NotRequired[bool | None],
 })
 
 
@@ -48,8 +48,8 @@ def smooth_image_params(
     image_ext: InputPathType,
     smoothing_sigma: str,
     out_image_ext: str,
-    sigma_units: typing.Literal[0, 1] | None = None,
-    median_filter: typing.Literal[0, 1] | None = None,
+    sigma_units: bool | None = None,
+    median_filter: bool | None = None,
 ) -> SmoothImageParametersTagged:
     """
     Build parameters.
@@ -101,9 +101,9 @@ def smooth_image_cargs(
     cargs.append(params.get("smoothing_sigma", None))
     cargs.append(params.get("out_image_ext", None))
     if params.get("sigma_units", None) is not None:
-        cargs.append(str(params.get("sigma_units", None)))
+        cargs.append(("1" if params.get("sigma_units", None) else "0"))
     if params.get("median_filter", None) is not None:
-        cargs.append(str(params.get("median_filter", None)))
+        cargs.append(("1" if params.get("median_filter", None) else "0"))
     return cargs
 
 
@@ -161,8 +161,8 @@ def smooth_image(
     image_ext: InputPathType,
     smoothing_sigma: str,
     out_image_ext: str,
-    sigma_units: typing.Literal[0, 1] | None = None,
-    median_filter: typing.Literal[0, 1] | None = None,
+    sigma_units: bool | None = None,
+    median_filter: bool | None = None,
     runner: Runner | None = None,
 ) -> SmoothImageOutputs:
     """

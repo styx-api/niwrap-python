@@ -16,30 +16,30 @@ DCM2NIIX_METADATA = Metadata(
 Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
     "@type": typing.NotRequired[typing.Literal["dcm2niix/dcm2niix"]],
     "compression_level": typing.NotRequired[float | None],
-    "adjacent": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "adjacent": typing.NotRequired[bool | None],
     "bids": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
-    "bids_anon": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "bids_anon": typing.NotRequired[bool | None],
     "comment": typing.NotRequired[str | None],
     "depth": typing.NotRequired[float | None],
     "export_format": typing.NotRequired[typing.Literal["y", "n", "o", "j", "b"] | None],
     "filename": typing.NotRequired[str | None],
     "defaults": typing.NotRequired[typing.Literal["y", "n", "o", "i"] | None],
-    "ignore_derived": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "ignore_derived": typing.NotRequired[bool | None],
     "scaling": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
     "merge_2d": typing.NotRequired[typing.Literal["n", "y", "0", "1", "2"] | None],
     "series_number": typing.NotRequired[str | None],
     "output_dir": typing.NotRequired[str | None],
-    "philips_scaling": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "philips_scaling": typing.NotRequired[bool | None],
     "search_mode": typing.NotRequired[typing.Literal["y", "l", "n"] | None],
-    "rename": typing.NotRequired[typing.Literal["y", "n"] | None],
-    "single_file": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "rename": typing.NotRequired[bool | None],
+    "single_file": typing.NotRequired[bool | None],
     "update_check": bool,
     "verbose": typing.NotRequired[typing.Literal["0", "1", "2"] | None],
     "conflict_behavior": typing.NotRequired[float | None],
     "crop_3d": typing.NotRequired[typing.Literal["y", "n", "i"] | None],
     "compression": typing.NotRequired[typing.Literal["y", "o", "i", "n", "3"] | None],
     "endian": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
-    "progress": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "progress": typing.NotRequired[bool | None],
     "ignore_trigger": bool,
     "terse": bool,
     "xml": bool,
@@ -48,30 +48,30 @@ Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
 Dcm2niixParametersTagged = typing.TypedDict('Dcm2niixParametersTagged', {
     "@type": typing.Literal["dcm2niix/dcm2niix"],
     "compression_level": typing.NotRequired[float | None],
-    "adjacent": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "adjacent": typing.NotRequired[bool | None],
     "bids": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
-    "bids_anon": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "bids_anon": typing.NotRequired[bool | None],
     "comment": typing.NotRequired[str | None],
     "depth": typing.NotRequired[float | None],
     "export_format": typing.NotRequired[typing.Literal["y", "n", "o", "j", "b"] | None],
     "filename": typing.NotRequired[str | None],
     "defaults": typing.NotRequired[typing.Literal["y", "n", "o", "i"] | None],
-    "ignore_derived": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "ignore_derived": typing.NotRequired[bool | None],
     "scaling": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
     "merge_2d": typing.NotRequired[typing.Literal["n", "y", "0", "1", "2"] | None],
     "series_number": typing.NotRequired[str | None],
     "output_dir": typing.NotRequired[str | None],
-    "philips_scaling": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "philips_scaling": typing.NotRequired[bool | None],
     "search_mode": typing.NotRequired[typing.Literal["y", "l", "n"] | None],
-    "rename": typing.NotRequired[typing.Literal["y", "n"] | None],
-    "single_file": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "rename": typing.NotRequired[bool | None],
+    "single_file": typing.NotRequired[bool | None],
     "update_check": bool,
     "verbose": typing.NotRequired[typing.Literal["0", "1", "2"] | None],
     "conflict_behavior": typing.NotRequired[float | None],
     "crop_3d": typing.NotRequired[typing.Literal["y", "n", "i"] | None],
     "compression": typing.NotRequired[typing.Literal["y", "o", "i", "n", "3"] | None],
     "endian": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
-    "progress": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "progress": typing.NotRequired[bool | None],
     "ignore_trigger": bool,
     "terse": bool,
     "xml": bool,
@@ -90,30 +90,30 @@ class Dcm2niixOutputs(typing.NamedTuple):
 def dcm2niix_params(
     input_dir: InputPathType,
     compression_level: float | None = None,
-    adjacent: typing.Literal["y", "n"] | None = None,
+    adjacent: bool | None = None,
     bids: typing.Literal["y", "n", "o"] | None = None,
-    bids_anon: typing.Literal["y", "n"] | None = None,
+    bids_anon: bool | None = None,
     comment: str | None = None,
     depth: float | None = None,
     export_format: typing.Literal["y", "n", "o", "j", "b"] | None = None,
     filename: str | None = None,
     defaults: typing.Literal["y", "n", "o", "i"] | None = None,
-    ignore_derived: typing.Literal["y", "n"] | None = None,
+    ignore_derived: bool | None = None,
     scaling: typing.Literal["y", "n", "o"] | None = None,
     merge_2d: typing.Literal["n", "y", "0", "1", "2"] | None = None,
     series_number: str | None = None,
     output_dir: str | None = ".",
-    philips_scaling: typing.Literal["y", "n"] | None = None,
+    philips_scaling: bool | None = None,
     search_mode: typing.Literal["y", "l", "n"] | None = None,
-    rename: typing.Literal["y", "n"] | None = None,
-    single_file: typing.Literal["y", "n"] | None = None,
+    rename: bool | None = None,
+    single_file: bool | None = None,
     update_check: bool = False,
     verbose: typing.Literal["0", "1", "2"] | None = None,
     conflict_behavior: float | None = None,
     crop_3d: typing.Literal["y", "n", "i"] | None = None,
     compression: typing.Literal["y", "o", "i", "n", "3"] | None = None,
     endian: typing.Literal["y", "n", "o"] | None = None,
-    progress: typing.Literal["y", "n"] | None = None,
+    progress: bool | None = None,
     ignore_trigger: bool = False,
     terse: bool = False,
     xml_: bool = False,
@@ -249,7 +249,7 @@ def dcm2niix_cargs(
     if params.get("adjacent", None) is not None:
         cargs.extend([
             "-a",
-            params.get("adjacent", None)
+            ("y" if params.get("adjacent", None) else "n")
         ])
     if params.get("bids", None) is not None:
         cargs.extend([
@@ -259,7 +259,7 @@ def dcm2niix_cargs(
     if params.get("bids_anon", None) is not None:
         cargs.extend([
             "-ba",
-            params.get("bids_anon", None)
+            ("y" if params.get("bids_anon", None) else "n")
         ])
     if params.get("comment", None) is not None:
         cargs.extend([
@@ -289,7 +289,7 @@ def dcm2niix_cargs(
     if params.get("ignore_derived", None) is not None:
         cargs.extend([
             "-i",
-            params.get("ignore_derived", None)
+            ("y" if params.get("ignore_derived", None) else "n")
         ])
     if params.get("scaling", None) is not None:
         cargs.extend([
@@ -314,7 +314,7 @@ def dcm2niix_cargs(
     if params.get("philips_scaling", None) is not None:
         cargs.extend([
             "-p",
-            params.get("philips_scaling", None)
+            ("y" if params.get("philips_scaling", None) else "n")
         ])
     if params.get("search_mode", None) is not None:
         cargs.extend([
@@ -324,12 +324,12 @@ def dcm2niix_cargs(
     if params.get("rename", None) is not None:
         cargs.extend([
             "-r",
-            params.get("rename", None)
+            ("y" if params.get("rename", None) else "n")
         ])
     if params.get("single_file", None) is not None:
         cargs.extend([
             "-s",
-            params.get("single_file", None)
+            ("y" if params.get("single_file", None) else "n")
         ])
     if params.get("update_check", False):
         cargs.append("-u")
@@ -361,7 +361,7 @@ def dcm2niix_cargs(
     if params.get("progress", None) is not None:
         cargs.extend([
             "--progress",
-            params.get("progress", None)
+            ("y" if params.get("progress", None) else "n")
         ])
     if params.get("ignore_trigger", False):
         cargs.append("--ignore_trigger_times")
@@ -422,30 +422,30 @@ def dcm2niix_execute(
 def dcm2niix_(
     input_dir: InputPathType,
     compression_level: float | None = None,
-    adjacent: typing.Literal["y", "n"] | None = None,
+    adjacent: bool | None = None,
     bids: typing.Literal["y", "n", "o"] | None = None,
-    bids_anon: typing.Literal["y", "n"] | None = None,
+    bids_anon: bool | None = None,
     comment: str | None = None,
     depth: float | None = None,
     export_format: typing.Literal["y", "n", "o", "j", "b"] | None = None,
     filename: str | None = None,
     defaults: typing.Literal["y", "n", "o", "i"] | None = None,
-    ignore_derived: typing.Literal["y", "n"] | None = None,
+    ignore_derived: bool | None = None,
     scaling: typing.Literal["y", "n", "o"] | None = None,
     merge_2d: typing.Literal["n", "y", "0", "1", "2"] | None = None,
     series_number: str | None = None,
     output_dir: str | None = ".",
-    philips_scaling: typing.Literal["y", "n"] | None = None,
+    philips_scaling: bool | None = None,
     search_mode: typing.Literal["y", "l", "n"] | None = None,
-    rename: typing.Literal["y", "n"] | None = None,
-    single_file: typing.Literal["y", "n"] | None = None,
+    rename: bool | None = None,
+    single_file: bool | None = None,
     update_check: bool = False,
     verbose: typing.Literal["0", "1", "2"] | None = None,
     conflict_behavior: float | None = None,
     crop_3d: typing.Literal["y", "n", "i"] | None = None,
     compression: typing.Literal["y", "o", "i", "n", "3"] | None = None,
     endian: typing.Literal["y", "n", "o"] | None = None,
-    progress: typing.Literal["y", "n"] | None = None,
+    progress: bool | None = None,
     ignore_trigger: bool = False,
     terse: bool = False,
     xml_: bool = False,

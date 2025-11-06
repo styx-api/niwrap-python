@@ -6,64 +6,63 @@ import pathlib
 from styxdefs import *
 
 LABEL_RESAMPLE_METADATA = Metadata(
-    id="27cac022f876a408a3e9c32a66575355a7783848.boutiques",
+    id="c5578cc16cfdc8f6e4a75e75e6c10f719016d2e0.workbench",
     name="label-resample",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 LabelResampleAreaSurfsParameters = typing.TypedDict('LabelResampleAreaSurfsParameters', {
-    "@type": typing.NotRequired[typing.Literal["area_surfs"]],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["area-surfs"]],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 LabelResampleAreaSurfsParametersTagged = typing.TypedDict('LabelResampleAreaSurfsParametersTagged', {
-    "@type": typing.Literal["area_surfs"],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.Literal["area-surfs"],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 
 
 LabelResampleAreaMetricsParameters = typing.TypedDict('LabelResampleAreaMetricsParameters', {
-    "@type": typing.NotRequired[typing.Literal["area_metrics"]],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.NotRequired[typing.Literal["area-metrics"]],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 LabelResampleAreaMetricsParametersTagged = typing.TypedDict('LabelResampleAreaMetricsParametersTagged', {
-    "@type": typing.Literal["area_metrics"],
-    "current_area": InputPathType,
-    "new_area": InputPathType,
+    "@type": typing.Literal["area-metrics"],
+    "current-area": InputPathType,
+    "new-area": InputPathType,
 })
 
 
 LabelResampleParameters = typing.TypedDict('LabelResampleParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/label-resample"]],
-    "label_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
+    "label-out": str,
+    "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParameters | None],
+    "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParameters | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-out": typing.NotRequired[str | None],
+    "largest": bool,
+    "bypass-sphere-check": bool,
+    "label-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
     "method": str,
-    "label_out": str,
-    "area_surfs": typing.NotRequired[LabelResampleAreaSurfsParameters | None],
-    "area_metrics": typing.NotRequired[LabelResampleAreaMetricsParameters | None],
-    "opt_current_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_valid_roi_out_roi_out": typing.NotRequired[str | None],
-    "opt_largest": bool,
-    "opt_bypass_sphere_check": bool,
 })
 LabelResampleParametersTagged = typing.TypedDict('LabelResampleParametersTagged', {
     "@type": typing.Literal["workbench/label-resample"],
-    "label_in": InputPathType,
-    "current_sphere": InputPathType,
-    "new_sphere": InputPathType,
+    "label-out": str,
+    "area-surfs": typing.NotRequired[LabelResampleAreaSurfsParameters | None],
+    "area-metrics": typing.NotRequired[LabelResampleAreaMetricsParameters | None],
+    "roi-metric": typing.NotRequired[InputPathType | None],
+    "roi-out": typing.NotRequired[str | None],
+    "largest": bool,
+    "bypass-sphere-check": bool,
+    "label-in": InputPathType,
+    "current-sphere": InputPathType,
+    "new-sphere": InputPathType,
     "method": str,
-    "label_out": str,
-    "area_surfs": typing.NotRequired[LabelResampleAreaSurfsParameters | None],
-    "area_metrics": typing.NotRequired[LabelResampleAreaMetricsParameters | None],
-    "opt_current_roi_roi_metric": typing.NotRequired[InputPathType | None],
-    "opt_valid_roi_out_roi_out": typing.NotRequired[str | None],
-    "opt_largest": bool,
-    "opt_bypass_sphere_check": bool,
 })
 
 
@@ -81,9 +80,9 @@ def label_resample_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "area_surfs",
-        "current_area": current_area,
-        "new_area": new_area,
+        "@type": "area-surfs",
+        "current-area": current_area,
+        "new-area": new_area,
     }
     return params
 
@@ -102,9 +101,11 @@ def label_resample_area_surfs_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-area-surfs")
-    cargs.append(execution.input_file(params.get("current_area", None)))
-    cargs.append(execution.input_file(params.get("new_area", None)))
+    cargs.extend([
+        "-area-surfs",
+        execution.input_file(params.get("current-area", None)),
+        execution.input_file(params.get("new-area", None))
+    ])
     return cargs
 
 
@@ -122,9 +123,9 @@ def label_resample_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "area_metrics",
-        "current_area": current_area,
-        "new_area": new_area,
+        "@type": "area-metrics",
+        "current-area": current_area,
+        "new-area": new_area,
     }
     return params
 
@@ -143,9 +144,11 @@ def label_resample_area_metrics_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("-area-metrics")
-    cargs.append(execution.input_file(params.get("current_area", None)))
-    cargs.append(execution.input_file(params.get("new_area", None)))
+    cargs.extend([
+        "-area-metrics",
+        execution.input_file(params.get("current-area", None)),
+        execution.input_file(params.get("new-area", None))
+    ])
     return cargs
 
 
@@ -157,66 +160,67 @@ class LabelResampleOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     label_out: OutputPathType
     """the output label file"""
-    opt_valid_roi_out_roi_out: OutputPathType | None
-    """output the ROI of vertices that got data from valid source vertices: the
-    output roi as a metric"""
 
 
 def label_resample_params(
+    label_out: str,
+    roi_metric: InputPathType | None,
+    roi_out: str | None,
     label_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    label_out: str,
     area_surfs: LabelResampleAreaSurfsParameters | None = None,
     area_metrics: LabelResampleAreaMetricsParameters | None = None,
-    opt_current_roi_roi_metric: InputPathType | None = None,
-    opt_valid_roi_out_roi_out: str | None = None,
-    opt_largest: bool = False,
-    opt_bypass_sphere_check: bool = False,
+    largest: bool = False,
+    bypass_sphere_check: bool = False,
 ) -> LabelResampleParametersTagged:
     """
     Build parameters.
     
     Args:
+        label_out: the output label file.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         label_in: the label file to resample.
         current_sphere: a sphere surface with the mesh that the label file is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
-        label_out: the output label file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
-        opt_current_roi_roi_metric: use an input roi on the current mesh to\
-            exclude non-data vertices: the roi, as a metric file.
-        opt_valid_roi_out_roi_out: output the ROI of vertices that got data\
-            from valid source vertices: the output roi as a metric.
-        opt_largest: use only the label of the vertex with the largest weight.
-        opt_bypass_sphere_check: ADVANCED: allow the current and new 'spheres'\
-            to have arbitrary shape as long as they follow the same contour.
+        largest: use only the label of the vertex with the largest weight.
+        bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
+            have arbitrary shape as long as they follow the same contour.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/label-resample",
-        "label_in": label_in,
-        "current_sphere": current_sphere,
-        "new_sphere": new_sphere,
+        "label-out": label_out,
+        "largest": largest,
+        "bypass-sphere-check": bypass_sphere_check,
+        "label-in": label_in,
+        "current-sphere": current_sphere,
+        "new-sphere": new_sphere,
         "method": method,
-        "label_out": label_out,
-        "opt_largest": opt_largest,
-        "opt_bypass_sphere_check": opt_bypass_sphere_check,
     }
     if area_surfs is not None:
-        params["area_surfs"] = area_surfs
+        params["area-surfs"] = area_surfs
     if area_metrics is not None:
-        params["area_metrics"] = area_metrics
-    if opt_current_roi_roi_metric is not None:
-        params["opt_current_roi_roi_metric"] = opt_current_roi_roi_metric
-    if opt_valid_roi_out_roi_out is not None:
-        params["opt_valid_roi_out_roi_out"] = opt_valid_roi_out_roi_out
+        params["area-metrics"] = area_metrics
+    if roi_metric is not None:
+        params["roi-metric"] = roi_metric
+    if roi_out is not None:
+        params["roi-out"] = roi_out
     return params
 
 
@@ -234,31 +238,24 @@ def label_resample_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-label-resample")
-    cargs.append(execution.input_file(params.get("label_in", None)))
-    cargs.append(execution.input_file(params.get("current_sphere", None)))
-    cargs.append(execution.input_file(params.get("new_sphere", None)))
-    cargs.append(params.get("method", None))
-    cargs.append(params.get("label_out", None))
-    if params.get("area_surfs", None) is not None:
-        cargs.extend(label_resample_area_surfs_cargs(params.get("area_surfs", None), execution))
-    if params.get("area_metrics", None) is not None:
-        cargs.extend(label_resample_area_metrics_cargs(params.get("area_metrics", None), execution))
-    if params.get("opt_current_roi_roi_metric", None) is not None:
+    if params.get("area-surfs", None) is not None or params.get("area-metrics", None) is not None or params.get("roi-metric", None) is not None or params.get("roi-out", None) is not None or params.get("largest", False) or params.get("bypass-sphere-check", False):
         cargs.extend([
+            "wb_command",
+            "-label-resample",
+            params.get("label-out", None),
+            *(label_resample_area_surfs_cargs(params.get("area-surfs", None), execution) if (params.get("area-surfs", None) is not None) else []),
+            *(label_resample_area_metrics_cargs(params.get("area-metrics", None), execution) if (params.get("area-metrics", None) is not None) else []),
             "-current-roi",
-            execution.input_file(params.get("opt_current_roi_roi_metric", None))
-        ])
-    if params.get("opt_valid_roi_out_roi_out", None) is not None:
-        cargs.extend([
+            (execution.input_file(params.get("roi-metric", None)) if (params.get("roi-metric", None) is not None) else ""),
             "-valid-roi-out",
-            params.get("opt_valid_roi_out_roi_out", None)
+            (params.get("roi-out", None) if (params.get("roi-out", None) is not None) else ""),
+            ("-largest" if (params.get("largest", False)) else ""),
+            ("-bypass-sphere-check" if (params.get("bypass-sphere-check", False)) else "")
         ])
-    if params.get("opt_largest", False):
-        cargs.append("-largest")
-    if params.get("opt_bypass_sphere_check", False):
-        cargs.append("-bypass-sphere-check")
+    cargs.append(execution.input_file(params.get("label-in", None)))
+    cargs.append(execution.input_file(params.get("current-sphere", None)))
+    cargs.append(execution.input_file(params.get("new-sphere", None)))
+    cargs.append(params.get("method", None))
     return cargs
 
 
@@ -277,8 +274,7 @@ def label_resample_outputs(
     """
     ret = LabelResampleOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out", None)),
-        opt_valid_roi_out_roi_out=execution.output_file(params.get("opt_valid_roi_out_roi_out", None)) if (params.get("opt_valid_roi_out_roi_out") is not None) else None,
+        label_out=execution.output_file(params.get("label-out", None)),
     )
     return ret
 
@@ -288,9 +284,7 @@ def label_resample_execute(
     runner: Runner | None = None,
 ) -> LabelResampleOutputs:
     """
-    label-resample
-    
-    Resample a label file to a different mesh.
+    RESAMPLE A LABEL FILE TO A DIFFERENT MESH.
     
     Resamples a label file, given two spherical surfaces that are in register.
     If ADAP_BARY_AREA is used, exactly one of -area-surfs or -area-metrics must
@@ -313,10 +307,6 @@ def label_resample_execute(
     ADAP_BARY_AREA
     BARYCENTRIC
     .
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -334,23 +324,21 @@ def label_resample_execute(
 
 
 def label_resample(
+    label_out: str,
+    roi_metric: InputPathType | None,
+    roi_out: str | None,
     label_in: InputPathType,
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     method: str,
-    label_out: str,
     area_surfs: LabelResampleAreaSurfsParameters | None = None,
     area_metrics: LabelResampleAreaMetricsParameters | None = None,
-    opt_current_roi_roi_metric: InputPathType | None = None,
-    opt_valid_roi_out_roi_out: str | None = None,
-    opt_largest: bool = False,
-    opt_bypass_sphere_check: bool = False,
+    largest: bool = False,
+    bypass_sphere_check: bool = False,
     runner: Runner | None = None,
 ) -> LabelResampleOutputs:
     """
-    label-resample
-    
-    Resample a label file to a different mesh.
+    RESAMPLE A LABEL FILE TO A DIFFERENT MESH.
     
     Resamples a label file, given two spherical surfaces that are in register.
     If ADAP_BARY_AREA is used, exactly one of -area-surfs or -area-metrics must
@@ -374,44 +362,44 @@ def label_resample(
     BARYCENTRIC
     .
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
+        label_out: the output label file.
+        roi_metric: use an input roi on the current mesh to exclude non-data\
+            vertices\
+            \
+            the roi, as a metric file.
+        roi_out: output the ROI of vertices that got data from valid source\
+            vertices\
+            \
+            the output roi as a metric.
         label_in: the label file to resample.
         current_sphere: a sphere surface with the mesh that the label file is\
             currently on.
         new_sphere: a sphere surface that is in register with <current-sphere>\
             and has the desired output mesh.
         method: the method name.
-        label_out: the output label file.
         area_surfs: specify surfaces to do vertex area correction based on.
         area_metrics: specify vertex area metrics to do area correction based\
             on.
-        opt_current_roi_roi_metric: use an input roi on the current mesh to\
-            exclude non-data vertices: the roi, as a metric file.
-        opt_valid_roi_out_roi_out: output the ROI of vertices that got data\
-            from valid source vertices: the output roi as a metric.
-        opt_largest: use only the label of the vertex with the largest weight.
-        opt_bypass_sphere_check: ADVANCED: allow the current and new 'spheres'\
-            to have arbitrary shape as long as they follow the same contour.
+        largest: use only the label of the vertex with the largest weight.
+        bypass_sphere_check: ADVANCED: allow the current and new 'spheres' to\
+            have arbitrary shape as long as they follow the same contour.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelResampleOutputs`).
     """
     params = label_resample_params(
+        label_out=label_out,
+        area_surfs=area_surfs,
+        area_metrics=area_metrics,
+        roi_metric=roi_metric,
+        roi_out=roi_out,
+        largest=largest,
+        bypass_sphere_check=bypass_sphere_check,
         label_in=label_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
         method=method,
-        label_out=label_out,
-        area_surfs=area_surfs,
-        area_metrics=area_metrics,
-        opt_current_roi_roi_metric=opt_current_roi_roi_metric,
-        opt_valid_roi_out_roi_out=opt_valid_roi_out_roi_out,
-        opt_largest=opt_largest,
-        opt_bypass_sphere_check=opt_bypass_sphere_check,
     )
     return label_resample_execute(params, runner)
 

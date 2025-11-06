@@ -6,24 +6,23 @@ import pathlib
 from styxdefs import *
 
 CIFTI_TRANSPOSE_METADATA = Metadata(
-    id="2184f40f0f6a338d14117c56093429c24502286f.boutiques",
+    id="a38fc279857d9723961ff9db61fed1fba00e53c2.workbench",
     name="cifti-transpose",
     package="workbench",
-    container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
 )
 
 
 CiftiTransposeParameters = typing.TypedDict('CiftiTransposeParameters', {
     "@type": typing.NotRequired[typing.Literal["workbench/cifti-transpose"]],
-    "cifti_in": InputPathType,
-    "cifti_out": str,
-    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+    "cifti-out": str,
+    "limit-GB": typing.NotRequired[float | None],
+    "cifti-in": InputPathType,
 })
 CiftiTransposeParametersTagged = typing.TypedDict('CiftiTransposeParametersTagged', {
     "@type": typing.Literal["workbench/cifti-transpose"],
-    "cifti_in": InputPathType,
-    "cifti_out": str,
-    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+    "cifti-out": str,
+    "limit-GB": typing.NotRequired[float | None],
+    "cifti-in": InputPathType,
 })
 
 
@@ -38,28 +37,29 @@ class CiftiTransposeOutputs(typing.NamedTuple):
 
 
 def cifti_transpose_params(
-    cifti_in: InputPathType,
     cifti_out: str,
-    opt_mem_limit_limit_gb: float | None = None,
+    limit_gb: float | None,
+    cifti_in: InputPathType,
 ) -> CiftiTransposeParametersTagged:
     """
     Build parameters.
     
     Args:
-        cifti_in: the input cifti file.
         cifti_out: the output cifti file.
-        opt_mem_limit_limit_gb: restrict memory usage: memory limit in\
-            gigabytes.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
+        cifti_in: the input cifti file.
     Returns:
         Parameter dictionary
     """
     params = {
         "@type": "workbench/cifti-transpose",
-        "cifti_in": cifti_in,
-        "cifti_out": cifti_out,
+        "cifti-out": cifti_out,
+        "cifti-in": cifti_in,
     }
-    if opt_mem_limit_limit_gb is not None:
-        params["opt_mem_limit_limit_gb"] = opt_mem_limit_limit_gb
+    if limit_gb is not None:
+        params["limit-GB"] = limit_gb
     return params
 
 
@@ -77,15 +77,15 @@ def cifti_transpose_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("wb_command")
-    cargs.append("-cifti-transpose")
-    cargs.append(execution.input_file(params.get("cifti_in", None)))
-    cargs.append(params.get("cifti_out", None))
-    if params.get("opt_mem_limit_limit_gb", None) is not None:
+    if params.get("limit-GB", None) is not None:
         cargs.extend([
+            "wb_command",
+            "-cifti-transpose",
+            params.get("cifti-out", None),
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb", None))
+            str(params.get("limit-GB", None))
         ])
+    cargs.append(execution.input_file(params.get("cifti-in", None)))
     return cargs
 
 
@@ -104,7 +104,7 @@ def cifti_transpose_outputs(
     """
     ret = CiftiTransposeOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        cifti_out=execution.output_file(params.get("cifti-out", None)),
     )
     return ret
 
@@ -114,16 +114,10 @@ def cifti_transpose_execute(
     runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
     """
-    cifti-transpose
-    
-    Transpose a cifti file.
+    TRANSPOSE A CIFTI FILE.
     
     The input must be a 2-dimensional cifti file. The output is a cifti file
     where every row in the input is a column in the output.
-    
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
     
     Args:
         params: The parameters.
@@ -141,36 +135,31 @@ def cifti_transpose_execute(
 
 
 def cifti_transpose(
-    cifti_in: InputPathType,
     cifti_out: str,
-    opt_mem_limit_limit_gb: float | None = None,
+    limit_gb: float | None,
+    cifti_in: InputPathType,
     runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
     """
-    cifti-transpose
-    
-    Transpose a cifti file.
+    TRANSPOSE A CIFTI FILE.
     
     The input must be a 2-dimensional cifti file. The output is a cifti file
     where every row in the input is a column in the output.
     
-    Author: Connectome Workbench Developers
-    
-    URL: https://github.com/Washington-University/workbench
-    
     Args:
-        cifti_in: the input cifti file.
         cifti_out: the output cifti file.
-        opt_mem_limit_limit_gb: restrict memory usage: memory limit in\
-            gigabytes.
+        limit_gb: restrict memory usage\
+            \
+            memory limit in gigabytes.
+        cifti_in: the input cifti file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiTransposeOutputs`).
     """
     params = cifti_transpose_params(
-        cifti_in=cifti_in,
         cifti_out=cifti_out,
-        opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
+        limit_gb=limit_gb,
+        cifti_in=cifti_in,
     )
     return cifti_transpose_execute(params, runner)
 
