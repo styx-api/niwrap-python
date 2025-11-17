@@ -90,6 +90,49 @@ def ants_motion_corr_stats_params(
     return params
 
 
+def ants_motion_corr_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsMotionCorrStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("moco_params", None) is None:
+        raise StyxValidationError("`moco_params` must not be None")
+    if not isinstance(params["moco_params"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moco_params` has the wrong type: Received `{type(params.get("moco_params", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("transform_index", None) is not None:
+        if not isinstance(params["transform_index"], int):
+            raise StyxValidationError(f'`transform_index` has the wrong type: Received `{type(params.get("transform_index", None))}` expected `int | None`')
+    if params.get("framewise", None) is not None:
+        if not isinstance(params["framewise"], bool):
+            raise StyxValidationError(f'`framewise` has the wrong type: Received `{type(params.get("framewise", None))}` expected `bool | None`')
+    if params.get("spatial_map", False) is None:
+        raise StyxValidationError("`spatial_map` must not be None")
+    if not isinstance(params["spatial_map"], bool):
+        raise StyxValidationError(f'`spatial_map` has the wrong type: Received `{type(params.get("spatial_map", False))}` expected `bool`')
+    if params.get("timeseries_displacement", False) is None:
+        raise StyxValidationError("`timeseries_displacement` must not be None")
+    if not isinstance(params["timeseries_displacement"], bool):
+        raise StyxValidationError(f'`timeseries_displacement` has the wrong type: Received `{type(params.get("timeseries_displacement", False))}` expected `bool`')
+    if params.get("help", None) is not None:
+        if not isinstance(params["help"], bool):
+            raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", None))}` expected `bool | None`')
+
+
 def ants_motion_corr_stats_cargs(
     params: AntsMotionCorrStatsParameters,
     execution: Execution,
@@ -183,6 +226,7 @@ def ants_motion_corr_stats_execute(
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrStatsOutputs`).
     """
+    ants_motion_corr_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_MOTION_CORR_STATS_METADATA)
     params = execution.params(params)

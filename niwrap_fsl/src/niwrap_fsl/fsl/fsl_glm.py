@@ -215,6 +215,105 @@ def fsl_glm_params(
     return params
 
 
+def fsl_glm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslGlmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("design_matrix", None) is None:
+        raise StyxValidationError("`design_matrix` must not be None")
+    if not isinstance(params["design_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design_matrix` has the wrong type: Received `{type(params.get("design_matrix", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("contrasts", None) is not None:
+        if not isinstance(params["contrasts"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`contrasts` has the wrong type: Received `{type(params.get("contrasts", None))}` expected `InputPathType | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("dof", None) is not None:
+        if not isinstance(params["dof"], (float, int)):
+            raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `float | None`')
+    if params.get("design_norm_flag", False) is None:
+        raise StyxValidationError("`design_norm_flag` must not be None")
+    if not isinstance(params["design_norm_flag"], bool):
+        raise StyxValidationError(f'`design_norm_flag` has the wrong type: Received `{type(params.get("design_norm_flag", False))}` expected `bool`')
+    if params.get("data_norm_flag", False) is None:
+        raise StyxValidationError("`data_norm_flag` must not be None")
+    if not isinstance(params["data_norm_flag"], bool):
+        raise StyxValidationError(f'`data_norm_flag` has the wrong type: Received `{type(params.get("data_norm_flag", False))}` expected `bool`')
+    if params.get("vn_flag", False) is None:
+        raise StyxValidationError("`vn_flag` must not be None")
+    if not isinstance(params["vn_flag"], bool):
+        raise StyxValidationError(f'`vn_flag` has the wrong type: Received `{type(params.get("vn_flag", False))}` expected `bool`')
+    if params.get("demean_flag", False) is None:
+        raise StyxValidationError("`demean_flag` must not be None")
+    if not isinstance(params["demean_flag"], bool):
+        raise StyxValidationError(f'`demean_flag` has the wrong type: Received `{type(params.get("demean_flag", False))}` expected `bool`')
+    if params.get("output_copes", None) is not None:
+        if not isinstance(params["output_copes"], str):
+            raise StyxValidationError(f'`output_copes` has the wrong type: Received `{type(params.get("output_copes", None))}` expected `str | None`')
+    if params.get("output_zstats", None) is not None:
+        if not isinstance(params["output_zstats"], str):
+            raise StyxValidationError(f'`output_zstats` has the wrong type: Received `{type(params.get("output_zstats", None))}` expected `str | None`')
+    if params.get("output_tstats", None) is not None:
+        if not isinstance(params["output_tstats"], str):
+            raise StyxValidationError(f'`output_tstats` has the wrong type: Received `{type(params.get("output_tstats", None))}` expected `str | None`')
+    if params.get("output_pvals", None) is not None:
+        if not isinstance(params["output_pvals"], str):
+            raise StyxValidationError(f'`output_pvals` has the wrong type: Received `{type(params.get("output_pvals", None))}` expected `str | None`')
+    if params.get("output_fvals", None) is not None:
+        if not isinstance(params["output_fvals"], str):
+            raise StyxValidationError(f'`output_fvals` has the wrong type: Received `{type(params.get("output_fvals", None))}` expected `str | None`')
+    if params.get("output_pfvals", None) is not None:
+        if not isinstance(params["output_pfvals"], str):
+            raise StyxValidationError(f'`output_pfvals` has the wrong type: Received `{type(params.get("output_pfvals", None))}` expected `str | None`')
+    if params.get("output_residuals", None) is not None:
+        if not isinstance(params["output_residuals"], str):
+            raise StyxValidationError(f'`output_residuals` has the wrong type: Received `{type(params.get("output_residuals", None))}` expected `str | None`')
+    if params.get("output_varcb", None) is not None:
+        if not isinstance(params["output_varcb"], str):
+            raise StyxValidationError(f'`output_varcb` has the wrong type: Received `{type(params.get("output_varcb", None))}` expected `str | None`')
+    if params.get("output_sigsq", None) is not None:
+        if not isinstance(params["output_sigsq"], str):
+            raise StyxValidationError(f'`output_sigsq` has the wrong type: Received `{type(params.get("output_sigsq", None))}` expected `str | None`')
+    if params.get("output_data", None) is not None:
+        if not isinstance(params["output_data"], str):
+            raise StyxValidationError(f'`output_data` has the wrong type: Received `{type(params.get("output_data", None))}` expected `str | None`')
+    if params.get("output_vnscales", None) is not None:
+        if not isinstance(params["output_vnscales"], str):
+            raise StyxValidationError(f'`output_vnscales` has the wrong type: Received `{type(params.get("output_vnscales", None))}` expected `str | None`')
+    if params.get("vx_text", None) is not None:
+        if not isinstance(params["vx_text"], list):
+            raise StyxValidationError(f'`vx_text` has the wrong type: Received `{type(params.get("vx_text", None))}` expected `list[str] | None`')
+        for e in params["vx_text"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`vx_text` has the wrong type: Received `{type(params.get("vx_text", None))}` expected `list[str] | None`')
+    if params.get("vx_images", None) is not None:
+        if not isinstance(params["vx_images"], list):
+            raise StyxValidationError(f'`vx_images` has the wrong type: Received `{type(params.get("vx_images", None))}` expected `list[InputPathType] | None`')
+        for e in params["vx_images"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`vx_images` has the wrong type: Received `{type(params.get("vx_images", None))}` expected `list[InputPathType] | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def fsl_glm_cargs(
     params: FslGlmParameters,
     execution: Execution,
@@ -387,6 +486,7 @@ def fsl_glm_execute(
     Returns:
         NamedTuple of outputs (described in `FslGlmOutputs`).
     """
+    fsl_glm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_GLM_METADATA)
     params = execution.params(params)

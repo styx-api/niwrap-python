@@ -71,6 +71,39 @@ def mri_parse_sdcmdir_params(
     return params
 
 
+def mri_parse_sdcmdir_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriParseSdcmdirParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sdicomdir", None) is None:
+        raise StyxValidationError("`sdicomdir` must not be None")
+    if not isinstance(params["sdicomdir"], str):
+        raise StyxValidationError(f'`sdicomdir` has the wrong type: Received `{type(params.get("sdicomdir", None))}` expected `str`')
+    if params.get("outfile", None) is not None:
+        if not isinstance(params["outfile"], str):
+            raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str | None`')
+    if params.get("sortbyrun", False) is None:
+        raise StyxValidationError("`sortbyrun` must not be None")
+    if not isinstance(params["sortbyrun"], bool):
+        raise StyxValidationError(f'`sortbyrun` has the wrong type: Received `{type(params.get("sortbyrun", False))}` expected `bool`')
+    if params.get("summarize", False) is None:
+        raise StyxValidationError("`summarize` must not be None")
+    if not isinstance(params["summarize"], bool):
+        raise StyxValidationError(f'`summarize` has the wrong type: Received `{type(params.get("summarize", False))}` expected `bool`')
+    if params.get("dwi", False) is None:
+        raise StyxValidationError("`dwi` must not be None")
+    if not isinstance(params["dwi"], bool):
+        raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", False))}` expected `bool`')
+
+
 def mri_parse_sdcmdir_cargs(
     params: MriParseSdcmdirParameters,
     execution: Execution,
@@ -143,6 +176,7 @@ def mri_parse_sdcmdir_execute(
     Returns:
         NamedTuple of outputs (described in `MriParseSdcmdirOutputs`).
     """
+    mri_parse_sdcmdir_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_PARSE_SDCMDIR_METADATA)
     params = execution.params(params)

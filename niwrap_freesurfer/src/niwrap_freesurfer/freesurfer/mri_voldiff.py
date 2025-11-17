@@ -91,6 +91,54 @@ def mri_voldiff_params(
     return params
 
 
+def mri_voldiff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriVoldiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume1", None) is None:
+        raise StyxValidationError("`volume1` must not be None")
+    if not isinstance(params["volume1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume1` has the wrong type: Received `{type(params.get("volume1", None))}` expected `InputPathType`')
+    if params.get("volume2", None) is None:
+        raise StyxValidationError("`volume2` must not be None")
+    if not isinstance(params["volume2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume2` has the wrong type: Received `{type(params.get("volume2", None))}` expected `InputPathType`')
+    if params.get("vox2ras_thresh", None) is not None:
+        if not isinstance(params["vox2ras_thresh"], (float, int)):
+            raise StyxValidationError(f'`vox2ras_thresh` has the wrong type: Received `{type(params.get("vox2ras_thresh", None))}` expected `float | None`')
+    if params.get("pix_thresh", None) is not None:
+        if not isinstance(params["pix_thresh"], (float, int)):
+            raise StyxValidationError(f'`pix_thresh` has the wrong type: Received `{type(params.get("pix_thresh", None))}` expected `float | None`')
+    if params.get("allow_precision", False) is None:
+        raise StyxValidationError("`allow_precision` must not be None")
+    if not isinstance(params["allow_precision"], bool):
+        raise StyxValidationError(f'`allow_precision` has the wrong type: Received `{type(params.get("allow_precision", False))}` expected `bool`')
+    if params.get("allow_resolution", False) is None:
+        raise StyxValidationError("`allow_resolution` must not be None")
+    if not isinstance(params["allow_resolution"], bool):
+        raise StyxValidationError(f'`allow_resolution` has the wrong type: Received `{type(params.get("allow_resolution", False))}` expected `bool`')
+    if params.get("allow_vox2ras", False) is None:
+        raise StyxValidationError("`allow_vox2ras` must not be None")
+    if not isinstance(params["allow_vox2ras"], bool):
+        raise StyxValidationError(f'`allow_vox2ras` has the wrong type: Received `{type(params.get("allow_vox2ras", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+
+
 def mri_voldiff_cargs(
     params: MriVoldiffParameters,
     execution: Execution,
@@ -176,6 +224,7 @@ def mri_voldiff_execute(
     Returns:
         NamedTuple of outputs (described in `MriVoldiffOutputs`).
     """
+    mri_voldiff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_VOLDIFF_METADATA)
     params = execution.params(params)

@@ -76,6 +76,44 @@ def fsdcmdecompress_params(
     return params
 
 
+def fsdcmdecompress_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsdcmdecompressParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("indcmfile", None) is None:
+        raise StyxValidationError("`indcmfile` must not be None")
+    if not isinstance(params["indcmfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`indcmfile` has the wrong type: Received `{type(params.get("indcmfile", None))}` expected `InputPathType`')
+    if params.get("outdcmfile", None) is None:
+        raise StyxValidationError("`outdcmfile` must not be None")
+    if not isinstance(params["outdcmfile"], str):
+        raise StyxValidationError(f'`outdcmfile` has the wrong type: Received `{type(params.get("outdcmfile", None))}` expected `str`')
+    if params.get("dcmtk", False) is None:
+        raise StyxValidationError("`dcmtk` must not be None")
+    if not isinstance(params["dcmtk"], bool):
+        raise StyxValidationError(f'`dcmtk` has the wrong type: Received `{type(params.get("dcmtk", False))}` expected `bool`')
+    if params.get("jpeg", False) is None:
+        raise StyxValidationError("`jpeg` must not be None")
+    if not isinstance(params["jpeg"], bool):
+        raise StyxValidationError(f'`jpeg` has the wrong type: Received `{type(params.get("jpeg", False))}` expected `bool`')
+    if params.get("rle", False) is None:
+        raise StyxValidationError("`rle` must not be None")
+    if not isinstance(params["rle"], bool):
+        raise StyxValidationError(f'`rle` has the wrong type: Received `{type(params.get("rle", False))}` expected `bool`')
+    if params.get("gdcm", False) is None:
+        raise StyxValidationError("`gdcm` must not be None")
+    if not isinstance(params["gdcm"], bool):
+        raise StyxValidationError(f'`gdcm` has the wrong type: Received `{type(params.get("gdcm", False))}` expected `bool`')
+
+
 def fsdcmdecompress_cargs(
     params: FsdcmdecompressParameters,
     execution: Execution,
@@ -149,6 +187,7 @@ def fsdcmdecompress_execute(
     Returns:
         NamedTuple of outputs (described in `FsdcmdecompressOutputs`).
     """
+    fsdcmdecompress_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSDCMDECOMPRESS_METADATA)
     params = execution.params(params)

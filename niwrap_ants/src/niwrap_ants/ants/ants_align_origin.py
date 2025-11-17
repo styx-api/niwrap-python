@@ -74,6 +74,37 @@ def ants_align_origin_params(
     return params
 
 
+def ants_align_origin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAlignOriginParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is not None:
+        if not isinstance(params["dimensionality"], int):
+            raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["dimensionality"] not in [2, 3]:
+            raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3]")
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def ants_align_origin_cargs(
     params: AntsAlignOriginParameters,
     execution: Execution,
@@ -149,6 +180,7 @@ def ants_align_origin_execute(
     Returns:
         NamedTuple of outputs (described in `AntsAlignOriginOutputs`).
     """
+    ants_align_origin_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_ALIGN_ORIGIN_METADATA)
     params = execution.params(params)

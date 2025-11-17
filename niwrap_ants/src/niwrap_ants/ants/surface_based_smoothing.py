@@ -73,6 +73,39 @@ def surface_based_smoothing_params(
     return params
 
 
+def surface_based_smoothing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceBasedSmoothingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_to_smooth", None) is None:
+        raise StyxValidationError("`image_to_smooth` must not be None")
+    if not isinstance(params["image_to_smooth"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image_to_smooth` has the wrong type: Received `{type(params.get("image_to_smooth", None))}` expected `InputPathType`')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], (float, int)):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float`')
+    if params.get("surface_image", None) is None:
+        raise StyxValidationError("`surface_image` must not be None")
+    if not isinstance(params["surface_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_image` has the wrong type: Received `{type(params.get("surface_image", None))}` expected `InputPathType`')
+    if params.get("outname", None) is None:
+        raise StyxValidationError("`outname` must not be None")
+    if not isinstance(params["outname"], str):
+        raise StyxValidationError(f'`outname` has the wrong type: Received `{type(params.get("outname", None))}` expected `str`')
+    if params.get("num_repeats", None) is not None:
+        if not isinstance(params["num_repeats"], int):
+            raise StyxValidationError(f'`num_repeats` has the wrong type: Received `{type(params.get("num_repeats", None))}` expected `int | None`')
+
+
 def surface_based_smoothing_cargs(
     params: SurfaceBasedSmoothingParameters,
     execution: Execution,
@@ -137,6 +170,7 @@ def surface_based_smoothing_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceBasedSmoothingOutputs`).
     """
+    surface_based_smoothing_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_BASED_SMOOTHING_METADATA)
     params = execution.params(params)

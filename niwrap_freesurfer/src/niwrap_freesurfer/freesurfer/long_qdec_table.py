@@ -75,6 +75,37 @@ def long_qdec_table_params(
     return params
 
 
+def long_qdec_table_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongQdecTableParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec_table", None) is None:
+        raise StyxValidationError("`qdec_table` must not be None")
+    if not isinstance(params["qdec_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`qdec_table` has the wrong type: Received `{type(params.get("qdec_table", None))}` expected `InputPathType`')
+    if params.get("split", None) is not None:
+        if not isinstance(params["split"], str):
+            raise StyxValidationError(f'`split` has the wrong type: Received `{type(params.get("split", None))}` expected `str | None`')
+    if params.get("cross_flag", False) is None:
+        raise StyxValidationError("`cross_flag` must not be None")
+    if not isinstance(params["cross_flag"], bool):
+        raise StyxValidationError(f'`cross_flag` has the wrong type: Received `{type(params.get("cross_flag", False))}` expected `bool`')
+    if params.get("sort", None) is not None:
+        if not isinstance(params["sort"], str):
+            raise StyxValidationError(f'`sort` has the wrong type: Received `{type(params.get("sort", None))}` expected `str | None`')
+    if params.get("out", None) is not None:
+        if not isinstance(params["out"], str):
+            raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str | None`')
+
+
 def long_qdec_table_cargs(
     params: LongQdecTableParameters,
     execution: Execution,
@@ -153,6 +184,7 @@ def long_qdec_table_execute(
     Returns:
         NamedTuple of outputs (described in `LongQdecTableOutputs`).
     """
+    long_qdec_table_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_QDEC_TABLE_METADATA)
     params = execution.params(params)

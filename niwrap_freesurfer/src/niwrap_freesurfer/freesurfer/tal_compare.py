@@ -66,6 +66,36 @@ def tal_compare_params(
     return params
 
 
+def tal_compare_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TalCompareParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ref_file", None) is None:
+        raise StyxValidationError("`ref_file` must not be None")
+    if not isinstance(params["ref_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ref_file` has the wrong type: Received `{type(params.get("ref_file", None))}` expected `InputPathType`')
+    if params.get("moving_file", None) is None:
+        raise StyxValidationError("`moving_file` must not be None")
+    if not isinstance(params["moving_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_file` has the wrong type: Received `{type(params.get("moving_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def tal_compare_cargs(
     params: TalCompareParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def tal_compare_execute(
     Returns:
         NamedTuple of outputs (described in `TalCompareOutputs`).
     """
+    tal_compare_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TAL_COMPARE_METADATA)
     params = execution.params(params)

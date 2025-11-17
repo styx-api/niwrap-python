@@ -208,6 +208,126 @@ def asl_file_params(
     return params
 
 
+def asl_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AslFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datafile", None) is None:
+        raise StyxValidationError("`datafile` must not be None")
+    if not isinstance(params["datafile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datafile` has the wrong type: Received `{type(params.get("datafile", None))}` expected `InputPathType`')
+    if params.get("ntis", None) is None:
+        raise StyxValidationError("`ntis` must not be None")
+    if not isinstance(params["ntis"], (float, int)):
+        raise StyxValidationError(f'`ntis` has the wrong type: Received `{type(params.get("ntis", None))}` expected `float`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("inblockform", None) is not None:
+        if not isinstance(params["inblockform"], str):
+            raise StyxValidationError(f'`inblockform` has the wrong type: Received `{type(params.get("inblockform", None))}` expected `typing.Literal["rpt", "tis"] | None`')
+        if params["inblockform"] not in ["rpt", "tis"]:
+            raise StyxValidationError("Parameter `inblockform` must be one of [\"rpt\", \"tis\"]")
+    if params.get("inaslform", None) is not None:
+        if not isinstance(params["inaslform"], str):
+            raise StyxValidationError(f'`inaslform` has the wrong type: Received `{type(params.get("inaslform", None))}` expected `typing.Literal["diff", "tc", "ct", "tcb", "ctb"] | None`')
+        if params["inaslform"] not in ["diff", "tc", "ct", "tcb", "ctb"]:
+            raise StyxValidationError("Parameter `inaslform` must be one of [\"diff\", \"tc\", \"ct\", \"tcb\", \"ctb\"]")
+    if params.get("rpts", None) is not None:
+        if not isinstance(params["rpts"], str):
+            raise StyxValidationError(f'`rpts` has the wrong type: Received `{type(params.get("rpts", None))}` expected `str | None`')
+    if params.get("pairs", False) is None:
+        raise StyxValidationError("`pairs` must not be None")
+    if not isinstance(params["pairs"], bool):
+        raise StyxValidationError(f'`pairs` has the wrong type: Received `{type(params.get("pairs", False))}` expected `bool`')
+    if params.get("spairs", False) is None:
+        raise StyxValidationError("`spairs` must not be None")
+    if not isinstance(params["spairs"], bool):
+        raise StyxValidationError(f'`spairs` has the wrong type: Received `{type(params.get("spairs", False))}` expected `bool`')
+    if params.get("diff", False) is None:
+        raise StyxValidationError("`diff` must not be None")
+    if not isinstance(params["diff"], bool):
+        raise StyxValidationError(f'`diff` has the wrong type: Received `{type(params.get("diff", False))}` expected `bool`')
+    if params.get("surrdiff", False) is None:
+        raise StyxValidationError("`surrdiff` must not be None")
+    if not isinstance(params["surrdiff"], bool):
+        raise StyxValidationError(f'`surrdiff` has the wrong type: Received `{type(params.get("surrdiff", False))}` expected `bool`')
+    if params.get("extrapolate", False) is None:
+        raise StyxValidationError("`extrapolate` must not be None")
+    if not isinstance(params["extrapolate"], bool):
+        raise StyxValidationError(f'`extrapolate` has the wrong type: Received `{type(params.get("extrapolate", False))}` expected `bool`')
+    if params.get("neighbour", None) is not None:
+        if not isinstance(params["neighbour"], (float, int)):
+            raise StyxValidationError(f'`neighbour` has the wrong type: Received `{type(params.get("neighbour", None))}` expected `float | None`')
+        if 3 <= params["neighbour"] <= 9:
+            raise StyxValidationError("Parameter `neighbour` must be between 3 and 9 (inclusive)")
+    if params.get("pvgm", None) is not None:
+        if not isinstance(params["pvgm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pvgm` has the wrong type: Received `{type(params.get("pvgm", None))}` expected `InputPathType | None`')
+    if params.get("pvwm", None) is not None:
+        if not isinstance(params["pvwm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pvwm` has the wrong type: Received `{type(params.get("pvwm", None))}` expected `InputPathType | None`')
+    if params.get("kernel", None) is not None:
+        if not isinstance(params["kernel"], (float, int)):
+            raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float | None`')
+        if 3 <= params["kernel"] <= 9:
+            raise StyxValidationError("Parameter `kernel` must be between 3 and 9 (inclusive)")
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("outblockform", None) is not None:
+        if not isinstance(params["outblockform"], str):
+            raise StyxValidationError(f'`outblockform` has the wrong type: Received `{type(params.get("outblockform", None))}` expected `typing.Literal["rpt", "tis"] | None`')
+        if params["outblockform"] not in ["rpt", "tis"]:
+            raise StyxValidationError("Parameter `outblockform` must be one of [\"rpt\", \"tis\"]")
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
+    if params.get("split", None) is not None:
+        if not isinstance(params["split"], str):
+            raise StyxValidationError(f'`split` has the wrong type: Received `{type(params.get("split", None))}` expected `str | None`')
+    if params.get("epoch", False) is None:
+        raise StyxValidationError("`epoch` must not be None")
+    if not isinstance(params["epoch"], bool):
+        raise StyxValidationError(f'`epoch` has the wrong type: Received `{type(params.get("epoch", False))}` expected `bool`')
+    if params.get("epoch_length", None) is not None:
+        if not isinstance(params["epoch_length"], (float, int)):
+            raise StyxValidationError(f'`epoch_length` has the wrong type: Received `{type(params.get("epoch_length", None))}` expected `float | None`')
+    if params.get("epoch_overlap", None) is not None:
+        if not isinstance(params["epoch_overlap"], (float, int)):
+            raise StyxValidationError(f'`epoch_overlap` has the wrong type: Received `{type(params.get("epoch_overlap", None))}` expected `float | None`')
+    if params.get("epoch_unit", None) is not None:
+        if not isinstance(params["epoch_unit"], str):
+            raise StyxValidationError(f'`epoch_unit` has the wrong type: Received `{type(params.get("epoch_unit", None))}` expected `typing.Literal["rpt", "tis"] | None`')
+        if params["epoch_unit"] not in ["rpt", "tis"]:
+            raise StyxValidationError("Parameter `epoch_unit` must be one of [\"rpt\", \"tis\"]")
+    if params.get("deconv", False) is None:
+        raise StyxValidationError("`deconv` must not be None")
+    if not isinstance(params["deconv"], bool):
+        raise StyxValidationError(f'`deconv` has the wrong type: Received `{type(params.get("deconv", False))}` expected `bool`')
+    if params.get("aif", None) is not None:
+        if not isinstance(params["aif"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aif` has the wrong type: Received `{type(params.get("aif", None))}` expected `InputPathType | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def asl_file_cargs(
     params: AslFileParameters,
     execution: Execution,
@@ -368,6 +488,7 @@ def asl_file_execute(
     Returns:
         NamedTuple of outputs (described in `AslFileOutputs`).
     """
+    asl_file_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ASL_FILE_METADATA)
     params = execution.params(params)

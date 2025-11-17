@@ -107,6 +107,32 @@ def warp2metric_fc_params(
     return params
 
 
+def warp2metric_fc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Warp2metricFcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template_fixel_directory", None) is None:
+        raise StyxValidationError("`template_fixel_directory` must not be None")
+    if not isinstance(params["template_fixel_directory"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template_fixel_directory` has the wrong type: Received `{type(params.get("template_fixel_directory", None))}` expected `InputPathType`')
+    if params.get("output_fixel_directory", None) is None:
+        raise StyxValidationError("`output_fixel_directory` must not be None")
+    if not isinstance(params["output_fixel_directory"], str):
+        raise StyxValidationError(f'`output_fixel_directory` has the wrong type: Received `{type(params.get("output_fixel_directory", None))}` expected `str`')
+    if params.get("output_fixel_data", None) is None:
+        raise StyxValidationError("`output_fixel_data` must not be None")
+    if not isinstance(params["output_fixel_data"], str):
+        raise StyxValidationError(f'`output_fixel_data` has the wrong type: Received `{type(params.get("output_fixel_data", None))}` expected `str`')
+
+
 def warp2metric_fc_cargs(
     params: Warp2metricFcParameters,
     execution: Execution,
@@ -147,6 +173,28 @@ def warp2metric_config_params(
         "value": value,
     }
     return params
+
+
+def warp2metric_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Warp2metricConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def warp2metric_config_cargs(
@@ -248,6 +296,64 @@ def warp2metric_params(
     return params
 
 
+def warp2metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Warp2metricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fc", None) is not None:
+        warp2metric_fc_validate(params["fc"])
+    if params.get("jmat", None) is not None:
+        if not isinstance(params["jmat"], str):
+            raise StyxValidationError(f'`jmat` has the wrong type: Received `{type(params.get("jmat", None))}` expected `str | None`')
+    if params.get("jdet", None) is not None:
+        if not isinstance(params["jdet"], str):
+            raise StyxValidationError(f'`jdet` has the wrong type: Received `{type(params.get("jdet", None))}` expected `str | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Warp2metricConfigParameters] | None`')
+        for e in params["config"]:
+            warp2metric_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("in", None) is None:
+        raise StyxValidationError("`in` must not be None")
+    if not isinstance(params["in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in` has the wrong type: Received `{type(params.get("in", None))}` expected `InputPathType`')
+
+
 def warp2metric_cargs(
     params: Warp2metricParameters,
     execution: Execution,
@@ -347,6 +453,7 @@ def warp2metric_execute(
     Returns:
         NamedTuple of outputs (described in `Warp2metricOutputs`).
     """
+    warp2metric_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WARP2METRIC_METADATA)
     params = execution.params(params)

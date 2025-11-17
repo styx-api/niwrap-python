@@ -61,6 +61,31 @@ def foci_list_coords_params(
     return params
 
 
+def foci_list_coords_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociListCoordsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("names-file-out", None) is not None:
+        if not isinstance(params["names-file-out"], str):
+            raise StyxValidationError(f'`names-file-out` has the wrong type: Received `{type(params.get("names-file-out", None))}` expected `str | None`')
+    if params.get("foci-file", None) is None:
+        raise StyxValidationError("`foci-file` must not be None")
+    if not isinstance(params["foci-file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`foci-file` has the wrong type: Received `{type(params.get("foci-file", None))}` expected `InputPathType`')
+    if params.get("coord-file-out", None) is None:
+        raise StyxValidationError("`coord-file-out` must not be None")
+    if not isinstance(params["coord-file-out"], str):
+        raise StyxValidationError(f'`coord-file-out` has the wrong type: Received `{type(params.get("coord-file-out", None))}` expected `str`')
+
+
 def foci_list_coords_cargs(
     params: FociListCoordsParameters,
     execution: Execution,
@@ -122,6 +147,7 @@ def foci_list_coords_execute(
     Returns:
         NamedTuple of outputs (described in `FociListCoordsOutputs`).
     """
+    foci_list_coords_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FOCI_LIST_COORDS_METADATA)
     params = execution.params(params)

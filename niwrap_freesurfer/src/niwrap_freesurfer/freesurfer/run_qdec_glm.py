@@ -49,6 +49,24 @@ def run_qdec_glm_params(
     return params
 
 
+def run_qdec_glm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunQdecGlmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec_directory", None) is None:
+        raise StyxValidationError("`qdec_directory` must not be None")
+    if not isinstance(params["qdec_directory"], str):
+        raise StyxValidationError(f'`qdec_directory` has the wrong type: Received `{type(params.get("qdec_directory", None))}` expected `str`')
+
+
 def run_qdec_glm_cargs(
     params: RunQdecGlmParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def run_qdec_glm_execute(
     Returns:
         NamedTuple of outputs (described in `RunQdecGlmOutputs`).
     """
+    run_qdec_glm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_QDEC_GLM_METADATA)
     params = execution.params(params)

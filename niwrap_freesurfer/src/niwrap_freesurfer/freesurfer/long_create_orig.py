@@ -57,6 +57,27 @@ def long_create_orig_params(
     return params
 
 
+def long_create_orig_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongCreateOrigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_id", None) is None:
+        raise StyxValidationError("`base_id` must not be None")
+    if not isinstance(params["base_id"], str):
+        raise StyxValidationError(f'`base_id` has the wrong type: Received `{type(params.get("base_id", None))}` expected `str`')
+    if params.get("tp_id", None) is not None:
+        if not isinstance(params["tp_id"], str):
+            raise StyxValidationError(f'`tp_id` has the wrong type: Received `{type(params.get("tp_id", None))}` expected `str | None`')
+
+
 def long_create_orig_cargs(
     params: LongCreateOrigParameters,
     execution: Execution,
@@ -118,6 +139,7 @@ def long_create_orig_execute(
     Returns:
         NamedTuple of outputs (described in `LongCreateOrigOutputs`).
     """
+    long_create_orig_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_CREATE_ORIG_METADATA)
     params = execution.params(params)

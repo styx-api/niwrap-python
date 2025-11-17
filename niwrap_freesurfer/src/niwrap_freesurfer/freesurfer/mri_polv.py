@@ -62,6 +62,31 @@ def mri_polv_params(
     return params
 
 
+def mri_polv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriPolvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("window_size", None) is not None:
+        if not isinstance(params["window_size"], (float, int)):
+            raise StyxValidationError(f'`window_size` has the wrong type: Received `{type(params.get("window_size", None))}` expected `float | None`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `InputPathType`')
+
+
 def mri_polv_cargs(
     params: MriPolvParameters,
     execution: Execution,
@@ -126,6 +151,7 @@ def mri_polv_execute(
     Returns:
         NamedTuple of outputs (described in `MriPolvOutputs`).
     """
+    mri_polv_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_POLV_METADATA)
     params = execution.params(params)

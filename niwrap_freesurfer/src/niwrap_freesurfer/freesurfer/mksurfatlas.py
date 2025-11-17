@@ -95,6 +95,57 @@ def mksurfatlas_params(
     return params
 
 
+def mksurfatlas_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MksurfatlasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("atlas", None) is None:
+        raise StyxValidationError("`atlas` must not be None")
+    if not isinstance(params["atlas"], str):
+        raise StyxValidationError(f'`atlas` has the wrong type: Received `{type(params.get("atlas", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("surfval", None) is None:
+        raise StyxValidationError("`surfval` must not be None")
+    if not isinstance(params["surfval"], str):
+        raise StyxValidationError(f'`surfval` has the wrong type: Received `{type(params.get("surfval", None))}` expected `str`')
+    if params.get("surfvaldir", None) is not None:
+        if not isinstance(params["surfvaldir"], str):
+            raise StyxValidationError(f'`surfvaldir` has the wrong type: Received `{type(params.get("surfvaldir", None))}` expected `str | None`')
+    if params.get("regsurf", None) is not None:
+        if not isinstance(params["regsurf"], str):
+            raise StyxValidationError(f'`regsurf` has the wrong type: Received `{type(params.get("regsurf", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mksurfatlas_cargs(
     params: MksurfatlasParameters,
     execution: Execution,
@@ -185,6 +236,7 @@ def mksurfatlas_execute(
     Returns:
         NamedTuple of outputs (described in `MksurfatlasOutputs`).
     """
+    mksurfatlas_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MKSURFATLAS_METADATA)
     params = execution.params(params)

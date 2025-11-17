@@ -74,6 +74,50 @@ def mris_multiscale_stats_params(
     return params
 
 
+def mris_multiscale_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMultiscaleStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_subject", None) is None:
+        raise StyxValidationError("`output_subject` must not be None")
+    if not isinstance(params["output_subject"], str):
+        raise StyxValidationError(f'`output_subject` has the wrong type: Received `{type(params.get("output_subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surf", None) is None:
+        raise StyxValidationError("`surf` must not be None")
+    if not isinstance(params["surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `InputPathType`')
+    if params.get("curv", None) is None:
+        raise StyxValidationError("`curv` must not be None")
+    if not isinstance(params["curv"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`curv` has the wrong type: Received `{type(params.get("curv", None))}` expected `InputPathType`')
+    if params.get("class1_subjects", None) is None:
+        raise StyxValidationError("`class1_subjects` must not be None")
+    if not isinstance(params["class1_subjects"], list):
+        raise StyxValidationError(f'`class1_subjects` has the wrong type: Received `{type(params.get("class1_subjects", None))}` expected `list[str]`')
+    for e in params["class1_subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`class1_subjects` has the wrong type: Received `{type(params.get("class1_subjects", None))}` expected `list[str]`')
+    if params.get("class2_subjects", None) is None:
+        raise StyxValidationError("`class2_subjects` must not be None")
+    if not isinstance(params["class2_subjects"], list):
+        raise StyxValidationError(f'`class2_subjects` has the wrong type: Received `{type(params.get("class2_subjects", None))}` expected `list[str]`')
+    for e in params["class2_subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`class2_subjects` has the wrong type: Received `{type(params.get("class2_subjects", None))}` expected `list[str]`')
+
+
 def mris_multiscale_stats_cargs(
     params: MrisMultiscaleStatsParameters,
     execution: Execution,
@@ -140,6 +184,7 @@ def mris_multiscale_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMultiscaleStatsOutputs`).
     """
+    mris_multiscale_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MULTISCALE_STATS_METADATA)
     params = execution.params(params)

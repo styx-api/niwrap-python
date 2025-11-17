@@ -96,6 +96,52 @@ def fscalc_params(
     return params
 
 
+def fscalc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FscalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input1", None) is None:
+        raise StyxValidationError("`input1` must not be None")
+    if not isinstance(params["input1"], str):
+        raise StyxValidationError(f'`input1` has the wrong type: Received `{type(params.get("input1", None))}` expected `str`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
+    if params.get("input2", None) is not None:
+        if not isinstance(params["input2"], str):
+            raise StyxValidationError(f'`input2` has the wrong type: Received `{type(params.get("input2", None))}` expected `str | None`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("output_data_type", None) is not None:
+        if not isinstance(params["output_data_type"], str):
+            raise StyxValidationError(f'`output_data_type` has the wrong type: Received `{type(params.get("output_data_type", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("tmpdir", None) is not None:
+        if not isinstance(params["tmpdir"], str):
+            raise StyxValidationError(f'`tmpdir` has the wrong type: Received `{type(params.get("tmpdir", None))}` expected `str | None`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+
+
 def fscalc_cargs(
     params: FscalcParameters,
     execution: Execution,
@@ -181,6 +227,7 @@ def fscalc_execute(
     Returns:
         NamedTuple of outputs (described in `FscalcOutputs`).
     """
+    fscalc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSCALC_METADATA)
     params = execution.params(params)

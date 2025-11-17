@@ -66,6 +66,36 @@ def deface_subject_params(
     return params
 
 
+def deface_subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DefaceSubjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("volume_input", None) is None:
+        raise StyxValidationError("`volume_input` must not be None")
+    if not isinstance(params["volume_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume_input` has the wrong type: Received `{type(params.get("volume_input", None))}` expected `InputPathType`')
+    if params.get("volume_output", None) is None:
+        raise StyxValidationError("`volume_output` must not be None")
+    if not isinstance(params["volume_output"], str):
+        raise StyxValidationError(f'`volume_output` has the wrong type: Received `{type(params.get("volume_output", None))}` expected `str`')
+
+
 def deface_subject_cargs(
     params: DefaceSubjectParameters,
     execution: Execution,
@@ -139,6 +169,7 @@ def deface_subject_execute(
     Returns:
         NamedTuple of outputs (described in `DefaceSubjectOutputs`).
     """
+    deface_subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DEFACE_SUBJECT_METADATA)
     params = execution.params(params)

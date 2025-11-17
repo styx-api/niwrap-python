@@ -97,6 +97,55 @@ def run_first_all_params(
     return params
 
 
+def run_first_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunFirstAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `typing.Literal["auto", "fast", "none"] | None`')
+        if params["method"] not in ["auto", "fast", "none"]:
+            raise StyxValidationError("Parameter `method` must be one of [\"auto\", \"fast\", \"none\"]")
+    if params.get("brainextract_flag", False) is None:
+        raise StyxValidationError("`brainextract_flag` must not be None")
+    if not isinstance(params["brainextract_flag"], bool):
+        raise StyxValidationError(f'`brainextract_flag` has the wrong type: Received `{type(params.get("brainextract_flag", False))}` expected `bool`')
+    if params.get("structure", None) is not None:
+        if not isinstance(params["structure"], str):
+            raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str | None`')
+    if params.get("affine_matrix", None) is not None:
+        if not isinstance(params["affine_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`affine_matrix` has the wrong type: Received `{type(params.get("affine_matrix", None))}` expected `InputPathType | None`')
+    if params.get("threestage_flag", False) is None:
+        raise StyxValidationError("`threestage_flag` must not be None")
+    if not isinstance(params["threestage_flag"], bool):
+        raise StyxValidationError(f'`threestage_flag` has the wrong type: Received `{type(params.get("threestage_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+
+
 def run_first_all_cargs(
     params: RunFirstAllParameters,
     execution: Execution,
@@ -186,6 +235,7 @@ def run_first_all_execute(
     Returns:
         NamedTuple of outputs (described in `RunFirstAllOutputs`).
     """
+    run_first_all_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_FIRST_ALL_METADATA)
     params = execution.params(params)

@@ -77,6 +77,43 @@ def pairreg_params(
     return params
 
 
+def pairreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PairregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("brain1", None) is None:
+        raise StyxValidationError("`brain1` must not be None")
+    if not isinstance(params["brain1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain1` has the wrong type: Received `{type(params.get("brain1", None))}` expected `InputPathType`')
+    if params.get("brain2", None) is None:
+        raise StyxValidationError("`brain2` must not be None")
+    if not isinstance(params["brain2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain2` has the wrong type: Received `{type(params.get("brain2", None))}` expected `InputPathType`')
+    if params.get("skull1", None) is None:
+        raise StyxValidationError("`skull1` must not be None")
+    if not isinstance(params["skull1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`skull1` has the wrong type: Received `{type(params.get("skull1", None))}` expected `InputPathType`')
+    if params.get("skull2", None) is None:
+        raise StyxValidationError("`skull2` must not be None")
+    if not isinstance(params["skull2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`skull2` has the wrong type: Received `{type(params.get("skull2", None))}` expected `InputPathType`')
+    if params.get("outputmatrix", None) is None:
+        raise StyxValidationError("`outputmatrix` must not be None")
+    if not isinstance(params["outputmatrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outputmatrix` has the wrong type: Received `{type(params.get("outputmatrix", None))}` expected `InputPathType`')
+    if params.get("extra_flirt_args", None) is not None:
+        if not isinstance(params["extra_flirt_args"], str):
+            raise StyxValidationError(f'`extra_flirt_args` has the wrong type: Received `{type(params.get("extra_flirt_args", None))}` expected `str | None`')
+
+
 def pairreg_cargs(
     params: PairregParameters,
     execution: Execution,
@@ -141,6 +178,7 @@ def pairreg_execute(
     Returns:
         NamedTuple of outputs (described in `PairregOutputs`).
     """
+    pairreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PAIRREG_METADATA)
     params = execution.params(params)

@@ -127,6 +127,76 @@ def fslmeants_params(
     return params
 
 
+def fslmeants_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmeantsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("coordinates", None) is not None:
+        if not isinstance(params["coordinates"], list):
+            raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
+        if len(params["coordinates"]) == 3:
+            raise StyxValidationError("Parameter `coordinates` must contain exactly 3 elements")
+        for e in params["coordinates"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
+    if params.get("usemm_flag", False) is None:
+        raise StyxValidationError("`usemm_flag` must not be None")
+    if not isinstance(params["usemm_flag"], bool):
+        raise StyxValidationError(f'`usemm_flag` has the wrong type: Received `{type(params.get("usemm_flag", False))}` expected `bool`')
+    if params.get("showall_flag", False) is None:
+        raise StyxValidationError("`showall_flag` must not be None")
+    if not isinstance(params["showall_flag"], bool):
+        raise StyxValidationError(f'`showall_flag` has the wrong type: Received `{type(params.get("showall_flag", False))}` expected `bool`')
+    if params.get("eigenv_flag", False) is None:
+        raise StyxValidationError("`eigenv_flag` must not be None")
+    if not isinstance(params["eigenv_flag"], bool):
+        raise StyxValidationError(f'`eigenv_flag` has the wrong type: Received `{type(params.get("eigenv_flag", False))}` expected `bool`')
+    if params.get("eigenvariates_order", None) is not None:
+        if not isinstance(params["eigenvariates_order"], (float, int)):
+            raise StyxValidationError(f'`eigenvariates_order` has the wrong type: Received `{type(params.get("eigenvariates_order", None))}` expected `float | None`')
+    if params.get("no_bin_flag", False) is None:
+        raise StyxValidationError("`no_bin_flag` must not be None")
+    if not isinstance(params["no_bin_flag"], bool):
+        raise StyxValidationError(f'`no_bin_flag` has the wrong type: Received `{type(params.get("no_bin_flag", False))}` expected `bool`')
+    if params.get("label_image", None) is not None:
+        if not isinstance(params["label_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_image` has the wrong type: Received `{type(params.get("label_image", None))}` expected `InputPathType | None`')
+    if params.get("transpose_flag", False) is None:
+        raise StyxValidationError("`transpose_flag` must not be None")
+    if not isinstance(params["transpose_flag"], bool):
+        raise StyxValidationError(f'`transpose_flag` has the wrong type: Received `{type(params.get("transpose_flag", False))}` expected `bool`')
+    if params.get("weighted_mean_flag", False) is None:
+        raise StyxValidationError("`weighted_mean_flag` must not be None")
+    if not isinstance(params["weighted_mean_flag"], bool):
+        raise StyxValidationError(f'`weighted_mean_flag` has the wrong type: Received `{type(params.get("weighted_mean_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def fslmeants_cargs(
     params: FslmeantsParameters,
     execution: Execution,
@@ -229,6 +299,7 @@ def fslmeants_execute(
     Returns:
         NamedTuple of outputs (described in `FslmeantsOutputs`).
     """
+    fslmeants_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLMEANTS_METADATA)
     params = execution.params(params)

@@ -85,6 +85,38 @@ def register_subject_params(
     return params
 
 
+def register_subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegisterSubjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is not None:
+        if not isinstance(params["input_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType | None`')
+    if params.get("mask_volume", None) is not None:
+        if not isinstance(params["mask_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `InputPathType | None`')
+    if params.get("control_points", None) is not None:
+        if not isinstance(params["control_points"], str):
+            raise StyxValidationError(f'`control_points` has the wrong type: Received `{type(params.get("control_points", None))}` expected `str | None`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `InputPathType | None`')
+    if params.get("gca_file", None) is not None:
+        if not isinstance(params["gca_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gca_file` has the wrong type: Received `{type(params.get("gca_file", None))}` expected `InputPathType | None`')
+
+
 def register_subject_cargs(
     params: RegisterSubjectParameters,
     execution: Execution,
@@ -155,6 +187,7 @@ def register_subject_execute(
     Returns:
         NamedTuple of outputs (described in `RegisterSubjectOutputs`).
     """
+    register_subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REGISTER_SUBJECT_METADATA)
     params = execution.params(params)

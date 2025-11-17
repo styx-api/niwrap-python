@@ -81,6 +81,43 @@ def v_3d_tortoiseto_here_params(
     return params
 
 
+def v_3d_tortoiseto_here_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTortoisetoHereParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dt_tort", None) is None:
+        raise StyxValidationError("`dt_tort` must not be None")
+    if not isinstance(params["dt_tort"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dt_tort` has the wrong type: Received `{type(params.get("dt_tort", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("flip_x", False) is None:
+        raise StyxValidationError("`flip_x` must not be None")
+    if not isinstance(params["flip_x"], bool):
+        raise StyxValidationError(f'`flip_x` has the wrong type: Received `{type(params.get("flip_x", False))}` expected `bool`')
+    if params.get("flip_y", False) is None:
+        raise StyxValidationError("`flip_y` must not be None")
+    if not isinstance(params["flip_y"], bool):
+        raise StyxValidationError(f'`flip_y` has the wrong type: Received `{type(params.get("flip_y", False))}` expected `bool`')
+    if params.get("flip_z", False) is None:
+        raise StyxValidationError("`flip_z` must not be None")
+    if not isinstance(params["flip_z"], bool):
+        raise StyxValidationError(f'`flip_z` has the wrong type: Received `{type(params.get("flip_z", False))}` expected `bool`')
+
+
 def v_3d_tortoiseto_here_cargs(
     params: V3dTortoisetoHereParameters,
     execution: Execution,
@@ -158,6 +195,7 @@ def v_3d_tortoiseto_here_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTortoisetoHereOutputs`).
     """
+    v_3d_tortoiseto_here_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TORTOISETO_HERE_METADATA)
     params = execution.params(params)

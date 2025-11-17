@@ -96,6 +96,27 @@ def cifti_false_correlation_left_surface_params(
     return params
 
 
+def cifti_false_correlation_left_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFalseCorrelationLeftSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("text-out", None) is not None:
+        if not isinstance(params["text-out"], str):
+            raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str | None`')
+
+
 def cifti_false_correlation_left_surface_cargs(
     params: CiftiFalseCorrelationLeftSurfaceParameters,
     execution: Execution,
@@ -144,6 +165,27 @@ def cifti_false_correlation_right_surface_params(
     return params
 
 
+def cifti_false_correlation_right_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFalseCorrelationRightSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("text-out", None) is not None:
+        if not isinstance(params["text-out"], str):
+            raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str | None`')
+
+
 def cifti_false_correlation_right_surface_cargs(
     params: CiftiFalseCorrelationRightSurfaceParameters,
     execution: Execution,
@@ -190,6 +232,27 @@ def cifti_false_correlation_cerebellum_surface_params(
     if text_out is not None:
         params["text-out"] = text_out
     return params
+
+
+def cifti_false_correlation_cerebellum_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFalseCorrelationCerebellumSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("text-out", None) is not None:
+        if not isinstance(params["text-out"], str):
+            raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str | None`')
 
 
 def cifti_false_correlation_cerebellum_surface_cargs(
@@ -268,6 +331,46 @@ def cifti_false_correlation_params(
     return params
 
 
+def cifti_false_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFalseCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("left-surface", None) is not None:
+        cifti_false_correlation_left_surface_validate(params["left-surface"])
+    if params.get("right-surface", None) is not None:
+        cifti_false_correlation_right_surface_validate(params["right-surface"])
+    if params.get("cerebellum-surface", None) is not None:
+        cifti_false_correlation_cerebellum_surface_validate(params["cerebellum-surface"])
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("3D-dist", None) is None:
+        raise StyxValidationError("`3D-dist` must not be None")
+    if not isinstance(params["3D-dist"], (float, int)):
+        raise StyxValidationError(f'`3D-dist` has the wrong type: Received `{type(params.get("3D-dist", None))}` expected `float`')
+    if params.get("geo-outer", None) is None:
+        raise StyxValidationError("`geo-outer` must not be None")
+    if not isinstance(params["geo-outer"], (float, int)):
+        raise StyxValidationError(f'`geo-outer` has the wrong type: Received `{type(params.get("geo-outer", None))}` expected `float`')
+    if params.get("geo-inner", None) is None:
+        raise StyxValidationError("`geo-inner` must not be None")
+    if not isinstance(params["geo-inner"], (float, int)):
+        raise StyxValidationError(f'`geo-inner` has the wrong type: Received `{type(params.get("geo-inner", None))}` expected `float`')
+
+
 def cifti_false_correlation_cargs(
     params: CiftiFalseCorrelationParameters,
     execution: Execution,
@@ -338,6 +441,7 @@ def cifti_false_correlation_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiFalseCorrelationOutputs`).
     """
+    cifti_false_correlation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_FALSE_CORRELATION_METADATA)
     params = execution.params(params)

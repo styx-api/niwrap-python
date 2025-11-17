@@ -100,6 +100,55 @@ def v_3d_nwarp_cat_params(
     return params
 
 
+def v_3d_nwarp_cat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNwarpCatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], str):
+            raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `str | None`')
+    if params.get("verbosity", False) is None:
+        raise StyxValidationError("`verbosity` must not be None")
+    if not isinstance(params["verbosity"], bool):
+        raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", False))}` expected `bool`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("space_marker", None) is not None:
+        if not isinstance(params["space_marker"], str):
+            raise StyxValidationError(f'`space_marker` has the wrong type: Received `{type(params.get("space_marker", None))}` expected `str | None`')
+    if params.get("warp1", None) is None:
+        raise StyxValidationError("`warp1` must not be None")
+    if not isinstance(params["warp1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`warp1` has the wrong type: Received `{type(params.get("warp1", None))}` expected `InputPathType`')
+    if params.get("warp2", None) is None:
+        raise StyxValidationError("`warp2` must not be None")
+    if not isinstance(params["warp2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`warp2` has the wrong type: Received `{type(params.get("warp2", None))}` expected `InputPathType`')
+    if params.get("additional_warps", None) is not None:
+        if not isinstance(params["additional_warps"], list):
+            raise StyxValidationError(f'`additional_warps` has the wrong type: Received `{type(params.get("additional_warps", None))}` expected `list[InputPathType] | None`')
+        for e in params["additional_warps"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`additional_warps` has the wrong type: Received `{type(params.get("additional_warps", None))}` expected `list[InputPathType] | None`')
+    if params.get("invert_final_warp", False) is None:
+        raise StyxValidationError("`invert_final_warp` must not be None")
+    if not isinstance(params["invert_final_warp"], bool):
+        raise StyxValidationError(f'`invert_final_warp` has the wrong type: Received `{type(params.get("invert_final_warp", False))}` expected `bool`')
+    if params.get("extra_padding", None) is not None:
+        if not isinstance(params["extra_padding"], (float, int)):
+            raise StyxValidationError(f'`extra_padding` has the wrong type: Received `{type(params.get("extra_padding", None))}` expected `float | None`')
+
+
 def v_3d_nwarp_cat_cargs(
     params: V3dNwarpCatParameters,
     execution: Execution,
@@ -191,6 +240,7 @@ def v_3d_nwarp_cat_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpCatOutputs`).
     """
+    v_3d_nwarp_cat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NWARP_CAT_METADATA)
     params = execution.params(params)

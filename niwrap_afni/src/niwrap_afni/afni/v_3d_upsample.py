@@ -84,6 +84,44 @@ def v_3d_upsample_params(
     return params
 
 
+def v_3d_upsample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dUpsampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("upsample_factor", None) is None:
+        raise StyxValidationError("`upsample_factor` must not be None")
+    if not isinstance(params["upsample_factor"], int):
+        raise StyxValidationError(f'`upsample_factor` has the wrong type: Received `{type(params.get("upsample_factor", None))}` expected `int`')
+    if 2 <= params["upsample_factor"] <= 320:
+        raise StyxValidationError("Parameter `upsample_factor` must be between 2 and 320 (inclusive)")
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], str):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `str`')
+    if params.get("linear_interpolation", False) is None:
+        raise StyxValidationError("`linear_interpolation` must not be None")
+    if not isinstance(params["linear_interpolation"], bool):
+        raise StyxValidationError(f'`linear_interpolation` has the wrong type: Received `{type(params.get("linear_interpolation", False))}` expected `bool`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `str | None`')
+
+
 def v_3d_upsample_cargs(
     params: V3dUpsampleParameters,
     execution: Execution,
@@ -164,6 +202,7 @@ def v_3d_upsample_execute(
     Returns:
         NamedTuple of outputs (described in `V3dUpsampleOutputs`).
     """
+    v_3d_upsample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_UPSAMPLE_METADATA)
     params = execution.params(params)

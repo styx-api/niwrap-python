@@ -57,6 +57,28 @@ def unpacksdcmdir_params(
     return params
 
 
+def unpacksdcmdir_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UnpacksdcmdirParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_directory", None) is None:
+        raise StyxValidationError("`input_directory` must not be None")
+    if not isinstance(params["input_directory"], str):
+        raise StyxValidationError(f'`input_directory` has the wrong type: Received `{type(params.get("input_directory", None))}` expected `str`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+
+
 def unpacksdcmdir_cargs(
     params: UnpacksdcmdirParameters,
     execution: Execution,
@@ -118,6 +140,7 @@ def unpacksdcmdir_execute(
     Returns:
         NamedTuple of outputs (described in `UnpacksdcmdirOutputs`).
     """
+    unpacksdcmdir_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UNPACKSDCMDIR_METADATA)
     params = execution.params(params)

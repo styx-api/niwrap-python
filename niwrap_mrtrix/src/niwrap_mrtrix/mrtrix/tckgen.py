@@ -318,18 +318,20 @@ def tckgen_spec_cargs_dyn_fn(
     }.get(t)
 
 
-def tckgen_spec_outputs_dyn_fn(
+def tckgen_spec_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": tckgen_various_string_validate,
+        "VariousFile": tckgen_various_file_validate,
     }.get(t)
 
 
@@ -350,18 +352,20 @@ def tckgen_spec_cargs_dyn_fn_(
     }.get(t)
 
 
-def tckgen_spec_outputs_dyn_fn_(
+def tckgen_spec_validate_dyn_fn_(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString_1": tckgen_various_string_1_validate,
+        "VariousFile_1": tckgen_various_file_1_validate,
     }.get(t)
 
 
@@ -382,18 +386,20 @@ def tckgen_spec_cargs_dyn_fn_2(
     }.get(t)
 
 
-def tckgen_spec_outputs_dyn_fn_2(
+def tckgen_spec_validate_dyn_fn_2(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString_2": tckgen_various_string_2_validate,
+        "VariousFile_2": tckgen_various_file_2_validate,
     }.get(t)
 
 
@@ -413,6 +419,24 @@ def tckgen_seed_image_params(
         "image": image,
     }
     return params
+
+
+def tckgen_seed_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenSeedImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
 
 
 def tckgen_seed_image_cargs(
@@ -451,6 +475,27 @@ def tckgen_seed_sphere_params(
         "spec": spec,
     }
     return params
+
+
+def tckgen_seed_sphere_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenSeedSphereParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], list):
+        raise StyxValidationError(f'`spec` has the wrong type: Received `{type(params.get("spec", None))}` expected `list[float]`')
+    for e in params["spec"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`spec` has the wrong type: Received `{type(params.get("spec", None))}` expected `list[float]`')
 
 
 def tckgen_seed_sphere_cargs(
@@ -493,6 +538,28 @@ def tckgen_seed_random_per_voxel_params(
         "num_per_voxel": num_per_voxel,
     }
     return params
+
+
+def tckgen_seed_random_per_voxel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenSeedRandomPerVoxelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+    if params.get("num_per_voxel", None) is None:
+        raise StyxValidationError("`num_per_voxel` must not be None")
+    if not isinstance(params["num_per_voxel"], int):
+        raise StyxValidationError(f'`num_per_voxel` has the wrong type: Received `{type(params.get("num_per_voxel", None))}` expected `int`')
 
 
 def tckgen_seed_random_per_voxel_cargs(
@@ -540,6 +607,28 @@ def tckgen_seed_grid_per_voxel_params(
     return params
 
 
+def tckgen_seed_grid_per_voxel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenSeedGridPerVoxelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+    if params.get("grid_size", None) is None:
+        raise StyxValidationError("`grid_size` must not be None")
+    if not isinstance(params["grid_size"], int):
+        raise StyxValidationError(f'`grid_size` has the wrong type: Received `{type(params.get("grid_size", None))}` expected `int`')
+
+
 def tckgen_seed_grid_per_voxel_cargs(
     params: TckgenSeedGridPerVoxelParameters,
     execution: Execution,
@@ -577,6 +666,24 @@ def tckgen_seed_rejection_params(
         "image": image,
     }
     return params
+
+
+def tckgen_seed_rejection_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenSeedRejectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
 
 
 def tckgen_seed_rejection_cargs(
@@ -619,6 +726,24 @@ def tckgen_seed_gmwmi_params(
     return params
 
 
+def tckgen_seed_gmwmi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenSeedGmwmiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+
+
 def tckgen_seed_gmwmi_cargs(
     params: TckgenSeedGmwmiParameters,
     execution: Execution,
@@ -654,6 +779,24 @@ def tckgen_various_string_params(
         "obj": obj,
     }
     return params
+
+
+def tckgen_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
 
 
 def tckgen_various_string_cargs(
@@ -692,6 +835,24 @@ def tckgen_various_file_params(
     return params
 
 
+def tckgen_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
+
+
 def tckgen_various_file_cargs(
     params: TckgenVariousFileParameters,
     execution: Execution,
@@ -728,6 +889,27 @@ def tckgen_include_params(
         "spec": spec,
     }
     return params
+
+
+def tckgen_include_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenIncludeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
+    if "@type" not in params["spec"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    tckgen_spec_validate_dyn_fn(params["spec"]["@type"])(params["spec"])
 
 
 def tckgen_include_cargs(
@@ -770,6 +952,24 @@ def tckgen_include_ordered_params(
     return params
 
 
+def tckgen_include_ordered_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenIncludeOrderedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], str):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `str`')
+
+
 def tckgen_include_ordered_cargs(
     params: TckgenIncludeOrderedParameters,
     execution: Execution,
@@ -807,6 +1007,24 @@ def tckgen_various_string_1_params(
     return params
 
 
+def tckgen_various_string_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenVariousString1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def tckgen_various_string_1_cargs(
     params: TckgenVariousString1Parameters,
     execution: Execution,
@@ -841,6 +1059,24 @@ def tckgen_various_file_1_params(
         "obj": obj,
     }
     return params
+
+
+def tckgen_various_file_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenVariousFile1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def tckgen_various_file_1_cargs(
@@ -881,6 +1117,27 @@ def tckgen_exclude_params(
     return params
 
 
+def tckgen_exclude_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenExcludeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
+    if "@type" not in params["spec"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    tckgen_spec_validate_dyn_fn_(params["spec"]["@type"])(params["spec"])
+
+
 def tckgen_exclude_cargs(
     params: TckgenExcludeParameters,
     execution: Execution,
@@ -916,6 +1173,24 @@ def tckgen_various_string_2_params(
         "obj": obj,
     }
     return params
+
+
+def tckgen_various_string_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenVariousString2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
 
 
 def tckgen_various_string_2_cargs(
@@ -954,6 +1229,24 @@ def tckgen_various_file_2_params(
     return params
 
 
+def tckgen_various_file_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenVariousFile2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
+
+
 def tckgen_various_file_2_cargs(
     params: TckgenVariousFile2Parameters,
     execution: Execution,
@@ -990,6 +1283,27 @@ def tckgen_mask_params(
         "spec": spec,
     }
     return params
+
+
+def tckgen_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
+    if "@type" not in params["spec"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    tckgen_spec_validate_dyn_fn_2(params["spec"]["@type"])(params["spec"])
 
 
 def tckgen_mask_cargs(
@@ -1038,6 +1352,28 @@ def tckgen_fslgrad_params(
     return params
 
 
+def tckgen_fslgrad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenFslgradParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
+
+
 def tckgen_fslgrad_cargs(
     params: TckgenFslgradParameters,
     execution: Execution,
@@ -1077,6 +1413,28 @@ def tckgen_config_params(
         "value": value,
     }
     return params
+
+
+def tckgen_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def tckgen_config_cargs(
@@ -1380,6 +1738,196 @@ def tckgen_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def tckgen_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckgenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("algorithm", None) is not None:
+        if not isinstance(params["algorithm"], str):
+            raise StyxValidationError(f'`algorithm` has the wrong type: Received `{type(params.get("algorithm", None))}` expected `str | None`')
+    if params.get("select", None) is not None:
+        if not isinstance(params["select"], int):
+            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `int | None`')
+    if params.get("step", None) is not None:
+        if not isinstance(params["step"], (float, int)):
+            raise StyxValidationError(f'`step` has the wrong type: Received `{type(params.get("step", None))}` expected `float | None`')
+    if params.get("angle", None) is not None:
+        if not isinstance(params["angle"], (float, int)):
+            raise StyxValidationError(f'`angle` has the wrong type: Received `{type(params.get("angle", None))}` expected `float | None`')
+    if params.get("minlength", None) is not None:
+        if not isinstance(params["minlength"], (float, int)):
+            raise StyxValidationError(f'`minlength` has the wrong type: Received `{type(params.get("minlength", None))}` expected `float | None`')
+    if params.get("maxlength", None) is not None:
+        if not isinstance(params["maxlength"], (float, int)):
+            raise StyxValidationError(f'`maxlength` has the wrong type: Received `{type(params.get("maxlength", None))}` expected `float | None`')
+    if params.get("cutoff", None) is not None:
+        if not isinstance(params["cutoff"], (float, int)):
+            raise StyxValidationError(f'`cutoff` has the wrong type: Received `{type(params.get("cutoff", None))}` expected `float | None`')
+    if params.get("trials", None) is not None:
+        if not isinstance(params["trials"], int):
+            raise StyxValidationError(f'`trials` has the wrong type: Received `{type(params.get("trials", None))}` expected `int | None`')
+    if params.get("noprecomputed", False) is None:
+        raise StyxValidationError("`noprecomputed` must not be None")
+    if not isinstance(params["noprecomputed"], bool):
+        raise StyxValidationError(f'`noprecomputed` has the wrong type: Received `{type(params.get("noprecomputed", False))}` expected `bool`')
+    if params.get("rk4", False) is None:
+        raise StyxValidationError("`rk4` must not be None")
+    if not isinstance(params["rk4"], bool):
+        raise StyxValidationError(f'`rk4` has the wrong type: Received `{type(params.get("rk4", False))}` expected `bool`')
+    if params.get("stop", False) is None:
+        raise StyxValidationError("`stop` must not be None")
+    if not isinstance(params["stop"], bool):
+        raise StyxValidationError(f'`stop` has the wrong type: Received `{type(params.get("stop", False))}` expected `bool`')
+    if params.get("downsample", None) is not None:
+        if not isinstance(params["downsample"], int):
+            raise StyxValidationError(f'`downsample` has the wrong type: Received `{type(params.get("downsample", None))}` expected `int | None`')
+    if params.get("seed_image", None) is not None:
+        if not isinstance(params["seed_image"], list):
+            raise StyxValidationError(f'`seed_image` has the wrong type: Received `{type(params.get("seed_image", None))}` expected `list[TckgenSeedImageParameters] | None`')
+        for e in params["seed_image"]:
+            tckgen_seed_image_validate(e)
+    if params.get("seed_sphere", None) is not None:
+        if not isinstance(params["seed_sphere"], list):
+            raise StyxValidationError(f'`seed_sphere` has the wrong type: Received `{type(params.get("seed_sphere", None))}` expected `list[TckgenSeedSphereParameters] | None`')
+        for e in params["seed_sphere"]:
+            tckgen_seed_sphere_validate(e)
+    if params.get("seed_random_per_voxel", None) is not None:
+        if not isinstance(params["seed_random_per_voxel"], list):
+            raise StyxValidationError(f'`seed_random_per_voxel` has the wrong type: Received `{type(params.get("seed_random_per_voxel", None))}` expected `list[TckgenSeedRandomPerVoxelParameters] | None`')
+        for e in params["seed_random_per_voxel"]:
+            tckgen_seed_random_per_voxel_validate(e)
+    if params.get("seed_grid_per_voxel", None) is not None:
+        if not isinstance(params["seed_grid_per_voxel"], list):
+            raise StyxValidationError(f'`seed_grid_per_voxel` has the wrong type: Received `{type(params.get("seed_grid_per_voxel", None))}` expected `list[TckgenSeedGridPerVoxelParameters] | None`')
+        for e in params["seed_grid_per_voxel"]:
+            tckgen_seed_grid_per_voxel_validate(e)
+    if params.get("seed_rejection", None) is not None:
+        if not isinstance(params["seed_rejection"], list):
+            raise StyxValidationError(f'`seed_rejection` has the wrong type: Received `{type(params.get("seed_rejection", None))}` expected `list[TckgenSeedRejectionParameters] | None`')
+        for e in params["seed_rejection"]:
+            tckgen_seed_rejection_validate(e)
+    if params.get("seed_gmwmi", None) is not None:
+        if not isinstance(params["seed_gmwmi"], list):
+            raise StyxValidationError(f'`seed_gmwmi` has the wrong type: Received `{type(params.get("seed_gmwmi", None))}` expected `list[TckgenSeedGmwmiParameters] | None`')
+        for e in params["seed_gmwmi"]:
+            tckgen_seed_gmwmi_validate(e)
+    if params.get("seed_dynamic", None) is not None:
+        if not isinstance(params["seed_dynamic"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seed_dynamic` has the wrong type: Received `{type(params.get("seed_dynamic", None))}` expected `InputPathType | None`')
+    if params.get("seeds", None) is not None:
+        if not isinstance(params["seeds"], int):
+            raise StyxValidationError(f'`seeds` has the wrong type: Received `{type(params.get("seeds", None))}` expected `int | None`')
+    if params.get("max_attempts_per_seed", None) is not None:
+        if not isinstance(params["max_attempts_per_seed"], int):
+            raise StyxValidationError(f'`max_attempts_per_seed` has the wrong type: Received `{type(params.get("max_attempts_per_seed", None))}` expected `int | None`')
+    if params.get("seed_cutoff", None) is not None:
+        if not isinstance(params["seed_cutoff"], (float, int)):
+            raise StyxValidationError(f'`seed_cutoff` has the wrong type: Received `{type(params.get("seed_cutoff", None))}` expected `float | None`')
+    if params.get("seed_unidirectional", False) is None:
+        raise StyxValidationError("`seed_unidirectional` must not be None")
+    if not isinstance(params["seed_unidirectional"], bool):
+        raise StyxValidationError(f'`seed_unidirectional` has the wrong type: Received `{type(params.get("seed_unidirectional", False))}` expected `bool`')
+    if params.get("seed_direction", None) is not None:
+        if not isinstance(params["seed_direction"], list):
+            raise StyxValidationError(f'`seed_direction` has the wrong type: Received `{type(params.get("seed_direction", None))}` expected `list[float] | None`')
+        for e in params["seed_direction"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_direction` has the wrong type: Received `{type(params.get("seed_direction", None))}` expected `list[float] | None`')
+    if params.get("output_seeds", None) is not None:
+        if not isinstance(params["output_seeds"], str):
+            raise StyxValidationError(f'`output_seeds` has the wrong type: Received `{type(params.get("output_seeds", None))}` expected `str | None`')
+    if params.get("include", None) is not None:
+        if not isinstance(params["include"], list):
+            raise StyxValidationError(f'`include` has the wrong type: Received `{type(params.get("include", None))}` expected `list[TckgenIncludeParameters] | None`')
+        for e in params["include"]:
+            tckgen_include_validate(e)
+    if params.get("include_ordered", None) is not None:
+        if not isinstance(params["include_ordered"], list):
+            raise StyxValidationError(f'`include_ordered` has the wrong type: Received `{type(params.get("include_ordered", None))}` expected `list[TckgenIncludeOrderedParameters] | None`')
+        for e in params["include_ordered"]:
+            tckgen_include_ordered_validate(e)
+    if params.get("exclude", None) is not None:
+        if not isinstance(params["exclude"], list):
+            raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[TckgenExcludeParameters] | None`')
+        for e in params["exclude"]:
+            tckgen_exclude_validate(e)
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], list):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[TckgenMaskParameters] | None`')
+        for e in params["mask"]:
+            tckgen_mask_validate(e)
+    if params.get("act", None) is not None:
+        if not isinstance(params["act"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`act` has the wrong type: Received `{type(params.get("act", None))}` expected `InputPathType | None`')
+    if params.get("backtrack", False) is None:
+        raise StyxValidationError("`backtrack` must not be None")
+    if not isinstance(params["backtrack"], bool):
+        raise StyxValidationError(f'`backtrack` has the wrong type: Received `{type(params.get("backtrack", False))}` expected `bool`')
+    if params.get("crop_at_gmwmi", False) is None:
+        raise StyxValidationError("`crop_at_gmwmi` must not be None")
+    if not isinstance(params["crop_at_gmwmi"], bool):
+        raise StyxValidationError(f'`crop_at_gmwmi` has the wrong type: Received `{type(params.get("crop_at_gmwmi", False))}` expected `bool`')
+    if params.get("power", None) is not None:
+        if not isinstance(params["power"], (float, int)):
+            raise StyxValidationError(f'`power` has the wrong type: Received `{type(params.get("power", None))}` expected `float | None`')
+    if params.get("samples", None) is not None:
+        if not isinstance(params["samples"], int):
+            raise StyxValidationError(f'`samples` has the wrong type: Received `{type(params.get("samples", None))}` expected `int | None`')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("fslgrad", None) is not None:
+        tckgen_fslgrad_validate(params["fslgrad"])
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckgenConfigParameters] | None`')
+        for e in params["config"]:
+            tckgen_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("source", None) is None:
+        raise StyxValidationError("`source` must not be None")
+    if not isinstance(params["source"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `InputPathType`')
+    if params.get("tracks", None) is None:
+        raise StyxValidationError("`tracks` must not be None")
+    if not isinstance(params["tracks"], str):
+        raise StyxValidationError(f'`tracks` has the wrong type: Received `{type(params.get("tracks", None))}` expected `str`')
 
 
 def tckgen_cargs(
@@ -1724,6 +2272,7 @@ def tckgen_execute(
     Returns:
         NamedTuple of outputs (described in `TckgenOutputs`).
     """
+    tckgen_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCKGEN_METADATA)
     params = execution.params(params)

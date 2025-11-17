@@ -94,6 +94,52 @@ def tfim_params(
     return params
 
 
+def tfim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `TfimParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("pthresh", None) is not None:
+        if not isinstance(params["pthresh"], (float, int)):
+            raise StyxValidationError(f'`pthresh` has the wrong type: Received `{type(params.get("pthresh", None))}` expected `float | None`')
+        if 0 <= params["pthresh"] <= 1:
+            raise StyxValidationError("Parameter `pthresh` must be between 0 and 1 (inclusive)")
+    if params.get("eqcorr", None) is not None:
+        if not isinstance(params["eqcorr"], (float, int)):
+            raise StyxValidationError(f'`eqcorr` has the wrong type: Received `{type(params.get("eqcorr", None))}` expected `float | None`')
+    if params.get("paired", False) is None:
+        raise StyxValidationError("`paired` must not be None")
+    if not isinstance(params["paired"], bool):
+        raise StyxValidationError(f'`paired` has the wrong type: Received `{type(params.get("paired", False))}` expected `bool`')
+    if params.get("set1_images", None) is None:
+        raise StyxValidationError("`set1_images` must not be None")
+    if not isinstance(params["set1_images"], list):
+        raise StyxValidationError(f'`set1_images` has the wrong type: Received `{type(params.get("set1_images", None))}` expected `list[InputPathType]`')
+    for e in params["set1_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`set1_images` has the wrong type: Received `{type(params.get("set1_images", None))}` expected `list[InputPathType]`')
+    if params.get("set2_images", None) is None:
+        raise StyxValidationError("`set2_images` must not be None")
+    if not isinstance(params["set2_images"], list):
+        raise StyxValidationError(f'`set2_images` has the wrong type: Received `{type(params.get("set2_images", None))}` expected `list[InputPathType]`')
+    for e in params["set2_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`set2_images` has the wrong type: Received `{type(params.get("set2_images", None))}` expected `list[InputPathType]`')
+    if params.get("base1_value", None) is not None:
+        if not isinstance(params["base1_value"], (float, int)):
+            raise StyxValidationError(f'`base1_value` has the wrong type: Received `{type(params.get("base1_value", None))}` expected `float | None`')
+
+
 def tfim_cargs(
     params: TfimParameters,
     execution: Execution,
@@ -183,6 +229,7 @@ def tfim_execute(
     Returns:
         NamedTuple of outputs (described in `TfimOutputs`).
     """
+    tfim_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TFIM_METADATA)
     params = execution.params(params)

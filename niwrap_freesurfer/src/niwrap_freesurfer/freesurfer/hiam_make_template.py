@@ -64,6 +64,39 @@ def hiam_make_template_params(
     return params
 
 
+def hiam_make_template_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HiamMakeTemplateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surface_name", None) is None:
+        raise StyxValidationError("`surface_name` must not be None")
+    if not isinstance(params["surface_name"], str):
+        raise StyxValidationError(f'`surface_name` has the wrong type: Received `{type(params.get("surface_name", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+
+
 def hiam_make_template_cargs(
     params: HiamMakeTemplateParameters,
     execution: Execution,
@@ -124,6 +157,7 @@ def hiam_make_template_execute(
     Returns:
         NamedTuple of outputs (described in `HiamMakeTemplateOutputs`).
     """
+    hiam_make_template_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HIAM_MAKE_TEMPLATE_METADATA)
     params = execution.params(params)

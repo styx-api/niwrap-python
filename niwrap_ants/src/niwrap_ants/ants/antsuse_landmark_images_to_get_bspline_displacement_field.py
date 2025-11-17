@@ -95,6 +95,49 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_params(
     return params
 
 
+def antsuse_landmark_images_to_get_bspline_displacement_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image_with_labeled_landmarks", None) is None:
+        raise StyxValidationError("`fixed_image_with_labeled_landmarks` must not be None")
+    if not isinstance(params["fixed_image_with_labeled_landmarks"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image_with_labeled_landmarks` has the wrong type: Received `{type(params.get("fixed_image_with_labeled_landmarks", None))}` expected `InputPathType`')
+    if params.get("moving_image_with_labeled_landmarks", None) is None:
+        raise StyxValidationError("`moving_image_with_labeled_landmarks` must not be None")
+    if not isinstance(params["moving_image_with_labeled_landmarks"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image_with_labeled_landmarks` has the wrong type: Received `{type(params.get("moving_image_with_labeled_landmarks", None))}` expected `InputPathType`')
+    if params.get("output_displacement_field", None) is None:
+        raise StyxValidationError("`output_displacement_field` must not be None")
+    if not isinstance(params["output_displacement_field"], str):
+        raise StyxValidationError(f'`output_displacement_field` has the wrong type: Received `{type(params.get("output_displacement_field", None))}` expected `str`')
+    if params.get("mesh_size", None) is None:
+        raise StyxValidationError("`mesh_size` must not be None")
+    if not isinstance(params["mesh_size"], str):
+        raise StyxValidationError(f'`mesh_size` has the wrong type: Received `{type(params.get("mesh_size", None))}` expected `str`')
+    if params.get("number_of_levels", None) is None:
+        raise StyxValidationError("`number_of_levels` must not be None")
+    if not isinstance(params["number_of_levels"], int):
+        raise StyxValidationError(f'`number_of_levels` has the wrong type: Received `{type(params.get("number_of_levels", None))}` expected `int`')
+    if params.get("order", None) is not None:
+        if not isinstance(params["order"], int):
+            raise StyxValidationError(f'`order` has the wrong type: Received `{type(params.get("order", None))}` expected `int | None`')
+    if params.get("enforce_stationary_boundaries", None) is not None:
+        if not isinstance(params["enforce_stationary_boundaries"], int):
+            raise StyxValidationError(f'`enforce_stationary_boundaries` has the wrong type: Received `{type(params.get("enforce_stationary_boundaries", None))}` expected `int | None`')
+    if params.get("landmark_weights", None) is not None:
+        if not isinstance(params["landmark_weights"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`landmark_weights` has the wrong type: Received `{type(params.get("landmark_weights", None))}` expected `InputPathType | None`')
+
+
 def antsuse_landmark_images_to_get_bspline_displacement_field_cargs(
     params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters,
     execution: Execution,
@@ -170,6 +213,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_execute(
     Returns:
         NamedTuple of outputs (described in `AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs`).
     """
+    antsuse_landmark_images_to_get_bspline_displacement_field_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)

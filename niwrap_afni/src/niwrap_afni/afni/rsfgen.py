@@ -124,6 +124,64 @@ def rsfgen_params(
     return params
 
 
+def rsfgen_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RsfgenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("length", None) is None:
+        raise StyxValidationError("`length` must not be None")
+    if not isinstance(params["length"], int):
+        raise StyxValidationError(f'`length` has the wrong type: Received `{type(params.get("length", None))}` expected `int`')
+    if params.get("num_experimental_conditions", None) is None:
+        raise StyxValidationError("`num_experimental_conditions` must not be None")
+    if not isinstance(params["num_experimental_conditions"], int):
+        raise StyxValidationError(f'`num_experimental_conditions` has the wrong type: Received `{type(params.get("num_experimental_conditions", None))}` expected `int`')
+    if params.get("block_length", None) is not None:
+        if not isinstance(params["block_length"], str):
+            raise StyxValidationError(f'`block_length` has the wrong type: Received `{type(params.get("block_length", None))}` expected `str | None`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], (float, int)):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `float | None`')
+    if params.get("suppress_output_flag", False) is None:
+        raise StyxValidationError("`suppress_output_flag` must not be None")
+    if not isinstance(params["suppress_output_flag"], bool):
+        raise StyxValidationError(f'`suppress_output_flag` has the wrong type: Received `{type(params.get("suppress_output_flag", False))}` expected `bool`')
+    if params.get("single_file_flag", False) is None:
+        raise StyxValidationError("`single_file_flag` must not be None")
+    if not isinstance(params["single_file_flag"], bool):
+        raise StyxValidationError(f'`single_file_flag` has the wrong type: Received `{type(params.get("single_file_flag", False))}` expected `bool`')
+    if params.get("single_column_flag", False) is None:
+        raise StyxValidationError("`single_column_flag` must not be None")
+    if not isinstance(params["single_column_flag"], bool):
+        raise StyxValidationError(f'`single_column_flag` has the wrong type: Received `{type(params.get("single_column_flag", False))}` expected `bool`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("num_reps", None) is not None:
+        if not isinstance(params["num_reps"], str):
+            raise StyxValidationError(f'`num_reps` has the wrong type: Received `{type(params.get("num_reps", None))}` expected `str | None`')
+    if params.get("permutation_seed", None) is not None:
+        if not isinstance(params["permutation_seed"], (float, int)):
+            raise StyxValidationError(f'`permutation_seed` has the wrong type: Received `{type(params.get("permutation_seed", None))}` expected `float | None`')
+    if params.get("markov_file", None) is not None:
+        if not isinstance(params["markov_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`markov_file` has the wrong type: Received `{type(params.get("markov_file", None))}` expected `InputPathType | None`')
+    if params.get("prob_zero", None) is not None:
+        if not isinstance(params["prob_zero"], (float, int)):
+            raise StyxValidationError(f'`prob_zero` has the wrong type: Received `{type(params.get("prob_zero", None))}` expected `float | None`')
+    if params.get("input_table", None) is not None:
+        if not isinstance(params["input_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_table` has the wrong type: Received `{type(params.get("input_table", None))}` expected `InputPathType | None`')
+
+
 def rsfgen_cargs(
     params: RsfgenParameters,
     execution: Execution,
@@ -235,6 +293,7 @@ def rsfgen_execute(
     Returns:
         NamedTuple of outputs (described in `RsfgenOutputs`).
     """
+    rsfgen_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RSFGEN_METADATA)
     params = execution.params(params)

@@ -54,6 +54,28 @@ def inflate_subject3_params(
     return params
 
 
+def inflate_subject3_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InflateSubject3Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("script_name", None) is None:
+        raise StyxValidationError("`script_name` must not be None")
+    if not isinstance(params["script_name"], str):
+        raise StyxValidationError(f'`script_name` has the wrong type: Received `{type(params.get("script_name", None))}` expected `str`')
+
+
 def inflate_subject3_cargs(
     params: InflateSubject3Parameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def inflate_subject3_execute(
     Returns:
         NamedTuple of outputs (described in `InflateSubject3Outputs`).
     """
+    inflate_subject3_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INFLATE_SUBJECT3_METADATA)
     params = execution.params(params)

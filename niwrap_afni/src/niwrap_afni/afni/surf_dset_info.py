@@ -145,6 +145,98 @@ def surf_dset_info_params(
     return params
 
 
+def surf_dset_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfDsetInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dsets", None) is None:
+        raise StyxValidationError("`input_dsets` must not be None")
+    if not isinstance(params["input_dsets"], list):
+        raise StyxValidationError(f'`input_dsets` has the wrong type: Received `{type(params.get("input_dsets", None))}` expected `list[InputPathType]`')
+    for e in params["input_dsets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_dsets` has the wrong type: Received `{type(params.get("input_dsets", None))}` expected `list[InputPathType]`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], int):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `int | None`')
+        if params["debug_level"] >= 0:
+            raise StyxValidationError("Parameter `debug_level` must be at least 0")
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("noxform", False) is None:
+        raise StyxValidationError("`noxform` must not be None")
+    if not isinstance(params["noxform"], bool):
+        raise StyxValidationError(f'`noxform` has the wrong type: Received `{type(params.get("noxform", False))}` expected `bool`')
+    if params.get("setenv", None) is not None:
+        if not isinstance(params["setenv"], str):
+            raise StyxValidationError(f'`setenv` has the wrong type: Received `{type(params.get("setenv", None))}` expected `str | None`')
+    if params.get("trace", False) is None:
+        raise StyxValidationError("`trace` must not be None")
+    if not isinstance(params["trace"], bool):
+        raise StyxValidationError(f'`trace` has the wrong type: Received `{type(params.get("trace", False))}` expected `bool`')
+    if params.get("extreme_trace", False) is None:
+        raise StyxValidationError("`extreme_trace` must not be None")
+    if not isinstance(params["extreme_trace"], bool):
+        raise StyxValidationError(f'`extreme_trace` has the wrong type: Received `{type(params.get("extreme_trace", False))}` expected `bool`')
+    if params.get("nomall", False) is None:
+        raise StyxValidationError("`nomall` must not be None")
+    if not isinstance(params["nomall"], bool):
+        raise StyxValidationError(f'`nomall` has the wrong type: Received `{type(params.get("nomall", False))}` expected `bool`')
+    if params.get("yesmall", False) is None:
+        raise StyxValidationError("`yesmall` must not be None")
+    if not isinstance(params["yesmall"], bool):
+        raise StyxValidationError(f'`yesmall` has the wrong type: Received `{type(params.get("yesmall", False))}` expected `bool`')
+    if params.get("mini_help", False) is None:
+        raise StyxValidationError("`mini_help` must not be None")
+    if not isinstance(params["mini_help"], bool):
+        raise StyxValidationError(f'`mini_help` has the wrong type: Received `{type(params.get("mini_help", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("extreme_help", False) is None:
+        raise StyxValidationError("`extreme_help` must not be None")
+    if not isinstance(params["extreme_help"], bool):
+        raise StyxValidationError(f'`extreme_help` has the wrong type: Received `{type(params.get("extreme_help", False))}` expected `bool`')
+    if params.get("help_view", False) is None:
+        raise StyxValidationError("`help_view` must not be None")
+    if not isinstance(params["help_view"], bool):
+        raise StyxValidationError(f'`help_view` has the wrong type: Received `{type(params.get("help_view", False))}` expected `bool`')
+    if params.get("help_web", False) is None:
+        raise StyxValidationError("`help_web` must not be None")
+    if not isinstance(params["help_web"], bool):
+        raise StyxValidationError(f'`help_web` has the wrong type: Received `{type(params.get("help_web", False))}` expected `bool`')
+    if params.get("help_find", None) is not None:
+        if not isinstance(params["help_find"], str):
+            raise StyxValidationError(f'`help_find` has the wrong type: Received `{type(params.get("help_find", None))}` expected `str | None`')
+    if params.get("help_raw", False) is None:
+        raise StyxValidationError("`help_raw` must not be None")
+    if not isinstance(params["help_raw"], bool):
+        raise StyxValidationError(f'`help_raw` has the wrong type: Received `{type(params.get("help_raw", False))}` expected `bool`')
+    if params.get("help_spx", False) is None:
+        raise StyxValidationError("`help_spx` must not be None")
+    if not isinstance(params["help_spx"], bool):
+        raise StyxValidationError(f'`help_spx` has the wrong type: Received `{type(params.get("help_spx", False))}` expected `bool`')
+    if params.get("help_aspx", False) is None:
+        raise StyxValidationError("`help_aspx` must not be None")
+    if not isinstance(params["help_aspx"], bool):
+        raise StyxValidationError(f'`help_aspx` has the wrong type: Received `{type(params.get("help_aspx", False))}` expected `bool`')
+    if params.get("all_opts", False) is None:
+        raise StyxValidationError("`all_opts` must not be None")
+    if not isinstance(params["all_opts"], bool):
+        raise StyxValidationError(f'`all_opts` has the wrong type: Received `{type(params.get("all_opts", False))}` expected `bool`')
+
+
 def surf_dset_info_cargs(
     params: SurfDsetInfoParameters,
     execution: Execution,
@@ -250,6 +342,7 @@ def surf_dset_info_execute(
     Returns:
         NamedTuple of outputs (described in `SurfDsetInfoOutputs`).
     """
+    surf_dset_info_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_DSET_INFO_METADATA)
     params = execution.params(params)

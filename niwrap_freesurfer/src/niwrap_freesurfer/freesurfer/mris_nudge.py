@@ -71,6 +71,40 @@ def mris_nudge_params(
     return params
 
 
+def mris_nudge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisNudgeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("vertex", None) is None:
+        raise StyxValidationError("`vertex` must not be None")
+    if not isinstance(params["vertex"], int):
+        raise StyxValidationError(f'`vertex` has the wrong type: Received `{type(params.get("vertex", None))}` expected `int`')
+    if params.get("target_val", None) is None:
+        raise StyxValidationError("`target_val` must not be None")
+    if not isinstance(params["target_val"], (float, int)):
+        raise StyxValidationError(f'`target_val` has the wrong type: Received `{type(params.get("target_val", None))}` expected `float`')
+    if params.get("nbhd", None) is None:
+        raise StyxValidationError("`nbhd` must not be None")
+    if not isinstance(params["nbhd"], int):
+        raise StyxValidationError(f'`nbhd` has the wrong type: Received `{type(params.get("nbhd", None))}` expected `int`')
+
+
 def mris_nudge_cargs(
     params: MrisNudgeParameters,
     execution: Execution,
@@ -133,6 +167,7 @@ def mris_nudge_execute(
     Returns:
         NamedTuple of outputs (described in `MrisNudgeOutputs`).
     """
+    mris_nudge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_NUDGE_METADATA)
     params = execution.params(params)

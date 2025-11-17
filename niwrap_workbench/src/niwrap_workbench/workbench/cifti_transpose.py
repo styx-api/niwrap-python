@@ -63,6 +63,31 @@ def cifti_transpose_params(
     return params
 
 
+def cifti_transpose_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiTransposeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+
+
 def cifti_transpose_cargs(
     params: CiftiTransposeParameters,
     execution: Execution,
@@ -125,6 +150,7 @@ def cifti_transpose_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiTransposeOutputs`).
     """
+    cifti_transpose_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_TRANSPOSE_METADATA)
     params = execution.params(params)

@@ -127,6 +127,70 @@ def v__surf_to_vol_spackle_params(
     return params
 
 
+def v__surf_to_vol_spackle_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSurfToVolSpackleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("maskset", None) is None:
+        raise StyxValidationError("`maskset` must not be None")
+    if not isinstance(params["maskset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskset` has the wrong type: Received `{type(params.get("maskset", None))}` expected `InputPathType`')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec` has the wrong type: Received `{type(params.get("spec", None))}` expected `InputPathType`')
+    if params.get("surfA", None) is None:
+        raise StyxValidationError("`surfA` must not be None")
+    if not isinstance(params["surfA"], str):
+        raise StyxValidationError(f'`surfA` has the wrong type: Received `{type(params.get("surfA", None))}` expected `str`')
+    if params.get("surfB", None) is not None:
+        if not isinstance(params["surfB"], str):
+            raise StyxValidationError(f'`surfB` has the wrong type: Received `{type(params.get("surfB", None))}` expected `str | None`')
+    if params.get("surfset", None) is None:
+        raise StyxValidationError("`surfset` must not be None")
+    if not isinstance(params["surfset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surfset` has the wrong type: Received `{type(params.get("surfset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("normal_vector_length", None) is not None:
+        if not isinstance(params["normal_vector_length"], (float, int)):
+            raise StyxValidationError(f'`normal_vector_length` has the wrong type: Received `{type(params.get("normal_vector_length", None))}` expected `float | None`')
+    if params.get("search_radius", None) is not None:
+        if not isinstance(params["search_radius"], (float, int)):
+            raise StyxValidationError(f'`search_radius` has the wrong type: Received `{type(params.get("search_radius", None))}` expected `float | None`')
+    if params.get("num_steps", None) is not None:
+        if not isinstance(params["num_steps"], (float, int)):
+            raise StyxValidationError(f'`num_steps` has the wrong type: Received `{type(params.get("num_steps", None))}` expected `float | None`')
+    if params.get("keep_temp_files", False) is None:
+        raise StyxValidationError("`keep_temp_files` must not be None")
+    if not isinstance(params["keep_temp_files"], bool):
+        raise StyxValidationError(f'`keep_temp_files` has the wrong type: Received `{type(params.get("keep_temp_files", False))}` expected `bool`')
+    if params.get("max_iters", None) is not None:
+        if not isinstance(params["max_iters"], (float, int)):
+            raise StyxValidationError(f'`max_iters` has the wrong type: Received `{type(params.get("max_iters", None))}` expected `float | None`')
+    if params.get("use_mode", False) is None:
+        raise StyxValidationError("`use_mode` must not be None")
+    if not isinstance(params["use_mode"], bool):
+        raise StyxValidationError(f'`use_mode` has the wrong type: Received `{type(params.get("use_mode", False))}` expected `bool`')
+    if params.get("datum_type", None) is not None:
+        if not isinstance(params["datum_type"], str):
+            raise StyxValidationError(f'`datum_type` has the wrong type: Received `{type(params.get("datum_type", None))}` expected `str | None`')
+    if params.get("ignore_unknown_options", False) is None:
+        raise StyxValidationError("`ignore_unknown_options` must not be None")
+    if not isinstance(params["ignore_unknown_options"], bool):
+        raise StyxValidationError(f'`ignore_unknown_options` has the wrong type: Received `{type(params.get("ignore_unknown_options", False))}` expected `bool`')
+
+
 def v__surf_to_vol_spackle_cargs(
     params: VSurfToVolSpackleParameters,
     execution: Execution,
@@ -223,6 +287,7 @@ def v__surf_to_vol_spackle_execute(
     Returns:
         NamedTuple of outputs (described in `VSurfToVolSpackleOutputs`).
     """
+    v__surf_to_vol_spackle_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SURF_TO_VOL_SPACKLE_METADATA)
     params = execution.params(params)

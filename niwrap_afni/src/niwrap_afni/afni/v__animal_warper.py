@@ -261,6 +261,167 @@ def v__animal_warper_params(
     return params
 
 
+def v__animal_warper_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAnimalWarperParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("base_template", None) is None:
+        raise StyxValidationError("`base_template` must not be None")
+    if not isinstance(params["base_template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_template` has the wrong type: Received `{type(params.get("base_template", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("brainmask", None) is not None:
+        if not isinstance(params["brainmask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brainmask` has the wrong type: Received `{type(params.get("brainmask", None))}` expected `InputPathType | None`')
+    if params.get("atlases", None) is not None:
+        if not isinstance(params["atlases"], list):
+            raise StyxValidationError(f'`atlases` has the wrong type: Received `{type(params.get("atlases", None))}` expected `list[InputPathType] | None`')
+        for e in params["atlases"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`atlases` has the wrong type: Received `{type(params.get("atlases", None))}` expected `list[InputPathType] | None`')
+    if params.get("atlas_followers", None) is not None:
+        if not isinstance(params["atlas_followers"], list):
+            raise StyxValidationError(f'`atlas_followers` has the wrong type: Received `{type(params.get("atlas_followers", None))}` expected `list[InputPathType] | None`')
+        for e in params["atlas_followers"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`atlas_followers` has the wrong type: Received `{type(params.get("atlas_followers", None))}` expected `list[InputPathType] | None`')
+    if params.get("seg_followers", None) is not None:
+        if not isinstance(params["seg_followers"], list):
+            raise StyxValidationError(f'`seg_followers` has the wrong type: Received `{type(params.get("seg_followers", None))}` expected `list[InputPathType] | None`')
+        for e in params["seg_followers"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`seg_followers` has the wrong type: Received `{type(params.get("seg_followers", None))}` expected `list[InputPathType] | None`')
+    if params.get("template_followers", None) is not None:
+        if not isinstance(params["template_followers"], list):
+            raise StyxValidationError(f'`template_followers` has the wrong type: Received `{type(params.get("template_followers", None))}` expected `list[InputPathType] | None`')
+        for e in params["template_followers"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`template_followers` has the wrong type: Received `{type(params.get("template_followers", None))}` expected `list[InputPathType] | None`')
+    if params.get("dset_followers", None) is not None:
+        if not isinstance(params["dset_followers"], list):
+            raise StyxValidationError(f'`dset_followers` has the wrong type: Received `{type(params.get("dset_followers", None))}` expected `list[InputPathType] | None`')
+        for e in params["dset_followers"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`dset_followers` has the wrong type: Received `{type(params.get("dset_followers", None))}` expected `list[InputPathType] | None`')
+    if params.get("roidset_followers", None) is not None:
+        if not isinstance(params["roidset_followers"], list):
+            raise StyxValidationError(f'`roidset_followers` has the wrong type: Received `{type(params.get("roidset_followers", None))}` expected `list[InputPathType] | None`')
+        for e in params["roidset_followers"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`roidset_followers` has the wrong type: Received `{type(params.get("roidset_followers", None))}` expected `list[InputPathType] | None`')
+    if params.get("input_abbrev", None) is not None:
+        if not isinstance(params["input_abbrev"], str):
+            raise StyxValidationError(f'`input_abbrev` has the wrong type: Received `{type(params.get("input_abbrev", None))}` expected `str | None`')
+    if params.get("base_abbrev", None) is not None:
+        if not isinstance(params["base_abbrev"], str):
+            raise StyxValidationError(f'`base_abbrev` has the wrong type: Received `{type(params.get("base_abbrev", None))}` expected `str | None`')
+    if params.get("atlas_abbrevs", None) is not None:
+        if not isinstance(params["atlas_abbrevs"], list):
+            raise StyxValidationError(f'`atlas_abbrevs` has the wrong type: Received `{type(params.get("atlas_abbrevs", None))}` expected `list[str] | None`')
+        for e in params["atlas_abbrevs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`atlas_abbrevs` has the wrong type: Received `{type(params.get("atlas_abbrevs", None))}` expected `list[str] | None`')
+    if params.get("template_abbrevs", None) is not None:
+        if not isinstance(params["template_abbrevs"], list):
+            raise StyxValidationError(f'`template_abbrevs` has the wrong type: Received `{type(params.get("template_abbrevs", None))}` expected `list[str] | None`')
+        for e in params["template_abbrevs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`template_abbrevs` has the wrong type: Received `{type(params.get("template_abbrevs", None))}` expected `list[str] | None`')
+    if params.get("seg_abbrevs", None) is not None:
+        if not isinstance(params["seg_abbrevs"], list):
+            raise StyxValidationError(f'`seg_abbrevs` has the wrong type: Received `{type(params.get("seg_abbrevs", None))}` expected `list[str] | None`')
+        for e in params["seg_abbrevs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`seg_abbrevs` has the wrong type: Received `{type(params.get("seg_abbrevs", None))}` expected `list[str] | None`')
+    if params.get("dset_abbrevs", None) is not None:
+        if not isinstance(params["dset_abbrevs"], list):
+            raise StyxValidationError(f'`dset_abbrevs` has the wrong type: Received `{type(params.get("dset_abbrevs", None))}` expected `list[str] | None`')
+        for e in params["dset_abbrevs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`dset_abbrevs` has the wrong type: Received `{type(params.get("dset_abbrevs", None))}` expected `list[str] | None`')
+    if params.get("roidset_abbrevs", None) is not None:
+        if not isinstance(params["roidset_abbrevs"], list):
+            raise StyxValidationError(f'`roidset_abbrevs` has the wrong type: Received `{type(params.get("roidset_abbrevs", None))}` expected `list[str] | None`')
+        for e in params["roidset_abbrevs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`roidset_abbrevs` has the wrong type: Received `{type(params.get("roidset_abbrevs", None))}` expected `list[str] | None`')
+    if params.get("align_centers_meth", None) is not None:
+        if not isinstance(params["align_centers_meth"], str):
+            raise StyxValidationError(f'`align_centers_meth` has the wrong type: Received `{type(params.get("align_centers_meth", None))}` expected `str | None`')
+    if params.get("aff_move_opt", None) is not None:
+        if not isinstance(params["aff_move_opt"], str):
+            raise StyxValidationError(f'`aff_move_opt` has the wrong type: Received `{type(params.get("aff_move_opt", None))}` expected `str | None`')
+    if params.get("cost", None) is not None:
+        if not isinstance(params["cost"], str):
+            raise StyxValidationError(f'`cost` has the wrong type: Received `{type(params.get("cost", None))}` expected `str | None`')
+    if params.get("maxlev", None) is not None:
+        if not isinstance(params["maxlev"], (float, int)):
+            raise StyxValidationError(f'`maxlev` has the wrong type: Received `{type(params.get("maxlev", None))}` expected `float | None`')
+        if 0 <= params["maxlev"] <= 11:
+            raise StyxValidationError("Parameter `maxlev` must be between 0 and 11 (inclusive)")
+    if params.get("no_surfaces", False) is None:
+        raise StyxValidationError("`no_surfaces` must not be None")
+    if not isinstance(params["no_surfaces"], bool):
+        raise StyxValidationError(f'`no_surfaces` has the wrong type: Received `{type(params.get("no_surfaces", False))}` expected `bool`')
+    if params.get("feature_size", None) is not None:
+        if not isinstance(params["feature_size"], (float, int)):
+            raise StyxValidationError(f'`feature_size` has the wrong type: Received `{type(params.get("feature_size", None))}` expected `float | None`')
+    if params.get("supersize", False) is None:
+        raise StyxValidationError("`supersize` must not be None")
+    if not isinstance(params["supersize"], bool):
+        raise StyxValidationError(f'`supersize` has the wrong type: Received `{type(params.get("supersize", False))}` expected `bool`')
+    if params.get("init_scale", None) is not None:
+        if not isinstance(params["init_scale"], (float, int)):
+            raise StyxValidationError(f'`init_scale` has the wrong type: Received `{type(params.get("init_scale", None))}` expected `float | None`')
+    if params.get("mode_smooth_size", None) is not None:
+        if not isinstance(params["mode_smooth_size"], (float, int)):
+            raise StyxValidationError(f'`mode_smooth_size` has the wrong type: Received `{type(params.get("mode_smooth_size", None))}` expected `float | None`')
+    if params.get("mode_smooth_replacement_off", False) is None:
+        raise StyxValidationError("`mode_smooth_replacement_off` must not be None")
+    if not isinstance(params["mode_smooth_replacement_off"], bool):
+        raise StyxValidationError(f'`mode_smooth_replacement_off` has the wrong type: Received `{type(params.get("mode_smooth_replacement_off", False))}` expected `bool`')
+    if params.get("center_out", None) is not None:
+        if not isinstance(params["center_out"], str):
+            raise StyxValidationError(f'`center_out` has the wrong type: Received `{type(params.get("center_out", None))}` expected `str | None`')
+    if params.get("align_type", None) is not None:
+        if not isinstance(params["align_type"], str):
+            raise StyxValidationError(f'`align_type` has the wrong type: Received `{type(params.get("align_type", None))}` expected `str | None`')
+    if params.get("extra_qw_opts", None) is not None:
+        if not isinstance(params["extra_qw_opts"], str):
+            raise StyxValidationError(f'`extra_qw_opts` has the wrong type: Received `{type(params.get("extra_qw_opts", None))}` expected `str | None`')
+    if params.get("keep_temp", False) is None:
+        raise StyxValidationError("`keep_temp` must not be None")
+    if not isinstance(params["keep_temp"], bool):
+        raise StyxValidationError(f'`keep_temp` has the wrong type: Received `{type(params.get("keep_temp", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("ok_to_exist", False) is None:
+        raise StyxValidationError("`ok_to_exist` must not be None")
+    if not isinstance(params["ok_to_exist"], bool):
+        raise StyxValidationError(f'`ok_to_exist` has the wrong type: Received `{type(params.get("ok_to_exist", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+
+
 def v__animal_warper_cargs(
     params: VAnimalWarperParameters,
     execution: Execution,
@@ -458,6 +619,7 @@ def v__animal_warper_execute(
     Returns:
         NamedTuple of outputs (described in `VAnimalWarperOutputs`).
     """
+    v__animal_warper_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ANIMAL_WARPER_METADATA)
     params = execution.params(params)

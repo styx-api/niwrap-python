@@ -81,6 +81,28 @@ def surface_resample_area_surfs_params(
     return params
 
 
+def surface_resample_area_surfs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceResampleAreaSurfsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
+
+
 def surface_resample_area_surfs_cargs(
     params: SurfaceResampleAreaSurfsParameters,
     execution: Execution,
@@ -122,6 +144,28 @@ def surface_resample_area_metrics_params(
         "new-area": new_area,
     }
     return params
+
+
+def surface_resample_area_metrics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceResampleAreaMetricsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
 
 
 def surface_resample_area_metrics_cargs(
@@ -199,6 +243,48 @@ def surface_resample_params(
     if area_metrics is not None:
         params["area-metrics"] = area_metrics
     return params
+
+
+def surface_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
+    if params.get("area-surfs", None) is not None:
+        surface_resample_area_surfs_validate(params["area-surfs"])
+    if params.get("area-metrics", None) is not None:
+        surface_resample_area_metrics_validate(params["area-metrics"])
+    if params.get("bypass-sphere-check", False) is None:
+        raise StyxValidationError("`bypass-sphere-check` must not be None")
+    if not isinstance(params["bypass-sphere-check"], bool):
+        raise StyxValidationError(f'`bypass-sphere-check` has the wrong type: Received `{type(params.get("bypass-sphere-check", False))}` expected `bool`')
+    if params.get("surface-in", None) is None:
+        raise StyxValidationError("`surface-in` must not be None")
+    if not isinstance(params["surface-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-in` has the wrong type: Received `{type(params.get("surface-in", None))}` expected `InputPathType`')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
 
 
 def surface_resample_cargs(
@@ -283,6 +369,7 @@ def surface_resample_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceResampleOutputs`).
     """
+    surface_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_RESAMPLE_METADATA)
     params = execution.params(params)

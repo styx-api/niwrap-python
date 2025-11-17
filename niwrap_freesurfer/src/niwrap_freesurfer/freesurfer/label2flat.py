@@ -66,6 +66,36 @@ def label2flat_params(
     return params
 
 
+def label2flat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Label2flatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("label_file", None) is None:
+        raise StyxValidationError("`label_file` must not be None")
+    if not isinstance(params["label_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType`')
+    if params.get("patch_file", None) is None:
+        raise StyxValidationError("`patch_file` must not be None")
+    if not isinstance(params["patch_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`patch_file` has the wrong type: Received `{type(params.get("patch_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def label2flat_cargs(
     params: Label2flatParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def label2flat_execute(
     Returns:
         NamedTuple of outputs (described in `Label2flatOutputs`).
     """
+    label2flat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL2FLAT_METADATA)
     params = execution.params(params)

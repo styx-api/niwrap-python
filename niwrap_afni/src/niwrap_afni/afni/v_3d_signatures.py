@@ -79,6 +79,44 @@ def v_3d_signatures_params(
     return params
 
 
+def v_3d_signatures_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSignaturesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("segmentation", False) is None:
+        raise StyxValidationError("`segmentation` must not be None")
+    if not isinstance(params["segmentation"], bool):
+        raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", False))}` expected `bool`')
+    if params.get("filter", False) is None:
+        raise StyxValidationError("`filter` must not be None")
+    if not isinstance(params["filter"], bool):
+        raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+        if 0 <= params["threshold"] <= 1:
+            raise StyxValidationError("Parameter `threshold` must be between 0 and 1 (inclusive)")
+    if params.get("smoothing", None) is not None:
+        if not isinstance(params["smoothing"], (float, int)):
+            raise StyxValidationError(f'`smoothing` has the wrong type: Received `{type(params.get("smoothing", None))}` expected `float | None`')
+
+
 def v_3d_signatures_cargs(
     params: V3dSignaturesParameters,
     execution: Execution,
@@ -152,6 +190,7 @@ def v_3d_signatures_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSignaturesOutputs`).
     """
+    v_3d_signatures_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SIGNATURES_METADATA)
     params = execution.params(params)

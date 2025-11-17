@@ -88,6 +88,49 @@ def qatools_py_params(
     return params
 
 
+def qatools_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QatoolsPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("subjects", None) is not None:
+        if not isinstance(params["subjects"], list):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+        for e in params["subjects"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+    if params.get("screenshots", False) is None:
+        raise StyxValidationError("`screenshots` must not be None")
+    if not isinstance(params["screenshots"], bool):
+        raise StyxValidationError(f'`screenshots` has the wrong type: Received `{type(params.get("screenshots", False))}` expected `bool`')
+    if params.get("fornix", False) is None:
+        raise StyxValidationError("`fornix` must not be None")
+    if not isinstance(params["fornix"], bool):
+        raise StyxValidationError(f'`fornix` has the wrong type: Received `{type(params.get("fornix", False))}` expected `bool`')
+    if params.get("outlier", False) is None:
+        raise StyxValidationError("`outlier` must not be None")
+    if not isinstance(params["outlier"], bool):
+        raise StyxValidationError(f'`outlier` has the wrong type: Received `{type(params.get("outlier", False))}` expected `bool`')
+    if params.get("outlier_table", None) is not None:
+        if not isinstance(params["outlier_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outlier_table` has the wrong type: Received `{type(params.get("outlier_table", None))}` expected `InputPathType | None`')
+
+
 def qatools_py_cargs(
     params: QatoolsPyParameters,
     execution: Execution,
@@ -170,6 +213,7 @@ def qatools_py_execute(
     Returns:
         NamedTuple of outputs (described in `QatoolsPyOutputs`).
     """
+    qatools_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QATOOLS_PY_METADATA)
     params = execution.params(params)

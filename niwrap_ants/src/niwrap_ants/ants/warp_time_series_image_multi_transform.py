@@ -82,6 +82,50 @@ def warp_time_series_image_multi_transform_params(
     return params
 
 
+def warp_time_series_image_multi_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WarpTimeSeriesImageMultiTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `typing.Literal[3, 4]`')
+    if params["image_dimension"] not in [3, 4]:
+        raise StyxValidationError("Parameter `image_dimension` must be one of [3, 4]")
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("transforms", None) is None:
+        raise StyxValidationError("`transforms` must not be None")
+    if not isinstance(params["transforms"], list):
+        raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[str]`')
+    for e in params["transforms"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[str]`')
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], str):
+            raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `typing.Literal["NearestNeighbor", "BSpline"] | None`')
+        if params["interpolation"] not in ["NearestNeighbor", "BSpline"]:
+            raise StyxValidationError("Parameter `interpolation` must be one of [\"NearestNeighbor\", \"BSpline\"]")
+
+
 def warp_time_series_image_multi_transform_cargs(
     params: WarpTimeSeriesImageMultiTransformParameters,
     execution: Execution,
@@ -151,6 +195,7 @@ def warp_time_series_image_multi_transform_execute(
     Returns:
         NamedTuple of outputs (described in `WarpTimeSeriesImageMultiTransformOutputs`).
     """
+    warp_time_series_image_multi_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA)
     params = execution.params(params)

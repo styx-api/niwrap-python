@@ -54,6 +54,28 @@ def v__time_diff_params(
     return params
 
 
+def v__time_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VTimeDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("file1", None) is None:
+        raise StyxValidationError("`file1` must not be None")
+    if not isinstance(params["file1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file1` has the wrong type: Received `{type(params.get("file1", None))}` expected `InputPathType`')
+    if params.get("file2", None) is None:
+        raise StyxValidationError("`file2` must not be None")
+    if not isinstance(params["file2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file2` has the wrong type: Received `{type(params.get("file2", None))}` expected `InputPathType`')
+
+
 def v__time_diff_cargs(
     params: VTimeDiffParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def v__time_diff_execute(
     Returns:
         NamedTuple of outputs (described in `VTimeDiffOutputs`).
     """
+    v__time_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__TIME_DIFF_METADATA)
     params = execution.params(params)

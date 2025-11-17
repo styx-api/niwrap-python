@@ -74,6 +74,38 @@ def spharm_rm_params(
     return params
 
 
+def spharm_rm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpharmRmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("number_of_terms", None) is not None:
+        if not isinstance(params["number_of_terms"], (float, int)):
+            raise StyxValidationError(f'`number_of_terms` has the wrong type: Received `{type(params.get("number_of_terms", None))}` expected `float | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def spharm_rm_cargs(
     params: SpharmRmParameters,
     execution: Execution,
@@ -151,6 +183,7 @@ def spharm_rm_execute(
     Returns:
         NamedTuple of outputs (described in `SpharmRmOutputs`).
     """
+    spharm_rm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPHARM_RM_METADATA)
     params = execution.params(params)

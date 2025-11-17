@@ -66,6 +66,38 @@ def slicedelay_params(
     return params
 
 
+def slicedelay_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlicedelayParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("slicedelayfile", None) is None:
+        raise StyxValidationError("`slicedelayfile` must not be None")
+    if not isinstance(params["slicedelayfile"], str):
+        raise StyxValidationError(f'`slicedelayfile` has the wrong type: Received `{type(params.get("slicedelayfile", None))}` expected `str`')
+    if params.get("nslices", None) is None:
+        raise StyxValidationError("`nslices` must not be None")
+    if not isinstance(params["nslices"], (float, int)):
+        raise StyxValidationError(f'`nslices` has the wrong type: Received `{type(params.get("nslices", None))}` expected `float`')
+    if params.get("order", None) is None:
+        raise StyxValidationError("`order` must not be None")
+    if not isinstance(params["order"], str):
+        raise StyxValidationError(f'`order` has the wrong type: Received `{type(params.get("order", None))}` expected `typing.Literal["up", "down", "odd", "even", "siemens"]`')
+    if params["order"] not in ["up", "down", "odd", "even", "siemens"]:
+        raise StyxValidationError("Parameter `order` must be one of [\"up\", \"down\", \"odd\", \"even\", \"siemens\"]")
+    if params.get("ngroups", None) is None:
+        raise StyxValidationError("`ngroups` must not be None")
+    if not isinstance(params["ngroups"], (float, int)):
+        raise StyxValidationError(f'`ngroups` has the wrong type: Received `{type(params.get("ngroups", None))}` expected `float`')
+
+
 def slicedelay_cargs(
     params: SlicedelayParameters,
     execution: Execution,
@@ -140,6 +172,7 @@ def slicedelay_execute(
     Returns:
         NamedTuple of outputs (described in `SlicedelayOutputs`).
     """
+    slicedelay_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLICEDELAY_METADATA)
     params = execution.params(params)

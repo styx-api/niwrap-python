@@ -141,6 +141,89 @@ def align_epi_anat_py_params(
     return params
 
 
+def align_epi_anat_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AlignEpiAnatPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("epi", None) is None:
+        raise StyxValidationError("`epi` must not be None")
+    if not isinstance(params["epi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`epi` has the wrong type: Received `{type(params.get("epi", None))}` expected `InputPathType`')
+    if params.get("anat", None) is None:
+        raise StyxValidationError("`anat` must not be None")
+    if not isinstance(params["anat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anat` has the wrong type: Received `{type(params.get("anat", None))}` expected `InputPathType`')
+    if params.get("epi_base", None) is None:
+        raise StyxValidationError("`epi_base` must not be None")
+    if not isinstance(params["epi_base"], str):
+        raise StyxValidationError(f'`epi_base` has the wrong type: Received `{type(params.get("epi_base", None))}` expected `str`')
+    if params.get("anat2epi", False) is None:
+        raise StyxValidationError("`anat2epi` must not be None")
+    if not isinstance(params["anat2epi"], bool):
+        raise StyxValidationError(f'`anat2epi` has the wrong type: Received `{type(params.get("anat2epi", False))}` expected `bool`')
+    if params.get("epi2anat", False) is None:
+        raise StyxValidationError("`epi2anat` must not be None")
+    if not isinstance(params["epi2anat"], bool):
+        raise StyxValidationError(f'`epi2anat` has the wrong type: Received `{type(params.get("epi2anat", False))}` expected `bool`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("AddEdge", False) is None:
+        raise StyxValidationError("`AddEdge` must not be None")
+    if not isinstance(params["AddEdge"], bool):
+        raise StyxValidationError(f'`AddEdge` has the wrong type: Received `{type(params.get("AddEdge", False))}` expected `bool`')
+    if params.get("big_move", False) is None:
+        raise StyxValidationError("`big_move` must not be None")
+    if not isinstance(params["big_move"], bool):
+        raise StyxValidationError(f'`big_move` has the wrong type: Received `{type(params.get("big_move", False))}` expected `bool`')
+    if params.get("giant_move", False) is None:
+        raise StyxValidationError("`giant_move` must not be None")
+    if not isinstance(params["giant_move"], bool):
+        raise StyxValidationError(f'`giant_move` has the wrong type: Received `{type(params.get("giant_move", False))}` expected `bool`')
+    if params.get("ginormous_move", False) is None:
+        raise StyxValidationError("`ginormous_move` must not be None")
+    if not isinstance(params["ginormous_move"], bool):
+        raise StyxValidationError(f'`ginormous_move` has the wrong type: Received `{type(params.get("ginormous_move", False))}` expected `bool`')
+    if params.get("keep_rm_files", False) is None:
+        raise StyxValidationError("`keep_rm_files` must not be None")
+    if not isinstance(params["keep_rm_files"], bool):
+        raise StyxValidationError(f'`keep_rm_files` has the wrong type: Received `{type(params.get("keep_rm_files", False))}` expected `bool`')
+    if params.get("prep_only", False) is None:
+        raise StyxValidationError("`prep_only` must not be None")
+    if not isinstance(params["prep_only"], bool):
+        raise StyxValidationError(f'`prep_only` has the wrong type: Received `{type(params.get("prep_only", False))}` expected `bool`')
+    if params.get("ana_has_skull", None) is not None:
+        if not isinstance(params["ana_has_skull"], bool):
+            raise StyxValidationError(f'`ana_has_skull` has the wrong type: Received `{type(params.get("ana_has_skull", None))}` expected `bool | None`')
+    if params.get("epi_strip", None) is not None:
+        if not isinstance(params["epi_strip"], str):
+            raise StyxValidationError(f'`epi_strip` has the wrong type: Received `{type(params.get("epi_strip", None))}` expected `typing.Literal["3dSkullStrip", "3dAutomask", "None"] | None`')
+        if params["epi_strip"] not in ["3dSkullStrip", "3dAutomask", "None"]:
+            raise StyxValidationError("Parameter `epi_strip` must be one of [\"3dSkullStrip\", \"3dAutomask\", \"None\"]")
+    if params.get("volreg_method", None) is not None:
+        if not isinstance(params["volreg_method"], str):
+            raise StyxValidationError(f'`volreg_method` has the wrong type: Received `{type(params.get("volreg_method", None))}` expected `typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None`')
+        if params["volreg_method"] not in ["3dvolreg", "3dWarpDrive", "3dAllineate"]:
+            raise StyxValidationError("Parameter `volreg_method` must be one of [\"3dvolreg\", \"3dWarpDrive\", \"3dAllineate\"]")
+    if params.get("ex_mode", None) is not None:
+        if not isinstance(params["ex_mode"], str):
+            raise StyxValidationError(f'`ex_mode` has the wrong type: Received `{type(params.get("ex_mode", None))}` expected `typing.Literal["quiet", "echo", "dry_run", "script"] | None`')
+        if params["ex_mode"] not in ["quiet", "echo", "dry_run", "script"]:
+            raise StyxValidationError("Parameter `ex_mode` must be one of [\"quiet\", \"echo\", \"dry_run\", \"script\"]")
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+
+
 def align_epi_anat_py_cargs(
     params: AlignEpiAnatPyParameters,
     execution: Execution,
@@ -254,6 +337,7 @@ def align_epi_anat_py_execute(
     Returns:
         NamedTuple of outputs (described in `AlignEpiAnatPyOutputs`).
     """
+    align_epi_anat_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ALIGN_EPI_ANAT_PY_METADATA)
     params = execution.params(params)

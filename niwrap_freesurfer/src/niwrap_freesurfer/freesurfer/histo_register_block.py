@@ -82,6 +82,47 @@ def histo_register_block_params(
     return params
 
 
+def histo_register_block_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HistoRegisterBlockParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("seg_time1", None) is None:
+        raise StyxValidationError("`seg_time1` must not be None")
+    if not isinstance(params["seg_time1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`seg_time1` has the wrong type: Received `{type(params.get("seg_time1", None))}` expected `InputPathType`')
+    if params.get("seg_time2", None) is None:
+        raise StyxValidationError("`seg_time2` must not be None")
+    if not isinstance(params["seg_time2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`seg_time2` has the wrong type: Received `{type(params.get("seg_time2", None))}` expected `InputPathType`')
+    if params.get("transform1", None) is None:
+        raise StyxValidationError("`transform1` must not be None")
+    if not isinstance(params["transform1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform1` has the wrong type: Received `{type(params.get("transform1", None))}` expected `InputPathType`')
+    if params.get("transform2", None) is None:
+        raise StyxValidationError("`transform2` must not be None")
+    if not isinstance(params["transform2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform2` has the wrong type: Received `{type(params.get("transform2", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("out_like", None) is not None:
+        if not isinstance(params["out_like"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_like` has the wrong type: Received `{type(params.get("out_like", None))}` expected `InputPathType | None`')
+    if params.get("invert_transform", False) is None:
+        raise StyxValidationError("`invert_transform` must not be None")
+    if not isinstance(params["invert_transform"], bool):
+        raise StyxValidationError(f'`invert_transform` has the wrong type: Received `{type(params.get("invert_transform", False))}` expected `bool`')
+
+
 def histo_register_block_cargs(
     params: HistoRegisterBlockParameters,
     execution: Execution,
@@ -151,6 +192,7 @@ def histo_register_block_execute(
     Returns:
         NamedTuple of outputs (described in `HistoRegisterBlockOutputs`).
     """
+    histo_register_block_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HISTO_REGISTER_BLOCK_METADATA)
     params = execution.params(params)

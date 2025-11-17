@@ -76,6 +76,44 @@ def un_warp_epi_py_params(
     return params
 
 
+def un_warp_epi_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UnWarpEpiPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("forward", None) is None:
+        raise StyxValidationError("`forward` must not be None")
+    if not isinstance(params["forward"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`forward` has the wrong type: Received `{type(params.get("forward", None))}` expected `InputPathType`')
+    if params.get("reverse", None) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", None))}` expected `InputPathType`')
+    if params.get("anat4warp", None) is None:
+        raise StyxValidationError("`anat4warp` must not be None")
+    if not isinstance(params["anat4warp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anat4warp` has the wrong type: Received `{type(params.get("anat4warp", None))}` expected `InputPathType`')
+    if params.get("data", None) is None:
+        raise StyxValidationError("`data` must not be None")
+    if not isinstance(params["data"], str):
+        raise StyxValidationError(f'`data` has the wrong type: Received `{type(params.get("data", None))}` expected `str`')
+    if params.get("subjID", None) is None:
+        raise StyxValidationError("`subjID` must not be None")
+    if not isinstance(params["subjID"], str):
+        raise StyxValidationError(f'`subjID` has the wrong type: Received `{type(params.get("subjID", None))}` expected `str`')
+    if params.get("giant_move", False) is None:
+        raise StyxValidationError("`giant_move` must not be None")
+    if not isinstance(params["giant_move"], bool):
+        raise StyxValidationError(f'`giant_move` has the wrong type: Received `{type(params.get("giant_move", False))}` expected `bool`')
+
+
 def un_warp_epi_py_cargs(
     params: UnWarpEpiPyParameters,
     execution: Execution,
@@ -155,6 +193,7 @@ def un_warp_epi_py_execute(
     Returns:
         NamedTuple of outputs (described in `UnWarpEpiPyOutputs`).
     """
+    un_warp_epi_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UN_WARP_EPI_PY_METADATA)
     params = execution.params(params)

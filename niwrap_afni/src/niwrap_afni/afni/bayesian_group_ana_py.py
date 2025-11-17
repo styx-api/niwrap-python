@@ -134,6 +134,75 @@ def bayesian_group_ana_py_params(
     return params
 
 
+def bayesian_group_ana_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BayesianGroupAnaPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataTable", None) is None:
+        raise StyxValidationError("`dataTable` must not be None")
+    if not isinstance(params["dataTable"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataTable` has the wrong type: Received `{type(params.get("dataTable", None))}` expected `InputPathType`')
+    if params.get("y_variable", None) is None:
+        raise StyxValidationError("`y_variable` must not be None")
+    if not isinstance(params["y_variable"], str):
+        raise StyxValidationError(f'`y_variable` has the wrong type: Received `{type(params.get("y_variable", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("x_variables", None) is not None:
+        if not isinstance(params["x_variables"], list):
+            raise StyxValidationError(f'`x_variables` has the wrong type: Received `{type(params.get("x_variables", None))}` expected `list[str] | None`')
+        for e in params["x_variables"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`x_variables` has the wrong type: Received `{type(params.get("x_variables", None))}` expected `list[str] | None`')
+    if params.get("no_center", False) is None:
+        raise StyxValidationError("`no_center` must not be None")
+    if not isinstance(params["no_center"], bool):
+        raise StyxValidationError(f'`no_center` has the wrong type: Received `{type(params.get("no_center", False))}` expected `bool`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+    if params.get("chains", None) is not None:
+        if not isinstance(params["chains"], (float, int)):
+            raise StyxValidationError(f'`chains` has the wrong type: Received `{type(params.get("chains", None))}` expected `float | None`')
+    if params.get("control_list", None) is not None:
+        if not isinstance(params["control_list"], str):
+            raise StyxValidationError(f'`control_list` has the wrong type: Received `{type(params.get("control_list", None))}` expected `str | None`')
+    if params.get("plot", False) is None:
+        raise StyxValidationError("`plot` must not be None")
+    if not isinstance(params["plot"], bool):
+        raise StyxValidationError(f'`plot` has the wrong type: Received `{type(params.get("plot", False))}` expected `bool`')
+    if params.get("more_plots", None) is not None:
+        if not isinstance(params["more_plots"], list):
+            raise StyxValidationError(f'`more_plots` has the wrong type: Received `{type(params.get("more_plots", None))}` expected `list[str] | None`')
+        for e in params["more_plots"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`more_plots` has the wrong type: Received `{type(params.get("more_plots", None))}` expected `list[str] | None`')
+    if params.get("RData", False) is None:
+        raise StyxValidationError("`RData` must not be None")
+    if not isinstance(params["RData"], bool):
+        raise StyxValidationError(f'`RData` has the wrong type: Received `{type(params.get("RData", False))}` expected `bool`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def bayesian_group_ana_py_cargs(
     params: BayesianGroupAnaPyParameters,
     execution: Execution,
@@ -243,6 +312,7 @@ def bayesian_group_ana_py_execute(
     Returns:
         NamedTuple of outputs (described in `BayesianGroupAnaPyOutputs`).
     """
+    bayesian_group_ana_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BAYESIAN_GROUP_ANA_PY_METADATA)
     params = execution.params(params)

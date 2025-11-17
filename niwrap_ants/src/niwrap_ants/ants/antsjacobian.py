@@ -84,6 +84,47 @@ def antsjacobian_params(
     return params
 
 
+def antsjacobian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsjacobianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("imagedim", None) is None:
+        raise StyxValidationError("`imagedim` must not be None")
+    if not isinstance(params["imagedim"], int):
+        raise StyxValidationError(f'`imagedim` has the wrong type: Received `{type(params.get("imagedim", None))}` expected `int`')
+    if params.get("gwarp", None) is None:
+        raise StyxValidationError("`gwarp` must not be None")
+    if not isinstance(params["gwarp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`gwarp` has the wrong type: Received `{type(params.get("gwarp", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("uselog", None) is None:
+        raise StyxValidationError("`uselog` must not be None")
+    if not isinstance(params["uselog"], int):
+        raise StyxValidationError(f'`uselog` has the wrong type: Received `{type(params.get("uselog", None))}` expected `int`')
+    if params.get("maskfn", None) is None:
+        raise StyxValidationError("`maskfn` must not be None")
+    if not isinstance(params["maskfn"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskfn` has the wrong type: Received `{type(params.get("maskfn", None))}` expected `InputPathType`')
+    if params.get("normbytotalbool", None) is None:
+        raise StyxValidationError("`normbytotalbool` must not be None")
+    if not isinstance(params["normbytotalbool"], int):
+        raise StyxValidationError(f'`normbytotalbool` has the wrong type: Received `{type(params.get("normbytotalbool", None))}` expected `int`')
+    if params.get("projectionvector", None) is not None:
+        if not isinstance(params["projectionvector"], str):
+            raise StyxValidationError(f'`projectionvector` has the wrong type: Received `{type(params.get("projectionvector", None))}` expected `str | None`')
+
+
 def antsjacobian_cargs(
     params: AntsjacobianParameters,
     execution: Execution,
@@ -151,6 +192,7 @@ def antsjacobian_execute(
     Returns:
         NamedTuple of outputs (described in `AntsjacobianOutputs`).
     """
+    antsjacobian_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTSJACOBIAN_METADATA)
     params = execution.params(params)

@@ -80,6 +80,40 @@ def cblumwmgyri_params(
     return params
 
 
+def cblumwmgyri_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CblumwmgyriParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("source_seg", None) is not None:
+        if not isinstance(params["source_seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`source_seg` has the wrong type: Received `{type(params.get("source_seg", None))}` expected `InputPathType | None`')
+    if params.get("n_erodes_dilates", None) is not None:
+        if not isinstance(params["n_erodes_dilates"], (float, int)):
+            raise StyxValidationError(f'`n_erodes_dilates` has the wrong type: Received `{type(params.get("n_erodes_dilates", None))}` expected `float | None`')
+    if params.get("out_seg", None) is not None:
+        if not isinstance(params["out_seg"], str):
+            raise StyxValidationError(f'`out_seg` has the wrong type: Received `{type(params.get("out_seg", None))}` expected `str | None`')
+    if params.get("no_segstats", False) is None:
+        raise StyxValidationError("`no_segstats` must not be None")
+    if not isinstance(params["no_segstats"], bool):
+        raise StyxValidationError(f'`no_segstats` has the wrong type: Received `{type(params.get("no_segstats", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+
+
 def cblumwmgyri_cargs(
     params: CblumwmgyriParameters,
     execution: Execution,
@@ -164,6 +198,7 @@ def cblumwmgyri_execute(
     Returns:
         NamedTuple of outputs (described in `CblumwmgyriOutputs`).
     """
+    cblumwmgyri_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CBLUMWMGYRI_METADATA)
     params = execution.params(params)

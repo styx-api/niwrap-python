@@ -67,6 +67,38 @@ def mri_mark_temporal_lobe_params(
     return params
 
 
+def mri_mark_temporal_lobe_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMarkTemporalLobeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spacing", None) is not None:
+        if not isinstance(params["spacing"], str):
+            raise StyxValidationError(f'`spacing` has the wrong type: Received `{type(params.get("spacing", None))}` expected `str | None`')
+    if params.get("use_gradient", False) is None:
+        raise StyxValidationError("`use_gradient` must not be None")
+    if not isinstance(params["use_gradient"], bool):
+        raise StyxValidationError(f'`use_gradient` has the wrong type: Received `{type(params.get("use_gradient", False))}` expected `bool`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[InputPathType]`')
+    for e in params["subjects"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[InputPathType]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def mri_mark_temporal_lobe_cargs(
     params: MriMarkTemporalLobeParameters,
     execution: Execution,
@@ -131,6 +163,7 @@ def mri_mark_temporal_lobe_execute(
     Returns:
         NamedTuple of outputs (described in `MriMarkTemporalLobeOutputs`).
     """
+    mri_mark_temporal_lobe_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MARK_TEMPORAL_LOBE_METADATA)
     params = execution.params(params)

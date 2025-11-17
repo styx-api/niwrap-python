@@ -79,6 +79,28 @@ def surface_distortion_smooth_params(
     return params
 
 
+def surface_distortion_smooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceDistortionSmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], (float, int)):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+
+
 def surface_distortion_smooth_cargs(
     params: SurfaceDistortionSmoothParameters,
     execution: Execution,
@@ -122,6 +144,23 @@ def surface_distortion_match_surface_area_params(
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     return params
+
+
+def surface_distortion_match_surface_area_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceDistortionMatchSurfaceAreaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def surface_distortion_match_surface_area_cargs(
@@ -200,6 +239,47 @@ def surface_distortion_params(
     if log2 is not None:
         params["log2"] = log2
     return params
+
+
+def surface_distortion_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceDistortionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("smooth", None) is not None:
+        surface_distortion_smooth_validate(params["smooth"])
+    if params.get("match-surface-area", None) is not None:
+        surface_distortion_match_surface_area_validate(params["match-surface-area"])
+    if params.get("caret5-method", False) is None:
+        raise StyxValidationError("`caret5-method` must not be None")
+    if not isinstance(params["caret5-method"], bool):
+        raise StyxValidationError(f'`caret5-method` has the wrong type: Received `{type(params.get("caret5-method", False))}` expected `bool`')
+    if params.get("edge-method", False) is None:
+        raise StyxValidationError("`edge-method` must not be None")
+    if not isinstance(params["edge-method"], bool):
+        raise StyxValidationError(f'`edge-method` has the wrong type: Received `{type(params.get("edge-method", False))}` expected `bool`')
+    if params.get("log2", False) is not None:
+        if not isinstance(params["log2"], bool):
+            raise StyxValidationError(f'`log2` has the wrong type: Received `{type(params.get("log2", False))}` expected `bool | None`')
+    if params.get("surface-reference", None) is None:
+        raise StyxValidationError("`surface-reference` must not be None")
+    if not isinstance(params["surface-reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-reference` has the wrong type: Received `{type(params.get("surface-reference", None))}` expected `InputPathType`')
+    if params.get("surface-distorted", None) is None:
+        raise StyxValidationError("`surface-distorted` must not be None")
+    if not isinstance(params["surface-distorted"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-distorted` has the wrong type: Received `{type(params.get("surface-distorted", None))}` expected `InputPathType`')
 
 
 def surface_distortion_cargs(
@@ -286,6 +366,7 @@ def surface_distortion_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceDistortionOutputs`).
     """
+    surface_distortion_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_DISTORTION_METADATA)
     params = execution.params(params)

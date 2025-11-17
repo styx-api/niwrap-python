@@ -119,6 +119,75 @@ def fslcreatehd_params(
     return params
 
 
+def fslcreatehd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslcreatehdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xsize", None) is None:
+        raise StyxValidationError("`xsize` must not be None")
+    if not isinstance(params["xsize"], (float, int)):
+        raise StyxValidationError(f'`xsize` has the wrong type: Received `{type(params.get("xsize", None))}` expected `float`')
+    if params.get("ysize", None) is None:
+        raise StyxValidationError("`ysize` must not be None")
+    if not isinstance(params["ysize"], (float, int)):
+        raise StyxValidationError(f'`ysize` has the wrong type: Received `{type(params.get("ysize", None))}` expected `float`')
+    if params.get("zsize", None) is None:
+        raise StyxValidationError("`zsize` must not be None")
+    if not isinstance(params["zsize"], (float, int)):
+        raise StyxValidationError(f'`zsize` has the wrong type: Received `{type(params.get("zsize", None))}` expected `float`')
+    if params.get("tsize", None) is None:
+        raise StyxValidationError("`tsize` must not be None")
+    if not isinstance(params["tsize"], (float, int)):
+        raise StyxValidationError(f'`tsize` has the wrong type: Received `{type(params.get("tsize", None))}` expected `float`')
+    if params.get("xvoxsize", None) is None:
+        raise StyxValidationError("`xvoxsize` must not be None")
+    if not isinstance(params["xvoxsize"], (float, int)):
+        raise StyxValidationError(f'`xvoxsize` has the wrong type: Received `{type(params.get("xvoxsize", None))}` expected `float`')
+    if params.get("yvoxsize", None) is None:
+        raise StyxValidationError("`yvoxsize` must not be None")
+    if not isinstance(params["yvoxsize"], (float, int)):
+        raise StyxValidationError(f'`yvoxsize` has the wrong type: Received `{type(params.get("yvoxsize", None))}` expected `float`')
+    if params.get("zvoxsize", None) is None:
+        raise StyxValidationError("`zvoxsize` must not be None")
+    if not isinstance(params["zvoxsize"], (float, int)):
+        raise StyxValidationError(f'`zvoxsize` has the wrong type: Received `{type(params.get("zvoxsize", None))}` expected `float`')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("xorigin", None) is None:
+        raise StyxValidationError("`xorigin` must not be None")
+    if not isinstance(params["xorigin"], (float, int)):
+        raise StyxValidationError(f'`xorigin` has the wrong type: Received `{type(params.get("xorigin", None))}` expected `float`')
+    if params.get("yorigin", None) is None:
+        raise StyxValidationError("`yorigin` must not be None")
+    if not isinstance(params["yorigin"], (float, int)):
+        raise StyxValidationError(f'`yorigin` has the wrong type: Received `{type(params.get("yorigin", None))}` expected `float`')
+    if params.get("zorigin", None) is None:
+        raise StyxValidationError("`zorigin` must not be None")
+    if not isinstance(params["zorigin"], (float, int)):
+        raise StyxValidationError(f'`zorigin` has the wrong type: Received `{type(params.get("zorigin", None))}` expected `float`')
+    if params.get("datatype", None) is None:
+        raise StyxValidationError("`datatype` must not be None")
+    if not isinstance(params["datatype"], (float, int)):
+        raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `float`')
+    if params.get("headername", None) is None:
+        raise StyxValidationError("`headername` must not be None")
+    if not isinstance(params["headername"], str):
+        raise StyxValidationError(f'`headername` has the wrong type: Received `{type(params.get("headername", None))}` expected `str`')
+    if params.get("nifti_xml_file", None) is not None:
+        if not isinstance(params["nifti_xml_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nifti_xml_file` has the wrong type: Received `{type(params.get("nifti_xml_file", None))}` expected `InputPathType | None`')
+
+
 def fslcreatehd_cargs(
     params: FslcreatehdParameters,
     execution: Execution,
@@ -191,6 +260,7 @@ def fslcreatehd_execute(
     Returns:
         NamedTuple of outputs (described in `FslcreatehdOutputs`).
     """
+    fslcreatehd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLCREATEHD_METADATA)
     params = execution.params(params)

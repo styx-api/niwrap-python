@@ -101,6 +101,49 @@ def segment_subregions_params(
     return params
 
 
+def segment_subregions_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentSubregionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("cross", None) is not None:
+        if not isinstance(params["cross"], str):
+            raise StyxValidationError(f'`cross` has the wrong type: Received `{type(params.get("cross", None))}` expected `str | None`')
+    if params.get("long_base", None) is not None:
+        if not isinstance(params["long_base"], str):
+            raise StyxValidationError(f'`long_base` has the wrong type: Received `{type(params.get("long_base", None))}` expected `str | None`')
+    if params.get("sd", None) is not None:
+        if not isinstance(params["sd"], str):
+            raise StyxValidationError(f'`sd` has the wrong type: Received `{type(params.get("sd", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("temp_dir", None) is not None:
+        if not isinstance(params["temp_dir"], str):
+            raise StyxValidationError(f'`temp_dir` has the wrong type: Received `{type(params.get("temp_dir", None))}` expected `str | None`')
+    if params.get("out_dir", None) is not None:
+        if not isinstance(params["out_dir"], str):
+            raise StyxValidationError(f'`out_dir` has the wrong type: Received `{type(params.get("out_dir", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+
+
 def segment_subregions_cargs(
     params: SegmentSubregionsParameters,
     execution: Execution,
@@ -196,6 +239,7 @@ def segment_subregions_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentSubregionsOutputs`).
     """
+    segment_subregions_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_SUBREGIONS_METADATA)
     params = execution.params(params)

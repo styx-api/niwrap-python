@@ -56,6 +56,27 @@ def reinflate_subject_rh_params(
     return params
 
 
+def reinflate_subject_rh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ReinflateSubjectRhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], str):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str`')
+    if params.get("additional_options", None) is not None:
+        if not isinstance(params["additional_options"], str):
+            raise StyxValidationError(f'`additional_options` has the wrong type: Received `{type(params.get("additional_options", None))}` expected `str | None`')
+
+
 def reinflate_subject_rh_cargs(
     params: ReinflateSubjectRhParameters,
     execution: Execution,
@@ -119,6 +140,7 @@ def reinflate_subject_rh_execute(
     Returns:
         NamedTuple of outputs (described in `ReinflateSubjectRhOutputs`).
     """
+    reinflate_subject_rh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REINFLATE_SUBJECT_RH_METADATA)
     params = execution.params(params)

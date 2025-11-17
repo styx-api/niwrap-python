@@ -114,6 +114,66 @@ def betsurf_params(
     return params
 
 
+def betsurf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BetsurfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_image", None) is None:
+        raise StyxValidationError("`t1_image` must not be None")
+    if not isinstance(params["t1_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_image` has the wrong type: Received `{type(params.get("t1_image", None))}` expected `InputPathType`')
+    if params.get("t2_image", None) is not None:
+        if not isinstance(params["t2_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t2_image` has the wrong type: Received `{type(params.get("t2_image", None))}` expected `InputPathType | None`')
+    if params.get("bet_mesh", None) is None:
+        raise StyxValidationError("`bet_mesh` must not be None")
+    if not isinstance(params["bet_mesh"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bet_mesh` has the wrong type: Received `{type(params.get("bet_mesh", None))}` expected `InputPathType`')
+    if params.get("t1_to_standard_mat", None) is None:
+        raise StyxValidationError("`t1_to_standard_mat` must not be None")
+    if not isinstance(params["t1_to_standard_mat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_to_standard_mat` has the wrong type: Received `{type(params.get("t1_to_standard_mat", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("t1only_flag", False) is None:
+        raise StyxValidationError("`t1only_flag` must not be None")
+    if not isinstance(params["t1only_flag"], bool):
+        raise StyxValidationError(f'`t1only_flag` has the wrong type: Received `{type(params.get("t1only_flag", False))}` expected `bool`')
+    if params.get("outline_flag", False) is None:
+        raise StyxValidationError("`outline_flag` must not be None")
+    if not isinstance(params["outline_flag"], bool):
+        raise StyxValidationError(f'`outline_flag` has the wrong type: Received `{type(params.get("outline_flag", False))}` expected `bool`')
+    if params.get("mask_flag", False) is None:
+        raise StyxValidationError("`mask_flag` must not be None")
+    if not isinstance(params["mask_flag"], bool):
+        raise StyxValidationError(f'`mask_flag` has the wrong type: Received `{type(params.get("mask_flag", False))}` expected `bool`')
+    if params.get("skull_mask_flag", False) is None:
+        raise StyxValidationError("`skull_mask_flag` must not be None")
+    if not isinstance(params["skull_mask_flag"], bool):
+        raise StyxValidationError(f'`skull_mask_flag` has the wrong type: Received `{type(params.get("skull_mask_flag", False))}` expected `bool`')
+    if params.get("increased_precision", None) is not None:
+        if not isinstance(params["increased_precision"], int):
+            raise StyxValidationError(f'`increased_precision` has the wrong type: Received `{type(params.get("increased_precision", None))}` expected `int | None`')
+
+
 def betsurf_cargs(
     params: BetsurfParameters,
     execution: Execution,
@@ -196,6 +256,7 @@ def betsurf_execute(
     Returns:
         NamedTuple of outputs (described in `BetsurfOutputs`).
     """
+    betsurf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BETSURF_METADATA)
     params = execution.params(params)

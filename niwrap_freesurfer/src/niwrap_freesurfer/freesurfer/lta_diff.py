@@ -93,6 +93,48 @@ def lta_diff_params(
     return params
 
 
+def lta_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LtaDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transform1", None) is None:
+        raise StyxValidationError("`transform1` must not be None")
+    if not isinstance(params["transform1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform1` has the wrong type: Received `{type(params.get("transform1", None))}` expected `InputPathType`')
+    if params.get("transform2", None) is not None:
+        if not isinstance(params["transform2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transform2` has the wrong type: Received `{type(params.get("transform2", None))}` expected `InputPathType | None`')
+    if params.get("dist_type", None) is not None:
+        if not isinstance(params["dist_type"], int):
+            raise StyxValidationError(f'`dist_type` has the wrong type: Received `{type(params.get("dist_type", None))}` expected `int | None`')
+    if params.get("invert1", False) is None:
+        raise StyxValidationError("`invert1` must not be None")
+    if not isinstance(params["invert1"], bool):
+        raise StyxValidationError(f'`invert1` has the wrong type: Received `{type(params.get("invert1", False))}` expected `bool`')
+    if params.get("invert2", False) is None:
+        raise StyxValidationError("`invert2` must not be None")
+    if not isinstance(params["invert2"], bool):
+        raise StyxValidationError(f'`invert2` has the wrong type: Received `{type(params.get("invert2", False))}` expected `bool`')
+    if params.get("vox", False) is None:
+        raise StyxValidationError("`vox` must not be None")
+    if not isinstance(params["vox"], bool):
+        raise StyxValidationError(f'`vox` has the wrong type: Received `{type(params.get("vox", False))}` expected `bool`')
+    if params.get("normdiv", None) is not None:
+        if not isinstance(params["normdiv"], (float, int)):
+            raise StyxValidationError(f'`normdiv` has the wrong type: Received `{type(params.get("normdiv", None))}` expected `float | None`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+
+
 def lta_diff_cargs(
     params: LtaDiffParameters,
     execution: Execution,
@@ -174,6 +216,7 @@ def lta_diff_execute(
     Returns:
         NamedTuple of outputs (described in `LtaDiffOutputs`).
     """
+    lta_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LTA_DIFF_METADATA)
     params = execution.params(params)

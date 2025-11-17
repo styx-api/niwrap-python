@@ -63,6 +63,41 @@ def spline3_test_params(
     return params
 
 
+def spline3_test_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Spline3TestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("x_values", None) is None:
+        raise StyxValidationError("`x_values` must not be None")
+    if not isinstance(params["x_values"], list):
+        raise StyxValidationError(f'`x_values` has the wrong type: Received `{type(params.get("x_values", None))}` expected `list[float]`')
+    for e in params["x_values"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`x_values` has the wrong type: Received `{type(params.get("x_values", None))}` expected `list[float]`')
+    if params.get("y_values", None) is None:
+        raise StyxValidationError("`y_values` must not be None")
+    if not isinstance(params["y_values"], list):
+        raise StyxValidationError(f'`y_values` has the wrong type: Received `{type(params.get("y_values", None))}` expected `list[float]`')
+    for e in params["y_values"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`y_values` has the wrong type: Received `{type(params.get("y_values", None))}` expected `list[float]`')
+    if params.get("x_new_values", None) is None:
+        raise StyxValidationError("`x_new_values` must not be None")
+    if not isinstance(params["x_new_values"], list):
+        raise StyxValidationError(f'`x_new_values` has the wrong type: Received `{type(params.get("x_new_values", None))}` expected `list[float]`')
+    for e in params["x_new_values"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`x_new_values` has the wrong type: Received `{type(params.get("x_new_values", None))}` expected `list[float]`')
+
+
 def spline3_test_cargs(
     params: Spline3TestParameters,
     execution: Execution,
@@ -124,6 +159,7 @@ def spline3_test_execute(
     Returns:
         NamedTuple of outputs (described in `Spline3TestOutputs`).
     """
+    spline3_test_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPLINE3_TEST_METADATA)
     params = execution.params(params)

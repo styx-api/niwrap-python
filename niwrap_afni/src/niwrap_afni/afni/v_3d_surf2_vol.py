@@ -185,6 +185,104 @@ def v_3d_surf2_vol_params(
     return params
 
 
+def v_3d_surf2_vol_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSurf2VolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec` has the wrong type: Received `{type(params.get("spec", None))}` expected `InputPathType`')
+    if params.get("surface_volume", None) is None:
+        raise StyxValidationError("`surface_volume` must not be None")
+    if not isinstance(params["surface_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_volume` has the wrong type: Received `{type(params.get("surface_volume", None))}` expected `InputPathType`')
+    if params.get("surf_a", None) is None:
+        raise StyxValidationError("`surf_a` must not be None")
+    if not isinstance(params["surf_a"], str):
+        raise StyxValidationError(f'`surf_a` has the wrong type: Received `{type(params.get("surf_a", None))}` expected `str`')
+    if params.get("surf_b", None) is not None:
+        if not isinstance(params["surf_b"], str):
+            raise StyxValidationError(f'`surf_b` has the wrong type: Received `{type(params.get("surf_b", None))}` expected `str | None`')
+    if params.get("grid_parent", None) is None:
+        raise StyxValidationError("`grid_parent` must not be None")
+    if not isinstance(params["grid_parent"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`grid_parent` has the wrong type: Received `{type(params.get("grid_parent", None))}` expected `InputPathType`')
+    if params.get("map_func", None) is None:
+        raise StyxValidationError("`map_func` must not be None")
+    if not isinstance(params["map_func"], str):
+        raise StyxValidationError(f'`map_func` has the wrong type: Received `{type(params.get("map_func", None))}` expected `str`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("surf_xyz_1d", None) is not None:
+        if not isinstance(params["surf_xyz_1d"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_xyz_1d` has the wrong type: Received `{type(params.get("surf_xyz_1d", None))}` expected `InputPathType | None`')
+    if params.get("sdata_1d", None) is not None:
+        if not isinstance(params["sdata_1d"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sdata_1d` has the wrong type: Received `{type(params.get("sdata_1d", None))}` expected `InputPathType | None`')
+    if params.get("sdata", None) is not None:
+        if not isinstance(params["sdata"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sdata` has the wrong type: Received `{type(params.get("sdata", None))}` expected `InputPathType | None`')
+    if params.get("f_steps", None) is not None:
+        if not isinstance(params["f_steps"], (float, int)):
+            raise StyxValidationError(f'`f_steps` has the wrong type: Received `{type(params.get("f_steps", None))}` expected `float | None`')
+    if params.get("f_index", None) is not None:
+        if not isinstance(params["f_index"], str):
+            raise StyxValidationError(f'`f_index` has the wrong type: Received `{type(params.get("f_index", None))}` expected `str | None`')
+    if params.get("f_p1_fr", None) is not None:
+        if not isinstance(params["f_p1_fr"], (float, int)):
+            raise StyxValidationError(f'`f_p1_fr` has the wrong type: Received `{type(params.get("f_p1_fr", None))}` expected `float | None`')
+    if params.get("f_pn_fr", None) is not None:
+        if not isinstance(params["f_pn_fr"], (float, int)):
+            raise StyxValidationError(f'`f_pn_fr` has the wrong type: Received `{type(params.get("f_pn_fr", None))}` expected `float | None`')
+    if params.get("f_p1_mm", None) is not None:
+        if not isinstance(params["f_p1_mm"], (float, int)):
+            raise StyxValidationError(f'`f_p1_mm` has the wrong type: Received `{type(params.get("f_p1_mm", None))}` expected `float | None`')
+    if params.get("f_pn_mm", None) is not None:
+        if not isinstance(params["f_pn_mm"], (float, int)):
+            raise StyxValidationError(f'`f_pn_mm` has the wrong type: Received `{type(params.get("f_pn_mm", None))}` expected `float | None`')
+    if params.get("stop_gap", False) is None:
+        raise StyxValidationError("`stop_gap` must not be None")
+    if not isinstance(params["stop_gap"], bool):
+        raise StyxValidationError(f'`stop_gap` has the wrong type: Received `{type(params.get("stop_gap", False))}` expected `bool`')
+    if params.get("cmask", None) is not None:
+        if not isinstance(params["cmask"], str):
+            raise StyxValidationError(f'`cmask` has the wrong type: Received `{type(params.get("cmask", None))}` expected `str | None`')
+    if params.get("data_expr", None) is not None:
+        if not isinstance(params["data_expr"], str):
+            raise StyxValidationError(f'`data_expr` has the wrong type: Received `{type(params.get("data_expr", None))}` expected `str | None`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `str | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], int):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `int | None`')
+    if params.get("dnode", None) is not None:
+        if not isinstance(params["dnode"], int):
+            raise StyxValidationError(f'`dnode` has the wrong type: Received `{type(params.get("dnode", None))}` expected `int | None`')
+    if params.get("dvoxel", None) is not None:
+        if not isinstance(params["dvoxel"], int):
+            raise StyxValidationError(f'`dvoxel` has the wrong type: Received `{type(params.get("dvoxel", None))}` expected `int | None`')
+    if params.get("noscale", False) is None:
+        raise StyxValidationError("`noscale` must not be None")
+    if not isinstance(params["noscale"], bool):
+        raise StyxValidationError(f'`noscale` has the wrong type: Received `{type(params.get("noscale", False))}` expected `bool`')
+    if params.get("sxyz_orient_as_gpar", False) is None:
+        raise StyxValidationError("`sxyz_orient_as_gpar` must not be None")
+    if not isinstance(params["sxyz_orient_as_gpar"], bool):
+        raise StyxValidationError(f'`sxyz_orient_as_gpar` has the wrong type: Received `{type(params.get("sxyz_orient_as_gpar", False))}` expected `bool`')
+
+
 def v_3d_surf2_vol_cargs(
     params: V3dSurf2VolParameters,
     execution: Execution,
@@ -351,6 +449,7 @@ def v_3d_surf2_vol_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSurf2VolOutputs`).
     """
+    v_3d_surf2_vol_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SURF2_VOL_METADATA)
     params = execution.params(params)

@@ -100,6 +100,49 @@ def dmri_spline_params(
     return params
 
 
+def dmri_spline_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriSplineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("control_points_file", None) is None:
+        raise StyxValidationError("`control_points_file` must not be None")
+    if not isinstance(params["control_points_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`control_points_file` has the wrong type: Received `{type(params.get("control_points_file", None))}` expected `InputPathType`')
+    if params.get("mask_volume", None) is None:
+        raise StyxValidationError("`mask_volume` must not be None")
+    if not isinstance(params["mask_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is not None:
+        if not isinstance(params["output_volume"], str):
+            raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str | None`')
+    if params.get("show_points", False) is None:
+        raise StyxValidationError("`show_points` must not be None")
+    if not isinstance(params["show_points"], bool):
+        raise StyxValidationError(f'`show_points` has the wrong type: Received `{type(params.get("show_points", False))}` expected `bool`')
+    if params.get("output_points", None) is not None:
+        if not isinstance(params["output_points"], str):
+            raise StyxValidationError(f'`output_points` has the wrong type: Received `{type(params.get("output_points", None))}` expected `str | None`')
+    if params.get("output_vectors_base", None) is not None:
+        if not isinstance(params["output_vectors_base"], str):
+            raise StyxValidationError(f'`output_vectors_base` has the wrong type: Received `{type(params.get("output_vectors_base", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_options", False) is None:
+        raise StyxValidationError("`check_options` must not be None")
+    if not isinstance(params["check_options"], bool):
+        raise StyxValidationError(f'`check_options` has the wrong type: Received `{type(params.get("check_options", False))}` expected `bool`')
+
+
 def dmri_spline_cargs(
     params: DmriSplineParameters,
     execution: Execution,
@@ -190,6 +233,7 @@ def dmri_spline_execute(
     Returns:
         NamedTuple of outputs (described in `DmriSplineOutputs`).
     """
+    dmri_spline_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_SPLINE_METADATA)
     params = execution.params(params)

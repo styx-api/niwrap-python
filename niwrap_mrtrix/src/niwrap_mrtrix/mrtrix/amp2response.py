@@ -88,6 +88,28 @@ def amp2response_config_params(
     return params
 
 
+def amp2response_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Amp2responseConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def amp2response_config_cargs(
     params: Amp2responseConfigParameters,
     execution: Execution,
@@ -206,6 +228,91 @@ def amp2response_params(
     return params
 
 
+def amp2response_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Amp2responseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("isotropic", False) is None:
+        raise StyxValidationError("`isotropic` must not be None")
+    if not isinstance(params["isotropic"], bool):
+        raise StyxValidationError(f'`isotropic` has the wrong type: Received `{type(params.get("isotropic", False))}` expected `bool`')
+    if params.get("noconstraint", False) is None:
+        raise StyxValidationError("`noconstraint` must not be None")
+    if not isinstance(params["noconstraint"], bool):
+        raise StyxValidationError(f'`noconstraint` has the wrong type: Received `{type(params.get("noconstraint", False))}` expected `bool`')
+    if params.get("directions", None) is not None:
+        if not isinstance(params["directions"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`directions` has the wrong type: Received `{type(params.get("directions", None))}` expected `InputPathType | None`')
+    if params.get("shells", None) is not None:
+        if not isinstance(params["shells"], list):
+            raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+        for e in params["shells"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+    if params.get("lmax", None) is not None:
+        if not isinstance(params["lmax"], list):
+            raise StyxValidationError(f'`lmax` has the wrong type: Received `{type(params.get("lmax", None))}` expected `list[int] | None`')
+        for e in params["lmax"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`lmax` has the wrong type: Received `{type(params.get("lmax", None))}` expected `list[int] | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Amp2responseConfigParameters] | None`')
+        for e in params["config"]:
+            amp2response_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("amps", None) is None:
+        raise StyxValidationError("`amps` must not be None")
+    if not isinstance(params["amps"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`amps` has the wrong type: Received `{type(params.get("amps", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("directions_1", None) is None:
+        raise StyxValidationError("`directions_1` must not be None")
+    if not isinstance(params["directions_1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`directions_1` has the wrong type: Received `{type(params.get("directions_1", None))}` expected `InputPathType`')
+    if params.get("response", None) is None:
+        raise StyxValidationError("`response` must not be None")
+    if not isinstance(params["response"], str):
+        raise StyxValidationError(f'`response` has the wrong type: Received `{type(params.get("response", None))}` expected `str`')
+
+
 def amp2response_cargs(
     params: Amp2responseParameters,
     execution: Execution,
@@ -322,6 +429,7 @@ def amp2response_execute(
     Returns:
         NamedTuple of outputs (described in `Amp2responseOutputs`).
     """
+    amp2response_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AMP2RESPONSE_METADATA)
     params = execution.params(params)

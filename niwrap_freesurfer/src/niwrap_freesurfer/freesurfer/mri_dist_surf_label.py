@@ -61,6 +61,32 @@ def mri_dist_surf_label_params(
     return params
 
 
+def mri_dist_surf_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriDistSurfLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("label_file", None) is None:
+        raise StyxValidationError("`label_file` must not be None")
+    if not isinstance(params["label_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def mri_dist_surf_label_cargs(
     params: MriDistSurfLabelParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mri_dist_surf_label_execute(
     Returns:
         NamedTuple of outputs (described in `MriDistSurfLabelOutputs`).
     """
+    mri_dist_surf_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_DIST_SURF_LABEL_METADATA)
     params = execution.params(params)

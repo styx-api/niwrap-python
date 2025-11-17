@@ -181,6 +181,114 @@ def afni_params(
     return params
 
 
+def afni_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `AfniParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("session_directories", None) is not None:
+        if not isinstance(params["session_directories"], str):
+            raise StyxValidationError(f'`session_directories` has the wrong type: Received `{type(params.get("session_directories", None))}` expected `str | None`')
+    if params.get("bysub", None) is not None:
+        if not isinstance(params["bysub"], list):
+            raise StyxValidationError(f'`bysub` has the wrong type: Received `{type(params.get("bysub", None))}` expected `list[str] | None`')
+        for e in params["bysub"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`bysub` has the wrong type: Received `{type(params.get("bysub", None))}` expected `list[str] | None`')
+    if params.get("all_dsets", False) is None:
+        raise StyxValidationError("`all_dsets` must not be None")
+    if not isinstance(params["all_dsets"], bool):
+        raise StyxValidationError(f'`all_dsets` has the wrong type: Received `{type(params.get("all_dsets", False))}` expected `bool`')
+    if params.get("purge", False) is None:
+        raise StyxValidationError("`purge` must not be None")
+    if not isinstance(params["purge"], bool):
+        raise StyxValidationError(f'`purge` has the wrong type: Received `{type(params.get("purge", False))}` expected `bool`')
+    if params.get("posfunc", False) is None:
+        raise StyxValidationError("`posfunc` must not be None")
+    if not isinstance(params["posfunc"], bool):
+        raise StyxValidationError(f'`posfunc` has the wrong type: Received `{type(params.get("posfunc", False))}` expected `bool`')
+    if params.get("recursive", False) is None:
+        raise StyxValidationError("`recursive` must not be None")
+    if not isinstance(params["recursive"], bool):
+        raise StyxValidationError(f'`recursive` has the wrong type: Received `{type(params.get("recursive", False))}` expected `bool`')
+    if params.get("no1D", False) is None:
+        raise StyxValidationError("`no1D` must not be None")
+    if not isinstance(params["no1D"], bool):
+        raise StyxValidationError(f'`no1D` has the wrong type: Received `{type(params.get("no1D", False))}` expected `bool`')
+    if params.get("nocsv", False) is None:
+        raise StyxValidationError("`nocsv` must not be None")
+    if not isinstance(params["nocsv"], bool):
+        raise StyxValidationError(f'`nocsv` has the wrong type: Received `{type(params.get("nocsv", False))}` expected `bool`')
+    if params.get("notsv", False) is None:
+        raise StyxValidationError("`notsv` must not be None")
+    if not isinstance(params["notsv"], bool):
+        raise StyxValidationError(f'`notsv` has the wrong type: Received `{type(params.get("notsv", False))}` expected `bool`')
+    if params.get("unique", False) is None:
+        raise StyxValidationError("`unique` must not be None")
+    if not isinstance(params["unique"], bool):
+        raise StyxValidationError(f'`unique` has the wrong type: Received `{type(params.get("unique", False))}` expected `bool`')
+    if params.get("orient", None) is not None:
+        if not isinstance(params["orient"], str):
+            raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str | None`')
+    if params.get("noplugins", False) is None:
+        raise StyxValidationError("`noplugins` must not be None")
+    if not isinstance(params["noplugins"], bool):
+        raise StyxValidationError(f'`noplugins` has the wrong type: Received `{type(params.get("noplugins", False))}` expected `bool`')
+    if params.get("seehidden", False) is None:
+        raise StyxValidationError("`seehidden` must not be None")
+    if not isinstance(params["seehidden"], bool):
+        raise StyxValidationError(f'`seehidden` has the wrong type: Received `{type(params.get("seehidden", False))}` expected `bool`')
+    if params.get("allow_all_plugins", False) is None:
+        raise StyxValidationError("`allow_all_plugins` must not be None")
+    if not isinstance(params["allow_all_plugins"], bool):
+        raise StyxValidationError(f'`allow_all_plugins` has the wrong type: Received `{type(params.get("allow_all_plugins", False))}` expected `bool`')
+    if params.get("yesplugouts", False) is None:
+        raise StyxValidationError("`yesplugouts` must not be None")
+    if not isinstance(params["yesplugouts"], bool):
+        raise StyxValidationError(f'`yesplugouts` has the wrong type: Received `{type(params.get("yesplugouts", False))}` expected `bool`')
+    if params.get("debug_plugouts", False) is None:
+        raise StyxValidationError("`debug_plugouts` must not be None")
+    if not isinstance(params["debug_plugouts"], bool):
+        raise StyxValidationError(f'`debug_plugouts` has the wrong type: Received `{type(params.get("debug_plugouts", False))}` expected `bool`')
+    if params.get("noplugouts", False) is None:
+        raise StyxValidationError("`noplugouts` must not be None")
+    if not isinstance(params["noplugouts"], bool):
+        raise StyxValidationError(f'`noplugouts` has the wrong type: Received `{type(params.get("noplugouts", False))}` expected `bool`')
+    if params.get("skip_afnirc", False) is None:
+        raise StyxValidationError("`skip_afnirc` must not be None")
+    if not isinstance(params["skip_afnirc"], bool):
+        raise StyxValidationError(f'`skip_afnirc` has the wrong type: Received `{type(params.get("skip_afnirc", False))}` expected `bool`')
+    if params.get("layout", None) is not None:
+        if not isinstance(params["layout"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`layout` has the wrong type: Received `{type(params.get("layout", None))}` expected `InputPathType | None`')
+    if params.get("niml", False) is None:
+        raise StyxValidationError("`niml` must not be None")
+    if not isinstance(params["niml"], bool):
+        raise StyxValidationError(f'`niml` has the wrong type: Received `{type(params.get("niml", False))}` expected `bool`')
+    if params.get("np", None) is not None:
+        if not isinstance(params["np"], int):
+            raise StyxValidationError(f'`np` has the wrong type: Received `{type(params.get("np", None))}` expected `int | None`')
+    if params.get("npq", None) is not None:
+        if not isinstance(params["npq"], int):
+            raise StyxValidationError(f'`npq` has the wrong type: Received `{type(params.get("npq", None))}` expected `int | None`')
+    if params.get("npb", None) is not None:
+        if not isinstance(params["npb"], int):
+            raise StyxValidationError(f'`npb` has the wrong type: Received `{type(params.get("npb", None))}` expected `int | None`')
+    if params.get("com", None) is not None:
+        if not isinstance(params["com"], str):
+            raise StyxValidationError(f'`com` has the wrong type: Received `{type(params.get("com", None))}` expected `str | None`')
+    if params.get("comsep", None) is not None:
+        if not isinstance(params["comsep"], str):
+            raise StyxValidationError(f'`comsep` has the wrong type: Received `{type(params.get("comsep", None))}` expected `str | None`')
+
+
 def afni_cargs(
     params: AfniParameters,
     execution: Execution,
@@ -312,6 +420,7 @@ def afni_execute(
     Returns:
         NamedTuple of outputs (described in `AfniOutputs`).
     """
+    afni_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_METADATA)
     params = execution.params(params)

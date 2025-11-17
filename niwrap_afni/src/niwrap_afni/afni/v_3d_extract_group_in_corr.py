@@ -59,6 +59,27 @@ def v_3d_extract_group_in_corr_params(
     return params
 
 
+def v_3d_extract_group_in_corr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dExtractGroupInCorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("group_in_corr_file", None) is None:
+        raise StyxValidationError("`group_in_corr_file` must not be None")
+    if not isinstance(params["group_in_corr_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`group_in_corr_file` has the wrong type: Received `{type(params.get("group_in_corr_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3d_extract_group_in_corr_cargs(
     params: V3dExtractGroupInCorrParameters,
     execution: Execution,
@@ -123,6 +144,7 @@ def v_3d_extract_group_in_corr_execute(
     Returns:
         NamedTuple of outputs (described in `V3dExtractGroupInCorrOutputs`).
     """
+    v_3d_extract_group_in_corr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_EXTRACT_GROUP_IN_CORR_METADATA)
     params = execution.params(params)

@@ -110,6 +110,54 @@ def reg_resample_params(
     return params
 
 
+def reg_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("floating_image", None) is None:
+        raise StyxValidationError("`floating_image` must not be None")
+    if not isinstance(params["floating_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`floating_image` has the wrong type: Received `{type(params.get("floating_image", None))}` expected `InputPathType`')
+    if params.get("affine_transform", None) is not None:
+        if not isinstance(params["affine_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`affine_transform` has the wrong type: Received `{type(params.get("affine_transform", None))}` expected `InputPathType | None`')
+    if params.get("flirt_affine_transform", None) is not None:
+        if not isinstance(params["flirt_affine_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`flirt_affine_transform` has the wrong type: Received `{type(params.get("flirt_affine_transform", None))}` expected `InputPathType | None`')
+    if params.get("control_point_grid", None) is not None:
+        if not isinstance(params["control_point_grid"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`control_point_grid` has the wrong type: Received `{type(params.get("control_point_grid", None))}` expected `InputPathType | None`')
+    if params.get("deformation_field", None) is not None:
+        if not isinstance(params["deformation_field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`deformation_field` has the wrong type: Received `{type(params.get("deformation_field", None))}` expected `InputPathType | None`')
+    if params.get("resampled_image", None) is not None:
+        if not isinstance(params["resampled_image"], str):
+            raise StyxValidationError(f'`resampled_image` has the wrong type: Received `{type(params.get("resampled_image", None))}` expected `str | None`')
+    if params.get("resampled_blank", None) is not None:
+        if not isinstance(params["resampled_blank"], str):
+            raise StyxValidationError(f'`resampled_blank` has the wrong type: Received `{type(params.get("resampled_blank", None))}` expected `str | None`')
+    if params.get("nearest_neighbor", False) is None:
+        raise StyxValidationError("`nearest_neighbor` must not be None")
+    if not isinstance(params["nearest_neighbor"], bool):
+        raise StyxValidationError(f'`nearest_neighbor` has the wrong type: Received `{type(params.get("nearest_neighbor", False))}` expected `bool`')
+    if params.get("linear_interpolation", False) is None:
+        raise StyxValidationError("`linear_interpolation` must not be None")
+    if not isinstance(params["linear_interpolation"], bool):
+        raise StyxValidationError(f'`linear_interpolation` has the wrong type: Received `{type(params.get("linear_interpolation", False))}` expected `bool`')
+
+
 def reg_resample_cargs(
     params: RegResampleParameters,
     execution: Execution,
@@ -211,6 +259,7 @@ def reg_resample_execute(
     Returns:
         NamedTuple of outputs (described in `RegResampleOutputs`).
     """
+    reg_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REG_RESAMPLE_METADATA)
     params = execution.params(params)

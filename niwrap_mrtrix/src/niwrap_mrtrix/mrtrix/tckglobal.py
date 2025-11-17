@@ -126,6 +126,24 @@ def tckglobal_riso_params(
     return params
 
 
+def tckglobal_riso_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckglobalRisoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("response", None) is None:
+        raise StyxValidationError("`response` must not be None")
+    if not isinstance(params["response"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`response` has the wrong type: Received `{type(params.get("response", None))}` expected `InputPathType`')
+
+
 def tckglobal_riso_cargs(
     params: TckglobalRisoParameters,
     execution: Execution,
@@ -164,6 +182,28 @@ def tckglobal_config_params(
         "value": value,
     }
     return params
+
+
+def tckglobal_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckglobalConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def tckglobal_config_cargs(
@@ -375,6 +415,133 @@ def tckglobal_params(
     return params
 
 
+def tckglobal_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckglobalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("riso", None) is not None:
+        if not isinstance(params["riso"], list):
+            raise StyxValidationError(f'`riso` has the wrong type: Received `{type(params.get("riso", None))}` expected `list[TckglobalRisoParameters] | None`')
+        for e in params["riso"]:
+            tckglobal_riso_validate(e)
+    if params.get("lmax", None) is not None:
+        if not isinstance(params["lmax"], int):
+            raise StyxValidationError(f'`lmax` has the wrong type: Received `{type(params.get("lmax", None))}` expected `int | None`')
+    if params.get("length", None) is not None:
+        if not isinstance(params["length"], (float, int)):
+            raise StyxValidationError(f'`length` has the wrong type: Received `{type(params.get("length", None))}` expected `float | None`')
+    if params.get("weight", None) is not None:
+        if not isinstance(params["weight"], (float, int)):
+            raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float | None`')
+    if params.get("ppot", None) is not None:
+        if not isinstance(params["ppot"], (float, int)):
+            raise StyxValidationError(f'`ppot` has the wrong type: Received `{type(params.get("ppot", None))}` expected `float | None`')
+    if params.get("cpot", None) is not None:
+        if not isinstance(params["cpot"], (float, int)):
+            raise StyxValidationError(f'`cpot` has the wrong type: Received `{type(params.get("cpot", None))}` expected `float | None`')
+    if params.get("t0", None) is not None:
+        if not isinstance(params["t0"], (float, int)):
+            raise StyxValidationError(f'`t0` has the wrong type: Received `{type(params.get("t0", None))}` expected `float | None`')
+    if params.get("t1", None) is not None:
+        if not isinstance(params["t1"], (float, int)):
+            raise StyxValidationError(f'`t1` has the wrong type: Received `{type(params.get("t1", None))}` expected `float | None`')
+    if params.get("niter", None) is not None:
+        if not isinstance(params["niter"], int):
+            raise StyxValidationError(f'`niter` has the wrong type: Received `{type(params.get("niter", None))}` expected `int | None`')
+    if params.get("fod", None) is not None:
+        if not isinstance(params["fod"], str):
+            raise StyxValidationError(f'`fod` has the wrong type: Received `{type(params.get("fod", None))}` expected `str | None`')
+    if params.get("noapo", False) is None:
+        raise StyxValidationError("`noapo` must not be None")
+    if not isinstance(params["noapo"], bool):
+        raise StyxValidationError(f'`noapo` has the wrong type: Received `{type(params.get("noapo", False))}` expected `bool`')
+    if params.get("fiso", None) is not None:
+        if not isinstance(params["fiso"], str):
+            raise StyxValidationError(f'`fiso` has the wrong type: Received `{type(params.get("fiso", None))}` expected `str | None`')
+    if params.get("eext", None) is not None:
+        if not isinstance(params["eext"], str):
+            raise StyxValidationError(f'`eext` has the wrong type: Received `{type(params.get("eext", None))}` expected `str | None`')
+    if params.get("etrend", None) is not None:
+        if not isinstance(params["etrend"], str):
+            raise StyxValidationError(f'`etrend` has the wrong type: Received `{type(params.get("etrend", None))}` expected `str | None`')
+    if params.get("balance", None) is not None:
+        if not isinstance(params["balance"], (float, int)):
+            raise StyxValidationError(f'`balance` has the wrong type: Received `{type(params.get("balance", None))}` expected `float | None`')
+    if params.get("density", None) is not None:
+        if not isinstance(params["density"], (float, int)):
+            raise StyxValidationError(f'`density` has the wrong type: Received `{type(params.get("density", None))}` expected `float | None`')
+    if params.get("prob", None) is not None:
+        if not isinstance(params["prob"], list):
+            raise StyxValidationError(f'`prob` has the wrong type: Received `{type(params.get("prob", None))}` expected `list[float] | None`')
+        for e in params["prob"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`prob` has the wrong type: Received `{type(params.get("prob", None))}` expected `list[float] | None`')
+    if params.get("beta", None) is not None:
+        if not isinstance(params["beta"], (float, int)):
+            raise StyxValidationError(f'`beta` has the wrong type: Received `{type(params.get("beta", None))}` expected `float | None`')
+    if params.get("lambda", None) is not None:
+        if not isinstance(params["lambda"], (float, int)):
+            raise StyxValidationError(f'`lambda` has the wrong type: Received `{type(params.get("lambda", None))}` expected `float | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckglobalConfigParameters] | None`')
+        for e in params["config"]:
+            tckglobal_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("source", None) is None:
+        raise StyxValidationError("`source` must not be None")
+    if not isinstance(params["source"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `InputPathType`')
+    if params.get("response", None) is None:
+        raise StyxValidationError("`response` must not be None")
+    if not isinstance(params["response"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`response` has the wrong type: Received `{type(params.get("response", None))}` expected `InputPathType`')
+    if params.get("tracks", None) is None:
+        raise StyxValidationError("`tracks` must not be None")
+    if not isinstance(params["tracks"], str):
+        raise StyxValidationError(f'`tracks` has the wrong type: Received `{type(params.get("tracks", None))}` expected `str`')
+
+
 def tckglobal_cargs(
     params: TckglobalParameters,
     execution: Execution,
@@ -579,6 +746,7 @@ def tckglobal_execute(
     Returns:
         NamedTuple of outputs (described in `TckglobalOutputs`).
     """
+    tckglobal_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCKGLOBAL_METADATA)
     params = execution.params(params)

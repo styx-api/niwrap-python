@@ -150,6 +150,96 @@ def v_3d_mean_params(
     return params
 
 
+def v_3d_mean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMeanParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `str | None`')
+    if params.get("fscale", False) is None:
+        raise StyxValidationError("`fscale` must not be None")
+    if not isinstance(params["fscale"], bool):
+        raise StyxValidationError(f'`fscale` has the wrong type: Received `{type(params.get("fscale", False))}` expected `bool`')
+    if params.get("gscale", False) is None:
+        raise StyxValidationError("`gscale` must not be None")
+    if not isinstance(params["gscale"], bool):
+        raise StyxValidationError(f'`gscale` has the wrong type: Received `{type(params.get("gscale", False))}` expected `bool`')
+    if params.get("nscale", False) is None:
+        raise StyxValidationError("`nscale` must not be None")
+    if not isinstance(params["nscale"], bool):
+        raise StyxValidationError(f'`nscale` has the wrong type: Received `{type(params.get("nscale", False))}` expected `bool`')
+    if params.get("non_zero", False) is None:
+        raise StyxValidationError("`non_zero` must not be None")
+    if not isinstance(params["non_zero"], bool):
+        raise StyxValidationError(f'`non_zero` has the wrong type: Received `{type(params.get("non_zero", False))}` expected `bool`')
+    if params.get("stdev", False) is None:
+        raise StyxValidationError("`stdev` must not be None")
+    if not isinstance(params["stdev"], bool):
+        raise StyxValidationError(f'`stdev` has the wrong type: Received `{type(params.get("stdev", False))}` expected `bool`')
+    if params.get("sqr", False) is None:
+        raise StyxValidationError("`sqr` must not be None")
+    if not isinstance(params["sqr"], bool):
+        raise StyxValidationError(f'`sqr` has the wrong type: Received `{type(params.get("sqr", False))}` expected `bool`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("count", False) is None:
+        raise StyxValidationError("`count` must not be None")
+    if not isinstance(params["count"], bool):
+        raise StyxValidationError(f'`count` has the wrong type: Received `{type(params.get("count", False))}` expected `bool`')
+    if params.get("max", False) is None:
+        raise StyxValidationError("`max` must not be None")
+    if not isinstance(params["max"], bool):
+        raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", False))}` expected `bool`')
+    if params.get("min", False) is None:
+        raise StyxValidationError("`min` must not be None")
+    if not isinstance(params["min"], bool):
+        raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", False))}` expected `bool`')
+    if params.get("absmax", False) is None:
+        raise StyxValidationError("`absmax` must not be None")
+    if not isinstance(params["absmax"], bool):
+        raise StyxValidationError(f'`absmax` has the wrong type: Received `{type(params.get("absmax", False))}` expected `bool`')
+    if params.get("signed_absmax", False) is None:
+        raise StyxValidationError("`signed_absmax` must not be None")
+    if not isinstance(params["signed_absmax"], bool):
+        raise StyxValidationError(f'`signed_absmax` has the wrong type: Received `{type(params.get("signed_absmax", False))}` expected `bool`')
+    if params.get("mask_inter", False) is None:
+        raise StyxValidationError("`mask_inter` must not be None")
+    if not isinstance(params["mask_inter"], bool):
+        raise StyxValidationError(f'`mask_inter` has the wrong type: Received `{type(params.get("mask_inter", False))}` expected `bool`')
+    if params.get("mask_union", False) is None:
+        raise StyxValidationError("`mask_union` must not be None")
+    if not isinstance(params["mask_union"], bool):
+        raise StyxValidationError(f'`mask_union` has the wrong type: Received `{type(params.get("mask_union", False))}` expected `bool`')
+    if params.get("weightset", None) is not None:
+        if not isinstance(params["weightset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weightset` has the wrong type: Received `{type(params.get("weightset", None))}` expected `InputPathType | None`')
+
+
 def v_3d_mean_cargs(
     params: V3dMeanParameters,
     execution: Execution,
@@ -254,6 +344,7 @@ def v_3d_mean_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMeanOutputs`).
     """
+    v_3d_mean_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MEAN_METADATA)
     params = execution.params(params)

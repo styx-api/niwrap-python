@@ -161,6 +161,91 @@ def timing_tool_py_params(
     return params
 
 
+def timing_tool_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TimingToolPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timing_file", None) is not None:
+        if not isinstance(params["timing_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`timing_file` has the wrong type: Received `{type(params.get("timing_file", None))}` expected `InputPathType | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("run_length", None) is not None:
+        if not isinstance(params["run_length"], list):
+            raise StyxValidationError(f'`run_length` has the wrong type: Received `{type(params.get("run_length", None))}` expected `list[float] | None`')
+        for e in params["run_length"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`run_length` has the wrong type: Received `{type(params.get("run_length", None))}` expected `list[float] | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("extend_file", None) is not None:
+        if not isinstance(params["extend_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`extend_file` has the wrong type: Received `{type(params.get("extend_file", None))}` expected `InputPathType | None`')
+    if params.get("sort", False) is None:
+        raise StyxValidationError("`sort` must not be None")
+    if not isinstance(params["sort"], bool):
+        raise StyxValidationError(f'`sort` has the wrong type: Received `{type(params.get("sort", False))}` expected `bool`')
+    if params.get("scale_data", None) is not None:
+        if not isinstance(params["scale_data"], (float, int)):
+            raise StyxValidationError(f'`scale_data` has the wrong type: Received `{type(params.get("scale_data", None))}` expected `float | None`')
+    if params.get("shift_to_run_offset", None) is not None:
+        if not isinstance(params["shift_to_run_offset"], (float, int)):
+            raise StyxValidationError(f'`shift_to_run_offset` has the wrong type: Received `{type(params.get("shift_to_run_offset", None))}` expected `float | None`')
+    if params.get("timing_to_1D_file", None) is not None:
+        if not isinstance(params["timing_to_1D_file"], str):
+            raise StyxValidationError(f'`timing_to_1D_file` has the wrong type: Received `{type(params.get("timing_to_1D_file", None))}` expected `str | None`')
+    if params.get("stim_duration", None) is not None:
+        if not isinstance(params["stim_duration"], (float, int)):
+            raise StyxValidationError(f'`stim_duration` has the wrong type: Received `{type(params.get("stim_duration", None))}` expected `float | None`')
+    if params.get("multi_timing_files", None) is not None:
+        if not isinstance(params["multi_timing_files"], list):
+            raise StyxValidationError(f'`multi_timing_files` has the wrong type: Received `{type(params.get("multi_timing_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["multi_timing_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`multi_timing_files` has the wrong type: Received `{type(params.get("multi_timing_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("multi_show_isi_stats", False) is None:
+        raise StyxValidationError("`multi_show_isi_stats` must not be None")
+    if not isinstance(params["multi_show_isi_stats"], bool):
+        raise StyxValidationError(f'`multi_show_isi_stats` has the wrong type: Received `{type(params.get("multi_show_isi_stats", False))}` expected `bool`')
+    if params.get("multi_show_timing", False) is None:
+        raise StyxValidationError("`multi_show_timing` must not be None")
+    if not isinstance(params["multi_show_timing"], bool):
+        raise StyxValidationError(f'`multi_show_timing` has the wrong type: Received `{type(params.get("multi_show_timing", False))}` expected `bool`')
+    if params.get("show_timing", False) is None:
+        raise StyxValidationError("`show_timing` must not be None")
+    if not isinstance(params["show_timing"], bool):
+        raise StyxValidationError(f'`show_timing` has the wrong type: Received `{type(params.get("show_timing", False))}` expected `bool`')
+    if params.get("multi_stim_duration", None) is not None:
+        if not isinstance(params["multi_stim_duration"], list):
+            raise StyxValidationError(f'`multi_stim_duration` has the wrong type: Received `{type(params.get("multi_stim_duration", None))}` expected `list[float] | None`')
+        for e in params["multi_stim_duration"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`multi_stim_duration` has the wrong type: Received `{type(params.get("multi_stim_duration", None))}` expected `list[float] | None`')
+    if params.get("round_times_frac", None) is not None:
+        if not isinstance(params["round_times_frac"], (float, int)):
+            raise StyxValidationError(f'`round_times_frac` has the wrong type: Received `{type(params.get("round_times_frac", None))}` expected `float | None`')
+    if params.get("truncate_times", False) is None:
+        raise StyxValidationError("`truncate_times` must not be None")
+    if not isinstance(params["truncate_times"], bool):
+        raise StyxValidationError(f'`truncate_times` has the wrong type: Received `{type(params.get("truncate_times", False))}` expected `bool`')
+    if params.get("multi_timing_event_list", None) is not None:
+        if not isinstance(params["multi_timing_event_list"], str):
+            raise StyxValidationError(f'`multi_timing_event_list` has the wrong type: Received `{type(params.get("multi_timing_event_list", None))}` expected `str | None`')
+
+
 def timing_tool_py_cargs(
     params: TimingToolPyParameters,
     execution: Execution,
@@ -299,6 +384,7 @@ def timing_tool_py_execute(
     Returns:
         NamedTuple of outputs (described in `TimingToolPyOutputs`).
     """
+    timing_tool_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TIMING_TOOL_PY_METADATA)
     params = execution.params(params)

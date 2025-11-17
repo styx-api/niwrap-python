@@ -87,6 +87,44 @@ def mergeseg_params(
     return params
 
 
+def mergeseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MergesegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("src_seg", None) is None:
+        raise StyxValidationError("`src_seg` must not be None")
+    if not isinstance(params["src_seg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`src_seg` has the wrong type: Received `{type(params.get("src_seg", None))}` expected `InputPathType`')
+    if params.get("merge_seg", None) is None:
+        raise StyxValidationError("`merge_seg` must not be None")
+    if not isinstance(params["merge_seg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merge_seg` has the wrong type: Received `{type(params.get("merge_seg", None))}` expected `InputPathType`')
+    if params.get("out_seg", None) is None:
+        raise StyxValidationError("`out_seg` must not be None")
+    if not isinstance(params["out_seg"], str):
+        raise StyxValidationError(f'`out_seg` has the wrong type: Received `{type(params.get("out_seg", None))}` expected `str`')
+    if params.get("segid", None) is not None:
+        if not isinstance(params["segid"], (float, int)):
+            raise StyxValidationError(f'`segid` has the wrong type: Received `{type(params.get("segid", None))}` expected `float | None`')
+    if params.get("segid_only", None) is not None:
+        if not isinstance(params["segid_only"], (float, int)):
+            raise StyxValidationError(f'`segid_only` has the wrong type: Received `{type(params.get("segid_only", None))}` expected `float | None`')
+    if params.get("segid_erode", None) is not None:
+        if not isinstance(params["segid_erode"], (float, int)):
+            raise StyxValidationError(f'`segid_erode` has the wrong type: Received `{type(params.get("segid_erode", None))}` expected `float | None`')
+    if params.get("ctab", None) is not None:
+        if not isinstance(params["ctab"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab` has the wrong type: Received `{type(params.get("ctab", None))}` expected `InputPathType | None`')
+
+
 def mergeseg_cargs(
     params: MergesegParameters,
     execution: Execution,
@@ -171,6 +209,7 @@ def mergeseg_execute(
     Returns:
         NamedTuple of outputs (described in `MergesegOutputs`).
     """
+    mergeseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MERGESEG_METADATA)
     params = execution.params(params)

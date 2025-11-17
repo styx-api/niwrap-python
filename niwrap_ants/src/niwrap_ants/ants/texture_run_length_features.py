@@ -92,6 +92,37 @@ def texture_run_length_features_params(
     return params
 
 
+def texture_run_length_features_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TextureRunLengthFeaturesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("number_of_bins_per_axis", None) is not None:
+        if not isinstance(params["number_of_bins_per_axis"], int):
+            raise StyxValidationError(f'`number_of_bins_per_axis` has the wrong type: Received `{type(params.get("number_of_bins_per_axis", None))}` expected `int | None`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("mask_label", None) is not None:
+        if not isinstance(params["mask_label"], int):
+            raise StyxValidationError(f'`mask_label` has the wrong type: Received `{type(params.get("mask_label", None))}` expected `int | None`')
+
+
 def texture_run_length_features_cargs(
     params: TextureRunLengthFeaturesParameters,
     execution: Execution,
@@ -166,6 +197,7 @@ def texture_run_length_features_execute(
     Returns:
         NamedTuple of outputs (described in `TextureRunLengthFeaturesOutputs`).
     """
+    texture_run_length_features_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TEXTURE_RUN_LENGTH_FEATURES_METADATA)
     params = execution.params(params)

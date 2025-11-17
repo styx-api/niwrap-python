@@ -281,6 +281,176 @@ def to3d_params(
     return params
 
 
+def to3d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `To3dParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None`')
+        if params["type"] not in ["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"]:
+            raise StyxValidationError("Parameter `type` must be one of [\"spgr\", \"fse\", \"epan\", \"anat\", \"ct\", \"spct\", \"pet\", \"mra\", \"bmap\", \"diff\", \"omri\", \"abuc\", \"fim\", \"fith\", \"fico\", \"fitt\", \"fift\", \"fizt\", \"fict\", \"fibt\", \"fibn\", \"figt\", \"fipt\", \"fbuc\"]")
+    if params.get("statpar", None) is not None:
+        if not isinstance(params["statpar"], list):
+            raise StyxValidationError(f'`statpar` has the wrong type: Received `{type(params.get("statpar", None))}` expected `list[float] | None`')
+        for e in params["statpar"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`statpar` has the wrong type: Received `{type(params.get("statpar", None))}` expected `list[float] | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("session", None) is not None:
+        if not isinstance(params["session"], str):
+            raise StyxValidationError(f'`session` has the wrong type: Received `{type(params.get("session", None))}` expected `str | None`')
+    if params.get("geomparent", None) is not None:
+        if not isinstance(params["geomparent"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`geomparent` has the wrong type: Received `{type(params.get("geomparent", None))}` expected `InputPathType | None`')
+    if params.get("anatparent", None) is not None:
+        if not isinstance(params["anatparent"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`anatparent` has the wrong type: Received `{type(params.get("anatparent", None))}` expected `InputPathType | None`')
+    if params.get("nosave_flag", False) is None:
+        raise StyxValidationError("`nosave_flag` must not be None")
+    if not isinstance(params["nosave_flag"], bool):
+        raise StyxValidationError(f'`nosave_flag` has the wrong type: Received `{type(params.get("nosave_flag", False))}` expected `bool`')
+    if params.get("nowritebrik_flag", False) is None:
+        raise StyxValidationError("`nowritebrik_flag` must not be None")
+    if not isinstance(params["nowritebrik_flag"], bool):
+        raise StyxValidationError(f'`nowritebrik_flag` has the wrong type: Received `{type(params.get("nowritebrik_flag", False))}` expected `bool`')
+    if params.get("view", None) is not None:
+        if not isinstance(params["view"], str):
+            raise StyxValidationError(f'`view` has the wrong type: Received `{type(params.get("view", None))}` expected `typing.Literal["orig", "acpc", "tlrc"] | None`')
+        if params["view"] not in ["orig", "acpc", "tlrc"]:
+            raise StyxValidationError("Parameter `view` must be one of [\"orig\", \"acpc\", \"tlrc\"]")
+    if params.get("time_zt", None) is not None:
+        if not isinstance(params["time_zt"], list):
+            raise StyxValidationError(f'`time_zt` has the wrong type: Received `{type(params.get("time_zt", None))}` expected `list[str] | None`')
+        for e in params["time_zt"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`time_zt` has the wrong type: Received `{type(params.get("time_zt", None))}` expected `list[str] | None`')
+    if params.get("time_tz", None) is not None:
+        if not isinstance(params["time_tz"], list):
+            raise StyxValidationError(f'`time_tz` has the wrong type: Received `{type(params.get("time_tz", None))}` expected `list[str] | None`')
+        for e in params["time_tz"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`time_tz` has the wrong type: Received `{type(params.get("time_tz", None))}` expected `list[str] | None`')
+    if params.get("tr_units", None) is not None:
+        if not isinstance(params["tr_units"], str):
+            raise StyxValidationError(f'`tr_units` has the wrong type: Received `{type(params.get("tr_units", None))}` expected `typing.Literal["ms", "msec", "s", "sec", "Hz", "Hertz"] | None`')
+        if params["tr_units"] not in ["ms", "msec", "s", "sec", "Hz", "Hertz"]:
+            raise StyxValidationError("Parameter `tr_units` must be one of [\"ms\", \"msec\", \"s\", \"sec\", \"Hz\", \"Hertz\"]")
+    if params.get("torg", None) is not None:
+        if not isinstance(params["torg"], (float, int)):
+            raise StyxValidationError(f'`torg` has the wrong type: Received `{type(params.get("torg", None))}` expected `float | None`')
+    if params.get("xFOV", None) is not None:
+        if not isinstance(params["xFOV"], str):
+            raise StyxValidationError(f'`xFOV` has the wrong type: Received `{type(params.get("xFOV", None))}` expected `str | None`')
+    if params.get("yFOV", None) is not None:
+        if not isinstance(params["yFOV"], str):
+            raise StyxValidationError(f'`yFOV` has the wrong type: Received `{type(params.get("yFOV", None))}` expected `str | None`')
+    if params.get("zFOV", None) is not None:
+        if not isinstance(params["zFOV"], str):
+            raise StyxValidationError(f'`zFOV` has the wrong type: Received `{type(params.get("zFOV", None))}` expected `str | None`')
+    if params.get("xSLAB", None) is not None:
+        if not isinstance(params["xSLAB"], str):
+            raise StyxValidationError(f'`xSLAB` has the wrong type: Received `{type(params.get("xSLAB", None))}` expected `str | None`')
+    if params.get("ySLAB", None) is not None:
+        if not isinstance(params["ySLAB"], str):
+            raise StyxValidationError(f'`ySLAB` has the wrong type: Received `{type(params.get("ySLAB", None))}` expected `str | None`')
+    if params.get("zSLAB", None) is not None:
+        if not isinstance(params["zSLAB"], str):
+            raise StyxValidationError(f'`zSLAB` has the wrong type: Received `{type(params.get("zSLAB", None))}` expected `str | None`')
+    if params.get("zorigin", None) is not None:
+        if not isinstance(params["zorigin"], (float, int)):
+            raise StyxValidationError(f'`zorigin` has the wrong type: Received `{type(params.get("zorigin", None))}` expected `float | None`')
+    if params.get("data_type", None) is not None:
+        if not isinstance(params["data_type"], str):
+            raise StyxValidationError(f'`data_type` has the wrong type: Received `{type(params.get("data_type", None))}` expected `typing.Literal["short", "float", "byte", "complex"] | None`')
+        if params["data_type"] not in ["short", "float", "byte", "complex"]:
+            raise StyxValidationError("Parameter `data_type` must be one of [\"short\", \"float\", \"byte\", \"complex\"]")
+    if params.get("global_scaling_factor", None) is not None:
+        if not isinstance(params["global_scaling_factor"], (float, int)):
+            raise StyxValidationError(f'`global_scaling_factor` has the wrong type: Received `{type(params.get("global_scaling_factor", None))}` expected `float | None`')
+    if params.get("nofloatscan_flag", False) is None:
+        raise StyxValidationError("`nofloatscan_flag` must not be None")
+    if not isinstance(params["nofloatscan_flag"], bool):
+        raise StyxValidationError(f'`nofloatscan_flag` has the wrong type: Received `{type(params.get("nofloatscan_flag", False))}` expected `bool`')
+    if params.get("in1_flag", False) is None:
+        raise StyxValidationError("`in1_flag` must not be None")
+    if not isinstance(params["in1_flag"], bool):
+        raise StyxValidationError(f'`in1_flag` has the wrong type: Received `{type(params.get("in1_flag", False))}` expected `bool`')
+    if params.get("orient", None) is not None:
+        if not isinstance(params["orient"], str):
+            raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str | None`')
+    if params.get("skip_outliers_flag", False) is None:
+        raise StyxValidationError("`skip_outliers_flag` must not be None")
+    if not isinstance(params["skip_outliers_flag"], bool):
+        raise StyxValidationError(f'`skip_outliers_flag` has the wrong type: Received `{type(params.get("skip_outliers_flag", False))}` expected `bool`')
+    if params.get("text_outliers_flag", False) is None:
+        raise StyxValidationError("`text_outliers_flag` must not be None")
+    if not isinstance(params["text_outliers_flag"], bool):
+        raise StyxValidationError(f'`text_outliers_flag` has the wrong type: Received `{type(params.get("text_outliers_flag", False))}` expected `bool`')
+    if params.get("save_outliers", None) is not None:
+        if not isinstance(params["save_outliers"], str):
+            raise StyxValidationError(f'`save_outliers` has the wrong type: Received `{type(params.get("save_outliers", None))}` expected `str | None`')
+    if params.get("assume_dicom_mosaic_flag", False) is None:
+        raise StyxValidationError("`assume_dicom_mosaic_flag` must not be None")
+    if not isinstance(params["assume_dicom_mosaic_flag"], bool):
+        raise StyxValidationError(f'`assume_dicom_mosaic_flag` has the wrong type: Received `{type(params.get("assume_dicom_mosaic_flag", False))}` expected `bool`')
+    if params.get("oblique_origin_flag", False) is None:
+        raise StyxValidationError("`oblique_origin_flag` must not be None")
+    if not isinstance(params["oblique_origin_flag"], bool):
+        raise StyxValidationError(f'`oblique_origin_flag` has the wrong type: Received `{type(params.get("oblique_origin_flag", False))}` expected `bool`')
+    if params.get("reverse_list_flag", False) is None:
+        raise StyxValidationError("`reverse_list_flag` must not be None")
+    if not isinstance(params["reverse_list_flag"], bool):
+        raise StyxValidationError(f'`reverse_list_flag` has the wrong type: Received `{type(params.get("reverse_list_flag", False))}` expected `bool`')
+    if params.get("use_last_elem_flag", False) is None:
+        raise StyxValidationError("`use_last_elem_flag` must not be None")
+    if not isinstance(params["use_last_elem_flag"], bool):
+        raise StyxValidationError(f'`use_last_elem_flag` has the wrong type: Received `{type(params.get("use_last_elem_flag", False))}` expected `bool`')
+    if params.get("use_old_mosaic_code_flag", False) is None:
+        raise StyxValidationError("`use_old_mosaic_code_flag` must not be None")
+    if not isinstance(params["use_old_mosaic_code_flag"], bool):
+        raise StyxValidationError(f'`use_old_mosaic_code_flag` has the wrong type: Received `{type(params.get("use_old_mosaic_code_flag", False))}` expected `bool`')
+    if params.get("ushort2float_flag", False) is None:
+        raise StyxValidationError("`ushort2float_flag` must not be None")
+    if not isinstance(params["ushort2float_flag"], bool):
+        raise StyxValidationError(f'`ushort2float_flag` has the wrong type: Received `{type(params.get("ushort2float_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("gamma", None) is not None:
+        if not isinstance(params["gamma"], (float, int)):
+            raise StyxValidationError(f'`gamma` has the wrong type: Received `{type(params.get("gamma", None))}` expected `float | None`')
+    if params.get("ncolors", None) is not None:
+        if not isinstance(params["ncolors"], (float, int)):
+            raise StyxValidationError(f'`ncolors` has the wrong type: Received `{type(params.get("ncolors", None))}` expected `float | None`')
+    if params.get("xtwarns_flag", False) is None:
+        raise StyxValidationError("`xtwarns_flag` must not be None")
+    if not isinstance(params["xtwarns_flag"], bool):
+        raise StyxValidationError(f'`xtwarns_flag` has the wrong type: Received `{type(params.get("xtwarns_flag", False))}` expected `bool`')
+    if params.get("quit_on_err_flag", False) is None:
+        raise StyxValidationError("`quit_on_err_flag` must not be None")
+    if not isinstance(params["quit_on_err_flag"], bool):
+        raise StyxValidationError(f'`quit_on_err_flag` has the wrong type: Received `{type(params.get("quit_on_err_flag", False))}` expected `bool`')
+
+
 def to3d_cargs(
     params: To3dParameters,
     execution: Execution,
@@ -491,6 +661,7 @@ def to3d_execute(
     Returns:
         NamedTuple of outputs (described in `To3dOutputs`).
     """
+    to3d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TO3D_METADATA)
     params = execution.params(params)

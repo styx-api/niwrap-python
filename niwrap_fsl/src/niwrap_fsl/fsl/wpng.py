@@ -86,6 +86,41 @@ def wpng_params(
     return params
 
 
+def wpng_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `WpngParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is not None:
+        if not isinstance(params["input_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType | None`')
+    if params.get("gamma", None) is not None:
+        if not isinstance(params["gamma"], (float, int)):
+            raise StyxValidationError(f'`gamma` has the wrong type: Received `{type(params.get("gamma", None))}` expected `float | None`')
+    if params.get("bgcolor", None) is not None:
+        if not isinstance(params["bgcolor"], str):
+            raise StyxValidationError(f'`bgcolor` has the wrong type: Received `{type(params.get("bgcolor", None))}` expected `str | None`')
+    if params.get("text_flag", False) is None:
+        raise StyxValidationError("`text_flag` must not be None")
+    if not isinstance(params["text_flag"], bool):
+        raise StyxValidationError(f'`text_flag` has the wrong type: Received `{type(params.get("text_flag", False))}` expected `bool`')
+    if params.get("time_flag", False) is None:
+        raise StyxValidationError("`time_flag` must not be None")
+    if not isinstance(params["time_flag"], bool):
+        raise StyxValidationError(f'`time_flag` has the wrong type: Received `{type(params.get("time_flag", False))}` expected `bool`')
+    if params.get("interlace_flag", False) is None:
+        raise StyxValidationError("`interlace_flag` must not be None")
+    if not isinstance(params["interlace_flag"], bool):
+        raise StyxValidationError(f'`interlace_flag` has the wrong type: Received `{type(params.get("interlace_flag", False))}` expected `bool`')
+
+
 def wpng_cargs(
     params: WpngParameters,
     execution: Execution,
@@ -161,6 +196,7 @@ def wpng_execute(
     Returns:
         NamedTuple of outputs (described in `WpngOutputs`).
     """
+    wpng_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WPNG_METADATA)
     params = execution.params(params)

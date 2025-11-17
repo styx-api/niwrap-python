@@ -97,6 +97,54 @@ def v_3d_surf_mask_params(
     return params
 
 
+def v_3d_surf_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSurfMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface_type", None) is None:
+        raise StyxValidationError("`surface_type` must not be None")
+    if not isinstance(params["surface_type"], str):
+        raise StyxValidationError(f'`surface_type` has the wrong type: Received `{type(params.get("surface_type", None))}` expected `str`')
+    if params.get("surface_file", None) is None:
+        raise StyxValidationError("`surface_file` must not be None")
+    if not isinstance(params["surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_file` has the wrong type: Received `{type(params.get("surface_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("grid_parent", None) is None:
+        raise StyxValidationError("`grid_parent` must not be None")
+    if not isinstance(params["grid_parent"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`grid_parent` has the wrong type: Received `{type(params.get("grid_parent", None))}` expected `InputPathType`')
+    if params.get("fill_method", None) is not None:
+        if not isinstance(params["fill_method"], str):
+            raise StyxValidationError(f'`fill_method` has the wrong type: Received `{type(params.get("fill_method", None))}` expected `str | None`')
+    if params.get("surface_volume", None) is not None:
+        if not isinstance(params["surface_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_volume` has the wrong type: Received `{type(params.get("surface_volume", None))}` expected `InputPathType | None`')
+    if params.get("mask_only", False) is None:
+        raise StyxValidationError("`mask_only` must not be None")
+    if not isinstance(params["mask_only"], bool):
+        raise StyxValidationError(f'`mask_only` has the wrong type: Received `{type(params.get("mask_only", False))}` expected `bool`')
+    if params.get("flip_orientation", False) is None:
+        raise StyxValidationError("`flip_orientation` must not be None")
+    if not isinstance(params["flip_orientation"], bool):
+        raise StyxValidationError(f'`flip_orientation` has the wrong type: Received `{type(params.get("flip_orientation", False))}` expected `bool`')
+    if params.get("no_distance", False) is None:
+        raise StyxValidationError("`no_distance` must not be None")
+    if not isinstance(params["no_distance"], bool):
+        raise StyxValidationError(f'`no_distance` has the wrong type: Received `{type(params.get("no_distance", False))}` expected `bool`')
+
+
 def v_3d_surf_mask_cargs(
     params: V3dSurfMaskParameters,
     execution: Execution,
@@ -176,6 +224,7 @@ def v_3d_surf_mask_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSurfMaskOutputs`).
     """
+    v_3d_surf_mask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SURF_MASK_METADATA)
     params = execution.params(params)

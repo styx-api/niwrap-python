@@ -136,6 +136,75 @@ def plugout_drive_params(
     return params
 
 
+def plugout_drive_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PlugoutDriveParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("host", None) is not None:
+        if not isinstance(params["host"], str):
+            raise StyxValidationError(f'`host` has the wrong type: Received `{type(params.get("host", None))}` expected `str | None`')
+    if params.get("shm", False) is None:
+        raise StyxValidationError("`shm` must not be None")
+    if not isinstance(params["shm"], bool):
+        raise StyxValidationError(f'`shm` has the wrong type: Received `{type(params.get("shm", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("port", None) is not None:
+        if not isinstance(params["port"], (float, int)):
+            raise StyxValidationError(f'`port` has the wrong type: Received `{type(params.get("port", None))}` expected `float | None`')
+    if params.get("maxwait", None) is not None:
+        if not isinstance(params["maxwait"], (float, int)):
+            raise StyxValidationError(f'`maxwait` has the wrong type: Received `{type(params.get("maxwait", None))}` expected `float | None`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("command", None) is not None:
+        if not isinstance(params["command"], list):
+            raise StyxValidationError(f'`command` has the wrong type: Received `{type(params.get("command", None))}` expected `list[str] | None`')
+        for e in params["command"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`command` has the wrong type: Received `{type(params.get("command", None))}` expected `list[str] | None`')
+    if params.get("quit", False) is None:
+        raise StyxValidationError("`quit` must not be None")
+    if not isinstance(params["quit"], bool):
+        raise StyxValidationError(f'`quit` has the wrong type: Received `{type(params.get("quit", False))}` expected `bool`')
+    if params.get("np", None) is not None:
+        if not isinstance(params["np"], (float, int)):
+            raise StyxValidationError(f'`np` has the wrong type: Received `{type(params.get("np", None))}` expected `float | None`')
+    if params.get("npq", None) is not None:
+        if not isinstance(params["npq"], (float, int)):
+            raise StyxValidationError(f'`npq` has the wrong type: Received `{type(params.get("npq", None))}` expected `float | None`')
+    if params.get("npb", None) is not None:
+        if not isinstance(params["npb"], (float, int)):
+            raise StyxValidationError(f'`npb` has the wrong type: Received `{type(params.get("npb", None))}` expected `float | None`')
+    if params.get("max_port_bloc", False) is None:
+        raise StyxValidationError("`max_port_bloc` must not be None")
+    if not isinstance(params["max_port_bloc"], bool):
+        raise StyxValidationError(f'`max_port_bloc` has the wrong type: Received `{type(params.get("max_port_bloc", False))}` expected `bool`')
+    if params.get("max_port_bloc_quiet", False) is None:
+        raise StyxValidationError("`max_port_bloc_quiet` must not be None")
+    if not isinstance(params["max_port_bloc_quiet"], bool):
+        raise StyxValidationError(f'`max_port_bloc_quiet` has the wrong type: Received `{type(params.get("max_port_bloc_quiet", False))}` expected `bool`')
+    if params.get("num_assigned_ports", False) is None:
+        raise StyxValidationError("`num_assigned_ports` must not be None")
+    if not isinstance(params["num_assigned_ports"], bool):
+        raise StyxValidationError(f'`num_assigned_ports` has the wrong type: Received `{type(params.get("num_assigned_ports", False))}` expected `bool`')
+    if params.get("num_assigned_ports_quiet", False) is None:
+        raise StyxValidationError("`num_assigned_ports_quiet` must not be None")
+    if not isinstance(params["num_assigned_ports_quiet"], bool):
+        raise StyxValidationError(f'`num_assigned_ports_quiet` has the wrong type: Received `{type(params.get("num_assigned_ports_quiet", False))}` expected `bool`')
+
+
 def plugout_drive_cargs(
     params: PlugoutDriveParameters,
     execution: Execution,
@@ -247,6 +316,7 @@ def plugout_drive_execute(
     Returns:
         NamedTuple of outputs (described in `PlugoutDriveOutputs`).
     """
+    plugout_drive_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PLUGOUT_DRIVE_METADATA)
     params = execution.params(params)

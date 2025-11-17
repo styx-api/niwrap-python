@@ -93,6 +93,48 @@ def v_3d_blur_to_fwhm_params(
     return params
 
 
+def v_3d_blur_to_fwhm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dBlurToFwhmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("blurmaster", None) is not None:
+        if not isinstance(params["blurmaster"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`blurmaster` has the wrong type: Received `{type(params.get("blurmaster", None))}` expected `InputPathType | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("fwhmxy", None) is not None:
+        if not isinstance(params["fwhmxy"], (float, int)):
+            raise StyxValidationError(f'`fwhmxy` has the wrong type: Received `{type(params.get("fwhmxy", None))}` expected `float | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3d_blur_to_fwhm_cargs(
     params: V3dBlurToFwhmParameters,
     execution: Execution,
@@ -184,6 +226,7 @@ def v_3d_blur_to_fwhm_execute(
     Returns:
         NamedTuple of outputs (described in `V3dBlurToFwhmOutputs`).
     """
+    v_3d_blur_to_fwhm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_BLUR_TO_FWHM_METADATA)
     params = execution.params(params)

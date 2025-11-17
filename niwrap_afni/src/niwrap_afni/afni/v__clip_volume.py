@@ -154,6 +154,94 @@ def v__clip_volume_params(
     return params
 
 
+def v__clip_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VClipVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("below_zmm", None) is not None:
+        if not isinstance(params["below_zmm"], (float, int)):
+            raise StyxValidationError(f'`below_zmm` has the wrong type: Received `{type(params.get("below_zmm", None))}` expected `float | None`')
+    if params.get("above_zmm", None) is not None:
+        if not isinstance(params["above_zmm"], (float, int)):
+            raise StyxValidationError(f'`above_zmm` has the wrong type: Received `{type(params.get("above_zmm", None))}` expected `float | None`')
+    if params.get("left_xmm", None) is not None:
+        if not isinstance(params["left_xmm"], (float, int)):
+            raise StyxValidationError(f'`left_xmm` has the wrong type: Received `{type(params.get("left_xmm", None))}` expected `float | None`')
+    if params.get("right_xmm", None) is not None:
+        if not isinstance(params["right_xmm"], (float, int)):
+            raise StyxValidationError(f'`right_xmm` has the wrong type: Received `{type(params.get("right_xmm", None))}` expected `float | None`')
+    if params.get("anterior_ymm", None) is not None:
+        if not isinstance(params["anterior_ymm"], (float, int)):
+            raise StyxValidationError(f'`anterior_ymm` has the wrong type: Received `{type(params.get("anterior_ymm", None))}` expected `float | None`')
+    if params.get("posterior_ymm", None) is not None:
+        if not isinstance(params["posterior_ymm"], (float, int)):
+            raise StyxValidationError(f'`posterior_ymm` has the wrong type: Received `{type(params.get("posterior_ymm", None))}` expected `float | None`')
+    if params.get("box", None) is not None:
+        if not isinstance(params["box"], list):
+            raise StyxValidationError(f'`box` has the wrong type: Received `{type(params.get("box", None))}` expected `list[float] | None`')
+        if len(params["box"]) == 6:
+            raise StyxValidationError("Parameter `box` must contain exactly 6 elements")
+        for e in params["box"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`box` has the wrong type: Received `{type(params.get("box", None))}` expected `list[float] | None`')
+    if params.get("mask_box", None) is not None:
+        if not isinstance(params["mask_box"], list):
+            raise StyxValidationError(f'`mask_box` has the wrong type: Received `{type(params.get("mask_box", None))}` expected `list[float] | None`')
+        if len(params["mask_box"]) == 6:
+            raise StyxValidationError("Parameter `mask_box` must contain exactly 6 elements")
+        for e in params["mask_box"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mask_box` has the wrong type: Received `{type(params.get("mask_box", None))}` expected `list[float] | None`')
+    if params.get("and_logic", False) is None:
+        raise StyxValidationError("`and_logic` must not be None")
+    if not isinstance(params["and_logic"], bool):
+        raise StyxValidationError(f'`and_logic` has the wrong type: Received `{type(params.get("and_logic", False))}` expected `bool`')
+    if params.get("or_logic", False) is None:
+        raise StyxValidationError("`or_logic` must not be None")
+    if not isinstance(params["or_logic"], bool):
+        raise StyxValidationError(f'`or_logic` has the wrong type: Received `{type(params.get("or_logic", False))}` expected `bool`')
+    if params.get("verbosity", False) is None:
+        raise StyxValidationError("`verbosity` must not be None")
+    if not isinstance(params["verbosity"], bool):
+        raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", False))}` expected `bool`')
+    if params.get("crop_allzero", False) is None:
+        raise StyxValidationError("`crop_allzero` must not be None")
+    if not isinstance(params["crop_allzero"], bool):
+        raise StyxValidationError(f'`crop_allzero` has the wrong type: Received `{type(params.get("crop_allzero", False))}` expected `bool`')
+    if params.get("crop_greedy", False) is None:
+        raise StyxValidationError("`crop_greedy` must not be None")
+    if not isinstance(params["crop_greedy"], bool):
+        raise StyxValidationError(f'`crop_greedy` has the wrong type: Received `{type(params.get("crop_greedy", False))}` expected `bool`')
+    if params.get("crop", False) is None:
+        raise StyxValidationError("`crop` must not be None")
+    if not isinstance(params["crop"], bool):
+        raise StyxValidationError(f'`crop` has the wrong type: Received `{type(params.get("crop", False))}` expected `bool`')
+    if params.get("crop_npad", None) is not None:
+        if not isinstance(params["crop_npad"], (float, int)):
+            raise StyxValidationError(f'`crop_npad` has the wrong type: Received `{type(params.get("crop_npad", None))}` expected `float | None`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("followers", None) is not None:
+        if not isinstance(params["followers"], list):
+            raise StyxValidationError(f'`followers` has the wrong type: Received `{type(params.get("followers", None))}` expected `list[InputPathType] | None`')
+        for e in params["followers"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`followers` has the wrong type: Received `{type(params.get("followers", None))}` expected `list[InputPathType] | None`')
+
+
 def v__clip_volume_cargs(
     params: VClipVolumeParameters,
     execution: Execution,
@@ -281,6 +369,7 @@ def v__clip_volume_execute(
     Returns:
         NamedTuple of outputs (described in `VClipVolumeOutputs`).
     """
+    v__clip_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__CLIP_VOLUME_METADATA)
     params = execution.params(params)

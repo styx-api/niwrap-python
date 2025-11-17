@@ -58,6 +58,32 @@ def border_export_color_table_params(
     return params
 
 
+def border_export_color_table_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderExportColorTableParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("class-colors", False) is None:
+        raise StyxValidationError("`class-colors` must not be None")
+    if not isinstance(params["class-colors"], bool):
+        raise StyxValidationError(f'`class-colors` has the wrong type: Received `{type(params.get("class-colors", False))}` expected `bool`')
+    if params.get("border-file", None) is None:
+        raise StyxValidationError("`border-file` must not be None")
+    if not isinstance(params["border-file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border-file` has the wrong type: Received `{type(params.get("border-file", None))}` expected `InputPathType`')
+    if params.get("table-out", None) is None:
+        raise StyxValidationError("`table-out` must not be None")
+    if not isinstance(params["table-out"], str):
+        raise StyxValidationError(f'`table-out` has the wrong type: Received `{type(params.get("table-out", None))}` expected `str`')
+
+
 def border_export_color_table_cargs(
     params: BorderExportColorTableParameters,
     execution: Execution,
@@ -120,6 +146,7 @@ def border_export_color_table_execute(
     Returns:
         NamedTuple of outputs (described in `BorderExportColorTableOutputs`).
     """
+    border_export_color_table_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BORDER_EXPORT_COLOR_TABLE_METADATA)
     params = execution.params(params)

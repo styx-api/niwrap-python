@@ -68,6 +68,35 @@ def possum_sum_params(
     return params
 
 
+def possum_sum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PossumSumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_signal", None) is None:
+        raise StyxValidationError("`input_signal` must not be None")
+    if not isinstance(params["input_signal"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_signal` has the wrong type: Received `{type(params.get("input_signal", None))}` expected `InputPathType`')
+    if params.get("output_signal", None) is None:
+        raise StyxValidationError("`output_signal` must not be None")
+    if not isinstance(params["output_signal"], str):
+        raise StyxValidationError(f'`output_signal` has the wrong type: Received `{type(params.get("output_signal", None))}` expected `str`')
+    if params.get("num_processors", None) is not None:
+        if not isinstance(params["num_processors"], int):
+            raise StyxValidationError(f'`num_processors` has the wrong type: Received `{type(params.get("num_processors", None))}` expected `int | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def possum_sum_cargs(
     params: PossumSumParameters,
     execution: Execution,
@@ -140,6 +169,7 @@ def possum_sum_execute(
     Returns:
         NamedTuple of outputs (described in `PossumSumOutputs`).
     """
+    possum_sum_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POSSUM_SUM_METADATA)
     params = execution.params(params)

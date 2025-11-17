@@ -128,6 +128,72 @@ def v__t1scale_params(
     return params
 
 
+def v__t1scale_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VT1scaleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_volume", None) is None:
+        raise StyxValidationError("`t1_volume` must not be None")
+    if not isinstance(params["t1_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_volume` has the wrong type: Received `{type(params.get("t1_volume", None))}` expected `InputPathType`')
+    if params.get("pd_volume", None) is not None:
+        if not isinstance(params["pd_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pd_volume` has the wrong type: Received `{type(params.get("pd_volume", None))}` expected `InputPathType | None`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+    if params.get("align", False) is None:
+        raise StyxValidationError("`align` must not be None")
+    if not isinstance(params["align"], bool):
+        raise StyxValidationError(f'`align` has the wrong type: Received `{type(params.get("align", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("head_mask", False) is None:
+        raise StyxValidationError("`head_mask` must not be None")
+    if not isinstance(params["head_mask"], bool):
+        raise StyxValidationError(f'`head_mask` has the wrong type: Received `{type(params.get("head_mask", False))}` expected `bool`')
+    if params.get("unmasked_uni", False) is None:
+        raise StyxValidationError("`unmasked_uni` must not be None")
+    if not isinstance(params["unmasked_uni"], bool):
+        raise StyxValidationError(f'`unmasked_uni` has the wrong type: Received `{type(params.get("unmasked_uni", False))}` expected `bool`')
+    if params.get("masked_uni", False) is None:
+        raise StyxValidationError("`masked_uni` must not be None")
+    if not isinstance(params["masked_uni"], bool):
+        raise StyxValidationError(f'`masked_uni` has the wrong type: Received `{type(params.get("masked_uni", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("h_web", False) is None:
+        raise StyxValidationError("`h_web` must not be None")
+    if not isinstance(params["h_web"], bool):
+        raise StyxValidationError(f'`h_web` has the wrong type: Received `{type(params.get("h_web", False))}` expected `bool`')
+    if params.get("h_view", False) is None:
+        raise StyxValidationError("`h_view` must not be None")
+    if not isinstance(params["h_view"], bool):
+        raise StyxValidationError(f'`h_view` has the wrong type: Received `{type(params.get("h_view", False))}` expected `bool`')
+    if params.get("all_opts", False) is None:
+        raise StyxValidationError("`all_opts` must not be None")
+    if not isinstance(params["all_opts"], bool):
+        raise StyxValidationError(f'`all_opts` has the wrong type: Received `{type(params.get("all_opts", False))}` expected `bool`')
+    if params.get("h_find_word", None) is not None:
+        if not isinstance(params["h_find_word"], str):
+            raise StyxValidationError(f'`h_find_word` has the wrong type: Received `{type(params.get("h_find_word", None))}` expected `str | None`')
+
+
 def v__t1scale_cargs(
     params: VT1scaleParameters,
     execution: Execution,
@@ -230,6 +296,7 @@ def v__t1scale_execute(
     Returns:
         NamedTuple of outputs (described in `VT1scaleOutputs`).
     """
+    v__t1scale_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__T1SCALE_METADATA)
     params = execution.params(params)

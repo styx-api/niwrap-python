@@ -51,6 +51,24 @@ def v__get_afni_dims_params(
     return params
 
 
+def v__get_afni_dims_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGetAfniDimsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dset", None) is None:
+        raise StyxValidationError("`input_dset` must not be None")
+    if not isinstance(params["input_dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dset` has the wrong type: Received `{type(params.get("input_dset", None))}` expected `InputPathType`')
+
+
 def v__get_afni_dims_cargs(
     params: VGetAfniDimsParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def v__get_afni_dims_execute(
     Returns:
         NamedTuple of outputs (described in `VGetAfniDimsOutputs`).
     """
+    v__get_afni_dims_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GET_AFNI_DIMS_METADATA)
     params = execution.params(params)

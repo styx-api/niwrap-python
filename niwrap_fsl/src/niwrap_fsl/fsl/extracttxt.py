@@ -69,6 +69,34 @@ def extracttxt_params(
     return params
 
 
+def extracttxt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtracttxtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("search_word", None) is None:
+        raise StyxValidationError("`search_word` must not be None")
+    if not isinstance(params["search_word"], str):
+        raise StyxValidationError(f'`search_word` has the wrong type: Received `{type(params.get("search_word", None))}` expected `str`')
+    if params.get("file", None) is None:
+        raise StyxValidationError("`file` must not be None")
+    if not isinstance(params["file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `InputPathType`')
+    if params.get("num_trailing_lines", None) is not None:
+        if not isinstance(params["num_trailing_lines"], (float, int)):
+            raise StyxValidationError(f'`num_trailing_lines` has the wrong type: Received `{type(params.get("num_trailing_lines", None))}` expected `float | None`')
+    if params.get("relative_start", None) is not None:
+        if not isinstance(params["relative_start"], (float, int)):
+            raise StyxValidationError(f'`relative_start` has the wrong type: Received `{type(params.get("relative_start", None))}` expected `float | None`')
+
+
 def extracttxt_cargs(
     params: ExtracttxtParameters,
     execution: Execution,
@@ -132,6 +160,7 @@ def extracttxt_execute(
     Returns:
         NamedTuple of outputs (described in `ExtracttxtOutputs`).
     """
+    extracttxt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EXTRACTTXT_METADATA)
     params = execution.params(params)

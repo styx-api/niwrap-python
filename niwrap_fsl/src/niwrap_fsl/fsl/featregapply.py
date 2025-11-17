@@ -90,6 +90,45 @@ def featregapply_params(
     return params
 
 
+def featregapply_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FeatregapplyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat_directory", None) is None:
+        raise StyxValidationError("`feat_directory` must not be None")
+    if not isinstance(params["feat_directory"], str):
+        raise StyxValidationError(f'`feat_directory` has the wrong type: Received `{type(params.get("feat_directory", None))}` expected `str`')
+    if params.get("force_flag", False) is None:
+        raise StyxValidationError("`force_flag` must not be None")
+    if not isinstance(params["force_flag"], bool):
+        raise StyxValidationError(f'`force_flag` has the wrong type: Received `{type(params.get("force_flag", False))}` expected `bool`')
+    if params.get("cleanup_flag", False) is None:
+        raise StyxValidationError("`cleanup_flag` must not be None")
+    if not isinstance(params["cleanup_flag"], bool):
+        raise StyxValidationError(f'`cleanup_flag` has the wrong type: Received `{type(params.get("cleanup_flag", False))}` expected `bool`')
+    if params.get("upsample_trilinear", None) is not None:
+        if not isinstance(params["upsample_trilinear"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`upsample_trilinear` has the wrong type: Received `{type(params.get("upsample_trilinear", None))}` expected `InputPathType | None`')
+    if params.get("upsample_spline", None) is not None:
+        if not isinstance(params["upsample_spline"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`upsample_spline` has the wrong type: Received `{type(params.get("upsample_spline", None))}` expected `InputPathType | None`')
+    if params.get("standard_space_res", None) is not None:
+        if not isinstance(params["standard_space_res"], (float, int)):
+            raise StyxValidationError(f'`standard_space_res` has the wrong type: Received `{type(params.get("standard_space_res", None))}` expected `float | None`')
+    if params.get("exclude_filtered_func_flag", False) is None:
+        raise StyxValidationError("`exclude_filtered_func_flag` must not be None")
+    if not isinstance(params["exclude_filtered_func_flag"], bool):
+        raise StyxValidationError(f'`exclude_filtered_func_flag` has the wrong type: Received `{type(params.get("exclude_filtered_func_flag", False))}` expected `bool`')
+
+
 def featregapply_cargs(
     params: FeatregapplyParameters,
     execution: Execution,
@@ -169,6 +208,7 @@ def featregapply_execute(
     Returns:
         NamedTuple of outputs (described in `FeatregapplyOutputs`).
     """
+    featregapply_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FEATREGAPPLY_METADATA)
     params = execution.params(params)

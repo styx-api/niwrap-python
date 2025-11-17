@@ -95,6 +95,45 @@ def v_3d_brain_sync_params(
     return params
 
 
+def v_3d_brain_sync_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dBrainSyncParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inset1", None) is None:
+        raise StyxValidationError("`inset1` must not be None")
+    if not isinstance(params["inset1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset1` has the wrong type: Received `{type(params.get("inset1", None))}` expected `InputPathType`')
+    if params.get("inset2", None) is None:
+        raise StyxValidationError("`inset2` must not be None")
+    if not isinstance(params["inset2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset2` has the wrong type: Received `{type(params.get("inset2", None))}` expected `InputPathType`')
+    if params.get("qprefix", None) is not None:
+        if not isinstance(params["qprefix"], str):
+            raise StyxValidationError(f'`qprefix` has the wrong type: Received `{type(params.get("qprefix", None))}` expected `str | None`')
+    if params.get("pprefix", None) is not None:
+        if not isinstance(params["pprefix"], str):
+            raise StyxValidationError(f'`pprefix` has the wrong type: Received `{type(params.get("pprefix", None))}` expected `str | None`')
+    if params.get("normalize", False) is None:
+        raise StyxValidationError("`normalize` must not be None")
+    if not isinstance(params["normalize"], bool):
+        raise StyxValidationError(f'`normalize` has the wrong type: Received `{type(params.get("normalize", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+
+
 def v_3d_brain_sync_cargs(
     params: V3dBrainSyncParameters,
     execution: Execution,
@@ -184,6 +223,7 @@ def v_3d_brain_sync_execute(
     Returns:
         NamedTuple of outputs (described in `V3dBrainSyncOutputs`).
     """
+    v_3d_brain_sync_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_BRAIN_SYNC_METADATA)
     params = execution.params(params)

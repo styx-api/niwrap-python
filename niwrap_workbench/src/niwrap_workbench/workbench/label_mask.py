@@ -68,6 +68,35 @@ def label_mask_params(
     return params
 
 
+def label_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+
+
 def label_mask_cargs(
     params: LabelMaskParameters,
     execution: Execution,
@@ -133,6 +162,7 @@ def label_mask_execute(
     Returns:
         NamedTuple of outputs (described in `LabelMaskOutputs`).
     """
+    label_mask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL_MASK_METADATA)
     params = execution.params(params)

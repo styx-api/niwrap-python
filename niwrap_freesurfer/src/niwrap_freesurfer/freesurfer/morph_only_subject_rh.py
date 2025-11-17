@@ -53,6 +53,24 @@ def morph_only_subject_rh_params(
     return params
 
 
+def morph_only_subject_rh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MorphOnlySubjectRhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `InputPathType`')
+
+
 def morph_only_subject_rh_cargs(
     params: MorphOnlySubjectRhParameters,
     execution: Execution,
@@ -115,6 +133,7 @@ def morph_only_subject_rh_execute(
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectRhOutputs`).
     """
+    morph_only_subject_rh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MORPH_ONLY_SUBJECT_RH_METADATA)
     params = execution.params(params)

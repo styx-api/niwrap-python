@@ -76,6 +76,44 @@ def mris_jacobian_params(
     return params
 
 
+def mris_jacobian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisJacobianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("original_surface", None) is None:
+        raise StyxValidationError("`original_surface` must not be None")
+    if not isinstance(params["original_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`original_surface` has the wrong type: Received `{type(params.get("original_surface", None))}` expected `InputPathType`')
+    if params.get("mapped_surface", None) is None:
+        raise StyxValidationError("`mapped_surface` must not be None")
+    if not isinstance(params["mapped_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mapped_surface` has the wrong type: Received `{type(params.get("mapped_surface", None))}` expected `InputPathType`')
+    if params.get("jacobian_file", None) is None:
+        raise StyxValidationError("`jacobian_file` must not be None")
+    if not isinstance(params["jacobian_file"], str):
+        raise StyxValidationError(f'`jacobian_file` has the wrong type: Received `{type(params.get("jacobian_file", None))}` expected `str`')
+    if params.get("log", False) is None:
+        raise StyxValidationError("`log` must not be None")
+    if not isinstance(params["log"], bool):
+        raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", False))}` expected `bool`')
+    if params.get("noscale", False) is None:
+        raise StyxValidationError("`noscale` must not be None")
+    if not isinstance(params["noscale"], bool):
+        raise StyxValidationError(f'`noscale` has the wrong type: Received `{type(params.get("noscale", False))}` expected `bool`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+
+
 def mris_jacobian_cargs(
     params: MrisJacobianParameters,
     execution: Execution,
@@ -142,6 +180,7 @@ def mris_jacobian_execute(
     Returns:
         NamedTuple of outputs (described in `MrisJacobianOutputs`).
     """
+    mris_jacobian_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_JACOBIAN_METADATA)
     params = execution.params(params)

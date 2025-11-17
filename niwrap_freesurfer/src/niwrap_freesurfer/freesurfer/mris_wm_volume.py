@@ -77,6 +77,41 @@ def mris_wm_volume_params(
     return params
 
 
+def mris_wm_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisWmVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("whitesurfname", None) is not None:
+        if not isinstance(params["whitesurfname"], str):
+            raise StyxValidationError(f'`whitesurfname` has the wrong type: Received `{type(params.get("whitesurfname", None))}` expected `str | None`')
+    if params.get("asegname", None) is not None:
+        if not isinstance(params["asegname"], str):
+            raise StyxValidationError(f'`asegname` has the wrong type: Received `{type(params.get("asegname", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def mris_wm_volume_cargs(
     params: MrisWmVolumeParameters,
     execution: Execution,
@@ -153,6 +188,7 @@ def mris_wm_volume_execute(
     Returns:
         NamedTuple of outputs (described in `MrisWmVolumeOutputs`).
     """
+    mris_wm_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_WM_VOLUME_METADATA)
     params = execution.params(params)

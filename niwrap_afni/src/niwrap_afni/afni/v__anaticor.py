@@ -127,6 +127,73 @@ def v__anaticor_params(
     return params
 
 
+def v__anaticor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAnaticorParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ts", None) is None:
+        raise StyxValidationError("`ts` must not be None")
+    if not isinstance(params["ts"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ts` has the wrong type: Received `{type(params.get("ts", None))}` expected `InputPathType`')
+    if params.get("polort", None) is None:
+        raise StyxValidationError("`polort` must not be None")
+    if not isinstance(params["polort"], str):
+        raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `str`')
+    if params.get("motion", None) is None:
+        raise StyxValidationError("`motion` must not be None")
+    if not isinstance(params["motion"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`motion` has the wrong type: Received `{type(params.get("motion", None))}` expected `InputPathType`')
+    if params.get("aseg", None) is None:
+        raise StyxValidationError("`aseg` must not be None")
+    if not isinstance(params["aseg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aseg` has the wrong type: Received `{type(params.get("aseg", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+    if params.get("view", None) is not None:
+        if not isinstance(params["view"], str):
+            raise StyxValidationError(f'`view` has the wrong type: Received `{type(params.get("view", None))}` expected `str | None`')
+    if params.get("nuisance", None) is not None:
+        if not isinstance(params["nuisance"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nuisance` has the wrong type: Received `{type(params.get("nuisance", None))}` expected `InputPathType | None`')
+    if params.get("no_ventricles", False) is None:
+        raise StyxValidationError("`no_ventricles` must not be None")
+    if not isinstance(params["no_ventricles"], bool):
+        raise StyxValidationError(f'`no_ventricles` has the wrong type: Received `{type(params.get("no_ventricles", False))}` expected `bool`')
+    if params.get("Rsq_WMe", False) is None:
+        raise StyxValidationError("`Rsq_WMe` must not be None")
+    if not isinstance(params["Rsq_WMe"], bool):
+        raise StyxValidationError(f'`Rsq_WMe` has the wrong type: Received `{type(params.get("Rsq_WMe", False))}` expected `bool`')
+    if params.get("coverage", False) is None:
+        raise StyxValidationError("`coverage` must not be None")
+    if not isinstance(params["coverage"], bool):
+        raise StyxValidationError(f'`coverage` has the wrong type: Received `{type(params.get("coverage", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+    if params.get("dirty", False) is None:
+        raise StyxValidationError("`dirty` must not be None")
+    if not isinstance(params["dirty"], bool):
+        raise StyxValidationError(f'`dirty` has the wrong type: Received `{type(params.get("dirty", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+
+
 def v__anaticor_cargs(
     params: VAnaticorParameters,
     execution: Execution,
@@ -225,6 +292,7 @@ def v__anaticor_execute(
     Returns:
         NamedTuple of outputs (described in `VAnaticorOutputs`).
     """
+    v__anaticor_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ANATICOR_METADATA)
     params = execution.params(params)

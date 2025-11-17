@@ -109,6 +109,70 @@ def mri_path2label_params(
     return params
 
 
+def mri_path2label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriPath2labelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], str):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `str`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("single", False) is None:
+        raise StyxValidationError("`single` must not be None")
+    if not isinstance(params["single"], bool):
+        raise StyxValidationError(f'`single` has the wrong type: Received `{type(params.get("single", False))}` expected `bool`')
+    if params.get("path_to_label", False) is None:
+        raise StyxValidationError("`path_to_label` must not be None")
+    if not isinstance(params["path_to_label"], bool):
+        raise StyxValidationError(f'`path_to_label` has the wrong type: Received `{type(params.get("path_to_label", False))}` expected `bool`')
+    if params.get("label_to_path", False) is None:
+        raise StyxValidationError("`label_to_path` must not be None")
+    if not isinstance(params["label_to_path"], bool):
+        raise StyxValidationError(f'`label_to_path` has the wrong type: Received `{type(params.get("label_to_path", False))}` expected `bool`')
+    if params.get("connect", None) is not None:
+        if not isinstance(params["connect"], list):
+            raise StyxValidationError(f'`connect` has the wrong type: Received `{type(params.get("connect", None))}` expected `list[str] | None`')
+        for e in params["connect"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`connect` has the wrong type: Received `{type(params.get("connect", None))}` expected `list[str] | None`')
+    if params.get("fill", None) is not None:
+        if not isinstance(params["fill"], list):
+            raise StyxValidationError(f'`fill` has the wrong type: Received `{type(params.get("fill", None))}` expected `list[str] | None`')
+        for e in params["fill"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`fill` has the wrong type: Received `{type(params.get("fill", None))}` expected `list[str] | None`')
+    if params.get("confillx", None) is not None:
+        if not isinstance(params["confillx"], list):
+            raise StyxValidationError(f'`confillx` has the wrong type: Received `{type(params.get("confillx", None))}` expected `list[str] | None`')
+        for e in params["confillx"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`confillx` has the wrong type: Received `{type(params.get("confillx", None))}` expected `list[str] | None`')
+    if params.get("confill", None) is not None:
+        if not isinstance(params["confill"], list):
+            raise StyxValidationError(f'`confill` has the wrong type: Received `{type(params.get("confill", None))}` expected `list[str] | None`')
+        for e in params["confill"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`confill` has the wrong type: Received `{type(params.get("confill", None))}` expected `list[str] | None`')
+    if params.get("source_file", None) is not None:
+        if not isinstance(params["source_file"], str):
+            raise StyxValidationError(f'`source_file` has the wrong type: Received `{type(params.get("source_file", None))}` expected `str | None`')
+    if params.get("dest_file", None) is not None:
+        if not isinstance(params["dest_file"], str):
+            raise StyxValidationError(f'`dest_file` has the wrong type: Received `{type(params.get("dest_file", None))}` expected `str | None`')
+
+
 def mri_path2label_cargs(
     params: MriPath2labelParameters,
     execution: Execution,
@@ -203,6 +267,7 @@ def mri_path2label_execute(
     Returns:
         NamedTuple of outputs (described in `MriPath2labelOutputs`).
     """
+    mri_path2label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_PATH2LABEL_METADATA)
     params = execution.params(params)

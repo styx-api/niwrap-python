@@ -56,6 +56,28 @@ def fslval_params(
     return params
 
 
+def fslval_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslvalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("keyword", None) is None:
+        raise StyxValidationError("`keyword` must not be None")
+    if not isinstance(params["keyword"], str):
+        raise StyxValidationError(f'`keyword` has the wrong type: Received `{type(params.get("keyword", None))}` expected `str`')
+
+
 def fslval_cargs(
     params: FslvalParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def fslval_execute(
     Returns:
         NamedTuple of outputs (described in `FslvalOutputs`).
     """
+    fslval_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLVAL_METADATA)
     params = execution.params(params)

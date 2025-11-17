@@ -122,6 +122,74 @@ def v_3d_brain_voyagerto_afni_params(
     return params
 
 
+def v_3d_brain_voyagerto_afni_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dBrainVoyagertoAfniParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("force_byte_swap", False) is None:
+        raise StyxValidationError("`force_byte_swap` must not be None")
+    if not isinstance(params["force_byte_swap"], bool):
+        raise StyxValidationError(f'`force_byte_swap` has the wrong type: Received `{type(params.get("force_byte_swap", False))}` expected `bool`')
+    if params.get("brainvoyager_qx", False) is None:
+        raise StyxValidationError("`brainvoyager_qx` must not be None")
+    if not isinstance(params["brainvoyager_qx"], bool):
+        raise StyxValidationError(f'`brainvoyager_qx` has the wrong type: Received `{type(params.get("brainvoyager_qx", False))}` expected `bool`')
+    if params.get("tlrc_space", False) is None:
+        raise StyxValidationError("`tlrc_space` must not be None")
+    if not isinstance(params["tlrc_space"], bool):
+        raise StyxValidationError(f'`tlrc_space` has the wrong type: Received `{type(params.get("tlrc_space", False))}` expected `bool`')
+    if params.get("acpc_space", False) is None:
+        raise StyxValidationError("`acpc_space` must not be None")
+    if not isinstance(params["acpc_space"], bool):
+        raise StyxValidationError(f'`acpc_space` has the wrong type: Received `{type(params.get("acpc_space", False))}` expected `bool`')
+    if params.get("orig_space", False) is None:
+        raise StyxValidationError("`orig_space` must not be None")
+    if not isinstance(params["orig_space"], bool):
+        raise StyxValidationError(f'`orig_space` has the wrong type: Received `{type(params.get("orig_space", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("noxform", False) is None:
+        raise StyxValidationError("`noxform` must not be None")
+    if not isinstance(params["noxform"], bool):
+        raise StyxValidationError(f'`noxform` has the wrong type: Received `{type(params.get("noxform", False))}` expected `bool`')
+    if params.get("set_environment", None) is not None:
+        if not isinstance(params["set_environment"], str):
+            raise StyxValidationError(f'`set_environment` has the wrong type: Received `{type(params.get("set_environment", None))}` expected `str | None`')
+    if params.get("trace_debugging", False) is None:
+        raise StyxValidationError("`trace_debugging` must not be None")
+    if not isinstance(params["trace_debugging"], bool):
+        raise StyxValidationError(f'`trace_debugging` has the wrong type: Received `{type(params.get("trace_debugging", False))}` expected `bool`')
+    if params.get("trace_extreme_debugging", False) is None:
+        raise StyxValidationError("`trace_extreme_debugging` must not be None")
+    if not isinstance(params["trace_extreme_debugging"], bool):
+        raise StyxValidationError(f'`trace_extreme_debugging` has the wrong type: Received `{type(params.get("trace_extreme_debugging", False))}` expected `bool`')
+    if params.get("turn_off_memory_tracing", False) is None:
+        raise StyxValidationError("`turn_off_memory_tracing` must not be None")
+    if not isinstance(params["turn_off_memory_tracing"], bool):
+        raise StyxValidationError(f'`turn_off_memory_tracing` has the wrong type: Received `{type(params.get("turn_off_memory_tracing", False))}` expected `bool`')
+    if params.get("turn_on_memory_tracing", False) is None:
+        raise StyxValidationError("`turn_on_memory_tracing` must not be None")
+    if not isinstance(params["turn_on_memory_tracing"], bool):
+        raise StyxValidationError(f'`turn_on_memory_tracing` has the wrong type: Received `{type(params.get("turn_on_memory_tracing", False))}` expected `bool`')
+
+
 def v_3d_brain_voyagerto_afni_cargs(
     params: V3dBrainVoyagertoAfniParameters,
     execution: Execution,
@@ -217,6 +285,7 @@ def v_3d_brain_voyagerto_afni_execute(
     Returns:
         NamedTuple of outputs (described in `V3dBrainVoyagertoAfniOutputs`).
     """
+    v_3d_brain_voyagerto_afni_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_BRAIN_VOYAGERTO_AFNI_METADATA)
     params = execution.params(params)

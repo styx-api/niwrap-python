@@ -101,6 +101,58 @@ def mri_synthsr_params(
     return params
 
 
+def mri_synthsr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSynthsrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], str):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("ct", False) is None:
+        raise StyxValidationError("`ct` must not be None")
+    if not isinstance(params["ct"], bool):
+        raise StyxValidationError(f'`ct` has the wrong type: Received `{type(params.get("ct", False))}` expected `bool`')
+    if params.get("disable_sharpening", False) is None:
+        raise StyxValidationError("`disable_sharpening` must not be None")
+    if not isinstance(params["disable_sharpening"], bool):
+        raise StyxValidationError(f'`disable_sharpening` has the wrong type: Received `{type(params.get("disable_sharpening", False))}` expected `bool`')
+    if params.get("disable_flipping", False) is None:
+        raise StyxValidationError("`disable_flipping` must not be None")
+    if not isinstance(params["disable_flipping"], bool):
+        raise StyxValidationError(f'`disable_flipping` has the wrong type: Received `{type(params.get("disable_flipping", False))}` expected `bool`')
+    if params.get("lowfield", False) is None:
+        raise StyxValidationError("`lowfield` must not be None")
+    if not isinstance(params["lowfield"], bool):
+        raise StyxValidationError(f'`lowfield` has the wrong type: Received `{type(params.get("lowfield", False))}` expected `bool`')
+    if params.get("v1", False) is None:
+        raise StyxValidationError("`v1` must not be None")
+    if not isinstance(params["v1"], bool):
+        raise StyxValidationError(f'`v1` has the wrong type: Received `{type(params.get("v1", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("cpu", False) is None:
+        raise StyxValidationError("`cpu` must not be None")
+    if not isinstance(params["cpu"], bool):
+        raise StyxValidationError(f'`cpu` has the wrong type: Received `{type(params.get("cpu", False))}` expected `bool`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], str):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str | None`')
+
+
 def mri_synthsr_cargs(
     params: MriSynthsrParameters,
     execution: Execution,
@@ -182,6 +234,7 @@ def mri_synthsr_execute(
     Returns:
         NamedTuple of outputs (described in `MriSynthsrOutputs`).
     """
+    mri_synthsr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SYNTHSR_METADATA)
     params = execution.params(params)

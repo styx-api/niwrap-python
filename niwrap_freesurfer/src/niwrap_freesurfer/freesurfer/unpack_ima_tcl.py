@@ -49,6 +49,24 @@ def unpack_ima_tcl_params(
     return params
 
 
+def unpack_ima_tcl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UnpackImaTclParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("target_dir", "~") is None:
+        raise StyxValidationError("`target_dir` must not be None")
+    if not isinstance(params["target_dir"], str):
+        raise StyxValidationError(f'`target_dir` has the wrong type: Received `{type(params.get("target_dir", "~"))}` expected `str`')
+
+
 def unpack_ima_tcl_cargs(
     params: UnpackImaTclParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def unpack_ima_tcl_execute(
     Returns:
         NamedTuple of outputs (described in `UnpackImaTclOutputs`).
     """
+    unpack_ima_tcl_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UNPACK_IMA_TCL_METADATA)
     params = execution.params(params)

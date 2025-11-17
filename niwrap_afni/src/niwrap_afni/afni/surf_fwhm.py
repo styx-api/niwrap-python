@@ -135,6 +135,67 @@ def surf_fwhm_params(
     return params
 
 
+def surf_fwhm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfFwhmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("surf_1", None) is not None:
+        if not isinstance(params["surf_1"], str):
+            raise StyxValidationError(f'`surf_1` has the wrong type: Received `{type(params.get("surf_1", None))}` expected `str | None`')
+    if params.get("surf_sphere", None) is not None:
+        if not isinstance(params["surf_sphere"], str):
+            raise StyxValidationError(f'`surf_sphere` has the wrong type: Received `{type(params.get("surf_sphere", None))}` expected `str | None`')
+    if params.get("clean", False) is None:
+        raise StyxValidationError("`clean` must not be None")
+    if not isinstance(params["clean"], bool):
+        raise StyxValidationError(f'`clean` has the wrong type: Received `{type(params.get("clean", False))}` expected `bool`')
+    if params.get("detrend", None) is not None:
+        if not isinstance(params["detrend"], (float, int)):
+            raise StyxValidationError(f'`detrend` has the wrong type: Received `{type(params.get("detrend", None))}` expected `float | None`')
+    if params.get("detpoly", None) is not None:
+        if not isinstance(params["detpoly"], (float, int)):
+            raise StyxValidationError(f'`detpoly` has the wrong type: Received `{type(params.get("detpoly", None))}` expected `float | None`')
+    if params.get("detprefix", None) is not None:
+        if not isinstance(params["detprefix"], str):
+            raise StyxValidationError(f'`detprefix` has the wrong type: Received `{type(params.get("detprefix", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("vox_size", None) is not None:
+        if not isinstance(params["vox_size"], (float, int)):
+            raise StyxValidationError(f'`vox_size` has the wrong type: Received `{type(params.get("vox_size", None))}` expected `float | None`')
+    if params.get("neighborhood", None) is not None:
+        if not isinstance(params["neighborhood"], (float, int)):
+            raise StyxValidationError(f'`neighborhood` has the wrong type: Received `{type(params.get("neighborhood", None))}` expected `float | None`')
+    if params.get("ok_warn", False) is None:
+        raise StyxValidationError("`ok_warn` must not be None")
+    if not isinstance(params["ok_warn"], bool):
+        raise StyxValidationError(f'`ok_warn` has the wrong type: Received `{type(params.get("ok_warn", False))}` expected `bool`')
+    if params.get("examples", False) is None:
+        raise StyxValidationError("`examples` must not be None")
+    if not isinstance(params["examples"], bool):
+        raise StyxValidationError(f'`examples` has the wrong type: Received `{type(params.get("examples", False))}` expected `bool`')
+    if params.get("slice", False) is None:
+        raise StyxValidationError("`slice` must not be None")
+    if not isinstance(params["slice"], bool):
+        raise StyxValidationError(f'`slice` has the wrong type: Received `{type(params.get("slice", False))}` expected `bool`')
+
+
 def surf_fwhm_cargs(
     params: SurfFwhmParameters,
     execution: Execution,
@@ -249,6 +310,7 @@ def surf_fwhm_execute(
     Returns:
         NamedTuple of outputs (described in `SurfFwhmOutputs`).
     """
+    surf_fwhm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_FWHM_METADATA)
     params = execution.params(params)

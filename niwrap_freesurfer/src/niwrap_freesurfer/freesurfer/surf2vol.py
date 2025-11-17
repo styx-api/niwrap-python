@@ -149,6 +149,80 @@ def surf2vol_params(
     return params
 
 
+def surf2vol_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Surf2volParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_surface", None) is None:
+        raise StyxValidationError("`fixed_surface` must not be None")
+    if not isinstance(params["fixed_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_surface` has the wrong type: Received `{type(params.get("fixed_surface", None))}` expected `InputPathType`')
+    if params.get("moving_surface", None) is None:
+        raise StyxValidationError("`moving_surface` must not be None")
+    if not isinstance(params["moving_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_surface` has the wrong type: Received `{type(params.get("moving_surface", None))}` expected `InputPathType`')
+    if params.get("fixed_mri", None) is None:
+        raise StyxValidationError("`fixed_mri` must not be None")
+    if not isinstance(params["fixed_mri"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_mri` has the wrong type: Received `{type(params.get("fixed_mri", None))}` expected `InputPathType`')
+    if params.get("moving_mri", None) is None:
+        raise StyxValidationError("`moving_mri` must not be None")
+    if not isinstance(params["moving_mri"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_mri` has the wrong type: Received `{type(params.get("moving_mri", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("output_field", None) is not None:
+        if not isinstance(params["output_field"], str):
+            raise StyxValidationError(f'`output_field` has the wrong type: Received `{type(params.get("output_field", None))}` expected `str | None`')
+    if params.get("output_affine", None) is not None:
+        if not isinstance(params["output_affine"], str):
+            raise StyxValidationError(f'`output_affine` has the wrong type: Received `{type(params.get("output_affine", None))}` expected `str | None`')
+    if params.get("output_surf", None) is not None:
+        if not isinstance(params["output_surf"], str):
+            raise StyxValidationError(f'`output_surf` has the wrong type: Received `{type(params.get("output_surf", None))}` expected `str | None`')
+    if params.get("output_surf_affine", None) is not None:
+        if not isinstance(params["output_surf_affine"], str):
+            raise StyxValidationError(f'`output_surf_affine` has the wrong type: Received `{type(params.get("output_surf_affine", None))}` expected `str | None`')
+    if params.get("output_mesh", None) is not None:
+        if not isinstance(params["output_mesh"], str):
+            raise StyxValidationError(f'`output_mesh` has the wrong type: Received `{type(params.get("output_mesh", None))}` expected `str | None`')
+    if params.get("spacing_x", None) is not None:
+        if not isinstance(params["spacing_x"], (float, int)):
+            raise StyxValidationError(f'`spacing_x` has the wrong type: Received `{type(params.get("spacing_x", None))}` expected `float | None`')
+    if params.get("spacing_y", None) is not None:
+        if not isinstance(params["spacing_y"], (float, int)):
+            raise StyxValidationError(f'`spacing_y` has the wrong type: Received `{type(params.get("spacing_y", None))}` expected `float | None`')
+    if params.get("spacing_z", None) is not None:
+        if not isinstance(params["spacing_z"], (float, int)):
+            raise StyxValidationError(f'`spacing_z` has the wrong type: Received `{type(params.get("spacing_z", None))}` expected `float | None`')
+    if params.get("poisson_ratio", None) is not None:
+        if not isinstance(params["poisson_ratio"], (float, int)):
+            raise StyxValidationError(f'`poisson_ratio` has the wrong type: Received `{type(params.get("poisson_ratio", None))}` expected `float | None`')
+        if params["poisson_ratio"] <= 0.5:
+            raise StyxValidationError("Parameter `poisson_ratio` must be at most 0.5")
+    if params.get("dirty_factor", None) is not None:
+        if not isinstance(params["dirty_factor"], (float, int)):
+            raise StyxValidationError(f'`dirty_factor` has the wrong type: Received `{type(params.get("dirty_factor", None))}` expected `float | None`')
+        if 0 <= params["dirty_factor"] <= 1:
+            raise StyxValidationError("Parameter `dirty_factor` must be between 0 and 1 (inclusive)")
+    if params.get("debug_output", False) is None:
+        raise StyxValidationError("`debug_output` must not be None")
+    if not isinstance(params["debug_output"], bool):
+        raise StyxValidationError(f'`debug_output` has the wrong type: Received `{type(params.get("debug_output", False))}` expected `bool`')
+    if params.get("cache_transform", None) is not None:
+        if not isinstance(params["cache_transform"], str):
+            raise StyxValidationError(f'`cache_transform` has the wrong type: Received `{type(params.get("cache_transform", None))}` expected `str | None`')
+
+
 def surf2vol_cargs(
     params: Surf2volParameters,
     execution: Execution,
@@ -285,6 +359,7 @@ def surf2vol_execute(
     Returns:
         NamedTuple of outputs (described in `Surf2volOutputs`).
     """
+    surf2vol_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF2VOL_METADATA)
     params = execution.params(params)

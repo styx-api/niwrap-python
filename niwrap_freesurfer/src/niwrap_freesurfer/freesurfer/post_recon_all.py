@@ -145,6 +145,99 @@ def post_recon_all_params(
     return params
 
 
+def post_recon_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PostReconAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("subfields", False) is None:
+        raise StyxValidationError("`subfields` must not be None")
+    if not isinstance(params["subfields"], bool):
+        raise StyxValidationError(f'`subfields` has the wrong type: Received `{type(params.get("subfields", False))}` expected `bool`')
+    if params.get("no_subfields", False) is None:
+        raise StyxValidationError("`no_subfields` must not be None")
+    if not isinstance(params["no_subfields"], bool):
+        raise StyxValidationError(f'`no_subfields` has the wrong type: Received `{type(params.get("no_subfields", False))}` expected `bool`')
+    if params.get("subregions", False) is None:
+        raise StyxValidationError("`subregions` must not be None")
+    if not isinstance(params["subregions"], bool):
+        raise StyxValidationError(f'`subregions` has the wrong type: Received `{type(params.get("subregions", False))}` expected `bool`')
+    if params.get("no_subregions", False) is None:
+        raise StyxValidationError("`no_subregions` must not be None")
+    if not isinstance(params["no_subregions"], bool):
+        raise StyxValidationError(f'`no_subregions` has the wrong type: Received `{type(params.get("no_subregions", False))}` expected `bool`')
+    if params.get("cvs", False) is None:
+        raise StyxValidationError("`cvs` must not be None")
+    if not isinstance(params["cvs"], bool):
+        raise StyxValidationError(f'`cvs` has the wrong type: Received `{type(params.get("cvs", False))}` expected `bool`')
+    if params.get("no_cvs", False) is None:
+        raise StyxValidationError("`no_cvs` must not be None")
+    if not isinstance(params["no_cvs"], bool):
+        raise StyxValidationError(f'`no_cvs` has the wrong type: Received `{type(params.get("no_cvs", False))}` expected `bool`')
+    if params.get("qcache", False) is None:
+        raise StyxValidationError("`qcache` must not be None")
+    if not isinstance(params["qcache"], bool):
+        raise StyxValidationError(f'`qcache` has the wrong type: Received `{type(params.get("qcache", False))}` expected `bool`')
+    if params.get("no_qcache", False) is None:
+        raise StyxValidationError("`no_qcache` must not be None")
+    if not isinstance(params["no_qcache"], bool):
+        raise StyxValidationError(f'`no_qcache` has the wrong type: Received `{type(params.get("no_qcache", False))}` expected `bool`')
+    if params.get("no_sclimbic", False) is None:
+        raise StyxValidationError("`no_sclimbic` must not be None")
+    if not isinstance(params["no_sclimbic"], bool):
+        raise StyxValidationError(f'`no_sclimbic` has the wrong type: Received `{type(params.get("no_sclimbic", False))}` expected `bool`')
+    if params.get("no_hthsu", False) is None:
+        raise StyxValidationError("`no_hthsu` must not be None")
+    if not isinstance(params["no_hthsu"], bool):
+        raise StyxValidationError(f'`no_hthsu` has the wrong type: Received `{type(params.get("no_hthsu", False))}` expected `bool`')
+    if params.get("no_synthstrip", False) is None:
+        raise StyxValidationError("`no_synthstrip` must not be None")
+    if not isinstance(params["no_synthstrip"], bool):
+        raise StyxValidationError(f'`no_synthstrip` has the wrong type: Received `{type(params.get("no_synthstrip", False))}` expected `bool`')
+    if params.get("no_synthseg", False) is None:
+        raise StyxValidationError("`no_synthseg` must not be None")
+    if not isinstance(params["no_synthseg"], bool):
+        raise StyxValidationError(f'`no_synthseg` has the wrong type: Received `{type(params.get("no_synthseg", False))}` expected `bool`')
+    if params.get("no_qastats", False) is None:
+        raise StyxValidationError("`no_qastats` must not be None")
+    if not isinstance(params["no_qastats"], bool):
+        raise StyxValidationError(f'`no_qastats` has the wrong type: Received `{type(params.get("no_qastats", False))}` expected `bool`')
+    if params.get("no_samseg", False) is None:
+        raise StyxValidationError("`no_samseg` must not be None")
+    if not isinstance(params["no_samseg"], bool):
+        raise StyxValidationError(f'`no_samseg` has the wrong type: Received `{type(params.get("no_samseg", False))}` expected `bool`')
+    if params.get("no_xhemi", False) is None:
+        raise StyxValidationError("`no_xhemi` must not be None")
+    if not isinstance(params["no_xhemi"], bool):
+        raise StyxValidationError(f'`no_xhemi` has the wrong type: Received `{type(params.get("no_xhemi", False))}` expected `bool`')
+    if params.get("no_cos7", False) is None:
+        raise StyxValidationError("`no_cos7` must not be None")
+    if not isinstance(params["no_cos7"], bool):
+        raise StyxValidationError(f'`no_cos7` has the wrong type: Received `{type(params.get("no_cos7", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("exit_on_error", False) is None:
+        raise StyxValidationError("`exit_on_error` must not be None")
+    if not isinstance(params["exit_on_error"], bool):
+        raise StyxValidationError(f'`exit_on_error` has the wrong type: Received `{type(params.get("exit_on_error", False))}` expected `bool`')
+
+
 def post_recon_all_cargs(
     params: PostReconAllParameters,
     execution: Execution,
@@ -246,6 +339,7 @@ def post_recon_all_execute(
     Returns:
         NamedTuple of outputs (described in `PostReconAllOutputs`).
     """
+    post_recon_all_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POST_RECON_ALL_METADATA)
     params = execution.params(params)

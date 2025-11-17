@@ -98,6 +98,50 @@ def v_3d_dwuncert_params(
     return params
 
 
+def v_3d_dwuncert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDwuncertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("input_prefix", None) is None:
+        raise StyxValidationError("`input_prefix` must not be None")
+    if not isinstance(params["input_prefix"], str):
+        raise StyxValidationError(f'`input_prefix` has the wrong type: Received `{type(params.get("input_prefix", None))}` expected `str`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("grad_file", None) is not None:
+        if not isinstance(params["grad_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad_file` has the wrong type: Received `{type(params.get("grad_file", None))}` expected `InputPathType | None`')
+    if params.get("bmatrix_file", None) is not None:
+        if not isinstance(params["bmatrix_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bmatrix_file` has the wrong type: Received `{type(params.get("bmatrix_file", None))}` expected `InputPathType | None`')
+    if params.get("num_iters", None) is not None:
+        if not isinstance(params["num_iters"], (float, int)):
+            raise StyxValidationError(f'`num_iters` has the wrong type: Received `{type(params.get("num_iters", None))}` expected `float | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("calc_thr_fa", None) is not None:
+        if not isinstance(params["calc_thr_fa"], (float, int)):
+            raise StyxValidationError(f'`calc_thr_fa` has the wrong type: Received `{type(params.get("calc_thr_fa", None))}` expected `float | None`')
+    if params.get("csf_fa", None) is not None:
+        if not isinstance(params["csf_fa"], (float, int)):
+            raise StyxValidationError(f'`csf_fa` has the wrong type: Received `{type(params.get("csf_fa", None))}` expected `float | None`')
+
+
 def v_3d_dwuncert_cargs(
     params: V3dDwuncertParameters,
     execution: Execution,
@@ -198,6 +242,7 @@ def v_3d_dwuncert_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDwuncertOutputs`).
     """
+    v_3d_dwuncert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DWUNCERT_METADATA)
     params = execution.params(params)

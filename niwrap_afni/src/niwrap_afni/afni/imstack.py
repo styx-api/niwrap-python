@@ -67,6 +67,35 @@ def imstack_params(
     return params
 
 
+def imstack_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImstackParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_files", None) is None:
+        raise StyxValidationError("`image_files` must not be None")
+    if not isinstance(params["image_files"], list):
+        raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+    for e in params["image_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+    if params.get("data_type", None) is not None:
+        if not isinstance(params["data_type"], str):
+            raise StyxValidationError(f'`data_type` has the wrong type: Received `{type(params.get("data_type", None))}` expected `typing.Literal["short", "float"] | None`')
+        if params["data_type"] not in ["short", "float"]:
+            raise StyxValidationError("Parameter `data_type` must be one of [\"short\", \"float\"]")
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+
+
 def imstack_cargs(
     params: ImstackParameters,
     execution: Execution,
@@ -136,6 +165,7 @@ def imstack_execute(
     Returns:
         NamedTuple of outputs (described in `ImstackOutputs`).
     """
+    imstack_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMSTACK_METADATA)
     params = execution.params(params)

@@ -136,6 +136,78 @@ def applywarp_params(
     return params
 
 
+def applywarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ApplywarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["nn", "trilinear", "sinc", "spline"] | None`')
+        if params["interp"] not in ["nn", "trilinear", "sinc", "spline"]:
+            raise StyxValidationError("Parameter `interp` must be one of [\"nn\", \"trilinear\", \"sinc\", \"spline\"]")
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("ref_file", None) is None:
+        raise StyxValidationError("`ref_file` must not be None")
+    if not isinstance(params["ref_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ref_file` has the wrong type: Received `{type(params.get("ref_file", None))}` expected `InputPathType`')
+    if params.get("out_file", None) is not None:
+        if not isinstance(params["out_file"], str):
+            raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str | None`')
+    if params.get("relwarp", False) is None:
+        raise StyxValidationError("`relwarp` must not be None")
+    if not isinstance(params["relwarp"], bool):
+        raise StyxValidationError(f'`relwarp` has the wrong type: Received `{type(params.get("relwarp", False))}` expected `bool`')
+    if params.get("abswarp", False) is None:
+        raise StyxValidationError("`abswarp` must not be None")
+    if not isinstance(params["abswarp"], bool):
+        raise StyxValidationError(f'`abswarp` has the wrong type: Received `{type(params.get("abswarp", False))}` expected `bool`')
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `typing.Literal["char", "short", "int", "float", "double"] | None`')
+        if params["datatype"] not in ["char", "short", "int", "float", "double"]:
+            raise StyxValidationError("Parameter `datatype` must be one of [\"char\", \"short\", \"int\", \"float\", \"double\"]")
+    if params.get("field_file", None) is not None:
+        if not isinstance(params["field_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`field_file` has the wrong type: Received `{type(params.get("field_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None`')
+        if params["output_type"] not in ["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"NIFTI\", \"NIFTI_PAIR\", \"NIFTI_GZ\", \"NIFTI_PAIR_GZ\"]")
+    if params.get("postmat", None) is not None:
+        if not isinstance(params["postmat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`postmat` has the wrong type: Received `{type(params.get("postmat", None))}` expected `InputPathType | None`')
+    if params.get("premat", None) is not None:
+        if not isinstance(params["premat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`premat` has the wrong type: Received `{type(params.get("premat", None))}` expected `InputPathType | None`')
+    if params.get("superlevel", None) is not None:
+        if not isinstance(params["superlevel"], str):
+            raise StyxValidationError(f'`superlevel` has the wrong type: Received `{type(params.get("superlevel", None))}` expected `typing.Literal["a"] | None`')
+        if params["superlevel"] not in ["a"]:
+            raise StyxValidationError("Parameter `superlevel` must be one of [\"a\"]")
+    if params.get("superlevel_2", None) is not None:
+        if not isinstance(params["superlevel_2"], int):
+            raise StyxValidationError(f'`superlevel_2` has the wrong type: Received `{type(params.get("superlevel_2", None))}` expected `int | None`')
+    if params.get("supersample", False) is None:
+        raise StyxValidationError("`supersample` must not be None")
+    if not isinstance(params["supersample"], bool):
+        raise StyxValidationError(f'`supersample` has the wrong type: Received `{type(params.get("supersample", False))}` expected `bool`')
+
+
 def applywarp_cargs(
     params: ApplywarpParameters,
     execution: Execution,
@@ -221,6 +293,7 @@ def applywarp_execute(
     Returns:
         NamedTuple of outputs (described in `ApplywarpOutputs`).
     """
+    applywarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APPLYWARP_METADATA)
     params = execution.params(params)

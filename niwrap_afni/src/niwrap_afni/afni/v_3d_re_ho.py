@@ -145,6 +145,65 @@ def v_3d_re_ho_params(
     return params
 
 
+def v_3d_re_ho_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dReHoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("nneigh", None) is not None:
+        if not isinstance(params["nneigh"], str):
+            raise StyxValidationError(f'`nneigh` has the wrong type: Received `{type(params.get("nneigh", None))}` expected `str | None`')
+    if params.get("chi_sq", False) is None:
+        raise StyxValidationError("`chi_sq` must not be None")
+    if not isinstance(params["chi_sq"], bool):
+        raise StyxValidationError(f'`chi_sq` has the wrong type: Received `{type(params.get("chi_sq", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("neigh_rad", None) is not None:
+        if not isinstance(params["neigh_rad"], (float, int)):
+            raise StyxValidationError(f'`neigh_rad` has the wrong type: Received `{type(params.get("neigh_rad", None))}` expected `float | None`')
+    if params.get("neigh_x", None) is not None:
+        if not isinstance(params["neigh_x"], (float, int)):
+            raise StyxValidationError(f'`neigh_x` has the wrong type: Received `{type(params.get("neigh_x", None))}` expected `float | None`')
+    if params.get("neigh_y", None) is not None:
+        if not isinstance(params["neigh_y"], (float, int)):
+            raise StyxValidationError(f'`neigh_y` has the wrong type: Received `{type(params.get("neigh_y", None))}` expected `float | None`')
+    if params.get("neigh_z", None) is not None:
+        if not isinstance(params["neigh_z"], (float, int)):
+            raise StyxValidationError(f'`neigh_z` has the wrong type: Received `{type(params.get("neigh_z", None))}` expected `float | None`')
+    if params.get("box_rad", None) is not None:
+        if not isinstance(params["box_rad"], (float, int)):
+            raise StyxValidationError(f'`box_rad` has the wrong type: Received `{type(params.get("box_rad", None))}` expected `float | None`')
+    if params.get("box_x", None) is not None:
+        if not isinstance(params["box_x"], (float, int)):
+            raise StyxValidationError(f'`box_x` has the wrong type: Received `{type(params.get("box_x", None))}` expected `float | None`')
+    if params.get("box_y", None) is not None:
+        if not isinstance(params["box_y"], (float, int)):
+            raise StyxValidationError(f'`box_y` has the wrong type: Received `{type(params.get("box_y", None))}` expected `float | None`')
+    if params.get("box_z", None) is not None:
+        if not isinstance(params["box_z"], (float, int)):
+            raise StyxValidationError(f'`box_z` has the wrong type: Received `{type(params.get("box_z", None))}` expected `float | None`')
+    if params.get("in_rois", None) is not None:
+        if not isinstance(params["in_rois"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_rois` has the wrong type: Received `{type(params.get("in_rois", None))}` expected `InputPathType | None`')
+
+
 def v_3d_re_ho_cargs(
     params: V3dReHoParameters,
     execution: Execution,
@@ -271,6 +330,7 @@ def v_3d_re_ho_execute(
     Returns:
         NamedTuple of outputs (described in `V3dReHoOutputs`).
     """
+    v_3d_re_ho_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_RE_HO_METADATA)
     params = execution.params(params)

@@ -68,6 +68,35 @@ def foci_get_projection_vertex_params(
     return params
 
 
+def foci_get_projection_vertex_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociGetProjectionVertexParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("foci", None) is None:
+        raise StyxValidationError("`foci` must not be None")
+    if not isinstance(params["foci"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`foci` has the wrong type: Received `{type(params.get("foci", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def foci_get_projection_vertex_cargs(
     params: FociGetProjectionVertexParameters,
     execution: Execution,
@@ -132,6 +161,7 @@ def foci_get_projection_vertex_execute(
     Returns:
         NamedTuple of outputs (described in `FociGetProjectionVertexOutputs`).
     """
+    foci_get_projection_vertex_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FOCI_GET_PROJECTION_VERTEX_METADATA)
     params = execution.params(params)

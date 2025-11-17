@@ -90,6 +90,50 @@ def applyxfm4_d_params(
     return params
 
 
+def applyxfm4_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Applyxfm4DParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("ref_volume", None) is None:
+        raise StyxValidationError("`ref_volume` must not be None")
+    if not isinstance(params["ref_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ref_volume` has the wrong type: Received `{type(params.get("ref_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("transformation_matrix", None) is None:
+        raise StyxValidationError("`transformation_matrix` must not be None")
+    if not isinstance(params["transformation_matrix"], str):
+        raise StyxValidationError(f'`transformation_matrix` has the wrong type: Received `{type(params.get("transformation_matrix", None))}` expected `str`')
+    if params.get("interpolation_method", None) is not None:
+        if not isinstance(params["interpolation_method"], str):
+            raise StyxValidationError(f'`interpolation_method` has the wrong type: Received `{type(params.get("interpolation_method", None))}` expected `str | None`')
+    if params.get("single_matrix_flag", False) is None:
+        raise StyxValidationError("`single_matrix_flag` must not be None")
+    if not isinstance(params["single_matrix_flag"], bool):
+        raise StyxValidationError(f'`single_matrix_flag` has the wrong type: Received `{type(params.get("single_matrix_flag", False))}` expected `bool`')
+    if params.get("four_digit_flag", False) is None:
+        raise StyxValidationError("`four_digit_flag` must not be None")
+    if not isinstance(params["four_digit_flag"], bool):
+        raise StyxValidationError(f'`four_digit_flag` has the wrong type: Received `{type(params.get("four_digit_flag", False))}` expected `bool`')
+    if params.get("user_prefix", None) is not None:
+        if not isinstance(params["user_prefix"], str):
+            raise StyxValidationError(f'`user_prefix` has the wrong type: Received `{type(params.get("user_prefix", None))}` expected `str | None`')
+
+
 def applyxfm4_d_cargs(
     params: Applyxfm4DParameters,
     execution: Execution,
@@ -165,6 +209,7 @@ def applyxfm4_d_execute(
     Returns:
         NamedTuple of outputs (described in `Applyxfm4DOutputs`).
     """
+    applyxfm4_d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APPLYXFM4_D_METADATA)
     params = execution.params(params)

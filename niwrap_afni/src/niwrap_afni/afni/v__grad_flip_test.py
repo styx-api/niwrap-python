@@ -135,6 +135,65 @@ def v__grad_flip_test_params(
     return params
 
 
+def v__grad_flip_test_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGradFlipTestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dwi", None) is None:
+        raise StyxValidationError("`dwi` must not be None")
+    if not isinstance(params["dwi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", None))}` expected `InputPathType`')
+    if params.get("grad_row_vec", None) is not None:
+        if not isinstance(params["grad_row_vec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad_row_vec` has the wrong type: Received `{type(params.get("grad_row_vec", None))}` expected `InputPathType | None`')
+    if params.get("grad_col_vec", None) is not None:
+        if not isinstance(params["grad_col_vec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad_col_vec` has the wrong type: Received `{type(params.get("grad_col_vec", None))}` expected `InputPathType | None`')
+    if params.get("grad_col_matA", None) is not None:
+        if not isinstance(params["grad_col_matA"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad_col_matA` has the wrong type: Received `{type(params.get("grad_col_matA", None))}` expected `InputPathType | None`')
+    if params.get("grad_col_matT", None) is not None:
+        if not isinstance(params["grad_col_matT"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad_col_matT` has the wrong type: Received `{type(params.get("grad_col_matT", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("bvals", None) is not None:
+        if not isinstance(params["bvals"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType | None`')
+    if params.get("thresh_fa", None) is not None:
+        if not isinstance(params["thresh_fa"], (float, int)):
+            raise StyxValidationError(f'`thresh_fa` has the wrong type: Received `{type(params.get("thresh_fa", None))}` expected `float | None`')
+    if params.get("thresh_len", None) is not None:
+        if not isinstance(params["thresh_len"], (float, int)):
+            raise StyxValidationError(f'`thresh_len` has the wrong type: Received `{type(params.get("thresh_len", None))}` expected `float | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("check_abs_min", None) is not None:
+        if not isinstance(params["check_abs_min"], (float, int)):
+            raise StyxValidationError(f'`check_abs_min` has the wrong type: Received `{type(params.get("check_abs_min", None))}` expected `float | None`')
+    if params.get("scale_out_1000", False) is None:
+        raise StyxValidationError("`scale_out_1000` must not be None")
+    if not isinstance(params["scale_out_1000"], bool):
+        raise StyxValidationError(f'`scale_out_1000` has the wrong type: Received `{type(params.get("scale_out_1000", False))}` expected `bool`')
+    if params.get("wdir", None) is not None:
+        if not isinstance(params["wdir"], str):
+            raise StyxValidationError(f'`wdir` has the wrong type: Received `{type(params.get("wdir", None))}` expected `str | None`')
+    if params.get("do_clean", False) is None:
+        raise StyxValidationError("`do_clean` must not be None")
+    if not isinstance(params["do_clean"], bool):
+        raise StyxValidationError(f'`do_clean` has the wrong type: Received `{type(params.get("do_clean", False))}` expected `bool`')
+
+
 def v__grad_flip_test_cargs(
     params: VGradFlipTestParameters,
     execution: Execution,
@@ -256,6 +315,7 @@ def v__grad_flip_test_execute(
     Returns:
         NamedTuple of outputs (described in `VGradFlipTestOutputs`).
     """
+    v__grad_flip_test_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GRAD_FLIP_TEST_METADATA)
     params = execution.params(params)

@@ -55,6 +55,27 @@ def run_mris_preproc_params(
     return params
 
 
+def run_mris_preproc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunMrisPreprocParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec_table", None) is None:
+        raise StyxValidationError("`qdec_table` must not be None")
+    if not isinstance(params["qdec_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`qdec_table` has the wrong type: Received `{type(params.get("qdec_table", None))}` expected `InputPathType`')
+    if params.get("target_average", None) is not None:
+        if not isinstance(params["target_average"], str):
+            raise StyxValidationError(f'`target_average` has the wrong type: Received `{type(params.get("target_average", None))}` expected `str | None`')
+
+
 def run_mris_preproc_cargs(
     params: RunMrisPreprocParameters,
     execution: Execution,
@@ -115,6 +136,7 @@ def run_mris_preproc_execute(
     Returns:
         NamedTuple of outputs (described in `RunMrisPreprocOutputs`).
     """
+    run_mris_preproc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_MRIS_PREPROC_METADATA)
     params = execution.params(params)

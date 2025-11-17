@@ -111,6 +111,61 @@ def mris_register_to_label_params(
     return params
 
 
+def mris_register_to_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRegisterToLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("regfile", None) is None:
+        raise StyxValidationError("`regfile` must not be None")
+    if not isinstance(params["regfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`regfile` has the wrong type: Received `{type(params.get("regfile", None))}` expected `InputPathType`')
+    if params.get("mri_reg", None) is None:
+        raise StyxValidationError("`mri_reg` must not be None")
+    if not isinstance(params["mri_reg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mri_reg` has the wrong type: Received `{type(params.get("mri_reg", None))}` expected `InputPathType`')
+    if params.get("mov_volume", None) is None:
+        raise StyxValidationError("`mov_volume` must not be None")
+    if not isinstance(params["mov_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mov_volume` has the wrong type: Received `{type(params.get("mov_volume", None))}` expected `InputPathType`')
+    if params.get("resolution", None) is None:
+        raise StyxValidationError("`resolution` must not be None")
+    if not isinstance(params["resolution"], (float, int)):
+        raise StyxValidationError(f'`resolution` has the wrong type: Received `{type(params.get("resolution", None))}` expected `float`')
+    if params.get("max_rot", None) is not None:
+        if not isinstance(params["max_rot"], (float, int)):
+            raise StyxValidationError(f'`max_rot` has the wrong type: Received `{type(params.get("max_rot", None))}` expected `float | None`')
+    if params.get("max_trans", None) is not None:
+        if not isinstance(params["max_trans"], (float, int)):
+            raise StyxValidationError(f'`max_trans` has the wrong type: Received `{type(params.get("max_trans", None))}` expected `float | None`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], str):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str | None`')
+    if params.get("out_reg", None) is not None:
+        if not isinstance(params["out_reg"], str):
+            raise StyxValidationError(f'`out_reg` has the wrong type: Received `{type(params.get("out_reg", None))}` expected `str | None`')
+    if params.get("downsample", None) is not None:
+        if not isinstance(params["downsample"], (float, int)):
+            raise StyxValidationError(f'`downsample` has the wrong type: Received `{type(params.get("downsample", None))}` expected `float | None`')
+    if params.get("cost_file", None) is not None:
+        if not isinstance(params["cost_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cost_file` has the wrong type: Received `{type(params.get("cost_file", None))}` expected `InputPathType | None`')
+
+
 def mris_register_to_label_cargs(
     params: MrisRegisterToLabelParameters,
     execution: Execution,
@@ -222,6 +277,7 @@ def mris_register_to_label_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRegisterToLabelOutputs`).
     """
+    mris_register_to_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_REGISTER_TO_LABEL_METADATA)
     params = execution.params(params)

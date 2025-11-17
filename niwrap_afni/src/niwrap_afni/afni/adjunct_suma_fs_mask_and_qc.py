@@ -90,6 +90,44 @@ def adjunct_suma_fs_mask_and_qc_params(
     return params
 
 
+def adjunct_suma_fs_mask_and_qc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctSumaFsMaskAndQcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subj_id", None) is None:
+        raise StyxValidationError("`subj_id` must not be None")
+    if not isinstance(params["subj_id"], str):
+        raise StyxValidationError(f'`subj_id` has the wrong type: Received `{type(params.get("subj_id", None))}` expected `str`')
+    if params.get("suma_dir", None) is None:
+        raise StyxValidationError("`suma_dir` must not be None")
+    if not isinstance(params["suma_dir"], str):
+        raise StyxValidationError(f'`suma_dir` has the wrong type: Received `{type(params.get("suma_dir", None))}` expected `str`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hview", False) is None:
+        raise StyxValidationError("`hview` must not be None")
+    if not isinstance(params["hview"], bool):
+        raise StyxValidationError(f'`hview` has the wrong type: Received `{type(params.get("hview", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def adjunct_suma_fs_mask_and_qc_cargs(
     params: AdjunctSumaFsMaskAndQcParameters,
     execution: Execution,
@@ -170,6 +208,7 @@ def adjunct_suma_fs_mask_and_qc_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctSumaFsMaskAndQcOutputs`).
     """
+    adjunct_suma_fs_mask_and_qc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA)
     params = execution.params(params)

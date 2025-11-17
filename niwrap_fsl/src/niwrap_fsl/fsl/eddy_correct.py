@@ -67,6 +67,37 @@ def eddy_correct_params(
     return params
 
 
+def eddy_correct_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EddyCorrectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("4d_input", None) is None:
+        raise StyxValidationError("`4d_input` must not be None")
+    if not isinstance(params["4d_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`4d_input` has the wrong type: Received `{type(params.get("4d_input", None))}` expected `InputPathType`')
+    if params.get("4d_output", None) is None:
+        raise StyxValidationError("`4d_output` must not be None")
+    if not isinstance(params["4d_output"], str):
+        raise StyxValidationError(f'`4d_output` has the wrong type: Received `{type(params.get("4d_output", None))}` expected `str`')
+    if params.get("reference_no", None) is None:
+        raise StyxValidationError("`reference_no` must not be None")
+    if not isinstance(params["reference_no"], int):
+        raise StyxValidationError(f'`reference_no` has the wrong type: Received `{type(params.get("reference_no", None))}` expected `int`')
+    if params.get("interp_method", None) is not None:
+        if not isinstance(params["interp_method"], str):
+            raise StyxValidationError(f'`interp_method` has the wrong type: Received `{type(params.get("interp_method", None))}` expected `typing.Literal["trilinear", "spline"] | None`')
+        if params["interp_method"] not in ["trilinear", "spline"]:
+            raise StyxValidationError("Parameter `interp_method` must be one of [\"trilinear\", \"spline\"]")
+
+
 def eddy_correct_cargs(
     params: EddyCorrectParameters,
     execution: Execution,
@@ -128,6 +159,7 @@ def eddy_correct_execute(
     Returns:
         NamedTuple of outputs (described in `EddyCorrectOutputs`).
     """
+    eddy_correct_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EDDY_CORRECT_METADATA)
     params = execution.params(params)

@@ -136,6 +136,76 @@ def v__add_edge_params(
     return params
 
 
+def v__add_edge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAddEdgeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("examine_list", None) is not None:
+        if not isinstance(params["examine_list"], str):
+            raise StyxValidationError(f'`examine_list` has the wrong type: Received `{type(params.get("examine_list", None))}` expected `str | None`')
+    if params.get("ax_mont", None) is not None:
+        if not isinstance(params["ax_mont"], str):
+            raise StyxValidationError(f'`ax_mont` has the wrong type: Received `{type(params.get("ax_mont", None))}` expected `str | None`')
+    if params.get("ax_geom", None) is not None:
+        if not isinstance(params["ax_geom"], str):
+            raise StyxValidationError(f'`ax_geom` has the wrong type: Received `{type(params.get("ax_geom", None))}` expected `str | None`')
+    if params.get("sag_geom", None) is not None:
+        if not isinstance(params["sag_geom"], str):
+            raise StyxValidationError(f'`sag_geom` has the wrong type: Received `{type(params.get("sag_geom", None))}` expected `str | None`')
+    if params.get("layout_file", None) is not None:
+        if not isinstance(params["layout_file"], str):
+            raise StyxValidationError(f'`layout_file` has the wrong type: Received `{type(params.get("layout_file", None))}` expected `str | None`')
+    if params.get("no_layout", False) is None:
+        raise StyxValidationError("`no_layout` must not be None")
+    if not isinstance(params["no_layout"], bool):
+        raise StyxValidationError(f'`no_layout` has the wrong type: Received `{type(params.get("no_layout", False))}` expected `bool`')
+    if params.get("edge_percentile", None) is not None:
+        if not isinstance(params["edge_percentile"], int):
+            raise StyxValidationError(f'`edge_percentile` has the wrong type: Received `{type(params.get("edge_percentile", None))}` expected `int | None`')
+    if params.get("single_edge", False) is None:
+        raise StyxValidationError("`single_edge` must not be None")
+    if not isinstance(params["single_edge"], bool):
+        raise StyxValidationError(f'`single_edge` has the wrong type: Received `{type(params.get("single_edge", False))}` expected `bool`')
+    if params.get("opacity", None) is not None:
+        if not isinstance(params["opacity"], int):
+            raise StyxValidationError(f'`opacity` has the wrong type: Received `{type(params.get("opacity", None))}` expected `int | None`')
+    if params.get("keep_temp", False) is None:
+        raise StyxValidationError("`keep_temp` must not be None")
+    if not isinstance(params["keep_temp"], bool):
+        raise StyxValidationError(f'`keep_temp` has the wrong type: Received `{type(params.get("keep_temp", False))}` expected `bool`')
+    if params.get("no_deoblique", False) is None:
+        raise StyxValidationError("`no_deoblique` must not be None")
+    if not isinstance(params["no_deoblique"], bool):
+        raise StyxValidationError(f'`no_deoblique` has the wrong type: Received `{type(params.get("no_deoblique", False))}` expected `bool`')
+    if params.get("auto_record", False) is None:
+        raise StyxValidationError("`auto_record` must not be None")
+    if not isinstance(params["auto_record"], bool):
+        raise StyxValidationError(f'`auto_record` has the wrong type: Received `{type(params.get("auto_record", False))}` expected `bool`')
+    if params.get("auto", False) is None:
+        raise StyxValidationError("`auto` must not be None")
+    if not isinstance(params["auto"], bool):
+        raise StyxValidationError(f'`auto` has the wrong type: Received `{type(params.get("auto", False))}` expected `bool`')
+    if params.get("no_auto", False) is None:
+        raise StyxValidationError("`no_auto` must not be None")
+    if not isinstance(params["no_auto"], bool):
+        raise StyxValidationError(f'`no_auto` has the wrong type: Received `{type(params.get("no_auto", False))}` expected `bool`')
+
+
 def v__add_edge_cargs(
     params: VAddEdgeParameters,
     execution: Execution,
@@ -247,6 +317,7 @@ def v__add_edge_execute(
     Returns:
         NamedTuple of outputs (described in `VAddEdgeOutputs`).
     """
+    v__add_edge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ADD_EDGE_METADATA)
     params = execution.params(params)

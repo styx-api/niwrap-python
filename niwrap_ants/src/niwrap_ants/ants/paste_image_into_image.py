@@ -95,6 +95,51 @@ def paste_image_into_image_params(
     return params
 
 
+def paste_image_into_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PasteImageIntoImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("input_canvas_image", None) is None:
+        raise StyxValidationError("`input_canvas_image` must not be None")
+    if not isinstance(params["input_canvas_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_canvas_image` has the wrong type: Received `{type(params.get("input_canvas_image", None))}` expected `InputPathType`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("start_index", None) is None:
+        raise StyxValidationError("`start_index` must not be None")
+    if not isinstance(params["start_index"], str):
+        raise StyxValidationError(f'`start_index` has the wrong type: Received `{type(params.get("start_index", None))}` expected `str`')
+    if params.get("background_label", None) is not None:
+        if not isinstance(params["background_label"], int):
+            raise StyxValidationError(f'`background_label` has the wrong type: Received `{type(params.get("background_label", None))}` expected `int | None`')
+    if params.get("paint_over_non_background_voxels", None) is not None:
+        if not isinstance(params["paint_over_non_background_voxels"], int):
+            raise StyxValidationError(f'`paint_over_non_background_voxels` has the wrong type: Received `{type(params.get("paint_over_non_background_voxels", None))}` expected `typing.Literal[0, 1, 2] | None`')
+        if params["paint_over_non_background_voxels"] not in [0, 1, 2]:
+            raise StyxValidationError("Parameter `paint_over_non_background_voxels` must be one of [0, 1, 2]")
+    if params.get("conflict_label", None) is not None:
+        if not isinstance(params["conflict_label"], int):
+            raise StyxValidationError(f'`conflict_label` has the wrong type: Received `{type(params.get("conflict_label", None))}` expected `int | None`')
+
+
 def paste_image_into_image_cargs(
     params: PasteImageIntoImageParameters,
     execution: Execution,
@@ -164,6 +209,7 @@ def paste_image_into_image_execute(
     Returns:
         NamedTuple of outputs (described in `PasteImageIntoImageOutputs`).
     """
+    paste_image_into_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PASTE_IMAGE_INTO_IMAGE_METADATA)
     params = execution.params(params)

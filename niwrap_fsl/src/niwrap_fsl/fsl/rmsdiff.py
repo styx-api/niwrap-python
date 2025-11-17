@@ -65,6 +65,35 @@ def rmsdiff_params(
     return params
 
 
+def rmsdiff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RmsdiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matrixfile1", None) is None:
+        raise StyxValidationError("`matrixfile1` must not be None")
+    if not isinstance(params["matrixfile1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`matrixfile1` has the wrong type: Received `{type(params.get("matrixfile1", None))}` expected `InputPathType`')
+    if params.get("matrixfile2", None) is None:
+        raise StyxValidationError("`matrixfile2` must not be None")
+    if not isinstance(params["matrixfile2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`matrixfile2` has the wrong type: Received `{type(params.get("matrixfile2", None))}` expected `InputPathType`')
+    if params.get("refvol", None) is None:
+        raise StyxValidationError("`refvol` must not be None")
+    if not isinstance(params["refvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`refvol` has the wrong type: Received `{type(params.get("refvol", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+
+
 def rmsdiff_cargs(
     params: RmsdiffParameters,
     execution: Execution,
@@ -126,6 +155,7 @@ def rmsdiff_execute(
     Returns:
         NamedTuple of outputs (described in `RmsdiffOutputs`).
     """
+    rmsdiff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RMSDIFF_METADATA)
     params = execution.params(params)

@@ -144,6 +144,83 @@ def v_1d_sem_params(
     return params
 
 
+def v_1d_sem_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dSemParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("theta", None) is None:
+        raise StyxValidationError("`theta` must not be None")
+    if not isinstance(params["theta"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`theta` has the wrong type: Received `{type(params.get("theta", None))}` expected `InputPathType`')
+    if params.get("correlation_matrix", None) is None:
+        raise StyxValidationError("`correlation_matrix` must not be None")
+    if not isinstance(params["correlation_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`correlation_matrix` has the wrong type: Received `{type(params.get("correlation_matrix", None))}` expected `InputPathType`')
+    if params.get("residual_variance", None) is None:
+        raise StyxValidationError("`residual_variance` must not be None")
+    if not isinstance(params["residual_variance"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`residual_variance` has the wrong type: Received `{type(params.get("residual_variance", None))}` expected `InputPathType`')
+    if params.get("degrees_of_freedom", None) is None:
+        raise StyxValidationError("`degrees_of_freedom` must not be None")
+    if not isinstance(params["degrees_of_freedom"], (float, int)):
+        raise StyxValidationError(f'`degrees_of_freedom` has the wrong type: Received `{type(params.get("degrees_of_freedom", None))}` expected `float`')
+    if params.get("max_iterations", None) is not None:
+        if not isinstance(params["max_iterations"], int):
+            raise StyxValidationError(f'`max_iterations` has the wrong type: Received `{type(params.get("max_iterations", None))}` expected `int | None`')
+    if params.get("number_random_trials", None) is not None:
+        if not isinstance(params["number_random_trials"], int):
+            raise StyxValidationError(f'`number_random_trials` has the wrong type: Received `{type(params.get("number_random_trials", None))}` expected `int | None`')
+    if params.get("limits", None) is not None:
+        if not isinstance(params["limits"], list):
+            raise StyxValidationError(f'`limits` has the wrong type: Received `{type(params.get("limits", None))}` expected `list[float] | None`')
+        if len(params["limits"]) == 2:
+            raise StyxValidationError("Parameter `limits` must contain exactly 2 elements")
+        for e in params["limits"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`limits` has the wrong type: Received `{type(params.get("limits", None))}` expected `list[float] | None`')
+    if params.get("calculate_cost", False) is None:
+        raise StyxValidationError("`calculate_cost` must not be None")
+    if not isinstance(params["calculate_cost"], bool):
+        raise StyxValidationError(f'`calculate_cost` has the wrong type: Received `{type(params.get("calculate_cost", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], int):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `int | None`')
+    if params.get("tree_growth", False) is None:
+        raise StyxValidationError("`tree_growth` must not be None")
+    if not isinstance(params["tree_growth"], bool):
+        raise StyxValidationError(f'`tree_growth` has the wrong type: Received `{type(params.get("tree_growth", False))}` expected `bool`')
+    if params.get("model_search", False) is None:
+        raise StyxValidationError("`model_search` must not be None")
+    if not isinstance(params["model_search"], bool):
+        raise StyxValidationError(f'`model_search` has the wrong type: Received `{type(params.get("model_search", False))}` expected `bool`')
+    if params.get("max_paths", None) is not None:
+        if not isinstance(params["max_paths"], int):
+            raise StyxValidationError(f'`max_paths` has the wrong type: Received `{type(params.get("max_paths", None))}` expected `int | None`')
+    if params.get("stop_cost", None) is not None:
+        if not isinstance(params["stop_cost"], (float, int)):
+            raise StyxValidationError(f'`stop_cost` has the wrong type: Received `{type(params.get("stop_cost", None))}` expected `float | None`')
+    if params.get("forest_growth", False) is None:
+        raise StyxValidationError("`forest_growth` must not be None")
+    if not isinstance(params["forest_growth"], bool):
+        raise StyxValidationError(f'`forest_growth` has the wrong type: Received `{type(params.get("forest_growth", False))}` expected `bool`')
+    if params.get("grow_all", False) is None:
+        raise StyxValidationError("`grow_all` must not be None")
+    if not isinstance(params["grow_all"], bool):
+        raise StyxValidationError(f'`grow_all` has the wrong type: Received `{type(params.get("grow_all", False))}` expected `bool`')
+    if params.get("leafpicker", False) is None:
+        raise StyxValidationError("`leafpicker` must not be None")
+    if not isinstance(params["leafpicker"], bool):
+        raise StyxValidationError(f'`leafpicker` has the wrong type: Received `{type(params.get("leafpicker", False))}` expected `bool`')
+
+
 def v_1d_sem_cargs(
     params: V1dSemParameters,
     execution: Execution,
@@ -260,6 +337,7 @@ def v_1d_sem_execute(
     Returns:
         NamedTuple of outputs (described in `V1dSemOutputs`).
     """
+    v_1d_sem_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_SEM_METADATA)
     params = execution.params(params)

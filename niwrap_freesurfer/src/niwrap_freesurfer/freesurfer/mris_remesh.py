@@ -86,6 +86,44 @@ def mris_remesh_params(
     return params
 
 
+def mris_remesh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRemeshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("edge_length", None) is not None:
+        if not isinstance(params["edge_length"], (float, int)):
+            raise StyxValidationError(f'`edge_length` has the wrong type: Received `{type(params.get("edge_length", None))}` expected `float | None`')
+    if params.get("num_vertices", None) is not None:
+        if not isinstance(params["num_vertices"], (float, int)):
+            raise StyxValidationError(f'`num_vertices` has the wrong type: Received `{type(params.get("num_vertices", None))}` expected `float | None`')
+    if params.get("face_area", None) is not None:
+        if not isinstance(params["face_area"], (float, int)):
+            raise StyxValidationError(f'`face_area` has the wrong type: Received `{type(params.get("face_area", None))}` expected `float | None`')
+    if params.get("remesh", False) is None:
+        raise StyxValidationError("`remesh` must not be None")
+    if not isinstance(params["remesh"], bool):
+        raise StyxValidationError(f'`remesh` has the wrong type: Received `{type(params.get("remesh", False))}` expected `bool`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+
+
 def mris_remesh_cargs(
     params: MrisRemeshParameters,
     execution: Execution,
@@ -174,6 +212,7 @@ def mris_remesh_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRemeshOutputs`).
     """
+    mris_remesh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_REMESH_METADATA)
     params = execution.params(params)

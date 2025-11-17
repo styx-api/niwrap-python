@@ -109,6 +109,64 @@ def dmri_motion_params(
     return params
 
 
+def dmri_motion_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriMotionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType`')
+    if params.get("outf", None) is not None:
+        if not isinstance(params["outf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outf` has the wrong type: Received `{type(params.get("outf", None))}` expected `InputPathType | None`')
+    if params.get("mat", None) is not None:
+        if not isinstance(params["mat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mat` has the wrong type: Received `{type(params.get("mat", None))}` expected `InputPathType | None`')
+    if params.get("dwi", None) is not None:
+        if not isinstance(params["dwi"], list):
+            raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", None))}` expected `list[InputPathType] | None`')
+        for e in params["dwi"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", None))}` expected `list[InputPathType] | None`')
+    if params.get("bval", None) is not None:
+        if not isinstance(params["bval"], list):
+            raise StyxValidationError(f'`bval` has the wrong type: Received `{type(params.get("bval", None))}` expected `list[InputPathType] | None`')
+        for e in params["bval"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`bval` has the wrong type: Received `{type(params.get("bval", None))}` expected `list[InputPathType] | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("diffusivity", None) is not None:
+        if not isinstance(params["diffusivity"], (float, int)):
+            raise StyxValidationError(f'`diffusivity` has the wrong type: Received `{type(params.get("diffusivity", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def dmri_motion_cargs(
     params: DmriMotionParameters,
     execution: Execution,
@@ -209,6 +267,7 @@ def dmri_motion_execute(
     Returns:
         NamedTuple of outputs (described in `DmriMotionOutputs`).
     """
+    dmri_motion_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_MOTION_METADATA)
     params = execution.params(params)

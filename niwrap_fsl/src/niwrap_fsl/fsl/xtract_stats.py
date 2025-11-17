@@ -105,6 +105,51 @@ def xtract_stats_params(
     return params
 
 
+def xtract_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XtractStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("folder_basename", None) is None:
+        raise StyxValidationError("`folder_basename` must not be None")
+    if not isinstance(params["folder_basename"], str):
+        raise StyxValidationError(f'`folder_basename` has the wrong type: Received `{type(params.get("folder_basename", None))}` expected `str`')
+    if params.get("XTRACT_dir", None) is None:
+        raise StyxValidationError("`XTRACT_dir` must not be None")
+    if not isinstance(params["XTRACT_dir"], str):
+        raise StyxValidationError(f'`XTRACT_dir` has the wrong type: Received `{type(params.get("XTRACT_dir", None))}` expected `str`')
+    if params.get("xtract2diff", None) is None:
+        raise StyxValidationError("`xtract2diff` must not be None")
+    if not isinstance(params["xtract2diff"], str):
+        raise StyxValidationError(f'`xtract2diff` has the wrong type: Received `{type(params.get("xtract2diff", None))}` expected `str`')
+    if params.get("reference_image", None) is not None:
+        if not isinstance(params["reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("structures_file", None) is not None:
+        if not isinstance(params["structures_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`structures_file` has the wrong type: Received `{type(params.get("structures_file", None))}` expected `InputPathType | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("measurements", None) is not None:
+        if not isinstance(params["measurements"], str):
+            raise StyxValidationError(f'`measurements` has the wrong type: Received `{type(params.get("measurements", None))}` expected `str | None`')
+    if params.get("keep_temp_files", False) is None:
+        raise StyxValidationError("`keep_temp_files` must not be None")
+    if not isinstance(params["keep_temp_files"], bool):
+        raise StyxValidationError(f'`keep_temp_files` has the wrong type: Received `{type(params.get("keep_temp_files", False))}` expected `bool`')
+
+
 def xtract_stats_cargs(
     params: XtractStatsParameters,
     execution: Execution,
@@ -201,6 +246,7 @@ def xtract_stats_execute(
     Returns:
         NamedTuple of outputs (described in `XtractStatsOutputs`).
     """
+    xtract_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XTRACT_STATS_METADATA)
     params = execution.params(params)

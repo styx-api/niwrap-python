@@ -110,6 +110,62 @@ def plugout_ijk_params(
     return params
 
 
+def plugout_ijk_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PlugoutIjkParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("host", None) is not None:
+        if not isinstance(params["host"], str):
+            raise StyxValidationError(f'`host` has the wrong type: Received `{type(params.get("host", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("port", None) is not None:
+        if not isinstance(params["port"], (float, int)):
+            raise StyxValidationError(f'`port` has the wrong type: Received `{type(params.get("port", None))}` expected `float | None`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("port_offset", None) is not None:
+        if not isinstance(params["port_offset"], (float, int)):
+            raise StyxValidationError(f'`port_offset` has the wrong type: Received `{type(params.get("port_offset", None))}` expected `float | None`')
+        if 1025 <= params["port_offset"] <= 65500:
+            raise StyxValidationError("Parameter `port_offset` must be between 1025 and 65500 (inclusive)")
+    if params.get("port_quiet", None) is not None:
+        if not isinstance(params["port_quiet"], (float, int)):
+            raise StyxValidationError(f'`port_quiet` has the wrong type: Received `{type(params.get("port_quiet", None))}` expected `float | None`')
+    if params.get("port_bloc_offset", None) is not None:
+        if not isinstance(params["port_bloc_offset"], (float, int)):
+            raise StyxValidationError(f'`port_bloc_offset` has the wrong type: Received `{type(params.get("port_bloc_offset", None))}` expected `float | None`')
+        if params["port_bloc_offset"] <= 4000:
+            raise StyxValidationError("Parameter `port_bloc_offset` must be at most 4000")
+    if params.get("max_bloc", False) is None:
+        raise StyxValidationError("`max_bloc` must not be None")
+    if not isinstance(params["max_bloc"], bool):
+        raise StyxValidationError(f'`max_bloc` has the wrong type: Received `{type(params.get("max_bloc", False))}` expected `bool`')
+    if params.get("max_bloc_quiet", False) is None:
+        raise StyxValidationError("`max_bloc_quiet` must not be None")
+    if not isinstance(params["max_bloc_quiet"], bool):
+        raise StyxValidationError(f'`max_bloc_quiet` has the wrong type: Received `{type(params.get("max_bloc_quiet", False))}` expected `bool`')
+    if params.get("num_assigned_ports", False) is None:
+        raise StyxValidationError("`num_assigned_ports` must not be None")
+    if not isinstance(params["num_assigned_ports"], bool):
+        raise StyxValidationError(f'`num_assigned_ports` has the wrong type: Received `{type(params.get("num_assigned_ports", False))}` expected `bool`')
+    if params.get("num_assigned_ports_quiet", False) is None:
+        raise StyxValidationError("`num_assigned_ports_quiet` must not be None")
+    if not isinstance(params["num_assigned_ports_quiet"], bool):
+        raise StyxValidationError(f'`num_assigned_ports_quiet` has the wrong type: Received `{type(params.get("num_assigned_ports_quiet", False))}` expected `bool`')
+
+
 def plugout_ijk_cargs(
     params: PlugoutIjkParameters,
     execution: Execution,
@@ -206,6 +262,7 @@ def plugout_ijk_execute(
     Returns:
         NamedTuple of outputs (described in `PlugoutIjkOutputs`).
     """
+    plugout_ijk_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PLUGOUT_IJK_METADATA)
     params = execution.params(params)

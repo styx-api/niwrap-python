@@ -117,6 +117,63 @@ def reg_tools_params(
     return params
 
 
+def reg_tools_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegToolsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is not None:
+        if not isinstance(params["output_image"], str):
+            raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str | None`')
+    if params.get("add_value_or_image", None) is not None:
+        if not isinstance(params["add_value_or_image"], str):
+            raise StyxValidationError(f'`add_value_or_image` has the wrong type: Received `{type(params.get("add_value_or_image", None))}` expected `str | None`')
+    if params.get("sub_value_or_image", None) is not None:
+        if not isinstance(params["sub_value_or_image"], str):
+            raise StyxValidationError(f'`sub_value_or_image` has the wrong type: Received `{type(params.get("sub_value_or_image", None))}` expected `str | None`')
+    if params.get("mul_value_or_image", None) is not None:
+        if not isinstance(params["mul_value_or_image"], str):
+            raise StyxValidationError(f'`mul_value_or_image` has the wrong type: Received `{type(params.get("mul_value_or_image", None))}` expected `str | None`')
+    if params.get("div_value_or_image", None) is not None:
+        if not isinstance(params["div_value_or_image"], str):
+            raise StyxValidationError(f'`div_value_or_image` has the wrong type: Received `{type(params.get("div_value_or_image", None))}` expected `str | None`')
+    if params.get("smooth_value", None) is not None:
+        if not isinstance(params["smooth_value"], (float, int)):
+            raise StyxValidationError(f'`smooth_value` has the wrong type: Received `{type(params.get("smooth_value", None))}` expected `float | None`')
+    if params.get("smooth_gaussian", None) is not None:
+        if not isinstance(params["smooth_gaussian"], list):
+            raise StyxValidationError(f'`smooth_gaussian` has the wrong type: Received `{type(params.get("smooth_gaussian", None))}` expected `list[float] | None`')
+        if len(params["smooth_gaussian"]) == 3:
+            raise StyxValidationError("Parameter `smooth_gaussian` must contain exactly 3 elements")
+        for e in params["smooth_gaussian"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`smooth_gaussian` has the wrong type: Received `{type(params.get("smooth_gaussian", None))}` expected `list[float] | None`')
+    if params.get("rms_image", None) is not None:
+        if not isinstance(params["rms_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rms_image` has the wrong type: Received `{type(params.get("rms_image", None))}` expected `InputPathType | None`')
+    if params.get("binarize", False) is None:
+        raise StyxValidationError("`binarize` must not be None")
+    if not isinstance(params["binarize"], bool):
+        raise StyxValidationError(f'`binarize` has the wrong type: Received `{type(params.get("binarize", False))}` expected `bool`')
+    if params.get("threshold_value", None) is not None:
+        if not isinstance(params["threshold_value"], (float, int)):
+            raise StyxValidationError(f'`threshold_value` has the wrong type: Received `{type(params.get("threshold_value", None))}` expected `float | None`')
+    if params.get("nan_mask_image", None) is not None:
+        if not isinstance(params["nan_mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nan_mask_image` has the wrong type: Received `{type(params.get("nan_mask_image", None))}` expected `InputPathType | None`')
+
+
 def reg_tools_cargs(
     params: RegToolsParameters,
     execution: Execution,
@@ -230,6 +287,7 @@ def reg_tools_execute(
     Returns:
         NamedTuple of outputs (described in `RegToolsOutputs`).
     """
+    reg_tools_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REG_TOOLS_METADATA)
     params = execution.params(params)

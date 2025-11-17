@@ -60,6 +60,31 @@ def maskdyads_params(
     return params
 
 
+def maskdyads_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MaskdyadsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dyads", None) is None:
+        raise StyxValidationError("`dyads` must not be None")
+    if not isinstance(params["dyads"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dyads` has the wrong type: Received `{type(params.get("dyads", None))}` expected `InputPathType`')
+    if params.get("fsamples", None) is None:
+        raise StyxValidationError("`fsamples` must not be None")
+    if not isinstance(params["fsamples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fsamples` has the wrong type: Received `{type(params.get("fsamples", None))}` expected `InputPathType`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+
+
 def maskdyads_cargs(
     params: MaskdyadsParameters,
     execution: Execution,
@@ -123,6 +148,7 @@ def maskdyads_execute(
     Returns:
         NamedTuple of outputs (described in `MaskdyadsOutputs`).
     """
+    maskdyads_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MASKDYADS_METADATA)
     params = execution.params(params)

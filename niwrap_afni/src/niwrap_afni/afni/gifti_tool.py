@@ -170,6 +170,118 @@ def gifti_tool_params(
     return params
 
 
+def gifti_tool_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GiftiToolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("new_numda", None) is not None:
+        if not isinstance(params["new_numda"], (float, int)):
+            raise StyxValidationError(f'`new_numda` has the wrong type: Received `{type(params.get("new_numda", None))}` expected `float | None`')
+    if params.get("new_dtype", None) is not None:
+        if not isinstance(params["new_dtype"], str):
+            raise StyxValidationError(f'`new_dtype` has the wrong type: Received `{type(params.get("new_dtype", None))}` expected `str | None`')
+    if params.get("new_intent", None) is not None:
+        if not isinstance(params["new_intent"], str):
+            raise StyxValidationError(f'`new_intent` has the wrong type: Received `{type(params.get("new_intent", None))}` expected `str | None`')
+    if params.get("new_ndim", None) is not None:
+        if not isinstance(params["new_ndim"], (float, int)):
+            raise StyxValidationError(f'`new_ndim` has the wrong type: Received `{type(params.get("new_ndim", None))}` expected `float | None`')
+    if params.get("new_dims", None) is not None:
+        if not isinstance(params["new_dims"], list):
+            raise StyxValidationError(f'`new_dims` has the wrong type: Received `{type(params.get("new_dims", None))}` expected `list[float] | None`')
+        for e in params["new_dims"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`new_dims` has the wrong type: Received `{type(params.get("new_dims", None))}` expected `list[float] | None`')
+    if params.get("write_gifti", None) is None:
+        raise StyxValidationError("`write_gifti` must not be None")
+    if not isinstance(params["write_gifti"], str):
+        raise StyxValidationError(f'`write_gifti` has the wrong type: Received `{type(params.get("write_gifti", None))}` expected `str`')
+    if params.get("set_extern_filelist", None) is not None:
+        if not isinstance(params["set_extern_filelist"], list):
+            raise StyxValidationError(f'`set_extern_filelist` has the wrong type: Received `{type(params.get("set_extern_filelist", None))}` expected `list[str] | None`')
+        for e in params["set_extern_filelist"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`set_extern_filelist` has the wrong type: Received `{type(params.get("set_extern_filelist", None))}` expected `list[str] | None`')
+    if params.get("mod_add_data", False) is None:
+        raise StyxValidationError("`mod_add_data` must not be None")
+    if not isinstance(params["mod_add_data"], bool):
+        raise StyxValidationError(f'`mod_add_data` has the wrong type: Received `{type(params.get("mod_add_data", False))}` expected `bool`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+    if params.get("show_gifti", False) is None:
+        raise StyxValidationError("`show_gifti` must not be None")
+    if not isinstance(params["show_gifti"], bool):
+        raise StyxValidationError(f'`show_gifti` has the wrong type: Received `{type(params.get("show_gifti", False))}` expected `bool`')
+    if params.get("read_das", None) is not None:
+        if not isinstance(params["read_das"], list):
+            raise StyxValidationError(f'`read_das` has the wrong type: Received `{type(params.get("read_das", None))}` expected `list[float] | None`')
+        for e in params["read_das"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`read_das` has the wrong type: Received `{type(params.get("read_das", None))}` expected `list[float] | None`')
+    if params.get("mod_gim_atr", None) is not None:
+        if not isinstance(params["mod_gim_atr"], list):
+            raise StyxValidationError(f'`mod_gim_atr` has the wrong type: Received `{type(params.get("mod_gim_atr", None))}` expected `list[str] | None`')
+        for e in params["mod_gim_atr"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mod_gim_atr` has the wrong type: Received `{type(params.get("mod_gim_atr", None))}` expected `list[str] | None`')
+    if params.get("mod_gim_meta", None) is not None:
+        if not isinstance(params["mod_gim_meta"], list):
+            raise StyxValidationError(f'`mod_gim_meta` has the wrong type: Received `{type(params.get("mod_gim_meta", None))}` expected `list[str] | None`')
+        for e in params["mod_gim_meta"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mod_gim_meta` has the wrong type: Received `{type(params.get("mod_gim_meta", None))}` expected `list[str] | None`')
+    if params.get("mod_da_atr", None) is not None:
+        if not isinstance(params["mod_da_atr"], list):
+            raise StyxValidationError(f'`mod_da_atr` has the wrong type: Received `{type(params.get("mod_da_atr", None))}` expected `list[str] | None`')
+        for e in params["mod_da_atr"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mod_da_atr` has the wrong type: Received `{type(params.get("mod_da_atr", None))}` expected `list[str] | None`')
+    if params.get("mod_da_meta", None) is not None:
+        if not isinstance(params["mod_da_meta"], list):
+            raise StyxValidationError(f'`mod_da_meta` has the wrong type: Received `{type(params.get("mod_da_meta", None))}` expected `list[str] | None`')
+        for e in params["mod_da_meta"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mod_da_meta` has the wrong type: Received `{type(params.get("mod_da_meta", None))}` expected `list[str] | None`')
+    if params.get("mod_das", None) is not None:
+        if not isinstance(params["mod_das"], list):
+            raise StyxValidationError(f'`mod_das` has the wrong type: Received `{type(params.get("mod_das", None))}` expected `list[float] | None`')
+        for e in params["mod_das"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mod_das` has the wrong type: Received `{type(params.get("mod_das", None))}` expected `list[float] | None`')
+    if params.get("new_dset", False) is None:
+        raise StyxValidationError("`new_dset` must not be None")
+    if not isinstance(params["new_dset"], bool):
+        raise StyxValidationError(f'`new_dset` has the wrong type: Received `{type(params.get("new_dset", False))}` expected `bool`')
+    if params.get("compare_gifti", False) is None:
+        raise StyxValidationError("`compare_gifti` must not be None")
+    if not isinstance(params["compare_gifti"], bool):
+        raise StyxValidationError(f'`compare_gifti` has the wrong type: Received `{type(params.get("compare_gifti", False))}` expected `bool`')
+    if params.get("compare_data", False) is None:
+        raise StyxValidationError("`compare_data` must not be None")
+    if not isinstance(params["compare_data"], bool):
+        raise StyxValidationError(f'`compare_data` has the wrong type: Received `{type(params.get("compare_data", False))}` expected `bool`')
+    if params.get("compare_verb", None) is not None:
+        if not isinstance(params["compare_verb"], (float, int)):
+            raise StyxValidationError(f'`compare_verb` has the wrong type: Received `{type(params.get("compare_verb", None))}` expected `float | None`')
+    if params.get("approx_gifti", False) is None:
+        raise StyxValidationError("`approx_gifti` must not be None")
+    if not isinstance(params["approx_gifti"], bool):
+        raise StyxValidationError(f'`approx_gifti` has the wrong type: Received `{type(params.get("approx_gifti", False))}` expected `bool`')
+
+
 def gifti_tool_cargs(
     params: GiftiToolParameters,
     execution: Execution,
@@ -317,6 +429,7 @@ def gifti_tool_execute(
     Returns:
         NamedTuple of outputs (described in `GiftiToolOutputs`).
     """
+    gifti_tool_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GIFTI_TOOL_METADATA)
     params = execution.params(params)

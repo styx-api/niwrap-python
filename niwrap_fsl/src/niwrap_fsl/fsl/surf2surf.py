@@ -101,6 +101,49 @@ def surf2surf_params(
     return params
 
 
+def surf2surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Surf2surfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `InputPathType`')
+    if params.get("input_convention", None) is not None:
+        if not isinstance(params["input_convention"], str):
+            raise StyxValidationError(f'`input_convention` has the wrong type: Received `{type(params.get("input_convention", None))}` expected `str | None`')
+    if params.get("output_convention", None) is not None:
+        if not isinstance(params["output_convention"], str):
+            raise StyxValidationError(f'`output_convention` has the wrong type: Received `{type(params.get("output_convention", None))}` expected `str | None`')
+    if params.get("input_ref_volume", None) is not None:
+        if not isinstance(params["input_ref_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_ref_volume` has the wrong type: Received `{type(params.get("input_ref_volume", None))}` expected `InputPathType | None`')
+    if params.get("output_ref_volume", None) is not None:
+        if not isinstance(params["output_ref_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`output_ref_volume` has the wrong type: Received `{type(params.get("output_ref_volume", None))}` expected `InputPathType | None`')
+    if params.get("transform", None) is not None:
+        if not isinstance(params["transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType | None`')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `str | None`')
+    if params.get("output_values", None) is not None:
+        if not isinstance(params["output_values"], str):
+            raise StyxValidationError(f'`output_values` has the wrong type: Received `{type(params.get("output_values", None))}` expected `str | None`')
+
+
 def surf2surf_cargs(
     params: Surf2surfParameters,
     execution: Execution,
@@ -194,6 +237,7 @@ def surf2surf_execute(
     Returns:
         NamedTuple of outputs (described in `Surf2surfOutputs`).
     """
+    surf2surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF2SURF_METADATA)
     params = execution.params(params)

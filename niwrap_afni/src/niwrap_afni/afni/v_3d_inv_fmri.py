@@ -116,6 +116,60 @@ def v_3d_inv_fmri_params(
     return params
 
 
+def v_3d_inv_fmri_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dInvFmriParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("activation_map", None) is None:
+        raise StyxValidationError("`activation_map` must not be None")
+    if not isinstance(params["activation_map"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`activation_map` has the wrong type: Received `{type(params.get("activation_map", None))}` expected `InputPathType`')
+    if params.get("map_weight", None) is not None:
+        if not isinstance(params["map_weight"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`map_weight` has the wrong type: Received `{type(params.get("map_weight", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("baseline_file", None) is not None:
+        if not isinstance(params["baseline_file"], list):
+            raise StyxValidationError(f'`baseline_file` has the wrong type: Received `{type(params.get("baseline_file", None))}` expected `list[InputPathType] | None`')
+        for e in params["baseline_file"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`baseline_file` has the wrong type: Received `{type(params.get("baseline_file", None))}` expected `list[InputPathType] | None`')
+    if params.get("polynom_order", None) is not None:
+        if not isinstance(params["polynom_order"], (float, int)):
+            raise StyxValidationError(f'`polynom_order` has the wrong type: Received `{type(params.get("polynom_order", None))}` expected `float | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("alpha", None) is not None:
+        if not isinstance(params["alpha"], (float, int)):
+            raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float | None`')
+    if params.get("smooth_fir", False) is None:
+        raise StyxValidationError("`smooth_fir` must not be None")
+    if not isinstance(params["smooth_fir"], bool):
+        raise StyxValidationError(f'`smooth_fir` has the wrong type: Received `{type(params.get("smooth_fir", False))}` expected `bool`')
+    if params.get("smooth_median", False) is None:
+        raise StyxValidationError("`smooth_median` must not be None")
+    if not isinstance(params["smooth_median"], bool):
+        raise StyxValidationError(f'`smooth_median` has the wrong type: Received `{type(params.get("smooth_median", False))}` expected `bool`')
+
+
 def v_3d_inv_fmri_cargs(
     params: V3dInvFmriParameters,
     execution: Execution,
@@ -221,6 +275,7 @@ def v_3d_inv_fmri_execute(
     Returns:
         NamedTuple of outputs (described in `V3dInvFmriOutputs`).
     """
+    v_3d_inv_fmri_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_INV_FMRI_METADATA)
     params = execution.params(params)

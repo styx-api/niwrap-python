@@ -56,6 +56,28 @@ def segment_thalamic_nuclei_params(
     return params
 
 
+def segment_thalamic_nuclei_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentThalamicNucleiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_image", None) is None:
+        raise StyxValidationError("`t1_image` must not be None")
+    if not isinstance(params["t1_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_image` has the wrong type: Received `{type(params.get("t1_image", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+
+
 def segment_thalamic_nuclei_cargs(
     params: SegmentThalamicNucleiParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def segment_thalamic_nuclei_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentThalamicNucleiOutputs`).
     """
+    segment_thalamic_nuclei_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_THALAMIC_NUCLEI_METADATA)
     params = execution.params(params)

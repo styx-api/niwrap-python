@@ -126,6 +126,65 @@ def fsl_mvlm_params(
     return params
 
 
+def fsl_mvlm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslMvlmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("basename_output_files", None) is None:
+        raise StyxValidationError("`basename_output_files` must not be None")
+    if not isinstance(params["basename_output_files"], str):
+        raise StyxValidationError(f'`basename_output_files` has the wrong type: Received `{type(params.get("basename_output_files", None))}` expected `str`')
+    if params.get("algorithm", None) is not None:
+        if not isinstance(params["algorithm"], str):
+            raise StyxValidationError(f'`algorithm` has the wrong type: Received `{type(params.get("algorithm", None))}` expected `str | None`')
+    if params.get("design_matrix", None) is not None:
+        if not isinstance(params["design_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`design_matrix` has the wrong type: Received `{type(params.get("design_matrix", None))}` expected `InputPathType | None`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("design_normalization", False) is None:
+        raise StyxValidationError("`design_normalization` must not be None")
+    if not isinstance(params["design_normalization"], bool):
+        raise StyxValidationError(f'`design_normalization` has the wrong type: Received `{type(params.get("design_normalization", False))}` expected `bool`')
+    if params.get("variance_normalisation", False) is None:
+        raise StyxValidationError("`variance_normalisation` must not be None")
+    if not isinstance(params["variance_normalisation"], bool):
+        raise StyxValidationError(f'`variance_normalisation` has the wrong type: Received `{type(params.get("variance_normalisation", False))}` expected `bool`')
+    if params.get("demean", False) is None:
+        raise StyxValidationError("`demean` must not be None")
+    if not isinstance(params["demean"], bool):
+        raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool`')
+    if params.get("nmf_dim", None) is not None:
+        if not isinstance(params["nmf_dim"], (float, int)):
+            raise StyxValidationError(f'`nmf_dim` has the wrong type: Received `{type(params.get("nmf_dim", None))}` expected `float | None`')
+    if params.get("nmf_iterations", None) is not None:
+        if not isinstance(params["nmf_iterations"], (float, int)):
+            raise StyxValidationError(f'`nmf_iterations` has the wrong type: Received `{type(params.get("nmf_iterations", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("out_data", None) is not None:
+        if not isinstance(params["out_data"], str):
+            raise StyxValidationError(f'`out_data` has the wrong type: Received `{type(params.get("out_data", None))}` expected `str | None`')
+    if params.get("out_vnscales", None) is not None:
+        if not isinstance(params["out_vnscales"], str):
+            raise StyxValidationError(f'`out_vnscales` has the wrong type: Received `{type(params.get("out_vnscales", None))}` expected `str | None`')
+
+
 def fsl_mvlm_cargs(
     params: FslMvlmParameters,
     execution: Execution,
@@ -237,6 +296,7 @@ def fsl_mvlm_execute(
     Returns:
         NamedTuple of outputs (described in `FslMvlmOutputs`).
     """
+    fsl_mvlm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_MVLM_METADATA)
     params = execution.params(params)

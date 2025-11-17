@@ -127,6 +127,65 @@ def mris_volsmooth_params(
     return params
 
 
+def mris_volsmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisVolsmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("registration", None) is None:
+        raise StyxValidationError("`registration` must not be None")
+    if not isinstance(params["registration"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`registration` has the wrong type: Received `{type(params.get("registration", None))}` expected `InputPathType`')
+    if params.get("projfrac", None) is not None:
+        if not isinstance(params["projfrac"], (float, int)):
+            raise StyxValidationError(f'`projfrac` has the wrong type: Received `{type(params.get("projfrac", None))}` expected `float | None`')
+    if params.get("projfrac_avg", None) is not None:
+        if not isinstance(params["projfrac_avg"], str):
+            raise StyxValidationError(f'`projfrac_avg` has the wrong type: Received `{type(params.get("projfrac_avg", None))}` expected `str | None`')
+    if params.get("fill_ribbon", False) is None:
+        raise StyxValidationError("`fill_ribbon` must not be None")
+    if not isinstance(params["fill_ribbon"], bool):
+        raise StyxValidationError(f'`fill_ribbon` has the wrong type: Received `{type(params.get("fill_ribbon", False))}` expected `bool`')
+    if params.get("surf_out", None) is not None:
+        if not isinstance(params["surf_out"], str):
+            raise StyxValidationError(f'`surf_out` has the wrong type: Received `{type(params.get("surf_out", None))}` expected `str | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("niters", None) is not None:
+        if not isinstance(params["niters"], (float, int)):
+            raise StyxValidationError(f'`niters` has the wrong type: Received `{type(params.get("niters", None))}` expected `float | None`')
+    if params.get("vol_fwhm", None) is not None:
+        if not isinstance(params["vol_fwhm"], (float, int)):
+            raise StyxValidationError(f'`vol_fwhm` has the wrong type: Received `{type(params.get("vol_fwhm", None))}` expected `float | None`')
+    if params.get("log", None) is not None:
+        if not isinstance(params["log"], str):
+            raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `str | None`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def mris_volsmooth_cargs(
     params: MrisVolsmoothParameters,
     execution: Execution,
@@ -241,6 +300,7 @@ def mris_volsmooth_execute(
     Returns:
         NamedTuple of outputs (described in `MrisVolsmoothOutputs`).
     """
+    mris_volsmooth_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_VOLSMOOTH_METADATA)
     params = execution.params(params)

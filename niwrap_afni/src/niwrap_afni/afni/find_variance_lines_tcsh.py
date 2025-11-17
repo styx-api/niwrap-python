@@ -131,6 +131,79 @@ def find_variance_lines_tcsh_params(
     return params
 
 
+def find_variance_lines_tcsh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FindVarianceLinesTcshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], str):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `str | None`')
+    if params.get("min_cvox", None) is not None:
+        if not isinstance(params["min_cvox"], int):
+            raise StyxValidationError(f'`min_cvox` has the wrong type: Received `{type(params.get("min_cvox", None))}` expected `int | None`')
+    if params.get("min_nt", None) is not None:
+        if not isinstance(params["min_nt"], int):
+            raise StyxValidationError(f'`min_nt` has the wrong type: Received `{type(params.get("min_nt", None))}` expected `int | None`')
+    if params.get("nerode", None) is not None:
+        if not isinstance(params["nerode"], int):
+            raise StyxValidationError(f'`nerode` has the wrong type: Received `{type(params.get("nerode", None))}` expected `int | None`')
+    if params.get("nfirst", None) is not None:
+        if not isinstance(params["nfirst"], int):
+            raise StyxValidationError(f'`nfirst` has the wrong type: Received `{type(params.get("nfirst", None))}` expected `int | None`')
+    if params.get("percentile", None) is not None:
+        if not isinstance(params["percentile"], int):
+            raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `int | None`')
+        if 0 <= params["percentile"] <= 99:
+            raise StyxValidationError("Parameter `percentile` must be between 0 and 99 (inclusive)")
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], str):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `str | None`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("do_clean", None) is not None:
+        if not isinstance(params["do_clean"], int):
+            raise StyxValidationError(f'`do_clean` has the wrong type: Received `{type(params.get("do_clean", None))}` expected `int | None`')
+        if 0 <= params["do_clean"] <= 1:
+            raise StyxValidationError("Parameter `do_clean` must be between 0 and 1 (inclusive)")
+    if params.get("do_img", None) is not None:
+        if not isinstance(params["do_img"], int):
+            raise StyxValidationError(f'`do_img` has the wrong type: Received `{type(params.get("do_img", None))}` expected `int | None`')
+        if 0 <= params["do_img"] <= 1:
+            raise StyxValidationError("Parameter `do_img` must be between 0 and 1 (inclusive)")
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+
+
 def find_variance_lines_tcsh_cargs(
     params: FindVarianceLinesTcshParameters,
     execution: Execution,
@@ -248,6 +321,7 @@ def find_variance_lines_tcsh_execute(
     Returns:
         NamedTuple of outputs (described in `FindVarianceLinesTcshOutputs`).
     """
+    find_variance_lines_tcsh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIND_VARIANCE_LINES_TCSH_METADATA)
     params = execution.params(params)

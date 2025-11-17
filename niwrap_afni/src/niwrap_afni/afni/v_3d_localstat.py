@@ -171,6 +171,100 @@ def v_3d_localstat_params(
     return params
 
 
+def v_3d_localstat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLocalstatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("nbhd", None) is None:
+        raise StyxValidationError("`nbhd` must not be None")
+    if not isinstance(params["nbhd"], str):
+        raise StyxValidationError(f'`nbhd` has the wrong type: Received `{type(params.get("nbhd", None))}` expected `str`')
+    if params.get("stat", None) is not None:
+        if not isinstance(params["stat"], list):
+            raise StyxValidationError(f'`stat` has the wrong type: Received `{type(params.get("stat", None))}` expected `list[str] | None`')
+        for e in params["stat"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`stat` has the wrong type: Received `{type(params.get("stat", None))}` expected `list[str] | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("use_nonmask", False) is None:
+        raise StyxValidationError("`use_nonmask` must not be None")
+    if not isinstance(params["use_nonmask"], bool):
+        raise StyxValidationError(f'`use_nonmask` has the wrong type: Received `{type(params.get("use_nonmask", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `str | None`')
+    if params.get("label_ext", None) is not None:
+        if not isinstance(params["label_ext"], str):
+            raise StyxValidationError(f'`label_ext` has the wrong type: Received `{type(params.get("label_ext", None))}` expected `str | None`')
+    if params.get("reduce_grid", None) is not None:
+        if not isinstance(params["reduce_grid"], list):
+            raise StyxValidationError(f'`reduce_grid` has the wrong type: Received `{type(params.get("reduce_grid", None))}` expected `list[float] | None`')
+        if 1 <= len(params["reduce_grid"]) <= 3:
+            raise StyxValidationError("Parameter `reduce_grid` must contain between 1 and 3 elements (inclusive)")
+        for e in params["reduce_grid"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`reduce_grid` has the wrong type: Received `{type(params.get("reduce_grid", None))}` expected `list[float] | None`')
+    if params.get("reduce_restore_grid", None) is not None:
+        if not isinstance(params["reduce_restore_grid"], list):
+            raise StyxValidationError(f'`reduce_restore_grid` has the wrong type: Received `{type(params.get("reduce_restore_grid", None))}` expected `list[float] | None`')
+        if 1 <= len(params["reduce_restore_grid"]) <= 3:
+            raise StyxValidationError("Parameter `reduce_restore_grid` must contain between 1 and 3 elements (inclusive)")
+        for e in params["reduce_restore_grid"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`reduce_restore_grid` has the wrong type: Received `{type(params.get("reduce_restore_grid", None))}` expected `list[float] | None`')
+    if params.get("reduce_max_vox", None) is not None:
+        if not isinstance(params["reduce_max_vox"], (float, int)):
+            raise StyxValidationError(f'`reduce_max_vox` has the wrong type: Received `{type(params.get("reduce_max_vox", None))}` expected `float | None`')
+    if params.get("grid_rmode", None) is not None:
+        if not isinstance(params["grid_rmode"], str):
+            raise StyxValidationError(f'`grid_rmode` has the wrong type: Received `{type(params.get("grid_rmode", None))}` expected `str | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("proceed_small_N", False) is None:
+        raise StyxValidationError("`proceed_small_N` must not be None")
+    if not isinstance(params["proceed_small_N"], bool):
+        raise StyxValidationError(f'`proceed_small_N` has the wrong type: Received `{type(params.get("proceed_small_N", False))}` expected `bool`')
+    if params.get("fillvalue", None) is not None:
+        if not isinstance(params["fillvalue"], (float, int)):
+            raise StyxValidationError(f'`fillvalue` has the wrong type: Received `{type(params.get("fillvalue", None))}` expected `float | None`')
+    if params.get("unfillvalue", None) is not None:
+        if not isinstance(params["unfillvalue"], (float, int)):
+            raise StyxValidationError(f'`unfillvalue` has the wrong type: Received `{type(params.get("unfillvalue", None))}` expected `float | None`')
+    if params.get("maskvalue", None) is not None:
+        if not isinstance(params["maskvalue"], (float, int)):
+            raise StyxValidationError(f'`maskvalue` has the wrong type: Received `{type(params.get("maskvalue", None))}` expected `float | None`')
+    if params.get("maskvalue2", None) is not None:
+        if not isinstance(params["maskvalue2"], (float, int)):
+            raise StyxValidationError(f'`maskvalue2` has the wrong type: Received `{type(params.get("maskvalue2", None))}` expected `float | None`')
+
+
 def v_3d_localstat_cargs(
     params: V3dLocalstatParameters,
     execution: Execution,
@@ -309,6 +403,7 @@ def v_3d_localstat_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLocalstatOutputs`).
     """
+    v_3d_localstat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOCALSTAT_METADATA)
     params = execution.params(params)

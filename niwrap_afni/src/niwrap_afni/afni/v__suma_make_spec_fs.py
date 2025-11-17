@@ -140,6 +140,84 @@ def v__suma_make_spec_fs_params(
     return params
 
 
+def v__suma_make_spec_fs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSumaMakeSpecFsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], int):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `int | None`')
+        if 0 <= params["debug"] <= 2:
+            raise StyxValidationError("Parameter `debug` must be between 0 and 2 (inclusive)")
+    if params.get("fs_setup", False) is None:
+        raise StyxValidationError("`fs_setup` must not be None")
+    if not isinstance(params["fs_setup"], bool):
+        raise StyxValidationError(f'`fs_setup` has the wrong type: Received `{type(params.get("fs_setup", False))}` expected `bool`')
+    if params.get("filesystem_path", None) is not None:
+        if not isinstance(params["filesystem_path"], str):
+            raise StyxValidationError(f'`filesystem_path` has the wrong type: Received `{type(params.get("filesystem_path", None))}` expected `str | None`')
+    if params.get("extra_annot_labels", None) is not None:
+        if not isinstance(params["extra_annot_labels"], list):
+            raise StyxValidationError(f'`extra_annot_labels` has the wrong type: Received `{type(params.get("extra_annot_labels", None))}` expected `list[str] | None`')
+        for e in params["extra_annot_labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`extra_annot_labels` has the wrong type: Received `{type(params.get("extra_annot_labels", None))}` expected `list[str] | None`')
+    if params.get("extra_fs_dsets", None) is not None:
+        if not isinstance(params["extra_fs_dsets"], list):
+            raise StyxValidationError(f'`extra_fs_dsets` has the wrong type: Received `{type(params.get("extra_fs_dsets", None))}` expected `list[str] | None`')
+        for e in params["extra_fs_dsets"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`extra_fs_dsets` has the wrong type: Received `{type(params.get("extra_fs_dsets", None))}` expected `list[str] | None`')
+    if params.get("make_rank_dsets", False) is None:
+        raise StyxValidationError("`make_rank_dsets` must not be None")
+    if not isinstance(params["make_rank_dsets"], bool):
+        raise StyxValidationError(f'`make_rank_dsets` has the wrong type: Received `{type(params.get("make_rank_dsets", False))}` expected `bool`')
+    if params.get("use_mgz", False) is None:
+        raise StyxValidationError("`use_mgz` must not be None")
+    if not isinstance(params["use_mgz"], bool):
+        raise StyxValidationError(f'`use_mgz` has the wrong type: Received `{type(params.get("use_mgz", False))}` expected `bool`')
+    if params.get("neuro", False) is None:
+        raise StyxValidationError("`neuro` must not be None")
+    if not isinstance(params["neuro"], bool):
+        raise StyxValidationError(f'`neuro` has the wrong type: Received `{type(params.get("neuro", False))}` expected `bool`')
+    if params.get("gnifti", False) is None:
+        raise StyxValidationError("`gnifti` must not be None")
+    if not isinstance(params["gnifti"], bool):
+        raise StyxValidationError(f'`gnifti` has the wrong type: Received `{type(params.get("gnifti", False))}` expected `bool`')
+    if params.get("nifti", False) is None:
+        raise StyxValidationError("`nifti` must not be None")
+    if not isinstance(params["nifti"], bool):
+        raise StyxValidationError(f'`nifti` has the wrong type: Received `{type(params.get("nifti", False))}` expected `bool`')
+    if params.get("inflate", None) is not None:
+        if not isinstance(params["inflate"], (float, int)):
+            raise StyxValidationError(f'`inflate` has the wrong type: Received `{type(params.get("inflate", None))}` expected `float | None`')
+    if params.get("set_space", None) is not None:
+        if not isinstance(params["set_space"], str):
+            raise StyxValidationError(f'`set_space` has the wrong type: Received `{type(params.get("set_space", None))}` expected `str | None`')
+    if params.get("ld", None) is not None:
+        if not isinstance(params["ld"], (float, int)):
+            raise StyxValidationError(f'`ld` has the wrong type: Received `{type(params.get("ld", None))}` expected `float | None`')
+    if params.get("ldpref", None) is not None:
+        if not isinstance(params["ldpref"], str):
+            raise StyxValidationError(f'`ldpref` has the wrong type: Received `{type(params.get("ldpref", None))}` expected `str | None`')
+    if params.get("no_ld", False) is None:
+        raise StyxValidationError("`no_ld` must not be None")
+    if not isinstance(params["no_ld"], bool):
+        raise StyxValidationError(f'`no_ld` has the wrong type: Received `{type(params.get("no_ld", False))}` expected `bool`')
+
+
 def v__suma_make_spec_fs_cargs(
     params: VSumaMakeSpecFsParameters,
     execution: Execution,
@@ -255,6 +333,7 @@ def v__suma_make_spec_fs_execute(
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecFsOutputs`).
     """
+    v__suma_make_spec_fs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SUMA_MAKE_SPEC_FS_METADATA)
     params = execution.params(params)

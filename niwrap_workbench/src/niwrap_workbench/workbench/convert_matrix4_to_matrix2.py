@@ -80,6 +80,32 @@ def convert_matrix4_to_matrix2_individual_fibers_params(
     return params
 
 
+def convert_matrix4_to_matrix2_individual_fibers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertMatrix4ToMatrix2IndividualFibersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fiber-1", None) is None:
+        raise StyxValidationError("`fiber-1` must not be None")
+    if not isinstance(params["fiber-1"], str):
+        raise StyxValidationError(f'`fiber-1` has the wrong type: Received `{type(params.get("fiber-1", None))}` expected `str`')
+    if params.get("fiber-2", None) is None:
+        raise StyxValidationError("`fiber-2` must not be None")
+    if not isinstance(params["fiber-2"], str):
+        raise StyxValidationError(f'`fiber-2` has the wrong type: Received `{type(params.get("fiber-2", None))}` expected `str`')
+    if params.get("fiber-3", None) is None:
+        raise StyxValidationError("`fiber-3` must not be None")
+    if not isinstance(params["fiber-3"], str):
+        raise StyxValidationError(f'`fiber-3` has the wrong type: Received `{type(params.get("fiber-3", None))}` expected `str`')
+
+
 def convert_matrix4_to_matrix2_individual_fibers_cargs(
     params: ConvertMatrix4ToMatrix2IndividualFibersParameters,
     execution: Execution,
@@ -168,6 +194,33 @@ def convert_matrix4_to_matrix2_params(
     return params
 
 
+def convert_matrix4_to_matrix2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertMatrix4ToMatrix2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("counts-out", None) is None:
+        raise StyxValidationError("`counts-out` must not be None")
+    if not isinstance(params["counts-out"], str):
+        raise StyxValidationError(f'`counts-out` has the wrong type: Received `{type(params.get("counts-out", None))}` expected `str`')
+    if params.get("distance-out", None) is not None:
+        if not isinstance(params["distance-out"], str):
+            raise StyxValidationError(f'`distance-out` has the wrong type: Received `{type(params.get("distance-out", None))}` expected `str | None`')
+    if params.get("individual-fibers", None) is not None:
+        convert_matrix4_to_matrix2_individual_fibers_validate(params["individual-fibers"])
+    if params.get("matrix4-wbsparse", None) is None:
+        raise StyxValidationError("`matrix4-wbsparse` must not be None")
+    if not isinstance(params["matrix4-wbsparse"], str):
+        raise StyxValidationError(f'`matrix4-wbsparse` has the wrong type: Received `{type(params.get("matrix4-wbsparse", None))}` expected `str`')
+
+
 def convert_matrix4_to_matrix2_cargs(
     params: ConvertMatrix4ToMatrix2Parameters,
     execution: Execution,
@@ -235,6 +288,7 @@ def convert_matrix4_to_matrix2_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToMatrix2Outputs`).
     """
+    convert_matrix4_to_matrix2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_MATRIX4_TO_MATRIX2_METADATA)
     params = execution.params(params)

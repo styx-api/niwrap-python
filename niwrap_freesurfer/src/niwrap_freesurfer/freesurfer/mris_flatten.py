@@ -94,6 +94,52 @@ def mris_flatten_params(
     return params
 
 
+def mris_flatten_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisFlattenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_patch", None) is None:
+        raise StyxValidationError("`input_patch` must not be None")
+    if not isinstance(params["input_patch"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_patch` has the wrong type: Received `{type(params.get("input_patch", None))}` expected `InputPathType`')
+    if params.get("output_patch", None) is None:
+        raise StyxValidationError("`output_patch` must not be None")
+    if not isinstance(params["output_patch"], str):
+        raise StyxValidationError(f'`output_patch` has the wrong type: Received `{type(params.get("output_patch", None))}` expected `str`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+    if params.get("distances", None) is not None:
+        if not isinstance(params["distances"], list):
+            raise StyxValidationError(f'`distances` has the wrong type: Received `{type(params.get("distances", None))}` expected `list[float] | None`')
+        if len(params["distances"]) == 2:
+            raise StyxValidationError("Parameter `distances` must contain exactly 2 elements")
+        for e in params["distances"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`distances` has the wrong type: Received `{type(params.get("distances", None))}` expected `list[float] | None`')
+    if params.get("dilations", None) is not None:
+        if not isinstance(params["dilations"], (float, int)):
+            raise StyxValidationError(f'`dilations` has the wrong type: Received `{type(params.get("dilations", None))}` expected `float | None`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], (float, int)):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `float | None`')
+    if params.get("copy_coords", None) is not None:
+        if not isinstance(params["copy_coords"], str):
+            raise StyxValidationError(f'`copy_coords` has the wrong type: Received `{type(params.get("copy_coords", None))}` expected `str | None`')
+    if params.get("norand", False) is None:
+        raise StyxValidationError("`norand` must not be None")
+    if not isinstance(params["norand"], bool):
+        raise StyxValidationError(f'`norand` has the wrong type: Received `{type(params.get("norand", False))}` expected `bool`')
+
+
 def mris_flatten_cargs(
     params: MrisFlattenParameters,
     execution: Execution,
@@ -180,6 +226,7 @@ def mris_flatten_execute(
     Returns:
         NamedTuple of outputs (described in `MrisFlattenOutputs`).
     """
+    mris_flatten_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_FLATTEN_METADATA)
     params = execution.params(params)

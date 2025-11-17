@@ -58,6 +58,28 @@ def check_feat_params(
     return params
 
 
+def check_feat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CheckFeatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("report_file", None) is None:
+        raise StyxValidationError("`report_file` must not be None")
+    if not isinstance(params["report_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`report_file` has the wrong type: Received `{type(params.get("report_file", None))}` expected `InputPathType`')
+    if params.get("report_log_file", None) is None:
+        raise StyxValidationError("`report_log_file` must not be None")
+    if not isinstance(params["report_log_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`report_log_file` has the wrong type: Received `{type(params.get("report_log_file", None))}` expected `InputPathType`')
+
+
 def check_feat_cargs(
     params: CheckFeatParameters,
     execution: Execution,
@@ -118,6 +140,7 @@ def check_feat_execute(
     Returns:
         NamedTuple of outputs (described in `CheckFeatOutputs`).
     """
+    check_feat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CHECK_FEAT_METADATA)
     params = execution.params(params)

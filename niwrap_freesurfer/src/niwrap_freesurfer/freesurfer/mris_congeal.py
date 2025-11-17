@@ -129,6 +129,91 @@ def mris_congeal_params(
     return params
 
 
+def mris_congeal_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisCongealParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface_name", None) is None:
+        raise StyxValidationError("`input_surface_name` must not be None")
+    if not isinstance(params["input_surface_name"], str):
+        raise StyxValidationError(f'`input_surface_name` has the wrong type: Received `{type(params.get("input_surface_name", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_surface_name", None) is None:
+        raise StyxValidationError("`output_surface_name` must not be None")
+    if not isinstance(params["output_surface_name"], str):
+        raise StyxValidationError(f'`output_surface_name` has the wrong type: Received `{type(params.get("output_surface_name", None))}` expected `str`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("disable_rigid_alignment", False) is None:
+        raise StyxValidationError("`disable_rigid_alignment` must not be None")
+    if not isinstance(params["disable_rigid_alignment"], bool):
+        raise StyxValidationError(f'`disable_rigid_alignment` has the wrong type: Received `{type(params.get("disable_rigid_alignment", False))}` expected `bool`')
+    if params.get("disable_sulc_alignment", False) is None:
+        raise StyxValidationError("`disable_sulc_alignment` must not be None")
+    if not isinstance(params["disable_sulc_alignment"], bool):
+        raise StyxValidationError(f'`disable_sulc_alignment` has the wrong type: Received `{type(params.get("disable_sulc_alignment", False))}` expected `bool`')
+    if params.get("smoothwm_curv", False) is None:
+        raise StyxValidationError("`smoothwm_curv` must not be None")
+    if not isinstance(params["smoothwm_curv"], bool):
+        raise StyxValidationError(f'`smoothwm_curv` has the wrong type: Received `{type(params.get("smoothwm_curv", False))}` expected `bool`')
+    if params.get("jacobian_output", None) is not None:
+        if not isinstance(params["jacobian_output"], str):
+            raise StyxValidationError(f'`jacobian_output` has the wrong type: Received `{type(params.get("jacobian_output", None))}` expected `str | None`')
+    if params.get("distance_term", None) is not None:
+        if not isinstance(params["distance_term"], (float, int)):
+            raise StyxValidationError(f'`distance_term` has the wrong type: Received `{type(params.get("distance_term", None))}` expected `float | None`')
+    if params.get("manual_label", None) is not None:
+        if not isinstance(params["manual_label"], list):
+            raise StyxValidationError(f'`manual_label` has the wrong type: Received `{type(params.get("manual_label", None))}` expected `list[str] | None`')
+        if len(params["manual_label"]) <= 3:
+            raise StyxValidationError("Parameter `manual_label` must contain at most 3 elements")
+        for e in params["manual_label"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`manual_label` has the wrong type: Received `{type(params.get("manual_label", None))}` expected `list[str] | None`')
+    if params.get("addframe", None) is not None:
+        if not isinstance(params["addframe"], list):
+            raise StyxValidationError(f'`addframe` has the wrong type: Received `{type(params.get("addframe", None))}` expected `list[str] | None`')
+        if len(params["addframe"]) <= 4:
+            raise StyxValidationError("Parameter `addframe` must contain at most 4 elements")
+        for e in params["addframe"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`addframe` has the wrong type: Received `{type(params.get("addframe", None))}` expected `list[str] | None`')
+    if params.get("overlay", None) is not None:
+        if not isinstance(params["overlay"], list):
+            raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `list[str] | None`')
+        if len(params["overlay"]) <= 2:
+            raise StyxValidationError("Parameter `overlay` must contain at most 2 elements")
+        for e in params["overlay"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `list[str] | None`')
+    if params.get("overlay_dir", None) is not None:
+        if not isinstance(params["overlay_dir"], str):
+            raise StyxValidationError(f'`overlay_dir` has the wrong type: Received `{type(params.get("overlay_dir", None))}` expected `str | None`')
+    if params.get("target_subject", False) is None:
+        raise StyxValidationError("`target_subject` must not be None")
+    if not isinstance(params["target_subject"], bool):
+        raise StyxValidationError(f'`target_subject` has the wrong type: Received `{type(params.get("target_subject", False))}` expected `bool`')
+
+
 def mris_congeal_cargs(
     params: MrisCongealParameters,
     execution: Execution,
@@ -234,6 +319,7 @@ def mris_congeal_execute(
     Returns:
         NamedTuple of outputs (described in `MrisCongealOutputs`).
     """
+    mris_congeal_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CONGEAL_METADATA)
     params = execution.params(params)

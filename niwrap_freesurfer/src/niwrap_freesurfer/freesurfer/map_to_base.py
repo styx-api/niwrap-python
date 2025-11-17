@@ -84,6 +84,39 @@ def map_to_base_params(
     return params
 
 
+def map_to_base_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MapToBaseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("baseid", None) is None:
+        raise StyxValidationError("`baseid` must not be None")
+    if not isinstance(params["baseid"], str):
+        raise StyxValidationError(f'`baseid` has the wrong type: Received `{type(params.get("baseid", None))}` expected `str`')
+    if params.get("tpid", None) is None:
+        raise StyxValidationError("`tpid` must not be None")
+    if not isinstance(params["tpid"], str):
+        raise StyxValidationError(f'`tpid` has the wrong type: Received `{type(params.get("tpid", None))}` expected `str`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], str):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `str`')
+    if params.get("resample_type", None) is None:
+        raise StyxValidationError("`resample_type` must not be None")
+    if not isinstance(params["resample_type"], str):
+        raise StyxValidationError(f'`resample_type` has the wrong type: Received `{type(params.get("resample_type", None))}` expected `str`')
+    if params.get("cross", None) is not None:
+        if not isinstance(params["cross"], str):
+            raise StyxValidationError(f'`cross` has the wrong type: Received `{type(params.get("cross", None))}` expected `str | None`')
+
+
 def map_to_base_cargs(
     params: MapToBaseParameters,
     execution: Execution,
@@ -152,6 +185,7 @@ def map_to_base_execute(
     Returns:
         NamedTuple of outputs (described in `MapToBaseOutputs`).
     """
+    map_to_base_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAP_TO_BASE_METADATA)
     params = execution.params(params)

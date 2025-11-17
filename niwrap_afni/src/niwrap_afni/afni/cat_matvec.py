@@ -68,6 +68,39 @@ def cat_matvec_params(
     return params
 
 
+def cat_matvec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CatMatvecParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matrix_format", False) is None:
+        raise StyxValidationError("`matrix_format` must not be None")
+    if not isinstance(params["matrix_format"], bool):
+        raise StyxValidationError(f'`matrix_format` has the wrong type: Received `{type(params.get("matrix_format", False))}` expected `bool`')
+    if params.get("oneline_format", False) is None:
+        raise StyxValidationError("`oneline_format` must not be None")
+    if not isinstance(params["oneline_format"], bool):
+        raise StyxValidationError(f'`oneline_format` has the wrong type: Received `{type(params.get("oneline_format", False))}` expected `bool`')
+    if params.get("four_by_four_format", False) is None:
+        raise StyxValidationError("`four_by_four_format` must not be None")
+    if not isinstance(params["four_by_four_format"], bool):
+        raise StyxValidationError(f'`four_by_four_format` has the wrong type: Received `{type(params.get("four_by_four_format", False))}` expected `bool`')
+    if params.get("matvec_spec", None) is None:
+        raise StyxValidationError("`matvec_spec` must not be None")
+    if not isinstance(params["matvec_spec"], list):
+        raise StyxValidationError(f'`matvec_spec` has the wrong type: Received `{type(params.get("matvec_spec", None))}` expected `list[str]`')
+    for e in params["matvec_spec"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`matvec_spec` has the wrong type: Received `{type(params.get("matvec_spec", None))}` expected `list[str]`')
+
+
 def cat_matvec_cargs(
     params: CatMatvecParameters,
     execution: Execution,
@@ -131,6 +164,7 @@ def cat_matvec_execute(
     Returns:
         NamedTuple of outputs (described in `CatMatvecOutputs`).
     """
+    cat_matvec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CAT_MATVEC_METADATA)
     params = execution.params(params)

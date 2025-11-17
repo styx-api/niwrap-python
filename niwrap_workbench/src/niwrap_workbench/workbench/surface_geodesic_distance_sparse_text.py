@@ -72,6 +72,39 @@ def surface_geodesic_distance_sparse_text_params(
     return params
 
 
+def surface_geodesic_distance_sparse_text_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceGeodesicDistanceSparseTextParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("naive", False) is None:
+        raise StyxValidationError("`naive` must not be None")
+    if not isinstance(params["naive"], bool):
+        raise StyxValidationError(f'`naive` has the wrong type: Received `{type(params.get("naive", False))}` expected `bool`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("limit", None) is None:
+        raise StyxValidationError("`limit` must not be None")
+    if not isinstance(params["limit"], (float, int)):
+        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
+    if params.get("text-out", None) is None:
+        raise StyxValidationError("`text-out` must not be None")
+    if not isinstance(params["text-out"], str):
+        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
+
+
 def surface_geodesic_distance_sparse_text_cargs(
     params: SurfaceGeodesicDistanceSparseTextParameters,
     execution: Execution,
@@ -148,6 +181,7 @@ def surface_geodesic_distance_sparse_text_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceSparseTextOutputs`).
     """
+    surface_geodesic_distance_sparse_text_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_GEODESIC_DISTANCE_SPARSE_TEXT_METADATA)
     params = execution.params(params)

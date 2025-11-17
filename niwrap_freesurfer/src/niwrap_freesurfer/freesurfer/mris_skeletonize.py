@@ -136,6 +136,72 @@ def mris_skeletonize_params(
     return params
 
 
+def mris_skeletonize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSkeletonizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("surfvals", None) is None:
+        raise StyxValidationError("`surfvals` must not be None")
+    if not isinstance(params["surfvals"], str):
+        raise StyxValidationError(f'`surfvals` has the wrong type: Received `{type(params.get("surfvals", None))}` expected `str`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], str):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `str`')
+    if params.get("k1", False) is None:
+        raise StyxValidationError("`k1` must not be None")
+    if not isinstance(params["k1"], bool):
+        raise StyxValidationError(f'`k1` has the wrong type: Received `{type(params.get("k1", False))}` expected `bool`')
+    if params.get("curv_nonmaxsup", False) is None:
+        raise StyxValidationError("`curv_nonmaxsup` must not be None")
+    if not isinstance(params["curv_nonmaxsup"], bool):
+        raise StyxValidationError(f'`curv_nonmaxsup` has the wrong type: Received `{type(params.get("curv_nonmaxsup", False))}` expected `bool`')
+    if params.get("gyrus", False) is None:
+        raise StyxValidationError("`gyrus` must not be None")
+    if not isinstance(params["gyrus"], bool):
+        raise StyxValidationError(f'`gyrus` has the wrong type: Received `{type(params.get("gyrus", False))}` expected `bool`')
+    if params.get("sulcus", False) is None:
+        raise StyxValidationError("`sulcus` must not be None")
+    if not isinstance(params["sulcus"], bool):
+        raise StyxValidationError(f'`sulcus` has the wrong type: Received `{type(params.get("sulcus", False))}` expected `bool`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+    if params.get("sphere", None) is not None:
+        if not isinstance(params["sphere"], str):
+            raise StyxValidationError(f'`sphere` has the wrong type: Received `{type(params.get("sphere", None))}` expected `str | None`')
+    if params.get("pointset", None) is not None:
+        if not isinstance(params["pointset"], str):
+            raise StyxValidationError(f'`pointset` has the wrong type: Received `{type(params.get("pointset", None))}` expected `str | None`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], str):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str | None`')
+    if params.get("nbrsize", None) is not None:
+        if not isinstance(params["nbrsize"], (float, int)):
+            raise StyxValidationError(f'`nbrsize` has the wrong type: Received `{type(params.get("nbrsize", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("cluster", None) is not None:
+        if not isinstance(params["cluster"], (float, int)):
+            raise StyxValidationError(f'`cluster` has the wrong type: Received `{type(params.get("cluster", None))}` expected `float | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+
+
 def mris_skeletonize_cargs(
     params: MrisSkeletonizeParameters,
     execution: Execution,
@@ -255,6 +321,7 @@ def mris_skeletonize_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSkeletonizeOutputs`).
     """
+    mris_skeletonize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SKELETONIZE_METADATA)
     params = execution.params(params)

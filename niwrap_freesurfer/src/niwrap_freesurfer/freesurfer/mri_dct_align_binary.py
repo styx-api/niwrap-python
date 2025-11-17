@@ -61,6 +61,32 @@ def mri_dct_align_binary_params(
     return params
 
 
+def mri_dct_align_binary_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriDctAlignBinaryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_image", None) is None:
+        raise StyxValidationError("`source_image` must not be None")
+    if not isinstance(params["source_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_image` has the wrong type: Received `{type(params.get("source_image", None))}` expected `InputPathType`')
+    if params.get("destination_image", None) is None:
+        raise StyxValidationError("`destination_image` must not be None")
+    if not isinstance(params["destination_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`destination_image` has the wrong type: Received `{type(params.get("destination_image", None))}` expected `InputPathType`')
+    if params.get("output_transformation", None) is None:
+        raise StyxValidationError("`output_transformation` must not be None")
+    if not isinstance(params["output_transformation"], str):
+        raise StyxValidationError(f'`output_transformation` has the wrong type: Received `{type(params.get("output_transformation", None))}` expected `str`')
+
+
 def mri_dct_align_binary_cargs(
     params: MriDctAlignBinaryParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mri_dct_align_binary_execute(
     Returns:
         NamedTuple of outputs (described in `MriDctAlignBinaryOutputs`).
     """
+    mri_dct_align_binary_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_DCT_ALIGN_BINARY_METADATA)
     params = execution.params(params)

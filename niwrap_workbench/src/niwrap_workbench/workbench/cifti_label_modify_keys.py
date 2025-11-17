@@ -68,6 +68,35 @@ def cifti_label_modify_keys_params(
     return params
 
 
+def cifti_label_modify_keys_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiLabelModifyKeysParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("remap-file", None) is None:
+        raise StyxValidationError("`remap-file` must not be None")
+    if not isinstance(params["remap-file"], str):
+        raise StyxValidationError(f'`remap-file` has the wrong type: Received `{type(params.get("remap-file", None))}` expected `str`')
+
+
 def cifti_label_modify_keys_cargs(
     params: CiftiLabelModifyKeysParameters,
     execution: Execution,
@@ -142,6 +171,7 @@ def cifti_label_modify_keys_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelModifyKeysOutputs`).
     """
+    cifti_label_modify_keys_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_LABEL_MODIFY_KEYS_METADATA)
     params = execution.params(params)

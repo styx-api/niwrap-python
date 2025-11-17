@@ -51,6 +51,27 @@ def v_3d_conformist_params(
     return params
 
 
+def v_3d_conformist_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dConformistParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def v_3d_conformist_cargs(
     params: V3dConformistParameters,
     execution: Execution,
@@ -110,6 +131,7 @@ def v_3d_conformist_execute(
     Returns:
         NamedTuple of outputs (described in `V3dConformistOutputs`).
     """
+    v_3d_conformist_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_CONFORMIST_METADATA)
     params = execution.params(params)

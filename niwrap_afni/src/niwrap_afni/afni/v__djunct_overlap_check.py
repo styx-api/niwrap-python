@@ -178,6 +178,117 @@ def v__djunct_overlap_check_params(
     return params
 
 
+def v__djunct_overlap_check_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunctOverlapCheckParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ulay", None) is None:
+        raise StyxValidationError("`ulay` must not be None")
+    if not isinstance(params["ulay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ulay` has the wrong type: Received `{type(params.get("ulay", None))}` expected `InputPathType`')
+    if params.get("olay", None) is None:
+        raise StyxValidationError("`olay` must not be None")
+    if not isinstance(params["olay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`olay` has the wrong type: Received `{type(params.get("olay", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("box_focus_slices", None) is not None:
+        if not isinstance(params["box_focus_slices"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`box_focus_slices` has the wrong type: Received `{type(params.get("box_focus_slices", None))}` expected `InputPathType | None`')
+    if params.get("montgap", None) is not None:
+        if not isinstance(params["montgap"], (float, int)):
+            raise StyxValidationError(f'`montgap` has the wrong type: Received `{type(params.get("montgap", None))}` expected `float | None`')
+    if params.get("montcolor", None) is not None:
+        if not isinstance(params["montcolor"], str):
+            raise StyxValidationError(f'`montcolor` has the wrong type: Received `{type(params.get("montcolor", None))}` expected `str | None`')
+    if params.get("cbar", None) is not None:
+        if not isinstance(params["cbar"], str):
+            raise StyxValidationError(f'`cbar` has the wrong type: Received `{type(params.get("cbar", None))}` expected `str | None`')
+    if params.get("opacity", None) is not None:
+        if not isinstance(params["opacity"], (float, int)):
+            raise StyxValidationError(f'`opacity` has the wrong type: Received `{type(params.get("opacity", None))}` expected `float | None`')
+    if params.get("zerocolor", None) is not None:
+        if not isinstance(params["zerocolor"], str):
+            raise StyxValidationError(f'`zerocolor` has the wrong type: Received `{type(params.get("zerocolor", None))}` expected `str | None`')
+    if params.get("set_dicom_xyz", None) is not None:
+        if not isinstance(params["set_dicom_xyz"], list):
+            raise StyxValidationError(f'`set_dicom_xyz` has the wrong type: Received `{type(params.get("set_dicom_xyz", None))}` expected `list[float] | None`')
+        if len(params["set_dicom_xyz"]) == 3:
+            raise StyxValidationError("Parameter `set_dicom_xyz` must contain exactly 3 elements")
+        for e in params["set_dicom_xyz"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`set_dicom_xyz` has the wrong type: Received `{type(params.get("set_dicom_xyz", None))}` expected `list[float] | None`')
+    if params.get("ulay_range", None) is not None:
+        if not isinstance(params["ulay_range"], list):
+            raise StyxValidationError(f'`ulay_range` has the wrong type: Received `{type(params.get("ulay_range", None))}` expected `list[float] | None`')
+        if len(params["ulay_range"]) == 2:
+            raise StyxValidationError("Parameter `ulay_range` must contain exactly 2 elements")
+        for e in params["ulay_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ulay_range` has the wrong type: Received `{type(params.get("ulay_range", None))}` expected `list[float] | None`')
+    if params.get("ulay_range_nz", None) is not None:
+        if not isinstance(params["ulay_range_nz"], list):
+            raise StyxValidationError(f'`ulay_range_nz` has the wrong type: Received `{type(params.get("ulay_range_nz", None))}` expected `list[float] | None`')
+        if len(params["ulay_range_nz"]) == 2:
+            raise StyxValidationError("Parameter `ulay_range_nz` must contain exactly 2 elements")
+        for e in params["ulay_range_nz"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ulay_range_nz` has the wrong type: Received `{type(params.get("ulay_range_nz", None))}` expected `list[float] | None`')
+    if params.get("montx", None) is not None:
+        if not isinstance(params["montx"], (float, int)):
+            raise StyxValidationError(f'`montx` has the wrong type: Received `{type(params.get("montx", None))}` expected `float | None`')
+    if params.get("monty", None) is not None:
+        if not isinstance(params["monty"], (float, int)):
+            raise StyxValidationError(f'`monty` has the wrong type: Received `{type(params.get("monty", None))}` expected `float | None`')
+    if params.get("montx_cat", None) is not None:
+        if not isinstance(params["montx_cat"], (float, int)):
+            raise StyxValidationError(f'`montx_cat` has the wrong type: Received `{type(params.get("montx_cat", None))}` expected `float | None`')
+    if params.get("monty_cat", None) is not None:
+        if not isinstance(params["monty_cat"], (float, int)):
+            raise StyxValidationError(f'`monty_cat` has the wrong type: Received `{type(params.get("monty_cat", None))}` expected `float | None`')
+    if params.get("label_mode", None) is not None:
+        if not isinstance(params["label_mode"], str):
+            raise StyxValidationError(f'`label_mode` has the wrong type: Received `{type(params.get("label_mode", None))}` expected `str | None`')
+    if params.get("pbar_posonly_off", False) is None:
+        raise StyxValidationError("`pbar_posonly_off` must not be None")
+    if not isinstance(params["pbar_posonly_off"], bool):
+        raise StyxValidationError(f'`pbar_posonly_off` has the wrong type: Received `{type(params.get("pbar_posonly_off", False))}` expected `bool`')
+    if params.get("edgy_ulay", False) is None:
+        raise StyxValidationError("`edgy_ulay` must not be None")
+    if not isinstance(params["edgy_ulay"], bool):
+        raise StyxValidationError(f'`edgy_ulay` has the wrong type: Received `{type(params.get("edgy_ulay", False))}` expected `bool`')
+    if params.get("set_dicom_xyz_off", False) is None:
+        raise StyxValidationError("`set_dicom_xyz_off` must not be None")
+    if not isinstance(params["set_dicom_xyz_off"], bool):
+        raise StyxValidationError(f'`set_dicom_xyz_off` has the wrong type: Received `{type(params.get("set_dicom_xyz_off", False))}` expected `bool`')
+    if params.get("no_cor", False) is None:
+        raise StyxValidationError("`no_cor` must not be None")
+    if not isinstance(params["no_cor"], bool):
+        raise StyxValidationError(f'`no_cor` has the wrong type: Received `{type(params.get("no_cor", False))}` expected `bool`')
+    if params.get("no_axi", False) is None:
+        raise StyxValidationError("`no_axi` must not be None")
+    if not isinstance(params["no_axi"], bool):
+        raise StyxValidationError(f'`no_axi` has the wrong type: Received `{type(params.get("no_axi", False))}` expected `bool`')
+    if params.get("no_sag", False) is None:
+        raise StyxValidationError("`no_sag` must not be None")
+    if not isinstance(params["no_sag"], bool):
+        raise StyxValidationError(f'`no_sag` has the wrong type: Received `{type(params.get("no_sag", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def v__djunct_overlap_check_cargs(
     params: VDjunctOverlapCheckParameters,
     execution: Execution,
@@ -318,6 +429,7 @@ def v__djunct_overlap_check_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunctOverlapCheckOutputs`).
     """
+    v__djunct_overlap_check_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_OVERLAP_CHECK_METADATA)
     params = execution.params(params)

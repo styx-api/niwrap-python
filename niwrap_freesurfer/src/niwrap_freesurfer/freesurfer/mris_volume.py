@@ -54,6 +54,28 @@ def mris_volume_params(
     return params
 
 
+def mris_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface_file", None) is None:
+        raise StyxValidationError("`surface_file` must not be None")
+    if not isinstance(params["surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_file` has the wrong type: Received `{type(params.get("surface_file", None))}` expected `InputPathType`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def mris_volume_cargs(
     params: MrisVolumeParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def mris_volume_execute(
     Returns:
         NamedTuple of outputs (described in `MrisVolumeOutputs`).
     """
+    mris_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_VOLUME_METADATA)
     params = execution.params(params)

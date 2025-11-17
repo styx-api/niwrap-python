@@ -81,6 +81,28 @@ def volume_merge_up_to_params(
     return params
 
 
+def volume_merge_up_to_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeMergeUpToParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("last-subvol", None) is None:
+        raise StyxValidationError("`last-subvol` must not be None")
+    if not isinstance(params["last-subvol"], str):
+        raise StyxValidationError(f'`last-subvol` has the wrong type: Received `{type(params.get("last-subvol", None))}` expected `str`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+
+
 def volume_merge_up_to_cargs(
     params: VolumeMergeUpToParameters,
     execution: Execution,
@@ -126,6 +148,26 @@ def volume_merge_subvolume_params(
     return params
 
 
+def volume_merge_subvolume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeMergeSubvolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subvol", None) is None:
+        raise StyxValidationError("`subvol` must not be None")
+    if not isinstance(params["subvol"], str):
+        raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str`')
+    if params.get("up-to", None) is not None:
+        volume_merge_up_to_validate(params["up-to"])
+
+
 def volume_merge_subvolume_cargs(
     params: VolumeMergeSubvolumeParameters,
     execution: Execution,
@@ -169,6 +211,29 @@ def volume_merge_volume_params(
     if subvolume is not None:
         params["subvolume"] = subvolume
     return params
+
+
+def volume_merge_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeMergeVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], list):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `list[VolumeMergeSubvolumeParameters] | None`')
+        for e in params["subvolume"]:
+            volume_merge_subvolume_validate(e)
 
 
 def volume_merge_volume_cargs(
@@ -224,6 +289,29 @@ def volume_merge_params(
     if volume is not None:
         params["volume"] = volume
     return params
+
+
+def volume_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], list):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[VolumeMergeVolumeParameters] | None`')
+        for e in params["volume"]:
+            volume_merge_volume_validate(e)
 
 
 def volume_merge_cargs(
@@ -293,6 +381,7 @@ def volume_merge_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeMergeOutputs`).
     """
+    volume_merge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_MERGE_METADATA)
     params = execution.params(params)

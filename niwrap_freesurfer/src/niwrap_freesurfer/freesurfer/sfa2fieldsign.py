@@ -117,6 +117,55 @@ def sfa2fieldsign_params(
     return params
 
 
+def sfa2fieldsign_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Sfa2fieldsignParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sfadir", None) is None:
+        raise StyxValidationError("`sfadir` must not be None")
+    if not isinstance(params["sfadir"], str):
+        raise StyxValidationError(f'`sfadir` has the wrong type: Received `{type(params.get("sfadir", None))}` expected `str`')
+    if params.get("register_dat", None) is None:
+        raise StyxValidationError("`register_dat` must not be None")
+    if not isinstance(params["register_dat"], str):
+        raise StyxValidationError(f'`register_dat` has the wrong type: Received `{type(params.get("register_dat", None))}` expected `str`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("proj_frac", None) is not None:
+        if not isinstance(params["proj_frac"], (float, int)):
+            raise StyxValidationError(f'`proj_frac` has the wrong type: Received `{type(params.get("proj_frac", None))}` expected `float | None`')
+    if params.get("occip", False) is None:
+        raise StyxValidationError("`occip` must not be None")
+    if not isinstance(params["occip"], bool):
+        raise StyxValidationError(f'`occip` has the wrong type: Received `{type(params.get("occip", False))}` expected `bool`')
+    if params.get("patch", None) is not None:
+        if not isinstance(params["patch"], str):
+            raise StyxValidationError(f'`patch` has the wrong type: Received `{type(params.get("patch", None))}` expected `str | None`')
+    if params.get("osd", None) is not None:
+        if not isinstance(params["osd"], str):
+            raise StyxValidationError(f'`osd` has the wrong type: Received `{type(params.get("osd", None))}` expected `str | None`')
+    if params.get("lh", False) is None:
+        raise StyxValidationError("`lh` must not be None")
+    if not isinstance(params["lh"], bool):
+        raise StyxValidationError(f'`lh` has the wrong type: Received `{type(params.get("lh", False))}` expected `bool`')
+    if params.get("rh", False) is None:
+        raise StyxValidationError("`rh` must not be None")
+    if not isinstance(params["rh"], bool):
+        raise StyxValidationError(f'`rh` has the wrong type: Received `{type(params.get("rh", False))}` expected `bool`')
+
+
 def sfa2fieldsign_cargs(
     params: Sfa2fieldsignParameters,
     execution: Execution,
@@ -222,6 +271,7 @@ def sfa2fieldsign_execute(
     Returns:
         NamedTuple of outputs (described in `Sfa2fieldsignOutputs`).
     """
+    sfa2fieldsign_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SFA2FIELDSIGN_METADATA)
     params = execution.params(params)

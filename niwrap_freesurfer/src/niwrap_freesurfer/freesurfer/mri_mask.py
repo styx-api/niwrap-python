@@ -174,6 +174,100 @@ def mri_mask_params(
     return params
 
 
+def mri_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("mask_volume", None) is None:
+        raise StyxValidationError("`mask_volume` must not be None")
+    if not isinstance(params["mask_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], str):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `str | None`')
+    if params.get("lta_src", None) is not None:
+        if not isinstance(params["lta_src"], str):
+            raise StyxValidationError(f'`lta_src` has the wrong type: Received `{type(params.get("lta_src", None))}` expected `str | None`')
+    if params.get("lta_dst", None) is not None:
+        if not isinstance(params["lta_dst"], str):
+            raise StyxValidationError(f'`lta_dst` has the wrong type: Received `{type(params.get("lta_dst", None))}` expected `str | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("npad", None) is not None:
+        if not isinstance(params["npad"], (float, int)):
+            raise StyxValidationError(f'`npad` has the wrong type: Received `{type(params.get("npad", None))}` expected `float | None`')
+    if params.get("npad_vector", None) is not None:
+        if not isinstance(params["npad_vector"], list):
+            raise StyxValidationError(f'`npad_vector` has the wrong type: Received `{type(params.get("npad_vector", None))}` expected `list[float] | None`')
+        for e in params["npad_vector"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`npad_vector` has the wrong type: Received `{type(params.get("npad_vector", None))}` expected `list[float] | None`')
+    if params.get("npad_multi_vector", None) is not None:
+        if not isinstance(params["npad_multi_vector"], list):
+            raise StyxValidationError(f'`npad_multi_vector` has the wrong type: Received `{type(params.get("npad_multi_vector", None))}` expected `list[float] | None`')
+        for e in params["npad_multi_vector"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`npad_multi_vector` has the wrong type: Received `{type(params.get("npad_multi_vector", None))}` expected `list[float] | None`')
+    if params.get("abs", False) is None:
+        raise StyxValidationError("`abs` must not be None")
+    if not isinstance(params["abs"], bool):
+        raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", False))}` expected `bool`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+    if params.get("no_invert", False) is None:
+        raise StyxValidationError("`no_invert` must not be None")
+    if not isinstance(params["no_invert"], bool):
+        raise StyxValidationError(f'`no_invert` has the wrong type: Received `{type(params.get("no_invert", False))}` expected `bool`')
+    if params.get("rh_labels", False) is None:
+        raise StyxValidationError("`rh_labels` must not be None")
+    if not isinstance(params["rh_labels"], bool):
+        raise StyxValidationError(f'`rh_labels` has the wrong type: Received `{type(params.get("rh_labels", False))}` expected `bool`')
+    if params.get("lh_labels", False) is None:
+        raise StyxValidationError("`lh_labels` must not be None")
+    if not isinstance(params["lh_labels"], bool):
+        raise StyxValidationError(f'`lh_labels` has the wrong type: Received `{type(params.get("lh_labels", False))}` expected `bool`')
+    if params.get("dilate", None) is not None:
+        if not isinstance(params["dilate"], (float, int)):
+            raise StyxValidationError(f'`dilate` has the wrong type: Received `{type(params.get("dilate", None))}` expected `float | None`')
+    if params.get("no_cerebellum", False) is None:
+        raise StyxValidationError("`no_cerebellum` must not be None")
+    if not isinstance(params["no_cerebellum"], bool):
+        raise StyxValidationError(f'`no_cerebellum` has the wrong type: Received `{type(params.get("no_cerebellum", False))}` expected `bool`')
+    if params.get("oval_value", None) is not None:
+        if not isinstance(params["oval_value"], (float, int)):
+            raise StyxValidationError(f'`oval_value` has the wrong type: Received `{type(params.get("oval_value", None))}` expected `float | None`')
+    if params.get("transfer_value", None) is not None:
+        if not isinstance(params["transfer_value"], (float, int)):
+            raise StyxValidationError(f'`transfer_value` has the wrong type: Received `{type(params.get("transfer_value", None))}` expected `float | None`')
+    if params.get("keep_mask_deletion_edits", False) is None:
+        raise StyxValidationError("`keep_mask_deletion_edits` must not be None")
+    if not isinstance(params["keep_mask_deletion_edits"], bool):
+        raise StyxValidationError(f'`keep_mask_deletion_edits` has the wrong type: Received `{type(params.get("keep_mask_deletion_edits", False))}` expected `bool`')
+    if params.get("samseg", False) is None:
+        raise StyxValidationError("`samseg` must not be None")
+    if not isinstance(params["samseg"], bool):
+        raise StyxValidationError(f'`samseg` has the wrong type: Received `{type(params.get("samseg", False))}` expected `bool`')
+
+
 def mri_mask_cargs(
     params: MriMaskParameters,
     execution: Execution,
@@ -300,6 +394,7 @@ def mri_mask_execute(
     Returns:
         NamedTuple of outputs (described in `MriMaskOutputs`).
     """
+    mri_mask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MASK_METADATA)
     params = execution.params(params)

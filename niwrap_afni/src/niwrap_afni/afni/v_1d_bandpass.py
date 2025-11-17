@@ -84,6 +84,48 @@ def v_1d_bandpass_params(
     return params
 
 
+def v_1d_bandpass_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dBandpassParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fbot", None) is None:
+        raise StyxValidationError("`fbot` must not be None")
+    if not isinstance(params["fbot"], (float, int)):
+        raise StyxValidationError(f'`fbot` has the wrong type: Received `{type(params.get("fbot", None))}` expected `float`')
+    if params["fbot"] >= 0:
+        raise StyxValidationError("Parameter `fbot` must be at least 0")
+    if params.get("ftop", None) is None:
+        raise StyxValidationError("`ftop` must not be None")
+    if not isinstance(params["ftop"], (float, int)):
+        raise StyxValidationError(f'`ftop` has the wrong type: Received `{type(params.get("ftop", None))}` expected `float`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("timestep", None) is not None:
+        if not isinstance(params["timestep"], (float, int)):
+            raise StyxValidationError(f'`timestep` has the wrong type: Received `{type(params.get("timestep", None))}` expected `float | None`')
+    if params.get("ortfile", None) is not None:
+        if not isinstance(params["ortfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ortfile` has the wrong type: Received `{type(params.get("ortfile", None))}` expected `InputPathType | None`')
+    if params.get("nodetrend", False) is None:
+        raise StyxValidationError("`nodetrend` must not be None")
+    if not isinstance(params["nodetrend"], bool):
+        raise StyxValidationError(f'`nodetrend` has the wrong type: Received `{type(params.get("nodetrend", False))}` expected `bool`')
+    if params.get("norm", False) is None:
+        raise StyxValidationError("`norm` must not be None")
+    if not isinstance(params["norm"], bool):
+        raise StyxValidationError(f'`norm` has the wrong type: Received `{type(params.get("norm", False))}` expected `bool`')
+
+
 def v_1d_bandpass_cargs(
     params: V1dBandpassParameters,
     execution: Execution,
@@ -157,6 +199,7 @@ def v_1d_bandpass_execute(
     Returns:
         NamedTuple of outputs (described in `V1dBandpassOutputs`).
     """
+    v_1d_bandpass_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_BANDPASS_METADATA)
     params = execution.params(params)

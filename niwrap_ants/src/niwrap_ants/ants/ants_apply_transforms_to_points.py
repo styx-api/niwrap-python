@@ -68,18 +68,20 @@ def ants_apply_transforms_to_points_transform_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_apply_transforms_to_points_transform_outputs_dyn_fn(
+def ants_apply_transforms_to_points_transform_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "single_transform": ants_apply_transforms_to_points_single_transform_validate,
+        "inverse_transform": ants_apply_transforms_to_points_inverse_transform_validate,
     }.get(t)
 
 
@@ -96,6 +98,20 @@ def ants_apply_transforms_to_points_single_transform_params(
         "@type": "single_transform",
     }
     return params
+
+
+def ants_apply_transforms_to_points_single_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsToPointsSingleTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
 
 
 def ants_apply_transforms_to_points_single_transform_cargs(
@@ -132,6 +148,24 @@ def ants_apply_transforms_to_points_inverse_transform_params(
         "transform_file": transform_file,
     }
     return params
+
+
+def ants_apply_transforms_to_points_inverse_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsToPointsInverseTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transform_file", None) is None:
+        raise StyxValidationError("`transform_file` must not be None")
+    if not isinstance(params["transform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType`')
 
 
 def ants_apply_transforms_to_points_inverse_transform_cargs(
@@ -200,6 +234,45 @@ def ants_apply_transforms_to_points_params(
     if transform is not None:
         params["transform"] = transform
     return params
+
+
+def ants_apply_transforms_to_points_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsToPointsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is not None:
+        if not isinstance(params["dimensionality"], int):
+            raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["dimensionality"] not in [2, 3]:
+            raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3]")
+    if params.get("precision", None) is not None:
+        if not isinstance(params["precision"], bool):
+            raise StyxValidationError(f'`precision` has the wrong type: Received `{type(params.get("precision", None))}` expected `bool | None`')
+    if params.get("forantsr", None) is not None:
+        if not isinstance(params["forantsr"], bool):
+            raise StyxValidationError(f'`forantsr` has the wrong type: Received `{type(params.get("forantsr", None))}` expected `bool | None`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("transform", None) is not None:
+        if not isinstance(params["transform"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["transform"])}\'')
+        if "@type" not in params["transform"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        ants_apply_transforms_to_points_transform_validate_dyn_fn(params["transform"]["@type"])(params["transform"])
 
 
 def ants_apply_transforms_to_points_cargs(
@@ -291,6 +364,7 @@ def ants_apply_transforms_to_points_execute(
     Returns:
         NamedTuple of outputs (described in `AntsApplyTransformsToPointsOutputs`).
     """
+    ants_apply_transforms_to_points_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA)
     params = execution.params(params)

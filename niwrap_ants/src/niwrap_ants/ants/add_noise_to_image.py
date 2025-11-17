@@ -77,6 +77,42 @@ def add_noise_to_image_params(
     return params
 
 
+def add_noise_to_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AddNoiseToImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["image_dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3, 4]")
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("noise_model", None) is None:
+        raise StyxValidationError("`noise_model` must not be None")
+    if not isinstance(params["noise_model"], str):
+        raise StyxValidationError(f'`noise_model` has the wrong type: Received `{type(params.get("noise_model", None))}` expected `typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"]`')
+    if params["noise_model"] not in ["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"]:
+        raise StyxValidationError("Parameter `noise_model` must be one of [\"AdditiveGaussian\", \"SaltAndPepper\", \"Shot\", \"Speckle\"]")
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def add_noise_to_image_cargs(
     params: AddNoiseToImageParameters,
     execution: Execution,
@@ -156,6 +192,7 @@ def add_noise_to_image_execute(
     Returns:
         NamedTuple of outputs (described in `AddNoiseToImageOutputs`).
     """
+    add_noise_to_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADD_NOISE_TO_IMAGE_METADATA)
     params = execution.params(params)

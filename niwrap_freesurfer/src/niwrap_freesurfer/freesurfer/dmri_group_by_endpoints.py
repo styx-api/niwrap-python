@@ -59,6 +59,32 @@ def dmri_group_by_endpoints_params(
     return params
 
 
+def dmri_group_by_endpoints_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriGroupByEndpointsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("streamline_file", None) is None:
+        raise StyxValidationError("`streamline_file` must not be None")
+    if not isinstance(params["streamline_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`streamline_file` has the wrong type: Received `{type(params.get("streamline_file", None))}` expected `InputPathType`')
+    if params.get("image_file", None) is None:
+        raise StyxValidationError("`image_file` must not be None")
+    if not isinstance(params["image_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image_file` has the wrong type: Received `{type(params.get("image_file", None))}` expected `InputPathType`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+
+
 def dmri_group_by_endpoints_cargs(
     params: DmriGroupByEndpointsParameters,
     execution: Execution,
@@ -127,6 +153,7 @@ def dmri_group_by_endpoints_execute(
     Returns:
         NamedTuple of outputs (described in `DmriGroupByEndpointsOutputs`).
     """
+    dmri_group_by_endpoints_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_GROUP_BY_ENDPOINTS_METADATA)
     params = execution.params(params)

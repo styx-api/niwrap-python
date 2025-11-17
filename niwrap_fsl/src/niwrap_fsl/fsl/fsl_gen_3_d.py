@@ -56,6 +56,28 @@ def fsl_gen_3_d_params(
     return params
 
 
+def fsl_gen_3_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslGen3DParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType`')
+
+
 def fsl_gen_3_d_cargs(
     params: FslGen3DParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def fsl_gen_3_d_execute(
     Returns:
         NamedTuple of outputs (described in `FslGen3DOutputs`).
     """
+    fsl_gen_3_d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_GEN_3_D_METADATA)
     params = execution.params(params)

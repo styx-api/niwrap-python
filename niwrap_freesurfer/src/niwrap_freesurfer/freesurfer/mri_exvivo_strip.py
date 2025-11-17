@@ -117,6 +117,61 @@ def mri_exvivo_strip_params(
     return params
 
 
+def mri_exvivo_strip_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriExvivoStripParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("invol", None) is None:
+        raise StyxValidationError("`invol` must not be None")
+    if not isinstance(params["invol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`invol` has the wrong type: Received `{type(params.get("invol", None))}` expected `InputPathType`')
+    if params.get("outvol", None) is None:
+        raise StyxValidationError("`outvol` must not be None")
+    if not isinstance(params["outvol"], str):
+        raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("pred", None) is not None:
+        if not isinstance(params["pred"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pred` has the wrong type: Received `{type(params.get("pred", None))}` expected `InputPathType | None`')
+    if params.get("norm", None) is not None:
+        if not isinstance(params["norm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`norm` has the wrong type: Received `{type(params.get("norm", None))}` expected `InputPathType | None`')
+    if params.get("fv", False) is None:
+        raise StyxValidationError("`fv` must not be None")
+    if not isinstance(params["fv"], bool):
+        raise StyxValidationError(f'`fv` has the wrong type: Received `{type(params.get("fv", False))}` expected `bool`')
+    if params.get("uthresh", None) is not None:
+        if not isinstance(params["uthresh"], (float, int)):
+            raise StyxValidationError(f'`uthresh` has the wrong type: Received `{type(params.get("uthresh", None))}` expected `float | None`')
+    if params.get("border", None) is not None:
+        if not isinstance(params["border"], (float, int)):
+            raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `float | None`')
+    if params.get("multichannel", False) is None:
+        raise StyxValidationError("`multichannel` must not be None")
+    if not isinstance(params["multichannel"], bool):
+        raise StyxValidationError(f'`multichannel` has the wrong type: Received `{type(params.get("multichannel", False))}` expected `bool`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `InputPathType | None`')
+    if params.get("wts", None) is not None:
+        if not isinstance(params["wts"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wts` has the wrong type: Received `{type(params.get("wts", None))}` expected `InputPathType | None`')
+    if params.get("gpu", None) is not None:
+        if not isinstance(params["gpu"], (float, int)):
+            raise StyxValidationError(f'`gpu` has the wrong type: Received `{type(params.get("gpu", None))}` expected `float | None`')
+
+
 def mri_exvivo_strip_cargs(
     params: MriExvivoStripParameters,
     execution: Execution,
@@ -227,6 +282,7 @@ def mri_exvivo_strip_execute(
     Returns:
         NamedTuple of outputs (described in `MriExvivoStripOutputs`).
     """
+    mri_exvivo_strip_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EXVIVO_STRIP_METADATA)
     params = execution.params(params)

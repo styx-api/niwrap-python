@@ -76,6 +76,44 @@ def mris_annot_to_segmentation_params(
     return params
 
 
+def mris_annot_to_segmentation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisAnnotToSegmentationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("annot_file", None) is None:
+        raise StyxValidationError("`annot_file` must not be None")
+    if not isinstance(params["annot_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`annot_file` has the wrong type: Received `{type(params.get("annot_file", None))}` expected `InputPathType`')
+    if params.get("color_table", None) is None:
+        raise StyxValidationError("`color_table` must not be None")
+    if not isinstance(params["color_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`color_table` has the wrong type: Received `{type(params.get("color_table", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mris_annot_to_segmentation_cargs(
     params: MrisAnnotToSegmentationParameters,
     execution: Execution,
@@ -139,6 +177,7 @@ def mris_annot_to_segmentation_execute(
     Returns:
         NamedTuple of outputs (described in `MrisAnnotToSegmentationOutputs`).
     """
+    mris_annot_to_segmentation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ANNOT_TO_SEGMENTATION_METADATA)
     params = execution.params(params)

@@ -56,6 +56,31 @@ def concat_bvars_params(
     return params
 
 
+def concat_bvars_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConcatBvarsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_bvars", None) is None:
+        raise StyxValidationError("`output_bvars` must not be None")
+    if not isinstance(params["output_bvars"], str):
+        raise StyxValidationError(f'`output_bvars` has the wrong type: Received `{type(params.get("output_bvars", None))}` expected `str`')
+    if params.get("input_bvars", None) is None:
+        raise StyxValidationError("`input_bvars` must not be None")
+    if not isinstance(params["input_bvars"], list):
+        raise StyxValidationError(f'`input_bvars` has the wrong type: Received `{type(params.get("input_bvars", None))}` expected `list[InputPathType]`')
+    for e in params["input_bvars"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_bvars` has the wrong type: Received `{type(params.get("input_bvars", None))}` expected `list[InputPathType]`')
+
+
 def concat_bvars_cargs(
     params: ConcatBvarsParameters,
     execution: Execution,
@@ -115,6 +140,7 @@ def concat_bvars_execute(
     Returns:
         NamedTuple of outputs (described in `ConcatBvarsOutputs`).
     """
+    concat_bvars_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONCAT_BVARS_METADATA)
     params = execution.params(params)

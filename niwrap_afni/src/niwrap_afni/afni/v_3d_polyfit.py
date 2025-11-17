@@ -139,6 +139,71 @@ def v_3d_polyfit_params(
     return params
 
 
+def v_3d_polyfit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dPolyfitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("poly_order", None) is not None:
+        if not isinstance(params["poly_order"], int):
+            raise StyxValidationError(f'`poly_order` has the wrong type: Received `{type(params.get("poly_order", None))}` expected `int | None`')
+        if -1 <= params["poly_order"] <= 9:
+            raise StyxValidationError("Parameter `poly_order` must be between -1 and 9 (inclusive)")
+    if params.get("blur", None) is not None:
+        if not isinstance(params["blur"], (float, int)):
+            raise StyxValidationError(f'`blur` has the wrong type: Received `{type(params.get("blur", None))}` expected `float | None`')
+    if params.get("median_radius", None) is not None:
+        if not isinstance(params["median_radius"], (float, int)):
+            raise StyxValidationError(f'`median_radius` has the wrong type: Received `{type(params.get("median_radius", None))}` expected `float | None`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("resid_prefix", None) is not None:
+        if not isinstance(params["resid_prefix"], str):
+            raise StyxValidationError(f'`resid_prefix` has the wrong type: Received `{type(params.get("resid_prefix", None))}` expected `str | None`')
+    if params.get("coeff_output", None) is not None:
+        if not isinstance(params["coeff_output"], str):
+            raise StyxValidationError(f'`coeff_output` has the wrong type: Received `{type(params.get("coeff_output", None))}` expected `str | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("mean_scale", False) is None:
+        raise StyxValidationError("`mean_scale` must not be None")
+    if not isinstance(params["mean_scale"], bool):
+        raise StyxValidationError(f'`mean_scale` has the wrong type: Received `{type(params.get("mean_scale", False))}` expected `bool`')
+    if params.get("clip_box", False) is None:
+        raise StyxValidationError("`clip_box` must not be None")
+    if not isinstance(params["clip_box"], bool):
+        raise StyxValidationError(f'`clip_box` has the wrong type: Received `{type(params.get("clip_box", False))}` expected `bool`')
+    if params.get("fit_method", None) is not None:
+        if not isinstance(params["fit_method"], int):
+            raise StyxValidationError(f'`fit_method` has the wrong type: Received `{type(params.get("fit_method", None))}` expected `int | None`')
+        if 1 <= params["fit_method"] <= 2:
+            raise StyxValidationError("Parameter `fit_method` must be between 1 and 2 (inclusive)")
+    if params.get("base_dataset", None) is not None:
+        if not isinstance(params["base_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`base_dataset` has the wrong type: Received `{type(params.get("base_dataset", None))}` expected `InputPathType | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v_3d_polyfit_cargs(
     params: V3dPolyfitParameters,
     execution: Execution,
@@ -253,6 +318,7 @@ def v_3d_polyfit_execute(
     Returns:
         NamedTuple of outputs (described in `V3dPolyfitOutputs`).
     """
+    v_3d_polyfit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_POLYFIT_METADATA)
     params = execution.params(params)

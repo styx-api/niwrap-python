@@ -121,6 +121,65 @@ def ants_intermodality_intrasubject_sh_params(
     return params
 
 
+def ants_intermodality_intrasubject_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsIntermodalityIntrasubjectShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimension", None) is None:
+        raise StyxValidationError("`dimension` must not be None")
+    if not isinstance(params["dimension"], int):
+        raise StyxValidationError(f'`dimension` has the wrong type: Received `{type(params.get("dimension", None))}` expected `int`')
+    if params.get("anatomical_t1_image", None) is None:
+        raise StyxValidationError("`anatomical_t1_image` must not be None")
+    if not isinstance(params["anatomical_t1_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical_t1_image` has the wrong type: Received `{type(params.get("anatomical_t1_image", None))}` expected `InputPathType`')
+    if params.get("anatomical_reference_image", None) is not None:
+        if not isinstance(params["anatomical_reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`anatomical_reference_image` has the wrong type: Received `{type(params.get("anatomical_reference_image", None))}` expected `InputPathType | None`')
+    if params.get("scalar_image_to_match", None) is None:
+        raise StyxValidationError("`scalar_image_to_match` must not be None")
+    if not isinstance(params["scalar_image_to_match"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`scalar_image_to_match` has the wrong type: Received `{type(params.get("scalar_image_to_match", None))}` expected `InputPathType`')
+    if params.get("anatomical_t1brainmask", None) is None:
+        raise StyxValidationError("`anatomical_t1brainmask` must not be None")
+    if not isinstance(params["anatomical_t1brainmask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical_t1brainmask` has the wrong type: Received `{type(params.get("anatomical_t1brainmask", None))}` expected `InputPathType`')
+    if params.get("transform_type", None) is None:
+        raise StyxValidationError("`transform_type` must not be None")
+    if not isinstance(params["transform_type"], int):
+        raise StyxValidationError(f'`transform_type` has the wrong type: Received `{type(params.get("transform_type", None))}` expected `typing.Literal[0, 1, 2, 3]`')
+    if params["transform_type"] not in [0, 1, 2, 3]:
+        raise StyxValidationError("Parameter `transform_type` must be one of [0, 1, 2, 3]")
+    if params.get("t1_to_template_prefix", None) is None:
+        raise StyxValidationError("`t1_to_template_prefix` must not be None")
+    if not isinstance(params["t1_to_template_prefix"], str):
+        raise StyxValidationError(f'`t1_to_template_prefix` has the wrong type: Received `{type(params.get("t1_to_template_prefix", None))}` expected `str`')
+    if params.get("template_space", None) is not None:
+        if not isinstance(params["template_space"], str):
+            raise StyxValidationError(f'`template_space` has the wrong type: Received `{type(params.get("template_space", None))}` expected `str | None`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("labels_in_template_space", None) is not None:
+        if not isinstance(params["labels_in_template_space"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labels_in_template_space` has the wrong type: Received `{type(params.get("labels_in_template_space", None))}` expected `InputPathType | None`')
+    if params.get("auxiliary_scalar_images", None) is not None:
+        if not isinstance(params["auxiliary_scalar_images"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`auxiliary_scalar_images` has the wrong type: Received `{type(params.get("auxiliary_scalar_images", None))}` expected `InputPathType | None`')
+    if params.get("auxiliary_dt_image", None) is not None:
+        if not isinstance(params["auxiliary_dt_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`auxiliary_dt_image` has the wrong type: Received `{type(params.get("auxiliary_dt_image", None))}` expected `InputPathType | None`')
+
+
 def ants_intermodality_intrasubject_sh_cargs(
     params: AntsIntermodalityIntrasubjectShParameters,
     execution: Execution,
@@ -233,6 +292,7 @@ def ants_intermodality_intrasubject_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsIntermodalityIntrasubjectShOutputs`).
     """
+    ants_intermodality_intrasubject_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA)
     params = execution.params(params)

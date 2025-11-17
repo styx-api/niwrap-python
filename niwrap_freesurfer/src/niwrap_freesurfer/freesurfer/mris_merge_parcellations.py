@@ -65,6 +65,35 @@ def mris_merge_parcellations_params(
     return params
 
 
+def mris_merge_parcellations_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMergeParcellationsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("label1", None) is None:
+        raise StyxValidationError("`label1` must not be None")
+    if not isinstance(params["label1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label1` has the wrong type: Received `{type(params.get("label1", None))}` expected `InputPathType`')
+    if params.get("label2", None) is None:
+        raise StyxValidationError("`label2` must not be None")
+    if not isinstance(params["label2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label2` has the wrong type: Received `{type(params.get("label2", None))}` expected `InputPathType`')
+    if params.get("annot_name", None) is not None:
+        if not isinstance(params["annot_name"], str):
+            raise StyxValidationError(f'`annot_name` has the wrong type: Received `{type(params.get("annot_name", None))}` expected `str | None`')
+
+
 def mris_merge_parcellations_cargs(
     params: MrisMergeParcellationsParameters,
     execution: Execution,
@@ -130,6 +159,7 @@ def mris_merge_parcellations_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMergeParcellationsOutputs`).
     """
+    mris_merge_parcellations_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MERGE_PARCELLATIONS_METADATA)
     params = execution.params(params)

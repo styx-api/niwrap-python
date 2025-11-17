@@ -221,6 +221,117 @@ def randomise_params(
     return params
 
 
+def randomise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RandomiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("base_name", None) is not None:
+        if not isinstance(params["base_name"], str):
+            raise StyxValidationError(f'`base_name` has the wrong type: Received `{type(params.get("base_name", None))}` expected `str | None`')
+    if params.get("design_mat", None) is not None:
+        if not isinstance(params["design_mat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`design_mat` has the wrong type: Received `{type(params.get("design_mat", None))}` expected `InputPathType | None`')
+    if params.get("tcon", None) is not None:
+        if not isinstance(params["tcon"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tcon` has the wrong type: Received `{type(params.get("tcon", None))}` expected `InputPathType | None`')
+    if params.get("c_thresh", None) is not None:
+        if not isinstance(params["c_thresh"], (float, int)):
+            raise StyxValidationError(f'`c_thresh` has the wrong type: Received `{type(params.get("c_thresh", None))}` expected `float | None`')
+    if params.get("cm_thresh", None) is not None:
+        if not isinstance(params["cm_thresh"], (float, int)):
+            raise StyxValidationError(f'`cm_thresh` has the wrong type: Received `{type(params.get("cm_thresh", None))}` expected `float | None`')
+    if params.get("demean", False) is None:
+        raise StyxValidationError("`demean` must not be None")
+    if not isinstance(params["demean"], bool):
+        raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool`')
+    if params.get("f_c_thresh", None) is not None:
+        if not isinstance(params["f_c_thresh"], (float, int)):
+            raise StyxValidationError(f'`f_c_thresh` has the wrong type: Received `{type(params.get("f_c_thresh", None))}` expected `float | None`')
+    if params.get("f_cm_thresh", None) is not None:
+        if not isinstance(params["f_cm_thresh"], (float, int)):
+            raise StyxValidationError(f'`f_cm_thresh` has the wrong type: Received `{type(params.get("f_cm_thresh", None))}` expected `float | None`')
+    if params.get("f_only", False) is None:
+        raise StyxValidationError("`f_only` must not be None")
+    if not isinstance(params["f_only"], bool):
+        raise StyxValidationError(f'`f_only` has the wrong type: Received `{type(params.get("f_only", False))}` expected `bool`')
+    if params.get("fcon", None) is not None:
+        if not isinstance(params["fcon"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fcon` has the wrong type: Received `{type(params.get("fcon", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("num_perm", None) is not None:
+        if not isinstance(params["num_perm"], int):
+            raise StyxValidationError(f'`num_perm` has the wrong type: Received `{type(params.get("num_perm", None))}` expected `int | None`')
+    if params.get("one_sample_group_mean", False) is None:
+        raise StyxValidationError("`one_sample_group_mean` must not be None")
+    if not isinstance(params["one_sample_group_mean"], bool):
+        raise StyxValidationError(f'`one_sample_group_mean` has the wrong type: Received `{type(params.get("one_sample_group_mean", False))}` expected `bool`')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None`')
+        if params["output_type"] not in ["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"NIFTI\", \"NIFTI_PAIR\", \"NIFTI_GZ\", \"NIFTI_PAIR_GZ\"]")
+    if params.get("p_vec_n_dist_files", False) is None:
+        raise StyxValidationError("`p_vec_n_dist_files` must not be None")
+    if not isinstance(params["p_vec_n_dist_files"], bool):
+        raise StyxValidationError(f'`p_vec_n_dist_files` has the wrong type: Received `{type(params.get("p_vec_n_dist_files", False))}` expected `bool`')
+    if params.get("raw_stats_imgs", False) is None:
+        raise StyxValidationError("`raw_stats_imgs` must not be None")
+    if not isinstance(params["raw_stats_imgs"], bool):
+        raise StyxValidationError(f'`raw_stats_imgs` has the wrong type: Received `{type(params.get("raw_stats_imgs", False))}` expected `bool`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], int):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `int | None`')
+    if params.get("show_info_parallel_mode", False) is None:
+        raise StyxValidationError("`show_info_parallel_mode` must not be None")
+    if not isinstance(params["show_info_parallel_mode"], bool):
+        raise StyxValidationError(f'`show_info_parallel_mode` has the wrong type: Received `{type(params.get("show_info_parallel_mode", False))}` expected `bool`')
+    if params.get("show_total_perms", False) is None:
+        raise StyxValidationError("`show_total_perms` must not be None")
+    if not isinstance(params["show_total_perms"], bool):
+        raise StyxValidationError(f'`show_total_perms` has the wrong type: Received `{type(params.get("show_total_perms", False))}` expected `bool`')
+    if params.get("tfce", False) is None:
+        raise StyxValidationError("`tfce` must not be None")
+    if not isinstance(params["tfce"], bool):
+        raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", False))}` expected `bool`')
+    if params.get("tfce2D", False) is None:
+        raise StyxValidationError("`tfce2D` must not be None")
+    if not isinstance(params["tfce2D"], bool):
+        raise StyxValidationError(f'`tfce2D` has the wrong type: Received `{type(params.get("tfce2D", False))}` expected `bool`')
+    if params.get("tfce_C", None) is not None:
+        if not isinstance(params["tfce_C"], (float, int)):
+            raise StyxValidationError(f'`tfce_C` has the wrong type: Received `{type(params.get("tfce_C", None))}` expected `float | None`')
+    if params.get("tfce_E", None) is not None:
+        if not isinstance(params["tfce_E"], (float, int)):
+            raise StyxValidationError(f'`tfce_E` has the wrong type: Received `{type(params.get("tfce_E", None))}` expected `float | None`')
+    if params.get("tfce_H", None) is not None:
+        if not isinstance(params["tfce_H"], (float, int)):
+            raise StyxValidationError(f'`tfce_H` has the wrong type: Received `{type(params.get("tfce_H", None))}` expected `float | None`')
+    if params.get("var_smooth", None) is not None:
+        if not isinstance(params["var_smooth"], int):
+            raise StyxValidationError(f'`var_smooth` has the wrong type: Received `{type(params.get("var_smooth", None))}` expected `int | None`')
+    if params.get("vox_p_values", False) is None:
+        raise StyxValidationError("`vox_p_values` must not be None")
+    if not isinstance(params["vox_p_values"], bool):
+        raise StyxValidationError(f'`vox_p_values` has the wrong type: Received `{type(params.get("vox_p_values", False))}` expected `bool`')
+    if params.get("x_block_labels", None) is not None:
+        if not isinstance(params["x_block_labels"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`x_block_labels` has the wrong type: Received `{type(params.get("x_block_labels", None))}` expected `InputPathType | None`')
+
+
 def randomise_cargs(
     params: RandomiseParameters,
     execution: Execution,
@@ -378,6 +489,7 @@ def randomise_execute(
     Returns:
         NamedTuple of outputs (described in `RandomiseOutputs`).
     """
+    randomise_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RANDOMISE_METADATA)
     params = execution.params(params)

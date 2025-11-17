@@ -61,6 +61,32 @@ def mri_joint_density_params(
     return params
 
 
+def mri_joint_density_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriJointDensityParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vol1", None) is None:
+        raise StyxValidationError("`vol1` must not be None")
+    if not isinstance(params["vol1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol1` has the wrong type: Received `{type(params.get("vol1", None))}` expected `InputPathType`')
+    if params.get("vol2", None) is None:
+        raise StyxValidationError("`vol2` must not be None")
+    if not isinstance(params["vol2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol2` has the wrong type: Received `{type(params.get("vol2", None))}` expected `InputPathType`')
+    if params.get("output_density_file", None) is None:
+        raise StyxValidationError("`output_density_file` must not be None")
+    if not isinstance(params["output_density_file"], str):
+        raise StyxValidationError(f'`output_density_file` has the wrong type: Received `{type(params.get("output_density_file", None))}` expected `str`')
+
+
 def mri_joint_density_cargs(
     params: MriJointDensityParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mri_joint_density_execute(
     Returns:
         NamedTuple of outputs (described in `MriJointDensityOutputs`).
     """
+    mri_joint_density_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_JOINT_DENSITY_METADATA)
     params = execution.params(params)

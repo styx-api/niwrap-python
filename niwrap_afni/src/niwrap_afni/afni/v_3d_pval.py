@@ -80,6 +80,43 @@ def v_3d_pval_params(
     return params
 
 
+def v_3d_pval_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dPvalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("zscore", False) is None:
+        raise StyxValidationError("`zscore` must not be None")
+    if not isinstance(params["zscore"], bool):
+        raise StyxValidationError(f'`zscore` has the wrong type: Received `{type(params.get("zscore", False))}` expected `bool`')
+    if params.get("log2", False) is None:
+        raise StyxValidationError("`log2` must not be None")
+    if not isinstance(params["log2"], bool):
+        raise StyxValidationError(f'`log2` has the wrong type: Received `{type(params.get("log2", False))}` expected `bool`')
+    if params.get("log10", False) is None:
+        raise StyxValidationError("`log10` must not be None")
+    if not isinstance(params["log10"], bool):
+        raise StyxValidationError(f'`log10` has the wrong type: Received `{type(params.get("log10", False))}` expected `bool`')
+    if params.get("qval", False) is None:
+        raise StyxValidationError("`qval` must not be None")
+    if not isinstance(params["qval"], bool):
+        raise StyxValidationError(f'`qval` has the wrong type: Received `{type(params.get("qval", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3d_pval_cargs(
     params: V3dPvalParameters,
     execution: Execution,
@@ -152,6 +189,7 @@ def v_3d_pval_execute(
     Returns:
         NamedTuple of outputs (described in `V3dPvalOutputs`).
     """
+    v_3d_pval_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_PVAL_METADATA)
     params = execution.params(params)

@@ -70,6 +70,28 @@ def convert_matrix4_to_workbench_sparse_volume_seeds_params(
     return params
 
 
+def convert_matrix4_to_workbench_sparse_volume_seeds_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-template", None) is None:
+        raise StyxValidationError("`cifti-template` must not be None")
+    if not isinstance(params["cifti-template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-template` has the wrong type: Received `{type(params.get("cifti-template", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+
+
 def convert_matrix4_to_workbench_sparse_volume_seeds_cargs(
     params: ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters,
     execution: Execution,
@@ -145,6 +167,49 @@ def convert_matrix4_to_workbench_sparse_params(
     return params
 
 
+def convert_matrix4_to_workbench_sparse_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertMatrix4ToWorkbenchSparseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("seed-roi", None) is not None:
+        if not isinstance(params["seed-roi"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seed-roi` has the wrong type: Received `{type(params.get("seed-roi", None))}` expected `InputPathType | None`')
+    if params.get("volume-seeds", None) is not None:
+        convert_matrix4_to_workbench_sparse_volume_seeds_validate(params["volume-seeds"])
+    if params.get("matrix4_1", None) is None:
+        raise StyxValidationError("`matrix4_1` must not be None")
+    if not isinstance(params["matrix4_1"], str):
+        raise StyxValidationError(f'`matrix4_1` has the wrong type: Received `{type(params.get("matrix4_1", None))}` expected `str`')
+    if params.get("matrix4_2", None) is None:
+        raise StyxValidationError("`matrix4_2` must not be None")
+    if not isinstance(params["matrix4_2"], str):
+        raise StyxValidationError(f'`matrix4_2` has the wrong type: Received `{type(params.get("matrix4_2", None))}` expected `str`')
+    if params.get("matrix4_3", None) is None:
+        raise StyxValidationError("`matrix4_3` must not be None")
+    if not isinstance(params["matrix4_3"], str):
+        raise StyxValidationError(f'`matrix4_3` has the wrong type: Received `{type(params.get("matrix4_3", None))}` expected `str`')
+    if params.get("orientation-file", None) is None:
+        raise StyxValidationError("`orientation-file` must not be None")
+    if not isinstance(params["orientation-file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`orientation-file` has the wrong type: Received `{type(params.get("orientation-file", None))}` expected `InputPathType`')
+    if params.get("voxel-list", None) is None:
+        raise StyxValidationError("`voxel-list` must not be None")
+    if not isinstance(params["voxel-list"], str):
+        raise StyxValidationError(f'`voxel-list` has the wrong type: Received `{type(params.get("voxel-list", None))}` expected `str`')
+    if params.get("wb-sparse-out", None) is None:
+        raise StyxValidationError("`wb-sparse-out` must not be None")
+    if not isinstance(params["wb-sparse-out"], str):
+        raise StyxValidationError(f'`wb-sparse-out` has the wrong type: Received `{type(params.get("wb-sparse-out", None))}` expected `str`')
+
+
 def convert_matrix4_to_workbench_sparse_cargs(
     params: ConvertMatrix4ToWorkbenchSparseParameters,
     execution: Execution,
@@ -211,6 +276,7 @@ def convert_matrix4_to_workbench_sparse_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToWorkbenchSparseOutputs`).
     """
+    convert_matrix4_to_workbench_sparse_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA)
     params = execution.params(params)

@@ -77,6 +77,46 @@ def fsl_prepare_fieldmap_params(
     return params
 
 
+def fsl_prepare_fieldmap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslPrepareFieldmapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scanner", None) is None:
+        raise StyxValidationError("`scanner` must not be None")
+    if not isinstance(params["scanner"], str):
+        raise StyxValidationError(f'`scanner` has the wrong type: Received `{type(params.get("scanner", None))}` expected `str`')
+    if params.get("phase_image", None) is None:
+        raise StyxValidationError("`phase_image` must not be None")
+    if not isinstance(params["phase_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`phase_image` has the wrong type: Received `{type(params.get("phase_image", None))}` expected `InputPathType`')
+    if params.get("magnitude_image", None) is None:
+        raise StyxValidationError("`magnitude_image` must not be None")
+    if not isinstance(params["magnitude_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`magnitude_image` has the wrong type: Received `{type(params.get("magnitude_image", None))}` expected `InputPathType`')
+    if params.get("out_image", None) is None:
+        raise StyxValidationError("`out_image` must not be None")
+    if not isinstance(params["out_image"], str):
+        raise StyxValidationError(f'`out_image` has the wrong type: Received `{type(params.get("out_image", None))}` expected `str`')
+    if params.get("delta_te", None) is None:
+        raise StyxValidationError("`delta_te` must not be None")
+    if not isinstance(params["delta_te"], (float, int)):
+        raise StyxValidationError(f'`delta_te` has the wrong type: Received `{type(params.get("delta_te", None))}` expected `float`')
+    if params["delta_te"] >= 0:
+        raise StyxValidationError("Parameter `delta_te` must be at least 0")
+    if params.get("nocheck_flag", False) is None:
+        raise StyxValidationError("`nocheck_flag` must not be None")
+    if not isinstance(params["nocheck_flag"], bool):
+        raise StyxValidationError(f'`nocheck_flag` has the wrong type: Received `{type(params.get("nocheck_flag", False))}` expected `bool`')
+
+
 def fsl_prepare_fieldmap_cargs(
     params: FslPrepareFieldmapParameters,
     execution: Execution,
@@ -142,6 +182,7 @@ def fsl_prepare_fieldmap_execute(
     Returns:
         NamedTuple of outputs (described in `FslPrepareFieldmapOutputs`).
     """
+    fsl_prepare_fieldmap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_PREPARE_FIELDMAP_METADATA)
     params = execution.params(params)

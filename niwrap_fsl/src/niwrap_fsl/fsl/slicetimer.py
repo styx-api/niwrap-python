@@ -105,6 +105,54 @@ def slicetimer_params(
     return params
 
 
+def slicetimer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlicetimerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is not None:
+        if not isinstance(params["outfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("down_flag", False) is None:
+        raise StyxValidationError("`down_flag` must not be None")
+    if not isinstance(params["down_flag"], bool):
+        raise StyxValidationError(f'`down_flag` has the wrong type: Received `{type(params.get("down_flag", False))}` expected `bool`')
+    if params.get("tr_value", None) is not None:
+        if not isinstance(params["tr_value"], (float, int)):
+            raise StyxValidationError(f'`tr_value` has the wrong type: Received `{type(params.get("tr_value", None))}` expected `float | None`')
+    if params.get("direction", None) is not None:
+        if not isinstance(params["direction"], str):
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str | None`')
+    if params.get("odd_flag", False) is None:
+        raise StyxValidationError("`odd_flag` must not be None")
+    if not isinstance(params["odd_flag"], bool):
+        raise StyxValidationError(f'`odd_flag` has the wrong type: Received `{type(params.get("odd_flag", False))}` expected `bool`')
+    if params.get("tcustom_file", None) is not None:
+        if not isinstance(params["tcustom_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tcustom_file` has the wrong type: Received `{type(params.get("tcustom_file", None))}` expected `InputPathType | None`')
+    if params.get("tglobal_value", None) is not None:
+        if not isinstance(params["tglobal_value"], (float, int)):
+            raise StyxValidationError(f'`tglobal_value` has the wrong type: Received `{type(params.get("tglobal_value", None))}` expected `float | None`')
+    if params.get("ocustom_file", None) is not None:
+        if not isinstance(params["ocustom_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ocustom_file` has the wrong type: Received `{type(params.get("ocustom_file", None))}` expected `InputPathType | None`')
+
+
 def slicetimer_cargs(
     params: SlicetimerParameters,
     execution: Execution,
@@ -202,6 +250,7 @@ def slicetimer_execute(
     Returns:
         NamedTuple of outputs (described in `SlicetimerOutputs`).
     """
+    slicetimer_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLICETIMER_METADATA)
     params = execution.params(params)

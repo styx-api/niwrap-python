@@ -91,6 +91,55 @@ def v_1ddot_params(
     return params
 
 
+def v_1ddot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1ddotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("one_flag", False) is None:
+        raise StyxValidationError("`one_flag` must not be None")
+    if not isinstance(params["one_flag"], bool):
+        raise StyxValidationError(f'`one_flag` has the wrong type: Received `{type(params.get("one_flag", False))}` expected `bool`')
+    if params.get("dem_flag", False) is None:
+        raise StyxValidationError("`dem_flag` must not be None")
+    if not isinstance(params["dem_flag"], bool):
+        raise StyxValidationError(f'`dem_flag` has the wrong type: Received `{type(params.get("dem_flag", False))}` expected `bool`')
+    if params.get("cov_flag", False) is None:
+        raise StyxValidationError("`cov_flag` must not be None")
+    if not isinstance(params["cov_flag"], bool):
+        raise StyxValidationError(f'`cov_flag` has the wrong type: Received `{type(params.get("cov_flag", False))}` expected `bool`')
+    if params.get("inn_flag", False) is None:
+        raise StyxValidationError("`inn_flag` must not be None")
+    if not isinstance(params["inn_flag"], bool):
+        raise StyxValidationError(f'`inn_flag` has the wrong type: Received `{type(params.get("inn_flag", False))}` expected `bool`')
+    if params.get("rank_flag", False) is None:
+        raise StyxValidationError("`rank_flag` must not be None")
+    if not isinstance(params["rank_flag"], bool):
+        raise StyxValidationError(f'`rank_flag` has the wrong type: Received `{type(params.get("rank_flag", False))}` expected `bool`')
+    if params.get("terse_flag", False) is None:
+        raise StyxValidationError("`terse_flag` must not be None")
+    if not isinstance(params["terse_flag"], bool):
+        raise StyxValidationError(f'`terse_flag` has the wrong type: Received `{type(params.get("terse_flag", False))}` expected `bool`')
+    if params.get("okzero_flag", False) is None:
+        raise StyxValidationError("`okzero_flag` must not be None")
+    if not isinstance(params["okzero_flag"], bool):
+        raise StyxValidationError(f'`okzero_flag` has the wrong type: Received `{type(params.get("okzero_flag", False))}` expected `bool`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def v_1ddot_cargs(
     params: V1ddotParameters,
     execution: Execution,
@@ -165,6 +214,7 @@ def v_1ddot_execute(
     Returns:
         NamedTuple of outputs (described in `V1ddotOutputs`).
     """
+    v_1ddot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DDOT_METADATA)
     params = execution.params(params)

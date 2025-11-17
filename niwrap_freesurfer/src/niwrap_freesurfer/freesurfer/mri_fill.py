@@ -154,6 +154,111 @@ def mri_fill_params(
     return params
 
 
+def mri_fill_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFillParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_mr_dir", None) is None:
+        raise StyxValidationError("`input_mr_dir` must not be None")
+    if not isinstance(params["input_mr_dir"], str):
+        raise StyxValidationError(f'`input_mr_dir` has the wrong type: Received `{type(params.get("input_mr_dir", None))}` expected `str`')
+    if params.get("output_mr_dir", None) is None:
+        raise StyxValidationError("`output_mr_dir` must not be None")
+    if not isinstance(params["output_mr_dir"], str):
+        raise StyxValidationError(f'`output_mr_dir` has the wrong type: Received `{type(params.get("output_mr_dir", None))}` expected `str`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("xform_name", None) is not None:
+        if not isinstance(params["xform_name"], str):
+            raise StyxValidationError(f'`xform_name` has the wrong type: Received `{type(params.get("xform_name", None))}` expected `str | None`')
+    if params.get("segmentation_file", None) is not None:
+        if not isinstance(params["segmentation_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation_file` has the wrong type: Received `{type(params.get("segmentation_file", None))}` expected `InputPathType | None`')
+    if params.get("atlas_file", None) is not None:
+        if not isinstance(params["atlas_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`atlas_file` has the wrong type: Received `{type(params.get("atlas_file", None))}` expected `InputPathType | None`')
+    if params.get("fill_ven", False) is None:
+        raise StyxValidationError("`fill_ven` must not be None")
+    if not isinstance(params["fill_ven"], bool):
+        raise StyxValidationError(f'`fill_ven` has the wrong type: Received `{type(params.get("fill_ven", False))}` expected `bool`')
+    if params.get("seed_cc_tal", None) is not None:
+        if not isinstance(params["seed_cc_tal"], list):
+            raise StyxValidationError(f'`seed_cc_tal` has the wrong type: Received `{type(params.get("seed_cc_tal", None))}` expected `list[float] | None`')
+        if len(params["seed_cc_tal"]) == 3:
+            raise StyxValidationError("Parameter `seed_cc_tal` must contain exactly 3 elements")
+        for e in params["seed_cc_tal"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_cc_tal` has the wrong type: Received `{type(params.get("seed_cc_tal", None))}` expected `list[float] | None`')
+    if params.get("seed_pons_tal", None) is not None:
+        if not isinstance(params["seed_pons_tal"], list):
+            raise StyxValidationError(f'`seed_pons_tal` has the wrong type: Received `{type(params.get("seed_pons_tal", None))}` expected `list[float] | None`')
+        if len(params["seed_pons_tal"]) == 3:
+            raise StyxValidationError("Parameter `seed_pons_tal` must contain exactly 3 elements")
+        for e in params["seed_pons_tal"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_pons_tal` has the wrong type: Received `{type(params.get("seed_pons_tal", None))}` expected `list[float] | None`')
+    if params.get("seed_lh_tal", None) is not None:
+        if not isinstance(params["seed_lh_tal"], list):
+            raise StyxValidationError(f'`seed_lh_tal` has the wrong type: Received `{type(params.get("seed_lh_tal", None))}` expected `list[float] | None`')
+        if len(params["seed_lh_tal"]) == 3:
+            raise StyxValidationError("Parameter `seed_lh_tal` must contain exactly 3 elements")
+        for e in params["seed_lh_tal"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_lh_tal` has the wrong type: Received `{type(params.get("seed_lh_tal", None))}` expected `list[float] | None`')
+    if params.get("seed_rh_tal", None) is not None:
+        if not isinstance(params["seed_rh_tal"], list):
+            raise StyxValidationError(f'`seed_rh_tal` has the wrong type: Received `{type(params.get("seed_rh_tal", None))}` expected `list[float] | None`')
+        if len(params["seed_rh_tal"]) == 3:
+            raise StyxValidationError("Parameter `seed_rh_tal` must contain exactly 3 elements")
+        for e in params["seed_rh_tal"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_rh_tal` has the wrong type: Received `{type(params.get("seed_rh_tal", None))}` expected `list[float] | None`')
+    if params.get("seed_cc_vox", None) is not None:
+        if not isinstance(params["seed_cc_vox"], list):
+            raise StyxValidationError(f'`seed_cc_vox` has the wrong type: Received `{type(params.get("seed_cc_vox", None))}` expected `list[float] | None`')
+        if len(params["seed_cc_vox"]) == 3:
+            raise StyxValidationError("Parameter `seed_cc_vox` must contain exactly 3 elements")
+        for e in params["seed_cc_vox"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_cc_vox` has the wrong type: Received `{type(params.get("seed_cc_vox", None))}` expected `list[float] | None`')
+    if params.get("seed_pons_vox", None) is not None:
+        if not isinstance(params["seed_pons_vox"], list):
+            raise StyxValidationError(f'`seed_pons_vox` has the wrong type: Received `{type(params.get("seed_pons_vox", None))}` expected `list[float] | None`')
+        if len(params["seed_pons_vox"]) == 3:
+            raise StyxValidationError("Parameter `seed_pons_vox` must contain exactly 3 elements")
+        for e in params["seed_pons_vox"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_pons_vox` has the wrong type: Received `{type(params.get("seed_pons_vox", None))}` expected `list[float] | None`')
+    if params.get("auto_man_files", None) is not None:
+        if not isinstance(params["auto_man_files"], list):
+            raise StyxValidationError(f'`auto_man_files` has the wrong type: Received `{type(params.get("auto_man_files", None))}` expected `list[str] | None`')
+        for e in params["auto_man_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`auto_man_files` has the wrong type: Received `{type(params.get("auto_man_files", None))}` expected `list[str] | None`')
+    if params.get("no_auto_man", False) is None:
+        raise StyxValidationError("`no_auto_man` must not be None")
+    if not isinstance(params["no_auto_man"], bool):
+        raise StyxValidationError(f'`no_auto_man` has the wrong type: Received `{type(params.get("no_auto_man", False))}` expected `bool`')
+    if params.get("pointset_args", None) is not None:
+        if not isinstance(params["pointset_args"], list):
+            raise StyxValidationError(f'`pointset_args` has the wrong type: Received `{type(params.get("pointset_args", None))}` expected `list[str] | None`')
+        for e in params["pointset_args"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`pointset_args` has the wrong type: Received `{type(params.get("pointset_args", None))}` expected `list[str] | None`')
+    if params.get("ctab_file", None) is not None:
+        if not isinstance(params["ctab_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab_file` has the wrong type: Received `{type(params.get("ctab_file", None))}` expected `InputPathType | None`')
+
+
 def mri_fill_cargs(
     params: MriFillParameters,
     execution: Execution,
@@ -283,6 +388,7 @@ def mri_fill_execute(
     Returns:
         NamedTuple of outputs (described in `MriFillOutputs`).
     """
+    mri_fill_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FILL_METADATA)
     params = execution.params(params)

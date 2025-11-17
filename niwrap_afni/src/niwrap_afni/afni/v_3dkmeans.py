@@ -183,6 +183,97 @@ def v_3dkmeans_params(
     return params
 
 
+def v_3dkmeans_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dkmeansParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], list):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `list[InputPathType]`')
+    for e in params["input"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `list[InputPathType]`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_range", None) is not None:
+        if not isinstance(params["mask_range"], list):
+            raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
+        if len(params["mask_range"]) == 2:
+            raise StyxValidationError("Parameter `mask_range` must contain exactly 2 elements")
+        for e in params["mask_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
+    if params.get("cmask", None) is not None:
+        if not isinstance(params["cmask"], str):
+            raise StyxValidationError(f'`cmask` has the wrong type: Received `{type(params.get("cmask", None))}` expected `str | None`')
+    if params.get("jobname", None) is not None:
+        if not isinstance(params["jobname"], str):
+            raise StyxValidationError(f'`jobname` has the wrong type: Received `{type(params.get("jobname", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("distance_measure", None) is not None:
+        if not isinstance(params["distance_measure"], (float, int)):
+            raise StyxValidationError(f'`distance_measure` has the wrong type: Received `{type(params.get("distance_measure", None))}` expected `float | None`')
+    if params.get("num_clusters", None) is not None:
+        if not isinstance(params["num_clusters"], (float, int)):
+            raise StyxValidationError(f'`num_clusters` has the wrong type: Received `{type(params.get("num_clusters", None))}` expected `float | None`')
+    if params.get("remap_method", None) is not None:
+        if not isinstance(params["remap_method"], str):
+            raise StyxValidationError(f'`remap_method` has the wrong type: Received `{type(params.get("remap_method", None))}` expected `str | None`')
+    if params.get("labeltable", None) is not None:
+        if not isinstance(params["labeltable"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labeltable` has the wrong type: Received `{type(params.get("labeltable", None))}` expected `InputPathType | None`')
+    if params.get("clabels", None) is not None:
+        if not isinstance(params["clabels"], list):
+            raise StyxValidationError(f'`clabels` has the wrong type: Received `{type(params.get("clabels", None))}` expected `list[str] | None`')
+        for e in params["clabels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`clabels` has the wrong type: Received `{type(params.get("clabels", None))}` expected `list[str] | None`')
+    if params.get("clust_init", None) is not None:
+        if not isinstance(params["clust_init"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`clust_init` has the wrong type: Received `{type(params.get("clust_init", None))}` expected `InputPathType | None`')
+    if params.get("num_repeats", None) is not None:
+        if not isinstance(params["num_repeats"], (float, int)):
+            raise StyxValidationError(f'`num_repeats` has the wrong type: Received `{type(params.get("num_repeats", None))}` expected `float | None`')
+    if params.get("rsigs", None) is not None:
+        if not isinstance(params["rsigs"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rsigs` has the wrong type: Received `{type(params.get("rsigs", None))}` expected `InputPathType | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("write_dists", False) is None:
+        raise StyxValidationError("`write_dists` must not be None")
+    if not isinstance(params["write_dists"], bool):
+        raise StyxValidationError(f'`write_dists` has the wrong type: Received `{type(params.get("write_dists", False))}` expected `bool`')
+    if params.get("voxdbg", None) is not None:
+        if not isinstance(params["voxdbg"], list):
+            raise StyxValidationError(f'`voxdbg` has the wrong type: Received `{type(params.get("voxdbg", None))}` expected `list[float] | None`')
+        if len(params["voxdbg"]) == 3:
+            raise StyxValidationError("Parameter `voxdbg` must contain exactly 3 elements")
+        for e in params["voxdbg"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`voxdbg` has the wrong type: Received `{type(params.get("voxdbg", None))}` expected `list[float] | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+
+
 def v_3dkmeans_cargs(
     params: V3dkmeansParameters,
     execution: Execution,
@@ -331,6 +422,7 @@ def v_3dkmeans_execute(
     Returns:
         NamedTuple of outputs (described in `V3dkmeansOutputs`).
     """
+    v_3dkmeans_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DKMEANS_METADATA)
     params = execution.params(params)

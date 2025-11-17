@@ -135,6 +135,28 @@ def metric_palette_pos_percent_params(
     return params
 
 
+def metric_palette_pos_percent_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricPalettePosPercentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pos-min-%", None) is None:
+        raise StyxValidationError("`pos-min-%` must not be None")
+    if not isinstance(params["pos-min-%"], (float, int)):
+        raise StyxValidationError(f'`pos-min-%` has the wrong type: Received `{type(params.get("pos-min-%", None))}` expected `float`')
+    if params.get("pos-max-%", None) is None:
+        raise StyxValidationError("`pos-max-%` must not be None")
+    if not isinstance(params["pos-max-%"], (float, int)):
+        raise StyxValidationError(f'`pos-max-%` has the wrong type: Received `{type(params.get("pos-max-%", None))}` expected `float`')
+
+
 def metric_palette_pos_percent_cargs(
     params: MetricPalettePosPercentParameters,
     execution: Execution,
@@ -176,6 +198,28 @@ def metric_palette_neg_percent_params(
         "neg-max-%": neg_max__,
     }
     return params
+
+
+def metric_palette_neg_percent_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricPaletteNegPercentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("neg-min-%", None) is None:
+        raise StyxValidationError("`neg-min-%` must not be None")
+    if not isinstance(params["neg-min-%"], (float, int)):
+        raise StyxValidationError(f'`neg-min-%` has the wrong type: Received `{type(params.get("neg-min-%", None))}` expected `float`')
+    if params.get("neg-max-%", None) is None:
+        raise StyxValidationError("`neg-max-%` must not be None")
+    if not isinstance(params["neg-max-%"], (float, int)):
+        raise StyxValidationError(f'`neg-max-%` has the wrong type: Received `{type(params.get("neg-max-%", None))}` expected `float`')
 
 
 def metric_palette_neg_percent_cargs(
@@ -221,6 +265,28 @@ def metric_palette_pos_user_params(
     return params
 
 
+def metric_palette_pos_user_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricPalettePosUserParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pos-min-user", None) is None:
+        raise StyxValidationError("`pos-min-user` must not be None")
+    if not isinstance(params["pos-min-user"], (float, int)):
+        raise StyxValidationError(f'`pos-min-user` has the wrong type: Received `{type(params.get("pos-min-user", None))}` expected `float`')
+    if params.get("pos-max-user", None) is None:
+        raise StyxValidationError("`pos-max-user` must not be None")
+    if not isinstance(params["pos-max-user"], (float, int)):
+        raise StyxValidationError(f'`pos-max-user` has the wrong type: Received `{type(params.get("pos-max-user", None))}` expected `float`')
+
+
 def metric_palette_pos_user_cargs(
     params: MetricPalettePosUserParameters,
     execution: Execution,
@@ -262,6 +328,28 @@ def metric_palette_neg_user_params(
         "neg-max-user": neg_max_user,
     }
     return params
+
+
+def metric_palette_neg_user_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricPaletteNegUserParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("neg-min-user", None) is None:
+        raise StyxValidationError("`neg-min-user` must not be None")
+    if not isinstance(params["neg-min-user"], (float, int)):
+        raise StyxValidationError(f'`neg-min-user` has the wrong type: Received `{type(params.get("neg-min-user", None))}` expected `float`')
+    if params.get("neg-max-user", None) is None:
+        raise StyxValidationError("`neg-max-user` must not be None")
+    if not isinstance(params["neg-max-user"], (float, int)):
+        raise StyxValidationError(f'`neg-max-user` has the wrong type: Received `{type(params.get("neg-max-user", None))}` expected `float`')
 
 
 def metric_palette_neg_user_cargs(
@@ -311,6 +399,36 @@ def metric_palette_thresholding_params(
         "max": max_,
     }
     return params
+
+
+def metric_palette_thresholding_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricPaletteThresholdingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("type", None) is None:
+        raise StyxValidationError("`type` must not be None")
+    if not isinstance(params["type"], str):
+        raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str`')
+    if params.get("test", None) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], str):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", None))}` expected `str`')
+    if params.get("min", None) is None:
+        raise StyxValidationError("`min` must not be None")
+    if not isinstance(params["min"], (float, int)):
+        raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `float`')
+    if params.get("max", None) is None:
+        raise StyxValidationError("`max` must not be None")
+    if not isinstance(params["max"], (float, int)):
+        raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float`')
 
 
 def metric_palette_thresholding_cargs(
@@ -433,6 +551,62 @@ def metric_palette_params(
     if type_2 is not None:
         params["type"] = type_2
     return params
+
+
+def metric_palette_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricPaletteParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("pos-percent", None) is not None:
+        metric_palette_pos_percent_validate(params["pos-percent"])
+    if params.get("neg-percent", None) is not None:
+        metric_palette_neg_percent_validate(params["neg-percent"])
+    if params.get("pos-user", None) is not None:
+        metric_palette_pos_user_validate(params["pos-user"])
+    if params.get("neg-user", None) is not None:
+        metric_palette_neg_user_validate(params["neg-user"])
+    if params.get("interpolate", None) is not None:
+        if not isinstance(params["interpolate"], bool):
+            raise StyxValidationError(f'`interpolate` has the wrong type: Received `{type(params.get("interpolate", None))}` expected `bool | None`')
+    if params.get("display", None) is not None:
+        if not isinstance(params["display"], bool):
+            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
+    if params.get("display", None) is not None:
+        if not isinstance(params["display"], bool):
+            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
+    if params.get("display", None) is not None:
+        if not isinstance(params["display"], bool):
+            raise StyxValidationError(f'`display` has the wrong type: Received `{type(params.get("display", None))}` expected `bool | None`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("thresholding", None) is not None:
+        metric_palette_thresholding_validate(params["thresholding"])
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
+    if params.get("mode", None) is None:
+        raise StyxValidationError("`mode` must not be None")
+    if not isinstance(params["mode"], str):
+        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
 
 
 def metric_palette_cargs(
@@ -593,6 +767,7 @@ def metric_palette_execute(
     Returns:
         NamedTuple of outputs (described in `MetricPaletteOutputs`).
     """
+    metric_palette_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_PALETTE_METADATA)
     params = execution.params(params)

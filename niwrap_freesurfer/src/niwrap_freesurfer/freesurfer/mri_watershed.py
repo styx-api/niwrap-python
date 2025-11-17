@@ -221,6 +221,144 @@ def mri_watershed_params(
     return params
 
 
+def mri_watershed_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriWatershedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("weight", None) is not None:
+        if not isinstance(params["weight"], (float, int)):
+            raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float | None`')
+    if params.get("no_wta_flag", False) is None:
+        raise StyxValidationError("`no_wta_flag` must not be None")
+    if not isinstance(params["no_wta_flag"], bool):
+        raise StyxValidationError(f'`no_wta_flag` has the wrong type: Received `{type(params.get("no_wta_flag", False))}` expected `bool`')
+    if params.get("proba_merging", None) is not None:
+        if not isinstance(params["proba_merging"], (float, int)):
+            raise StyxValidationError(f'`proba_merging` has the wrong type: Received `{type(params.get("proba_merging", None))}` expected `float | None`')
+    if params.get("preflooding_height", None) is not None:
+        if not isinstance(params["preflooding_height"], (float, int)):
+            raise StyxValidationError(f'`preflooding_height` has the wrong type: Received `{type(params.get("preflooding_height", None))}` expected `float | None`')
+    if params.get("no_seedpt_flag", False) is None:
+        raise StyxValidationError("`no_seedpt_flag` must not be None")
+    if not isinstance(params["no_seedpt_flag"], bool):
+        raise StyxValidationError(f'`no_seedpt_flag` has the wrong type: Received `{type(params.get("no_seedpt_flag", False))}` expected `bool`')
+    if params.get("no_ta_flag", False) is None:
+        raise StyxValidationError("`no_ta_flag` must not be None")
+    if not isinstance(params["no_ta_flag"], bool):
+        raise StyxValidationError(f'`no_ta_flag` has the wrong type: Received `{type(params.get("no_ta_flag", False))}` expected `bool`')
+    if params.get("copy_flag", False) is None:
+        raise StyxValidationError("`copy_flag` must not be None")
+    if not isinstance(params["copy_flag"], bool):
+        raise StyxValidationError(f'`copy_flag` has the wrong type: Received `{type(params.get("copy_flag", False))}` expected `bool`')
+    if params.get("atlas_flag", False) is None:
+        raise StyxValidationError("`atlas_flag` must not be None")
+    if not isinstance(params["atlas_flag"], bool):
+        raise StyxValidationError(f'`atlas_flag` has the wrong type: Received `{type(params.get("atlas_flag", False))}` expected `bool`')
+    if params.get("surf_name", None) is not None:
+        if not isinstance(params["surf_name"], str):
+            raise StyxValidationError(f'`surf_name` has the wrong type: Received `{type(params.get("surf_name", None))}` expected `str | None`')
+    if params.get("usesurf_ras_flag", False) is None:
+        raise StyxValidationError("`usesurf_ras_flag` must not be None")
+    if not isinstance(params["usesurf_ras_flag"], bool):
+        raise StyxValidationError(f'`usesurf_ras_flag` has the wrong type: Received `{type(params.get("usesurf_ras_flag", False))}` expected `bool`')
+    if params.get("no_t1_analysis_flag", False) is None:
+        raise StyxValidationError("`no_t1_analysis_flag` must not be None")
+    if not isinstance(params["no_t1_analysis_flag"], bool):
+        raise StyxValidationError(f'`no_t1_analysis_flag` has the wrong type: Received `{type(params.get("no_t1_analysis_flag", False))}` expected `bool`')
+    if params.get("shrink_surface_flag", False) is None:
+        raise StyxValidationError("`shrink_surface_flag` must not be None")
+    if not isinstance(params["shrink_surface_flag"], bool):
+        raise StyxValidationError(f'`shrink_surface_flag` has the wrong type: Received `{type(params.get("shrink_surface_flag", False))}` expected `bool`')
+    if params.get("expand_surface_flag", False) is None:
+        raise StyxValidationError("`expand_surface_flag` must not be None")
+    if not isinstance(params["expand_surface_flag"], bool):
+        raise StyxValidationError(f'`expand_surface_flag` has the wrong type: Received `{type(params.get("expand_surface_flag", False))}` expected `bool`')
+    if params.get("use_watershed_flag", False) is None:
+        raise StyxValidationError("`use_watershed_flag` must not be None")
+    if not isinstance(params["use_watershed_flag"], bool):
+        raise StyxValidationError(f'`use_watershed_flag` has the wrong type: Received `{type(params.get("use_watershed_flag", False))}` expected `bool`')
+    if params.get("t1_volume", None) is not None:
+        if not isinstance(params["t1_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t1_volume` has the wrong type: Received `{type(params.get("t1_volume", None))}` expected `InputPathType | None`')
+    if params.get("wat_temp_flag", False) is None:
+        raise StyxValidationError("`wat_temp_flag` must not be None")
+    if not isinstance(params["wat_temp_flag"], bool):
+        raise StyxValidationError(f'`wat_temp_flag` has the wrong type: Received `{type(params.get("wat_temp_flag", False))}` expected `bool`')
+    if params.get("first_temp_flag", False) is None:
+        raise StyxValidationError("`first_temp_flag` must not be None")
+    if not isinstance(params["first_temp_flag"], bool):
+        raise StyxValidationError(f'`first_temp_flag` has the wrong type: Received `{type(params.get("first_temp_flag", False))}` expected `bool`')
+    if params.get("surf_debug_flag", False) is None:
+        raise StyxValidationError("`surf_debug_flag` must not be None")
+    if not isinstance(params["surf_debug_flag"], bool):
+        raise StyxValidationError(f'`surf_debug_flag` has the wrong type: Received `{type(params.get("surf_debug_flag", False))}` expected `bool`')
+    if params.get("brain_surf_name", None) is not None:
+        if not isinstance(params["brain_surf_name"], str):
+            raise StyxValidationError(f'`brain_surf_name` has the wrong type: Received `{type(params.get("brain_surf_name", None))}` expected `str | None`')
+    if params.get("shrink_brain_surf", None) is not None:
+        if not isinstance(params["shrink_brain_surf"], str):
+            raise StyxValidationError(f'`shrink_brain_surf` has the wrong type: Received `{type(params.get("shrink_brain_surf", None))}` expected `str | None`')
+    if params.get("seed_point", None) is not None:
+        if not isinstance(params["seed_point"], list):
+            raise StyxValidationError(f'`seed_point` has the wrong type: Received `{type(params.get("seed_point", None))}` expected `list[float] | None`')
+        if len(params["seed_point"]) == 3:
+            raise StyxValidationError("Parameter `seed_point` must contain exactly 3 elements")
+        for e in params["seed_point"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_point` has the wrong type: Received `{type(params.get("seed_point", None))}` expected `list[float] | None`')
+    if params.get("center_brain", None) is not None:
+        if not isinstance(params["center_brain"], list):
+            raise StyxValidationError(f'`center_brain` has the wrong type: Received `{type(params.get("center_brain", None))}` expected `list[float] | None`')
+        if len(params["center_brain"]) == 3:
+            raise StyxValidationError("Parameter `center_brain` must contain exactly 3 elements")
+        for e in params["center_brain"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`center_brain` has the wrong type: Received `{type(params.get("center_brain", None))}` expected `list[float] | None`')
+    if params.get("brain_radius", None) is not None:
+        if not isinstance(params["brain_radius"], (float, int)):
+            raise StyxValidationError(f'`brain_radius` has the wrong type: Received `{type(params.get("brain_radius", None))}` expected `float | None`')
+    if params.get("watershed_threshold", None) is not None:
+        if not isinstance(params["watershed_threshold"], (float, int)):
+            raise StyxValidationError(f'`watershed_threshold` has the wrong type: Received `{type(params.get("watershed_threshold", None))}` expected `float | None`')
+    if params.get("no_watershed_analysis_flag", False) is None:
+        raise StyxValidationError("`no_watershed_analysis_flag` must not be None")
+    if not isinstance(params["no_watershed_analysis_flag"], bool):
+        raise StyxValidationError(f'`no_watershed_analysis_flag` has the wrong type: Received `{type(params.get("no_watershed_analysis_flag", False))}` expected `bool`')
+    if params.get("label_flag", False) is None:
+        raise StyxValidationError("`label_flag` must not be None")
+    if not isinstance(params["label_flag"], bool):
+        raise StyxValidationError(f'`label_flag` has the wrong type: Received `{type(params.get("label_flag", False))}` expected `bool`')
+    if params.get("manual_params", None) is not None:
+        if not isinstance(params["manual_params"], list):
+            raise StyxValidationError(f'`manual_params` has the wrong type: Received `{type(params.get("manual_params", None))}` expected `list[float] | None`')
+        for e in params["manual_params"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`manual_params` has the wrong type: Received `{type(params.get("manual_params", None))}` expected `list[float] | None`')
+    if params.get("xthresh", None) is not None:
+        if not isinstance(params["xthresh"], (float, int)):
+            raise StyxValidationError(f'`xthresh` has the wrong type: Received `{type(params.get("xthresh", None))}` expected `float | None`')
+    if params.get("mask_flag", False) is None:
+        raise StyxValidationError("`mask_flag` must not be None")
+    if not isinstance(params["mask_flag"], bool):
+        raise StyxValidationError(f'`mask_flag` has the wrong type: Received `{type(params.get("mask_flag", False))}` expected `bool`')
+
+
 def mri_watershed_cargs(
     params: MriWatershedParameters,
     execution: Execution,
@@ -379,6 +517,7 @@ def mri_watershed_execute(
     Returns:
         NamedTuple of outputs (described in `MriWatershedOutputs`).
     """
+    mri_watershed_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_WATERSHED_METADATA)
     params = execution.params(params)

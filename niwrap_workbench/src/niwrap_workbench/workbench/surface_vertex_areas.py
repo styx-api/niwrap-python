@@ -55,6 +55,28 @@ def surface_vertex_areas_params(
     return params
 
 
+def surface_vertex_areas_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceVertexAreasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def surface_vertex_areas_cargs(
     params: SurfaceVertexAreasParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def surface_vertex_areas_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceVertexAreasOutputs`).
     """
+    surface_vertex_areas_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_VERTEX_AREAS_METADATA)
     params = execution.params(params)

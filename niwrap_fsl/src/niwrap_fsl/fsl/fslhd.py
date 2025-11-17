@@ -54,6 +54,28 @@ def fslhd_params(
     return params
 
 
+def fslhd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslhdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xml_flag", False) is None:
+        raise StyxValidationError("`xml_flag` must not be None")
+    if not isinstance(params["xml_flag"], bool):
+        raise StyxValidationError(f'`xml_flag` has the wrong type: Received `{type(params.get("xml_flag", False))}` expected `bool`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+
+
 def fslhd_cargs(
     params: FslhdParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def fslhd_execute(
     Returns:
         NamedTuple of outputs (described in `FslhdOutputs`).
     """
+    fslhd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLHD_METADATA)
     params = execution.params(params)

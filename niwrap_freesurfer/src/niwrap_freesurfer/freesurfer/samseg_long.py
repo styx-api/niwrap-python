@@ -86,6 +86,50 @@ def samseg_long_params(
     return params
 
 
+def samseg_long_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SamsegLongParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("align_mc", False) is None:
+        raise StyxValidationError("`align_mc` must not be None")
+    if not isinstance(params["align_mc"], bool):
+        raise StyxValidationError(f'`align_mc` has the wrong type: Received `{type(params.get("align_mc", False))}` expected `bool`')
+    if params.get("align_no_mc", False) is None:
+        raise StyxValidationError("`align_no_mc` must not be None")
+    if not isinstance(params["align_no_mc"], bool):
+        raise StyxValidationError(f'`align_no_mc` has the wrong type: Received `{type(params.get("align_no_mc", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("save_posteriors", False) is None:
+        raise StyxValidationError("`save_posteriors` must not be None")
+    if not isinstance(params["save_posteriors"], bool):
+        raise StyxValidationError(f'`save_posteriors` has the wrong type: Received `{type(params.get("save_posteriors", False))}` expected `bool`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+
+
 def samseg_long_cargs(
     params: SamsegLongParameters,
     execution: Execution,
@@ -166,6 +210,7 @@ def samseg_long_execute(
     Returns:
         NamedTuple of outputs (described in `SamsegLongOutputs`).
     """
+    samseg_long_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SAMSEG_LONG_METADATA)
     params = execution.params(params)

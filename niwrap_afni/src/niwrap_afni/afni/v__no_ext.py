@@ -57,6 +57,30 @@ def v__no_ext_params(
     return params
 
 
+def v__no_ext_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VNoExtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputfile", None) is None:
+        raise StyxValidationError("`inputfile` must not be None")
+    if not isinstance(params["inputfile"], str):
+        raise StyxValidationError(f'`inputfile` has the wrong type: Received `{type(params.get("inputfile", None))}` expected `str`')
+    if params.get("extensions", None) is not None:
+        if not isinstance(params["extensions"], list):
+            raise StyxValidationError(f'`extensions` has the wrong type: Received `{type(params.get("extensions", None))}` expected `list[str] | None`')
+        for e in params["extensions"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`extensions` has the wrong type: Received `{type(params.get("extensions", None))}` expected `list[str] | None`')
+
+
 def v__no_ext_cargs(
     params: VNoExtParameters,
     execution: Execution,
@@ -117,6 +141,7 @@ def v__no_ext_execute(
     Returns:
         NamedTuple of outputs (described in `VNoExtOutputs`).
     """
+    v__no_ext_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__NO_EXT_METADATA)
     params = execution.params(params)

@@ -102,6 +102,60 @@ def mris_multimodal_params(
     return params
 
 
+def mris_multimodal_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMultimodalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("target_surface", None) is None:
+        raise StyxValidationError("`target_surface` must not be None")
+    if not isinstance(params["target_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target_surface` has the wrong type: Received `{type(params.get("target_surface", None))}` expected `InputPathType`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("fill_holes", False) is None:
+        raise StyxValidationError("`fill_holes` must not be None")
+    if not isinstance(params["fill_holes"], bool):
+        raise StyxValidationError(f'`fill_holes` has the wrong type: Received `{type(params.get("fill_holes", False))}` expected `bool`')
+    if params.get("curvature", False) is None:
+        raise StyxValidationError("`curvature` must not be None")
+    if not isinstance(params["curvature"], bool):
+        raise StyxValidationError(f'`curvature` has the wrong type: Received `{type(params.get("curvature", False))}` expected `bool`')
+    if params.get("thickness", False) is None:
+        raise StyxValidationError("`thickness` must not be None")
+    if not isinstance(params["thickness"], bool):
+        raise StyxValidationError(f'`thickness` has the wrong type: Received `{type(params.get("thickness", False))}` expected `bool`')
+    if params.get("annotation_output", None) is None:
+        raise StyxValidationError("`annotation_output` must not be None")
+    if not isinstance(params["annotation_output"], str):
+        raise StyxValidationError(f'`annotation_output` has the wrong type: Received `{type(params.get("annotation_output", None))}` expected `str`')
+    if params.get("overlay_output", None) is None:
+        raise StyxValidationError("`overlay_output` must not be None")
+    if not isinstance(params["overlay_output"], str):
+        raise StyxValidationError(f'`overlay_output` has the wrong type: Received `{type(params.get("overlay_output", None))}` expected `str`')
+    if params.get("csv_output", None) is None:
+        raise StyxValidationError("`csv_output` must not be None")
+    if not isinstance(params["csv_output"], str):
+        raise StyxValidationError(f'`csv_output` has the wrong type: Received `{type(params.get("csv_output", None))}` expected `str`')
+    if params.get("vtk_output", False) is None:
+        raise StyxValidationError("`vtk_output` must not be None")
+    if not isinstance(params["vtk_output"], bool):
+        raise StyxValidationError(f'`vtk_output` has the wrong type: Received `{type(params.get("vtk_output", False))}` expected `bool`')
+
+
 def mris_multimodal_cargs(
     params: MrisMultimodalParameters,
     execution: Execution,
@@ -194,6 +248,7 @@ def mris_multimodal_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMultimodalOutputs`).
     """
+    mris_multimodal_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MULTIMODAL_METADATA)
     params = execution.params(params)

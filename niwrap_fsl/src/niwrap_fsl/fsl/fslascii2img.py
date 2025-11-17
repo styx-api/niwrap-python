@@ -96,6 +96,60 @@ def fslascii2img_params(
     return params
 
 
+def fslascii2img_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Fslascii2imgParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("xsize", None) is None:
+        raise StyxValidationError("`xsize` must not be None")
+    if not isinstance(params["xsize"], int):
+        raise StyxValidationError(f'`xsize` has the wrong type: Received `{type(params.get("xsize", None))}` expected `int`')
+    if params.get("ysize", None) is None:
+        raise StyxValidationError("`ysize` must not be None")
+    if not isinstance(params["ysize"], int):
+        raise StyxValidationError(f'`ysize` has the wrong type: Received `{type(params.get("ysize", None))}` expected `int`')
+    if params.get("zsize", None) is None:
+        raise StyxValidationError("`zsize` must not be None")
+    if not isinstance(params["zsize"], int):
+        raise StyxValidationError(f'`zsize` has the wrong type: Received `{type(params.get("zsize", None))}` expected `int`')
+    if params.get("tsize", None) is None:
+        raise StyxValidationError("`tsize` must not be None")
+    if not isinstance(params["tsize"], int):
+        raise StyxValidationError(f'`tsize` has the wrong type: Received `{type(params.get("tsize", None))}` expected `int`')
+    if params.get("xdim", None) is None:
+        raise StyxValidationError("`xdim` must not be None")
+    if not isinstance(params["xdim"], (float, int)):
+        raise StyxValidationError(f'`xdim` has the wrong type: Received `{type(params.get("xdim", None))}` expected `float`')
+    if params.get("ydim", None) is None:
+        raise StyxValidationError("`ydim` must not be None")
+    if not isinstance(params["ydim"], (float, int)):
+        raise StyxValidationError(f'`ydim` has the wrong type: Received `{type(params.get("ydim", None))}` expected `float`')
+    if params.get("zdim", None) is None:
+        raise StyxValidationError("`zdim` must not be None")
+    if not isinstance(params["zdim"], (float, int)):
+        raise StyxValidationError(f'`zdim` has the wrong type: Received `{type(params.get("zdim", None))}` expected `float`')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("outfile", "output") is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", "output"))}` expected `str`')
+
+
 def fslascii2img_cargs(
     params: Fslascii2imgParameters,
     execution: Execution,
@@ -163,6 +217,7 @@ def fslascii2img_execute(
     Returns:
         NamedTuple of outputs (described in `Fslascii2imgOutputs`).
     """
+    fslascii2img_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLASCII2IMG_METADATA)
     params = execution.params(params)

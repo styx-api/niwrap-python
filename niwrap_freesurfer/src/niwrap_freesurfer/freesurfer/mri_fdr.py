@@ -97,6 +97,65 @@ def mri_fdr_params(
     return params
 
 
+def mri_fdr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFdrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+    if len(params["input_files"]) >= 1:
+        raise StyxValidationError("Parameter `input_files` must contain at least 1 element")
+    for e in params["input_files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+    if params.get("fdr_value", None) is None:
+        raise StyxValidationError("`fdr_value` must not be None")
+    if not isinstance(params["fdr_value"], (float, int)):
+        raise StyxValidationError(f'`fdr_value` has the wrong type: Received `{type(params.get("fdr_value", None))}` expected `float`')
+    if 0 <= params["fdr_value"] <= 1:
+        raise StyxValidationError("Parameter `fdr_value` must be between 0 and 1 (inclusive)")
+    if params.get("default_frame", None) is not None:
+        if not isinstance(params["default_frame"], int):
+            raise StyxValidationError(f'`default_frame` has the wrong type: Received `{type(params.get("default_frame", None))}` expected `int | None`')
+    if params.get("positive_only", False) is None:
+        raise StyxValidationError("`positive_only` must not be None")
+    if not isinstance(params["positive_only"], bool):
+        raise StyxValidationError(f'`positive_only` has the wrong type: Received `{type(params.get("positive_only", False))}` expected `bool`')
+    if params.get("negative_only", False) is None:
+        raise StyxValidationError("`negative_only` must not be None")
+    if not isinstance(params["negative_only"], bool):
+        raise StyxValidationError(f'`negative_only` has the wrong type: Received `{type(params.get("negative_only", False))}` expected `bool`')
+    if params.get("all_voxels", False) is None:
+        raise StyxValidationError("`all_voxels` must not be None")
+    if not isinstance(params["all_voxels"], bool):
+        raise StyxValidationError(f'`all_voxels` has the wrong type: Received `{type(params.get("all_voxels", False))}` expected `bool`')
+    if params.get("raw_p_values", False) is None:
+        raise StyxValidationError("`raw_p_values` must not be None")
+    if not isinstance(params["raw_p_values"], bool):
+        raise StyxValidationError(f'`raw_p_values` has the wrong type: Received `{type(params.get("raw_p_values", False))}` expected `bool`')
+    if params.get("threshold_file", None) is not None:
+        if not isinstance(params["threshold_file"], str):
+            raise StyxValidationError(f'`threshold_file` has the wrong type: Received `{type(params.get("threshold_file", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_options", False) is None:
+        raise StyxValidationError("`check_options` must not be None")
+    if not isinstance(params["check_options"], bool):
+        raise StyxValidationError(f'`check_options` has the wrong type: Received `{type(params.get("check_options", False))}` expected `bool`')
+
+
 def mri_fdr_cargs(
     params: MriFdrParameters,
     execution: Execution,
@@ -183,6 +242,7 @@ def mri_fdr_execute(
     Returns:
         NamedTuple of outputs (described in `MriFdrOutputs`).
     """
+    mri_fdr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FDR_METADATA)
     params = execution.params(params)

@@ -78,6 +78,42 @@ def segpons_params(
     return params
 
 
+def segpons_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegponsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("aseg", False) is None:
+        raise StyxValidationError("`aseg` must not be None")
+    if not isinstance(params["aseg"], bool):
+        raise StyxValidationError(f'`aseg` has the wrong type: Received `{type(params.get("aseg", False))}` expected `bool`')
+    if params.get("apas", False) is None:
+        raise StyxValidationError("`apas` must not be None")
+    if not isinstance(params["apas"], bool):
+        raise StyxValidationError(f'`apas` has the wrong type: Received `{type(params.get("apas", False))}` expected `bool`')
+    if params.get("seg", None) is not None:
+        if not isinstance(params["seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg` has the wrong type: Received `{type(params.get("seg", None))}` expected `InputPathType | None`')
+    if params.get("no_refine", False) is None:
+        raise StyxValidationError("`no_refine` must not be None")
+    if not isinstance(params["no_refine"], bool):
+        raise StyxValidationError(f'`no_refine` has the wrong type: Received `{type(params.get("no_refine", False))}` expected `bool`')
+    if params.get("pons152_mask", None) is not None:
+        if not isinstance(params["pons152_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pons152_mask` has the wrong type: Received `{type(params.get("pons152_mask", None))}` expected `InputPathType | None`')
+
+
 def segpons_cargs(
     params: SegponsParameters,
     execution: Execution,
@@ -155,6 +191,7 @@ def segpons_execute(
     Returns:
         NamedTuple of outputs (described in `SegponsOutputs`).
     """
+    segpons_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGPONS_METADATA)
     params = execution.params(params)

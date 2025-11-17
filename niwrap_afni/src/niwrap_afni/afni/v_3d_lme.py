@@ -217,6 +217,127 @@ def v_3d_lme_params(
     return params
 
 
+def v_3d_lme_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLmeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("PREFIX", None) is None:
+        raise StyxValidationError("`PREFIX` must not be None")
+    if not isinstance(params["PREFIX"], str):
+        raise StyxValidationError(f'`PREFIX` has the wrong type: Received `{type(params.get("PREFIX", None))}` expected `str`')
+    if params.get("MODEL", None) is None:
+        raise StyxValidationError("`MODEL` must not be None")
+    if not isinstance(params["MODEL"], str):
+        raise StyxValidationError(f'`MODEL` has the wrong type: Received `{type(params.get("MODEL", None))}` expected `str`')
+    if params.get("DATA_TABLE", None) is None:
+        raise StyxValidationError("`DATA_TABLE` must not be None")
+    if not isinstance(params["DATA_TABLE"], str):
+        raise StyxValidationError(f'`DATA_TABLE` has the wrong type: Received `{type(params.get("DATA_TABLE", None))}` expected `str`')
+    if params.get("BOUNDS", None) is not None:
+        if not isinstance(params["BOUNDS"], list):
+            raise StyxValidationError(f'`BOUNDS` has the wrong type: Received `{type(params.get("BOUNDS", None))}` expected `list[float] | None`')
+        if len(params["BOUNDS"]) == 2:
+            raise StyxValidationError("Parameter `BOUNDS` must contain exactly 2 elements")
+        for e in params["BOUNDS"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`BOUNDS` has the wrong type: Received `{type(params.get("BOUNDS", None))}` expected `list[float] | None`')
+    if params.get("CIO_FLAG", False) is None:
+        raise StyxValidationError("`CIO_FLAG` must not be None")
+    if not isinstance(params["CIO_FLAG"], bool):
+        raise StyxValidationError(f'`CIO_FLAG` has the wrong type: Received `{type(params.get("CIO_FLAG", False))}` expected `bool`')
+    if params.get("COR_STR", None) is not None:
+        if not isinstance(params["COR_STR"], str):
+            raise StyxValidationError(f'`COR_STR` has the wrong type: Received `{type(params.get("COR_STR", None))}` expected `str | None`')
+    if params.get("CUTOFF", None) is not None:
+        if not isinstance(params["CUTOFF"], (float, int)):
+            raise StyxValidationError(f'`CUTOFF` has the wrong type: Received `{type(params.get("CUTOFF", None))}` expected `float | None`')
+    if params.get("DBG_ARGS_FLAG", False) is None:
+        raise StyxValidationError("`DBG_ARGS_FLAG` must not be None")
+    if not isinstance(params["DBG_ARGS_FLAG"], bool):
+        raise StyxValidationError(f'`DBG_ARGS_FLAG` has the wrong type: Received `{type(params.get("DBG_ARGS_FLAG", False))}` expected `bool`')
+    if params.get("JOBS", None) is not None:
+        if not isinstance(params["JOBS"], (float, int)):
+            raise StyxValidationError(f'`JOBS` has the wrong type: Received `{type(params.get("JOBS", None))}` expected `float | None`')
+    if params.get("GLT_CODE", None) is not None:
+        if not isinstance(params["GLT_CODE"], str):
+            raise StyxValidationError(f'`GLT_CODE` has the wrong type: Received `{type(params.get("GLT_CODE", None))}` expected `str | None`')
+    if params.get("GLT_LABEL", None) is not None:
+        if not isinstance(params["GLT_LABEL"], str):
+            raise StyxValidationError(f'`GLT_LABEL` has the wrong type: Received `{type(params.get("GLT_LABEL", None))}` expected `str | None`')
+    if params.get("GLF_LABEL", None) is not None:
+        if not isinstance(params["GLF_LABEL"], str):
+            raise StyxValidationError(f'`GLF_LABEL` has the wrong type: Received `{type(params.get("GLF_LABEL", None))}` expected `str | None`')
+    if params.get("GLF_CODE", None) is not None:
+        if not isinstance(params["GLF_CODE"], str):
+            raise StyxValidationError(f'`GLF_CODE` has the wrong type: Received `{type(params.get("GLF_CODE", None))}` expected `str | None`')
+    if params.get("ICC_FLAG", False) is None:
+        raise StyxValidationError("`ICC_FLAG` must not be None")
+    if not isinstance(params["ICC_FLAG"], bool):
+        raise StyxValidationError(f'`ICC_FLAG` has the wrong type: Received `{type(params.get("ICC_FLAG", False))}` expected `bool`')
+    if params.get("ICCB_FLAG", False) is None:
+        raise StyxValidationError("`ICCB_FLAG` must not be None")
+    if not isinstance(params["ICCB_FLAG"], bool):
+        raise StyxValidationError(f'`ICCB_FLAG` has the wrong type: Received `{type(params.get("ICCB_FLAG", False))}` expected `bool`')
+    if params.get("LOG_LIK_FLAG", False) is None:
+        raise StyxValidationError("`LOG_LIK_FLAG` must not be None")
+    if not isinstance(params["LOG_LIK_FLAG"], bool):
+        raise StyxValidationError(f'`LOG_LIK_FLAG` has the wrong type: Received `{type(params.get("LOG_LIK_FLAG", False))}` expected `bool`')
+    if params.get("LOGIT_FLAG", False) is None:
+        raise StyxValidationError("`LOGIT_FLAG` must not be None")
+    if not isinstance(params["LOGIT_FLAG"], bool):
+        raise StyxValidationError(f'`LOGIT_FLAG` has the wrong type: Received `{type(params.get("LOGIT_FLAG", False))}` expected `bool`')
+    if params.get("ML_FLAG", False) is None:
+        raise StyxValidationError("`ML_FLAG` must not be None")
+    if not isinstance(params["ML_FLAG"], bool):
+        raise StyxValidationError(f'`ML_FLAG` has the wrong type: Received `{type(params.get("ML_FLAG", False))}` expected `bool`')
+    if params.get("QVARS_CENTERS", None) is not None:
+        if not isinstance(params["QVARS_CENTERS"], str):
+            raise StyxValidationError(f'`QVARS_CENTERS` has the wrong type: Received `{type(params.get("QVARS_CENTERS", None))}` expected `str | None`')
+    if params.get("QVARS", None) is not None:
+        if not isinstance(params["QVARS"], str):
+            raise StyxValidationError(f'`QVARS` has the wrong type: Received `{type(params.get("QVARS", None))}` expected `str | None`')
+    if params.get("RANEFF", None) is not None:
+        if not isinstance(params["RANEFF"], str):
+            raise StyxValidationError(f'`RANEFF` has the wrong type: Received `{type(params.get("RANEFF", None))}` expected `str | None`')
+    if params.get("MASK", None) is not None:
+        if not isinstance(params["MASK"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`MASK` has the wrong type: Received `{type(params.get("MASK", None))}` expected `InputPathType | None`')
+    if params.get("NUM_GLF", None) is not None:
+        if not isinstance(params["NUM_GLF"], (float, int)):
+            raise StyxValidationError(f'`NUM_GLF` has the wrong type: Received `{type(params.get("NUM_GLF", None))}` expected `float | None`')
+    if params.get("NUM_GLT", None) is not None:
+        if not isinstance(params["NUM_GLT"], (float, int)):
+            raise StyxValidationError(f'`NUM_GLT` has the wrong type: Received `{type(params.get("NUM_GLT", None))}` expected `float | None`')
+    if params.get("RESID", None) is not None:
+        if not isinstance(params["RESID"], str):
+            raise StyxValidationError(f'`RESID` has the wrong type: Received `{type(params.get("RESID", None))}` expected `str | None`')
+    if params.get("RE", None) is not None:
+        if not isinstance(params["RE"], str):
+            raise StyxValidationError(f'`RE` has the wrong type: Received `{type(params.get("RE", None))}` expected `str | None`')
+    if params.get("REPREFIX", None) is not None:
+        if not isinstance(params["REPREFIX"], str):
+            raise StyxValidationError(f'`REPREFIX` has the wrong type: Received `{type(params.get("REPREFIX", None))}` expected `str | None`')
+    if params.get("RIO_FLAG", False) is None:
+        raise StyxValidationError("`RIO_FLAG` must not be None")
+    if not isinstance(params["RIO_FLAG"], bool):
+        raise StyxValidationError(f'`RIO_FLAG` has the wrong type: Received `{type(params.get("RIO_FLAG", False))}` expected `bool`')
+    if params.get("SHOW_OPTIONS_FLAG", False) is None:
+        raise StyxValidationError("`SHOW_OPTIONS_FLAG` must not be None")
+    if not isinstance(params["SHOW_OPTIONS_FLAG"], bool):
+        raise StyxValidationError(f'`SHOW_OPTIONS_FLAG` has the wrong type: Received `{type(params.get("SHOW_OPTIONS_FLAG", False))}` expected `bool`')
+    if params.get("SS_TYPE", None) is not None:
+        if not isinstance(params["SS_TYPE"], (float, int)):
+            raise StyxValidationError(f'`SS_TYPE` has the wrong type: Received `{type(params.get("SS_TYPE", None))}` expected `float | None`')
+
+
 def v_3d_lme_cargs(
     params: V3dLmeParameters,
     execution: Execution,
@@ -394,6 +515,7 @@ def v_3d_lme_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLmeOutputs`).
     """
+    v_3d_lme_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LME_METADATA)
     params = execution.params(params)

@@ -132,6 +132,26 @@ def v_3d_anova3_outfile_abcontr_params(
     return params
 
 
+def v_3d_anova3_outfile_abcontr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAnova3OutfileAbcontrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outfile_abcontr", None) is not None:
+        if not isinstance(params["outfile_abcontr"], str):
+            raise StyxValidationError(f'`outfile_abcontr` has the wrong type: Received `{type(params.get("outfile_abcontr", None))}` expected `str | None`')
+    if params.get("outfile_Abcontr", None) is not None:
+        if not isinstance(params["outfile_Abcontr"], str):
+            raise StyxValidationError(f'`outfile_Abcontr` has the wrong type: Received `{type(params.get("outfile_Abcontr", None))}` expected `str | None`')
+
+
 def v_3d_anova3_outfile_abcontr_cargs(
     params: V3dAnova3OutfileAbcontrParameters,
     execution: Execution,
@@ -182,6 +202,26 @@ def v_3d_anova3_outfile_abcontr_1_params(
     if outfile_abdiff_ is not None:
         params["outfile_Abdiff"] = outfile_abdiff_
     return params
+
+
+def v_3d_anova3_outfile_abcontr_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAnova3OutfileAbcontr1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outfile_abdiff", None) is not None:
+        if not isinstance(params["outfile_abdiff"], str):
+            raise StyxValidationError(f'`outfile_abdiff` has the wrong type: Received `{type(params.get("outfile_abdiff", None))}` expected `str | None`')
+    if params.get("outfile_Abdiff", None) is not None:
+        if not isinstance(params["outfile_Abdiff"], str):
+            raise StyxValidationError(f'`outfile_Abdiff` has the wrong type: Received `{type(params.get("outfile_Abdiff", None))}` expected `str | None`')
 
 
 def v_3d_anova3_outfile_abcontr_1_cargs(
@@ -380,6 +420,125 @@ def v_3d_anova3_params(
     if anova_options is not None:
         params["anova_options"] = anova_options
     return params
+
+
+def v_3d_anova3_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAnova3Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("type", None) is None:
+        raise StyxValidationError("`type` must not be None")
+    if not isinstance(params["type"], int):
+        raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `int`')
+    if 1 <= params["type"] <= 5:
+        raise StyxValidationError("Parameter `type` must be between 1 and 5 (inclusive)")
+    if params.get("alevels", None) is None:
+        raise StyxValidationError("`alevels` must not be None")
+    if not isinstance(params["alevels"], int):
+        raise StyxValidationError(f'`alevels` has the wrong type: Received `{type(params.get("alevels", None))}` expected `int`')
+    if params.get("blevels", None) is None:
+        raise StyxValidationError("`blevels` must not be None")
+    if not isinstance(params["blevels"], int):
+        raise StyxValidationError(f'`blevels` has the wrong type: Received `{type(params.get("blevels", None))}` expected `int`')
+    if params.get("clevels", None) is None:
+        raise StyxValidationError("`clevels` must not be None")
+    if not isinstance(params["clevels"], int):
+        raise StyxValidationError(f'`clevels` has the wrong type: Received `{type(params.get("clevels", None))}` expected `int`')
+    if params.get("dsets", None) is None:
+        raise StyxValidationError("`dsets` must not be None")
+    if not isinstance(params["dsets"], list):
+        raise StyxValidationError(f'`dsets` has the wrong type: Received `{type(params.get("dsets", None))}` expected `list[str]`')
+    for e in params["dsets"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`dsets` has the wrong type: Received `{type(params.get("dsets", None))}` expected `list[str]`')
+    if params.get("voxel_num", None) is not None:
+        if not isinstance(params["voxel_num"], int):
+            raise StyxValidationError(f'`voxel_num` has the wrong type: Received `{type(params.get("voxel_num", None))}` expected `int | None`')
+    if params.get("diskspace", False) is None:
+        raise StyxValidationError("`diskspace` must not be None")
+    if not isinstance(params["diskspace"], bool):
+        raise StyxValidationError(f'`diskspace` has the wrong type: Received `{type(params.get("diskspace", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("outfile_fa", None) is not None:
+        if not isinstance(params["outfile_fa"], str):
+            raise StyxValidationError(f'`outfile_fa` has the wrong type: Received `{type(params.get("outfile_fa", None))}` expected `str | None`')
+    if params.get("outfile_fb", None) is not None:
+        if not isinstance(params["outfile_fb"], str):
+            raise StyxValidationError(f'`outfile_fb` has the wrong type: Received `{type(params.get("outfile_fb", None))}` expected `str | None`')
+    if params.get("outfile_fc", None) is not None:
+        if not isinstance(params["outfile_fc"], str):
+            raise StyxValidationError(f'`outfile_fc` has the wrong type: Received `{type(params.get("outfile_fc", None))}` expected `str | None`')
+    if params.get("outfile_fab", None) is not None:
+        if not isinstance(params["outfile_fab"], str):
+            raise StyxValidationError(f'`outfile_fab` has the wrong type: Received `{type(params.get("outfile_fab", None))}` expected `str | None`')
+    if params.get("outfile_fac", None) is not None:
+        if not isinstance(params["outfile_fac"], str):
+            raise StyxValidationError(f'`outfile_fac` has the wrong type: Received `{type(params.get("outfile_fac", None))}` expected `str | None`')
+    if params.get("outfile_fbc", None) is not None:
+        if not isinstance(params["outfile_fbc"], str):
+            raise StyxValidationError(f'`outfile_fbc` has the wrong type: Received `{type(params.get("outfile_fbc", None))}` expected `str | None`')
+    if params.get("outfile_fabc", None) is not None:
+        if not isinstance(params["outfile_fabc"], str):
+            raise StyxValidationError(f'`outfile_fabc` has the wrong type: Received `{type(params.get("outfile_fabc", None))}` expected `str | None`')
+    if params.get("outfile_amean", None) is not None:
+        if not isinstance(params["outfile_amean"], str):
+            raise StyxValidationError(f'`outfile_amean` has the wrong type: Received `{type(params.get("outfile_amean", None))}` expected `str | None`')
+    if params.get("outfile_bmean", None) is not None:
+        if not isinstance(params["outfile_bmean"], str):
+            raise StyxValidationError(f'`outfile_bmean` has the wrong type: Received `{type(params.get("outfile_bmean", None))}` expected `str | None`')
+    if params.get("outfile_cmean", None) is not None:
+        if not isinstance(params["outfile_cmean"], str):
+            raise StyxValidationError(f'`outfile_cmean` has the wrong type: Received `{type(params.get("outfile_cmean", None))}` expected `str | None`')
+    if params.get("outfile_xmean", None) is not None:
+        if not isinstance(params["outfile_xmean"], str):
+            raise StyxValidationError(f'`outfile_xmean` has the wrong type: Received `{type(params.get("outfile_xmean", None))}` expected `str | None`')
+    if params.get("outfile_adiff", None) is not None:
+        if not isinstance(params["outfile_adiff"], str):
+            raise StyxValidationError(f'`outfile_adiff` has the wrong type: Received `{type(params.get("outfile_adiff", None))}` expected `str | None`')
+    if params.get("outfile_bdiff", None) is not None:
+        if not isinstance(params["outfile_bdiff"], str):
+            raise StyxValidationError(f'`outfile_bdiff` has the wrong type: Received `{type(params.get("outfile_bdiff", None))}` expected `str | None`')
+    if params.get("outfile_cdiff", None) is not None:
+        if not isinstance(params["outfile_cdiff"], str):
+            raise StyxValidationError(f'`outfile_cdiff` has the wrong type: Received `{type(params.get("outfile_cdiff", None))}` expected `str | None`')
+    if params.get("outfile_xdiff", None) is not None:
+        if not isinstance(params["outfile_xdiff"], str):
+            raise StyxValidationError(f'`outfile_xdiff` has the wrong type: Received `{type(params.get("outfile_xdiff", None))}` expected `str | None`')
+    if params.get("outfile_acontr", None) is not None:
+        if not isinstance(params["outfile_acontr"], str):
+            raise StyxValidationError(f'`outfile_acontr` has the wrong type: Received `{type(params.get("outfile_acontr", None))}` expected `str | None`')
+    if params.get("outfile_bcontr", None) is not None:
+        if not isinstance(params["outfile_bcontr"], str):
+            raise StyxValidationError(f'`outfile_bcontr` has the wrong type: Received `{type(params.get("outfile_bcontr", None))}` expected `str | None`')
+    if params.get("outfile_ccontr", None) is not None:
+        if not isinstance(params["outfile_ccontr"], str):
+            raise StyxValidationError(f'`outfile_ccontr` has the wrong type: Received `{type(params.get("outfile_ccontr", None))}` expected `str | None`')
+    if params.get("outfile_abcontr", None) is not None:
+        v_3d_anova3_outfile_abcontr_validate(params["outfile_abcontr"])
+    if params.get("outfile_abdiff", None) is not None:
+        v_3d_anova3_outfile_abcontr_1_validate(params["outfile_abdiff"])
+    if params.get("outfile_abmean", None) is not None:
+        if not isinstance(params["outfile_abmean"], str):
+            raise StyxValidationError(f'`outfile_abmean` has the wrong type: Received `{type(params.get("outfile_abmean", None))}` expected `str | None`')
+    if params.get("outfile_bucket", None) is not None:
+        if not isinstance(params["outfile_bucket"], str):
+            raise StyxValidationError(f'`outfile_bucket` has the wrong type: Received `{type(params.get("outfile_bucket", None))}` expected `str | None`')
+    if params.get("anova_options", None) is not None:
+        if not isinstance(params["anova_options"], list):
+            raise StyxValidationError(f'`anova_options` has the wrong type: Received `{type(params.get("anova_options", None))}` expected `list[str] | None`')
+        for e in params["anova_options"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`anova_options` has the wrong type: Received `{type(params.get("anova_options", None))}` expected `list[str] | None`')
 
 
 def v_3d_anova3_cargs(
@@ -588,6 +747,7 @@ def v_3d_anova3_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAnova3Outputs`).
     """
+    v_3d_anova3_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ANOVA3_METADATA)
     params = execution.params(params)

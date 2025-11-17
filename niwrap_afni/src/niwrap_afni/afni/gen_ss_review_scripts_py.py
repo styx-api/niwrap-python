@@ -164,6 +164,77 @@ def gen_ss_review_scripts_py_params(
     return params
 
 
+def gen_ss_review_scripts_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GenSsReviewScriptsPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is not None:
+        if not isinstance(params["subject_id"], str):
+            raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str | None`')
+    if params.get("rm_trs", None) is not None:
+        if not isinstance(params["rm_trs"], (float, int)):
+            raise StyxValidationError(f'`rm_trs` has the wrong type: Received `{type(params.get("rm_trs", None))}` expected `float | None`')
+    if params.get("num_stim", None) is not None:
+        if not isinstance(params["num_stim"], (float, int)):
+            raise StyxValidationError(f'`num_stim` has the wrong type: Received `{type(params.get("num_stim", None))}` expected `float | None`')
+    if params.get("mb_level", None) is not None:
+        if not isinstance(params["mb_level"], (float, int)):
+            raise StyxValidationError(f'`mb_level` has the wrong type: Received `{type(params.get("mb_level", None))}` expected `float | None`')
+    if params.get("slice_pattern", None) is not None:
+        if not isinstance(params["slice_pattern"], str):
+            raise StyxValidationError(f'`slice_pattern` has the wrong type: Received `{type(params.get("slice_pattern", None))}` expected `str | None`')
+    if params.get("motion_dset", None) is not None:
+        if not isinstance(params["motion_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`motion_dset` has the wrong type: Received `{type(params.get("motion_dset", None))}` expected `InputPathType | None`')
+    if params.get("outlier_dset", None) is not None:
+        if not isinstance(params["outlier_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outlier_dset` has the wrong type: Received `{type(params.get("outlier_dset", None))}` expected `InputPathType | None`')
+    if params.get("enorm_dset", None) is not None:
+        if not isinstance(params["enorm_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`enorm_dset` has the wrong type: Received `{type(params.get("enorm_dset", None))}` expected `InputPathType | None`')
+    if params.get("mot_limit", None) is not None:
+        if not isinstance(params["mot_limit"], (float, int)):
+            raise StyxValidationError(f'`mot_limit` has the wrong type: Received `{type(params.get("mot_limit", None))}` expected `float | None`')
+    if params.get("out_limit", None) is not None:
+        if not isinstance(params["out_limit"], (float, int)):
+            raise StyxValidationError(f'`out_limit` has the wrong type: Received `{type(params.get("out_limit", None))}` expected `float | None`')
+    if params.get("xmat_regress", None) is not None:
+        if not isinstance(params["xmat_regress"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xmat_regress` has the wrong type: Received `{type(params.get("xmat_regress", None))}` expected `InputPathType | None`')
+    if params.get("xmat_uncensored", None) is not None:
+        if not isinstance(params["xmat_uncensored"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xmat_uncensored` has the wrong type: Received `{type(params.get("xmat_uncensored", None))}` expected `InputPathType | None`')
+    if params.get("stats_dset", None) is not None:
+        if not isinstance(params["stats_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`stats_dset` has the wrong type: Received `{type(params.get("stats_dset", None))}` expected `InputPathType | None`')
+    if params.get("final_anat", None) is not None:
+        if not isinstance(params["final_anat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`final_anat` has the wrong type: Received `{type(params.get("final_anat", None))}` expected `InputPathType | None`')
+    if params.get("final_view", None) is not None:
+        if not isinstance(params["final_view"], str):
+            raise StyxValidationError(f'`final_view` has the wrong type: Received `{type(params.get("final_view", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+    if params.get("uvars_json", None) is not None:
+        if not isinstance(params["uvars_json"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`uvars_json` has the wrong type: Received `{type(params.get("uvars_json", None))}` expected `InputPathType | None`')
+    if params.get("init_uvars_json", None) is not None:
+        if not isinstance(params["init_uvars_json"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_uvars_json` has the wrong type: Received `{type(params.get("init_uvars_json", None))}` expected `InputPathType | None`')
+
+
 def gen_ss_review_scripts_py_cargs(
     params: GenSsReviewScriptsPyParameters,
     execution: Execution,
@@ -318,6 +389,7 @@ def gen_ss_review_scripts_py_execute(
     Returns:
         NamedTuple of outputs (described in `GenSsReviewScriptsPyOutputs`).
     """
+    gen_ss_review_scripts_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GEN_SS_REVIEW_SCRIPTS_PY_METADATA)
     params = execution.params(params)

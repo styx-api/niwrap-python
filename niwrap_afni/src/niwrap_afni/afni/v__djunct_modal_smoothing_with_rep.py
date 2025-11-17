@@ -89,6 +89,51 @@ def v__djunct_modal_smoothing_with_rep_params(
     return params
 
 
+def v__djunct_modal_smoothing_with_rep_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunctModalSmoothingWithRepParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("modesmooth", None) is not None:
+        if not isinstance(params["modesmooth"], (float, int)):
+            raise StyxValidationError(f'`modesmooth` has the wrong type: Received `{type(params.get("modesmooth", None))}` expected `float | None`')
+    if params.get("help_view", False) is None:
+        raise StyxValidationError("`help_view` must not be None")
+    if not isinstance(params["help_view"], bool):
+        raise StyxValidationError(f'`help_view` has the wrong type: Received `{type(params.get("help_view", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def v__djunct_modal_smoothing_with_rep_cargs(
     params: VDjunctModalSmoothingWithRepParameters,
     execution: Execution,
@@ -166,6 +211,7 @@ def v__djunct_modal_smoothing_with_rep_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunctModalSmoothingWithRepOutputs`).
     """
+    v__djunct_modal_smoothing_with_rep_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA)
     params = execution.params(params)

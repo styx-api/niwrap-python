@@ -174,6 +174,116 @@ def mri_fieldsign_params(
     return params
 
 
+def mri_fieldsign_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFieldsignParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fieldsign_file", None) is None:
+        raise StyxValidationError("`fieldsign_file` must not be None")
+    if not isinstance(params["fieldsign_file"], str):
+        raise StyxValidationError(f'`fieldsign_file` has the wrong type: Received `{type(params.get("fieldsign_file", None))}` expected `str`')
+    if params.get("eccen_values", None) is None:
+        raise StyxValidationError("`eccen_values` must not be None")
+    if not isinstance(params["eccen_values"], list):
+        raise StyxValidationError(f'`eccen_values` has the wrong type: Received `{type(params.get("eccen_values", None))}` expected `list[float]`')
+    if len(params["eccen_values"]) == 2:
+        raise StyxValidationError("Parameter `eccen_values` must contain exactly 2 elements")
+    for e in params["eccen_values"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`eccen_values` has the wrong type: Received `{type(params.get("eccen_values", None))}` expected `list[float]`')
+    if params.get("polar_values", None) is None:
+        raise StyxValidationError("`polar_values` must not be None")
+    if not isinstance(params["polar_values"], list):
+        raise StyxValidationError(f'`polar_values` has the wrong type: Received `{type(params.get("polar_values", None))}` expected `list[float]`')
+    if len(params["polar_values"]) == 2:
+        raise StyxValidationError("Parameter `polar_values` must contain exactly 2 elements")
+    for e in params["polar_values"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`polar_values` has the wrong type: Received `{type(params.get("polar_values", None))}` expected `list[float]`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("patch_file", None) is not None:
+        if not isinstance(params["patch_file"], str):
+            raise StyxValidationError(f'`patch_file` has the wrong type: Received `{type(params.get("patch_file", None))}` expected `str | None`')
+    if params.get("occip_flag", False) is None:
+        raise StyxValidationError("`occip_flag` must not be None")
+    if not isinstance(params["occip_flag"], bool):
+        raise StyxValidationError(f'`occip_flag` has the wrong type: Received `{type(params.get("occip_flag", False))}` expected `bool`')
+    if params.get("sphere_flag", False) is None:
+        raise StyxValidationError("`sphere_flag` must not be None")
+    if not isinstance(params["sphere_flag"], bool):
+        raise StyxValidationError(f'`sphere_flag` has the wrong type: Received `{type(params.get("sphere_flag", False))}` expected `bool`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("nsmooth", None) is not None:
+        if not isinstance(params["nsmooth"], (float, int)):
+            raise StyxValidationError(f'`nsmooth` has the wrong type: Received `{type(params.get("nsmooth", None))}` expected `float | None`')
+    if params.get("reverse_flag", False) is None:
+        raise StyxValidationError("`reverse_flag` must not be None")
+    if not isinstance(params["reverse_flag"], bool):
+        raise StyxValidationError(f'`reverse_flag` has the wrong type: Received `{type(params.get("reverse_flag", False))}` expected `bool`')
+    if params.get("old_flag", False) is None:
+        raise StyxValidationError("`old_flag` must not be None")
+    if not isinstance(params["old_flag"], bool):
+        raise StyxValidationError(f'`old_flag` has the wrong type: Received `{type(params.get("old_flag", False))}` expected `bool`')
+    if params.get("eccen_rotation", None) is not None:
+        if not isinstance(params["eccen_rotation"], (float, int)):
+            raise StyxValidationError(f'`eccen_rotation` has the wrong type: Received `{type(params.get("eccen_rotation", None))}` expected `float | None`')
+    if params.get("polar_rotation", None) is not None:
+        if not isinstance(params["polar_rotation"], (float, int)):
+            raise StyxValidationError(f'`polar_rotation` has the wrong type: Received `{type(params.get("polar_rotation", None))}` expected `float | None`')
+    if params.get("eccen_output", None) is not None:
+        if not isinstance(params["eccen_output"], (float, int)):
+            raise StyxValidationError(f'`eccen_output` has the wrong type: Received `{type(params.get("eccen_output", None))}` expected `float | None`')
+    if params.get("polar_output", None) is not None:
+        if not isinstance(params["polar_output"], (float, int)):
+            raise StyxValidationError(f'`polar_output` has the wrong type: Received `{type(params.get("polar_output", None))}` expected `float | None`')
+    if params.get("eccen_sfa_file", None) is not None:
+        if not isinstance(params["eccen_sfa_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`eccen_sfa_file` has the wrong type: Received `{type(params.get("eccen_sfa_file", None))}` expected `InputPathType | None`')
+    if params.get("polar_sfa_file", None) is not None:
+        if not isinstance(params["polar_sfa_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`polar_sfa_file` has the wrong type: Received `{type(params.get("polar_sfa_file", None))}` expected `InputPathType | None`')
+    if params.get("sfa_dir", None) is not None:
+        if not isinstance(params["sfa_dir"], str):
+            raise StyxValidationError(f'`sfa_dir` has the wrong type: Received `{type(params.get("sfa_dir", None))}` expected `str | None`')
+    if params.get("sfa_true_flag", False) is None:
+        raise StyxValidationError("`sfa_true_flag` must not be None")
+    if not isinstance(params["sfa_true_flag"], bool):
+        raise StyxValidationError(f'`sfa_true_flag` has the wrong type: Received `{type(params.get("sfa_true_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("checkopts_flag", False) is None:
+        raise StyxValidationError("`checkopts_flag` must not be None")
+    if not isinstance(params["checkopts_flag"], bool):
+        raise StyxValidationError(f'`checkopts_flag` has the wrong type: Received `{type(params.get("checkopts_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+
+
 def mri_fieldsign_cargs(
     params: MriFieldsignParameters,
     execution: Execution,
@@ -318,6 +428,7 @@ def mri_fieldsign_execute(
     Returns:
         NamedTuple of outputs (described in `MriFieldsignOutputs`).
     """
+    mri_fieldsign_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FIELDSIGN_METADATA)
     params = execution.params(params)

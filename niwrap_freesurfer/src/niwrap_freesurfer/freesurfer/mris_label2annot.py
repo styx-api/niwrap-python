@@ -123,6 +123,72 @@ def mris_label2annot_params(
     return params
 
 
+def mris_label2annot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisLabel2annotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("ctabfile", None) is None:
+        raise StyxValidationError("`ctabfile` must not be None")
+    if not isinstance(params["ctabfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ctabfile` has the wrong type: Received `{type(params.get("ctabfile", None))}` expected `InputPathType`')
+    if params.get("annotname", None) is None:
+        raise StyxValidationError("`annotname` must not be None")
+    if not isinstance(params["annotname"], str):
+        raise StyxValidationError(f'`annotname` has the wrong type: Received `{type(params.get("annotname", None))}` expected `str`')
+    if params.get("index_offset", None) is not None:
+        if not isinstance(params["index_offset"], (float, int)):
+            raise StyxValidationError(f'`index_offset` has the wrong type: Received `{type(params.get("index_offset", None))}` expected `float | None`')
+    if params.get("label_files", None) is not None:
+        if not isinstance(params["label_files"], list):
+            raise StyxValidationError(f'`label_files` has the wrong type: Received `{type(params.get("label_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["label_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`label_files` has the wrong type: Received `{type(params.get("label_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("annot_path", None) is not None:
+        if not isinstance(params["annot_path"], str):
+            raise StyxValidationError(f'`annot_path` has the wrong type: Received `{type(params.get("annot_path", None))}` expected `str | None`')
+    if params.get("labeldir", None) is not None:
+        if not isinstance(params["labeldir"], str):
+            raise StyxValidationError(f'`labeldir` has the wrong type: Received `{type(params.get("labeldir", None))}` expected `str | None`')
+    if params.get("ldir_default", False) is None:
+        raise StyxValidationError("`ldir_default` must not be None")
+    if not isinstance(params["ldir_default"], bool):
+        raise StyxValidationError(f'`ldir_default` has the wrong type: Received `{type(params.get("ldir_default", False))}` expected `bool`')
+    if params.get("no_unknown", False) is None:
+        raise StyxValidationError("`no_unknown` must not be None")
+    if not isinstance(params["no_unknown"], bool):
+        raise StyxValidationError(f'`no_unknown` has the wrong type: Received `{type(params.get("no_unknown", False))}` expected `bool`')
+    if params.get("thresh", None) is not None:
+        if not isinstance(params["thresh"], (float, int)):
+            raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `float | None`')
+    if params.get("maxstatwinner", False) is None:
+        raise StyxValidationError("`maxstatwinner` must not be None")
+    if not isinstance(params["maxstatwinner"], bool):
+        raise StyxValidationError(f'`maxstatwinner` has the wrong type: Received `{type(params.get("maxstatwinner", False))}` expected `bool`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+
+
 def mris_label2annot_cargs(
     params: MrisLabel2annotParameters,
     execution: Execution,
@@ -237,6 +303,7 @@ def mris_label2annot_execute(
     Returns:
         NamedTuple of outputs (described in `MrisLabel2annotOutputs`).
     """
+    mris_label2annot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_LABEL2ANNOT_METADATA)
     params = execution.params(params)

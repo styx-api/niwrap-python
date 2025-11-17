@@ -126,6 +126,61 @@ def mri_segment_hypothalamic_subunits_params(
     return params
 
 
+def mri_segment_hypothalamic_subunits_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSegmentHypothalamicSubunitsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is not None:
+        if not isinstance(params["subjects"], list):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+        for e in params["subjects"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("write_posteriors", False) is None:
+        raise StyxValidationError("`write_posteriors` must not be None")
+    if not isinstance(params["write_posteriors"], bool):
+        raise StyxValidationError(f'`write_posteriors` has the wrong type: Received `{type(params.get("write_posteriors", False))}` expected `bool`')
+    if params.get("image_input", None) is not None:
+        if not isinstance(params["image_input"], str):
+            raise StyxValidationError(f'`image_input` has the wrong type: Received `{type(params.get("image_input", None))}` expected `str | None`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("posteriors", None) is not None:
+        if not isinstance(params["posteriors"], str):
+            raise StyxValidationError(f'`posteriors` has the wrong type: Received `{type(params.get("posteriors", None))}` expected `str | None`')
+    if params.get("resample", None) is not None:
+        if not isinstance(params["resample"], str):
+            raise StyxValidationError(f'`resample` has the wrong type: Received `{type(params.get("resample", None))}` expected `str | None`')
+    if params.get("volume_output", None) is not None:
+        if not isinstance(params["volume_output"], str):
+            raise StyxValidationError(f'`volume_output` has the wrong type: Received `{type(params.get("volume_output", None))}` expected `str | None`')
+    if params.get("crop_size", None) is not None:
+        if not isinstance(params["crop_size"], list):
+            raise StyxValidationError(f'`crop_size` has the wrong type: Received `{type(params.get("crop_size", None))}` expected `list[float] | None`')
+        for e in params["crop_size"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`crop_size` has the wrong type: Received `{type(params.get("crop_size", None))}` expected `list[float] | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("cpu", False) is None:
+        raise StyxValidationError("`cpu` must not be None")
+    if not isinstance(params["cpu"], bool):
+        raise StyxValidationError(f'`cpu` has the wrong type: Received `{type(params.get("cpu", False))}` expected `bool`')
+
+
 def mri_segment_hypothalamic_subunits_cargs(
     params: MriSegmentHypothalamicSubunitsParameters,
     execution: Execution,
@@ -237,6 +292,7 @@ def mri_segment_hypothalamic_subunits_execute(
     Returns:
         NamedTuple of outputs (described in `MriSegmentHypothalamicSubunitsOutputs`).
     """
+    mri_segment_hypothalamic_subunits_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA)
     params = execution.params(params)

@@ -62,6 +62,31 @@ def apsearch_params(
     return params
 
 
+def apsearch_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ApsearchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("search_term", None) is None:
+        raise StyxValidationError("`search_term` must not be None")
+    if not isinstance(params["search_term"], str):
+        raise StyxValidationError(f'`search_term` has the wrong type: Received `{type(params.get("search_term", None))}` expected `str`')
+    if params.get("file_output", None) is not None:
+        if not isinstance(params["file_output"], str):
+            raise StyxValidationError(f'`file_output` has the wrong type: Received `{type(params.get("file_output", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def apsearch_cargs(
     params: ApsearchParameters,
     execution: Execution,
@@ -124,6 +149,7 @@ def apsearch_execute(
     Returns:
         NamedTuple of outputs (described in `ApsearchOutputs`).
     """
+    apsearch_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APSEARCH_METADATA)
     params = execution.params(params)

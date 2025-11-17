@@ -54,6 +54,28 @@ def brec_params(
     return params
 
 
+def brec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `BrecParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("my_file", None) is None:
+        raise StyxValidationError("`my_file` must not be None")
+    if not isinstance(params["my_file"], str):
+        raise StyxValidationError(f'`my_file` has the wrong type: Received `{type(params.get("my_file", None))}` expected `str`')
+    if params.get("depth_limit", False) is None:
+        raise StyxValidationError("`depth_limit` must not be None")
+    if not isinstance(params["depth_limit"], bool):
+        raise StyxValidationError(f'`depth_limit` has the wrong type: Received `{type(params.get("depth_limit", False))}` expected `bool`')
+
+
 def brec_cargs(
     params: BrecParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def brec_execute(
     Returns:
         NamedTuple of outputs (described in `BrecOutputs`).
     """
+    brec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BREC_METADATA)
     params = execution.params(params)

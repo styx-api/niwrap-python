@@ -62,6 +62,31 @@ def quantify_thalamic_nuclei_sh_params(
     return params
 
 
+def quantify_thalamic_nuclei_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QuantifyThalamicNucleiShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("analysis_id", None) is None:
+        raise StyxValidationError("`analysis_id` must not be None")
+    if not isinstance(params["analysis_id"], str):
+        raise StyxValidationError(f'`analysis_id` has the wrong type: Received `{type(params.get("analysis_id", None))}` expected `str`')
+    if params.get("subjects_directory", None) is not None:
+        if not isinstance(params["subjects_directory"], str):
+            raise StyxValidationError(f'`subjects_directory` has the wrong type: Received `{type(params.get("subjects_directory", None))}` expected `str | None`')
+
+
 def quantify_thalamic_nuclei_sh_cargs(
     params: QuantifyThalamicNucleiShParameters,
     execution: Execution,
@@ -123,6 +148,7 @@ def quantify_thalamic_nuclei_sh_execute(
     Returns:
         NamedTuple of outputs (described in `QuantifyThalamicNucleiShOutputs`).
     """
+    quantify_thalamic_nuclei_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QUANTIFY_THALAMIC_NUCLEI_SH_METADATA)
     params = execution.params(params)

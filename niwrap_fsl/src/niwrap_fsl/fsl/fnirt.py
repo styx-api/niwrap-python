@@ -125,6 +125,57 @@ def fnirt_params(
     return params
 
 
+def fnirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FnirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("affine_file", None) is not None:
+        if not isinstance(params["affine_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`affine_file` has the wrong type: Received `{type(params.get("affine_file", None))}` expected `InputPathType | None`')
+    if params.get("config_file", None) is not None:
+        if not isinstance(params["config_file"], str):
+            raise StyxValidationError(f'`config_file` has the wrong type: Received `{type(params.get("config_file", None))}` expected `typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None`')
+        if params["config_file"] not in ["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"]:
+            raise StyxValidationError("Parameter `config_file` must be one of [\"T1_2_MNI152_2mm\", \"FA_2_FMRIB58_1mm\"]")
+    if params.get("field_file", None) is not None:
+        if not isinstance(params["field_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`field_file` has the wrong type: Received `{type(params.get("field_file", None))}` expected `InputPathType | None`')
+    if params.get("fieldcoeff_file", None) is not None:
+        if not isinstance(params["fieldcoeff_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fieldcoeff_file` has the wrong type: Received `{type(params.get("fieldcoeff_file", None))}` expected `InputPathType | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("jacobian_file", None) is not None:
+        if not isinstance(params["jacobian_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`jacobian_file` has the wrong type: Received `{type(params.get("jacobian_file", None))}` expected `InputPathType | None`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `InputPathType | None`')
+    if params.get("modulatedref_file", None) is not None:
+        if not isinstance(params["modulatedref_file"], str):
+            raise StyxValidationError(f'`modulatedref_file` has the wrong type: Received `{type(params.get("modulatedref_file", None))}` expected `str | None`')
+    if params.get("ref_file", None) is None:
+        raise StyxValidationError("`ref_file` must not be None")
+    if not isinstance(params["ref_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ref_file` has the wrong type: Received `{type(params.get("ref_file", None))}` expected `InputPathType`')
+    if params.get("refmask_file", None) is not None:
+        if not isinstance(params["refmask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`refmask_file` has the wrong type: Received `{type(params.get("refmask_file", None))}` expected `InputPathType | None`')
+    if params.get("warped_file", None) is not None:
+        if not isinstance(params["warped_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warped_file` has the wrong type: Received `{type(params.get("warped_file", None))}` expected `InputPathType | None`')
+
+
 def fnirt_cargs(
     params: FnirtParameters,
     execution: Execution,
@@ -207,6 +258,7 @@ def fnirt_execute(
     Returns:
         NamedTuple of outputs (described in `FnirtOutputs`).
     """
+    fnirt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FNIRT_METADATA)
     params = execution.params(params)

@@ -50,6 +50,24 @@ def segment_subject_t2_auto_estimate_alveus_ml_params(
     return params
 
 
+def segment_subject_t2_auto_estimate_alveus_ml_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentSubjectT2AutoEstimateAlveusMlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("missing_library", "libmwlaunchermain.so: cannot open shared object file") is None:
+        raise StyxValidationError("`missing_library` must not be None")
+    if not isinstance(params["missing_library"], str):
+        raise StyxValidationError(f'`missing_library` has the wrong type: Received `{type(params.get("missing_library", "libmwlaunchermain.so: cannot open shared object file"))}` expected `str`')
+
+
 def segment_subject_t2_auto_estimate_alveus_ml_cargs(
     params: SegmentSubjectT2AutoEstimateAlveusMlParameters,
     execution: Execution,
@@ -108,6 +126,7 @@ def segment_subject_t2_auto_estimate_alveus_ml_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT2AutoEstimateAlveusMlOutputs`).
     """
+    segment_subject_t2_auto_estimate_alveus_ml_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = execution.params(params)

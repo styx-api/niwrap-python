@@ -71,6 +71,38 @@ def jkgcatrain_params(
     return params
 
 
+def jkgcatrain_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `JkgcatrainParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gca_directory", None) is None:
+        raise StyxValidationError("`gca_directory` must not be None")
+    if not isinstance(params["gca_directory"], str):
+        raise StyxValidationError(f'`gca_directory` has the wrong type: Received `{type(params.get("gca_directory", None))}` expected `str`')
+    if params.get("iteration_number", None) is not None:
+        if not isinstance(params["iteration_number"], (float, int)):
+            raise StyxValidationError(f'`iteration_number` has the wrong type: Received `{type(params.get("iteration_number", None))}` expected `float | None`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], (float, int)):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `float | None`')
+    if params.get("no_submit", False) is None:
+        raise StyxValidationError("`no_submit` must not be None")
+    if not isinstance(params["no_submit"], bool):
+        raise StyxValidationError(f'`no_submit` has the wrong type: Received `{type(params.get("no_submit", False))}` expected `bool`')
+    if params.get("mail_flag", False) is None:
+        raise StyxValidationError("`mail_flag` must not be None")
+    if not isinstance(params["mail_flag"], bool):
+        raise StyxValidationError(f'`mail_flag` has the wrong type: Received `{type(params.get("mail_flag", False))}` expected `bool`')
+
+
 def jkgcatrain_cargs(
     params: JkgcatrainParameters,
     execution: Execution,
@@ -145,6 +177,7 @@ def jkgcatrain_execute(
     Returns:
         NamedTuple of outputs (described in `JkgcatrainOutputs`).
     """
+    jkgcatrain_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(JKGCATRAIN_METADATA)
     params = execution.params(params)

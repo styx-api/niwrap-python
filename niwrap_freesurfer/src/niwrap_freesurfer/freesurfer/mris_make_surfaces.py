@@ -367,6 +367,192 @@ def mris_make_surfaces_params(
     return params
 
 
+def mris_make_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMakeSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("white", None) is not None:
+        if not isinstance(params["white"], str):
+            raise StyxValidationError(f'`white` has the wrong type: Received `{type(params.get("white", None))}` expected `str | None`')
+    if params.get("pial", None) is not None:
+        if not isinstance(params["pial"], str):
+            raise StyxValidationError(f'`pial` has the wrong type: Received `{type(params.get("pial", None))}` expected `str | None`')
+    if params.get("whiteonly", False) is None:
+        raise StyxValidationError("`whiteonly` must not be None")
+    if not isinstance(params["whiteonly"], bool):
+        raise StyxValidationError(f'`whiteonly` has the wrong type: Received `{type(params.get("whiteonly", False))}` expected `bool`')
+    if params.get("nowhite", False) is None:
+        raise StyxValidationError("`nowhite` must not be None")
+    if not isinstance(params["nowhite"], bool):
+        raise StyxValidationError(f'`nowhite` has the wrong type: Received `{type(params.get("nowhite", False))}` expected `bool`')
+    if params.get("orig_white", None) is not None:
+        if not isinstance(params["orig_white"], str):
+            raise StyxValidationError(f'`orig_white` has the wrong type: Received `{type(params.get("orig_white", None))}` expected `str | None`')
+    if params.get("orig_pial", None) is not None:
+        if not isinstance(params["orig_pial"], str):
+            raise StyxValidationError(f'`orig_pial` has the wrong type: Received `{type(params.get("orig_pial", None))}` expected `str | None`')
+    if params.get("q", False) is None:
+        raise StyxValidationError("`q` must not be None")
+    if not isinstance(params["q"], bool):
+        raise StyxValidationError(f'`q` has the wrong type: Received `{type(params.get("q", False))}` expected `bool`')
+    if params.get("max_gray_scale", None) is not None:
+        if not isinstance(params["max_gray_scale"], (float, int)):
+            raise StyxValidationError(f'`max_gray_scale` has the wrong type: Received `{type(params.get("max_gray_scale", None))}` expected `float | None`')
+    if params.get("c", False) is None:
+        raise StyxValidationError("`c` must not be None")
+    if not isinstance(params["c"], bool):
+        raise StyxValidationError(f'`c` has the wrong type: Received `{type(params.get("c", False))}` expected `bool`')
+    if params.get("cortex", None) is not None:
+        if not isinstance(params["cortex"], (float, int)):
+            raise StyxValidationError(f'`cortex` has the wrong type: Received `{type(params.get("cortex", None))}` expected `float | None`')
+    if params.get("w", None) is not None:
+        if not isinstance(params["w"], (float, int)):
+            raise StyxValidationError(f'`w` has the wrong type: Received `{type(params.get("w", None))}` expected `float | None`')
+    if params.get("first_wm_peak", False) is None:
+        raise StyxValidationError("`first_wm_peak` must not be None")
+    if not isinstance(params["first_wm_peak"], bool):
+        raise StyxValidationError(f'`first_wm_peak` has the wrong type: Received `{type(params.get("first_wm_peak", False))}` expected `bool`')
+    if params.get("a_avgs", None) is not None:
+        if not isinstance(params["a_avgs"], (float, int)):
+            raise StyxValidationError(f'`a_avgs` has the wrong type: Received `{type(params.get("a_avgs", None))}` expected `float | None`')
+    if params.get("pa_avgs", None) is not None:
+        if not isinstance(params["pa_avgs"], (float, int)):
+            raise StyxValidationError(f'`pa_avgs` has the wrong type: Received `{type(params.get("pa_avgs", None))}` expected `float | None`')
+    if params.get("wa_avgs", None) is not None:
+        if not isinstance(params["wa_avgs"], (float, int)):
+            raise StyxValidationError(f'`wa_avgs` has the wrong type: Received `{type(params.get("wa_avgs", None))}` expected `float | None`')
+    if params.get("t1_vol", None) is not None:
+        if not isinstance(params["t1_vol"], str):
+            raise StyxValidationError(f'`t1_vol` has the wrong type: Received `{type(params.get("t1_vol", None))}` expected `str | None`')
+    if params.get("w_vol", None) is not None:
+        if not isinstance(params["w_vol"], str):
+            raise StyxValidationError(f'`w_vol` has the wrong type: Received `{type(params.get("w_vol", None))}` expected `str | None`')
+    if params.get("long", False) is None:
+        raise StyxValidationError("`long` must not be None")
+    if not isinstance(params["long"], bool):
+        raise StyxValidationError(f'`long` has the wrong type: Received `{type(params.get("long", False))}` expected `bool`')
+    if params.get("dura_thresh", None) is not None:
+        if not isinstance(params["dura_thresh"], (float, int)):
+            raise StyxValidationError(f'`dura_thresh` has the wrong type: Received `{type(params.get("dura_thresh", None))}` expected `float | None`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("erase_cerebellum", False) is None:
+        raise StyxValidationError("`erase_cerebellum` must not be None")
+    if not isinstance(params["erase_cerebellum"], bool):
+        raise StyxValidationError(f'`erase_cerebellum` has the wrong type: Received `{type(params.get("erase_cerebellum", False))}` expected `bool`')
+    if params.get("wm_weight", None) is not None:
+        if not isinstance(params["wm_weight"], (float, int)):
+            raise StyxValidationError(f'`wm_weight` has the wrong type: Received `{type(params.get("wm_weight", None))}` expected `float | None`')
+    if params.get("nsigma_above", None) is not None:
+        if not isinstance(params["nsigma_above"], (float, int)):
+            raise StyxValidationError(f'`nsigma_above` has the wrong type: Received `{type(params.get("nsigma_above", None))}` expected `float | None`')
+    if params.get("nsigma_below", None) is not None:
+        if not isinstance(params["nsigma_below"], (float, int)):
+            raise StyxValidationError(f'`nsigma_below` has the wrong type: Received `{type(params.get("nsigma_below", None))}` expected `float | None`')
+    if params.get("t2_min_inside", None) is not None:
+        if not isinstance(params["t2_min_inside"], (float, int)):
+            raise StyxValidationError(f'`t2_min_inside` has the wrong type: Received `{type(params.get("t2_min_inside", None))}` expected `float | None`')
+    if params.get("t2_max_inside", None) is not None:
+        if not isinstance(params["t2_max_inside"], (float, int)):
+            raise StyxValidationError(f'`t2_max_inside` has the wrong type: Received `{type(params.get("t2_max_inside", None))}` expected `float | None`')
+    if params.get("t2_outside_min", None) is not None:
+        if not isinstance(params["t2_outside_min"], (float, int)):
+            raise StyxValidationError(f'`t2_outside_min` has the wrong type: Received `{type(params.get("t2_outside_min", None))}` expected `float | None`')
+    if params.get("t2_outside_max", None) is not None:
+        if not isinstance(params["t2_outside_max"], (float, int)):
+            raise StyxValidationError(f'`t2_outside_max` has the wrong type: Received `{type(params.get("t2_outside_max", None))}` expected `float | None`')
+    if params.get("min_peak_pct", None) is not None:
+        if not isinstance(params["min_peak_pct"], (float, int)):
+            raise StyxValidationError(f'`min_peak_pct` has the wrong type: Received `{type(params.get("min_peak_pct", None))}` expected `float | None`')
+    if params.get("border_vals_hires", False) is None:
+        raise StyxValidationError("`border_vals_hires` must not be None")
+    if not isinstance(params["border_vals_hires"], bool):
+        raise StyxValidationError(f'`border_vals_hires` has the wrong type: Received `{type(params.get("border_vals_hires", False))}` expected `bool`')
+    if params.get("no_unitize", False) is None:
+        raise StyxValidationError("`no_unitize` must not be None")
+    if not isinstance(params["no_unitize"], bool):
+        raise StyxValidationError(f'`no_unitize` has the wrong type: Received `{type(params.get("no_unitize", False))}` expected `bool`')
+    if params.get("intensity", None) is not None:
+        if not isinstance(params["intensity"], (float, int)):
+            raise StyxValidationError(f'`intensity` has the wrong type: Received `{type(params.get("intensity", None))}` expected `float | None`')
+    if params.get("curv", None) is not None:
+        if not isinstance(params["curv"], (float, int)):
+            raise StyxValidationError(f'`curv` has the wrong type: Received `{type(params.get("curv", None))}` expected `float | None`')
+    if params.get("tspring", None) is not None:
+        if not isinstance(params["tspring"], (float, int)):
+            raise StyxValidationError(f'`tspring` has the wrong type: Received `{type(params.get("tspring", None))}` expected `float | None`')
+    if params.get("nspring", None) is not None:
+        if not isinstance(params["nspring"], (float, int)):
+            raise StyxValidationError(f'`nspring` has the wrong type: Received `{type(params.get("nspring", None))}` expected `float | None`')
+    if params.get("repulse", None) is not None:
+        if not isinstance(params["repulse"], (float, int)):
+            raise StyxValidationError(f'`repulse` has the wrong type: Received `{type(params.get("repulse", None))}` expected `float | None`')
+    if params.get("save_target", False) is None:
+        raise StyxValidationError("`save_target` must not be None")
+    if not isinstance(params["save_target"], bool):
+        raise StyxValidationError(f'`save_target` has the wrong type: Received `{type(params.get("save_target", False))}` expected `bool`')
+    if params.get("save_res", False) is None:
+        raise StyxValidationError("`save_res` must not be None")
+    if not isinstance(params["save_res"], bool):
+        raise StyxValidationError(f'`save_res` has the wrong type: Received `{type(params.get("save_res", False))}` expected `bool`')
+    if params.get("v_vertexno", None) is not None:
+        if not isinstance(params["v_vertexno"], (float, int)):
+            raise StyxValidationError(f'`v_vertexno` has the wrong type: Received `{type(params.get("v_vertexno", None))}` expected `float | None`')
+    if params.get("diag_vertex", None) is not None:
+        if not isinstance(params["diag_vertex"], (float, int)):
+            raise StyxValidationError(f'`diag_vertex` has the wrong type: Received `{type(params.get("diag_vertex", None))}` expected `float | None`')
+    if params.get("rip", None) is not None:
+        if not isinstance(params["rip"], str):
+            raise StyxValidationError(f'`rip` has the wrong type: Received `{type(params.get("rip", None))}` expected `str | None`')
+    if params.get("sigma_white", None) is not None:
+        if not isinstance(params["sigma_white"], str):
+            raise StyxValidationError(f'`sigma_white` has the wrong type: Received `{type(params.get("sigma_white", None))}` expected `str | None`')
+    if params.get("sigma_pial", None) is not None:
+        if not isinstance(params["sigma_pial"], str):
+            raise StyxValidationError(f'`sigma_pial` has the wrong type: Received `{type(params.get("sigma_pial", None))}` expected `str | None`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("min_border_white", None) is not None:
+        if not isinstance(params["min_border_white"], (float, int)):
+            raise StyxValidationError(f'`min_border_white` has the wrong type: Received `{type(params.get("min_border_white", None))}` expected `float | None`')
+    if params.get("max_border_white", None) is not None:
+        if not isinstance(params["max_border_white"], (float, int)):
+            raise StyxValidationError(f'`max_border_white` has the wrong type: Received `{type(params.get("max_border_white", None))}` expected `float | None`')
+    if params.get("min_gray_white_border", None) is not None:
+        if not isinstance(params["min_gray_white_border"], (float, int)):
+            raise StyxValidationError(f'`min_gray_white_border` has the wrong type: Received `{type(params.get("min_gray_white_border", None))}` expected `float | None`')
+    if params.get("max_gray", None) is not None:
+        if not isinstance(params["max_gray"], (float, int)):
+            raise StyxValidationError(f'`max_gray` has the wrong type: Received `{type(params.get("max_gray", None))}` expected `float | None`')
+    if params.get("max_gray_csf_border", None) is not None:
+        if not isinstance(params["max_gray_csf_border"], (float, int)):
+            raise StyxValidationError(f'`max_gray_csf_border` has the wrong type: Received `{type(params.get("max_gray_csf_border", None))}` expected `float | None`')
+    if params.get("min_gray_csf_border", None) is not None:
+        if not isinstance(params["min_gray_csf_border"], (float, int)):
+            raise StyxValidationError(f'`min_gray_csf_border` has the wrong type: Received `{type(params.get("min_gray_csf_border", None))}` expected `float | None`')
+    if params.get("max_csf", None) is not None:
+        if not isinstance(params["max_csf"], (float, int)):
+            raise StyxValidationError(f'`max_csf` has the wrong type: Received `{type(params.get("max_csf", None))}` expected `float | None`')
+
+
 def mris_make_surfaces_cargs(
     params: MrisMakeSurfacesParameters,
     execution: Execution,
@@ -649,6 +835,7 @@ def mris_make_surfaces_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMakeSurfacesOutputs`).
     """
+    mris_make_surfaces_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MAKE_SURFACES_METADATA)
     params = execution.params(params)

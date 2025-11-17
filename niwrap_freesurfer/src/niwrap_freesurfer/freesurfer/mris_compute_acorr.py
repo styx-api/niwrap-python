@@ -75,6 +75,50 @@ def mris_compute_acorr_params(
     return params
 
 
+def mris_compute_acorr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisComputeAcorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_subject", None) is None:
+        raise StyxValidationError("`output_subject` must not be None")
+    if not isinstance(params["output_subject"], str):
+        raise StyxValidationError(f'`output_subject` has the wrong type: Received `{type(params.get("output_subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surf", None) is None:
+        raise StyxValidationError("`surf` must not be None")
+    if not isinstance(params["surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `InputPathType`')
+    if params.get("curv", None) is None:
+        raise StyxValidationError("`curv` must not be None")
+    if not isinstance(params["curv"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`curv` has the wrong type: Received `{type(params.get("curv", None))}` expected `InputPathType`')
+    if params.get("c1_subjects", None) is None:
+        raise StyxValidationError("`c1_subjects` must not be None")
+    if not isinstance(params["c1_subjects"], list):
+        raise StyxValidationError(f'`c1_subjects` has the wrong type: Received `{type(params.get("c1_subjects", None))}` expected `list[str]`')
+    for e in params["c1_subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`c1_subjects` has the wrong type: Received `{type(params.get("c1_subjects", None))}` expected `list[str]`')
+    if params.get("c2_subjects", None) is None:
+        raise StyxValidationError("`c2_subjects` must not be None")
+    if not isinstance(params["c2_subjects"], list):
+        raise StyxValidationError(f'`c2_subjects` has the wrong type: Received `{type(params.get("c2_subjects", None))}` expected `list[str]`')
+    for e in params["c2_subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`c2_subjects` has the wrong type: Received `{type(params.get("c2_subjects", None))}` expected `list[str]`')
+
+
 def mris_compute_acorr_cargs(
     params: MrisComputeAcorrParameters,
     execution: Execution,
@@ -141,6 +185,7 @@ def mris_compute_acorr_execute(
     Returns:
         NamedTuple of outputs (described in `MrisComputeAcorrOutputs`).
     """
+    mris_compute_acorr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_COMPUTE_ACORR_METADATA)
     params = execution.params(params)

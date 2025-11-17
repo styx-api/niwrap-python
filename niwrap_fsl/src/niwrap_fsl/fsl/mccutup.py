@@ -69,6 +69,33 @@ def mccutup_params(
     return params
 
 
+def mccutup_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MccutupParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("param1", None) is not None:
+        if not isinstance(params["param1"], str):
+            raise StyxValidationError(f'`param1` has the wrong type: Received `{type(params.get("param1", None))}` expected `str | None`')
+    if params.get("param2", None) is not None:
+        if not isinstance(params["param2"], str):
+            raise StyxValidationError(f'`param2` has the wrong type: Received `{type(params.get("param2", None))}` expected `str | None`')
+
+
 def mccutup_cargs(
     params: MccutupParameters,
     execution: Execution,
@@ -142,6 +169,7 @@ def mccutup_execute(
     Returns:
         NamedTuple of outputs (described in `MccutupOutputs`).
     """
+    mccutup_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MCCUTUP_METADATA)
     params = execution.params(params)

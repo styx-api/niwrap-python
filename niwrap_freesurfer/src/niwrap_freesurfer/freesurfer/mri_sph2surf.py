@@ -99,6 +99,53 @@ def mri_sph2surf_params(
     return params
 
 
+def mri_sph2surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSph2surfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("instem", None) is None:
+        raise StyxValidationError("`instem` must not be None")
+    if not isinstance(params["instem"], str):
+        raise StyxValidationError(f'`instem` has the wrong type: Received `{type(params.get("instem", None))}` expected `str`')
+    if params.get("outstem", None) is None:
+        raise StyxValidationError("`outstem` must not be None")
+    if not isinstance(params["outstem"], str):
+        raise StyxValidationError(f'`outstem` has the wrong type: Received `{type(params.get("outstem", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("svitdir", None) is not None:
+        if not isinstance(params["svitdir"], str):
+            raise StyxValidationError(f'`svitdir` has the wrong type: Received `{type(params.get("svitdir", None))}` expected `str | None`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_sph2surf_cargs(
     params: MriSph2surfParameters,
     execution: Execution,
@@ -192,6 +239,7 @@ def mri_sph2surf_execute(
     Returns:
         NamedTuple of outputs (described in `MriSph2surfOutputs`).
     """
+    mri_sph2surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SPH2SURF_METADATA)
     params = execution.params(params)

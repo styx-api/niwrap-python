@@ -63,6 +63,30 @@ def mri_probedicom_params(
     return params
 
 
+def mri_probedicom_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriProbedicomParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dicom_file", None) is None:
+        raise StyxValidationError("`dicom_file` must not be None")
+    if not isinstance(params["dicom_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dicom_file` has the wrong type: Received `{type(params.get("dicom_file", None))}` expected `InputPathType`')
+    if params.get("option1", None) is not None:
+        if not isinstance(params["option1"], str):
+            raise StyxValidationError(f'`option1` has the wrong type: Received `{type(params.get("option1", None))}` expected `str | None`')
+    if params.get("option2", None) is not None:
+        if not isinstance(params["option2"], str):
+            raise StyxValidationError(f'`option2` has the wrong type: Received `{type(params.get("option2", None))}` expected `str | None`')
+
+
 def mri_probedicom_cargs(
     params: MriProbedicomParameters,
     execution: Execution,
@@ -131,6 +155,7 @@ def mri_probedicom_execute(
     Returns:
         NamedTuple of outputs (described in `MriProbedicomOutputs`).
     """
+    mri_probedicom_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_PROBEDICOM_METADATA)
     params = execution.params(params)

@@ -216,6 +216,103 @@ def sccan_params(
     return params
 
 
+def sccan_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SccanParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("n_permutations", None) is not None:
+        if not isinstance(params["n_permutations"], int):
+            raise StyxValidationError(f'`n_permutations` has the wrong type: Received `{type(params.get("n_permutations", None))}` expected `int | None`')
+    if params.get("smoother", None) is not None:
+        if not isinstance(params["smoother"], int):
+            raise StyxValidationError(f'`smoother` has the wrong type: Received `{type(params.get("smoother", None))}` expected `int | None`')
+    if params.get("row_sparseness", None) is not None:
+        if not isinstance(params["row_sparseness"], int):
+            raise StyxValidationError(f'`row_sparseness` has the wrong type: Received `{type(params.get("row_sparseness", None))}` expected `int | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], int):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `int | None`')
+        if params["iterations"] >= 20:
+            raise StyxValidationError("Parameter `iterations` must be at least 20")
+    if params.get("n_eigenvectors", None) is not None:
+        if not isinstance(params["n_eigenvectors"], int):
+            raise StyxValidationError(f'`n_eigenvectors` has the wrong type: Received `{type(params.get("n_eigenvectors", None))}` expected `int | None`')
+    if params.get("robustify", None) is not None:
+        if not isinstance(params["robustify"], int):
+            raise StyxValidationError(f'`robustify` has the wrong type: Received `{type(params.get("robustify", None))}` expected `int | None`')
+    if params.get("covering", None) is not None:
+        if not isinstance(params["covering"], int):
+            raise StyxValidationError(f'`covering` has the wrong type: Received `{type(params.get("covering", None))}` expected `int | None`')
+    if params.get("uselong", None) is not None:
+        if not isinstance(params["uselong"], int):
+            raise StyxValidationError(f'`uselong` has the wrong type: Received `{type(params.get("uselong", None))}` expected `int | None`')
+    if params.get("l1", None) is not None:
+        if not isinstance(params["l1"], (float, int)):
+            raise StyxValidationError(f'`l1` has the wrong type: Received `{type(params.get("l1", None))}` expected `float | None`')
+    if params.get("pclusterthresh", None) is not None:
+        if not isinstance(params["pclusterthresh"], (float, int)):
+            raise StyxValidationError(f'`pclusterthresh` has the wrong type: Received `{type(params.get("pclusterthresh", None))}` expected `float | None`')
+    if params.get("qclusterthresh", None) is not None:
+        if not isinstance(params["qclusterthresh"], (float, int)):
+            raise StyxValidationError(f'`qclusterthresh` has the wrong type: Received `{type(params.get("qclusterthresh", None))}` expected `float | None`')
+    if params.get("ridge_cca", None) is not None:
+        if not isinstance(params["ridge_cca"], (float, int)):
+            raise StyxValidationError(f'`ridge_cca` has the wrong type: Received `{type(params.get("ridge_cca", None))}` expected `float | None`')
+    if params.get("initialization", None) is not None:
+        if not isinstance(params["initialization"], str):
+            raise StyxValidationError(f'`initialization` has the wrong type: Received `{type(params.get("initialization", None))}` expected `str | None`')
+    if params.get("initialization2", None) is not None:
+        if not isinstance(params["initialization2"], str):
+            raise StyxValidationError(f'`initialization2` has the wrong type: Received `{type(params.get("initialization2", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask2", None) is not None:
+        if not isinstance(params["mask2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask2` has the wrong type: Received `{type(params.get("mask2", None))}` expected `InputPathType | None`')
+    if params.get("partial_scca_option", None) is not None:
+        if not isinstance(params["partial_scca_option"], str):
+            raise StyxValidationError(f'`partial_scca_option` has the wrong type: Received `{type(params.get("partial_scca_option", None))}` expected `str | None`')
+    if params.get("prior_weight", None) is not None:
+        if not isinstance(params["prior_weight"], (float, int)):
+            raise StyxValidationError(f'`prior_weight` has the wrong type: Received `{type(params.get("prior_weight", None))}` expected `float | None`')
+    if params.get("get_small", None) is not None:
+        if not isinstance(params["get_small"], (float, int)):
+            raise StyxValidationError(f'`get_small` has the wrong type: Received `{type(params.get("get_small", None))}` expected `float | None`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], (float, int)):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
+    if params.get("imageset_to_matrix", None) is not None:
+        if not isinstance(params["imageset_to_matrix"], str):
+            raise StyxValidationError(f'`imageset_to_matrix` has the wrong type: Received `{type(params.get("imageset_to_matrix", None))}` expected `str | None`')
+    if params.get("timeseriesimage_to_matrix", None) is not None:
+        if not isinstance(params["timeseriesimage_to_matrix"], str):
+            raise StyxValidationError(f'`timeseriesimage_to_matrix` has the wrong type: Received `{type(params.get("timeseriesimage_to_matrix", None))}` expected `str | None`')
+    if params.get("vector_to_image", None) is not None:
+        if not isinstance(params["vector_to_image"], str):
+            raise StyxValidationError(f'`vector_to_image` has the wrong type: Received `{type(params.get("vector_to_image", None))}` expected `str | None`')
+    if params.get("imageset_to_projections", None) is not None:
+        if not isinstance(params["imageset_to_projections"], str):
+            raise StyxValidationError(f'`imageset_to_projections` has the wrong type: Received `{type(params.get("imageset_to_projections", None))}` expected `str | None`')
+    if params.get("scca", None) is not None:
+        if not isinstance(params["scca"], str):
+            raise StyxValidationError(f'`scca` has the wrong type: Received `{type(params.get("scca", None))}` expected `str | None`')
+    if params.get("svd", None) is not None:
+        if not isinstance(params["svd"], str):
+            raise StyxValidationError(f'`svd` has the wrong type: Received `{type(params.get("svd", None))}` expected `str | None`')
+
+
 def sccan_cargs(
     params: SccanParameters,
     execution: Execution,
@@ -409,6 +506,7 @@ def sccan_execute(
     Returns:
         NamedTuple of outputs (described in `SccanOutputs`).
     """
+    sccan_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SCCAN_METADATA)
     params = execution.params(params)

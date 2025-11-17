@@ -98,6 +98,62 @@ def dicom_hdr_params(
     return params
 
 
+def dicom_hdr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DicomHdrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("files", None) is None:
+        raise StyxValidationError("`files` must not be None")
+    if not isinstance(params["files"], list):
+        raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    for e in params["files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    if params.get("hex", False) is None:
+        raise StyxValidationError("`hex` must not be None")
+    if not isinstance(params["hex"], bool):
+        raise StyxValidationError(f'`hex` has the wrong type: Received `{type(params.get("hex", False))}` expected `bool`')
+    if params.get("noname", False) is None:
+        raise StyxValidationError("`noname` must not be None")
+    if not isinstance(params["noname"], bool):
+        raise StyxValidationError(f'`noname` has the wrong type: Received `{type(params.get("noname", False))}` expected `bool`')
+    if params.get("sexinfo", False) is None:
+        raise StyxValidationError("`sexinfo` must not be None")
+    if not isinstance(params["sexinfo"], bool):
+        raise StyxValidationError(f'`sexinfo` has the wrong type: Received `{type(params.get("sexinfo", False))}` expected `bool`')
+    if params.get("mulfram", False) is None:
+        raise StyxValidationError("`mulfram` must not be None")
+    if not isinstance(params["mulfram"], bool):
+        raise StyxValidationError(f'`mulfram` has the wrong type: Received `{type(params.get("mulfram", False))}` expected `bool`')
+    if params.get("v_dump", None) is not None:
+        if not isinstance(params["v_dump"], (float, int)):
+            raise StyxValidationError(f'`v_dump` has the wrong type: Received `{type(params.get("v_dump", None))}` expected `float | None`')
+    if params.get("no_length", False) is None:
+        raise StyxValidationError("`no_length` must not be None")
+    if not isinstance(params["no_length"], bool):
+        raise StyxValidationError(f'`no_length` has the wrong type: Received `{type(params.get("no_length", False))}` expected `bool`')
+    if params.get("slice_times", False) is None:
+        raise StyxValidationError("`slice_times` must not be None")
+    if not isinstance(params["slice_times"], bool):
+        raise StyxValidationError(f'`slice_times` has the wrong type: Received `{type(params.get("slice_times", False))}` expected `bool`')
+    if params.get("slice_times_verb", False) is None:
+        raise StyxValidationError("`slice_times_verb` must not be None")
+    if not isinstance(params["slice_times_verb"], bool):
+        raise StyxValidationError(f'`slice_times_verb` has the wrong type: Received `{type(params.get("slice_times_verb", False))}` expected `bool`')
+    if params.get("siemens_csa_data", False) is None:
+        raise StyxValidationError("`siemens_csa_data` must not be None")
+    if not isinstance(params["siemens_csa_data"], bool):
+        raise StyxValidationError(f'`siemens_csa_data` has the wrong type: Received `{type(params.get("siemens_csa_data", False))}` expected `bool`')
+
+
 def dicom_hdr_cargs(
     params: DicomHdrParameters,
     execution: Execution,
@@ -176,6 +232,7 @@ def dicom_hdr_execute(
     Returns:
         NamedTuple of outputs (described in `DicomHdrOutputs`).
     """
+    dicom_hdr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DICOM_HDR_METADATA)
     params = execution.params(params)

@@ -95,6 +95,49 @@ def volume_label_import_params(
     return params
 
 
+def volume_label_import_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeLabelImportParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("discard-others", False) is None:
+        raise StyxValidationError("`discard-others` must not be None")
+    if not isinstance(params["discard-others"], bool):
+        raise StyxValidationError(f'`discard-others` has the wrong type: Received `{type(params.get("discard-others", False))}` expected `bool`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], int):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `int | None`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("drop-unused-labels", False) is None:
+        raise StyxValidationError("`drop-unused-labels` must not be None")
+    if not isinstance(params["drop-unused-labels"], bool):
+        raise StyxValidationError(f'`drop-unused-labels` has the wrong type: Received `{type(params.get("drop-unused-labels", False))}` expected `bool`')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("label-list-file", None) is None:
+        raise StyxValidationError("`label-list-file` must not be None")
+    if not isinstance(params["label-list-file"], str):
+        raise StyxValidationError(f'`label-list-file` has the wrong type: Received `{type(params.get("label-list-file", None))}` expected `str`')
+
+
 def volume_label_import_cargs(
     params: VolumeLabelImportParameters,
     execution: Execution,
@@ -187,6 +230,7 @@ def volume_label_import_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelImportOutputs`).
     """
+    volume_label_import_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_LABEL_IMPORT_METADATA)
     params = execution.params(params)

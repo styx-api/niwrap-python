@@ -98,6 +98,51 @@ def film_cifti_params(
     return params
 
 
+def film_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FilmCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_filename", None) is None:
+        raise StyxValidationError("`input_filename` must not be None")
+    if not isinstance(params["input_filename"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_filename` has the wrong type: Received `{type(params.get("input_filename", None))}` expected `InputPathType`')
+    if params.get("basename", None) is None:
+        raise StyxValidationError("`basename` must not be None")
+    if not isinstance(params["basename"], str):
+        raise StyxValidationError(f'`basename` has the wrong type: Received `{type(params.get("basename", None))}` expected `str`')
+    if params.get("left_surface", None) is None:
+        raise StyxValidationError("`left_surface` must not be None")
+    if not isinstance(params["left_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`left_surface` has the wrong type: Received `{type(params.get("left_surface", None))}` expected `InputPathType`')
+    if params.get("right_surface", None) is None:
+        raise StyxValidationError("`right_surface` must not be None")
+    if not isinstance(params["right_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`right_surface` has the wrong type: Received `{type(params.get("right_surface", None))}` expected `InputPathType`')
+    if params.get("susan_threshold", None) is not None:
+        if not isinstance(params["susan_threshold"], (float, int)):
+            raise StyxValidationError(f'`susan_threshold` has the wrong type: Received `{type(params.get("susan_threshold", None))}` expected `float | None`')
+    if params.get("susan_extent", None) is not None:
+        if not isinstance(params["susan_extent"], (float, int)):
+            raise StyxValidationError(f'`susan_extent` has the wrong type: Received `{type(params.get("susan_extent", None))}` expected `float | None`')
+    if params.get("surface_sigma", None) is not None:
+        if not isinstance(params["surface_sigma"], (float, int)):
+            raise StyxValidationError(f'`surface_sigma` has the wrong type: Received `{type(params.get("surface_sigma", None))}` expected `float | None`')
+    if params.get("surface_extent", None) is not None:
+        if not isinstance(params["surface_extent"], (float, int)):
+            raise StyxValidationError(f'`surface_extent` has the wrong type: Received `{type(params.get("surface_extent", None))}` expected `float | None`')
+    if params.get("film_options", None) is not None:
+        if not isinstance(params["film_options"], str):
+            raise StyxValidationError(f'`film_options` has the wrong type: Received `{type(params.get("film_options", None))}` expected `str | None`')
+
+
 def film_cifti_cargs(
     params: FilmCiftiParameters,
     execution: Execution,
@@ -196,6 +241,7 @@ def film_cifti_execute(
     Returns:
         NamedTuple of outputs (described in `FilmCiftiOutputs`).
     """
+    film_cifti_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FILM_CIFTI_METADATA)
     params = execution.params(params)

@@ -84,6 +84,52 @@ def mri_matrix_multiply_params(
     return params
 
 
+def mri_matrix_multiply_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMatrixMultiplyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_matrices", None) is None:
+        raise StyxValidationError("`input_matrices` must not be None")
+    if not isinstance(params["input_matrices"], list):
+        raise StyxValidationError(f'`input_matrices` has the wrong type: Received `{type(params.get("input_matrices", None))}` expected `list[InputPathType]`')
+    for e in params["input_matrices"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_matrices` has the wrong type: Received `{type(params.get("input_matrices", None))}` expected `list[InputPathType]`')
+    if params.get("inverted_input_matrices", None) is not None:
+        if not isinstance(params["inverted_input_matrices"], list):
+            raise StyxValidationError(f'`inverted_input_matrices` has the wrong type: Received `{type(params.get("inverted_input_matrices", None))}` expected `list[InputPathType] | None`')
+        for e in params["inverted_input_matrices"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`inverted_input_matrices` has the wrong type: Received `{type(params.get("inverted_input_matrices", None))}` expected `list[InputPathType] | None`')
+    if params.get("output_matrix", None) is None:
+        raise StyxValidationError("`output_matrix` must not be None")
+    if not isinstance(params["output_matrix"], str):
+        raise StyxValidationError(f'`output_matrix` has the wrong type: Received `{type(params.get("output_matrix", None))}` expected `str`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("fsl", False) is None:
+        raise StyxValidationError("`fsl` must not be None")
+    if not isinstance(params["fsl"], bool):
+        raise StyxValidationError(f'`fsl` has the wrong type: Received `{type(params.get("fsl", False))}` expected `bool`')
+    if params.get("binarize", False) is None:
+        raise StyxValidationError("`binarize` must not be None")
+    if not isinstance(params["binarize"], bool):
+        raise StyxValidationError(f'`binarize` has the wrong type: Received `{type(params.get("binarize", False))}` expected `bool`')
+    if params.get("subject_name", None) is not None:
+        if not isinstance(params["subject_name"], str):
+            raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str | None`')
+
+
 def mri_matrix_multiply_cargs(
     params: MriMatrixMultiplyParameters,
     execution: Execution,
@@ -166,6 +212,7 @@ def mri_matrix_multiply_execute(
     Returns:
         NamedTuple of outputs (described in `MriMatrixMultiplyOutputs`).
     """
+    mri_matrix_multiply_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MATRIX_MULTIPLY_METADATA)
     params = execution.params(params)

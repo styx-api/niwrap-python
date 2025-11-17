@@ -76,18 +76,20 @@ def simulate_displacement_field_displacement_specific_options_cargs_dyn_fn(
     }.get(t)
 
 
-def simulate_displacement_field_displacement_specific_options_outputs_dyn_fn(
+def simulate_displacement_field_displacement_specific_options_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "bspline_options": simulate_displacement_field_bspline_options_validate,
+        "exponential_options": simulate_displacement_field_exponential_options_validate,
     }.get(t)
 
 
@@ -112,6 +114,26 @@ def simulate_displacement_field_bspline_options_params(
     if number_of_control_points is not None:
         params["number_of_control_points"] = number_of_control_points
     return params
+
+
+def simulate_displacement_field_bspline_options_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SimulateDisplacementFieldBsplineOptionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_of_fitting_levels", None) is not None:
+        if not isinstance(params["number_of_fitting_levels"], int):
+            raise StyxValidationError(f'`number_of_fitting_levels` has the wrong type: Received `{type(params.get("number_of_fitting_levels", None))}` expected `int | None`')
+    if params.get("number_of_control_points", None) is not None:
+        if not isinstance(params["number_of_control_points"], int):
+            raise StyxValidationError(f'`number_of_control_points` has the wrong type: Received `{type(params.get("number_of_control_points", None))}` expected `int | None`')
 
 
 def simulate_displacement_field_bspline_options_cargs(
@@ -153,6 +175,23 @@ def simulate_displacement_field_exponential_options_params(
     if smoothing_standard_deviation is not None:
         params["smoothing_standard_deviation"] = smoothing_standard_deviation
     return params
+
+
+def simulate_displacement_field_exponential_options_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SimulateDisplacementFieldExponentialOptionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("smoothing_standard_deviation", None) is not None:
+        if not isinstance(params["smoothing_standard_deviation"], (float, int)):
+            raise StyxValidationError(f'`smoothing_standard_deviation` has the wrong type: Received `{type(params.get("smoothing_standard_deviation", None))}` expected `float | None`')
 
 
 def simulate_displacement_field_exponential_options_cargs(
@@ -231,6 +270,53 @@ def simulate_displacement_field_params(
     return params
 
 
+def simulate_displacement_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SimulateDisplacementFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("displacement_field_type", None) is None:
+        raise StyxValidationError("`displacement_field_type` must not be None")
+    if not isinstance(params["displacement_field_type"], str):
+        raise StyxValidationError(f'`displacement_field_type` has the wrong type: Received `{type(params.get("displacement_field_type", None))}` expected `typing.Literal["BSpline", "Exponential"]`')
+    if params["displacement_field_type"] not in ["BSpline", "Exponential"]:
+        raise StyxValidationError("Parameter `displacement_field_type` must be one of [\"BSpline\", \"Exponential\"]")
+    if params.get("domain_image", None) is None:
+        raise StyxValidationError("`domain_image` must not be None")
+    if not isinstance(params["domain_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`domain_image` has the wrong type: Received `{type(params.get("domain_image", None))}` expected `InputPathType`')
+    if params.get("output_field", None) is None:
+        raise StyxValidationError("`output_field` must not be None")
+    if not isinstance(params["output_field"], str):
+        raise StyxValidationError(f'`output_field` has the wrong type: Received `{type(params.get("output_field", None))}` expected `str`')
+    if params.get("number_of_random_points", None) is not None:
+        if not isinstance(params["number_of_random_points"], int):
+            raise StyxValidationError(f'`number_of_random_points` has the wrong type: Received `{type(params.get("number_of_random_points", None))}` expected `int | None`')
+    if params.get("standard_deviation_displacement_field", None) is not None:
+        if not isinstance(params["standard_deviation_displacement_field"], (float, int)):
+            raise StyxValidationError(f'`standard_deviation_displacement_field` has the wrong type: Received `{type(params.get("standard_deviation_displacement_field", None))}` expected `float | None`')
+    if params.get("enforce_stationary_boundary", None) is not None:
+        if not isinstance(params["enforce_stationary_boundary"], int):
+            raise StyxValidationError(f'`enforce_stationary_boundary` has the wrong type: Received `{type(params.get("enforce_stationary_boundary", None))}` expected `int | None`')
+    if params.get("displacement_specific_options", None) is not None:
+        if not isinstance(params["displacement_specific_options"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["displacement_specific_options"])}\'')
+        if "@type" not in params["displacement_specific_options"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        simulate_displacement_field_displacement_specific_options_validate_dyn_fn(params["displacement_specific_options"]["@type"])(params["displacement_specific_options"])
+
+
 def simulate_displacement_field_cargs(
     params: SimulateDisplacementFieldParameters,
     execution: Execution,
@@ -301,6 +387,7 @@ def simulate_displacement_field_execute(
     Returns:
         NamedTuple of outputs (described in `SimulateDisplacementFieldOutputs`).
     """
+    simulate_displacement_field_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIMULATE_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)

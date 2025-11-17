@@ -51,6 +51,24 @@ def v__djunct_4d_slices_to_3d_vol_params(
     return params
 
 
+def v__djunct_4d_slices_to_3d_vol_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunct4dSlicesTo3dVolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("do_something", False) is None:
+        raise StyxValidationError("`do_something` must not be None")
+    if not isinstance(params["do_something"], bool):
+        raise StyxValidationError(f'`do_something` has the wrong type: Received `{type(params.get("do_something", False))}` expected `bool`')
+
+
 def v__djunct_4d_slices_to_3d_vol_cargs(
     params: VDjunct4dSlicesTo3dVolParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def v__djunct_4d_slices_to_3d_vol_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunct4dSlicesTo3dVolOutputs`).
     """
+    v__djunct_4d_slices_to_3d_vol_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA)
     params = execution.params(params)

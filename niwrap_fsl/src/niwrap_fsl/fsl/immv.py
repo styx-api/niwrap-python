@@ -55,6 +55,31 @@ def immv_params(
     return params
 
 
+def immv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `ImmvParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_files", None) is None:
+        raise StyxValidationError("`source_files` must not be None")
+    if not isinstance(params["source_files"], list):
+        raise StyxValidationError(f'`source_files` has the wrong type: Received `{type(params.get("source_files", None))}` expected `list[InputPathType]`')
+    for e in params["source_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`source_files` has the wrong type: Received `{type(params.get("source_files", None))}` expected `list[InputPathType]`')
+    if params.get("destination", None) is None:
+        raise StyxValidationError("`destination` must not be None")
+    if not isinstance(params["destination"], str):
+        raise StyxValidationError(f'`destination` has the wrong type: Received `{type(params.get("destination", None))}` expected `str`')
+
+
 def immv_cargs(
     params: ImmvParameters,
     execution: Execution,
@@ -113,6 +138,7 @@ def immv_execute(
     Returns:
         NamedTuple of outputs (described in `ImmvOutputs`).
     """
+    immv_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMMV_METADATA)
     params = execution.params(params)

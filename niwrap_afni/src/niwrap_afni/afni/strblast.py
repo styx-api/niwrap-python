@@ -83,6 +83,49 @@ def strblast_params(
     return params
 
 
+def strblast_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `StrblastParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("targetstring", None) is None:
+        raise StyxValidationError("`targetstring` must not be None")
+    if not isinstance(params["targetstring"], str):
+        raise StyxValidationError(f'`targetstring` has the wrong type: Received `{type(params.get("targetstring", None))}` expected `str`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("new_char", None) is not None:
+        if not isinstance(params["new_char"], str):
+            raise StyxValidationError(f'`new_char` has the wrong type: Received `{type(params.get("new_char", None))}` expected `str | None`')
+    if params.get("new_string", None) is not None:
+        if not isinstance(params["new_string"], str):
+            raise StyxValidationError(f'`new_string` has the wrong type: Received `{type(params.get("new_string", None))}` expected `str | None`')
+    if params.get("unescape", False) is None:
+        raise StyxValidationError("`unescape` must not be None")
+    if not isinstance(params["unescape"], bool):
+        raise StyxValidationError(f'`unescape` has the wrong type: Received `{type(params.get("unescape", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def strblast_cargs(
     params: StrblastParameters,
     execution: Execution,
@@ -158,6 +201,7 @@ def strblast_execute(
     Returns:
         NamedTuple of outputs (described in `StrblastOutputs`).
     """
+    strblast_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(STRBLAST_METADATA)
     params = execution.params(params)

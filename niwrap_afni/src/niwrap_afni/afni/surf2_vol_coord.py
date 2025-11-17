@@ -110,6 +110,59 @@ def surf2_vol_coord_params(
     return params
 
 
+def surf2_vol_coord_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Surf2VolCoordParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("grid_vol", None) is None:
+        raise StyxValidationError("`grid_vol` must not be None")
+    if not isinstance(params["grid_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`grid_vol` has the wrong type: Received `{type(params.get("grid_vol", None))}` expected `InputPathType`')
+    if params.get("grid_subbrick", None) is not None:
+        if not isinstance(params["grid_subbrick"], (float, int)):
+            raise StyxValidationError(f'`grid_subbrick` has the wrong type: Received `{type(params.get("grid_subbrick", None))}` expected `float | None`')
+    if params.get("sv", None) is not None:
+        if not isinstance(params["sv"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sv` has the wrong type: Received `{type(params.get("sv", None))}` expected `InputPathType | None`')
+    if params.get("one_node", None) is not None:
+        if not isinstance(params["one_node"], str):
+            raise StyxValidationError(f'`one_node` has the wrong type: Received `{type(params.get("one_node", None))}` expected `str | None`')
+    if params.get("closest_nodes", None) is None:
+        raise StyxValidationError("`closest_nodes` must not be None")
+    if not isinstance(params["closest_nodes"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`closest_nodes` has the wrong type: Received `{type(params.get("closest_nodes", None))}` expected `InputPathType`')
+    if params.get("qual", None) is not None:
+        if not isinstance(params["qual"], str):
+            raise StyxValidationError(f'`qual` has the wrong type: Received `{type(params.get("qual", None))}` expected `str | None`')
+    if params.get("lpi", False) is None:
+        raise StyxValidationError("`lpi` must not be None")
+    if not isinstance(params["lpi"], bool):
+        raise StyxValidationError(f'`lpi` has the wrong type: Received `{type(params.get("lpi", False))}` expected `bool`')
+    if params.get("rai", False) is None:
+        raise StyxValidationError("`rai` must not be None")
+    if not isinstance(params["rai"], bool):
+        raise StyxValidationError(f'`rai` has the wrong type: Received `{type(params.get("rai", False))}` expected `bool`')
+    if params.get("verb_level", None) is not None:
+        if not isinstance(params["verb_level"], (float, int)):
+            raise StyxValidationError(f'`verb_level` has the wrong type: Received `{type(params.get("verb_level", None))}` expected `float | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+
+
 def surf2_vol_coord_cargs(
     params: Surf2VolCoordParameters,
     execution: Execution,
@@ -213,6 +266,7 @@ def surf2_vol_coord_execute(
     Returns:
         NamedTuple of outputs (described in `Surf2VolCoordOutputs`).
     """
+    surf2_vol_coord_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF2_VOL_COORD_METADATA)
     params = execution.params(params)

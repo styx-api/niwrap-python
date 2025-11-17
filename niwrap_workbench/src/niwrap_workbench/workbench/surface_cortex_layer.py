@@ -74,6 +74,39 @@ def surface_cortex_layer_params(
     return params
 
 
+def surface_cortex_layer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceCortexLayerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("out-surface", None) is None:
+        raise StyxValidationError("`out-surface` must not be None")
+    if not isinstance(params["out-surface"], str):
+        raise StyxValidationError(f'`out-surface` has the wrong type: Received `{type(params.get("out-surface", None))}` expected `str`')
+    if params.get("placement-metric", None) is not None:
+        if not isinstance(params["placement-metric"], str):
+            raise StyxValidationError(f'`placement-metric` has the wrong type: Received `{type(params.get("placement-metric", None))}` expected `str | None`')
+    if params.get("white-surface", None) is None:
+        raise StyxValidationError("`white-surface` must not be None")
+    if not isinstance(params["white-surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`white-surface` has the wrong type: Received `{type(params.get("white-surface", None))}` expected `InputPathType`')
+    if params.get("pial-surface", None) is None:
+        raise StyxValidationError("`pial-surface` must not be None")
+    if not isinstance(params["pial-surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pial-surface` has the wrong type: Received `{type(params.get("pial-surface", None))}` expected `InputPathType`')
+    if params.get("location", None) is None:
+        raise StyxValidationError("`location` must not be None")
+    if not isinstance(params["location"], (float, int)):
+        raise StyxValidationError(f'`location` has the wrong type: Received `{type(params.get("location", None))}` expected `float`')
+
+
 def surface_cortex_layer_cargs(
     params: SurfaceCortexLayerParameters,
     execution: Execution,
@@ -142,6 +175,7 @@ def surface_cortex_layer_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceCortexLayerOutputs`).
     """
+    surface_cortex_layer_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_CORTEX_LAYER_METADATA)
     params = execution.params(params)

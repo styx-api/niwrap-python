@@ -183,6 +183,100 @@ def mris_sample_parc_params(
     return params
 
 
+def mris_sample_parc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSampleParcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("parc_name", None) is None:
+        raise StyxValidationError("`parc_name` must not be None")
+    if not isinstance(params["parc_name"], str):
+        raise StyxValidationError(f'`parc_name` has the wrong type: Received `{type(params.get("parc_name", None))}` expected `str`')
+    if params.get("output_annot", None) is None:
+        raise StyxValidationError("`output_annot` must not be None")
+    if not isinstance(params["output_annot"], str):
+        raise StyxValidationError(f'`output_annot` has the wrong type: Received `{type(params.get("output_annot", None))}` expected `str`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+    if params.get("fix", None) is not None:
+        if not isinstance(params["fix"], (float, int)):
+            raise StyxValidationError(f'`fix` has the wrong type: Received `{type(params.get("fix", None))}` expected `float | None`')
+    if params.get("replace", None) is not None:
+        if not isinstance(params["replace"], (float, int)):
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
+    if params.get("trans", None) is not None:
+        if not isinstance(params["trans"], list):
+            raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `list[float] | None`')
+        if len(params["trans"]) == 2:
+            raise StyxValidationError("Parameter `trans` must contain exactly 2 elements")
+        for e in params["trans"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `list[float] | None`')
+    if params.get("cortex", None) is not None:
+        if not isinstance(params["cortex"], str):
+            raise StyxValidationError(f'`cortex` has the wrong type: Received `{type(params.get("cortex", None))}` expected `str | None`')
+    if params.get("projmm", None) is not None:
+        if not isinstance(params["projmm"], (float, int)):
+            raise StyxValidationError(f'`projmm` has the wrong type: Received `{type(params.get("projmm", None))}` expected `float | None`')
+    if params.get("proj", None) is not None:
+        if not isinstance(params["proj"], (float, int)):
+            raise StyxValidationError(f'`proj` has the wrong type: Received `{type(params.get("proj", None))}` expected `float | None`')
+    if params.get("projfrac", None) is not None:
+        if not isinstance(params["projfrac"], (float, int)):
+            raise StyxValidationError(f'`projfrac` has the wrong type: Received `{type(params.get("projfrac", None))}` expected `float | None`')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("ct", None) is not None:
+        if not isinstance(params["ct"], str):
+            raise StyxValidationError(f'`ct` has the wrong type: Received `{type(params.get("ct", None))}` expected `str | None`')
+    if params.get("v_level", None) is not None:
+        if not isinstance(params["v_level"], (float, int)):
+            raise StyxValidationError(f'`v_level` has the wrong type: Received `{type(params.get("v_level", None))}` expected `float | None`')
+    if params.get("filter", None) is not None:
+        if not isinstance(params["filter"], (float, int)):
+            raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `float | None`')
+    if params.get("smooth", None) is not None:
+        if not isinstance(params["smooth"], (float, int)):
+            raise StyxValidationError(f'`smooth` has the wrong type: Received `{type(params.get("smooth", None))}` expected `float | None`')
+    if params.get("w_size", None) is not None:
+        if not isinstance(params["w_size"], (float, int)):
+            raise StyxValidationError(f'`w_size` has the wrong type: Received `{type(params.get("w_size", None))}` expected `float | None`')
+    if params.get("thickness", None) is not None:
+        if not isinstance(params["thickness"], str):
+            raise StyxValidationError(f'`thickness` has the wrong type: Received `{type(params.get("thickness", None))}` expected `str | None`')
+    if params.get("change_unknown", None) is not None:
+        if not isinstance(params["change_unknown"], (float, int)):
+            raise StyxValidationError(f'`change_unknown` has the wrong type: Received `{type(params.get("change_unknown", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mris_sample_parc_cargs(
     params: MrisSampleParcParameters,
     execution: Execution,
@@ -333,6 +427,7 @@ def mris_sample_parc_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSampleParcOutputs`).
     """
+    mris_sample_parc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SAMPLE_PARC_METADATA)
     params = execution.params(params)

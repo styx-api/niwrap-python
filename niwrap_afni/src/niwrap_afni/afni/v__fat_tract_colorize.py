@@ -95,6 +95,47 @@ def v__fat_tract_colorize_params(
     return params
 
 
+def v__fat_tract_colorize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VFatTractColorizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_fa", None) is None:
+        raise StyxValidationError("`in_fa` must not be None")
+    if not isinstance(params["in_fa"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_fa` has the wrong type: Received `{type(params.get("in_fa", None))}` expected `InputPathType`')
+    if params.get("in_v1", None) is None:
+        raise StyxValidationError("`in_v1` must not be None")
+    if not isinstance(params["in_v1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_v1` has the wrong type: Received `{type(params.get("in_v1", None))}` expected `InputPathType`')
+    if params.get("in_tracts", None) is None:
+        raise StyxValidationError("`in_tracts` must not be None")
+    if not isinstance(params["in_tracts"], str):
+        raise StyxValidationError(f'`in_tracts` has the wrong type: Received `{type(params.get("in_tracts", None))}` expected `str`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("in_ulay", None) is not None:
+        if not isinstance(params["in_ulay"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_ulay` has the wrong type: Received `{type(params.get("in_ulay", None))}` expected `InputPathType | None`')
+    if params.get("no_view", False) is None:
+        raise StyxValidationError("`no_view` must not be None")
+    if not isinstance(params["no_view"], bool):
+        raise StyxValidationError(f'`no_view` has the wrong type: Received `{type(params.get("no_view", False))}` expected `bool`')
+    if params.get("only_view", False) is None:
+        raise StyxValidationError("`only_view` must not be None")
+    if not isinstance(params["only_view"], bool):
+        raise StyxValidationError(f'`only_view` has the wrong type: Received `{type(params.get("only_view", False))}` expected `bool`')
+
+
 def v__fat_tract_colorize_cargs(
     params: VFatTractColorizeParameters,
     execution: Execution,
@@ -181,6 +222,7 @@ def v__fat_tract_colorize_execute(
     Returns:
         NamedTuple of outputs (described in `VFatTractColorizeOutputs`).
     """
+    v__fat_tract_colorize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__FAT_TRACT_COLORIZE_METADATA)
     params = execution.params(params)

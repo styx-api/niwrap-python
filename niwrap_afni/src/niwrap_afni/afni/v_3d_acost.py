@@ -68,6 +68,36 @@ def v_3d_acost_params(
     return params
 
 
+def v_3d_acost_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAcostParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("basefile", None) is None:
+        raise StyxValidationError("`basefile` must not be None")
+    if not isinstance(params["basefile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`basefile` has the wrong type: Received `{type(params.get("basefile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("all_cost", False) is None:
+        raise StyxValidationError("`all_cost` must not be None")
+    if not isinstance(params["all_cost"], bool):
+        raise StyxValidationError(f'`all_cost` has the wrong type: Received `{type(params.get("all_cost", False))}` expected `bool`')
+
+
 def v_3d_acost_cargs(
     params: V3dAcostParameters,
     execution: Execution,
@@ -137,6 +167,7 @@ def v_3d_acost_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAcostOutputs`).
     """
+    v_3d_acost_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ACOST_METADATA)
     params = execution.params(params)

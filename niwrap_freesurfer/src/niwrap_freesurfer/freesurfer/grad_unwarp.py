@@ -99,6 +99,52 @@ def grad_unwarp_params(
     return params
 
 
+def grad_unwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GradUnwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("seriesno", None) is not None:
+        if not isinstance(params["seriesno"], str):
+            raise StyxValidationError(f'`seriesno` has the wrong type: Received `{type(params.get("seriesno", None))}` expected `str | None`')
+    if params.get("unwarp_type", None) is not None:
+        if not isinstance(params["unwarp_type"], str):
+            raise StyxValidationError(f'`unwarp_type` has the wrong type: Received `{type(params.get("unwarp_type", None))}` expected `str | None`')
+    if params.get("nojac", False) is None:
+        raise StyxValidationError("`nojac` must not be None")
+    if not isinstance(params["nojac"], bool):
+        raise StyxValidationError(f'`nojac` has the wrong type: Received `{type(params.get("nojac", False))}` expected `bool`')
+    if params.get("corfov", False) is None:
+        raise StyxValidationError("`corfov` must not be None")
+    if not isinstance(params["corfov"], bool):
+        raise StyxValidationError(f'`corfov` has the wrong type: Received `{type(params.get("corfov", False))}` expected `bool`')
+    if params.get("cor", False) is None:
+        raise StyxValidationError("`cor` must not be None")
+    if not isinstance(params["cor"], bool):
+        raise StyxValidationError(f'`cor` has the wrong type: Received `{type(params.get("cor", False))}` expected `bool`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `str | None`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("matlab_binary", None) is not None:
+        if not isinstance(params["matlab_binary"], str):
+            raise StyxValidationError(f'`matlab_binary` has the wrong type: Received `{type(params.get("matlab_binary", None))}` expected `str | None`')
+
+
 def grad_unwarp_cargs(
     params: GradUnwarpParameters,
     execution: Execution,
@@ -188,6 +234,7 @@ def grad_unwarp_execute(
     Returns:
         NamedTuple of outputs (described in `GradUnwarpOutputs`).
     """
+    grad_unwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GRAD_UNWARP_METADATA)
     params = execution.params(params)

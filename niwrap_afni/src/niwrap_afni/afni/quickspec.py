@@ -88,6 +88,59 @@ def quickspec_params(
     return params
 
 
+def quickspec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QuickspecParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tn", None) is None:
+        raise StyxValidationError("`tn` must not be None")
+    if not isinstance(params["tn"], list):
+        raise StyxValidationError(f'`tn` has the wrong type: Received `{type(params.get("tn", None))}` expected `list[str]`')
+    for e in params["tn"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`tn` has the wrong type: Received `{type(params.get("tn", None))}` expected `list[str]`')
+    if params.get("tsn", None) is None:
+        raise StyxValidationError("`tsn` must not be None")
+    if not isinstance(params["tsn"], list):
+        raise StyxValidationError(f'`tsn` has the wrong type: Received `{type(params.get("tsn", None))}` expected `list[str]`')
+    for e in params["tsn"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`tsn` has the wrong type: Received `{type(params.get("tsn", None))}` expected `list[str]`')
+    if params.get("tsnad", None) is not None:
+        if not isinstance(params["tsnad"], list):
+            raise StyxValidationError(f'`tsnad` has the wrong type: Received `{type(params.get("tsnad", None))}` expected `list[str] | None`')
+        for e in params["tsnad"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`tsnad` has the wrong type: Received `{type(params.get("tsnad", None))}` expected `list[str] | None`')
+    if params.get("tsnadm", None) is not None:
+        if not isinstance(params["tsnadm"], list):
+            raise StyxValidationError(f'`tsnadm` has the wrong type: Received `{type(params.get("tsnadm", None))}` expected `list[str] | None`')
+        for e in params["tsnadm"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`tsnadm` has the wrong type: Received `{type(params.get("tsnadm", None))}` expected `list[str] | None`')
+    if params.get("tsnadl", None) is not None:
+        if not isinstance(params["tsnadl"], list):
+            raise StyxValidationError(f'`tsnadl` has the wrong type: Received `{type(params.get("tsnadl", None))}` expected `list[str] | None`')
+        for e in params["tsnadl"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`tsnadl` has the wrong type: Received `{type(params.get("tsnadl", None))}` expected `list[str] | None`')
+    if params.get("spec", None) is not None:
+        if not isinstance(params["spec"], str):
+            raise StyxValidationError(f'`spec` has the wrong type: Received `{type(params.get("spec", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def quickspec_cargs(
     params: QuickspecParameters,
     execution: Execution,
@@ -176,6 +229,7 @@ def quickspec_execute(
     Returns:
         NamedTuple of outputs (described in `QuickspecOutputs`).
     """
+    quickspec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QUICKSPEC_METADATA)
     params = execution.params(params)

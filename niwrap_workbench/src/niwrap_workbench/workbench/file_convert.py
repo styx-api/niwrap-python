@@ -101,6 +101,35 @@ def file_convert_border_version_convert_params(
     return params
 
 
+def file_convert_border_version_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FileConvertBorderVersionConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border-in", None) is None:
+        raise StyxValidationError("`border-in` must not be None")
+    if not isinstance(params["border-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border-in` has the wrong type: Received `{type(params.get("border-in", None))}` expected `InputPathType`')
+    if params.get("out-version", None) is None:
+        raise StyxValidationError("`out-version` must not be None")
+    if not isinstance(params["out-version"], int):
+        raise StyxValidationError(f'`out-version` has the wrong type: Received `{type(params.get("out-version", None))}` expected `int`')
+    if params.get("border-out", None) is None:
+        raise StyxValidationError("`border-out` must not be None")
+    if not isinstance(params["border-out"], str):
+        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+
+
 def file_convert_border_version_convert_cargs(
     params: FileConvertBorderVersionConvertParameters,
     execution: Execution,
@@ -151,6 +180,32 @@ def file_convert_nifti_version_convert_params(
     return params
 
 
+def file_convert_nifti_version_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FileConvertNiftiVersionConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], str):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str`')
+    if params.get("version", None) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], int):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", None))}` expected `int`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def file_convert_nifti_version_convert_cargs(
     params: FileConvertNiftiVersionConvertParameters,
     execution: Execution,
@@ -196,6 +251,32 @@ def file_convert_cifti_version_convert_params(
         "cifti-out": cifti_out,
     }
     return params
+
+
+def file_convert_cifti_version_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FileConvertCiftiVersionConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("version", None) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], str):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", None))}` expected `str`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
 
 
 def file_convert_cifti_version_convert_cargs(
@@ -254,6 +335,26 @@ def file_convert_params(
     if cifti_version_convert is not None:
         params["cifti-version-convert"] = cifti_version_convert
     return params
+
+
+def file_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FileConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border-version-convert", None) is not None:
+        file_convert_border_version_convert_validate(params["border-version-convert"])
+    if params.get("nifti-version-convert", None) is not None:
+        file_convert_nifti_version_convert_validate(params["nifti-version-convert"])
+    if params.get("cifti-version-convert", None) is not None:
+        file_convert_cifti_version_convert_validate(params["cifti-version-convert"])
 
 
 def file_convert_cargs(
@@ -315,6 +416,7 @@ def file_convert_execute(
     Returns:
         NamedTuple of outputs (described in `FileConvertOutputs`).
     """
+    file_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FILE_CONVERT_METADATA)
     params = execution.params(params)

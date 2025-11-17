@@ -60,6 +60,35 @@ def gltsymtest_params(
     return params
 
 
+def gltsymtest_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GltsymtestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("badonly", False) is None:
+        raise StyxValidationError("`badonly` must not be None")
+    if not isinstance(params["badonly"], bool):
+        raise StyxValidationError(f'`badonly` has the wrong type: Received `{type(params.get("badonly", False))}` expected `bool`')
+    if params.get("varlist", None) is None:
+        raise StyxValidationError("`varlist` must not be None")
+    if not isinstance(params["varlist"], str):
+        raise StyxValidationError(f'`varlist` has the wrong type: Received `{type(params.get("varlist", None))}` expected `str`')
+    if params.get("expr", None) is None:
+        raise StyxValidationError("`expr` must not be None")
+    if not isinstance(params["expr"], list):
+        raise StyxValidationError(f'`expr` has the wrong type: Received `{type(params.get("expr", None))}` expected `list[str]`')
+    for e in params["expr"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`expr` has the wrong type: Received `{type(params.get("expr", None))}` expected `list[str]`')
+
+
 def gltsymtest_cargs(
     params: GltsymtestParameters,
     execution: Execution,
@@ -121,6 +150,7 @@ def gltsymtest_execute(
     Returns:
         NamedTuple of outputs (described in `GltsymtestOutputs`).
     """
+    gltsymtest_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GLTSYMTEST_METADATA)
     params = execution.params(params)

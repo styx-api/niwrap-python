@@ -99,6 +99,48 @@ def dimon_params(
     return params
 
 
+def dimon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DimonParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile_prefix", None) is None:
+        raise StyxValidationError("`infile_prefix` must not be None")
+    if not isinstance(params["infile_prefix"], str):
+        raise StyxValidationError(f'`infile_prefix` has the wrong type: Received `{type(params.get("infile_prefix", None))}` expected `str`')
+    if params.get("infile_pattern", None) is not None:
+        if not isinstance(params["infile_pattern"], str):
+            raise StyxValidationError(f'`infile_pattern` has the wrong type: Received `{type(params.get("infile_pattern", None))}` expected `str | None`')
+    if params.get("infile_list", None) is not None:
+        if not isinstance(params["infile_list"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`infile_list` has the wrong type: Received `{type(params.get("infile_list", None))}` expected `InputPathType | None`')
+    if params.get("rt_cmd", None) is not None:
+        if not isinstance(params["rt_cmd"], str):
+            raise StyxValidationError(f'`rt_cmd` has the wrong type: Received `{type(params.get("rt_cmd", None))}` expected `str | None`')
+    if params.get("host", None) is not None:
+        if not isinstance(params["host"], str):
+            raise StyxValidationError(f'`host` has the wrong type: Received `{type(params.get("host", None))}` expected `str | None`')
+    if params.get("drive_afni", None) is not None:
+        if not isinstance(params["drive_afni"], str):
+            raise StyxValidationError(f'`drive_afni` has the wrong type: Received `{type(params.get("drive_afni", None))}` expected `str | None`')
+    if params.get("drive_wait", None) is not None:
+        if not isinstance(params["drive_wait"], str):
+            raise StyxValidationError(f'`drive_wait` has the wrong type: Received `{type(params.get("drive_wait", None))}` expected `str | None`')
+    if params.get("te_list", None) is not None:
+        if not isinstance(params["te_list"], str):
+            raise StyxValidationError(f'`te_list` has the wrong type: Received `{type(params.get("te_list", None))}` expected `str | None`')
+    if params.get("sort_method", None) is not None:
+        if not isinstance(params["sort_method"], str):
+            raise StyxValidationError(f'`sort_method` has the wrong type: Received `{type(params.get("sort_method", None))}` expected `str | None`')
+
+
 def dimon_cargs(
     params: DimonParameters,
     execution: Execution,
@@ -200,6 +242,7 @@ def dimon_execute(
     Returns:
         NamedTuple of outputs (described in `DimonOutputs`).
     """
+    dimon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DIMON_METADATA)
     params = execution.params(params)

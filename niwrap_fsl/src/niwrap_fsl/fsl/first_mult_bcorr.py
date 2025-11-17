@@ -78,6 +78,44 @@ def first_mult_bcorr_params(
     return params
 
 
+def first_mult_bcorr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FirstMultBcorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("corrected_4d_labels", None) is None:
+        raise StyxValidationError("`corrected_4d_labels` must not be None")
+    if not isinstance(params["corrected_4d_labels"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`corrected_4d_labels` has the wrong type: Received `{type(params.get("corrected_4d_labels", None))}` expected `InputPathType`')
+    if params.get("uncorrected_4d_labels", None) is None:
+        raise StyxValidationError("`uncorrected_4d_labels` must not be None")
+    if not isinstance(params["uncorrected_4d_labels"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`uncorrected_4d_labels` has the wrong type: Received `{type(params.get("uncorrected_4d_labels", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def first_mult_bcorr_cargs(
     params: FirstMultBcorrParameters,
     execution: Execution,
@@ -156,6 +194,7 @@ def first_mult_bcorr_execute(
     Returns:
         NamedTuple of outputs (described in `FirstMultBcorrOutputs`).
     """
+    first_mult_bcorr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIRST_MULT_BCORR_METADATA)
     params = execution.params(params)

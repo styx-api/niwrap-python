@@ -55,6 +55,30 @@ def v__iso_masks_params(
     return params
 
 
+def v__iso_masks_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VIsoMasksParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("isovals", None) is not None:
+        if not isinstance(params["isovals"], list):
+            raise StyxValidationError(f'`isovals` has the wrong type: Received `{type(params.get("isovals", None))}` expected `list[float] | None`')
+        for e in params["isovals"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`isovals` has the wrong type: Received `{type(params.get("isovals", None))}` expected `list[float] | None`')
+
+
 def v__iso_masks_cargs(
     params: VIsoMasksParameters,
     execution: Execution,
@@ -117,6 +141,7 @@ def v__iso_masks_execute(
     Returns:
         NamedTuple of outputs (described in `VIsoMasksOutputs`).
     """
+    v__iso_masks_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ISO_MASKS_METADATA)
     params = execution.params(params)

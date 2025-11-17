@@ -90,6 +90,51 @@ def mris_distance_transform_params(
     return params
 
 
+def mris_distance_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisDistanceTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+    if params.get("mode", None) is None:
+        raise StyxValidationError("`mode` must not be None")
+    if not isinstance(params["mode"], str):
+        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `typing.Literal["signed", "unsigned", "outside"]`')
+    if params["mode"] not in ["signed", "unsigned", "outside"]:
+        raise StyxValidationError("Parameter `mode` must be one of [\"signed\", \"unsigned\", \"outside\"]")
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("anterior", None) is not None:
+        if not isinstance(params["anterior"], (float, int)):
+            raise StyxValidationError(f'`anterior` has the wrong type: Received `{type(params.get("anterior", None))}` expected `float | None`')
+    if params.get("posterior", None) is not None:
+        if not isinstance(params["posterior"], (float, int)):
+            raise StyxValidationError(f'`posterior` has the wrong type: Received `{type(params.get("posterior", None))}` expected `float | None`')
+    if params.get("divide", None) is not None:
+        if not isinstance(params["divide"], (float, int)):
+            raise StyxValidationError(f'`divide` has the wrong type: Received `{type(params.get("divide", None))}` expected `float | None`')
+    if params.get("olabel", False) is None:
+        raise StyxValidationError("`olabel` must not be None")
+    if not isinstance(params["olabel"], bool):
+        raise StyxValidationError(f'`olabel` has the wrong type: Received `{type(params.get("olabel", False))}` expected `bool`')
+
+
 def mris_distance_transform_cargs(
     params: MrisDistanceTransformParameters,
     execution: Execution,
@@ -168,6 +213,7 @@ def mris_distance_transform_execute(
     Returns:
         NamedTuple of outputs (described in `MrisDistanceTransformOutputs`).
     """
+    mris_distance_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_DISTANCE_TRANSFORM_METADATA)
     params = execution.params(params)

@@ -133,6 +133,83 @@ def gems_compute_atlas_probs_params(
     return params
 
 
+def gems_compute_atlas_probs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GemsComputeAtlasProbsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("mesh_collections", None) is None:
+        raise StyxValidationError("`mesh_collections` must not be None")
+    if not isinstance(params["mesh_collections"], list):
+        raise StyxValidationError(f'`mesh_collections` has the wrong type: Received `{type(params.get("mesh_collections", None))}` expected `list[str]`')
+    for e in params["mesh_collections"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`mesh_collections` has the wrong type: Received `{type(params.get("mesh_collections", None))}` expected `list[str]`')
+    if params.get("out_dir", None) is None:
+        raise StyxValidationError("`out_dir` must not be None")
+    if not isinstance(params["out_dir"], str):
+        raise StyxValidationError(f'`out_dir` has the wrong type: Received `{type(params.get("out_dir", None))}` expected `str`')
+    if params.get("segmentations_dir", None) is not None:
+        if not isinstance(params["segmentations_dir"], str):
+            raise StyxValidationError(f'`segmentations_dir` has the wrong type: Received `{type(params.get("segmentations_dir", None))}` expected `str | None`')
+    if params.get("gt_from_fs", False) is None:
+        raise StyxValidationError("`gt_from_fs` must not be None")
+    if not isinstance(params["gt_from_fs"], bool):
+        raise StyxValidationError(f'`gt_from_fs` has the wrong type: Received `{type(params.get("gt_from_fs", False))}` expected `bool`')
+    if params.get("segmentation_name", None) is not None:
+        if not isinstance(params["segmentation_name"], str):
+            raise StyxValidationError(f'`segmentation_name` has the wrong type: Received `{type(params.get("segmentation_name", None))}` expected `str | None`')
+    if params.get("multi_structure", False) is None:
+        raise StyxValidationError("`multi_structure` must not be None")
+    if not isinstance(params["multi_structure"], bool):
+        raise StyxValidationError(f'`multi_structure` has the wrong type: Received `{type(params.get("multi_structure", False))}` expected `bool`')
+    if params.get("labels", None) is not None:
+        if not isinstance(params["labels"], list):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+        for e in params["labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+    if params.get("from_samseg", False) is None:
+        raise StyxValidationError("`from_samseg` must not be None")
+    if not isinstance(params["from_samseg"], bool):
+        raise StyxValidationError(f'`from_samseg` has the wrong type: Received `{type(params.get("from_samseg", False))}` expected `bool`')
+    if params.get("em_iterations", None) is not None:
+        if not isinstance(params["em_iterations"], (float, int)):
+            raise StyxValidationError(f'`em_iterations` has the wrong type: Received `{type(params.get("em_iterations", None))}` expected `float | None`')
+    if params.get("show_figs", False) is None:
+        raise StyxValidationError("`show_figs` must not be None")
+    if not isinstance(params["show_figs"], bool):
+        raise StyxValidationError(f'`show_figs` has the wrong type: Received `{type(params.get("show_figs", False))}` expected `bool`')
+    if params.get("save_figs", False) is None:
+        raise StyxValidationError("`save_figs` must not be None")
+    if not isinstance(params["save_figs"], bool):
+        raise StyxValidationError(f'`save_figs` has the wrong type: Received `{type(params.get("save_figs", False))}` expected `bool`')
+    if params.get("save_average_figs", False) is None:
+        raise StyxValidationError("`save_average_figs` must not be None")
+    if not isinstance(params["save_average_figs"], bool):
+        raise StyxValidationError(f'`save_average_figs` has the wrong type: Received `{type(params.get("save_average_figs", False))}` expected `bool`')
+    if params.get("subjects_file", None) is not None:
+        if not isinstance(params["subjects_file"], str):
+            raise StyxValidationError(f'`subjects_file` has the wrong type: Received `{type(params.get("subjects_file", None))}` expected `str | None`')
+    if params.get("labels_file", None) is not None:
+        if not isinstance(params["labels_file"], str):
+            raise StyxValidationError(f'`labels_file` has the wrong type: Received `{type(params.get("labels_file", None))}` expected `str | None`')
+    if params.get("samseg_subdir", None) is not None:
+        if not isinstance(params["samseg_subdir"], str):
+            raise StyxValidationError(f'`samseg_subdir` has the wrong type: Received `{type(params.get("samseg_subdir", None))}` expected `str | None`')
+
+
 def gems_compute_atlas_probs_cargs(
     params: GemsComputeAtlasProbsParameters,
     execution: Execution,
@@ -248,6 +325,7 @@ def gems_compute_atlas_probs_execute(
     Returns:
         NamedTuple of outputs (described in `GemsComputeAtlasProbsOutputs`).
     """
+    gems_compute_atlas_probs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GEMS_COMPUTE_ATLAS_PROBS_METADATA)
     params = execution.params(params)

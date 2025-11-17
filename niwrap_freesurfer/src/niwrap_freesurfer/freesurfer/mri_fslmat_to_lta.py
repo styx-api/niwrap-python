@@ -67,6 +67,36 @@ def mri_fslmat_to_lta_params(
     return params
 
 
+def mri_fslmat_to_lta_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFslmatToLtaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("src_vol", None) is None:
+        raise StyxValidationError("`src_vol` must not be None")
+    if not isinstance(params["src_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`src_vol` has the wrong type: Received `{type(params.get("src_vol", None))}` expected `InputPathType`')
+    if params.get("target_vol", None) is None:
+        raise StyxValidationError("`target_vol` must not be None")
+    if not isinstance(params["target_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target_vol` has the wrong type: Received `{type(params.get("target_vol", None))}` expected `InputPathType`')
+    if params.get("fslmat_file", None) is None:
+        raise StyxValidationError("`fslmat_file` must not be None")
+    if not isinstance(params["fslmat_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fslmat_file` has the wrong type: Received `{type(params.get("fslmat_file", None))}` expected `InputPathType`')
+    if params.get("lta_file", None) is None:
+        raise StyxValidationError("`lta_file` must not be None")
+    if not isinstance(params["lta_file"], str):
+        raise StyxValidationError(f'`lta_file` has the wrong type: Received `{type(params.get("lta_file", None))}` expected `str`')
+
+
 def mri_fslmat_to_lta_cargs(
     params: MriFslmatToLtaParameters,
     execution: Execution,
@@ -129,6 +159,7 @@ def mri_fslmat_to_lta_execute(
     Returns:
         NamedTuple of outputs (described in `MriFslmatToLtaOutputs`).
     """
+    mri_fslmat_to_lta_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FSLMAT_TO_LTA_METADATA)
     params = execution.params(params)

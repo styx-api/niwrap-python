@@ -102,6 +102,56 @@ def convert_surface_params(
     return params
 
 
+def convert_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], str):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `str`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("surface_volume", None) is not None:
+        if not isinstance(params["surface_volume"], str):
+            raise StyxValidationError(f'`surface_volume` has the wrong type: Received `{type(params.get("surface_volume", None))}` expected `str | None`')
+    if params.get("transform_tlrc", False) is None:
+        raise StyxValidationError("`transform_tlrc` must not be None")
+    if not isinstance(params["transform_tlrc"], bool):
+        raise StyxValidationError(f'`transform_tlrc` has the wrong type: Received `{type(params.get("transform_tlrc", False))}` expected `bool`')
+    if params.get("mni_rai", False) is None:
+        raise StyxValidationError("`mni_rai` must not be None")
+    if not isinstance(params["mni_rai"], bool):
+        raise StyxValidationError(f'`mni_rai` has the wrong type: Received `{type(params.get("mni_rai", False))}` expected `bool`')
+    if params.get("mni_lpi", False) is None:
+        raise StyxValidationError("`mni_lpi` must not be None")
+    if not isinstance(params["mni_lpi"], bool):
+        raise StyxValidationError(f'`mni_lpi` has the wrong type: Received `{type(params.get("mni_lpi", False))}` expected `bool`')
+    if params.get("xmat_1D", None) is not None:
+        if not isinstance(params["xmat_1D"], str):
+            raise StyxValidationError(f'`xmat_1D` has the wrong type: Received `{type(params.get("xmat_1D", None))}` expected `str | None`')
+    if params.get("ixmat_1D", None) is not None:
+        if not isinstance(params["ixmat_1D"], str):
+            raise StyxValidationError(f'`ixmat_1D` has the wrong type: Received `{type(params.get("ixmat_1D", None))}` expected `str | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], str):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `str | None`')
+    if params.get("native", False) is None:
+        raise StyxValidationError("`native` must not be None")
+    if not isinstance(params["native"], bool):
+        raise StyxValidationError(f'`native` has the wrong type: Received `{type(params.get("native", False))}` expected `bool`')
+
+
 def convert_surface_cargs(
     params: ConvertSurfaceParameters,
     execution: Execution,
@@ -196,6 +246,7 @@ def convert_surface_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertSurfaceOutputs`).
     """
+    convert_surface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_SURFACE_METADATA)
     params = execution.params(params)

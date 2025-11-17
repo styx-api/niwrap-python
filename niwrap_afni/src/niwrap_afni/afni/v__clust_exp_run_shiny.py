@@ -54,6 +54,28 @@ def v__clust_exp_run_shiny_params(
     return params
 
 
+def v__clust_exp_run_shiny_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VClustExpRunShinyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("directory", None) is None:
+        raise StyxValidationError("`directory` must not be None")
+    if not isinstance(params["directory"], str):
+        raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__clust_exp_run_shiny_cargs(
     params: VClustExpRunShinyParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def v__clust_exp_run_shiny_execute(
     Returns:
         NamedTuple of outputs (described in `VClustExpRunShinyOutputs`).
     """
+    v__clust_exp_run_shiny_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__CLUST_EXP_RUN_SHINY_METADATA)
     params = execution.params(params)

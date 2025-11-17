@@ -71,6 +71,40 @@ def label_subject_mixed_params(
     return params
 
 
+def label_subject_mixed_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelSubjectMixedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("brain_mask", None) is None:
+        raise StyxValidationError("`brain_mask` must not be None")
+    if not isinstance(params["brain_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain_mask` has the wrong type: Received `{type(params.get("brain_mask", None))}` expected `InputPathType`')
+    if params.get("norm_volume", None) is None:
+        raise StyxValidationError("`norm_volume` must not be None")
+    if not isinstance(params["norm_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`norm_volume` has the wrong type: Received `{type(params.get("norm_volume", None))}` expected `InputPathType`')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType`')
+    if params.get("gca_file", None) is None:
+        raise StyxValidationError("`gca_file` must not be None")
+    if not isinstance(params["gca_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`gca_file` has the wrong type: Received `{type(params.get("gca_file", None))}` expected `InputPathType`')
+    if params.get("aseg_output", None) is None:
+        raise StyxValidationError("`aseg_output` must not be None")
+    if not isinstance(params["aseg_output"], str):
+        raise StyxValidationError(f'`aseg_output` has the wrong type: Received `{type(params.get("aseg_output", None))}` expected `str`')
+
+
 def label_subject_mixed_cargs(
     params: LabelSubjectMixedParameters,
     execution: Execution,
@@ -136,6 +170,7 @@ def label_subject_mixed_execute(
     Returns:
         NamedTuple of outputs (described in `LabelSubjectMixedOutputs`).
     """
+    label_subject_mixed_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL_SUBJECT_MIXED_METADATA)
     params = execution.params(params)

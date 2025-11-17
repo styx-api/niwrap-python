@@ -71,6 +71,40 @@ def mri_vessel_segment_params(
     return params
 
 
+def mri_vessel_segment_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriVesselSegmentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_image", None) is None:
+        raise StyxValidationError("`t1_image` must not be None")
+    if not isinstance(params["t1_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_image` has the wrong type: Received `{type(params.get("t1_image", None))}` expected `InputPathType`')
+    if params.get("t2_image", None) is None:
+        raise StyxValidationError("`t2_image` must not be None")
+    if not isinstance(params["t2_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t2_image` has the wrong type: Received `{type(params.get("t2_image", None))}` expected `InputPathType`')
+    if params.get("aseg_file", None) is None:
+        raise StyxValidationError("`aseg_file` must not be None")
+    if not isinstance(params["aseg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aseg_file` has the wrong type: Received `{type(params.get("aseg_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("shape_flag", False) is None:
+        raise StyxValidationError("`shape_flag` must not be None")
+    if not isinstance(params["shape_flag"], bool):
+        raise StyxValidationError(f'`shape_flag` has the wrong type: Received `{type(params.get("shape_flag", False))}` expected `bool`')
+
+
 def mri_vessel_segment_cargs(
     params: MriVesselSegmentParameters,
     execution: Execution,
@@ -146,6 +180,7 @@ def mri_vessel_segment_execute(
     Returns:
         NamedTuple of outputs (described in `MriVesselSegmentOutputs`).
     """
+    mri_vessel_segment_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_VESSEL_SEGMENT_METADATA)
     params = execution.params(params)

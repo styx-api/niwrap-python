@@ -55,6 +55,28 @@ def mris_distance_to_label_params(
     return params
 
 
+def mris_distance_to_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisDistanceToLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("subject_1", None) is None:
+        raise StyxValidationError("`subject_1` must not be None")
+    if not isinstance(params["subject_1"], str):
+        raise StyxValidationError(f'`subject_1` has the wrong type: Received `{type(params.get("subject_1", None))}` expected `str`')
+
+
 def mris_distance_to_label_cargs(
     params: MrisDistanceToLabelParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def mris_distance_to_label_execute(
     Returns:
         NamedTuple of outputs (described in `MrisDistanceToLabelOutputs`).
     """
+    mris_distance_to_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_DISTANCE_TO_LABEL_METADATA)
     params = execution.params(params)

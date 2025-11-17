@@ -83,6 +83,47 @@ def mris_rotate_params(
     return params
 
 
+def mris_rotate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRotateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("alpha_deg", None) is None:
+        raise StyxValidationError("`alpha_deg` must not be None")
+    if not isinstance(params["alpha_deg"], (float, int)):
+        raise StyxValidationError(f'`alpha_deg` has the wrong type: Received `{type(params.get("alpha_deg", None))}` expected `float`')
+    if params.get("beta_deg", None) is None:
+        raise StyxValidationError("`beta_deg` must not be None")
+    if not isinstance(params["beta_deg"], (float, int)):
+        raise StyxValidationError(f'`beta_deg` has the wrong type: Received `{type(params.get("beta_deg", None))}` expected `float`')
+    if params.get("gamma_deg", None) is None:
+        raise StyxValidationError("`gamma_deg` must not be None")
+    if not isinstance(params["gamma_deg"], (float, int)):
+        raise StyxValidationError(f'`gamma_deg` has the wrong type: Received `{type(params.get("gamma_deg", None))}` expected `float`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("regfile", None) is not None:
+        if not isinstance(params["regfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`regfile` has the wrong type: Received `{type(params.get("regfile", None))}` expected `InputPathType | None`')
+    if params.get("invalidate_geometry", False) is None:
+        raise StyxValidationError("`invalidate_geometry` must not be None")
+    if not isinstance(params["invalidate_geometry"], bool):
+        raise StyxValidationError(f'`invalidate_geometry` has the wrong type: Received `{type(params.get("invalidate_geometry", False))}` expected `bool`')
+
+
 def mris_rotate_cargs(
     params: MrisRotateParameters,
     execution: Execution,
@@ -152,6 +193,7 @@ def mris_rotate_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRotateOutputs`).
     """
+    mris_rotate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ROTATE_METADATA)
     params = execution.params(params)

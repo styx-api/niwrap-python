@@ -106,6 +106,52 @@ def surf_layers_params(
     return params
 
 
+def surf_layers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfLayersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_dset", None) is not None:
+        if not isinstance(params["spec_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`spec_dset` has the wrong type: Received `{type(params.get("spec_dset", None))}` expected `InputPathType | None`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+    if params.get("states", None) is not None:
+        if not isinstance(params["states"], str):
+            raise StyxValidationError(f'`states` has the wrong type: Received `{type(params.get("states", None))}` expected `str | None`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("n_intermed_surfs", None) is not None:
+        if not isinstance(params["n_intermed_surfs"], (float, int)):
+            raise StyxValidationError(f'`n_intermed_surfs` has the wrong type: Received `{type(params.get("n_intermed_surfs", None))}` expected `float | None`')
+    if params.get("surf_a", None) is not None:
+        if not isinstance(params["surf_a"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_a` has the wrong type: Received `{type(params.get("surf_a", None))}` expected `InputPathType | None`')
+    if params.get("surf_b", None) is not None:
+        if not isinstance(params["surf_b"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_b` has the wrong type: Received `{type(params.get("surf_b", None))}` expected `InputPathType | None`')
+    if params.get("surf_intermed_pref", None) is not None:
+        if not isinstance(params["surf_intermed_pref"], str):
+            raise StyxValidationError(f'`surf_intermed_pref` has the wrong type: Received `{type(params.get("surf_intermed_pref", None))}` expected `str | None`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def surf_layers_cargs(
     params: SurfLayersParameters,
     execution: Execution,
@@ -207,6 +253,7 @@ def surf_layers_execute(
     Returns:
         NamedTuple of outputs (described in `SurfLayersOutputs`).
     """
+    surf_layers_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_LAYERS_METADATA)
     params = execution.params(params)

@@ -68,6 +68,36 @@ def v_3d_nwarp_adjust_params(
     return params
 
 
+def v_3d_nwarp_adjust_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNwarpAdjustParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_warps", None) is None:
+        raise StyxValidationError("`input_warps` must not be None")
+    if not isinstance(params["input_warps"], list):
+        raise StyxValidationError(f'`input_warps` has the wrong type: Received `{type(params.get("input_warps", None))}` expected `list[InputPathType]`')
+    for e in params["input_warps"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_warps` has the wrong type: Received `{type(params.get("input_warps", None))}` expected `list[InputPathType]`')
+    if params.get("source_datasets", None) is not None:
+        if not isinstance(params["source_datasets"], list):
+            raise StyxValidationError(f'`source_datasets` has the wrong type: Received `{type(params.get("source_datasets", None))}` expected `list[InputPathType] | None`')
+        for e in params["source_datasets"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`source_datasets` has the wrong type: Received `{type(params.get("source_datasets", None))}` expected `list[InputPathType] | None`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+
+
 def v_3d_nwarp_adjust_cargs(
     params: V3dNwarpAdjustParameters,
     execution: Execution,
@@ -142,6 +172,7 @@ def v_3d_nwarp_adjust_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpAdjustOutputs`).
     """
+    v_3d_nwarp_adjust_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NWARP_ADJUST_METADATA)
     params = execution.params(params)

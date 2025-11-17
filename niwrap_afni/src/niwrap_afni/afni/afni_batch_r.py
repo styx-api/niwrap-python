@@ -70,6 +70,40 @@ def afni_batch_r_params(
     return params
 
 
+def afni_batch_r_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AfniBatchRParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("no_restore", False) is None:
+        raise StyxValidationError("`no_restore` must not be None")
+    if not isinstance(params["no_restore"], bool):
+        raise StyxValidationError(f'`no_restore` has the wrong type: Received `{type(params.get("no_restore", False))}` expected `bool`')
+    if params.get("save_workspace", False) is None:
+        raise StyxValidationError("`save_workspace` must not be None")
+    if not isinstance(params["save_workspace"], bool):
+        raise StyxValidationError(f'`save_workspace` has the wrong type: Received `{type(params.get("save_workspace", False))}` expected `bool`')
+    if params.get("no_readline", False) is None:
+        raise StyxValidationError("`no_readline` must not be None")
+    if not isinstance(params["no_readline"], bool):
+        raise StyxValidationError(f'`no_readline` has the wrong type: Received `{type(params.get("no_readline", False))}` expected `bool`')
+    if params.get("vanilla_mode", False) is None:
+        raise StyxValidationError("`vanilla_mode` must not be None")
+    if not isinstance(params["vanilla_mode"], bool):
+        raise StyxValidationError(f'`vanilla_mode` has the wrong type: Received `{type(params.get("vanilla_mode", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def afni_batch_r_cargs(
     params: AfniBatchRParameters,
     execution: Execution,
@@ -139,6 +173,7 @@ def afni_batch_r_execute(
     Returns:
         NamedTuple of outputs (described in `AfniBatchROutputs`).
     """
+    afni_batch_r_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_BATCH_R_METADATA)
     params = execution.params(params)

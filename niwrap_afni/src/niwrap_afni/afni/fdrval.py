@@ -88,6 +88,55 @@ def fdrval_params(
     return params
 
 
+def fdrval_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FdrvalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+    if params.get("sub", None) is None:
+        raise StyxValidationError("`sub` must not be None")
+    if not isinstance(params["sub"], (float, int)):
+        raise StyxValidationError(f'`sub` has the wrong type: Received `{type(params.get("sub", None))}` expected `float`')
+    if params.get("val_list", None) is None:
+        raise StyxValidationError("`val_list` must not be None")
+    if not isinstance(params["val_list"], list):
+        raise StyxValidationError(f'`val_list` has the wrong type: Received `{type(params.get("val_list", None))}` expected `list[float]`')
+    for e in params["val_list"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`val_list` has the wrong type: Received `{type(params.get("val_list", None))}` expected `list[float]`')
+    if params.get("pval", False) is None:
+        raise StyxValidationError("`pval` must not be None")
+    if not isinstance(params["pval"], bool):
+        raise StyxValidationError(f'`pval` has the wrong type: Received `{type(params.get("pval", False))}` expected `bool`')
+    if params.get("ponly", False) is None:
+        raise StyxValidationError("`ponly` must not be None")
+    if not isinstance(params["ponly"], bool):
+        raise StyxValidationError(f'`ponly` has the wrong type: Received `{type(params.get("ponly", False))}` expected `bool`')
+    if params.get("qonly", False) is None:
+        raise StyxValidationError("`qonly` must not be None")
+    if not isinstance(params["qonly"], bool):
+        raise StyxValidationError(f'`qonly` has the wrong type: Received `{type(params.get("qonly", False))}` expected `bool`')
+    if params.get("qinput", False) is None:
+        raise StyxValidationError("`qinput` must not be None")
+    if not isinstance(params["qinput"], bool):
+        raise StyxValidationError(f'`qinput` has the wrong type: Received `{type(params.get("qinput", False))}` expected `bool`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+
+
 def fdrval_cargs(
     params: FdrvalParameters,
     execution: Execution,
@@ -158,6 +207,7 @@ def fdrval_execute(
     Returns:
         NamedTuple of outputs (described in `FdrvalOutputs`).
     """
+    fdrval_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FDRVAL_METADATA)
     params = execution.params(params)

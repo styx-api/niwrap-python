@@ -186,6 +186,147 @@ def make_random_timing_py_params(
     return params
 
 
+def make_random_timing_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeRandomTimingPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("num_runs", None) is None:
+        raise StyxValidationError("`num_runs` must not be None")
+    if not isinstance(params["num_runs"], (float, int)):
+        raise StyxValidationError(f'`num_runs` has the wrong type: Received `{type(params.get("num_runs", None))}` expected `float`')
+    if params["num_runs"] >= 1:
+        raise StyxValidationError("Parameter `num_runs` must be at least 1")
+    if params.get("run_time", None) is None:
+        raise StyxValidationError("`run_time` must not be None")
+    if not isinstance(params["run_time"], list):
+        raise StyxValidationError(f'`run_time` has the wrong type: Received `{type(params.get("run_time", None))}` expected `list[float]`')
+    if len(params["run_time"]) >= 1:
+        raise StyxValidationError("Parameter `run_time` must contain at least 1 element")
+    for e in params["run_time"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`run_time` has the wrong type: Received `{type(params.get("run_time", None))}` expected `list[float]`')
+    if params.get("num_stim", None) is None:
+        raise StyxValidationError("`num_stim` must not be None")
+    if not isinstance(params["num_stim"], (float, int)):
+        raise StyxValidationError(f'`num_stim` has the wrong type: Received `{type(params.get("num_stim", None))}` expected `float`')
+    if params["num_stim"] >= 1:
+        raise StyxValidationError("Parameter `num_stim` must be at least 1")
+    if params.get("num_reps", None) is None:
+        raise StyxValidationError("`num_reps` must not be None")
+    if not isinstance(params["num_reps"], list):
+        raise StyxValidationError(f'`num_reps` has the wrong type: Received `{type(params.get("num_reps", None))}` expected `list[float]`')
+    if len(params["num_reps"]) >= 1:
+        raise StyxValidationError("Parameter `num_reps` must contain at least 1 element")
+    for e in params["num_reps"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`num_reps` has the wrong type: Received `{type(params.get("num_reps", None))}` expected `list[float]`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("stim_dur", None) is not None:
+        if not isinstance(params["stim_dur"], list):
+            raise StyxValidationError(f'`stim_dur` has the wrong type: Received `{type(params.get("stim_dur", None))}` expected `list[float] | None`')
+        if len(params["stim_dur"]) >= 1:
+            raise StyxValidationError("Parameter `stim_dur` must contain at least 1 element")
+        for e in params["stim_dur"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`stim_dur` has the wrong type: Received `{type(params.get("stim_dur", None))}` expected `list[float] | None`')
+    if params.get("across_runs", False) is None:
+        raise StyxValidationError("`across_runs` must not be None")
+    if not isinstance(params["across_runs"], bool):
+        raise StyxValidationError(f'`across_runs` has the wrong type: Received `{type(params.get("across_runs", False))}` expected `bool`')
+    if params.get("max_consec", None) is not None:
+        if not isinstance(params["max_consec"], list):
+            raise StyxValidationError(f'`max_consec` has the wrong type: Received `{type(params.get("max_consec", None))}` expected `list[float] | None`')
+        if len(params["max_consec"]) >= 1:
+            raise StyxValidationError("Parameter `max_consec` must contain at least 1 element")
+        for e in params["max_consec"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`max_consec` has the wrong type: Received `{type(params.get("max_consec", None))}` expected `list[float] | None`')
+    if params.get("max_rest", None) is not None:
+        if not isinstance(params["max_rest"], (float, int)):
+            raise StyxValidationError(f'`max_rest` has the wrong type: Received `{type(params.get("max_rest", None))}` expected `float | None`')
+    if params.get("min_rest", None) is not None:
+        if not isinstance(params["min_rest"], (float, int)):
+            raise StyxValidationError(f'`min_rest` has the wrong type: Received `{type(params.get("min_rest", None))}` expected `float | None`')
+    if params.get("not_first", None) is not None:
+        if not isinstance(params["not_first"], list):
+            raise StyxValidationError(f'`not_first` has the wrong type: Received `{type(params.get("not_first", None))}` expected `list[str] | None`')
+        if len(params["not_first"]) >= 1:
+            raise StyxValidationError("Parameter `not_first` must contain at least 1 element")
+        for e in params["not_first"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`not_first` has the wrong type: Received `{type(params.get("not_first", None))}` expected `list[str] | None`')
+    if params.get("not_last", None) is not None:
+        if not isinstance(params["not_last"], list):
+            raise StyxValidationError(f'`not_last` has the wrong type: Received `{type(params.get("not_last", None))}` expected `list[str] | None`')
+        if len(params["not_last"]) >= 1:
+            raise StyxValidationError("Parameter `not_last` must contain at least 1 element")
+        for e in params["not_last"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`not_last` has the wrong type: Received `{type(params.get("not_last", None))}` expected `list[str] | None`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("ordered_stimuli", None) is not None:
+        if not isinstance(params["ordered_stimuli"], list):
+            raise StyxValidationError(f'`ordered_stimuli` has the wrong type: Received `{type(params.get("ordered_stimuli", None))}` expected `list[str] | None`')
+        if len(params["ordered_stimuli"]) >= 1:
+            raise StyxValidationError("Parameter `ordered_stimuli` must contain at least 1 element")
+        for e in params["ordered_stimuli"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ordered_stimuli` has the wrong type: Received `{type(params.get("ordered_stimuli", None))}` expected `list[str] | None`')
+    if params.get("pre_stim_rest", None) is not None:
+        if not isinstance(params["pre_stim_rest"], (float, int)):
+            raise StyxValidationError(f'`pre_stim_rest` has the wrong type: Received `{type(params.get("pre_stim_rest", None))}` expected `float | None`')
+    if params.get("post_stim_rest", None) is not None:
+        if not isinstance(params["post_stim_rest"], (float, int)):
+            raise StyxValidationError(f'`post_stim_rest` has the wrong type: Received `{type(params.get("post_stim_rest", None))}` expected `float | None`')
+    if params.get("save_3dd_cmd", None) is not None:
+        if not isinstance(params["save_3dd_cmd"], str):
+            raise StyxValidationError(f'`save_3dd_cmd` has the wrong type: Received `{type(params.get("save_3dd_cmd", None))}` expected `str | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("stim_labels", None) is not None:
+        if not isinstance(params["stim_labels"], list):
+            raise StyxValidationError(f'`stim_labels` has the wrong type: Received `{type(params.get("stim_labels", None))}` expected `list[str] | None`')
+        if len(params["stim_labels"]) >= 1:
+            raise StyxValidationError("Parameter `stim_labels` must contain at least 1 element")
+        for e in params["stim_labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`stim_labels` has the wrong type: Received `{type(params.get("stim_labels", None))}` expected `list[str] | None`')
+    if params.get("t_digits", None) is not None:
+        if not isinstance(params["t_digits"], (float, int)):
+            raise StyxValidationError(f'`t_digits` has the wrong type: Received `{type(params.get("t_digits", None))}` expected `float | None`')
+    if params.get("t_gran", None) is not None:
+        if not isinstance(params["t_gran"], (float, int)):
+            raise StyxValidationError(f'`t_gran` has the wrong type: Received `{type(params.get("t_gran", None))}` expected `float | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("tr_locked", False) is None:
+        raise StyxValidationError("`tr_locked` must not be None")
+    if not isinstance(params["tr_locked"], bool):
+        raise StyxValidationError(f'`tr_locked` has the wrong type: Received `{type(params.get("tr_locked", False))}` expected `bool`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+    if params.get("show_timing_stats", False) is None:
+        raise StyxValidationError("`show_timing_stats` must not be None")
+    if not isinstance(params["show_timing_stats"], bool):
+        raise StyxValidationError(f'`show_timing_stats` has the wrong type: Received `{type(params.get("show_timing_stats", False))}` expected `bool`')
+
+
 def make_random_timing_py_cargs(
     params: MakeRandomTimingPyParameters,
     execution: Execution,
@@ -353,6 +494,7 @@ def make_random_timing_py_execute(
     Returns:
         NamedTuple of outputs (described in `MakeRandomTimingPyOutputs`).
     """
+    make_random_timing_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_RANDOM_TIMING_PY_METADATA)
     params = execution.params(params)

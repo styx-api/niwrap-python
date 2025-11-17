@@ -74,6 +74,35 @@ def volume_math_var_params(
     return params
 
 
+def volume_math_var_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeMathVarParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is None:
+        raise StyxValidationError("`name` must not be None")
+    if not isinstance(params["name"], str):
+        raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str`')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("repeat", False) is None:
+        raise StyxValidationError("`repeat` must not be None")
+    if not isinstance(params["repeat"], bool):
+        raise StyxValidationError(f'`repeat` has the wrong type: Received `{type(params.get("repeat", False))}` expected `bool`')
+
+
 def volume_math_var_cargs(
     params: VolumeMathVarParameters,
     execution: Execution,
@@ -139,6 +168,36 @@ def volume_math_params(
     if var is not None:
         params["var"] = var
     return params
+
+
+def volume_math_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeMathParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("replace", None) is not None:
+        if not isinstance(params["replace"], (float, int)):
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
+    if params.get("var", None) is not None:
+        if not isinstance(params["var"], list):
+            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[VolumeMathVarParameters] | None`')
+        for e in params["var"]:
+            volume_math_var_validate(e)
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
 
 
 def volume_math_cargs(
@@ -270,6 +329,7 @@ def volume_math_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeMathOutputs`).
     """
+    volume_math_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_MATH_METADATA)
     params = execution.params(params)

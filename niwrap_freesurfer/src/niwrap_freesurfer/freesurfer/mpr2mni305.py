@@ -49,6 +49,24 @@ def mpr2mni305_params(
     return params
 
 
+def mpr2mni305_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Mpr2mni305Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mpr_anat", None) is None:
+        raise StyxValidationError("`mpr_anat` must not be None")
+    if not isinstance(params["mpr_anat"], str):
+        raise StyxValidationError(f'`mpr_anat` has the wrong type: Received `{type(params.get("mpr_anat", None))}` expected `str`')
+
+
 def mpr2mni305_cargs(
     params: Mpr2mni305Parameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def mpr2mni305_execute(
     Returns:
         NamedTuple of outputs (described in `Mpr2mni305Outputs`).
     """
+    mpr2mni305_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MPR2MNI305_METADATA)
     params = execution.params(params)

@@ -147,6 +147,80 @@ def talsegprob_params(
     return params
 
 
+def talsegprob_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TalsegprobParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_list", None) is not None:
+        if not isinstance(params["subjects_list"], list):
+            raise StyxValidationError(f'`subjects_list` has the wrong type: Received `{type(params.get("subjects_list", None))}` expected `list[str] | None`')
+        for e in params["subjects_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subjects_list` has the wrong type: Received `{type(params.get("subjects_list", None))}` expected `list[str] | None`')
+    if params.get("fsgd_file", None) is not None:
+        if not isinstance(params["fsgd_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsgd_file` has the wrong type: Received `{type(params.get("fsgd_file", None))}` expected `InputPathType | None`')
+    if params.get("segmentation_number", None) is not None:
+        if not isinstance(params["segmentation_number"], (float, int)):
+            raise StyxValidationError(f'`segmentation_number` has the wrong type: Received `{type(params.get("segmentation_number", None))}` expected `float | None`')
+    if params.get("second_segmentation_number", None) is not None:
+        if not isinstance(params["second_segmentation_number"], (float, int)):
+            raise StyxValidationError(f'`second_segmentation_number` has the wrong type: Received `{type(params.get("second_segmentation_number", None))}` expected `float | None`')
+    if params.get("hippo_flag", False) is None:
+        raise StyxValidationError("`hippo_flag` must not be None")
+    if not isinstance(params["hippo_flag"], bool):
+        raise StyxValidationError(f'`hippo_flag` has the wrong type: Received `{type(params.get("hippo_flag", False))}` expected `bool`')
+    if params.get("left_hippo_flag", False) is None:
+        raise StyxValidationError("`left_hippo_flag` must not be None")
+    if not isinstance(params["left_hippo_flag"], bool):
+        raise StyxValidationError(f'`left_hippo_flag` has the wrong type: Received `{type(params.get("left_hippo_flag", False))}` expected `bool`')
+    if params.get("right_hippo_flag", False) is None:
+        raise StyxValidationError("`right_hippo_flag` must not be None")
+    if not isinstance(params["right_hippo_flag"], bool):
+        raise StyxValidationError(f'`right_hippo_flag` has the wrong type: Received `{type(params.get("right_hippo_flag", False))}` expected `bool`')
+    if params.get("segmentation_file", None) is not None:
+        if not isinstance(params["segmentation_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation_file` has the wrong type: Received `{type(params.get("segmentation_file", None))}` expected `InputPathType | None`')
+    if params.get("probability_output", None) is not None:
+        if not isinstance(params["probability_output"], str):
+            raise StyxValidationError(f'`probability_output` has the wrong type: Received `{type(params.get("probability_output", None))}` expected `str | None`')
+    if params.get("vote_output", None) is not None:
+        if not isinstance(params["vote_output"], str):
+            raise StyxValidationError(f'`vote_output` has the wrong type: Received `{type(params.get("vote_output", None))}` expected `str | None`')
+    if params.get("concat_output", None) is not None:
+        if not isinstance(params["concat_output"], str):
+            raise StyxValidationError(f'`concat_output` has the wrong type: Received `{type(params.get("concat_output", None))}` expected `str | None`')
+    if params.get("xform_file", None) is not None:
+        if not isinstance(params["xform_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xform_file` has the wrong type: Received `{type(params.get("xform_file", None))}` expected `InputPathType | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("tmpdir", None) is not None:
+        if not isinstance(params["tmpdir"], str):
+            raise StyxValidationError(f'`tmpdir` has the wrong type: Received `{type(params.get("tmpdir", None))}` expected `str | None`')
+    if params.get("nocleanup_flag", False) is None:
+        raise StyxValidationError("`nocleanup_flag` must not be None")
+    if not isinstance(params["nocleanup_flag"], bool):
+        raise StyxValidationError(f'`nocleanup_flag` has the wrong type: Received `{type(params.get("nocleanup_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("echo_flag", False) is None:
+        raise StyxValidationError("`echo_flag` must not be None")
+    if not isinstance(params["echo_flag"], bool):
+        raise StyxValidationError(f'`echo_flag` has the wrong type: Received `{type(params.get("echo_flag", False))}` expected `bool`')
+
+
 def talsegprob_cargs(
     params: TalsegprobParameters,
     execution: Execution,
@@ -274,6 +348,7 @@ def talsegprob_execute(
     Returns:
         NamedTuple of outputs (described in `TalsegprobOutputs`).
     """
+    talsegprob_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TALSEGPROB_METADATA)
     params = execution.params(params)

@@ -193,6 +193,98 @@ def fat_mat_sel_py_params(
     return params
 
 
+def fat_mat_sel_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatMatSelPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("parameters", None) is None:
+        raise StyxValidationError("`parameters` must not be None")
+    if not isinstance(params["parameters"], str):
+        raise StyxValidationError(f'`parameters` has the wrong type: Received `{type(params.get("parameters", None))}` expected `str`')
+    if params.get("matr_in", None) is not None:
+        if not isinstance(params["matr_in"], str):
+            raise StyxValidationError(f'`matr_in` has the wrong type: Received `{type(params.get("matr_in", None))}` expected `str | None`')
+    if params.get("list_match", None) is not None:
+        if not isinstance(params["list_match"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`list_match` has the wrong type: Received `{type(params.get("list_match", None))}` expected `InputPathType | None`')
+    if params.get("out_ind_matr", False) is None:
+        raise StyxValidationError("`out_ind_matr` must not be None")
+    if not isinstance(params["out_ind_matr"], bool):
+        raise StyxValidationError(f'`out_ind_matr` has the wrong type: Received `{type(params.get("out_ind_matr", False))}` expected `bool`')
+    if params.get("out_ind_1ddset", False) is None:
+        raise StyxValidationError("`out_ind_1ddset` must not be None")
+    if not isinstance(params["out_ind_1ddset"], bool):
+        raise StyxValidationError(f'`out_ind_1ddset` has the wrong type: Received `{type(params.get("out_ind_1ddset", False))}` expected `bool`')
+    if params.get("hold_image", False) is None:
+        raise StyxValidationError("`hold_image` must not be None")
+    if not isinstance(params["hold_image"], bool):
+        raise StyxValidationError(f'`hold_image` has the wrong type: Received `{type(params.get("hold_image", False))}` expected `bool`')
+    if params.get("extern_labs_no", False) is None:
+        raise StyxValidationError("`extern_labs_no` must not be None")
+    if not isinstance(params["extern_labs_no"], bool):
+        raise StyxValidationError(f'`extern_labs_no` has the wrong type: Received `{type(params.get("extern_labs_no", False))}` expected `bool`')
+    if params.get("type_file", None) is not None:
+        if not isinstance(params["type_file"], str):
+            raise StyxValidationError(f'`type_file` has the wrong type: Received `{type(params.get("type_file", None))}` expected `str | None`')
+    if params.get("dpi_file", None) is not None:
+        if not isinstance(params["dpi_file"], (float, int)):
+            raise StyxValidationError(f'`dpi_file` has the wrong type: Received `{type(params.get("dpi_file", None))}` expected `float | None`')
+    if params.get("xlen_file", None) is not None:
+        if not isinstance(params["xlen_file"], (float, int)):
+            raise StyxValidationError(f'`xlen_file` has the wrong type: Received `{type(params.get("xlen_file", None))}` expected `float | None`')
+    if params.get("ylen_file", None) is not None:
+        if not isinstance(params["ylen_file"], (float, int)):
+            raise StyxValidationError(f'`ylen_file` has the wrong type: Received `{type(params.get("ylen_file", None))}` expected `float | None`')
+    if params.get("tight_layout_on", False) is None:
+        raise StyxValidationError("`tight_layout_on` must not be None")
+    if not isinstance(params["tight_layout_on"], bool):
+        raise StyxValidationError(f'`tight_layout_on` has the wrong type: Received `{type(params.get("tight_layout_on", False))}` expected `bool`')
+    if params.get("fig_off", False) is None:
+        raise StyxValidationError("`fig_off` must not be None")
+    if not isinstance(params["fig_off"], bool):
+        raise StyxValidationError(f'`fig_off` has the wrong type: Received `{type(params.get("fig_off", False))}` expected `bool`')
+    if params.get("size_font", None) is not None:
+        if not isinstance(params["size_font"], (float, int)):
+            raise StyxValidationError(f'`size_font` has the wrong type: Received `{type(params.get("size_font", None))}` expected `float | None`')
+    if params.get("lab_size_font", None) is not None:
+        if not isinstance(params["lab_size_font"], (float, int)):
+            raise StyxValidationError(f'`lab_size_font` has the wrong type: Received `{type(params.get("lab_size_font", None))}` expected `float | None`')
+    if params.get("a_plotmin", None) is not None:
+        if not isinstance(params["a_plotmin"], (float, int)):
+            raise StyxValidationError(f'`a_plotmin` has the wrong type: Received `{type(params.get("a_plotmin", None))}` expected `float | None`')
+    if params.get("b_plotmax", None) is not None:
+        if not isinstance(params["b_plotmax"], (float, int)):
+            raise StyxValidationError(f'`b_plotmax` has the wrong type: Received `{type(params.get("b_plotmax", None))}` expected `float | None`')
+    if params.get("cbar_off", False) is None:
+        raise StyxValidationError("`cbar_off` must not be None")
+    if not isinstance(params["cbar_off"], bool):
+        raise StyxValidationError(f'`cbar_off` has the wrong type: Received `{type(params.get("cbar_off", False))}` expected `bool`')
+    if params.get("map_of_colors", None) is not None:
+        if not isinstance(params["map_of_colors"], str):
+            raise StyxValidationError(f'`map_of_colors` has the wrong type: Received `{type(params.get("map_of_colors", None))}` expected `str | None`')
+    if params.get("cbar_int_num", None) is not None:
+        if not isinstance(params["cbar_int_num"], (float, int)):
+            raise StyxValidationError(f'`cbar_int_num` has the wrong type: Received `{type(params.get("cbar_int_num", None))}` expected `float | None`')
+    if params.get("width_cbar_perc", None) is not None:
+        if not isinstance(params["width_cbar_perc"], (float, int)):
+            raise StyxValidationError(f'`width_cbar_perc` has the wrong type: Received `{type(params.get("width_cbar_perc", None))}` expected `float | None`')
+    if params.get("specifier", None) is not None:
+        if not isinstance(params["specifier"], str):
+            raise StyxValidationError(f'`specifier` has the wrong type: Received `{type(params.get("specifier", None))}` expected `str | None`')
+    if params.get("xtick_lab_off", False) is None:
+        raise StyxValidationError("`xtick_lab_off` must not be None")
+    if not isinstance(params["xtick_lab_off"], bool):
+        raise StyxValidationError(f'`xtick_lab_off` has the wrong type: Received `{type(params.get("xtick_lab_off", False))}` expected `bool`')
+
+
 def fat_mat_sel_py_cargs(
     params: FatMatSelPyParameters,
     execution: Execution,
@@ -343,6 +435,7 @@ def fat_mat_sel_py_execute(
     Returns:
         NamedTuple of outputs (described in `FatMatSelPyOutputs`).
     """
+    fat_mat_sel_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_MAT_SEL_PY_METADATA)
     params = execution.params(params)

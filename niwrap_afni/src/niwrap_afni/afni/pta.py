@@ -98,6 +98,48 @@ def pta_params(
     return params
 
 
+def pta_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `PtaParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("model_formula", None) is None:
+        raise StyxValidationError("`model_formula` must not be None")
+    if not isinstance(params["model_formula"], str):
+        raise StyxValidationError(f'`model_formula` has the wrong type: Received `{type(params.get("model_formula", None))}` expected `str`')
+    if params.get("vt_formulation", None) is not None:
+        if not isinstance(params["vt_formulation"], str):
+            raise StyxValidationError(f'`vt_formulation` has the wrong type: Received `{type(params.get("vt_formulation", None))}` expected `str | None`')
+    if params.get("prediction_table", None) is not None:
+        if not isinstance(params["prediction_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prediction_table` has the wrong type: Received `{type(params.get("prediction_table", None))}` expected `InputPathType | None`')
+    if params.get("verbosity_level", None) is not None:
+        if not isinstance(params["verbosity_level"], (float, int)):
+            raise StyxValidationError(f'`verbosity_level` has the wrong type: Received `{type(params.get("verbosity_level", None))}` expected `float | None`')
+    if params.get("response_var", None) is not None:
+        if not isinstance(params["response_var"], str):
+            raise StyxValidationError(f'`response_var` has the wrong type: Received `{type(params.get("response_var", None))}` expected `str | None`')
+    if params.get("dbg_args", False) is None:
+        raise StyxValidationError("`dbg_args` must not be None")
+    if not isinstance(params["dbg_args"], bool):
+        raise StyxValidationError(f'`dbg_args` has the wrong type: Received `{type(params.get("dbg_args", False))}` expected `bool`')
+
+
 def pta_cargs(
     params: PtaParameters,
     execution: Execution,
@@ -191,6 +233,7 @@ def pta_execute(
     Returns:
         NamedTuple of outputs (described in `PtaOutputs`).
     """
+    pta_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PTA_METADATA)
     params = execution.params(params)

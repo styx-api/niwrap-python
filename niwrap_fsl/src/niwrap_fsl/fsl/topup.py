@@ -195,6 +195,104 @@ def topup_params(
     return params
 
 
+def topup_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TopupParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("imain", None) is None:
+        raise StyxValidationError("`imain` must not be None")
+    if not isinstance(params["imain"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`imain` has the wrong type: Received `{type(params.get("imain", None))}` expected `InputPathType`')
+    if params.get("datain", None) is None:
+        raise StyxValidationError("`datain` must not be None")
+    if not isinstance(params["datain"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datain` has the wrong type: Received `{type(params.get("datain", None))}` expected `InputPathType`')
+    if params.get("out", None) is not None:
+        if not isinstance(params["out"], str):
+            raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str | None`')
+    if params.get("fout", None) is not None:
+        if not isinstance(params["fout"], str):
+            raise StyxValidationError(f'`fout` has the wrong type: Received `{type(params.get("fout", None))}` expected `str | None`')
+    if params.get("iout", None) is not None:
+        if not isinstance(params["iout"], str):
+            raise StyxValidationError(f'`iout` has the wrong type: Received `{type(params.get("iout", None))}` expected `str | None`')
+    if params.get("logout", None) is not None:
+        if not isinstance(params["logout"], str):
+            raise StyxValidationError(f'`logout` has the wrong type: Received `{type(params.get("logout", None))}` expected `str | None`')
+    if params.get("warpres", None) is not None:
+        if not isinstance(params["warpres"], (float, int)):
+            raise StyxValidationError(f'`warpres` has the wrong type: Received `{type(params.get("warpres", None))}` expected `float | None`')
+    if params.get("subsamp", None) is not None:
+        if not isinstance(params["subsamp"], (float, int)):
+            raise StyxValidationError(f'`subsamp` has the wrong type: Received `{type(params.get("subsamp", None))}` expected `float | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `InputPathType | None`')
+    if params.get("miter", None) is not None:
+        if not isinstance(params["miter"], (float, int)):
+            raise StyxValidationError(f'`miter` has the wrong type: Received `{type(params.get("miter", None))}` expected `float | None`')
+    if params.get("lambda", None) is not None:
+        if not isinstance(params["lambda"], (float, int)):
+            raise StyxValidationError(f'`lambda` has the wrong type: Received `{type(params.get("lambda", None))}` expected `float | None`')
+    if params.get("ssqlambda", False) is None:
+        raise StyxValidationError("`ssqlambda` must not be None")
+    if not isinstance(params["ssqlambda"], bool):
+        raise StyxValidationError(f'`ssqlambda` has the wrong type: Received `{type(params.get("ssqlambda", False))}` expected `bool`')
+    if params.get("regmod", None) is not None:
+        if not isinstance(params["regmod"], str):
+            raise StyxValidationError(f'`regmod` has the wrong type: Received `{type(params.get("regmod", None))}` expected `typing.Literal["membrane_energy", "bending_energy"] | None`')
+        if params["regmod"] not in ["membrane_energy", "bending_energy"]:
+            raise StyxValidationError("Parameter `regmod` must be one of [\"membrane_energy\", \"bending_energy\"]")
+    if params.get("estmov", False) is None:
+        raise StyxValidationError("`estmov` must not be None")
+    if not isinstance(params["estmov"], bool):
+        raise StyxValidationError(f'`estmov` has the wrong type: Received `{type(params.get("estmov", False))}` expected `bool`')
+    if params.get("minmet", None) is not None:
+        if not isinstance(params["minmet"], bool):
+            raise StyxValidationError(f'`minmet` has the wrong type: Received `{type(params.get("minmet", None))}` expected `bool | None`')
+    if params.get("splineorder", None) is not None:
+        if not isinstance(params["splineorder"], int):
+            raise StyxValidationError(f'`splineorder` has the wrong type: Received `{type(params.get("splineorder", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["splineorder"] not in [2, 3]:
+            raise StyxValidationError("Parameter `splineorder` must be one of [2, 3]")
+    if params.get("numprec", None) is not None:
+        if not isinstance(params["numprec"], str):
+            raise StyxValidationError(f'`numprec` has the wrong type: Received `{type(params.get("numprec", None))}` expected `typing.Literal["double", "float"] | None`')
+        if params["numprec"] not in ["double", "float"]:
+            raise StyxValidationError("Parameter `numprec` must be one of [\"double\", \"float\"]")
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["linear", "spline"] | None`')
+        if params["interp"] not in ["linear", "spline"]:
+            raise StyxValidationError("Parameter `interp` must be one of [\"linear\", \"spline\"]")
+    if params.get("scale", False) is None:
+        raise StyxValidationError("`scale` must not be None")
+    if not isinstance(params["scale"], bool):
+        raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", False))}` expected `bool`')
+    if params.get("regrid", False) is None:
+        raise StyxValidationError("`regrid` must not be None")
+    if not isinstance(params["regrid"], bool):
+        raise StyxValidationError(f'`regrid` has the wrong type: Received `{type(params.get("regrid", False))}` expected `bool`')
+    if params.get("nthr", None) is not None:
+        if not isinstance(params["nthr"], (float, int)):
+            raise StyxValidationError(f'`nthr` has the wrong type: Received `{type(params.get("nthr", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def topup_cargs(
     params: TopupParameters,
     execution: Execution,
@@ -301,6 +399,7 @@ def topup_execute(
     Returns:
         NamedTuple of outputs (described in `TopupOutputs`).
     """
+    topup_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TOPUP_METADATA)
     params = execution.params(params)

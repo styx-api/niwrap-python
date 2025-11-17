@@ -69,6 +69,34 @@ def v__snapshot_volreg_params(
     return params
 
 
+def v__snapshot_volreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSnapshotVolregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("anatdataset", None) is None:
+        raise StyxValidationError("`anatdataset` must not be None")
+    if not isinstance(params["anatdataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatdataset` has the wrong type: Received `{type(params.get("anatdataset", None))}` expected `InputPathType`')
+    if params.get("epidataset", None) is None:
+        raise StyxValidationError("`epidataset` must not be None")
+    if not isinstance(params["epidataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`epidataset` has the wrong type: Received `{type(params.get("epidataset", None))}` expected `InputPathType`')
+    if params.get("jname", None) is not None:
+        if not isinstance(params["jname"], str):
+            raise StyxValidationError(f'`jname` has the wrong type: Received `{type(params.get("jname", None))}` expected `str | None`')
+    if params.get("xdisplay", None) is not None:
+        if not isinstance(params["xdisplay"], str):
+            raise StyxValidationError(f'`xdisplay` has the wrong type: Received `{type(params.get("xdisplay", None))}` expected `str | None`')
+
+
 def v__snapshot_volreg_cargs(
     params: VSnapshotVolregParameters,
     execution: Execution,
@@ -133,6 +161,7 @@ def v__snapshot_volreg_execute(
     Returns:
         NamedTuple of outputs (described in `VSnapshotVolregOutputs`).
     """
+    v__snapshot_volreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SNAPSHOT_VOLREG_METADATA)
     params = execution.params(params)

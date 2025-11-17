@@ -187,6 +187,101 @@ def v_3danisosmooth_params(
     return params
 
 
+def v_3danisosmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3danisosmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+    if params.get("2d_flag", False) is None:
+        raise StyxValidationError("`2d_flag` must not be None")
+    if not isinstance(params["2d_flag"], bool):
+        raise StyxValidationError(f'`2d_flag` has the wrong type: Received `{type(params.get("2d_flag", False))}` expected `bool`')
+    if params.get("3d_flag", False) is None:
+        raise StyxValidationError("`3d_flag` must not be None")
+    if not isinstance(params["3d_flag"], bool):
+        raise StyxValidationError(f'`3d_flag` has the wrong type: Received `{type(params.get("3d_flag", False))}` expected `bool`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("automask_flag", False) is None:
+        raise StyxValidationError("`automask_flag` must not be None")
+    if not isinstance(params["automask_flag"], bool):
+        raise StyxValidationError(f'`automask_flag` has the wrong type: Received `{type(params.get("automask_flag", False))}` expected `bool`')
+    if params.get("viewer_flag", False) is None:
+        raise StyxValidationError("`viewer_flag` must not be None")
+    if not isinstance(params["viewer_flag"], bool):
+        raise StyxValidationError(f'`viewer_flag` has the wrong type: Received `{type(params.get("viewer_flag", False))}` expected `bool`')
+    if params.get("nosmooth_flag", False) is None:
+        raise StyxValidationError("`nosmooth_flag` must not be None")
+    if not isinstance(params["nosmooth_flag"], bool):
+        raise StyxValidationError(f'`nosmooth_flag` has the wrong type: Received `{type(params.get("nosmooth_flag", False))}` expected `bool`')
+    if params.get("sigma1", None) is not None:
+        if not isinstance(params["sigma1"], (float, int)):
+            raise StyxValidationError(f'`sigma1` has the wrong type: Received `{type(params.get("sigma1", None))}` expected `float | None`')
+    if params.get("sigma2", None) is not None:
+        if not isinstance(params["sigma2"], (float, int)):
+            raise StyxValidationError(f'`sigma2` has the wrong type: Received `{type(params.get("sigma2", None))}` expected `float | None`')
+    if params.get("deltat", None) is not None:
+        if not isinstance(params["deltat"], (float, int)):
+            raise StyxValidationError(f'`deltat` has the wrong type: Received `{type(params.get("deltat", None))}` expected `float | None`')
+    if params.get("savetempdata_flag", False) is None:
+        raise StyxValidationError("`savetempdata_flag` must not be None")
+    if not isinstance(params["savetempdata_flag"], bool):
+        raise StyxValidationError(f'`savetempdata_flag` has the wrong type: Received `{type(params.get("savetempdata_flag", False))}` expected `bool`')
+    if params.get("save_temp_with_diff_measures_flag", False) is None:
+        raise StyxValidationError("`save_temp_with_diff_measures_flag` must not be None")
+    if not isinstance(params["save_temp_with_diff_measures_flag"], bool):
+        raise StyxValidationError(f'`save_temp_with_diff_measures_flag` has the wrong type: Received `{type(params.get("save_temp_with_diff_measures_flag", False))}` expected `bool`')
+    if params.get("phiding_flag", False) is None:
+        raise StyxValidationError("`phiding_flag` must not be None")
+    if not isinstance(params["phiding_flag"], bool):
+        raise StyxValidationError(f'`phiding_flag` has the wrong type: Received `{type(params.get("phiding_flag", False))}` expected `bool`')
+    if params.get("phiexp_flag", False) is None:
+        raise StyxValidationError("`phiexp_flag` must not be None")
+    if not isinstance(params["phiexp_flag"], bool):
+        raise StyxValidationError(f'`phiexp_flag` has the wrong type: Received `{type(params.get("phiexp_flag", False))}` expected `bool`')
+    if params.get("noneg_flag", False) is None:
+        raise StyxValidationError("`noneg_flag` must not be None")
+    if not isinstance(params["noneg_flag"], bool):
+        raise StyxValidationError(f'`noneg_flag` has the wrong type: Received `{type(params.get("noneg_flag", False))}` expected `bool`')
+    if params.get("setneg_value", None) is not None:
+        if not isinstance(params["setneg_value"], (float, int)):
+            raise StyxValidationError(f'`setneg_value` has the wrong type: Received `{type(params.get("setneg_value", None))}` expected `float | None`')
+    if params.get("edgefraction", None) is not None:
+        if not isinstance(params["edgefraction"], (float, int)):
+            raise StyxValidationError(f'`edgefraction` has the wrong type: Received `{type(params.get("edgefraction", None))}` expected `float | None`')
+        if 0 <= params["edgefraction"] <= 1:
+            raise StyxValidationError("Parameter `edgefraction` must be between 0 and 1 (inclusive)")
+    if params.get("datum_type", None) is not None:
+        if not isinstance(params["datum_type"], str):
+            raise StyxValidationError(f'`datum_type` has the wrong type: Received `{type(params.get("datum_type", None))}` expected `str | None`')
+    if params.get("matchorig_flag", False) is None:
+        raise StyxValidationError("`matchorig_flag` must not be None")
+    if not isinstance(params["matchorig_flag"], bool):
+        raise StyxValidationError(f'`matchorig_flag` has the wrong type: Received `{type(params.get("matchorig_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def v_3danisosmooth_cargs(
     params: V3danisosmoothParameters,
     execution: Execution,
@@ -322,6 +417,7 @@ def v_3danisosmooth_execute(
     Returns:
         NamedTuple of outputs (described in `V3danisosmoothOutputs`).
     """
+    v_3danisosmooth_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DANISOSMOOTH_METADATA)
     params = execution.params(params)

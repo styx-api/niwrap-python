@@ -72,6 +72,41 @@ def create_displacement_field_params(
     return params
 
 
+def create_displacement_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateDisplacementFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("enforce_zero_boundary_flag", None) is None:
+        raise StyxValidationError("`enforce_zero_boundary_flag` must not be None")
+    if not isinstance(params["enforce_zero_boundary_flag"], bool):
+        raise StyxValidationError(f'`enforce_zero_boundary_flag` has the wrong type: Received `{type(params.get("enforce_zero_boundary_flag", None))}` expected `bool`')
+    if params.get("component_images", None) is None:
+        raise StyxValidationError("`component_images` must not be None")
+    if not isinstance(params["component_images"], list):
+        raise StyxValidationError(f'`component_images` has the wrong type: Received `{type(params.get("component_images", None))}` expected `list[InputPathType]`')
+    if 1 <= len(params["component_images"]) <= 8:
+        raise StyxValidationError("Parameter `component_images` must contain between 1 and 8 elements (inclusive)")
+    for e in params["component_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`component_images` has the wrong type: Received `{type(params.get("component_images", None))}` expected `list[InputPathType]`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+
+
 def create_displacement_field_cargs(
     params: CreateDisplacementFieldParameters,
     execution: Execution,
@@ -139,6 +174,7 @@ def create_displacement_field_execute(
     Returns:
         NamedTuple of outputs (described in `CreateDisplacementFieldOutputs`).
     """
+    create_displacement_field_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CREATE_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)

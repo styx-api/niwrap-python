@@ -93,6 +93,49 @@ def fat_proc_select_vols_params(
     return params
 
 
+def fat_proc_select_vols_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcSelectVolsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dwi_input", None) is None:
+        raise StyxValidationError("`dwi_input` must not be None")
+    if not isinstance(params["dwi_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dwi_input` has the wrong type: Received `{type(params.get("dwi_input", None))}` expected `InputPathType`')
+    if params.get("img_input", None) is None:
+        raise StyxValidationError("`img_input` must not be None")
+    if not isinstance(params["img_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`img_input` has the wrong type: Received `{type(params.get("img_input", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("in_bads", None) is not None:
+        if not isinstance(params["in_bads"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_bads` has the wrong type: Received `{type(params.get("in_bads", None))}` expected `InputPathType | None`')
+    if params.get("apply_to_vols", False) is None:
+        raise StyxValidationError("`apply_to_vols` must not be None")
+    if not isinstance(params["apply_to_vols"], bool):
+        raise StyxValidationError(f'`apply_to_vols` has the wrong type: Received `{type(params.get("apply_to_vols", False))}` expected `bool`')
+    if params.get("do_movie", None) is not None:
+        if not isinstance(params["do_movie"], str):
+            raise StyxValidationError(f'`do_movie` has the wrong type: Received `{type(params.get("do_movie", None))}` expected `str | None`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("no_cmd_out", False) is None:
+        raise StyxValidationError("`no_cmd_out` must not be None")
+    if not isinstance(params["no_cmd_out"], bool):
+        raise StyxValidationError(f'`no_cmd_out` has the wrong type: Received `{type(params.get("no_cmd_out", False))}` expected `bool`')
+
+
 def fat_proc_select_vols_cargs(
     params: FatProcSelectVolsParameters,
     execution: Execution,
@@ -181,6 +224,7 @@ def fat_proc_select_vols_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcSelectVolsOutputs`).
     """
+    fat_proc_select_vols_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_SELECT_VOLS_METADATA)
     params = execution.params(params)

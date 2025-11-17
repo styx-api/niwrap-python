@@ -120,6 +120,73 @@ def abids_json_tool_py_params(
     return params
 
 
+def abids_json_tool_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AbidsJsonToolPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("txt2json", False) is None:
+        raise StyxValidationError("`txt2json` must not be None")
+    if not isinstance(params["txt2json"], bool):
+        raise StyxValidationError(f'`txt2json` has the wrong type: Received `{type(params.get("txt2json", False))}` expected `bool`')
+    if params.get("json2txt", False) is None:
+        raise StyxValidationError("`json2txt` must not be None")
+    if not isinstance(params["json2txt"], bool):
+        raise StyxValidationError(f'`json2txt` has the wrong type: Received `{type(params.get("json2txt", False))}` expected `bool`')
+    if params.get("add_json", None) is not None:
+        if not isinstance(params["add_json"], list):
+            raise StyxValidationError(f'`add_json` has the wrong type: Received `{type(params.get("add_json", None))}` expected `list[str] | None`')
+        if len(params["add_json"]) >= 1:
+            raise StyxValidationError("Parameter `add_json` must contain at least 1 element")
+        for e in params["add_json"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`add_json` has the wrong type: Received `{type(params.get("add_json", None))}` expected `list[str] | None`')
+    if params.get("del_json", None) is not None:
+        if not isinstance(params["del_json"], str):
+            raise StyxValidationError(f'`del_json` has the wrong type: Received `{type(params.get("del_json", None))}` expected `str | None`')
+    if params.get("force_add", False) is None:
+        raise StyxValidationError("`force_add` must not be None")
+    if not isinstance(params["force_add"], bool):
+        raise StyxValidationError(f'`force_add` has the wrong type: Received `{type(params.get("force_add", False))}` expected `bool`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("delimiter_major", None) is not None:
+        if not isinstance(params["delimiter_major"], str):
+            raise StyxValidationError(f'`delimiter_major` has the wrong type: Received `{type(params.get("delimiter_major", None))}` expected `str | None`')
+    if params.get("delimiter_minor", None) is not None:
+        if not isinstance(params["delimiter_minor"], str):
+            raise StyxValidationError(f'`delimiter_minor` has the wrong type: Received `{type(params.get("delimiter_minor", None))}` expected `str | None`')
+    if params.get("literal_keys", False) is None:
+        raise StyxValidationError("`literal_keys` must not be None")
+    if not isinstance(params["literal_keys"], bool):
+        raise StyxValidationError(f'`literal_keys` has the wrong type: Received `{type(params.get("literal_keys", False))}` expected `bool`')
+    if params.get("values_stay_str", False) is None:
+        raise StyxValidationError("`values_stay_str` must not be None")
+    if not isinstance(params["values_stay_str"], bool):
+        raise StyxValidationError(f'`values_stay_str` has the wrong type: Received `{type(params.get("values_stay_str", False))}` expected `bool`')
+
+
 def abids_json_tool_py_cargs(
     params: AbidsJsonToolPyParameters,
     execution: Execution,
@@ -218,6 +285,7 @@ def abids_json_tool_py_execute(
     Returns:
         NamedTuple of outputs (described in `AbidsJsonToolPyOutputs`).
     """
+    abids_json_tool_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ABIDS_JSON_TOOL_PY_METADATA)
     params = execution.params(params)

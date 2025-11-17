@@ -77,6 +77,49 @@ def dicom_hinfo_params(
     return params
 
 
+def dicom_hinfo_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DicomHinfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tag", None) is None:
+        raise StyxValidationError("`tag` must not be None")
+    if not isinstance(params["tag"], list):
+        raise StyxValidationError(f'`tag` has the wrong type: Received `{type(params.get("tag", None))}` expected `list[str]`')
+    for e in params["tag"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`tag` has the wrong type: Received `{type(params.get("tag", None))}` expected `list[str]`')
+    if params.get("sepstr", None) is not None:
+        if not isinstance(params["sepstr"], str):
+            raise StyxValidationError(f'`sepstr` has the wrong type: Received `{type(params.get("sepstr", None))}` expected `str | None`')
+    if params.get("full_entry", False) is None:
+        raise StyxValidationError("`full_entry` must not be None")
+    if not isinstance(params["full_entry"], bool):
+        raise StyxValidationError(f'`full_entry` has the wrong type: Received `{type(params.get("full_entry", False))}` expected `bool`')
+    if params.get("no_name", False) is None:
+        raise StyxValidationError("`no_name` must not be None")
+    if not isinstance(params["no_name"], bool):
+        raise StyxValidationError(f'`no_name` has the wrong type: Received `{type(params.get("no_name", False))}` expected `bool`')
+    if params.get("namelast", False) is None:
+        raise StyxValidationError("`namelast` must not be None")
+    if not isinstance(params["namelast"], bool):
+        raise StyxValidationError(f'`namelast` has the wrong type: Received `{type(params.get("namelast", False))}` expected `bool`')
+    if params.get("files", None) is None:
+        raise StyxValidationError("`files` must not be None")
+    if not isinstance(params["files"], list):
+        raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    for e in params["files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+
+
 def dicom_hinfo_cargs(
     params: DicomHinfoParameters,
     execution: Execution,
@@ -149,6 +192,7 @@ def dicom_hinfo_execute(
     Returns:
         NamedTuple of outputs (described in `DicomHinfoOutputs`).
     """
+    dicom_hinfo_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DICOM_HINFO_METADATA)
     params = execution.params(params)

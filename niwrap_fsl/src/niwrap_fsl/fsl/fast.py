@@ -184,6 +184,114 @@ def fast_params(
     return params
 
 
+def fast_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `FastParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_classes", None) is not None:
+        if not isinstance(params["number_classes"], int):
+            raise StyxValidationError(f'`number_classes` has the wrong type: Received `{type(params.get("number_classes", None))}` expected `int | None`')
+        if params["number_classes"] >= 1:
+            raise StyxValidationError("Parameter `number_classes` must be at least 1")
+    if params.get("bias_iters", None) is not None:
+        if not isinstance(params["bias_iters"], int):
+            raise StyxValidationError(f'`bias_iters` has the wrong type: Received `{type(params.get("bias_iters", None))}` expected `int | None`')
+        if params["bias_iters"] >= 1:
+            raise StyxValidationError("Parameter `bias_iters` must be at least 1")
+    if params.get("bias_lowpass", None) is not None:
+        if not isinstance(params["bias_lowpass"], (float, int)):
+            raise StyxValidationError(f'`bias_lowpass` has the wrong type: Received `{type(params.get("bias_lowpass", None))}` expected `float | None`')
+        if params["bias_lowpass"] >= 0:
+            raise StyxValidationError("Parameter `bias_lowpass` must be at least 0")
+    if params.get("img_type", None) is not None:
+        if not isinstance(params["img_type"], int):
+            raise StyxValidationError(f'`img_type` has the wrong type: Received `{type(params.get("img_type", None))}` expected `typing.Literal[1, 2, 3] | None`')
+        if params["img_type"] not in [1, 2, 3]:
+            raise StyxValidationError("Parameter `img_type` must be one of [1, 2, 3]")
+    if params.get("init_seg_smooth", None) is not None:
+        if not isinstance(params["init_seg_smooth"], (float, int)):
+            raise StyxValidationError(f'`init_seg_smooth` has the wrong type: Received `{type(params.get("init_seg_smooth", None))}` expected `float | None`')
+    if params.get("segments", False) is None:
+        raise StyxValidationError("`segments` must not be None")
+    if not isinstance(params["segments"], bool):
+        raise StyxValidationError(f'`segments` has the wrong type: Received `{type(params.get("segments", False))}` expected `bool`')
+    if params.get("init_transform", None) is not None:
+        if not isinstance(params["init_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_transform` has the wrong type: Received `{type(params.get("init_transform", None))}` expected `InputPathType | None`')
+    if params.get("other_priors", None) is not None:
+        if not isinstance(params["other_priors"], list):
+            raise StyxValidationError(f'`other_priors` has the wrong type: Received `{type(params.get("other_priors", None))}` expected `list[InputPathType] | None`')
+        for e in params["other_priors"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`other_priors` has the wrong type: Received `{type(params.get("other_priors", None))}` expected `list[InputPathType] | None`')
+    if params.get("output_biasfield", False) is None:
+        raise StyxValidationError("`output_biasfield` must not be None")
+    if not isinstance(params["output_biasfield"], bool):
+        raise StyxValidationError(f'`output_biasfield` has the wrong type: Received `{type(params.get("output_biasfield", False))}` expected `bool`')
+    if params.get("output_biascorrected", False) is None:
+        raise StyxValidationError("`output_biascorrected` must not be None")
+    if not isinstance(params["output_biascorrected"], bool):
+        raise StyxValidationError(f'`output_biascorrected` has the wrong type: Received `{type(params.get("output_biascorrected", False))}` expected `bool`')
+    if params.get("no_bias", False) is None:
+        raise StyxValidationError("`no_bias` must not be None")
+    if not isinstance(params["no_bias"], bool):
+        raise StyxValidationError(f'`no_bias` has the wrong type: Received `{type(params.get("no_bias", False))}` expected `bool`')
+    if params.get("channels", None) is not None:
+        if not isinstance(params["channels"], int):
+            raise StyxValidationError(f'`channels` has the wrong type: Received `{type(params.get("channels", None))}` expected `int | None`')
+    if params.get("out_basename", None) is not None:
+        if not isinstance(params["out_basename"], str):
+            raise StyxValidationError(f'`out_basename` has the wrong type: Received `{type(params.get("out_basename", None))}` expected `str | None`')
+    if params.get("use_priors", False) is None:
+        raise StyxValidationError("`use_priors` must not be None")
+    if not isinstance(params["use_priors"], bool):
+        raise StyxValidationError(f'`use_priors` has the wrong type: Received `{type(params.get("use_priors", False))}` expected `bool`')
+    if params.get("no_pve", False) is None:
+        raise StyxValidationError("`no_pve` must not be None")
+    if not isinstance(params["no_pve"], bool):
+        raise StyxValidationError(f'`no_pve` has the wrong type: Received `{type(params.get("no_pve", False))}` expected `bool`')
+    if params.get("segment_iters", None) is not None:
+        if not isinstance(params["segment_iters"], int):
+            raise StyxValidationError(f'`segment_iters` has the wrong type: Received `{type(params.get("segment_iters", None))}` expected `int | None`')
+        if params["segment_iters"] >= 1:
+            raise StyxValidationError("Parameter `segment_iters` must be at least 1")
+    if params.get("mixel_smooth", None) is not None:
+        if not isinstance(params["mixel_smooth"], (float, int)):
+            raise StyxValidationError(f'`mixel_smooth` has the wrong type: Received `{type(params.get("mixel_smooth", None))}` expected `float | None`')
+    if params.get("hyper", None) is not None:
+        if not isinstance(params["hyper"], (float, int)):
+            raise StyxValidationError(f'`hyper` has the wrong type: Received `{type(params.get("hyper", None))}` expected `float | None`')
+        if 0.0 <= params["hyper"] <= 1.0:
+            raise StyxValidationError("Parameter `hyper` must be between 0.0 and 1.0 (inclusive)")
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("manual_seg", None) is not None:
+        if not isinstance(params["manual_seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`manual_seg` has the wrong type: Received `{type(params.get("manual_seg", None))}` expected `InputPathType | None`')
+    if params.get("iters_afterbias", None) is not None:
+        if not isinstance(params["iters_afterbias"], int):
+            raise StyxValidationError(f'`iters_afterbias` has the wrong type: Received `{type(params.get("iters_afterbias", None))}` expected `int | None`')
+        if params["iters_afterbias"] >= 1:
+            raise StyxValidationError("Parameter `iters_afterbias` must be at least 1")
+    if params.get("in_files", None) is None:
+        raise StyxValidationError("`in_files` must not be None")
+    if not isinstance(params["in_files"], list):
+        raise StyxValidationError(f'`in_files` has the wrong type: Received `{type(params.get("in_files", None))}` expected `list[InputPathType]`')
+    for e in params["in_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_files` has the wrong type: Received `{type(params.get("in_files", None))}` expected `list[InputPathType]`')
+
+
 def fast_cargs(
     params: FastParameters,
     execution: Execution,
@@ -338,6 +446,7 @@ def fast_execute(
     Returns:
         NamedTuple of outputs (described in `FastOutputs`).
     """
+    fast_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAST_METADATA)
     params = execution.params(params)

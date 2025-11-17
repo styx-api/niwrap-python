@@ -110,18 +110,20 @@ def tckconvert_input_cargs_dyn_fn(
     }.get(t)
 
 
-def tckconvert_input_outputs_dyn_fn(
+def tckconvert_input_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": tckconvert_various_string_validate,
+        "VariousFile": tckconvert_various_file_validate,
     }.get(t)
 
 
@@ -144,6 +146,28 @@ def tckconvert_config_params(
         "value": value,
     }
     return params
+
+
+def tckconvert_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckconvertConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def tckconvert_config_cargs(
@@ -184,6 +208,24 @@ def tckconvert_various_string_params(
     return params
 
 
+def tckconvert_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckconvertVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def tckconvert_various_string_cargs(
     params: TckconvertVariousStringParameters,
     execution: Execution,
@@ -218,6 +260,24 @@ def tckconvert_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def tckconvert_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckconvertVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def tckconvert_various_file_cargs(
@@ -342,6 +402,96 @@ def tckconvert_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def tckconvert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckconvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scanner2voxel", None) is not None:
+        if not isinstance(params["scanner2voxel"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`scanner2voxel` has the wrong type: Received `{type(params.get("scanner2voxel", None))}` expected `InputPathType | None`')
+    if params.get("scanner2image", None) is not None:
+        if not isinstance(params["scanner2image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`scanner2image` has the wrong type: Received `{type(params.get("scanner2image", None))}` expected `InputPathType | None`')
+    if params.get("voxel2scanner", None) is not None:
+        if not isinstance(params["voxel2scanner"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`voxel2scanner` has the wrong type: Received `{type(params.get("voxel2scanner", None))}` expected `InputPathType | None`')
+    if params.get("image2scanner", None) is not None:
+        if not isinstance(params["image2scanner"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`image2scanner` has the wrong type: Received `{type(params.get("image2scanner", None))}` expected `InputPathType | None`')
+    if params.get("sides", None) is not None:
+        if not isinstance(params["sides"], int):
+            raise StyxValidationError(f'`sides` has the wrong type: Received `{type(params.get("sides", None))}` expected `int | None`')
+    if params.get("increment", None) is not None:
+        if not isinstance(params["increment"], int):
+            raise StyxValidationError(f'`increment` has the wrong type: Received `{type(params.get("increment", None))}` expected `int | None`')
+    if params.get("dec", False) is None:
+        raise StyxValidationError("`dec` must not be None")
+    if not isinstance(params["dec"], bool):
+        raise StyxValidationError(f'`dec` has the wrong type: Received `{type(params.get("dec", False))}` expected `bool`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+    if params.get("ascii", False) is None:
+        raise StyxValidationError("`ascii` must not be None")
+    if not isinstance(params["ascii"], bool):
+        raise StyxValidationError(f'`ascii` has the wrong type: Received `{type(params.get("ascii", False))}` expected `bool`')
+    if params.get("binary", False) is None:
+        raise StyxValidationError("`binary` must not be None")
+    if not isinstance(params["binary"], bool):
+        raise StyxValidationError(f'`binary` has the wrong type: Received `{type(params.get("binary", False))}` expected `bool`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckconvertConfigParameters] | None`')
+        for e in params["config"]:
+            tckconvert_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["input"])}\'')
+    if "@type" not in params["input"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    tckconvert_input_validate_dyn_fn(params["input"]["@type"])(params["input"])
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def tckconvert_cargs(
@@ -481,6 +631,7 @@ def tckconvert_execute(
     Returns:
         NamedTuple of outputs (described in `TckconvertOutputs`).
     """
+    tckconvert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCKCONVERT_METADATA)
     params = execution.params(params)

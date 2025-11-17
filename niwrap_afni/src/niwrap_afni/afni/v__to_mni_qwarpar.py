@@ -58,6 +58,28 @@ def v__to_mni_qwarpar_params(
     return params
 
 
+def v__to_mni_qwarpar_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VToMniQwarparParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("numcpu", None) is None:
+        raise StyxValidationError("`numcpu` must not be None")
+    if not isinstance(params["numcpu"], (float, int)):
+        raise StyxValidationError(f'`numcpu` has the wrong type: Received `{type(params.get("numcpu", None))}` expected `float`')
+    if params.get("numjob", None) is None:
+        raise StyxValidationError("`numjob` must not be None")
+    if not isinstance(params["numjob"], (float, int)):
+        raise StyxValidationError(f'`numjob` has the wrong type: Received `{type(params.get("numjob", None))}` expected `float`')
+
+
 def v__to_mni_qwarpar_cargs(
     params: VToMniQwarparParameters,
     execution: Execution,
@@ -118,6 +140,7 @@ def v__to_mni_qwarpar_execute(
     Returns:
         NamedTuple of outputs (described in `VToMniQwarparOutputs`).
     """
+    v__to_mni_qwarpar_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__TO_MNI_QWARPAR_METADATA)
     params = execution.params(params)

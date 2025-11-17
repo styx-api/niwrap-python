@@ -125,6 +125,66 @@ def siena_params(
     return params
 
 
+def siena_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SienaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input1", None) is None:
+        raise StyxValidationError("`input1` must not be None")
+    if not isinstance(params["input1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input1` has the wrong type: Received `{type(params.get("input1", None))}` expected `InputPathType`')
+    if params.get("input2", None) is None:
+        raise StyxValidationError("`input2` must not be None")
+    if not isinstance(params["input2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input2` has the wrong type: Received `{type(params.get("input2", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("bet_options", None) is not None:
+        if not isinstance(params["bet_options"], str):
+            raise StyxValidationError(f'`bet_options` has the wrong type: Received `{type(params.get("bet_options", None))}` expected `str | None`')
+    if params.get("two_class_seg_flag", False) is None:
+        raise StyxValidationError("`two_class_seg_flag` must not be None")
+    if not isinstance(params["two_class_seg_flag"], bool):
+        raise StyxValidationError(f'`two_class_seg_flag` has the wrong type: Received `{type(params.get("two_class_seg_flag", False))}` expected `bool`')
+    if params.get("t2_weighted_flag", False) is None:
+        raise StyxValidationError("`t2_weighted_flag` must not be None")
+    if not isinstance(params["t2_weighted_flag"], bool):
+        raise StyxValidationError(f'`t2_weighted_flag` has the wrong type: Received `{type(params.get("t2_weighted_flag", False))}` expected `bool`')
+    if params.get("standard_space_mask_flag", False) is None:
+        raise StyxValidationError("`standard_space_mask_flag` must not be None")
+    if not isinstance(params["standard_space_mask_flag"], bool):
+        raise StyxValidationError(f'`standard_space_mask_flag` has the wrong type: Received `{type(params.get("standard_space_mask_flag", False))}` expected `bool`')
+    if params.get("upper_ignore", None) is not None:
+        if not isinstance(params["upper_ignore"], (float, int)):
+            raise StyxValidationError(f'`upper_ignore` has the wrong type: Received `{type(params.get("upper_ignore", None))}` expected `float | None`')
+    if params.get("lower_ignore", None) is not None:
+        if not isinstance(params["lower_ignore"], (float, int)):
+            raise StyxValidationError(f'`lower_ignore` has the wrong type: Received `{type(params.get("lower_ignore", None))}` expected `float | None`')
+    if params.get("sienadiff_options", None) is not None:
+        if not isinstance(params["sienadiff_options"], str):
+            raise StyxValidationError(f'`sienadiff_options` has the wrong type: Received `{type(params.get("sienadiff_options", None))}` expected `str | None`')
+    if params.get("ventricle_analysis_flag", False) is None:
+        raise StyxValidationError("`ventricle_analysis_flag` must not be None")
+    if not isinstance(params["ventricle_analysis_flag"], bool):
+        raise StyxValidationError(f'`ventricle_analysis_flag` has the wrong type: Received `{type(params.get("ventricle_analysis_flag", False))}` expected `bool`')
+    if params.get("ventricle_mask", None) is not None:
+        if not isinstance(params["ventricle_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ventricle_mask` has the wrong type: Received `{type(params.get("ventricle_mask", None))}` expected `InputPathType | None`')
+
+
 def siena_cargs(
     params: SienaParameters,
     execution: Execution,
@@ -226,6 +286,7 @@ def siena_execute(
     Returns:
         NamedTuple of outputs (described in `SienaOutputs`).
     """
+    siena_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIENA_METADATA)
     params = execution.params(params)

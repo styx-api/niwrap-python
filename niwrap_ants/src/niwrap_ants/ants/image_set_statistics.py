@@ -85,6 +85,44 @@ def image_set_statistics_params(
     return params
 
 
+def image_set_statistics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImageSetStatisticsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("controls_list", None) is None:
+        raise StyxValidationError("`controls_list` must not be None")
+    if not isinstance(params["controls_list"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`controls_list` has the wrong type: Received `{type(params.get("controls_list", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("which_stat", None) is None:
+        raise StyxValidationError("`which_stat` must not be None")
+    if not isinstance(params["which_stat"], int):
+        raise StyxValidationError(f'`which_stat` has the wrong type: Received `{type(params.get("which_stat", None))}` expected `typing.Literal[0, 1, 2, 3, 4, 5, 6, 7]`')
+    if params["which_stat"] not in [0, 1, 2, 3, 4, 5, 6, 7]:
+        raise StyxValidationError("Parameter `which_stat` must be one of [0, 1, 2, 3, 4, 5, 6, 7]")
+    if params.get("roi", None) is not None:
+        if not isinstance(params["roi"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `InputPathType | None`')
+    if params.get("imagelist2", None) is not None:
+        if not isinstance(params["imagelist2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`imagelist2` has the wrong type: Received `{type(params.get("imagelist2", None))}` expected `InputPathType | None`')
+
+
 def image_set_statistics_cargs(
     params: ImageSetStatisticsParameters,
     execution: Execution,
@@ -167,6 +205,7 @@ def image_set_statistics_execute(
     Returns:
         NamedTuple of outputs (described in `ImageSetStatisticsOutputs`).
     """
+    image_set_statistics_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMAGE_SET_STATISTICS_METADATA)
     params = execution.params(params)

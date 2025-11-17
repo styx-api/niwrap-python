@@ -56,6 +56,28 @@ def mri_topologycorrection_params(
     return params
 
 
+def mri_topologycorrection_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriTopologycorrectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_orig_file", None) is None:
+        raise StyxValidationError("`input_orig_file` must not be None")
+    if not isinstance(params["input_orig_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_orig_file` has the wrong type: Received `{type(params.get("input_orig_file", None))}` expected `InputPathType`')
+    if params.get("input_segmented_file", None) is None:
+        raise StyxValidationError("`input_segmented_file` must not be None")
+    if not isinstance(params["input_segmented_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_segmented_file` has the wrong type: Received `{type(params.get("input_segmented_file", None))}` expected `InputPathType`')
+
+
 def mri_topologycorrection_cargs(
     params: MriTopologycorrectionParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def mri_topologycorrection_execute(
     Returns:
         NamedTuple of outputs (described in `MriTopologycorrectionOutputs`).
     """
+    mri_topologycorrection_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_TOPOLOGYCORRECTION_METADATA)
     params = execution.params(params)

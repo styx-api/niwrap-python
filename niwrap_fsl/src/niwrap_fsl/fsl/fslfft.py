@@ -61,6 +61,32 @@ def fslfft_params(
     return params
 
 
+def fslfft_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslfftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("inverse_flag", False) is None:
+        raise StyxValidationError("`inverse_flag` must not be None")
+    if not isinstance(params["inverse_flag"], bool):
+        raise StyxValidationError(f'`inverse_flag` has the wrong type: Received `{type(params.get("inverse_flag", False))}` expected `bool`')
+
+
 def fslfft_cargs(
     params: FslfftParameters,
     execution: Execution,
@@ -123,6 +149,7 @@ def fslfft_execute(
     Returns:
         NamedTuple of outputs (described in `FslfftOutputs`).
     """
+    fslfft_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLFFT_METADATA)
     params = execution.params(params)

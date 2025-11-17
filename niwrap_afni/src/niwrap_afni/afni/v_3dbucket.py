@@ -102,6 +102,58 @@ def v_3dbucket_params(
     return params
 
 
+def v_3dbucket_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dbucketParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("session", None) is not None:
+        if not isinstance(params["session"], str):
+            raise StyxValidationError(f'`session` has the wrong type: Received `{type(params.get("session", None))}` expected `str | None`')
+    if params.get("glueto", None) is not None:
+        if not isinstance(params["glueto"], str):
+            raise StyxValidationError(f'`glueto` has the wrong type: Received `{type(params.get("glueto", None))}` expected `str | None`')
+    if params.get("aglueto", None) is not None:
+        if not isinstance(params["aglueto"], str):
+            raise StyxValidationError(f'`aglueto` has the wrong type: Received `{type(params.get("aglueto", None))}` expected `str | None`')
+    if params.get("dry", False) is None:
+        raise StyxValidationError("`dry` must not be None")
+    if not isinstance(params["dry"], bool):
+        raise StyxValidationError(f'`dry` has the wrong type: Received `{type(params.get("dry", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("fbuc", False) is None:
+        raise StyxValidationError("`fbuc` must not be None")
+    if not isinstance(params["fbuc"], bool):
+        raise StyxValidationError(f'`fbuc` has the wrong type: Received `{type(params.get("fbuc", False))}` expected `bool`')
+    if params.get("abuc", False) is None:
+        raise StyxValidationError("`abuc` must not be None")
+    if not isinstance(params["abuc"], bool):
+        raise StyxValidationError(f'`abuc` has the wrong type: Received `{type(params.get("abuc", False))}` expected `bool`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+    for e in params["input_files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+
+
 def v_3dbucket_cargs(
     params: V3dbucketParameters,
     execution: Execution,
@@ -192,6 +244,7 @@ def v_3dbucket_execute(
     Returns:
         NamedTuple of outputs (described in `V3dbucketOutputs`).
     """
+    v_3dbucket_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DBUCKET_METADATA)
     params = execution.params(params)

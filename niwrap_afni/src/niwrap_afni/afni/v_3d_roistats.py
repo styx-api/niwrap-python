@@ -157,6 +157,73 @@ def v_3d_roistats_params(
     return params
 
 
+def v_3d_roistats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRoistatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("format1D", False) is None:
+        raise StyxValidationError("`format1D` must not be None")
+    if not isinstance(params["format1D"], bool):
+        raise StyxValidationError(f'`format1D` has the wrong type: Received `{type(params.get("format1D", False))}` expected `bool`')
+    if params.get("format1DR", False) is None:
+        raise StyxValidationError("`format1DR` must not be None")
+    if not isinstance(params["format1DR"], bool):
+        raise StyxValidationError(f'`format1DR` has the wrong type: Received `{type(params.get("format1DR", False))}` expected `bool`')
+    if params.get("mask_f2short", False) is None:
+        raise StyxValidationError("`mask_f2short` must not be None")
+    if not isinstance(params["mask_f2short"], bool):
+        raise StyxValidationError(f'`mask_f2short` has the wrong type: Received `{type(params.get("mask_f2short", False))}` expected `bool`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("nobriklab", False) is None:
+        raise StyxValidationError("`nobriklab` must not be None")
+    if not isinstance(params["nobriklab"], bool):
+        raise StyxValidationError(f'`nobriklab` has the wrong type: Received `{type(params.get("nobriklab", False))}` expected `bool`')
+    if params.get("nomeanout", False) is None:
+        raise StyxValidationError("`nomeanout` must not be None")
+    if not isinstance(params["nomeanout"], bool):
+        raise StyxValidationError(f'`nomeanout` has the wrong type: Received `{type(params.get("nomeanout", False))}` expected `bool`')
+    if params.get("num_roi", None) is not None:
+        if not isinstance(params["num_roi"], int):
+            raise StyxValidationError(f'`num_roi` has the wrong type: Received `{type(params.get("num_roi", None))}` expected `int | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("roisel", None) is not None:
+        if not isinstance(params["roisel"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roisel` has the wrong type: Received `{type(params.get("roisel", None))}` expected `InputPathType | None`')
+    if params.get("stat", None) is not None:
+        if not isinstance(params["stat"], list):
+            raise StyxValidationError(f'`stat` has the wrong type: Received `{type(params.get("stat", None))}` expected `list[InputPathType] | None`')
+        for e in params["stat"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`stat` has the wrong type: Received `{type(params.get("stat", None))}` expected `list[InputPathType] | None`')
+    if params.get("zerofill", None) is not None:
+        if not isinstance(params["zerofill"], str):
+            raise StyxValidationError(f'`zerofill` has the wrong type: Received `{type(params.get("zerofill", None))}` expected `str | None`')
+
+
 def v_3d_roistats_cargs(
     params: V3dRoistatsParameters,
     execution: Execution,
@@ -256,6 +323,7 @@ def v_3d_roistats_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRoistatsOutputs`).
     """
+    v_3d_roistats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ROISTATS_METADATA)
     params = execution.params(params)

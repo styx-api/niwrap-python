@@ -145,6 +145,96 @@ def gcatrain_params(
     return params
 
 
+def gcatrain_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GcatrainParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gcadir", None) is None:
+        raise StyxValidationError("`gcadir` must not be None")
+    if not isinstance(params["gcadir"], str):
+        raise StyxValidationError(f'`gcadir` has the wrong type: Received `{type(params.get("gcadir", None))}` expected `str`')
+    if params.get("subjectlistfile", None) is None:
+        raise StyxValidationError("`subjectlistfile` must not be None")
+    if not isinstance(params["subjectlistfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subjectlistfile` has the wrong type: Received `{type(params.get("subjectlistfile", None))}` expected `InputPathType`')
+    if params.get("init_subject_transform", None) is None:
+        raise StyxValidationError("`init_subject_transform` must not be None")
+    if not isinstance(params["init_subject_transform"], list):
+        raise StyxValidationError(f'`init_subject_transform` has the wrong type: Received `{type(params.get("init_subject_transform", None))}` expected `list[str]`')
+    if len(params["init_subject_transform"]) == 2:
+        raise StyxValidationError("Parameter `init_subject_transform` must contain exactly 2 elements")
+    for e in params["init_subject_transform"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`init_subject_transform` has the wrong type: Received `{type(params.get("init_subject_transform", None))}` expected `list[str]`')
+    if params.get("seg_file", None) is None:
+        raise StyxValidationError("`seg_file` must not be None")
+    if not isinstance(params["seg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`seg_file` has the wrong type: Received `{type(params.get("seg_file", None))}` expected `InputPathType`')
+    if params.get("source_subjects_dir", None) is None:
+        raise StyxValidationError("`source_subjects_dir` must not be None")
+    if not isinstance(params["source_subjects_dir"], str):
+        raise StyxValidationError(f'`source_subjects_dir` has the wrong type: Received `{type(params.get("source_subjects_dir", None))}` expected `str`')
+    if params.get("num_iters", None) is not None:
+        if not isinstance(params["num_iters"], (float, int)):
+            raise StyxValidationError(f'`num_iters` has the wrong type: Received `{type(params.get("num_iters", None))}` expected `float | None`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], (float, int)):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `float | None`')
+    if params.get("exclude_file", None) is not None:
+        if not isinstance(params["exclude_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exclude_file` has the wrong type: Received `{type(params.get("exclude_file", None))}` expected `InputPathType | None`')
+    if params.get("exclude_subject", None) is not None:
+        if not isinstance(params["exclude_subject"], str):
+            raise StyxValidationError(f'`exclude_subject` has the wrong type: Received `{type(params.get("exclude_subject", None))}` expected `str | None`')
+    if params.get("symmetric_atlas", False) is None:
+        raise StyxValidationError("`symmetric_atlas` must not be None")
+    if not isinstance(params["symmetric_atlas"], bool):
+        raise StyxValidationError(f'`symmetric_atlas` has the wrong type: Received `{type(params.get("symmetric_atlas", False))}` expected `bool`')
+    if params.get("color_table", None) is not None:
+        if not isinstance(params["color_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`color_table` has the wrong type: Received `{type(params.get("color_table", None))}` expected `InputPathType | None`')
+    if params.get("no_submit", False) is None:
+        raise StyxValidationError("`no_submit` must not be None")
+    if not isinstance(params["no_submit"], bool):
+        raise StyxValidationError(f'`no_submit` has the wrong type: Received `{type(params.get("no_submit", False))}` expected `bool`')
+    if params.get("mail_flag", False) is None:
+        raise StyxValidationError("`mail_flag` must not be None")
+    if not isinstance(params["mail_flag"], bool):
+        raise StyxValidationError(f'`mail_flag` has the wrong type: Received `{type(params.get("mail_flag", False))}` expected `bool`')
+    if params.get("no_strict", False) is None:
+        raise StyxValidationError("`no_strict` must not be None")
+    if not isinstance(params["no_strict"], bool):
+        raise StyxValidationError(f'`no_strict` has the wrong type: Received `{type(params.get("no_strict", False))}` expected `bool`')
+    if params.get("gcareg_iters", False) is None:
+        raise StyxValidationError("`gcareg_iters` must not be None")
+    if not isinstance(params["gcareg_iters"], bool):
+        raise StyxValidationError(f'`gcareg_iters` has the wrong type: Received `{type(params.get("gcareg_iters", False))}` expected `bool`')
+    if params.get("prep_only", False) is None:
+        raise StyxValidationError("`prep_only` must not be None")
+    if not isinstance(params["prep_only"], bool):
+        raise StyxValidationError(f'`prep_only` has the wrong type: Received `{type(params.get("prep_only", False))}` expected `bool`')
+    if params.get("nu10_flag", False) is None:
+        raise StyxValidationError("`nu10_flag` must not be None")
+    if not isinstance(params["nu10_flag"], bool):
+        raise StyxValidationError(f'`nu10_flag` has the wrong type: Received `{type(params.get("nu10_flag", False))}` expected `bool`')
+    if params.get("nu12_flag", False) is None:
+        raise StyxValidationError("`nu12_flag` must not be None")
+    if not isinstance(params["nu12_flag"], bool):
+        raise StyxValidationError(f'`nu12_flag` has the wrong type: Received `{type(params.get("nu12_flag", False))}` expected `bool`')
+    if params.get("no_emreg", False) is None:
+        raise StyxValidationError("`no_emreg` must not be None")
+    if not isinstance(params["no_emreg"], bool):
+        raise StyxValidationError(f'`no_emreg` has the wrong type: Received `{type(params.get("no_emreg", False))}` expected `bool`')
+
+
 def gcatrain_cargs(
     params: GcatrainParameters,
     execution: Execution,
@@ -265,6 +355,7 @@ def gcatrain_execute(
     Returns:
         NamedTuple of outputs (described in `GcatrainOutputs`).
     """
+    gcatrain_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GCATRAIN_METADATA)
     params = execution.params(params)

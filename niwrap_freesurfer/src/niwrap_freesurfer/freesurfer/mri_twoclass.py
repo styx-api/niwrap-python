@@ -82,6 +82,53 @@ def mri_twoclass_params(
     return params
 
 
+def mri_twoclass_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriTwoclassParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("segmentation_volume", None) is None:
+        raise StyxValidationError("`segmentation_volume` must not be None")
+    if not isinstance(params["segmentation_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segmentation_volume` has the wrong type: Received `{type(params.get("segmentation_volume", None))}` expected `InputPathType`')
+    if params.get("output_subject", None) is None:
+        raise StyxValidationError("`output_subject` must not be None")
+    if not isinstance(params["output_subject"], str):
+        raise StyxValidationError(f'`output_subject` has the wrong type: Received `{type(params.get("output_subject", None))}` expected `str`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("c1_subjects", None) is None:
+        raise StyxValidationError("`c1_subjects` must not be None")
+    if not isinstance(params["c1_subjects"], list):
+        raise StyxValidationError(f'`c1_subjects` has the wrong type: Received `{type(params.get("c1_subjects", None))}` expected `list[str]`')
+    for e in params["c1_subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`c1_subjects` has the wrong type: Received `{type(params.get("c1_subjects", None))}` expected `list[str]`')
+    if params.get("c2_subjects", None) is None:
+        raise StyxValidationError("`c2_subjects` must not be None")
+    if not isinstance(params["c2_subjects"], list):
+        raise StyxValidationError(f'`c2_subjects` has the wrong type: Received `{type(params.get("c2_subjects", None))}` expected `list[str]`')
+    for e in params["c2_subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`c2_subjects` has the wrong type: Received `{type(params.get("c2_subjects", None))}` expected `list[str]`')
+    if params.get("f_threshold", None) is not None:
+        if not isinstance(params["f_threshold"], (float, int)):
+            raise StyxValidationError(f'`f_threshold` has the wrong type: Received `{type(params.get("f_threshold", None))}` expected `float | None`')
+    if params.get("bonferroni_correction", False) is None:
+        raise StyxValidationError("`bonferroni_correction` must not be None")
+    if not isinstance(params["bonferroni_correction"], bool):
+        raise StyxValidationError(f'`bonferroni_correction` has the wrong type: Received `{type(params.get("bonferroni_correction", False))}` expected `bool`')
+
+
 def mri_twoclass_cargs(
     params: MriTwoclassParameters,
     execution: Execution,
@@ -151,6 +198,7 @@ def mri_twoclass_execute(
     Returns:
         NamedTuple of outputs (described in `MriTwoclassOutputs`).
     """
+    mri_twoclass_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_TWOCLASS_METADATA)
     params = execution.params(params)

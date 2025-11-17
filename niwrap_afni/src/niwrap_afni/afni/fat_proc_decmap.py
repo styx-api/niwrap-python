@@ -124,6 +124,59 @@ def fat_proc_decmap_params(
     return params
 
 
+def fat_proc_decmap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcDecmapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_fa", None) is None:
+        raise StyxValidationError("`in_fa` must not be None")
+    if not isinstance(params["in_fa"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_fa` has the wrong type: Received `{type(params.get("in_fa", None))}` expected `InputPathType`')
+    if params.get("in_v1", None) is None:
+        raise StyxValidationError("`in_v1` must not be None")
+    if not isinstance(params["in_v1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_v1` has the wrong type: Received `{type(params.get("in_v1", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("fa_thr", None) is not None:
+        if not isinstance(params["fa_thr"], (float, int)):
+            raise StyxValidationError(f'`fa_thr` has the wrong type: Received `{type(params.get("fa_thr", None))}` expected `float | None`')
+    if params.get("fa_sca", None) is not None:
+        if not isinstance(params["fa_sca"], (float, int)):
+            raise StyxValidationError(f'`fa_sca` has the wrong type: Received `{type(params.get("fa_sca", None))}` expected `float | None`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("qc_prefix", None) is not None:
+        if not isinstance(params["qc_prefix"], str):
+            raise StyxValidationError(f'`qc_prefix` has the wrong type: Received `{type(params.get("qc_prefix", None))}` expected `str | None`')
+    if params.get("no_cmd_out", False) is None:
+        raise StyxValidationError("`no_cmd_out` must not be None")
+    if not isinstance(params["no_cmd_out"], bool):
+        raise StyxValidationError(f'`no_cmd_out` has the wrong type: Received `{type(params.get("no_cmd_out", False))}` expected `bool`')
+    if params.get("no_qc_view", False) is None:
+        raise StyxValidationError("`no_qc_view` must not be None")
+    if not isinstance(params["no_qc_view"], bool):
+        raise StyxValidationError(f'`no_qc_view` has the wrong type: Received `{type(params.get("no_qc_view", False))}` expected `bool`')
+
+
 def fat_proc_decmap_cargs(
     params: FatProcDecmapParameters,
     execution: Execution,
@@ -229,6 +282,7 @@ def fat_proc_decmap_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcDecmapOutputs`).
     """
+    fat_proc_decmap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_DECMAP_METADATA)
     params = execution.params(params)

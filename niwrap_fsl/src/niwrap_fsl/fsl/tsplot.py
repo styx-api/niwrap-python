@@ -99,6 +99,61 @@ def tsplot_params(
     return params
 
 
+def tsplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TsplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_directory", None) is None:
+        raise StyxValidationError("`input_directory` must not be None")
+    if not isinstance(params["input_directory"], str):
+        raise StyxValidationError(f'`input_directory` has the wrong type: Received `{type(params.get("input_directory", None))}` expected `str`')
+    if params.get("main_filtered_data", None) is not None:
+        if not isinstance(params["main_filtered_data"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`main_filtered_data` has the wrong type: Received `{type(params.get("main_filtered_data", None))}` expected `InputPathType | None`')
+    if params.get("coordinates", None) is not None:
+        if not isinstance(params["coordinates"], list):
+            raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
+        if len(params["coordinates"]) == 3:
+            raise StyxValidationError("Parameter `coordinates` must contain exactly 3 elements")
+        for e in params["coordinates"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
+    if params.get("coordinates_output", None) is not None:
+        if not isinstance(params["coordinates_output"], list):
+            raise StyxValidationError(f'`coordinates_output` has the wrong type: Received `{type(params.get("coordinates_output", None))}` expected `list[float] | None`')
+        if len(params["coordinates_output"]) == 3:
+            raise StyxValidationError("Parameter `coordinates_output` must contain exactly 3 elements")
+        for e in params["coordinates_output"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`coordinates_output` has the wrong type: Received `{type(params.get("coordinates_output", None))}` expected `list[float] | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+    if params.get("no_weight_flag", False) is None:
+        raise StyxValidationError("`no_weight_flag` must not be None")
+    if not isinstance(params["no_weight_flag"], bool):
+        raise StyxValidationError(f'`no_weight_flag` has the wrong type: Received `{type(params.get("no_weight_flag", False))}` expected `bool`')
+    if params.get("prewhiten_flag", False) is None:
+        raise StyxValidationError("`prewhiten_flag` must not be None")
+    if not isinstance(params["prewhiten_flag"], bool):
+        raise StyxValidationError(f'`prewhiten_flag` has the wrong type: Received `{type(params.get("prewhiten_flag", False))}` expected `bool`')
+    if params.get("no_raw_flag", False) is None:
+        raise StyxValidationError("`no_raw_flag` must not be None")
+    if not isinstance(params["no_raw_flag"], bool):
+        raise StyxValidationError(f'`no_raw_flag` has the wrong type: Received `{type(params.get("no_raw_flag", False))}` expected `bool`')
+
+
 def tsplot_cargs(
     params: TsplotParameters,
     execution: Execution,
@@ -188,6 +243,7 @@ def tsplot_execute(
     Returns:
         NamedTuple of outputs (described in `TsplotOutputs`).
     """
+    tsplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TSPLOT_METADATA)
     params = execution.params(params)

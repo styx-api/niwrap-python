@@ -71,6 +71,35 @@ def v_3d_periodogram_params(
     return params
 
 
+def v_3d_periodogram_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dPeriodogramParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("taper", None) is not None:
+        if not isinstance(params["taper"], (float, int)):
+            raise StyxValidationError(f'`taper` has the wrong type: Received `{type(params.get("taper", None))}` expected `float | None`')
+        if 0 <= params["taper"] <= 1:
+            raise StyxValidationError("Parameter `taper` must be between 0 and 1 (inclusive)")
+    if params.get("nfft", None) is not None:
+        if not isinstance(params["nfft"], (float, int)):
+            raise StyxValidationError(f'`nfft` has the wrong type: Received `{type(params.get("nfft", None))}` expected `float | None`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_periodogram_cargs(
     params: V3dPeriodogramParameters,
     execution: Execution,
@@ -146,6 +175,7 @@ def v_3d_periodogram_execute(
     Returns:
         NamedTuple of outputs (described in `V3dPeriodogramOutputs`).
     """
+    v_3d_periodogram_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_PERIODOGRAM_METADATA)
     params = execution.params(params)

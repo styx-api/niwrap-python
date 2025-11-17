@@ -204,6 +204,108 @@ def v__sswarper_params(
     return params
 
 
+def v__sswarper_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSswarperParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("base_template", None) is None:
+        raise StyxValidationError("`base_template` must not be None")
+    if not isinstance(params["base_template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_template` has the wrong type: Received `{type(params.get("base_template", None))}` expected `InputPathType`')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("min_patch_size", None) is not None:
+        if not isinstance(params["min_patch_size"], (float, int)):
+            raise StyxValidationError(f'`min_patch_size` has the wrong type: Received `{type(params.get("min_patch_size", None))}` expected `float | None`')
+    if params.get("no_lite", False) is None:
+        raise StyxValidationError("`no_lite` must not be None")
+    if not isinstance(params["no_lite"], bool):
+        raise StyxValidationError(f'`no_lite` has the wrong type: Received `{type(params.get("no_lite", False))}` expected `bool`')
+    if params.get("skip_warp", False) is None:
+        raise StyxValidationError("`skip_warp` must not be None")
+    if not isinstance(params["skip_warp"], bool):
+        raise StyxValidationError(f'`skip_warp` has the wrong type: Received `{type(params.get("skip_warp", False))}` expected `bool`')
+    if params.get("unifize_off", False) is None:
+        raise StyxValidationError("`unifize_off` must not be None")
+    if not isinstance(params["unifize_off"], bool):
+        raise StyxValidationError(f'`unifize_off` has the wrong type: Received `{type(params.get("unifize_off", False))}` expected `bool`')
+    if params.get("init_skullstr_off", False) is None:
+        raise StyxValidationError("`init_skullstr_off` must not be None")
+    if not isinstance(params["init_skullstr_off"], bool):
+        raise StyxValidationError(f'`init_skullstr_off` has the wrong type: Received `{type(params.get("init_skullstr_off", False))}` expected `bool`')
+    if params.get("extra_qc_off", False) is None:
+        raise StyxValidationError("`extra_qc_off` must not be None")
+    if not isinstance(params["extra_qc_off"], bool):
+        raise StyxValidationError(f'`extra_qc_off` has the wrong type: Received `{type(params.get("extra_qc_off", False))}` expected `bool`')
+    if params.get("jump_to_extra_qc", False) is None:
+        raise StyxValidationError("`jump_to_extra_qc` must not be None")
+    if not isinstance(params["jump_to_extra_qc"], bool):
+        raise StyxValidationError(f'`jump_to_extra_qc` has the wrong type: Received `{type(params.get("jump_to_extra_qc", False))}` expected `bool`')
+    if params.get("cost_nl_init", None) is not None:
+        if not isinstance(params["cost_nl_init"], str):
+            raise StyxValidationError(f'`cost_nl_init` has the wrong type: Received `{type(params.get("cost_nl_init", None))}` expected `str | None`')
+    if params.get("cost_nl_final", None) is not None:
+        if not isinstance(params["cost_nl_final"], str):
+            raise StyxValidationError(f'`cost_nl_final` has the wrong type: Received `{type(params.get("cost_nl_final", None))}` expected `str | None`')
+    if params.get("deoblique", False) is None:
+        raise StyxValidationError("`deoblique` must not be None")
+    if not isinstance(params["deoblique"], bool):
+        raise StyxValidationError(f'`deoblique` has the wrong type: Received `{type(params.get("deoblique", False))}` expected `bool`')
+    if params.get("deoblique_refitly", False) is None:
+        raise StyxValidationError("`deoblique_refitly` must not be None")
+    if not isinstance(params["deoblique_refitly"], bool):
+        raise StyxValidationError(f'`deoblique_refitly` has the wrong type: Received `{type(params.get("deoblique_refitly", False))}` expected `bool`')
+    if params.get("warp_scale", None) is not None:
+        if not isinstance(params["warp_scale"], (float, int)):
+            raise StyxValidationError(f'`warp_scale` has the wrong type: Received `{type(params.get("warp_scale", None))}` expected `float | None`')
+        if 0.1 <= params["warp_scale"] <= 1.0:
+            raise StyxValidationError("Parameter `warp_scale` must be between 0.1 and 1.0 (inclusive)")
+    if params.get("ssopt_flag", None) is not None:
+        if not isinstance(params["ssopt_flag"], str):
+            raise StyxValidationError(f'`ssopt_flag` has the wrong type: Received `{type(params.get("ssopt_flag", None))}` expected `str | None`')
+    if params.get("aniso_off", False) is None:
+        raise StyxValidationError("`aniso_off` must not be None")
+    if not isinstance(params["aniso_off"], bool):
+        raise StyxValidationError(f'`aniso_off` has the wrong type: Received `{type(params.get("aniso_off", False))}` expected `bool`')
+    if params.get("ceil_off", False) is None:
+        raise StyxValidationError("`ceil_off` must not be None")
+    if not isinstance(params["ceil_off"], bool):
+        raise StyxValidationError(f'`ceil_off` has the wrong type: Received `{type(params.get("ceil_off", False))}` expected `bool`')
+    if params.get("tmp_name_nice", False) is None:
+        raise StyxValidationError("`tmp_name_nice` must not be None")
+    if not isinstance(params["tmp_name_nice"], bool):
+        raise StyxValidationError(f'`tmp_name_nice` has the wrong type: Received `{type(params.get("tmp_name_nice", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("noclean", False) is None:
+        raise StyxValidationError("`noclean` must not be None")
+    if not isinstance(params["noclean"], bool):
+        raise StyxValidationError(f'`noclean` has the wrong type: Received `{type(params.get("noclean", False))}` expected `bool`')
+
+
 def v__sswarper_cargs(
     params: VSswarperParameters,
     execution: Execution,
@@ -346,6 +448,7 @@ def v__sswarper_execute(
     Returns:
         NamedTuple of outputs (described in `VSswarperOutputs`).
     """
+    v__sswarper_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SSWARPER_METADATA)
     params = execution.params(params)

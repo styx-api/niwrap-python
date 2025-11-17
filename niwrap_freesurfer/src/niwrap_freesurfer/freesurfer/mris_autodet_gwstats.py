@@ -131,6 +131,71 @@ def mris_autodet_gwstats_params(
     return params
 
 
+def mris_autodet_gwstats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisAutodetGwstatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("t1w_volume", None) is None:
+        raise StyxValidationError("`t1w_volume` must not be None")
+    if not isinstance(params["t1w_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1w_volume` has the wrong type: Received `{type(params.get("t1w_volume", None))}` expected `InputPathType`')
+    if params.get("wm_volume", None) is None:
+        raise StyxValidationError("`wm_volume` must not be None")
+    if not isinstance(params["wm_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`wm_volume` has the wrong type: Received `{type(params.get("wm_volume", None))}` expected `InputPathType`')
+    if params.get("surf", None) is None:
+        raise StyxValidationError("`surf` must not be None")
+    if not isinstance(params["surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `InputPathType`')
+    if params.get("lhsurf", None) is not None:
+        if not isinstance(params["lhsurf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lhsurf` has the wrong type: Received `{type(params.get("lhsurf", None))}` expected `InputPathType | None`')
+    if params.get("rhsurf", None) is not None:
+        if not isinstance(params["rhsurf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rhsurf` has the wrong type: Received `{type(params.get("rhsurf", None))}` expected `InputPathType | None`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("min_border_white", None) is not None:
+        if not isinstance(params["min_border_white"], (float, int)):
+            raise StyxValidationError(f'`min_border_white` has the wrong type: Received `{type(params.get("min_border_white", None))}` expected `float | None`')
+    if params.get("max_border_white", None) is not None:
+        if not isinstance(params["max_border_white"], (float, int)):
+            raise StyxValidationError(f'`max_border_white` has the wrong type: Received `{type(params.get("max_border_white", None))}` expected `float | None`')
+    if params.get("min_gray_at_white_border", None) is not None:
+        if not isinstance(params["min_gray_at_white_border"], (float, int)):
+            raise StyxValidationError(f'`min_gray_at_white_border` has the wrong type: Received `{type(params.get("min_gray_at_white_border", None))}` expected `float | None`')
+    if params.get("max_gray", None) is not None:
+        if not isinstance(params["max_gray"], (float, int)):
+            raise StyxValidationError(f'`max_gray` has the wrong type: Received `{type(params.get("max_gray", None))}` expected `float | None`')
+    if params.get("max_gray_at_csf_border", None) is not None:
+        if not isinstance(params["max_gray_at_csf_border"], (float, int)):
+            raise StyxValidationError(f'`max_gray_at_csf_border` has the wrong type: Received `{type(params.get("max_gray_at_csf_border", None))}` expected `float | None`')
+    if params.get("min_gray_at_csf_border", None) is not None:
+        if not isinstance(params["min_gray_at_csf_border"], (float, int)):
+            raise StyxValidationError(f'`min_gray_at_csf_border` has the wrong type: Received `{type(params.get("min_gray_at_csf_border", None))}` expected `float | None`')
+    if params.get("max_csf", None) is not None:
+        if not isinstance(params["max_csf"], (float, int)):
+            raise StyxValidationError(f'`max_csf` has the wrong type: Received `{type(params.get("max_csf", None))}` expected `float | None`')
+
+
 def mris_autodet_gwstats_cargs(
     params: MrisAutodetGwstatsParameters,
     execution: Execution,
@@ -258,6 +323,7 @@ def mris_autodet_gwstats_execute(
     Returns:
         NamedTuple of outputs (described in `MrisAutodetGwstatsOutputs`).
     """
+    mris_autodet_gwstats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_AUTODET_GWSTATS_METADATA)
     params = execution.params(params)

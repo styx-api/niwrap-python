@@ -98,6 +98,53 @@ def fsl_boxplot_params(
     return params
 
 
+def fsl_boxplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslBoxplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("title", None) is not None:
+        if not isinstance(params["title"], str):
+            raise StyxValidationError(f'`title` has the wrong type: Received `{type(params.get("title", None))}` expected `str | None`')
+    if params.get("legend_file", None) is not None:
+        if not isinstance(params["legend_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`legend_file` has the wrong type: Received `{type(params.get("legend_file", None))}` expected `InputPathType | None`')
+    if params.get("x_label", None) is not None:
+        if not isinstance(params["x_label"], str):
+            raise StyxValidationError(f'`x_label` has the wrong type: Received `{type(params.get("x_label", None))}` expected `str | None`')
+    if params.get("y_label", None) is not None:
+        if not isinstance(params["y_label"], str):
+            raise StyxValidationError(f'`y_label` has the wrong type: Received `{type(params.get("y_label", None))}` expected `str | None`')
+    if params.get("plot_height", None) is not None:
+        if not isinstance(params["plot_height"], (float, int)):
+            raise StyxValidationError(f'`plot_height` has the wrong type: Received `{type(params.get("plot_height", None))}` expected `float | None`')
+    if params.get("plot_width", None) is not None:
+        if not isinstance(params["plot_width"], (float, int)):
+            raise StyxValidationError(f'`plot_width` has the wrong type: Received `{type(params.get("plot_width", None))}` expected `float | None`')
+
+
 def fsl_boxplot_cargs(
     params: FslBoxplotParameters,
     execution: Execution,
@@ -195,6 +242,7 @@ def fsl_boxplot_execute(
     Returns:
         NamedTuple of outputs (described in `FslBoxplotOutputs`).
     """
+    fsl_boxplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_BOXPLOT_METADATA)
     params = execution.params(params)

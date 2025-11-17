@@ -66,6 +66,36 @@ def hist2prob_params(
     return params
 
 
+def hist2prob_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Hist2probParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+    if params.get("size", None) is None:
+        raise StyxValidationError("`size` must not be None")
+    if not isinstance(params["size"], int):
+        raise StyxValidationError(f'`size` has the wrong type: Received `{type(params.get("size", None))}` expected `int`')
+    if params.get("low_threshold", None) is None:
+        raise StyxValidationError("`low_threshold` must not be None")
+    if not isinstance(params["low_threshold"], (float, int)):
+        raise StyxValidationError(f'`low_threshold` has the wrong type: Received `{type(params.get("low_threshold", None))}` expected `float`')
+    if params.get("high_threshold", None) is None:
+        raise StyxValidationError("`high_threshold` must not be None")
+    if not isinstance(params["high_threshold"], (float, int)):
+        raise StyxValidationError(f'`high_threshold` has the wrong type: Received `{type(params.get("high_threshold", None))}` expected `float`')
+
+
 def hist2prob_cargs(
     params: Hist2probParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def hist2prob_execute(
     Returns:
         NamedTuple of outputs (described in `Hist2probOutputs`).
     """
+    hist2prob_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HIST2PROB_METADATA)
     params = execution.params(params)

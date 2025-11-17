@@ -70,6 +70,38 @@ def v__command_globb_params(
     return params
 
 
+def v__command_globb_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VCommandGlobbParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("program_command", None) is None:
+        raise StyxValidationError("`program_command` must not be None")
+    if not isinstance(params["program_command"], str):
+        raise StyxValidationError(f'`program_command` has the wrong type: Received `{type(params.get("program_command", None))}` expected `str`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("extension", None) is not None:
+        if not isinstance(params["extension"], str):
+            raise StyxValidationError(f'`extension` has the wrong type: Received `{type(params.get("extension", None))}` expected `str | None`')
+    if params.get("brick_list", None) is None:
+        raise StyxValidationError("`brick_list` must not be None")
+    if not isinstance(params["brick_list"], list):
+        raise StyxValidationError(f'`brick_list` has the wrong type: Received `{type(params.get("brick_list", None))}` expected `list[str]`')
+    for e in params["brick_list"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`brick_list` has the wrong type: Received `{type(params.get("brick_list", None))}` expected `list[str]`')
+
+
 def v__command_globb_cargs(
     params: VCommandGlobbParameters,
     execution: Execution,
@@ -144,6 +176,7 @@ def v__command_globb_execute(
     Returns:
         NamedTuple of outputs (described in `VCommandGlobbOutputs`).
     """
+    v__command_globb_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__COMMAND_GLOBB_METADATA)
     params = execution.params(params)

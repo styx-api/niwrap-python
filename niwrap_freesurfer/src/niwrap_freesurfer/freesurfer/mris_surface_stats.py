@@ -131,6 +131,65 @@ def mris_surface_stats_params(
     return params
 
 
+def mris_surface_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSurfaceStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nsmooth", None) is not None:
+        if not isinstance(params["nsmooth"], (float, int)):
+            raise StyxValidationError(f'`nsmooth` has the wrong type: Received `{type(params.get("nsmooth", None))}` expected `float | None`')
+    if params.get("surf_name", None) is None:
+        raise StyxValidationError("`surf_name` must not be None")
+    if not isinstance(params["surf_name"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf_name` has the wrong type: Received `{type(params.get("surf_name", None))}` expected `InputPathType`')
+    if params.get("mask_name", None) is not None:
+        if not isinstance(params["mask_name"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_name` has the wrong type: Received `{type(params.get("mask_name", None))}` expected `InputPathType | None`')
+    if params.get("out_name", None) is None:
+        raise StyxValidationError("`out_name` must not be None")
+    if not isinstance(params["out_name"], str):
+        raise StyxValidationError(f'`out_name` has the wrong type: Received `{type(params.get("out_name", None))}` expected `str`')
+    if params.get("mean", None) is not None:
+        if not isinstance(params["mean"], str):
+            raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", None))}` expected `str | None`')
+    if params.get("absmean", None) is not None:
+        if not isinstance(params["absmean"], str):
+            raise StyxValidationError(f'`absmean` has the wrong type: Received `{type(params.get("absmean", None))}` expected `str | None`')
+    if params.get("absstd", None) is not None:
+        if not isinstance(params["absstd"], str):
+            raise StyxValidationError(f'`absstd` has the wrong type: Received `{type(params.get("absstd", None))}` expected `str | None`')
+    if params.get("zscore", None) is not None:
+        if not isinstance(params["zscore"], str):
+            raise StyxValidationError(f'`zscore` has the wrong type: Received `{type(params.get("zscore", None))}` expected `str | None`')
+    if params.get("first_group_size", None) is not None:
+        if not isinstance(params["first_group_size"], (float, int)):
+            raise StyxValidationError(f'`first_group_size` has the wrong type: Received `{type(params.get("first_group_size", None))}` expected `float | None`')
+    if params.get("src_type", None) is not None:
+        if not isinstance(params["src_type"], str):
+            raise StyxValidationError(f'`src_type` has the wrong type: Received `{type(params.get("src_type", None))}` expected `str | None`')
+    if params.get("trg_type", None) is not None:
+        if not isinstance(params["trg_type"], str):
+            raise StyxValidationError(f'`trg_type` has the wrong type: Received `{type(params.get("trg_type", None))}` expected `str | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("data_files", None) is None:
+        raise StyxValidationError("`data_files` must not be None")
+    if not isinstance(params["data_files"], list):
+        raise StyxValidationError(f'`data_files` has the wrong type: Received `{type(params.get("data_files", None))}` expected `list[InputPathType]`')
+    for e in params["data_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`data_files` has the wrong type: Received `{type(params.get("data_files", None))}` expected `list[InputPathType]`')
+
+
 def mris_surface_stats_cargs(
     params: MrisSurfaceStatsParameters,
     execution: Execution,
@@ -252,6 +311,7 @@ def mris_surface_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSurfaceStatsOutputs`).
     """
+    mris_surface_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SURFACE_STATS_METADATA)
     params = execution.params(params)

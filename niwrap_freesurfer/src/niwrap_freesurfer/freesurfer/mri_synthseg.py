@@ -143,6 +143,76 @@ def mri_synthseg_params(
     return params
 
 
+def mri_synthseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSynthsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_segmentation", None) is None:
+        raise StyxValidationError("`output_segmentation` must not be None")
+    if not isinstance(params["output_segmentation"], str):
+        raise StyxValidationError(f'`output_segmentation` has the wrong type: Received `{type(params.get("output_segmentation", None))}` expected `str`')
+    if params.get("cortex_parcellation", False) is None:
+        raise StyxValidationError("`cortex_parcellation` must not be None")
+    if not isinstance(params["cortex_parcellation"], bool):
+        raise StyxValidationError(f'`cortex_parcellation` has the wrong type: Received `{type(params.get("cortex_parcellation", False))}` expected `bool`')
+    if params.get("robust_prediction", False) is None:
+        raise StyxValidationError("`robust_prediction` must not be None")
+    if not isinstance(params["robust_prediction"], bool):
+        raise StyxValidationError(f'`robust_prediction` has the wrong type: Received `{type(params.get("robust_prediction", False))}` expected `bool`')
+    if params.get("fast_prediction", False) is None:
+        raise StyxValidationError("`fast_prediction` must not be None")
+    if not isinstance(params["fast_prediction"], bool):
+        raise StyxValidationError(f'`fast_prediction` has the wrong type: Received `{type(params.get("fast_prediction", False))}` expected `bool`')
+    if params.get("clip_ct", False) is None:
+        raise StyxValidationError("`clip_ct` must not be None")
+    if not isinstance(params["clip_ct"], bool):
+        raise StyxValidationError(f'`clip_ct` has the wrong type: Received `{type(params.get("clip_ct", False))}` expected `bool`')
+    if params.get("output_volume", None) is not None:
+        if not isinstance(params["output_volume"], str):
+            raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str | None`')
+    if params.get("output_qc", None) is not None:
+        if not isinstance(params["output_qc"], str):
+            raise StyxValidationError(f'`output_qc` has the wrong type: Received `{type(params.get("output_qc", None))}` expected `str | None`')
+    if params.get("output_posteriors", None) is not None:
+        if not isinstance(params["output_posteriors"], str):
+            raise StyxValidationError(f'`output_posteriors` has the wrong type: Received `{type(params.get("output_posteriors", None))}` expected `str | None`')
+    if params.get("resampled_images", None) is not None:
+        if not isinstance(params["resampled_images"], str):
+            raise StyxValidationError(f'`resampled_images` has the wrong type: Received `{type(params.get("resampled_images", None))}` expected `str | None`')
+    if params.get("image_patch_size", None) is not None:
+        if not isinstance(params["image_patch_size"], list):
+            raise StyxValidationError(f'`image_patch_size` has the wrong type: Received `{type(params.get("image_patch_size", None))}` expected `list[float] | None`')
+        for e in params["image_patch_size"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`image_patch_size` has the wrong type: Received `{type(params.get("image_patch_size", None))}` expected `list[float] | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("cpu", False) is None:
+        raise StyxValidationError("`cpu` must not be None")
+    if not isinstance(params["cpu"], bool):
+        raise StyxValidationError(f'`cpu` has the wrong type: Received `{type(params.get("cpu", False))}` expected `bool`')
+    if params.get("version_1", False) is None:
+        raise StyxValidationError("`version_1` must not be None")
+    if not isinstance(params["version_1"], bool):
+        raise StyxValidationError(f'`version_1` has the wrong type: Received `{type(params.get("version_1", False))}` expected `bool`')
+    if params.get("photo_synthseg", None) is not None:
+        if not isinstance(params["photo_synthseg"], str):
+            raise StyxValidationError(f'`photo_synthseg` has the wrong type: Received `{type(params.get("photo_synthseg", None))}` expected `str | None`')
+
+
 def mri_synthseg_cargs(
     params: MriSynthsegParameters,
     execution: Execution,
@@ -232,6 +302,7 @@ def mri_synthseg_execute(
     Returns:
         NamedTuple of outputs (described in `MriSynthsegOutputs`).
     """
+    mri_synthseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SYNTHSEG_METADATA)
     params = execution.params(params)

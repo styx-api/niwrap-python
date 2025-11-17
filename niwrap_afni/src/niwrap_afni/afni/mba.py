@@ -139,6 +139,69 @@ def mba_params(
     return params
 
 
+def mba_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `MbaParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("chains", None) is not None:
+        if not isinstance(params["chains"], int):
+            raise StyxValidationError(f'`chains` has the wrong type: Received `{type(params.get("chains", None))}` expected `int | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], int):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `int | None`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], str):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str | None`')
+    if params.get("eoi", None) is not None:
+        if not isinstance(params["eoi"], str):
+            raise StyxValidationError(f'`eoi` has the wrong type: Received `{type(params.get("eoi", None))}` expected `str | None`')
+    if params.get("data_table", None) is None:
+        raise StyxValidationError("`data_table` must not be None")
+    if not isinstance(params["data_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_table` has the wrong type: Received `{type(params.get("data_table", None))}` expected `InputPathType`')
+    if params.get("cvars", None) is not None:
+        if not isinstance(params["cvars"], str):
+            raise StyxValidationError(f'`cvars` has the wrong type: Received `{type(params.get("cvars", None))}` expected `str | None`')
+    if params.get("qvars", None) is not None:
+        if not isinstance(params["qvars"], str):
+            raise StyxValidationError(f'`qvars` has the wrong type: Received `{type(params.get("qvars", None))}` expected `str | None`')
+    if params.get("qcvar", None) is not None:
+        if not isinstance(params["qcvar"], str):
+            raise StyxValidationError(f'`qcvar` has the wrong type: Received `{type(params.get("qcvar", None))}` expected `str | None`')
+    if params.get("stdz", None) is not None:
+        if not isinstance(params["stdz"], str):
+            raise StyxValidationError(f'`stdz` has the wrong type: Received `{type(params.get("stdz", None))}` expected `str | None`')
+    if params.get("wcp", None) is not None:
+        if not isinstance(params["wcp"], int):
+            raise StyxValidationError(f'`wcp` has the wrong type: Received `{type(params.get("wcp", None))}` expected `int | None`')
+    if params.get("disty", None) is not None:
+        if not isinstance(params["disty"], str):
+            raise StyxValidationError(f'`disty` has the wrong type: Received `{type(params.get("disty", None))}` expected `str | None`')
+    if params.get("se", None) is not None:
+        if not isinstance(params["se"], str):
+            raise StyxValidationError(f'`se` has the wrong type: Received `{type(params.get("se", None))}` expected `str | None`')
+    if params.get("dbgArgs", False) is None:
+        raise StyxValidationError("`dbgArgs` must not be None")
+    if not isinstance(params["dbgArgs"], bool):
+        raise StyxValidationError(f'`dbgArgs` has the wrong type: Received `{type(params.get("dbgArgs", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mba_cargs(
     params: MbaParameters,
     execution: Execution,
@@ -262,6 +325,7 @@ def mba_execute(
     Returns:
         NamedTuple of outputs (described in `MbaOutputs`).
     """
+    mba_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MBA_METADATA)
     params = execution.params(params)

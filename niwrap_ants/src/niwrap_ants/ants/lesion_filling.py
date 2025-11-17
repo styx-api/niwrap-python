@@ -66,6 +66,36 @@ def lesion_filling_params(
     return params
 
 
+def lesion_filling_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LesionFillingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("t1_image", None) is None:
+        raise StyxValidationError("`t1_image` must not be None")
+    if not isinstance(params["t1_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_image` has the wrong type: Received `{type(params.get("t1_image", None))}` expected `InputPathType`')
+    if params.get("lesion_mask", None) is None:
+        raise StyxValidationError("`lesion_mask` must not be None")
+    if not isinstance(params["lesion_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lesion_mask` has the wrong type: Received `{type(params.get("lesion_mask", None))}` expected `InputPathType`')
+    if params.get("output_lesion_filled", None) is None:
+        raise StyxValidationError("`output_lesion_filled` must not be None")
+    if not isinstance(params["output_lesion_filled"], str):
+        raise StyxValidationError(f'`output_lesion_filled` has the wrong type: Received `{type(params.get("output_lesion_filled", None))}` expected `str`')
+
+
 def lesion_filling_cargs(
     params: LesionFillingParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def lesion_filling_execute(
     Returns:
         NamedTuple of outputs (described in `LesionFillingOutputs`).
     """
+    lesion_filling_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LESION_FILLING_METADATA)
     params = execution.params(params)

@@ -105,6 +105,65 @@ def v_1d_bport_params(
     return params
 
 
+def v_1d_bport_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dBportParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("band", None) is None:
+        raise StyxValidationError("`band` must not be None")
+    if not isinstance(params["band"], list):
+        raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float]`')
+    if len(params["band"]) == 2:
+        raise StyxValidationError("Parameter `band` must contain exactly 2 elements")
+    for e in params["band"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float]`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+    if params.get("nozero", False) is None:
+        raise StyxValidationError("`nozero` must not be None")
+    if not isinstance(params["nozero"], bool):
+        raise StyxValidationError(f'`nozero` has the wrong type: Received `{type(params.get("nozero", False))}` expected `bool`')
+    if params.get("noconst", False) is None:
+        raise StyxValidationError("`noconst` must not be None")
+    if not isinstance(params["noconst"], bool):
+        raise StyxValidationError(f'`noconst` has the wrong type: Received `{type(params.get("noconst", False))}` expected `bool`')
+    if params.get("quad", False) is None:
+        raise StyxValidationError("`quad` must not be None")
+    if not isinstance(params["quad"], bool):
+        raise StyxValidationError(f'`quad` has the wrong type: Received `{type(params.get("quad", False))}` expected `bool`')
+    if params.get("input_dataset", None) is not None:
+        if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType | None`')
+    if params.get("input_1d_file", None) is not None:
+        if not isinstance(params["input_1d_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_1d_file` has the wrong type: Received `{type(params.get("input_1d_file", None))}` expected `InputPathType | None`')
+    if params.get("nodata", None) is not None:
+        if not isinstance(params["nodata"], list):
+            raise StyxValidationError(f'`nodata` has the wrong type: Received `{type(params.get("nodata", None))}` expected `list[float] | None`')
+        if 1 <= len(params["nodata"]) <= 2:
+            raise StyxValidationError("Parameter `nodata` must contain between 1 and 2 elements (inclusive)")
+        for e in params["nodata"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`nodata` has the wrong type: Received `{type(params.get("nodata", None))}` expected `list[float] | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("concat", None) is not None:
+        if not isinstance(params["concat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`concat` has the wrong type: Received `{type(params.get("concat", None))}` expected `InputPathType | None`')
+
+
 def v_1d_bport_cargs(
     params: V1dBportParameters,
     execution: Execution,
@@ -200,6 +259,7 @@ def v_1d_bport_execute(
     Returns:
         NamedTuple of outputs (described in `V1dBportOutputs`).
     """
+    v_1d_bport_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_BPORT_METADATA)
     params = execution.params(params)

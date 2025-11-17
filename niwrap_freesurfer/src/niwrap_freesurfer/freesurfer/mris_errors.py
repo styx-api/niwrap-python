@@ -49,6 +49,24 @@ def mris_errors_params(
     return params
 
 
+def mris_errors_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisErrorsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image_file", None) is None:
+        raise StyxValidationError("`input_image_file` must not be None")
+    if not isinstance(params["input_image_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image_file` has the wrong type: Received `{type(params.get("input_image_file", None))}` expected `InputPathType`')
+
+
 def mris_errors_cargs(
     params: MrisErrorsParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def mris_errors_execute(
     Returns:
         NamedTuple of outputs (described in `MrisErrorsOutputs`).
     """
+    mris_errors_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ERRORS_METADATA)
     params = execution.params(params)

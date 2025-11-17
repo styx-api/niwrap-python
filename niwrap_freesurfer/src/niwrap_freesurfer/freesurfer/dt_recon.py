@@ -157,6 +157,86 @@ def dt_recon_params(
     return params
 
 
+def dt_recon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DtReconParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("bvals_bvecs", None) is not None:
+        if not isinstance(params["bvals_bvecs"], str):
+            raise StyxValidationError(f'`bvals_bvecs` has the wrong type: Received `{type(params.get("bvals_bvecs", None))}` expected `str | None`')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("info_dump", None) is not None:
+        if not isinstance(params["info_dump"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`info_dump` has the wrong type: Received `{type(params.get("info_dump", None))}` expected `InputPathType | None`')
+    if params.get("ec_reference", None) is not None:
+        if not isinstance(params["ec_reference"], (float, int)):
+            raise StyxValidationError(f'`ec_reference` has the wrong type: Received `{type(params.get("ec_reference", None))}` expected `float | None`')
+    if params.get("no_ec_flag", False) is None:
+        raise StyxValidationError("`no_ec_flag` must not be None")
+    if not isinstance(params["no_ec_flag"], bool):
+        raise StyxValidationError(f'`no_ec_flag` has the wrong type: Received `{type(params.get("no_ec_flag", False))}` expected `bool`')
+    if params.get("no_reg_flag", False) is None:
+        raise StyxValidationError("`no_reg_flag` must not be None")
+    if not isinstance(params["no_reg_flag"], bool):
+        raise StyxValidationError(f'`no_reg_flag` has the wrong type: Received `{type(params.get("no_reg_flag", False))}` expected `bool`')
+    if params.get("register_file", None) is not None:
+        if not isinstance(params["register_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`register_file` has the wrong type: Received `{type(params.get("register_file", None))}` expected `InputPathType | None`')
+    if params.get("no_tal_flag", False) is None:
+        raise StyxValidationError("`no_tal_flag` must not be None")
+    if not isinstance(params["no_tal_flag"], bool):
+        raise StyxValidationError(f'`no_tal_flag` has the wrong type: Received `{type(params.get("no_tal_flag", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("save_ec_residuals_flag", False) is None:
+        raise StyxValidationError("`save_ec_residuals_flag` must not be None")
+    if not isinstance(params["save_ec_residuals_flag"], bool):
+        raise StyxValidationError(f'`save_ec_residuals_flag` has the wrong type: Received `{type(params.get("save_ec_residuals_flag", False))}` expected `bool`')
+    if params.get("pca_analysis_flag", False) is None:
+        raise StyxValidationError("`pca_analysis_flag` must not be None")
+    if not isinstance(params["pca_analysis_flag"], bool):
+        raise StyxValidationError(f'`pca_analysis_flag` has the wrong type: Received `{type(params.get("pca_analysis_flag", False))}` expected `bool`')
+    if params.get("mask_prune_threshold", None) is not None:
+        if not isinstance(params["mask_prune_threshold"], (float, int)):
+            raise StyxValidationError(f'`mask_prune_threshold` has the wrong type: Received `{type(params.get("mask_prune_threshold", None))}` expected `float | None`')
+    if params.get("init_spm_flag", False) is None:
+        raise StyxValidationError("`init_spm_flag` must not be None")
+    if not isinstance(params["init_spm_flag"], bool):
+        raise StyxValidationError(f'`init_spm_flag` has the wrong type: Received `{type(params.get("init_spm_flag", False))}` expected `bool`')
+    if params.get("init_fsl_flag", False) is None:
+        raise StyxValidationError("`init_fsl_flag` must not be None")
+    if not isinstance(params["init_fsl_flag"], bool):
+        raise StyxValidationError(f'`init_fsl_flag` has the wrong type: Received `{type(params.get("init_fsl_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+
+
 def dt_recon_cargs(
     params: DtReconParameters,
     execution: Execution,
@@ -280,6 +360,7 @@ def dt_recon_execute(
     Returns:
         NamedTuple of outputs (described in `DtReconOutputs`).
     """
+    dt_recon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DT_RECON_METADATA)
     params = execution.params(params)

@@ -63,6 +63,33 @@ def v__purify_1_d_params(
     return params
 
 
+def v__purify_1_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VPurify1DParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sub_brick", None) is not None:
+        if not isinstance(params["sub_brick"], str):
+            raise StyxValidationError(f'`sub_brick` has the wrong type: Received `{type(params.get("sub_brick", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def v__purify_1_d_cargs(
     params: VPurify1DParameters,
     execution: Execution,
@@ -130,6 +157,7 @@ def v__purify_1_d_execute(
     Returns:
         NamedTuple of outputs (described in `VPurify1DOutputs`).
     """
+    v__purify_1_d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__PURIFY_1_D_METADATA)
     params = execution.params(params)

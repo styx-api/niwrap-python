@@ -100,6 +100,60 @@ def mri_motion_correct2_params(
     return params
 
 
+def mri_motion_correct2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMotionCorrect2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_spec", None) is None:
+        raise StyxValidationError("`output_spec` must not be None")
+    if not isinstance(params["output_spec"], str):
+        raise StyxValidationError(f'`output_spec` has the wrong type: Received `{type(params.get("output_spec", None))}` expected `str`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("target", None) is not None:
+        if not isinstance(params["target"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`target` has the wrong type: Received `{type(params.get("target", None))}` expected `InputPathType | None`')
+    if params.get("wild", False) is None:
+        raise StyxValidationError("`wild` must not be None")
+    if not isinstance(params["wild"], bool):
+        raise StyxValidationError(f'`wild` has the wrong type: Received `{type(params.get("wild", False))}` expected `bool`')
+    if params.get("tmp_dir", None) is not None:
+        if not isinstance(params["tmp_dir"], str):
+            raise StyxValidationError(f'`tmp_dir` has the wrong type: Received `{type(params.get("tmp_dir", None))}` expected `str | None`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+    if params.get("cm", False) is None:
+        raise StyxValidationError("`cm` must not be None")
+    if not isinstance(params["cm"], bool):
+        raise StyxValidationError(f'`cm` has the wrong type: Received `{type(params.get("cm", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def mri_motion_correct2_cargs(
     params: MriMotionCorrect2Parameters,
     execution: Execution,
@@ -191,6 +245,7 @@ def mri_motion_correct2_execute(
     Returns:
         NamedTuple of outputs (described in `MriMotionCorrect2Outputs`).
     """
+    mri_motion_correct2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MOTION_CORRECT2_METADATA)
     params = execution.params(params)

@@ -92,6 +92,47 @@ def niml_feedme_params(
     return params
 
 
+def niml_feedme_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NimlFeedmeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("host", None) is not None:
+        if not isinstance(params["host"], str):
+            raise StyxValidationError(f'`host` has the wrong type: Received `{type(params.get("host", None))}` expected `str | None`')
+    if params.get("interval", None) is not None:
+        if not isinstance(params["interval"], (float, int)):
+            raise StyxValidationError(f'`interval` has the wrong type: Received `{type(params.get("interval", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("accum", False) is None:
+        raise StyxValidationError("`accum` must not be None")
+    if not isinstance(params["accum"], bool):
+        raise StyxValidationError(f'`accum` has the wrong type: Received `{type(params.get("accum", False))}` expected `bool`')
+    if params.get("target_dataset", None) is not None:
+        if not isinstance(params["target_dataset"], str):
+            raise StyxValidationError(f'`target_dataset` has the wrong type: Received `{type(params.get("target_dataset", None))}` expected `str | None`')
+    if params.get("drive_cmds", None) is not None:
+        if not isinstance(params["drive_cmds"], list):
+            raise StyxValidationError(f'`drive_cmds` has the wrong type: Received `{type(params.get("drive_cmds", None))}` expected `list[str] | None`')
+        for e in params["drive_cmds"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`drive_cmds` has the wrong type: Received `{type(params.get("drive_cmds", None))}` expected `list[str] | None`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+
+
 def niml_feedme_cargs(
     params: NimlFeedmeParameters,
     execution: Execution,
@@ -173,6 +214,7 @@ def niml_feedme_execute(
     Returns:
         NamedTuple of outputs (described in `NimlFeedmeOutputs`).
     """
+    niml_feedme_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NIML_FEEDME_METADATA)
     params = execution.params(params)

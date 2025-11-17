@@ -83,6 +83,52 @@ def mris_transmantle_dysplasia_paths_params(
     return params
 
 
+def mris_transmantle_dysplasia_paths_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisTransmantleDysplasiaPathsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("aseg_volume", None) is None:
+        raise StyxValidationError("`aseg_volume` must not be None")
+    if not isinstance(params["aseg_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aseg_volume` has the wrong type: Received `{type(params.get("aseg_volume", None))}` expected `InputPathType`')
+    if params.get("intensity_volume", None) is None:
+        raise StyxValidationError("`intensity_volume` must not be None")
+    if not isinstance(params["intensity_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`intensity_volume` has the wrong type: Received `{type(params.get("intensity_volume", None))}` expected `InputPathType`')
+    if params.get("xform", None) is None:
+        raise StyxValidationError("`xform` must not be None")
+    if not isinstance(params["xform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("filter", None) is not None:
+        if not isinstance(params["filter"], list):
+            raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `list[float] | None`')
+        if len(params["filter"]) == 2:
+            raise StyxValidationError("Parameter `filter` must contain exactly 2 elements")
+        for e in params["filter"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `list[float] | None`')
+    if params.get("noise_sensitivity", False) is None:
+        raise StyxValidationError("`noise_sensitivity` must not be None")
+    if not isinstance(params["noise_sensitivity"], bool):
+        raise StyxValidationError(f'`noise_sensitivity` has the wrong type: Received `{type(params.get("noise_sensitivity", False))}` expected `bool`')
+
+
 def mris_transmantle_dysplasia_paths_cargs(
     params: MrisTransmantleDysplasiaPathsParameters,
     execution: Execution,
@@ -152,6 +198,7 @@ def mris_transmantle_dysplasia_paths_execute(
     Returns:
         NamedTuple of outputs (described in `MrisTransmantleDysplasiaPathsOutputs`).
     """
+    mris_transmantle_dysplasia_paths_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA)
     params = execution.params(params)

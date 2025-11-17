@@ -115,6 +115,60 @@ def roi2dataset_params(
     return params
 
 
+def roi2dataset_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Roi2datasetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("input_rois", None) is None:
+        raise StyxValidationError("`input_rois` must not be None")
+    if not isinstance(params["input_rois"], list):
+        raise StyxValidationError(f'`input_rois` has the wrong type: Received `{type(params.get("input_rois", None))}` expected `list[InputPathType]`')
+    for e in params["input_rois"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_rois` has the wrong type: Received `{type(params.get("input_rois", None))}` expected `list[InputPathType]`')
+    if params.get("keep_separate", False) is None:
+        raise StyxValidationError("`keep_separate` must not be None")
+    if not isinstance(params["keep_separate"], bool):
+        raise StyxValidationError(f'`keep_separate` has the wrong type: Received `{type(params.get("keep_separate", False))}` expected `bool`')
+    if params.get("nodelist", None) is not None:
+        if not isinstance(params["nodelist"], str):
+            raise StyxValidationError(f'`nodelist` has the wrong type: Received `{type(params.get("nodelist", None))}` expected `str | None`')
+    if params.get("nodelist_nodups", None) is not None:
+        if not isinstance(params["nodelist_nodups"], str):
+            raise StyxValidationError(f'`nodelist_nodups` has the wrong type: Received `{type(params.get("nodelist_nodups", None))}` expected `str | None`')
+    if params.get("nodelist_with_roival", False) is None:
+        raise StyxValidationError("`nodelist_with_roival` must not be None")
+    if not isinstance(params["nodelist_with_roival"], bool):
+        raise StyxValidationError(f'`nodelist_with_roival` has the wrong type: Received `{type(params.get("nodelist_with_roival", False))}` expected `bool`')
+    if params.get("label_dset", None) is not None:
+        if not isinstance(params["label_dset"], str):
+            raise StyxValidationError(f'`label_dset` has the wrong type: Received `{type(params.get("label_dset", None))}` expected `str | None`')
+    if params.get("output_format", None) is not None:
+        if not isinstance(params["output_format"], str):
+            raise StyxValidationError(f'`output_format` has the wrong type: Received `{type(params.get("output_format", None))}` expected `str | None`')
+    if params.get("domain_parent_id", None) is not None:
+        if not isinstance(params["domain_parent_id"], str):
+            raise StyxValidationError(f'`domain_parent_id` has the wrong type: Received `{type(params.get("domain_parent_id", None))}` expected `str | None`')
+    if params.get("pad_to_node", None) is not None:
+        if not isinstance(params["pad_to_node"], (float, int)):
+            raise StyxValidationError(f'`pad_to_node` has the wrong type: Received `{type(params.get("pad_to_node", None))}` expected `float | None`')
+    if params.get("pad_label", None) is not None:
+        if not isinstance(params["pad_label"], (float, int)):
+            raise StyxValidationError(f'`pad_label` has the wrong type: Received `{type(params.get("pad_label", None))}` expected `float | None`')
+
+
 def roi2dataset_cargs(
     params: Roi2datasetParameters,
     execution: Execution,
@@ -215,6 +269,7 @@ def roi2dataset_execute(
     Returns:
         NamedTuple of outputs (described in `Roi2datasetOutputs`).
     """
+    roi2dataset_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ROI2DATASET_METADATA)
     params = execution.params(params)

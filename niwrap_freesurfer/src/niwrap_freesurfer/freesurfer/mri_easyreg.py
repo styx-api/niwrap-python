@@ -113,6 +113,53 @@ def mri_easyreg_params(
     return params
 
 
+def mri_easyreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriEasyregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("reference_segmentation", None) is not None:
+        if not isinstance(params["reference_segmentation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_segmentation` has the wrong type: Received `{type(params.get("reference_segmentation", None))}` expected `InputPathType | None`')
+    if params.get("floating_image", None) is None:
+        raise StyxValidationError("`floating_image` must not be None")
+    if not isinstance(params["floating_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`floating_image` has the wrong type: Received `{type(params.get("floating_image", None))}` expected `InputPathType`')
+    if params.get("floating_segmentation", None) is not None:
+        if not isinstance(params["floating_segmentation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`floating_segmentation` has the wrong type: Received `{type(params.get("floating_segmentation", None))}` expected `InputPathType | None`')
+    if params.get("registered_reference", None) is not None:
+        if not isinstance(params["registered_reference"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`registered_reference` has the wrong type: Received `{type(params.get("registered_reference", None))}` expected `InputPathType | None`')
+    if params.get("registered_floating", None) is not None:
+        if not isinstance(params["registered_floating"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`registered_floating` has the wrong type: Received `{type(params.get("registered_floating", None))}` expected `InputPathType | None`')
+    if params.get("forward_field", None) is not None:
+        if not isinstance(params["forward_field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`forward_field` has the wrong type: Received `{type(params.get("forward_field", None))}` expected `InputPathType | None`')
+    if params.get("inverse_field", None) is not None:
+        if not isinstance(params["inverse_field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`inverse_field` has the wrong type: Received `{type(params.get("inverse_field", None))}` expected `InputPathType | None`')
+    if params.get("affine_only", False) is None:
+        raise StyxValidationError("`affine_only` must not be None")
+    if not isinstance(params["affine_only"], bool):
+        raise StyxValidationError(f'`affine_only` has the wrong type: Received `{type(params.get("affine_only", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+
+
 def mri_easyreg_cargs(
     params: MriEasyregParameters,
     execution: Execution,
@@ -218,6 +265,7 @@ def mri_easyreg_execute(
     Returns:
         NamedTuple of outputs (described in `MriEasyregOutputs`).
     """
+    mri_easyreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EASYREG_METADATA)
     params = execution.params(params)

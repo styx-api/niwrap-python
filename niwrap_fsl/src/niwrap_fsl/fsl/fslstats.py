@@ -203,6 +203,123 @@ def fslstats_params(
     return params
 
 
+def fslstats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslstatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("index_mask", None) is not None:
+        if not isinstance(params["index_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`index_mask` has the wrong type: Received `{type(params.get("index_mask", None))}` expected `InputPathType | None`')
+    if params.get("lower_threshold", None) is not None:
+        if not isinstance(params["lower_threshold"], (float, int)):
+            raise StyxValidationError(f'`lower_threshold` has the wrong type: Received `{type(params.get("lower_threshold", None))}` expected `float | None`')
+    if params.get("upper_threshold", None) is not None:
+        if not isinstance(params["upper_threshold"], (float, int)):
+            raise StyxValidationError(f'`upper_threshold` has the wrong type: Received `{type(params.get("upper_threshold", None))}` expected `float | None`')
+    if params.get("robust_intensity_flag", False) is None:
+        raise StyxValidationError("`robust_intensity_flag` must not be None")
+    if not isinstance(params["robust_intensity_flag"], bool):
+        raise StyxValidationError(f'`robust_intensity_flag` has the wrong type: Received `{type(params.get("robust_intensity_flag", False))}` expected `bool`')
+    if params.get("minmax_intensity_flag", False) is None:
+        raise StyxValidationError("`minmax_intensity_flag` must not be None")
+    if not isinstance(params["minmax_intensity_flag"], bool):
+        raise StyxValidationError(f'`minmax_intensity_flag` has the wrong type: Received `{type(params.get("minmax_intensity_flag", False))}` expected `bool`')
+    if params.get("voxels_volume_flag", False) is None:
+        raise StyxValidationError("`voxels_volume_flag` must not be None")
+    if not isinstance(params["voxels_volume_flag"], bool):
+        raise StyxValidationError(f'`voxels_volume_flag` has the wrong type: Received `{type(params.get("voxels_volume_flag", False))}` expected `bool`')
+    if params.get("nonzero_voxels_volume_flag", False) is None:
+        raise StyxValidationError("`nonzero_voxels_volume_flag` must not be None")
+    if not isinstance(params["nonzero_voxels_volume_flag"], bool):
+        raise StyxValidationError(f'`nonzero_voxels_volume_flag` has the wrong type: Received `{type(params.get("nonzero_voxels_volume_flag", False))}` expected `bool`')
+    if params.get("mean_flag", False) is None:
+        raise StyxValidationError("`mean_flag` must not be None")
+    if not isinstance(params["mean_flag"], bool):
+        raise StyxValidationError(f'`mean_flag` has the wrong type: Received `{type(params.get("mean_flag", False))}` expected `bool`')
+    if params.get("nonzero_mean_flag", False) is None:
+        raise StyxValidationError("`nonzero_mean_flag` must not be None")
+    if not isinstance(params["nonzero_mean_flag"], bool):
+        raise StyxValidationError(f'`nonzero_mean_flag` has the wrong type: Received `{type(params.get("nonzero_mean_flag", False))}` expected `bool`')
+    if params.get("std_dev_flag", False) is None:
+        raise StyxValidationError("`std_dev_flag` must not be None")
+    if not isinstance(params["std_dev_flag"], bool):
+        raise StyxValidationError(f'`std_dev_flag` has the wrong type: Received `{type(params.get("std_dev_flag", False))}` expected `bool`')
+    if params.get("nonzero_std_dev_flag", False) is None:
+        raise StyxValidationError("`nonzero_std_dev_flag` must not be None")
+    if not isinstance(params["nonzero_std_dev_flag"], bool):
+        raise StyxValidationError(f'`nonzero_std_dev_flag` has the wrong type: Received `{type(params.get("nonzero_std_dev_flag", False))}` expected `bool`')
+    if params.get("smallest_roi_flag", False) is None:
+        raise StyxValidationError("`smallest_roi_flag` must not be None")
+    if not isinstance(params["smallest_roi_flag"], bool):
+        raise StyxValidationError(f'`smallest_roi_flag` has the wrong type: Received `{type(params.get("smallest_roi_flag", False))}` expected `bool`')
+    if params.get("max_coords_flag", False) is None:
+        raise StyxValidationError("`max_coords_flag` must not be None")
+    if not isinstance(params["max_coords_flag"], bool):
+        raise StyxValidationError(f'`max_coords_flag` has the wrong type: Received `{type(params.get("max_coords_flag", False))}` expected `bool`')
+    if params.get("min_coords_flag", False) is None:
+        raise StyxValidationError("`min_coords_flag` must not be None")
+    if not isinstance(params["min_coords_flag"], bool):
+        raise StyxValidationError(f'`min_coords_flag` has the wrong type: Received `{type(params.get("min_coords_flag", False))}` expected `bool`')
+    if params.get("cog_mm_flag", False) is None:
+        raise StyxValidationError("`cog_mm_flag` must not be None")
+    if not isinstance(params["cog_mm_flag"], bool):
+        raise StyxValidationError(f'`cog_mm_flag` has the wrong type: Received `{type(params.get("cog_mm_flag", False))}` expected `bool`')
+    if params.get("cog_voxel_flag", False) is None:
+        raise StyxValidationError("`cog_voxel_flag` must not be None")
+    if not isinstance(params["cog_voxel_flag"], bool):
+        raise StyxValidationError(f'`cog_voxel_flag` has the wrong type: Received `{type(params.get("cog_voxel_flag", False))}` expected `bool`')
+    if params.get("percentile", None) is not None:
+        if not isinstance(params["percentile"], (float, int)):
+            raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `float | None`')
+    if params.get("nonzero_percentile", None) is not None:
+        if not isinstance(params["nonzero_percentile"], (float, int)):
+            raise StyxValidationError(f'`nonzero_percentile` has the wrong type: Received `{type(params.get("nonzero_percentile", None))}` expected `float | None`')
+    if params.get("absolute_values_flag", False) is None:
+        raise StyxValidationError("`absolute_values_flag` must not be None")
+    if not isinstance(params["absolute_values_flag"], bool):
+        raise StyxValidationError(f'`absolute_values_flag` has the wrong type: Received `{type(params.get("absolute_values_flag", False))}` expected `bool`')
+    if params.get("nan_as_zero_flag", False) is None:
+        raise StyxValidationError("`nan_as_zero_flag` must not be None")
+    if not isinstance(params["nan_as_zero_flag"], bool):
+        raise StyxValidationError(f'`nan_as_zero_flag` has the wrong type: Received `{type(params.get("nan_as_zero_flag", False))}` expected `bool`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("difference_image", None) is not None:
+        if not isinstance(params["difference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`difference_image` has the wrong type: Received `{type(params.get("difference_image", None))}` expected `InputPathType | None`')
+    if params.get("hist_bins", None) is not None:
+        if not isinstance(params["hist_bins"], (float, int)):
+            raise StyxValidationError(f'`hist_bins` has the wrong type: Received `{type(params.get("hist_bins", None))}` expected `float | None`')
+    if params.get("hist_bins_min_max", None) is not None:
+        if not isinstance(params["hist_bins_min_max"], str):
+            raise StyxValidationError(f'`hist_bins_min_max` has the wrong type: Received `{type(params.get("hist_bins_min_max", None))}` expected `str | None`')
+    if params.get("timeseries_flag", False) is None:
+        raise StyxValidationError("`timeseries_flag` must not be None")
+    if not isinstance(params["timeseries_flag"], bool):
+        raise StyxValidationError(f'`timeseries_flag` has the wrong type: Received `{type(params.get("timeseries_flag", False))}` expected `bool`')
+    if params.get("mean_entropy_flag", False) is None:
+        raise StyxValidationError("`mean_entropy_flag` must not be None")
+    if not isinstance(params["mean_entropy_flag"], bool):
+        raise StyxValidationError(f'`mean_entropy_flag` has the wrong type: Received `{type(params.get("mean_entropy_flag", False))}` expected `bool`')
+    if params.get("nonzero_mean_entropy_flag", False) is None:
+        raise StyxValidationError("`nonzero_mean_entropy_flag` must not be None")
+    if not isinstance(params["nonzero_mean_entropy_flag"], bool):
+        raise StyxValidationError(f'`nonzero_mean_entropy_flag` has the wrong type: Received `{type(params.get("nonzero_mean_entropy_flag", False))}` expected `bool`')
+
+
 def fslstats_cargs(
     params: FslstatsParameters,
     execution: Execution,
@@ -342,6 +459,7 @@ def fslstats_execute(
     Returns:
         NamedTuple of outputs (described in `FslstatsOutputs`).
     """
+    fslstats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLSTATS_METADATA)
     params = execution.params(params)

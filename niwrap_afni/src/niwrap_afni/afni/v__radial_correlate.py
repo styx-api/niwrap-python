@@ -161,6 +161,88 @@ def v__radial_correlate_params(
     return params
 
 
+def v__radial_correlate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VRadialCorrelateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("results_dir", None) is not None:
+        if not isinstance(params["results_dir"], str):
+            raise StyxValidationError(f'`results_dir` has the wrong type: Received `{type(params.get("results_dir", None))}` expected `str | None`')
+    if params.get("do_corr", None) is not None:
+        if not isinstance(params["do_corr"], str):
+            raise StyxValidationError(f'`do_corr` has the wrong type: Received `{type(params.get("do_corr", None))}` expected `str | None`')
+    if params.get("do_clust", None) is not None:
+        if not isinstance(params["do_clust"], str):
+            raise StyxValidationError(f'`do_clust` has the wrong type: Received `{type(params.get("do_clust", None))}` expected `str | None`')
+    if params.get("mask_dset", None) is not None:
+        if not isinstance(params["mask_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dset` has the wrong type: Received `{type(params.get("mask_dset", None))}` expected `InputPathType | None`')
+    if params.get("cthresh", None) is not None:
+        if not isinstance(params["cthresh"], (float, int)):
+            raise StyxValidationError(f'`cthresh` has the wrong type: Received `{type(params.get("cthresh", None))}` expected `float | None`')
+    if params.get("frac_limit", None) is not None:
+        if not isinstance(params["frac_limit"], (float, int)):
+            raise StyxValidationError(f'`frac_limit` has the wrong type: Received `{type(params.get("frac_limit", None))}` expected `float | None`')
+    if params.get("sphere_rad", None) is not None:
+        if not isinstance(params["sphere_rad"], (float, int)):
+            raise StyxValidationError(f'`sphere_rad` has the wrong type: Received `{type(params.get("sphere_rad", None))}` expected `float | None`')
+    if params.get("use_3dmerge", None) is not None:
+        if not isinstance(params["use_3dmerge"], str):
+            raise StyxValidationError(f'`use_3dmerge` has the wrong type: Received `{type(params.get("use_3dmerge", None))}` expected `str | None`')
+    if params.get("percentile", None) is not None:
+        if not isinstance(params["percentile"], (float, int)):
+            raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `float | None`')
+    if params.get("min_thr", None) is not None:
+        if not isinstance(params["min_thr"], (float, int)):
+            raise StyxValidationError(f'`min_thr` has the wrong type: Received `{type(params.get("min_thr", None))}` expected `float | None`')
+    if params.get("nfirst", None) is not None:
+        if not isinstance(params["nfirst"], (float, int)):
+            raise StyxValidationError(f'`nfirst` has the wrong type: Received `{type(params.get("nfirst", None))}` expected `float | None`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("corr_mask", None) is not None:
+        if not isinstance(params["corr_mask"], str):
+            raise StyxValidationError(f'`corr_mask` has the wrong type: Received `{type(params.get("corr_mask", None))}` expected `str | None`')
+    if params.get("do_clean", None) is not None:
+        if not isinstance(params["do_clean"], str):
+            raise StyxValidationError(f'`do_clean` has the wrong type: Received `{type(params.get("do_clean", None))}` expected `str | None`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], (float, int)):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `float | None`')
+    if params.get("merge_frad", None) is not None:
+        if not isinstance(params["merge_frad"], (float, int)):
+            raise StyxValidationError(f'`merge_frad` has the wrong type: Received `{type(params.get("merge_frad", None))}` expected `float | None`')
+
+
 def v__radial_correlate_cargs(
     params: VRadialCorrelateParameters,
     execution: Execution,
@@ -302,6 +384,7 @@ def v__radial_correlate_execute(
     Returns:
         NamedTuple of outputs (described in `VRadialCorrelateOutputs`).
     """
+    v__radial_correlate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__RADIAL_CORRELATE_METADATA)
     params = execution.params(params)

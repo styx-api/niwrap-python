@@ -66,6 +66,38 @@ def rca_config_params(
     return params
 
 
+def rca_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RcaConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_config", None) is None:
+        raise StyxValidationError("`source_config` must not be None")
+    if not isinstance(params["source_config"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_config` has the wrong type: Received `{type(params.get("source_config", None))}` expected `InputPathType`')
+    if params.get("updated_config", None) is None:
+        raise StyxValidationError("`updated_config` must not be None")
+    if not isinstance(params["updated_config"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`updated_config` has the wrong type: Received `{type(params.get("updated_config", None))}` expected `InputPathType`')
+    if params.get("unknown_args_file", None) is None:
+        raise StyxValidationError("`unknown_args_file` must not be None")
+    if not isinstance(params["unknown_args_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`unknown_args_file` has the wrong type: Received `{type(params.get("unknown_args_file", None))}` expected `InputPathType`')
+    if params.get("args", None) is not None:
+        if not isinstance(params["args"], list):
+            raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `list[str] | None`')
+        for e in params["args"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `list[str] | None`')
+
+
 def rca_config_cargs(
     params: RcaConfigParameters,
     execution: Execution,
@@ -130,6 +162,7 @@ def rca_config_execute(
     Returns:
         NamedTuple of outputs (described in `RcaConfigOutputs`).
     """
+    rca_config_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RCA_CONFIG_METADATA)
     params = execution.params(params)

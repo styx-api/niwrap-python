@@ -89,6 +89,24 @@ def scene_file_update_copy_map_one_palette_params(
     return params
 
 
+def scene_file_update_copy_map_one_palette_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileUpdateCopyMapOnePaletteParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Data File Name Suffix", None) is None:
+        raise StyxValidationError("`Data File Name Suffix` must not be None")
+    if not isinstance(params["Data File Name Suffix"], str):
+        raise StyxValidationError(f'`Data File Name Suffix` has the wrong type: Received `{type(params.get("Data File Name Suffix", None))}` expected `str`')
+
+
 def scene_file_update_copy_map_one_palette_cargs(
     params: SceneFileUpdateCopyMapOnePaletteParameters,
     execution: Execution,
@@ -135,6 +153,24 @@ def scene_file_update_data_file_add_params(
     return params
 
 
+def scene_file_update_data_file_add_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileUpdateDataFileAddParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Name of data file", None) is None:
+        raise StyxValidationError("`Name of data file` must not be None")
+    if not isinstance(params["Name of data file"], str):
+        raise StyxValidationError(f'`Name of data file` has the wrong type: Received `{type(params.get("Name of data file", None))}` expected `str`')
+
+
 def scene_file_update_data_file_add_cargs(
     params: SceneFileUpdateDataFileAddParameters,
     execution: Execution,
@@ -179,6 +215,24 @@ def scene_file_update_data_file_remove_params(
         "Name of data file": name_of_data_file,
     }
     return params
+
+
+def scene_file_update_data_file_remove_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileUpdateDataFileRemoveParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Name of data file", None) is None:
+        raise StyxValidationError("`Name of data file` must not be None")
+    if not isinstance(params["Name of data file"], str):
+        raise StyxValidationError(f'`Name of data file` has the wrong type: Received `{type(params.get("Name of data file", None))}` expected `str`')
 
 
 def scene_file_update_data_file_remove_cargs(
@@ -260,6 +314,63 @@ def scene_file_update_params(
     if data_file_remove is not None:
         params["data-file-remove"] = data_file_remove
     return params
+
+
+def scene_file_update_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileUpdateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fix-map-palette-settings", False) is None:
+        raise StyxValidationError("`fix-map-palette-settings` must not be None")
+    if not isinstance(params["fix-map-palette-settings"], bool):
+        raise StyxValidationError(f'`fix-map-palette-settings` has the wrong type: Received `{type(params.get("fix-map-palette-settings", False))}` expected `bool`')
+    if params.get("remove-missing-files", False) is None:
+        raise StyxValidationError("`remove-missing-files` must not be None")
+    if not isinstance(params["remove-missing-files"], bool):
+        raise StyxValidationError(f'`remove-missing-files` has the wrong type: Received `{type(params.get("remove-missing-files", False))}` expected `bool`')
+    if params.get("error", False) is None:
+        raise StyxValidationError("`error` must not be None")
+    if not isinstance(params["error"], bool):
+        raise StyxValidationError(f'`error` has the wrong type: Received `{type(params.get("error", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("copy-map-one-palette", None) is not None:
+        if not isinstance(params["copy-map-one-palette"], list):
+            raise StyxValidationError(f'`copy-map-one-palette` has the wrong type: Received `{type(params.get("copy-map-one-palette", None))}` expected `list[SceneFileUpdateCopyMapOnePaletteParameters] | None`')
+        for e in params["copy-map-one-palette"]:
+            scene_file_update_copy_map_one_palette_validate(e)
+    if params.get("data-file-add", None) is not None:
+        if not isinstance(params["data-file-add"], list):
+            raise StyxValidationError(f'`data-file-add` has the wrong type: Received `{type(params.get("data-file-add", None))}` expected `list[SceneFileUpdateDataFileAddParameters] | None`')
+        for e in params["data-file-add"]:
+            scene_file_update_data_file_add_validate(e)
+    if params.get("data-file-remove", None) is not None:
+        if not isinstance(params["data-file-remove"], list):
+            raise StyxValidationError(f'`data-file-remove` has the wrong type: Received `{type(params.get("data-file-remove", None))}` expected `list[SceneFileUpdateDataFileRemoveParameters] | None`')
+        for e in params["data-file-remove"]:
+            scene_file_update_data_file_remove_validate(e)
+    if params.get("input-scene-file", None) is None:
+        raise StyxValidationError("`input-scene-file` must not be None")
+    if not isinstance(params["input-scene-file"], str):
+        raise StyxValidationError(f'`input-scene-file` has the wrong type: Received `{type(params.get("input-scene-file", None))}` expected `str`')
+    if params.get("output-scene-file", None) is None:
+        raise StyxValidationError("`output-scene-file` must not be None")
+    if not isinstance(params["output-scene-file"], str):
+        raise StyxValidationError(f'`output-scene-file` has the wrong type: Received `{type(params.get("output-scene-file", None))}` expected `str`')
+    if params.get("scene-name-or-number", None) is None:
+        raise StyxValidationError("`scene-name-or-number` must not be None")
+    if not isinstance(params["scene-name-or-number"], str):
+        raise StyxValidationError(f'`scene-name-or-number` has the wrong type: Received `{type(params.get("scene-name-or-number", None))}` expected `str`')
 
 
 def scene_file_update_cargs(
@@ -354,6 +465,7 @@ def scene_file_update_execute(
     Returns:
         NamedTuple of outputs (described in `SceneFileUpdateOutputs`).
     """
+    scene_file_update_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SCENE_FILE_UPDATE_METADATA)
     params = execution.params(params)

@@ -230,6 +230,136 @@ def qdelaunay_params(
     return params
 
 
+def qdelaunay_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QdelaunayParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("furthest_site", False) is None:
+        raise StyxValidationError("`furthest_site` must not be None")
+    if not isinstance(params["furthest_site"], bool):
+        raise StyxValidationError(f'`furthest_site` has the wrong type: Received `{type(params.get("furthest_site", False))}` expected `bool`')
+    if params.get("triangulated_output", False) is None:
+        raise StyxValidationError("`triangulated_output` must not be None")
+    if not isinstance(params["triangulated_output"], bool):
+        raise StyxValidationError(f'`triangulated_output` has the wrong type: Received `{type(params.get("triangulated_output", False))}` expected `bool`')
+    if params.get("joggled_input", False) is None:
+        raise StyxValidationError("`joggled_input` must not be None")
+    if not isinstance(params["joggled_input"], bool):
+        raise StyxValidationError(f'`joggled_input` has the wrong type: Received `{type(params.get("joggled_input", False))}` expected `bool`')
+    if params.get("joggle_range", None) is not None:
+        if not isinstance(params["joggle_range"], (float, int)):
+            raise StyxValidationError(f'`joggle_range` has the wrong type: Received `{type(params.get("joggle_range", None))}` expected `float | None`')
+    if params.get("search_simplex", False) is None:
+        raise StyxValidationError("`search_simplex` must not be None")
+    if not isinstance(params["search_simplex"], bool):
+        raise StyxValidationError(f'`search_simplex` has the wrong type: Received `{type(params.get("search_simplex", False))}` expected `bool`')
+    if params.get("point_infinity", False) is None:
+        raise StyxValidationError("`point_infinity` must not be None")
+    if not isinstance(params["point_infinity"], bool):
+        raise StyxValidationError(f'`point_infinity` has the wrong type: Received `{type(params.get("point_infinity", False))}` expected `bool`')
+    if params.get("delaunay_visible", None) is not None:
+        if not isinstance(params["delaunay_visible"], str):
+            raise StyxValidationError(f'`delaunay_visible` has the wrong type: Received `{type(params.get("delaunay_visible", None))}` expected `str | None`')
+    if params.get("delaunay_regions", None) is not None:
+        if not isinstance(params["delaunay_regions"], str):
+            raise StyxValidationError(f'`delaunay_regions` has the wrong type: Received `{type(params.get("delaunay_regions", None))}` expected `str | None`')
+    if params.get("trace_level", None) is not None:
+        if not isinstance(params["trace_level"], (float, int)):
+            raise StyxValidationError(f'`trace_level` has the wrong type: Received `{type(params.get("trace_level", None))}` expected `float | None`')
+    if params.get("check", False) is None:
+        raise StyxValidationError("`check` must not be None")
+    if not isinstance(params["check"], bool):
+        raise StyxValidationError(f'`check` has the wrong type: Received `{type(params.get("check", False))}` expected `bool`')
+    if params.get("statistics", False) is None:
+        raise StyxValidationError("`statistics` must not be None")
+    if not isinstance(params["statistics"], bool):
+        raise StyxValidationError(f'`statistics` has the wrong type: Received `{type(params.get("statistics", False))}` expected `bool`')
+    if params.get("verify", False) is None:
+        raise StyxValidationError("`verify` must not be None")
+    if not isinstance(params["verify"], bool):
+        raise StyxValidationError(f'`verify` has the wrong type: Received `{type(params.get("verify", False))}` expected `bool`')
+    if params.get("output_stdout", False) is None:
+        raise StyxValidationError("`output_stdout` must not be None")
+    if not isinstance(params["output_stdout"], bool):
+        raise StyxValidationError(f'`output_stdout` has the wrong type: Received `{type(params.get("output_stdout", False))}` expected `bool`')
+    if params.get("facets_summary", None) is not None:
+        if not isinstance(params["facets_summary"], (float, int)):
+            raise StyxValidationError(f'`facets_summary` has the wrong type: Received `{type(params.get("facets_summary", None))}` expected `float | None`')
+    if params.get("input_file_option", None) is not None:
+        if not isinstance(params["input_file_option"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_file_option` has the wrong type: Received `{type(params.get("input_file_option", None))}` expected `InputPathType | None`')
+    if params.get("output_file_option", None) is not None:
+        if not isinstance(params["output_file_option"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`output_file_option` has the wrong type: Received `{type(params.get("output_file_option", None))}` expected `InputPathType | None`')
+    if params.get("trace_point", None) is not None:
+        if not isinstance(params["trace_point"], (float, int)):
+            raise StyxValidationError(f'`trace_point` has the wrong type: Received `{type(params.get("trace_point", None))}` expected `float | None`')
+    if params.get("trace_merge", None) is not None:
+        if not isinstance(params["trace_merge"], (float, int)):
+            raise StyxValidationError(f'`trace_merge` has the wrong type: Received `{type(params.get("trace_merge", None))}` expected `float | None`')
+    if params.get("trace_merge_width", None) is not None:
+        if not isinstance(params["trace_merge_width"], (float, int)):
+            raise StyxValidationError(f'`trace_merge_width` has the wrong type: Received `{type(params.get("trace_merge_width", None))}` expected `float | None`')
+    if params.get("stop_point", None) is not None:
+        if not isinstance(params["stop_point"], (float, int)):
+            raise StyxValidationError(f'`stop_point` has the wrong type: Received `{type(params.get("stop_point", None))}` expected `float | None`')
+    if params.get("stop_cone_point", None) is not None:
+        if not isinstance(params["stop_cone_point"], (float, int)):
+            raise StyxValidationError(f'`stop_cone_point` has the wrong type: Received `{type(params.get("stop_cone_point", None))}` expected `float | None`')
+    if params.get("centrum_radius", None) is not None:
+        if not isinstance(params["centrum_radius"], (float, int)):
+            raise StyxValidationError(f'`centrum_radius` has the wrong type: Received `{type(params.get("centrum_radius", None))}` expected `float | None`')
+    if params.get("max_angle_cosine", None) is not None:
+        if not isinstance(params["max_angle_cosine"], (float, int)):
+            raise StyxValidationError(f'`max_angle_cosine` has the wrong type: Received `{type(params.get("max_angle_cosine", None))}` expected `float | None`')
+    if params.get("perturb_factor", None) is not None:
+        if not isinstance(params["perturb_factor"], (float, int)):
+            raise StyxValidationError(f'`perturb_factor` has the wrong type: Received `{type(params.get("perturb_factor", None))}` expected `float | None`')
+    if params.get("min_facet_width", None) is not None:
+        if not isinstance(params["min_facet_width"], (float, int)):
+            raise StyxValidationError(f'`min_facet_width` has the wrong type: Received `{type(params.get("min_facet_width", None))}` expected `float | None`')
+    if params.get("facet_dump", False) is None:
+        raise StyxValidationError("`facet_dump` must not be None")
+    if not isinstance(params["facet_dump"], bool):
+        raise StyxValidationError(f'`facet_dump` has the wrong type: Received `{type(params.get("facet_dump", False))}` expected `bool`')
+    if params.get("geomview", False) is None:
+        raise StyxValidationError("`geomview` must not be None")
+    if not isinstance(params["geomview"], bool):
+        raise StyxValidationError(f'`geomview` has the wrong type: Received `{type(params.get("geomview", False))}` expected `bool`')
+    if params.get("vertices_incident", False) is None:
+        raise StyxValidationError("`vertices_incident` must not be None")
+    if not isinstance(params["vertices_incident"], bool):
+        raise StyxValidationError(f'`vertices_incident` has the wrong type: Received `{type(params.get("vertices_incident", False))}` expected `bool`')
+    if params.get("mathematica", False) is None:
+        raise StyxValidationError("`mathematica` must not be None")
+    if not isinstance(params["mathematica"], bool):
+        raise StyxValidationError(f'`mathematica` has the wrong type: Received `{type(params.get("mathematica", False))}` expected `bool`')
+    if params.get("off_format", False) is None:
+        raise StyxValidationError("`off_format` must not be None")
+    if not isinstance(params["off_format"], bool):
+        raise StyxValidationError(f'`off_format` has the wrong type: Received `{type(params.get("off_format", False))}` expected `bool`')
+    if params.get("point_coordinates", False) is None:
+        raise StyxValidationError("`point_coordinates` must not be None")
+    if not isinstance(params["point_coordinates"], bool):
+        raise StyxValidationError(f'`point_coordinates` has the wrong type: Received `{type(params.get("point_coordinates", False))}` expected `bool`')
+    if params.get("summary", False) is None:
+        raise StyxValidationError("`summary` must not be None")
+    if not isinstance(params["summary"], bool):
+        raise StyxValidationError(f'`summary` has the wrong type: Received `{type(params.get("summary", False))}` expected `bool`')
+
+
 def qdelaunay_cargs(
     params: QdelaunayParameters,
     execution: Execution,
@@ -399,6 +529,7 @@ def qdelaunay_execute(
     Returns:
         NamedTuple of outputs (described in `QdelaunayOutputs`).
     """
+    qdelaunay_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QDELAUNAY_METADATA)
     params = execution.params(params)

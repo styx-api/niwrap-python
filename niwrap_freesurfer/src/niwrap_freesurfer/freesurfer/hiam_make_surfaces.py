@@ -55,6 +55,30 @@ def hiam_make_surfaces_params(
     return params
 
 
+def hiam_make_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HiamMakeSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `typing.Literal["RA", "LA", "RH", "LH"]`')
+    if params["structure"] not in ["RA", "LA", "RH", "LH"]:
+        raise StyxValidationError("Parameter `structure` must be one of [\"RA\", \"LA\", \"RH\", \"LH\"]")
+
+
 def hiam_make_surfaces_cargs(
     params: HiamMakeSurfacesParameters,
     execution: Execution,
@@ -113,6 +137,7 @@ def hiam_make_surfaces_execute(
     Returns:
         NamedTuple of outputs (described in `HiamMakeSurfacesOutputs`).
     """
+    hiam_make_surfaces_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HIAM_MAKE_SURFACES_METADATA)
     params = execution.params(params)

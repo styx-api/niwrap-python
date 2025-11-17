@@ -57,6 +57,27 @@ def ccalc_params(
     return params
 
 
+def ccalc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CcalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("format", None) is not None:
+        if not isinstance(params["format"], str):
+            raise StyxValidationError(f'`format` has the wrong type: Received `{type(params.get("format", None))}` expected `str | None`')
+    if params.get("expr", None) is None:
+        raise StyxValidationError("`expr` must not be None")
+    if not isinstance(params["expr"], str):
+        raise StyxValidationError(f'`expr` has the wrong type: Received `{type(params.get("expr", None))}` expected `str`')
+
+
 def ccalc_cargs(
     params: CcalcParameters,
     execution: Execution,
@@ -122,6 +143,7 @@ def ccalc_execute(
     Returns:
         NamedTuple of outputs (described in `CcalcOutputs`).
     """
+    ccalc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CCALC_METADATA)
     params = execution.params(params)

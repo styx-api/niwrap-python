@@ -79,6 +79,44 @@ def fiber_dot_products_params(
     return params
 
 
+def fiber_dot_products_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FiberDotProductsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dot-metric", None) is None:
+        raise StyxValidationError("`dot-metric` must not be None")
+    if not isinstance(params["dot-metric"], str):
+        raise StyxValidationError(f'`dot-metric` has the wrong type: Received `{type(params.get("dot-metric", None))}` expected `str`')
+    if params.get("f-metric", None) is None:
+        raise StyxValidationError("`f-metric` must not be None")
+    if not isinstance(params["f-metric"], str):
+        raise StyxValidationError(f'`f-metric` has the wrong type: Received `{type(params.get("f-metric", None))}` expected `str`')
+    if params.get("white-surf", None) is None:
+        raise StyxValidationError("`white-surf` must not be None")
+    if not isinstance(params["white-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`white-surf` has the wrong type: Received `{type(params.get("white-surf", None))}` expected `InputPathType`')
+    if params.get("fiber-file", None) is None:
+        raise StyxValidationError("`fiber-file` must not be None")
+    if not isinstance(params["fiber-file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fiber-file` has the wrong type: Received `{type(params.get("fiber-file", None))}` expected `InputPathType`')
+    if params.get("max-dist", None) is None:
+        raise StyxValidationError("`max-dist` must not be None")
+    if not isinstance(params["max-dist"], (float, int)):
+        raise StyxValidationError(f'`max-dist` has the wrong type: Received `{type(params.get("max-dist", None))}` expected `float`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+
+
 def fiber_dot_products_cargs(
     params: FiberDotProductsParameters,
     execution: Execution,
@@ -148,6 +186,7 @@ def fiber_dot_products_execute(
     Returns:
         NamedTuple of outputs (described in `FiberDotProductsOutputs`).
     """
+    fiber_dot_products_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIBER_DOT_PRODUCTS_METADATA)
     params = execution.params(params)

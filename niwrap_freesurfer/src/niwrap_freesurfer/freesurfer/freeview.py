@@ -50,6 +50,23 @@ def freeview_params(
     return params
 
 
+def freeview_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FreeviewParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("args", None) is not None:
+        if not isinstance(params["args"], str):
+            raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `str | None`')
+
+
 def freeview_cargs(
     params: FreeviewParameters,
     execution: Execution,
@@ -108,6 +125,7 @@ def freeview_execute(
     Returns:
         NamedTuple of outputs (described in `FreeviewOutputs`).
     """
+    freeview_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FREEVIEW_METADATA)
     params = execution.params(params)

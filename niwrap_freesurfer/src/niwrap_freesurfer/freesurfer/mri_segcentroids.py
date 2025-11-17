@@ -84,6 +84,45 @@ def mri_segcentroids_params(
     return params
 
 
+def mri_segcentroids_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSegcentroidsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_segmentation", None) is None:
+        raise StyxValidationError("`input_segmentation` must not be None")
+    if not isinstance(params["input_segmentation"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_segmentation` has the wrong type: Received `{type(params.get("input_segmentation", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("pointset_flag", False) is None:
+        raise StyxValidationError("`pointset_flag` must not be None")
+    if not isinstance(params["pointset_flag"], bool):
+        raise StyxValidationError(f'`pointset_flag` has the wrong type: Received `{type(params.get("pointset_flag", False))}` expected `bool`')
+    if params.get("registration_file", None) is not None:
+        if not isinstance(params["registration_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`registration_file` has the wrong type: Received `{type(params.get("registration_file", None))}` expected `InputPathType | None`')
+    if params.get("weights_file", None) is not None:
+        if not isinstance(params["weights_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weights_file` has the wrong type: Received `{type(params.get("weights_file", None))}` expected `InputPathType | None`')
+    if params.get("lut_file", None) is not None:
+        if not isinstance(params["lut_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lut_file` has the wrong type: Received `{type(params.get("lut_file", None))}` expected `InputPathType | None`')
+    if params.get("default_lut_flag", False) is None:
+        raise StyxValidationError("`default_lut_flag` must not be None")
+    if not isinstance(params["default_lut_flag"], bool):
+        raise StyxValidationError(f'`default_lut_flag` has the wrong type: Received `{type(params.get("default_lut_flag", False))}` expected `bool`')
+
+
 def mri_segcentroids_cargs(
     params: MriSegcentroidsParameters,
     execution: Execution,
@@ -168,6 +207,7 @@ def mri_segcentroids_execute(
     Returns:
         NamedTuple of outputs (described in `MriSegcentroidsOutputs`).
     """
+    mri_segcentroids_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SEGCENTROIDS_METADATA)
     params = execution.params(params)

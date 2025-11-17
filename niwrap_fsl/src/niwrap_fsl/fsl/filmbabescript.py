@@ -54,6 +54,28 @@ def filmbabescript_params(
     return params
 
 
+def filmbabescript_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FilmbabescriptParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat_dir", None) is None:
+        raise StyxValidationError("`feat_dir` must not be None")
+    if not isinstance(params["feat_dir"], str):
+        raise StyxValidationError(f'`feat_dir` has the wrong type: Received `{type(params.get("feat_dir", None))}` expected `str`')
+    if params.get("flobs_dir", None) is None:
+        raise StyxValidationError("`flobs_dir` must not be None")
+    if not isinstance(params["flobs_dir"], str):
+        raise StyxValidationError(f'`flobs_dir` has the wrong type: Received `{type(params.get("flobs_dir", None))}` expected `str`')
+
+
 def filmbabescript_cargs(
     params: FilmbabescriptParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def filmbabescript_execute(
     Returns:
         NamedTuple of outputs (described in `FilmbabescriptOutputs`).
     """
+    filmbabescript_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FILMBABESCRIPT_METADATA)
     params = execution.params(params)

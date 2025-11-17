@@ -127,6 +127,78 @@ def vol2segavg_params(
     return params
 
 
+def vol2segavg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Vol2segavgParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("registration", None) is None:
+        raise StyxValidationError("`registration` must not be None")
+    if not isinstance(params["registration"], str):
+        raise StyxValidationError(f'`registration` has the wrong type: Received `{type(params.get("registration", None))}` expected `str`')
+    if params.get("segmentation_file", None) is None:
+        raise StyxValidationError("`segmentation_file` must not be None")
+    if not isinstance(params["segmentation_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segmentation_file` has the wrong type: Received `{type(params.get("segmentation_file", None))}` expected `InputPathType`')
+    if params.get("aparc_aseg_flag", False) is None:
+        raise StyxValidationError("`aparc_aseg_flag` must not be None")
+    if not isinstance(params["aparc_aseg_flag"], bool):
+        raise StyxValidationError(f'`aparc_aseg_flag` has the wrong type: Received `{type(params.get("aparc_aseg_flag", False))}` expected `bool`')
+    if params.get("subject_id", None) is not None:
+        if not isinstance(params["subject_id"], str):
+            raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str | None`')
+    if params.get("segmentation_id", None) is not None:
+        if not isinstance(params["segmentation_id"], list):
+            raise StyxValidationError(f'`segmentation_id` has the wrong type: Received `{type(params.get("segmentation_id", None))}` expected `list[float] | None`')
+        for e in params["segmentation_id"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`segmentation_id` has the wrong type: Received `{type(params.get("segmentation_id", None))}` expected `list[float] | None`')
+    if params.get("multiply_value", None) is not None:
+        if not isinstance(params["multiply_value"], (float, int)):
+            raise StyxValidationError(f'`multiply_value` has the wrong type: Received `{type(params.get("multiply_value", None))}` expected `float | None`')
+    if params.get("no_bb_flag", False) is None:
+        raise StyxValidationError("`no_bb_flag` must not be None")
+    if not isinstance(params["no_bb_flag"], bool):
+        raise StyxValidationError(f'`no_bb_flag` has the wrong type: Received `{type(params.get("no_bb_flag", False))}` expected `bool`')
+    if params.get("erode_value", None) is not None:
+        if not isinstance(params["erode_value"], (float, int)):
+            raise StyxValidationError(f'`erode_value` has the wrong type: Received `{type(params.get("erode_value", None))}` expected `float | None`')
+    if params.get("dilate_value", None) is not None:
+        if not isinstance(params["dilate_value"], (float, int)):
+            raise StyxValidationError(f'`dilate_value` has the wrong type: Received `{type(params.get("dilate_value", None))}` expected `float | None`')
+    if params.get("wm_flag", False) is None:
+        raise StyxValidationError("`wm_flag` must not be None")
+    if not isinstance(params["wm_flag"], bool):
+        raise StyxValidationError(f'`wm_flag` has the wrong type: Received `{type(params.get("wm_flag", False))}` expected `bool`')
+    if params.get("vcsf_flag", False) is None:
+        raise StyxValidationError("`vcsf_flag` must not be None")
+    if not isinstance(params["vcsf_flag"], bool):
+        raise StyxValidationError(f'`vcsf_flag` has the wrong type: Received `{type(params.get("vcsf_flag", False))}` expected `bool`')
+    if params.get("xcsf_flag", False) is None:
+        raise StyxValidationError("`xcsf_flag` must not be None")
+    if not isinstance(params["xcsf_flag"], bool):
+        raise StyxValidationError(f'`xcsf_flag` has the wrong type: Received `{type(params.get("xcsf_flag", False))}` expected `bool`')
+    if params.get("remove_mean_flag", False) is None:
+        raise StyxValidationError("`remove_mean_flag` must not be None")
+    if not isinstance(params["remove_mean_flag"], bool):
+        raise StyxValidationError(f'`remove_mean_flag` has the wrong type: Received `{type(params.get("remove_mean_flag", False))}` expected `bool`')
+
+
 def vol2segavg_cargs(
     params: Vol2segavgParameters,
     execution: Execution,
@@ -238,6 +310,7 @@ def vol2segavg_execute(
     Returns:
         NamedTuple of outputs (described in `Vol2segavgOutputs`).
     """
+    vol2segavg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOL2SEGAVG_METADATA)
     params = execution.params(params)

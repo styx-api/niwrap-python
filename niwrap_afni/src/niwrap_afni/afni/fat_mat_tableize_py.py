@@ -107,6 +107,63 @@ def fat_mat_tableize_py_params(
     return params
 
 
+def fat_mat_tableize_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatMatTableizePyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_matrices", None) is None:
+        raise StyxValidationError("`input_matrices` must not be None")
+    if not isinstance(params["input_matrices"], list):
+        raise StyxValidationError(f'`input_matrices` has the wrong type: Received `{type(params.get("input_matrices", None))}` expected `list[str]`')
+    for e in params["input_matrices"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`input_matrices` has the wrong type: Received `{type(params.get("input_matrices", None))}` expected `list[str]`')
+    if params.get("input_csv", None) is not None:
+        if not isinstance(params["input_csv"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_csv` has the wrong type: Received `{type(params.get("input_csv", None))}` expected `InputPathType | None`')
+    if params.get("input_list", None) is not None:
+        if not isinstance(params["input_list"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_list` has the wrong type: Received `{type(params.get("input_list", None))}` expected `InputPathType | None`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("parameters", None) is not None:
+        if not isinstance(params["parameters"], list):
+            raise StyxValidationError(f'`parameters` has the wrong type: Received `{type(params.get("parameters", None))}` expected `list[str] | None`')
+        for e in params["parameters"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`parameters` has the wrong type: Received `{type(params.get("parameters", None))}` expected `list[str] | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("date", False) is None:
+        raise StyxValidationError("`date` must not be None")
+    if not isinstance(params["date"], bool):
+        raise StyxValidationError(f'`date` has the wrong type: Received `{type(params.get("date", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("help_short", False) is None:
+        raise StyxValidationError("`help_short` must not be None")
+    if not isinstance(params["help_short"], bool):
+        raise StyxValidationError(f'`help_short` has the wrong type: Received `{type(params.get("help_short", False))}` expected `bool`')
+    if params.get("help_view", False) is None:
+        raise StyxValidationError("`help_view` must not be None")
+    if not isinstance(params["help_view"], bool):
+        raise StyxValidationError(f'`help_view` has the wrong type: Received `{type(params.get("help_view", False))}` expected `bool`')
+
+
 def fat_mat_tableize_py_cargs(
     params: FatMatTableizePyParameters,
     execution: Execution,
@@ -200,6 +257,7 @@ def fat_mat_tableize_py_execute(
     Returns:
         NamedTuple of outputs (described in `FatMatTableizePyOutputs`).
     """
+    fat_mat_tableize_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_MAT_TABLEIZE_PY_METADATA)
     params = execution.params(params)

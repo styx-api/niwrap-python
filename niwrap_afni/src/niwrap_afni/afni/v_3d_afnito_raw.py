@@ -63,6 +63,31 @@ def v_3d_afnito_raw_params(
     return params
 
 
+def v_3d_afnito_raw_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAfnitoRawParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("force_float", False) is None:
+        raise StyxValidationError("`force_float` must not be None")
+    if not isinstance(params["force_float"], bool):
+        raise StyxValidationError(f'`force_float` has the wrong type: Received `{type(params.get("force_float", False))}` expected `bool`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], str):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `str`')
+
+
 def v_3d_afnito_raw_cargs(
     params: V3dAfnitoRawParameters,
     execution: Execution,
@@ -128,6 +153,7 @@ def v_3d_afnito_raw_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoRawOutputs`).
     """
+    v_3d_afnito_raw_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AFNITO_RAW_METADATA)
     params = execution.params(params)

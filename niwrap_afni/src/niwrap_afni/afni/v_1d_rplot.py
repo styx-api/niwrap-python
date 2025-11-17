@@ -160,6 +160,102 @@ def v_1d_rplot_params(
     return params
 
 
+def v_1d_rplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dRplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("save_size", None) is not None:
+        if not isinstance(params["save_size"], list):
+            raise StyxValidationError(f'`save_size` has the wrong type: Received `{type(params.get("save_size", None))}` expected `list[float] | None`')
+        if len(params["save_size"]) == 2:
+            raise StyxValidationError("Parameter `save_size` must contain exactly 2 elements")
+        for e in params["save_size"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`save_size` has the wrong type: Received `{type(params.get("save_size", None))}` expected `list[float] | None`')
+    if params.get("TR", None) is not None:
+        if not isinstance(params["TR"], (float, int)):
+            raise StyxValidationError(f'`TR` has the wrong type: Received `{type(params.get("TR", None))}` expected `float | None`')
+    if params.get("title", None) is not None:
+        if not isinstance(params["title"], str):
+            raise StyxValidationError(f'`title` has the wrong type: Received `{type(params.get("title", None))}` expected `str | None`')
+    if params.get("input_type", None) is not None:
+        if not isinstance(params["input_type"], str):
+            raise StyxValidationError(f'`input_type` has the wrong type: Received `{type(params.get("input_type", None))}` expected `typing.Literal["VOLREG", "XMAT"] | None`')
+        if params["input_type"] not in ["VOLREG", "XMAT"]:
+            raise StyxValidationError("Parameter `input_type` must be one of [\"VOLREG\", \"XMAT\"]")
+    if params.get("legend_font_size", None) is not None:
+        if not isinstance(params["legend_font_size"], (float, int)):
+            raise StyxValidationError(f'`legend_font_size` has the wrong type: Received `{type(params.get("legend_font_size", None))}` expected `float | None`')
+    if params.get("left_y_margin_text", None) is not None:
+        if not isinstance(params["left_y_margin_text"], str):
+            raise StyxValidationError(f'`left_y_margin_text` has the wrong type: Received `{type(params.get("left_y_margin_text", None))}` expected `str | None`')
+    if params.get("right_y_margin_text", None) is not None:
+        if not isinstance(params["right_y_margin_text"], str):
+            raise StyxValidationError(f'`right_y_margin_text` has the wrong type: Received `{type(params.get("right_y_margin_text", None))}` expected `str | None`')
+    if params.get("x_axis_label", None) is not None:
+        if not isinstance(params["x_axis_label"], str):
+            raise StyxValidationError(f'`x_axis_label` has the wrong type: Received `{type(params.get("x_axis_label", None))}` expected `str | None`')
+    if params.get("y_axis_label", None) is not None:
+        if not isinstance(params["y_axis_label"], str):
+            raise StyxValidationError(f'`y_axis_label` has the wrong type: Received `{type(params.get("y_axis_label", None))}` expected `str | None`')
+    if params.get("x_axis_range", None) is not None:
+        if not isinstance(params["x_axis_range"], list):
+            raise StyxValidationError(f'`x_axis_range` has the wrong type: Received `{type(params.get("x_axis_range", None))}` expected `list[float] | None`')
+        for e in params["x_axis_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`x_axis_range` has the wrong type: Received `{type(params.get("x_axis_range", None))}` expected `list[float] | None`')
+    if params.get("y_axis_range", None) is not None:
+        if not isinstance(params["y_axis_range"], list):
+            raise StyxValidationError(f'`y_axis_range` has the wrong type: Received `{type(params.get("y_axis_range", None))}` expected `list[float] | None`')
+        for e in params["y_axis_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`y_axis_range` has the wrong type: Received `{type(params.get("y_axis_range", None))}` expected `list[float] | None`')
+    if params.get("plot_char", None) is not None:
+        if not isinstance(params["plot_char"], list):
+            raise StyxValidationError(f'`plot_char` has the wrong type: Received `{type(params.get("plot_char", None))}` expected `list[str] | None`')
+        for e in params["plot_char"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`plot_char` has the wrong type: Received `{type(params.get("plot_char", None))}` expected `list[str] | None`')
+    if params.get("group_labels", None) is not None:
+        if not isinstance(params["group_labels"], list):
+            raise StyxValidationError(f'`group_labels` has the wrong type: Received `{type(params.get("group_labels", None))}` expected `list[str] | None`')
+        for e in params["group_labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`group_labels` has the wrong type: Received `{type(params.get("group_labels", None))}` expected `list[str] | None`')
+    if params.get("legend_show", False) is None:
+        raise StyxValidationError("`legend_show` must not be None")
+    if not isinstance(params["legend_show"], bool):
+        raise StyxValidationError(f'`legend_show` has the wrong type: Received `{type(params.get("legend_show", False))}` expected `bool`')
+    if params.get("legend_position", None) is not None:
+        if not isinstance(params["legend_position"], str):
+            raise StyxValidationError(f'`legend_position` has the wrong type: Received `{type(params.get("legend_position", None))}` expected `typing.Literal["bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"] | None`')
+        if params["legend_position"] not in ["bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"]:
+            raise StyxValidationError("Parameter `legend_position` must be one of [\"bottomright\", \"bottom\", \"bottomleft\", \"left\", \"topleft\", \"top\", \"topright\", \"right\", \"center\"]")
+    if params.get("save_plot", False) is None:
+        raise StyxValidationError("`save_plot` must not be None")
+    if not isinstance(params["save_plot"], bool):
+        raise StyxValidationError(f'`save_plot` has the wrong type: Received `{type(params.get("save_plot", False))}` expected `bool`')
+    if params.get("column_name_show", False) is None:
+        raise StyxValidationError("`column_name_show` must not be None")
+    if not isinstance(params["column_name_show"], bool):
+        raise StyxValidationError(f'`column_name_show` has the wrong type: Received `{type(params.get("column_name_show", False))}` expected `bool`')
+
+
 def v_1d_rplot_cargs(
     params: V1dRplotParameters,
     execution: Execution,
@@ -302,6 +398,7 @@ def v_1d_rplot_execute(
     Returns:
         NamedTuple of outputs (described in `V1dRplotOutputs`).
     """
+    v_1d_rplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_RPLOT_METADATA)
     params = execution.params(params)

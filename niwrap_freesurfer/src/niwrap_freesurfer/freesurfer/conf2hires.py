@@ -159,6 +159,99 @@ def conf2hires_params(
     return params
 
 
+def conf2hires_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Conf2hiresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("t2", False) is None:
+        raise StyxValidationError("`t2` must not be None")
+    if not isinstance(params["t2"], bool):
+        raise StyxValidationError(f'`t2` has the wrong type: Received `{type(params.get("t2", False))}` expected `bool`')
+    if params.get("no_t2", False) is None:
+        raise StyxValidationError("`no_t2` must not be None")
+    if not isinstance(params["no_t2"], bool):
+        raise StyxValidationError(f'`no_t2` has the wrong type: Received `{type(params.get("no_t2", False))}` expected `bool`')
+    if params.get("mm_norm_sigma", None) is not None:
+        if not isinstance(params["mm_norm_sigma"], (float, int)):
+            raise StyxValidationError(f'`mm_norm_sigma` has the wrong type: Received `{type(params.get("mm_norm_sigma", None))}` expected `float | None`')
+    if params.get("flair", False) is None:
+        raise StyxValidationError("`flair` must not be None")
+    if not isinstance(params["flair"], bool):
+        raise StyxValidationError(f'`flair` has the wrong type: Received `{type(params.get("flair", False))}` expected `bool`')
+    if params.get("no_flair", False) is None:
+        raise StyxValidationError("`no_flair` must not be None")
+    if not isinstance(params["no_flair"], bool):
+        raise StyxValidationError(f'`no_flair` has the wrong type: Received `{type(params.get("no_flair", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("copy_bias_from_conf", False) is None:
+        raise StyxValidationError("`copy_bias_from_conf` must not be None")
+    if not isinstance(params["copy_bias_from_conf"], bool):
+        raise StyxValidationError(f'`copy_bias_from_conf` has the wrong type: Received `{type(params.get("copy_bias_from_conf", False))}` expected `bool`')
+    if params.get("norm_opts_rca", False) is None:
+        raise StyxValidationError("`norm_opts_rca` must not be None")
+    if not isinstance(params["norm_opts_rca"], bool):
+        raise StyxValidationError(f'`norm_opts_rca` has the wrong type: Received `{type(params.get("norm_opts_rca", False))}` expected `bool`')
+    if params.get("cubic", False) is None:
+        raise StyxValidationError("`cubic` must not be None")
+    if not isinstance(params["cubic"], bool):
+        raise StyxValidationError(f'`cubic` has the wrong type: Received `{type(params.get("cubic", False))}` expected `bool`')
+    if params.get("trilin", False) is None:
+        raise StyxValidationError("`trilin` must not be None")
+    if not isinstance(params["trilin"], bool):
+        raise StyxValidationError(f'`trilin` has the wrong type: Received `{type(params.get("trilin", False))}` expected `bool`')
+    if params.get("dev", False) is None:
+        raise StyxValidationError("`dev` must not be None")
+    if not isinstance(params["dev"], bool):
+        raise StyxValidationError(f'`dev` has the wrong type: Received `{type(params.get("dev", False))}` expected `bool`')
+    if params.get("no_dev", False) is None:
+        raise StyxValidationError("`no_dev` must not be None")
+    if not isinstance(params["no_dev"], bool):
+        raise StyxValidationError(f'`no_dev` has the wrong type: Received `{type(params.get("no_dev", False))}` expected `bool`')
+    if params.get("bbr_con", None) is not None:
+        if not isinstance(params["bbr_con"], str):
+            raise StyxValidationError(f'`bbr_con` has the wrong type: Received `{type(params.get("bbr_con", None))}` expected `str | None`')
+    if params.get("bbr_t1", False) is None:
+        raise StyxValidationError("`bbr_t1` must not be None")
+    if not isinstance(params["bbr_t1"], bool):
+        raise StyxValidationError(f'`bbr_t1` has the wrong type: Received `{type(params.get("bbr_t1", False))}` expected `bool`')
+    if params.get("bbr_t2", False) is None:
+        raise StyxValidationError("`bbr_t2` must not be None")
+    if not isinstance(params["bbr_t2"], bool):
+        raise StyxValidationError(f'`bbr_t2` has the wrong type: Received `{type(params.get("bbr_t2", False))}` expected `bool`')
+    if params.get("first_peak_d1", False) is None:
+        raise StyxValidationError("`first_peak_d1` must not be None")
+    if not isinstance(params["first_peak_d1"], bool):
+        raise StyxValidationError(f'`first_peak_d1` has the wrong type: Received `{type(params.get("first_peak_d1", False))}` expected `bool`')
+    if params.get("first_peak_d2", False) is None:
+        raise StyxValidationError("`first_peak_d2` must not be None")
+    if not isinstance(params["first_peak_d2"], bool):
+        raise StyxValidationError(f'`first_peak_d2` has the wrong type: Received `{type(params.get("first_peak_d2", False))}` expected `bool`')
+    if params.get("stopmask", None) is not None:
+        if not isinstance(params["stopmask"], str):
+            raise StyxValidationError(f'`stopmask` has the wrong type: Received `{type(params.get("stopmask", None))}` expected `str | None`')
+    if params.get("expert", None) is not None:
+        if not isinstance(params["expert"], str):
+            raise StyxValidationError(f'`expert` has the wrong type: Received `{type(params.get("expert", None))}` expected `str | None`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+
+
 def conf2hires_cargs(
     params: Conf2hiresParameters,
     execution: Execution,
@@ -275,6 +368,7 @@ def conf2hires_execute(
     Returns:
         NamedTuple of outputs (described in `Conf2hiresOutputs`).
     """
+    conf2hires_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONF2HIRES_METADATA)
     params = execution.params(params)

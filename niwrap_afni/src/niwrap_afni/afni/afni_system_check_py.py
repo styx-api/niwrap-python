@@ -99,6 +99,55 @@ def afni_system_check_py_params(
     return params
 
 
+def afni_system_check_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AfniSystemCheckPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("check_all", False) is None:
+        raise StyxValidationError("`check_all` must not be None")
+    if not isinstance(params["check_all"], bool):
+        raise StyxValidationError(f'`check_all` has the wrong type: Received `{type(params.get("check_all", False))}` expected `bool`')
+    if params.get("find_prog", None) is not None:
+        if not isinstance(params["find_prog"], str):
+            raise StyxValidationError(f'`find_prog` has the wrong type: Received `{type(params.get("find_prog", None))}` expected `str | None`')
+    if params.get("exact", None) is not None:
+        if not isinstance(params["exact"], str):
+            raise StyxValidationError(f'`exact` has the wrong type: Received `{type(params.get("exact", None))}` expected `str | None`')
+    if params.get("disp_num_cpu", False) is None:
+        raise StyxValidationError("`disp_num_cpu` must not be None")
+    if not isinstance(params["disp_num_cpu"], bool):
+        raise StyxValidationError(f'`disp_num_cpu` has the wrong type: Received `{type(params.get("disp_num_cpu", False))}` expected `bool`')
+    if params.get("disp_ver_matplotlib", False) is None:
+        raise StyxValidationError("`disp_ver_matplotlib` must not be None")
+    if not isinstance(params["disp_ver_matplotlib"], bool):
+        raise StyxValidationError(f'`disp_ver_matplotlib` has the wrong type: Received `{type(params.get("disp_ver_matplotlib", False))}` expected `bool`')
+    if params.get("dot_file_list", False) is None:
+        raise StyxValidationError("`dot_file_list` must not be None")
+    if not isinstance(params["dot_file_list"], bool):
+        raise StyxValidationError(f'`dot_file_list` has the wrong type: Received `{type(params.get("dot_file_list", False))}` expected `bool`')
+    if params.get("dot_file_show", False) is None:
+        raise StyxValidationError("`dot_file_show` must not be None")
+    if not isinstance(params["dot_file_show"], bool):
+        raise StyxValidationError(f'`dot_file_show` has the wrong type: Received `{type(params.get("dot_file_show", False))}` expected `bool`')
+    if params.get("dot_file_pack", None) is not None:
+        if not isinstance(params["dot_file_pack"], str):
+            raise StyxValidationError(f'`dot_file_pack` has the wrong type: Received `{type(params.get("dot_file_pack", None))}` expected `str | None`')
+    if params.get("casematch", None) is not None:
+        if not isinstance(params["casematch"], str):
+            raise StyxValidationError(f'`casematch` has the wrong type: Received `{type(params.get("casematch", None))}` expected `str | None`')
+    if params.get("data_root", None) is not None:
+        if not isinstance(params["data_root"], str):
+            raise StyxValidationError(f'`data_root` has the wrong type: Received `{type(params.get("data_root", None))}` expected `str | None`')
+
+
 def afni_system_check_py_cargs(
     params: AfniSystemCheckPyParameters,
     execution: Execution,
@@ -190,6 +239,7 @@ def afni_system_check_py_execute(
     Returns:
         NamedTuple of outputs (described in `AfniSystemCheckPyOutputs`).
     """
+    afni_system_check_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_SYSTEM_CHECK_PY_METADATA)
     params = execution.params(params)

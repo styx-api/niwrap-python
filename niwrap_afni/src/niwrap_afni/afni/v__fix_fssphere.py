@@ -79,6 +79,42 @@ def v__fix_fssphere_params(
     return params
 
 
+def v__fix_fssphere_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VFixFssphereParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("sphere_file", None) is None:
+        raise StyxValidationError("`sphere_file` must not be None")
+    if not isinstance(params["sphere_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sphere_file` has the wrong type: Received `{type(params.get("sphere_file", None))}` expected `InputPathType`')
+    if params.get("num_iterations", None) is not None:
+        if not isinstance(params["num_iterations"], int):
+            raise StyxValidationError(f'`num_iterations` has the wrong type: Received `{type(params.get("num_iterations", None))}` expected `int | None`')
+    if params.get("extent_lim", None) is not None:
+        if not isinstance(params["extent_lim"], (float, int)):
+            raise StyxValidationError(f'`extent_lim` has the wrong type: Received `{type(params.get("extent_lim", None))}` expected `float | None`')
+    if params.get("project_first", False) is None:
+        raise StyxValidationError("`project_first` must not be None")
+    if not isinstance(params["project_first"], bool):
+        raise StyxValidationError(f'`project_first` has the wrong type: Received `{type(params.get("project_first", False))}` expected `bool`')
+    if params.get("keep_temp", False) is None:
+        raise StyxValidationError("`keep_temp` must not be None")
+    if not isinstance(params["keep_temp"], bool):
+        raise StyxValidationError(f'`keep_temp` has the wrong type: Received `{type(params.get("keep_temp", False))}` expected `bool`')
+
+
 def v__fix_fssphere_cargs(
     params: VFixFssphereParameters,
     execution: Execution,
@@ -158,6 +194,7 @@ def v__fix_fssphere_execute(
     Returns:
         NamedTuple of outputs (described in `VFixFssphereOutputs`).
     """
+    v__fix_fssphere_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__FIX_FSSPHERE_METADATA)
     params = execution.params(params)

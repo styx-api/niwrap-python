@@ -135,6 +135,67 @@ def v_3d_allineate_params(
     return params
 
 
+def v_3d_allineate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAllineateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source", None) is None:
+        raise StyxValidationError("`source` must not be None")
+    if not isinstance(params["source"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `InputPathType`')
+    if params.get("base", None) is not None:
+        if not isinstance(params["base"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("param_save", None) is not None:
+        if not isinstance(params["param_save"], str):
+            raise StyxValidationError(f'`param_save` has the wrong type: Received `{type(params.get("param_save", None))}` expected `str | None`')
+    if params.get("param_apply", None) is not None:
+        if not isinstance(params["param_apply"], str):
+            raise StyxValidationError(f'`param_apply` has the wrong type: Received `{type(params.get("param_apply", None))}` expected `str | None`')
+    if params.get("matrix_save", None) is not None:
+        if not isinstance(params["matrix_save"], str):
+            raise StyxValidationError(f'`matrix_save` has the wrong type: Received `{type(params.get("matrix_save", None))}` expected `str | None`')
+    if params.get("matrix_apply", None) is not None:
+        if not isinstance(params["matrix_apply"], str):
+            raise StyxValidationError(f'`matrix_apply` has the wrong type: Received `{type(params.get("matrix_apply", None))}` expected `str | None`')
+    if params.get("cost", None) is not None:
+        if not isinstance(params["cost"], str):
+            raise StyxValidationError(f'`cost` has the wrong type: Received `{type(params.get("cost", None))}` expected `str | None`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `str | None`')
+    if params.get("final", None) is not None:
+        if not isinstance(params["final"], str):
+            raise StyxValidationError(f'`final` has the wrong type: Received `{type(params.get("final", None))}` expected `str | None`')
+    if params.get("nmatch", None) is not None:
+        if not isinstance(params["nmatch"], (float, int)):
+            raise StyxValidationError(f'`nmatch` has the wrong type: Received `{type(params.get("nmatch", None))}` expected `float | None`')
+    if params.get("nopad", False) is None:
+        raise StyxValidationError("`nopad` must not be None")
+    if not isinstance(params["nopad"], bool):
+        raise StyxValidationError(f'`nopad` has the wrong type: Received `{type(params.get("nopad", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3d_allineate_cargs(
     params: V3dAllineateParameters,
     execution: Execution,
@@ -252,6 +313,7 @@ def v_3d_allineate_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAllineateOutputs`).
     """
+    v_3d_allineate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ALLINEATE_METADATA)
     params = execution.params(params)

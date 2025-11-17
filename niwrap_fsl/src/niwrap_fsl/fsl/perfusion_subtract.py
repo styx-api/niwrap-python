@@ -63,6 +63,32 @@ def perfusion_subtract_params(
     return params
 
 
+def perfusion_subtract_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PerfusionSubtractParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("four_d_input", None) is None:
+        raise StyxValidationError("`four_d_input` must not be None")
+    if not isinstance(params["four_d_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`four_d_input` has the wrong type: Received `{type(params.get("four_d_input", None))}` expected `InputPathType`')
+    if params.get("four_d_output", None) is None:
+        raise StyxValidationError("`four_d_output` must not be None")
+    if not isinstance(params["four_d_output"], str):
+        raise StyxValidationError(f'`four_d_output` has the wrong type: Received `{type(params.get("four_d_output", None))}` expected `str`')
+    if params.get("control_first_flag", False) is None:
+        raise StyxValidationError("`control_first_flag` must not be None")
+    if not isinstance(params["control_first_flag"], bool):
+        raise StyxValidationError(f'`control_first_flag` has the wrong type: Received `{type(params.get("control_first_flag", False))}` expected `bool`')
+
+
 def perfusion_subtract_cargs(
     params: PerfusionSubtractParameters,
     execution: Execution,
@@ -124,6 +150,7 @@ def perfusion_subtract_execute(
     Returns:
         NamedTuple of outputs (described in `PerfusionSubtractOutputs`).
     """
+    perfusion_subtract_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PERFUSION_SUBTRACT_METADATA)
     params = execution.params(params)

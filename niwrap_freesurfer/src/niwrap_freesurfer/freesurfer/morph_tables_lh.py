@@ -57,6 +57,28 @@ def morph_tables_lh_params(
     return params
 
 
+def morph_tables_lh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MorphTablesLhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("some_flag", False) is None:
+        raise StyxValidationError("`some_flag` must not be None")
+    if not isinstance(params["some_flag"], bool):
+        raise StyxValidationError(f'`some_flag` has the wrong type: Received `{type(params.get("some_flag", False))}` expected `bool`')
+
+
 def morph_tables_lh_cargs(
     params: MorphTablesLhParameters,
     execution: Execution,
@@ -120,6 +142,7 @@ def morph_tables_lh_execute(
     Returns:
         NamedTuple of outputs (described in `MorphTablesLhOutputs`).
     """
+    morph_tables_lh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MORPH_TABLES_LH_METADATA)
     params = execution.params(params)

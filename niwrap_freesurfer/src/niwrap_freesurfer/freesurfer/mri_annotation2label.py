@@ -157,6 +157,81 @@ def mri_annotation2label_params(
     return params
 
 
+def mri_annotation2label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriAnnotation2labelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("lobes", None) is not None:
+        if not isinstance(params["lobes"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lobes` has the wrong type: Received `{type(params.get("lobes", None))}` expected `InputPathType | None`')
+    if params.get("lobes_strict", None) is not None:
+        if not isinstance(params["lobes_strict"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lobes_strict` has the wrong type: Received `{type(params.get("lobes_strict", None))}` expected `InputPathType | None`')
+    if params.get("lobes_strict_phcg", None) is not None:
+        if not isinstance(params["lobes_strict_phcg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lobes_strict_phcg` has the wrong type: Received `{type(params.get("lobes_strict_phcg", None))}` expected `InputPathType | None`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], (float, int)):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `float | None`')
+    if params.get("labelbase", None) is not None:
+        if not isinstance(params["labelbase"], str):
+            raise StyxValidationError(f'`labelbase` has the wrong type: Received `{type(params.get("labelbase", None))}` expected `str | None`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+    if params.get("seg", None) is not None:
+        if not isinstance(params["seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg` has the wrong type: Received `{type(params.get("seg", None))}` expected `InputPathType | None`')
+    if params.get("segbase", None) is not None:
+        if not isinstance(params["segbase"], (float, int)):
+            raise StyxValidationError(f'`segbase` has the wrong type: Received `{type(params.get("segbase", None))}` expected `float | None`')
+    if params.get("ctab", None) is not None:
+        if not isinstance(params["ctab"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab` has the wrong type: Received `{type(params.get("ctab", None))}` expected `InputPathType | None`')
+    if params.get("border", None) is not None:
+        if not isinstance(params["border"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `InputPathType | None`')
+    if params.get("border_annot", None) is not None:
+        if not isinstance(params["border_annot"], str):
+            raise StyxValidationError(f'`border_annot` has the wrong type: Received `{type(params.get("border_annot", None))}` expected `str | None`')
+    if params.get("annotation", None) is not None:
+        if not isinstance(params["annotation"], str):
+            raise StyxValidationError(f'`annotation` has the wrong type: Received `{type(params.get("annotation", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], str):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str | None`')
+    if params.get("stat", None) is not None:
+        if not isinstance(params["stat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`stat` has the wrong type: Received `{type(params.get("stat", None))}` expected `InputPathType | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_annotation2label_cargs(
     params: MriAnnotation2labelParameters,
     execution: Execution,
@@ -301,6 +376,7 @@ def mri_annotation2label_execute(
     Returns:
         NamedTuple of outputs (described in `MriAnnotation2labelOutputs`).
     """
+    mri_annotation2label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_ANNOTATION2LABEL_METADATA)
     params = execution.params(params)

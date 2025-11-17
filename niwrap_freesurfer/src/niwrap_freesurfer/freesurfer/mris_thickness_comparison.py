@@ -69,6 +69,43 @@ def mris_thickness_comparison_params(
     return params
 
 
+def mris_thickness_comparison_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisThicknessComparisonParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("thickness_file", None) is None:
+        raise StyxValidationError("`thickness_file` must not be None")
+    if not isinstance(params["thickness_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`thickness_file` has the wrong type: Received `{type(params.get("thickness_file", None))}` expected `InputPathType`')
+    if params.get("w_file", None) is None:
+        raise StyxValidationError("`w_file` must not be None")
+    if not isinstance(params["w_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`w_file` has the wrong type: Received `{type(params.get("w_file", None))}` expected `InputPathType`')
+    if params.get("labels", None) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], list):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    for e in params["labels"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+
+
 def mris_thickness_comparison_cargs(
     params: MrisThicknessComparisonParameters,
     execution: Execution,
@@ -131,6 +168,7 @@ def mris_thickness_comparison_execute(
     Returns:
         NamedTuple of outputs (described in `MrisThicknessComparisonOutputs`).
     """
+    mris_thickness_comparison_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_THICKNESS_COMPARISON_METADATA)
     params = execution.params(params)

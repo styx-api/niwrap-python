@@ -85,6 +85,44 @@ def v_3d_notes_params(
     return params
 
 
+def v_3d_notes_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNotesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("add_note", None) is not None:
+        if not isinstance(params["add_note"], str):
+            raise StyxValidationError(f'`add_note` has the wrong type: Received `{type(params.get("add_note", None))}` expected `str | None`')
+    if params.get("append_history", None) is not None:
+        if not isinstance(params["append_history"], str):
+            raise StyxValidationError(f'`append_history` has the wrong type: Received `{type(params.get("append_history", None))}` expected `str | None`')
+    if params.get("replace_history", None) is not None:
+        if not isinstance(params["replace_history"], str):
+            raise StyxValidationError(f'`replace_history` has the wrong type: Received `{type(params.get("replace_history", None))}` expected `str | None`')
+    if params.get("delete_note", None) is not None:
+        if not isinstance(params["delete_note"], (float, int)):
+            raise StyxValidationError(f'`delete_note` has the wrong type: Received `{type(params.get("delete_note", None))}` expected `float | None`')
+    if params.get("print_notes", False) is None:
+        raise StyxValidationError("`print_notes` must not be None")
+    if not isinstance(params["print_notes"], bool):
+        raise StyxValidationError(f'`print_notes` has the wrong type: Received `{type(params.get("print_notes", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_notes_cargs(
     params: V3dNotesParameters,
     execution: Execution,
@@ -166,6 +204,7 @@ def v_3d_notes_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNotesOutputs`).
     """
+    v_3d_notes_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NOTES_METADATA)
     params = execution.params(params)

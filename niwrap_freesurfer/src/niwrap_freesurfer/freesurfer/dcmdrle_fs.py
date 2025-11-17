@@ -210,6 +210,145 @@ def dcmdrle_fs_params(
     return params
 
 
+def dcmdrle_fs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DcmdrleFsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("arguments", False) is None:
+        raise StyxValidationError("`arguments` must not be None")
+    if not isinstance(params["arguments"], bool):
+        raise StyxValidationError(f'`arguments` has the wrong type: Received `{type(params.get("arguments", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("log_level", None) is not None:
+        if not isinstance(params["log_level"], str):
+            raise StyxValidationError(f'`log_level` has the wrong type: Received `{type(params.get("log_level", None))}` expected `str | None`')
+    if params.get("log_config", None) is not None:
+        if not isinstance(params["log_config"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`log_config` has the wrong type: Received `{type(params.get("log_config", None))}` expected `InputPathType | None`')
+    if params.get("read_file", False) is None:
+        raise StyxValidationError("`read_file` must not be None")
+    if not isinstance(params["read_file"], bool):
+        raise StyxValidationError(f'`read_file` has the wrong type: Received `{type(params.get("read_file", False))}` expected `bool`')
+    if params.get("read_file_only", False) is None:
+        raise StyxValidationError("`read_file_only` must not be None")
+    if not isinstance(params["read_file_only"], bool):
+        raise StyxValidationError(f'`read_file_only` has the wrong type: Received `{type(params.get("read_file_only", False))}` expected `bool`')
+    if params.get("read_dataset", False) is None:
+        raise StyxValidationError("`read_dataset` must not be None")
+    if not isinstance(params["read_dataset"], bool):
+        raise StyxValidationError(f'`read_dataset` has the wrong type: Received `{type(params.get("read_dataset", False))}` expected `bool`')
+    if params.get("uid_default", False) is None:
+        raise StyxValidationError("`uid_default` must not be None")
+    if not isinstance(params["uid_default"], bool):
+        raise StyxValidationError(f'`uid_default` has the wrong type: Received `{type(params.get("uid_default", False))}` expected `bool`')
+    if params.get("uid_always", False) is None:
+        raise StyxValidationError("`uid_always` must not be None")
+    if not isinstance(params["uid_always"], bool):
+        raise StyxValidationError(f'`uid_always` has the wrong type: Received `{type(params.get("uid_always", False))}` expected `bool`')
+    if params.get("byte_order_default", False) is None:
+        raise StyxValidationError("`byte_order_default` must not be None")
+    if not isinstance(params["byte_order_default"], bool):
+        raise StyxValidationError(f'`byte_order_default` has the wrong type: Received `{type(params.get("byte_order_default", False))}` expected `bool`')
+    if params.get("byte_order_reverse", False) is None:
+        raise StyxValidationError("`byte_order_reverse` must not be None")
+    if not isinstance(params["byte_order_reverse"], bool):
+        raise StyxValidationError(f'`byte_order_reverse` has the wrong type: Received `{type(params.get("byte_order_reverse", False))}` expected `bool`')
+    if params.get("write_file", False) is None:
+        raise StyxValidationError("`write_file` must not be None")
+    if not isinstance(params["write_file"], bool):
+        raise StyxValidationError(f'`write_file` has the wrong type: Received `{type(params.get("write_file", False))}` expected `bool`')
+    if params.get("write_dataset", False) is None:
+        raise StyxValidationError("`write_dataset` must not be None")
+    if not isinstance(params["write_dataset"], bool):
+        raise StyxValidationError(f'`write_dataset` has the wrong type: Received `{type(params.get("write_dataset", False))}` expected `bool`')
+    if params.get("write_xfer_little", False) is None:
+        raise StyxValidationError("`write_xfer_little` must not be None")
+    if not isinstance(params["write_xfer_little"], bool):
+        raise StyxValidationError(f'`write_xfer_little` has the wrong type: Received `{type(params.get("write_xfer_little", False))}` expected `bool`')
+    if params.get("write_xfer_big", False) is None:
+        raise StyxValidationError("`write_xfer_big` must not be None")
+    if not isinstance(params["write_xfer_big"], bool):
+        raise StyxValidationError(f'`write_xfer_big` has the wrong type: Received `{type(params.get("write_xfer_big", False))}` expected `bool`')
+    if params.get("write_xfer_implicit", False) is None:
+        raise StyxValidationError("`write_xfer_implicit` must not be None")
+    if not isinstance(params["write_xfer_implicit"], bool):
+        raise StyxValidationError(f'`write_xfer_implicit` has the wrong type: Received `{type(params.get("write_xfer_implicit", False))}` expected `bool`')
+    if params.get("enable_new_vr", False) is None:
+        raise StyxValidationError("`enable_new_vr` must not be None")
+    if not isinstance(params["enable_new_vr"], bool):
+        raise StyxValidationError(f'`enable_new_vr` has the wrong type: Received `{type(params.get("enable_new_vr", False))}` expected `bool`')
+    if params.get("disable_new_vr", False) is None:
+        raise StyxValidationError("`disable_new_vr` must not be None")
+    if not isinstance(params["disable_new_vr"], bool):
+        raise StyxValidationError(f'`disable_new_vr` has the wrong type: Received `{type(params.get("disable_new_vr", False))}` expected `bool`')
+    if params.get("group_length_recalc", False) is None:
+        raise StyxValidationError("`group_length_recalc` must not be None")
+    if not isinstance(params["group_length_recalc"], bool):
+        raise StyxValidationError(f'`group_length_recalc` has the wrong type: Received `{type(params.get("group_length_recalc", False))}` expected `bool`')
+    if params.get("group_length_create", False) is None:
+        raise StyxValidationError("`group_length_create` must not be None")
+    if not isinstance(params["group_length_create"], bool):
+        raise StyxValidationError(f'`group_length_create` has the wrong type: Received `{type(params.get("group_length_create", False))}` expected `bool`')
+    if params.get("group_length_remove", False) is None:
+        raise StyxValidationError("`group_length_remove` must not be None")
+    if not isinstance(params["group_length_remove"], bool):
+        raise StyxValidationError(f'`group_length_remove` has the wrong type: Received `{type(params.get("group_length_remove", False))}` expected `bool`')
+    if params.get("length_explicit", False) is None:
+        raise StyxValidationError("`length_explicit` must not be None")
+    if not isinstance(params["length_explicit"], bool):
+        raise StyxValidationError(f'`length_explicit` has the wrong type: Received `{type(params.get("length_explicit", False))}` expected `bool`')
+    if params.get("length_undefined", False) is None:
+        raise StyxValidationError("`length_undefined` must not be None")
+    if not isinstance(params["length_undefined"], bool):
+        raise StyxValidationError(f'`length_undefined` has the wrong type: Received `{type(params.get("length_undefined", False))}` expected `bool`')
+    if params.get("padding_retain", False) is None:
+        raise StyxValidationError("`padding_retain` must not be None")
+    if not isinstance(params["padding_retain"], bool):
+        raise StyxValidationError(f'`padding_retain` has the wrong type: Received `{type(params.get("padding_retain", False))}` expected `bool`')
+    if params.get("padding_off", False) is None:
+        raise StyxValidationError("`padding_off` must not be None")
+    if not isinstance(params["padding_off"], bool):
+        raise StyxValidationError(f'`padding_off` has the wrong type: Received `{type(params.get("padding_off", False))}` expected `bool`')
+    if params.get("padding_create", None) is not None:
+        if not isinstance(params["padding_create"], str):
+            raise StyxValidationError(f'`padding_create` has the wrong type: Received `{type(params.get("padding_create", None))}` expected `str | None`')
+
+
 def dcmdrle_fs_cargs(
     params: DcmdrleFsParameters,
     execution: Execution,
@@ -338,6 +477,7 @@ def dcmdrle_fs_execute(
     Returns:
         NamedTuple of outputs (described in `DcmdrleFsOutputs`).
     """
+    dcmdrle_fs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DCMDRLE_FS_METADATA)
     params = execution.params(params)

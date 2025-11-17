@@ -219,6 +219,125 @@ def drive_suma_params(
     return params
 
 
+def drive_suma_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DriveSumaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("command", None) is None:
+        raise StyxValidationError("`command` must not be None")
+    if not isinstance(params["command"], str):
+        raise StyxValidationError(f'`command` has the wrong type: Received `{type(params.get("command", None))}` expected `str`')
+    if params.get("surf_label", None) is not None:
+        if not isinstance(params["surf_label"], str):
+            raise StyxValidationError(f'`surf_label` has the wrong type: Received `{type(params.get("surf_label", None))}` expected `str | None`')
+    if params.get("surface_file", None) is not None:
+        if not isinstance(params["surface_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_file` has the wrong type: Received `{type(params.get("surface_file", None))}` expected `InputPathType | None`')
+    if params.get("surf_state", None) is not None:
+        if not isinstance(params["surf_state"], str):
+            raise StyxValidationError(f'`surf_state` has the wrong type: Received `{type(params.get("surf_state", None))}` expected `str | None`')
+    if params.get("surf_winding", None) is not None:
+        if not isinstance(params["surf_winding"], str):
+            raise StyxValidationError(f'`surf_winding` has the wrong type: Received `{type(params.get("surf_winding", None))}` expected `str | None`')
+    if params.get("coordinates", None) is not None:
+        if not isinstance(params["coordinates"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `InputPathType | None`')
+    if params.get("autorecord", None) is not None:
+        if not isinstance(params["autorecord"], str):
+            raise StyxValidationError(f'`autorecord` has the wrong type: Received `{type(params.get("autorecord", None))}` expected `str | None`')
+    if params.get("background_color", None) is not None:
+        if not isinstance(params["background_color"], str):
+            raise StyxValidationError(f'`background_color` has the wrong type: Received `{type(params.get("background_color", None))}` expected `str | None`')
+    if params.get("view_file", None) is not None:
+        if not isinstance(params["view_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`view_file` has the wrong type: Received `{type(params.get("view_file", None))}` expected `InputPathType | None`')
+    if params.get("do_file", None) is not None:
+        if not isinstance(params["do_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`do_file` has the wrong type: Received `{type(params.get("do_file", None))}` expected `InputPathType | None`')
+    if params.get("do_draw_mask", None) is not None:
+        if not isinstance(params["do_draw_mask"], str):
+            raise StyxValidationError(f'`do_draw_mask` has the wrong type: Received `{type(params.get("do_draw_mask", None))}` expected `str | None`')
+    if params.get("fixed_do", None) is not None:
+        if not isinstance(params["fixed_do"], str):
+            raise StyxValidationError(f'`fixed_do` has the wrong type: Received `{type(params.get("fixed_do", None))}` expected `str | None`')
+    if params.get("mobile_do", None) is not None:
+        if not isinstance(params["mobile_do"], str):
+            raise StyxValidationError(f'`mobile_do` has the wrong type: Received `{type(params.get("mobile_do", None))}` expected `str | None`')
+    if params.get("key_press", None) is not None:
+        if not isinstance(params["key_press"], str):
+            raise StyxValidationError(f'`key_press` has the wrong type: Received `{type(params.get("key_press", None))}` expected `str | None`')
+    if params.get("viewer", None) is not None:
+        if not isinstance(params["viewer"], str):
+            raise StyxValidationError(f'`viewer` has the wrong type: Received `{type(params.get("viewer", None))}` expected `str | None`')
+    if params.get("anim_dup", None) is not None:
+        if not isinstance(params["anim_dup"], (float, int)):
+            raise StyxValidationError(f'`anim_dup` has the wrong type: Received `{type(params.get("anim_dup", None))}` expected `float | None`')
+    if params.get("save_as", None) is not None:
+        if not isinstance(params["save_as"], str):
+            raise StyxValidationError(f'`save_as` has the wrong type: Received `{type(params.get("save_as", None))}` expected `str | None`')
+    if params.get("save_index", None) is not None:
+        if not isinstance(params["save_index"], (float, int)):
+            raise StyxValidationError(f'`save_index` has the wrong type: Received `{type(params.get("save_index", None))}` expected `float | None`')
+    if params.get("save_range", None) is not None:
+        if not isinstance(params["save_range"], str):
+            raise StyxValidationError(f'`save_range` has the wrong type: Received `{type(params.get("save_range", None))}` expected `str | None`')
+    if params.get("save_last", False) is None:
+        raise StyxValidationError("`save_last` must not be None")
+    if not isinstance(params["save_last"], bool):
+        raise StyxValidationError(f'`save_last` has the wrong type: Received `{type(params.get("save_last", False))}` expected `bool`')
+    if params.get("save_last_n", None) is not None:
+        if not isinstance(params["save_last_n"], (float, int)):
+            raise StyxValidationError(f'`save_last_n` has the wrong type: Received `{type(params.get("save_last_n", None))}` expected `float | None`')
+    if params.get("save_all", False) is None:
+        raise StyxValidationError("`save_all` must not be None")
+    if not isinstance(params["save_all"], bool):
+        raise StyxValidationError(f'`save_all` has the wrong type: Received `{type(params.get("save_all", False))}` expected `bool`')
+    if params.get("echo_edu", False) is None:
+        raise StyxValidationError("`echo_edu` must not be None")
+    if not isinstance(params["echo_edu"], bool):
+        raise StyxValidationError(f'`echo_edu` has the wrong type: Received `{type(params.get("echo_edu", False))}` expected `bool`')
+    if params.get("echo_nel_stdout", False) is None:
+        raise StyxValidationError("`echo_nel_stdout` must not be None")
+    if not isinstance(params["echo_nel_stdout"], bool):
+        raise StyxValidationError(f'`echo_nel_stdout` has the wrong type: Received `{type(params.get("echo_nel_stdout", False))}` expected `bool`')
+    if params.get("echo_nel_stderr", False) is None:
+        raise StyxValidationError("`echo_nel_stderr` must not be None")
+    if not isinstance(params["echo_nel_stderr"], bool):
+        raise StyxValidationError(f'`echo_nel_stderr` has the wrong type: Received `{type(params.get("echo_nel_stderr", False))}` expected `bool`')
+    if params.get("examples", False) is None:
+        raise StyxValidationError("`examples` must not be None")
+    if not isinstance(params["examples"], bool):
+        raise StyxValidationError(f'`examples` has the wrong type: Received `{type(params.get("examples", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("h", False) is None:
+        raise StyxValidationError("`h` must not be None")
+    if not isinstance(params["h"], bool):
+        raise StyxValidationError(f'`h` has the wrong type: Received `{type(params.get("h", False))}` expected `bool`')
+    if params.get("help_nido", False) is None:
+        raise StyxValidationError("`help_nido` must not be None")
+    if not isinstance(params["help_nido"], bool):
+        raise StyxValidationError(f'`help_nido` has the wrong type: Received `{type(params.get("help_nido", False))}` expected `bool`')
+    if params.get("c_demo", False) is None:
+        raise StyxValidationError("`c_demo` must not be None")
+    if not isinstance(params["c_demo"], bool):
+        raise StyxValidationError(f'`c_demo` has the wrong type: Received `{type(params.get("c_demo", False))}` expected `bool`')
+    if params.get("viewer_cont", False) is None:
+        raise StyxValidationError("`viewer_cont` must not be None")
+    if not isinstance(params["viewer_cont"], bool):
+        raise StyxValidationError(f'`viewer_cont` has the wrong type: Received `{type(params.get("viewer_cont", False))}` expected `bool`')
+
+
 def drive_suma_cargs(
     params: DriveSumaParameters,
     execution: Execution,
@@ -393,6 +512,7 @@ def drive_suma_execute(
     Returns:
         NamedTuple of outputs (described in `DriveSumaOutputs`).
     """
+    drive_suma_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DRIVE_SUMA_METADATA)
     params = execution.params(params)

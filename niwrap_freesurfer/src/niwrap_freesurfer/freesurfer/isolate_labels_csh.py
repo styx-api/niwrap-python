@@ -83,6 +83,46 @@ def isolate_labels_csh_params(
     return params
 
 
+def isolate_labels_csh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `IsolateLabelsCshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label_volume", None) is None:
+        raise StyxValidationError("`label_volume` must not be None")
+    if not isinstance(params["label_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_volume` has the wrong type: Received `{type(params.get("label_volume", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("label_option", None) is not None:
+        if not isinstance(params["label_option"], str):
+            raise StyxValidationError(f'`label_option` has the wrong type: Received `{type(params.get("label_option", None))}` expected `str | None`')
+    if params.get("lowercase_label_option", None) is not None:
+        if not isinstance(params["lowercase_label_option"], str):
+            raise StyxValidationError(f'`lowercase_label_option` has the wrong type: Received `{type(params.get("lowercase_label_option", None))}` expected `str | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("keepval", False) is None:
+        raise StyxValidationError("`keepval` must not be None")
+    if not isinstance(params["keepval"], bool):
+        raise StyxValidationError(f'`keepval` has the wrong type: Received `{type(params.get("keepval", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def isolate_labels_csh_cargs(
     params: IsolateLabelsCshParameters,
     execution: Execution,
@@ -164,6 +204,7 @@ def isolate_labels_csh_execute(
     Returns:
         NamedTuple of outputs (described in `IsolateLabelsCshOutputs`).
     """
+    isolate_labels_csh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ISOLATE_LABELS_CSH_METADATA)
     params = execution.params(params)

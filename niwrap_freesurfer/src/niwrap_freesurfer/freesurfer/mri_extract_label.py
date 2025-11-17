@@ -92,6 +92,51 @@ def mri_extract_label_params(
     return params
 
 
+def mri_extract_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriExtractLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("labels", None) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], list):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    for e in params["labels"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("gaussian_smoothing", None) is not None:
+        if not isinstance(params["gaussian_smoothing"], (float, int)):
+            raise StyxValidationError(f'`gaussian_smoothing` has the wrong type: Received `{type(params.get("gaussian_smoothing", None))}` expected `float | None`')
+    if params.get("transform_file", None) is not None:
+        if not isinstance(params["transform_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType | None`')
+    if params.get("exit_none_found", False) is None:
+        raise StyxValidationError("`exit_none_found` must not be None")
+    if not isinstance(params["exit_none_found"], bool):
+        raise StyxValidationError(f'`exit_none_found` has the wrong type: Received `{type(params.get("exit_none_found", False))}` expected `bool`')
+    if params.get("dilate", None) is not None:
+        if not isinstance(params["dilate"], (float, int)):
+            raise StyxValidationError(f'`dilate` has the wrong type: Received `{type(params.get("dilate", None))}` expected `float | None`')
+    if params.get("erode", None) is not None:
+        if not isinstance(params["erode"], (float, int)):
+            raise StyxValidationError(f'`erode` has the wrong type: Received `{type(params.get("erode", None))}` expected `float | None`')
+
+
 def mri_extract_label_cargs(
     params: MriExtractLabelParameters,
     execution: Execution,
@@ -174,6 +219,7 @@ def mri_extract_label_execute(
     Returns:
         NamedTuple of outputs (described in `MriExtractLabelOutputs`).
     """
+    mri_extract_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EXTRACT_LABEL_METADATA)
     params = execution.params(params)

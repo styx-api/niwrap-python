@@ -67,6 +67,35 @@ def nicat_params(
     return params
 
 
+def nicat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NicatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stream_spec", None) is None:
+        raise StyxValidationError("`stream_spec` must not be None")
+    if not isinstance(params["stream_spec"], str):
+        raise StyxValidationError(f'`stream_spec` has the wrong type: Received `{type(params.get("stream_spec", None))}` expected `str`')
+    if params.get("reopen", None) is not None:
+        if not isinstance(params["reopen"], str):
+            raise StyxValidationError(f'`reopen` has the wrong type: Received `{type(params.get("reopen", None))}` expected `str | None`')
+    if params.get("copy_stream", False) is None:
+        raise StyxValidationError("`copy_stream` must not be None")
+    if not isinstance(params["copy_stream"], bool):
+        raise StyxValidationError(f'`copy_stream` has the wrong type: Received `{type(params.get("copy_stream", False))}` expected `bool`')
+    if params.get("read_only", False) is None:
+        raise StyxValidationError("`read_only` must not be None")
+    if not isinstance(params["read_only"], bool):
+        raise StyxValidationError(f'`read_only` has the wrong type: Received `{type(params.get("read_only", False))}` expected `bool`')
+
+
 def nicat_cargs(
     params: NicatParameters,
     execution: Execution,
@@ -133,6 +162,7 @@ def nicat_execute(
     Returns:
         NamedTuple of outputs (described in `NicatOutputs`).
     """
+    nicat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NICAT_METADATA)
     params = execution.params(params)

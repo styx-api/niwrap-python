@@ -173,6 +173,97 @@ def v_3d_net_corr_params(
     return params
 
 
+def v_3d_net_corr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNetCorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("in_rois", None) is None:
+        raise StyxValidationError("`in_rois` must not be None")
+    if not isinstance(params["in_rois"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_rois` has the wrong type: Received `{type(params.get("in_rois", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("fish_z", False) is None:
+        raise StyxValidationError("`fish_z` must not be None")
+    if not isinstance(params["fish_z"], bool):
+        raise StyxValidationError(f'`fish_z` has the wrong type: Received `{type(params.get("fish_z", False))}` expected `bool`')
+    if params.get("part_corr", False) is None:
+        raise StyxValidationError("`part_corr` must not be None")
+    if not isinstance(params["part_corr"], bool):
+        raise StyxValidationError(f'`part_corr` has the wrong type: Received `{type(params.get("part_corr", False))}` expected `bool`')
+    if params.get("ts_out", False) is None:
+        raise StyxValidationError("`ts_out` must not be None")
+    if not isinstance(params["ts_out"], bool):
+        raise StyxValidationError(f'`ts_out` has the wrong type: Received `{type(params.get("ts_out", False))}` expected `bool`')
+    if params.get("ts_label", False) is None:
+        raise StyxValidationError("`ts_label` must not be None")
+    if not isinstance(params["ts_label"], bool):
+        raise StyxValidationError(f'`ts_label` has the wrong type: Received `{type(params.get("ts_label", False))}` expected `bool`')
+    if params.get("ts_indiv", False) is None:
+        raise StyxValidationError("`ts_indiv` must not be None")
+    if not isinstance(params["ts_indiv"], bool):
+        raise StyxValidationError(f'`ts_indiv` has the wrong type: Received `{type(params.get("ts_indiv", False))}` expected `bool`')
+    if params.get("ts_wb_corr", False) is None:
+        raise StyxValidationError("`ts_wb_corr` must not be None")
+    if not isinstance(params["ts_wb_corr"], bool):
+        raise StyxValidationError(f'`ts_wb_corr` has the wrong type: Received `{type(params.get("ts_wb_corr", False))}` expected `bool`')
+    if params.get("ts_wb_Z", False) is None:
+        raise StyxValidationError("`ts_wb_Z` must not be None")
+    if not isinstance(params["ts_wb_Z"], bool):
+        raise StyxValidationError(f'`ts_wb_Z` has the wrong type: Received `{type(params.get("ts_wb_Z", False))}` expected `bool`')
+    if params.get("weight_ts", None) is not None:
+        if not isinstance(params["weight_ts"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight_ts` has the wrong type: Received `{type(params.get("weight_ts", None))}` expected `InputPathType | None`')
+    if params.get("weight_corr", None) is not None:
+        if not isinstance(params["weight_corr"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight_corr` has the wrong type: Received `{type(params.get("weight_corr", None))}` expected `InputPathType | None`')
+    if params.get("ts_wb_strlabel", False) is None:
+        raise StyxValidationError("`ts_wb_strlabel` must not be None")
+    if not isinstance(params["ts_wb_strlabel"], bool):
+        raise StyxValidationError(f'`ts_wb_strlabel` has the wrong type: Received `{type(params.get("ts_wb_strlabel", False))}` expected `bool`')
+    if params.get("nifti", False) is None:
+        raise StyxValidationError("`nifti` must not be None")
+    if not isinstance(params["nifti"], bool):
+        raise StyxValidationError(f'`nifti` has the wrong type: Received `{type(params.get("nifti", False))}` expected `bool`')
+    if params.get("output_mask_nonnull", False) is None:
+        raise StyxValidationError("`output_mask_nonnull` must not be None")
+    if not isinstance(params["output_mask_nonnull"], bool):
+        raise StyxValidationError(f'`output_mask_nonnull` has the wrong type: Received `{type(params.get("output_mask_nonnull", False))}` expected `bool`')
+    if params.get("push_thru_many_zeros", False) is None:
+        raise StyxValidationError("`push_thru_many_zeros` must not be None")
+    if not isinstance(params["push_thru_many_zeros"], bool):
+        raise StyxValidationError(f'`push_thru_many_zeros` has the wrong type: Received `{type(params.get("push_thru_many_zeros", False))}` expected `bool`')
+    if params.get("allow_roi_zeros", False) is None:
+        raise StyxValidationError("`allow_roi_zeros` must not be None")
+    if not isinstance(params["allow_roi_zeros"], bool):
+        raise StyxValidationError(f'`allow_roi_zeros` has the wrong type: Received `{type(params.get("allow_roi_zeros", False))}` expected `bool`')
+    if params.get("automask_off", False) is None:
+        raise StyxValidationError("`automask_off` must not be None")
+    if not isinstance(params["automask_off"], bool):
+        raise StyxValidationError(f'`automask_off` has the wrong type: Received `{type(params.get("automask_off", False))}` expected `bool`')
+    if params.get("ignore_LT", False) is None:
+        raise StyxValidationError("`ignore_LT` must not be None")
+    if not isinstance(params["ignore_LT"], bool):
+        raise StyxValidationError(f'`ignore_LT` has the wrong type: Received `{type(params.get("ignore_LT", False))}` expected `bool`')
+
+
 def v_3d_net_corr_cargs(
     params: V3dNetCorrParameters,
     execution: Execution,
@@ -282,6 +373,7 @@ def v_3d_net_corr_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNetCorrOutputs`).
     """
+    v_3d_net_corr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NET_CORR_METADATA)
     params = execution.params(params)

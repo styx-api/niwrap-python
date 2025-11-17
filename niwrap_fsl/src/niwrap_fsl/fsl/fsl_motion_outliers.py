@@ -137,6 +137,74 @@ def fsl_motion_outliers_params(
     return params
 
 
+def fsl_motion_outliers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslMotionOutliersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_4d_image", None) is None:
+        raise StyxValidationError("`input_4d_image` must not be None")
+    if not isinstance(params["input_4d_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_4d_image` has the wrong type: Received `{type(params.get("input_4d_image", None))}` expected `InputPathType`')
+    if params.get("output_confound_file", None) is None:
+        raise StyxValidationError("`output_confound_file` must not be None")
+    if not isinstance(params["output_confound_file"], str):
+        raise StyxValidationError(f'`output_confound_file` has the wrong type: Received `{type(params.get("output_confound_file", None))}` expected `str`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("save_metric_file", None) is not None:
+        if not isinstance(params["save_metric_file"], str):
+            raise StyxValidationError(f'`save_metric_file` has the wrong type: Received `{type(params.get("save_metric_file", None))}` expected `str | None`')
+    if params.get("save_metric_plot", None) is not None:
+        if not isinstance(params["save_metric_plot"], str):
+            raise StyxValidationError(f'`save_metric_plot` has the wrong type: Received `{type(params.get("save_metric_plot", None))}` expected `str | None`')
+    if params.get("temp_path", None) is not None:
+        if not isinstance(params["temp_path"], str):
+            raise StyxValidationError(f'`temp_path` has the wrong type: Received `{type(params.get("temp_path", None))}` expected `str | None`')
+    if params.get("refrms_flag", False) is None:
+        raise StyxValidationError("`refrms_flag` must not be None")
+    if not isinstance(params["refrms_flag"], bool):
+        raise StyxValidationError(f'`refrms_flag` has the wrong type: Received `{type(params.get("refrms_flag", False))}` expected `bool`')
+    if params.get("dvars_flag", False) is None:
+        raise StyxValidationError("`dvars_flag` must not be None")
+    if not isinstance(params["dvars_flag"], bool):
+        raise StyxValidationError(f'`dvars_flag` has the wrong type: Received `{type(params.get("dvars_flag", False))}` expected `bool`')
+    if params.get("refmse_flag", False) is None:
+        raise StyxValidationError("`refmse_flag` must not be None")
+    if not isinstance(params["refmse_flag"], bool):
+        raise StyxValidationError(f'`refmse_flag` has the wrong type: Received `{type(params.get("refmse_flag", False))}` expected `bool`')
+    if params.get("fd_flag", False) is None:
+        raise StyxValidationError("`fd_flag` must not be None")
+    if not isinstance(params["fd_flag"], bool):
+        raise StyxValidationError(f'`fd_flag` has the wrong type: Received `{type(params.get("fd_flag", False))}` expected `bool`')
+    if params.get("fdrms_flag", False) is None:
+        raise StyxValidationError("`fdrms_flag` must not be None")
+    if not isinstance(params["fdrms_flag"], bool):
+        raise StyxValidationError(f'`fdrms_flag` has the wrong type: Received `{type(params.get("fdrms_flag", False))}` expected `bool`')
+    if params.get("abs_thresh", None) is not None:
+        if not isinstance(params["abs_thresh"], (float, int)):
+            raise StyxValidationError(f'`abs_thresh` has the wrong type: Received `{type(params.get("abs_thresh", None))}` expected `float | None`')
+    if params.get("no_moco_flag", False) is None:
+        raise StyxValidationError("`no_moco_flag` must not be None")
+    if not isinstance(params["no_moco_flag"], bool):
+        raise StyxValidationError(f'`no_moco_flag` has the wrong type: Received `{type(params.get("no_moco_flag", False))}` expected `bool`')
+    if params.get("dummy_scans", None) is not None:
+        if not isinstance(params["dummy_scans"], (float, int)):
+            raise StyxValidationError(f'`dummy_scans` has the wrong type: Received `{type(params.get("dummy_scans", None))}` expected `float | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def fsl_motion_outliers_cargs(
     params: FslMotionOutliersParameters,
     execution: Execution,
@@ -248,6 +316,7 @@ def fsl_motion_outliers_execute(
     Returns:
         NamedTuple of outputs (described in `FslMotionOutliersOutputs`).
     """
+    fsl_motion_outliers_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_MOTION_OUTLIERS_METADATA)
     params = execution.params(params)

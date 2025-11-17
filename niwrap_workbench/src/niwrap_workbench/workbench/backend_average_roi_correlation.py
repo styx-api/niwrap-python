@@ -54,6 +54,28 @@ def backend_average_roi_correlation_params(
     return params
 
 
+def backend_average_roi_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BackendAverageRoiCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("index-list", None) is None:
+        raise StyxValidationError("`index-list` must not be None")
+    if not isinstance(params["index-list"], str):
+        raise StyxValidationError(f'`index-list` has the wrong type: Received `{type(params.get("index-list", None))}` expected `str`')
+    if params.get("out-file", None) is None:
+        raise StyxValidationError("`out-file` must not be None")
+    if not isinstance(params["out-file"], str):
+        raise StyxValidationError(f'`out-file` has the wrong type: Received `{type(params.get("out-file", None))}` expected `str`')
+
+
 def backend_average_roi_correlation_cargs(
     params: BackendAverageRoiCorrelationParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def backend_average_roi_correlation_execute(
     Returns:
         NamedTuple of outputs (described in `BackendAverageRoiCorrelationOutputs`).
     """
+    backend_average_roi_correlation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BACKEND_AVERAGE_ROI_CORRELATION_METADATA)
     params = execution.params(params)

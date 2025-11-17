@@ -69,6 +69,38 @@ def antsuse_landmark_images_to_get_affine_transform_params(
     return params
 
 
+def antsuse_landmark_images_to_get_affine_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsuseLandmarkImagesToGetAffineTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("transform_type", None) is None:
+        raise StyxValidationError("`transform_type` must not be None")
+    if not isinstance(params["transform_type"], str):
+        raise StyxValidationError(f'`transform_type` has the wrong type: Received `{type(params.get("transform_type", None))}` expected `typing.Literal["rigid", "affine"]`')
+    if params["transform_type"] not in ["rigid", "affine"]:
+        raise StyxValidationError("Parameter `transform_type` must be one of [\"rigid\", \"affine\"]")
+    if params.get("output_affine", None) is None:
+        raise StyxValidationError("`output_affine` must not be None")
+    if not isinstance(params["output_affine"], str):
+        raise StyxValidationError(f'`output_affine` has the wrong type: Received `{type(params.get("output_affine", None))}` expected `str`')
+
+
 def antsuse_landmark_images_to_get_affine_transform_cargs(
     params: AntsuseLandmarkImagesToGetAffineTransformParameters,
     execution: Execution,
@@ -135,6 +167,7 @@ def antsuse_landmark_images_to_get_affine_transform_execute(
     Returns:
         NamedTuple of outputs (described in `AntsuseLandmarkImagesToGetAffineTransformOutputs`).
     """
+    antsuse_landmark_images_to_get_affine_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA)
     params = execution.params(params)

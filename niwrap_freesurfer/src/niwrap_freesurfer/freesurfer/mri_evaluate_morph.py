@@ -61,6 +61,35 @@ def mri_evaluate_morph_params(
     return params
 
 
+def mri_evaluate_morph_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriEvaluateMorphParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xform_name", None) is None:
+        raise StyxValidationError("`xform_name` must not be None")
+    if not isinstance(params["xform_name"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xform_name` has the wrong type: Received `{type(params.get("xform_name", None))}` expected `InputPathType`')
+    if params.get("segmentation_files", None) is None:
+        raise StyxValidationError("`segmentation_files` must not be None")
+    if not isinstance(params["segmentation_files"], list):
+        raise StyxValidationError(f'`segmentation_files` has the wrong type: Received `{type(params.get("segmentation_files", None))}` expected `list[InputPathType]`')
+    for e in params["segmentation_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation_files` has the wrong type: Received `{type(params.get("segmentation_files", None))}` expected `list[InputPathType]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def mri_evaluate_morph_cargs(
     params: MriEvaluateMorphParameters,
     execution: Execution,
@@ -122,6 +151,7 @@ def mri_evaluate_morph_execute(
     Returns:
         NamedTuple of outputs (described in `MriEvaluateMorphOutputs`).
     """
+    mri_evaluate_morph_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EVALUATE_MORPH_METADATA)
     params = execution.params(params)

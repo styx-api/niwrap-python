@@ -115,6 +115,62 @@ def nifti_tool_params(
     return params
 
 
+def nifti_tool_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NiftiToolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("action", None) is None:
+        raise StyxValidationError("`action` must not be None")
+    if not isinstance(params["action"], str):
+        raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str`')
+    if params.get("input_files", None) is not None:
+        if not isinstance(params["input_files"], list):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["input_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("field", None) is not None:
+        if not isinstance(params["field"], str):
+            raise StyxValidationError(f'`field` has the wrong type: Received `{type(params.get("field", None))}` expected `str | None`')
+    if params.get("mod_field", None) is not None:
+        if not isinstance(params["mod_field"], str):
+            raise StyxValidationError(f'`mod_field` has the wrong type: Received `{type(params.get("mod_field", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("convert2dtype", None) is not None:
+        if not isinstance(params["convert2dtype"], str):
+            raise StyxValidationError(f'`convert2dtype` has the wrong type: Received `{type(params.get("convert2dtype", None))}` expected `str | None`')
+    if params.get("convert_fail_choice", None) is not None:
+        if not isinstance(params["convert_fail_choice"], str):
+            raise StyxValidationError(f'`convert_fail_choice` has the wrong type: Received `{type(params.get("convert_fail_choice", None))}` expected `str | None`')
+    if params.get("convert_verify", False) is None:
+        raise StyxValidationError("`convert_verify` must not be None")
+    if not isinstance(params["convert_verify"], bool):
+        raise StyxValidationError(f'`convert_verify` has the wrong type: Received `{type(params.get("convert_verify", False))}` expected `bool`')
+    if params.get("add_comment_ext", None) is not None:
+        if not isinstance(params["add_comment_ext"], str):
+            raise StyxValidationError(f'`add_comment_ext` has the wrong type: Received `{type(params.get("add_comment_ext", None))}` expected `str | None`')
+    if params.get("rm_ext", None) is not None:
+        if not isinstance(params["rm_ext"], str):
+            raise StyxValidationError(f'`rm_ext` has the wrong type: Received `{type(params.get("rm_ext", None))}` expected `str | None`')
+
+
 def nifti_tool_cargs(
     params: NiftiToolParameters,
     execution: Execution,
@@ -222,6 +278,7 @@ def nifti_tool_execute(
     Returns:
         NamedTuple of outputs (described in `NiftiToolOutputs`).
     """
+    nifti_tool_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NIFTI_TOOL_METADATA)
     params = execution.params(params)

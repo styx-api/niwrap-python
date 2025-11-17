@@ -104,6 +104,49 @@ def v_3d_winsor_params(
     return params
 
 
+def v_3d_winsor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dWinsorParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("irad", None) is not None:
+        if not isinstance(params["irad"], (float, int)):
+            raise StyxValidationError(f'`irad` has the wrong type: Received `{type(params.get("irad", None))}` expected `float | None`')
+    if params.get("cbot", None) is not None:
+        if not isinstance(params["cbot"], (float, int)):
+            raise StyxValidationError(f'`cbot` has the wrong type: Received `{type(params.get("cbot", None))}` expected `float | None`')
+    if params.get("ctop", None) is not None:
+        if not isinstance(params["ctop"], (float, int)):
+            raise StyxValidationError(f'`ctop` has the wrong type: Received `{type(params.get("ctop", None))}` expected `float | None`')
+    if params.get("nrep", None) is not None:
+        if not isinstance(params["nrep"], (float, int)):
+            raise StyxValidationError(f'`nrep` has the wrong type: Received `{type(params.get("nrep", None))}` expected `float | None`')
+    if params.get("keepzero", False) is None:
+        raise StyxValidationError("`keepzero` must not be None")
+    if not isinstance(params["keepzero"], bool):
+        raise StyxValidationError(f'`keepzero` has the wrong type: Received `{type(params.get("keepzero", False))}` expected `bool`')
+    if params.get("clip", None) is not None:
+        if not isinstance(params["clip"], (float, int)):
+            raise StyxValidationError(f'`clip` has the wrong type: Received `{type(params.get("clip", None))}` expected `float | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_winsor_cargs(
     params: V3dWinsorParameters,
     execution: Execution,
@@ -200,6 +243,7 @@ def v_3d_winsor_execute(
     Returns:
         NamedTuple of outputs (described in `V3dWinsorOutputs`).
     """
+    v_3d_winsor_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_WINSOR_METADATA)
     params = execution.params(params)

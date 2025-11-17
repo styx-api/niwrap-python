@@ -63,6 +63,32 @@ def foci_create_class_params(
     return params
 
 
+def foci_create_class_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociCreateClassParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("class-name", None) is None:
+        raise StyxValidationError("`class-name` must not be None")
+    if not isinstance(params["class-name"], str):
+        raise StyxValidationError(f'`class-name` has the wrong type: Received `{type(params.get("class-name", None))}` expected `str`')
+    if params.get("foci-list-file", None) is None:
+        raise StyxValidationError("`foci-list-file` must not be None")
+    if not isinstance(params["foci-list-file"], str):
+        raise StyxValidationError(f'`foci-list-file` has the wrong type: Received `{type(params.get("foci-list-file", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def foci_create_class_cargs(
     params: FociCreateClassParameters,
     execution: Execution,
@@ -116,6 +142,29 @@ def foci_create_params(
     if class_ is not None:
         params["class"] = class_
     return params
+
+
+def foci_create_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociCreateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("class", None) is not None:
+        if not isinstance(params["class"], list):
+            raise StyxValidationError(f'`class` has the wrong type: Received `{type(params.get("class", None))}` expected `list[FociCreateClassParameters] | None`')
+        for e in params["class"]:
+            foci_create_class_validate(e)
 
 
 def foci_create_cargs(
@@ -194,6 +243,7 @@ def foci_create_execute(
     Returns:
         NamedTuple of outputs (described in `FociCreateOutputs`).
     """
+    foci_create_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FOCI_CREATE_METADATA)
     params = execution.params(params)

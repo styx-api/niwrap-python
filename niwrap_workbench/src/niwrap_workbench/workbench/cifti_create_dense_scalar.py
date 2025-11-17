@@ -119,6 +119,28 @@ def cifti_create_dense_scalar_volume_params(
     return params
 
 
+def cifti_create_dense_scalar_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseScalarVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-data", None) is None:
+        raise StyxValidationError("`volume-data` must not be None")
+    if not isinstance(params["volume-data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-data` has the wrong type: Received `{type(params.get("volume-data", None))}` expected `InputPathType`')
+    if params.get("structure-label-volume", None) is None:
+        raise StyxValidationError("`structure-label-volume` must not be None")
+    if not isinstance(params["structure-label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`structure-label-volume` has the wrong type: Received `{type(params.get("structure-label-volume", None))}` expected `InputPathType`')
+
+
 def cifti_create_dense_scalar_volume_cargs(
     params: CiftiCreateDenseScalarVolumeParameters,
     execution: Execution,
@@ -163,6 +185,27 @@ def cifti_create_dense_scalar_left_metric_params(
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     return params
+
+
+def cifti_create_dense_scalar_left_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseScalarLeftMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_create_dense_scalar_left_metric_cargs(
@@ -213,6 +256,27 @@ def cifti_create_dense_scalar_right_metric_params(
     return params
 
 
+def cifti_create_dense_scalar_right_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseScalarRightMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_create_dense_scalar_right_metric_cargs(
     params: CiftiCreateDenseScalarRightMetricParameters,
     execution: Execution,
@@ -259,6 +323,27 @@ def cifti_create_dense_scalar_cerebellum_metric_params(
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     return params
+
+
+def cifti_create_dense_scalar_cerebellum_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseScalarCerebellumMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_create_dense_scalar_cerebellum_metric_cargs(
@@ -310,6 +395,31 @@ def cifti_create_dense_scalar_metric_params(
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     return params
+
+
+def cifti_create_dense_scalar_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseScalarMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_create_dense_scalar_metric_cargs(
@@ -389,6 +499,40 @@ def cifti_create_dense_scalar_params(
     if metric is not None:
         params["metric"] = metric
     return params
+
+
+def cifti_create_dense_scalar_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseScalarParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("volume", None) is not None:
+        cifti_create_dense_scalar_volume_validate(params["volume"])
+    if params.get("left-metric", None) is not None:
+        cifti_create_dense_scalar_left_metric_validate(params["left-metric"])
+    if params.get("right-metric", None) is not None:
+        cifti_create_dense_scalar_right_metric_validate(params["right-metric"])
+    if params.get("cerebellum-metric", None) is not None:
+        cifti_create_dense_scalar_cerebellum_metric_validate(params["cerebellum-metric"])
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("metric", None) is not None:
+        if not isinstance(params["metric"], list):
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseScalarMetricParameters] | None`')
+        for e in params["metric"]:
+            cifti_create_dense_scalar_metric_validate(e)
 
 
 def cifti_create_dense_scalar_cargs(
@@ -499,6 +643,7 @@ def cifti_create_dense_scalar_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseScalarOutputs`).
     """
+    cifti_create_dense_scalar_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CREATE_DENSE_SCALAR_METADATA)
     params = execution.params(params)

@@ -60,6 +60,23 @@ def nifti_information_print_xml_params(
     return params
 
 
+def nifti_information_print_xml_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NiftiInformationPrintXmlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("version", None) is not None:
+        if not isinstance(params["version"], str):
+            raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", None))}` expected `str | None`')
+
+
 def nifti_information_print_xml_cargs(
     params: NiftiInformationPrintXmlParameters,
     execution: Execution,
@@ -120,6 +137,33 @@ def nifti_information_params(
     if print_xml is not None:
         params["print-xml"] = print_xml
     return params
+
+
+def nifti_information_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NiftiInformationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("allow-truncated", False) is not None:
+        if not isinstance(params["allow-truncated"], bool):
+            raise StyxValidationError(f'`allow-truncated` has the wrong type: Received `{type(params.get("allow-truncated", False))}` expected `bool | None`')
+    if params.get("print-matrix", False) is None:
+        raise StyxValidationError("`print-matrix` must not be None")
+    if not isinstance(params["print-matrix"], bool):
+        raise StyxValidationError(f'`print-matrix` has the wrong type: Received `{type(params.get("print-matrix", False))}` expected `bool`')
+    if params.get("print-xml", None) is not None:
+        nifti_information_print_xml_validate(params["print-xml"])
+    if params.get("nifti-file", None) is None:
+        raise StyxValidationError("`nifti-file` must not be None")
+    if not isinstance(params["nifti-file"], str):
+        raise StyxValidationError(f'`nifti-file` has the wrong type: Received `{type(params.get("nifti-file", None))}` expected `str`')
 
 
 def nifti_information_cargs(
@@ -183,6 +227,7 @@ def nifti_information_execute(
     Returns:
         NamedTuple of outputs (described in `NiftiInformationOutputs`).
     """
+    nifti_information_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NIFTI_INFORMATION_METADATA)
     params = execution.params(params)

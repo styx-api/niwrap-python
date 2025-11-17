@@ -54,6 +54,28 @@ def mris_extract_patches_params(
     return params
 
 
+def mris_extract_patches_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisExtractPatchesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+
+
 def mris_extract_patches_cargs(
     params: MrisExtractPatchesParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def mris_extract_patches_execute(
     Returns:
         NamedTuple of outputs (described in `MrisExtractPatchesOutputs`).
     """
+    mris_extract_patches_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_EXTRACT_PATCHES_METADATA)
     params = execution.params(params)

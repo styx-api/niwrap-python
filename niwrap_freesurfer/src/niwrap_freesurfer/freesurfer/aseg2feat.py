@@ -97,6 +97,54 @@ def aseg2feat_params(
     return params
 
 
+def aseg2feat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Aseg2featParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat", None) is None:
+        raise StyxValidationError("`feat` must not be None")
+    if not isinstance(params["feat"], str):
+        raise StyxValidationError(f'`feat` has the wrong type: Received `{type(params.get("feat", None))}` expected `str`')
+    if params.get("featdirfile", None) is not None:
+        if not isinstance(params["featdirfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`featdirfile` has the wrong type: Received `{type(params.get("featdirfile", None))}` expected `InputPathType | None`')
+    if params.get("seg", None) is not None:
+        if not isinstance(params["seg"], str):
+            raise StyxValidationError(f'`seg` has the wrong type: Received `{type(params.get("seg", None))}` expected `str | None`')
+    if params.get("aparc_aseg", False) is None:
+        raise StyxValidationError("`aparc_aseg` must not be None")
+    if not isinstance(params["aparc_aseg"], bool):
+        raise StyxValidationError(f'`aparc_aseg` has the wrong type: Received `{type(params.get("aparc_aseg", False))}` expected `bool`')
+    if params.get("svstats", False) is None:
+        raise StyxValidationError("`svstats` must not be None")
+    if not isinstance(params["svstats"], bool):
+        raise StyxValidationError(f'`svstats` has the wrong type: Received `{type(params.get("svstats", False))}` expected `bool`')
+    if params.get("standard", False) is None:
+        raise StyxValidationError("`standard` must not be None")
+    if not isinstance(params["standard"], bool):
+        raise StyxValidationError(f'`standard` has the wrong type: Received `{type(params.get("standard", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def aseg2feat_cargs(
     params: Aseg2featParameters,
     execution: Execution,
@@ -182,6 +230,7 @@ def aseg2feat_execute(
     Returns:
         NamedTuple of outputs (described in `Aseg2featOutputs`).
     """
+    aseg2feat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ASEG2FEAT_METADATA)
     params = execution.params(params)

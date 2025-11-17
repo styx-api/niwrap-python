@@ -158,6 +158,86 @@ def v_3d_mss_params(
     return params
 
 
+def v_3d_mss_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMssParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("jobs", None) is not None:
+        if not isinstance(params["jobs"], (float, int)):
+            raise StyxValidationError(f'`jobs` has the wrong type: Received `{type(params.get("jobs", None))}` expected `float | None`')
+    if params.get("mrr_formula", None) is not None:
+        if not isinstance(params["mrr_formula"], str):
+            raise StyxValidationError(f'`mrr_formula` has the wrong type: Received `{type(params.get("mrr_formula", None))}` expected `str | None`')
+    if params.get("lme_formula", None) is not None:
+        if not isinstance(params["lme_formula"], str):
+            raise StyxValidationError(f'`lme_formula` has the wrong type: Received `{type(params.get("lme_formula", None))}` expected `str | None`')
+    if params.get("random_effect", None) is not None:
+        if not isinstance(params["random_effect"], str):
+            raise StyxValidationError(f'`random_effect` has the wrong type: Received `{type(params.get("random_effect", None))}` expected `str | None`')
+    if params.get("qvars", None) is not None:
+        if not isinstance(params["qvars"], str):
+            raise StyxValidationError(f'`qvars` has the wrong type: Received `{type(params.get("qvars", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("bounds", None) is not None:
+        if not isinstance(params["bounds"], list):
+            raise StyxValidationError(f'`bounds` has the wrong type: Received `{type(params.get("bounds", None))}` expected `list[float] | None`')
+        if len(params["bounds"]) == 2:
+            raise StyxValidationError("Parameter `bounds` must contain exactly 2 elements")
+        for e in params["bounds"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`bounds` has the wrong type: Received `{type(params.get("bounds", None))}` expected `list[float] | None`')
+    if params.get("prediction_table", None) is not None:
+        if not isinstance(params["prediction_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prediction_table` has the wrong type: Received `{type(params.get("prediction_table", None))}` expected `InputPathType | None`')
+    if params.get("data_table", None) is None:
+        raise StyxValidationError("`data_table` must not be None")
+    if not isinstance(params["data_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_table` has the wrong type: Received `{type(params.get("data_table", None))}` expected `InputPathType`')
+    if params.get("cio_flag", False) is None:
+        raise StyxValidationError("`cio_flag` must not be None")
+    if not isinstance(params["cio_flag"], bool):
+        raise StyxValidationError(f'`cio_flag` has the wrong type: Received `{type(params.get("cio_flag", False))}` expected `bool`')
+    if params.get("rio_flag", False) is None:
+        raise StyxValidationError("`rio_flag` must not be None")
+    if not isinstance(params["rio_flag"], bool):
+        raise StyxValidationError(f'`rio_flag` has the wrong type: Received `{type(params.get("rio_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("dbg_args_flag", False) is None:
+        raise StyxValidationError("`dbg_args_flag` must not be None")
+    if not isinstance(params["dbg_args_flag"], bool):
+        raise StyxValidationError(f'`dbg_args_flag` has the wrong type: Received `{type(params.get("dbg_args_flag", False))}` expected `bool`')
+    if params.get("if_name", None) is not None:
+        if not isinstance(params["if_name"], str):
+            raise StyxValidationError(f'`if_name` has the wrong type: Received `{type(params.get("if_name", None))}` expected `str | None`')
+    if params.get("show_allowed_options_flag", False) is None:
+        raise StyxValidationError("`show_allowed_options_flag` must not be None")
+    if not isinstance(params["show_allowed_options_flag"], bool):
+        raise StyxValidationError(f'`show_allowed_options_flag` has the wrong type: Received `{type(params.get("show_allowed_options_flag", False))}` expected `bool`')
+    if params.get("sdiff_vars", None) is not None:
+        if not isinstance(params["sdiff_vars"], str):
+            raise StyxValidationError(f'`sdiff_vars` has the wrong type: Received `{type(params.get("sdiff_vars", None))}` expected `str | None`')
+    if params.get("vt_formula", None) is not None:
+        if not isinstance(params["vt_formula"], str):
+            raise StyxValidationError(f'`vt_formula` has the wrong type: Received `{type(params.get("vt_formula", None))}` expected `str | None`')
+
+
 def v_3d_mss_cargs(
     params: V3dMssParameters,
     execution: Execution,
@@ -285,6 +365,7 @@ def v_3d_mss_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMssOutputs`).
     """
+    v_3d_mss_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MSS_METADATA)
     params = execution.params(params)

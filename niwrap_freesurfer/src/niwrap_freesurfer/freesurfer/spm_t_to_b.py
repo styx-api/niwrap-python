@@ -54,6 +54,28 @@ def spm_t_to_b_params(
     return params
 
 
+def spm_t_to_b_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpmTToBParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spm_stem_format", None) is None:
+        raise StyxValidationError("`spm_stem_format` must not be None")
+    if not isinstance(params["spm_stem_format"], str):
+        raise StyxValidationError(f'`spm_stem_format` has the wrong type: Received `{type(params.get("spm_stem_format", None))}` expected `str`')
+    if params.get("bshort_stem", None) is None:
+        raise StyxValidationError("`bshort_stem` must not be None")
+    if not isinstance(params["bshort_stem"], str):
+        raise StyxValidationError(f'`bshort_stem` has the wrong type: Received `{type(params.get("bshort_stem", None))}` expected `str`')
+
+
 def spm_t_to_b_cargs(
     params: SpmTToBParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def spm_t_to_b_execute(
     Returns:
         NamedTuple of outputs (described in `SpmTToBOutputs`).
     """
+    spm_t_to_b_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPM_T_TO_B_METADATA)
     params = execution.params(params)

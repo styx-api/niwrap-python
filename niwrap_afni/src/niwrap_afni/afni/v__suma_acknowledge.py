@@ -88,6 +88,45 @@ def v__suma_acknowledge_params(
     return params
 
 
+def v__suma_acknowledge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSumaAcknowledgeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("surface_file", None) is None:
+        raise StyxValidationError("`surface_file` must not be None")
+    if not isinstance(params["surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_file` has the wrong type: Received `{type(params.get("surface_file", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("center_flag", False) is None:
+        raise StyxValidationError("`center_flag` must not be None")
+    if not isinstance(params["center_flag"], bool):
+        raise StyxValidationError(f'`center_flag` has the wrong type: Received `{type(params.get("center_flag", False))}` expected `bool`')
+    if params.get("subsurface_file", None) is not None:
+        if not isinstance(params["subsurface_file"], str):
+            raise StyxValidationError(f'`subsurface_file` has the wrong type: Received `{type(params.get("subsurface_file", None))}` expected `str | None`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("reduce_factor", None) is not None:
+        if not isinstance(params["reduce_factor"], (float, int)):
+            raise StyxValidationError(f'`reduce_factor` has the wrong type: Received `{type(params.get("reduce_factor", None))}` expected `float | None`')
+
+
 def v__suma_acknowledge_cargs(
     params: VSumaAcknowledgeParameters,
     execution: Execution,
@@ -175,6 +214,7 @@ def v__suma_acknowledge_execute(
     Returns:
         NamedTuple of outputs (described in `VSumaAcknowledgeOutputs`).
     """
+    v__suma_acknowledge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SUMA_ACKNOWLEDGE_METADATA)
     params = execution.params(params)

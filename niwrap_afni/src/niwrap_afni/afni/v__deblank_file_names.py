@@ -76,6 +76,46 @@ def v__deblank_file_names_params(
     return params
 
 
+def v__deblank_file_names_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDeblankFileNamesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("move", False) is None:
+        raise StyxValidationError("`move` must not be None")
+    if not isinstance(params["move"], bool):
+        raise StyxValidationError(f'`move` has the wrong type: Received `{type(params.get("move", False))}` expected `bool`')
+    if params.get("nobrac", False) is None:
+        raise StyxValidationError("`nobrac` must not be None")
+    if not isinstance(params["nobrac"], bool):
+        raise StyxValidationError(f'`nobrac` has the wrong type: Received `{type(params.get("nobrac", False))}` expected `bool`')
+    if params.get("demo_set", False) is None:
+        raise StyxValidationError("`demo_set` must not be None")
+    if not isinstance(params["demo_set"], bool):
+        raise StyxValidationError(f'`demo_set` has the wrong type: Received `{type(params.get("demo_set", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("files", None) is not None:
+        if not isinstance(params["files"], list):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType] | None`')
+        for e in params["files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType] | None`')
+
+
 def v__deblank_file_names_cargs(
     params: VDeblankFileNamesParameters,
     execution: Execution,
@@ -145,6 +185,7 @@ def v__deblank_file_names_execute(
     Returns:
         NamedTuple of outputs (described in `VDeblankFileNamesOutputs`).
     """
+    v__deblank_file_names_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DEBLANK_FILE_NAMES_METADATA)
     params = execution.params(params)

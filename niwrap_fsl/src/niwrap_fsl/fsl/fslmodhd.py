@@ -59,6 +59,32 @@ def fslmodhd_params(
     return params
 
 
+def fslmodhd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmodhdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+    if params.get("keyword", None) is None:
+        raise StyxValidationError("`keyword` must not be None")
+    if not isinstance(params["keyword"], str):
+        raise StyxValidationError(f'`keyword` has the wrong type: Received `{type(params.get("keyword", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def fslmodhd_cargs(
     params: FslmodhdParameters,
     execution: Execution,
@@ -118,6 +144,7 @@ def fslmodhd_execute(
     Returns:
         NamedTuple of outputs (described in `FslmodhdOutputs`).
     """
+    fslmodhd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLMODHD_METADATA)
     params = execution.params(params)

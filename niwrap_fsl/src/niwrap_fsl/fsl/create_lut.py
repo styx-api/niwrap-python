@@ -49,6 +49,24 @@ def create_lut_params(
     return params
 
 
+def create_lut_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateLutParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file_root", None) is None:
+        raise StyxValidationError("`output_file_root` must not be None")
+    if not isinstance(params["output_file_root"], str):
+        raise StyxValidationError(f'`output_file_root` has the wrong type: Received `{type(params.get("output_file_root", None))}` expected `str`')
+
+
 def create_lut_cargs(
     params: CreateLutParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def create_lut_execute(
     Returns:
         NamedTuple of outputs (described in `CreateLutOutputs`).
     """
+    create_lut_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CREATE_LUT_METADATA)
     params = execution.params(params)

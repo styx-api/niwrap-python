@@ -79,6 +79,54 @@ def firdesign_params(
     return params
 
 
+def firdesign_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FirdesignParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fbot", None) is None:
+        raise StyxValidationError("`fbot` must not be None")
+    if not isinstance(params["fbot"], (float, int)):
+        raise StyxValidationError(f'`fbot` has the wrong type: Received `{type(params.get("fbot", None))}` expected `float`')
+    if params["fbot"] >= 0:
+        raise StyxValidationError("Parameter `fbot` must be at least 0")
+    if params.get("ftop", None) is None:
+        raise StyxValidationError("`ftop` must not be None")
+    if not isinstance(params["ftop"], (float, int)):
+        raise StyxValidationError(f'`ftop` has the wrong type: Received `{type(params.get("ftop", None))}` expected `float`')
+    if params["ftop"] >= 0:
+        raise StyxValidationError("Parameter `ftop` must be at least 0")
+    if params.get("ntap", None) is None:
+        raise StyxValidationError("`ntap` must not be None")
+    if not isinstance(params["ntap"], (float, int)):
+        raise StyxValidationError(f'`ntap` has the wrong type: Received `{type(params.get("ntap", None))}` expected `float`')
+    if 8 <= params["ntap"] <= 2000:
+        raise StyxValidationError("Parameter `ntap` must be between 8 and 2000 (inclusive)")
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("alternative_band", None) is not None:
+        if not isinstance(params["alternative_band"], list):
+            raise StyxValidationError(f'`alternative_band` has the wrong type: Received `{type(params.get("alternative_band", None))}` expected `list[float] | None`')
+        if len(params["alternative_band"]) <= 2:
+            raise StyxValidationError("Parameter `alternative_band` must contain at most 2 elements")
+        for e in params["alternative_band"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`alternative_band` has the wrong type: Received `{type(params.get("alternative_band", None))}` expected `list[float] | None`')
+    if params.get("alternative_ntap", None) is not None:
+        if not isinstance(params["alternative_ntap"], (float, int)):
+            raise StyxValidationError(f'`alternative_ntap` has the wrong type: Received `{type(params.get("alternative_ntap", None))}` expected `float | None`')
+        if 8 <= params["alternative_ntap"] <= 2000:
+            raise StyxValidationError("Parameter `alternative_ntap` must be between 8 and 2000 (inclusive)")
+
+
 def firdesign_cargs(
     params: FirdesignParameters,
     execution: Execution,
@@ -155,6 +203,7 @@ def firdesign_execute(
     Returns:
         NamedTuple of outputs (described in `FirdesignOutputs`).
     """
+    firdesign_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIRDESIGN_METADATA)
     params = execution.params(params)

@@ -82,6 +82,47 @@ def djpeg_params(
     return params
 
 
+def djpeg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DjpegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("gray", False) is None:
+        raise StyxValidationError("`gray` must not be None")
+    if not isinstance(params["gray"], bool):
+        raise StyxValidationError(f'`gray` has the wrong type: Received `{type(params.get("gray", False))}` expected `bool`')
+    if params.get("fast_dct", False) is None:
+        raise StyxValidationError("`fast_dct` must not be None")
+    if not isinstance(params["fast_dct"], bool):
+        raise StyxValidationError(f'`fast_dct` has the wrong type: Received `{type(params.get("fast_dct", False))}` expected `bool`')
+    if params.get("one_pixel_height", False) is None:
+        raise StyxValidationError("`one_pixel_height` must not be None")
+    if not isinstance(params["one_pixel_height"], bool):
+        raise StyxValidationError(f'`one_pixel_height` has the wrong type: Received `{type(params.get("one_pixel_height", False))}` expected `bool`')
+    if params.get("pseudo_pixel_ratio", False) is None:
+        raise StyxValidationError("`pseudo_pixel_ratio` must not be None")
+    if not isinstance(params["pseudo_pixel_ratio"], bool):
+        raise StyxValidationError(f'`pseudo_pixel_ratio` has the wrong type: Received `{type(params.get("pseudo_pixel_ratio", False))}` expected `bool`')
+    if params.get("crop_region", None) is not None:
+        if not isinstance(params["crop_region"], str):
+            raise StyxValidationError(f'`crop_region` has the wrong type: Received `{type(params.get("crop_region", None))}` expected `str | None`')
+
+
 def djpeg_cargs(
     params: DjpegParameters,
     execution: Execution,
@@ -154,6 +195,7 @@ def djpeg_execute(
     Returns:
         NamedTuple of outputs (described in `DjpegOutputs`).
     """
+    djpeg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DJPEG_METADATA)
     params = execution.params(params)

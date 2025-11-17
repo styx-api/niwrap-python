@@ -65,6 +65,36 @@ def surface_modify_sphere_params(
     return params
 
 
+def surface_modify_sphere_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceModifySphereParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sphere-out", None) is None:
+        raise StyxValidationError("`sphere-out` must not be None")
+    if not isinstance(params["sphere-out"], str):
+        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
+    if params.get("recenter", False) is None:
+        raise StyxValidationError("`recenter` must not be None")
+    if not isinstance(params["recenter"], bool):
+        raise StyxValidationError(f'`recenter` has the wrong type: Received `{type(params.get("recenter", False))}` expected `bool`')
+    if params.get("sphere-in", None) is None:
+        raise StyxValidationError("`sphere-in` must not be None")
+    if not isinstance(params["sphere-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sphere-in` has the wrong type: Received `{type(params.get("sphere-in", None))}` expected `InputPathType`')
+    if params.get("radius", None) is None:
+        raise StyxValidationError("`radius` must not be None")
+    if not isinstance(params["radius"], (float, int)):
+        raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float`')
+
+
 def surface_modify_sphere_cargs(
     params: SurfaceModifySphereParameters,
     execution: Execution,
@@ -133,6 +163,7 @@ def surface_modify_sphere_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceModifySphereOutputs`).
     """
+    surface_modify_sphere_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_MODIFY_SPHERE_METADATA)
     params = execution.params(params)

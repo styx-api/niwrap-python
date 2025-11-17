@@ -66,6 +66,36 @@ def mri_copy_params_params(
     return params
 
 
+def mri_copy_params_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCopyParamsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_vol", None) is None:
+        raise StyxValidationError("`in_vol` must not be None")
+    if not isinstance(params["in_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_vol` has the wrong type: Received `{type(params.get("in_vol", None))}` expected `InputPathType`')
+    if params.get("template_vol", None) is None:
+        raise StyxValidationError("`template_vol` must not be None")
+    if not isinstance(params["template_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template_vol` has the wrong type: Received `{type(params.get("template_vol", None))}` expected `InputPathType`')
+    if params.get("out_vol", None) is None:
+        raise StyxValidationError("`out_vol` must not be None")
+    if not isinstance(params["out_vol"], str):
+        raise StyxValidationError(f'`out_vol` has the wrong type: Received `{type(params.get("out_vol", None))}` expected `str`')
+    if params.get("size_flag", False) is None:
+        raise StyxValidationError("`size_flag` must not be None")
+    if not isinstance(params["size_flag"], bool):
+        raise StyxValidationError(f'`size_flag` has the wrong type: Received `{type(params.get("size_flag", False))}` expected `bool`')
+
+
 def mri_copy_params_cargs(
     params: MriCopyParamsParameters,
     execution: Execution,
@@ -129,6 +159,7 @@ def mri_copy_params_execute(
     Returns:
         NamedTuple of outputs (described in `MriCopyParamsOutputs`).
     """
+    mri_copy_params_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COPY_PARAMS_METADATA)
     params = execution.params(params)

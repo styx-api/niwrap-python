@@ -77,6 +77,41 @@ def antsuse_deformation_field_to_get_affine_transform_params(
     return params
 
 
+def antsuse_deformation_field_to_get_affine_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsuseDeformationFieldToGetAffineTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("deformation_field", None) is None:
+        raise StyxValidationError("`deformation_field` must not be None")
+    if not isinstance(params["deformation_field"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`deformation_field` has the wrong type: Received `{type(params.get("deformation_field", None))}` expected `InputPathType`')
+    if params.get("load_ratio", None) is None:
+        raise StyxValidationError("`load_ratio` must not be None")
+    if not isinstance(params["load_ratio"], (float, int)):
+        raise StyxValidationError(f'`load_ratio` has the wrong type: Received `{type(params.get("load_ratio", None))}` expected `float`')
+    if params.get("transform_type", None) is None:
+        raise StyxValidationError("`transform_type` must not be None")
+    if not isinstance(params["transform_type"], str):
+        raise StyxValidationError(f'`transform_type` has the wrong type: Received `{type(params.get("transform_type", None))}` expected `typing.Literal["rigid", "affine"]`')
+    if params["transform_type"] not in ["rigid", "affine"]:
+        raise StyxValidationError("Parameter `transform_type` must be one of [\"rigid\", \"affine\"]")
+    if params.get("output_affine", None) is None:
+        raise StyxValidationError("`output_affine` must not be None")
+    if not isinstance(params["output_affine"], str):
+        raise StyxValidationError(f'`output_affine` has the wrong type: Received `{type(params.get("output_affine", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+
+
 def antsuse_deformation_field_to_get_affine_transform_cargs(
     params: AntsuseDeformationFieldToGetAffineTransformParameters,
     execution: Execution,
@@ -142,6 +177,7 @@ def antsuse_deformation_field_to_get_affine_transform_execute(
     Returns:
         NamedTuple of outputs (described in `AntsuseDeformationFieldToGetAffineTransformOutputs`).
     """
+    antsuse_deformation_field_to_get_affine_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA)
     params = execution.params(params)

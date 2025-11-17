@@ -76,6 +76,43 @@ def v__spharm_examples_params(
     return params
 
 
+def v__spharm_examples_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSpharmExamplesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("help_web", False) is None:
+        raise StyxValidationError("`help_web` must not be None")
+    if not isinstance(params["help_web"], bool):
+        raise StyxValidationError(f'`help_web` has the wrong type: Received `{type(params.get("help_web", False))}` expected `bool`')
+    if params.get("help_web_alias", False) is None:
+        raise StyxValidationError("`help_web_alias` must not be None")
+    if not isinstance(params["help_web_alias"], bool):
+        raise StyxValidationError(f'`help_web_alias` has the wrong type: Received `{type(params.get("help_web_alias", False))}` expected `bool`')
+    if params.get("help_view", False) is None:
+        raise StyxValidationError("`help_view` must not be None")
+    if not isinstance(params["help_view"], bool):
+        raise StyxValidationError(f'`help_view` has the wrong type: Received `{type(params.get("help_view", False))}` expected `bool`')
+    if params.get("help_view_alias", False) is None:
+        raise StyxValidationError("`help_view_alias` must not be None")
+    if not isinstance(params["help_view_alias"], bool):
+        raise StyxValidationError(f'`help_view_alias` has the wrong type: Received `{type(params.get("help_view_alias", False))}` expected `bool`')
+    if params.get("all_opts", False) is None:
+        raise StyxValidationError("`all_opts` must not be None")
+    if not isinstance(params["all_opts"], bool):
+        raise StyxValidationError(f'`all_opts` has the wrong type: Received `{type(params.get("all_opts", False))}` expected `bool`')
+    if params.get("help_find", None) is not None:
+        if not isinstance(params["help_find"], str):
+            raise StyxValidationError(f'`help_find` has the wrong type: Received `{type(params.get("help_find", None))}` expected `str | None`')
+
+
 def v__spharm_examples_cargs(
     params: VSpharmExamplesParameters,
     execution: Execution,
@@ -148,6 +185,7 @@ def v__spharm_examples_execute(
     Returns:
         NamedTuple of outputs (described in `VSpharmExamplesOutputs`).
     """
+    v__spharm_examples_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SPHARM_EXAMPLES_METADATA)
     params = execution.params(params)

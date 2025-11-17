@@ -135,6 +135,78 @@ def merge_stats_tables_params(
     return params
 
 
+def merge_stats_tables_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MergeStatsTablesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is not None:
+        if not isinstance(params["subjects"], list):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+        for e in params["subjects"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("subjectsfile", None) is not None:
+        if not isinstance(params["subjectsfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subjectsfile` has the wrong type: Received `{type(params.get("subjectsfile", None))}` expected `InputPathType | None`')
+    if params.get("inputs", None) is not None:
+        if not isinstance(params["inputs"], list):
+            raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[InputPathType] | None`')
+        for e in params["inputs"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[InputPathType] | None`')
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType | None`')
+    if params.get("outputfile", None) is None:
+        raise StyxValidationError("`outputfile` must not be None")
+    if not isinstance(params["outputfile"], str):
+        raise StyxValidationError(f'`outputfile` has the wrong type: Received `{type(params.get("outputfile", None))}` expected `str`')
+    if params.get("meas", None) is None:
+        raise StyxValidationError("`meas` must not be None")
+    if not isinstance(params["meas"], str):
+        raise StyxValidationError(f'`meas` has the wrong type: Received `{type(params.get("meas", None))}` expected `str`')
+    if params.get("common_segs", False) is None:
+        raise StyxValidationError("`common_segs` must not be None")
+    if not isinstance(params["common_segs"], bool):
+        raise StyxValidationError(f'`common_segs` has the wrong type: Received `{type(params.get("common_segs", False))}` expected `bool`')
+    if params.get("all_segs", False) is None:
+        raise StyxValidationError("`all_segs` must not be None")
+    if not isinstance(params["all_segs"], bool):
+        raise StyxValidationError(f'`all_segs` has the wrong type: Received `{type(params.get("all_segs", False))}` expected `bool`')
+    if params.get("intable", None) is not None:
+        if not isinstance(params["intable"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`intable` has the wrong type: Received `{type(params.get("intable", None))}` expected `InputPathType | None`')
+    if params.get("subdir", None) is not None:
+        if not isinstance(params["subdir"], str):
+            raise StyxValidationError(f'`subdir` has the wrong type: Received `{type(params.get("subdir", None))}` expected `str | None`')
+    if params.get("delimiter", None) is not None:
+        if not isinstance(params["delimiter"], str):
+            raise StyxValidationError(f'`delimiter` has the wrong type: Received `{type(params.get("delimiter", None))}` expected `str | None`')
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
+    if params.get("skip", False) is None:
+        raise StyxValidationError("`skip` must not be None")
+    if not isinstance(params["skip"], bool):
+        raise StyxValidationError(f'`skip` has the wrong type: Received `{type(params.get("skip", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def merge_stats_tables_cargs(
     params: MergeStatsTablesParameters,
     execution: Execution,
@@ -251,6 +323,7 @@ def merge_stats_tables_execute(
     Returns:
         NamedTuple of outputs (described in `MergeStatsTablesOutputs`).
     """
+    merge_stats_tables_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MERGE_STATS_TABLES_METADATA)
     params = execution.params(params)

@@ -108,6 +108,71 @@ def mri_compute_overlap_params(
     return params
 
 
+def mri_compute_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriComputeOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volumes", None) is None:
+        raise StyxValidationError("`volumes` must not be None")
+    if not isinstance(params["volumes"], list):
+        raise StyxValidationError(f'`volumes` has the wrong type: Received `{type(params.get("volumes", None))}` expected `list[InputPathType]`')
+    for e in params["volumes"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`volumes` has the wrong type: Received `{type(params.get("volumes", None))}` expected `list[InputPathType]`')
+    if params.get("label_numbers", None) is not None:
+        if not isinstance(params["label_numbers"], list):
+            raise StyxValidationError(f'`label_numbers` has the wrong type: Received `{type(params.get("label_numbers", None))}` expected `list[str] | None`')
+        for e in params["label_numbers"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`label_numbers` has the wrong type: Received `{type(params.get("label_numbers", None))}` expected `list[str] | None`')
+    if params.get("all_labels", False) is None:
+        raise StyxValidationError("`all_labels` must not be None")
+    if not isinstance(params["all_labels"], bool):
+        raise StyxValidationError(f'`all_labels` has the wrong type: Received `{type(params.get("all_labels", False))}` expected `bool`')
+    if params.get("show_label", False) is None:
+        raise StyxValidationError("`show_label` must not be None")
+    if not isinstance(params["show_label"], bool):
+        raise StyxValidationError(f'`show_label` has the wrong type: Received `{type(params.get("show_label", False))}` expected `bool`')
+    if params.get("total_overlap", False) is None:
+        raise StyxValidationError("`total_overlap` must not be None")
+    if not isinstance(params["total_overlap"], bool):
+        raise StyxValidationError(f'`total_overlap` has the wrong type: Received `{type(params.get("total_overlap", False))}` expected `bool`')
+    if params.get("no_summary", False) is None:
+        raise StyxValidationError("`no_summary` must not be None")
+    if not isinstance(params["no_summary"], bool):
+        raise StyxValidationError(f'`no_summary` has the wrong type: Received `{type(params.get("no_summary", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("quiet_mode", False) is None:
+        raise StyxValidationError("`quiet_mode` must not be None")
+    if not isinstance(params["quiet_mode"], bool):
+        raise StyxValidationError(f'`quiet_mode` has the wrong type: Received `{type(params.get("quiet_mode", False))}` expected `bool`')
+    if params.get("translate_label", None) is not None:
+        if not isinstance(params["translate_label"], list):
+            raise StyxValidationError(f'`translate_label` has the wrong type: Received `{type(params.get("translate_label", None))}` expected `list[float] | None`')
+        if len(params["translate_label"]) <= 2:
+            raise StyxValidationError("Parameter `translate_label` must contain at most 2 elements")
+        for e in params["translate_label"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`translate_label` has the wrong type: Received `{type(params.get("translate_label", None))}` expected `list[float] | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_compute_overlap_cargs(
     params: MriComputeOverlapParameters,
     execution: Execution,
@@ -195,6 +260,7 @@ def mri_compute_overlap_execute(
     Returns:
         NamedTuple of outputs (described in `MriComputeOverlapOutputs`).
     """
+    mri_compute_overlap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COMPUTE_OVERLAP_METADATA)
     params = execution.params(params)

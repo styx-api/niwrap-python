@@ -144,6 +144,77 @@ def v_3d_remlfit_params(
     return params
 
 
+def v_3d_remlfit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRemlfitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("regression_matrix", None) is None:
+        raise StyxValidationError("`regression_matrix` must not be None")
+    if not isinstance(params["regression_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`regression_matrix` has the wrong type: Received `{type(params.get("regression_matrix", None))}` expected `InputPathType`')
+    if params.get("baseline_files", None) is not None:
+        if not isinstance(params["baseline_files"], list):
+            raise StyxValidationError(f'`baseline_files` has the wrong type: Received `{type(params.get("baseline_files", None))}` expected `list[str] | None`')
+        for e in params["baseline_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`baseline_files` has the wrong type: Received `{type(params.get("baseline_files", None))}` expected `list[str] | None`')
+    if params.get("sort_nods", False) is None:
+        raise StyxValidationError("`sort_nods` must not be None")
+    if not isinstance(params["sort_nods"], bool):
+        raise StyxValidationError(f'`sort_nods` has the wrong type: Received `{type(params.get("sort_nods", False))}` expected `bool`')
+    if params.get("temp_storage", False) is None:
+        raise StyxValidationError("`temp_storage` must not be None")
+    if not isinstance(params["temp_storage"], bool):
+        raise StyxValidationError(f'`temp_storage` has the wrong type: Received `{type(params.get("temp_storage", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("no_fdr_curve", False) is None:
+        raise StyxValidationError("`no_fdr_curve` must not be None")
+    if not isinstance(params["no_fdr_curve"], bool):
+        raise StyxValidationError(f'`no_fdr_curve` has the wrong type: Received `{type(params.get("no_fdr_curve", False))}` expected `bool`')
+    if params.get("go_for_it", False) is None:
+        raise StyxValidationError("`go_for_it` must not be None")
+    if not isinstance(params["go_for_it"], bool):
+        raise StyxValidationError(f'`go_for_it` has the wrong type: Received `{type(params.get("go_for_it", False))}` expected `bool`')
+    if params.get("max_a_param", None) is not None:
+        if not isinstance(params["max_a_param"], (float, int)):
+            raise StyxValidationError(f'`max_a_param` has the wrong type: Received `{type(params.get("max_a_param", None))}` expected `float | None`')
+    if params.get("max_b_param", None) is not None:
+        if not isinstance(params["max_b_param"], (float, int)):
+            raise StyxValidationError(f'`max_b_param` has the wrong type: Received `{type(params.get("max_b_param", None))}` expected `float | None`')
+    if params.get("grid_param", None) is not None:
+        if not isinstance(params["grid_param"], (float, int)):
+            raise StyxValidationError(f'`grid_param` has the wrong type: Received `{type(params.get("grid_param", None))}` expected `float | None`')
+    if params.get("negative_corr", False) is None:
+        raise StyxValidationError("`negative_corr` must not be None")
+    if not isinstance(params["negative_corr"], bool):
+        raise StyxValidationError(f'`negative_corr` has the wrong type: Received `{type(params.get("negative_corr", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v_3d_remlfit_cargs(
     params: V3dRemlfitParameters,
     execution: Execution,
@@ -259,6 +330,7 @@ def v_3d_remlfit_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRemlfitOutputs`).
     """
+    v_3d_remlfit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_REMLFIT_METADATA)
     params = execution.params(params)

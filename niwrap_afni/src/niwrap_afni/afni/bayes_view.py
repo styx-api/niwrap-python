@@ -60,6 +60,31 @@ def bayes_view_params(
     return params
 
 
+def bayes_view_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BayesViewParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_folder", None) is None:
+        raise StyxValidationError("`input_folder` must not be None")
+    if not isinstance(params["input_folder"], str):
+        raise StyxValidationError(f'`input_folder` has the wrong type: Received `{type(params.get("input_folder", None))}` expected `str`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("shiny_folder", None) is not None:
+        if not isinstance(params["shiny_folder"], str):
+            raise StyxValidationError(f'`shiny_folder` has the wrong type: Received `{type(params.get("shiny_folder", None))}` expected `str | None`')
+
+
 def bayes_view_cargs(
     params: BayesViewParameters,
     execution: Execution,
@@ -125,6 +150,7 @@ def bayes_view_execute(
     Returns:
         NamedTuple of outputs (described in `BayesViewOutputs`).
     """
+    bayes_view_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BAYES_VIEW_METADATA)
     params = execution.params(params)

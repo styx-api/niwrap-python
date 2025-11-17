@@ -94,6 +94,60 @@ def listsubj_params(
     return params
 
 
+def listsubj_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ListsubjParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], str):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str`')
+    if params.get("cross", False) is None:
+        raise StyxValidationError("`cross` must not be None")
+    if not isinstance(params["cross"], bool):
+        raise StyxValidationError(f'`cross` has the wrong type: Received `{type(params.get("cross", False))}` expected `bool`')
+    if params.get("base", False) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], bool):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", False))}` expected `bool`')
+    if params.get("long", False) is None:
+        raise StyxValidationError("`long` must not be None")
+    if not isinstance(params["long"], bool):
+        raise StyxValidationError(f'`long` has the wrong type: Received `{type(params.get("long", False))}` expected `bool`')
+    if params.get("done", False) is None:
+        raise StyxValidationError("`done` must not be None")
+    if not isinstance(params["done"], bool):
+        raise StyxValidationError(f'`done` has the wrong type: Received `{type(params.get("done", False))}` expected `bool`')
+    if params.get("error", False) is None:
+        raise StyxValidationError("`error` must not be None")
+    if not isinstance(params["error"], bool):
+        raise StyxValidationError(f'`error` has the wrong type: Received `{type(params.get("error", False))}` expected `bool`')
+    if params.get("running", False) is None:
+        raise StyxValidationError("`running` must not be None")
+    if not isinstance(params["running"], bool):
+        raise StyxValidationError(f'`running` has the wrong type: Received `{type(params.get("running", False))}` expected `bool`')
+    if params.get("full_path", False) is None:
+        raise StyxValidationError("`full_path` must not be None")
+    if not isinstance(params["full_path"], bool):
+        raise StyxValidationError(f'`full_path` has the wrong type: Received `{type(params.get("full_path", False))}` expected `bool`')
+    if params.get("count", False) is None:
+        raise StyxValidationError("`count` must not be None")
+    if not isinstance(params["count"], bool):
+        raise StyxValidationError(f'`count` has the wrong type: Received `{type(params.get("count", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def listsubj_cargs(
     params: ListsubjParameters,
     execution: Execution,
@@ -169,6 +223,7 @@ def listsubj_execute(
     Returns:
         NamedTuple of outputs (described in `ListsubjOutputs`).
     """
+    listsubj_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LISTSUBJ_METADATA)
     params = execution.params(params)

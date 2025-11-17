@@ -107,6 +107,52 @@ def bedpostx_gpu_params(
     return params
 
 
+def bedpostx_gpu_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BedpostxGpuParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], str):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str`')
+    if params.get("gpu_queue", None) is not None:
+        if not isinstance(params["gpu_queue"], str):
+            raise StyxValidationError(f'`gpu_queue` has the wrong type: Received `{type(params.get("gpu_queue", None))}` expected `str | None`')
+    if params.get("num_jobs", None) is not None:
+        if not isinstance(params["num_jobs"], (float, int)):
+            raise StyxValidationError(f'`num_jobs` has the wrong type: Received `{type(params.get("num_jobs", None))}` expected `float | None`')
+    if params.get("num_fibers", None) is not None:
+        if not isinstance(params["num_fibers"], (float, int)):
+            raise StyxValidationError(f'`num_fibers` has the wrong type: Received `{type(params.get("num_fibers", None))}` expected `float | None`')
+    if params.get("ard_weight", None) is not None:
+        if not isinstance(params["ard_weight"], (float, int)):
+            raise StyxValidationError(f'`ard_weight` has the wrong type: Received `{type(params.get("ard_weight", None))}` expected `float | None`')
+    if params.get("burnin_period", None) is not None:
+        if not isinstance(params["burnin_period"], (float, int)):
+            raise StyxValidationError(f'`burnin_period` has the wrong type: Received `{type(params.get("burnin_period", None))}` expected `float | None`')
+    if params.get("num_jumps", None) is not None:
+        if not isinstance(params["num_jumps"], (float, int)):
+            raise StyxValidationError(f'`num_jumps` has the wrong type: Received `{type(params.get("num_jumps", None))}` expected `float | None`')
+    if params.get("sample_every", None) is not None:
+        if not isinstance(params["sample_every"], (float, int)):
+            raise StyxValidationError(f'`sample_every` has the wrong type: Received `{type(params.get("sample_every", None))}` expected `float | None`')
+    if params.get("deconv_model", None) is not None:
+        if not isinstance(params["deconv_model"], (float, int)):
+            raise StyxValidationError(f'`deconv_model` has the wrong type: Received `{type(params.get("deconv_model", None))}` expected `float | None`')
+    if params.get("grad_nonlinear", False) is None:
+        raise StyxValidationError("`grad_nonlinear` must not be None")
+    if not isinstance(params["grad_nonlinear"], bool):
+        raise StyxValidationError(f'`grad_nonlinear` has the wrong type: Received `{type(params.get("grad_nonlinear", False))}` expected `bool`')
+
+
 def bedpostx_gpu_cargs(
     params: BedpostxGpuParameters,
     execution: Execution,
@@ -206,6 +252,7 @@ def bedpostx_gpu_execute(
     Returns:
         NamedTuple of outputs (described in `BedpostxGpuOutputs`).
     """
+    bedpostx_gpu_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BEDPOSTX_GPU_METADATA)
     params = execution.params(params)

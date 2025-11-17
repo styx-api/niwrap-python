@@ -104,6 +104,59 @@ def v_3d_par2_afni_pl_params(
     return params
 
 
+def v_3d_par2_afni_pl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dPar2AfniPlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("skip_outliers_test", False) is None:
+        raise StyxValidationError("`skip_outliers_test` must not be None")
+    if not isinstance(params["skip_outliers_test"], bool):
+        raise StyxValidationError(f'`skip_outliers_test` has the wrong type: Received `{type(params.get("skip_outliers_test", False))}` expected `bool`')
+    if params.get("output_nifti", False) is None:
+        raise StyxValidationError("`output_nifti` must not be None")
+    if not isinstance(params["output_nifti"], bool):
+        raise StyxValidationError(f'`output_nifti` has the wrong type: Received `{type(params.get("output_nifti", False))}` expected `bool`')
+    if params.get("output_analyze", False) is None:
+        raise StyxValidationError("`output_analyze` must not be None")
+    if not isinstance(params["output_analyze"], bool):
+        raise StyxValidationError(f'`output_analyze` has the wrong type: Received `{type(params.get("output_analyze", False))}` expected `bool`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("gzip_files", False) is None:
+        raise StyxValidationError("`gzip_files` must not be None")
+    if not isinstance(params["gzip_files"], bool):
+        raise StyxValidationError(f'`gzip_files` has the wrong type: Received `{type(params.get("gzip_files", False))}` expected `bool`')
+    if params.get("byte_swap_2", False) is None:
+        raise StyxValidationError("`byte_swap_2` must not be None")
+    if not isinstance(params["byte_swap_2"], bool):
+        raise StyxValidationError(f'`byte_swap_2` has the wrong type: Received `{type(params.get("byte_swap_2", False))}` expected `bool`')
+    if params.get("byte_swap_4", False) is None:
+        raise StyxValidationError("`byte_swap_4` must not be None")
+    if not isinstance(params["byte_swap_4"], bool):
+        raise StyxValidationError(f'`byte_swap_4` has the wrong type: Received `{type(params.get("byte_swap_4", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def v_3d_par2_afni_pl_cargs(
     params: V3dPar2AfniPlParameters,
     execution: Execution,
@@ -183,6 +236,7 @@ def v_3d_par2_afni_pl_execute(
     Returns:
         NamedTuple of outputs (described in `V3dPar2AfniPlOutputs`).
     """
+    v_3d_par2_afni_pl_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_PAR2_AFNI_PL_METADATA)
     params = execution.params(params)

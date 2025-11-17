@@ -120,6 +120,61 @@ def fsread_annot_params(
     return params
 
 
+def fsread_annot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsreadAnnotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("fscmap", None) is not None:
+        if not isinstance(params["fscmap"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fscmap` has the wrong type: Received `{type(params.get("fscmap", None))}` expected `InputPathType | None`')
+    if params.get("fscmap_range", None) is not None:
+        if not isinstance(params["fscmap_range"], list):
+            raise StyxValidationError(f'`fscmap_range` has the wrong type: Received `{type(params.get("fscmap_range", None))}` expected `list[float] | None`')
+        if len(params["fscmap_range"]) == 2:
+            raise StyxValidationError("Parameter `fscmap_range` must contain exactly 2 elements")
+        for e in params["fscmap_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fscmap_range` has the wrong type: Received `{type(params.get("fscmap_range", None))}` expected `list[float] | None`')
+    if params.get("fsversion", None) is not None:
+        if not isinstance(params["fsversion"], str):
+            raise StyxValidationError(f'`fsversion` has the wrong type: Received `{type(params.get("fsversion", None))}` expected `str | None`')
+    if params.get("col_1d", None) is not None:
+        if not isinstance(params["col_1d"], str):
+            raise StyxValidationError(f'`col_1d` has the wrong type: Received `{type(params.get("col_1d", None))}` expected `str | None`')
+    if params.get("roi_1d", None) is not None:
+        if not isinstance(params["roi_1d"], str):
+            raise StyxValidationError(f'`roi_1d` has the wrong type: Received `{type(params.get("roi_1d", None))}` expected `str | None`')
+    if params.get("cmap_1d", None) is not None:
+        if not isinstance(params["cmap_1d"], str):
+            raise StyxValidationError(f'`cmap_1d` has the wrong type: Received `{type(params.get("cmap_1d", None))}` expected `str | None`')
+    if params.get("show_fscmap", False) is None:
+        raise StyxValidationError("`show_fscmap` must not be None")
+    if not isinstance(params["show_fscmap"], bool):
+        raise StyxValidationError(f'`show_fscmap` has the wrong type: Received `{type(params.get("show_fscmap", False))}` expected `bool`')
+    if params.get("dset", None) is not None:
+        if not isinstance(params["dset"], str):
+            raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def fsread_annot_cargs(
     params: FsreadAnnotParameters,
     execution: Execution,
@@ -229,6 +284,7 @@ def fsread_annot_execute(
     Returns:
         NamedTuple of outputs (described in `FsreadAnnotOutputs`).
     """
+    fsread_annot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSREAD_ANNOT_METADATA)
     params = execution.params(params)

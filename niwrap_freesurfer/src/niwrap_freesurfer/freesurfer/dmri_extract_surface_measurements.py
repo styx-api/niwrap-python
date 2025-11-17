@@ -116,6 +116,70 @@ def dmri_extract_surface_measurements_params(
     return params
 
 
+def dmri_extract_surface_measurements_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriExtractSurfaceMeasurementsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("streamline_file", None) is None:
+        raise StyxValidationError("`streamline_file` must not be None")
+    if not isinstance(params["streamline_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`streamline_file` has the wrong type: Received `{type(params.get("streamline_file", None))}` expected `InputPathType`')
+    if params.get("lh_surface_file", None) is None:
+        raise StyxValidationError("`lh_surface_file` must not be None")
+    if not isinstance(params["lh_surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lh_surface_file` has the wrong type: Received `{type(params.get("lh_surface_file", None))}` expected `InputPathType`')
+    if params.get("lh_thickness_overlay", None) is None:
+        raise StyxValidationError("`lh_thickness_overlay` must not be None")
+    if not isinstance(params["lh_thickness_overlay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lh_thickness_overlay` has the wrong type: Received `{type(params.get("lh_thickness_overlay", None))}` expected `InputPathType`')
+    if params.get("lh_curvature_overlay", None) is None:
+        raise StyxValidationError("`lh_curvature_overlay` must not be None")
+    if not isinstance(params["lh_curvature_overlay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lh_curvature_overlay` has the wrong type: Received `{type(params.get("lh_curvature_overlay", None))}` expected `InputPathType`')
+    if params.get("rh_surface_file", None) is None:
+        raise StyxValidationError("`rh_surface_file` must not be None")
+    if not isinstance(params["rh_surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rh_surface_file` has the wrong type: Received `{type(params.get("rh_surface_file", None))}` expected `InputPathType`')
+    if params.get("rh_thickness_overlay", None) is None:
+        raise StyxValidationError("`rh_thickness_overlay` must not be None")
+    if not isinstance(params["rh_thickness_overlay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rh_thickness_overlay` has the wrong type: Received `{type(params.get("rh_thickness_overlay", None))}` expected `InputPathType`')
+    if params.get("rh_curvature_overlay", None) is None:
+        raise StyxValidationError("`rh_curvature_overlay` must not be None")
+    if not isinstance(params["rh_curvature_overlay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rh_curvature_overlay` has the wrong type: Received `{type(params.get("rh_curvature_overlay", None))}` expected `InputPathType`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+    if params.get("reference_image", None) is not None:
+        if not isinstance(params["reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType | None`')
+    if params.get("reference_image_anatomical", None) is not None:
+        if not isinstance(params["reference_image_anatomical"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image_anatomical` has the wrong type: Received `{type(params.get("reference_image_anatomical", None))}` expected `InputPathType | None`')
+    if params.get("transformation", None) is not None:
+        if not isinstance(params["transformation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transformation` has the wrong type: Received `{type(params.get("transformation", None))}` expected `InputPathType | None`')
+    if params.get("annotation_file", None) is not None:
+        if not isinstance(params["annotation_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annotation_file` has the wrong type: Received `{type(params.get("annotation_file", None))}` expected `InputPathType | None`')
+    if params.get("fa_options", None) is not None:
+        if not isinstance(params["fa_options"], list):
+            raise StyxValidationError(f'`fa_options` has the wrong type: Received `{type(params.get("fa_options", None))}` expected `list[str] | None`')
+        for e in params["fa_options"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`fa_options` has the wrong type: Received `{type(params.get("fa_options", None))}` expected `list[str] | None`')
+
+
 def dmri_extract_surface_measurements_cargs(
     params: DmriExtractSurfaceMeasurementsParameters,
     execution: Execution,
@@ -229,6 +293,7 @@ def dmri_extract_surface_measurements_execute(
     Returns:
         NamedTuple of outputs (described in `DmriExtractSurfaceMeasurementsOutputs`).
     """
+    dmri_extract_surface_measurements_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA)
     params = execution.params(params)

@@ -115,6 +115,66 @@ def v__djunct_ssw_intermed_edge_imgs_params(
     return params
 
 
+def v__djunct_ssw_intermed_edge_imgs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunctSswIntermedEdgeImgsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("ulay", None) is None:
+        raise StyxValidationError("`ulay` must not be None")
+    if not isinstance(params["ulay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ulay` has the wrong type: Received `{type(params.get("ulay", None))}` expected `InputPathType`')
+    if params.get("olay", None) is None:
+        raise StyxValidationError("`olay` must not be None")
+    if not isinstance(params["olay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`olay` has the wrong type: Received `{type(params.get("olay", None))}` expected `InputPathType`')
+    if params.get("box_focus_slices", None) is not None:
+        if not isinstance(params["box_focus_slices"], str):
+            raise StyxValidationError(f'`box_focus_slices` has the wrong type: Received `{type(params.get("box_focus_slices", None))}` expected `str | None`')
+    if params.get("montgap", None) is not None:
+        if not isinstance(params["montgap"], str):
+            raise StyxValidationError(f'`montgap` has the wrong type: Received `{type(params.get("montgap", None))}` expected `str | None`')
+    if params.get("cbar", None) is not None:
+        if not isinstance(params["cbar"], str):
+            raise StyxValidationError(f'`cbar` has the wrong type: Received `{type(params.get("cbar", None))}` expected `str | None`')
+    if params.get("ulay_range", None) is not None:
+        if not isinstance(params["ulay_range"], str):
+            raise StyxValidationError(f'`ulay_range` has the wrong type: Received `{type(params.get("ulay_range", None))}` expected `str | None`')
+    if params.get("montx", None) is not None:
+        if not isinstance(params["montx"], str):
+            raise StyxValidationError(f'`montx` has the wrong type: Received `{type(params.get("montx", None))}` expected `str | None`')
+    if params.get("monty", None) is not None:
+        if not isinstance(params["monty"], str):
+            raise StyxValidationError(f'`monty` has the wrong type: Received `{type(params.get("monty", None))}` expected `str | None`')
+    if params.get("help_view", False) is None:
+        raise StyxValidationError("`help_view` must not be None")
+    if not isinstance(params["help_view"], bool):
+        raise StyxValidationError(f'`help_view` has the wrong type: Received `{type(params.get("help_view", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def v__djunct_ssw_intermed_edge_imgs_cargs(
     params: VDjunctSswIntermedEdgeImgsParameters,
     execution: Execution,
@@ -222,6 +282,7 @@ def v__djunct_ssw_intermed_edge_imgs_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunctSswIntermedEdgeImgsOutputs`).
     """
+    v__djunct_ssw_intermed_edge_imgs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA)
     params = execution.params(params)

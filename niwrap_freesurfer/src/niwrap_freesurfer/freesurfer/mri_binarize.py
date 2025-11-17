@@ -238,6 +238,144 @@ def mri_binarize_params(
     return params
 
 
+def mri_binarize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriBinarizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("min_threshold", None) is not None:
+        if not isinstance(params["min_threshold"], (float, int)):
+            raise StyxValidationError(f'`min_threshold` has the wrong type: Received `{type(params.get("min_threshold", None))}` expected `float | None`')
+    if params.get("max_threshold", None) is not None:
+        if not isinstance(params["max_threshold"], (float, int)):
+            raise StyxValidationError(f'`max_threshold` has the wrong type: Received `{type(params.get("max_threshold", None))}` expected `float | None`')
+    if params.get("pct_threshold", None) is not None:
+        if not isinstance(params["pct_threshold"], (float, int)):
+            raise StyxValidationError(f'`pct_threshold` has the wrong type: Received `{type(params.get("pct_threshold", None))}` expected `float | None`')
+    if params.get("rmin", None) is not None:
+        if not isinstance(params["rmin"], (float, int)):
+            raise StyxValidationError(f'`rmin` has the wrong type: Received `{type(params.get("rmin", None))}` expected `float | None`')
+    if params.get("rmax", None) is not None:
+        if not isinstance(params["rmax"], (float, int)):
+            raise StyxValidationError(f'`rmax` has the wrong type: Received `{type(params.get("rmax", None))}` expected `float | None`')
+    if params.get("fdr_threshold", None) is not None:
+        if not isinstance(params["fdr_threshold"], (float, int)):
+            raise StyxValidationError(f'`fdr_threshold` has the wrong type: Received `{type(params.get("fdr_threshold", None))}` expected `float | None`')
+    if params.get("match_values", None) is not None:
+        if not isinstance(params["match_values"], list):
+            raise StyxValidationError(f'`match_values` has the wrong type: Received `{type(params.get("match_values", None))}` expected `list[float] | None`')
+        for e in params["match_values"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`match_values` has the wrong type: Received `{type(params.get("match_values", None))}` expected `list[float] | None`')
+    if params.get("replace_values", None) is not None:
+        if not isinstance(params["replace_values"], list):
+            raise StyxValidationError(f'`replace_values` has the wrong type: Received `{type(params.get("replace_values", None))}` expected `list[float] | None`')
+        for e in params["replace_values"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`replace_values` has the wrong type: Received `{type(params.get("replace_values", None))}` expected `list[float] | None`')
+    if params.get("binval", None) is not None:
+        if not isinstance(params["binval"], (float, int)):
+            raise StyxValidationError(f'`binval` has the wrong type: Received `{type(params.get("binval", None))}` expected `float | None`')
+    if params.get("binval_not", None) is not None:
+        if not isinstance(params["binval_not"], (float, int)):
+            raise StyxValidationError(f'`binval_not` has the wrong type: Received `{type(params.get("binval_not", None))}` expected `float | None`')
+    if params.get("frame", None) is not None:
+        if not isinstance(params["frame"], (float, int)):
+            raise StyxValidationError(f'`frame` has the wrong type: Received `{type(params.get("frame", None))}` expected `float | None`')
+    if params.get("merge_volume", None) is not None:
+        if not isinstance(params["merge_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`merge_volume` has the wrong type: Received `{type(params.get("merge_volume", None))}` expected `InputPathType | None`')
+    if params.get("mask_volume", None) is not None:
+        if not isinstance(params["mask_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `InputPathType | None`')
+    if params.get("mask_threshold", None) is not None:
+        if not isinstance(params["mask_threshold"], (float, int)):
+            raise StyxValidationError(f'`mask_threshold` has the wrong type: Received `{type(params.get("mask_threshold", None))}` expected `float | None`')
+    if params.get("surf_name", None) is not None:
+        if not isinstance(params["surf_name"], str):
+            raise StyxValidationError(f'`surf_name` has the wrong type: Received `{type(params.get("surf_name", None))}` expected `str | None`')
+    if params.get("surf_smooth", None) is not None:
+        if not isinstance(params["surf_smooth"], (float, int)):
+            raise StyxValidationError(f'`surf_smooth` has the wrong type: Received `{type(params.get("surf_smooth", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("ctx_wm_flag", False) is None:
+        raise StyxValidationError("`ctx_wm_flag` must not be None")
+    if not isinstance(params["ctx_wm_flag"], bool):
+        raise StyxValidationError(f'`ctx_wm_flag` has the wrong type: Received `{type(params.get("ctx_wm_flag", False))}` expected `bool`')
+    if params.get("all_wm_flag", False) is None:
+        raise StyxValidationError("`all_wm_flag` must not be None")
+    if not isinstance(params["all_wm_flag"], bool):
+        raise StyxValidationError(f'`all_wm_flag` has the wrong type: Received `{type(params.get("all_wm_flag", False))}` expected `bool`')
+    if params.get("ventricles_flag", False) is None:
+        raise StyxValidationError("`ventricles_flag` must not be None")
+    if not isinstance(params["ventricles_flag"], bool):
+        raise StyxValidationError(f'`ventricles_flag` has the wrong type: Received `{type(params.get("ventricles_flag", False))}` expected `bool`')
+    if params.get("wm_vcsf_flag", False) is None:
+        raise StyxValidationError("`wm_vcsf_flag` must not be None")
+    if not isinstance(params["wm_vcsf_flag"], bool):
+        raise StyxValidationError(f'`wm_vcsf_flag` has the wrong type: Received `{type(params.get("wm_vcsf_flag", False))}` expected `bool`')
+    if params.get("gm_flag", False) is None:
+        raise StyxValidationError("`gm_flag` must not be None")
+    if not isinstance(params["gm_flag"], bool):
+        raise StyxValidationError(f'`gm_flag` has the wrong type: Received `{type(params.get("gm_flag", False))}` expected `bool`')
+    if params.get("subcort_gm_flag", False) is None:
+        raise StyxValidationError("`subcort_gm_flag` must not be None")
+    if not isinstance(params["subcort_gm_flag"], bool):
+        raise StyxValidationError(f'`subcort_gm_flag` has the wrong type: Received `{type(params.get("subcort_gm_flag", False))}` expected `bool`')
+    if params.get("scm_lh_flag", False) is None:
+        raise StyxValidationError("`scm_lh_flag` must not be None")
+    if not isinstance(params["scm_lh_flag"], bool):
+        raise StyxValidationError(f'`scm_lh_flag` has the wrong type: Received `{type(params.get("scm_lh_flag", False))}` expected `bool`')
+    if params.get("scm_rh_flag", False) is None:
+        raise StyxValidationError("`scm_rh_flag` must not be None")
+    if not isinstance(params["scm_rh_flag"], bool):
+        raise StyxValidationError(f'`scm_rh_flag` has the wrong type: Received `{type(params.get("scm_rh_flag", False))}` expected `bool`')
+    if params.get("zero_edges_flag", False) is None:
+        raise StyxValidationError("`zero_edges_flag` must not be None")
+    if not isinstance(params["zero_edges_flag"], bool):
+        raise StyxValidationError(f'`zero_edges_flag` has the wrong type: Received `{type(params.get("zero_edges_flag", False))}` expected `bool`')
+    if params.get("zero_slice_edges_flag", False) is None:
+        raise StyxValidationError("`zero_slice_edges_flag` must not be None")
+    if not isinstance(params["zero_slice_edges_flag"], bool):
+        raise StyxValidationError(f'`zero_slice_edges_flag` has the wrong type: Received `{type(params.get("zero_slice_edges_flag", False))}` expected `bool`')
+    if params.get("dilate_vertex", None) is not None:
+        if not isinstance(params["dilate_vertex"], str):
+            raise StyxValidationError(f'`dilate_vertex` has the wrong type: Received `{type(params.get("dilate_vertex", None))}` expected `str | None`')
+    if params.get("remove_islands_flag", False) is None:
+        raise StyxValidationError("`remove_islands_flag` must not be None")
+    if not isinstance(params["remove_islands_flag"], bool):
+        raise StyxValidationError(f'`remove_islands_flag` has the wrong type: Received `{type(params.get("remove_islands_flag", False))}` expected `bool`')
+    if params.get("fill_holes_flag", False) is None:
+        raise StyxValidationError("`fill_holes_flag` must not be None")
+    if not isinstance(params["fill_holes_flag"], bool):
+        raise StyxValidationError(f'`fill_holes_flag` has the wrong type: Received `{type(params.get("fill_holes_flag", False))}` expected `bool`')
+    if params.get("noverbose_flag", False) is None:
+        raise StyxValidationError("`noverbose_flag` must not be None")
+    if not isinstance(params["noverbose_flag"], bool):
+        raise StyxValidationError(f'`noverbose_flag` has the wrong type: Received `{type(params.get("noverbose_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def mri_binarize_cargs(
     params: MriBinarizeParameters,
     execution: Execution,
@@ -422,6 +560,7 @@ def mri_binarize_execute(
     Returns:
         NamedTuple of outputs (described in `MriBinarizeOutputs`).
     """
+    mri_binarize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_BINARIZE_METADATA)
     params = execution.params(params)

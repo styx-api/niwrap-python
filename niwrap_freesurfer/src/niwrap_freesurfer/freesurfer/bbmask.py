@@ -90,6 +90,54 @@ def bbmask_params(
     return params
 
 
+def bbmask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BbmaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], list):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[InputPathType]`')
+    if len(params["mask"]) == 2:
+        raise StyxValidationError("Parameter `mask` must contain exactly 2 elements")
+    for e in params["mask"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[InputPathType]`')
+    if params.get("src_volumes", None) is not None:
+        if not isinstance(params["src_volumes"], list):
+            raise StyxValidationError(f'`src_volumes` has the wrong type: Received `{type(params.get("src_volumes", None))}` expected `list[InputPathType] | None`')
+        if len(params["src_volumes"]) >= 2:
+            raise StyxValidationError("Parameter `src_volumes` must contain at least 2 elements")
+        for e in params["src_volumes"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`src_volumes` has the wrong type: Received `{type(params.get("src_volumes", None))}` expected `list[InputPathType] | None`')
+    if params.get("npad", None) is not None:
+        if not isinstance(params["npad"], (float, int)):
+            raise StyxValidationError(f'`npad` has the wrong type: Received `{type(params.get("npad", None))}` expected `float | None`')
+    if params.get("registration", None) is not None:
+        if not isinstance(params["registration"], list):
+            raise StyxValidationError(f'`registration` has the wrong type: Received `{type(params.get("registration", None))}` expected `list[InputPathType] | None`')
+        if len(params["registration"]) == 2:
+            raise StyxValidationError("Parameter `registration` must contain exactly 2 elements")
+        for e in params["registration"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`registration` has the wrong type: Received `{type(params.get("registration", None))}` expected `list[InputPathType] | None`')
+    if params.get("regheader", None) is not None:
+        if not isinstance(params["regheader"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`regheader` has the wrong type: Received `{type(params.get("regheader", None))}` expected `InputPathType | None`')
+    if params.get("sub2src", None) is not None:
+        if not isinstance(params["sub2src"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sub2src` has the wrong type: Received `{type(params.get("sub2src", None))}` expected `InputPathType | None`')
+
+
 def bbmask_cargs(
     params: BbmaskParameters,
     execution: Execution,
@@ -181,6 +229,7 @@ def bbmask_execute(
     Returns:
         NamedTuple of outputs (described in `BbmaskOutputs`).
     """
+    bbmask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BBMASK_METADATA)
     params = execution.params(params)

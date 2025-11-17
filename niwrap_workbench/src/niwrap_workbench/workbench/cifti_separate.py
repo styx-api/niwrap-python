@@ -137,6 +137,34 @@ def cifti_separate_volume_all_params(
     return params
 
 
+def cifti_separate_volume_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateVolumeAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("roi-out", None) is not None:
+        if not isinstance(params["roi-out"], str):
+            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("label-out", None) is not None:
+        if not isinstance(params["label-out"], str):
+            raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str | None`')
+    if params.get("crop", False) is None:
+        raise StyxValidationError("`crop` must not be None")
+    if not isinstance(params["crop"], bool):
+        raise StyxValidationError(f'`crop` has the wrong type: Received `{type(params.get("crop", False))}` expected `bool`')
+
+
 def cifti_separate_volume_all_cargs(
     params: CiftiSeparateVolumeAllParameters,
     execution: Execution,
@@ -221,6 +249,31 @@ def cifti_separate_label_params(
     return params
 
 
+def cifti_separate_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("roi-out", None) is not None:
+        if not isinstance(params["roi-out"], str):
+            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+
+
 def cifti_separate_label_cargs(
     params: CiftiSeparateLabelParameters,
     execution: Execution,
@@ -301,6 +354,31 @@ def cifti_separate_metric_params(
     if roi_out is not None:
         params["roi-out"] = roi_out
     return params
+
+
+def cifti_separate_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("roi-out", None) is not None:
+        if not isinstance(params["roi-out"], str):
+            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
 
 
 def cifti_separate_metric_cargs(
@@ -387,6 +465,35 @@ def cifti_separate_volume_params(
     if roi_out is not None:
         params["roi-out"] = roi_out
     return params
+
+
+def cifti_separate_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("roi-out", None) is not None:
+        if not isinstance(params["roi-out"], str):
+            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("crop", False) is None:
+        raise StyxValidationError("`crop` must not be None")
+    if not isinstance(params["crop"], bool):
+        raise StyxValidationError(f'`crop` has the wrong type: Received `{type(params.get("crop", False))}` expected `bool`')
 
 
 def cifti_separate_volume_cargs(
@@ -489,6 +596,45 @@ def cifti_separate_params(
     if volume is not None:
         params["volume"] = volume
     return params
+
+
+def cifti_separate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiSeparateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-all", None) is not None:
+        cifti_separate_volume_all_validate(params["volume-all"])
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], list):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiSeparateLabelParameters] | None`')
+        for e in params["label"]:
+            cifti_separate_label_validate(e)
+    if params.get("metric", None) is not None:
+        if not isinstance(params["metric"], list):
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiSeparateMetricParameters] | None`')
+        for e in params["metric"]:
+            cifti_separate_metric_validate(e)
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], list):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiSeparateVolumeParameters] | None`')
+        for e in params["volume"]:
+            cifti_separate_volume_validate(e)
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_separate_cargs(
@@ -602,6 +748,7 @@ def cifti_separate_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiSeparateOutputs`).
     """
+    cifti_separate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_SEPARATE_METADATA)
     params = execution.params(params)

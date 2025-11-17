@@ -129,6 +129,86 @@ def v_3ddot_params(
     return params
 
 
+def v_3ddot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3ddotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_datasets", None) is None:
+        raise StyxValidationError("`input_datasets` must not be None")
+    if not isinstance(params["input_datasets"], list):
+        raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+    for e in params["input_datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mrange", None) is not None:
+        if not isinstance(params["mrange"], list):
+            raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+        if len(params["mrange"]) == 2:
+            raise StyxValidationError("Parameter `mrange` must contain exactly 2 elements")
+        for e in params["mrange"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+    if params.get("demean", False) is None:
+        raise StyxValidationError("`demean` must not be None")
+    if not isinstance(params["demean"], bool):
+        raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool`')
+    if params.get("docor", False) is None:
+        raise StyxValidationError("`docor` must not be None")
+    if not isinstance(params["docor"], bool):
+        raise StyxValidationError(f'`docor` has the wrong type: Received `{type(params.get("docor", False))}` expected `bool`')
+    if params.get("dodot", False) is None:
+        raise StyxValidationError("`dodot` must not be None")
+    if not isinstance(params["dodot"], bool):
+        raise StyxValidationError(f'`dodot` has the wrong type: Received `{type(params.get("dodot", False))}` expected `bool`')
+    if params.get("docoef", False) is None:
+        raise StyxValidationError("`docoef` must not be None")
+    if not isinstance(params["docoef"], bool):
+        raise StyxValidationError(f'`docoef` has the wrong type: Received `{type(params.get("docoef", False))}` expected `bool`')
+    if params.get("dosums", False) is None:
+        raise StyxValidationError("`dosums` must not be None")
+    if not isinstance(params["dosums"], bool):
+        raise StyxValidationError(f'`dosums` has the wrong type: Received `{type(params.get("dosums", False))}` expected `bool`')
+    if params.get("doeta2", False) is None:
+        raise StyxValidationError("`doeta2` must not be None")
+    if not isinstance(params["doeta2"], bool):
+        raise StyxValidationError(f'`doeta2` has the wrong type: Received `{type(params.get("doeta2", False))}` expected `bool`')
+    if params.get("dodice", False) is None:
+        raise StyxValidationError("`dodice` must not be None")
+    if not isinstance(params["dodice"], bool):
+        raise StyxValidationError(f'`dodice` has the wrong type: Received `{type(params.get("dodice", False))}` expected `bool`')
+    if params.get("show_labels", False) is None:
+        raise StyxValidationError("`show_labels` must not be None")
+    if not isinstance(params["show_labels"], bool):
+        raise StyxValidationError(f'`show_labels` has the wrong type: Received `{type(params.get("show_labels", False))}` expected `bool`')
+    if params.get("upper", False) is None:
+        raise StyxValidationError("`upper` must not be None")
+    if not isinstance(params["upper"], bool):
+        raise StyxValidationError(f'`upper` has the wrong type: Received `{type(params.get("upper", False))}` expected `bool`')
+    if params.get("full", False) is None:
+        raise StyxValidationError("`full` must not be None")
+    if not isinstance(params["full"], bool):
+        raise StyxValidationError(f'`full` has the wrong type: Received `{type(params.get("full", False))}` expected `bool`')
+    if params.get("1D", False) is None:
+        raise StyxValidationError("`1D` must not be None")
+    if not isinstance(params["1D"], bool):
+        raise StyxValidationError(f'`1D` has the wrong type: Received `{type(params.get("1D", False))}` expected `bool`')
+    if params.get("NIML", False) is None:
+        raise StyxValidationError("`NIML` must not be None")
+    if not isinstance(params["NIML"], bool):
+        raise StyxValidationError(f'`NIML` has the wrong type: Received `{type(params.get("NIML", False))}` expected `bool`')
+
+
 def v_3ddot_cargs(
     params: V3ddotParameters,
     execution: Execution,
@@ -221,6 +301,7 @@ def v_3ddot_execute(
     Returns:
         NamedTuple of outputs (described in `V3ddotOutputs`).
     """
+    v_3ddot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DDOT_METADATA)
     params = execution.params(params)

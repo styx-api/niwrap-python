@@ -128,6 +128,75 @@ def v__align_centers_params(
     return params
 
 
+def v__align_centers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAlignCentersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base", None) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `InputPathType`')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+    if params.get("children", None) is not None:
+        if not isinstance(params["children"], list):
+            raise StyxValidationError(f'`children` has the wrong type: Received `{type(params.get("children", None))}` expected `list[InputPathType] | None`')
+        for e in params["children"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`children` has the wrong type: Received `{type(params.get("children", None))}` expected `list[InputPathType] | None`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("matrix_only", False) is None:
+        raise StyxValidationError("`matrix_only` must not be None")
+    if not isinstance(params["matrix_only"], bool):
+        raise StyxValidationError(f'`matrix_only` has the wrong type: Received `{type(params.get("matrix_only", False))}` expected `bool`')
+    if params.get("matrix_only_no_dset", False) is None:
+        raise StyxValidationError("`matrix_only_no_dset` must not be None")
+    if not isinstance(params["matrix_only_no_dset"], bool):
+        raise StyxValidationError(f'`matrix_only_no_dset` has the wrong type: Received `{type(params.get("matrix_only_no_dset", False))}` expected `bool`')
+    if params.get("no_cp", False) is None:
+        raise StyxValidationError("`no_cp` must not be None")
+    if not isinstance(params["no_cp"], bool):
+        raise StyxValidationError(f'`no_cp` has the wrong type: Received `{type(params.get("no_cp", False))}` expected `bool`')
+    if params.get("center_grid", False) is None:
+        raise StyxValidationError("`center_grid` must not be None")
+    if not isinstance(params["center_grid"], bool):
+        raise StyxValidationError(f'`center_grid` has the wrong type: Received `{type(params.get("center_grid", False))}` expected `bool`')
+    if params.get("center_cm", False) is None:
+        raise StyxValidationError("`center_cm` must not be None")
+    if not isinstance(params["center_cm"], bool):
+        raise StyxValidationError(f'`center_cm` has the wrong type: Received `{type(params.get("center_cm", False))}` expected `bool`')
+    if params.get("center_cm_no_amask", False) is None:
+        raise StyxValidationError("`center_cm_no_amask` must not be None")
+    if not isinstance(params["center_cm_no_amask"], bool):
+        raise StyxValidationError(f'`center_cm_no_amask` has the wrong type: Received `{type(params.get("center_cm_no_amask", False))}` expected `bool`')
+    if params.get("shift_xform", None) is not None:
+        if not isinstance(params["shift_xform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`shift_xform` has the wrong type: Received `{type(params.get("shift_xform", None))}` expected `InputPathType | None`')
+    if params.get("shift_xform_inv", None) is not None:
+        if not isinstance(params["shift_xform_inv"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`shift_xform_inv` has the wrong type: Received `{type(params.get("shift_xform_inv", None))}` expected `InputPathType | None`')
+
+
 def v__align_centers_cargs(
     params: VAlignCentersParameters,
     execution: Execution,
@@ -226,6 +295,7 @@ def v__align_centers_execute(
     Returns:
         NamedTuple of outputs (described in `VAlignCentersOutputs`).
     """
+    v__align_centers_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ALIGN_CENTERS_METADATA)
     params = execution.params(params)

@@ -81,6 +81,42 @@ def gauss_4dfp_params(
     return params
 
 
+def gauss_4dfp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Gauss4dfpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], str):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `str`')
+    if params.get("f_half", None) is None:
+        raise StyxValidationError("`f_half` must not be None")
+    if not isinstance(params["f_half"], (float, int)):
+        raise StyxValidationError(f'`f_half` has the wrong type: Received `{type(params.get("f_half", None))}` expected `float`')
+    if params.get("output_root", None) is not None:
+        if not isinstance(params["output_root"], str):
+            raise StyxValidationError(f'`output_root` has the wrong type: Received `{type(params.get("output_root", None))}` expected `str | None`')
+    if params.get("endian_flag", None) is not None:
+        if not isinstance(params["endian_flag"], str):
+            raise StyxValidationError(f'`endian_flag` has the wrong type: Received `{type(params.get("endian_flag", None))}` expected `str | None`')
+    if params.get("wrap_flag", False) is None:
+        raise StyxValidationError("`wrap_flag` must not be None")
+    if not isinstance(params["wrap_flag"], bool):
+        raise StyxValidationError(f'`wrap_flag` has the wrong type: Received `{type(params.get("wrap_flag", False))}` expected `bool`')
+    if params.get("differentiate_flag", False) is None:
+        raise StyxValidationError("`differentiate_flag` must not be None")
+    if not isinstance(params["differentiate_flag"], bool):
+        raise StyxValidationError(f'`differentiate_flag` has the wrong type: Received `{type(params.get("differentiate_flag", False))}` expected `bool`')
+
+
 def gauss_4dfp_cargs(
     params: Gauss4dfpParameters,
     execution: Execution,
@@ -151,6 +187,7 @@ def gauss_4dfp_execute(
     Returns:
         NamedTuple of outputs (described in `Gauss4dfpOutputs`).
     """
+    gauss_4dfp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GAUSS_4DFP_METADATA)
     params = execution.params(params)

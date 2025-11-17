@@ -124,18 +124,20 @@ def fixelfilter_input_cargs_dyn_fn(
     }.get(t)
 
 
-def fixelfilter_input_outputs_dyn_fn(
+def fixelfilter_input_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": fixelfilter_various_string_validate,
+        "VariousFile": fixelfilter_various_file_validate,
     }.get(t)
 
 
@@ -156,18 +158,20 @@ def fixelfilter_output_cargs_dyn_fn(
     }.get(t)
 
 
-def fixelfilter_output_outputs_dyn_fn(
+def fixelfilter_output_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString_1": fixelfilter_various_string_1_validate,
+        "VariousFile_1": fixelfilter_various_file_1_validate,
     }.get(t)
 
 
@@ -190,6 +194,28 @@ def fixelfilter_config_params(
         "value": value,
     }
     return params
+
+
+def fixelfilter_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelfilterConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def fixelfilter_config_cargs(
@@ -230,6 +256,24 @@ def fixelfilter_various_string_params(
     return params
 
 
+def fixelfilter_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelfilterVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def fixelfilter_various_string_cargs(
     params: FixelfilterVariousStringParameters,
     execution: Execution,
@@ -264,6 +308,24 @@ def fixelfilter_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def fixelfilter_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelfilterVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def fixelfilter_various_file_cargs(
@@ -302,6 +364,24 @@ def fixelfilter_various_string_1_params(
     return params
 
 
+def fixelfilter_various_string_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelfilterVariousString1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def fixelfilter_various_string_1_cargs(
     params: FixelfilterVariousString1Parameters,
     execution: Execution,
@@ -336,6 +416,24 @@ def fixelfilter_various_file_1_params(
         "obj": obj,
     }
     return params
+
+
+def fixelfilter_various_file_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelfilterVariousFile1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def fixelfilter_various_file_1_cargs(
@@ -447,6 +545,89 @@ def fixelfilter_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def fixelfilter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelfilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matrix", None) is None:
+        raise StyxValidationError("`matrix` must not be None")
+    if not isinstance(params["matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `InputPathType`')
+    if params.get("threshold_value", None) is not None:
+        if not isinstance(params["threshold_value"], (float, int)):
+            raise StyxValidationError(f'`threshold_value` has the wrong type: Received `{type(params.get("threshold_value", None))}` expected `float | None`')
+    if params.get("threshold_connectivity", None) is not None:
+        if not isinstance(params["threshold_connectivity"], (float, int)):
+            raise StyxValidationError(f'`threshold_connectivity` has the wrong type: Received `{type(params.get("threshold_connectivity", None))}` expected `float | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("minweight", None) is not None:
+        if not isinstance(params["minweight"], (float, int)):
+            raise StyxValidationError(f'`minweight` has the wrong type: Received `{type(params.get("minweight", None))}` expected `float | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelfilterConfigParameters] | None`')
+        for e in params["config"]:
+            fixelfilter_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["input"])}\'')
+    if "@type" not in params["input"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    fixelfilter_input_validate_dyn_fn(params["input"]["@type"])(params["input"])
+    if params.get("filter", None) is None:
+        raise StyxValidationError("`filter` must not be None")
+    if not isinstance(params["filter"], str):
+        raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `str`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
+    if "@type" not in params["output"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    fixelfilter_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
 
 
 def fixelfilter_cargs(
@@ -566,6 +747,7 @@ def fixelfilter_execute(
     Returns:
         NamedTuple of outputs (described in `FixelfilterOutputs`).
     """
+    fixelfilter_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIXELFILTER_METADATA)
     params = execution.params(params)

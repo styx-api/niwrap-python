@@ -132,6 +132,81 @@ def mri_z2p_params(
     return params
 
 
+def mri_z2p_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriZ2pParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("z_volume", None) is None:
+        raise StyxValidationError("`z_volume` must not be None")
+    if not isinstance(params["z_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`z_volume` has the wrong type: Received `{type(params.get("z_volume", None))}` expected `InputPathType`')
+    if params.get("p_volume", None) is None:
+        raise StyxValidationError("`p_volume` must not be None")
+    if not isinstance(params["p_volume"], str):
+        raise StyxValidationError(f'`p_volume` has the wrong type: Received `{type(params.get("p_volume", None))}` expected `str`')
+    if params.get("sig_volume", None) is None:
+        raise StyxValidationError("`sig_volume` must not be None")
+    if not isinstance(params["sig_volume"], str):
+        raise StyxValidationError(f'`sig_volume` has the wrong type: Received `{type(params.get("sig_volume", None))}` expected `str`')
+    if params.get("mask_volume", None) is not None:
+        if not isinstance(params["mask_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `InputPathType | None`')
+    if params.get("two_sided", False) is None:
+        raise StyxValidationError("`two_sided` must not be None")
+    if not isinstance(params["two_sided"], bool):
+        raise StyxValidationError(f'`two_sided` has the wrong type: Received `{type(params.get("two_sided", False))}` expected `bool`')
+    if params.get("one_sided", False) is None:
+        raise StyxValidationError("`one_sided` must not be None")
+    if not isinstance(params["one_sided"], bool):
+        raise StyxValidationError(f'`one_sided` has the wrong type: Received `{type(params.get("one_sided", False))}` expected `bool`')
+    if params.get("signed", False) is None:
+        raise StyxValidationError("`signed` must not be None")
+    if not isinstance(params["signed"], bool):
+        raise StyxValidationError(f'`signed` has the wrong type: Received `{type(params.get("signed", False))}` expected `bool`')
+    if params.get("feat", None) is not None:
+        if not isinstance(params["feat"], str):
+            raise StyxValidationError(f'`feat` has the wrong type: Received `{type(params.get("feat", None))}` expected `str | None`')
+    if params.get("feat_format", None) is not None:
+        if not isinstance(params["feat_format"], str):
+            raise StyxValidationError(f'`feat_format` has the wrong type: Received `{type(params.get("feat_format", None))}` expected `str | None`')
+    if params.get("nii_format", False) is None:
+        raise StyxValidationError("`nii_format` must not be None")
+    if not isinstance(params["nii_format"], bool):
+        raise StyxValidationError(f'`nii_format` has the wrong type: Received `{type(params.get("nii_format", False))}` expected `bool`')
+    if params.get("niigz_format", False) is None:
+        raise StyxValidationError("`niigz_format` must not be None")
+    if not isinstance(params["niigz_format"], bool):
+        raise StyxValidationError(f'`niigz_format` has the wrong type: Received `{type(params.get("niigz_format", False))}` expected `bool`')
+    if params.get("mgh_format", False) is None:
+        raise StyxValidationError("`mgh_format` must not be None")
+    if not isinstance(params["mgh_format"], bool):
+        raise StyxValidationError(f'`mgh_format` has the wrong type: Received `{type(params.get("mgh_format", False))}` expected `bool`')
+    if params.get("mgz_format", False) is None:
+        raise StyxValidationError("`mgz_format` must not be None")
+    if not isinstance(params["mgz_format"], bool):
+        raise StyxValidationError(f'`mgz_format` has the wrong type: Received `{type(params.get("mgz_format", False))}` expected `bool`')
+    if params.get("img_format", False) is None:
+        raise StyxValidationError("`img_format` must not be None")
+    if not isinstance(params["img_format"], bool):
+        raise StyxValidationError(f'`img_format` has the wrong type: Received `{type(params.get("img_format", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+
+
 def mri_z2p_cargs(
     params: MriZ2pParameters,
     execution: Execution,
@@ -237,6 +312,7 @@ def mri_z2p_execute(
     Returns:
         NamedTuple of outputs (described in `MriZ2pOutputs`).
     """
+    mri_z2p_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_Z2P_METADATA)
     params = execution.params(params)

@@ -66,6 +66,36 @@ def mris_ba_segment_params(
     return params
 
 
+def mris_ba_segment_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisBaSegmentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("profiles", None) is None:
+        raise StyxValidationError("`profiles` must not be None")
+    if not isinstance(params["profiles"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`profiles` has the wrong type: Received `{type(params.get("profiles", None))}` expected `InputPathType`')
+    if params.get("prior_label", None) is None:
+        raise StyxValidationError("`prior_label` must not be None")
+    if not isinstance(params["prior_label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`prior_label` has the wrong type: Received `{type(params.get("prior_label", None))}` expected `InputPathType`')
+    if params.get("output_label", None) is None:
+        raise StyxValidationError("`output_label` must not be None")
+    if not isinstance(params["output_label"], str):
+        raise StyxValidationError(f'`output_label` has the wrong type: Received `{type(params.get("output_label", None))}` expected `str`')
+
+
 def mris_ba_segment_cargs(
     params: MrisBaSegmentParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def mris_ba_segment_execute(
     Returns:
         NamedTuple of outputs (described in `MrisBaSegmentOutputs`).
     """
+    mris_ba_segment_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_BA_SEGMENT_METADATA)
     params = execution.params(params)

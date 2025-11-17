@@ -69,6 +69,33 @@ def estnoise_params(
     return params
 
 
+def estnoise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EstnoiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_4d_data", None) is None:
+        raise StyxValidationError("`input_4d_data` must not be None")
+    if not isinstance(params["input_4d_data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_4d_data` has the wrong type: Received `{type(params.get("input_4d_data", None))}` expected `InputPathType`')
+    if params.get("spatial_sigma", None) is not None:
+        if not isinstance(params["spatial_sigma"], (float, int)):
+            raise StyxValidationError(f'`spatial_sigma` has the wrong type: Received `{type(params.get("spatial_sigma", None))}` expected `float | None`')
+    if params.get("temp_hp_sigma", None) is not None:
+        if not isinstance(params["temp_hp_sigma"], (float, int)):
+            raise StyxValidationError(f'`temp_hp_sigma` has the wrong type: Received `{type(params.get("temp_hp_sigma", None))}` expected `float | None`')
+    if params.get("temp_lp_sigma", None) is not None:
+        if not isinstance(params["temp_lp_sigma"], (float, int)):
+            raise StyxValidationError(f'`temp_lp_sigma` has the wrong type: Received `{type(params.get("temp_lp_sigma", None))}` expected `float | None`')
+
+
 def estnoise_cargs(
     params: EstnoiseParameters,
     execution: Execution,
@@ -133,6 +160,7 @@ def estnoise_execute(
     Returns:
         NamedTuple of outputs (described in `EstnoiseOutputs`).
     """
+    estnoise_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ESTNOISE_METADATA)
     params = execution.params(params)

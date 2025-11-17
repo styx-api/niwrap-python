@@ -82,6 +82,50 @@ def possum_interpmot_py_params(
     return params
 
 
+def possum_interpmot_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PossumInterpmotPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("motion_type", None) is None:
+        raise StyxValidationError("`motion_type` must not be None")
+    if not isinstance(params["motion_type"], int):
+        raise StyxValidationError(f'`motion_type` has the wrong type: Received `{type(params.get("motion_type", None))}` expected `int`')
+    if 0 <= params["motion_type"] <= 2:
+        raise StyxValidationError("Parameter `motion_type` must be between 0 and 2 (inclusive)")
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("tr_slice", None) is None:
+        raise StyxValidationError("`tr_slice` must not be None")
+    if not isinstance(params["tr_slice"], (float, int)):
+        raise StyxValidationError(f'`tr_slice` has the wrong type: Received `{type(params.get("tr_slice", None))}` expected `float`')
+    if params.get("nslices", None) is None:
+        raise StyxValidationError("`nslices` must not be None")
+    if not isinstance(params["nslices"], int):
+        raise StyxValidationError(f'`nslices` has the wrong type: Received `{type(params.get("nslices", None))}` expected `int`')
+    if params.get("nvols", None) is None:
+        raise StyxValidationError("`nvols` must not be None")
+    if not isinstance(params["nvols"], int):
+        raise StyxValidationError(f'`nvols` has the wrong type: Received `{type(params.get("nvols", None))}` expected `int`')
+    if params.get("custom_motion_file", None) is None:
+        raise StyxValidationError("`custom_motion_file` must not be None")
+    if not isinstance(params["custom_motion_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`custom_motion_file` has the wrong type: Received `{type(params.get("custom_motion_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def possum_interpmot_py_cargs(
     params: PossumInterpmotPyParameters,
     execution: Execution,
@@ -146,6 +190,7 @@ def possum_interpmot_py_execute(
     Returns:
         NamedTuple of outputs (described in `PossumInterpmotPyOutputs`).
     """
+    possum_interpmot_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POSSUM_INTERPMOT_PY_METADATA)
     params = execution.params(params)

@@ -64,6 +64,36 @@ def make_exvivo_filled_params(
     return params
 
 
+def make_exvivo_filled_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeExvivoFilledParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("input_samseg", None) is None:
+        raise StyxValidationError("`input_samseg` must not be None")
+    if not isinstance(params["input_samseg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_samseg` has the wrong type: Received `{type(params.get("input_samseg", None))}` expected `InputPathType`')
+    if params.get("input_intensity_vol", None) is None:
+        raise StyxValidationError("`input_intensity_vol` must not be None")
+    if not isinstance(params["input_intensity_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_intensity_vol` has the wrong type: Received `{type(params.get("input_intensity_vol", None))}` expected `InputPathType`')
+    if params.get("hemi_both", None) is None:
+        raise StyxValidationError("`hemi_both` must not be None")
+    if not isinstance(params["hemi_both"], str):
+        raise StyxValidationError(f'`hemi_both` has the wrong type: Received `{type(params.get("hemi_both", None))}` expected `str`')
+
+
 def make_exvivo_filled_cargs(
     params: MakeExvivoFilledParameters,
     execution: Execution,
@@ -124,6 +154,7 @@ def make_exvivo_filled_execute(
     Returns:
         NamedTuple of outputs (described in `MakeExvivoFilledOutputs`).
     """
+    make_exvivo_filled_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_EXVIVO_FILLED_METADATA)
     params = execution.params(params)

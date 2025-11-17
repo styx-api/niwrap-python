@@ -171,6 +171,93 @@ def qboot_params(
     return params
 
 
+def qboot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QbootParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data_file", None) is None:
+        raise StyxValidationError("`data_file` must not be None")
+    if not isinstance(params["data_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_file` has the wrong type: Received `{type(params.get("data_file", None))}` expected `InputPathType`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("bvecs_file", None) is None:
+        raise StyxValidationError("`bvecs_file` must not be None")
+    if not isinstance(params["bvecs_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs_file` has the wrong type: Received `{type(params.get("bvecs_file", None))}` expected `InputPathType`')
+    if params.get("bvals_file", None) is None:
+        raise StyxValidationError("`bvals_file` must not be None")
+    if not isinstance(params["bvals_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals_file` has the wrong type: Received `{type(params.get("bvals_file", None))}` expected `InputPathType`')
+    if params.get("log_dir", None) is not None:
+        if not isinstance(params["log_dir"], str):
+            raise StyxValidationError(f'`log_dir` has the wrong type: Received `{type(params.get("log_dir", None))}` expected `str | None`')
+    if params.get("forcedir_flag", False) is None:
+        raise StyxValidationError("`forcedir_flag` must not be None")
+    if not isinstance(params["forcedir_flag"], bool):
+        raise StyxValidationError(f'`forcedir_flag` has the wrong type: Received `{type(params.get("forcedir_flag", False))}` expected `bool`')
+    if params.get("q_file", None) is not None:
+        if not isinstance(params["q_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`q_file` has the wrong type: Received `{type(params.get("q_file", None))}` expected `InputPathType | None`')
+    if params.get("model_type", None) is not None:
+        if not isinstance(params["model_type"], int):
+            raise StyxValidationError(f'`model_type` has the wrong type: Received `{type(params.get("model_type", None))}` expected `int | None`')
+    if params.get("lmax_order", None) is not None:
+        if not isinstance(params["lmax_order"], int):
+            raise StyxValidationError(f'`lmax_order` has the wrong type: Received `{type(params.get("lmax_order", None))}` expected `int | None`')
+    if params.get("npeaks", None) is not None:
+        if not isinstance(params["npeaks"], int):
+            raise StyxValidationError(f'`npeaks` has the wrong type: Received `{type(params.get("npeaks", None))}` expected `int | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("num_samples", None) is not None:
+        if not isinstance(params["num_samples"], int):
+            raise StyxValidationError(f'`num_samples` has the wrong type: Received `{type(params.get("num_samples", None))}` expected `int | None`')
+    if params.get("lambda_param", None) is not None:
+        if not isinstance(params["lambda_param"], (float, int)):
+            raise StyxValidationError(f'`lambda_param` has the wrong type: Received `{type(params.get("lambda_param", None))}` expected `float | None`')
+    if params.get("delta_param", None) is not None:
+        if not isinstance(params["delta_param"], (float, int)):
+            raise StyxValidationError(f'`delta_param` has the wrong type: Received `{type(params.get("delta_param", None))}` expected `float | None`')
+    if params.get("alpha_param", None) is not None:
+        if not isinstance(params["alpha_param"], (float, int)):
+            raise StyxValidationError(f'`alpha_param` has the wrong type: Received `{type(params.get("alpha_param", None))}` expected `float | None`')
+    if params.get("seed_param", None) is not None:
+        if not isinstance(params["seed_param"], int):
+            raise StyxValidationError(f'`seed_param` has the wrong type: Received `{type(params.get("seed_param", None))}` expected `int | None`')
+    if params.get("gfa_flag", False) is None:
+        raise StyxValidationError("`gfa_flag` must not be None")
+    if not isinstance(params["gfa_flag"], bool):
+        raise StyxValidationError(f'`gfa_flag` has the wrong type: Received `{type(params.get("gfa_flag", False))}` expected `bool`')
+    if params.get("savecoeff_flag", False) is None:
+        raise StyxValidationError("`savecoeff_flag` must not be None")
+    if not isinstance(params["savecoeff_flag"], bool):
+        raise StyxValidationError(f'`savecoeff_flag` has the wrong type: Received `{type(params.get("savecoeff_flag", False))}` expected `bool`')
+    if params.get("savemeancoeff_flag", False) is None:
+        raise StyxValidationError("`savemeancoeff_flag` must not be None")
+    if not isinstance(params["savemeancoeff_flag"], bool):
+        raise StyxValidationError(f'`savemeancoeff_flag` has the wrong type: Received `{type(params.get("savemeancoeff_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def qboot_cargs(
     params: QbootParameters,
     execution: Execution,
@@ -311,6 +398,7 @@ def qboot_execute(
     Returns:
         NamedTuple of outputs (described in `QbootOutputs`).
     """
+    qboot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QBOOT_METADATA)
     params = execution.params(params)

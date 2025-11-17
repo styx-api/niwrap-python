@@ -76,6 +76,41 @@ def mri_morphology_params(
     return params
 
 
+def mri_morphology_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMorphologyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"]`')
+    if params["operation"] not in ["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"]:
+        raise StyxValidationError("Parameter `operation` must be one of [\"open\", \"close\", \"dilate\", \"erode\", \"mode\", \"fill_holes\", \"erode_bottom\", \"dilate_thresh\", \"erode_thresh\"]")
+    if params.get("number_iter", None) is None:
+        raise StyxValidationError("`number_iter` must not be None")
+    if not isinstance(params["number_iter"], int):
+        raise StyxValidationError(f'`number_iter` has the wrong type: Received `{type(params.get("number_iter", None))}` expected `int`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("label_option", None) is not None:
+        if not isinstance(params["label_option"], (float, int)):
+            raise StyxValidationError(f'`label_option` has the wrong type: Received `{type(params.get("label_option", None))}` expected `float | None`')
+
+
 def mri_morphology_cargs(
     params: MriMorphologyParameters,
     execution: Execution,
@@ -142,6 +177,7 @@ def mri_morphology_execute(
     Returns:
         NamedTuple of outputs (described in `MriMorphologyOutputs`).
     """
+    mri_morphology_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MORPHOLOGY_METADATA)
     params = execution.params(params)

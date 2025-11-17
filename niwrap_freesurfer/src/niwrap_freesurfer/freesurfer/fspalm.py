@@ -117,6 +117,73 @@ def fspalm_params(
     return params
 
 
+def fspalm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FspalmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("glmdir", None) is None:
+        raise StyxValidationError("`glmdir` must not be None")
+    if not isinstance(params["glmdir"], str):
+        raise StyxValidationError(f'`glmdir` has the wrong type: Received `{type(params.get("glmdir", None))}` expected `str`')
+    if params.get("cft", None) is None:
+        raise StyxValidationError("`cft` must not be None")
+    if not isinstance(params["cft"], (float, int)):
+        raise StyxValidationError(f'`cft` has the wrong type: Received `{type(params.get("cft", None))}` expected `float`')
+    if params.get("cwp", None) is None:
+        raise StyxValidationError("`cwp` must not be None")
+    if not isinstance(params["cwp"], (float, int)):
+        raise StyxValidationError(f'`cwp` has the wrong type: Received `{type(params.get("cwp", None))}` expected `float`')
+    if params.get("onetail", False) is None:
+        raise StyxValidationError("`onetail` must not be None")
+    if not isinstance(params["onetail"], bool):
+        raise StyxValidationError(f'`onetail` has the wrong type: Received `{type(params.get("onetail", False))}` expected `bool`')
+    if params.get("twotail", False) is None:
+        raise StyxValidationError("`twotail` must not be None")
+    if not isinstance(params["twotail"], bool):
+        raise StyxValidationError(f'`twotail` has the wrong type: Received `{type(params.get("twotail", False))}` expected `bool`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("iters", None) is not None:
+        if not isinstance(params["iters"], (float, int)):
+            raise StyxValidationError(f'`iters` has the wrong type: Received `{type(params.get("iters", None))}` expected `float | None`')
+    if params.get("monly", False) is None:
+        raise StyxValidationError("`monly` must not be None")
+    if not isinstance(params["monly"], bool):
+        raise StyxValidationError(f'`monly` has the wrong type: Received `{type(params.get("monly", False))}` expected `bool`')
+    if params.get("pponly", False) is None:
+        raise StyxValidationError("`pponly` must not be None")
+    if not isinstance(params["pponly"], bool):
+        raise StyxValidationError(f'`pponly` has the wrong type: Received `{type(params.get("pponly", False))}` expected `bool`')
+    if params.get("octave", False) is None:
+        raise StyxValidationError("`octave` must not be None")
+    if not isinstance(params["octave"], bool):
+        raise StyxValidationError(f'`octave` has the wrong type: Received `{type(params.get("octave", False))}` expected `bool`')
+    if params.get("centroid", False) is None:
+        raise StyxValidationError("`centroid` must not be None")
+    if not isinstance(params["centroid"], bool):
+        raise StyxValidationError(f'`centroid` has the wrong type: Received `{type(params.get("centroid", False))}` expected `bool`')
+    if params.get("2spaces", False) is None:
+        raise StyxValidationError("`2spaces` must not be None")
+    if not isinstance(params["2spaces"], bool):
+        raise StyxValidationError(f'`2spaces` has the wrong type: Received `{type(params.get("2spaces", False))}` expected `bool`')
+    if params.get("3spaces", False) is None:
+        raise StyxValidationError("`3spaces` must not be None")
+    if not isinstance(params["3spaces"], bool):
+        raise StyxValidationError(f'`3spaces` has the wrong type: Received `{type(params.get("3spaces", False))}` expected `bool`')
+    if params.get("pargs", None) is not None:
+        if not isinstance(params["pargs"], str):
+            raise StyxValidationError(f'`pargs` has the wrong type: Received `{type(params.get("pargs", None))}` expected `str | None`')
+
+
 def fspalm_cargs(
     params: FspalmParameters,
     execution: Execution,
@@ -217,6 +284,7 @@ def fspalm_execute(
     Returns:
         NamedTuple of outputs (described in `FspalmOutputs`).
     """
+    fspalm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSPALM_METADATA)
     params = execution.params(params)

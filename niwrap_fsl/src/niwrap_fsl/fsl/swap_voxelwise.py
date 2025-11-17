@@ -93,6 +93,47 @@ def swap_voxelwise_params(
     return params
 
 
+def swap_voxelwise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SwapVoxelwiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vectors_file_list", None) is None:
+        raise StyxValidationError("`vectors_file_list` must not be None")
+    if not isinstance(params["vectors_file_list"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vectors_file_list` has the wrong type: Received `{type(params.get("vectors_file_list", None))}` expected `InputPathType`')
+    if params.get("scalars_file_list", None) is not None:
+        if not isinstance(params["scalars_file_list"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`scalars_file_list` has the wrong type: Received `{type(params.get("scalars_file_list", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("output_base_name", None) is not None:
+        if not isinstance(params["output_base_name"], str):
+            raise StyxValidationError(f'`output_base_name` has the wrong type: Received `{type(params.get("output_base_name", None))}` expected `str | None`')
+    if params.get("reorder_mode", None) is not None:
+        if not isinstance(params["reorder_mode"], str):
+            raise StyxValidationError(f'`reorder_mode` has the wrong type: Received `{type(params.get("reorder_mode", None))}` expected `str | None`')
+    if params.get("init_mask", None) is not None:
+        if not isinstance(params["init_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_mask` has the wrong type: Received `{type(params.get("init_mask", None))}` expected `InputPathType | None`')
+    if params.get("crossing_thresh", None) is not None:
+        if not isinstance(params["crossing_thresh"], (float, int)):
+            raise StyxValidationError(f'`crossing_thresh` has the wrong type: Received `{type(params.get("crossing_thresh", None))}` expected `float | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def swap_voxelwise_cargs(
     params: SwapVoxelwiseParameters,
     execution: Execution,
@@ -185,6 +226,7 @@ def swap_voxelwise_execute(
     Returns:
         NamedTuple of outputs (described in `SwapVoxelwiseOutputs`).
     """
+    swap_voxelwise_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SWAP_VOXELWISE_METADATA)
     params = execution.params(params)

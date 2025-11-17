@@ -147,6 +147,79 @@ def v_3dvolreg_params(
     return params
 
 
+def v_3dvolreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dvolregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("copyorigin", False) is None:
+        raise StyxValidationError("`copyorigin` must not be None")
+    if not isinstance(params["copyorigin"], bool):
+        raise StyxValidationError(f'`copyorigin` has the wrong type: Received `{type(params.get("copyorigin", False))}` expected `bool`')
+    if params.get("twopass", False) is None:
+        raise StyxValidationError("`twopass` must not be None")
+    if not isinstance(params["twopass"], bool):
+        raise StyxValidationError(f'`twopass` has the wrong type: Received `{type(params.get("twopass", False))}` expected `bool`')
+    if params.get("Fourier", False) is None:
+        raise StyxValidationError("`Fourier` must not be None")
+    if not isinstance(params["Fourier"], bool):
+        raise StyxValidationError(f'`Fourier` has the wrong type: Received `{type(params.get("Fourier", False))}` expected `bool`')
+    if params.get("in_weight_volume", None) is not None:
+        if not isinstance(params["in_weight_volume"], list):
+            raise StyxValidationError(f'`in_weight_volume` has the wrong type: Received `{type(params.get("in_weight_volume", None))}` expected `list[str] | None`')
+        for e in params["in_weight_volume"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`in_weight_volume` has the wrong type: Received `{type(params.get("in_weight_volume", None))}` expected `list[str] | None`')
+    if params.get("in_weight_volume_2", None) is not None:
+        if not isinstance(params["in_weight_volume_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_weight_volume_2` has the wrong type: Received `{type(params.get("in_weight_volume_2", None))}` expected `InputPathType | None`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["fourier", "cubic", "heptic", "quintic", "linear"] | None`')
+        if params["interp"] not in ["fourier", "cubic", "heptic", "quintic", "linear"]:
+            raise StyxValidationError("Parameter `interp` must be one of [\"fourier\", \"cubic\", \"heptic\", \"quintic\", \"linear\"]")
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], int):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("timeshift", False) is None:
+        raise StyxValidationError("`timeshift` must not be None")
+    if not isinstance(params["timeshift"], bool):
+        raise StyxValidationError(f'`timeshift` has the wrong type: Received `{type(params.get("timeshift", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("basefile", None) is not None:
+        if not isinstance(params["basefile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`basefile` has the wrong type: Received `{type(params.get("basefile", None))}` expected `InputPathType | None`')
+    if params.get("zpad", None) is not None:
+        if not isinstance(params["zpad"], int):
+            raise StyxValidationError(f'`zpad` has the wrong type: Received `{type(params.get("zpad", None))}` expected `int | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("Maxdisp1d", None) is not None:
+        if not isinstance(params["Maxdisp1d"], str):
+            raise StyxValidationError(f'`Maxdisp1d` has the wrong type: Received `{type(params.get("Maxdisp1d", None))}` expected `str | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+
+
 def v_3dvolreg_cargs(
     params: V3dvolregParameters,
     execution: Execution,
@@ -259,6 +332,7 @@ def v_3dvolreg_execute(
     Returns:
         NamedTuple of outputs (described in `V3dvolregOutputs`).
     """
+    v_3dvolreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DVOLREG_METADATA)
     params = execution.params(params)

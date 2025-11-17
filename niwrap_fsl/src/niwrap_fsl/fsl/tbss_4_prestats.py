@@ -50,6 +50,24 @@ def tbss_4_prestats_params(
     return params
 
 
+def tbss_4_prestats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tbss4PrestatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("threshold", 0.2) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", 0.2))}` expected `float`')
+
+
 def tbss_4_prestats_cargs(
     params: Tbss4PrestatsParameters,
     execution: Execution,
@@ -107,6 +125,7 @@ def tbss_4_prestats_execute(
     Returns:
         NamedTuple of outputs (described in `Tbss4PrestatsOutputs`).
     """
+    tbss_4_prestats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_4_PRESTATS_METADATA)
     params = execution.params(params)

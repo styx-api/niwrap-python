@@ -130,6 +130,85 @@ def mri_ca_train_params(
     return params
 
 
+def mri_ca_train_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCaTrainParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if len(params["subjects"]) >= 1:
+        raise StyxValidationError("Parameter `subjects` must contain at least 1 element")
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_gca", None) is None:
+        raise StyxValidationError("`output_gca` must not be None")
+    if not isinstance(params["output_gca"], str):
+        raise StyxValidationError(f'`output_gca` has the wrong type: Received `{type(params.get("output_gca", None))}` expected `str`')
+    if params.get("segmentation", None) is None:
+        raise StyxValidationError("`segmentation` must not be None")
+    if not isinstance(params["segmentation"], str):
+        raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", None))}` expected `str`')
+    if params.get("transform", None) is not None:
+        if not isinstance(params["transform"], str):
+            raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `str | None`')
+    if params.get("mask_volume", None) is not None:
+        if not isinstance(params["mask_volume"], str):
+            raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `str | None`')
+    if params.get("node_spacing", None) is not None:
+        if not isinstance(params["node_spacing"], str):
+            raise StyxValidationError(f'`node_spacing` has the wrong type: Received `{type(params.get("node_spacing", None))}` expected `str | None`')
+    if params.get("prior_spacing", None) is not None:
+        if not isinstance(params["prior_spacing"], str):
+            raise StyxValidationError(f'`prior_spacing` has the wrong type: Received `{type(params.get("prior_spacing", None))}` expected `str | None`')
+    if params.get("input_training", None) is not None:
+        if not isinstance(params["input_training"], list):
+            raise StyxValidationError(f'`input_training` has the wrong type: Received `{type(params.get("input_training", None))}` expected `list[str] | None`')
+        for e in params["input_training"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`input_training` has the wrong type: Received `{type(params.get("input_training", None))}` expected `list[str] | None`')
+    if params.get("symmetrize", False) is None:
+        raise StyxValidationError("`symmetrize` must not be None")
+    if not isinstance(params["symmetrize"], bool):
+        raise StyxValidationError(f'`symmetrize` has the wrong type: Received `{type(params.get("symmetrize", False))}` expected `bool`')
+    if params.get("makesym", None) is not None:
+        if not isinstance(params["makesym"], list):
+            raise StyxValidationError(f'`makesym` has the wrong type: Received `{type(params.get("makesym", None))}` expected `list[str] | None`')
+        if len(params["makesym"]) <= 2:
+            raise StyxValidationError("Parameter `makesym` must contain at most 2 elements")
+        for e in params["makesym"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`makesym` has the wrong type: Received `{type(params.get("makesym", None))}` expected `list[str] | None`')
+    if params.get("check_symmetry", None) is not None:
+        if not isinstance(params["check_symmetry"], list):
+            raise StyxValidationError(f'`check_symmetry` has the wrong type: Received `{type(params.get("check_symmetry", None))}` expected `list[str] | None`')
+        if len(params["check_symmetry"]) <= 2:
+            raise StyxValidationError("Parameter `check_symmetry` must contain at most 2 elements")
+        for e in params["check_symmetry"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`check_symmetry` has the wrong type: Received `{type(params.get("check_symmetry", None))}` expected `list[str] | None`')
+    if params.get("sanity_check", False) is None:
+        raise StyxValidationError("`sanity_check` must not be None")
+    if not isinstance(params["sanity_check"], bool):
+        raise StyxValidationError(f'`sanity_check` has the wrong type: Received `{type(params.get("sanity_check", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], int):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int | None`')
+    if params.get("done_file", None) is not None:
+        if not isinstance(params["done_file"], str):
+            raise StyxValidationError(f'`done_file` has the wrong type: Received `{type(params.get("done_file", None))}` expected `str | None`')
+
+
 def mri_ca_train_cargs(
     params: MriCaTrainParameters,
     execution: Execution,
@@ -242,6 +321,7 @@ def mri_ca_train_execute(
     Returns:
         NamedTuple of outputs (described in `MriCaTrainOutputs`).
     """
+    mri_ca_train_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CA_TRAIN_METADATA)
     params = execution.params(params)

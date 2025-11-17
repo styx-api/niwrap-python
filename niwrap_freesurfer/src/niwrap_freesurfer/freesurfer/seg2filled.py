@@ -84,6 +84,45 @@ def seg2filled_params(
     return params
 
 
+def seg2filled_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Seg2filledParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("seg_file", None) is None:
+        raise StyxValidationError("`seg_file` must not be None")
+    if not isinstance(params["seg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`seg_file` has the wrong type: Received `{type(params.get("seg_file", None))}` expected `InputPathType`')
+    if params.get("norm_file", None) is None:
+        raise StyxValidationError("`norm_file` must not be None")
+    if not isinstance(params["norm_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`norm_file` has the wrong type: Received `{type(params.get("norm_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("ndil", None) is not None:
+        if not isinstance(params["ndil"], int):
+            raise StyxValidationError(f'`ndil` has the wrong type: Received `{type(params.get("ndil", None))}` expected `int | None`')
+    if params.get("cavity_flag", False) is None:
+        raise StyxValidationError("`cavity_flag` must not be None")
+    if not isinstance(params["cavity_flag"], bool):
+        raise StyxValidationError(f'`cavity_flag` has the wrong type: Received `{type(params.get("cavity_flag", False))}` expected `bool`')
+    if params.get("surf_name", None) is not None:
+        if not isinstance(params["surf_name"], str):
+            raise StyxValidationError(f'`surf_name` has the wrong type: Received `{type(params.get("surf_name", None))}` expected `str | None`')
+    if params.get("surf_dir", None) is not None:
+        if not isinstance(params["surf_dir"], str):
+            raise StyxValidationError(f'`surf_dir` has the wrong type: Received `{type(params.get("surf_dir", None))}` expected `str | None`')
+
+
 def seg2filled_cargs(
     params: Seg2filledParameters,
     execution: Execution,
@@ -171,6 +210,7 @@ def seg2filled_execute(
     Returns:
         NamedTuple of outputs (described in `Seg2filledOutputs`).
     """
+    seg2filled_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEG2FILLED_METADATA)
     params = execution.params(params)

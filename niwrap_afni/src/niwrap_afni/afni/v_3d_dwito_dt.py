@@ -203,6 +203,110 @@ def v_3d_dwito_dt_params(
     return params
 
 
+def v_3d_dwito_dt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDwitoDtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_file", None) is None:
+        raise StyxValidationError("`gradient_file` must not be None")
+    if not isinstance(params["gradient_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`gradient_file` has the wrong type: Received `{type(params.get("gradient_file", None))}` expected `InputPathType`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("bmatrix_NZ", None) is not None:
+        if not isinstance(params["bmatrix_NZ"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bmatrix_NZ` has the wrong type: Received `{type(params.get("bmatrix_NZ", None))}` expected `InputPathType | None`')
+    if params.get("bmatrix_Z", None) is not None:
+        if not isinstance(params["bmatrix_Z"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bmatrix_Z` has the wrong type: Received `{type(params.get("bmatrix_Z", None))}` expected `InputPathType | None`')
+    if params.get("bmatrix_FULL", None) is not None:
+        if not isinstance(params["bmatrix_FULL"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bmatrix_FULL` has the wrong type: Received `{type(params.get("bmatrix_FULL", None))}` expected `InputPathType | None`')
+    if params.get("scale_out_1000", False) is None:
+        raise StyxValidationError("`scale_out_1000` must not be None")
+    if not isinstance(params["scale_out_1000"], bool):
+        raise StyxValidationError(f'`scale_out_1000` has the wrong type: Received `{type(params.get("scale_out_1000", False))}` expected `bool`')
+    if params.get("bmax_ref", None) is not None:
+        if not isinstance(params["bmax_ref"], (float, int)):
+            raise StyxValidationError(f'`bmax_ref` has the wrong type: Received `{type(params.get("bmax_ref", None))}` expected `float | None`')
+    if params.get("nonlinear", False) is None:
+        raise StyxValidationError("`nonlinear` must not be None")
+    if not isinstance(params["nonlinear"], bool):
+        raise StyxValidationError(f'`nonlinear` has the wrong type: Received `{type(params.get("nonlinear", False))}` expected `bool`')
+    if params.get("linear", False) is None:
+        raise StyxValidationError("`linear` must not be None")
+    if not isinstance(params["linear"], bool):
+        raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
+    if params.get("reweight", False) is None:
+        raise StyxValidationError("`reweight` must not be None")
+    if not isinstance(params["reweight"], bool):
+        raise StyxValidationError(f'`reweight` has the wrong type: Received `{type(params.get("reweight", False))}` expected `bool`')
+    if params.get("max_iter", None) is not None:
+        if not isinstance(params["max_iter"], int):
+            raise StyxValidationError(f'`max_iter` has the wrong type: Received `{type(params.get("max_iter", None))}` expected `int | None`')
+    if params.get("max_iter_rw", None) is not None:
+        if not isinstance(params["max_iter_rw"], int):
+            raise StyxValidationError(f'`max_iter_rw` has the wrong type: Received `{type(params.get("max_iter_rw", None))}` expected `int | None`')
+    if params.get("eigs", False) is None:
+        raise StyxValidationError("`eigs` must not be None")
+    if not isinstance(params["eigs"], bool):
+        raise StyxValidationError(f'`eigs` has the wrong type: Received `{type(params.get("eigs", False))}` expected `bool`')
+    if params.get("debug_briks", False) is None:
+        raise StyxValidationError("`debug_briks` must not be None")
+    if not isinstance(params["debug_briks"], bool):
+        raise StyxValidationError(f'`debug_briks` has the wrong type: Received `{type(params.get("debug_briks", False))}` expected `bool`')
+    if params.get("cumulative_wts", False) is None:
+        raise StyxValidationError("`cumulative_wts` must not be None")
+    if not isinstance(params["cumulative_wts"], bool):
+        raise StyxValidationError(f'`cumulative_wts` has the wrong type: Received `{type(params.get("cumulative_wts", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], int):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `int | None`')
+    if params.get("drive_afni", None) is not None:
+        if not isinstance(params["drive_afni"], int):
+            raise StyxValidationError(f'`drive_afni` has the wrong type: Received `{type(params.get("drive_afni", None))}` expected `int | None`')
+    if params.get("sep_dsets", False) is None:
+        raise StyxValidationError("`sep_dsets` must not be None")
+    if not isinstance(params["sep_dsets"], bool):
+        raise StyxValidationError(f'`sep_dsets` has the wrong type: Received `{type(params.get("sep_dsets", False))}` expected `bool`')
+    if params.get("csf_val", None) is not None:
+        if not isinstance(params["csf_val"], (float, int)):
+            raise StyxValidationError(f'`csf_val` has the wrong type: Received `{type(params.get("csf_val", None))}` expected `float | None`')
+    if params.get("min_bad_md", None) is not None:
+        if not isinstance(params["min_bad_md"], int):
+            raise StyxValidationError(f'`min_bad_md` has the wrong type: Received `{type(params.get("min_bad_md", None))}` expected `int | None`')
+    if params.get("csf_fa", None) is not None:
+        if not isinstance(params["csf_fa"], (float, int)):
+            raise StyxValidationError(f'`csf_fa` has the wrong type: Received `{type(params.get("csf_fa", None))}` expected `float | None`')
+    if params.get("opt", None) is not None:
+        if not isinstance(params["opt"], str):
+            raise StyxValidationError(f'`opt` has the wrong type: Received `{type(params.get("opt", None))}` expected `str | None`')
+    if params.get("mean_b0", False) is None:
+        raise StyxValidationError("`mean_b0` must not be None")
+    if not isinstance(params["mean_b0"], bool):
+        raise StyxValidationError(f'`mean_b0` has the wrong type: Received `{type(params.get("mean_b0", False))}` expected `bool`')
+
+
 def v_3d_dwito_dt_cargs(
     params: V3dDwitoDtParameters,
     execution: Execution,
@@ -352,6 +456,7 @@ def v_3d_dwito_dt_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDwitoDtOutputs`).
     """
+    v_3d_dwito_dt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DWITO_DT_METADATA)
     params = execution.params(params)

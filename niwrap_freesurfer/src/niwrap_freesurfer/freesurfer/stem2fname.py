@@ -52,6 +52,24 @@ def stem2fname_params(
     return params
 
 
+def stem2fname_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Stem2fnameParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stem", None) is None:
+        raise StyxValidationError("`stem` must not be None")
+    if not isinstance(params["stem"], str):
+        raise StyxValidationError(f'`stem` has the wrong type: Received `{type(params.get("stem", None))}` expected `str`')
+
+
 def stem2fname_cargs(
     params: Stem2fnameParameters,
     execution: Execution,
@@ -111,6 +129,7 @@ def stem2fname_execute(
     Returns:
         NamedTuple of outputs (described in `Stem2fnameOutputs`).
     """
+    stem2fname_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(STEM2FNAME_METADATA)
     params = execution.params(params)

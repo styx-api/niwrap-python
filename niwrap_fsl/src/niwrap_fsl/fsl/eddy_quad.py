@@ -102,6 +102,56 @@ def eddy_quad_params(
     return params
 
 
+def eddy_quad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EddyQuadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("eddyBase", None) is None:
+        raise StyxValidationError("`eddyBase` must not be None")
+    if not isinstance(params["eddyBase"], str):
+        raise StyxValidationError(f'`eddyBase` has the wrong type: Received `{type(params.get("eddyBase", None))}` expected `str`')
+    if params.get("eddyIndex", None) is None:
+        raise StyxValidationError("`eddyIndex` must not be None")
+    if not isinstance(params["eddyIndex"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`eddyIndex` has the wrong type: Received `{type(params.get("eddyIndex", None))}` expected `InputPathType`')
+    if params.get("eddyParams", None) is None:
+        raise StyxValidationError("`eddyParams` must not be None")
+    if not isinstance(params["eddyParams"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`eddyParams` has the wrong type: Received `{type(params.get("eddyParams", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
+    if params.get("bvecs", None) is not None:
+        if not isinstance(params["bvecs"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType | None`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("field", None) is not None:
+        if not isinstance(params["field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`field` has the wrong type: Received `{type(params.get("field", None))}` expected `InputPathType | None`')
+    if params.get("slspec", None) is not None:
+        if not isinstance(params["slspec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`slspec` has the wrong type: Received `{type(params.get("slspec", None))}` expected `InputPathType | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def eddy_quad_cargs(
     params: EddyQuadParameters,
     execution: Execution,
@@ -198,6 +248,7 @@ def eddy_quad_execute(
     Returns:
         NamedTuple of outputs (described in `EddyQuadOutputs`).
     """
+    eddy_quad_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EDDY_QUAD_METADATA)
     params = execution.params(params)

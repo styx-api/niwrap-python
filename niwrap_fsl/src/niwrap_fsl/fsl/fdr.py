@@ -115,6 +115,65 @@ def fdr_params(
     return params
 
 
+def fdr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `FdrParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("maskfile", None) is not None:
+        if not isinstance(params["maskfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`maskfile` has the wrong type: Received `{type(params.get("maskfile", None))}` expected `InputPathType | None`')
+    if params.get("qvalue", None) is not None:
+        if not isinstance(params["qvalue"], (float, int)):
+            raise StyxValidationError(f'`qvalue` has the wrong type: Received `{type(params.get("qvalue", None))}` expected `float | None`')
+    if params.get("adjustedimage", None) is not None:
+        if not isinstance(params["adjustedimage"], str):
+            raise StyxValidationError(f'`adjustedimage` has the wrong type: Received `{type(params.get("adjustedimage", None))}` expected `str | None`')
+    if params.get("othresh_flag", False) is None:
+        raise StyxValidationError("`othresh_flag` must not be None")
+    if not isinstance(params["othresh_flag"], bool):
+        raise StyxValidationError(f'`othresh_flag` has the wrong type: Received `{type(params.get("othresh_flag", False))}` expected `bool`')
+    if params.get("order_flag", False) is None:
+        raise StyxValidationError("`order_flag` must not be None")
+    if not isinstance(params["order_flag"], bool):
+        raise StyxValidationError(f'`order_flag` has the wrong type: Received `{type(params.get("order_flag", False))}` expected `bool`')
+    if params.get("oneminusp_flag", False) is None:
+        raise StyxValidationError("`oneminusp_flag` must not be None")
+    if not isinstance(params["oneminusp_flag"], bool):
+        raise StyxValidationError(f'`oneminusp_flag` has the wrong type: Received `{type(params.get("oneminusp_flag", False))}` expected `bool`')
+    if params.get("positive_corr_flag", False) is None:
+        raise StyxValidationError("`positive_corr_flag` must not be None")
+    if not isinstance(params["positive_corr_flag"], bool):
+        raise StyxValidationError(f'`positive_corr_flag` has the wrong type: Received `{type(params.get("positive_corr_flag", False))}` expected `bool`')
+    if params.get("independent_flag", False) is None:
+        raise StyxValidationError("`independent_flag` must not be None")
+    if not isinstance(params["independent_flag"], bool):
+        raise StyxValidationError(f'`independent_flag` has the wrong type: Received `{type(params.get("independent_flag", False))}` expected `bool`')
+    if params.get("conservative_flag", False) is None:
+        raise StyxValidationError("`conservative_flag` must not be None")
+    if not isinstance(params["conservative_flag"], bool):
+        raise StyxValidationError(f'`conservative_flag` has the wrong type: Received `{type(params.get("conservative_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def fdr_cargs(
     params: FdrParameters,
     execution: Execution,
@@ -209,6 +268,7 @@ def fdr_execute(
     Returns:
         NamedTuple of outputs (described in `FdrOutputs`).
     """
+    fdr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FDR_METADATA)
     params = execution.params(params)

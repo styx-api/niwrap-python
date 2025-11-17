@@ -81,6 +81,41 @@ def robustfov_params(
     return params
 
 
+def robustfov_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RobustfovParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is not None:
+        if not isinstance(params["output_image"], str):
+            raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str | None`')
+    if params.get("brain_size", None) is not None:
+        if not isinstance(params["brain_size"], (float, int)):
+            raise StyxValidationError(f'`brain_size` has the wrong type: Received `{type(params.get("brain_size", None))}` expected `float | None`')
+    if params.get("matrix_output", None) is not None:
+        if not isinstance(params["matrix_output"], str):
+            raise StyxValidationError(f'`matrix_output` has the wrong type: Received `{type(params.get("matrix_output", None))}` expected `str | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def robustfov_cargs(
     params: RobustfovParameters,
     execution: Execution,
@@ -162,6 +197,7 @@ def robustfov_execute(
     Returns:
         NamedTuple of outputs (described in `RobustfovOutputs`).
     """
+    robustfov_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ROBUSTFOV_METADATA)
     params = execution.params(params)

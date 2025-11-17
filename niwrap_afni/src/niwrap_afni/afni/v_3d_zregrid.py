@@ -83,6 +83,40 @@ def v_3d_zregrid_params(
     return params
 
 
+def v_3d_zregrid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dZregridParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("z_thickness", None) is not None:
+        if not isinstance(params["z_thickness"], (float, int)):
+            raise StyxValidationError(f'`z_thickness` has the wrong type: Received `{type(params.get("z_thickness", None))}` expected `float | None`')
+    if params.get("slice_count", None) is not None:
+        if not isinstance(params["slice_count"], (float, int)):
+            raise StyxValidationError(f'`slice_count` has the wrong type: Received `{type(params.get("slice_count", None))}` expected `float | None`')
+    if params.get("z_size", None) is not None:
+        if not isinstance(params["z_size"], (float, int)):
+            raise StyxValidationError(f'`z_size` has the wrong type: Received `{type(params.get("z_size", None))}` expected `float | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v_3d_zregrid_cargs(
     params: V3dZregridParameters,
     execution: Execution,
@@ -164,6 +198,7 @@ def v_3d_zregrid_execute(
     Returns:
         NamedTuple of outputs (described in `V3dZregridOutputs`).
     """
+    v_3d_zregrid_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ZREGRID_METADATA)
     params = execution.params(params)

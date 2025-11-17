@@ -51,6 +51,23 @@ def morph_only_subject_params(
     return params
 
 
+def morph_only_subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MorphOnlySubjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("placeholder_input", None) is not None:
+        if not isinstance(params["placeholder_input"], str):
+            raise StyxValidationError(f'`placeholder_input` has the wrong type: Received `{type(params.get("placeholder_input", None))}` expected `str | None`')
+
+
 def morph_only_subject_cargs(
     params: MorphOnlySubjectParameters,
     execution: Execution,
@@ -110,6 +127,7 @@ def morph_only_subject_execute(
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectOutputs`).
     """
+    morph_only_subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MORPH_ONLY_SUBJECT_METADATA)
     params = execution.params(params)

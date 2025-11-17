@@ -64,6 +64,36 @@ def vno_match_check_params(
     return params
 
 
+def vno_match_check_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VnoMatchCheckParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjid", None) is None:
+        raise StyxValidationError("`subjid` must not be None")
+    if not isinstance(params["subjid"], str):
+        raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("right_hemi", False) is None:
+        raise StyxValidationError("`right_hemi` must not be None")
+    if not isinstance(params["right_hemi"], bool):
+        raise StyxValidationError(f'`right_hemi` has the wrong type: Received `{type(params.get("right_hemi", False))}` expected `bool`')
+    if params.get("left_hemi", False) is None:
+        raise StyxValidationError("`left_hemi` must not be None")
+    if not isinstance(params["left_hemi"], bool):
+        raise StyxValidationError(f'`left_hemi` has the wrong type: Received `{type(params.get("left_hemi", False))}` expected `bool`')
+
+
 def vno_match_check_cargs(
     params: VnoMatchCheckParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def vno_match_check_execute(
     Returns:
         NamedTuple of outputs (described in `VnoMatchCheckOutputs`).
     """
+    vno_match_check_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VNO_MATCH_CHECK_METADATA)
     params = execution.params(params)

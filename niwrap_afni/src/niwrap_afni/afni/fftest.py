@@ -64,6 +64,36 @@ def fftest_params(
     return params
 
 
+def fftest_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FftestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("length", None) is None:
+        raise StyxValidationError("`length` must not be None")
+    if not isinstance(params["length"], (float, int)):
+        raise StyxValidationError(f'`length` has the wrong type: Received `{type(params.get("length", None))}` expected `float`')
+    if params.get("num_tests", None) is None:
+        raise StyxValidationError("`num_tests` must not be None")
+    if not isinstance(params["num_tests"], (float, int)):
+        raise StyxValidationError(f'`num_tests` has the wrong type: Received `{type(params.get("num_tests", None))}` expected `float`')
+    if params.get("vector_size", None) is None:
+        raise StyxValidationError("`vector_size` must not be None")
+    if not isinstance(params["vector_size"], (float, int)):
+        raise StyxValidationError(f'`vector_size` has the wrong type: Received `{type(params.get("vector_size", None))}` expected `float`')
+    if params.get("quiet_mode", False) is None:
+        raise StyxValidationError("`quiet_mode` must not be None")
+    if not isinstance(params["quiet_mode"], bool):
+        raise StyxValidationError(f'`quiet_mode` has the wrong type: Received `{type(params.get("quiet_mode", False))}` expected `bool`')
+
+
 def fftest_cargs(
     params: FftestParameters,
     execution: Execution,
@@ -125,6 +155,7 @@ def fftest_execute(
     Returns:
         NamedTuple of outputs (described in `FftestOutputs`).
     """
+    fftest_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FFTEST_METADATA)
     params = execution.params(params)

@@ -96,6 +96,57 @@ def tbss_non_fa_params(
     return params
 
 
+def tbss_non_fa_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TbssNonFaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("concat_auto", False) is None:
+        raise StyxValidationError("`concat_auto` must not be None")
+    if not isinstance(params["concat_auto"], bool):
+        raise StyxValidationError(f'`concat_auto` has the wrong type: Received `{type(params.get("concat_auto", False))}` expected `bool`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("concat_x", False) is None:
+        raise StyxValidationError("`concat_x` must not be None")
+    if not isinstance(params["concat_x"], bool):
+        raise StyxValidationError(f'`concat_x` has the wrong type: Received `{type(params.get("concat_x", False))}` expected `bool`')
+    if params.get("concat_y", False) is None:
+        raise StyxValidationError("`concat_y` must not be None")
+    if not isinstance(params["concat_y"], bool):
+        raise StyxValidationError(f'`concat_y` has the wrong type: Received `{type(params.get("concat_y", False))}` expected `bool`')
+    if params.get("concat_z", False) is None:
+        raise StyxValidationError("`concat_z` must not be None")
+    if not isinstance(params["concat_z"], bool):
+        raise StyxValidationError(f'`concat_z` has the wrong type: Received `{type(params.get("concat_z", False))}` expected `bool`')
+    if params.get("concat_t", False) is None:
+        raise StyxValidationError("`concat_t` must not be None")
+    if not isinstance(params["concat_t"], bool):
+        raise StyxValidationError(f'`concat_t` has the wrong type: Received `{type(params.get("concat_t", False))}` expected `bool`')
+    if params.get("concat_tr", None) is not None:
+        if not isinstance(params["concat_tr"], (float, int)):
+            raise StyxValidationError(f'`concat_tr` has the wrong type: Received `{type(params.get("concat_tr", None))}` expected `float | None`')
+    if params.get("volume_number", None) is not None:
+        if not isinstance(params["volume_number"], (float, int)):
+            raise StyxValidationError(f'`volume_number` has the wrong type: Received `{type(params.get("volume_number", None))}` expected `float | None`')
+
+
 def tbss_non_fa_cargs(
     params: TbssNonFaParameters,
     execution: Execution,
@@ -175,6 +226,7 @@ def tbss_non_fa_execute(
     Returns:
         NamedTuple of outputs (described in `TbssNonFaOutputs`).
     """
+    tbss_non_fa_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_NON_FA_METADATA)
     params = execution.params(params)

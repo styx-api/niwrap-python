@@ -51,6 +51,24 @@ def morph_rgb_lh_params(
     return params
 
 
+def morph_rgb_lh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MorphRgbLhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+
+
 def morph_rgb_lh_cargs(
     params: MorphRgbLhParameters,
     execution: Execution,
@@ -112,6 +130,7 @@ def morph_rgb_lh_execute(
     Returns:
         NamedTuple of outputs (described in `MorphRgbLhOutputs`).
     """
+    morph_rgb_lh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MORPH_RGB_LH_METADATA)
     params = execution.params(params)

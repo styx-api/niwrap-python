@@ -98,6 +98,53 @@ def aparc2feat_params(
     return params
 
 
+def aparc2feat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Aparc2featParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat_directories", None) is None:
+        raise StyxValidationError("`feat_directories` must not be None")
+    if not isinstance(params["feat_directories"], str):
+        raise StyxValidationError(f'`feat_directories` has the wrong type: Received `{type(params.get("feat_directories", None))}` expected `str`')
+    if params.get("featdirfile", None) is not None:
+        if not isinstance(params["featdirfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`featdirfile` has the wrong type: Received `{type(params.get("featdirfile", None))}` expected `InputPathType | None`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("annot", None) is not None:
+        if not isinstance(params["annot"], str):
+            raise StyxValidationError(f'`annot` has the wrong type: Received `{type(params.get("annot", None))}` expected `str | None`')
+    if params.get("annot_a2005s_flag", False) is None:
+        raise StyxValidationError("`annot_a2005s_flag` must not be None")
+    if not isinstance(params["annot_a2005s_flag"], bool):
+        raise StyxValidationError(f'`annot_a2005s_flag` has the wrong type: Received `{type(params.get("annot_a2005s_flag", False))}` expected `bool`')
+    if params.get("annot_a2009s_flag", False) is None:
+        raise StyxValidationError("`annot_a2009s_flag` must not be None")
+    if not isinstance(params["annot_a2009s_flag"], bool):
+        raise StyxValidationError(f'`annot_a2009s_flag` has the wrong type: Received `{type(params.get("annot_a2009s_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+
+
 def aparc2feat_cargs(
     params: Aparc2featParameters,
     execution: Execution,
@@ -186,6 +233,7 @@ def aparc2feat_execute(
     Returns:
         NamedTuple of outputs (described in `Aparc2featOutputs`).
     """
+    aparc2feat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APARC2FEAT_METADATA)
     params = execution.params(params)

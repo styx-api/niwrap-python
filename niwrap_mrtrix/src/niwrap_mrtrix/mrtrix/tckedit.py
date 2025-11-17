@@ -198,18 +198,20 @@ def tckedit_spec_cargs_dyn_fn(
     }.get(t)
 
 
-def tckedit_spec_outputs_dyn_fn(
+def tckedit_spec_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": tckedit_various_string_validate,
+        "VariousFile": tckedit_various_file_validate,
     }.get(t)
 
 
@@ -230,18 +232,20 @@ def tckedit_spec_cargs_dyn_fn_(
     }.get(t)
 
 
-def tckedit_spec_outputs_dyn_fn_(
+def tckedit_spec_validate_dyn_fn_(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString_1": tckedit_various_string_1_validate,
+        "VariousFile_1": tckedit_various_file_1_validate,
     }.get(t)
 
 
@@ -262,18 +266,20 @@ def tckedit_spec_cargs_dyn_fn_2(
     }.get(t)
 
 
-def tckedit_spec_outputs_dyn_fn_2(
+def tckedit_spec_validate_dyn_fn_2(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString_2": tckedit_various_string_2_validate,
+        "VariousFile_2": tckedit_various_file_2_validate,
     }.get(t)
 
 
@@ -293,6 +299,24 @@ def tckedit_various_string_params(
         "obj": obj,
     }
     return params
+
+
+def tckedit_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
 
 
 def tckedit_various_string_cargs(
@@ -331,6 +355,24 @@ def tckedit_various_file_params(
     return params
 
 
+def tckedit_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
+
+
 def tckedit_various_file_cargs(
     params: TckeditVariousFileParameters,
     execution: Execution,
@@ -367,6 +409,27 @@ def tckedit_include_params(
         "spec": spec,
     }
     return params
+
+
+def tckedit_include_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditIncludeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
+    if "@type" not in params["spec"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    tckedit_spec_validate_dyn_fn(params["spec"]["@type"])(params["spec"])
 
 
 def tckedit_include_cargs(
@@ -409,6 +472,24 @@ def tckedit_include_ordered_params(
     return params
 
 
+def tckedit_include_ordered_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditIncludeOrderedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], str):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `str`')
+
+
 def tckedit_include_ordered_cargs(
     params: TckeditIncludeOrderedParameters,
     execution: Execution,
@@ -446,6 +527,24 @@ def tckedit_various_string_1_params(
     return params
 
 
+def tckedit_various_string_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditVariousString1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def tckedit_various_string_1_cargs(
     params: TckeditVariousString1Parameters,
     execution: Execution,
@@ -480,6 +579,24 @@ def tckedit_various_file_1_params(
         "obj": obj,
     }
     return params
+
+
+def tckedit_various_file_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditVariousFile1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def tckedit_various_file_1_cargs(
@@ -520,6 +637,27 @@ def tckedit_exclude_params(
     return params
 
 
+def tckedit_exclude_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditExcludeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
+    if "@type" not in params["spec"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    tckedit_spec_validate_dyn_fn_(params["spec"]["@type"])(params["spec"])
+
+
 def tckedit_exclude_cargs(
     params: TckeditExcludeParameters,
     execution: Execution,
@@ -557,6 +695,24 @@ def tckedit_various_string_2_params(
     return params
 
 
+def tckedit_various_string_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditVariousString2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def tckedit_various_string_2_cargs(
     params: TckeditVariousString2Parameters,
     execution: Execution,
@@ -591,6 +747,24 @@ def tckedit_various_file_2_params(
         "obj": obj,
     }
     return params
+
+
+def tckedit_various_file_2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditVariousFile2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def tckedit_various_file_2_cargs(
@@ -631,6 +805,27 @@ def tckedit_mask_params(
     return params
 
 
+def tckedit_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["spec"])}\'')
+    if "@type" not in params["spec"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    tckedit_spec_validate_dyn_fn_2(params["spec"]["@type"])(params["spec"])
+
+
 def tckedit_mask_cargs(
     params: TckeditMaskParameters,
     execution: Execution,
@@ -669,6 +864,28 @@ def tckedit_config_params(
         "value": value,
     }
     return params
+
+
+def tckedit_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def tckedit_config_cargs(
@@ -828,6 +1045,115 @@ def tckedit_params(
     return params
 
 
+def tckedit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckeditParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("include", None) is not None:
+        if not isinstance(params["include"], list):
+            raise StyxValidationError(f'`include` has the wrong type: Received `{type(params.get("include", None))}` expected `list[TckeditIncludeParameters] | None`')
+        for e in params["include"]:
+            tckedit_include_validate(e)
+    if params.get("include_ordered", None) is not None:
+        if not isinstance(params["include_ordered"], list):
+            raise StyxValidationError(f'`include_ordered` has the wrong type: Received `{type(params.get("include_ordered", None))}` expected `list[TckeditIncludeOrderedParameters] | None`')
+        for e in params["include_ordered"]:
+            tckedit_include_ordered_validate(e)
+    if params.get("exclude", None) is not None:
+        if not isinstance(params["exclude"], list):
+            raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[TckeditExcludeParameters] | None`')
+        for e in params["exclude"]:
+            tckedit_exclude_validate(e)
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], list):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `list[TckeditMaskParameters] | None`')
+        for e in params["mask"]:
+            tckedit_mask_validate(e)
+    if params.get("maxlength", None) is not None:
+        if not isinstance(params["maxlength"], (float, int)):
+            raise StyxValidationError(f'`maxlength` has the wrong type: Received `{type(params.get("maxlength", None))}` expected `float | None`')
+    if params.get("minlength", None) is not None:
+        if not isinstance(params["minlength"], (float, int)):
+            raise StyxValidationError(f'`minlength` has the wrong type: Received `{type(params.get("minlength", None))}` expected `float | None`')
+    if params.get("number", None) is not None:
+        if not isinstance(params["number"], int):
+            raise StyxValidationError(f'`number` has the wrong type: Received `{type(params.get("number", None))}` expected `int | None`')
+    if params.get("skip", None) is not None:
+        if not isinstance(params["skip"], int):
+            raise StyxValidationError(f'`skip` has the wrong type: Received `{type(params.get("skip", None))}` expected `int | None`')
+    if params.get("maxweight", None) is not None:
+        if not isinstance(params["maxweight"], (float, int)):
+            raise StyxValidationError(f'`maxweight` has the wrong type: Received `{type(params.get("maxweight", None))}` expected `float | None`')
+    if params.get("minweight", None) is not None:
+        if not isinstance(params["minweight"], (float, int)):
+            raise StyxValidationError(f'`minweight` has the wrong type: Received `{type(params.get("minweight", None))}` expected `float | None`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+    if params.get("ends_only", False) is None:
+        raise StyxValidationError("`ends_only` must not be None")
+    if not isinstance(params["ends_only"], bool):
+        raise StyxValidationError(f'`ends_only` has the wrong type: Received `{type(params.get("ends_only", False))}` expected `bool`')
+    if params.get("tck_weights_in", None) is not None:
+        if not isinstance(params["tck_weights_in"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tck_weights_in` has the wrong type: Received `{type(params.get("tck_weights_in", None))}` expected `InputPathType | None`')
+    if params.get("tck_weights_out", None) is not None:
+        if not isinstance(params["tck_weights_out"], str):
+            raise StyxValidationError(f'`tck_weights_out` has the wrong type: Received `{type(params.get("tck_weights_out", None))}` expected `str | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckeditConfigParameters] | None`')
+        for e in params["config"]:
+            tckedit_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("tracks_in", None) is None:
+        raise StyxValidationError("`tracks_in` must not be None")
+    if not isinstance(params["tracks_in"], list):
+        raise StyxValidationError(f'`tracks_in` has the wrong type: Received `{type(params.get("tracks_in", None))}` expected `list[InputPathType]`')
+    for e in params["tracks_in"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`tracks_in` has the wrong type: Received `{type(params.get("tracks_in", None))}` expected `list[InputPathType]`')
+    if params.get("tracks_out", None) is None:
+        raise StyxValidationError("`tracks_out` must not be None")
+    if not isinstance(params["tracks_out"], str):
+        raise StyxValidationError(f'`tracks_out` has the wrong type: Received `{type(params.get("tracks_out", None))}` expected `str`')
+
+
 def tckedit_cargs(
     params: TckeditParameters,
     execution: Execution,
@@ -967,6 +1293,7 @@ def tckedit_execute(
     Returns:
         NamedTuple of outputs (described in `TckeditOutputs`).
     """
+    tckedit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCKEDIT_METADATA)
     params = execution.params(params)

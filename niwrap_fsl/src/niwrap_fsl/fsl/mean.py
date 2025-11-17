@@ -157,6 +157,84 @@ def mean_params(
     return params
 
 
+def mean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `MeanParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datafile", None) is None:
+        raise StyxValidationError("`datafile` must not be None")
+    if not isinstance(params["datafile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datafile` has the wrong type: Received `{type(params.get("datafile", None))}` expected `InputPathType`')
+    if params.get("maskfile", None) is None:
+        raise StyxValidationError("`maskfile` must not be None")
+    if not isinstance(params["maskfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskfile` has the wrong type: Received `{type(params.get("maskfile", None))}` expected `InputPathType`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], (float, int)):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `float | None`')
+    if params.get("timing_flag", False) is None:
+        raise StyxValidationError("`timing_flag` must not be None")
+    if not isinstance(params["timing_flag"], bool):
+        raise StyxValidationError(f'`timing_flag` has the wrong type: Received `{type(params.get("timing_flag", False))}` expected `bool`')
+    if params.get("log_dir", None) is not None:
+        if not isinstance(params["log_dir"], str):
+            raise StyxValidationError(f'`log_dir` has the wrong type: Received `{type(params.get("log_dir", None))}` expected `str | None`')
+    if params.get("forcedir_flag", False) is None:
+        raise StyxValidationError("`forcedir_flag` must not be None")
+    if not isinstance(params["forcedir_flag"], bool):
+        raise StyxValidationError(f'`forcedir_flag` has the wrong type: Received `{type(params.get("forcedir_flag", False))}` expected `bool`')
+    if params.get("inference_tech", None) is not None:
+        if not isinstance(params["inference_tech"], str):
+            raise StyxValidationError(f'`inference_tech` has the wrong type: Received `{type(params.get("inference_tech", None))}` expected `str | None`')
+    if params.get("num_jumps", None) is not None:
+        if not isinstance(params["num_jumps"], (float, int)):
+            raise StyxValidationError(f'`num_jumps` has the wrong type: Received `{type(params.get("num_jumps", None))}` expected `float | None`')
+    if params.get("num_burnin", None) is not None:
+        if not isinstance(params["num_burnin"], (float, int)):
+            raise StyxValidationError(f'`num_burnin` has the wrong type: Received `{type(params.get("num_burnin", None))}` expected `float | None`')
+    if params.get("num_sample_every", None) is not None:
+        if not isinstance(params["num_sample_every"], (float, int)):
+            raise StyxValidationError(f'`num_sample_every` has the wrong type: Received `{type(params.get("num_sample_every", None))}` expected `float | None`')
+    if params.get("num_update_proposalevery", None) is not None:
+        if not isinstance(params["num_update_proposalevery"], (float, int)):
+            raise StyxValidationError(f'`num_update_proposalevery` has the wrong type: Received `{type(params.get("num_update_proposalevery", None))}` expected `float | None`')
+    if params.get("acceptance_rate", None) is not None:
+        if not isinstance(params["acceptance_rate"], (float, int)):
+            raise StyxValidationError(f'`acceptance_rate` has the wrong type: Received `{type(params.get("acceptance_rate", None))}` expected `float | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("error_precision", None) is not None:
+        if not isinstance(params["error_precision"], (float, int)):
+            raise StyxValidationError(f'`error_precision` has the wrong type: Received `{type(params.get("error_precision", None))}` expected `float | None`')
+    if params.get("noamp_flag", False) is None:
+        raise StyxValidationError("`noamp_flag` must not be None")
+    if not isinstance(params["noamp_flag"], bool):
+        raise StyxValidationError(f'`noamp_flag` has the wrong type: Received `{type(params.get("noamp_flag", False))}` expected `bool`')
+    if params.get("prior_mean", None) is not None:
+        if not isinstance(params["prior_mean"], (float, int)):
+            raise StyxValidationError(f'`prior_mean` has the wrong type: Received `{type(params.get("prior_mean", None))}` expected `float | None`')
+    if params.get("prior_std", None) is not None:
+        if not isinstance(params["prior_std"], (float, int)):
+            raise StyxValidationError(f'`prior_std` has the wrong type: Received `{type(params.get("prior_std", None))}` expected `float | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def mean_cargs(
     params: MeanParameters,
     execution: Execution,
@@ -292,6 +370,7 @@ def mean_execute(
     Returns:
         NamedTuple of outputs (described in `MeanOutputs`).
     """
+    mean_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MEAN_METADATA)
     params = execution.params(params)

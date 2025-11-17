@@ -190,6 +190,69 @@ def v_3d_pfm_params(
     return params
 
 
+def v_3d_pfm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dPfmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("algorithm", None) is not None:
+        if not isinstance(params["algorithm"], str):
+            raise StyxValidationError(f'`algorithm` has the wrong type: Received `{type(params.get("algorithm", None))}` expected `str | None`')
+    if params.get("criteria", None) is not None:
+        if not isinstance(params["criteria"], str):
+            raise StyxValidationError(f'`criteria` has the wrong type: Received `{type(params.get("criteria", None))}` expected `str | None`')
+    if params.get("nonzeros", None) is not None:
+        if not isinstance(params["nonzeros"], (float, int)):
+            raise StyxValidationError(f'`nonzeros` has the wrong type: Received `{type(params.get("nonzeros", None))}` expected `float | None`')
+    if params.get("maxiter", None) is not None:
+        if not isinstance(params["maxiter"], (float, int)):
+            raise StyxValidationError(f'`maxiter` has the wrong type: Received `{type(params.get("maxiter", None))}` expected `float | None`')
+    if params.get("maxiterfactor", None) is not None:
+        if not isinstance(params["maxiterfactor"], (float, int)):
+            raise StyxValidationError(f'`maxiterfactor` has the wrong type: Received `{type(params.get("maxiterfactor", None))}` expected `float | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("hrf", None) is not None:
+        if not isinstance(params["hrf"], str):
+            raise StyxValidationError(f'`hrf` has the wrong type: Received `{type(params.get("hrf", None))}` expected `str | None`')
+    if params.get("hrf_vol", None) is not None:
+        if not isinstance(params["hrf_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`hrf_vol` has the wrong type: Received `{type(params.get("hrf_vol", None))}` expected `InputPathType | None`')
+    if params.get("idx_hrf", None) is not None:
+        if not isinstance(params["idx_hrf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`idx_hrf` has the wrong type: Received `{type(params.get("idx_hrf", None))}` expected `InputPathType | None`')
+    if params.get("LHS", None) is not None:
+        if not isinstance(params["LHS"], list):
+            raise StyxValidationError(f'`LHS` has the wrong type: Received `{type(params.get("LHS", None))}` expected `list[InputPathType] | None`')
+        for e in params["LHS"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`LHS` has the wrong type: Received `{type(params.get("LHS", None))}` expected `list[InputPathType] | None`')
+    if params.get("jobs", None) is not None:
+        if not isinstance(params["jobs"], (float, int)):
+            raise StyxValidationError(f'`jobs` has the wrong type: Received `{type(params.get("jobs", None))}` expected `float | None`')
+    if params.get("nSeg", None) is not None:
+        if not isinstance(params["nSeg"], (float, int)):
+            raise StyxValidationError(f'`nSeg` has the wrong type: Received `{type(params.get("nSeg", None))}` expected `float | None`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+
+
 def v_3d_pfm_cargs(
     params: V3dPfmParameters,
     execution: Execution,
@@ -347,6 +410,7 @@ def v_3d_pfm_execute(
     Returns:
         NamedTuple of outputs (described in `V3dPfmOutputs`).
     """
+    v_3d_pfm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_PFM_METADATA)
     params = execution.params(params)

@@ -189,6 +189,105 @@ def slicer_params(
     return params
 
 
+def slicer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlicerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("overlay_file", None) is not None:
+        if not isinstance(params["overlay_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`overlay_file` has the wrong type: Received `{type(params.get("overlay_file", None))}` expected `InputPathType | None`')
+    if params.get("label_slices", False) is None:
+        raise StyxValidationError("`label_slices` must not be None")
+    if not isinstance(params["label_slices"], bool):
+        raise StyxValidationError(f'`label_slices` has the wrong type: Received `{type(params.get("label_slices", False))}` expected `bool`')
+    if params.get("colour_map", None) is not None:
+        if not isinstance(params["colour_map"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`colour_map` has the wrong type: Received `{type(params.get("colour_map", None))}` expected `InputPathType | None`')
+    if params.get("scaling", None) is not None:
+        if not isinstance(params["scaling"], (float, int)):
+            raise StyxValidationError(f'`scaling` has the wrong type: Received `{type(params.get("scaling", None))}` expected `float | None`')
+    if params.get("intensity_range", None) is not None:
+        if not isinstance(params["intensity_range"], list):
+            raise StyxValidationError(f'`intensity_range` has the wrong type: Received `{type(params.get("intensity_range", None))}` expected `list[float] | None`')
+        if len(params["intensity_range"]) == 2:
+            raise StyxValidationError("Parameter `intensity_range` must contain exactly 2 elements")
+        for e in params["intensity_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`intensity_range` has the wrong type: Received `{type(params.get("intensity_range", None))}` expected `list[float] | None`')
+    if params.get("threshold_edges", None) is not None:
+        if not isinstance(params["threshold_edges"], (float, int)):
+            raise StyxValidationError(f'`threshold_edges` has the wrong type: Received `{type(params.get("threshold_edges", None))}` expected `float | None`')
+    if params.get("dither_edges", False) is None:
+        raise StyxValidationError("`dither_edges` must not be None")
+    if not isinstance(params["dither_edges"], bool):
+        raise StyxValidationError(f'`dither_edges` has the wrong type: Received `{type(params.get("dither_edges", False))}` expected `bool`')
+    if params.get("nearest_neighbour", False) is None:
+        raise StyxValidationError("`nearest_neighbour` must not be None")
+    if not isinstance(params["nearest_neighbour"], bool):
+        raise StyxValidationError(f'`nearest_neighbour` has the wrong type: Received `{type(params.get("nearest_neighbour", False))}` expected `bool`')
+    if params.get("show_orientation", False) is None:
+        raise StyxValidationError("`show_orientation` must not be None")
+    if not isinstance(params["show_orientation"], bool):
+        raise StyxValidationError(f'`show_orientation` has the wrong type: Received `{type(params.get("show_orientation", False))}` expected `bool`')
+    if params.get("red_dot_marker", False) is None:
+        raise StyxValidationError("`red_dot_marker` must not be None")
+    if not isinstance(params["red_dot_marker"], bool):
+        raise StyxValidationError(f'`red_dot_marker` has the wrong type: Received `{type(params.get("red_dot_marker", False))}` expected `bool`')
+    if params.get("output_single_image", None) is not None:
+        if not isinstance(params["output_single_image"], str):
+            raise StyxValidationError(f'`output_single_image` has the wrong type: Received `{type(params.get("output_single_image", None))}` expected `str | None`')
+    if params.get("output_sagittal_slice", False) is None:
+        raise StyxValidationError("`output_sagittal_slice` must not be None")
+    if not isinstance(params["output_sagittal_slice"], bool):
+        raise StyxValidationError(f'`output_sagittal_slice` has the wrong type: Received `{type(params.get("output_sagittal_slice", False))}` expected `bool`')
+    if params.get("output_sagittal_slice_fname", None) is not None:
+        if not isinstance(params["output_sagittal_slice_fname"], str):
+            raise StyxValidationError(f'`output_sagittal_slice_fname` has the wrong type: Received `{type(params.get("output_sagittal_slice_fname", None))}` expected `str | None`')
+    if params.get("output_axial_slice", False) is None:
+        raise StyxValidationError("`output_axial_slice` must not be None")
+    if not isinstance(params["output_axial_slice"], bool):
+        raise StyxValidationError(f'`output_axial_slice` has the wrong type: Received `{type(params.get("output_axial_slice", False))}` expected `bool`')
+    if params.get("output_axial_slice_fname", None) is not None:
+        if not isinstance(params["output_axial_slice_fname"], str):
+            raise StyxValidationError(f'`output_axial_slice_fname` has the wrong type: Received `{type(params.get("output_axial_slice_fname", None))}` expected `str | None`')
+    if params.get("output_coronal_slice", False) is None:
+        raise StyxValidationError("`output_coronal_slice` must not be None")
+    if not isinstance(params["output_coronal_slice"], bool):
+        raise StyxValidationError(f'`output_coronal_slice` has the wrong type: Received `{type(params.get("output_coronal_slice", False))}` expected `bool`')
+    if params.get("output_coronal_slice_fname", None) is not None:
+        if not isinstance(params["output_coronal_slice_fname"], str):
+            raise StyxValidationError(f'`output_coronal_slice_fname` has the wrong type: Received `{type(params.get("output_coronal_slice_fname", None))}` expected `str | None`')
+    if params.get("output_all_axial_slices", False) is None:
+        raise StyxValidationError("`output_all_axial_slices` must not be None")
+    if not isinstance(params["output_all_axial_slices"], bool):
+        raise StyxValidationError(f'`output_all_axial_slices` has the wrong type: Received `{type(params.get("output_all_axial_slices", False))}` expected `bool`')
+    if params.get("output_all_axial_slices_fname", None) is not None:
+        if not isinstance(params["output_all_axial_slices_fname"], str):
+            raise StyxValidationError(f'`output_all_axial_slices_fname` has the wrong type: Received `{type(params.get("output_all_axial_slices_fname", None))}` expected `str | None`')
+    if params.get("output_sample_axial_slices", False) is None:
+        raise StyxValidationError("`output_sample_axial_slices` must not be None")
+    if not isinstance(params["output_sample_axial_slices"], bool):
+        raise StyxValidationError(f'`output_sample_axial_slices` has the wrong type: Received `{type(params.get("output_sample_axial_slices", False))}` expected `bool`')
+    if params.get("output_sample_axial_slices_width", None) is not None:
+        if not isinstance(params["output_sample_axial_slices_width"], str):
+            raise StyxValidationError(f'`output_sample_axial_slices_width` has the wrong type: Received `{type(params.get("output_sample_axial_slices_width", None))}` expected `str | None`')
+    if params.get("output_sample_axial_slices_fname", None) is not None:
+        if not isinstance(params["output_sample_axial_slices_fname"], str):
+            raise StyxValidationError(f'`output_sample_axial_slices_fname` has the wrong type: Received `{type(params.get("output_sample_axial_slices_fname", None))}` expected `str | None`')
+
+
 def slicer_cargs(
     params: SlicerParameters,
     execution: Execution,
@@ -314,6 +413,7 @@ def slicer_execute(
     Returns:
         NamedTuple of outputs (described in `SlicerOutputs`).
     """
+    slicer_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLICER_METADATA)
     params = execution.params(params)

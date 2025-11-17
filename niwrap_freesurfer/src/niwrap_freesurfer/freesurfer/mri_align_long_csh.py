@@ -53,6 +53,24 @@ def mri_align_long_csh_params(
     return params
 
 
+def mri_align_long_csh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriAlignLongCshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_id", None) is None:
+        raise StyxValidationError("`base_id` must not be None")
+    if not isinstance(params["base_id"], str):
+        raise StyxValidationError(f'`base_id` has the wrong type: Received `{type(params.get("base_id", None))}` expected `str`')
+
+
 def mri_align_long_csh_cargs(
     params: MriAlignLongCshParameters,
     execution: Execution,
@@ -113,6 +131,7 @@ def mri_align_long_csh_execute(
     Returns:
         NamedTuple of outputs (described in `MriAlignLongCshOutputs`).
     """
+    mri_align_long_csh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_ALIGN_LONG_CSH_METADATA)
     params = execution.params(params)

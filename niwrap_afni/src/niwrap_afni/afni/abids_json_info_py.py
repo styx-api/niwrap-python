@@ -89,6 +89,57 @@ def abids_json_info_py_params(
     return params
 
 
+def abids_json_info_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AbidsJsonInfoPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("json_files", None) is None:
+        raise StyxValidationError("`json_files` must not be None")
+    if not isinstance(params["json_files"], list):
+        raise StyxValidationError(f'`json_files` has the wrong type: Received `{type(params.get("json_files", None))}` expected `list[InputPathType]`')
+    for e in params["json_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`json_files` has the wrong type: Received `{type(params.get("json_files", None))}` expected `list[InputPathType]`')
+    if params.get("tr_flag", False) is None:
+        raise StyxValidationError("`tr_flag` must not be None")
+    if not isinstance(params["tr_flag"], bool):
+        raise StyxValidationError(f'`tr_flag` has the wrong type: Received `{type(params.get("tr_flag", False))}` expected `bool`')
+    if params.get("te_flag", False) is None:
+        raise StyxValidationError("`te_flag` must not be None")
+    if not isinstance(params["te_flag"], bool):
+        raise StyxValidationError(f'`te_flag` has the wrong type: Received `{type(params.get("te_flag", False))}` expected `bool`')
+    if params.get("te_sec_flag", False) is None:
+        raise StyxValidationError("`te_sec_flag` must not be None")
+    if not isinstance(params["te_sec_flag"], bool):
+        raise StyxValidationError(f'`te_sec_flag` has the wrong type: Received `{type(params.get("te_sec_flag", False))}` expected `bool`')
+    if params.get("match_nii_flag", False) is None:
+        raise StyxValidationError("`match_nii_flag` must not be None")
+    if not isinstance(params["match_nii_flag"], bool):
+        raise StyxValidationError(f'`match_nii_flag` has the wrong type: Received `{type(params.get("match_nii_flag", False))}` expected `bool`')
+    if params.get("field_list", None) is not None:
+        if not isinstance(params["field_list"], list):
+            raise StyxValidationError(f'`field_list` has the wrong type: Received `{type(params.get("field_list", None))}` expected `list[str] | None`')
+        for e in params["field_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`field_list` has the wrong type: Received `{type(params.get("field_list", None))}` expected `list[str] | None`')
+    if params.get("list_fields_flag", False) is None:
+        raise StyxValidationError("`list_fields_flag` must not be None")
+    if not isinstance(params["list_fields_flag"], bool):
+        raise StyxValidationError(f'`list_fields_flag` has the wrong type: Received `{type(params.get("list_fields_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def abids_json_info_py_cargs(
     params: AbidsJsonInfoPyParameters,
     execution: Execution,
@@ -163,6 +214,7 @@ def abids_json_info_py_execute(
     Returns:
         NamedTuple of outputs (described in `AbidsJsonInfoPyOutputs`).
     """
+    abids_json_info_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ABIDS_JSON_INFO_PY_METADATA)
     params = execution.params(params)

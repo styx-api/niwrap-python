@@ -60,6 +60,32 @@ def cluster2html_params(
     return params
 
 
+def cluster2html_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Cluster2htmlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("featdir", None) is None:
+        raise StyxValidationError("`featdir` must not be None")
+    if not isinstance(params["featdir"], str):
+        raise StyxValidationError(f'`featdir` has the wrong type: Received `{type(params.get("featdir", None))}` expected `str`')
+    if params.get("inroot", None) is None:
+        raise StyxValidationError("`inroot` must not be None")
+    if not isinstance(params["inroot"], str):
+        raise StyxValidationError(f'`inroot` has the wrong type: Received `{type(params.get("inroot", None))}` expected `str`')
+    if params.get("std_flag", False) is None:
+        raise StyxValidationError("`std_flag` must not be None")
+    if not isinstance(params["std_flag"], bool):
+        raise StyxValidationError(f'`std_flag` has the wrong type: Received `{type(params.get("std_flag", False))}` expected `bool`')
+
+
 def cluster2html_cargs(
     params: Cluster2htmlParameters,
     execution: Execution,
@@ -120,6 +146,7 @@ def cluster2html_execute(
     Returns:
         NamedTuple of outputs (described in `Cluster2htmlOutputs`).
     """
+    cluster2html_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CLUSTER2HTML_METADATA)
     params = execution.params(params)

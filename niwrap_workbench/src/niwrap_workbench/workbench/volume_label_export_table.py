@@ -66,6 +66,35 @@ def volume_label_export_table_params(
     return params
 
 
+def volume_label_export_table_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeLabelExportTableParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("json-out", None) is not None:
+        if not isinstance(params["json-out"], str):
+            raise StyxValidationError(f'`json-out` has the wrong type: Received `{type(params.get("json-out", None))}` expected `str | None`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+    if params.get("map", None) is None:
+        raise StyxValidationError("`map` must not be None")
+    if not isinstance(params["map"], str):
+        raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `str`')
+    if params.get("table-out", None) is None:
+        raise StyxValidationError("`table-out` must not be None")
+    if not isinstance(params["table-out"], str):
+        raise StyxValidationError(f'`table-out` has the wrong type: Received `{type(params.get("table-out", None))}` expected `str`')
+
+
 def volume_label_export_table_cargs(
     params: VolumeLabelExportTableParameters,
     execution: Execution,
@@ -128,6 +157,7 @@ def volume_label_export_table_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelExportTableOutputs`).
     """
+    volume_label_export_table_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_LABEL_EXPORT_TABLE_METADATA)
     params = execution.params(params)

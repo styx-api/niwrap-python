@@ -71,6 +71,38 @@ def mris_rf_label_params(
     return params
 
 
+def mris_rf_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRfLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("rf_classifier", None) is None:
+        raise StyxValidationError("`rf_classifier` must not be None")
+    if not isinstance(params["rf_classifier"], str):
+        raise StyxValidationError(f'`rf_classifier` has the wrong type: Received `{type(params.get("rf_classifier", None))}` expected `str`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+
+
 def mris_rf_label_cargs(
     params: MrisRfLabelParameters,
     execution: Execution,
@@ -140,6 +172,7 @@ def mris_rf_label_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRfLabelOutputs`).
     """
+    mris_rf_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_RF_LABEL_METADATA)
     params = execution.params(params)

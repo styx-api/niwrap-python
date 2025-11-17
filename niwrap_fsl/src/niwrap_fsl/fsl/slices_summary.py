@@ -101,6 +101,60 @@ def slices_summary_params(
     return params
 
 
+def slices_summary_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlicesSummaryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("4d_input_file", None) is None:
+        raise StyxValidationError("`4d_input_file` must not be None")
+    if not isinstance(params["4d_input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`4d_input_file` has the wrong type: Received `{type(params.get("4d_input_file", None))}` expected `InputPathType`')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
+    if params.get("background_image", None) is None:
+        raise StyxValidationError("`background_image` must not be None")
+    if not isinstance(params["background_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`background_image` has the wrong type: Received `{type(params.get("background_image", None))}` expected `InputPathType`')
+    if params.get("pictures_sum", None) is None:
+        raise StyxValidationError("`pictures_sum` must not be None")
+    if not isinstance(params["pictures_sum"], str):
+        raise StyxValidationError(f'`pictures_sum` has the wrong type: Received `{type(params.get("pictures_sum", None))}` expected `str`')
+    if params.get("single_slice_flag", False) is None:
+        raise StyxValidationError("`single_slice_flag` must not be None")
+    if not isinstance(params["single_slice_flag"], bool):
+        raise StyxValidationError(f'`single_slice_flag` has the wrong type: Received `{type(params.get("single_slice_flag", False))}` expected `bool`')
+    if params.get("darker_background_flag", False) is None:
+        raise StyxValidationError("`darker_background_flag` must not be None")
+    if not isinstance(params["darker_background_flag"], bool):
+        raise StyxValidationError(f'`darker_background_flag` has the wrong type: Received `{type(params.get("darker_background_flag", False))}` expected `bool`')
+    if params.get("dumb_rule_flag", False) is None:
+        raise StyxValidationError("`dumb_rule_flag` must not be None")
+    if not isinstance(params["dumb_rule_flag"], bool):
+        raise StyxValidationError(f'`dumb_rule_flag` has the wrong type: Received `{type(params.get("dumb_rule_flag", False))}` expected `bool`')
+    if params.get("pictures_sum_second", None) is None:
+        raise StyxValidationError("`pictures_sum_second` must not be None")
+    if not isinstance(params["pictures_sum_second"], str):
+        raise StyxValidationError(f'`pictures_sum_second` has the wrong type: Received `{type(params.get("pictures_sum_second", None))}` expected `str`')
+    if params.get("output_png", None) is None:
+        raise StyxValidationError("`output_png` must not be None")
+    if not isinstance(params["output_png"], str):
+        raise StyxValidationError(f'`output_png` has the wrong type: Received `{type(params.get("output_png", None))}` expected `str`')
+    if params.get("timepoints", None) is None:
+        raise StyxValidationError("`timepoints` must not be None")
+    if not isinstance(params["timepoints"], str):
+        raise StyxValidationError(f'`timepoints` has the wrong type: Received `{type(params.get("timepoints", None))}` expected `str`')
+
+
 def slices_summary_cargs(
     params: SlicesSummaryParameters,
     execution: Execution,
@@ -172,6 +226,7 @@ def slices_summary_execute(
     Returns:
         NamedTuple of outputs (described in `SlicesSummaryOutputs`).
     """
+    slices_summary_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLICES_SUMMARY_METADATA)
     params = execution.params(params)

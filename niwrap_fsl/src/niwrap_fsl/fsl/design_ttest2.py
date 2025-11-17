@@ -64,6 +64,36 @@ def design_ttest2_params(
     return params
 
 
+def design_ttest2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DesignTtest2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("design_files_rootname", None) is None:
+        raise StyxValidationError("`design_files_rootname` must not be None")
+    if not isinstance(params["design_files_rootname"], str):
+        raise StyxValidationError(f'`design_files_rootname` has the wrong type: Received `{type(params.get("design_files_rootname", None))}` expected `str`')
+    if params.get("ngroupa", None) is None:
+        raise StyxValidationError("`ngroupa` must not be None")
+    if not isinstance(params["ngroupa"], (float, int)):
+        raise StyxValidationError(f'`ngroupa` has the wrong type: Received `{type(params.get("ngroupa", None))}` expected `float`')
+    if params.get("ngroupb", None) is None:
+        raise StyxValidationError("`ngroupb` must not be None")
+    if not isinstance(params["ngroupb"], (float, int)):
+        raise StyxValidationError(f'`ngroupb` has the wrong type: Received `{type(params.get("ngroupb", None))}` expected `float`')
+    if params.get("include_mean_contrasts", False) is None:
+        raise StyxValidationError("`include_mean_contrasts` must not be None")
+    if not isinstance(params["include_mean_contrasts"], bool):
+        raise StyxValidationError(f'`include_mean_contrasts` has the wrong type: Received `{type(params.get("include_mean_contrasts", False))}` expected `bool`')
+
+
 def design_ttest2_cargs(
     params: DesignTtest2Parameters,
     execution: Execution,
@@ -125,6 +155,7 @@ def design_ttest2_execute(
     Returns:
         NamedTuple of outputs (described in `DesignTtest2Outputs`).
     """
+    design_ttest2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DESIGN_TTEST2_METADATA)
     params = execution.params(params)

@@ -85,6 +85,51 @@ def imcutup_params(
     return params
 
 
+def imcutup_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImcutupParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("xynum", False) is None:
+        raise StyxValidationError("`xynum` must not be None")
+    if not isinstance(params["xynum"], bool):
+        raise StyxValidationError(f'`xynum` has the wrong type: Received `{type(params.get("xynum", False))}` expected `bool`')
+    if params.get("yxnum", False) is None:
+        raise StyxValidationError("`yxnum` must not be None")
+    if not isinstance(params["yxnum"], bool):
+        raise StyxValidationError(f'`yxnum` has the wrong type: Received `{type(params.get("yxnum", False))}` expected `bool`')
+    if params.get("xynum_format", False) is None:
+        raise StyxValidationError("`xynum_format` must not be None")
+    if not isinstance(params["xynum_format"], bool):
+        raise StyxValidationError(f'`xynum_format` has the wrong type: Received `{type(params.get("xynum_format", False))}` expected `bool`')
+    if params.get("yxnum_format", False) is None:
+        raise StyxValidationError("`yxnum_format` must not be None")
+    if not isinstance(params["yxnum_format"], bool):
+        raise StyxValidationError(f'`yxnum_format` has the wrong type: Received `{type(params.get("yxnum_format", False))}` expected `bool`')
+    if params.get("nx", None) is None:
+        raise StyxValidationError("`nx` must not be None")
+    if not isinstance(params["nx"], int):
+        raise StyxValidationError(f'`nx` has the wrong type: Received `{type(params.get("nx", None))}` expected `int`')
+    if params.get("ny", None) is None:
+        raise StyxValidationError("`ny` must not be None")
+    if not isinstance(params["ny"], int):
+        raise StyxValidationError(f'`ny` has the wrong type: Received `{type(params.get("ny", None))}` expected `int`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+
+
 def imcutup_cargs(
     params: ImcutupParameters,
     execution: Execution,
@@ -157,6 +202,7 @@ def imcutup_execute(
     Returns:
         NamedTuple of outputs (described in `ImcutupOutputs`).
     """
+    imcutup_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMCUTUP_METADATA)
     params = execution.params(params)

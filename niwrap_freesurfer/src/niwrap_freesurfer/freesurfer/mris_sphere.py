@@ -61,6 +61,32 @@ def mris_sphere_params(
     return params
 
 
+def mris_sphere_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSphereParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface_file", None) is None:
+        raise StyxValidationError("`surface_file` must not be None")
+    if not isinstance(params["surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_file` has the wrong type: Received `{type(params.get("surface_file", None))}` expected `InputPathType`')
+    if params.get("patch_file", None) is None:
+        raise StyxValidationError("`patch_file` must not be None")
+    if not isinstance(params["patch_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`patch_file` has the wrong type: Received `{type(params.get("patch_file", None))}` expected `InputPathType`')
+    if params.get("output_patch", None) is None:
+        raise StyxValidationError("`output_patch` must not be None")
+    if not isinstance(params["output_patch"], str):
+        raise StyxValidationError(f'`output_patch` has the wrong type: Received `{type(params.get("output_patch", None))}` expected `str`')
+
+
 def mris_sphere_cargs(
     params: MrisSphereParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mris_sphere_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSphereOutputs`).
     """
+    mris_sphere_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SPHERE_METADATA)
     params = execution.params(params)

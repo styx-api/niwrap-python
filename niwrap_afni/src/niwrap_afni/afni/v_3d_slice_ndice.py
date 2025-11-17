@@ -80,6 +80,41 @@ def v_3d_slice_ndice_params(
     return params
 
 
+def v_3d_slice_ndice_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSliceNdiceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile_a", None) is None:
+        raise StyxValidationError("`infile_a` must not be None")
+    if not isinstance(params["infile_a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile_a` has the wrong type: Received `{type(params.get("infile_a", None))}` expected `InputPathType`')
+    if params.get("infile_b", None) is None:
+        raise StyxValidationError("`infile_b` must not be None")
+    if not isinstance(params["infile_b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile_b` has the wrong type: Received `{type(params.get("infile_b", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("out_domain", None) is not None:
+        if not isinstance(params["out_domain"], str):
+            raise StyxValidationError(f'`out_domain` has the wrong type: Received `{type(params.get("out_domain", None))}` expected `typing.Literal["all", "AorB", "AandB", "Amask", "Bmask"] | None`')
+        if params["out_domain"] not in ["all", "AorB", "AandB", "Amask", "Bmask"]:
+            raise StyxValidationError("Parameter `out_domain` must be one of [\"all\", \"AorB\", \"AandB\", \"Amask\", \"Bmask\"]")
+    if params.get("no_cmd_echo", False) is None:
+        raise StyxValidationError("`no_cmd_echo` must not be None")
+    if not isinstance(params["no_cmd_echo"], bool):
+        raise StyxValidationError(f'`no_cmd_echo` has the wrong type: Received `{type(params.get("no_cmd_echo", False))}` expected `bool`')
+
+
 def v_3d_slice_ndice_cargs(
     params: V3dSliceNdiceParameters,
     execution: Execution,
@@ -159,6 +194,7 @@ def v_3d_slice_ndice_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSliceNdiceOutputs`).
     """
+    v_3d_slice_ndice_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SLICE_NDICE_METADATA)
     params = execution.params(params)

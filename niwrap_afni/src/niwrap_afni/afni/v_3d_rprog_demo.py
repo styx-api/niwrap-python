@@ -104,6 +104,65 @@ def v_3d_rprog_demo_params(
     return params
 
 
+def v_3d_rprog_demo_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRprogDemoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dsets", None) is None:
+        raise StyxValidationError("`input_dsets` must not be None")
+    if not isinstance(params["input_dsets"], list):
+        raise StyxValidationError(f'`input_dsets` has the wrong type: Received `{type(params.get("input_dsets", None))}` expected `list[InputPathType]`')
+    for e in params["input_dsets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_dsets` has the wrong type: Received `{type(params.get("input_dsets", None))}` expected `list[InputPathType]`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("scale", None) is None:
+        raise StyxValidationError("`scale` must not be None")
+    if not isinstance(params["scale"], (float, int)):
+        raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("help_aspx", False) is None:
+        raise StyxValidationError("`help_aspx` must not be None")
+    if not isinstance(params["help_aspx"], bool):
+        raise StyxValidationError(f'`help_aspx` has the wrong type: Received `{type(params.get("help_aspx", False))}` expected `bool`')
+    if params.get("help_raw", False) is None:
+        raise StyxValidationError("`help_raw` must not be None")
+    if not isinstance(params["help_raw"], bool):
+        raise StyxValidationError(f'`help_raw` has the wrong type: Received `{type(params.get("help_raw", False))}` expected `bool`')
+    if params.get("help_spx", False) is None:
+        raise StyxValidationError("`help_spx` must not be None")
+    if not isinstance(params["help_spx"], bool):
+        raise StyxValidationError(f'`help_spx` has the wrong type: Received `{type(params.get("help_spx", False))}` expected `bool`')
+    if params.get("help_txt", False) is None:
+        raise StyxValidationError("`help_txt` must not be None")
+    if not isinstance(params["help_txt"], bool):
+        raise StyxValidationError(f'`help_txt` has the wrong type: Received `{type(params.get("help_txt", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("show_allowed_options", False) is None:
+        raise StyxValidationError("`show_allowed_options` must not be None")
+    if not isinstance(params["show_allowed_options"], bool):
+        raise StyxValidationError(f'`show_allowed_options` has the wrong type: Received `{type(params.get("show_allowed_options", False))}` expected `bool`')
+    if params.get("verbosity_level", None) is not None:
+        if not isinstance(params["verbosity_level"], (float, int)):
+            raise StyxValidationError(f'`verbosity_level` has the wrong type: Received `{type(params.get("verbosity_level", None))}` expected `float | None`')
+
+
 def v_3d_rprog_demo_cargs(
     params: V3dRprogDemoParameters,
     execution: Execution,
@@ -193,6 +252,7 @@ def v_3d_rprog_demo_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRprogDemoOutputs`).
     """
+    v_3d_rprog_demo_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_RPROG_DEMO_METADATA)
     params = execution.params(params)

@@ -300,6 +300,203 @@ def mri_concat_params(
     return params
 
 
+def mri_concat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriConcatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("file_list", None) is not None:
+        if not isinstance(params["file_list"], str):
+            raise StyxValidationError(f'`file_list` has the wrong type: Received `{type(params.get("file_list", None))}` expected `str | None`')
+    if params.get("paired_sum", False) is None:
+        raise StyxValidationError("`paired_sum` must not be None")
+    if not isinstance(params["paired_sum"], bool):
+        raise StyxValidationError(f'`paired_sum` has the wrong type: Received `{type(params.get("paired_sum", False))}` expected `bool`')
+    if params.get("paired_avg", False) is None:
+        raise StyxValidationError("`paired_avg` must not be None")
+    if not isinstance(params["paired_avg"], bool):
+        raise StyxValidationError(f'`paired_avg` has the wrong type: Received `{type(params.get("paired_avg", False))}` expected `bool`')
+    if params.get("paired_diff", False) is None:
+        raise StyxValidationError("`paired_diff` must not be None")
+    if not isinstance(params["paired_diff"], bool):
+        raise StyxValidationError(f'`paired_diff` has the wrong type: Received `{type(params.get("paired_diff", False))}` expected `bool`')
+    if params.get("paired_diff_norm", False) is None:
+        raise StyxValidationError("`paired_diff_norm` must not be None")
+    if not isinstance(params["paired_diff_norm"], bool):
+        raise StyxValidationError(f'`paired_diff_norm` has the wrong type: Received `{type(params.get("paired_diff_norm", False))}` expected `bool`')
+    if params.get("paired_diff_norm1", False) is None:
+        raise StyxValidationError("`paired_diff_norm1` must not be None")
+    if not isinstance(params["paired_diff_norm1"], bool):
+        raise StyxValidationError(f'`paired_diff_norm1` has the wrong type: Received `{type(params.get("paired_diff_norm1", False))}` expected `bool`')
+    if params.get("paired_diff_norm2", False) is None:
+        raise StyxValidationError("`paired_diff_norm2` must not be None")
+    if not isinstance(params["paired_diff_norm2"], bool):
+        raise StyxValidationError(f'`paired_diff_norm2` has the wrong type: Received `{type(params.get("paired_diff_norm2", False))}` expected `bool`')
+    if params.get("norm_mean", False) is None:
+        raise StyxValidationError("`norm_mean` must not be None")
+    if not isinstance(params["norm_mean"], bool):
+        raise StyxValidationError(f'`norm_mean` has the wrong type: Received `{type(params.get("norm_mean", False))}` expected `bool`')
+    if params.get("norm1", False) is None:
+        raise StyxValidationError("`norm1` must not be None")
+    if not isinstance(params["norm1"], bool):
+        raise StyxValidationError(f'`norm1` has the wrong type: Received `{type(params.get("norm1", False))}` expected `bool`')
+    if params.get("matrix", None) is not None:
+        if not isinstance(params["matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `InputPathType | None`')
+    if params.get("frame_weight", None) is not None:
+        if not isinstance(params["frame_weight"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`frame_weight` has the wrong type: Received `{type(params.get("frame_weight", None))}` expected `InputPathType | None`')
+    if params.get("norm_weight", False) is None:
+        raise StyxValidationError("`norm_weight` must not be None")
+    if not isinstance(params["norm_weight"], bool):
+        raise StyxValidationError(f'`norm_weight` has the wrong type: Received `{type(params.get("norm_weight", False))}` expected `bool`')
+    if params.get("group_mean", None) is not None:
+        if not isinstance(params["group_mean"], (float, int)):
+            raise StyxValidationError(f'`group_mean` has the wrong type: Received `{type(params.get("group_mean", None))}` expected `float | None`')
+    if params.get("combine", False) is None:
+        raise StyxValidationError("`combine` must not be None")
+    if not isinstance(params["combine"], bool):
+        raise StyxValidationError(f'`combine` has the wrong type: Received `{type(params.get("combine", False))}` expected `bool`')
+    if params.get("keep_datatype", False) is None:
+        raise StyxValidationError("`keep_datatype` must not be None")
+    if not isinstance(params["keep_datatype"], bool):
+        raise StyxValidationError(f'`keep_datatype` has the wrong type: Received `{type(params.get("keep_datatype", False))}` expected `bool`')
+    if params.get("abs", False) is None:
+        raise StyxValidationError("`abs` must not be None")
+    if not isinstance(params["abs"], bool):
+        raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", False))}` expected `bool`')
+    if params.get("pos", False) is None:
+        raise StyxValidationError("`pos` must not be None")
+    if not isinstance(params["pos"], bool):
+        raise StyxValidationError(f'`pos` has the wrong type: Received `{type(params.get("pos", False))}` expected `bool`')
+    if params.get("neg", False) is None:
+        raise StyxValidationError("`neg` must not be None")
+    if not isinstance(params["neg"], bool):
+        raise StyxValidationError(f'`neg` has the wrong type: Received `{type(params.get("neg", False))}` expected `bool`')
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
+    if params.get("median", False) is None:
+        raise StyxValidationError("`median` must not be None")
+    if not isinstance(params["median"], bool):
+        raise StyxValidationError(f'`median` has the wrong type: Received `{type(params.get("median", False))}` expected `bool`')
+    if params.get("mean_div_n", False) is None:
+        raise StyxValidationError("`mean_div_n` must not be None")
+    if not isinstance(params["mean_div_n"], bool):
+        raise StyxValidationError(f'`mean_div_n` has the wrong type: Received `{type(params.get("mean_div_n", False))}` expected `bool`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("var", False) is None:
+        raise StyxValidationError("`var` must not be None")
+    if not isinstance(params["var"], bool):
+        raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", False))}` expected `bool`')
+    if params.get("std", False) is None:
+        raise StyxValidationError("`std` must not be None")
+    if not isinstance(params["std"], bool):
+        raise StyxValidationError(f'`std` has the wrong type: Received `{type(params.get("std", False))}` expected `bool`')
+    if params.get("max", False) is None:
+        raise StyxValidationError("`max` must not be None")
+    if not isinstance(params["max"], bool):
+        raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", False))}` expected `bool`')
+    if params.get("max_index", False) is None:
+        raise StyxValidationError("`max_index` must not be None")
+    if not isinstance(params["max_index"], bool):
+        raise StyxValidationError(f'`max_index` has the wrong type: Received `{type(params.get("max_index", False))}` expected `bool`')
+    if params.get("max_index_prune", False) is None:
+        raise StyxValidationError("`max_index_prune` must not be None")
+    if not isinstance(params["max_index_prune"], bool):
+        raise StyxValidationError(f'`max_index_prune` has the wrong type: Received `{type(params.get("max_index_prune", False))}` expected `bool`')
+    if params.get("max_index_add", None) is not None:
+        if not isinstance(params["max_index_add"], (float, int)):
+            raise StyxValidationError(f'`max_index_add` has the wrong type: Received `{type(params.get("max_index_add", None))}` expected `float | None`')
+    if params.get("min", False) is None:
+        raise StyxValidationError("`min` must not be None")
+    if not isinstance(params["min"], bool):
+        raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", False))}` expected `bool`')
+    if params.get("replicate_times", None) is not None:
+        if not isinstance(params["replicate_times"], (float, int)):
+            raise StyxValidationError(f'`replicate_times` has the wrong type: Received `{type(params.get("replicate_times", None))}` expected `float | None`')
+    if params.get("fnorm", False) is None:
+        raise StyxValidationError("`fnorm` must not be None")
+    if not isinstance(params["fnorm"], bool):
+        raise StyxValidationError(f'`fnorm` has the wrong type: Received `{type(params.get("fnorm", False))}` expected `bool`')
+    if params.get("conjunction", False) is None:
+        raise StyxValidationError("`conjunction` must not be None")
+    if not isinstance(params["conjunction"], bool):
+        raise StyxValidationError(f'`conjunction` has the wrong type: Received `{type(params.get("conjunction", False))}` expected `bool`')
+    if params.get("vote", False) is None:
+        raise StyxValidationError("`vote` must not be None")
+    if not isinstance(params["vote"], bool):
+        raise StyxValidationError(f'`vote` has the wrong type: Received `{type(params.get("vote", False))}` expected `bool`')
+    if params.get("sort", False) is None:
+        raise StyxValidationError("`sort` must not be None")
+    if not isinstance(params["sort"], bool):
+        raise StyxValidationError(f'`sort` has the wrong type: Received `{type(params.get("sort", False))}` expected `bool`')
+    if params.get("temporal_ar1", None) is not None:
+        if not isinstance(params["temporal_ar1"], (float, int)):
+            raise StyxValidationError(f'`temporal_ar1` has the wrong type: Received `{type(params.get("temporal_ar1", None))}` expected `float | None`')
+    if params.get("prune", False) is None:
+        raise StyxValidationError("`prune` must not be None")
+    if not isinstance(params["prune"], bool):
+        raise StyxValidationError(f'`prune` has the wrong type: Received `{type(params.get("prune", False))}` expected `bool`')
+    if params.get("pca", False) is None:
+        raise StyxValidationError("`pca` must not be None")
+    if not isinstance(params["pca"], bool):
+        raise StyxValidationError(f'`pca` has the wrong type: Received `{type(params.get("pca", False))}` expected `bool`')
+    if params.get("pca_mask", None) is not None:
+        if not isinstance(params["pca_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pca_mask` has the wrong type: Received `{type(params.get("pca_mask", None))}` expected `InputPathType | None`')
+    if params.get("scm", False) is None:
+        raise StyxValidationError("`scm` must not be None")
+    if not isinstance(params["scm"], bool):
+        raise StyxValidationError(f'`scm` has the wrong type: Received `{type(params.get("scm", False))}` expected `bool`')
+    if params.get("zconcat", None) is not None:
+        if not isinstance(params["zconcat"], str):
+            raise StyxValidationError(f'`zconcat` has the wrong type: Received `{type(params.get("zconcat", None))}` expected `str | None`')
+    if params.get("max_bonfcor", False) is None:
+        raise StyxValidationError("`max_bonfcor` must not be None")
+    if not isinstance(params["max_bonfcor"], bool):
+        raise StyxValidationError(f'`max_bonfcor` has the wrong type: Received `{type(params.get("max_bonfcor", False))}` expected `bool`')
+    if params.get("multiply", None) is not None:
+        if not isinstance(params["multiply"], (float, int)):
+            raise StyxValidationError(f'`multiply` has the wrong type: Received `{type(params.get("multiply", None))}` expected `float | None`')
+    if params.get("add", None) is not None:
+        if not isinstance(params["add"], (float, int)):
+            raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `float | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("rms", False) is None:
+        raise StyxValidationError("`rms` must not be None")
+    if not isinstance(params["rms"], bool):
+        raise StyxValidationError(f'`rms` has the wrong type: Received `{type(params.get("rms", False))}` expected `bool`')
+    if params.get("no_check", False) is None:
+        raise StyxValidationError("`no_check` must not be None")
+    if not isinstance(params["no_check"], bool):
+        raise StyxValidationError(f'`no_check` has the wrong type: Received `{type(params.get("no_check", False))}` expected `bool`')
+
+
 def mri_concat_cargs(
     params: MriConcatParameters,
     execution: Execution,
@@ -489,6 +686,7 @@ def mri_concat_execute(
     Returns:
         NamedTuple of outputs (described in `MriConcatOutputs`).
     """
+    mri_concat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CONCAT_METADATA)
     params = execution.params(params)

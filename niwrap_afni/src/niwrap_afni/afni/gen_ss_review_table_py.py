@@ -125,6 +125,75 @@ def gen_ss_review_table_py_params(
     return params
 
 
+def gen_ss_review_table_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GenSsReviewTablePyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infiles", None) is None:
+        raise StyxValidationError("`infiles` must not be None")
+    if not isinstance(params["infiles"], list):
+        raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    for e in params["infiles"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    if params.get("write_table", None) is not None:
+        if not isinstance(params["write_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`write_table` has the wrong type: Received `{type(params.get("write_table", None))}` expected `InputPathType | None`')
+    if params.get("write_outliers", None) is not None:
+        if not isinstance(params["write_outliers"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`write_outliers` has the wrong type: Received `{type(params.get("write_outliers", None))}` expected `InputPathType | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("empty_is_outlier", False) is None:
+        raise StyxValidationError("`empty_is_outlier` must not be None")
+    if not isinstance(params["empty_is_outlier"], bool):
+        raise StyxValidationError(f'`empty_is_outlier` has the wrong type: Received `{type(params.get("empty_is_outlier", False))}` expected `bool`')
+    if params.get("outlier_sep", None) is not None:
+        if not isinstance(params["outlier_sep"], str):
+            raise StyxValidationError(f'`outlier_sep` has the wrong type: Received `{type(params.get("outlier_sep", None))}` expected `str | None`')
+    if params.get("separator", None) is not None:
+        if not isinstance(params["separator"], str):
+            raise StyxValidationError(f'`separator` has the wrong type: Received `{type(params.get("separator", None))}` expected `str | None`')
+    if params.get("showlabs", False) is None:
+        raise StyxValidationError("`showlabs` must not be None")
+    if not isinstance(params["showlabs"], bool):
+        raise StyxValidationError(f'`showlabs` has the wrong type: Received `{type(params.get("showlabs", False))}` expected `bool`')
+    if params.get("show_infiles", False) is None:
+        raise StyxValidationError("`show_infiles` must not be None")
+    if not isinstance(params["show_infiles"], bool):
+        raise StyxValidationError(f'`show_infiles` has the wrong type: Received `{type(params.get("show_infiles", False))}` expected `bool`')
+    if params.get("show_keepers", False) is None:
+        raise StyxValidationError("`show_keepers` must not be None")
+    if not isinstance(params["show_keepers"], bool):
+        raise StyxValidationError(f'`show_keepers` has the wrong type: Received `{type(params.get("show_keepers", False))}` expected `bool`')
+    if params.get("report_outliers", None) is not None:
+        if not isinstance(params["report_outliers"], list):
+            raise StyxValidationError(f'`report_outliers` has the wrong type: Received `{type(params.get("report_outliers", None))}` expected `list[str] | None`')
+        for e in params["report_outliers"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`report_outliers` has the wrong type: Received `{type(params.get("report_outliers", None))}` expected `list[str] | None`')
+    if params.get("report_outliers_fill_style", None) is not None:
+        if not isinstance(params["report_outliers_fill_style"], str):
+            raise StyxValidationError(f'`report_outliers_fill_style` has the wrong type: Received `{type(params.get("report_outliers_fill_style", None))}` expected `str | None`')
+    if params.get("show_missing", False) is None:
+        raise StyxValidationError("`show_missing` must not be None")
+    if not isinstance(params["show_missing"], bool):
+        raise StyxValidationError(f'`show_missing` has the wrong type: Received `{type(params.get("show_missing", False))}` expected `bool`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], int):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `int | None`')
+
+
 def gen_ss_review_table_py_cargs(
     params: GenSsReviewTablePyParameters,
     execution: Execution,
@@ -231,6 +300,7 @@ def gen_ss_review_table_py_execute(
     Returns:
         NamedTuple of outputs (described in `GenSsReviewTablePyOutputs`).
     """
+    gen_ss_review_table_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GEN_SS_REVIEW_TABLE_PY_METADATA)
     params = execution.params(params)

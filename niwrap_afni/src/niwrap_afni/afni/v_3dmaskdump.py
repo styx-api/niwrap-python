@@ -170,6 +170,94 @@ def v_3dmaskdump_params(
     return params
 
 
+def v_3dmaskdump_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dmaskdumpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("mask_range", None) is not None:
+        if not isinstance(params["mask_range"], list):
+            raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[str] | None`')
+        if len(params["mask_range"]) == 2:
+            raise StyxValidationError("Parameter `mask_range` must contain exactly 2 elements")
+        for e in params["mask_range"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[str] | None`')
+    if params.get("output_index", False) is None:
+        raise StyxValidationError("`output_index` must not be None")
+    if not isinstance(params["output_index"], bool):
+        raise StyxValidationError(f'`output_index` has the wrong type: Received `{type(params.get("output_index", False))}` expected `bool`')
+    if params.get("output_noijk", False) is None:
+        raise StyxValidationError("`output_noijk` must not be None")
+    if not isinstance(params["output_noijk"], bool):
+        raise StyxValidationError(f'`output_noijk` has the wrong type: Received `{type(params.get("output_noijk", False))}` expected `bool`')
+    if params.get("output_xyz", False) is None:
+        raise StyxValidationError("`output_xyz` must not be None")
+    if not isinstance(params["output_xyz"], bool):
+        raise StyxValidationError(f'`output_xyz` has the wrong type: Received `{type(params.get("output_xyz", False))}` expected `bool`')
+    if params.get("output_filename", None) is not None:
+        if not isinstance(params["output_filename"], str):
+            raise StyxValidationError(f'`output_filename` has the wrong type: Received `{type(params.get("output_filename", None))}` expected `str | None`')
+    if params.get("calc_mask_opts", None) is not None:
+        if not isinstance(params["calc_mask_opts"], str):
+            raise StyxValidationError(f'`calc_mask_opts` has the wrong type: Received `{type(params.get("calc_mask_opts", None))}` expected `str | None`')
+    if params.get("xbox_coords", None) is not None:
+        if not isinstance(params["xbox_coords"], str):
+            raise StyxValidationError(f'`xbox_coords` has the wrong type: Received `{type(params.get("xbox_coords", None))}` expected `str | None`')
+    if params.get("dbox_coords", None) is not None:
+        if not isinstance(params["dbox_coords"], str):
+            raise StyxValidationError(f'`dbox_coords` has the wrong type: Received `{type(params.get("dbox_coords", None))}` expected `str | None`')
+    if params.get("nbox_coords", None) is not None:
+        if not isinstance(params["nbox_coords"], str):
+            raise StyxValidationError(f'`nbox_coords` has the wrong type: Received `{type(params.get("nbox_coords", None))}` expected `str | None`')
+    if params.get("ibox_coords", None) is not None:
+        if not isinstance(params["ibox_coords"], str):
+            raise StyxValidationError(f'`ibox_coords` has the wrong type: Received `{type(params.get("ibox_coords", None))}` expected `str | None`')
+    if params.get("xball_coords", None) is not None:
+        if not isinstance(params["xball_coords"], str):
+            raise StyxValidationError(f'`xball_coords` has the wrong type: Received `{type(params.get("xball_coords", None))}` expected `str | None`')
+    if params.get("dball_coords", None) is not None:
+        if not isinstance(params["dball_coords"], str):
+            raise StyxValidationError(f'`dball_coords` has the wrong type: Received `{type(params.get("dball_coords", None))}` expected `str | None`')
+    if params.get("nball_coords", None) is not None:
+        if not isinstance(params["nball_coords"], str):
+            raise StyxValidationError(f'`nball_coords` has the wrong type: Received `{type(params.get("nball_coords", None))}` expected `str | None`')
+    if params.get("nozero_output", False) is None:
+        raise StyxValidationError("`nozero_output` must not be None")
+    if not isinstance(params["nozero_output"], bool):
+        raise StyxValidationError(f'`nozero_output` has the wrong type: Received `{type(params.get("nozero_output", False))}` expected `bool`')
+    if params.get("random_voxels", None) is not None:
+        if not isinstance(params["random_voxels"], (float, int)):
+            raise StyxValidationError(f'`random_voxels` has the wrong type: Received `{type(params.get("random_voxels", None))}` expected `float | None`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], (float, int)):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `float | None`')
+    if params.get("output_niml", None) is not None:
+        if not isinstance(params["output_niml"], str):
+            raise StyxValidationError(f'`output_niml` has the wrong type: Received `{type(params.get("output_niml", None))}` expected `str | None`')
+    if params.get("quiet_mode", False) is None:
+        raise StyxValidationError("`quiet_mode` must not be None")
+    if not isinstance(params["quiet_mode"], bool):
+        raise StyxValidationError(f'`quiet_mode` has the wrong type: Received `{type(params.get("quiet_mode", False))}` expected `bool`')
+
+
 def v_3dmaskdump_cargs(
     params: V3dmaskdumpParameters,
     execution: Execution,
@@ -309,6 +397,7 @@ def v_3dmaskdump_execute(
     Returns:
         NamedTuple of outputs (described in `V3dmaskdumpOutputs`).
     """
+    v_3dmaskdump_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DMASKDUMP_METADATA)
     params = execution.params(params)

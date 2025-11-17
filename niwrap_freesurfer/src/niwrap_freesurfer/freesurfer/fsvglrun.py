@@ -72,6 +72,41 @@ def fsvglrun_params(
     return params
 
 
+def fsvglrun_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsvglrunParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("zeroth_arg_name", None) is not None:
+        if not isinstance(params["zeroth_arg_name"], str):
+            raise StyxValidationError(f'`zeroth_arg_name` has the wrong type: Received `{type(params.get("zeroth_arg_name", None))}` expected `str | None`')
+    if params.get("empty_env", False) is None:
+        raise StyxValidationError("`empty_env` must not be None")
+    if not isinstance(params["empty_env"], bool):
+        raise StyxValidationError(f'`empty_env` has the wrong type: Received `{type(params.get("empty_env", False))}` expected `bool`')
+    if params.get("dashed_arg", False) is None:
+        raise StyxValidationError("`dashed_arg` must not be None")
+    if not isinstance(params["dashed_arg"], bool):
+        raise StyxValidationError(f'`dashed_arg` has the wrong type: Received `{type(params.get("dashed_arg", False))}` expected `bool`')
+    if params.get("command", None) is None:
+        raise StyxValidationError("`command` must not be None")
+    if not isinstance(params["command"], str):
+        raise StyxValidationError(f'`command` has the wrong type: Received `{type(params.get("command", None))}` expected `str`')
+    if params.get("command_args", None) is not None:
+        if not isinstance(params["command_args"], list):
+            raise StyxValidationError(f'`command_args` has the wrong type: Received `{type(params.get("command_args", None))}` expected `list[str] | None`')
+        for e in params["command_args"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`command_args` has the wrong type: Received `{type(params.get("command_args", None))}` expected `list[str] | None`')
+
+
 def fsvglrun_cargs(
     params: FsvglrunParameters,
     execution: Execution,
@@ -141,6 +176,7 @@ def fsvglrun_execute(
     Returns:
         NamedTuple of outputs (described in `FsvglrunOutputs`).
     """
+    fsvglrun_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSVGLRUN_METADATA)
     params = execution.params(params)

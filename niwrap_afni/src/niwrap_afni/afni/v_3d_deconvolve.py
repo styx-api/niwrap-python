@@ -144,6 +144,69 @@ def v_3d_deconvolve_params(
     return params
 
 
+def v_3d_deconvolve_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDeconvolveParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("num_stimts", None) is not None:
+        if not isinstance(params["num_stimts"], int):
+            raise StyxValidationError(f'`num_stimts` has the wrong type: Received `{type(params.get("num_stimts", None))}` expected `int | None`')
+    if params.get("stim_file", None) is not None:
+        if not isinstance(params["stim_file"], str):
+            raise StyxValidationError(f'`stim_file` has the wrong type: Received `{type(params.get("stim_file", None))}` expected `str | None`')
+    if params.get("stim_label", None) is not None:
+        if not isinstance(params["stim_label"], str):
+            raise StyxValidationError(f'`stim_label` has the wrong type: Received `{type(params.get("stim_label", None))}` expected `str | None`')
+    if params.get("stim_base", False) is None:
+        raise StyxValidationError("`stim_base` must not be None")
+    if not isinstance(params["stim_base"], bool):
+        raise StyxValidationError(f'`stim_base` has the wrong type: Received `{type(params.get("stim_base", False))}` expected `bool`')
+    if params.get("stim_times", None) is not None:
+        if not isinstance(params["stim_times"], str):
+            raise StyxValidationError(f'`stim_times` has the wrong type: Received `{type(params.get("stim_times", None))}` expected `str | None`')
+    if params.get("iresp", None) is not None:
+        if not isinstance(params["iresp"], str):
+            raise StyxValidationError(f'`iresp` has the wrong type: Received `{type(params.get("iresp", None))}` expected `str | None`')
+    if params.get("fitts", None) is not None:
+        if not isinstance(params["fitts"], str):
+            raise StyxValidationError(f'`fitts` has the wrong type: Received `{type(params.get("fitts", None))}` expected `str | None`')
+    if params.get("fout", False) is None:
+        raise StyxValidationError("`fout` must not be None")
+    if not isinstance(params["fout"], bool):
+        raise StyxValidationError(f'`fout` has the wrong type: Received `{type(params.get("fout", False))}` expected `bool`')
+    if params.get("tout", False) is None:
+        raise StyxValidationError("`tout` must not be None")
+    if not isinstance(params["tout"], bool):
+        raise StyxValidationError(f'`tout` has the wrong type: Received `{type(params.get("tout", False))}` expected `bool`')
+    if params.get("bucket", None) is not None:
+        if not isinstance(params["bucket"], str):
+            raise StyxValidationError(f'`bucket` has the wrong type: Received `{type(params.get("bucket", None))}` expected `str | None`')
+    if params.get("cbucket", None) is not None:
+        if not isinstance(params["cbucket"], str):
+            raise StyxValidationError(f'`cbucket` has the wrong type: Received `{type(params.get("cbucket", None))}` expected `str | None`')
+    if params.get("x1D", None) is not None:
+        if not isinstance(params["x1D"], str):
+            raise StyxValidationError(f'`x1D` has the wrong type: Received `{type(params.get("x1D", None))}` expected `str | None`')
+    if params.get("jobs", None) is not None:
+        if not isinstance(params["jobs"], int):
+            raise StyxValidationError(f'`jobs` has the wrong type: Received `{type(params.get("jobs", None))}` expected `int | None`')
+
+
 def v_3d_deconvolve_cargs(
     params: V3dDeconvolveParameters,
     execution: Execution,
@@ -271,6 +334,7 @@ def v_3d_deconvolve_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDeconvolveOutputs`).
     """
+    v_3d_deconvolve_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DECONVOLVE_METADATA)
     params = execution.params(params)

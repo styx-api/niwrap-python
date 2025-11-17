@@ -170,6 +170,89 @@ def v__suma_align_to_experiment_params(
     return params
 
 
+def v__suma_align_to_experiment_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSumaAlignToExperimentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("exp_anat", None) is None:
+        raise StyxValidationError("`exp_anat` must not be None")
+    if not isinstance(params["exp_anat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`exp_anat` has the wrong type: Received `{type(params.get("exp_anat", None))}` expected `InputPathType`')
+    if params.get("surf_anat", None) is None:
+        raise StyxValidationError("`surf_anat` must not be None")
+    if not isinstance(params["surf_anat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf_anat` has the wrong type: Received `{type(params.get("surf_anat", None))}` expected `InputPathType`')
+    if params.get("dxyz", None) is not None:
+        if not isinstance(params["dxyz"], (float, int)):
+            raise StyxValidationError(f'`dxyz` has the wrong type: Received `{type(params.get("dxyz", None))}` expected `float | None`')
+    if params.get("out_dxyz", None) is not None:
+        if not isinstance(params["out_dxyz"], (float, int)):
+            raise StyxValidationError(f'`out_dxyz` has the wrong type: Received `{type(params.get("out_dxyz", None))}` expected `float | None`')
+    if params.get("wd", False) is None:
+        raise StyxValidationError("`wd` must not be None")
+    if not isinstance(params["wd"], bool):
+        raise StyxValidationError(f'`wd` has the wrong type: Received `{type(params.get("wd", False))}` expected `bool`')
+    if params.get("al", False) is None:
+        raise StyxValidationError("`al` must not be None")
+    if not isinstance(params["al"], bool):
+        raise StyxValidationError(f'`al` has the wrong type: Received `{type(params.get("al", False))}` expected `bool`')
+    if params.get("al_opt", None) is not None:
+        if not isinstance(params["al_opt"], str):
+            raise StyxValidationError(f'`al_opt` has the wrong type: Received `{type(params.get("al_opt", None))}` expected `str | None`')
+    if params.get("ok_change_view", False) is None:
+        raise StyxValidationError("`ok_change_view` must not be None")
+    if not isinstance(params["ok_change_view"], bool):
+        raise StyxValidationError(f'`ok_change_view` has the wrong type: Received `{type(params.get("ok_change_view", False))}` expected `bool`')
+    if params.get("strip_skull", None) is not None:
+        if not isinstance(params["strip_skull"], str):
+            raise StyxValidationError(f'`strip_skull` has the wrong type: Received `{type(params.get("strip_skull", None))}` expected `str | None`')
+    if params.get("skull_strip_opt", None) is not None:
+        if not isinstance(params["skull_strip_opt"], str):
+            raise StyxValidationError(f'`skull_strip_opt` has the wrong type: Received `{type(params.get("skull_strip_opt", None))}` expected `str | None`')
+    if params.get("align_centers", False) is None:
+        raise StyxValidationError("`align_centers` must not be None")
+    if not isinstance(params["align_centers"], bool):
+        raise StyxValidationError(f'`align_centers` has the wrong type: Received `{type(params.get("align_centers", False))}` expected `bool`')
+    if params.get("init_xform", None) is not None:
+        if not isinstance(params["init_xform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_xform` has the wrong type: Received `{type(params.get("init_xform", None))}` expected `InputPathType | None`')
+    if params.get("EA_clip_below", None) is not None:
+        if not isinstance(params["EA_clip_below"], (float, int)):
+            raise StyxValidationError(f'`EA_clip_below` has the wrong type: Received `{type(params.get("EA_clip_below", None))}` expected `float | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("surf_anat_followers", None) is not None:
+        if not isinstance(params["surf_anat_followers"], str):
+            raise StyxValidationError(f'`surf_anat_followers` has the wrong type: Received `{type(params.get("surf_anat_followers", None))}` expected `str | None`')
+    if params.get("followers_interp", None) is not None:
+        if not isinstance(params["followers_interp"], str):
+            raise StyxValidationError(f'`followers_interp` has the wrong type: Received `{type(params.get("followers_interp", None))}` expected `str | None`')
+    if params.get("atlas_followers", False) is None:
+        raise StyxValidationError("`atlas_followers` must not be None")
+    if not isinstance(params["atlas_followers"], bool):
+        raise StyxValidationError(f'`atlas_followers` has the wrong type: Received `{type(params.get("atlas_followers", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("keep_tmp", False) is None:
+        raise StyxValidationError("`keep_tmp` must not be None")
+    if not isinstance(params["keep_tmp"], bool):
+        raise StyxValidationError(f'`keep_tmp` has the wrong type: Received `{type(params.get("keep_tmp", False))}` expected `bool`')
+    if params.get("overwrite_resp", None) is not None:
+        if not isinstance(params["overwrite_resp"], str):
+            raise StyxValidationError(f'`overwrite_resp` has the wrong type: Received `{type(params.get("overwrite_resp", None))}` expected `str | None`')
+
+
 def v__suma_align_to_experiment_cargs(
     params: VSumaAlignToExperimentParameters,
     execution: Execution,
@@ -306,6 +389,7 @@ def v__suma_align_to_experiment_execute(
     Returns:
         NamedTuple of outputs (described in `VSumaAlignToExperimentOutputs`).
     """
+    v__suma_align_to_experiment_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SUMA_ALIGN_TO_EXPERIMENT_METADATA)
     params = execution.params(params)

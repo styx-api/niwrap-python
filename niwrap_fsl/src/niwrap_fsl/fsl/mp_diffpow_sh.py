@@ -59,6 +59,28 @@ def mp_diffpow_sh_params(
     return params
 
 
+def mp_diffpow_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MpDiffpowShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reg_file", None) is None:
+        raise StyxValidationError("`reg_file` must not be None")
+    if not isinstance(params["reg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `InputPathType`')
+    if params.get("diff_reg_file", None) is None:
+        raise StyxValidationError("`diff_reg_file` must not be None")
+    if not isinstance(params["diff_reg_file"], str):
+        raise StyxValidationError(f'`diff_reg_file` has the wrong type: Received `{type(params.get("diff_reg_file", None))}` expected `str`')
+
+
 def mp_diffpow_sh_cargs(
     params: MpDiffpowShParameters,
     execution: Execution,
@@ -120,6 +142,7 @@ def mp_diffpow_sh_execute(
     Returns:
         NamedTuple of outputs (described in `MpDiffpowShOutputs`).
     """
+    mp_diffpow_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MP_DIFFPOW_SH_METADATA)
     params = execution.params(params)

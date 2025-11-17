@@ -69,6 +69,37 @@ def oct_register_mosaic_params(
     return params
 
 
+def oct_register_mosaic_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `OctRegisterMosaicParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tiles_or_mosaic_list", None) is None:
+        raise StyxValidationError("`tiles_or_mosaic_list` must not be None")
+    if not isinstance(params["tiles_or_mosaic_list"], list):
+        raise StyxValidationError(f'`tiles_or_mosaic_list` has the wrong type: Received `{type(params.get("tiles_or_mosaic_list", None))}` expected `list[str]`')
+    for e in params["tiles_or_mosaic_list"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`tiles_or_mosaic_list` has the wrong type: Received `{type(params.get("tiles_or_mosaic_list", None))}` expected `list[str]`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("downsample", None) is not None:
+        if not isinstance(params["downsample"], (float, int)):
+            raise StyxValidationError(f'`downsample` has the wrong type: Received `{type(params.get("downsample", None))}` expected `float | None`')
+    if params.get("weight_file", None) is not None:
+        if not isinstance(params["weight_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight_file` has the wrong type: Received `{type(params.get("weight_file", None))}` expected `InputPathType | None`')
+
+
 def oct_register_mosaic_cargs(
     params: OctRegisterMosaicParameters,
     execution: Execution,
@@ -139,6 +170,7 @@ def oct_register_mosaic_execute(
     Returns:
         NamedTuple of outputs (described in `OctRegisterMosaicOutputs`).
     """
+    oct_register_mosaic_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(OCT_REGISTER_MOSAIC_METADATA)
     params = execution.params(params)

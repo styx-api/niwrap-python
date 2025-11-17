@@ -93,6 +93,46 @@ def bedpostx_mgh_params(
     return params
 
 
+def bedpostx_mgh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BedpostxMghParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_directory", None) is None:
+        raise StyxValidationError("`subject_directory` must not be None")
+    if not isinstance(params["subject_directory"], str):
+        raise StyxValidationError(f'`subject_directory` has the wrong type: Received `{type(params.get("subject_directory", None))}` expected `str`')
+    if params.get("fibres", None) is not None:
+        if not isinstance(params["fibres"], (float, int)):
+            raise StyxValidationError(f'`fibres` has the wrong type: Received `{type(params.get("fibres", None))}` expected `float | None`')
+    if params.get("ard_weight", None) is not None:
+        if not isinstance(params["ard_weight"], (float, int)):
+            raise StyxValidationError(f'`ard_weight` has the wrong type: Received `{type(params.get("ard_weight", None))}` expected `float | None`')
+    if params.get("burnin", None) is not None:
+        if not isinstance(params["burnin"], (float, int)):
+            raise StyxValidationError(f'`burnin` has the wrong type: Received `{type(params.get("burnin", None))}` expected `float | None`')
+    if params.get("jumps", None) is not None:
+        if not isinstance(params["jumps"], (float, int)):
+            raise StyxValidationError(f'`jumps` has the wrong type: Received `{type(params.get("jumps", None))}` expected `float | None`')
+    if params.get("sample_every", None) is not None:
+        if not isinstance(params["sample_every"], (float, int)):
+            raise StyxValidationError(f'`sample_every` has the wrong type: Received `{type(params.get("sample_every", None))}` expected `float | None`')
+    if params.get("deconv_model", None) is not None:
+        if not isinstance(params["deconv_model"], (float, int)):
+            raise StyxValidationError(f'`deconv_model` has the wrong type: Received `{type(params.get("deconv_model", None))}` expected `float | None`')
+    if params.get("gradient_nonlin", False) is None:
+        raise StyxValidationError("`gradient_nonlin` must not be None")
+    if not isinstance(params["gradient_nonlin"], bool):
+        raise StyxValidationError(f'`gradient_nonlin` has the wrong type: Received `{type(params.get("gradient_nonlin", False))}` expected `bool`')
+
+
 def bedpostx_mgh_cargs(
     params: BedpostxMghParameters,
     execution: Execution,
@@ -183,6 +223,7 @@ def bedpostx_mgh_execute(
     Returns:
         NamedTuple of outputs (described in `BedpostxMghOutputs`).
     """
+    bedpostx_mgh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BEDPOSTX_MGH_METADATA)
     params = execution.params(params)

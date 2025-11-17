@@ -146,6 +146,75 @@ def mri_label_volume_params(
     return params
 
 
+def mri_label_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriLabelVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("labels", None) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], list):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    for e in params["labels"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    if params.get("partial_volume_effects", None) is not None:
+        if not isinstance(params["partial_volume_effects"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`partial_volume_effects` has the wrong type: Received `{type(params.get("partial_volume_effects", None))}` expected `InputPathType | None`')
+    if params.get("intracranial_volume", None) is not None:
+        if not isinstance(params["intracranial_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`intracranial_volume` has the wrong type: Received `{type(params.get("intracranial_volume", None))}` expected `InputPathType | None`')
+    if params.get("spreadsheet_subject", None) is not None:
+        if not isinstance(params["spreadsheet_subject"], str):
+            raise StyxValidationError(f'`spreadsheet_subject` has the wrong type: Received `{type(params.get("spreadsheet_subject", None))}` expected `str | None`')
+    if params.get("non_zero_voxels", False) is None:
+        raise StyxValidationError("`non_zero_voxels` must not be None")
+    if not isinstance(params["non_zero_voxels"], bool):
+        raise StyxValidationError(f'`non_zero_voxels` has the wrong type: Received `{type(params.get("non_zero_voxels", False))}` expected `bool`')
+    if params.get("replace_label_in", None) is not None:
+        if not isinstance(params["replace_label_in"], str):
+            raise StyxValidationError(f'`replace_label_in` has the wrong type: Received `{type(params.get("replace_label_in", None))}` expected `str | None`')
+    if params.get("replace_label_out", None) is not None:
+        if not isinstance(params["replace_label_out"], str):
+            raise StyxValidationError(f'`replace_label_out` has the wrong type: Received `{type(params.get("replace_label_out", None))}` expected `str | None`')
+    if params.get("brain_volume", None) is not None:
+        if not isinstance(params["brain_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brain_volume` has the wrong type: Received `{type(params.get("brain_volume", None))}` expected `InputPathType | None`')
+    if params.get("percentage", False) is None:
+        raise StyxValidationError("`percentage` must not be None")
+    if not isinstance(params["percentage"], bool):
+        raise StyxValidationError(f'`percentage` has the wrong type: Received `{type(params.get("percentage", False))}` expected `bool`')
+    if params.get("log_results", None) is not None:
+        if not isinstance(params["log_results"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`log_results` has the wrong type: Received `{type(params.get("log_results", None))}` expected `InputPathType | None`')
+    if params.get("atlas_transform_file", None) is not None:
+        if not isinstance(params["atlas_transform_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`atlas_transform_file` has the wrong type: Received `{type(params.get("atlas_transform_file", None))}` expected `InputPathType | None`')
+    if params.get("atlas_scalefactor", None) is not None:
+        if not isinstance(params["atlas_scalefactor"], (float, int)):
+            raise StyxValidationError(f'`atlas_scalefactor` has the wrong type: Received `{type(params.get("atlas_scalefactor", None))}` expected `float | None`')
+    if params.get("etiv_transform_file", None) is not None:
+        if not isinstance(params["etiv_transform_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`etiv_transform_file` has the wrong type: Received `{type(params.get("etiv_transform_file", None))}` expected `InputPathType | None`')
+    if params.get("etiv_scalefactor", None) is not None:
+        if not isinstance(params["etiv_scalefactor"], (float, int)):
+            raise StyxValidationError(f'`etiv_scalefactor` has the wrong type: Received `{type(params.get("etiv_scalefactor", None))}` expected `float | None`')
+    if params.get("etiv_subject", None) is not None:
+        if not isinstance(params["etiv_subject"], str):
+            raise StyxValidationError(f'`etiv_subject` has the wrong type: Received `{type(params.get("etiv_subject", None))}` expected `str | None`')
+
+
 def mri_label_volume_cargs(
     params: MriLabelVolumeParameters,
     execution: Execution,
@@ -262,6 +331,7 @@ def mri_label_volume_execute(
     Returns:
         NamedTuple of outputs (described in `MriLabelVolumeOutputs`).
     """
+    mri_label_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_LABEL_VOLUME_METADATA)
     params = execution.params(params)

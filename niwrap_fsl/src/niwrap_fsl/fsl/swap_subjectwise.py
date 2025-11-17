@@ -82,6 +82,45 @@ def swap_subjectwise_params(
     return params
 
 
+def swap_subjectwise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SwapSubjectwiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dyads", None) is None:
+        raise StyxValidationError("`dyads` must not be None")
+    if not isinstance(params["dyads"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dyads` has the wrong type: Received `{type(params.get("dyads", None))}` expected `InputPathType`')
+    if params.get("fmean", None) is None:
+        raise StyxValidationError("`fmean` must not be None")
+    if not isinstance(params["fmean"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fmean` has the wrong type: Received `{type(params.get("fmean", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("obasename", None) is not None:
+        if not isinstance(params["obasename"], str):
+            raise StyxValidationError(f'`obasename` has the wrong type: Received `{type(params.get("obasename", None))}` expected `str | None`')
+    if params.get("xthresh", None) is not None:
+        if not isinstance(params["xthresh"], (float, int)):
+            raise StyxValidationError(f'`xthresh` has the wrong type: Received `{type(params.get("xthresh", None))}` expected `float | None`')
+    if params.get("averageonly_flag", False) is None:
+        raise StyxValidationError("`averageonly_flag` must not be None")
+    if not isinstance(params["averageonly_flag"], bool):
+        raise StyxValidationError(f'`averageonly_flag` has the wrong type: Received `{type(params.get("averageonly_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def swap_subjectwise_cargs(
     params: SwapSubjectwiseParameters,
     execution: Execution,
@@ -166,6 +205,7 @@ def swap_subjectwise_execute(
     Returns:
         NamedTuple of outputs (described in `SwapSubjectwiseOutputs`).
     """
+    swap_subjectwise_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SWAP_SUBJECTWISE_METADATA)
     params = execution.params(params)

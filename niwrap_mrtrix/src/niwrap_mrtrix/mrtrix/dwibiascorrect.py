@@ -114,6 +114,28 @@ def dwibiascorrect_fslgrad_params(
     return params
 
 
+def dwibiascorrect_fslgrad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwibiascorrectFslgradParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
+
+
 def dwibiascorrect_fslgrad_cargs(
     params: DwibiascorrectFslgradParameters,
     execution: Execution,
@@ -153,6 +175,28 @@ def dwibiascorrect_config_params(
         "value": value,
     }
     return params
+
+
+def dwibiascorrect_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwibiascorrectConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def dwibiascorrect_config_cargs(
@@ -287,6 +331,99 @@ def dwibiascorrect_params(
     return params
 
 
+def dwibiascorrect_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwibiascorrectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("algorithm", None) is None:
+        raise StyxValidationError("`algorithm` must not be None")
+    if not isinstance(params["algorithm"], str):
+        raise StyxValidationError(f'`algorithm` has the wrong type: Received `{type(params.get("algorithm", None))}` expected `str`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("fslgrad", None) is not None:
+        dwibiascorrect_fslgrad_validate(params["fslgrad"])
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("bias_image", None) is not None:
+        if not isinstance(params["bias_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bias_image` has the wrong type: Received `{type(params.get("bias_image", None))}` expected `InputPathType | None`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+    if params.get("scratch_dir", None) is not None:
+        if not isinstance(params["scratch_dir"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`scratch_dir` has the wrong type: Received `{type(params.get("scratch_dir", None))}` expected `InputPathType | None`')
+    if params.get("continue_scratch_dir", None) is not None:
+        if not isinstance(params["continue_scratch_dir"], list):
+            raise StyxValidationError(f'`continue_scratch_dir` has the wrong type: Received `{type(params.get("continue_scratch_dir", None))}` expected `list[InputPathType] | None`')
+        if len(params["continue_scratch_dir"]) == 2:
+            raise StyxValidationError("Parameter `continue_scratch_dir` must contain exactly 2 elements")
+        for e in params["continue_scratch_dir"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`continue_scratch_dir` has the wrong type: Received `{type(params.get("continue_scratch_dir", None))}` expected `list[InputPathType] | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], (float, int)):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `float | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwibiascorrectConfigParameters] | None`')
+        for e in params["config"]:
+            dwibiascorrect_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("ants_b", None) is not None:
+        if not isinstance(params["ants_b"], str):
+            raise StyxValidationError(f'`ants_b` has the wrong type: Received `{type(params.get("ants_b", None))}` expected `str | None`')
+    if params.get("ants_c", None) is not None:
+        if not isinstance(params["ants_c"], str):
+            raise StyxValidationError(f'`ants_c` has the wrong type: Received `{type(params.get("ants_c", None))}` expected `str | None`')
+    if params.get("ants_s", None) is not None:
+        if not isinstance(params["ants_s"], str):
+            raise StyxValidationError(f'`ants_s` has the wrong type: Received `{type(params.get("ants_s", None))}` expected `str | None`')
+
+
 def dwibiascorrect_cargs(
     params: DwibiascorrectParameters,
     execution: Execution,
@@ -412,6 +549,7 @@ def dwibiascorrect_execute(
     Returns:
         NamedTuple of outputs (described in `DwibiascorrectOutputs`).
     """
+    dwibiascorrect_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DWIBIASCORRECT_METADATA)
     params = execution.params(params)

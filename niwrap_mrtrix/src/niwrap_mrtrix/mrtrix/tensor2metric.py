@@ -96,6 +96,28 @@ def tensor2metric_config_params(
     return params
 
 
+def tensor2metric_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tensor2metricConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def tensor2metric_config_cargs(
     params: Tensor2metricConfigParameters,
     execution: Execution,
@@ -256,6 +278,95 @@ def tensor2metric_params(
     return params
 
 
+def tensor2metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tensor2metricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("adc", None) is not None:
+        if not isinstance(params["adc"], str):
+            raise StyxValidationError(f'`adc` has the wrong type: Received `{type(params.get("adc", None))}` expected `str | None`')
+    if params.get("fa", None) is not None:
+        if not isinstance(params["fa"], str):
+            raise StyxValidationError(f'`fa` has the wrong type: Received `{type(params.get("fa", None))}` expected `str | None`')
+    if params.get("ad", None) is not None:
+        if not isinstance(params["ad"], str):
+            raise StyxValidationError(f'`ad` has the wrong type: Received `{type(params.get("ad", None))}` expected `str | None`')
+    if params.get("rd", None) is not None:
+        if not isinstance(params["rd"], str):
+            raise StyxValidationError(f'`rd` has the wrong type: Received `{type(params.get("rd", None))}` expected `str | None`')
+    if params.get("cl", None) is not None:
+        if not isinstance(params["cl"], str):
+            raise StyxValidationError(f'`cl` has the wrong type: Received `{type(params.get("cl", None))}` expected `str | None`')
+    if params.get("cp", None) is not None:
+        if not isinstance(params["cp"], str):
+            raise StyxValidationError(f'`cp` has the wrong type: Received `{type(params.get("cp", None))}` expected `str | None`')
+    if params.get("cs", None) is not None:
+        if not isinstance(params["cs"], str):
+            raise StyxValidationError(f'`cs` has the wrong type: Received `{type(params.get("cs", None))}` expected `str | None`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], str):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str | None`')
+    if params.get("vector", None) is not None:
+        if not isinstance(params["vector"], str):
+            raise StyxValidationError(f'`vector` has the wrong type: Received `{type(params.get("vector", None))}` expected `str | None`')
+    if params.get("num", None) is not None:
+        if not isinstance(params["num"], list):
+            raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `list[int] | None`')
+        for e in params["num"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `list[int] | None`')
+    if params.get("modulate", None) is not None:
+        if not isinstance(params["modulate"], str):
+            raise StyxValidationError(f'`modulate` has the wrong type: Received `{type(params.get("modulate", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tensor2metricConfigParameters] | None`')
+        for e in params["config"]:
+            tensor2metric_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("tensor", None) is None:
+        raise StyxValidationError("`tensor` must not be None")
+    if not isinstance(params["tensor"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tensor` has the wrong type: Received `{type(params.get("tensor", None))}` expected `InputPathType`')
+
+
 def tensor2metric_cargs(
     params: Tensor2metricParameters,
     execution: Execution,
@@ -412,6 +523,7 @@ def tensor2metric_execute(
     Returns:
         NamedTuple of outputs (described in `Tensor2metricOutputs`).
     """
+    tensor2metric_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TENSOR2METRIC_METADATA)
     params = execution.params(params)

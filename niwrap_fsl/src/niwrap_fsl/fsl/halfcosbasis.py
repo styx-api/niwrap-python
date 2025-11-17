@@ -141,6 +141,77 @@ def halfcosbasis_params(
     return params
 
 
+def halfcosbasis_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HalfcosbasisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hrf_param_file", None) is None:
+        raise StyxValidationError("`hrf_param_file` must not be None")
+    if not isinstance(params["hrf_param_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`hrf_param_file` has the wrong type: Received `{type(params.get("hrf_param_file", None))}` expected `InputPathType`')
+    if params.get("hrf_param_file_hf", None) is None:
+        raise StyxValidationError("`hrf_param_file_hf` must not be None")
+    if not isinstance(params["hrf_param_file_hf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`hrf_param_file_hf` has the wrong type: Received `{type(params.get("hrf_param_file_hf", None))}` expected `InputPathType`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], (float, int)):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `float | None`')
+    if params.get("debug_level_debug", None) is not None:
+        if not isinstance(params["debug_level_debug"], (float, int)):
+            raise StyxValidationError(f'`debug_level_debug` has the wrong type: Received `{type(params.get("debug_level_debug", None))}` expected `float | None`')
+    if params.get("debug_level_debuglevel", None) is not None:
+        if not isinstance(params["debug_level_debuglevel"], (float, int)):
+            raise StyxValidationError(f'`debug_level_debuglevel` has the wrong type: Received `{type(params.get("debug_level_debuglevel", None))}` expected `float | None`')
+    if params.get("timing_on_flag", False) is None:
+        raise StyxValidationError("`timing_on_flag` must not be None")
+    if not isinstance(params["timing_on_flag"], bool):
+        raise StyxValidationError(f'`timing_on_flag` has the wrong type: Received `{type(params.get("timing_on_flag", False))}` expected `bool`')
+    if params.get("log_dir", None) is not None:
+        if not isinstance(params["log_dir"], str):
+            raise StyxValidationError(f'`log_dir` has the wrong type: Received `{type(params.get("log_dir", None))}` expected `str | None`')
+    if params.get("log_dir_ld", None) is not None:
+        if not isinstance(params["log_dir_ld"], str):
+            raise StyxValidationError(f'`log_dir_ld` has the wrong type: Received `{type(params.get("log_dir_ld", None))}` expected `str | None`')
+    if params.get("log_dir_logdir", None) is not None:
+        if not isinstance(params["log_dir_logdir"], str):
+            raise StyxValidationError(f'`log_dir_logdir` has the wrong type: Received `{type(params.get("log_dir_logdir", None))}` expected `str | None`')
+    if params.get("num_hrf_samples", None) is not None:
+        if not isinstance(params["num_hrf_samples"], (float, int)):
+            raise StyxValidationError(f'`num_hrf_samples` has the wrong type: Received `{type(params.get("num_hrf_samples", None))}` expected `float | None`')
+    if params.get("num_hrf_basis_funcs", None) is not None:
+        if not isinstance(params["num_hrf_basis_funcs"], (float, int)):
+            raise StyxValidationError(f'`num_hrf_basis_funcs` has the wrong type: Received `{type(params.get("num_hrf_basis_funcs", None))}` expected `float | None`')
+    if params.get("num_secs", None) is not None:
+        if not isinstance(params["num_secs"], (float, int)):
+            raise StyxValidationError(f'`num_secs` has the wrong type: Received `{type(params.get("num_secs", None))}` expected `float | None`')
+    if params.get("num_secs_nsecs", None) is not None:
+        if not isinstance(params["num_secs_nsecs"], (float, int)):
+            raise StyxValidationError(f'`num_secs_nsecs` has the wrong type: Received `{type(params.get("num_secs_nsecs", None))}` expected `float | None`')
+    if params.get("temp_res", None) is not None:
+        if not isinstance(params["temp_res"], (float, int)):
+            raise StyxValidationError(f'`temp_res` has the wrong type: Received `{type(params.get("temp_res", None))}` expected `float | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("help_flag_long", False) is None:
+        raise StyxValidationError("`help_flag_long` must not be None")
+    if not isinstance(params["help_flag_long"], bool):
+        raise StyxValidationError(f'`help_flag_long` has the wrong type: Received `{type(params.get("help_flag_long", False))}` expected `bool`')
+
+
 def halfcosbasis_cargs(
     params: HalfcosbasisParameters,
     execution: Execution,
@@ -268,6 +339,7 @@ def halfcosbasis_execute(
     Returns:
         NamedTuple of outputs (described in `HalfcosbasisOutputs`).
     """
+    halfcosbasis_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HALFCOSBASIS_METADATA)
     params = execution.params(params)

@@ -149,6 +149,63 @@ def brain_skin_params(
     return params
 
 
+def brain_skin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BrainSkinParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("skingrid_volume", None) is None:
+        raise StyxValidationError("`skingrid_volume` must not be None")
+    if not isinstance(params["skingrid_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`skingrid_volume` has the wrong type: Received `{type(params.get("skingrid_volume", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("plimit", None) is not None:
+        if not isinstance(params["plimit"], (float, int)):
+            raise StyxValidationError(f'`plimit` has the wrong type: Received `{type(params.get("plimit", None))}` expected `float | None`')
+    if params.get("dlimit", None) is not None:
+        if not isinstance(params["dlimit"], (float, int)):
+            raise StyxValidationError(f'`dlimit` has the wrong type: Received `{type(params.get("dlimit", None))}` expected `float | None`')
+    if params.get("segdo", None) is not None:
+        if not isinstance(params["segdo"], str):
+            raise StyxValidationError(f'`segdo` has the wrong type: Received `{type(params.get("segdo", None))}` expected `str | None`')
+    if params.get("voxelize", None) is not None:
+        if not isinstance(params["voxelize"], str):
+            raise StyxValidationError(f'`voxelize` has the wrong type: Received `{type(params.get("voxelize", None))}` expected `str | None`')
+    if params.get("infill", None) is not None:
+        if not isinstance(params["infill"], str):
+            raise StyxValidationError(f'`infill` has the wrong type: Received `{type(params.get("infill", None))}` expected `str | None`')
+    if params.get("out_file", None) is not None:
+        if not isinstance(params["out_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `InputPathType | None`')
+    if params.get("vol_skin", None) is not None:
+        if not isinstance(params["vol_skin"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vol_skin` has the wrong type: Received `{type(params.get("vol_skin", None))}` expected `InputPathType | None`')
+    if params.get("vol_hull", None) is not None:
+        if not isinstance(params["vol_hull"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vol_hull` has the wrong type: Received `{type(params.get("vol_hull", None))}` expected `InputPathType | None`')
+    if params.get("no_zero_attraction", False) is None:
+        raise StyxValidationError("`no_zero_attraction` must not be None")
+    if not isinstance(params["no_zero_attraction"], bool):
+        raise StyxValidationError(f'`no_zero_attraction` has the wrong type: Received `{type(params.get("no_zero_attraction", False))}` expected `bool`')
+    if params.get("node_dbg", None) is not None:
+        if not isinstance(params["node_dbg"], (float, int)):
+            raise StyxValidationError(f'`node_dbg` has the wrong type: Received `{type(params.get("node_dbg", None))}` expected `float | None`')
+
+
 def brain_skin_cargs(
     params: BrainSkinParameters,
     execution: Execution,
@@ -273,6 +330,7 @@ def brain_skin_execute(
     Returns:
         NamedTuple of outputs (described in `BrainSkinOutputs`).
     """
+    brain_skin_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BRAIN_SKIN_METADATA)
     params = execution.params(params)

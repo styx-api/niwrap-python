@@ -128,6 +128,88 @@ def volume_capture_plane_params(
     return params
 
 
+def volume_capture_plane_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeCapturePlaneParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("subvolume", None) is None:
+        raise StyxValidationError("`subvolume` must not be None")
+    if not isinstance(params["subvolume"], str):
+        raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str`')
+    if params.get("interp", None) is None:
+        raise StyxValidationError("`interp` must not be None")
+    if not isinstance(params["interp"], str):
+        raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `str`')
+    if params.get("h-dim", None) is None:
+        raise StyxValidationError("`h-dim` must not be None")
+    if not isinstance(params["h-dim"], int):
+        raise StyxValidationError(f'`h-dim` has the wrong type: Received `{type(params.get("h-dim", None))}` expected `int`')
+    if params.get("v-dim", None) is None:
+        raise StyxValidationError("`v-dim` must not be None")
+    if not isinstance(params["v-dim"], int):
+        raise StyxValidationError(f'`v-dim` has the wrong type: Received `{type(params.get("v-dim", None))}` expected `int`')
+    if params.get("scale-min", None) is None:
+        raise StyxValidationError("`scale-min` must not be None")
+    if not isinstance(params["scale-min"], (float, int)):
+        raise StyxValidationError(f'`scale-min` has the wrong type: Received `{type(params.get("scale-min", None))}` expected `float`')
+    if params.get("scale-max", None) is None:
+        raise StyxValidationError("`scale-max` must not be None")
+    if not isinstance(params["scale-max"], (float, int)):
+        raise StyxValidationError(f'`scale-max` has the wrong type: Received `{type(params.get("scale-max", None))}` expected `float`')
+    if params.get("bottom-left-x", None) is None:
+        raise StyxValidationError("`bottom-left-x` must not be None")
+    if not isinstance(params["bottom-left-x"], (float, int)):
+        raise StyxValidationError(f'`bottom-left-x` has the wrong type: Received `{type(params.get("bottom-left-x", None))}` expected `float`')
+    if params.get("bottom-left-y", None) is None:
+        raise StyxValidationError("`bottom-left-y` must not be None")
+    if not isinstance(params["bottom-left-y"], (float, int)):
+        raise StyxValidationError(f'`bottom-left-y` has the wrong type: Received `{type(params.get("bottom-left-y", None))}` expected `float`')
+    if params.get("bottom-left-z", None) is None:
+        raise StyxValidationError("`bottom-left-z` must not be None")
+    if not isinstance(params["bottom-left-z"], (float, int)):
+        raise StyxValidationError(f'`bottom-left-z` has the wrong type: Received `{type(params.get("bottom-left-z", None))}` expected `float`')
+    if params.get("bottom-right-x", None) is None:
+        raise StyxValidationError("`bottom-right-x` must not be None")
+    if not isinstance(params["bottom-right-x"], (float, int)):
+        raise StyxValidationError(f'`bottom-right-x` has the wrong type: Received `{type(params.get("bottom-right-x", None))}` expected `float`')
+    if params.get("bottom-right-y", None) is None:
+        raise StyxValidationError("`bottom-right-y` must not be None")
+    if not isinstance(params["bottom-right-y"], (float, int)):
+        raise StyxValidationError(f'`bottom-right-y` has the wrong type: Received `{type(params.get("bottom-right-y", None))}` expected `float`')
+    if params.get("bottom-right-z", None) is None:
+        raise StyxValidationError("`bottom-right-z` must not be None")
+    if not isinstance(params["bottom-right-z"], (float, int)):
+        raise StyxValidationError(f'`bottom-right-z` has the wrong type: Received `{type(params.get("bottom-right-z", None))}` expected `float`')
+    if params.get("top-left-x", None) is None:
+        raise StyxValidationError("`top-left-x` must not be None")
+    if not isinstance(params["top-left-x"], (float, int)):
+        raise StyxValidationError(f'`top-left-x` has the wrong type: Received `{type(params.get("top-left-x", None))}` expected `float`')
+    if params.get("top-left-y", None) is None:
+        raise StyxValidationError("`top-left-y` must not be None")
+    if not isinstance(params["top-left-y"], (float, int)):
+        raise StyxValidationError(f'`top-left-y` has the wrong type: Received `{type(params.get("top-left-y", None))}` expected `float`')
+    if params.get("top-left-z", None) is None:
+        raise StyxValidationError("`top-left-z` must not be None")
+    if not isinstance(params["top-left-z"], (float, int)):
+        raise StyxValidationError(f'`top-left-z` has the wrong type: Received `{type(params.get("top-left-z", None))}` expected `float`')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], str):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `str`')
+
+
 def volume_capture_plane_cargs(
     params: VolumeCapturePlaneParameters,
     execution: Execution,
@@ -208,6 +290,7 @@ def volume_capture_plane_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeCapturePlaneOutputs`).
     """
+    volume_capture_plane_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_CAPTURE_PLANE_METADATA)
     params = execution.params(params)

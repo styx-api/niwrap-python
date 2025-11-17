@@ -56,6 +56,30 @@ def run_segment_thalamic_nuclei_sh_params(
     return params
 
 
+def run_segment_thalamic_nuclei_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunSegmentThalamicNucleiShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mcr_root", None) is None:
+        raise StyxValidationError("`mcr_root` must not be None")
+    if not isinstance(params["mcr_root"], str):
+        raise StyxValidationError(f'`mcr_root` has the wrong type: Received `{type(params.get("mcr_root", None))}` expected `str`')
+    if params.get("args", None) is not None:
+        if not isinstance(params["args"], list):
+            raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `list[str] | None`')
+        for e in params["args"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `list[str] | None`')
+
+
 def run_segment_thalamic_nuclei_sh_cargs(
     params: RunSegmentThalamicNucleiShParameters,
     execution: Execution,
@@ -115,6 +139,7 @@ def run_segment_thalamic_nuclei_sh_execute(
     Returns:
         NamedTuple of outputs (described in `RunSegmentThalamicNucleiShOutputs`).
     """
+    run_segment_thalamic_nuclei_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA)
     params = execution.params(params)

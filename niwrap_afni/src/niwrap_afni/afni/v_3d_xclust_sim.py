@@ -146,6 +146,95 @@ def v_3d_xclust_sim_params(
     return params
 
 
+def v_3d_xclust_sim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dXclustSimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("insdat", None) is not None:
+        if not isinstance(params["insdat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`insdat` has the wrong type: Received `{type(params.get("insdat", None))}` expected `InputPathType | None`')
+    if params.get("nn", None) is not None:
+        if not isinstance(params["nn"], (float, int)):
+            raise StyxValidationError(f'`nn` has the wrong type: Received `{type(params.get("nn", None))}` expected `float | None`')
+    if params.get("sid", None) is not None:
+        if not isinstance(params["sid"], (float, int)):
+            raise StyxValidationError(f'`sid` has the wrong type: Received `{type(params.get("sid", None))}` expected `float | None`')
+    if params.get("hpow", None) is not None:
+        if not isinstance(params["hpow"], list):
+            raise StyxValidationError(f'`hpow` has the wrong type: Received `{type(params.get("hpow", None))}` expected `list[float] | None`')
+        for e in params["hpow"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`hpow` has the wrong type: Received `{type(params.get("hpow", None))}` expected `list[float] | None`')
+    if params.get("ncase", None) is not None:
+        if not isinstance(params["ncase"], list):
+            raise StyxValidationError(f'`ncase` has the wrong type: Received `{type(params.get("ncase", None))}` expected `list[str] | None`')
+        for e in params["ncase"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ncase` has the wrong type: Received `{type(params.get("ncase", None))}` expected `list[str] | None`')
+    if params.get("pthr", None) is not None:
+        if not isinstance(params["pthr"], list):
+            raise StyxValidationError(f'`pthr` has the wrong type: Received `{type(params.get("pthr", None))}` expected `list[float] | None`')
+        for e in params["pthr"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`pthr` has the wrong type: Received `{type(params.get("pthr", None))}` expected `list[float] | None`')
+    if params.get("fpr", None) is not None:
+        if not isinstance(params["fpr"], (float, int)):
+            raise StyxValidationError(f'`fpr` has the wrong type: Received `{type(params.get("fpr", None))}` expected `float | None`')
+        if 2 <= params["fpr"] <= 9:
+            raise StyxValidationError("Parameter `fpr` must be between 2 and 9 (inclusive)")
+    if params.get("multiFPR", False) is None:
+        raise StyxValidationError("`multiFPR` must not be None")
+    if not isinstance(params["multiFPR"], bool):
+        raise StyxValidationError(f'`multiFPR` has the wrong type: Received `{type(params.get("multiFPR", False))}` expected `bool`')
+    if params.get("minclust", None) is not None:
+        if not isinstance(params["minclust"], (float, int)):
+            raise StyxValidationError(f'`minclust` has the wrong type: Received `{type(params.get("minclust", None))}` expected `float | None`')
+    if params.get("local", False) is None:
+        raise StyxValidationError("`local` must not be None")
+    if not isinstance(params["local"], bool):
+        raise StyxValidationError(f'`local` has the wrong type: Received `{type(params.get("local", False))}` expected `bool`')
+    if params.get("global", False) is None:
+        raise StyxValidationError("`global` must not be None")
+    if not isinstance(params["global"], bool):
+        raise StyxValidationError(f'`global` has the wrong type: Received `{type(params.get("global", False))}` expected `bool`')
+    if params.get("nolocal", False) is None:
+        raise StyxValidationError("`nolocal` must not be None")
+    if not isinstance(params["nolocal"], bool):
+        raise StyxValidationError(f'`nolocal` has the wrong type: Received `{type(params.get("nolocal", False))}` expected `bool`')
+    if params.get("noglobal", False) is None:
+        raise StyxValidationError("`noglobal` must not be None")
+    if not isinstance(params["noglobal"], bool):
+        raise StyxValidationError(f'`noglobal` has the wrong type: Received `{type(params.get("noglobal", False))}` expected `bool`')
+    if params.get("splitfrac", None) is not None:
+        if not isinstance(params["splitfrac"], (float, int)):
+            raise StyxValidationError(f'`splitfrac` has the wrong type: Received `{type(params.get("splitfrac", None))}` expected `float | None`')
+        if 0.2 <= params["splitfrac"] <= 0.8:
+            raise StyxValidationError("Parameter `splitfrac` must be between 0.2 and 0.8 (inclusive)")
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3d_xclust_sim_cargs(
     params: V3dXclustSimParameters,
     execution: Execution,
@@ -264,6 +353,7 @@ def v_3d_xclust_sim_execute(
     Returns:
         NamedTuple of outputs (described in `V3dXclustSimOutputs`).
     """
+    v_3d_xclust_sim_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_XCLUST_SIM_METADATA)
     params = execution.params(params)

@@ -69,6 +69,34 @@ def clust_exp_hist_table_py_params(
     return params
 
 
+def clust_exp_hist_table_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ClustExpHistTablePyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stat_dset", None) is None:
+        raise StyxValidationError("`stat_dset` must not be None")
+    if not isinstance(params["stat_dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`stat_dset` has the wrong type: Received `{type(params.get("stat_dset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("session", None) is not None:
+        if not isinstance(params["session"], str):
+            raise StyxValidationError(f'`session` has the wrong type: Received `{type(params.get("session", None))}` expected `str | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+
+
 def clust_exp_hist_table_py_cargs(
     params: ClustExpHistTablePyParameters,
     execution: Execution,
@@ -143,6 +171,7 @@ def clust_exp_hist_table_py_execute(
     Returns:
         NamedTuple of outputs (described in `ClustExpHistTablePyOutputs`).
     """
+    clust_exp_hist_table_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CLUST_EXP_HIST_TABLE_PY_METADATA)
     params = execution.params(params)

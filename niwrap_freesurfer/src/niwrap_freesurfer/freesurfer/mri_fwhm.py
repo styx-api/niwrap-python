@@ -258,6 +258,137 @@ def mri_fwhm_params(
     return params
 
 
+def mri_fwhm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFwhmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputvol", None) is None:
+        raise StyxValidationError("`inputvol` must not be None")
+    if not isinstance(params["inputvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputvol` has the wrong type: Received `{type(params.get("inputvol", None))}` expected `InputPathType`')
+    if params.get("outputvol", None) is None:
+        raise StyxValidationError("`outputvol` must not be None")
+    if not isinstance(params["outputvol"], str):
+        raise StyxValidationError(f'`outputvol` has the wrong type: Received `{type(params.get("outputvol", None))}` expected `str`')
+    if params.get("save_detrended", False) is None:
+        raise StyxValidationError("`save_detrended` must not be None")
+    if not isinstance(params["save_detrended"], bool):
+        raise StyxValidationError(f'`save_detrended` has the wrong type: Received `{type(params.get("save_detrended", False))}` expected `bool`')
+    if params.get("save_unmasked", False) is None:
+        raise StyxValidationError("`save_unmasked` must not be None")
+    if not isinstance(params["save_unmasked"], bool):
+        raise StyxValidationError(f'`save_unmasked` has the wrong type: Received `{type(params.get("save_unmasked", False))}` expected `bool`')
+    if params.get("smooth_only", False) is None:
+        raise StyxValidationError("`smooth_only` must not be None")
+    if not isinstance(params["smooth_only"], bool):
+        raise StyxValidationError(f'`smooth_only` has the wrong type: Received `{type(params.get("smooth_only", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_thresh", None) is not None:
+        if not isinstance(params["mask_thresh"], (float, int)):
+            raise StyxValidationError(f'`mask_thresh` has the wrong type: Received `{type(params.get("mask_thresh", None))}` expected `float | None`')
+    if params.get("auto_mask", None) is not None:
+        if not isinstance(params["auto_mask"], (float, int)):
+            raise StyxValidationError(f'`auto_mask` has the wrong type: Received `{type(params.get("auto_mask", None))}` expected `float | None`')
+    if params.get("nerode", None) is not None:
+        if not isinstance(params["nerode"], (float, int)):
+            raise StyxValidationError(f'`nerode` has the wrong type: Received `{type(params.get("nerode", None))}` expected `float | None`')
+    if params.get("mask_inv", False) is None:
+        raise StyxValidationError("`mask_inv` must not be None")
+    if not isinstance(params["mask_inv"], bool):
+        raise StyxValidationError(f'`mask_inv` has the wrong type: Received `{type(params.get("mask_inv", False))}` expected `bool`')
+    if params.get("out_mask", None) is not None:
+        if not isinstance(params["out_mask"], str):
+            raise StyxValidationError(f'`out_mask` has the wrong type: Received `{type(params.get("out_mask", None))}` expected `str | None`')
+    if params.get("detrend_matrix", None) is not None:
+        if not isinstance(params["detrend_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`detrend_matrix` has the wrong type: Received `{type(params.get("detrend_matrix", None))}` expected `InputPathType | None`')
+    if params.get("detrend_order", None) is not None:
+        if not isinstance(params["detrend_order"], (float, int)):
+            raise StyxValidationError(f'`detrend_order` has the wrong type: Received `{type(params.get("detrend_order", None))}` expected `float | None`')
+    if params.get("square_input", False) is None:
+        raise StyxValidationError("`square_input` must not be None")
+    if not isinstance(params["square_input"], bool):
+        raise StyxValidationError(f'`square_input` has the wrong type: Received `{type(params.get("square_input", False))}` expected `bool`')
+    if params.get("smooth_by_fwhm", None) is not None:
+        if not isinstance(params["smooth_by_fwhm"], (float, int)):
+            raise StyxValidationError(f'`smooth_by_fwhm` has the wrong type: Received `{type(params.get("smooth_by_fwhm", None))}` expected `float | None`')
+    if params.get("smooth_by_gstd", None) is not None:
+        if not isinstance(params["smooth_by_gstd"], (float, int)):
+            raise StyxValidationError(f'`smooth_by_gstd` has the wrong type: Received `{type(params.get("smooth_by_gstd", None))}` expected `float | None`')
+    if params.get("median_filter", None) is not None:
+        if not isinstance(params["median_filter"], (float, int)):
+            raise StyxValidationError(f'`median_filter` has the wrong type: Received `{type(params.get("median_filter", None))}` expected `float | None`')
+    if params.get("smooth_to_fwhm", None) is not None:
+        if not isinstance(params["smooth_to_fwhm"], (float, int)):
+            raise StyxValidationError(f'`smooth_to_fwhm` has the wrong type: Received `{type(params.get("smooth_to_fwhm", None))}` expected `float | None`')
+    if params.get("to_fwhm_tol", None) is not None:
+        if not isinstance(params["to_fwhm_tol"], (float, int)):
+            raise StyxValidationError(f'`to_fwhm_tol` has the wrong type: Received `{type(params.get("to_fwhm_tol", None))}` expected `float | None`')
+    if params.get("to_fwhm_nmax", None) is not None:
+        if not isinstance(params["to_fwhm_nmax"], (float, int)):
+            raise StyxValidationError(f'`to_fwhm_nmax` has the wrong type: Received `{type(params.get("to_fwhm_nmax", None))}` expected `float | None`')
+    if params.get("to_fwhm_file", None) is not None:
+        if not isinstance(params["to_fwhm_file"], str):
+            raise StyxValidationError(f'`to_fwhm_file` has the wrong type: Received `{type(params.get("to_fwhm_file", None))}` expected `str | None`')
+    if params.get("summary_file", None) is not None:
+        if not isinstance(params["summary_file"], str):
+            raise StyxValidationError(f'`summary_file` has the wrong type: Received `{type(params.get("summary_file", None))}` expected `str | None`')
+    if params.get("dat_file", None) is not None:
+        if not isinstance(params["dat_file"], str):
+            raise StyxValidationError(f'`dat_file` has the wrong type: Received `{type(params.get("dat_file", None))}` expected `str | None`')
+    if params.get("fwhm_dat_file", None) is not None:
+        if not isinstance(params["fwhm_dat_file"], str):
+            raise StyxValidationError(f'`fwhm_dat_file` has the wrong type: Received `{type(params.get("fwhm_dat_file", None))}` expected `str | None`')
+    if params.get("fwhm_vol_mean_file", None) is not None:
+        if not isinstance(params["fwhm_vol_mean_file"], str):
+            raise StyxValidationError(f'`fwhm_vol_mean_file` has the wrong type: Received `{type(params.get("fwhm_vol_mean_file", None))}` expected `str | None`')
+    if params.get("fwhm_vol", None) is not None:
+        if not isinstance(params["fwhm_vol"], str):
+            raise StyxValidationError(f'`fwhm_vol` has the wrong type: Received `{type(params.get("fwhm_vol", None))}` expected `str | None`')
+    if params.get("synth", False) is None:
+        raise StyxValidationError("`synth` must not be None")
+    if not isinstance(params["synth"], bool):
+        raise StyxValidationError(f'`synth` has the wrong type: Received `{type(params.get("synth", False))}` expected `bool`')
+    if params.get("synth_frames", None) is not None:
+        if not isinstance(params["synth_frames"], (float, int)):
+            raise StyxValidationError(f'`synth_frames` has the wrong type: Received `{type(params.get("synth_frames", None))}` expected `float | None`')
+    if params.get("nframes_min", None) is not None:
+        if not isinstance(params["nframes_min"], (float, int)):
+            raise StyxValidationError(f'`nframes_min` has the wrong type: Received `{type(params.get("nframes_min", None))}` expected `float | None`')
+    if params.get("ispm", False) is None:
+        raise StyxValidationError("`ispm` must not be None")
+    if not isinstance(params["ispm"], bool):
+        raise StyxValidationError(f'`ispm` has the wrong type: Received `{type(params.get("ispm", False))}` expected `bool`')
+    if params.get("nspm_zero_padding", None) is not None:
+        if not isinstance(params["nspm_zero_padding"], (float, int)):
+            raise StyxValidationError(f'`nspm_zero_padding` has the wrong type: Received `{type(params.get("nspm_zero_padding", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_fwhm_cargs(
     params: MriFwhmParameters,
     execution: Execution,
@@ -465,6 +596,7 @@ def mri_fwhm_execute(
     Returns:
         NamedTuple of outputs (described in `MriFwhmOutputs`).
     """
+    mri_fwhm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FWHM_METADATA)
     params = execution.params(params)

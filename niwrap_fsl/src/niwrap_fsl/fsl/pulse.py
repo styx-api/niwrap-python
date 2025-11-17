@@ -200,6 +200,101 @@ def pulse_params(
     return params
 
 
+def pulse_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PulseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_base", None) is None:
+        raise StyxValidationError("`output_base` must not be None")
+    if not isinstance(params["output_base"], str):
+        raise StyxValidationError(f'`output_base` has the wrong type: Received `{type(params.get("output_base", None))}` expected `str`')
+    if params.get("seq", None) is not None:
+        if not isinstance(params["seq"], str):
+            raise StyxValidationError(f'`seq` has the wrong type: Received `{type(params.get("seq", None))}` expected `str | None`')
+    if params.get("angle", None) is not None:
+        if not isinstance(params["angle"], (float, int)):
+            raise StyxValidationError(f'`angle` has the wrong type: Received `{type(params.get("angle", None))}` expected `float | None`')
+    if params.get("te", None) is not None:
+        if not isinstance(params["te"], (float, int)):
+            raise StyxValidationError(f'`te` has the wrong type: Received `{type(params.get("te", None))}` expected `float | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("trslc", None) is not None:
+        if not isinstance(params["trslc"], (float, int)):
+            raise StyxValidationError(f'`trslc` has the wrong type: Received `{type(params.get("trslc", None))}` expected `float | None`')
+    if params.get("nx", None) is not None:
+        if not isinstance(params["nx"], (float, int)):
+            raise StyxValidationError(f'`nx` has the wrong type: Received `{type(params.get("nx", None))}` expected `float | None`')
+    if params.get("ny", None) is not None:
+        if not isinstance(params["ny"], (float, int)):
+            raise StyxValidationError(f'`ny` has the wrong type: Received `{type(params.get("ny", None))}` expected `float | None`')
+    if params.get("dx", None) is not None:
+        if not isinstance(params["dx"], (float, int)):
+            raise StyxValidationError(f'`dx` has the wrong type: Received `{type(params.get("dx", None))}` expected `float | None`')
+    if params.get("dy", None) is not None:
+        if not isinstance(params["dy"], (float, int)):
+            raise StyxValidationError(f'`dy` has the wrong type: Received `{type(params.get("dy", None))}` expected `float | None`')
+    if params.get("maxG", None) is not None:
+        if not isinstance(params["maxG"], (float, int)):
+            raise StyxValidationError(f'`maxG` has the wrong type: Received `{type(params.get("maxG", None))}` expected `float | None`')
+    if params.get("riset", None) is not None:
+        if not isinstance(params["riset"], (float, int)):
+            raise StyxValidationError(f'`riset` has the wrong type: Received `{type(params.get("riset", None))}` expected `float | None`')
+    if params.get("bw", None) is not None:
+        if not isinstance(params["bw"], (float, int)):
+            raise StyxValidationError(f'`bw` has the wrong type: Received `{type(params.get("bw", None))}` expected `float | None`')
+    if params.get("numvol", None) is not None:
+        if not isinstance(params["numvol"], (float, int)):
+            raise StyxValidationError(f'`numvol` has the wrong type: Received `{type(params.get("numvol", None))}` expected `float | None`')
+    if params.get("numslc", None) is not None:
+        if not isinstance(params["numslc"], (float, int)):
+            raise StyxValidationError(f'`numslc` has the wrong type: Received `{type(params.get("numslc", None))}` expected `float | None`')
+    if params.get("slcthk", None) is not None:
+        if not isinstance(params["slcthk"], (float, int)):
+            raise StyxValidationError(f'`slcthk` has the wrong type: Received `{type(params.get("slcthk", None))}` expected `float | None`')
+    if params.get("gap", None) is not None:
+        if not isinstance(params["gap"], (float, int)):
+            raise StyxValidationError(f'`gap` has the wrong type: Received `{type(params.get("gap", None))}` expected `float | None`')
+    if params.get("zstart", None) is not None:
+        if not isinstance(params["zstart"], (float, int)):
+            raise StyxValidationError(f'`zstart` has the wrong type: Received `{type(params.get("zstart", None))}` expected `float | None`')
+    if params.get("slcdir", None) is not None:
+        if not isinstance(params["slcdir"], str):
+            raise StyxValidationError(f'`slcdir` has the wrong type: Received `{type(params.get("slcdir", None))}` expected `str | None`')
+    if params.get("phasedir", None) is not None:
+        if not isinstance(params["phasedir"], str):
+            raise StyxValidationError(f'`phasedir` has the wrong type: Received `{type(params.get("phasedir", None))}` expected `str | None`')
+    if params.get("readdir", None) is not None:
+        if not isinstance(params["readdir"], str):
+            raise StyxValidationError(f'`readdir` has the wrong type: Received `{type(params.get("readdir", None))}` expected `str | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("kcoord_flag", False) is None:
+        raise StyxValidationError("`kcoord_flag` must not be None")
+    if not isinstance(params["kcoord_flag"], bool):
+        raise StyxValidationError(f'`kcoord_flag` has the wrong type: Received `{type(params.get("kcoord_flag", False))}` expected `bool`')
+    if params.get("cover", None) is not None:
+        if not isinstance(params["cover"], (float, int)):
+            raise StyxValidationError(f'`cover` has the wrong type: Received `{type(params.get("cover", None))}` expected `float | None`')
+        if 50 <= params["cover"] <= 100:
+            raise StyxValidationError("Parameter `cover` must be between 50 and 100 (inclusive)")
+
+
 def pulse_cargs(
     params: PulseParameters,
     execution: Execution,
@@ -374,6 +469,7 @@ def pulse_execute(
     Returns:
         NamedTuple of outputs (described in `PulseOutputs`).
     """
+    pulse_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PULSE_METADATA)
     params = execution.params(params)

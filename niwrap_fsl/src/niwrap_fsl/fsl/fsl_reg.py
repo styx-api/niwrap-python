@@ -88,6 +88,50 @@ def fsl_reg_params(
     return params
 
 
+def fsl_reg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslRegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("reference_file", None) is None:
+        raise StyxValidationError("`reference_file` must not be None")
+    if not isinstance(params["reference_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_file` has the wrong type: Received `{type(params.get("reference_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("estimate_only_flag", False) is None:
+        raise StyxValidationError("`estimate_only_flag` must not be None")
+    if not isinstance(params["estimate_only_flag"], bool):
+        raise StyxValidationError(f'`estimate_only_flag` has the wrong type: Received `{type(params.get("estimate_only_flag", False))}` expected `bool`')
+    if params.get("affine_only_flag", False) is None:
+        raise StyxValidationError("`affine_only_flag` must not be None")
+    if not isinstance(params["affine_only_flag"], bool):
+        raise StyxValidationError(f'`affine_only_flag` has the wrong type: Received `{type(params.get("affine_only_flag", False))}` expected `bool`')
+    if params.get("fnirt_fa_config_flag", False) is None:
+        raise StyxValidationError("`fnirt_fa_config_flag` must not be None")
+    if not isinstance(params["fnirt_fa_config_flag"], bool):
+        raise StyxValidationError(f'`fnirt_fa_config_flag` has the wrong type: Received `{type(params.get("fnirt_fa_config_flag", False))}` expected `bool`')
+    if params.get("flirt_options", None) is not None:
+        if not isinstance(params["flirt_options"], str):
+            raise StyxValidationError(f'`flirt_options` has the wrong type: Received `{type(params.get("flirt_options", None))}` expected `str | None`')
+    if params.get("fnirt_options", None) is not None:
+        if not isinstance(params["fnirt_options"], str):
+            raise StyxValidationError(f'`fnirt_options` has the wrong type: Received `{type(params.get("fnirt_options", None))}` expected `str | None`')
+
+
 def fsl_reg_cargs(
     params: FslRegParameters,
     execution: Execution,
@@ -164,6 +208,7 @@ def fsl_reg_execute(
     Returns:
         NamedTuple of outputs (described in `FslRegOutputs`).
     """
+    fsl_reg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_REG_METADATA)
     params = execution.params(params)

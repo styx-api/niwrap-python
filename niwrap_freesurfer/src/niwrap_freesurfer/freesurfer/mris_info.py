@@ -182,6 +182,98 @@ def mris_info_params(
     return params
 
 
+def mris_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surfacefile", None) is None:
+        raise StyxValidationError("`surfacefile` must not be None")
+    if not isinstance(params["surfacefile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surfacefile` has the wrong type: Received `{type(params.get("surfacefile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is not None:
+        if not isinstance(params["outfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType | None`')
+    if params.get("subject_hemi_surfname", None) is not None:
+        if not isinstance(params["subject_hemi_surfname"], str):
+            raise StyxValidationError(f'`subject_hemi_surfname` has the wrong type: Received `{type(params.get("subject_hemi_surfname", None))}` expected `str | None`')
+    if params.get("talairach_xfm_flag", False) is None:
+        raise StyxValidationError("`talairach_xfm_flag` must not be None")
+    if not isinstance(params["talairach_xfm_flag"], bool):
+        raise StyxValidationError(f'`talairach_xfm_flag` has the wrong type: Received `{type(params.get("talairach_xfm_flag", False))}` expected `bool`')
+    if params.get("rescale_flag", False) is None:
+        raise StyxValidationError("`rescale_flag` must not be None")
+    if not isinstance(params["rescale_flag"], bool):
+        raise StyxValidationError(f'`rescale_flag` has the wrong type: Received `{type(params.get("rescale_flag", False))}` expected `bool`')
+    if params.get("patchfile", None) is not None:
+        if not isinstance(params["patchfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`patchfile` has the wrong type: Received `{type(params.get("patchfile", None))}` expected `InputPathType | None`')
+    if params.get("vertex_number", None) is not None:
+        if not isinstance(params["vertex_number"], (float, int)):
+            raise StyxValidationError(f'`vertex_number` has the wrong type: Received `{type(params.get("vertex_number", None))}` expected `float | None`')
+    if params.get("extended_vertex_number", None) is not None:
+        if not isinstance(params["extended_vertex_number"], (float, int)):
+            raise StyxValidationError(f'`extended_vertex_number` has the wrong type: Received `{type(params.get("extended_vertex_number", None))}` expected `float | None`')
+    if params.get("curvfile", None) is not None:
+        if not isinstance(params["curvfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`curvfile` has the wrong type: Received `{type(params.get("curvfile", None))}` expected `InputPathType | None`')
+    if params.get("annotfile", None) is not None:
+        if not isinstance(params["annotfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annotfile` has the wrong type: Received `{type(params.get("annotfile", None))}` expected `InputPathType | None`')
+    if params.get("area_stats_flag", False) is None:
+        raise StyxValidationError("`area_stats_flag` must not be None")
+    if not isinstance(params["area_stats_flag"], bool):
+        raise StyxValidationError(f'`area_stats_flag` has the wrong type: Received `{type(params.get("area_stats_flag", False))}` expected `bool`')
+    if params.get("edge_stats_id", None) is not None:
+        if not isinstance(params["edge_stats_id"], str):
+            raise StyxValidationError(f'`edge_stats_id` has the wrong type: Received `{type(params.get("edge_stats_id", None))}` expected `str | None`')
+    if params.get("edge_number", None) is not None:
+        if not isinstance(params["edge_number"], (float, int)):
+            raise StyxValidationError(f'`edge_number` has the wrong type: Received `{type(params.get("edge_number", None))}` expected `float | None`')
+    if params.get("vtxno", None) is not None:
+        if not isinstance(params["vtxno"], str):
+            raise StyxValidationError(f'`vtxno` has the wrong type: Received `{type(params.get("vtxno", None))}` expected `str | None`')
+    if params.get("matrix_format", None) is not None:
+        if not isinstance(params["matrix_format"], str):
+            raise StyxValidationError(f'`matrix_format` has the wrong type: Received `{type(params.get("matrix_format", None))}` expected `str | None`')
+    if params.get("quality_stats_flag", False) is None:
+        raise StyxValidationError("`quality_stats_flag` must not be None")
+    if not isinstance(params["quality_stats_flag"], bool):
+        raise StyxValidationError(f'`quality_stats_flag` has the wrong type: Received `{type(params.get("quality_stats_flag", False))}` expected `bool`')
+    if params.get("intersections_flag", False) is None:
+        raise StyxValidationError("`intersections_flag` must not be None")
+    if not isinstance(params["intersections_flag"], bool):
+        raise StyxValidationError(f'`intersections_flag` has the wrong type: Received `{type(params.get("intersections_flag", False))}` expected `bool`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("edge_file", None) is not None:
+        if not isinstance(params["edge_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`edge_file` has the wrong type: Received `{type(params.get("edge_file", None))}` expected `InputPathType | None`')
+    if params.get("nogifti_flag", False) is None:
+        raise StyxValidationError("`nogifti_flag` must not be None")
+    if not isinstance(params["nogifti_flag"], bool):
+        raise StyxValidationError(f'`nogifti_flag` has the wrong type: Received `{type(params.get("nogifti_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def mris_info_cargs(
     params: MrisInfoParameters,
     execution: Execution,
@@ -327,6 +419,7 @@ def mris_info_execute(
     Returns:
         NamedTuple of outputs (described in `MrisInfoOutputs`).
     """
+    mris_info_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_INFO_METADATA)
     params = execution.params(params)

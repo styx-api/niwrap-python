@@ -51,6 +51,27 @@ def uniq_images_params(
     return params
 
 
+def uniq_images_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UniqImagesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def uniq_images_cargs(
     params: UniqImagesParameters,
     execution: Execution,
@@ -111,6 +132,7 @@ def uniq_images_execute(
     Returns:
         NamedTuple of outputs (described in `UniqImagesOutputs`).
     """
+    uniq_images_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UNIQ_IMAGES_METADATA)
     params = execution.params(params)

@@ -72,6 +72,39 @@ def ttoz_params(
     return params
 
 
+def ttoz_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `TtozParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("varsfile", None) is None:
+        raise StyxValidationError("`varsfile` must not be None")
+    if not isinstance(params["varsfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`varsfile` has the wrong type: Received `{type(params.get("varsfile", None))}` expected `InputPathType`')
+    if params.get("cbsfile", None) is None:
+        raise StyxValidationError("`cbsfile` must not be None")
+    if not isinstance(params["cbsfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cbsfile` has the wrong type: Received `{type(params.get("cbsfile", None))}` expected `InputPathType`')
+    if params.get("dof", None) is None:
+        raise StyxValidationError("`dof` must not be None")
+    if not isinstance(params["dof"], int):
+        raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `int`')
+    if params.get("outputvol", None) is not None:
+        if not isinstance(params["outputvol"], str):
+            raise StyxValidationError(f'`outputvol` has the wrong type: Received `{type(params.get("outputvol", None))}` expected `str | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def ttoz_cargs(
     params: TtozParameters,
     execution: Execution,
@@ -139,6 +172,7 @@ def ttoz_execute(
     Returns:
         NamedTuple of outputs (described in `TtozOutputs`).
     """
+    ttoz_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TTOZ_METADATA)
     params = execution.params(params)

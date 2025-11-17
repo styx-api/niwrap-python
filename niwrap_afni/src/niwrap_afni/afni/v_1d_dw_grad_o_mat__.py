@@ -174,6 +174,99 @@ def v_1d_dw_grad_o_mat___params(
     return params
 
 
+def v_1d_dw_grad_o_mat___validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dDwGradOMatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_row_vec", None) is None:
+        raise StyxValidationError("`in_row_vec` must not be None")
+    if not isinstance(params["in_row_vec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_row_vec` has the wrong type: Received `{type(params.get("in_row_vec", None))}` expected `InputPathType`')
+    if params.get("in_col_vec", None) is None:
+        raise StyxValidationError("`in_col_vec` must not be None")
+    if not isinstance(params["in_col_vec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_col_vec` has the wrong type: Received `{type(params.get("in_col_vec", None))}` expected `InputPathType`')
+    if params.get("in_col_matA", None) is None:
+        raise StyxValidationError("`in_col_matA` must not be None")
+    if not isinstance(params["in_col_matA"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_col_matA` has the wrong type: Received `{type(params.get("in_col_matA", None))}` expected `InputPathType`')
+    if params.get("in_col_matT", None) is None:
+        raise StyxValidationError("`in_col_matT` must not be None")
+    if not isinstance(params["in_col_matT"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_col_matT` has the wrong type: Received `{type(params.get("in_col_matT", None))}` expected `InputPathType`')
+    if params.get("flip_x", False) is None:
+        raise StyxValidationError("`flip_x` must not be None")
+    if not isinstance(params["flip_x"], bool):
+        raise StyxValidationError(f'`flip_x` has the wrong type: Received `{type(params.get("flip_x", False))}` expected `bool`')
+    if params.get("flip_y", False) is None:
+        raise StyxValidationError("`flip_y` must not be None")
+    if not isinstance(params["flip_y"], bool):
+        raise StyxValidationError(f'`flip_y` has the wrong type: Received `{type(params.get("flip_y", False))}` expected `bool`')
+    if params.get("flip_z", False) is None:
+        raise StyxValidationError("`flip_z` must not be None")
+    if not isinstance(params["flip_z"], bool):
+        raise StyxValidationError(f'`flip_z` has the wrong type: Received `{type(params.get("flip_z", False))}` expected `bool`')
+    if params.get("no_flip", False) is None:
+        raise StyxValidationError("`no_flip` must not be None")
+    if not isinstance(params["no_flip"], bool):
+        raise StyxValidationError(f'`no_flip` has the wrong type: Received `{type(params.get("no_flip", False))}` expected `bool`')
+    if params.get("out_row_vec", None) is None:
+        raise StyxValidationError("`out_row_vec` must not be None")
+    if not isinstance(params["out_row_vec"], str):
+        raise StyxValidationError(f'`out_row_vec` has the wrong type: Received `{type(params.get("out_row_vec", None))}` expected `str`')
+    if params.get("out_col_vec", None) is None:
+        raise StyxValidationError("`out_col_vec` must not be None")
+    if not isinstance(params["out_col_vec"], str):
+        raise StyxValidationError(f'`out_col_vec` has the wrong type: Received `{type(params.get("out_col_vec", None))}` expected `str`')
+    if params.get("out_col_matA", None) is None:
+        raise StyxValidationError("`out_col_matA` must not be None")
+    if not isinstance(params["out_col_matA"], str):
+        raise StyxValidationError(f'`out_col_matA` has the wrong type: Received `{type(params.get("out_col_matA", None))}` expected `str`')
+    if params.get("out_col_matT", None) is None:
+        raise StyxValidationError("`out_col_matT` must not be None")
+    if not isinstance(params["out_col_matT"], str):
+        raise StyxValidationError(f'`out_col_matT` has the wrong type: Received `{type(params.get("out_col_matT", None))}` expected `str`')
+    if params.get("in_bvals", None) is not None:
+        if not isinstance(params["in_bvals"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_bvals` has the wrong type: Received `{type(params.get("in_bvals", None))}` expected `InputPathType | None`')
+    if params.get("out_col_bval", False) is None:
+        raise StyxValidationError("`out_col_bval` must not be None")
+    if not isinstance(params["out_col_bval"], bool):
+        raise StyxValidationError(f'`out_col_bval` has the wrong type: Received `{type(params.get("out_col_bval", False))}` expected `bool`')
+    if params.get("out_row_bval_sep", None) is not None:
+        if not isinstance(params["out_row_bval_sep"], str):
+            raise StyxValidationError(f'`out_row_bval_sep` has the wrong type: Received `{type(params.get("out_row_bval_sep", None))}` expected `str | None`')
+    if params.get("out_col_bval_sep", None) is not None:
+        if not isinstance(params["out_col_bval_sep"], str):
+            raise StyxValidationError(f'`out_col_bval_sep` has the wrong type: Received `{type(params.get("out_col_bval_sep", None))}` expected `str | None`')
+    if params.get("unit_mag_out", False) is None:
+        raise StyxValidationError("`unit_mag_out` must not be None")
+    if not isinstance(params["unit_mag_out"], bool):
+        raise StyxValidationError(f'`unit_mag_out` has the wrong type: Received `{type(params.get("unit_mag_out", False))}` expected `bool`')
+    if params.get("check_abs_min", None) is not None:
+        if not isinstance(params["check_abs_min"], (float, int)):
+            raise StyxValidationError(f'`check_abs_min` has the wrong type: Received `{type(params.get("check_abs_min", None))}` expected `float | None`')
+    if params.get("bref_mean_top", False) is None:
+        raise StyxValidationError("`bref_mean_top` must not be None")
+    if not isinstance(params["bref_mean_top"], bool):
+        raise StyxValidationError(f'`bref_mean_top` has the wrong type: Received `{type(params.get("bref_mean_top", False))}` expected `bool`')
+    if params.get("put_zeros_top", False) is None:
+        raise StyxValidationError("`put_zeros_top` must not be None")
+    if not isinstance(params["put_zeros_top"], bool):
+        raise StyxValidationError(f'`put_zeros_top` has the wrong type: Received `{type(params.get("put_zeros_top", False))}` expected `bool`')
+    if params.get("bmax_ref", None) is not None:
+        if not isinstance(params["bmax_ref"], (float, int)):
+            raise StyxValidationError(f'`bmax_ref` has the wrong type: Received `{type(params.get("bmax_ref", None))}` expected `float | None`')
+
+
 def v_1d_dw_grad_o_mat___cargs(
     params: V1dDwGradOMatParameters,
     execution: Execution,
@@ -307,6 +400,7 @@ def v_1d_dw_grad_o_mat___execute(
     Returns:
         NamedTuple of outputs (described in `V1dDwGradOMatOutputs`).
     """
+    v_1d_dw_grad_o_mat___validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_DW_GRAD_O_MAT___METADATA)
     params = execution.params(params)

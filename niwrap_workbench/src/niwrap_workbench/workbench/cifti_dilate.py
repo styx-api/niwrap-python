@@ -105,6 +105,27 @@ def cifti_dilate_left_surface_params(
     return params
 
 
+def cifti_dilate_left_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiDilateLeftSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_dilate_left_surface_cargs(
     params: CiftiDilateLeftSurfaceParameters,
     execution: Execution,
@@ -154,6 +175,27 @@ def cifti_dilate_right_surface_params(
     return params
 
 
+def cifti_dilate_right_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiDilateRightSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_dilate_right_surface_cargs(
     params: CiftiDilateRightSurfaceParameters,
     execution: Execution,
@@ -201,6 +243,27 @@ def cifti_dilate_cerebellum_surface_params(
     if area_metric is not None:
         params["area-metric"] = area_metric
     return params
+
+
+def cifti_dilate_cerebellum_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiDilateCerebellumSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_dilate_cerebellum_surface_cargs(
@@ -297,6 +360,61 @@ def cifti_dilate_params(
     return params
 
 
+def cifti_dilate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiDilateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("left-surface", None) is not None:
+        cifti_dilate_left_surface_validate(params["left-surface"])
+    if params.get("right-surface", None) is not None:
+        cifti_dilate_right_surface_validate(params["right-surface"])
+    if params.get("cerebellum-surface", None) is not None:
+        cifti_dilate_cerebellum_surface_validate(params["cerebellum-surface"])
+    if params.get("roi-cifti", None) is not None:
+        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
+    if params.get("legacy-mode", False) is None:
+        raise StyxValidationError("`legacy-mode` must not be None")
+    if not isinstance(params["legacy-mode"], bool):
+        raise StyxValidationError(f'`legacy-mode` has the wrong type: Received `{type(params.get("legacy-mode", False))}` expected `bool`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+    if params.get("surface-distance", None) is None:
+        raise StyxValidationError("`surface-distance` must not be None")
+    if not isinstance(params["surface-distance"], (float, int)):
+        raise StyxValidationError(f'`surface-distance` has the wrong type: Received `{type(params.get("surface-distance", None))}` expected `float`')
+    if params.get("volume-distance", None) is None:
+        raise StyxValidationError("`volume-distance` must not be None")
+    if not isinstance(params["volume-distance"], (float, int)):
+        raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
+
+
 def cifti_dilate_cargs(
     params: CiftiDilateParameters,
     execution: Execution,
@@ -381,6 +499,7 @@ def cifti_dilate_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiDilateOutputs`).
     """
+    cifti_dilate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_DILATE_METADATA)
     params = execution.params(params)

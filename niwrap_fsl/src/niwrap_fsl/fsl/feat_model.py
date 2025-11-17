@@ -55,6 +55,27 @@ def feat_model_params(
     return params
 
 
+def feat_model_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FeatModelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("design_name_root", None) is None:
+        raise StyxValidationError("`design_name_root` must not be None")
+    if not isinstance(params["design_name_root"], str):
+        raise StyxValidationError(f'`design_name_root` has the wrong type: Received `{type(params.get("design_name_root", None))}` expected `str`')
+    if params.get("confound_matrix", None) is not None:
+        if not isinstance(params["confound_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`confound_matrix` has the wrong type: Received `{type(params.get("confound_matrix", None))}` expected `InputPathType | None`')
+
+
 def feat_model_cargs(
     params: FeatModelParameters,
     execution: Execution,
@@ -114,6 +135,7 @@ def feat_model_execute(
     Returns:
         NamedTuple of outputs (described in `FeatModelOutputs`).
     """
+    feat_model_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FEAT_MODEL_METADATA)
     params = execution.params(params)

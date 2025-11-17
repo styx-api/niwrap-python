@@ -122,6 +122,63 @@ def mris_thickness_diff_params(
     return params
 
 
+def mris_thickness_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisThicknessDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("src_type", None) is not None:
+        if not isinstance(params["src_type"], str):
+            raise StyxValidationError(f'`src_type` has the wrong type: Received `{type(params.get("src_type", None))}` expected `str | None`')
+    if params.get("trg_type", None) is not None:
+        if not isinstance(params["trg_type"], str):
+            raise StyxValidationError(f'`trg_type` has the wrong type: Received `{type(params.get("trg_type", None))}` expected `str | None`')
+    if params.get("out_file", None) is None:
+        raise StyxValidationError("`out_file` must not be None")
+    if not isinstance(params["out_file"], str):
+        raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str`')
+    if params.get("out_resampled", None) is not None:
+        if not isinstance(params["out_resampled"], str):
+            raise StyxValidationError(f'`out_resampled` has the wrong type: Received `{type(params.get("out_resampled", None))}` expected `str | None`')
+    if params.get("nsmooth", None) is not None:
+        if not isinstance(params["nsmooth"], (float, int)):
+            raise StyxValidationError(f'`nsmooth` has the wrong type: Received `{type(params.get("nsmooth", None))}` expected `float | None`')
+    if params.get("register", False) is None:
+        raise StyxValidationError("`register` must not be None")
+    if not isinstance(params["register"], bool):
+        raise StyxValidationError(f'`register` has the wrong type: Received `{type(params.get("register", False))}` expected `bool`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `InputPathType | None`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+    if params.get("src_volume", None) is not None:
+        if not isinstance(params["src_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`src_volume` has the wrong type: Received `{type(params.get("src_volume", None))}` expected `InputPathType | None`')
+    if params.get("dst_volume", None) is not None:
+        if not isinstance(params["dst_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dst_volume` has the wrong type: Received `{type(params.get("dst_volume", None))}` expected `InputPathType | None`')
+    if params.get("abs", False) is None:
+        raise StyxValidationError("`abs` must not be None")
+    if not isinstance(params["abs"], bool):
+        raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", False))}` expected `bool`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `InputPathType | None`')
+    if params.get("subject_name", None) is not None:
+        if not isinstance(params["subject_name"], str):
+            raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str | None`')
+
+
 def mris_thickness_diff_cargs(
     params: MrisThicknessDiffParameters,
     execution: Execution,
@@ -236,6 +293,7 @@ def mris_thickness_diff_execute(
     Returns:
         NamedTuple of outputs (described in `MrisThicknessDiffOutputs`).
     """
+    mris_thickness_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_THICKNESS_DIFF_METADATA)
     params = execution.params(params)

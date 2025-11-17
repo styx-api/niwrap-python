@@ -70,6 +70,42 @@ def thickdiffmap_params(
     return params
 
 
+def thickdiffmap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ThickdiffmapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjscan1", None) is None:
+        raise StyxValidationError("`subjscan1` must not be None")
+    if not isinstance(params["subjscan1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subjscan1` has the wrong type: Received `{type(params.get("subjscan1", None))}` expected `InputPathType`')
+    if params.get("subjscan2", None) is None:
+        raise StyxValidationError("`subjscan2` must not be None")
+    if not isinstance(params["subjscan2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subjscan2` has the wrong type: Received `{type(params.get("subjscan2", None))}` expected `InputPathType`')
+    if params.get("commonsubj", None) is None:
+        raise StyxValidationError("`commonsubj` must not be None")
+    if not isinstance(params["commonsubj"], str):
+        raise StyxValidationError(f'`commonsubj` has the wrong type: Received `{type(params.get("commonsubj", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("steps", None) is not None:
+        if not isinstance(params["steps"], list):
+            raise StyxValidationError(f'`steps` has the wrong type: Received `{type(params.get("steps", None))}` expected `list[str] | None`')
+        for e in params["steps"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`steps` has the wrong type: Received `{type(params.get("steps", None))}` expected `list[str] | None`')
+
+
 def thickdiffmap_cargs(
     params: ThickdiffmapParameters,
     execution: Execution,
@@ -132,6 +168,7 @@ def thickdiffmap_execute(
     Returns:
         NamedTuple of outputs (described in `ThickdiffmapOutputs`).
     """
+    thickdiffmap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(THICKDIFFMAP_METADATA)
     params = execution.params(params)

@@ -49,6 +49,27 @@ def tbss_1_preproc_params(
     return params
 
 
+def tbss_1_preproc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tbss1PreprocParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("images", None) is None:
+        raise StyxValidationError("`images` must not be None")
+    if not isinstance(params["images"], list):
+        raise StyxValidationError(f'`images` has the wrong type: Received `{type(params.get("images", None))}` expected `list[InputPathType]`')
+    for e in params["images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`images` has the wrong type: Received `{type(params.get("images", None))}` expected `list[InputPathType]`')
+
+
 def tbss_1_preproc_cargs(
     params: Tbss1PreprocParameters,
     execution: Execution,
@@ -106,6 +127,7 @@ def tbss_1_preproc_execute(
     Returns:
         NamedTuple of outputs (described in `Tbss1PreprocOutputs`).
     """
+    tbss_1_preproc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_1_PREPROC_METADATA)
     params = execution.params(params)

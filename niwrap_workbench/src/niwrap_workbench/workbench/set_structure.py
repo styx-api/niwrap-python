@@ -70,6 +70,34 @@ def set_structure_params(
     return params
 
 
+def set_structure_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SetStructureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
+    if params.get("secondary type", None) is not None:
+        if not isinstance(params["secondary type"], str):
+            raise StyxValidationError(f'`secondary type` has the wrong type: Received `{type(params.get("secondary type", None))}` expected `str | None`')
+    if params.get("data-file", None) is None:
+        raise StyxValidationError("`data-file` must not be None")
+    if not isinstance(params["data-file"], str):
+        raise StyxValidationError(f'`data-file` has the wrong type: Received `{type(params.get("data-file", None))}` expected `str`')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+
+
 def set_structure_cargs(
     params: SetStructureParameters,
     execution: Execution,
@@ -192,6 +220,7 @@ def set_structure_execute(
     Returns:
         NamedTuple of outputs (described in `SetStructureOutputs`).
     """
+    set_structure_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SET_STRUCTURE_METADATA)
     params = execution.params(params)

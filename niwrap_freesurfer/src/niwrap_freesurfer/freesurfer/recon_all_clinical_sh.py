@@ -66,6 +66,35 @@ def recon_all_clinical_sh_params(
     return params
 
 
+def recon_all_clinical_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ReconAllClinicalShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_scan", None) is None:
+        raise StyxValidationError("`input_scan` must not be None")
+    if not isinstance(params["input_scan"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_scan` has the wrong type: Received `{type(params.get("input_scan", None))}` expected `InputPathType`')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("threads", None) is None:
+        raise StyxValidationError("`threads` must not be None")
+    if not isinstance(params["threads"], int):
+        raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int`')
+    if params.get("subject_dir", None) is not None:
+        if not isinstance(params["subject_dir"], str):
+            raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str | None`')
+
+
 def recon_all_clinical_sh_cargs(
     params: ReconAllClinicalShParameters,
     execution: Execution,
@@ -128,6 +157,7 @@ def recon_all_clinical_sh_execute(
     Returns:
         NamedTuple of outputs (described in `ReconAllClinicalShOutputs`).
     """
+    recon_all_clinical_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RECON_ALL_CLINICAL_SH_METADATA)
     params = execution.params(params)

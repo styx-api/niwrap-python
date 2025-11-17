@@ -79,6 +79,48 @@ def v__make_plug_diff_params(
     return params
 
 
+def v__make_plug_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VMakePlugDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vtk_dir", None) is None:
+        raise StyxValidationError("`vtk_dir` must not be None")
+    if not isinstance(params["vtk_dir"], str):
+        raise StyxValidationError(f'`vtk_dir` has the wrong type: Received `{type(params.get("vtk_dir", None))}` expected `str`')
+    if params.get("xm_dir", None) is None:
+        raise StyxValidationError("`xm_dir` must not be None")
+    if not isinstance(params["xm_dir"], str):
+        raise StyxValidationError(f'`xm_dir` has the wrong type: Received `{type(params.get("xm_dir", None))}` expected `str`')
+    if params.get("afni_src_dir", None) is None:
+        raise StyxValidationError("`afni_src_dir` must not be None")
+    if not isinstance(params["afni_src_dir"], str):
+        raise StyxValidationError(f'`afni_src_dir` has the wrong type: Received `{type(params.get("afni_src_dir", None))}` expected `str`')
+    if params.get("afni_bin_dir", None) is None:
+        raise StyxValidationError("`afni_bin_dir` must not be None")
+    if not isinstance(params["afni_bin_dir"], str):
+        raise StyxValidationError(f'`afni_bin_dir` has the wrong type: Received `{type(params.get("afni_bin_dir", None))}` expected `str`')
+    if params.get("comments", False) is None:
+        raise StyxValidationError("`comments` must not be None")
+    if not isinstance(params["comments"], bool):
+        raise StyxValidationError(f'`comments` has the wrong type: Received `{type(params.get("comments", False))}` expected `bool`')
+    if params.get("linux", False) is None:
+        raise StyxValidationError("`linux` must not be None")
+    if not isinstance(params["linux"], bool):
+        raise StyxValidationError(f'`linux` has the wrong type: Received `{type(params.get("linux", False))}` expected `bool`')
+    if params.get("diff_dir", None) is None:
+        raise StyxValidationError("`diff_dir` must not be None")
+    if not isinstance(params["diff_dir"], str):
+        raise StyxValidationError(f'`diff_dir` has the wrong type: Received `{type(params.get("diff_dir", None))}` expected `str`')
+
+
 def v__make_plug_diff_cargs(
     params: VMakePlugDiffParameters,
     execution: Execution,
@@ -159,6 +201,7 @@ def v__make_plug_diff_execute(
     Returns:
         NamedTuple of outputs (described in `VMakePlugDiffOutputs`).
     """
+    v__make_plug_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__MAKE_PLUG_DIFF_METADATA)
     params = execution.params(params)

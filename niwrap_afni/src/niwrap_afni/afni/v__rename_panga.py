@@ -108,6 +108,58 @@ def v__rename_panga_params(
     return params
 
 
+def v__rename_panga_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VRenamePangaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dir_number", None) is None:
+        raise StyxValidationError("`dir_number` must not be None")
+    if not isinstance(params["dir_number"], str):
+        raise StyxValidationError(f'`dir_number` has the wrong type: Received `{type(params.get("dir_number", None))}` expected `str`')
+    if params.get("first_image_number", None) is None:
+        raise StyxValidationError("`first_image_number` must not be None")
+    if not isinstance(params["first_image_number"], str):
+        raise StyxValidationError(f'`first_image_number` has the wrong type: Received `{type(params.get("first_image_number", None))}` expected `str`')
+    if params.get("num_slices", None) is None:
+        raise StyxValidationError("`num_slices` must not be None")
+    if not isinstance(params["num_slices"], (float, int)):
+        raise StyxValidationError(f'`num_slices` has the wrong type: Received `{type(params.get("num_slices", None))}` expected `float`')
+    if params.get("num_reps", None) is None:
+        raise StyxValidationError("`num_reps` must not be None")
+    if not isinstance(params["num_reps"], (float, int)):
+        raise StyxValidationError(f'`num_reps` has the wrong type: Received `{type(params.get("num_reps", None))}` expected `float`')
+    if params.get("output_root", None) is None:
+        raise StyxValidationError("`output_root` must not be None")
+    if not isinstance(params["output_root"], str):
+        raise StyxValidationError(f'`output_root` has the wrong type: Received `{type(params.get("output_root", None))}` expected `str`')
+    if params.get("keep_prefix", False) is None:
+        raise StyxValidationError("`keep_prefix` must not be None")
+    if not isinstance(params["keep_prefix"], bool):
+        raise StyxValidationError(f'`keep_prefix` has the wrong type: Received `{type(params.get("keep_prefix", False))}` expected `bool`')
+    if params.get("interactive", False) is None:
+        raise StyxValidationError("`interactive` must not be None")
+    if not isinstance(params["interactive"], bool):
+        raise StyxValidationError(f'`interactive` has the wrong type: Received `{type(params.get("interactive", False))}` expected `bool`')
+    if params.get("outliers_check", False) is None:
+        raise StyxValidationError("`outliers_check` must not be None")
+    if not isinstance(params["outliers_check"], bool):
+        raise StyxValidationError(f'`outliers_check` has the wrong type: Received `{type(params.get("outliers_check", False))}` expected `bool`')
+    if params.get("slice_pattern", None) is not None:
+        if not isinstance(params["slice_pattern"], str):
+            raise StyxValidationError(f'`slice_pattern` has the wrong type: Received `{type(params.get("slice_pattern", None))}` expected `str | None`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+
+
 def v__rename_panga_cargs(
     params: VRenamePangaParameters,
     execution: Execution,
@@ -188,6 +240,7 @@ def v__rename_panga_execute(
     Returns:
         NamedTuple of outputs (described in `VRenamePangaOutputs`).
     """
+    v__rename_panga_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__RENAME_PANGA_METADATA)
     params = execution.params(params)

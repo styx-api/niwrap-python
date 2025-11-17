@@ -95,6 +95,59 @@ def dcmsplit_params(
     return params
 
 
+def dcmsplit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DcmsplitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dcm_dir", None) is None:
+        raise StyxValidationError("`dcm_dir` must not be None")
+    if not isinstance(params["dcm_dir"], str):
+        raise StyxValidationError(f'`dcm_dir` has the wrong type: Received `{type(params.get("dcm_dir", None))}` expected `str`')
+    if params.get("out_dir", None) is None:
+        raise StyxValidationError("`out_dir` must not be None")
+    if not isinstance(params["out_dir"], str):
+        raise StyxValidationError(f'`out_dir` has the wrong type: Received `{type(params.get("out_dir", None))}` expected `str`')
+    if params.get("copy", False) is None:
+        raise StyxValidationError("`copy` must not be None")
+    if not isinstance(params["copy"], bool):
+        raise StyxValidationError(f'`copy` has the wrong type: Received `{type(params.get("copy", False))}` expected `bool`')
+    if params.get("link", False) is None:
+        raise StyxValidationError("`link` must not be None")
+    if not isinstance(params["link"], bool):
+        raise StyxValidationError(f'`link` has the wrong type: Received `{type(params.get("link", False))}` expected `bool`')
+    if params.get("split_name", False) is None:
+        raise StyxValidationError("`split_name` must not be None")
+    if not isinstance(params["split_name"], bool):
+        raise StyxValidationError(f'`split_name` has the wrong type: Received `{type(params.get("split_name", False))}` expected `bool`')
+    if params.get("split_uid", False) is None:
+        raise StyxValidationError("`split_uid` must not be None")
+    if not isinstance(params["split_uid"], bool):
+        raise StyxValidationError(f'`split_uid` has the wrong type: Received `{type(params.get("split_uid", False))}` expected `bool`')
+    if params.get("series_no", False) is None:
+        raise StyxValidationError("`series_no` must not be None")
+    if not isinstance(params["series_no"], bool):
+        raise StyxValidationError(f'`series_no` has the wrong type: Received `{type(params.get("series_no", False))}` expected `bool`')
+    if params.get("series_plus", False) is None:
+        raise StyxValidationError("`series_plus` must not be None")
+    if not isinstance(params["series_plus"], bool):
+        raise StyxValidationError(f'`series_plus` has the wrong type: Received `{type(params.get("series_plus", False))}` expected `bool`')
+    if params.get("dicom_tag", None) is not None:
+        if not isinstance(params["dicom_tag"], str):
+            raise StyxValidationError(f'`dicom_tag` has the wrong type: Received `{type(params.get("dicom_tag", None))}` expected `str | None`')
+    if params.get("study_description", False) is None:
+        raise StyxValidationError("`study_description` must not be None")
+    if not isinstance(params["study_description"], bool):
+        raise StyxValidationError(f'`study_description` has the wrong type: Received `{type(params.get("study_description", False))}` expected `bool`')
+
+
 def dcmsplit_cargs(
     params: DcmsplitParameters,
     execution: Execution,
@@ -178,6 +231,7 @@ def dcmsplit_execute(
     Returns:
         NamedTuple of outputs (described in `DcmsplitOutputs`).
     """
+    dcmsplit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DCMSPLIT_METADATA)
     params = execution.params(params)

@@ -184,6 +184,104 @@ def v_3d_clusterize_params(
     return params
 
 
+def v_3d_clusterize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dClusterizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_from_hdr", False) is None:
+        raise StyxValidationError("`mask_from_hdr` must not be None")
+    if not isinstance(params["mask_from_hdr"], bool):
+        raise StyxValidationError(f'`mask_from_hdr` has the wrong type: Received `{type(params.get("mask_from_hdr", False))}` expected `bool`')
+    if params.get("out_mask", None) is not None:
+        if not isinstance(params["out_mask"], str):
+            raise StyxValidationError(f'`out_mask` has the wrong type: Received `{type(params.get("out_mask", None))}` expected `str | None`')
+    if params.get("ithr", None) is None:
+        raise StyxValidationError("`ithr` must not be None")
+    if not isinstance(params["ithr"], str):
+        raise StyxValidationError(f'`ithr` has the wrong type: Received `{type(params.get("ithr", None))}` expected `str`')
+    if params.get("idat", None) is not None:
+        if not isinstance(params["idat"], str):
+            raise StyxValidationError(f'`idat` has the wrong type: Received `{type(params.get("idat", None))}` expected `str | None`')
+    if params.get("onesided", None) is not None:
+        if not isinstance(params["onesided"], str):
+            raise StyxValidationError(f'`onesided` has the wrong type: Received `{type(params.get("onesided", None))}` expected `str | None`')
+    if params.get("twosided", None) is not None:
+        if not isinstance(params["twosided"], str):
+            raise StyxValidationError(f'`twosided` has the wrong type: Received `{type(params.get("twosided", None))}` expected `str | None`')
+    if params.get("bisided", None) is not None:
+        if not isinstance(params["bisided"], str):
+            raise StyxValidationError(f'`bisided` has the wrong type: Received `{type(params.get("bisided", None))}` expected `str | None`')
+    if params.get("within_range", None) is not None:
+        if not isinstance(params["within_range"], str):
+            raise StyxValidationError(f'`within_range` has the wrong type: Received `{type(params.get("within_range", None))}` expected `str | None`')
+    if params.get("nn", None) is None:
+        raise StyxValidationError("`nn` must not be None")
+    if not isinstance(params["nn"], int):
+        raise StyxValidationError(f'`nn` has the wrong type: Received `{type(params.get("nn", None))}` expected `int`')
+    if params.get("clust_nvox", None) is not None:
+        if not isinstance(params["clust_nvox"], int):
+            raise StyxValidationError(f'`clust_nvox` has the wrong type: Received `{type(params.get("clust_nvox", None))}` expected `int | None`')
+    if params.get("clust_vol", None) is not None:
+        if not isinstance(params["clust_vol"], int):
+            raise StyxValidationError(f'`clust_vol` has the wrong type: Received `{type(params.get("clust_vol", None))}` expected `int | None`')
+    if params.get("pref_map", None) is not None:
+        if not isinstance(params["pref_map"], str):
+            raise StyxValidationError(f'`pref_map` has the wrong type: Received `{type(params.get("pref_map", None))}` expected `str | None`')
+    if params.get("pref_dat", None) is not None:
+        if not isinstance(params["pref_dat"], str):
+            raise StyxValidationError(f'`pref_dat` has the wrong type: Received `{type(params.get("pref_dat", None))}` expected `str | None`')
+    if params.get("one_d_format", False) is None:
+        raise StyxValidationError("`one_d_format` must not be None")
+    if not isinstance(params["one_d_format"], bool):
+        raise StyxValidationError(f'`one_d_format` has the wrong type: Received `{type(params.get("one_d_format", False))}` expected `bool`')
+    if params.get("no_one_d_format", False) is None:
+        raise StyxValidationError("`no_one_d_format` must not be None")
+    if not isinstance(params["no_one_d_format"], bool):
+        raise StyxValidationError(f'`no_one_d_format` has the wrong type: Received `{type(params.get("no_one_d_format", False))}` expected `bool`')
+    if params.get("summarize", False) is None:
+        raise StyxValidationError("`summarize` must not be None")
+    if not isinstance(params["summarize"], bool):
+        raise StyxValidationError(f'`summarize` has the wrong type: Received `{type(params.get("summarize", False))}` expected `bool`')
+    if params.get("nosum", False) is None:
+        raise StyxValidationError("`nosum` must not be None")
+    if not isinstance(params["nosum"], bool):
+        raise StyxValidationError(f'`nosum` has the wrong type: Received `{type(params.get("nosum", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("outvol_if_no_clust", False) is None:
+        raise StyxValidationError("`outvol_if_no_clust` must not be None")
+    if not isinstance(params["outvol_if_no_clust"], bool):
+        raise StyxValidationError(f'`outvol_if_no_clust` has the wrong type: Received `{type(params.get("outvol_if_no_clust", False))}` expected `bool`')
+    if params.get("orient", None) is not None:
+        if not isinstance(params["orient"], str):
+            raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str | None`')
+    if params.get("abs_table_data", False) is None:
+        raise StyxValidationError("`abs_table_data` must not be None")
+    if not isinstance(params["abs_table_data"], bool):
+        raise StyxValidationError(f'`abs_table_data` has the wrong type: Received `{type(params.get("abs_table_data", False))}` expected `bool`')
+    if params.get("binary", False) is None:
+        raise StyxValidationError("`binary` must not be None")
+    if not isinstance(params["binary"], bool):
+        raise StyxValidationError(f'`binary` has the wrong type: Received `{type(params.get("binary", False))}` expected `bool`')
+
+
 def v_3d_clusterize_cargs(
     params: V3dClusterizeParameters,
     execution: Execution,
@@ -333,6 +431,7 @@ def v_3d_clusterize_execute(
     Returns:
         NamedTuple of outputs (described in `V3dClusterizeOutputs`).
     """
+    v_3d_clusterize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_CLUSTERIZE_METADATA)
     params = execution.params(params)

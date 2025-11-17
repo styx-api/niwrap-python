@@ -78,6 +78,38 @@ def v_3d_clust_count_params(
     return params
 
 
+def v_3d_clust_count_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dClustCountParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("final", False) is None:
+        raise StyxValidationError("`final` must not be None")
+    if not isinstance(params["final"], bool):
+        raise StyxValidationError(f'`final` has the wrong type: Received `{type(params.get("final", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3d_clust_count_cargs(
     params: V3dClustCountParameters,
     execution: Execution,
@@ -148,6 +180,7 @@ def v_3d_clust_count_execute(
     Returns:
         NamedTuple of outputs (described in `V3dClustCountOutputs`).
     """
+    v_3d_clust_count_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_CLUST_COUNT_METADATA)
     params = execution.params(params)

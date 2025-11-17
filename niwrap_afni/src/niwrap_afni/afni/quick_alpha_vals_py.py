@@ -57,6 +57,27 @@ def quick_alpha_vals_py_params(
     return params
 
 
+def quick_alpha_vals_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QuickAlphaValsPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("niter", None) is not None:
+        if not isinstance(params["niter"], int):
+            raise StyxValidationError(f'`niter` has the wrong type: Received `{type(params.get("niter", None))}` expected `int | None`')
+    if params.get("max_file", None) is None:
+        raise StyxValidationError("`max_file` must not be None")
+    if not isinstance(params["max_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`max_file` has the wrong type: Received `{type(params.get("max_file", None))}` expected `InputPathType`')
+
+
 def quick_alpha_vals_py_cargs(
     params: QuickAlphaValsPyParameters,
     execution: Execution,
@@ -120,6 +141,7 @@ def quick_alpha_vals_py_execute(
     Returns:
         NamedTuple of outputs (described in `QuickAlphaValsPyOutputs`).
     """
+    quick_alpha_vals_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QUICK_ALPHA_VALS_PY_METADATA)
     params = execution.params(params)

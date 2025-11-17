@@ -71,6 +71,40 @@ def mris_translate_annotation_params(
     return params
 
 
+def mris_translate_annotation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisTranslateAnnotationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("in_annot", None) is None:
+        raise StyxValidationError("`in_annot` must not be None")
+    if not isinstance(params["in_annot"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_annot` has the wrong type: Received `{type(params.get("in_annot", None))}` expected `InputPathType`')
+    if params.get("translation_file", None) is None:
+        raise StyxValidationError("`translation_file` must not be None")
+    if not isinstance(params["translation_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`translation_file` has the wrong type: Received `{type(params.get("translation_file", None))}` expected `InputPathType`')
+    if params.get("out_annot", None) is None:
+        raise StyxValidationError("`out_annot` must not be None")
+    if not isinstance(params["out_annot"], str):
+        raise StyxValidationError(f'`out_annot` has the wrong type: Received `{type(params.get("out_annot", None))}` expected `str`')
+
+
 def mris_translate_annotation_cargs(
     params: MrisTranslateAnnotationParameters,
     execution: Execution,
@@ -133,6 +167,7 @@ def mris_translate_annotation_execute(
     Returns:
         NamedTuple of outputs (described in `MrisTranslateAnnotationOutputs`).
     """
+    mris_translate_annotation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_TRANSLATE_ANNOTATION_METADATA)
     params = execution.params(params)

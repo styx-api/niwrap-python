@@ -74,6 +74,44 @@ def imgreg_4dfp_params(
     return params
 
 
+def imgreg_4dfp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Imgreg4dfpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("target_image", None) is None:
+        raise StyxValidationError("`target_image` must not be None")
+    if not isinstance(params["target_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target_image` has the wrong type: Received `{type(params.get("target_image", None))}` expected `InputPathType`')
+    if params.get("target_mask", "none") is None:
+        raise StyxValidationError("`target_mask` must not be None")
+    if not isinstance(params["target_mask"], str):
+        raise StyxValidationError(f'`target_mask` has the wrong type: Received `{type(params.get("target_mask", "none"))}` expected `str`')
+    if params.get("source_image", None) is None:
+        raise StyxValidationError("`source_image` must not be None")
+    if not isinstance(params["source_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_image` has the wrong type: Received `{type(params.get("source_image", None))}` expected `InputPathType`')
+    if params.get("source_mask", "none") is None:
+        raise StyxValidationError("`source_mask` must not be None")
+    if not isinstance(params["source_mask"], str):
+        raise StyxValidationError(f'`source_mask` has the wrong type: Received `{type(params.get("source_mask", "none"))}` expected `str`')
+    if params.get("t4file", None) is None:
+        raise StyxValidationError("`t4file` must not be None")
+    if not isinstance(params["t4file"], str):
+        raise StyxValidationError(f'`t4file` has the wrong type: Received `{type(params.get("t4file", None))}` expected `str`')
+    if params.get("mode", None) is None:
+        raise StyxValidationError("`mode` must not be None")
+    if not isinstance(params["mode"], str):
+        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str`')
+
+
 def imgreg_4dfp_cargs(
     params: Imgreg4dfpParameters,
     execution: Execution,
@@ -136,6 +174,7 @@ def imgreg_4dfp_execute(
     Returns:
         NamedTuple of outputs (described in `Imgreg4dfpOutputs`).
     """
+    imgreg_4dfp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMGREG_4DFP_METADATA)
     params = execution.params(params)

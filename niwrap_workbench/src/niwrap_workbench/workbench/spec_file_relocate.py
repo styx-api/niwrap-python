@@ -53,6 +53,28 @@ def spec_file_relocate_params(
     return params
 
 
+def spec_file_relocate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpecFileRelocateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input-spec", None) is None:
+        raise StyxValidationError("`input-spec` must not be None")
+    if not isinstance(params["input-spec"], str):
+        raise StyxValidationError(f'`input-spec` has the wrong type: Received `{type(params.get("input-spec", None))}` expected `str`')
+    if params.get("output-spec", None) is None:
+        raise StyxValidationError("`output-spec` must not be None")
+    if not isinstance(params["output-spec"], str):
+        raise StyxValidationError(f'`output-spec` has the wrong type: Received `{type(params.get("output-spec", None))}` expected `str`')
+
+
 def spec_file_relocate_cargs(
     params: SpecFileRelocateParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def spec_file_relocate_execute(
     Returns:
         NamedTuple of outputs (described in `SpecFileRelocateOutputs`).
     """
+    spec_file_relocate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPEC_FILE_RELOCATE_METADATA)
     params = execution.params(params)

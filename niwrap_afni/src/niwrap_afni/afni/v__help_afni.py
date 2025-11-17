@@ -77,6 +77,43 @@ def v__help_afni_params(
     return params
 
 
+def v__help_afni_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VHelpAfniParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("match", None) is not None:
+        if not isinstance(params["match"], str):
+            raise StyxValidationError(f'`match` has the wrong type: Received `{type(params.get("match", None))}` expected `str | None`')
+    if params.get("lynx", False) is None:
+        raise StyxValidationError("`lynx` must not be None")
+    if not isinstance(params["lynx"], bool):
+        raise StyxValidationError(f'`lynx` has the wrong type: Received `{type(params.get("lynx", False))}` expected `bool`')
+    if params.get("vi", False) is None:
+        raise StyxValidationError("`vi` must not be None")
+    if not isinstance(params["vi"], bool):
+        raise StyxValidationError(f'`vi` has the wrong type: Received `{type(params.get("vi", False))}` expected `bool`')
+    if params.get("less", False) is None:
+        raise StyxValidationError("`less` must not be None")
+    if not isinstance(params["less"], bool):
+        raise StyxValidationError(f'`less` has the wrong type: Received `{type(params.get("less", False))}` expected `bool`')
+    if params.get("nedit", False) is None:
+        raise StyxValidationError("`nedit` must not be None")
+    if not isinstance(params["nedit"], bool):
+        raise StyxValidationError(f'`nedit` has the wrong type: Received `{type(params.get("nedit", False))}` expected `bool`')
+    if params.get("noview", False) is None:
+        raise StyxValidationError("`noview` must not be None")
+    if not isinstance(params["noview"], bool):
+        raise StyxValidationError(f'`noview` has the wrong type: Received `{type(params.get("noview", False))}` expected `bool`')
+
+
 def v__help_afni_cargs(
     params: VHelpAfniParameters,
     execution: Execution,
@@ -148,6 +185,7 @@ def v__help_afni_execute(
     Returns:
         NamedTuple of outputs (described in `VHelpAfniOutputs`).
     """
+    v__help_afni_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__HELP_AFNI_METADATA)
     params = execution.params(params)

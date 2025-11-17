@@ -2011,19 +2011,197 @@ def c3d_operations_cargs_dyn_fn(
     }.get(t)
 
 
-def c3d_operations_outputs_dyn_fn(
+def c3d_operations_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
-        "output": c3d_output_outputs,
+        "accum": c3d_accum_validate,
+        "acos": c3d_acos_validate,
+        "add": c3d_add_validate,
+        "align_landmarks": c3d_align_landmarks_validate,
+        "anisotropic_diffusion": c3d_anisotropic_diffusion_validate,
+        "antialias": c3d_antialias_validate,
+        "set": c3d_set_validate,
+        "asin": c3d_asin_validate,
+        "atan2": c3d_atan2_validate,
+        "background": c3d_background_validate,
+        "n4_bias_correction": c3d_n4_bias_correction_validate,
+        "binarize": c3d_binarize_validate,
+        "canny": c3d_canny_validate,
+        "ceil": c3d_ceil_validate,
+        "centroid": c3d_centroid_validate,
+        "centroid_mark": c3d_centroid_mark_validate,
+        "connected_components": c3d_connected_components_validate,
+        "clear": c3d_clear_validate,
+        "clip": c3d_clip_validate,
+        "color_map": c3d_color_map_validate,
+        "compress": c3d_compress_validate,
+        "no_compress": c3d_no_compress_validate,
+        "conv": c3d_conv_validate,
+        "coordinate_map_voxel": c3d_coordinate_map_voxel_validate,
+        "coordinate_map_physical": c3d_coordinate_map_physical_validate,
+        "copy_transform": c3d_copy_transform_validate,
+        "cos": c3d_cos_validate,
+        "create": c3d_create_validate,
+        "dicom_series_list": c3d_dicom_series_list_validate,
+        "dicom_series_read": c3d_dicom_series_read_validate,
+        "dilate": c3d_dilate_validate,
+        "divide": c3d_divide_validate,
+        "duplicate": c3d_duplicate_validate,
+        "endaccum": c3d_endaccum_validate,
+        "endfor": c3d_endfor_validate,
+        "erode": c3d_erode_validate,
+        "erf": c3d_erf_validate,
+        "exp": c3d_exp_validate,
+        "export_patches": c3d_export_patches_validate,
+        "export_patches_aug": c3d_export_patches_aug_validate,
+        "extrude_seg": c3d_extrude_seg_validate,
+        "fill_background_with_noise": c3d_fill_background_with_noise_validate,
+        "fft": c3d_fft_validate,
+        "flip": c3d_flip_validate,
+        "floor": c3d_floor_validate,
+        "foreach": c3d_foreach_validate,
+        "foreach_comp": c3d_foreach_comp_validate,
+        "glm": c3d_glm_validate,
+        "gradient": c3d_gradient_validate,
+        "_help": c3d__help_validate,
+        "holefill": c3d_holefill_validate,
+        "hessian_eigenvalues": c3d_hessian_eigenvalues_validate,
+        "hessian_objectness": c3d_hessian_objectness_validate,
+        "histogram_match": c3d_histogram_match_validate,
+        "info": c3d_info_validate,
+        "info_full": c3d_info_full_validate,
+        "insert": c3d_insert_validate,
+        "interpolation": c3d_interpolation_validate,
+        "iterations": c3d_iterations_validate,
+        "label_overlap": c3d_label_overlap_validate,
+        "label_statistics": c3d_label_statistics_validate,
+        "landmarks_to_spheres": c3d_landmarks_to_spheres_validate,
+        "laplacian": c3d_laplacian_validate,
+        "levelset": c3d_levelset_validate,
+        "levelset_curvature": c3d_levelset_curvature_validate,
+        "levelset_advection": c3d_levelset_advection_validate,
+        "log": c3d_log_validate,
+        "log10": c3d_log10_validate,
+        "manual": c3d_manual_validate,
+        "match_bounding_box": c3d_match_bounding_box_validate,
+        "maximum": c3d_maximum_validate,
+        "multicomponent_split": c3d_multicomponent_split_validate,
+        "mean": c3d_mean_validate,
+        "median_filter": c3d_median_filter_validate,
+        "merge": c3d_merge_validate,
+        "mean_filter": c3d_mean_filter_validate,
+        "mutual_info": c3d_mutual_info_validate,
+        "minimum": c3d_minimum_validate,
+        "mixture_model": c3d_mixture_model_validate,
+        "moments": c3d_moments_validate,
+        "mattes_mutual_info": c3d_mattes_mutual_info_validate,
+        "mean_square": c3d_mean_square_validate,
+        "multiply": c3d_multiply_validate,
+        "normalized_cross_correlation": c3d_normalized_cross_correlation_validate,
+        "normalized_correlation": c3d_normalized_correlation_validate,
+        "normalized_mutual_info": c3d_normalized_mutual_info_validate,
+        "noise_gaussian": c3d_noise_gaussian_validate,
+        "noise_poisson": c3d_noise_poisson_validate,
+        "noise_speckle": c3d_noise_speckle_validate,
+        "noise_salt_pepper": c3d_noise_salt_pepper_validate,
+        "no_multicomponent_split": c3d_no_multicomponent_split_validate,
+        "normalize_local_window": c3d_normalize_local_window_validate,
+        "normpdf": c3d_normpdf_validate,
+        "noround": c3d_noround_validate,
+        "nospm": c3d_nospm_validate,
+        "output": c3d_output_validate,
+        "output_multicomponent": c3d_output_multicomponent_validate,
+        "output_multiple_multicomponent": c3d_output_multiple_multicomponent_validate,
+        "orient": c3d_orient_validate,
+        "output_multiple": c3d_output_multiple_validate,
+        "orient_1": c3d_orient_1_validate,
+        "origin": c3d_origin_validate,
+        "origin_voxel": c3d_origin_voxel_validate,
+        "origin_voxel_coord": c3d_origin_voxel_coord_validate,
+        "overlap": c3d_overlap_validate,
+        "overlay_label_image": c3d_overlay_label_image_validate,
+        "pad": c3d_pad_validate,
+        "pad_to": c3d_pad_to_validate,
+        "pca": c3d_pca_validate,
+        "percent_intensity_mode": c3d_percent_intensity_mode_validate,
+        "pixel": c3d_pixel_validate,
+        "pop": c3d_pop_validate,
+        "popas": c3d_popas_validate,
+        "probe": c3d_probe_validate,
+        "push": c3d_push_validate,
+        "rank": c3d_rank_validate,
+        "reciprocal": c3d_reciprocal_validate,
+        "region": c3d_region_validate,
+        "reorder": c3d_reorder_validate,
+        "retain_labels": c3d_retain_labels_validate,
+        "rf_apply": c3d_rf_apply_validate,
+        "rf_train": c3d_rf_train_validate,
+        "rf_param_patch": c3d_rf_param_patch_validate,
+        "rf_param_usexyz": c3d_rf_param_usexyz_validate,
+        "rf_param_nousexyz": c3d_rf_param_nousexyz_validate,
+        "rf_param_ntrees": c3d_rf_param_ntrees_validate,
+        "rf_param_treedepth": c3d_rf_param_treedepth_validate,
+        "set_sform": c3d_set_sform_validate,
+        "replace": c3d_replace_validate,
+        "resample": c3d_resample_validate,
+        "resample_iso": c3d_resample_iso_validate,
+        "resample_mm": c3d_resample_mm_validate,
+        "reslice_itk": c3d_reslice_itk_validate,
+        "reslice_matrix": c3d_reslice_matrix_validate,
+        "reslice_identity": c3d_reslice_identity_validate,
+        "rgb2hsv": c3d_rgb2hsv_validate,
+        "rms": c3d_rms_validate,
+        "round": c3d_round_validate,
+        "scale": c3d_scale_validate,
+        "set_sform_1": c3d_set_sform_1_validate,
+        "sin": c3d_sin_validate,
+        "slice": c3d_slice_validate,
+        "slice_all": c3d_slice_all_validate,
+        "sharpen": c3d_sharpen_validate,
+        "shift": c3d_shift_validate,
+        "signed_distance_transform": c3d_signed_distance_transform_validate,
+        "smooth": c3d_smooth_validate,
+        "smooth_fast": c3d_smooth_fast_validate,
+        "spacing": c3d_spacing_validate,
+        "split": c3d_split_validate,
+        "sqrt": c3d_sqrt_validate,
+        "staple": c3d_staple_validate,
+        "structure_tensor_eigenvalues": c3d_structure_tensor_eigenvalues_validate,
+        "spm": c3d_spm_validate,
+        "subtract": c3d_subtract_validate,
+        "supervoxel": c3d_supervoxel_validate,
+        "stretch": c3d_stretch_validate,
+        "swapdim": c3d_swapdim_validate,
+        "test_image": c3d_test_image_validate,
+        "test_probe": c3d_test_probe_validate,
+        "threshold": c3d_threshold_validate,
+        "tile": c3d_tile_validate,
+        "trim": c3d_trim_validate,
+        "trim_to_size": c3d_trim_to_size_validate,
+        "type": c3d_type_validate,
+        "verbose": c3d_verbose_validate,
+        "noverbose": c3d_noverbose_validate,
+        "version": c3d_version_validate,
+        "vote": c3d_vote_validate,
+        "vote_mrf": c3d_vote_mrf_validate,
+        "vote_label": c3d_vote_label_validate,
+        "voxel_sum": c3d_voxel_sum_validate,
+        "voxel_integral": c3d_voxel_integral_validate,
+        "voxelwise_regression": c3d_voxelwise_regression_validate,
+        "warp": c3d_warp_validate,
+        "warp_label": c3d_warp_label_validate,
+        "wrap": c3d_wrap_validate,
+        "weighted_sum": c3d_weighted_sum_validate,
+        "weighted_sum_voxelwise": c3d_weighted_sum_voxelwise_validate,
     }.get(t)
 
 
@@ -2054,6 +2232,24 @@ def c3d_accum_params(
         "accum": accum,
     }
     return params
+
+
+def c3d_accum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAccumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("accum", None) is None:
+        raise StyxValidationError("`accum` must not be None")
+    if not isinstance(params["accum"], str):
+        raise StyxValidationError(f'`accum` has the wrong type: Received `{type(params.get("accum", None))}` expected `str`')
 
 
 def c3d_accum_cargs(
@@ -2093,6 +2289,24 @@ def c3d_acos_params(
         "acos": acos,
     }
     return params
+
+
+def c3d_acos_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAcosParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("acos", None) is None:
+        raise StyxValidationError("`acos` must not be None")
+    if not isinstance(params["acos"], str):
+        raise StyxValidationError(f'`acos` has the wrong type: Received `{type(params.get("acos", None))}` expected `str`')
 
 
 def c3d_acos_cargs(
@@ -2148,6 +2362,24 @@ def c3d_add_params(
         "add": add,
     }
     return params
+
+
+def c3d_add_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAddParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("add", None) is None:
+        raise StyxValidationError("`add` must not be None")
+    if not isinstance(params["add"], str):
+        raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `str`')
 
 
 def c3d_add_cargs(
@@ -2208,6 +2440,24 @@ def c3d_align_landmarks_params(
     return params
 
 
+def c3d_align_landmarks_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAlignLandmarksParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("align_landmarks", None) is None:
+        raise StyxValidationError("`align_landmarks` must not be None")
+    if not isinstance(params["align_landmarks"], str):
+        raise StyxValidationError(f'`align_landmarks` has the wrong type: Received `{type(params.get("align_landmarks", None))}` expected `str`')
+
+
 def c3d_align_landmarks_cargs(
     params: C3dAlignLandmarksParameters,
     execution: Execution,
@@ -2263,6 +2513,24 @@ def c3d_anisotropic_diffusion_params(
     return params
 
 
+def c3d_anisotropic_diffusion_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAnisotropicDiffusionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("anisotropic_diffusion", None) is None:
+        raise StyxValidationError("`anisotropic_diffusion` must not be None")
+    if not isinstance(params["anisotropic_diffusion"], str):
+        raise StyxValidationError(f'`anisotropic_diffusion` has the wrong type: Received `{type(params.get("anisotropic_diffusion", None))}` expected `str`')
+
+
 def c3d_anisotropic_diffusion_cargs(
     params: C3dAnisotropicDiffusionParameters,
     execution: Execution,
@@ -2300,6 +2568,24 @@ def c3d_antialias_params(
         "antialias": antialias,
     }
     return params
+
+
+def c3d_antialias_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAntialiasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("antialias", None) is None:
+        raise StyxValidationError("`antialias` must not be None")
+    if not isinstance(params["antialias"], str):
+        raise StyxValidationError(f'`antialias` has the wrong type: Received `{type(params.get("antialias", None))}` expected `str`')
 
 
 def c3d_antialias_cargs(
@@ -2354,6 +2640,24 @@ def c3d_set_params(
     return params
 
 
+def c3d_set_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("set", None) is None:
+        raise StyxValidationError("`set` must not be None")
+    if not isinstance(params["set"], str):
+        raise StyxValidationError(f'`set` has the wrong type: Received `{type(params.get("set", None))}` expected `str`')
+
+
 def c3d_set_cargs(
     params: C3dSetParameters,
     execution: Execution,
@@ -2391,6 +2695,24 @@ def c3d_asin_params(
         "asin": asin,
     }
     return params
+
+
+def c3d_asin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAsinParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("asin", None) is None:
+        raise StyxValidationError("`asin` must not be None")
+    if not isinstance(params["asin"], str):
+        raise StyxValidationError(f'`asin` has the wrong type: Received `{type(params.get("asin", None))}` expected `str`')
 
 
 def c3d_asin_cargs(
@@ -2440,6 +2762,24 @@ def c3d_atan2_params(
     return params
 
 
+def c3d_atan2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAtan2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("atan2", None) is None:
+        raise StyxValidationError("`atan2` must not be None")
+    if not isinstance(params["atan2"], str):
+        raise StyxValidationError(f'`atan2` has the wrong type: Received `{type(params.get("atan2", None))}` expected `str`')
+
+
 def c3d_atan2_cargs(
     params: C3dAtan2Parameters,
     execution: Execution,
@@ -2483,6 +2823,24 @@ def c3d_background_params(
         "background": background,
     }
     return params
+
+
+def c3d_background_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dBackgroundParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("background", None) is None:
+        raise StyxValidationError("`background` must not be None")
+    if not isinstance(params["background"], str):
+        raise StyxValidationError(f'`background` has the wrong type: Received `{type(params.get("background", None))}` expected `str`')
 
 
 def c3d_background_cargs(
@@ -2530,6 +2888,24 @@ def c3d_n4_bias_correction_params(
         "n4_bias_correction": n4_bias_correction,
     }
     return params
+
+
+def c3d_n4_bias_correction_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dN4BiasCorrectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("n4_bias_correction", None) is None:
+        raise StyxValidationError("`n4_bias_correction` must not be None")
+    if not isinstance(params["n4_bias_correction"], str):
+        raise StyxValidationError(f'`n4_bias_correction` has the wrong type: Received `{type(params.get("n4_bias_correction", None))}` expected `str`')
 
 
 def c3d_n4_bias_correction_cargs(
@@ -2582,6 +2958,24 @@ def c3d_binarize_params(
     return params
 
 
+def c3d_binarize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dBinarizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("binarize", None) is None:
+        raise StyxValidationError("`binarize` must not be None")
+    if not isinstance(params["binarize"], str):
+        raise StyxValidationError(f'`binarize` has the wrong type: Received `{type(params.get("binarize", None))}` expected `str`')
+
+
 def c3d_binarize_cargs(
     params: C3dBinarizeParameters,
     execution: Execution,
@@ -2629,6 +3023,24 @@ def c3d_canny_params(
     return params
 
 
+def c3d_canny_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCannyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("canny", None) is None:
+        raise StyxValidationError("`canny` must not be None")
+    if not isinstance(params["canny"], str):
+        raise StyxValidationError(f'`canny` has the wrong type: Received `{type(params.get("canny", None))}` expected `str`')
+
+
 def c3d_canny_cargs(
     params: C3dCannyParameters,
     execution: Execution,
@@ -2673,6 +3085,24 @@ def c3d_ceil_params(
         "ceil": ceil,
     }
     return params
+
+
+def c3d_ceil_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCeilParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ceil", None) is None:
+        raise StyxValidationError("`ceil` must not be None")
+    if not isinstance(params["ceil"], str):
+        raise StyxValidationError(f'`ceil` has the wrong type: Received `{type(params.get("ceil", None))}` expected `str`')
 
 
 def c3d_ceil_cargs(
@@ -2727,6 +3157,24 @@ def c3d_centroid_params(
     return params
 
 
+def c3d_centroid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCentroidParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("centroid", None) is None:
+        raise StyxValidationError("`centroid` must not be None")
+    if not isinstance(params["centroid"], str):
+        raise StyxValidationError(f'`centroid` has the wrong type: Received `{type(params.get("centroid", None))}` expected `str`')
+
+
 def c3d_centroid_cargs(
     params: C3dCentroidParameters,
     execution: Execution,
@@ -2777,6 +3225,24 @@ def c3d_centroid_mark_params(
         "centroid_mark": centroid_mark,
     }
     return params
+
+
+def c3d_centroid_mark_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCentroidMarkParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("centroid_mark", None) is None:
+        raise StyxValidationError("`centroid_mark` must not be None")
+    if not isinstance(params["centroid_mark"], str):
+        raise StyxValidationError(f'`centroid_mark` has the wrong type: Received `{type(params.get("centroid_mark", None))}` expected `str`')
 
 
 def c3d_centroid_mark_cargs(
@@ -2831,6 +3297,24 @@ def c3d_connected_components_params(
     return params
 
 
+def c3d_connected_components_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dConnectedComponentsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("connected_components", None) is None:
+        raise StyxValidationError("`connected_components` must not be None")
+    if not isinstance(params["connected_components"], str):
+        raise StyxValidationError(f'`connected_components` has the wrong type: Received `{type(params.get("connected_components", None))}` expected `str`')
+
+
 def c3d_connected_components_cargs(
     params: C3dConnectedComponentsParameters,
     execution: Execution,
@@ -2873,6 +3357,24 @@ def c3d_clear_params(
         "clear": clear_,
     }
     return params
+
+
+def c3d_clear_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dClearParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("clear", None) is None:
+        raise StyxValidationError("`clear` must not be None")
+    if not isinstance(params["clear"], str):
+        raise StyxValidationError(f'`clear` has the wrong type: Received `{type(params.get("clear", None))}` expected `str`')
 
 
 def c3d_clear_cargs(
@@ -2925,6 +3427,24 @@ def c3d_clip_params(
         "clip": clip,
     }
     return params
+
+
+def c3d_clip_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dClipParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("clip", None) is None:
+        raise StyxValidationError("`clip` must not be None")
+    if not isinstance(params["clip"], str):
+        raise StyxValidationError(f'`clip` has the wrong type: Received `{type(params.get("clip", None))}` expected `str`')
 
 
 def c3d_clip_cargs(
@@ -2991,6 +3511,24 @@ def c3d_color_map_params(
     return params
 
 
+def c3d_color_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dColorMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("color_map", None) is None:
+        raise StyxValidationError("`color_map` must not be None")
+    if not isinstance(params["color_map"], str):
+        raise StyxValidationError(f'`color_map` has the wrong type: Received `{type(params.get("color_map", None))}` expected `str`')
+
+
 def c3d_color_map_cargs(
     params: C3dColorMapParameters,
     execution: Execution,
@@ -3041,6 +3579,24 @@ def c3d_compress_params(
         "compress": compress,
     }
     return params
+
+
+def c3d_compress_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCompressParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("compress", None) is None:
+        raise StyxValidationError("`compress` must not be None")
+    if not isinstance(params["compress"], str):
+        raise StyxValidationError(f'`compress` has the wrong type: Received `{type(params.get("compress", None))}` expected `str`')
 
 
 def c3d_compress_cargs(
@@ -3095,6 +3651,24 @@ def c3d_no_compress_params(
     return params
 
 
+def c3d_no_compress_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoCompressParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("no_compress", None) is None:
+        raise StyxValidationError("`no_compress` must not be None")
+    if not isinstance(params["no_compress"], str):
+        raise StyxValidationError(f'`no_compress` has the wrong type: Received `{type(params.get("no_compress", None))}` expected `str`')
+
+
 def c3d_no_compress_cargs(
     params: C3dNoCompressParameters,
     execution: Execution,
@@ -3144,6 +3718,24 @@ def c3d_conv_params(
         "conv": conv,
     }
     return params
+
+
+def c3d_conv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dConvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("conv", None) is None:
+        raise StyxValidationError("`conv` must not be None")
+    if not isinstance(params["conv"], str):
+        raise StyxValidationError(f'`conv` has the wrong type: Received `{type(params.get("conv", None))}` expected `str`')
 
 
 def c3d_conv_cargs(
@@ -3203,6 +3795,24 @@ def c3d_coordinate_map_voxel_params(
     return params
 
 
+def c3d_coordinate_map_voxel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCoordinateMapVoxelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("coordinate_map_voxel", None) is None:
+        raise StyxValidationError("`coordinate_map_voxel` must not be None")
+    if not isinstance(params["coordinate_map_voxel"], str):
+        raise StyxValidationError(f'`coordinate_map_voxel` has the wrong type: Received `{type(params.get("coordinate_map_voxel", None))}` expected `str`')
+
+
 def c3d_coordinate_map_voxel_cargs(
     params: C3dCoordinateMapVoxelParameters,
     execution: Execution,
@@ -3247,6 +3857,24 @@ def c3d_coordinate_map_physical_params(
         "coordinate_map_physical": coordinate_map_physical,
     }
     return params
+
+
+def c3d_coordinate_map_physical_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCoordinateMapPhysicalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("coordinate_map_physical", None) is None:
+        raise StyxValidationError("`coordinate_map_physical` must not be None")
+    if not isinstance(params["coordinate_map_physical"], str):
+        raise StyxValidationError(f'`coordinate_map_physical` has the wrong type: Received `{type(params.get("coordinate_map_physical", None))}` expected `str`')
 
 
 def c3d_coordinate_map_physical_cargs(
@@ -3299,6 +3927,24 @@ def c3d_copy_transform_params(
     return params
 
 
+def c3d_copy_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCopyTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("copy_transform", None) is None:
+        raise StyxValidationError("`copy_transform` must not be None")
+    if not isinstance(params["copy_transform"], str):
+        raise StyxValidationError(f'`copy_transform` has the wrong type: Received `{type(params.get("copy_transform", None))}` expected `str`')
+
+
 def c3d_copy_transform_cargs(
     params: C3dCopyTransformParameters,
     execution: Execution,
@@ -3336,6 +3982,24 @@ def c3d_cos_params(
         "cos": cos,
     }
     return params
+
+
+def c3d_cos_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCosParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cos", None) is None:
+        raise StyxValidationError("`cos` must not be None")
+    if not isinstance(params["cos"], str):
+        raise StyxValidationError(f'`cos` has the wrong type: Received `{type(params.get("cos", None))}` expected `str`')
 
 
 def c3d_cos_cargs(
@@ -3389,6 +4053,24 @@ def c3d_create_params(
     return params
 
 
+def c3d_create_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dCreateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("create", None) is None:
+        raise StyxValidationError("`create` must not be None")
+    if not isinstance(params["create"], str):
+        raise StyxValidationError(f'`create` has the wrong type: Received `{type(params.get("create", None))}` expected `str`')
+
+
 def c3d_create_cargs(
     params: C3dCreateParameters,
     execution: Execution,
@@ -3432,6 +4114,24 @@ def c3d_dicom_series_list_params(
         "dicom_series_list": dicom_series_list,
     }
     return params
+
+
+def c3d_dicom_series_list_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dDicomSeriesListParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dicom_series_list", None) is None:
+        raise StyxValidationError("`dicom_series_list` must not be None")
+    if not isinstance(params["dicom_series_list"], str):
+        raise StyxValidationError(f'`dicom_series_list` has the wrong type: Received `{type(params.get("dicom_series_list", None))}` expected `str`')
 
 
 def c3d_dicom_series_list_cargs(
@@ -3481,6 +4181,24 @@ def c3d_dicom_series_read_params(
     return params
 
 
+def c3d_dicom_series_read_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dDicomSeriesReadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dicom_series_read", None) is None:
+        raise StyxValidationError("`dicom_series_read` must not be None")
+    if not isinstance(params["dicom_series_read"], str):
+        raise StyxValidationError(f'`dicom_series_read` has the wrong type: Received `{type(params.get("dicom_series_read", None))}` expected `str`')
+
+
 def c3d_dicom_series_read_cargs(
     params: C3dDicomSeriesReadParameters,
     execution: Execution,
@@ -3527,6 +4245,24 @@ def c3d_dilate_params(
         "dilate": dilate,
     }
     return params
+
+
+def c3d_dilate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dDilateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dilate", None) is None:
+        raise StyxValidationError("`dilate` must not be None")
+    if not isinstance(params["dilate"], str):
+        raise StyxValidationError(f'`dilate` has the wrong type: Received `{type(params.get("dilate", None))}` expected `str`')
 
 
 def c3d_dilate_cargs(
@@ -3581,6 +4317,24 @@ def c3d_divide_params(
     return params
 
 
+def c3d_divide_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dDivideParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("divide", None) is None:
+        raise StyxValidationError("`divide` must not be None")
+    if not isinstance(params["divide"], str):
+        raise StyxValidationError(f'`divide` has the wrong type: Received `{type(params.get("divide", None))}` expected `str`')
+
+
 def c3d_divide_cargs(
     params: C3dDivideParameters,
     execution: Execution,
@@ -3629,6 +4383,24 @@ def c3d_duplicate_params(
         "duplicate": duplicate,
     }
     return params
+
+
+def c3d_duplicate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dDuplicateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("duplicate", None) is None:
+        raise StyxValidationError("`duplicate` must not be None")
+    if not isinstance(params["duplicate"], str):
+        raise StyxValidationError(f'`duplicate` has the wrong type: Received `{type(params.get("duplicate", None))}` expected `str`')
 
 
 def c3d_duplicate_cargs(
@@ -3681,6 +4453,24 @@ def c3d_endaccum_params(
     return params
 
 
+def c3d_endaccum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dEndaccumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("endaccum", None) is None:
+        raise StyxValidationError("`endaccum` must not be None")
+    if not isinstance(params["endaccum"], str):
+        raise StyxValidationError(f'`endaccum` has the wrong type: Received `{type(params.get("endaccum", None))}` expected `str`')
+
+
 def c3d_endaccum_cargs(
     params: C3dEndaccumParameters,
     execution: Execution,
@@ -3727,6 +4517,24 @@ def c3d_endfor_params(
         "endfor": endfor,
     }
     return params
+
+
+def c3d_endfor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dEndforParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("endfor", None) is None:
+        raise StyxValidationError("`endfor` must not be None")
+    if not isinstance(params["endfor"], str):
+        raise StyxValidationError(f'`endfor` has the wrong type: Received `{type(params.get("endfor", None))}` expected `str`')
 
 
 def c3d_endfor_cargs(
@@ -3777,6 +4585,24 @@ def c3d_erode_params(
     return params
 
 
+def c3d_erode_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dErodeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("erode", None) is None:
+        raise StyxValidationError("`erode` must not be None")
+    if not isinstance(params["erode"], str):
+        raise StyxValidationError(f'`erode` has the wrong type: Received `{type(params.get("erode", None))}` expected `str`')
+
+
 def c3d_erode_cargs(
     params: C3dErodeParameters,
     execution: Execution,
@@ -3823,6 +4649,24 @@ def c3d_erf_params(
     return params
 
 
+def c3d_erf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dErfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("erf", None) is None:
+        raise StyxValidationError("`erf` must not be None")
+    if not isinstance(params["erf"], str):
+        raise StyxValidationError(f'`erf` has the wrong type: Received `{type(params.get("erf", None))}` expected `str`')
+
+
 def c3d_erf_cargs(
     params: C3dErfParameters,
     execution: Execution,
@@ -3866,6 +4710,24 @@ def c3d_exp_params(
         "exp": exp,
     }
     return params
+
+
+def c3d_exp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dExpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("exp", None) is None:
+        raise StyxValidationError("`exp` must not be None")
+    if not isinstance(params["exp"], str):
+        raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", None))}` expected `str`')
 
 
 def c3d_exp_cargs(
@@ -3954,6 +4816,24 @@ def c3d_export_patches_params(
     return params
 
 
+def c3d_export_patches_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dExportPatchesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("export_patches", None) is None:
+        raise StyxValidationError("`export_patches` must not be None")
+    if not isinstance(params["export_patches"], str):
+        raise StyxValidationError(f'`export_patches` has the wrong type: Received `{type(params.get("export_patches", None))}` expected `str`')
+
+
 def c3d_export_patches_cargs(
     params: C3dExportPatchesParameters,
     execution: Execution,
@@ -4007,6 +4887,24 @@ def c3d_export_patches_aug_params(
     return params
 
 
+def c3d_export_patches_aug_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dExportPatchesAugParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("export_patches_aug", None) is None:
+        raise StyxValidationError("`export_patches_aug` must not be None")
+    if not isinstance(params["export_patches_aug"], str):
+        raise StyxValidationError(f'`export_patches_aug` has the wrong type: Received `{type(params.get("export_patches_aug", None))}` expected `str`')
+
+
 def c3d_export_patches_aug_cargs(
     params: C3dExportPatchesAugParameters,
     execution: Execution,
@@ -4046,6 +4944,24 @@ def c3d_extrude_seg_params(
     return params
 
 
+def c3d_extrude_seg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dExtrudeSegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("extrude_seg", None) is None:
+        raise StyxValidationError("`extrude_seg` must not be None")
+    if not isinstance(params["extrude_seg"], str):
+        raise StyxValidationError(f'`extrude_seg` has the wrong type: Received `{type(params.get("extrude_seg", None))}` expected `str`')
+
+
 def c3d_extrude_seg_cargs(
     params: C3dExtrudeSegParameters,
     execution: Execution,
@@ -4083,6 +4999,24 @@ def c3d_fill_background_with_noise_params(
         "fill_background_with_noise": fill_background_with_noise,
     }
     return params
+
+
+def c3d_fill_background_with_noise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dFillBackgroundWithNoiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fill_background_with_noise", None) is None:
+        raise StyxValidationError("`fill_background_with_noise` must not be None")
+    if not isinstance(params["fill_background_with_noise"], str):
+        raise StyxValidationError(f'`fill_background_with_noise` has the wrong type: Received `{type(params.get("fill_background_with_noise", None))}` expected `str`')
 
 
 def c3d_fill_background_with_noise_cargs(
@@ -4133,6 +5067,24 @@ def c3d_fft_params(
     return params
 
 
+def c3d_fft_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dFftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fft", None) is None:
+        raise StyxValidationError("`fft` must not be None")
+    if not isinstance(params["fft"], str):
+        raise StyxValidationError(f'`fft` has the wrong type: Received `{type(params.get("fft", None))}` expected `str`')
+
+
 def c3d_fft_cargs(
     params: C3dFftParameters,
     execution: Execution,
@@ -4178,6 +5130,24 @@ def c3d_flip_params(
         "flip": flip,
     }
     return params
+
+
+def c3d_flip_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dFlipParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("flip", None) is None:
+        raise StyxValidationError("`flip` must not be None")
+    if not isinstance(params["flip"], str):
+        raise StyxValidationError(f'`flip` has the wrong type: Received `{type(params.get("flip", None))}` expected `str`')
 
 
 def c3d_flip_cargs(
@@ -4230,6 +5200,24 @@ def c3d_floor_params(
     return params
 
 
+def c3d_floor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dFloorParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("floor", None) is None:
+        raise StyxValidationError("`floor` must not be None")
+    if not isinstance(params["floor"], str):
+        raise StyxValidationError(f'`floor` has the wrong type: Received `{type(params.get("floor", None))}` expected `str`')
+
+
 def c3d_floor_cargs(
     params: C3dFloorParameters,
     execution: Execution,
@@ -4276,6 +5264,24 @@ def c3d_foreach_params(
         "foreach": foreach,
     }
     return params
+
+
+def c3d_foreach_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dForeachParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("foreach", None) is None:
+        raise StyxValidationError("`foreach` must not be None")
+    if not isinstance(params["foreach"], str):
+        raise StyxValidationError(f'`foreach` has the wrong type: Received `{type(params.get("foreach", None))}` expected `str`')
 
 
 def c3d_foreach_cargs(
@@ -4331,6 +5337,24 @@ def c3d_foreach_comp_params(
         "foreach_comp": foreach_comp,
     }
     return params
+
+
+def c3d_foreach_comp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dForeachCompParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("foreach_comp", None) is None:
+        raise StyxValidationError("`foreach_comp` must not be None")
+    if not isinstance(params["foreach_comp"], str):
+        raise StyxValidationError(f'`foreach_comp` has the wrong type: Received `{type(params.get("foreach_comp", None))}` expected `str`')
 
 
 def c3d_foreach_comp_cargs(
@@ -4398,6 +5422,24 @@ def c3d_glm_params(
     return params
 
 
+def c3d_glm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dGlmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("glm", None) is None:
+        raise StyxValidationError("`glm` must not be None")
+    if not isinstance(params["glm"], str):
+        raise StyxValidationError(f'`glm` has the wrong type: Received `{type(params.get("glm", None))}` expected `str`')
+
+
 def c3d_glm_cargs(
     params: C3dGlmParameters,
     execution: Execution,
@@ -4449,6 +5491,24 @@ def c3d_gradient_params(
     return params
 
 
+def c3d_gradient_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dGradientParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient", None) is None:
+        raise StyxValidationError("`gradient` must not be None")
+    if not isinstance(params["gradient"], str):
+        raise StyxValidationError(f'`gradient` has the wrong type: Received `{type(params.get("gradient", None))}` expected `str`')
+
+
 def c3d_gradient_cargs(
     params: C3dGradientParameters,
     execution: Execution,
@@ -4498,6 +5558,24 @@ def c3d__help_params(
         "_help": v__help,
     }
     return params
+
+
+def c3d__help_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dHelpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("_help", None) is None:
+        raise StyxValidationError("`_help` must not be None")
+    if not isinstance(params["_help"], str):
+        raise StyxValidationError(f'`_help` has the wrong type: Received `{type(params.get("_help", None))}` expected `str`')
 
 
 def c3d__help_cargs(
@@ -4555,6 +5633,24 @@ def c3d_holefill_params(
     return params
 
 
+def c3d_holefill_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dHolefillParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("holefill", None) is None:
+        raise StyxValidationError("`holefill` must not be None")
+    if not isinstance(params["holefill"], str):
+        raise StyxValidationError(f'`holefill` has the wrong type: Received `{type(params.get("holefill", None))}` expected `str`')
+
+
 def c3d_holefill_cargs(
     params: C3dHolefillParameters,
     execution: Execution,
@@ -4604,6 +5700,24 @@ def c3d_hessian_eigenvalues_params(
         "hessian_eigenvalues": hessian_eigenvalues,
     }
     return params
+
+
+def c3d_hessian_eigenvalues_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dHessianEigenvaluesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hessian_eigenvalues", None) is None:
+        raise StyxValidationError("`hessian_eigenvalues` must not be None")
+    if not isinstance(params["hessian_eigenvalues"], str):
+        raise StyxValidationError(f'`hessian_eigenvalues` has the wrong type: Received `{type(params.get("hessian_eigenvalues", None))}` expected `str`')
 
 
 def c3d_hessian_eigenvalues_cargs(
@@ -4665,6 +5779,24 @@ def c3d_hessian_objectness_params(
     return params
 
 
+def c3d_hessian_objectness_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dHessianObjectnessParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hessian_objectness", None) is None:
+        raise StyxValidationError("`hessian_objectness` must not be None")
+    if not isinstance(params["hessian_objectness"], str):
+        raise StyxValidationError(f'`hessian_objectness` has the wrong type: Received `{type(params.get("hessian_objectness", None))}` expected `str`')
+
+
 def c3d_hessian_objectness_cargs(
     params: C3dHessianObjectnessParameters,
     execution: Execution,
@@ -4702,6 +5834,24 @@ def c3d_histogram_match_params(
         "histogram_match": histogram_match,
     }
     return params
+
+
+def c3d_histogram_match_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dHistogramMatchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("histogram_match", None) is None:
+        raise StyxValidationError("`histogram_match` must not be None")
+    if not isinstance(params["histogram_match"], str):
+        raise StyxValidationError(f'`histogram_match` has the wrong type: Received `{type(params.get("histogram_match", None))}` expected `str`')
 
 
 def c3d_histogram_match_cargs(
@@ -4755,6 +5905,24 @@ def c3d_info_params(
     return params
 
 
+def c3d_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("info", None) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], str):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", None))}` expected `str`')
+
+
 def c3d_info_cargs(
     params: C3dInfoParameters,
     execution: Execution,
@@ -4799,6 +5967,24 @@ def c3d_info_full_params(
         "info_full": info_full,
     }
     return params
+
+
+def c3d_info_full_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dInfoFullParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("info_full", None) is None:
+        raise StyxValidationError("`info_full` must not be None")
+    if not isinstance(params["info_full"], str):
+        raise StyxValidationError(f'`info_full` has the wrong type: Received `{type(params.get("info_full", None))}` expected `str`')
 
 
 def c3d_info_full_cargs(
@@ -4846,6 +6032,24 @@ def c3d_insert_params(
         "insert": insert,
     }
     return params
+
+
+def c3d_insert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dInsertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("insert", None) is None:
+        raise StyxValidationError("`insert` must not be None")
+    if not isinstance(params["insert"], str):
+        raise StyxValidationError(f'`insert` has the wrong type: Received `{type(params.get("insert", None))}` expected `str`')
 
 
 def c3d_insert_cargs(
@@ -4904,6 +6108,24 @@ def c3d_interpolation_params(
     return params
 
 
+def c3d_interpolation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dInterpolationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("interpolation", None) is None:
+        raise StyxValidationError("`interpolation` must not be None")
+    if not isinstance(params["interpolation"], str):
+        raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `str`')
+
+
 def c3d_interpolation_cargs(
     params: C3dInterpolationParameters,
     execution: Execution,
@@ -4943,6 +6165,24 @@ def c3d_iterations_params(
     return params
 
 
+def c3d_iterations_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dIterationsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("iterations", None) is None:
+        raise StyxValidationError("`iterations` must not be None")
+    if not isinstance(params["iterations"], str):
+        raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `str`')
+
+
 def c3d_iterations_cargs(
     params: C3dIterationsParameters,
     execution: Execution,
@@ -4980,6 +6220,24 @@ def c3d_label_overlap_params(
         "label_overlap": label_overlap,
     }
     return params
+
+
+def c3d_label_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLabelOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label_overlap", None) is None:
+        raise StyxValidationError("`label_overlap` must not be None")
+    if not isinstance(params["label_overlap"], str):
+        raise StyxValidationError(f'`label_overlap` has the wrong type: Received `{type(params.get("label_overlap", None))}` expected `str`')
 
 
 def c3d_label_overlap_cargs(
@@ -5040,6 +6298,24 @@ def c3d_label_statistics_params(
     return params
 
 
+def c3d_label_statistics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLabelStatisticsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label_statistics", None) is None:
+        raise StyxValidationError("`label_statistics` must not be None")
+    if not isinstance(params["label_statistics"], str):
+        raise StyxValidationError(f'`label_statistics` has the wrong type: Received `{type(params.get("label_statistics", None))}` expected `str`')
+
+
 def c3d_label_statistics_cargs(
     params: C3dLabelStatisticsParameters,
     execution: Execution,
@@ -5077,6 +6353,24 @@ def c3d_landmarks_to_spheres_params(
         "landmarks_to_spheres": landmarks_to_spheres,
     }
     return params
+
+
+def c3d_landmarks_to_spheres_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLandmarksToSpheresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("landmarks_to_spheres", None) is None:
+        raise StyxValidationError("`landmarks_to_spheres` must not be None")
+    if not isinstance(params["landmarks_to_spheres"], str):
+        raise StyxValidationError(f'`landmarks_to_spheres` has the wrong type: Received `{type(params.get("landmarks_to_spheres", None))}` expected `str`')
 
 
 def c3d_landmarks_to_spheres_cargs(
@@ -5125,6 +6419,24 @@ def c3d_laplacian_params(
         "laplacian": laplacian,
     }
     return params
+
+
+def c3d_laplacian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLaplacianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("laplacian", None) is None:
+        raise StyxValidationError("`laplacian` must not be None")
+    if not isinstance(params["laplacian"], str):
+        raise StyxValidationError(f'`laplacian` has the wrong type: Received `{type(params.get("laplacian", None))}` expected `str`')
 
 
 def c3d_laplacian_cargs(
@@ -5205,6 +6517,24 @@ def c3d_levelset_params(
     return params
 
 
+def c3d_levelset_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLevelsetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("levelset", None) is None:
+        raise StyxValidationError("`levelset` must not be None")
+    if not isinstance(params["levelset"], str):
+        raise StyxValidationError(f'`levelset` has the wrong type: Received `{type(params.get("levelset", None))}` expected `str`')
+
+
 def c3d_levelset_cargs(
     params: C3dLevelsetParameters,
     execution: Execution,
@@ -5244,6 +6574,24 @@ def c3d_levelset_curvature_params(
     return params
 
 
+def c3d_levelset_curvature_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLevelsetCurvatureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("levelset_curvature", None) is None:
+        raise StyxValidationError("`levelset_curvature` must not be None")
+    if not isinstance(params["levelset_curvature"], str):
+        raise StyxValidationError(f'`levelset_curvature` has the wrong type: Received `{type(params.get("levelset_curvature", None))}` expected `str`')
+
+
 def c3d_levelset_curvature_cargs(
     params: C3dLevelsetCurvatureParameters,
     execution: Execution,
@@ -5281,6 +6629,24 @@ def c3d_levelset_advection_params(
         "levelset_advection": levelset_advection,
     }
     return params
+
+
+def c3d_levelset_advection_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLevelsetAdvectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("levelset_advection", None) is None:
+        raise StyxValidationError("`levelset_advection` must not be None")
+    if not isinstance(params["levelset_advection"], str):
+        raise StyxValidationError(f'`levelset_advection` has the wrong type: Received `{type(params.get("levelset_advection", None))}` expected `str`')
 
 
 def c3d_levelset_advection_cargs(
@@ -5327,6 +6693,24 @@ def c3d_log_params(
     return params
 
 
+def c3d_log_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLogParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("log", None) is None:
+        raise StyxValidationError("`log` must not be None")
+    if not isinstance(params["log"], str):
+        raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `str`')
+
+
 def c3d_log_cargs(
     params: C3dLogParameters,
     execution: Execution,
@@ -5371,6 +6755,24 @@ def c3d_log10_params(
     return params
 
 
+def c3d_log10_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dLog10Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("log10", None) is None:
+        raise StyxValidationError("`log10` must not be None")
+    if not isinstance(params["log10"], str):
+        raise StyxValidationError(f'`log10` has the wrong type: Received `{type(params.get("log10", None))}` expected `str`')
+
+
 def c3d_log10_cargs(
     params: C3dLog10Parameters,
     execution: Execution,
@@ -5408,6 +6810,24 @@ def c3d_manual_params(
         "manual": manual,
     }
     return params
+
+
+def c3d_manual_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dManualParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("manual", None) is None:
+        raise StyxValidationError("`manual` must not be None")
+    if not isinstance(params["manual"], str):
+        raise StyxValidationError(f'`manual` has the wrong type: Received `{type(params.get("manual", None))}` expected `str`')
 
 
 def c3d_manual_cargs(
@@ -5460,6 +6880,24 @@ def c3d_match_bounding_box_params(
     return params
 
 
+def c3d_match_bounding_box_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMatchBoundingBoxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("match_bounding_box", None) is None:
+        raise StyxValidationError("`match_bounding_box` must not be None")
+    if not isinstance(params["match_bounding_box"], str):
+        raise StyxValidationError(f'`match_bounding_box` has the wrong type: Received `{type(params.get("match_bounding_box", None))}` expected `str`')
+
+
 def c3d_match_bounding_box_cargs(
     params: C3dMatchBoundingBoxParameters,
     execution: Execution,
@@ -5506,6 +6944,24 @@ def c3d_maximum_params(
         "maximum": maximum,
     }
     return params
+
+
+def c3d_maximum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMaximumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("maximum", None) is None:
+        raise StyxValidationError("`maximum` must not be None")
+    if not isinstance(params["maximum"], str):
+        raise StyxValidationError(f'`maximum` has the wrong type: Received `{type(params.get("maximum", None))}` expected `str`')
 
 
 def c3d_maximum_cargs(
@@ -5564,6 +7020,24 @@ def c3d_multicomponent_split_params(
     return params
 
 
+def c3d_multicomponent_split_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMulticomponentSplitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("multicomponent_split", None) is None:
+        raise StyxValidationError("`multicomponent_split` must not be None")
+    if not isinstance(params["multicomponent_split"], str):
+        raise StyxValidationError(f'`multicomponent_split` has the wrong type: Received `{type(params.get("multicomponent_split", None))}` expected `str`')
+
+
 def c3d_multicomponent_split_cargs(
     params: C3dMulticomponentSplitParameters,
     execution: Execution,
@@ -5608,6 +7082,24 @@ def c3d_mean_params(
         "mean": mean,
     }
     return params
+
+
+def c3d_mean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMeanParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mean", None) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], str):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", None))}` expected `str`')
 
 
 def c3d_mean_cargs(
@@ -5658,6 +7150,24 @@ def c3d_median_filter_params(
     return params
 
 
+def c3d_median_filter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMedianFilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("median_filter", None) is None:
+        raise StyxValidationError("`median_filter` must not be None")
+    if not isinstance(params["median_filter"], str):
+        raise StyxValidationError(f'`median_filter` has the wrong type: Received `{type(params.get("median_filter", None))}` expected `str`')
+
+
 def c3d_median_filter_cargs(
     params: C3dMedianFilterParameters,
     execution: Execution,
@@ -5701,6 +7211,24 @@ def c3d_merge_params(
         "merge": merge,
     }
     return params
+
+
+def c3d_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("merge", None) is None:
+        raise StyxValidationError("`merge` must not be None")
+    if not isinstance(params["merge"], str):
+        raise StyxValidationError(f'`merge` has the wrong type: Received `{type(params.get("merge", None))}` expected `str`')
 
 
 def c3d_merge_cargs(
@@ -5751,6 +7279,24 @@ def c3d_mean_filter_params(
     return params
 
 
+def c3d_mean_filter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMeanFilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mean_filter", None) is None:
+        raise StyxValidationError("`mean_filter` must not be None")
+    if not isinstance(params["mean_filter"], str):
+        raise StyxValidationError(f'`mean_filter` has the wrong type: Received `{type(params.get("mean_filter", None))}` expected `str`')
+
+
 def c3d_mean_filter_cargs(
     params: C3dMeanFilterParameters,
     execution: Execution,
@@ -5797,6 +7343,24 @@ def c3d_mutual_info_params(
         "mutual_info": mutual_info,
     }
     return params
+
+
+def c3d_mutual_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMutualInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mutual_info", None) is None:
+        raise StyxValidationError("`mutual_info` must not be None")
+    if not isinstance(params["mutual_info"], str):
+        raise StyxValidationError(f'`mutual_info` has the wrong type: Received `{type(params.get("mutual_info", None))}` expected `str`')
 
 
 def c3d_mutual_info_cargs(
@@ -5847,6 +7411,24 @@ def c3d_minimum_params(
     return params
 
 
+def c3d_minimum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMinimumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("minimum", None) is None:
+        raise StyxValidationError("`minimum` must not be None")
+    if not isinstance(params["minimum"], str):
+        raise StyxValidationError(f'`minimum` has the wrong type: Received `{type(params.get("minimum", None))}` expected `str`')
+
+
 def c3d_minimum_cargs(
     params: C3dMinimumParameters,
     execution: Execution,
@@ -5884,6 +7466,24 @@ def c3d_mixture_model_params(
         "mixture_model": mixture_model,
     }
     return params
+
+
+def c3d_mixture_model_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMixtureModelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mixture_model", None) is None:
+        raise StyxValidationError("`mixture_model` must not be None")
+    if not isinstance(params["mixture_model"], str):
+        raise StyxValidationError(f'`mixture_model` has the wrong type: Received `{type(params.get("mixture_model", None))}` expected `str`')
 
 
 def c3d_mixture_model_cargs(
@@ -5925,6 +7525,24 @@ def c3d_moments_params(
     return params
 
 
+def c3d_moments_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMomentsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("moments", None) is None:
+        raise StyxValidationError("`moments` must not be None")
+    if not isinstance(params["moments"], str):
+        raise StyxValidationError(f'`moments` has the wrong type: Received `{type(params.get("moments", None))}` expected `str`')
+
+
 def c3d_moments_cargs(
     params: C3dMomentsParameters,
     execution: Execution,
@@ -5962,6 +7580,24 @@ def c3d_mattes_mutual_info_params(
         "mattes_mutual_info": mattes_mutual_info,
     }
     return params
+
+
+def c3d_mattes_mutual_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMattesMutualInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mattes_mutual_info", None) is None:
+        raise StyxValidationError("`mattes_mutual_info` must not be None")
+    if not isinstance(params["mattes_mutual_info"], str):
+        raise StyxValidationError(f'`mattes_mutual_info` has the wrong type: Received `{type(params.get("mattes_mutual_info", None))}` expected `str`')
 
 
 def c3d_mattes_mutual_info_cargs(
@@ -6030,6 +7666,24 @@ def c3d_mean_square_params(
     return params
 
 
+def c3d_mean_square_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMeanSquareParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mean_square", None) is None:
+        raise StyxValidationError("`mean_square` must not be None")
+    if not isinstance(params["mean_square"], str):
+        raise StyxValidationError(f'`mean_square` has the wrong type: Received `{type(params.get("mean_square", None))}` expected `str`')
+
+
 def c3d_mean_square_cargs(
     params: C3dMeanSquareParameters,
     execution: Execution,
@@ -6086,6 +7740,24 @@ def c3d_multiply_params(
     return params
 
 
+def c3d_multiply_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dMultiplyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("multiply", None) is None:
+        raise StyxValidationError("`multiply` must not be None")
+    if not isinstance(params["multiply"], str):
+        raise StyxValidationError(f'`multiply` has the wrong type: Received `{type(params.get("multiply", None))}` expected `str`')
+
+
 def c3d_multiply_cargs(
     params: C3dMultiplyParameters,
     execution: Execution,
@@ -6134,6 +7806,24 @@ def c3d_normalized_cross_correlation_params(
     return params
 
 
+def c3d_normalized_cross_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNormalizedCrossCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("normalized_cross_correlation", None) is None:
+        raise StyxValidationError("`normalized_cross_correlation` must not be None")
+    if not isinstance(params["normalized_cross_correlation"], str):
+        raise StyxValidationError(f'`normalized_cross_correlation` has the wrong type: Received `{type(params.get("normalized_cross_correlation", None))}` expected `str`')
+
+
 def c3d_normalized_cross_correlation_cargs(
     params: C3dNormalizedCrossCorrelationParameters,
     execution: Execution,
@@ -6179,6 +7869,24 @@ def c3d_normalized_correlation_params(
     return params
 
 
+def c3d_normalized_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNormalizedCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("normalized_correlation", None) is None:
+        raise StyxValidationError("`normalized_correlation` must not be None")
+    if not isinstance(params["normalized_correlation"], str):
+        raise StyxValidationError(f'`normalized_correlation` has the wrong type: Received `{type(params.get("normalized_correlation", None))}` expected `str`')
+
+
 def c3d_normalized_correlation_cargs(
     params: C3dNormalizedCorrelationParameters,
     execution: Execution,
@@ -6222,6 +7930,24 @@ def c3d_normalized_mutual_info_params(
         "normalized_mutual_info": normalized_mutual_info,
     }
     return params
+
+
+def c3d_normalized_mutual_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNormalizedMutualInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("normalized_mutual_info", None) is None:
+        raise StyxValidationError("`normalized_mutual_info` must not be None")
+    if not isinstance(params["normalized_mutual_info"], str):
+        raise StyxValidationError(f'`normalized_mutual_info` has the wrong type: Received `{type(params.get("normalized_mutual_info", None))}` expected `str`')
 
 
 def c3d_normalized_mutual_info_cargs(
@@ -6271,6 +7997,24 @@ def c3d_noise_gaussian_params(
     return params
 
 
+def c3d_noise_gaussian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoiseGaussianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("noise_gaussian", None) is None:
+        raise StyxValidationError("`noise_gaussian` must not be None")
+    if not isinstance(params["noise_gaussian"], str):
+        raise StyxValidationError(f'`noise_gaussian` has the wrong type: Received `{type(params.get("noise_gaussian", None))}` expected `str`')
+
+
 def c3d_noise_gaussian_cargs(
     params: C3dNoiseGaussianParameters,
     execution: Execution,
@@ -6314,6 +8058,24 @@ def c3d_noise_poisson_params(
         "noise_poisson": noise_poisson,
     }
     return params
+
+
+def c3d_noise_poisson_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoisePoissonParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("noise_poisson", None) is None:
+        raise StyxValidationError("`noise_poisson` must not be None")
+    if not isinstance(params["noise_poisson"], str):
+        raise StyxValidationError(f'`noise_poisson` has the wrong type: Received `{type(params.get("noise_poisson", None))}` expected `str`')
 
 
 def c3d_noise_poisson_cargs(
@@ -6362,6 +8124,24 @@ def c3d_noise_speckle_params(
     return params
 
 
+def c3d_noise_speckle_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoiseSpeckleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("noise_speckle", None) is None:
+        raise StyxValidationError("`noise_speckle` must not be None")
+    if not isinstance(params["noise_speckle"], str):
+        raise StyxValidationError(f'`noise_speckle` has the wrong type: Received `{type(params.get("noise_speckle", None))}` expected `str`')
+
+
 def c3d_noise_speckle_cargs(
     params: C3dNoiseSpeckleParameters,
     execution: Execution,
@@ -6408,6 +8188,24 @@ def c3d_noise_salt_pepper_params(
     return params
 
 
+def c3d_noise_salt_pepper_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoiseSaltPepperParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("noise_salt_pepper", None) is None:
+        raise StyxValidationError("`noise_salt_pepper` must not be None")
+    if not isinstance(params["noise_salt_pepper"], str):
+        raise StyxValidationError(f'`noise_salt_pepper` has the wrong type: Received `{type(params.get("noise_salt_pepper", None))}` expected `str`')
+
+
 def c3d_noise_salt_pepper_cargs(
     params: C3dNoiseSaltPepperParameters,
     execution: Execution,
@@ -6450,6 +8248,24 @@ def c3d_no_multicomponent_split_params(
         "no_multicomponent_split": no_multicomponent_split,
     }
     return params
+
+
+def c3d_no_multicomponent_split_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoMulticomponentSplitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("no_multicomponent_split", None) is None:
+        raise StyxValidationError("`no_multicomponent_split` must not be None")
+    if not isinstance(params["no_multicomponent_split"], str):
+        raise StyxValidationError(f'`no_multicomponent_split` has the wrong type: Received `{type(params.get("no_multicomponent_split", None))}` expected `str`')
 
 
 def c3d_no_multicomponent_split_cargs(
@@ -6502,6 +8318,24 @@ def c3d_normalize_local_window_params(
     return params
 
 
+def c3d_normalize_local_window_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNormalizeLocalWindowParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("normalize_local_window", None) is None:
+        raise StyxValidationError("`normalize_local_window` must not be None")
+    if not isinstance(params["normalize_local_window"], str):
+        raise StyxValidationError(f'`normalize_local_window` has the wrong type: Received `{type(params.get("normalize_local_window", None))}` expected `str`')
+
+
 def c3d_normalize_local_window_cargs(
     params: C3dNormalizeLocalWindowParameters,
     execution: Execution,
@@ -6539,6 +8373,24 @@ def c3d_normpdf_params(
         "normpdf": normpdf,
     }
     return params
+
+
+def c3d_normpdf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNormpdfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("normpdf", None) is None:
+        raise StyxValidationError("`normpdf` must not be None")
+    if not isinstance(params["normpdf"], str):
+        raise StyxValidationError(f'`normpdf` has the wrong type: Received `{type(params.get("normpdf", None))}` expected `str`')
 
 
 def c3d_normpdf_cargs(
@@ -6590,6 +8442,24 @@ def c3d_noround_params(
     return params
 
 
+def c3d_noround_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoroundParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("noround", None) is None:
+        raise StyxValidationError("`noround` must not be None")
+    if not isinstance(params["noround"], str):
+        raise StyxValidationError(f'`noround` has the wrong type: Received `{type(params.get("noround", None))}` expected `str`')
+
+
 def c3d_noround_cargs(
     params: C3dNoroundParameters,
     execution: Execution,
@@ -6638,6 +8508,24 @@ def c3d_nospm_params(
         "nospm": nospm,
     }
     return params
+
+
+def c3d_nospm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNospmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nospm", None) is None:
+        raise StyxValidationError("`nospm` must not be None")
+    if not isinstance(params["nospm"], str):
+        raise StyxValidationError(f'`nospm` has the wrong type: Received `{type(params.get("nospm", None))}` expected `str`')
 
 
 def c3d_nospm_cargs(
@@ -6702,6 +8590,24 @@ def c3d_output_params(
         "output": output,
     }
     return params
+
+
+def c3d_output_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOutputParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def c3d_output_cargs(
@@ -6780,6 +8686,24 @@ def c3d_output_multicomponent_params(
     return params
 
 
+def c3d_output_multicomponent_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOutputMulticomponentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_multicomponent", None) is None:
+        raise StyxValidationError("`output_multicomponent` must not be None")
+    if not isinstance(params["output_multicomponent"], str):
+        raise StyxValidationError(f'`output_multicomponent` has the wrong type: Received `{type(params.get("output_multicomponent", None))}` expected `str`')
+
+
 def c3d_output_multicomponent_cargs(
     params: C3dOutputMulticomponentParameters,
     execution: Execution,
@@ -6847,6 +8771,24 @@ def c3d_output_multiple_multicomponent_params(
     return params
 
 
+def c3d_output_multiple_multicomponent_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOutputMultipleMulticomponentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_multiple_multicomponent", None) is None:
+        raise StyxValidationError("`output_multiple_multicomponent` must not be None")
+    if not isinstance(params["output_multiple_multicomponent"], str):
+        raise StyxValidationError(f'`output_multiple_multicomponent` has the wrong type: Received `{type(params.get("output_multiple_multicomponent", None))}` expected `str`')
+
+
 def c3d_output_multiple_multicomponent_cargs(
     params: C3dOutputMultipleMulticomponentParameters,
     execution: Execution,
@@ -6908,6 +8850,24 @@ def c3d_orient_params(
         "orient": orient,
     }
     return params
+
+
+def c3d_orient_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOrientParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("orient", None) is None:
+        raise StyxValidationError("`orient` must not be None")
+    if not isinstance(params["orient"], str):
+        raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str`')
 
 
 def c3d_orient_cargs(
@@ -6973,6 +8933,24 @@ def c3d_output_multiple_params(
     return params
 
 
+def c3d_output_multiple_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOutputMultipleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_multiple", None) is None:
+        raise StyxValidationError("`output_multiple` must not be None")
+    if not isinstance(params["output_multiple"], str):
+        raise StyxValidationError(f'`output_multiple` has the wrong type: Received `{type(params.get("output_multiple", None))}` expected `str`')
+
+
 def c3d_output_multiple_cargs(
     params: C3dOutputMultipleParameters,
     execution: Execution,
@@ -7036,6 +9014,24 @@ def c3d_orient_1_params(
     return params
 
 
+def c3d_orient_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOrient1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("orient", None) is None:
+        raise StyxValidationError("`orient` must not be None")
+    if not isinstance(params["orient"], str):
+        raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str`')
+
+
 def c3d_orient_1_cargs(
     params: C3dOrient1Parameters,
     execution: Execution,
@@ -7081,6 +9077,24 @@ def c3d_origin_params(
         "origin": origin,
     }
     return params
+
+
+def c3d_origin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOriginParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("origin", None) is None:
+        raise StyxValidationError("`origin` must not be None")
+    if not isinstance(params["origin"], str):
+        raise StyxValidationError(f'`origin` has the wrong type: Received `{type(params.get("origin", None))}` expected `str`')
 
 
 def c3d_origin_cargs(
@@ -7132,6 +9146,24 @@ def c3d_origin_voxel_params(
     return params
 
 
+def c3d_origin_voxel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOriginVoxelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("origin_voxel", None) is None:
+        raise StyxValidationError("`origin_voxel` must not be None")
+    if not isinstance(params["origin_voxel"], str):
+        raise StyxValidationError(f'`origin_voxel` has the wrong type: Received `{type(params.get("origin_voxel", None))}` expected `str`')
+
+
 def c3d_origin_voxel_cargs(
     params: C3dOriginVoxelParameters,
     execution: Execution,
@@ -7179,6 +9211,24 @@ def c3d_origin_voxel_coord_params(
         "origin_voxel_coord": origin_voxel_coord,
     }
     return params
+
+
+def c3d_origin_voxel_coord_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOriginVoxelCoordParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("origin_voxel_coord", None) is None:
+        raise StyxValidationError("`origin_voxel_coord` must not be None")
+    if not isinstance(params["origin_voxel_coord"], str):
+        raise StyxValidationError(f'`origin_voxel_coord` has the wrong type: Received `{type(params.get("origin_voxel_coord", None))}` expected `str`')
 
 
 def c3d_origin_voxel_coord_cargs(
@@ -7248,6 +9298,24 @@ def c3d_overlap_params(
         "overlap": overlap,
     }
     return params
+
+
+def c3d_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("overlap", None) is None:
+        raise StyxValidationError("`overlap` must not be None")
+    if not isinstance(params["overlap"], str):
+        raise StyxValidationError(f'`overlap` has the wrong type: Received `{type(params.get("overlap", None))}` expected `str`')
 
 
 def c3d_overlap_cargs(
@@ -7329,6 +9397,24 @@ def c3d_overlay_label_image_params(
     return params
 
 
+def c3d_overlay_label_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dOverlayLabelImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("overlay_label_image", None) is None:
+        raise StyxValidationError("`overlay_label_image` must not be None")
+    if not isinstance(params["overlay_label_image"], str):
+        raise StyxValidationError(f'`overlay_label_image` has the wrong type: Received `{type(params.get("overlay_label_image", None))}` expected `str`')
+
+
 def c3d_overlay_label_image_cargs(
     params: C3dOverlayLabelImageParameters,
     execution: Execution,
@@ -7395,6 +9481,24 @@ def c3d_pad_params(
     return params
 
 
+def c3d_pad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pad", None) is None:
+        raise StyxValidationError("`pad` must not be None")
+    if not isinstance(params["pad"], str):
+        raise StyxValidationError(f'`pad` has the wrong type: Received `{type(params.get("pad", None))}` expected `str`')
+
+
 def c3d_pad_cargs(
     params: C3dPadParameters,
     execution: Execution,
@@ -7432,6 +9536,24 @@ def c3d_pad_to_params(
         "pad_to": pad_to,
     }
     return params
+
+
+def c3d_pad_to_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPadToParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pad_to", None) is None:
+        raise StyxValidationError("`pad_to` must not be None")
+    if not isinstance(params["pad_to"], str):
+        raise StyxValidationError(f'`pad_to` has the wrong type: Received `{type(params.get("pad_to", None))}` expected `str`')
 
 
 def c3d_pad_to_cargs(
@@ -7485,6 +9607,24 @@ def c3d_pca_params(
         "pca": pca,
     }
     return params
+
+
+def c3d_pca_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPcaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pca", None) is None:
+        raise StyxValidationError("`pca` must not be None")
+    if not isinstance(params["pca"], str):
+        raise StyxValidationError(f'`pca` has the wrong type: Received `{type(params.get("pca", None))}` expected `str`')
 
 
 def c3d_pca_cargs(
@@ -7552,6 +9692,24 @@ def c3d_percent_intensity_mode_params(
     return params
 
 
+def c3d_percent_intensity_mode_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPercentIntensityModeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("percent_intensity_mode", None) is None:
+        raise StyxValidationError("`percent_intensity_mode` must not be None")
+    if not isinstance(params["percent_intensity_mode"], str):
+        raise StyxValidationError(f'`percent_intensity_mode` has the wrong type: Received `{type(params.get("percent_intensity_mode", None))}` expected `str`')
+
+
 def c3d_percent_intensity_mode_cargs(
     params: C3dPercentIntensityModeParameters,
     execution: Execution,
@@ -7589,6 +9747,24 @@ def c3d_pixel_params(
         "pixel": pixel,
     }
     return params
+
+
+def c3d_pixel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPixelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pixel", None) is None:
+        raise StyxValidationError("`pixel` must not be None")
+    if not isinstance(params["pixel"], str):
+        raise StyxValidationError(f'`pixel` has the wrong type: Received `{type(params.get("pixel", None))}` expected `str`')
 
 
 def c3d_pixel_cargs(
@@ -7635,6 +9811,24 @@ def c3d_pop_params(
     return params
 
 
+def c3d_pop_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPopParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pop", None) is None:
+        raise StyxValidationError("`pop` must not be None")
+    if not isinstance(params["pop"], str):
+        raise StyxValidationError(f'`pop` has the wrong type: Received `{type(params.get("pop", None))}` expected `str`')
+
+
 def c3d_pop_cargs(
     params: C3dPopParameters,
     execution: Execution,
@@ -7678,6 +9872,24 @@ def c3d_popas_params(
         "popas": popas,
     }
     return params
+
+
+def c3d_popas_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPopasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("popas", None) is None:
+        raise StyxValidationError("`popas` must not be None")
+    if not isinstance(params["popas"], str):
+        raise StyxValidationError(f'`popas` has the wrong type: Received `{type(params.get("popas", None))}` expected `str`')
 
 
 def c3d_popas_cargs(
@@ -7727,6 +9939,24 @@ def c3d_probe_params(
         "probe": probe,
     }
     return params
+
+
+def c3d_probe_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dProbeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("probe", None) is None:
+        raise StyxValidationError("`probe` must not be None")
+    if not isinstance(params["probe"], str):
+        raise StyxValidationError(f'`probe` has the wrong type: Received `{type(params.get("probe", None))}` expected `str`')
 
 
 def c3d_probe_cargs(
@@ -7780,6 +10010,24 @@ def c3d_push_params(
     return params
 
 
+def c3d_push_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dPushParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("push", None) is None:
+        raise StyxValidationError("`push` must not be None")
+    if not isinstance(params["push"], str):
+        raise StyxValidationError(f'`push` has the wrong type: Received `{type(params.get("push", None))}` expected `str`')
+
+
 def c3d_push_cargs(
     params: C3dPushParameters,
     execution: Execution,
@@ -7829,6 +10077,24 @@ def c3d_rank_params(
     return params
 
 
+def c3d_rank_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRankParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rank", None) is None:
+        raise StyxValidationError("`rank` must not be None")
+    if not isinstance(params["rank"], str):
+        raise StyxValidationError(f'`rank` has the wrong type: Received `{type(params.get("rank", None))}` expected `str`')
+
+
 def c3d_rank_cargs(
     params: C3dRankParameters,
     execution: Execution,
@@ -7873,6 +10139,24 @@ def c3d_reciprocal_params(
         "reciprocal": reciprocal,
     }
     return params
+
+
+def c3d_reciprocal_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dReciprocalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reciprocal", None) is None:
+        raise StyxValidationError("`reciprocal` must not be None")
+    if not isinstance(params["reciprocal"], str):
+        raise StyxValidationError(f'`reciprocal` has the wrong type: Received `{type(params.get("reciprocal", None))}` expected `str`')
 
 
 def c3d_reciprocal_cargs(
@@ -7921,6 +10205,24 @@ def c3d_region_params(
         "region": region,
     }
     return params
+
+
+def c3d_region_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRegionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("region", None) is None:
+        raise StyxValidationError("`region` must not be None")
+    if not isinstance(params["region"], str):
+        raise StyxValidationError(f'`region` has the wrong type: Received `{type(params.get("region", None))}` expected `str`')
 
 
 def c3d_region_cargs(
@@ -7994,6 +10296,24 @@ def c3d_reorder_params(
     return params
 
 
+def c3d_reorder_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dReorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reorder", None) is None:
+        raise StyxValidationError("`reorder` must not be None")
+    if not isinstance(params["reorder"], str):
+        raise StyxValidationError(f'`reorder` has the wrong type: Received `{type(params.get("reorder", None))}` expected `str`')
+
+
 def c3d_reorder_cargs(
     params: C3dReorderParameters,
     execution: Execution,
@@ -8039,6 +10359,24 @@ def c3d_retain_labels_params(
         "retain_labels": retain_labels,
     }
     return params
+
+
+def c3d_retain_labels_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRetainLabelsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("retain_labels", None) is None:
+        raise StyxValidationError("`retain_labels` must not be None")
+    if not isinstance(params["retain_labels"], str):
+        raise StyxValidationError(f'`retain_labels` has the wrong type: Received `{type(params.get("retain_labels", None))}` expected `str`')
 
 
 def c3d_retain_labels_cargs(
@@ -8087,6 +10425,24 @@ def c3d_rf_apply_params(
         "rf_apply": rf_apply,
     }
     return params
+
+
+def c3d_rf_apply_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRfApplyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rf_apply", None) is None:
+        raise StyxValidationError("`rf_apply` must not be None")
+    if not isinstance(params["rf_apply"], str):
+        raise StyxValidationError(f'`rf_apply` has the wrong type: Received `{type(params.get("rf_apply", None))}` expected `str`')
 
 
 def c3d_rf_apply_cargs(
@@ -8177,6 +10533,24 @@ def c3d_rf_train_params(
     return params
 
 
+def c3d_rf_train_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRfTrainParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rf_train", None) is None:
+        raise StyxValidationError("`rf_train` must not be None")
+    if not isinstance(params["rf_train"], str):
+        raise StyxValidationError(f'`rf_train` has the wrong type: Received `{type(params.get("rf_train", None))}` expected `str`')
+
+
 def c3d_rf_train_cargs(
     params: C3dRfTrainParameters,
     execution: Execution,
@@ -8229,6 +10603,24 @@ def c3d_rf_param_patch_params(
     return params
 
 
+def c3d_rf_param_patch_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRfParamPatchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rf_param_patch", None) is None:
+        raise StyxValidationError("`rf_param_patch` must not be None")
+    if not isinstance(params["rf_param_patch"], str):
+        raise StyxValidationError(f'`rf_param_patch` has the wrong type: Received `{type(params.get("rf_param_patch", None))}` expected `str`')
+
+
 def c3d_rf_param_patch_cargs(
     params: C3dRfParamPatchParameters,
     execution: Execution,
@@ -8274,6 +10666,24 @@ def c3d_rf_param_usexyz_params(
     return params
 
 
+def c3d_rf_param_usexyz_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRfParamUsexyzParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rf_param_usexyz", None) is None:
+        raise StyxValidationError("`rf_param_usexyz` must not be None")
+    if not isinstance(params["rf_param_usexyz"], str):
+        raise StyxValidationError(f'`rf_param_usexyz` has the wrong type: Received `{type(params.get("rf_param_usexyz", None))}` expected `str`')
+
+
 def c3d_rf_param_usexyz_cargs(
     params: C3dRfParamUsexyzParameters,
     execution: Execution,
@@ -8311,6 +10721,24 @@ def c3d_rf_param_nousexyz_params(
         "rf_param_nousexyz": rf_param_nousexyz,
     }
     return params
+
+
+def c3d_rf_param_nousexyz_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRfParamNousexyzParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rf_param_nousexyz", None) is None:
+        raise StyxValidationError("`rf_param_nousexyz` must not be None")
+    if not isinstance(params["rf_param_nousexyz"], str):
+        raise StyxValidationError(f'`rf_param_nousexyz` has the wrong type: Received `{type(params.get("rf_param_nousexyz", None))}` expected `str`')
 
 
 def c3d_rf_param_nousexyz_cargs(
@@ -8357,6 +10785,24 @@ def c3d_rf_param_ntrees_params(
     return params
 
 
+def c3d_rf_param_ntrees_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRfParamNtreesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rf_param_ntrees", None) is None:
+        raise StyxValidationError("`rf_param_ntrees` must not be None")
+    if not isinstance(params["rf_param_ntrees"], str):
+        raise StyxValidationError(f'`rf_param_ntrees` has the wrong type: Received `{type(params.get("rf_param_ntrees", None))}` expected `str`')
+
+
 def c3d_rf_param_ntrees_cargs(
     params: C3dRfParamNtreesParameters,
     execution: Execution,
@@ -8399,6 +10845,24 @@ def c3d_rf_param_treedepth_params(
         "rf_param_treedepth": rf_param_treedepth,
     }
     return params
+
+
+def c3d_rf_param_treedepth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRfParamTreedepthParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rf_param_treedepth", None) is None:
+        raise StyxValidationError("`rf_param_treedepth` must not be None")
+    if not isinstance(params["rf_param_treedepth"], str):
+        raise StyxValidationError(f'`rf_param_treedepth` has the wrong type: Received `{type(params.get("rf_param_treedepth", None))}` expected `str`')
 
 
 def c3d_rf_param_treedepth_cargs(
@@ -8445,6 +10909,24 @@ def c3d_set_sform_params(
     return params
 
 
+def c3d_set_sform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSetSformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("set_sform", None) is None:
+        raise StyxValidationError("`set_sform` must not be None")
+    if not isinstance(params["set_sform"], str):
+        raise StyxValidationError(f'`set_sform` has the wrong type: Received `{type(params.get("set_sform", None))}` expected `str`')
+
+
 def c3d_set_sform_cargs(
     params: C3dSetSformParameters,
     execution: Execution,
@@ -8489,6 +10971,24 @@ def c3d_replace_params(
         "replace": replace,
     }
     return params
+
+
+def c3d_replace_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dReplaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("replace", None) is None:
+        raise StyxValidationError("`replace` must not be None")
+    if not isinstance(params["replace"], str):
+        raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `str`')
 
 
 def c3d_replace_cargs(
@@ -8544,6 +11044,24 @@ def c3d_resample_params(
     return params
 
 
+def c3d_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("resample", None) is None:
+        raise StyxValidationError("`resample` must not be None")
+    if not isinstance(params["resample"], str):
+        raise StyxValidationError(f'`resample` has the wrong type: Received `{type(params.get("resample", None))}` expected `str`')
+
+
 def c3d_resample_cargs(
     params: C3dResampleParameters,
     execution: Execution,
@@ -8596,6 +11114,24 @@ def c3d_resample_iso_params(
     return params
 
 
+def c3d_resample_iso_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dResampleIsoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("resample_iso", None) is None:
+        raise StyxValidationError("`resample_iso` must not be None")
+    if not isinstance(params["resample_iso"], str):
+        raise StyxValidationError(f'`resample_iso` has the wrong type: Received `{type(params.get("resample_iso", None))}` expected `str`')
+
+
 def c3d_resample_iso_cargs(
     params: C3dResampleIsoParameters,
     execution: Execution,
@@ -8644,6 +11180,24 @@ def c3d_resample_mm_params(
     return params
 
 
+def c3d_resample_mm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dResampleMmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("resample_mm", None) is None:
+        raise StyxValidationError("`resample_mm` must not be None")
+    if not isinstance(params["resample_mm"], str):
+        raise StyxValidationError(f'`resample_mm` has the wrong type: Received `{type(params.get("resample_mm", None))}` expected `str`')
+
+
 def c3d_resample_mm_cargs(
     params: C3dResampleMmParameters,
     execution: Execution,
@@ -8688,6 +11242,24 @@ def c3d_reslice_itk_params(
     return params
 
 
+def c3d_reslice_itk_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dResliceItkParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reslice_itk", None) is None:
+        raise StyxValidationError("`reslice_itk` must not be None")
+    if not isinstance(params["reslice_itk"], str):
+        raise StyxValidationError(f'`reslice_itk` has the wrong type: Received `{type(params.get("reslice_itk", None))}` expected `str`')
+
+
 def c3d_reslice_itk_cargs(
     params: C3dResliceItkParameters,
     execution: Execution,
@@ -8725,6 +11297,24 @@ def c3d_reslice_matrix_params(
         "reslice_matrix": reslice_matrix,
     }
     return params
+
+
+def c3d_reslice_matrix_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dResliceMatrixParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reslice_matrix", None) is None:
+        raise StyxValidationError("`reslice_matrix` must not be None")
+    if not isinstance(params["reslice_matrix"], str):
+        raise StyxValidationError(f'`reslice_matrix` has the wrong type: Received `{type(params.get("reslice_matrix", None))}` expected `str`')
 
 
 def c3d_reslice_matrix_cargs(
@@ -8778,6 +11368,24 @@ def c3d_reslice_identity_params(
     return params
 
 
+def c3d_reslice_identity_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dResliceIdentityParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reslice_identity", None) is None:
+        raise StyxValidationError("`reslice_identity` must not be None")
+    if not isinstance(params["reslice_identity"], str):
+        raise StyxValidationError(f'`reslice_identity` has the wrong type: Received `{type(params.get("reslice_identity", None))}` expected `str`')
+
+
 def c3d_reslice_identity_cargs(
     params: C3dResliceIdentityParameters,
     execution: Execution,
@@ -8824,6 +11432,24 @@ def c3d_rgb2hsv_params(
         "rgb2hsv": rgb2hsv,
     }
     return params
+
+
+def c3d_rgb2hsv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRgb2hsvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rgb2hsv", None) is None:
+        raise StyxValidationError("`rgb2hsv` must not be None")
+    if not isinstance(params["rgb2hsv"], str):
+        raise StyxValidationError(f'`rgb2hsv` has the wrong type: Received `{type(params.get("rgb2hsv", None))}` expected `str`')
 
 
 def c3d_rgb2hsv_cargs(
@@ -8881,6 +11507,24 @@ def c3d_rms_params(
     return params
 
 
+def c3d_rms_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRmsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rms", None) is None:
+        raise StyxValidationError("`rms` must not be None")
+    if not isinstance(params["rms"], str):
+        raise StyxValidationError(f'`rms` has the wrong type: Received `{type(params.get("rms", None))}` expected `str`')
+
+
 def c3d_rms_cargs(
     params: C3dRmsParameters,
     execution: Execution,
@@ -8930,6 +11574,24 @@ def c3d_round_params(
     return params
 
 
+def c3d_round_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dRoundParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("round", None) is None:
+        raise StyxValidationError("`round` must not be None")
+    if not isinstance(params["round"], str):
+        raise StyxValidationError(f'`round` has the wrong type: Received `{type(params.get("round", None))}` expected `str`')
+
+
 def c3d_round_cargs(
     params: C3dRoundParameters,
     execution: Execution,
@@ -8976,6 +11638,24 @@ def c3d_scale_params(
     return params
 
 
+def c3d_scale_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dScaleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scale", None) is None:
+        raise StyxValidationError("`scale` must not be None")
+    if not isinstance(params["scale"], str):
+        raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `str`')
+
+
 def c3d_scale_cargs(
     params: C3dScaleParameters,
     execution: Execution,
@@ -9020,6 +11700,24 @@ def c3d_set_sform_1_params(
     return params
 
 
+def c3d_set_sform_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSetSform1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("set_sform", None) is None:
+        raise StyxValidationError("`set_sform` must not be None")
+    if not isinstance(params["set_sform"], str):
+        raise StyxValidationError(f'`set_sform` has the wrong type: Received `{type(params.get("set_sform", None))}` expected `str`')
+
+
 def c3d_set_sform_1_cargs(
     params: C3dSetSform1Parameters,
     execution: Execution,
@@ -9062,6 +11760,24 @@ def c3d_sin_params(
         "sin": sin,
     }
     return params
+
+
+def c3d_sin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSinParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sin", None) is None:
+        raise StyxValidationError("`sin` must not be None")
+    if not isinstance(params["sin"], str):
+        raise StyxValidationError(f'`sin` has the wrong type: Received `{type(params.get("sin", None))}` expected `str`')
 
 
 def c3d_sin_cargs(
@@ -9128,6 +11844,24 @@ def c3d_slice_params(
     return params
 
 
+def c3d_slice_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSliceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("slice", None) is None:
+        raise StyxValidationError("`slice` must not be None")
+    if not isinstance(params["slice"], str):
+        raise StyxValidationError(f'`slice` has the wrong type: Received `{type(params.get("slice", None))}` expected `str`')
+
+
 def c3d_slice_cargs(
     params: C3dSliceParameters,
     execution: Execution,
@@ -9177,6 +11911,24 @@ def c3d_slice_all_params(
     return params
 
 
+def c3d_slice_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSliceAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("slice_all", None) is None:
+        raise StyxValidationError("`slice_all` must not be None")
+    if not isinstance(params["slice_all"], str):
+        raise StyxValidationError(f'`slice_all` has the wrong type: Received `{type(params.get("slice_all", None))}` expected `str`')
+
+
 def c3d_slice_all_cargs(
     params: C3dSliceAllParameters,
     execution: Execution,
@@ -9223,6 +11975,24 @@ def c3d_sharpen_params(
     return params
 
 
+def c3d_sharpen_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSharpenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sharpen", None) is None:
+        raise StyxValidationError("`sharpen` must not be None")
+    if not isinstance(params["sharpen"], str):
+        raise StyxValidationError(f'`sharpen` has the wrong type: Received `{type(params.get("sharpen", None))}` expected `str`')
+
+
 def c3d_sharpen_cargs(
     params: C3dSharpenParameters,
     execution: Execution,
@@ -9266,6 +12036,24 @@ def c3d_shift_params(
         "shift": shift,
     }
     return params
+
+
+def c3d_shift_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dShiftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("shift", None) is None:
+        raise StyxValidationError("`shift` must not be None")
+    if not isinstance(params["shift"], str):
+        raise StyxValidationError(f'`shift` has the wrong type: Received `{type(params.get("shift", None))}` expected `str`')
 
 
 def c3d_shift_cargs(
@@ -9319,6 +12107,24 @@ def c3d_signed_distance_transform_params(
     return params
 
 
+def c3d_signed_distance_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSignedDistanceTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("signed_distance_transform", None) is None:
+        raise StyxValidationError("`signed_distance_transform` must not be None")
+    if not isinstance(params["signed_distance_transform"], str):
+        raise StyxValidationError(f'`signed_distance_transform` has the wrong type: Received `{type(params.get("signed_distance_transform", None))}` expected `str`')
+
+
 def c3d_signed_distance_transform_cargs(
     params: C3dSignedDistanceTransformParameters,
     execution: Execution,
@@ -9364,6 +12170,24 @@ def c3d_smooth_params(
         "smooth": smooth,
     }
     return params
+
+
+def c3d_smooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("smooth", None) is None:
+        raise StyxValidationError("`smooth` must not be None")
+    if not isinstance(params["smooth"], str):
+        raise StyxValidationError(f'`smooth` has the wrong type: Received `{type(params.get("smooth", None))}` expected `str`')
 
 
 def c3d_smooth_cargs(
@@ -9414,6 +12238,24 @@ def c3d_smooth_fast_params(
     return params
 
 
+def c3d_smooth_fast_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSmoothFastParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("smooth_fast", None) is None:
+        raise StyxValidationError("`smooth_fast` must not be None")
+    if not isinstance(params["smooth_fast"], str):
+        raise StyxValidationError(f'`smooth_fast` has the wrong type: Received `{type(params.get("smooth_fast", None))}` expected `str`')
+
+
 def c3d_smooth_fast_cargs(
     params: C3dSmoothFastParameters,
     execution: Execution,
@@ -9460,6 +12302,24 @@ def c3d_spacing_params(
         "spacing": spacing,
     }
     return params
+
+
+def c3d_spacing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSpacingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spacing", None) is None:
+        raise StyxValidationError("`spacing` must not be None")
+    if not isinstance(params["spacing"], str):
+        raise StyxValidationError(f'`spacing` has the wrong type: Received `{type(params.get("spacing", None))}` expected `str`')
 
 
 def c3d_spacing_cargs(
@@ -9522,6 +12382,24 @@ def c3d_split_params(
     return params
 
 
+def c3d_split_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSplitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("split", None) is None:
+        raise StyxValidationError("`split` must not be None")
+    if not isinstance(params["split"], str):
+        raise StyxValidationError(f'`split` has the wrong type: Received `{type(params.get("split", None))}` expected `str`')
+
+
 def c3d_split_cargs(
     params: C3dSplitParameters,
     execution: Execution,
@@ -9565,6 +12443,24 @@ def c3d_sqrt_params(
         "sqrt": sqrt,
     }
     return params
+
+
+def c3d_sqrt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSqrtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sqrt", None) is None:
+        raise StyxValidationError("`sqrt` must not be None")
+    if not isinstance(params["sqrt"], str):
+        raise StyxValidationError(f'`sqrt` has the wrong type: Received `{type(params.get("sqrt", None))}` expected `str`')
 
 
 def c3d_sqrt_cargs(
@@ -9631,6 +12527,24 @@ def c3d_staple_params(
     return params
 
 
+def c3d_staple_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dStapleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("staple", None) is None:
+        raise StyxValidationError("`staple` must not be None")
+    if not isinstance(params["staple"], str):
+        raise StyxValidationError(f'`staple` has the wrong type: Received `{type(params.get("staple", None))}` expected `str`')
+
+
 def c3d_staple_cargs(
     params: C3dStapleParameters,
     execution: Execution,
@@ -9680,6 +12594,24 @@ def c3d_structure_tensor_eigenvalues_params(
         "structure_tensor_eigenvalues": structure_tensor_eigenvalues,
     }
     return params
+
+
+def c3d_structure_tensor_eigenvalues_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dStructureTensorEigenvaluesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure_tensor_eigenvalues", None) is None:
+        raise StyxValidationError("`structure_tensor_eigenvalues` must not be None")
+    if not isinstance(params["structure_tensor_eigenvalues"], str):
+        raise StyxValidationError(f'`structure_tensor_eigenvalues` has the wrong type: Received `{type(params.get("structure_tensor_eigenvalues", None))}` expected `str`')
 
 
 def c3d_structure_tensor_eigenvalues_cargs(
@@ -9732,6 +12664,24 @@ def c3d_spm_params(
     return params
 
 
+def c3d_spm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSpmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spm", None) is None:
+        raise StyxValidationError("`spm` must not be None")
+    if not isinstance(params["spm"], str):
+        raise StyxValidationError(f'`spm` has the wrong type: Received `{type(params.get("spm", None))}` expected `str`')
+
+
 def c3d_spm_cargs(
     params: C3dSpmParameters,
     execution: Execution,
@@ -9771,6 +12721,24 @@ def c3d_subtract_params(
     return params
 
 
+def c3d_subtract_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSubtractParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subtract", None) is None:
+        raise StyxValidationError("`subtract` must not be None")
+    if not isinstance(params["subtract"], str):
+        raise StyxValidationError(f'`subtract` has the wrong type: Received `{type(params.get("subtract", None))}` expected `str`')
+
+
 def c3d_subtract_cargs(
     params: C3dSubtractParameters,
     execution: Execution,
@@ -9808,6 +12776,24 @@ def c3d_supervoxel_params(
         "supervoxel": supervoxel,
     }
     return params
+
+
+def c3d_supervoxel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSupervoxelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("supervoxel", None) is None:
+        raise StyxValidationError("`supervoxel` must not be None")
+    if not isinstance(params["supervoxel"], str):
+        raise StyxValidationError(f'`supervoxel` has the wrong type: Received `{type(params.get("supervoxel", None))}` expected `str`')
 
 
 def c3d_supervoxel_cargs(
@@ -9857,6 +12843,24 @@ def c3d_stretch_params(
         "stretch": stretch,
     }
     return params
+
+
+def c3d_stretch_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dStretchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stretch", None) is None:
+        raise StyxValidationError("`stretch` must not be None")
+    if not isinstance(params["stretch"], str):
+        raise StyxValidationError(f'`stretch` has the wrong type: Received `{type(params.get("stretch", None))}` expected `str`')
 
 
 def c3d_stretch_cargs(
@@ -9915,6 +12919,24 @@ def c3d_swapdim_params(
         "swapdim": swapdim,
     }
     return params
+
+
+def c3d_swapdim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dSwapdimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("swapdim", None) is None:
+        raise StyxValidationError("`swapdim` must not be None")
+    if not isinstance(params["swapdim"], str):
+        raise StyxValidationError(f'`swapdim` has the wrong type: Received `{type(params.get("swapdim", None))}` expected `str`')
 
 
 def c3d_swapdim_cargs(
@@ -9980,6 +13002,24 @@ def c3d_test_image_params(
     return params
 
 
+def c3d_test_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dTestImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("test_image", None) is None:
+        raise StyxValidationError("`test_image` must not be None")
+    if not isinstance(params["test_image"], str):
+        raise StyxValidationError(f'`test_image` has the wrong type: Received `{type(params.get("test_image", None))}` expected `str`')
+
+
 def c3d_test_image_cargs(
     params: C3dTestImageParameters,
     execution: Execution,
@@ -10043,6 +13083,24 @@ def c3d_test_probe_params(
     return params
 
 
+def c3d_test_probe_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dTestProbeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("test_probe", None) is None:
+        raise StyxValidationError("`test_probe` must not be None")
+    if not isinstance(params["test_probe"], str):
+        raise StyxValidationError(f'`test_probe` has the wrong type: Received `{type(params.get("test_probe", None))}` expected `str`')
+
+
 def c3d_test_probe_cargs(
     params: C3dTestProbeParameters,
     execution: Execution,
@@ -10092,6 +13150,24 @@ def c3d_threshold_params(
         "threshold": threshold,
     }
     return params
+
+
+def c3d_threshold_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dThresholdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], str):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `str`')
 
 
 def c3d_threshold_cargs(
@@ -10152,6 +13228,24 @@ def c3d_tile_params(
     return params
 
 
+def c3d_tile_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dTileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tile", None) is None:
+        raise StyxValidationError("`tile` must not be None")
+    if not isinstance(params["tile"], str):
+        raise StyxValidationError(f'`tile` has the wrong type: Received `{type(params.get("tile", None))}` expected `str`')
+
+
 def c3d_tile_cargs(
     params: C3dTileParameters,
     execution: Execution,
@@ -10203,6 +13297,24 @@ def c3d_trim_params(
     return params
 
 
+def c3d_trim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dTrimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("trim", None) is None:
+        raise StyxValidationError("`trim` must not be None")
+    if not isinstance(params["trim"], str):
+        raise StyxValidationError(f'`trim` has the wrong type: Received `{type(params.get("trim", None))}` expected `str`')
+
+
 def c3d_trim_cargs(
     params: C3dTrimParameters,
     execution: Execution,
@@ -10251,6 +13363,24 @@ def c3d_trim_to_size_params(
         "trim_to_size": trim_to_size,
     }
     return params
+
+
+def c3d_trim_to_size_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dTrimToSizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("trim_to_size", None) is None:
+        raise StyxValidationError("`trim_to_size` must not be None")
+    if not isinstance(params["trim_to_size"], str):
+        raise StyxValidationError(f'`trim_to_size` has the wrong type: Received `{type(params.get("trim_to_size", None))}` expected `str`')
 
 
 def c3d_trim_to_size_cargs(
@@ -10304,6 +13434,24 @@ def c3d_type_params(
     return params
 
 
+def c3d_type_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dTypeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("type", None) is None:
+        raise StyxValidationError("`type` must not be None")
+    if not isinstance(params["type"], str):
+        raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str`')
+
+
 def c3d_type_cargs(
     params: C3dTypeParameters,
     execution: Execution,
@@ -10350,6 +13498,24 @@ def c3d_verbose_params(
     return params
 
 
+def c3d_verbose_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVerboseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verbose", None) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], str):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `str`')
+
+
 def c3d_verbose_cargs(
     params: C3dVerboseParameters,
     execution: Execution,
@@ -10389,6 +13555,24 @@ def c3d_noverbose_params(
     return params
 
 
+def c3d_noverbose_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dNoverboseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("noverbose", None) is None:
+        raise StyxValidationError("`noverbose` must not be None")
+    if not isinstance(params["noverbose"], str):
+        raise StyxValidationError(f'`noverbose` has the wrong type: Received `{type(params.get("noverbose", None))}` expected `str`')
+
+
 def c3d_noverbose_cargs(
     params: C3dNoverboseParameters,
     execution: Execution,
@@ -10426,6 +13610,24 @@ def c3d_version_params(
         "version": version,
     }
     return params
+
+
+def c3d_version_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVersionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("version", None) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], str):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", None))}` expected `str`')
 
 
 def c3d_version_cargs(
@@ -10483,6 +13685,24 @@ def c3d_vote_params(
         "vote": vote,
     }
     return params
+
+
+def c3d_vote_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVoteParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vote", None) is None:
+        raise StyxValidationError("`vote` must not be None")
+    if not isinstance(params["vote"], str):
+        raise StyxValidationError(f'`vote` has the wrong type: Received `{type(params.get("vote", None))}` expected `str`')
 
 
 def c3d_vote_cargs(
@@ -10598,6 +13818,24 @@ def c3d_vote_mrf_params(
     return params
 
 
+def c3d_vote_mrf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVoteMrfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vote_mrf", None) is None:
+        raise StyxValidationError("`vote_mrf` must not be None")
+    if not isinstance(params["vote_mrf"], str):
+        raise StyxValidationError(f'`vote_mrf` has the wrong type: Received `{type(params.get("vote_mrf", None))}` expected `str`')
+
+
 def c3d_vote_mrf_cargs(
     params: C3dVoteMrfParameters,
     execution: Execution,
@@ -10635,6 +13873,24 @@ def c3d_vote_label_params(
         "vote_label": vote_label,
     }
     return params
+
+
+def c3d_vote_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVoteLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vote_label", None) is None:
+        raise StyxValidationError("`vote_label` must not be None")
+    if not isinstance(params["vote_label"], str):
+        raise StyxValidationError(f'`vote_label` has the wrong type: Received `{type(params.get("vote_label", None))}` expected `str`')
 
 
 def c3d_vote_label_cargs(
@@ -10681,6 +13937,24 @@ def c3d_voxel_sum_params(
         "voxel_sum": voxel_sum,
     }
     return params
+
+
+def c3d_voxel_sum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVoxelSumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("voxel_sum", None) is None:
+        raise StyxValidationError("`voxel_sum` must not be None")
+    if not isinstance(params["voxel_sum"], str):
+        raise StyxValidationError(f'`voxel_sum` has the wrong type: Received `{type(params.get("voxel_sum", None))}` expected `str`')
 
 
 def c3d_voxel_sum_cargs(
@@ -10730,6 +14004,24 @@ def c3d_voxel_integral_params(
         "voxel_integral": voxel_integral,
     }
     return params
+
+
+def c3d_voxel_integral_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVoxelIntegralParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("voxel_integral", None) is None:
+        raise StyxValidationError("`voxel_integral` must not be None")
+    if not isinstance(params["voxel_integral"], str):
+        raise StyxValidationError(f'`voxel_integral` has the wrong type: Received `{type(params.get("voxel_integral", None))}` expected `str`')
 
 
 def c3d_voxel_integral_cargs(
@@ -10788,6 +14080,24 @@ def c3d_voxelwise_regression_params(
     return params
 
 
+def c3d_voxelwise_regression_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dVoxelwiseRegressionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("voxelwise_regression", None) is None:
+        raise StyxValidationError("`voxelwise_regression` must not be None")
+    if not isinstance(params["voxelwise_regression"], str):
+        raise StyxValidationError(f'`voxelwise_regression` has the wrong type: Received `{type(params.get("voxelwise_regression", None))}` expected `str`')
+
+
 def c3d_voxelwise_regression_cargs(
     params: C3dVoxelwiseRegressionParameters,
     execution: Execution,
@@ -10827,6 +14137,24 @@ def c3d_warp_params(
     return params
 
 
+def c3d_warp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dWarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warp", None) is None:
+        raise StyxValidationError("`warp` must not be None")
+    if not isinstance(params["warp"], str):
+        raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `str`')
+
+
 def c3d_warp_cargs(
     params: C3dWarpParameters,
     execution: Execution,
@@ -10864,6 +14192,24 @@ def c3d_warp_label_params(
         "warp_label": warp_label,
     }
     return params
+
+
+def c3d_warp_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dWarpLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warp_label", None) is None:
+        raise StyxValidationError("`warp_label` must not be None")
+    if not isinstance(params["warp_label"], str):
+        raise StyxValidationError(f'`warp_label` has the wrong type: Received `{type(params.get("warp_label", None))}` expected `str`')
 
 
 def c3d_warp_label_cargs(
@@ -10923,6 +14269,24 @@ def c3d_wrap_params(
     return params
 
 
+def c3d_wrap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dWrapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("wrap", None) is None:
+        raise StyxValidationError("`wrap` must not be None")
+    if not isinstance(params["wrap"], str):
+        raise StyxValidationError(f'`wrap` has the wrong type: Received `{type(params.get("wrap", None))}` expected `str`')
+
+
 def c3d_wrap_cargs(
     params: C3dWrapParameters,
     execution: Execution,
@@ -10973,6 +14337,24 @@ def c3d_weighted_sum_params(
         "weighted_sum": weighted_sum,
     }
     return params
+
+
+def c3d_weighted_sum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dWeightedSumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("weighted_sum", None) is None:
+        raise StyxValidationError("`weighted_sum` must not be None")
+    if not isinstance(params["weighted_sum"], str):
+        raise StyxValidationError(f'`weighted_sum` has the wrong type: Received `{type(params.get("weighted_sum", None))}` expected `str`')
 
 
 def c3d_weighted_sum_cargs(
@@ -11030,6 +14412,24 @@ def c3d_weighted_sum_voxelwise_params(
     return params
 
 
+def c3d_weighted_sum_voxelwise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dWeightedSumVoxelwiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("weighted_sum_voxelwise", None) is None:
+        raise StyxValidationError("`weighted_sum_voxelwise` must not be None")
+    if not isinstance(params["weighted_sum_voxelwise"], str):
+        raise StyxValidationError(f'`weighted_sum_voxelwise` has the wrong type: Received `{type(params.get("weighted_sum_voxelwise", None))}` expected `str`')
+
+
 def c3d_weighted_sum_voxelwise_cargs(
     params: C3dWeightedSumVoxelwiseParameters,
     execution: Execution,
@@ -11084,6 +14484,41 @@ def c3d_params(
         "output": output,
     }
     return params
+
+
+def c3d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `C3dParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], list):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `list[InputPathType]`')
+    for e in params["input"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `list[InputPathType]`')
+    if params.get("operations", None) is None:
+        raise StyxValidationError("`operations` must not be None")
+    if not isinstance(params["operations"], list):
+        raise StyxValidationError(f'`operations` has the wrong type: Received `{type(params.get("operations", None))}` expected `list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]]`')
+    for e in params["operations"]:
+        if not isinstance(e, dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
+        if "@type" not in e:
+            raise StyxValidationError("Params object is missing `@type`")
+        c3d_operations_validate_dyn_fn(e["@type"])(e)
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def c3d_cargs(
@@ -11149,6 +14584,7 @@ def c3d_execute(
     Returns:
         NamedTuple of outputs (described in `C3dOutputs`).
     """
+    c3d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(C3D_METADATA)
     params = execution.params(params)

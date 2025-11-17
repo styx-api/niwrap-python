@@ -100,6 +100,64 @@ def estimate_fiber_binghams_params(
     return params
 
 
+def estimate_fiber_binghams_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EstimateFiberBinghamsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("merged_f1samples", None) is None:
+        raise StyxValidationError("`merged_f1samples` must not be None")
+    if not isinstance(params["merged_f1samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_f1samples` has the wrong type: Received `{type(params.get("merged_f1samples", None))}` expected `InputPathType`')
+    if params.get("merged_th1samples", None) is None:
+        raise StyxValidationError("`merged_th1samples` must not be None")
+    if not isinstance(params["merged_th1samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_th1samples` has the wrong type: Received `{type(params.get("merged_th1samples", None))}` expected `InputPathType`')
+    if params.get("merged_ph1samples", None) is None:
+        raise StyxValidationError("`merged_ph1samples` must not be None")
+    if not isinstance(params["merged_ph1samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_ph1samples` has the wrong type: Received `{type(params.get("merged_ph1samples", None))}` expected `InputPathType`')
+    if params.get("merged_f2samples", None) is None:
+        raise StyxValidationError("`merged_f2samples` must not be None")
+    if not isinstance(params["merged_f2samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_f2samples` has the wrong type: Received `{type(params.get("merged_f2samples", None))}` expected `InputPathType`')
+    if params.get("merged_th2samples", None) is None:
+        raise StyxValidationError("`merged_th2samples` must not be None")
+    if not isinstance(params["merged_th2samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_th2samples` has the wrong type: Received `{type(params.get("merged_th2samples", None))}` expected `InputPathType`')
+    if params.get("merged_ph2samples", None) is None:
+        raise StyxValidationError("`merged_ph2samples` must not be None")
+    if not isinstance(params["merged_ph2samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_ph2samples` has the wrong type: Received `{type(params.get("merged_ph2samples", None))}` expected `InputPathType`')
+    if params.get("merged_f3samples", None) is None:
+        raise StyxValidationError("`merged_f3samples` must not be None")
+    if not isinstance(params["merged_f3samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_f3samples` has the wrong type: Received `{type(params.get("merged_f3samples", None))}` expected `InputPathType`')
+    if params.get("merged_th3samples", None) is None:
+        raise StyxValidationError("`merged_th3samples` must not be None")
+    if not isinstance(params["merged_th3samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_th3samples` has the wrong type: Received `{type(params.get("merged_th3samples", None))}` expected `InputPathType`')
+    if params.get("merged_ph3samples", None) is None:
+        raise StyxValidationError("`merged_ph3samples` must not be None")
+    if not isinstance(params["merged_ph3samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`merged_ph3samples` has the wrong type: Received `{type(params.get("merged_ph3samples", None))}` expected `InputPathType`')
+    if params.get("label-volume", None) is None:
+        raise StyxValidationError("`label-volume` must not be None")
+    if not isinstance(params["label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
+
+
 def estimate_fiber_binghams_cargs(
     params: EstimateFiberBinghamsParameters,
     execution: Execution,
@@ -206,6 +264,7 @@ def estimate_fiber_binghams_execute(
     Returns:
         NamedTuple of outputs (described in `EstimateFiberBinghamsOutputs`).
     """
+    estimate_fiber_binghams_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ESTIMATE_FIBER_BINGHAMS_METADATA)
     params = execution.params(params)

@@ -101,6 +101,62 @@ def mris_register_label_map_params(
     return params
 
 
+def mris_register_label_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRegisterLabelMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_list", None) is None:
+        raise StyxValidationError("`subjects_list` must not be None")
+    if not isinstance(params["subjects_list"], str):
+        raise StyxValidationError(f'`subjects_list` has the wrong type: Received `{type(params.get("subjects_list", None))}` expected `str`')
+    if params.get("target_subject", None) is None:
+        raise StyxValidationError("`target_subject` must not be None")
+    if not isinstance(params["target_subject"], str):
+        raise StyxValidationError(f'`target_subject` has the wrong type: Received `{type(params.get("target_subject", None))}` expected `str`')
+    if params.get("prior", None) is None:
+        raise StyxValidationError("`prior` must not be None")
+    if not isinstance(params["prior"], str):
+        raise StyxValidationError(f'`prior` has the wrong type: Received `{type(params.get("prior", None))}` expected `str`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], str):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str`')
+    if params.get("template_volume", None) is None:
+        raise StyxValidationError("`template_volume` must not be None")
+    if not isinstance(params["template_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template_volume` has the wrong type: Received `{type(params.get("template_volume", None))}` expected `InputPathType`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("vno", None) is not None:
+        if not isinstance(params["vno"], (float, int)):
+            raise StyxValidationError(f'`vno` has the wrong type: Received `{type(params.get("vno", None))}` expected `float | None`')
+
+
 def mris_register_label_map_cargs(
     params: MrisRegisterLabelMapParameters,
     execution: Execution,
@@ -195,6 +251,7 @@ def mris_register_label_map_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRegisterLabelMapOutputs`).
     """
+    mris_register_label_map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_REGISTER_LABEL_MAP_METADATA)
     params = execution.params(params)

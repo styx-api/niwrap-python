@@ -92,6 +92,49 @@ def mri_hausdorff_dist_params(
     return params
 
 
+def mri_hausdorff_dist_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriHausdorffDistParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vol1", None) is None:
+        raise StyxValidationError("`vol1` must not be None")
+    if not isinstance(params["vol1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol1` has the wrong type: Received `{type(params.get("vol1", None))}` expected `InputPathType`')
+    if params.get("vol2", None) is None:
+        raise StyxValidationError("`vol2` must not be None")
+    if not isinstance(params["vol2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol2` has the wrong type: Received `{type(params.get("vol2", None))}` expected `InputPathType`')
+    if params.get("output_text_file", None) is None:
+        raise StyxValidationError("`output_text_file` must not be None")
+    if not isinstance(params["output_text_file"], str):
+        raise StyxValidationError(f'`output_text_file` has the wrong type: Received `{type(params.get("output_text_file", None))}` expected `str`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("input_file_flag", False) is None:
+        raise StyxValidationError("`input_file_flag` must not be None")
+    if not isinstance(params["input_file_flag"], bool):
+        raise StyxValidationError(f'`input_file_flag` has the wrong type: Received `{type(params.get("input_file_flag", False))}` expected `bool`')
+    if params.get("blur_sigma", None) is not None:
+        if not isinstance(params["blur_sigma"], (float, int)):
+            raise StyxValidationError(f'`blur_sigma` has the wrong type: Received `{type(params.get("blur_sigma", None))}` expected `float | None`')
+    if params.get("max_flag", False) is None:
+        raise StyxValidationError("`max_flag` must not be None")
+    if not isinstance(params["max_flag"], bool):
+        raise StyxValidationError(f'`max_flag` has the wrong type: Received `{type(params.get("max_flag", False))}` expected `bool`')
+    if params.get("label_index", None) is not None:
+        if not isinstance(params["label_index"], (float, int)):
+            raise StyxValidationError(f'`label_index` has the wrong type: Received `{type(params.get("label_index", None))}` expected `float | None`')
+
+
 def mri_hausdorff_dist_cargs(
     params: MriHausdorffDistParameters,
     execution: Execution,
@@ -172,6 +215,7 @@ def mri_hausdorff_dist_execute(
     Returns:
         NamedTuple of outputs (described in `MriHausdorffDistOutputs`).
     """
+    mri_hausdorff_dist_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_HAUSDORFF_DIST_METADATA)
     params = execution.params(params)

@@ -57,6 +57,24 @@ def v__parse_afni_name_params(
     return params
 
 
+def v__parse_afni_name_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VParseAfniNameParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("afni_name", None) is None:
+        raise StyxValidationError("`afni_name` must not be None")
+    if not isinstance(params["afni_name"], str):
+        raise StyxValidationError(f'`afni_name` has the wrong type: Received `{type(params.get("afni_name", None))}` expected `str`')
+
+
 def v__parse_afni_name_cargs(
     params: VParseAfniNameParameters,
     execution: Execution,
@@ -119,6 +137,7 @@ def v__parse_afni_name_execute(
     Returns:
         NamedTuple of outputs (described in `VParseAfniNameOutputs`).
     """
+    v__parse_afni_name_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__PARSE_AFNI_NAME_METADATA)
     params = execution.params(params)

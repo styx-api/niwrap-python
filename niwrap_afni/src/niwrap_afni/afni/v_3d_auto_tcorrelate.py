@@ -121,6 +121,67 @@ def v_3d_auto_tcorrelate_params(
     return params
 
 
+def v_3d_auto_tcorrelate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAutoTcorrelateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("pearson", False) is None:
+        raise StyxValidationError("`pearson` must not be None")
+    if not isinstance(params["pearson"], bool):
+        raise StyxValidationError(f'`pearson` has the wrong type: Received `{type(params.get("pearson", False))}` expected `bool`')
+    if params.get("eta2", False) is None:
+        raise StyxValidationError("`eta2` must not be None")
+    if not isinstance(params["eta2"], bool):
+        raise StyxValidationError(f'`eta2` has the wrong type: Received `{type(params.get("eta2", False))}` expected `bool`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], int):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `int | None`')
+    if params.get("autoclip", False) is None:
+        raise StyxValidationError("`autoclip` must not be None")
+    if not isinstance(params["autoclip"], bool):
+        raise StyxValidationError(f'`autoclip` has the wrong type: Received `{type(params.get("autoclip", False))}` expected `bool`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_only_targets", False) is None:
+        raise StyxValidationError("`mask_only_targets` must not be None")
+    if not isinstance(params["mask_only_targets"], bool):
+        raise StyxValidationError(f'`mask_only_targets` has the wrong type: Received `{type(params.get("mask_only_targets", False))}` expected `bool`')
+    if params.get("mask_source", None) is not None:
+        if not isinstance(params["mask_source"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_source` has the wrong type: Received `{type(params.get("mask_source", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("out1d", None) is not None:
+        if not isinstance(params["out1d"], str):
+            raise StyxValidationError(f'`out1d` has the wrong type: Received `{type(params.get("out1d", None))}` expected `str | None`')
+    if params.get("time", False) is None:
+        raise StyxValidationError("`time` must not be None")
+    if not isinstance(params["time"], bool):
+        raise StyxValidationError(f'`time` has the wrong type: Received `{type(params.get("time", False))}` expected `bool`')
+    if params.get("mmap", False) is None:
+        raise StyxValidationError("`mmap` must not be None")
+    if not isinstance(params["mmap"], bool):
+        raise StyxValidationError(f'`mmap` has the wrong type: Received `{type(params.get("mmap", False))}` expected `bool`')
+
+
 def v_3d_auto_tcorrelate_cargs(
     params: V3dAutoTcorrelateParameters,
     execution: Execution,
@@ -221,6 +282,7 @@ def v_3d_auto_tcorrelate_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAutoTcorrelateOutputs`).
     """
+    v_3d_auto_tcorrelate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AUTO_TCORRELATE_METADATA)
     params = execution.params(params)

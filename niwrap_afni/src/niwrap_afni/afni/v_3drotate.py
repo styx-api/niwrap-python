@@ -201,6 +201,127 @@ def v_3drotate_params(
     return params
 
 
+def v_3drotate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3drotateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("ashift", None) is not None:
+        if not isinstance(params["ashift"], list):
+            raise StyxValidationError(f'`ashift` has the wrong type: Received `{type(params.get("ashift", None))}` expected `list[float] | None`')
+        if len(params["ashift"]) == 3:
+            raise StyxValidationError("Parameter `ashift` must contain exactly 3 elements")
+        for e in params["ashift"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ashift` has the wrong type: Received `{type(params.get("ashift", None))}` expected `list[float] | None`')
+    if params.get("bshift", None) is not None:
+        if not isinstance(params["bshift"], list):
+            raise StyxValidationError(f'`bshift` has the wrong type: Received `{type(params.get("bshift", None))}` expected `list[float] | None`')
+        if len(params["bshift"]) == 3:
+            raise StyxValidationError("Parameter `bshift` must contain exactly 3 elements")
+        for e in params["bshift"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`bshift` has the wrong type: Received `{type(params.get("bshift", None))}` expected `list[float] | None`')
+    if params.get("rotate", None) is not None:
+        if not isinstance(params["rotate"], list):
+            raise StyxValidationError(f'`rotate` has the wrong type: Received `{type(params.get("rotate", None))}` expected `list[str] | None`')
+        if len(params["rotate"]) == 3:
+            raise StyxValidationError("Parameter `rotate` must contain exactly 3 elements")
+        for e in params["rotate"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`rotate` has the wrong type: Received `{type(params.get("rotate", None))}` expected `list[str] | None`')
+    if params.get("rotparent", None) is not None:
+        if not isinstance(params["rotparent"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rotparent` has the wrong type: Received `{type(params.get("rotparent", None))}` expected `InputPathType | None`')
+    if params.get("gridparent", None) is not None:
+        if not isinstance(params["gridparent"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gridparent` has the wrong type: Received `{type(params.get("gridparent", None))}` expected `InputPathType | None`')
+    if params.get("matvec_dicom", None) is not None:
+        if not isinstance(params["matvec_dicom"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matvec_dicom` has the wrong type: Received `{type(params.get("matvec_dicom", None))}` expected `InputPathType | None`')
+    if params.get("matvec_order", None) is not None:
+        if not isinstance(params["matvec_order"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matvec_order` has the wrong type: Received `{type(params.get("matvec_order", None))}` expected `InputPathType | None`')
+    if params.get("matvec_dset", None) is not None:
+        if not isinstance(params["matvec_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matvec_dset` has the wrong type: Received `{type(params.get("matvec_dset", None))}` expected `InputPathType | None`')
+    if params.get("dfile", None) is not None:
+        if not isinstance(params["dfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dfile` has the wrong type: Received `{type(params.get("dfile", None))}` expected `InputPathType | None`')
+    if params.get("1Dfile", None) is not None:
+        if not isinstance(params["1Dfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`1Dfile` has the wrong type: Received `{type(params.get("1Dfile", None))}` expected `InputPathType | None`')
+    if params.get("points", False) is None:
+        raise StyxValidationError("`points` must not be None")
+    if not isinstance(params["points"], bool):
+        raise StyxValidationError(f'`points` has the wrong type: Received `{type(params.get("points", False))}` expected `bool`')
+    if params.get("origin", None) is not None:
+        if not isinstance(params["origin"], list):
+            raise StyxValidationError(f'`origin` has the wrong type: Received `{type(params.get("origin", None))}` expected `list[float] | None`')
+        if len(params["origin"]) == 3:
+            raise StyxValidationError("Parameter `origin` must contain exactly 3 elements")
+        for e in params["origin"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`origin` has the wrong type: Received `{type(params.get("origin", None))}` expected `list[float] | None`')
+    if params.get("Fourier", False) is None:
+        raise StyxValidationError("`Fourier` must not be None")
+    if not isinstance(params["Fourier"], bool):
+        raise StyxValidationError(f'`Fourier` has the wrong type: Received `{type(params.get("Fourier", False))}` expected `bool`')
+    if params.get("NN", False) is None:
+        raise StyxValidationError("`NN` must not be None")
+    if not isinstance(params["NN"], bool):
+        raise StyxValidationError(f'`NN` has the wrong type: Received `{type(params.get("NN", False))}` expected `bool`')
+    if params.get("linear", False) is None:
+        raise StyxValidationError("`linear` must not be None")
+    if not isinstance(params["linear"], bool):
+        raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
+    if params.get("cubic", False) is None:
+        raise StyxValidationError("`cubic` must not be None")
+    if not isinstance(params["cubic"], bool):
+        raise StyxValidationError(f'`cubic` has the wrong type: Received `{type(params.get("cubic", False))}` expected `bool`')
+    if params.get("quintic", False) is None:
+        raise StyxValidationError("`quintic` must not be None")
+    if not isinstance(params["quintic"], bool):
+        raise StyxValidationError(f'`quintic` has the wrong type: Received `{type(params.get("quintic", False))}` expected `bool`')
+    if params.get("heptic", False) is None:
+        raise StyxValidationError("`heptic` must not be None")
+    if not isinstance(params["heptic"], bool):
+        raise StyxValidationError(f'`heptic` has the wrong type: Received `{type(params.get("heptic", False))}` expected `bool`')
+    if params.get("Fourier_nopad", False) is None:
+        raise StyxValidationError("`Fourier_nopad` must not be None")
+    if not isinstance(params["Fourier_nopad"], bool):
+        raise StyxValidationError(f'`Fourier_nopad` has the wrong type: Received `{type(params.get("Fourier_nopad", False))}` expected `bool`')
+    if params.get("clipit", False) is None:
+        raise StyxValidationError("`clipit` must not be None")
+    if not isinstance(params["clipit"], bool):
+        raise StyxValidationError(f'`clipit` has the wrong type: Received `{type(params.get("clipit", False))}` expected `bool`')
+    if params.get("noclip", False) is None:
+        raise StyxValidationError("`noclip` must not be None")
+    if not isinstance(params["noclip"], bool):
+        raise StyxValidationError(f'`noclip` has the wrong type: Received `{type(params.get("noclip", False))}` expected `bool`')
+    if params.get("zpad", None) is not None:
+        if not isinstance(params["zpad"], (float, int)):
+            raise StyxValidationError(f'`zpad` has the wrong type: Received `{type(params.get("zpad", None))}` expected `float | None`')
+
+
 def v_3drotate_cargs(
     params: V3drotateParameters,
     execution: Execution,
@@ -347,6 +468,7 @@ def v_3drotate_execute(
     Returns:
         NamedTuple of outputs (described in `V3drotateOutputs`).
     """
+    v_3drotate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DROTATE_METADATA)
     params = execution.params(params)

@@ -68,6 +68,31 @@ def v__thickness_master_params(
     return params
 
 
+def v__thickness_master_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VThicknessMasterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("maskset", None) is None:
+        raise StyxValidationError("`maskset` must not be None")
+    if not isinstance(params["maskset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskset` has the wrong type: Received `{type(params.get("maskset", None))}` expected `InputPathType`')
+    if params.get("surfset", None) is None:
+        raise StyxValidationError("`surfset` must not be None")
+    if not isinstance(params["surfset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surfset` has the wrong type: Received `{type(params.get("surfset", None))}` expected `InputPathType`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+
+
 def v__thickness_master_cargs(
     params: VThicknessMasterParameters,
     execution: Execution,
@@ -140,6 +165,7 @@ def v__thickness_master_execute(
     Returns:
         NamedTuple of outputs (described in `VThicknessMasterOutputs`).
     """
+    v__thickness_master_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__THICKNESS_MASTER_METADATA)
     params = execution.params(params)

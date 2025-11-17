@@ -94,6 +94,52 @@ def mri_probe_ima_params(
     return params
 
 
+def mri_probe_ima_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriProbeImaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ima_file", None) is None:
+        raise StyxValidationError("`ima_file` must not be None")
+    if not isinstance(params["ima_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ima_file` has the wrong type: Received `{type(params.get("ima_file", None))}` expected `InputPathType`')
+    if params.get("key_string", None) is not None:
+        if not isinstance(params["key_string"], str):
+            raise StyxValidationError(f'`key_string` has the wrong type: Received `{type(params.get("key_string", None))}` expected `str | None`')
+    if params.get("offset_type_len", None) is not None:
+        if not isinstance(params["offset_type_len"], str):
+            raise StyxValidationError(f'`offset_type_len` has the wrong type: Received `{type(params.get("offset_type_len", None))}` expected `str | None`')
+    if params.get("attribute_name", None) is not None:
+        if not isinstance(params["attribute_name"], str):
+            raise StyxValidationError(f'`attribute_name` has the wrong type: Received `{type(params.get("attribute_name", None))}` expected `str | None`')
+    if params.get("fileinfo", False) is None:
+        raise StyxValidationError("`fileinfo` must not be None")
+    if not isinstance(params["fileinfo"], bool):
+        raise StyxValidationError(f'`fileinfo` has the wrong type: Received `{type(params.get("fileinfo", False))}` expected `bool`')
+    if params.get("dictionary", False) is None:
+        raise StyxValidationError("`dictionary` must not be None")
+    if not isinstance(params["dictionary"], bool):
+        raise StyxValidationError(f'`dictionary` has the wrong type: Received `{type(params.get("dictionary", False))}` expected `bool`')
+    if params.get("ob_stem", None) is not None:
+        if not isinstance(params["ob_stem"], str):
+            raise StyxValidationError(f'`ob_stem` has the wrong type: Received `{type(params.get("ob_stem", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_probe_ima_cargs(
     params: MriProbeImaParameters,
     execution: Execution,
@@ -182,6 +228,7 @@ def mri_probe_ima_execute(
     Returns:
         NamedTuple of outputs (described in `MriProbeImaOutputs`).
     """
+    mri_probe_ima_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_PROBE_IMA_METADATA)
     params = execution.params(params)

@@ -49,6 +49,24 @@ def xhemi_tal_params(
     return params
 
 
+def xhemi_tal_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XhemiTalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+
+
 def xhemi_tal_cargs(
     params: XhemiTalParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def xhemi_tal_execute(
     Returns:
         NamedTuple of outputs (described in `XhemiTalOutputs`).
     """
+    xhemi_tal_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XHEMI_TAL_METADATA)
     params = execution.params(params)

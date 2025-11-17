@@ -130,6 +130,68 @@ def v_3dmask_tool_params(
     return params
 
 
+def v_3dmask_tool_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dmaskToolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("count", False) is None:
+        raise StyxValidationError("`count` must not be None")
+    if not isinstance(params["count"], bool):
+        raise StyxValidationError(f'`count` has the wrong type: Received `{type(params.get("count", False))}` expected `bool`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `typing.Literal["byte", "short", "float"] | None`')
+        if params["datum"] not in ["byte", "short", "float"]:
+            raise StyxValidationError("Parameter `datum` must be one of [\"byte\", \"short\", \"float\"]")
+    if params.get("dilate_inputs", None) is not None:
+        if not isinstance(params["dilate_inputs"], str):
+            raise StyxValidationError(f'`dilate_inputs` has the wrong type: Received `{type(params.get("dilate_inputs", None))}` expected `str | None`')
+    if params.get("dilate_results", None) is not None:
+        if not isinstance(params["dilate_results"], str):
+            raise StyxValidationError(f'`dilate_results` has the wrong type: Received `{type(params.get("dilate_results", None))}` expected `str | None`')
+    if params.get("fill_dirs", None) is not None:
+        if not isinstance(params["fill_dirs"], str):
+            raise StyxValidationError(f'`fill_dirs` has the wrong type: Received `{type(params.get("fill_dirs", None))}` expected `str | None`')
+    if params.get("fill_holes", False) is None:
+        raise StyxValidationError("`fill_holes` must not be None")
+    if not isinstance(params["fill_holes"], bool):
+        raise StyxValidationError(f'`fill_holes` has the wrong type: Received `{type(params.get("fill_holes", False))}` expected `bool`')
+    if params.get("frac", None) is not None:
+        if not isinstance(params["frac"], (float, int)):
+            raise StyxValidationError(f'`frac` has the wrong type: Received `{type(params.get("frac", None))}` expected `float | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("inter", False) is None:
+        raise StyxValidationError("`inter` must not be None")
+    if not isinstance(params["inter"], bool):
+        raise StyxValidationError(f'`inter` has the wrong type: Received `{type(params.get("inter", False))}` expected `bool`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], int):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("union", False) is None:
+        raise StyxValidationError("`union` must not be None")
+    if not isinstance(params["union"], bool):
+        raise StyxValidationError(f'`union` has the wrong type: Received `{type(params.get("union", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], int):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `int | None`')
+
+
 def v_3dmask_tool_cargs(
     params: V3dmaskToolParameters,
     execution: Execution,
@@ -234,6 +296,7 @@ def v_3dmask_tool_execute(
     Returns:
         NamedTuple of outputs (described in `V3dmaskToolOutputs`).
     """
+    v_3dmask_tool_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DMASK_TOOL_METADATA)
     params = execution.params(params)

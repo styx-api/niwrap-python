@@ -93,6 +93,60 @@ def mri_pretess_params(
     return params
 
 
+def mri_pretess_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriPretessParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filledvol", None) is None:
+        raise StyxValidationError("`filledvol` must not be None")
+    if not isinstance(params["filledvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`filledvol` has the wrong type: Received `{type(params.get("filledvol", None))}` expected `InputPathType`')
+    if params.get("labelstring", None) is None:
+        raise StyxValidationError("`labelstring` must not be None")
+    if not isinstance(params["labelstring"], str):
+        raise StyxValidationError(f'`labelstring` has the wrong type: Received `{type(params.get("labelstring", None))}` expected `str`')
+    if params.get("normvol", None) is None:
+        raise StyxValidationError("`normvol` must not be None")
+    if not isinstance(params["normvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`normvol` has the wrong type: Received `{type(params.get("normvol", None))}` expected `InputPathType`')
+    if params.get("newfilledvol", None) is None:
+        raise StyxValidationError("`newfilledvol` must not be None")
+    if not isinstance(params["newfilledvol"], str):
+        raise StyxValidationError(f'`newfilledvol` has the wrong type: Received `{type(params.get("newfilledvol", None))}` expected `str`')
+    if params.get("debug_voxel", None) is not None:
+        if not isinstance(params["debug_voxel"], list):
+            raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+        if len(params["debug_voxel"]) == 3:
+            raise StyxValidationError("Parameter `debug_voxel` must contain exactly 3 elements")
+        for e in params["debug_voxel"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+    if params.get("nocorners", False) is None:
+        raise StyxValidationError("`nocorners` must not be None")
+    if not isinstance(params["nocorners"], bool):
+        raise StyxValidationError(f'`nocorners` has the wrong type: Received `{type(params.get("nocorners", False))}` expected `bool`')
+    if params.get("write", False) is None:
+        raise StyxValidationError("`write` must not be None")
+    if not isinstance(params["write"], bool):
+        raise StyxValidationError(f'`write` has the wrong type: Received `{type(params.get("write", False))}` expected `bool`')
+    if params.get("keep", False) is None:
+        raise StyxValidationError("`keep` must not be None")
+    if not isinstance(params["keep"], bool):
+        raise StyxValidationError(f'`keep` has the wrong type: Received `{type(params.get("keep", False))}` expected `bool`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+
+
 def mri_pretess_cargs(
     params: MriPretessParameters,
     execution: Execution,
@@ -168,6 +222,7 @@ def mri_pretess_execute(
     Returns:
         NamedTuple of outputs (described in `MriPretessOutputs`).
     """
+    mri_pretess_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_PRETESS_METADATA)
     params = execution.params(params)

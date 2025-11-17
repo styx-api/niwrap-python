@@ -92,6 +92,57 @@ def dmri_forrest_params(
     return params
 
 
+def dmri_forrest_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriForrestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("test_dir", None) is None:
+        raise StyxValidationError("`test_dir` must not be None")
+    if not isinstance(params["test_dir"], str):
+        raise StyxValidationError(f'`test_dir` has the wrong type: Received `{type(params.get("test_dir", None))}` expected `str`')
+    if params.get("train_file", None) is None:
+        raise StyxValidationError("`train_file` must not be None")
+    if not isinstance(params["train_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`train_file` has the wrong type: Received `{type(params.get("train_file", None))}` expected `InputPathType`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("tract_files", None) is None:
+        raise StyxValidationError("`tract_files` must not be None")
+    if not isinstance(params["tract_files"], list):
+        raise StyxValidationError(f'`tract_files` has the wrong type: Received `{type(params.get("tract_files", None))}` expected `list[InputPathType]`')
+    for e in params["tract_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`tract_files` has the wrong type: Received `{type(params.get("tract_files", None))}` expected `list[InputPathType]`')
+    if params.get("seg_file", None) is not None:
+        if not isinstance(params["seg_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg_file` has the wrong type: Received `{type(params.get("seg_file", None))}` expected `InputPathType | None`')
+    if params.get("diff_file", None) is not None:
+        if not isinstance(params["diff_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`diff_file` has the wrong type: Received `{type(params.get("diff_file", None))}` expected `InputPathType | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def dmri_forrest_cargs(
     params: DmriForrestParameters,
     execution: Execution,
@@ -181,6 +232,7 @@ def dmri_forrest_execute(
     Returns:
         NamedTuple of outputs (described in `DmriForrestOutputs`).
     """
+    dmri_forrest_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_FORREST_METADATA)
     params = execution.params(params)

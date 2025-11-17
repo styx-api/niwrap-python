@@ -69,6 +69,34 @@ def v_1d_marry_params(
     return params
 
 
+def v_1d_marry_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dMarryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sep", None) is not None:
+        if not isinstance(params["sep"], str):
+            raise StyxValidationError(f'`sep` has the wrong type: Received `{type(params.get("sep", None))}` expected `str | None`')
+    if params.get("divorce", False) is None:
+        raise StyxValidationError("`divorce` must not be None")
+    if not isinstance(params["divorce"], bool):
+        raise StyxValidationError(f'`divorce` has the wrong type: Received `{type(params.get("divorce", False))}` expected `bool`')
+    if params.get("files", None) is None:
+        raise StyxValidationError("`files` must not be None")
+    if not isinstance(params["files"], list):
+        raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    for e in params["files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+
+
 def v_1d_marry_cargs(
     params: V1dMarryParameters,
     execution: Execution,
@@ -138,6 +166,7 @@ def v_1d_marry_execute(
     Returns:
         NamedTuple of outputs (described in `V1dMarryOutputs`).
     """
+    v_1d_marry_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_MARRY_METADATA)
     params = execution.params(params)

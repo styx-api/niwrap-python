@@ -213,6 +213,122 @@ def mri_cvs_register_params(
     return params
 
 
+def mri_cvs_register_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCvsRegisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mov_subjid", None) is None:
+        raise StyxValidationError("`mov_subjid` must not be None")
+    if not isinstance(params["mov_subjid"], str):
+        raise StyxValidationError(f'`mov_subjid` has the wrong type: Received `{type(params.get("mov_subjid", None))}` expected `str`')
+    if params.get("template_subjid", None) is not None:
+        if not isinstance(params["template_subjid"], str):
+            raise StyxValidationError(f'`template_subjid` has the wrong type: Received `{type(params.get("template_subjid", None))}` expected `str | None`')
+    if params.get("templatedir", None) is not None:
+        if not isinstance(params["templatedir"], str):
+            raise StyxValidationError(f'`templatedir` has the wrong type: Received `{type(params.get("templatedir", None))}` expected `str | None`')
+    if params.get("mni_flag", False) is None:
+        raise StyxValidationError("`mni_flag` must not be None")
+    if not isinstance(params["mni_flag"], bool):
+        raise StyxValidationError(f'`mni_flag` has the wrong type: Received `{type(params.get("mni_flag", False))}` expected `bool`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+    if params.get("asegfname", None) is not None:
+        if not isinstance(params["asegfname"], str):
+            raise StyxValidationError(f'`asegfname` has the wrong type: Received `{type(params.get("asegfname", None))}` expected `str | None`')
+    if params.get("voltype", None) is not None:
+        if not isinstance(params["voltype"], str):
+            raise StyxValidationError(f'`voltype` has the wrong type: Received `{type(params.get("voltype", None))}` expected `str | None`')
+    if params.get("step1_flag", False) is None:
+        raise StyxValidationError("`step1_flag` must not be None")
+    if not isinstance(params["step1_flag"], bool):
+        raise StyxValidationError(f'`step1_flag` has the wrong type: Received `{type(params.get("step1_flag", False))}` expected `bool`')
+    if params.get("step2_flag", False) is None:
+        raise StyxValidationError("`step2_flag` must not be None")
+    if not isinstance(params["step2_flag"], bool):
+        raise StyxValidationError(f'`step2_flag` has the wrong type: Received `{type(params.get("step2_flag", False))}` expected `bool`')
+    if params.get("step3_flag", False) is None:
+        raise StyxValidationError("`step3_flag` must not be None")
+    if not isinstance(params["step3_flag"], bool):
+        raise StyxValidationError(f'`step3_flag` has the wrong type: Received `{type(params.get("step3_flag", False))}` expected `bool`')
+    if params.get("noaseg_flag", False) is None:
+        raise StyxValidationError("`noaseg_flag` must not be None")
+    if not isinstance(params["noaseg_flag"], bool):
+        raise StyxValidationError(f'`noaseg_flag` has the wrong type: Received `{type(params.get("noaseg_flag", False))}` expected `bool`')
+    if params.get("nointensity_flag", False) is None:
+        raise StyxValidationError("`nointensity_flag` must not be None")
+    if not isinstance(params["nointensity_flag"], bool):
+        raise StyxValidationError(f'`nointensity_flag` has the wrong type: Received `{type(params.get("nointensity_flag", False))}` expected `bool`')
+    if params.get("hemi_flag", False) is None:
+        raise StyxValidationError("`hemi_flag` must not be None")
+    if not isinstance(params["hemi_flag"], bool):
+        raise StyxValidationError(f'`hemi_flag` has the wrong type: Received `{type(params.get("hemi_flag", False))}` expected `bool`')
+    if params.get("masktargethemi_flag", False) is None:
+        raise StyxValidationError("`masktargethemi_flag` must not be None")
+    if not isinstance(params["masktargethemi_flag"], bool):
+        raise StyxValidationError(f'`masktargethemi_flag` has the wrong type: Received `{type(params.get("masktargethemi_flag", False))}` expected `bool`')
+    if params.get("maskmovinghemi_flag", False) is None:
+        raise StyxValidationError("`maskmovinghemi_flag` must not be None")
+    if not isinstance(params["maskmovinghemi_flag"], bool):
+        raise StyxValidationError(f'`maskmovinghemi_flag` has the wrong type: Received `{type(params.get("maskmovinghemi_flag", False))}` expected `bool`')
+    if params.get("nocleanup_flag", False) is None:
+        raise StyxValidationError("`nocleanup_flag` must not be None")
+    if not isinstance(params["nocleanup_flag"], bool):
+        raise StyxValidationError(f'`nocleanup_flag` has the wrong type: Received `{type(params.get("nocleanup_flag", False))}` expected `bool`')
+    if params.get("keepelreg_flag", False) is None:
+        raise StyxValidationError("`keepelreg_flag` must not be None")
+    if not isinstance(params["keepelreg_flag"], bool):
+        raise StyxValidationError(f'`keepelreg_flag` has the wrong type: Received `{type(params.get("keepelreg_flag", False))}` expected `bool`')
+    if params.get("keepallm3z_flag", False) is None:
+        raise StyxValidationError("`keepallm3z_flag` must not be None")
+    if not isinstance(params["keepallm3z_flag"], bool):
+        raise StyxValidationError(f'`keepallm3z_flag` has the wrong type: Received `{type(params.get("keepallm3z_flag", False))}` expected `bool`')
+    if params.get("cleanall_flag", False) is None:
+        raise StyxValidationError("`cleanall_flag` must not be None")
+    if not isinstance(params["cleanall_flag"], bool):
+        raise StyxValidationError(f'`cleanall_flag` has the wrong type: Received `{type(params.get("cleanall_flag", False))}` expected `bool`')
+    if params.get("cleansurfreg_flag", False) is None:
+        raise StyxValidationError("`cleansurfreg_flag` must not be None")
+    if not isinstance(params["cleansurfreg_flag"], bool):
+        raise StyxValidationError(f'`cleansurfreg_flag` has the wrong type: Received `{type(params.get("cleansurfreg_flag", False))}` expected `bool`')
+    if params.get("cleanelreg_flag", False) is None:
+        raise StyxValidationError("`cleanelreg_flag` must not be None")
+    if not isinstance(params["cleanelreg_flag"], bool):
+        raise StyxValidationError(f'`cleanelreg_flag` has the wrong type: Received `{type(params.get("cleanelreg_flag", False))}` expected `bool`')
+    if params.get("cleanvolreg_flag", False) is None:
+        raise StyxValidationError("`cleanvolreg_flag` must not be None")
+    if not isinstance(params["cleanvolreg_flag"], bool):
+        raise StyxValidationError(f'`cleanvolreg_flag` has the wrong type: Received `{type(params.get("cleanvolreg_flag", False))}` expected `bool`')
+    if params.get("m3d_flag", False) is None:
+        raise StyxValidationError("`m3d_flag` must not be None")
+    if not isinstance(params["m3d_flag"], bool):
+        raise StyxValidationError(f'`m3d_flag` has the wrong type: Received `{type(params.get("m3d_flag", False))}` expected `bool`')
+    if params.get("openmp", None) is not None:
+        if not isinstance(params["openmp"], int):
+            raise StyxValidationError(f'`openmp` has the wrong type: Received `{type(params.get("openmp", None))}` expected `int | None`')
+    if params.get("nolog_flag", False) is None:
+        raise StyxValidationError("`nolog_flag` must not be None")
+    if not isinstance(params["nolog_flag"], bool):
+        raise StyxValidationError(f'`nolog_flag` has the wrong type: Received `{type(params.get("nolog_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def mri_cvs_register_cargs(
     params: MriCvsRegisterParameters,
     execution: Execution,
@@ -348,6 +464,7 @@ def mri_cvs_register_execute(
     Returns:
         NamedTuple of outputs (described in `MriCvsRegisterOutputs`).
     """
+    mri_cvs_register_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CVS_REGISTER_METADATA)
     params = execution.params(params)

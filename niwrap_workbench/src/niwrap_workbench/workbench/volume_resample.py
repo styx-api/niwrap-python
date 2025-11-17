@@ -117,6 +117,28 @@ def volume_resample_flirt_params(
     return params
 
 
+def volume_resample_flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeResampleFlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("target-volume", None) is None:
+        raise StyxValidationError("`target-volume` must not be None")
+    if not isinstance(params["target-volume"], str):
+        raise StyxValidationError(f'`target-volume` has the wrong type: Received `{type(params.get("target-volume", None))}` expected `str`')
+
+
 def volume_resample_flirt_cargs(
     params: VolumeResampleFlirtParameters,
     execution: Execution,
@@ -161,6 +183,26 @@ def volume_resample_affine_params(
     return params
 
 
+def volume_resample_affine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeResampleAffineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("affine", None) is None:
+        raise StyxValidationError("`affine` must not be None")
+    if not isinstance(params["affine"], str):
+        raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `str`')
+    if params.get("flirt", None) is not None:
+        volume_resample_flirt_validate(params["flirt"])
+
+
 def volume_resample_affine_cargs(
     params: VolumeResampleAffineParameters,
     execution: Execution,
@@ -203,6 +245,28 @@ def volume_resample_flirt_params_(
         "target-volume": target_volume,
     }
     return params
+
+
+def volume_resample_flirt_validate_(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeResampleFlirtParameters_` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("target-volume", None) is None:
+        raise StyxValidationError("`target-volume` must not be None")
+    if not isinstance(params["target-volume"], str):
+        raise StyxValidationError(f'`target-volume` has the wrong type: Received `{type(params.get("target-volume", None))}` expected `str`')
 
 
 def volume_resample_flirt_cargs_(
@@ -250,6 +314,26 @@ def volume_resample_affine_series_params(
     return params
 
 
+def volume_resample_affine_series_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeResampleAffineSeriesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("affine-series", None) is None:
+        raise StyxValidationError("`affine-series` must not be None")
+    if not isinstance(params["affine-series"], str):
+        raise StyxValidationError(f'`affine-series` has the wrong type: Received `{type(params.get("affine-series", None))}` expected `str`')
+    if params.get("flirt", None) is not None:
+        volume_resample_flirt_validate_(params["flirt"])
+
+
 def volume_resample_affine_series_cargs(
     params: VolumeResampleAffineSeriesParameters,
     execution: Execution,
@@ -295,6 +379,27 @@ def volume_resample_warp_params(
     if source_volume is not None:
         params["source-volume"] = source_volume
     return params
+
+
+def volume_resample_warp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeResampleWarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warpfield", None) is None:
+        raise StyxValidationError("`warpfield` must not be None")
+    if not isinstance(params["warpfield"], str):
+        raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
+    if params.get("source-volume", None) is not None:
+        if not isinstance(params["source-volume"], str):
+            raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str | None`')
 
 
 def volume_resample_warp_cargs(
@@ -377,6 +482,54 @@ def volume_resample_params(
     return params
 
 
+def volume_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], (float, int)):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
+    if params.get("affine", None) is not None:
+        if not isinstance(params["affine"], list):
+            raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `list[VolumeResampleAffineParameters] | None`')
+        for e in params["affine"]:
+            volume_resample_affine_validate(e)
+    if params.get("affine-series", None) is not None:
+        if not isinstance(params["affine-series"], list):
+            raise StyxValidationError(f'`affine-series` has the wrong type: Received `{type(params.get("affine-series", None))}` expected `list[VolumeResampleAffineSeriesParameters] | None`')
+        for e in params["affine-series"]:
+            volume_resample_affine_series_validate(e)
+    if params.get("warp", None) is not None:
+        if not isinstance(params["warp"], list):
+            raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `list[VolumeResampleWarpParameters] | None`')
+        for e in params["warp"]:
+            volume_resample_warp_validate(e)
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("volume-space", None) is None:
+        raise StyxValidationError("`volume-space` must not be None")
+    if not isinstance(params["volume-space"], str):
+        raise StyxValidationError(f'`volume-space` has the wrong type: Received `{type(params.get("volume-space", None))}` expected `str`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
+
+
 def volume_resample_cargs(
     params: VolumeResampleParameters,
     execution: Execution,
@@ -453,6 +606,7 @@ def volume_resample_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeResampleOutputs`).
     """
+    volume_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_RESAMPLE_METADATA)
     params = execution.params(params)

@@ -85,6 +85,51 @@ def split_parts_gpu_params(
     return params
 
 
+def split_parts_gpu_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SplitPartsGpuParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datafile", None) is None:
+        raise StyxValidationError("`datafile` must not be None")
+    if not isinstance(params["datafile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datafile` has the wrong type: Received `{type(params.get("datafile", None))}` expected `InputPathType`')
+    if params.get("maskfile", None) is None:
+        raise StyxValidationError("`maskfile` must not be None")
+    if not isinstance(params["maskfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskfile` has the wrong type: Received `{type(params.get("maskfile", None))}` expected `InputPathType`')
+    if params.get("bvals_file", None) is None:
+        raise StyxValidationError("`bvals_file` must not be None")
+    if not isinstance(params["bvals_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals_file` has the wrong type: Received `{type(params.get("bvals_file", None))}` expected `InputPathType`')
+    if params.get("bvecs_file", None) is None:
+        raise StyxValidationError("`bvecs_file` must not be None")
+    if not isinstance(params["bvecs_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs_file` has the wrong type: Received `{type(params.get("bvecs_file", None))}` expected `InputPathType`')
+    if params.get("grad_file", None) is not None:
+        if not isinstance(params["grad_file"], str):
+            raise StyxValidationError(f'`grad_file` has the wrong type: Received `{type(params.get("grad_file", None))}` expected `str | None`')
+    if params.get("use_grad_file", None) is None:
+        raise StyxValidationError("`use_grad_file` must not be None")
+    if not isinstance(params["use_grad_file"], int):
+        raise StyxValidationError(f'`use_grad_file` has the wrong type: Received `{type(params.get("use_grad_file", None))}` expected `int`')
+    if params.get("total_num_parts", None) is None:
+        raise StyxValidationError("`total_num_parts` must not be None")
+    if not isinstance(params["total_num_parts"], int):
+        raise StyxValidationError(f'`total_num_parts` has the wrong type: Received `{type(params.get("total_num_parts", None))}` expected `int`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+
+
 def split_parts_gpu_cargs(
     params: SplitPartsGpuParameters,
     execution: Execution,
@@ -150,6 +195,7 @@ def split_parts_gpu_execute(
     Returns:
         NamedTuple of outputs (described in `SplitPartsGpuOutputs`).
     """
+    split_parts_gpu_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPLIT_PARTS_GPU_METADATA)
     params = execution.params(params)

@@ -73,6 +73,41 @@ def mris_label_calc_params(
     return params
 
 
+def mris_label_calc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisLabelCalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("command", None) is None:
+        raise StyxValidationError("`command` must not be None")
+    if not isinstance(params["command"], str):
+        raise StyxValidationError(f'`command` has the wrong type: Received `{type(params.get("command", None))}` expected `typing.Literal["union", "intersect", "invert", "erode", "dilate"]`')
+    if params["command"] not in ["union", "intersect", "invert", "erode", "dilate"]:
+        raise StyxValidationError("Parameter `command` must be one of [\"union\", \"intersect\", \"invert\", \"erode\", \"dilate\"]")
+    if params.get("input1", None) is None:
+        raise StyxValidationError("`input1` must not be None")
+    if not isinstance(params["input1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input1` has the wrong type: Received `{type(params.get("input1", None))}` expected `InputPathType`')
+    if params.get("input2", None) is None:
+        raise StyxValidationError("`input2` must not be None")
+    if not isinstance(params["input2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input2` has the wrong type: Received `{type(params.get("input2", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], int):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `int | None`')
+
+
 def mris_label_calc_cargs(
     params: MrisLabelCalcParameters,
     execution: Execution,
@@ -139,6 +174,7 @@ def mris_label_calc_execute(
     Returns:
         NamedTuple of outputs (described in `MrisLabelCalcOutputs`).
     """
+    mris_label_calc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_LABEL_CALC_METADATA)
     params = execution.params(params)

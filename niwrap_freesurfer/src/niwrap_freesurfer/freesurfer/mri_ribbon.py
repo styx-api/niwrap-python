@@ -72,6 +72,39 @@ def mri_ribbon_params(
     return params
 
 
+def mri_ribbon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriRibbonParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("inner_surface", None) is None:
+        raise StyxValidationError("`inner_surface` must not be None")
+    if not isinstance(params["inner_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inner_surface` has the wrong type: Received `{type(params.get("inner_surface", None))}` expected `InputPathType`')
+    if params.get("outer_surface", None) is None:
+        raise StyxValidationError("`outer_surface` must not be None")
+    if not isinstance(params["outer_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outer_surface` has the wrong type: Received `{type(params.get("outer_surface", None))}` expected `InputPathType`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], str):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `str`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_ribbon_cargs(
     params: MriRibbonParameters,
     execution: Execution,
@@ -138,6 +171,7 @@ def mri_ribbon_execute(
     Returns:
         NamedTuple of outputs (described in `MriRibbonOutputs`).
     """
+    mri_ribbon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_RIBBON_METADATA)
     params = execution.params(params)

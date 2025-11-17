@@ -51,6 +51,23 @@ def inflate_subject_rh_params(
     return params
 
 
+def inflate_subject_rh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InflateSubjectRhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("arguments", None) is not None:
+        if not isinstance(params["arguments"], str):
+            raise StyxValidationError(f'`arguments` has the wrong type: Received `{type(params.get("arguments", None))}` expected `str | None`')
+
+
 def inflate_subject_rh_cargs(
     params: InflateSubjectRhParameters,
     execution: Execution,
@@ -113,6 +130,7 @@ def inflate_subject_rh_execute(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectRhOutputs`).
     """
+    inflate_subject_rh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INFLATE_SUBJECT_RH_METADATA)
     params = execution.params(params)

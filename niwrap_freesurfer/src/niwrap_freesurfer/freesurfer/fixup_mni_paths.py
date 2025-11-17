@@ -75,6 +75,24 @@ def fixup_mni_paths_params(
     return params
 
 
+def fixup_mni_paths_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixupMniPathsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def fixup_mni_paths_cargs(
     params: FixupMniPathsParameters,
     execution: Execution,
@@ -146,6 +164,7 @@ def fixup_mni_paths_execute(
     Returns:
         NamedTuple of outputs (described in `FixupMniPathsOutputs`).
     """
+    fixup_mni_paths_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIXUP_MNI_PATHS_METADATA)
     params = execution.params(params)

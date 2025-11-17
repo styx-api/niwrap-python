@@ -54,6 +54,28 @@ def mri_histo_eq_params(
     return params
 
 
+def mri_histo_eq_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriHistoEqParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume_1", None) is None:
+        raise StyxValidationError("`input_volume_1` must not be None")
+    if not isinstance(params["input_volume_1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume_1` has the wrong type: Received `{type(params.get("input_volume_1", None))}` expected `InputPathType`')
+    if params.get("input_volume_2", None) is None:
+        raise StyxValidationError("`input_volume_2` must not be None")
+    if not isinstance(params["input_volume_2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume_2` has the wrong type: Received `{type(params.get("input_volume_2", None))}` expected `InputPathType`')
+
+
 def mri_histo_eq_cargs(
     params: MriHistoEqParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def mri_histo_eq_execute(
     Returns:
         NamedTuple of outputs (described in `MriHistoEqOutputs`).
     """
+    mri_histo_eq_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_HISTO_EQ_METADATA)
     params = execution.params(params)

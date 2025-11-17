@@ -131,6 +131,72 @@ def mri_exvivo_norm_params(
     return params
 
 
+def mri_exvivo_norm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriExvivoNormParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("prediction_volume", None) is not None:
+        if not isinstance(params["prediction_volume"], str):
+            raise StyxValidationError(f'`prediction_volume` has the wrong type: Received `{type(params.get("prediction_volume", None))}` expected `str | None`')
+    if params.get("normalized_volume", None) is not None:
+        if not isinstance(params["normalized_volume"], str):
+            raise StyxValidationError(f'`normalized_volume` has the wrong type: Received `{type(params.get("normalized_volume", None))}` expected `str | None`')
+    if params.get("freeview", False) is None:
+        raise StyxValidationError("`freeview` must not be None")
+    if not isinstance(params["freeview"], bool):
+        raise StyxValidationError(f'`freeview` has the wrong type: Received `{type(params.get("freeview", False))}` expected `bool`')
+    if params.get("normalize_output_mean", False) is None:
+        raise StyxValidationError("`normalize_output_mean` must not be None")
+    if not isinstance(params["normalize_output_mean"], bool):
+        raise StyxValidationError(f'`normalize_output_mean` has the wrong type: Received `{type(params.get("normalize_output_mean", False))}` expected `bool`')
+    if params.get("write_normalization_rounds", False) is None:
+        raise StyxValidationError("`write_normalization_rounds` must not be None")
+    if not isinstance(params["write_normalization_rounds"], bool):
+        raise StyxValidationError(f'`write_normalization_rounds` has the wrong type: Received `{type(params.get("write_normalization_rounds", False))}` expected `bool`')
+    if params.get("upper_threshold", None) is not None:
+        if not isinstance(params["upper_threshold"], (float, int)):
+            raise StyxValidationError(f'`upper_threshold` has the wrong type: Received `{type(params.get("upper_threshold", None))}` expected `float | None`')
+    if params.get("bias_field_sigma", None) is not None:
+        if not isinstance(params["bias_field_sigma"], (float, int)):
+            raise StyxValidationError(f'`bias_field_sigma` has the wrong type: Received `{type(params.get("bias_field_sigma", None))}` expected `float | None`')
+    if params.get("normalization_rounds", None) is not None:
+        if not isinstance(params["normalization_rounds"], (float, int)):
+            raise StyxValidationError(f'`normalization_rounds` has the wrong type: Received `{type(params.get("normalization_rounds", None))}` expected `float | None`')
+    if params.get("multichannel", False) is None:
+        raise StyxValidationError("`multichannel` must not be None")
+    if not isinstance(params["multichannel"], bool):
+        raise StyxValidationError(f'`multichannel` has the wrong type: Received `{type(params.get("multichannel", False))}` expected `bool`')
+    if params.get("model_file", None) is not None:
+        if not isinstance(params["model_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`model_file` has the wrong type: Received `{type(params.get("model_file", None))}` expected `InputPathType | None`')
+    if params.get("weights_file", None) is not None:
+        if not isinstance(params["weights_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weights_file` has the wrong type: Received `{type(params.get("weights_file", None))}` expected `InputPathType | None`')
+    if params.get("gpu_number", None) is not None:
+        if not isinstance(params["gpu_number"], (float, int)):
+            raise StyxValidationError(f'`gpu_number` has the wrong type: Received `{type(params.get("gpu_number", None))}` expected `float | None`')
+
+
 def mri_exvivo_norm_cargs(
     params: MriExvivoNormParameters,
     execution: Execution,
@@ -248,6 +314,7 @@ def mri_exvivo_norm_execute(
     Returns:
         NamedTuple of outputs (described in `MriExvivoNormOutputs`).
     """
+    mri_exvivo_norm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EXVIVO_NORM_METADATA)
     params = execution.params(params)

@@ -172,6 +172,112 @@ def v__update_afni_binaries_params(
     return params
 
 
+def v__update_afni_binaries_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VUpdateAfniBinariesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("defaults_flag", False) is None:
+        raise StyxValidationError("`defaults_flag` must not be None")
+    if not isinstance(params["defaults_flag"], bool):
+        raise StyxValidationError(f'`defaults_flag` has the wrong type: Received `{type(params.get("defaults_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("help_sys_progs_flag", False) is None:
+        raise StyxValidationError("`help_sys_progs_flag` must not be None")
+    if not isinstance(params["help_sys_progs_flag"], bool):
+        raise StyxValidationError(f'`help_sys_progs_flag` has the wrong type: Received `{type(params.get("help_sys_progs_flag", False))}` expected `bool`')
+    if params.get("apsearch", None) is not None:
+        if not isinstance(params["apsearch"], str):
+            raise StyxValidationError(f'`apsearch` has the wrong type: Received `{type(params.get("apsearch", None))}` expected `str | None`')
+    if params.get("bindir", None) is not None:
+        if not isinstance(params["bindir"], str):
+            raise StyxValidationError(f'`bindir` has the wrong type: Received `{type(params.get("bindir", None))}` expected `str | None`')
+    if params.get("curl_flag", False) is None:
+        raise StyxValidationError("`curl_flag` must not be None")
+    if not isinstance(params["curl_flag"], bool):
+        raise StyxValidationError(f'`curl_flag` has the wrong type: Received `{type(params.get("curl_flag", False))}` expected `bool`')
+    if params.get("do_dotfiles_flag", False) is None:
+        raise StyxValidationError("`do_dotfiles_flag` must not be None")
+    if not isinstance(params["do_dotfiles_flag"], bool):
+        raise StyxValidationError(f'`do_dotfiles_flag` has the wrong type: Received `{type(params.get("do_dotfiles_flag", False))}` expected `bool`')
+    if params.get("do_extras_flag", False) is None:
+        raise StyxValidationError("`do_extras_flag` must not be None")
+    if not isinstance(params["do_extras_flag"], bool):
+        raise StyxValidationError(f'`do_extras_flag` has the wrong type: Received `{type(params.get("do_extras_flag", False))}` expected `bool`')
+    if params.get("echo_flag", False) is None:
+        raise StyxValidationError("`echo_flag` must not be None")
+    if not isinstance(params["echo_flag"], bool):
+        raise StyxValidationError(f'`echo_flag` has the wrong type: Received `{type(params.get("echo_flag", False))}` expected `bool`')
+    if params.get("make_backup", None) is not None:
+        if not isinstance(params["make_backup"], str):
+            raise StyxValidationError(f'`make_backup` has the wrong type: Received `{type(params.get("make_backup", None))}` expected `str | None`')
+    if params.get("no_cert_verify_flag", False) is None:
+        raise StyxValidationError("`no_cert_verify_flag` must not be None")
+    if not isinstance(params["no_cert_verify_flag"], bool):
+        raise StyxValidationError(f'`no_cert_verify_flag` has the wrong type: Received `{type(params.get("no_cert_verify_flag", False))}` expected `bool`')
+    if params.get("no_recur_flag", False) is None:
+        raise StyxValidationError("`no_recur_flag` must not be None")
+    if not isinstance(params["no_recur_flag"], bool):
+        raise StyxValidationError(f'`no_recur_flag` has the wrong type: Received `{type(params.get("no_recur_flag", False))}` expected `bool`')
+    if params.get("proto", None) is not None:
+        if not isinstance(params["proto"], str):
+            raise StyxValidationError(f'`proto` has the wrong type: Received `{type(params.get("proto", None))}` expected `str | None`')
+    if params.get("quick_flag", False) is None:
+        raise StyxValidationError("`quick_flag` must not be None")
+    if not isinstance(params["quick_flag"], bool):
+        raise StyxValidationError(f'`quick_flag` has the wrong type: Received `{type(params.get("quick_flag", False))}` expected `bool`')
+    if params.get("show_obsoletes_flag", False) is None:
+        raise StyxValidationError("`show_obsoletes_flag` must not be None")
+    if not isinstance(params["show_obsoletes_flag"], bool):
+        raise StyxValidationError(f'`show_obsoletes_flag` has the wrong type: Received `{type(params.get("show_obsoletes_flag", False))}` expected `bool`')
+    if params.get("show_obsoletes_grep_flag", False) is None:
+        raise StyxValidationError("`show_obsoletes_grep_flag` must not be None")
+    if not isinstance(params["show_obsoletes_grep_flag"], bool):
+        raise StyxValidationError(f'`show_obsoletes_grep_flag` has the wrong type: Received `{type(params.get("show_obsoletes_grep_flag", False))}` expected `bool`')
+    if params.get("show_system_progs_flag", False) is None:
+        raise StyxValidationError("`show_system_progs_flag` must not be None")
+    if not isinstance(params["show_system_progs_flag"], bool):
+        raise StyxValidationError(f'`show_system_progs_flag` has the wrong type: Received `{type(params.get("show_system_progs_flag", False))}` expected `bool`')
+    if params.get("sys_ok_flag", False) is None:
+        raise StyxValidationError("`sys_ok_flag` must not be None")
+    if not isinstance(params["sys_ok_flag"], bool):
+        raise StyxValidationError(f'`sys_ok_flag` has the wrong type: Received `{type(params.get("sys_ok_flag", False))}` expected `bool`')
+    if params.get("test_flag", False) is None:
+        raise StyxValidationError("`test_flag` must not be None")
+    if not isinstance(params["test_flag"], bool):
+        raise StyxValidationError(f'`test_flag` has the wrong type: Received `{type(params.get("test_flag", False))}` expected `bool`')
+    if params.get("test_protos_flag", False) is None:
+        raise StyxValidationError("`test_protos_flag` must not be None")
+    if not isinstance(params["test_protos_flag"], bool):
+        raise StyxValidationError(f'`test_protos_flag` has the wrong type: Received `{type(params.get("test_protos_flag", False))}` expected `bool`')
+    if params.get("revert_flag", False) is None:
+        raise StyxValidationError("`revert_flag` must not be None")
+    if not isinstance(params["revert_flag"], bool):
+        raise StyxValidationError(f'`revert_flag` has the wrong type: Received `{type(params.get("revert_flag", False))}` expected `bool`')
+    if params.get("local_package", None) is not None:
+        if not isinstance(params["local_package"], str):
+            raise StyxValidationError(f'`local_package` has the wrong type: Received `{type(params.get("local_package", None))}` expected `str | None`')
+    if params.get("prog_list", None) is not None:
+        if not isinstance(params["prog_list"], list):
+            raise StyxValidationError(f'`prog_list` has the wrong type: Received `{type(params.get("prog_list", None))}` expected `list[str] | None`')
+        for e in params["prog_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`prog_list` has the wrong type: Received `{type(params.get("prog_list", None))}` expected `list[str] | None`')
+    if params.get("package", None) is not None:
+        if not isinstance(params["package"], str):
+            raise StyxValidationError(f'`package` has the wrong type: Received `{type(params.get("package", None))}` expected `str | None`')
+
+
 def v__update_afni_binaries_cargs(
     params: VUpdateAfniBinariesParameters,
     execution: Execution,
@@ -297,6 +403,7 @@ def v__update_afni_binaries_execute(
     Returns:
         NamedTuple of outputs (described in `VUpdateAfniBinariesOutputs`).
     """
+    v__update_afni_binaries_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__UPDATE_AFNI_BINARIES_METADATA)
     params = execution.params(params)

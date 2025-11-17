@@ -216,6 +216,108 @@ def bet_params(
     return params
 
 
+def bet_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `BetParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("maskfile", "img_bet") is None:
+        raise StyxValidationError("`maskfile` must not be None")
+    if not isinstance(params["maskfile"], str):
+        raise StyxValidationError(f'`maskfile` has the wrong type: Received `{type(params.get("maskfile", "img_bet"))}` expected `str`')
+    if params.get("fractional_intensity", None) is not None:
+        if not isinstance(params["fractional_intensity"], (float, int)):
+            raise StyxValidationError(f'`fractional_intensity` has the wrong type: Received `{type(params.get("fractional_intensity", None))}` expected `float | None`')
+        if 0 <= params["fractional_intensity"] <= 1:
+            raise StyxValidationError("Parameter `fractional_intensity` must be between 0 and 1 (inclusive)")
+    if params.get("vg_fractional_intensity", None) is not None:
+        if not isinstance(params["vg_fractional_intensity"], (float, int)):
+            raise StyxValidationError(f'`vg_fractional_intensity` has the wrong type: Received `{type(params.get("vg_fractional_intensity", None))}` expected `float | None`')
+        if -1 <= params["vg_fractional_intensity"] <= 1:
+            raise StyxValidationError("Parameter `vg_fractional_intensity` must be between -1 and 1 (inclusive)")
+    if params.get("center_of_gravity", None) is not None:
+        if not isinstance(params["center_of_gravity"], list):
+            raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
+        if len(params["center_of_gravity"]) == 3:
+            raise StyxValidationError("Parameter `center_of_gravity` must contain exactly 3 elements")
+        for e in params["center_of_gravity"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
+    if params.get("overlay", False) is None:
+        raise StyxValidationError("`overlay` must not be None")
+    if not isinstance(params["overlay"], bool):
+        raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", False))}` expected `bool`')
+    if params.get("binary_mask", False) is None:
+        raise StyxValidationError("`binary_mask` must not be None")
+    if not isinstance(params["binary_mask"], bool):
+        raise StyxValidationError(f'`binary_mask` has the wrong type: Received `{type(params.get("binary_mask", False))}` expected `bool`')
+    if params.get("approx_skull", False) is None:
+        raise StyxValidationError("`approx_skull` must not be None")
+    if not isinstance(params["approx_skull"], bool):
+        raise StyxValidationError(f'`approx_skull` has the wrong type: Received `{type(params.get("approx_skull", False))}` expected `bool`')
+    if params.get("no_seg_output", False) is None:
+        raise StyxValidationError("`no_seg_output` must not be None")
+    if not isinstance(params["no_seg_output"], bool):
+        raise StyxValidationError(f'`no_seg_output` has the wrong type: Received `{type(params.get("no_seg_output", False))}` expected `bool`')
+    if params.get("vtk_mesh", False) is None:
+        raise StyxValidationError("`vtk_mesh` must not be None")
+    if not isinstance(params["vtk_mesh"], bool):
+        raise StyxValidationError(f'`vtk_mesh` has the wrong type: Received `{type(params.get("vtk_mesh", False))}` expected `bool`')
+    if params.get("head_radius", None) is not None:
+        if not isinstance(params["head_radius"], (float, int)):
+            raise StyxValidationError(f'`head_radius` has the wrong type: Received `{type(params.get("head_radius", None))}` expected `float | None`')
+    if params.get("thresholding", False) is None:
+        raise StyxValidationError("`thresholding` must not be None")
+    if not isinstance(params["thresholding"], bool):
+        raise StyxValidationError(f'`thresholding` has the wrong type: Received `{type(params.get("thresholding", False))}` expected `bool`')
+    if params.get("robust_iters", False) is None:
+        raise StyxValidationError("`robust_iters` must not be None")
+    if not isinstance(params["robust_iters"], bool):
+        raise StyxValidationError(f'`robust_iters` has the wrong type: Received `{type(params.get("robust_iters", False))}` expected `bool`')
+    if params.get("residual_optic_cleanup", False) is None:
+        raise StyxValidationError("`residual_optic_cleanup` must not be None")
+    if not isinstance(params["residual_optic_cleanup"], bool):
+        raise StyxValidationError(f'`residual_optic_cleanup` has the wrong type: Received `{type(params.get("residual_optic_cleanup", False))}` expected `bool`')
+    if params.get("reduce_bias", False) is None:
+        raise StyxValidationError("`reduce_bias` must not be None")
+    if not isinstance(params["reduce_bias"], bool):
+        raise StyxValidationError(f'`reduce_bias` has the wrong type: Received `{type(params.get("reduce_bias", False))}` expected `bool`')
+    if params.get("slice_padding", False) is None:
+        raise StyxValidationError("`slice_padding` must not be None")
+    if not isinstance(params["slice_padding"], bool):
+        raise StyxValidationError(f'`slice_padding` has the wrong type: Received `{type(params.get("slice_padding", False))}` expected `bool`')
+    if params.get("whole_set_mask", False) is None:
+        raise StyxValidationError("`whole_set_mask` must not be None")
+    if not isinstance(params["whole_set_mask"], bool):
+        raise StyxValidationError(f'`whole_set_mask` has the wrong type: Received `{type(params.get("whole_set_mask", False))}` expected `bool`')
+    if params.get("additional_surfaces", False) is None:
+        raise StyxValidationError("`additional_surfaces` must not be None")
+    if not isinstance(params["additional_surfaces"], bool):
+        raise StyxValidationError(f'`additional_surfaces` has the wrong type: Received `{type(params.get("additional_surfaces", False))}` expected `bool`')
+    if params.get("additional_surfaces_t2", None) is not None:
+        if not isinstance(params["additional_surfaces_t2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`additional_surfaces_t2` has the wrong type: Received `{type(params.get("additional_surfaces_t2", None))}` expected `InputPathType | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def bet_cargs(
     params: BetParameters,
     execution: Execution,
@@ -342,6 +444,7 @@ def bet_execute(
     Returns:
         NamedTuple of outputs (described in `BetOutputs`).
     """
+    bet_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BET_METADATA)
     params = execution.params(params)

@@ -92,6 +92,59 @@ def v_1d_correlate_params(
     return params
 
 
+def v_1d_correlate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dCorrelateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ktaub", False) is None:
+        raise StyxValidationError("`ktaub` must not be None")
+    if not isinstance(params["ktaub"], bool):
+        raise StyxValidationError(f'`ktaub` has the wrong type: Received `{type(params.get("ktaub", False))}` expected `bool`')
+    if params.get("nboot", None) is not None:
+        if not isinstance(params["nboot"], (float, int)):
+            raise StyxValidationError(f'`nboot` has the wrong type: Received `{type(params.get("nboot", None))}` expected `float | None`')
+    if params.get("alpha", None) is not None:
+        if not isinstance(params["alpha"], (float, int)):
+            raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float | None`')
+        if 1 <= params["alpha"] <= 20:
+            raise StyxValidationError("Parameter `alpha` must be between 1 and 20 (inclusive)")
+    if params.get("block", False) is None:
+        raise StyxValidationError("`block` must not be None")
+    if not isinstance(params["block"], bool):
+        raise StyxValidationError(f'`block` has the wrong type: Received `{type(params.get("block", False))}` expected `bool`')
+    if params.get("blk", False) is None:
+        raise StyxValidationError("`blk` must not be None")
+    if not isinstance(params["blk"], bool):
+        raise StyxValidationError(f'`blk` has the wrong type: Received `{type(params.get("blk", False))}` expected `bool`')
+    if params.get("pearson", False) is None:
+        raise StyxValidationError("`pearson` must not be None")
+    if not isinstance(params["pearson"], bool):
+        raise StyxValidationError(f'`pearson` has the wrong type: Received `{type(params.get("pearson", False))}` expected `bool`')
+    if params.get("spearman", False) is None:
+        raise StyxValidationError("`spearman` must not be None")
+    if not isinstance(params["spearman"], bool):
+        raise StyxValidationError(f'`spearman` has the wrong type: Received `{type(params.get("spearman", False))}` expected `bool`')
+    if params.get("quadrant", False) is None:
+        raise StyxValidationError("`quadrant` must not be None")
+    if not isinstance(params["quadrant"], bool):
+        raise StyxValidationError(f'`quadrant` has the wrong type: Received `{type(params.get("quadrant", False))}` expected `bool`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def v_1d_correlate_cargs(
     params: V1dCorrelateParameters,
     execution: Execution,
@@ -172,6 +225,7 @@ def v_1d_correlate_execute(
     Returns:
         NamedTuple of outputs (described in `V1dCorrelateOutputs`).
     """
+    v_1d_correlate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_CORRELATE_METADATA)
     params = execution.params(params)

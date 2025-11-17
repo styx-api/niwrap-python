@@ -106,6 +106,61 @@ def wmsaseg_params(
     return params
 
 
+def wmsaseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WmsasegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("source_orig", None) is not None:
+        if not isinstance(params["source_orig"], str):
+            raise StyxValidationError(f'`source_orig` has the wrong type: Received `{type(params.get("source_orig", None))}` expected `str | None`')
+    if params.get("source_long", False) is None:
+        raise StyxValidationError("`source_long` must not be None")
+    if not isinstance(params["source_long"], bool):
+        raise StyxValidationError(f'`source_long` has the wrong type: Received `{type(params.get("source_long", False))}` expected `bool`')
+    if params.get("output_subdir", None) is not None:
+        if not isinstance(params["output_subdir"], str):
+            raise StyxValidationError(f'`output_subdir` has the wrong type: Received `{type(params.get("output_subdir", None))}` expected `str | None`')
+    if params.get("gca_file", None) is not None:
+        if not isinstance(params["gca_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gca_file` has the wrong type: Received `{type(params.get("gca_file", None))}` expected `InputPathType | None`')
+    if params.get("no_reg", False) is None:
+        raise StyxValidationError("`no_reg` must not be None")
+    if not isinstance(params["no_reg"], bool):
+        raise StyxValidationError(f'`no_reg` has the wrong type: Received `{type(params.get("no_reg", False))}` expected `bool`')
+    if params.get("no_canorm", False) is None:
+        raise StyxValidationError("`no_canorm` must not be None")
+    if not isinstance(params["no_canorm"], bool):
+        raise StyxValidationError(f'`no_canorm` has the wrong type: Received `{type(params.get("no_canorm", False))}` expected `bool`')
+    if params.get("init_spm", False) is None:
+        raise StyxValidationError("`init_spm` must not be None")
+    if not isinstance(params["init_spm"], bool):
+        raise StyxValidationError(f'`init_spm` has the wrong type: Received `{type(params.get("init_spm", False))}` expected `bool`')
+    if params.get("reg_only", False) is None:
+        raise StyxValidationError("`reg_only` must not be None")
+    if not isinstance(params["reg_only"], bool):
+        raise StyxValidationError(f'`reg_only` has the wrong type: Received `{type(params.get("reg_only", False))}` expected `bool`')
+    if params.get("halo1", False) is None:
+        raise StyxValidationError("`halo1` must not be None")
+    if not isinstance(params["halo1"], bool):
+        raise StyxValidationError(f'`halo1` has the wrong type: Received `{type(params.get("halo1", False))}` expected `bool`')
+    if params.get("halo2", False) is None:
+        raise StyxValidationError("`halo2` must not be None")
+    if not isinstance(params["halo2"], bool):
+        raise StyxValidationError(f'`halo2` has the wrong type: Received `{type(params.get("halo2", False))}` expected `bool`')
+
+
 def wmsaseg_cargs(
     params: WmsasegParameters,
     execution: Execution,
@@ -197,6 +252,7 @@ def wmsaseg_execute(
     Returns:
         NamedTuple of outputs (described in `WmsasegOutputs`).
     """
+    wmsaseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WMSASEG_METADATA)
     params = execution.params(params)

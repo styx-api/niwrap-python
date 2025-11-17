@@ -229,6 +229,136 @@ def dcm2niix_params(
     return params
 
 
+def dcm2niix_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Dcm2niixParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("compression_level", None) is not None:
+        if not isinstance(params["compression_level"], (float, int)):
+            raise StyxValidationError(f'`compression_level` has the wrong type: Received `{type(params.get("compression_level", None))}` expected `float | None`')
+        if 1 <= params["compression_level"] <= 9:
+            raise StyxValidationError("Parameter `compression_level` must be between 1 and 9 (inclusive)")
+    if params.get("adjacent", None) is not None:
+        if not isinstance(params["adjacent"], bool):
+            raise StyxValidationError(f'`adjacent` has the wrong type: Received `{type(params.get("adjacent", None))}` expected `bool | None`')
+    if params.get("bids", None) is not None:
+        if not isinstance(params["bids"], str):
+            raise StyxValidationError(f'`bids` has the wrong type: Received `{type(params.get("bids", None))}` expected `typing.Literal["y", "n", "o"] | None`')
+        if params["bids"] not in ["y", "n", "o"]:
+            raise StyxValidationError("Parameter `bids` must be one of [\"y\", \"n\", \"o\"]")
+    if params.get("bids_anon", None) is not None:
+        if not isinstance(params["bids_anon"], bool):
+            raise StyxValidationError(f'`bids_anon` has the wrong type: Received `{type(params.get("bids_anon", None))}` expected `bool | None`')
+    if params.get("comment", None) is not None:
+        if not isinstance(params["comment"], str):
+            raise StyxValidationError(f'`comment` has the wrong type: Received `{type(params.get("comment", None))}` expected `str | None`')
+    if params.get("depth", None) is not None:
+        if not isinstance(params["depth"], (float, int)):
+            raise StyxValidationError(f'`depth` has the wrong type: Received `{type(params.get("depth", None))}` expected `float | None`')
+        if 0 <= params["depth"] <= 9:
+            raise StyxValidationError("Parameter `depth` must be between 0 and 9 (inclusive)")
+    if params.get("export_format", None) is not None:
+        if not isinstance(params["export_format"], str):
+            raise StyxValidationError(f'`export_format` has the wrong type: Received `{type(params.get("export_format", None))}` expected `typing.Literal["y", "n", "o", "j", "b"] | None`')
+        if params["export_format"] not in ["y", "n", "o", "j", "b"]:
+            raise StyxValidationError("Parameter `export_format` must be one of [\"y\", \"n\", \"o\", \"j\", \"b\"]")
+    if params.get("filename", None) is not None:
+        if not isinstance(params["filename"], str):
+            raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str | None`')
+    if params.get("defaults", None) is not None:
+        if not isinstance(params["defaults"], str):
+            raise StyxValidationError(f'`defaults` has the wrong type: Received `{type(params.get("defaults", None))}` expected `typing.Literal["y", "n", "o", "i"] | None`')
+        if params["defaults"] not in ["y", "n", "o", "i"]:
+            raise StyxValidationError("Parameter `defaults` must be one of [\"y\", \"n\", \"o\", \"i\"]")
+    if params.get("ignore_derived", None) is not None:
+        if not isinstance(params["ignore_derived"], bool):
+            raise StyxValidationError(f'`ignore_derived` has the wrong type: Received `{type(params.get("ignore_derived", None))}` expected `bool | None`')
+    if params.get("scaling", None) is not None:
+        if not isinstance(params["scaling"], str):
+            raise StyxValidationError(f'`scaling` has the wrong type: Received `{type(params.get("scaling", None))}` expected `typing.Literal["y", "n", "o"] | None`')
+        if params["scaling"] not in ["y", "n", "o"]:
+            raise StyxValidationError("Parameter `scaling` must be one of [\"y\", \"n\", \"o\"]")
+    if params.get("merge_2d", None) is not None:
+        if not isinstance(params["merge_2d"], str):
+            raise StyxValidationError(f'`merge_2d` has the wrong type: Received `{type(params.get("merge_2d", None))}` expected `typing.Literal["n", "y", "0", "1", "2"] | None`')
+        if params["merge_2d"] not in ["n", "y", "0", "1", "2"]:
+            raise StyxValidationError("Parameter `merge_2d` must be one of [\"n\", \"y\", \"0\", \"1\", \"2\"]")
+    if params.get("series_number", None) is not None:
+        if not isinstance(params["series_number"], str):
+            raise StyxValidationError(f'`series_number` has the wrong type: Received `{type(params.get("series_number", None))}` expected `str | None`')
+    if params.get("output_dir", ".") is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", "."))}` expected `str | None`')
+    if params.get("philips_scaling", None) is not None:
+        if not isinstance(params["philips_scaling"], bool):
+            raise StyxValidationError(f'`philips_scaling` has the wrong type: Received `{type(params.get("philips_scaling", None))}` expected `bool | None`')
+    if params.get("search_mode", None) is not None:
+        if not isinstance(params["search_mode"], str):
+            raise StyxValidationError(f'`search_mode` has the wrong type: Received `{type(params.get("search_mode", None))}` expected `typing.Literal["y", "l", "n"] | None`')
+        if params["search_mode"] not in ["y", "l", "n"]:
+            raise StyxValidationError("Parameter `search_mode` must be one of [\"y\", \"l\", \"n\"]")
+    if params.get("rename", None) is not None:
+        if not isinstance(params["rename"], bool):
+            raise StyxValidationError(f'`rename` has the wrong type: Received `{type(params.get("rename", None))}` expected `bool | None`')
+    if params.get("single_file", None) is not None:
+        if not isinstance(params["single_file"], bool):
+            raise StyxValidationError(f'`single_file` has the wrong type: Received `{type(params.get("single_file", None))}` expected `bool | None`')
+    if params.get("update_check", False) is None:
+        raise StyxValidationError("`update_check` must not be None")
+    if not isinstance(params["update_check"], bool):
+        raise StyxValidationError(f'`update_check` has the wrong type: Received `{type(params.get("update_check", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], str):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `typing.Literal["0", "1", "2"] | None`')
+        if params["verbose"] not in ["0", "1", "2"]:
+            raise StyxValidationError("Parameter `verbose` must be one of [\"0\", \"1\", \"2\"]")
+    if params.get("conflict_behavior", None) is not None:
+        if not isinstance(params["conflict_behavior"], (float, int)):
+            raise StyxValidationError(f'`conflict_behavior` has the wrong type: Received `{type(params.get("conflict_behavior", None))}` expected `float | None`')
+    if params.get("crop_3d", None) is not None:
+        if not isinstance(params["crop_3d"], str):
+            raise StyxValidationError(f'`crop_3d` has the wrong type: Received `{type(params.get("crop_3d", None))}` expected `typing.Literal["y", "n", "i"] | None`')
+        if params["crop_3d"] not in ["y", "n", "i"]:
+            raise StyxValidationError("Parameter `crop_3d` must be one of [\"y\", \"n\", \"i\"]")
+    if params.get("compression", None) is not None:
+        if not isinstance(params["compression"], str):
+            raise StyxValidationError(f'`compression` has the wrong type: Received `{type(params.get("compression", None))}` expected `typing.Literal["y", "o", "i", "n", "3"] | None`')
+        if params["compression"] not in ["y", "o", "i", "n", "3"]:
+            raise StyxValidationError("Parameter `compression` must be one of [\"y\", \"o\", \"i\", \"n\", \"3\"]")
+    if params.get("endian", None) is not None:
+        if not isinstance(params["endian"], str):
+            raise StyxValidationError(f'`endian` has the wrong type: Received `{type(params.get("endian", None))}` expected `typing.Literal["y", "n", "o"] | None`')
+        if params["endian"] not in ["y", "n", "o"]:
+            raise StyxValidationError("Parameter `endian` must be one of [\"y\", \"n\", \"o\"]")
+    if params.get("progress", None) is not None:
+        if not isinstance(params["progress"], bool):
+            raise StyxValidationError(f'`progress` has the wrong type: Received `{type(params.get("progress", None))}` expected `bool | None`')
+    if params.get("ignore_trigger", False) is None:
+        raise StyxValidationError("`ignore_trigger` must not be None")
+    if not isinstance(params["ignore_trigger"], bool):
+        raise StyxValidationError(f'`ignore_trigger` has the wrong type: Received `{type(params.get("ignore_trigger", False))}` expected `bool`')
+    if params.get("terse", False) is None:
+        raise StyxValidationError("`terse` must not be None")
+    if not isinstance(params["terse"], bool):
+        raise StyxValidationError(f'`terse` has the wrong type: Received `{type(params.get("terse", False))}` expected `bool`')
+    if params.get("xml", False) is None:
+        raise StyxValidationError("`xml` must not be None")
+    if not isinstance(params["xml"], bool):
+        raise StyxValidationError(f'`xml` has the wrong type: Received `{type(params.get("xml", False))}` expected `bool`')
+    if params.get("input_dir", None) is None:
+        raise StyxValidationError("`input_dir` must not be None")
+    if not isinstance(params["input_dir"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dir` has the wrong type: Received `{type(params.get("input_dir", None))}` expected `InputPathType`')
+
+
 def dcm2niix_cargs(
     params: Dcm2niixParameters,
     execution: Execution,
@@ -410,6 +540,7 @@ def dcm2niix_execute(
     Returns:
         NamedTuple of outputs (described in `Dcm2niixOutputs`).
     """
+    dcm2niix_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DCM2NIIX_METADATA)
     params = execution.params(params)

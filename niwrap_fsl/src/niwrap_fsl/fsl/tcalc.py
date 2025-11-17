@@ -137,6 +137,69 @@ def tcalc_params(
     return params
 
 
+def tcalc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TcalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("echo_time", None) is not None:
+        if not isinstance(params["echo_time"], (float, int)):
+            raise StyxValidationError(f'`echo_time` has the wrong type: Received `{type(params.get("echo_time", None))}` expected `float | None`')
+    if params.get("repetition_time", None) is not None:
+        if not isinstance(params["repetition_time"], (float, int)):
+            raise StyxValidationError(f'`repetition_time` has the wrong type: Received `{type(params.get("repetition_time", None))}` expected `float | None`')
+    if params.get("mrpar_file", None) is not None:
+        if not isinstance(params["mrpar_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mrpar_file` has the wrong type: Received `{type(params.get("mrpar_file", None))}` expected `InputPathType | None`')
+    if params.get("num_voxel_x", None) is not None:
+        if not isinstance(params["num_voxel_x"], (float, int)):
+            raise StyxValidationError(f'`num_voxel_x` has the wrong type: Received `{type(params.get("num_voxel_x", None))}` expected `float | None`')
+    if params.get("num_voxel_y", None) is not None:
+        if not isinstance(params["num_voxel_y"], (float, int)):
+            raise StyxValidationError(f'`num_voxel_y` has the wrong type: Received `{type(params.get("num_voxel_y", None))}` expected `float | None`')
+    if params.get("num_voxel_z", None) is not None:
+        if not isinstance(params["num_voxel_z"], (float, int)):
+            raise StyxValidationError(f'`num_voxel_z` has the wrong type: Received `{type(params.get("num_voxel_z", None))}` expected `float | None`')
+    if params.get("voxel_size_x", None) is not None:
+        if not isinstance(params["voxel_size_x"], (float, int)):
+            raise StyxValidationError(f'`voxel_size_x` has the wrong type: Received `{type(params.get("voxel_size_x", None))}` expected `float | None`')
+    if params.get("voxel_size_y", None) is not None:
+        if not isinstance(params["voxel_size_y"], (float, int)):
+            raise StyxValidationError(f'`voxel_size_y` has the wrong type: Received `{type(params.get("voxel_size_y", None))}` expected `float | None`')
+    if params.get("voxel_size_z", None) is not None:
+        if not isinstance(params["voxel_size_z"], (float, int)):
+            raise StyxValidationError(f'`voxel_size_z` has the wrong type: Received `{type(params.get("voxel_size_z", None))}` expected `float | None`')
+    if params.get("start_position", None) is not None:
+        if not isinstance(params["start_position"], (float, int)):
+            raise StyxValidationError(f'`start_position` has the wrong type: Received `{type(params.get("start_position", None))}` expected `float | None`')
+    if params.get("noise_sigma", None) is not None:
+        if not isinstance(params["noise_sigma"], (float, int)):
+            raise StyxValidationError(f'`noise_sigma` has the wrong type: Received `{type(params.get("noise_sigma", None))}` expected `float | None`')
+    if params.get("save_flag", False) is None:
+        raise StyxValidationError("`save_flag` must not be None")
+    if not isinstance(params["save_flag"], bool):
+        raise StyxValidationError(f'`save_flag` has the wrong type: Received `{type(params.get("save_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def tcalc_cargs(
     params: TcalcParameters,
     execution: Execution,
@@ -256,6 +319,7 @@ def tcalc_execute(
     Returns:
         NamedTuple of outputs (described in `TcalcOutputs`).
     """
+    tcalc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCALC_METADATA)
     params = execution.params(params)

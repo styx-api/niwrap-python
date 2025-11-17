@@ -96,6 +96,32 @@ def cifti_export_dense_mapping_volume_all_params(
     return params
 
 
+def cifti_export_dense_mapping_volume_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiExportDenseMappingVolumeAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("text-out", None) is None:
+        raise StyxValidationError("`text-out` must not be None")
+    if not isinstance(params["text-out"], str):
+        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
+    if params.get("no-cifti-index", False) is None:
+        raise StyxValidationError("`no-cifti-index` must not be None")
+    if not isinstance(params["no-cifti-index"], bool):
+        raise StyxValidationError(f'`no-cifti-index` has the wrong type: Received `{type(params.get("no-cifti-index", False))}` expected `bool`')
+    if params.get("structure", False) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], bool):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", False))}` expected `bool`')
+
+
 def cifti_export_dense_mapping_volume_all_cargs(
     params: CiftiExportDenseMappingVolumeAllParameters,
     execution: Execution,
@@ -144,6 +170,32 @@ def cifti_export_dense_mapping_surface_params(
     return params
 
 
+def cifti_export_dense_mapping_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiExportDenseMappingSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("text-out", None) is None:
+        raise StyxValidationError("`text-out` must not be None")
+    if not isinstance(params["text-out"], str):
+        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
+    if params.get("no-cifti-index", False) is None:
+        raise StyxValidationError("`no-cifti-index` must not be None")
+    if not isinstance(params["no-cifti-index"], bool):
+        raise StyxValidationError(f'`no-cifti-index` has the wrong type: Received `{type(params.get("no-cifti-index", False))}` expected `bool`')
+
+
 def cifti_export_dense_mapping_surface_cargs(
     params: CiftiExportDenseMappingSurfaceParameters,
     execution: Execution,
@@ -190,6 +242,32 @@ def cifti_export_dense_mapping_volume_params(
         "no-cifti-index": no_cifti_index,
     }
     return params
+
+
+def cifti_export_dense_mapping_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiExportDenseMappingVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("text-out", None) is None:
+        raise StyxValidationError("`text-out` must not be None")
+    if not isinstance(params["text-out"], str):
+        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
+    if params.get("no-cifti-index", False) is None:
+        raise StyxValidationError("`no-cifti-index` must not be None")
+    if not isinstance(params["no-cifti-index"], bool):
+        raise StyxValidationError(f'`no-cifti-index` has the wrong type: Received `{type(params.get("no-cifti-index", False))}` expected `bool`')
 
 
 def cifti_export_dense_mapping_volume_cargs(
@@ -255,6 +333,40 @@ def cifti_export_dense_mapping_params(
     if volume is not None:
         params["volume"] = volume
     return params
+
+
+def cifti_export_dense_mapping_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiExportDenseMappingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-all", None) is not None:
+        cifti_export_dense_mapping_volume_all_validate(params["volume-all"])
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], list):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiExportDenseMappingSurfaceParameters] | None`')
+        for e in params["surface"]:
+            cifti_export_dense_mapping_surface_validate(e)
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], list):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiExportDenseMappingVolumeParameters] | None`')
+        for e in params["volume"]:
+            cifti_export_dense_mapping_volume_validate(e)
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_export_dense_mapping_cargs(
@@ -364,6 +476,7 @@ def cifti_export_dense_mapping_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiExportDenseMappingOutputs`).
     """
+    cifti_export_dense_mapping_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_EXPORT_DENSE_MAPPING_METADATA)
     params = execution.params(params)

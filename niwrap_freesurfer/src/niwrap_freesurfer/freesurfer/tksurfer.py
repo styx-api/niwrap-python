@@ -65,6 +65,35 @@ def tksurfer_params(
     return params
 
 
+def tksurfer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TksurferParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("surface_name", None) is None:
+        raise StyxValidationError("`surface_name` must not be None")
+    if not isinstance(params["surface_name"], str):
+        raise StyxValidationError(f'`surface_name` has the wrong type: Received `{type(params.get("surface_name", None))}` expected `str`')
+    if params.get("options", None) is not None:
+        if not isinstance(params["options"], str):
+            raise StyxValidationError(f'`options` has the wrong type: Received `{type(params.get("options", None))}` expected `str | None`')
+
+
 def tksurfer_cargs(
     params: TksurferParameters,
     execution: Execution,
@@ -126,6 +155,7 @@ def tksurfer_execute(
     Returns:
         NamedTuple of outputs (described in `TksurferOutputs`).
     """
+    tksurfer_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TKSURFER_METADATA)
     params = execution.params(params)

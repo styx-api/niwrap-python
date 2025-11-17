@@ -54,6 +54,28 @@ def inflate_subject_lh_params(
     return params
 
 
+def inflate_subject_lh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InflateSubjectLhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_folder", None) is None:
+        raise StyxValidationError("`input_folder` must not be None")
+    if not isinstance(params["input_folder"], str):
+        raise StyxValidationError(f'`input_folder` has the wrong type: Received `{type(params.get("input_folder", None))}` expected `str`')
+    if params.get("hostname_flag", False) is None:
+        raise StyxValidationError("`hostname_flag` must not be None")
+    if not isinstance(params["hostname_flag"], bool):
+        raise StyxValidationError(f'`hostname_flag` has the wrong type: Received `{type(params.get("hostname_flag", False))}` expected `bool`')
+
+
 def inflate_subject_lh_cargs(
     params: InflateSubjectLhParameters,
     execution: Execution,
@@ -116,6 +138,7 @@ def inflate_subject_lh_execute(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectLhOutputs`).
     """
+    inflate_subject_lh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INFLATE_SUBJECT_LH_METADATA)
     params = execution.params(params)

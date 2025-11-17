@@ -131,6 +131,65 @@ def mri_synthmorph_params(
     return params
 
 
+def mri_synthmorph_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSynthmorphParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moved_output", None) is not None:
+        if not isinstance(params["moved_output"], str):
+            raise StyxValidationError(f'`moved_output` has the wrong type: Received `{type(params.get("moved_output", None))}` expected `str | None`')
+    if params.get("transform_output", None) is not None:
+        if not isinstance(params["transform_output"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transform_output` has the wrong type: Received `{type(params.get("transform_output", None))}` expected `InputPathType | None`')
+    if params.get("header_only", False) is None:
+        raise StyxValidationError("`header_only` must not be None")
+    if not isinstance(params["header_only"], bool):
+        raise StyxValidationError(f'`header_only` has the wrong type: Received `{type(params.get("header_only", False))}` expected `bool`')
+    if params.get("transformation_model", None) is not None:
+        if not isinstance(params["transformation_model"], str):
+            raise StyxValidationError(f'`transformation_model` has the wrong type: Received `{type(params.get("transformation_model", None))}` expected `typing.Literal["deform", "affine", "rigid"] | None`')
+        if params["transformation_model"] not in ["deform", "affine", "rigid"]:
+            raise StyxValidationError("Parameter `transformation_model` must be one of [\"deform\", \"affine\", \"rigid\"]")
+    if params.get("init_transform", None) is not None:
+        if not isinstance(params["init_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_transform` has the wrong type: Received `{type(params.get("init_transform", None))}` expected `InputPathType | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("gpu_flag", False) is None:
+        raise StyxValidationError("`gpu_flag` must not be None")
+    if not isinstance(params["gpu_flag"], bool):
+        raise StyxValidationError(f'`gpu_flag` has the wrong type: Received `{type(params.get("gpu_flag", False))}` expected `bool`')
+    if params.get("smooth", None) is not None:
+        if not isinstance(params["smooth"], (float, int)):
+            raise StyxValidationError(f'`smooth` has the wrong type: Received `{type(params.get("smooth", None))}` expected `float | None`')
+    if params.get("extent", None) is not None:
+        if not isinstance(params["extent"], (float, int)):
+            raise StyxValidationError(f'`extent` has the wrong type: Received `{type(params.get("extent", None))}` expected `float | None`')
+    if params.get("model_weights", None) is not None:
+        if not isinstance(params["model_weights"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`model_weights` has the wrong type: Received `{type(params.get("model_weights", None))}` expected `InputPathType | None`')
+    if params.get("inspect_directory", None) is not None:
+        if not isinstance(params["inspect_directory"], str):
+            raise StyxValidationError(f'`inspect_directory` has the wrong type: Received `{type(params.get("inspect_directory", None))}` expected `str | None`')
+
+
 def mri_synthmorph_cargs(
     params: MriSynthmorphParameters,
     execution: Execution,
@@ -241,6 +300,7 @@ def mri_synthmorph_execute(
     Returns:
         NamedTuple of outputs (described in `MriSynthmorphOutputs`).
     """
+    mri_synthmorph_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SYNTHMORPH_METADATA)
     params = execution.params(params)

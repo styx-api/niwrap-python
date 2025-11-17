@@ -66,6 +66,39 @@ def mris_surface_to_vol_distances_params(
     return params
 
 
+def mris_surface_to_vol_distances_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSurfaceToVolDistancesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("average_subject", None) is None:
+        raise StyxValidationError("`average_subject` must not be None")
+    if not isinstance(params["average_subject"], str):
+        raise StyxValidationError(f'`average_subject` has the wrong type: Received `{type(params.get("average_subject", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+
+
 def mris_surface_to_vol_distances_cargs(
     params: MrisSurfaceToVolDistancesParameters,
     execution: Execution,
@@ -127,6 +160,7 @@ def mris_surface_to_vol_distances_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSurfaceToVolDistancesOutputs`).
     """
+    mris_surface_to_vol_distances_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SURFACE_TO_VOL_DISTANCES_METADATA)
     params = execution.params(params)

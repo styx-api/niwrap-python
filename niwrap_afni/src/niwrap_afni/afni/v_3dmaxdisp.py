@@ -63,6 +63,32 @@ def v_3dmaxdisp_params(
     return params
 
 
+def v_3dmaxdisp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dmaxdispParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("matrix", None) is None:
+        raise StyxValidationError("`matrix` must not be None")
+    if not isinstance(params["matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `InputPathType`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v_3dmaxdisp_cargs(
     params: V3dmaxdispParameters,
     execution: Execution,
@@ -132,6 +158,7 @@ def v_3dmaxdisp_execute(
     Returns:
         NamedTuple of outputs (described in `V3dmaxdispOutputs`).
     """
+    v_3dmaxdisp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DMAXDISP_METADATA)
     params = execution.params(params)

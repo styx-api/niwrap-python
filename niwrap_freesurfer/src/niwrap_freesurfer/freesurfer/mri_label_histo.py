@@ -66,6 +66,36 @@ def mri_label_histo_params(
     return params
 
 
+def mri_label_histo_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriLabelHistoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_volume", None) is None:
+        raise StyxValidationError("`t1_volume` must not be None")
+    if not isinstance(params["t1_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_volume` has the wrong type: Received `{type(params.get("t1_volume", None))}` expected `InputPathType`')
+    if params.get("labeled_volume", None) is None:
+        raise StyxValidationError("`labeled_volume` must not be None")
+    if not isinstance(params["labeled_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`labeled_volume` has the wrong type: Received `{type(params.get("labeled_volume", None))}` expected `InputPathType`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (float, int)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `float`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def mri_label_histo_cargs(
     params: MriLabelHistoParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def mri_label_histo_execute(
     Returns:
         NamedTuple of outputs (described in `MriLabelHistoOutputs`).
     """
+    mri_label_histo_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_LABEL_HISTO_METADATA)
     params = execution.params(params)

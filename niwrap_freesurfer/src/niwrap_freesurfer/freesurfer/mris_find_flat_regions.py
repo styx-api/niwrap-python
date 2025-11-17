@@ -63,6 +63,31 @@ def mris_find_flat_regions_params(
     return params
 
 
+def mris_find_flat_regions_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisFindFlatRegionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("wfile", None) is None:
+        raise StyxValidationError("`wfile` must not be None")
+    if not isinstance(params["wfile"], str):
+        raise StyxValidationError(f'`wfile` has the wrong type: Received `{type(params.get("wfile", None))}` expected `str`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+
+
 def mris_find_flat_regions_cargs(
     params: MrisFindFlatRegionsParameters,
     execution: Execution,
@@ -128,6 +153,7 @@ def mris_find_flat_regions_execute(
     Returns:
         NamedTuple of outputs (described in `MrisFindFlatRegionsOutputs`).
     """
+    mris_find_flat_regions_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_FIND_FLAT_REGIONS_METADATA)
     params = execution.params(params)

@@ -49,6 +49,24 @@ def bedpostx_datacheck_params(
     return params
 
 
+def bedpostx_datacheck_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BedpostxDatacheckParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data_dir", None) is None:
+        raise StyxValidationError("`data_dir` must not be None")
+    if not isinstance(params["data_dir"], str):
+        raise StyxValidationError(f'`data_dir` has the wrong type: Received `{type(params.get("data_dir", None))}` expected `str`')
+
+
 def bedpostx_datacheck_cargs(
     params: BedpostxDatacheckParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def bedpostx_datacheck_execute(
     Returns:
         NamedTuple of outputs (described in `BedpostxDatacheckOutputs`).
     """
+    bedpostx_datacheck_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BEDPOSTX_DATACHECK_METADATA)
     params = execution.params(params)

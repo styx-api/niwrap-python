@@ -85,6 +85,28 @@ def cifti_merge_up_to_params(
     return params
 
 
+def cifti_merge_up_to_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMergeUpToParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("last-index", None) is None:
+        raise StyxValidationError("`last-index` must not be None")
+    if not isinstance(params["last-index"], str):
+        raise StyxValidationError(f'`last-index` has the wrong type: Received `{type(params.get("last-index", None))}` expected `str`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+
+
 def cifti_merge_up_to_cargs(
     params: CiftiMergeUpToParameters,
     execution: Execution,
@@ -130,6 +152,26 @@ def cifti_merge_index_params(
     return params
 
 
+def cifti_merge_index_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMergeIndexParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("index", None) is None:
+        raise StyxValidationError("`index` must not be None")
+    if not isinstance(params["index"], str):
+        raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", None))}` expected `str`')
+    if params.get("up-to", None) is not None:
+        cifti_merge_up_to_validate(params["up-to"])
+
+
 def cifti_merge_index_cargs(
     params: CiftiMergeIndexParameters,
     execution: Execution,
@@ -173,6 +215,29 @@ def cifti_merge_cifti_params(
     if index is not None:
         params["index"] = index
     return params
+
+
+def cifti_merge_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMergeCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("index", None) is not None:
+        if not isinstance(params["index"], list):
+            raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", None))}` expected `list[CiftiMergeIndexParameters] | None`')
+        for e in params["index"]:
+            cifti_merge_index_validate(e)
 
 
 def cifti_merge_cifti_cargs(
@@ -240,6 +305,35 @@ def cifti_merge_params(
     if cifti is not None:
         params["cifti"] = cifti
     return params
+
+
+def cifti_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("direction", None) is not None:
+        if not isinstance(params["direction"], str):
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str | None`')
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("cifti", None) is not None:
+        if not isinstance(params["cifti"], list):
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiMergeCiftiParameters] | None`')
+        for e in params["cifti"]:
+            cifti_merge_cifti_validate(e)
 
 
 def cifti_merge_cargs(
@@ -318,6 +412,7 @@ def cifti_merge_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiMergeOutputs`).
     """
+    cifti_merge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_MERGE_METADATA)
     params = execution.params(params)

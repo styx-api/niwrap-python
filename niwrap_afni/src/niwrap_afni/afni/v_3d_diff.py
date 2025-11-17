@@ -89,6 +89,50 @@ def v_3d_diff_params(
     return params
 
 
+def v_3d_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset_a", None) is None:
+        raise StyxValidationError("`dataset_a` must not be None")
+    if not isinstance(params["dataset_a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset_a` has the wrong type: Received `{type(params.get("dataset_a", None))}` expected `InputPathType`')
+    if params.get("dataset_b", None) is None:
+        raise StyxValidationError("`dataset_b` must not be None")
+    if not isinstance(params["dataset_b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset_b` has the wrong type: Received `{type(params.get("dataset_b", None))}` expected `InputPathType`')
+    if params.get("tolerance", None) is not None:
+        if not isinstance(params["tolerance"], (float, int)):
+            raise StyxValidationError(f'`tolerance` has the wrong type: Received `{type(params.get("tolerance", None))}` expected `float | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("quiet_mode", False) is None:
+        raise StyxValidationError("`quiet_mode` must not be None")
+    if not isinstance(params["quiet_mode"], bool):
+        raise StyxValidationError(f'`quiet_mode` has the wrong type: Received `{type(params.get("quiet_mode", False))}` expected `bool`')
+    if params.get("tabular_mode", False) is None:
+        raise StyxValidationError("`tabular_mode` must not be None")
+    if not isinstance(params["tabular_mode"], bool):
+        raise StyxValidationError(f'`tabular_mode` has the wrong type: Received `{type(params.get("tabular_mode", False))}` expected `bool`')
+    if params.get("brutalist_mode", False) is None:
+        raise StyxValidationError("`brutalist_mode` must not be None")
+    if not isinstance(params["brutalist_mode"], bool):
+        raise StyxValidationError(f'`brutalist_mode` has the wrong type: Received `{type(params.get("brutalist_mode", False))}` expected `bool`')
+    if params.get("long_report_mode", False) is None:
+        raise StyxValidationError("`long_report_mode` must not be None")
+    if not isinstance(params["long_report_mode"], bool):
+        raise StyxValidationError(f'`long_report_mode` has the wrong type: Received `{type(params.get("long_report_mode", False))}` expected `bool`')
+
+
 def v_3d_diff_cargs(
     params: V3dDiffParameters,
     execution: Execution,
@@ -172,6 +216,7 @@ def v_3d_diff_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDiffOutputs`).
     """
+    v_3d_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DIFF_METADATA)
     params = execution.params(params)

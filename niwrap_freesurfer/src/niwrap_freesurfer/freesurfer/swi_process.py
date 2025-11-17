@@ -120,6 +120,56 @@ def swi_process_params(
     return params
 
 
+def swi_process_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SwiProcessParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("magnitude_image", None) is None:
+        raise StyxValidationError("`magnitude_image` must not be None")
+    if not isinstance(params["magnitude_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`magnitude_image` has the wrong type: Received `{type(params.get("magnitude_image", None))}` expected `InputPathType`')
+    if params.get("phase_image", None) is None:
+        raise StyxValidationError("`phase_image` must not be None")
+    if not isinstance(params["phase_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`phase_image` has the wrong type: Received `{type(params.get("phase_image", None))}` expected `InputPathType`')
+    if params.get("swi_output", None) is None:
+        raise StyxValidationError("`swi_output` must not be None")
+    if not isinstance(params["swi_output"], str):
+        raise StyxValidationError(f'`swi_output` has the wrong type: Received `{type(params.get("swi_output", None))}` expected `str`')
+    if params.get("stddev", None) is not None:
+        if not isinstance(params["stddev"], (float, int)):
+            raise StyxValidationError(f'`stddev` has the wrong type: Received `{type(params.get("stddev", None))}` expected `float | None`')
+    if params.get("phase_mask_cutoff", None) is not None:
+        if not isinstance(params["phase_mask_cutoff"], (float, int)):
+            raise StyxValidationError(f'`phase_mask_cutoff` has the wrong type: Received `{type(params.get("phase_mask_cutoff", None))}` expected `float | None`')
+    if params.get("phase_mask_right_cutoff", None) is not None:
+        if not isinstance(params["phase_mask_right_cutoff"], (float, int)):
+            raise StyxValidationError(f'`phase_mask_right_cutoff` has the wrong type: Received `{type(params.get("phase_mask_right_cutoff", None))}` expected `float | None`')
+    if params.get("sigmoid_a", None) is not None:
+        if not isinstance(params["sigmoid_a"], (float, int)):
+            raise StyxValidationError(f'`sigmoid_a` has the wrong type: Received `{type(params.get("sigmoid_a", None))}` expected `float | None`')
+    if params.get("sigmoid_b", None) is not None:
+        if not isinstance(params["sigmoid_b"], (float, int)):
+            raise StyxValidationError(f'`sigmoid_b` has the wrong type: Received `{type(params.get("sigmoid_b", None))}` expected `float | None`')
+    if params.get("phase_multiplications", None) is not None:
+        if not isinstance(params["phase_multiplications"], (float, int)):
+            raise StyxValidationError(f'`phase_multiplications` has the wrong type: Received `{type(params.get("phase_multiplications", None))}` expected `float | None`')
+    if params.get("mip_level", None) is not None:
+        if not isinstance(params["mip_level"], (float, int)):
+            raise StyxValidationError(f'`mip_level` has the wrong type: Received `{type(params.get("mip_level", None))}` expected `float | None`')
+    if params.get("phase_mask_method", None) is not None:
+        if not isinstance(params["phase_mask_method"], str):
+            raise StyxValidationError(f'`phase_mask_method` has the wrong type: Received `{type(params.get("phase_mask_method", None))}` expected `str | None`')
+
+
 def swi_process_cargs(
     params: SwiProcessParameters,
     execution: Execution,
@@ -221,6 +271,7 @@ def swi_process_execute(
     Returns:
         NamedTuple of outputs (described in `SwiProcessOutputs`).
     """
+    swi_process_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SWI_PROCESS_METADATA)
     params = execution.params(params)

@@ -63,6 +63,30 @@ def connectedcomp_params(
     return params
 
 
+def connectedcomp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConnectedcompParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_volume", None) is None:
+        raise StyxValidationError("`in_volume` must not be None")
+    if not isinstance(params["in_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_volume` has the wrong type: Received `{type(params.get("in_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is not None:
+        if not isinstance(params["output_volume"], str):
+            raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str | None`')
+    if params.get("num_connect", None) is not None:
+        if not isinstance(params["num_connect"], int):
+            raise StyxValidationError(f'`num_connect` has the wrong type: Received `{type(params.get("num_connect", None))}` expected `int | None`')
+
+
 def connectedcomp_cargs(
     params: ConnectedcompParameters,
     execution: Execution,
@@ -125,6 +149,7 @@ def connectedcomp_execute(
     Returns:
         NamedTuple of outputs (described in `ConnectedcompOutputs`).
     """
+    connectedcomp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONNECTEDCOMP_METADATA)
     params = execution.params(params)

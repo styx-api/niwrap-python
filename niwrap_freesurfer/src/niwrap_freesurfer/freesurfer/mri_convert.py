@@ -150,6 +150,88 @@ def mri_convert_params(
     return params
 
 
+def mri_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inp_volume", None) is None:
+        raise StyxValidationError("`inp_volume` must not be None")
+    if not isinstance(params["inp_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inp_volume` has the wrong type: Received `{type(params.get("inp_volume", None))}` expected `InputPathType`')
+    if params.get("out_volume", None) is None:
+        raise StyxValidationError("`out_volume` must not be None")
+    if not isinstance(params["out_volume"], str):
+        raise StyxValidationError(f'`out_volume` has the wrong type: Received `{type(params.get("out_volume", None))}` expected `str`')
+    if params.get("read_only", False) is None:
+        raise StyxValidationError("`read_only` must not be None")
+    if not isinstance(params["read_only"], bool):
+        raise StyxValidationError(f'`read_only` has the wrong type: Received `{type(params.get("read_only", False))}` expected `bool`')
+    if params.get("no_write", False) is None:
+        raise StyxValidationError("`no_write` must not be None")
+    if not isinstance(params["no_write"], bool):
+        raise StyxValidationError(f'`no_write` has the wrong type: Received `{type(params.get("no_write", False))}` expected `bool`')
+    if params.get("in_info", False) is None:
+        raise StyxValidationError("`in_info` must not be None")
+    if not isinstance(params["in_info"], bool):
+        raise StyxValidationError(f'`in_info` has the wrong type: Received `{type(params.get("in_info", False))}` expected `bool`')
+    if params.get("out_info", False) is None:
+        raise StyxValidationError("`out_info` must not be None")
+    if not isinstance(params["out_info"], bool):
+        raise StyxValidationError(f'`out_info` has the wrong type: Received `{type(params.get("out_info", False))}` expected `bool`')
+    if params.get("in_stats", False) is None:
+        raise StyxValidationError("`in_stats` must not be None")
+    if not isinstance(params["in_stats"], bool):
+        raise StyxValidationError(f'`in_stats` has the wrong type: Received `{type(params.get("in_stats", False))}` expected `bool`')
+    if params.get("out_stats", False) is None:
+        raise StyxValidationError("`out_stats` must not be None")
+    if not isinstance(params["out_stats"], bool):
+        raise StyxValidationError(f'`out_stats` has the wrong type: Received `{type(params.get("out_stats", False))}` expected `bool`')
+    if params.get("upsample", None) is not None:
+        if not isinstance(params["upsample"], (float, int)):
+            raise StyxValidationError(f'`upsample` has the wrong type: Received `{type(params.get("upsample", None))}` expected `float | None`')
+    if params.get("force_ras_good", False) is None:
+        raise StyxValidationError("`force_ras_good` must not be None")
+    if not isinstance(params["force_ras_good"], bool):
+        raise StyxValidationError(f'`force_ras_good` has the wrong type: Received `{type(params.get("force_ras_good", False))}` expected `bool`')
+    if params.get("apply_transform", None) is not None:
+        if not isinstance(params["apply_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`apply_transform` has the wrong type: Received `{type(params.get("apply_transform", None))}` expected `InputPathType | None`')
+    if params.get("apply_inverse_transform", None) is not None:
+        if not isinstance(params["apply_inverse_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`apply_inverse_transform` has the wrong type: Received `{type(params.get("apply_inverse_transform", None))}` expected `InputPathType | None`')
+    if params.get("in_type", None) is not None:
+        if not isinstance(params["in_type"], str):
+            raise StyxValidationError(f'`in_type` has the wrong type: Received `{type(params.get("in_type", None))}` expected `str | None`')
+    if params.get("out_type", None) is not None:
+        if not isinstance(params["out_type"], str):
+            raise StyxValidationError(f'`out_type` has the wrong type: Received `{type(params.get("out_type", None))}` expected `str | None`')
+    if params.get("in_orientation", None) is not None:
+        if not isinstance(params["in_orientation"], str):
+            raise StyxValidationError(f'`in_orientation` has the wrong type: Received `{type(params.get("in_orientation", None))}` expected `str | None`')
+    if params.get("out_orientation", None) is not None:
+        if not isinstance(params["out_orientation"], str):
+            raise StyxValidationError(f'`out_orientation` has the wrong type: Received `{type(params.get("out_orientation", None))}` expected `str | None`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("bfile_little_endian", False) is None:
+        raise StyxValidationError("`bfile_little_endian` must not be None")
+    if not isinstance(params["bfile_little_endian"], bool):
+        raise StyxValidationError(f'`bfile_little_endian` has the wrong type: Received `{type(params.get("bfile_little_endian", False))}` expected `bool`')
+    if params.get("sphinx", False) is None:
+        raise StyxValidationError("`sphinx` must not be None")
+    if not isinstance(params["sphinx"], bool):
+        raise StyxValidationError(f'`sphinx` has the wrong type: Received `{type(params.get("sphinx", False))}` expected `bool`')
+
+
 def mri_convert_cargs(
     params: MriConvertParameters,
     execution: Execution,
@@ -268,6 +350,7 @@ def mri_convert_execute(
     Returns:
         NamedTuple of outputs (described in `MriConvertOutputs`).
     """
+    mri_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CONVERT_METADATA)
     params = execution.params(params)

@@ -157,6 +157,92 @@ def surf_info_params(
     return params
 
 
+def surf_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("com", False) is None:
+        raise StyxValidationError("`com` must not be None")
+    if not isinstance(params["com"], bool):
+        raise StyxValidationError(f'`com` has the wrong type: Received `{type(params.get("com", False))}` expected `bool`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], (float, int)):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `float | None`')
+    if params.get("detail_level", None) is not None:
+        if not isinstance(params["detail_level"], (float, int)):
+            raise StyxValidationError(f'`detail_level` has the wrong type: Received `{type(params.get("detail_level", None))}` expected `float | None`')
+    if params.get("n_node", False) is None:
+        raise StyxValidationError("`n_node` must not be None")
+    if not isinstance(params["n_node"], bool):
+        raise StyxValidationError(f'`n_node` has the wrong type: Received `{type(params.get("n_node", False))}` expected `bool`')
+    if params.get("n_faceset", False) is None:
+        raise StyxValidationError("`n_faceset` must not be None")
+    if not isinstance(params["n_faceset"], bool):
+        raise StyxValidationError(f'`n_faceset` has the wrong type: Received `{type(params.get("n_faceset", False))}` expected `bool`')
+    if params.get("n_tri", False) is None:
+        raise StyxValidationError("`n_tri` must not be None")
+    if not isinstance(params["n_tri"], bool):
+        raise StyxValidationError(f'`n_tri` has the wrong type: Received `{type(params.get("n_tri", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("separator", None) is not None:
+        if not isinstance(params["separator"], str):
+            raise StyxValidationError(f'`separator` has the wrong type: Received `{type(params.get("separator", None))}` expected `str | None`')
+    if params.get("input_surface", None) is not None:
+        if not isinstance(params["input_surface"], str):
+            raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `str | None`')
+    if params.get("surface_state", None) is not None:
+        if not isinstance(params["surface_state"], str):
+            raise StyxValidationError(f'`surface_state` has the wrong type: Received `{type(params.get("surface_state", None))}` expected `str | None`')
+    if params.get("surface_volume", None) is not None:
+        if not isinstance(params["surface_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_volume` has the wrong type: Received `{type(params.get("surface_volume", None))}` expected `InputPathType | None`')
+    if params.get("spec_file", None) is not None:
+        if not isinstance(params["spec_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType | None`')
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("noxform", False) is None:
+        raise StyxValidationError("`noxform` must not be None")
+    if not isinstance(params["noxform"], bool):
+        raise StyxValidationError(f'`noxform` has the wrong type: Received `{type(params.get("noxform", False))}` expected `bool`')
+    if params.get("setenv", None) is not None:
+        if not isinstance(params["setenv"], str):
+            raise StyxValidationError(f'`setenv` has the wrong type: Received `{type(params.get("setenv", None))}` expected `str | None`')
+    if params.get("trace", False) is None:
+        raise StyxValidationError("`trace` must not be None")
+    if not isinstance(params["trace"], bool):
+        raise StyxValidationError(f'`trace` has the wrong type: Received `{type(params.get("trace", False))}` expected `bool`')
+    if params.get("extreme_trace", False) is None:
+        raise StyxValidationError("`extreme_trace` must not be None")
+    if not isinstance(params["extreme_trace"], bool):
+        raise StyxValidationError(f'`extreme_trace` has the wrong type: Received `{type(params.get("extreme_trace", False))}` expected `bool`')
+    if params.get("nomall", False) is None:
+        raise StyxValidationError("`nomall` must not be None")
+    if not isinstance(params["nomall"], bool):
+        raise StyxValidationError(f'`nomall` has the wrong type: Received `{type(params.get("nomall", False))}` expected `bool`')
+    if params.get("yesmall", False) is None:
+        raise StyxValidationError("`yesmall` must not be None")
+    if not isinstance(params["yesmall"], bool):
+        raise StyxValidationError(f'`yesmall` has the wrong type: Received `{type(params.get("yesmall", False))}` expected `bool`')
+
+
 def surf_info_cargs(
     params: SurfInfoParameters,
     execution: Execution,
@@ -277,6 +363,7 @@ def surf_info_execute(
     Returns:
         NamedTuple of outputs (described in `SurfInfoOutputs`).
     """
+    surf_info_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_INFO_METADATA)
     params = execution.params(params)

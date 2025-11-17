@@ -93,6 +93,43 @@ def cifti_roi_average_params(
     return params
 
 
+def cifti_roi_average_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiRoiAverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-cifti", None) is not None:
+        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("text-out", None) is None:
+        raise StyxValidationError("`text-out` must not be None")
+    if not isinstance(params["text-out"], str):
+        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
+
+
 def cifti_roi_average_cargs(
     params: CiftiRoiAverageParameters,
     execution: Execution,
@@ -164,6 +201,7 @@ def cifti_roi_average_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiRoiAverageOutputs`).
     """
+    cifti_roi_average_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_ROI_AVERAGE_METADATA)
     params = execution.params(params)

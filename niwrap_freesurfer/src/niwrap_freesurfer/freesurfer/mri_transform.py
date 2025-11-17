@@ -72,6 +72,39 @@ def mri_transform_params(
     return params
 
 
+def mri_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("lta_file", None) is None:
+        raise StyxValidationError("`lta_file` must not be None")
+    if not isinstance(params["lta_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lta_file` has the wrong type: Received `{type(params.get("lta_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("out_like", None) is not None:
+        if not isinstance(params["out_like"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_like` has the wrong type: Received `{type(params.get("out_like", None))}` expected `InputPathType | None`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+
+
 def mri_transform_cargs(
     params: MriTransformParameters,
     execution: Execution,
@@ -139,6 +172,7 @@ def mri_transform_execute(
     Returns:
         NamedTuple of outputs (described in `MriTransformOutputs`).
     """
+    mri_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_TRANSFORM_METADATA)
     params = execution.params(params)

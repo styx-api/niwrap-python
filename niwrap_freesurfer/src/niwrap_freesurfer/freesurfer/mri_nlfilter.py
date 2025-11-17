@@ -112,6 +112,65 @@ def mri_nlfilter_params(
     return params
 
 
+def mri_nlfilter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriNlfilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("blur_sigma", None) is not None:
+        if not isinstance(params["blur_sigma"], (float, int)):
+            raise StyxValidationError(f'`blur_sigma` has the wrong type: Received `{type(params.get("blur_sigma", None))}` expected `float | None`')
+    if params.get("gaussian_sigma", None) is not None:
+        if not isinstance(params["gaussian_sigma"], (float, int)):
+            raise StyxValidationError(f'`gaussian_sigma` has the wrong type: Received `{type(params.get("gaussian_sigma", None))}` expected `float | None`')
+    if params.get("mean_flag", False) is None:
+        raise StyxValidationError("`mean_flag` must not be None")
+    if not isinstance(params["mean_flag"], bool):
+        raise StyxValidationError(f'`mean_flag` has the wrong type: Received `{type(params.get("mean_flag", False))}` expected `bool`')
+    if params.get("window_size", None) is not None:
+        if not isinstance(params["window_size"], (float, int)):
+            raise StyxValidationError(f'`window_size` has the wrong type: Received `{type(params.get("window_size", None))}` expected `float | None`')
+    if params.get("cplov_flag", False) is None:
+        raise StyxValidationError("`cplov_flag` must not be None")
+    if not isinstance(params["cplov_flag"], bool):
+        raise StyxValidationError(f'`cplov_flag` has the wrong type: Received `{type(params.get("cplov_flag", False))}` expected `bool`')
+    if params.get("minmax_flag", False) is None:
+        raise StyxValidationError("`minmax_flag` must not be None")
+    if not isinstance(params["minmax_flag"], bool):
+        raise StyxValidationError(f'`minmax_flag` has the wrong type: Received `{type(params.get("minmax_flag", False))}` expected `bool`')
+    if params.get("no_offsets_flag", False) is None:
+        raise StyxValidationError("`no_offsets_flag` must not be None")
+    if not isinstance(params["no_offsets_flag"], bool):
+        raise StyxValidationError(f'`no_offsets_flag` has the wrong type: Received `{type(params.get("no_offsets_flag", False))}` expected `bool`')
+    if params.get("no_crop_flag", False) is None:
+        raise StyxValidationError("`no_crop_flag` must not be None")
+    if not isinstance(params["no_crop_flag"], bool):
+        raise StyxValidationError(f'`no_crop_flag` has the wrong type: Received `{type(params.get("no_crop_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def mri_nlfilter_cargs(
     params: MriNlfilterParameters,
     execution: Execution,
@@ -202,6 +261,7 @@ def mri_nlfilter_execute(
     Returns:
         NamedTuple of outputs (described in `MriNlfilterOutputs`).
     """
+    mri_nlfilter_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_NLFILTER_METADATA)
     params = execution.params(params)

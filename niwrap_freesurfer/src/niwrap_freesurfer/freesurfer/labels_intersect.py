@@ -61,6 +61,32 @@ def labels_intersect_params(
     return params
 
 
+def labels_intersect_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelsIntersectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label1", None) is None:
+        raise StyxValidationError("`label1` must not be None")
+    if not isinstance(params["label1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label1` has the wrong type: Received `{type(params.get("label1", None))}` expected `InputPathType`')
+    if params.get("label2", None) is None:
+        raise StyxValidationError("`label2` must not be None")
+    if not isinstance(params["label2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label2` has the wrong type: Received `{type(params.get("label2", None))}` expected `InputPathType`')
+    if params.get("outputname", None) is None:
+        raise StyxValidationError("`outputname` must not be None")
+    if not isinstance(params["outputname"], str):
+        raise StyxValidationError(f'`outputname` has the wrong type: Received `{type(params.get("outputname", None))}` expected `str`')
+
+
 def labels_intersect_cargs(
     params: LabelsIntersectParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def labels_intersect_execute(
     Returns:
         NamedTuple of outputs (described in `LabelsIntersectOutputs`).
     """
+    labels_intersect_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABELS_INTERSECT_METADATA)
     params = execution.params(params)

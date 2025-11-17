@@ -73,6 +73,40 @@ def fslcomplex_params(
     return params
 
 
+def fslcomplex_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslcomplexParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("output_type", None) is None:
+        raise StyxValidationError("`output_type` must not be None")
+    if not isinstance(params["output_type"], str):
+        raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"]`')
+    if params["output_type"] not in ["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"]:
+        raise StyxValidationError("Parameter `output_type` must be one of [\"-realabs\", \"-realphase\", \"-realpolar\", \"-realcartesian\", \"-complex\", \"-complexpolar\", \"-complexsplit\", \"-complexmerge\", \"-copyonly\"]")
+    if params.get("start_vol", None) is not None:
+        if not isinstance(params["start_vol"], int):
+            raise StyxValidationError(f'`start_vol` has the wrong type: Received `{type(params.get("start_vol", None))}` expected `int | None`')
+    if params.get("end_vol", None) is not None:
+        if not isinstance(params["end_vol"], int):
+            raise StyxValidationError(f'`end_vol` has the wrong type: Received `{type(params.get("end_vol", None))}` expected `int | None`')
+
+
 def fslcomplex_cargs(
     params: FslcomplexParameters,
     execution: Execution,
@@ -137,6 +171,7 @@ def fslcomplex_execute(
     Returns:
         NamedTuple of outputs (described in `FslcomplexOutputs`).
     """
+    fslcomplex_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLCOMPLEX_METADATA)
     params = execution.params(params)

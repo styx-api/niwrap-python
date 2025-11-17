@@ -123,6 +123,77 @@ def exvivo_hemi_proc_params(
     return params
 
 
+def exvivo_hemi_proc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExvivoHemiProcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("flashdir", None) is None:
+        raise StyxValidationError("`flashdir` must not be None")
+    if not isinstance(params["flashdir"], str):
+        raise StyxValidationError(f'`flashdir` has the wrong type: Received `{type(params.get("flashdir", None))}` expected `str`')
+    if params.get("outdir", None) is None:
+        raise StyxValidationError("`outdir` must not be None")
+    if not isinstance(params["outdir"], str):
+        raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("left_hemi", False) is None:
+        raise StyxValidationError("`left_hemi` must not be None")
+    if not isinstance(params["left_hemi"], bool):
+        raise StyxValidationError(f'`left_hemi` has the wrong type: Received `{type(params.get("left_hemi", False))}` expected `bool`')
+    if params.get("right_hemi", False) is None:
+        raise StyxValidationError("`right_hemi` must not be None")
+    if not isinstance(params["right_hemi"], bool):
+        raise StyxValidationError(f'`right_hemi` has the wrong type: Received `{type(params.get("right_hemi", False))}` expected `bool`')
+    if params.get("suptent", False) is None:
+        raise StyxValidationError("`suptent` must not be None")
+    if not isinstance(params["suptent"], bool):
+        raise StyxValidationError(f'`suptent` has the wrong type: Received `{type(params.get("suptent", False))}` expected `bool`')
+    if params.get("no_rotate", False) is None:
+        raise StyxValidationError("`no_rotate` must not be None")
+    if not isinstance(params["no_rotate"], bool):
+        raise StyxValidationError(f'`no_rotate` has the wrong type: Received `{type(params.get("no_rotate", False))}` expected `bool`')
+    if params.get("t1thresh", None) is not None:
+        if not isinstance(params["t1thresh"], (float, int)):
+            raise StyxValidationError(f'`t1thresh` has the wrong type: Received `{type(params.get("t1thresh", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("check_only", False) is None:
+        raise StyxValidationError("`check_only` must not be None")
+    if not isinstance(params["check_only"], bool):
+        raise StyxValidationError(f'`check_only` has the wrong type: Received `{type(params.get("check_only", False))}` expected `bool`')
+    if params.get("prep_only", False) is None:
+        raise StyxValidationError("`prep_only` must not be None")
+    if not isinstance(params["prep_only"], bool):
+        raise StyxValidationError(f'`prep_only` has the wrong type: Received `{type(params.get("prep_only", False))}` expected `bool`')
+    if params.get("mask_only", False) is None:
+        raise StyxValidationError("`mask_only` must not be None")
+    if not isinstance(params["mask_only"], bool):
+        raise StyxValidationError(f'`mask_only` has the wrong type: Received `{type(params.get("mask_only", False))}` expected `bool`')
+    if params.get("samseg_only", False) is None:
+        raise StyxValidationError("`samseg_only` must not be None")
+    if not isinstance(params["samseg_only"], bool):
+        raise StyxValidationError(f'`samseg_only` has the wrong type: Received `{type(params.get("samseg_only", False))}` expected `bool`')
+    if params.get("stop_mmppsp_after", None) is not None:
+        if not isinstance(params["stop_mmppsp_after"], str):
+            raise StyxValidationError(f'`stop_mmppsp_after` has the wrong type: Received `{type(params.get("stop_mmppsp_after", None))}` expected `str | None`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+
+
 def exvivo_hemi_proc_cargs(
     params: ExvivoHemiProcParameters,
     execution: Execution,
@@ -225,6 +296,7 @@ def exvivo_hemi_proc_execute(
     Returns:
         NamedTuple of outputs (described in `ExvivoHemiProcOutputs`).
     """
+    exvivo_hemi_proc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EXVIVO_HEMI_PROC_METADATA)
     params = execution.params(params)

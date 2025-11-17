@@ -138,6 +138,81 @@ def run_mesh_utils_params(
     return params
 
 
+def run_mesh_utils_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunMeshUtilsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_mesh", None) is None:
+        raise StyxValidationError("`base_mesh` must not be None")
+    if not isinstance(params["base_mesh"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_mesh` has the wrong type: Received `{type(params.get("base_mesh", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("input_image", None) is not None:
+        if not isinstance(params["input_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType | None`')
+    if params.get("second_input_image", None) is not None:
+        if not isinstance(params["second_input_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`second_input_image` has the wrong type: Received `{type(params.get("second_input_image", None))}` expected `InputPathType | None`')
+    if params.get("weighting_image_force", None) is not None:
+        if not isinstance(params["weighting_image_force"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weighting_image_force` has the wrong type: Received `{type(params.get("weighting_image_force", None))}` expected `InputPathType | None`')
+    if params.get("do_uncentre_model", False) is None:
+        raise StyxValidationError("`do_uncentre_model` must not be None")
+    if not isinstance(params["do_uncentre_model"], bool):
+        raise StyxValidationError(f'`do_uncentre_model` has the wrong type: Received `{type(params.get("do_uncentre_model", False))}` expected `bool`')
+    if params.get("do_subtract_constant_from_scalars", False) is None:
+        raise StyxValidationError("`do_subtract_constant_from_scalars` must not be None")
+    if not isinstance(params["do_subtract_constant_from_scalars"], bool):
+        raise StyxValidationError(f'`do_subtract_constant_from_scalars` has the wrong type: Received `{type(params.get("do_subtract_constant_from_scalars", False))}` expected `bool`')
+    if params.get("do_vertex_scalars_to_image_volume", False) is None:
+        raise StyxValidationError("`do_vertex_scalars_to_image_volume` must not be None")
+    if not isinstance(params["do_vertex_scalars_to_image_volume"], bool):
+        raise StyxValidationError(f'`do_vertex_scalars_to_image_volume` has the wrong type: Received `{type(params.get("do_vertex_scalars_to_image_volume", False))}` expected `bool`')
+    if params.get("base_mesh2", None) is not None:
+        if not isinstance(params["base_mesh2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`base_mesh2` has the wrong type: Received `{type(params.get("base_mesh2", None))}` expected `InputPathType | None`')
+    if params.get("use_sc2", False) is None:
+        raise StyxValidationError("`use_sc2` must not be None")
+    if not isinstance(params["use_sc2"], bool):
+        raise StyxValidationError(f'`use_sc2` has the wrong type: Received `{type(params.get("use_sc2", False))}` expected `bool`')
+    if params.get("flirt_matrix", None) is not None:
+        if not isinstance(params["flirt_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`flirt_matrix` has the wrong type: Received `{type(params.get("flirt_matrix", None))}` expected `InputPathType | None`')
+    if params.get("do_mesh_reg", False) is None:
+        raise StyxValidationError("`do_mesh_reg` must not be None")
+    if not isinstance(params["do_mesh_reg"], bool):
+        raise StyxValidationError(f'`do_mesh_reg` has the wrong type: Received `{type(params.get("do_mesh_reg", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("degrees_of_freedom", None) is not None:
+        if not isinstance(params["degrees_of_freedom"], (float, int)):
+            raise StyxValidationError(f'`degrees_of_freedom` has the wrong type: Received `{type(params.get("degrees_of_freedom", None))}` expected `float | None`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def run_mesh_utils_cargs(
     params: RunMeshUtilsParameters,
     execution: Execution,
@@ -251,6 +326,7 @@ def run_mesh_utils_execute(
     Returns:
         NamedTuple of outputs (described in `RunMeshUtilsOutputs`).
     """
+    run_mesh_utils_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_MESH_UTILS_METADATA)
     params = execution.params(params)

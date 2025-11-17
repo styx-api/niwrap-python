@@ -98,6 +98,28 @@ def dirstat_fslgrad_params(
     return params
 
 
+def dirstat_fslgrad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DirstatFslgradParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
+
+
 def dirstat_fslgrad_cargs(
     params: DirstatFslgradParameters,
     execution: Execution,
@@ -137,6 +159,28 @@ def dirstat_config_params(
         "value": value,
     }
     return params
+
+
+def dirstat_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DirstatConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def dirstat_config_cargs(
@@ -248,6 +292,70 @@ def dirstat_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def dirstat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DirstatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("shells", None) is not None:
+        if not isinstance(params["shells"], list):
+            raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+        for e in params["shells"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("fslgrad", None) is not None:
+        dirstat_fslgrad_validate(params["fslgrad"])
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirstatConfigParameters] | None`')
+        for e in params["config"]:
+            dirstat_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("dirs", None) is None:
+        raise StyxValidationError("`dirs` must not be None")
+    if not isinstance(params["dirs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dirs` has the wrong type: Received `{type(params.get("dirs", None))}` expected `InputPathType`')
 
 
 def dirstat_cargs(
@@ -382,6 +490,7 @@ def dirstat_execute(
     Returns:
         NamedTuple of outputs (described in `DirstatOutputs`).
     """
+    dirstat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DIRSTAT_METADATA)
     params = execution.params(params)

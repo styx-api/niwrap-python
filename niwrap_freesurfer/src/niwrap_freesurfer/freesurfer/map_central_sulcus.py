@@ -256,6 +256,148 @@ def map_central_sulcus_params(
     return params
 
 
+def map_central_sulcus_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MapCentralSulcusParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjid", None) is None:
+        raise StyxValidationError("`subjid` must not be None")
+    if not isinstance(params["subjid"], str):
+        raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str`')
+    if params.get("process_directive", None) is None:
+        raise StyxValidationError("`process_directive` must not be None")
+    if not isinstance(params["process_directive"], str):
+        raise StyxValidationError(f'`process_directive` has the wrong type: Received `{type(params.get("process_directive", None))}` expected `str`')
+    if params.get("hemi_flag", None) is not None:
+        if not isinstance(params["hemi_flag"], str):
+            raise StyxValidationError(f'`hemi_flag` has the wrong type: Received `{type(params.get("hemi_flag", None))}` expected `str | None`')
+    if params.get("expert_prefs_file", None) is not None:
+        if not isinstance(params["expert_prefs_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`expert_prefs_file` has the wrong type: Received `{type(params.get("expert_prefs_file", None))}` expected `InputPathType | None`')
+    if params.get("xopts_use", False) is None:
+        raise StyxValidationError("`xopts_use` must not be None")
+    if not isinstance(params["xopts_use"], bool):
+        raise StyxValidationError(f'`xopts_use` has the wrong type: Received `{type(params.get("xopts_use", False))}` expected `bool`')
+    if params.get("xopts_clean", False) is None:
+        raise StyxValidationError("`xopts_clean` must not be None")
+    if not isinstance(params["xopts_clean"], bool):
+        raise StyxValidationError(f'`xopts_clean` has the wrong type: Received `{type(params.get("xopts_clean", False))}` expected `bool`')
+    if params.get("xopts_overwrite", False) is None:
+        raise StyxValidationError("`xopts_overwrite` must not be None")
+    if not isinstance(params["xopts_overwrite"], bool):
+        raise StyxValidationError(f'`xopts_overwrite` has the wrong type: Received `{type(params.get("xopts_overwrite", False))}` expected `bool`')
+    if params.get("watershed_cmd", None) is not None:
+        if not isinstance(params["watershed_cmd"], str):
+            raise StyxValidationError(f'`watershed_cmd` has the wrong type: Received `{type(params.get("watershed_cmd", None))}` expected `str | None`')
+    if params.get("xmask_file", None) is not None:
+        if not isinstance(params["xmask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xmask_file` has the wrong type: Received `{type(params.get("xmask_file", None))}` expected `InputPathType | None`')
+    if params.get("wsless", False) is None:
+        raise StyxValidationError("`wsless` must not be None")
+    if not isinstance(params["wsless"], bool):
+        raise StyxValidationError(f'`wsless` has the wrong type: Received `{type(params.get("wsless", False))}` expected `bool`')
+    if params.get("wsmore", False) is None:
+        raise StyxValidationError("`wsmore` must not be None")
+    if not isinstance(params["wsmore"], bool):
+        raise StyxValidationError(f'`wsmore` has the wrong type: Received `{type(params.get("wsmore", False))}` expected `bool`')
+    if params.get("wsatlas", False) is None:
+        raise StyxValidationError("`wsatlas` must not be None")
+    if not isinstance(params["wsatlas"], bool):
+        raise StyxValidationError(f'`wsatlas` has the wrong type: Received `{type(params.get("wsatlas", False))}` expected `bool`')
+    if params.get("no_wsatlas", False) is None:
+        raise StyxValidationError("`no_wsatlas` must not be None")
+    if not isinstance(params["no_wsatlas"], bool):
+        raise StyxValidationError(f'`no_wsatlas` has the wrong type: Received `{type(params.get("no_wsatlas", False))}` expected `bool`')
+    if params.get("no_wsgcaatlas", False) is None:
+        raise StyxValidationError("`no_wsgcaatlas` must not be None")
+    if not isinstance(params["no_wsgcaatlas"], bool):
+        raise StyxValidationError(f'`no_wsgcaatlas` has the wrong type: Received `{type(params.get("no_wsgcaatlas", False))}` expected `bool`')
+    if params.get("wsthresh", None) is not None:
+        if not isinstance(params["wsthresh"], (float, int)):
+            raise StyxValidationError(f'`wsthresh` has the wrong type: Received `{type(params.get("wsthresh", None))}` expected `float | None`')
+    if params.get("wsseed", None) is not None:
+        if not isinstance(params["wsseed"], str):
+            raise StyxValidationError(f'`wsseed` has the wrong type: Received `{type(params.get("wsseed", None))}` expected `str | None`')
+    if params.get("norm3diters", None) is not None:
+        if not isinstance(params["norm3diters"], (float, int)):
+            raise StyxValidationError(f'`norm3diters` has the wrong type: Received `{type(params.get("norm3diters", None))}` expected `float | None`')
+    if params.get("normmaxgrad", None) is not None:
+        if not isinstance(params["normmaxgrad"], (float, int)):
+            raise StyxValidationError(f'`normmaxgrad` has the wrong type: Received `{type(params.get("normmaxgrad", None))}` expected `float | None`')
+    if params.get("norm1_b", None) is not None:
+        if not isinstance(params["norm1_b"], (float, int)):
+            raise StyxValidationError(f'`norm1_b` has the wrong type: Received `{type(params.get("norm1_b", None))}` expected `float | None`')
+    if params.get("norm2_b", None) is not None:
+        if not isinstance(params["norm2_b"], (float, int)):
+            raise StyxValidationError(f'`norm2_b` has the wrong type: Received `{type(params.get("norm2_b", None))}` expected `float | None`')
+    if params.get("norm1_n", None) is not None:
+        if not isinstance(params["norm1_n"], (float, int)):
+            raise StyxValidationError(f'`norm1_n` has the wrong type: Received `{type(params.get("norm1_n", None))}` expected `float | None`')
+    if params.get("norm2_n", None) is not None:
+        if not isinstance(params["norm2_n"], (float, int)):
+            raise StyxValidationError(f'`norm2_n` has the wrong type: Received `{type(params.get("norm2_n", None))}` expected `float | None`')
+    if params.get("cm_flag", False) is None:
+        raise StyxValidationError("`cm_flag` must not be None")
+    if not isinstance(params["cm_flag"], bool):
+        raise StyxValidationError(f'`cm_flag` has the wrong type: Received `{type(params.get("cm_flag", False))}` expected `bool`')
+    if params.get("no_fix_with_ga", False) is None:
+        raise StyxValidationError("`no_fix_with_ga` must not be None")
+    if not isinstance(params["no_fix_with_ga"], bool):
+        raise StyxValidationError(f'`no_fix_with_ga` has the wrong type: Received `{type(params.get("no_fix_with_ga", False))}` expected `bool`')
+    if params.get("fix_diag_only", False) is None:
+        raise StyxValidationError("`fix_diag_only` must not be None")
+    if not isinstance(params["fix_diag_only"], bool):
+        raise StyxValidationError(f'`fix_diag_only` has the wrong type: Received `{type(params.get("fix_diag_only", False))}` expected `bool`')
+    if params.get("seg_wlo", None) is not None:
+        if not isinstance(params["seg_wlo"], (float, int)):
+            raise StyxValidationError(f'`seg_wlo` has the wrong type: Received `{type(params.get("seg_wlo", None))}` expected `float | None`')
+    if params.get("seg_ghi", None) is not None:
+        if not isinstance(params["seg_ghi"], (float, int)):
+            raise StyxValidationError(f'`seg_ghi` has the wrong type: Received `{type(params.get("seg_ghi", None))}` expected `float | None`')
+    if params.get("nothicken", False) is None:
+        raise StyxValidationError("`nothicken` must not be None")
+    if not isinstance(params["nothicken"], bool):
+        raise StyxValidationError(f'`nothicken` has the wrong type: Received `{type(params.get("nothicken", False))}` expected `bool`')
+    if params.get("no_ca_align_after", False) is None:
+        raise StyxValidationError("`no_ca_align_after` must not be None")
+    if not isinstance(params["no_ca_align_after"], bool):
+        raise StyxValidationError(f'`no_ca_align_after` has the wrong type: Received `{type(params.get("no_ca_align_after", False))}` expected `bool`')
+    if params.get("no_ca_align", False) is None:
+        raise StyxValidationError("`no_ca_align` must not be None")
+    if not isinstance(params["no_ca_align"], bool):
+        raise StyxValidationError(f'`no_ca_align` has the wrong type: Received `{type(params.get("no_ca_align", False))}` expected `bool`')
+    if params.get("deface", False) is None:
+        raise StyxValidationError("`deface` must not be None")
+    if not isinstance(params["deface"], bool):
+        raise StyxValidationError(f'`deface` has the wrong type: Received `{type(params.get("deface", False))}` expected `bool`')
+    if params.get("mprage", False) is None:
+        raise StyxValidationError("`mprage` must not be None")
+    if not isinstance(params["mprage"], bool):
+        raise StyxValidationError(f'`mprage` has the wrong type: Received `{type(params.get("mprage", False))}` expected `bool`')
+    if params.get("washu_mprage", False) is None:
+        raise StyxValidationError("`washu_mprage` must not be None")
+    if not isinstance(params["washu_mprage"], bool):
+        raise StyxValidationError(f'`washu_mprage` has the wrong type: Received `{type(params.get("washu_mprage", False))}` expected `bool`')
+    if params.get("schwartzya3t_atlas", False) is None:
+        raise StyxValidationError("`schwartzya3t_atlas` must not be None")
+    if not isinstance(params["schwartzya3t_atlas"], bool):
+        raise StyxValidationError(f'`schwartzya3t_atlas` has the wrong type: Received `{type(params.get("schwartzya3t_atlas", False))}` expected `bool`')
+    if params.get("mail_username", None) is not None:
+        if not isinstance(params["mail_username"], str):
+            raise StyxValidationError(f'`mail_username` has the wrong type: Received `{type(params.get("mail_username", None))}` expected `str | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+
+
 def map_central_sulcus_cargs(
     params: MapCentralSulcusParameters,
     execution: Execution,
@@ -436,6 +578,7 @@ def map_central_sulcus_execute(
     Returns:
         NamedTuple of outputs (described in `MapCentralSulcusOutputs`).
     """
+    map_central_sulcus_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAP_CENTRAL_SULCUS_METADATA)
     params = execution.params(params)

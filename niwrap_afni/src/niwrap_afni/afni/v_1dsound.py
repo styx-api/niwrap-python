@@ -111,6 +111,63 @@ def v_1dsound_params(
     return params
 
 
+def v_1dsound_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dsoundParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tsfile", None) is None:
+        raise StyxValidationError("`tsfile` must not be None")
+    if not isinstance(params["tsfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tsfile` has the wrong type: Received `{type(params.get("tsfile", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("encoding_16PCM", False) is None:
+        raise StyxValidationError("`encoding_16PCM` must not be None")
+    if not isinstance(params["encoding_16PCM"], bool):
+        raise StyxValidationError(f'`encoding_16PCM` has the wrong type: Received `{type(params.get("encoding_16PCM", False))}` expected `bool`')
+    if params.get("encoding_8PCM", False) is None:
+        raise StyxValidationError("`encoding_8PCM` must not be None")
+    if not isinstance(params["encoding_8PCM"], bool):
+        raise StyxValidationError(f'`encoding_8PCM` has the wrong type: Received `{type(params.get("encoding_8PCM", False))}` expected `bool`')
+    if params.get("encoding_8ulaw", False) is None:
+        raise StyxValidationError("`encoding_8ulaw` must not be None")
+    if not isinstance(params["encoding_8ulaw"], bool):
+        raise StyxValidationError(f'`encoding_8ulaw` has the wrong type: Received `{type(params.get("encoding_8ulaw", False))}` expected `bool`')
+    if params.get("tper_option", None) is not None:
+        if not isinstance(params["tper_option"], (float, int)):
+            raise StyxValidationError(f'`tper_option` has the wrong type: Received `{type(params.get("tper_option", None))}` expected `float | None`')
+        if 0.01 <= params["tper_option"] <= 1.0:
+            raise StyxValidationError("Parameter `tper_option` must be between 0.01 and 1.0 (inclusive)")
+    if params.get("fm_option", False) is None:
+        raise StyxValidationError("`fm_option` must not be None")
+    if not isinstance(params["fm_option"], bool):
+        raise StyxValidationError(f'`fm_option` has the wrong type: Received `{type(params.get("fm_option", False))}` expected `bool`')
+    if params.get("notes_option", False) is None:
+        raise StyxValidationError("`notes_option` must not be None")
+    if not isinstance(params["notes_option"], bool):
+        raise StyxValidationError(f'`notes_option` has the wrong type: Received `{type(params.get("notes_option", False))}` expected `bool`')
+    if params.get("notewave_option", None) is not None:
+        if not isinstance(params["notewave_option"], str):
+            raise StyxValidationError(f'`notewave_option` has the wrong type: Received `{type(params.get("notewave_option", None))}` expected `str | None`')
+    if params.get("despike_option", False) is None:
+        raise StyxValidationError("`despike_option` must not be None")
+    if not isinstance(params["despike_option"], bool):
+        raise StyxValidationError(f'`despike_option` has the wrong type: Received `{type(params.get("despike_option", False))}` expected `bool`')
+    if params.get("play_option", False) is None:
+        raise StyxValidationError("`play_option` must not be None")
+    if not isinstance(params["play_option"], bool):
+        raise StyxValidationError(f'`play_option` has the wrong type: Received `{type(params.get("play_option", False))}` expected `bool`')
+
+
 def v_1dsound_cargs(
     params: V1dsoundParameters,
     execution: Execution,
@@ -198,6 +255,7 @@ def v_1dsound_execute(
     Returns:
         NamedTuple of outputs (described in `V1dsoundOutputs`).
     """
+    v_1dsound_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DSOUND_METADATA)
     params = execution.params(params)

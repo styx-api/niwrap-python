@@ -60,6 +60,32 @@ def surface_set_coordinates_params(
     return params
 
 
+def surface_set_coordinates_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceSetCoordinatesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
+    if params.get("surface-in", None) is None:
+        raise StyxValidationError("`surface-in` must not be None")
+    if not isinstance(params["surface-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-in` has the wrong type: Received `{type(params.get("surface-in", None))}` expected `InputPathType`')
+    if params.get("coord-metric", None) is None:
+        raise StyxValidationError("`coord-metric` must not be None")
+    if not isinstance(params["coord-metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`coord-metric` has the wrong type: Received `{type(params.get("coord-metric", None))}` expected `InputPathType`')
+
+
 def surface_set_coordinates_cargs(
     params: SurfaceSetCoordinatesParameters,
     execution: Execution,
@@ -123,6 +149,7 @@ def surface_set_coordinates_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceSetCoordinatesOutputs`).
     """
+    surface_set_coordinates_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_SET_COORDINATES_METADATA)
     params = execution.params(params)

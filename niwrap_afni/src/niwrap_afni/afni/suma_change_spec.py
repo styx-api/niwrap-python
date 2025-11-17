@@ -80,6 +80,42 @@ def suma_change_spec_params(
     return params
 
 
+def suma_change_spec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SumaChangeSpecParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("state", None) is None:
+        raise StyxValidationError("`state` must not be None")
+    if not isinstance(params["state"], str):
+        raise StyxValidationError(f'`state` has the wrong type: Received `{type(params.get("state", None))}` expected `str`')
+    if params.get("domainparent", None) is not None:
+        if not isinstance(params["domainparent"], str):
+            raise StyxValidationError(f'`domainparent` has the wrong type: Received `{type(params.get("domainparent", None))}` expected `str | None`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("remove", False) is None:
+        raise StyxValidationError("`remove` must not be None")
+    if not isinstance(params["remove"], bool):
+        raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", False))}` expected `bool`')
+    if params.get("anatomical", False) is None:
+        raise StyxValidationError("`anatomical` must not be None")
+    if not isinstance(params["anatomical"], bool):
+        raise StyxValidationError(f'`anatomical` has the wrong type: Received `{type(params.get("anatomical", False))}` expected `bool`')
+
+
 def suma_change_spec_cargs(
     params: SumaChangeSpecParameters,
     execution: Execution,
@@ -148,6 +184,7 @@ def suma_change_spec_execute(
     Returns:
         NamedTuple of outputs (described in `SumaChangeSpecOutputs`).
     """
+    suma_change_spec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SUMA_CHANGE_SPEC_METADATA)
     params = execution.params(params)

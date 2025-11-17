@@ -159,6 +159,77 @@ def ants_motion_corr_params(
     return params
 
 
+def ants_motion_corr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsMotionCorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is not None:
+        if not isinstance(params["dimensionality"], int):
+            raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["dimensionality"] not in [2, 3]:
+            raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3]")
+    if params.get("n_images", None) is not None:
+        if not isinstance(params["n_images"], int):
+            raise StyxValidationError(f'`n_images` has the wrong type: Received `{type(params.get("n_images", None))}` expected `int | None`')
+    if params.get("metric", None) is not None:
+        if not isinstance(params["metric"], str):
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str | None`')
+    if params.get("use_fixed_reference_image", None) is not None:
+        if not isinstance(params["use_fixed_reference_image"], bool):
+            raise StyxValidationError(f'`use_fixed_reference_image` has the wrong type: Received `{type(params.get("use_fixed_reference_image", None))}` expected `bool | None`')
+    if params.get("use_scales_estimator", False) is None:
+        raise StyxValidationError("`use_scales_estimator` must not be None")
+    if not isinstance(params["use_scales_estimator"], bool):
+        raise StyxValidationError(f'`use_scales_estimator` has the wrong type: Received `{type(params.get("use_scales_estimator", False))}` expected `bool`')
+    if params.get("transform", None) is not None:
+        if not isinstance(params["transform"], str):
+            raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `str | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], str):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `str | None`')
+    if params.get("smoothing_sigmas", None) is not None:
+        if not isinstance(params["smoothing_sigmas"], str):
+            raise StyxValidationError(f'`smoothing_sigmas` has the wrong type: Received `{type(params.get("smoothing_sigmas", None))}` expected `str | None`')
+    if params.get("shrink_factors", None) is not None:
+        if not isinstance(params["shrink_factors"], str):
+            raise StyxValidationError(f'`shrink_factors` has the wrong type: Received `{type(params.get("shrink_factors", None))}` expected `str | None`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("average_image", False) is None:
+        raise StyxValidationError("`average_image` must not be None")
+    if not isinstance(params["average_image"], bool):
+        raise StyxValidationError(f'`average_image` has the wrong type: Received `{type(params.get("average_image", False))}` expected `bool`')
+    if params.get("write_displacement", False) is None:
+        raise StyxValidationError("`write_displacement` must not be None")
+    if not isinstance(params["write_displacement"], bool):
+        raise StyxValidationError(f'`write_displacement` has the wrong type: Received `{type(params.get("write_displacement", False))}` expected `bool`')
+    if params.get("use_histogram_matching", None) is not None:
+        if not isinstance(params["use_histogram_matching"], bool):
+            raise StyxValidationError(f'`use_histogram_matching` has the wrong type: Received `{type(params.get("use_histogram_matching", None))}` expected `bool | None`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], int):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
+        if params["random_seed"] >= 1:
+            raise StyxValidationError("Parameter `random_seed` must be at least 1")
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], str):
+            raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None`')
+        if params["interpolation"] not in ["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"]:
+            raise StyxValidationError("Parameter `interpolation` must be one of [\"Linear\", \"NearestNeighbor\", \"BSpline\", \"BlackmanWindowedSinc\", \"CosineWindowedSinc\", \"WelchWindowedSinc\", \"HammingWindowedSinc\", \"LanczosWindowedSinc\"]")
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def ants_motion_corr_cargs(
     params: AntsMotionCorrParameters,
     execution: Execution,
@@ -290,6 +361,7 @@ def ants_motion_corr_execute(
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrOutputs`).
     """
+    ants_motion_corr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_MOTION_CORR_METADATA)
     params = execution.params(params)

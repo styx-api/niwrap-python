@@ -204,6 +204,148 @@ def v_3d_brick_stat_params(
     return params
 
 
+def v_3d_brick_stat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dBrickStatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], str):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `str`')
+    if params.get("quick", False) is None:
+        raise StyxValidationError("`quick` must not be None")
+    if not isinstance(params["quick"], bool):
+        raise StyxValidationError(f'`quick` has the wrong type: Received `{type(params.get("quick", False))}` expected `bool`')
+    if params.get("slow", False) is None:
+        raise StyxValidationError("`slow` must not be None")
+    if not isinstance(params["slow"], bool):
+        raise StyxValidationError(f'`slow` has the wrong type: Received `{type(params.get("slow", False))}` expected `bool`')
+    if params.get("min", False) is None:
+        raise StyxValidationError("`min` must not be None")
+    if not isinstance(params["min"], bool):
+        raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", False))}` expected `bool`')
+    if params.get("max", False) is None:
+        raise StyxValidationError("`max` must not be None")
+    if not isinstance(params["max"], bool):
+        raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", False))}` expected `bool`')
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("var", False) is None:
+        raise StyxValidationError("`var` must not be None")
+    if not isinstance(params["var"], bool):
+        raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", False))}` expected `bool`')
+    if params.get("stdev", False) is None:
+        raise StyxValidationError("`stdev` must not be None")
+    if not isinstance(params["stdev"], bool):
+        raise StyxValidationError(f'`stdev` has the wrong type: Received `{type(params.get("stdev", False))}` expected `bool`')
+    if params.get("count", False) is None:
+        raise StyxValidationError("`count` must not be None")
+    if not isinstance(params["count"], bool):
+        raise StyxValidationError(f'`count` has the wrong type: Received `{type(params.get("count", False))}` expected `bool`')
+    if params.get("volume", False) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], bool):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", False))}` expected `bool`')
+    if params.get("positive", False) is None:
+        raise StyxValidationError("`positive` must not be None")
+    if not isinstance(params["positive"], bool):
+        raise StyxValidationError(f'`positive` has the wrong type: Received `{type(params.get("positive", False))}` expected `bool`')
+    if params.get("negative", False) is None:
+        raise StyxValidationError("`negative` must not be None")
+    if not isinstance(params["negative"], bool):
+        raise StyxValidationError(f'`negative` has the wrong type: Received `{type(params.get("negative", False))}` expected `bool`')
+    if params.get("zero", False) is None:
+        raise StyxValidationError("`zero` must not be None")
+    if not isinstance(params["zero"], bool):
+        raise StyxValidationError(f'`zero` has the wrong type: Received `{type(params.get("zero", False))}` expected `bool`')
+    if params.get("non_positive", False) is None:
+        raise StyxValidationError("`non_positive` must not be None")
+    if not isinstance(params["non_positive"], bool):
+        raise StyxValidationError(f'`non_positive` has the wrong type: Received `{type(params.get("non_positive", False))}` expected `bool`')
+    if params.get("non_negative", False) is None:
+        raise StyxValidationError("`non_negative` must not be None")
+    if not isinstance(params["non_negative"], bool):
+        raise StyxValidationError(f'`non_negative` has the wrong type: Received `{type(params.get("non_negative", False))}` expected `bool`')
+    if params.get("non_zero", False) is None:
+        raise StyxValidationError("`non_zero` must not be None")
+    if not isinstance(params["non_zero"], bool):
+        raise StyxValidationError(f'`non_zero` has the wrong type: Received `{type(params.get("non_zero", False))}` expected `bool`')
+    if params.get("absolute", False) is None:
+        raise StyxValidationError("`absolute` must not be None")
+    if not isinstance(params["absolute"], bool):
+        raise StyxValidationError(f'`absolute` has the wrong type: Received `{type(params.get("absolute", False))}` expected `bool`')
+    if params.get("nan", False) is None:
+        raise StyxValidationError("`nan` must not be None")
+    if not isinstance(params["nan"], bool):
+        raise StyxValidationError(f'`nan` has the wrong type: Received `{type(params.get("nan", False))}` expected `bool`')
+    if params.get("nonan", False) is None:
+        raise StyxValidationError("`nonan` must not be None")
+    if not isinstance(params["nonan"], bool):
+        raise StyxValidationError(f'`nonan` has the wrong type: Received `{type(params.get("nonan", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], str):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `str | None`')
+    if params.get("mrange", None) is not None:
+        if not isinstance(params["mrange"], list):
+            raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+        if len(params["mrange"]) == 2:
+            raise StyxValidationError("Parameter `mrange` must contain exactly 2 elements")
+        for e in params["mrange"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+    if params.get("mvalue", None) is not None:
+        if not isinstance(params["mvalue"], (float, int)):
+            raise StyxValidationError(f'`mvalue` has the wrong type: Received `{type(params.get("mvalue", None))}` expected `float | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("percentile", None) is not None:
+        if not isinstance(params["percentile"], list):
+            raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `list[float] | None`')
+        if len(params["percentile"]) == 3:
+            raise StyxValidationError("Parameter `percentile` must contain exactly 3 elements")
+        for e in params["percentile"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `list[float] | None`')
+    if params.get("perclist", None) is not None:
+        if not isinstance(params["perclist"], list):
+            raise StyxValidationError(f'`perclist` has the wrong type: Received `{type(params.get("perclist", None))}` expected `list[float] | None`')
+        for e in params["perclist"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`perclist` has the wrong type: Received `{type(params.get("perclist", None))}` expected `list[float] | None`')
+    if params.get("median", False) is None:
+        raise StyxValidationError("`median` must not be None")
+    if not isinstance(params["median"], bool):
+        raise StyxValidationError(f'`median` has the wrong type: Received `{type(params.get("median", False))}` expected `bool`')
+    if params.get("perc_quiet", False) is None:
+        raise StyxValidationError("`perc_quiet` must not be None")
+    if not isinstance(params["perc_quiet"], bool):
+        raise StyxValidationError(f'`perc_quiet` has the wrong type: Received `{type(params.get("perc_quiet", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v_3d_brick_stat_cargs(
     params: V3dBrickStatParameters,
     execution: Execution,
@@ -335,6 +477,7 @@ def v_3d_brick_stat_execute(
     Returns:
         NamedTuple of outputs (described in `V3dBrickStatOutputs`).
     """
+    v_3d_brick_stat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_BRICK_STAT_METADATA)
     params = execution.params(params)

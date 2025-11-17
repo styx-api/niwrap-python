@@ -91,6 +91,50 @@ def v_3daxialize_params(
     return params
 
 
+def v_3daxialize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3daxializeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+    if params.get("sagittal", False) is None:
+        raise StyxValidationError("`sagittal` must not be None")
+    if not isinstance(params["sagittal"], bool):
+        raise StyxValidationError(f'`sagittal` has the wrong type: Received `{type(params.get("sagittal", False))}` expected `bool`')
+    if params.get("coronal", False) is None:
+        raise StyxValidationError("`coronal` must not be None")
+    if not isinstance(params["coronal"], bool):
+        raise StyxValidationError(f'`coronal` has the wrong type: Received `{type(params.get("coronal", False))}` expected `bool`')
+    if params.get("axial", False) is None:
+        raise StyxValidationError("`axial` must not be None")
+    if not isinstance(params["axial"], bool):
+        raise StyxValidationError(f'`axial` has the wrong type: Received `{type(params.get("axial", False))}` expected `bool`')
+    if params.get("orient_code", None) is not None:
+        if not isinstance(params["orient_code"], str):
+            raise StyxValidationError(f'`orient_code` has the wrong type: Received `{type(params.get("orient_code", None))}` expected `str | None`')
+    if params.get("frugal", False) is None:
+        raise StyxValidationError("`frugal` must not be None")
+    if not isinstance(params["frugal"], bool):
+        raise StyxValidationError(f'`frugal` has the wrong type: Received `{type(params.get("frugal", False))}` expected `bool`')
+
+
 def v_3daxialize_cargs(
     params: V3daxializeParameters,
     execution: Execution,
@@ -170,6 +214,7 @@ def v_3daxialize_execute(
     Returns:
         NamedTuple of outputs (described in `V3daxializeOutputs`).
     """
+    v_3daxialize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DAXIALIZE_METADATA)
     params = execution.params(params)

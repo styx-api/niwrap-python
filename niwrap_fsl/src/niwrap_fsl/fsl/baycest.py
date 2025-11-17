@@ -86,6 +86,52 @@ def baycest_params(
     return params
 
 
+def baycest_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BaycestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data_file", None) is None:
+        raise StyxValidationError("`data_file` must not be None")
+    if not isinstance(params["data_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_file` has the wrong type: Received `{type(params.get("data_file", None))}` expected `InputPathType`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("pools_file", None) is None:
+        raise StyxValidationError("`pools_file` must not be None")
+    if not isinstance(params["pools_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pools_file` has the wrong type: Received `{type(params.get("pools_file", None))}` expected `InputPathType`')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("ptrain_file", None) is None:
+        raise StyxValidationError("`ptrain_file` must not be None")
+    if not isinstance(params["ptrain_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ptrain_file` has the wrong type: Received `{type(params.get("ptrain_file", None))}` expected `InputPathType`')
+    if params.get("spatial_flag", False) is None:
+        raise StyxValidationError("`spatial_flag` must not be None")
+    if not isinstance(params["spatial_flag"], bool):
+        raise StyxValidationError(f'`spatial_flag` has the wrong type: Received `{type(params.get("spatial_flag", False))}` expected `bool`')
+    if params.get("t12prior_flag", False) is None:
+        raise StyxValidationError("`t12prior_flag` must not be None")
+    if not isinstance(params["t12prior_flag"], bool):
+        raise StyxValidationError(f'`t12prior_flag` has the wrong type: Received `{type(params.get("t12prior_flag", False))}` expected `bool`')
+
+
 def baycest_cargs(
     params: BaycestParameters,
     execution: Execution,
@@ -153,6 +199,7 @@ def baycest_execute(
     Returns:
         NamedTuple of outputs (described in `BaycestOutputs`).
     """
+    baycest_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BAYCEST_METADATA)
     params = execution.params(params)

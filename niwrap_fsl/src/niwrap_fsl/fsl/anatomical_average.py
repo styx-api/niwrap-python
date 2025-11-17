@@ -97,6 +97,55 @@ def anatomical_average_params(
     return params
 
 
+def anatomical_average_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AnatomicalAverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_basename", None) is None:
+        raise StyxValidationError("`output_basename` must not be None")
+    if not isinstance(params["output_basename"], str):
+        raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str`')
+    if params.get("input_images", None) is None:
+        raise StyxValidationError("`input_images` must not be None")
+    if not isinstance(params["input_images"], list):
+        raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    for e in params["input_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    if params.get("standard_image", None) is not None:
+        if not isinstance(params["standard_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`standard_image` has the wrong type: Received `{type(params.get("standard_image", None))}` expected `InputPathType | None`')
+    if params.get("standard_brain_mask", None) is not None:
+        if not isinstance(params["standard_brain_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`standard_brain_mask` has the wrong type: Received `{type(params.get("standard_brain_mask", None))}` expected `InputPathType | None`')
+    if params.get("no_crop_flag", False) is None:
+        raise StyxValidationError("`no_crop_flag` must not be None")
+    if not isinstance(params["no_crop_flag"], bool):
+        raise StyxValidationError(f'`no_crop_flag` has the wrong type: Received `{type(params.get("no_crop_flag", False))}` expected `bool`')
+    if params.get("work_dir", None) is not None:
+        if not isinstance(params["work_dir"], str):
+            raise StyxValidationError(f'`work_dir` has the wrong type: Received `{type(params.get("work_dir", None))}` expected `str | None`')
+    if params.get("brainsize", None) is not None:
+        if not isinstance(params["brainsize"], (float, int)):
+            raise StyxValidationError(f'`brainsize` has the wrong type: Received `{type(params.get("brainsize", None))}` expected `float | None`')
+    if params.get("noclean_flag", False) is None:
+        raise StyxValidationError("`noclean_flag` must not be None")
+    if not isinstance(params["noclean_flag"], bool):
+        raise StyxValidationError(f'`noclean_flag` has the wrong type: Received `{type(params.get("noclean_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def anatomical_average_cargs(
     params: AnatomicalAverageParameters,
     execution: Execution,
@@ -185,6 +234,7 @@ def anatomical_average_execute(
     Returns:
         NamedTuple of outputs (described in `AnatomicalAverageOutputs`).
     """
+    anatomical_average_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANATOMICAL_AVERAGE_METADATA)
     params = execution.params(params)

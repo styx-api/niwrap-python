@@ -72,6 +72,24 @@ def v__suma_renumber_fs_params(
     return params
 
 
+def v__suma_renumber_fs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSumaRenumberFsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sumadir", None) is None:
+        raise StyxValidationError("`sumadir` must not be None")
+    if not isinstance(params["sumadir"], str):
+        raise StyxValidationError(f'`sumadir` has the wrong type: Received `{type(params.get("sumadir", None))}` expected `str`')
+
+
 def v__suma_renumber_fs_cargs(
     params: VSumaRenumberFsParameters,
     execution: Execution,
@@ -141,6 +159,7 @@ def v__suma_renumber_fs_execute(
     Returns:
         NamedTuple of outputs (described in `VSumaRenumberFsOutputs`).
     """
+    v__suma_renumber_fs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SUMA_RENUMBER_FS_METADATA)
     params = execution.params(params)

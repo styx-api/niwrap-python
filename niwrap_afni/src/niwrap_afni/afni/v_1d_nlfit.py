@@ -86,6 +86,42 @@ def v_1d_nlfit_params(
     return params
 
 
+def v_1d_nlfit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dNlfitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
+    if params.get("independent_variable", None) is None:
+        raise StyxValidationError("`independent_variable` must not be None")
+    if not isinstance(params["independent_variable"], str):
+        raise StyxValidationError(f'`independent_variable` has the wrong type: Received `{type(params.get("independent_variable", None))}` expected `str`')
+    if params.get("parameters", None) is None:
+        raise StyxValidationError("`parameters` must not be None")
+    if not isinstance(params["parameters"], list):
+        raise StyxValidationError(f'`parameters` has the wrong type: Received `{type(params.get("parameters", None))}` expected `list[str]`')
+    for e in params["parameters"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`parameters` has the wrong type: Received `{type(params.get("parameters", None))}` expected `list[str]`')
+    if params.get("dependent_data", None) is None:
+        raise StyxValidationError("`dependent_data` must not be None")
+    if not isinstance(params["dependent_data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dependent_data` has the wrong type: Received `{type(params.get("dependent_data", None))}` expected `InputPathType`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], int):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `int | None`')
+
+
 def v_1d_nlfit_cargs(
     params: V1dNlfitParameters,
     execution: Execution,
@@ -165,6 +201,7 @@ def v_1d_nlfit_execute(
     Returns:
         NamedTuple of outputs (described in `V1dNlfitOutputs`).
     """
+    v_1d_nlfit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_NLFIT_METADATA)
     params = execution.params(params)

@@ -67,6 +67,35 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml_params(
     return params
 
 
+def segment_subject_t1_t2_auto_estimate_alveus_ml_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentSubjectT1T2AutoEstimateAlveusMlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_t1", None) is None:
+        raise StyxValidationError("`input_t1` must not be None")
+    if not isinstance(params["input_t1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_t1` has the wrong type: Received `{type(params.get("input_t1", None))}` expected `InputPathType`')
+    if params.get("input_t2", None) is None:
+        raise StyxValidationError("`input_t2` must not be None")
+    if not isinstance(params["input_t2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_t2` has the wrong type: Received `{type(params.get("input_t2", None))}` expected `InputPathType`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+    if params.get("other_options", None) is not None:
+        if not isinstance(params["other_options"], str):
+            raise StyxValidationError(f'`other_options` has the wrong type: Received `{type(params.get("other_options", None))}` expected `str | None`')
+
+
 def segment_subject_t1_t2_auto_estimate_alveus_ml_cargs(
     params: SegmentSubjectT1T2AutoEstimateAlveusMlParameters,
     execution: Execution,
@@ -130,6 +159,7 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT1T2AutoEstimateAlveusMlOutputs`).
     """
+    segment_subject_t1_t2_auto_estimate_alveus_ml_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_SUBJECT_T1_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = execution.params(params)

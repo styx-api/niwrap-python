@@ -228,6 +228,124 @@ def mri_glmfit_sim_params(
     return params
 
 
+def mri_glmfit_sim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriGlmfitSimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("glmdir", None) is None:
+        raise StyxValidationError("`glmdir` must not be None")
+    if not isinstance(params["glmdir"], str):
+        raise StyxValidationError(f'`glmdir` has the wrong type: Received `{type(params.get("glmdir", None))}` expected `str`')
+    if params.get("cwp", None) is not None:
+        if not isinstance(params["cwp"], (float, int)):
+            raise StyxValidationError(f'`cwp` has the wrong type: Received `{type(params.get("cwp", None))}` expected `float | None`')
+    if params.get("mczsim", None) is not None:
+        if not isinstance(params["mczsim"], str):
+            raise StyxValidationError(f'`mczsim` has the wrong type: Received `{type(params.get("mczsim", None))}` expected `str | None`')
+    if params.get("mczsim_dir", None) is not None:
+        if not isinstance(params["mczsim_dir"], str):
+            raise StyxValidationError(f'`mczsim_dir` has the wrong type: Received `{type(params.get("mczsim_dir", None))}` expected `str | None`')
+    if params.get("mczsim_label", None) is not None:
+        if not isinstance(params["mczsim_label"], str):
+            raise StyxValidationError(f'`mczsim_label` has the wrong type: Received `{type(params.get("mczsim_label", None))}` expected `str | None`')
+    if params.get("perm", None) is not None:
+        if not isinstance(params["perm"], str):
+            raise StyxValidationError(f'`perm` has the wrong type: Received `{type(params.get("perm", None))}` expected `str | None`')
+    if params.get("perm_resid", False) is None:
+        raise StyxValidationError("`perm_resid` must not be None")
+    if not isinstance(params["perm_resid"], bool):
+        raise StyxValidationError(f'`perm_resid` has the wrong type: Received `{type(params.get("perm_resid", False))}` expected `bool`')
+    if params.get("perm_signflip", False) is None:
+        raise StyxValidationError("`perm_signflip` must not be None")
+    if not isinstance(params["perm_signflip"], bool):
+        raise StyxValidationError(f'`perm_signflip` has the wrong type: Received `{type(params.get("perm_signflip", False))}` expected `bool`')
+    if params.get("grf", None) is not None:
+        if not isinstance(params["grf"], str):
+            raise StyxValidationError(f'`grf` has the wrong type: Received `{type(params.get("grf", None))}` expected `str | None`')
+    if params.get("spaces_2", False) is None:
+        raise StyxValidationError("`spaces_2` must not be None")
+    if not isinstance(params["spaces_2"], bool):
+        raise StyxValidationError(f'`spaces_2` has the wrong type: Received `{type(params.get("spaces_2", False))}` expected `bool`')
+    if params.get("spaces_3", False) is None:
+        raise StyxValidationError("`spaces_3` must not be None")
+    if not isinstance(params["spaces_3"], bool):
+        raise StyxValidationError(f'`spaces_3` has the wrong type: Received `{type(params.get("spaces_3", False))}` expected `bool`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("bg", None) is not None:
+        if not isinstance(params["bg"], (float, int)):
+            raise StyxValidationError(f'`bg` has the wrong type: Received `{type(params.get("bg", None))}` expected `float | None`')
+    if params.get("sleep", None) is not None:
+        if not isinstance(params["sleep"], (float, int)):
+            raise StyxValidationError(f'`sleep` has the wrong type: Received `{type(params.get("sleep", None))}` expected `float | None`')
+    if params.get("a2009s", False) is None:
+        raise StyxValidationError("`a2009s` must not be None")
+    if not isinstance(params["a2009s"], bool):
+        raise StyxValidationError(f'`a2009s` has the wrong type: Received `{type(params.get("a2009s", False))}` expected `bool`')
+    if params.get("annot", None) is not None:
+        if not isinstance(params["annot"], str):
+            raise StyxValidationError(f'`annot` has the wrong type: Received `{type(params.get("annot", None))}` expected `str | None`')
+    if params.get("log", None) is not None:
+        if not isinstance(params["log"], str):
+            raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `str | None`')
+    if params.get("base", None) is not None:
+        if not isinstance(params["base"], str):
+            raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `str | None`')
+    if params.get("no_sim", None) is not None:
+        if not isinstance(params["no_sim"], str):
+            raise StyxValidationError(f'`no_sim` has the wrong type: Received `{type(params.get("no_sim", None))}` expected `str | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("fwhm_override", None) is not None:
+        if not isinstance(params["fwhm_override"], (float, int)):
+            raise StyxValidationError(f'`fwhm_override` has the wrong type: Received `{type(params.get("fwhm_override", None))}` expected `float | None`')
+    if params.get("fwhm_add", None) is not None:
+        if not isinstance(params["fwhm_add"], (float, int)):
+            raise StyxValidationError(f'`fwhm_add` has the wrong type: Received `{type(params.get("fwhm_add", None))}` expected `float | None`')
+    if params.get("uniform", None) is not None:
+        if not isinstance(params["uniform"], list):
+            raise StyxValidationError(f'`uniform` has the wrong type: Received `{type(params.get("uniform", None))}` expected `list[float] | None`')
+        if len(params["uniform"]) <= 2:
+            raise StyxValidationError("Parameter `uniform` must contain at most 2 elements")
+        for e in params["uniform"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`uniform` has the wrong type: Received `{type(params.get("uniform", None))}` expected `list[float] | None`')
+    if params.get("no_out_annot", False) is None:
+        raise StyxValidationError("`no_out_annot` must not be None")
+    if not isinstance(params["no_out_annot"], bool):
+        raise StyxValidationError(f'`no_out_annot` has the wrong type: Received `{type(params.get("no_out_annot", False))}` expected `bool`')
+    if params.get("no_cluster_mean", False) is None:
+        raise StyxValidationError("`no_cluster_mean` must not be None")
+    if not isinstance(params["no_cluster_mean"], bool):
+        raise StyxValidationError(f'`no_cluster_mean` has the wrong type: Received `{type(params.get("no_cluster_mean", False))}` expected `bool`')
+    if params.get("y_file", None) is not None:
+        if not isinstance(params["y_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`y_file` has the wrong type: Received `{type(params.get("y_file", None))}` expected `InputPathType | None`')
+    if params.get("centroid", False) is None:
+        raise StyxValidationError("`centroid` must not be None")
+    if not isinstance(params["centroid"], bool):
+        raise StyxValidationError(f'`centroid` has the wrong type: Received `{type(params.get("centroid", False))}` expected `bool`')
+    if params.get("spatial_sum", False) is None:
+        raise StyxValidationError("`spatial_sum` must not be None")
+    if not isinstance(params["spatial_sum"], bool):
+        raise StyxValidationError(f'`spatial_sum` has the wrong type: Received `{type(params.get("spatial_sum", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_glmfit_sim_cargs(
     params: MriGlmfitSimParameters,
     execution: Execution,
@@ -404,6 +522,7 @@ def mri_glmfit_sim_execute(
     Returns:
         NamedTuple of outputs (described in `MriGlmfitSimOutputs`).
     """
+    mri_glmfit_sim_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GLMFIT_SIM_METADATA)
     params = execution.params(params)

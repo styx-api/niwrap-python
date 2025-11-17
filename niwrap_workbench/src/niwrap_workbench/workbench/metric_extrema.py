@@ -90,6 +90,28 @@ def metric_extrema_presmooth_params(
     return params
 
 
+def metric_extrema_presmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricExtremaPresmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+
+
 def metric_extrema_presmooth_cargs(
     params: MetricExtremaPresmoothParameters,
     execution: Execution,
@@ -132,6 +154,28 @@ def metric_extrema_threshold_params(
         "high": high,
     }
     return params
+
+
+def metric_extrema_threshold_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricExtremaThresholdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("low", None) is None:
+        raise StyxValidationError("`low` must not be None")
+    if not isinstance(params["low"], (float, int)):
+        raise StyxValidationError(f'`low` has the wrong type: Received `{type(params.get("low", None))}` expected `float`')
+    if params.get("high", None) is None:
+        raise StyxValidationError("`high` must not be None")
+    if not isinstance(params["high"], (float, int)):
+        raise StyxValidationError(f'`high` has the wrong type: Received `{type(params.get("high", None))}` expected `float`')
 
 
 def metric_extrema_threshold_cargs(
@@ -226,6 +270,62 @@ def metric_extrema_params(
     if column is not None:
         params["column"] = column
     return params
+
+
+def metric_extrema_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricExtremaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("presmooth", None) is not None:
+        metric_extrema_presmooth_validate(params["presmooth"])
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("threshold", None) is not None:
+        metric_extrema_threshold_validate(params["threshold"])
+    if params.get("sum-columns", False) is None:
+        raise StyxValidationError("`sum-columns` must not be None")
+    if not isinstance(params["sum-columns"], bool):
+        raise StyxValidationError(f'`sum-columns` has the wrong type: Received `{type(params.get("sum-columns", False))}` expected `bool`')
+    if params.get("consolidate-mode", False) is None:
+        raise StyxValidationError("`consolidate-mode` must not be None")
+    if not isinstance(params["consolidate-mode"], bool):
+        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
+    if params.get("only-maxima", False) is None:
+        raise StyxValidationError("`only-maxima` must not be None")
+    if not isinstance(params["only-maxima"], bool):
+        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
+    if params.get("only-minima", False) is None:
+        raise StyxValidationError("`only-minima` must not be None")
+    if not isinstance(params["only-minima"], bool):
+        raise StyxValidationError(f'`only-minima` has the wrong type: Received `{type(params.get("only-minima", False))}` expected `bool`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
 
 
 def metric_extrema_cargs(
@@ -323,6 +423,7 @@ def metric_extrema_execute(
     Returns:
         NamedTuple of outputs (described in `MetricExtremaOutputs`).
     """
+    metric_extrema_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_EXTREMA_METADATA)
     params = execution.params(params)

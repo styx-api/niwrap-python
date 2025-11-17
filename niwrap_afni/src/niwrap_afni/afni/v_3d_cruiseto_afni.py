@@ -73,6 +73,28 @@ def v_3d_cruiseto_afni_trace_params(
     return params
 
 
+def v_3d_cruiseto_afni_trace_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dCruisetoAfniTraceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("trace", False) is None:
+        raise StyxValidationError("`trace` must not be None")
+    if not isinstance(params["trace"], bool):
+        raise StyxValidationError(f'`trace` has the wrong type: Received `{type(params.get("trace", False))}` expected `bool`')
+    if params.get("TRACE", False) is None:
+        raise StyxValidationError("`TRACE` must not be None")
+    if not isinstance(params["TRACE"], bool):
+        raise StyxValidationError(f'`TRACE` has the wrong type: Received `{type(params.get("TRACE", False))}` expected `bool`')
+
+
 def v_3d_cruiseto_afni_trace_cargs(
     params: V3dCruisetoAfniTraceParameters,
     execution: Execution,
@@ -147,6 +169,53 @@ def v_3d_cruiseto_afni_params(
     if trace_ is not None:
         params["trace"] = trace_
     return params
+
+
+def v_3d_cruiseto_afni_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dCruisetoAfniParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("noxform", False) is None:
+        raise StyxValidationError("`noxform` must not be None")
+    if not isinstance(params["noxform"], bool):
+        raise StyxValidationError(f'`noxform` has the wrong type: Received `{type(params.get("noxform", False))}` expected `bool`')
+    if params.get("setenv", None) is not None:
+        if not isinstance(params["setenv"], str):
+            raise StyxValidationError(f'`setenv` has the wrong type: Received `{type(params.get("setenv", None))}` expected `str | None`')
+    if params.get("trace", None) is not None:
+        v_3d_cruiseto_afni_trace_validate(params["trace"])
+    if params.get("nomall", False) is None:
+        raise StyxValidationError("`nomall` must not be None")
+    if not isinstance(params["nomall"], bool):
+        raise StyxValidationError(f'`nomall` has the wrong type: Received `{type(params.get("nomall", False))}` expected `bool`')
+    if params.get("yesmall", False) is None:
+        raise StyxValidationError("`yesmall` must not be None")
+    if not isinstance(params["yesmall"], bool):
+        raise StyxValidationError(f'`yesmall` has the wrong type: Received `{type(params.get("yesmall", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("h", False) is None:
+        raise StyxValidationError("`h` must not be None")
+    if not isinstance(params["h"], bool):
+        raise StyxValidationError(f'`h` has the wrong type: Received `{type(params.get("h", False))}` expected `bool`')
 
 
 def v_3d_cruiseto_afni_cargs(
@@ -228,6 +297,7 @@ def v_3d_cruiseto_afni_execute(
     Returns:
         NamedTuple of outputs (described in `V3dCruisetoAfniOutputs`).
     """
+    v_3d_cruiseto_afni_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_CRUISETO_AFNI_METADATA)
     params = execution.params(params)

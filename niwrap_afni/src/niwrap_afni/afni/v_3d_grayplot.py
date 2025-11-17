@@ -133,6 +133,79 @@ def v_3d_grayplot_params(
     return params
 
 
+def v_3d_grayplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dGrayplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("dimensions", None) is not None:
+        if not isinstance(params["dimensions"], list):
+            raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `list[float] | None`')
+        if len(params["dimensions"]) == 2:
+            raise StyxValidationError("Parameter `dimensions` must contain exactly 2 elements")
+        for e in params["dimensions"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `list[float] | None`')
+    if params.get("resample_old", False) is None:
+        raise StyxValidationError("`resample_old` must not be None")
+    if not isinstance(params["resample_old"], bool):
+        raise StyxValidationError(f'`resample_old` has the wrong type: Received `{type(params.get("resample_old", False))}` expected `bool`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], (float, int)):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `float | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("pvorder", False) is None:
+        raise StyxValidationError("`pvorder` must not be None")
+    if not isinstance(params["pvorder"], bool):
+        raise StyxValidationError(f'`pvorder` has the wrong type: Received `{type(params.get("pvorder", False))}` expected `bool`')
+    if params.get("LJorder", False) is None:
+        raise StyxValidationError("`LJorder` must not be None")
+    if not isinstance(params["LJorder"], bool):
+        raise StyxValidationError(f'`LJorder` has the wrong type: Received `{type(params.get("LJorder", False))}` expected `bool`')
+    if params.get("peelorder", False) is None:
+        raise StyxValidationError("`peelorder` must not be None")
+    if not isinstance(params["peelorder"], bool):
+        raise StyxValidationError(f'`peelorder` has the wrong type: Received `{type(params.get("peelorder", False))}` expected `bool`')
+    if params.get("ijkorder", False) is None:
+        raise StyxValidationError("`ijkorder` must not be None")
+    if not isinstance(params["ijkorder"], bool):
+        raise StyxValidationError(f'`ijkorder` has the wrong type: Received `{type(params.get("ijkorder", False))}` expected `bool`')
+    if params.get("range", None) is not None:
+        if not isinstance(params["range"], (float, int)):
+            raise StyxValidationError(f'`range` has the wrong type: Received `{type(params.get("range", None))}` expected `float | None`')
+    if params.get("percent", False) is None:
+        raise StyxValidationError("`percent` must not be None")
+    if not isinstance(params["percent"], bool):
+        raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", False))}` expected `bool`')
+    if params.get("raw_with_bounds", None) is not None:
+        if not isinstance(params["raw_with_bounds"], list):
+            raise StyxValidationError(f'`raw_with_bounds` has the wrong type: Received `{type(params.get("raw_with_bounds", None))}` expected `list[float] | None`')
+        if len(params["raw_with_bounds"]) == 2:
+            raise StyxValidationError("Parameter `raw_with_bounds` must contain exactly 2 elements")
+        for e in params["raw_with_bounds"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`raw_with_bounds` has the wrong type: Received `{type(params.get("raw_with_bounds", None))}` expected `list[float] | None`')
+
+
 def v_3d_grayplot_cargs(
     params: V3dGrayplotParameters,
     execution: Execution,
@@ -239,6 +312,7 @@ def v_3d_grayplot_execute(
     Returns:
         NamedTuple of outputs (described in `V3dGrayplotOutputs`).
     """
+    v_3d_grayplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_GRAYPLOT_METADATA)
     params = execution.params(params)

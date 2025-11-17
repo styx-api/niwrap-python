@@ -259,6 +259,164 @@ def dcmunpack_params(
     return params
 
 
+def dcmunpack_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DcmunpackParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("src", None) is None:
+        raise StyxValidationError("`src` must not be None")
+    if not isinstance(params["src"], str):
+        raise StyxValidationError(f'`src` has the wrong type: Received `{type(params.get("src", None))}` expected `str`')
+    if params.get("targ", None) is not None:
+        if not isinstance(params["targ"], str):
+            raise StyxValidationError(f'`targ` has the wrong type: Received `{type(params.get("targ", None))}` expected `str | None`')
+    if params.get("run", None) is not None:
+        if not isinstance(params["run"], str):
+            raise StyxValidationError(f'`run` has the wrong type: Received `{type(params.get("run", None))}` expected `str | None`')
+    if params.get("auto_runseq", None) is not None:
+        if not isinstance(params["auto_runseq"], str):
+            raise StyxValidationError(f'`auto_runseq` has the wrong type: Received `{type(params.get("auto_runseq", None))}` expected `str | None`')
+    if params.get("keep_scouts", False) is None:
+        raise StyxValidationError("`keep_scouts` must not be None")
+    if not isinstance(params["keep_scouts"], bool):
+        raise StyxValidationError(f'`keep_scouts` has the wrong type: Received `{type(params.get("keep_scouts", False))}` expected `bool`')
+    if params.get("scanonly", None) is not None:
+        if not isinstance(params["scanonly"], str):
+            raise StyxValidationError(f'`scanonly` has the wrong type: Received `{type(params.get("scanonly", None))}` expected `str | None`')
+    if params.get("one_per_dir", False) is None:
+        raise StyxValidationError("`one_per_dir` must not be None")
+    if not isinstance(params["one_per_dir"], bool):
+        raise StyxValidationError(f'`one_per_dir` has the wrong type: Received `{type(params.get("one_per_dir", False))}` expected `bool`')
+    if params.get("ext", None) is not None:
+        if not isinstance(params["ext"], str):
+            raise StyxValidationError(f'`ext` has the wrong type: Received `{type(params.get("ext", None))}` expected `str | None`')
+    if params.get("pre", None) is not None:
+        if not isinstance(params["pre"], str):
+            raise StyxValidationError(f'`pre` has the wrong type: Received `{type(params.get("pre", None))}` expected `str | None`')
+    if params.get("pat", None) is not None:
+        if not isinstance(params["pat"], str):
+            raise StyxValidationError(f'`pat` has the wrong type: Received `{type(params.get("pat", None))}` expected `str | None`')
+    if params.get("no_infodump", False) is None:
+        raise StyxValidationError("`no_infodump` must not be None")
+    if not isinstance(params["no_infodump"], bool):
+        raise StyxValidationError(f'`no_infodump` has the wrong type: Received `{type(params.get("no_infodump", False))}` expected `bool`')
+    if params.get("generic", False) is None:
+        raise StyxValidationError("`generic` must not be None")
+    if not isinstance(params["generic"], bool):
+        raise StyxValidationError(f'`generic` has the wrong type: Received `{type(params.get("generic", False))}` expected `bool`')
+    if params.get("copy_only", False) is None:
+        raise StyxValidationError("`copy_only` must not be None")
+    if not isinstance(params["copy_only"], bool):
+        raise StyxValidationError(f'`copy_only` has the wrong type: Received `{type(params.get("copy_only", False))}` expected `bool`')
+    if params.get("no_convert", False) is None:
+        raise StyxValidationError("`no_convert` must not be None")
+    if not isinstance(params["no_convert"], bool):
+        raise StyxValidationError(f'`no_convert` has the wrong type: Received `{type(params.get("no_convert", False))}` expected `bool`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+    if params.get("max", False) is None:
+        raise StyxValidationError("`max` must not be None")
+    if not isinstance(params["max"], bool):
+        raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", False))}` expected `bool`')
+    if params.get("base", False) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], bool):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", False))}` expected `bool`')
+    if params.get("key_string", None) is not None:
+        if not isinstance(params["key_string"], str):
+            raise StyxValidationError(f'`key_string` has the wrong type: Received `{type(params.get("key_string", None))}` expected `str | None`')
+    if params.get("index_out", None) is not None:
+        if not isinstance(params["index_out"], str):
+            raise StyxValidationError(f'`index_out` has the wrong type: Received `{type(params.get("index_out", None))}` expected `str | None`')
+    if params.get("index_in", None) is not None:
+        if not isinstance(params["index_in"], str):
+            raise StyxValidationError(f'`index_in` has the wrong type: Received `{type(params.get("index_in", None))}` expected `str | None`')
+    if params.get("it_dicom", False) is None:
+        raise StyxValidationError("`it_dicom` must not be None")
+    if not isinstance(params["it_dicom"], bool):
+        raise StyxValidationError(f'`it_dicom` has the wrong type: Received `{type(params.get("it_dicom", False))}` expected `bool`')
+    if params.get("no_exit_on_error", False) is None:
+        raise StyxValidationError("`no_exit_on_error` must not be None")
+    if not isinstance(params["no_exit_on_error"], bool):
+        raise StyxValidationError(f'`no_exit_on_error` has the wrong type: Received `{type(params.get("no_exit_on_error", False))}` expected `bool`')
+    if params.get("run_skip", None) is not None:
+        if not isinstance(params["run_skip"], str):
+            raise StyxValidationError(f'`run_skip` has the wrong type: Received `{type(params.get("run_skip", None))}` expected `str | None`')
+    if params.get("no_rescale_dicom", False) is None:
+        raise StyxValidationError("`no_rescale_dicom` must not be None")
+    if not isinstance(params["no_rescale_dicom"], bool):
+        raise StyxValidationError(f'`no_rescale_dicom` has the wrong type: Received `{type(params.get("no_rescale_dicom", False))}` expected `bool`')
+    if params.get("rescale_dicom", False) is None:
+        raise StyxValidationError("`rescale_dicom` must not be None")
+    if not isinstance(params["rescale_dicom"], bool):
+        raise StyxValidationError(f'`rescale_dicom` has the wrong type: Received `{type(params.get("rescale_dicom", False))}` expected `bool`')
+    if params.get("no_dwi", False) is None:
+        raise StyxValidationError("`no_dwi` must not be None")
+    if not isinstance(params["no_dwi"], bool):
+        raise StyxValidationError(f'`no_dwi` has the wrong type: Received `{type(params.get("no_dwi", False))}` expected `bool`')
+    if params.get("iid", None) is not None:
+        if not isinstance(params["iid"], list):
+            raise StyxValidationError(f'`iid` has the wrong type: Received `{type(params.get("iid", None))}` expected `list[float] | None`')
+        for e in params["iid"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`iid` has the wrong type: Received `{type(params.get("iid", None))}` expected `list[float] | None`')
+    if params.get("ijd", None) is not None:
+        if not isinstance(params["ijd"], list):
+            raise StyxValidationError(f'`ijd` has the wrong type: Received `{type(params.get("ijd", None))}` expected `list[float] | None`')
+        for e in params["ijd"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ijd` has the wrong type: Received `{type(params.get("ijd", None))}` expected `list[float] | None`')
+    if params.get("ikd", None) is not None:
+        if not isinstance(params["ikd"], list):
+            raise StyxValidationError(f'`ikd` has the wrong type: Received `{type(params.get("ikd", None))}` expected `list[float] | None`')
+        for e in params["ikd"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ikd` has the wrong type: Received `{type(params.get("ikd", None))}` expected `list[float] | None`')
+    if params.get("extra_info", False) is None:
+        raise StyxValidationError("`extra_info` must not be None")
+    if not isinstance(params["extra_info"], bool):
+        raise StyxValidationError(f'`extra_info` has the wrong type: Received `{type(params.get("extra_info", False))}` expected `bool`')
+    if params.get("first_dicom", False) is None:
+        raise StyxValidationError("`first_dicom` must not be None")
+    if not isinstance(params["first_dicom"], bool):
+        raise StyxValidationError(f'`first_dicom` has the wrong type: Received `{type(params.get("first_dicom", False))}` expected `bool`')
+    if params.get("no_dcm2niix", False) is None:
+        raise StyxValidationError("`no_dcm2niix` must not be None")
+    if not isinstance(params["no_dcm2niix"], bool):
+        raise StyxValidationError(f'`no_dcm2niix` has the wrong type: Received `{type(params.get("no_dcm2niix", False))}` expected `bool`')
+    if params.get("phase", False) is None:
+        raise StyxValidationError("`phase` must not be None")
+    if not isinstance(params["phase"], bool):
+        raise StyxValidationError(f'`phase` has the wrong type: Received `{type(params.get("phase", False))}` expected `bool`')
+    if params.get("fips", None) is not None:
+        if not isinstance(params["fips"], str):
+            raise StyxValidationError(f'`fips` has the wrong type: Received `{type(params.get("fips", None))}` expected `str | None`')
+    if params.get("fips_run", None) is not None:
+        if not isinstance(params["fips_run"], str):
+            raise StyxValidationError(f'`fips_run` has the wrong type: Received `{type(params.get("fips_run", None))}` expected `str | None`')
+    if params.get("xml_only", False) is None:
+        raise StyxValidationError("`xml_only` must not be None")
+    if not isinstance(params["xml_only"], bool):
+        raise StyxValidationError(f'`xml_only` has the wrong type: Received `{type(params.get("xml_only", False))}` expected `bool`')
+    if params.get("log", None) is not None:
+        if not isinstance(params["log"], str):
+            raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def dcmunpack_cargs(
     params: DcmunpackParameters,
     execution: Execution,
@@ -445,6 +603,7 @@ def dcmunpack_execute(
     Returns:
         NamedTuple of outputs (described in `DcmunpackOutputs`).
     """
+    dcmunpack_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DCMUNPACK_METADATA)
     params = execution.params(params)

@@ -113,6 +113,69 @@ def xhemireg_params(
     return params
 
 
+def xhemireg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XhemiregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("map_lh", False) is None:
+        raise StyxValidationError("`map_lh` must not be None")
+    if not isinstance(params["map_lh"], bool):
+        raise StyxValidationError(f'`map_lh` has the wrong type: Received `{type(params.get("map_lh", False))}` expected `bool`')
+    if params.get("map_rh", False) is None:
+        raise StyxValidationError("`map_rh` must not be None")
+    if not isinstance(params["map_rh"], bool):
+        raise StyxValidationError(f'`map_rh` has the wrong type: Received `{type(params.get("map_rh", False))}` expected `bool`')
+    if params.get("perform_reg", False) is None:
+        raise StyxValidationError("`perform_reg` must not be None")
+    if not isinstance(params["perform_reg"], bool):
+        raise StyxValidationError(f'`perform_reg` has the wrong type: Received `{type(params.get("perform_reg", False))}` expected `bool`')
+    if params.get("tal_compute", False) is None:
+        raise StyxValidationError("`tal_compute` must not be None")
+    if not isinstance(params["tal_compute"], bool):
+        raise StyxValidationError(f'`tal_compute` has the wrong type: Received `{type(params.get("tal_compute", False))}` expected `bool`')
+    if params.get("no_tal_compute", False) is None:
+        raise StyxValidationError("`no_tal_compute` must not be None")
+    if not isinstance(params["no_tal_compute"], bool):
+        raise StyxValidationError(f'`no_tal_compute` has the wrong type: Received `{type(params.get("no_tal_compute", False))}` expected `bool`')
+    if params.get("tal_estimate", False) is None:
+        raise StyxValidationError("`tal_estimate` must not be None")
+    if not isinstance(params["tal_estimate"], bool):
+        raise StyxValidationError(f'`tal_estimate` has the wrong type: Received `{type(params.get("tal_estimate", False))}` expected `bool`')
+    if params.get("no_tal_estimate", False) is None:
+        raise StyxValidationError("`no_tal_estimate` must not be None")
+    if not isinstance(params["no_tal_estimate"], bool):
+        raise StyxValidationError(f'`no_tal_estimate` has the wrong type: Received `{type(params.get("no_tal_estimate", False))}` expected `bool`')
+    if params.get("gcaprep", None) is not None:
+        if not isinstance(params["gcaprep"], str):
+            raise StyxValidationError(f'`gcaprep` has the wrong type: Received `{type(params.get("gcaprep", None))}` expected `str | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def xhemireg_cargs(
     params: XhemiregParameters,
     execution: Execution,
@@ -206,6 +269,7 @@ def xhemireg_execute(
     Returns:
         NamedTuple of outputs (described in `XhemiregOutputs`).
     """
+    xhemireg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XHEMIREG_METADATA)
     params = execution.params(params)

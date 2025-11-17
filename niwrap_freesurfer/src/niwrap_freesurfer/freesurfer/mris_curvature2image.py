@@ -88,6 +88,52 @@ def mris_curvature2image_params(
     return params
 
 
+def mris_curvature2image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisCurvature2imageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("output_overlay", None) is None:
+        raise StyxValidationError("`output_overlay` must not be None")
+    if not isinstance(params["output_overlay"], str):
+        raise StyxValidationError(f'`output_overlay` has the wrong type: Received `{type(params.get("output_overlay", None))}` expected `str`')
+    if params.get("output_distance", None) is None:
+        raise StyxValidationError("`output_distance` must not be None")
+    if not isinstance(params["output_distance"], str):
+        raise StyxValidationError(f'`output_distance` has the wrong type: Received `{type(params.get("output_distance", None))}` expected `str`')
+    if params.get("overlay", None) is None:
+        raise StyxValidationError("`overlay` must not be None")
+    if not isinstance(params["overlay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `InputPathType`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+    if params.get("invert_flag", False) is None:
+        raise StyxValidationError("`invert_flag` must not be None")
+    if not isinstance(params["invert_flag"], bool):
+        raise StyxValidationError(f'`invert_flag` has the wrong type: Received `{type(params.get("invert_flag", False))}` expected `bool`')
+    if params.get("radius", None) is None:
+        raise StyxValidationError("`radius` must not be None")
+    if not isinstance(params["radius"], (float, int)):
+        raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float`')
+
+
 def mris_curvature2image_cargs(
     params: MrisCurvature2imageParameters,
     execution: Execution,
@@ -176,6 +222,7 @@ def mris_curvature2image_execute(
     Returns:
         NamedTuple of outputs (described in `MrisCurvature2imageOutputs`).
     """
+    mris_curvature2image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CURVATURE2IMAGE_METADATA)
     params = execution.params(params)

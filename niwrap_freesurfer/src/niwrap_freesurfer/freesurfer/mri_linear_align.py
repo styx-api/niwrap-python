@@ -59,6 +59,32 @@ def mri_linear_align_params(
     return params
 
 
+def mri_linear_align_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriLinearAlignParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source", None) is None:
+        raise StyxValidationError("`source` must not be None")
+    if not isinstance(params["source"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `InputPathType`')
+    if params.get("target", None) is None:
+        raise StyxValidationError("`target` must not be None")
+    if not isinstance(params["target"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target` has the wrong type: Received `{type(params.get("target", None))}` expected `InputPathType`')
+    if params.get("output_xform", None) is None:
+        raise StyxValidationError("`output_xform` must not be None")
+    if not isinstance(params["output_xform"], str):
+        raise StyxValidationError(f'`output_xform` has the wrong type: Received `{type(params.get("output_xform", None))}` expected `str`')
+
+
 def mri_linear_align_cargs(
     params: MriLinearAlignParameters,
     execution: Execution,
@@ -118,6 +144,7 @@ def mri_linear_align_execute(
     Returns:
         NamedTuple of outputs (described in `MriLinearAlignOutputs`).
     """
+    mri_linear_align_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_LINEAR_ALIGN_METADATA)
     params = execution.params(params)

@@ -195,6 +195,131 @@ def v_3d_mema_params(
     return params
 
 
+def v_3d_mema_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMemaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("jobs", None) is not None:
+        if not isinstance(params["jobs"], (float, int)):
+            raise StyxValidationError(f'`jobs` has the wrong type: Received `{type(params.get("jobs", None))}` expected `float | None`')
+    if params.get("set", None) is None:
+        raise StyxValidationError("`set` must not be None")
+    if not isinstance(params["set"], list):
+        raise StyxValidationError(f'`set` has the wrong type: Received `{type(params.get("set", None))}` expected `list[str]`')
+    for e in params["set"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`set` has the wrong type: Received `{type(params.get("set", None))}` expected `list[str]`')
+    if params.get("covariates", None) is not None:
+        if not isinstance(params["covariates"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`covariates` has the wrong type: Received `{type(params.get("covariates", None))}` expected `InputPathType | None`')
+    if params.get("covariates_center", None) is not None:
+        if not isinstance(params["covariates_center"], str):
+            raise StyxValidationError(f'`covariates_center` has the wrong type: Received `{type(params.get("covariates_center", None))}` expected `str | None`')
+    if params.get("covariates_model", None) is not None:
+        if not isinstance(params["covariates_model"], str):
+            raise StyxValidationError(f'`covariates_model` has the wrong type: Received `{type(params.get("covariates_model", None))}` expected `str | None`')
+    if params.get("covariates_name", None) is not None:
+        if not isinstance(params["covariates_name"], list):
+            raise StyxValidationError(f'`covariates_name` has the wrong type: Received `{type(params.get("covariates_name", None))}` expected `list[str] | None`')
+        for e in params["covariates_name"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`covariates_name` has the wrong type: Received `{type(params.get("covariates_name", None))}` expected `list[str] | None`')
+    if params.get("groups", None) is not None:
+        if not isinstance(params["groups"], list):
+            raise StyxValidationError(f'`groups` has the wrong type: Received `{type(params.get("groups", None))}` expected `list[str] | None`')
+        for e in params["groups"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`groups` has the wrong type: Received `{type(params.get("groups", None))}` expected `list[str] | None`')
+    if params.get("cio", False) is None:
+        raise StyxValidationError("`cio` must not be None")
+    if not isinstance(params["cio"], bool):
+        raise StyxValidationError(f'`cio` has the wrong type: Received `{type(params.get("cio", False))}` expected `bool`')
+    if params.get("HKtest", False) is None:
+        raise StyxValidationError("`HKtest` must not be None")
+    if not isinstance(params["HKtest"], bool):
+        raise StyxValidationError(f'`HKtest` has the wrong type: Received `{type(params.get("HKtest", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("max_zeros", None) is not None:
+        if not isinstance(params["max_zeros"], (float, int)):
+            raise StyxValidationError(f'`max_zeros` has the wrong type: Received `{type(params.get("max_zeros", None))}` expected `float | None`')
+    if params.get("missing_data", None) is not None:
+        if not isinstance(params["missing_data"], list):
+            raise StyxValidationError(f'`missing_data` has the wrong type: Received `{type(params.get("missing_data", None))}` expected `list[str] | None`')
+        for e in params["missing_data"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`missing_data` has the wrong type: Received `{type(params.get("missing_data", None))}` expected `list[str] | None`')
+    if params.get("model_outliers", False) is None:
+        raise StyxValidationError("`model_outliers` must not be None")
+    if not isinstance(params["model_outliers"], bool):
+        raise StyxValidationError(f'`model_outliers` has the wrong type: Received `{type(params.get("model_outliers", False))}` expected `bool`')
+    if params.get("n_nonzero", None) is not None:
+        if not isinstance(params["n_nonzero"], (float, int)):
+            raise StyxValidationError(f'`n_nonzero` has the wrong type: Received `{type(params.get("n_nonzero", None))}` expected `float | None`')
+    if params.get("no_HKtest", False) is None:
+        raise StyxValidationError("`no_HKtest` must not be None")
+    if not isinstance(params["no_HKtest"], bool):
+        raise StyxValidationError(f'`no_HKtest` has the wrong type: Received `{type(params.get("no_HKtest", False))}` expected `bool`')
+    if params.get("no_model_outliers", False) is None:
+        raise StyxValidationError("`no_model_outliers` must not be None")
+    if not isinstance(params["no_model_outliers"], bool):
+        raise StyxValidationError(f'`no_model_outliers` has the wrong type: Received `{type(params.get("no_model_outliers", False))}` expected `bool`')
+    if params.get("no_residual_Z", False) is None:
+        raise StyxValidationError("`no_residual_Z` must not be None")
+    if not isinstance(params["no_residual_Z"], bool):
+        raise StyxValidationError(f'`no_residual_Z` has the wrong type: Received `{type(params.get("no_residual_Z", False))}` expected `bool`')
+    if params.get("residual_Z", False) is None:
+        raise StyxValidationError("`residual_Z` must not be None")
+    if not isinstance(params["residual_Z"], bool):
+        raise StyxValidationError(f'`residual_Z` has the wrong type: Received `{type(params.get("residual_Z", False))}` expected `bool`')
+    if params.get("Rio", False) is None:
+        raise StyxValidationError("`Rio` must not be None")
+    if not isinstance(params["Rio"], bool):
+        raise StyxValidationError(f'`Rio` has the wrong type: Received `{type(params.get("Rio", False))}` expected `bool`')
+    if params.get("equal_variance", False) is None:
+        raise StyxValidationError("`equal_variance` must not be None")
+    if not isinstance(params["equal_variance"], bool):
+        raise StyxValidationError(f'`equal_variance` has the wrong type: Received `{type(params.get("equal_variance", False))}` expected `bool`')
+    if params.get("unequal_variance", False) is None:
+        raise StyxValidationError("`unequal_variance` must not be None")
+    if not isinstance(params["unequal_variance"], bool):
+        raise StyxValidationError(f'`unequal_variance` has the wrong type: Received `{type(params.get("unequal_variance", False))}` expected `bool`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+    if params.get("dbgArgs", False) is None:
+        raise StyxValidationError("`dbgArgs` must not be None")
+    if not isinstance(params["dbgArgs"], bool):
+        raise StyxValidationError(f'`dbgArgs` has the wrong type: Received `{type(params.get("dbgArgs", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("conditions", None) is not None:
+        if not isinstance(params["conditions"], list):
+            raise StyxValidationError(f'`conditions` has the wrong type: Received `{type(params.get("conditions", None))}` expected `list[str] | None`')
+        for e in params["conditions"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`conditions` has the wrong type: Received `{type(params.get("conditions", None))}` expected `list[str] | None`')
+    if params.get("no_tstat", False) is None:
+        raise StyxValidationError("`no_tstat` must not be None")
+    if not isinstance(params["no_tstat"], bool):
+        raise StyxValidationError(f'`no_tstat` has the wrong type: Received `{type(params.get("no_tstat", False))}` expected `bool`')
+
+
 def v_3d_mema_cargs(
     params: V3dMemaParameters,
     execution: Execution,
@@ -347,6 +472,7 @@ def v_3d_mema_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMemaOutputs`).
     """
+    v_3d_mema_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MEMA_METADATA)
     params = execution.params(params)

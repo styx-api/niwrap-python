@@ -220,6 +220,136 @@ def mri_diff_params(
     return params
 
 
+def mri_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vol1file", None) is None:
+        raise StyxValidationError("`vol1file` must not be None")
+    if not isinstance(params["vol1file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol1file` has the wrong type: Received `{type(params.get("vol1file", None))}` expected `InputPathType`')
+    if params.get("vol2file", None) is None:
+        raise StyxValidationError("`vol2file` must not be None")
+    if not isinstance(params["vol2file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol2file` has the wrong type: Received `{type(params.get("vol2file", None))}` expected `InputPathType`')
+    if params.get("resolution_check", False) is None:
+        raise StyxValidationError("`resolution_check` must not be None")
+    if not isinstance(params["resolution_check"], bool):
+        raise StyxValidationError(f'`resolution_check` has the wrong type: Received `{type(params.get("resolution_check", False))}` expected `bool`')
+    if params.get("acquisition_param_check", False) is None:
+        raise StyxValidationError("`acquisition_param_check` must not be None")
+    if not isinstance(params["acquisition_param_check"], bool):
+        raise StyxValidationError(f'`acquisition_param_check` has the wrong type: Received `{type(params.get("acquisition_param_check", False))}` expected `bool`')
+    if params.get("geometry_check", False) is None:
+        raise StyxValidationError("`geometry_check` must not be None")
+    if not isinstance(params["geometry_check"], bool):
+        raise StyxValidationError(f'`geometry_check` has the wrong type: Received `{type(params.get("geometry_check", False))}` expected `bool`')
+    if params.get("precision_check", False) is None:
+        raise StyxValidationError("`precision_check` must not be None")
+    if not isinstance(params["precision_check"], bool):
+        raise StyxValidationError(f'`precision_check` has the wrong type: Received `{type(params.get("precision_check", False))}` expected `bool`')
+    if params.get("pixel_check", False) is None:
+        raise StyxValidationError("`pixel_check` must not be None")
+    if not isinstance(params["pixel_check"], bool):
+        raise StyxValidationError(f'`pixel_check` has the wrong type: Received `{type(params.get("pixel_check", False))}` expected `bool`')
+    if params.get("orientation_check", False) is None:
+        raise StyxValidationError("`orientation_check` must not be None")
+    if not isinstance(params["orientation_check"], bool):
+        raise StyxValidationError(f'`orientation_check` has the wrong type: Received `{type(params.get("orientation_check", False))}` expected `bool`')
+    if params.get("file_type_diff_check", False) is None:
+        raise StyxValidationError("`file_type_diff_check` must not be None")
+    if not isinstance(params["file_type_diff_check"], bool):
+        raise StyxValidationError(f'`file_type_diff_check` has the wrong type: Received `{type(params.get("file_type_diff_check", False))}` expected `bool`')
+    if params.get("no_exit_on_diff", False) is None:
+        raise StyxValidationError("`no_exit_on_diff` must not be None")
+    if not isinstance(params["no_exit_on_diff"], bool):
+        raise StyxValidationError(f'`no_exit_on_diff` has the wrong type: Received `{type(params.get("no_exit_on_diff", False))}` expected `bool`')
+    if params.get("quality_assurance", False) is None:
+        raise StyxValidationError("`quality_assurance` must not be None")
+    if not isinstance(params["quality_assurance"], bool):
+        raise StyxValidationError(f'`quality_assurance` has the wrong type: Received `{type(params.get("quality_assurance", False))}` expected `bool`')
+    if params.get("pixel_only", False) is None:
+        raise StyxValidationError("`pixel_only` must not be None")
+    if not isinstance(params["pixel_only"], bool):
+        raise StyxValidationError(f'`pixel_only` has the wrong type: Received `{type(params.get("pixel_only", False))}` expected `bool`')
+    if params.get("abs_difference", False) is None:
+        raise StyxValidationError("`abs_difference` must not be None")
+    if not isinstance(params["abs_difference"], bool):
+        raise StyxValidationError(f'`abs_difference` has the wrong type: Received `{type(params.get("abs_difference", False))}` expected `bool`')
+    if params.get("no_abs_difference", False) is None:
+        raise StyxValidationError("`no_abs_difference` must not be None")
+    if not isinstance(params["no_abs_difference"], bool):
+        raise StyxValidationError(f'`no_abs_difference` has the wrong type: Received `{type(params.get("no_abs_difference", False))}` expected `bool`')
+    if params.get("difference_abs", False) is None:
+        raise StyxValidationError("`difference_abs` must not be None")
+    if not isinstance(params["difference_abs"], bool):
+        raise StyxValidationError(f'`difference_abs` has the wrong type: Received `{type(params.get("difference_abs", False))}` expected `bool`')
+    if params.get("percentage_difference", False) is None:
+        raise StyxValidationError("`percentage_difference` must not be None")
+    if not isinstance(params["percentage_difference"], bool):
+        raise StyxValidationError(f'`percentage_difference` has the wrong type: Received `{type(params.get("percentage_difference", False))}` expected `bool`')
+    if params.get("rss_save", False) is None:
+        raise StyxValidationError("`rss_save` must not be None")
+    if not isinstance(params["rss_save"], bool):
+        raise StyxValidationError(f'`rss_save` has the wrong type: Received `{type(params.get("rss_save", False))}` expected `bool`')
+    if params.get("ssd_print", False) is None:
+        raise StyxValidationError("`ssd_print` must not be None")
+    if not isinstance(params["ssd_print"], bool):
+        raise StyxValidationError(f'`ssd_print` has the wrong type: Received `{type(params.get("ssd_print", False))}` expected `bool`')
+    if params.get("rms_print", False) is None:
+        raise StyxValidationError("`rms_print` must not be None")
+    if not isinstance(params["rms_print"], bool):
+        raise StyxValidationError(f'`rms_print` has the wrong type: Received `{type(params.get("rms_print", False))}` expected `bool`')
+    if params.get("count_diff_voxels", False) is None:
+        raise StyxValidationError("`count_diff_voxels` must not be None")
+    if not isinstance(params["count_diff_voxels"], bool):
+        raise StyxValidationError(f'`count_diff_voxels` has the wrong type: Received `{type(params.get("count_diff_voxels", False))}` expected `bool`')
+    if params.get("pixel_threshold", None) is not None:
+        if not isinstance(params["pixel_threshold"], (float, int)):
+            raise StyxValidationError(f'`pixel_threshold` has the wrong type: Received `{type(params.get("pixel_threshold", None))}` expected `float | None`')
+    if params.get("count_thresh_voxels", None) is not None:
+        if not isinstance(params["count_thresh_voxels"], (float, int)):
+            raise StyxValidationError(f'`count_thresh_voxels` has the wrong type: Received `{type(params.get("count_thresh_voxels", None))}` expected `float | None`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("difference_image", None) is not None:
+        if not isinstance(params["difference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`difference_image` has the wrong type: Received `{type(params.get("difference_image", None))}` expected `InputPathType | None`')
+    if params.get("suspicious_diff_volume", None) is not None:
+        if not isinstance(params["suspicious_diff_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`suspicious_diff_volume` has the wrong type: Received `{type(params.get("suspicious_diff_volume", None))}` expected `InputPathType | None`')
+    if params.get("segmentation_diff", None) is not None:
+        if not isinstance(params["segmentation_diff"], str):
+            raise StyxValidationError(f'`segmentation_diff` has the wrong type: Received `{type(params.get("segmentation_diff", None))}` expected `str | None`')
+    if params.get("merge_edits", None) is not None:
+        if not isinstance(params["merge_edits"], str):
+            raise StyxValidationError(f'`merge_edits` has the wrong type: Received `{type(params.get("merge_edits", None))}` expected `str | None`')
+    if params.get("average_difference", None) is not None:
+        if not isinstance(params["average_difference"], str):
+            raise StyxValidationError(f'`average_difference` has the wrong type: Received `{type(params.get("average_difference", None))}` expected `str | None`')
+    if params.get("debug_mode", False) is None:
+        raise StyxValidationError("`debug_mode` must not be None")
+    if not isinstance(params["debug_mode"], bool):
+        raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", False))}` expected `bool`')
+    if params.get("verbose_mode", False) is None:
+        raise StyxValidationError("`verbose_mode` must not be None")
+    if not isinstance(params["verbose_mode"], bool):
+        raise StyxValidationError(f'`verbose_mode` has the wrong type: Received `{type(params.get("verbose_mode", False))}` expected `bool`')
+    if params.get("check_options", False) is None:
+        raise StyxValidationError("`check_options` must not be None")
+    if not isinstance(params["check_options"], bool):
+        raise StyxValidationError(f'`check_options` has the wrong type: Received `{type(params.get("check_options", False))}` expected `bool`')
+
+
 def mri_diff_cargs(
     params: MriDiffParameters,
     execution: Execution,
@@ -364,6 +494,7 @@ def mri_diff_execute(
     Returns:
         NamedTuple of outputs (described in `MriDiffOutputs`).
     """
+    mri_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_DIFF_METADATA)
     params = execution.params(params)

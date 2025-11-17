@@ -135,6 +135,77 @@ def v__simulate_motion_params(
     return params
 
 
+def v__simulate_motion_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSimulateMotionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("epi", None) is None:
+        raise StyxValidationError("`epi` must not be None")
+    if not isinstance(params["epi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`epi` has the wrong type: Received `{type(params.get("epi", None))}` expected `InputPathType`')
+    if params.get("motion_file", None) is None:
+        raise StyxValidationError("`motion_file` must not be None")
+    if not isinstance(params["motion_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`motion_file` has the wrong type: Received `{type(params.get("motion_file", None))}` expected `InputPathType`')
+    if params.get("epi_timing", None) is not None:
+        if not isinstance(params["epi_timing"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`epi_timing` has the wrong type: Received `{type(params.get("epi_timing", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("save_workdir", False) is None:
+        raise StyxValidationError("`save_workdir` must not be None")
+    if not isinstance(params["save_workdir"], bool):
+        raise StyxValidationError(f'`save_workdir` has the wrong type: Received `{type(params.get("save_workdir", False))}` expected `bool`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+    if params.get("verb_level", None) is not None:
+        if not isinstance(params["verb_level"], (float, int)):
+            raise StyxValidationError(f'`verb_level` has the wrong type: Received `{type(params.get("verb_level", None))}` expected `float | None`')
+    if params.get("vr_base", None) is not None:
+        if not isinstance(params["vr_base"], (float, int)):
+            raise StyxValidationError(f'`vr_base` has the wrong type: Received `{type(params.get("vr_base", None))}` expected `float | None`')
+    if params.get("warp_method", None) is not None:
+        if not isinstance(params["warp_method"], str):
+            raise StyxValidationError(f'`warp_method` has the wrong type: Received `{type(params.get("warp_method", None))}` expected `str | None`')
+    if params.get("warp_1D", None) is not None:
+        if not isinstance(params["warp_1D"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp_1D` has the wrong type: Received `{type(params.get("warp_1D", None))}` expected `InputPathType | None`')
+    if params.get("warp_master", None) is not None:
+        if not isinstance(params["warp_master"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp_master` has the wrong type: Received `{type(params.get("warp_master", None))}` expected `InputPathType | None`')
+    if params.get("wsinc5", False) is None:
+        raise StyxValidationError("`wsinc5` must not be None")
+    if not isinstance(params["wsinc5"], bool):
+        raise StyxValidationError(f'`wsinc5` has the wrong type: Received `{type(params.get("wsinc5", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("todo", False) is None:
+        raise StyxValidationError("`todo` must not be None")
+    if not isinstance(params["todo"], bool):
+        raise StyxValidationError(f'`todo` has the wrong type: Received `{type(params.get("todo", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+
+
 def v__simulate_motion_cargs(
     params: VSimulateMotionParameters,
     execution: Execution,
@@ -250,6 +321,7 @@ def v__simulate_motion_execute(
     Returns:
         NamedTuple of outputs (described in `VSimulateMotionOutputs`).
     """
+    v__simulate_motion_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SIMULATE_MOTION_METADATA)
     params = execution.params(params)

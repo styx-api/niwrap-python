@@ -98,6 +98,54 @@ def v_3d_spat_norm_params(
     return params
 
 
+def v_3d_spat_norm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSpatNormParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("orig_space", False) is None:
+        raise StyxValidationError("`orig_space` must not be None")
+    if not isinstance(params["orig_space"], bool):
+        raise StyxValidationError(f'`orig_space` has the wrong type: Received `{type(params.get("orig_space", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("monkey", False) is None:
+        raise StyxValidationError("`monkey` must not be None")
+    if not isinstance(params["monkey"], bool):
+        raise StyxValidationError(f'`monkey` has the wrong type: Received `{type(params.get("monkey", False))}` expected `bool`')
+    if params.get("marmot", False) is None:
+        raise StyxValidationError("`marmot` must not be None")
+    if not isinstance(params["marmot"], bool):
+        raise StyxValidationError(f'`marmot` has the wrong type: Received `{type(params.get("marmot", False))}` expected `bool`')
+    if params.get("rat", False) is None:
+        raise StyxValidationError("`rat` must not be None")
+    if not isinstance(params["rat"], bool):
+        raise StyxValidationError(f'`rat` has the wrong type: Received `{type(params.get("rat", False))}` expected `bool`')
+    if params.get("human", False) is None:
+        raise StyxValidationError("`human` must not be None")
+    if not isinstance(params["human"], bool):
+        raise StyxValidationError(f'`human` has the wrong type: Received `{type(params.get("human", False))}` expected `bool`')
+    if params.get("bottom_cuts", None) is not None:
+        if not isinstance(params["bottom_cuts"], str):
+            raise StyxValidationError(f'`bottom_cuts` has the wrong type: Received `{type(params.get("bottom_cuts", None))}` expected `str | None`')
+
+
 def v_3d_spat_norm_cargs(
     params: V3dSpatNormParameters,
     execution: Execution,
@@ -179,6 +227,7 @@ def v_3d_spat_norm_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSpatNormOutputs`).
     """
+    v_3d_spat_norm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SPAT_NORM_METADATA)
     params = execution.params(params)

@@ -92,6 +92,28 @@ def ss3t_csd_beta1_config_params(
     return params
 
 
+def ss3t_csd_beta1_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Ss3tCsdBeta1ConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def ss3t_csd_beta1_config_cargs(
     params: Ss3tCsdBeta1ConfigParameters,
     execution: Execution,
@@ -141,6 +163,28 @@ def ss3t_csd_beta1_response_odf_params(
         "odf": odf,
     }
     return params
+
+
+def ss3t_csd_beta1_response_odf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Ss3tCsdBeta1ResponseOdfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("response", None) is None:
+        raise StyxValidationError("`response` must not be None")
+    if not isinstance(params["response"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`response` has the wrong type: Received `{type(params.get("response", None))}` expected `InputPathType`')
+    if params.get("odf", None) is None:
+        raise StyxValidationError("`odf` must not be None")
+    if not isinstance(params["odf"], str):
+        raise StyxValidationError(f'`odf` has the wrong type: Received `{type(params.get("odf", None))}` expected `str`')
 
 
 def ss3t_csd_beta1_response_odf_cargs(
@@ -260,6 +304,71 @@ def ss3t_csd_beta1_params(
     return params
 
 
+def ss3t_csd_beta1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Ss3tCsdBeta1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("bzero_pct", None) is not None:
+        if not isinstance(params["bzero_pct"], (float, int)):
+            raise StyxValidationError(f'`bzero_pct` has the wrong type: Received `{type(params.get("bzero_pct", None))}` expected `float | None`')
+    if params.get("niter", None) is not None:
+        if not isinstance(params["niter"], int):
+            raise StyxValidationError(f'`niter` has the wrong type: Received `{type(params.get("niter", None))}` expected `int | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Ss3tCsdBeta1ConfigParameters] | None`')
+        for e in params["config"]:
+            ss3t_csd_beta1_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("dwi", None) is None:
+        raise StyxValidationError("`dwi` must not be None")
+    if not isinstance(params["dwi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", None))}` expected `InputPathType`')
+    if params.get("response_odf", None) is None:
+        raise StyxValidationError("`response_odf` must not be None")
+    if not isinstance(params["response_odf"], list):
+        raise StyxValidationError(f'`response_odf` has the wrong type: Received `{type(params.get("response_odf", None))}` expected `list[Ss3tCsdBeta1ResponseOdfParameters]`')
+    for e in params["response_odf"]:
+        ss3t_csd_beta1_response_odf_validate(e)
+
+
 def ss3t_csd_beta1_cargs(
     params: Ss3tCsdBeta1Parameters,
     execution: Execution,
@@ -357,6 +466,7 @@ def ss3t_csd_beta1_execute(
     Returns:
         NamedTuple of outputs (described in `Ss3tCsdBeta1Outputs`).
     """
+    ss3t_csd_beta1_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SS3T_CSD_BETA1_METADATA)
     params = execution.params(params)

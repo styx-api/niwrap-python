@@ -85,6 +85,41 @@ def v_3d_twoto_complex_params(
     return params
 
 
+def v_3d_twoto_complex_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTwotoComplexParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset1", None) is None:
+        raise StyxValidationError("`dataset1` must not be None")
+    if not isinstance(params["dataset1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset1` has the wrong type: Received `{type(params.get("dataset1", None))}` expected `InputPathType`')
+    if params.get("dataset2", None) is not None:
+        if not isinstance(params["dataset2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dataset2` has the wrong type: Received `{type(params.get("dataset2", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("ri", False) is None:
+        raise StyxValidationError("`ri` must not be None")
+    if not isinstance(params["ri"], bool):
+        raise StyxValidationError(f'`ri` has the wrong type: Received `{type(params.get("ri", False))}` expected `bool`')
+    if params.get("mp", False) is None:
+        raise StyxValidationError("`mp` must not be None")
+    if not isinstance(params["mp"], bool):
+        raise StyxValidationError(f'`mp` has the wrong type: Received `{type(params.get("mp", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+
+
 def v_3d_twoto_complex_cargs(
     params: V3dTwotoComplexParameters,
     execution: Execution,
@@ -160,6 +195,7 @@ def v_3d_twoto_complex_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTwotoComplexOutputs`).
     """
+    v_3d_twoto_complex_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TWOTO_COMPLEX_METADATA)
     params = execution.params(params)

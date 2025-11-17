@@ -240,6 +240,139 @@ def mri_segment_params(
     return params
 
 
+def mri_segment_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSegmentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_vol", None) is None:
+        raise StyxValidationError("`in_vol` must not be None")
+    if not isinstance(params["in_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_vol` has the wrong type: Received `{type(params.get("in_vol", None))}` expected `InputPathType`')
+    if params.get("out_vol", None) is None:
+        raise StyxValidationError("`out_vol` must not be None")
+    if not isinstance(params["out_vol"], str):
+        raise StyxValidationError(f'`out_vol` has the wrong type: Received `{type(params.get("out_vol", None))}` expected `str`')
+    if params.get("no1d_remove", None) is not None:
+        if not isinstance(params["no1d_remove"], (float, int)):
+            raise StyxValidationError(f'`no1d_remove` has the wrong type: Received `{type(params.get("no1d_remove", None))}` expected `float | None`')
+    if params.get("slope", None) is not None:
+        if not isinstance(params["slope"], (float, int)):
+            raise StyxValidationError(f'`slope` has the wrong type: Received `{type(params.get("slope", None))}` expected `float | None`')
+    if params.get("pslope", None) is not None:
+        if not isinstance(params["pslope"], (float, int)):
+            raise StyxValidationError(f'`pslope` has the wrong type: Received `{type(params.get("pslope", None))}` expected `float | None`')
+    if params.get("nslope", None) is not None:
+        if not isinstance(params["nslope"], (float, int)):
+            raise StyxValidationError(f'`nslope` has the wrong type: Received `{type(params.get("nslope", None))}` expected `float | None`')
+    if params.get("debug_voxel", None) is not None:
+        if not isinstance(params["debug_voxel"], list):
+            raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+        if len(params["debug_voxel"]) == 3:
+            raise StyxValidationError("Parameter `debug_voxel` must contain exactly 3 elements")
+        for e in params["debug_voxel"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+    if params.get("auto", False) is None:
+        raise StyxValidationError("`auto` must not be None")
+    if not isinstance(params["auto"], bool):
+        raise StyxValidationError(f'`auto` has the wrong type: Received `{type(params.get("auto", False))}` expected `bool`')
+    if params.get("noauto", False) is None:
+        raise StyxValidationError("`noauto` must not be None")
+    if not isinstance(params["noauto"], bool):
+        raise StyxValidationError(f'`noauto` has the wrong type: Received `{type(params.get("noauto", False))}` expected `bool`')
+    if params.get("log", False) is None:
+        raise StyxValidationError("`log` must not be None")
+    if not isinstance(params["log"], bool):
+        raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", False))}` expected `bool`')
+    if params.get("keep", False) is None:
+        raise StyxValidationError("`keep` must not be None")
+    if not isinstance(params["keep"], bool):
+        raise StyxValidationError(f'`keep` has the wrong type: Received `{type(params.get("keep", False))}` expected `bool`')
+    if params.get("gray_hi", None) is not None:
+        if not isinstance(params["gray_hi"], (float, int)):
+            raise StyxValidationError(f'`gray_hi` has the wrong type: Received `{type(params.get("gray_hi", None))}` expected `float | None`')
+    if params.get("wm_low", None) is not None:
+        if not isinstance(params["wm_low"], (float, int)):
+            raise StyxValidationError(f'`wm_low` has the wrong type: Received `{type(params.get("wm_low", None))}` expected `float | None`')
+    if params.get("wm_low_factor", None) is not None:
+        if not isinstance(params["wm_low_factor"], (float, int)):
+            raise StyxValidationError(f'`wm_low_factor` has the wrong type: Received `{type(params.get("wm_low_factor", None))}` expected `float | None`')
+    if params.get("wm_hi", None) is not None:
+        if not isinstance(params["wm_hi"], (float, int)):
+            raise StyxValidationError(f'`wm_hi` has the wrong type: Received `{type(params.get("wm_hi", None))}` expected `float | None`')
+    if params.get("nseg", None) is not None:
+        if not isinstance(params["nseg"], (float, int)):
+            raise StyxValidationError(f'`nseg` has the wrong type: Received `{type(params.get("nseg", None))}` expected `float | None`')
+    if params.get("thicken", False) is None:
+        raise StyxValidationError("`thicken` must not be None")
+    if not isinstance(params["thicken"], bool):
+        raise StyxValidationError(f'`thicken` has the wrong type: Received `{type(params.get("thicken", False))}` expected `bool`')
+    if params.get("fillbg", False) is None:
+        raise StyxValidationError("`fillbg` must not be None")
+    if not isinstance(params["fillbg"], bool):
+        raise StyxValidationError(f'`fillbg` has the wrong type: Received `{type(params.get("fillbg", False))}` expected `bool`')
+    if params.get("fillv", False) is None:
+        raise StyxValidationError("`fillv` must not be None")
+    if not isinstance(params["fillv"], bool):
+        raise StyxValidationError(f'`fillv` has the wrong type: Received `{type(params.get("fillv", False))}` expected `bool`')
+    if params.get("blur_sigma", None) is not None:
+        if not isinstance(params["blur_sigma"], (float, int)):
+            raise StyxValidationError(f'`blur_sigma` has the wrong type: Received `{type(params.get("blur_sigma", None))}` expected `float | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+    if params.get("thin_strand_limit", None) is not None:
+        if not isinstance(params["thin_strand_limit"], (float, int)):
+            raise StyxValidationError(f'`thin_strand_limit` has the wrong type: Received `{type(params.get("thin_strand_limit", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("extract_options", None) is not None:
+        if not isinstance(params["extract_options"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`extract_options` has the wrong type: Received `{type(params.get("extract_options", None))}` expected `InputPathType | None`')
+    if params.get("wsize", None) is not None:
+        if not isinstance(params["wsize"], (float, int)):
+            raise StyxValidationError(f'`wsize` has the wrong type: Received `{type(params.get("wsize", None))}` expected `float | None`')
+    if params.get("wsizemm", None) is not None:
+        if not isinstance(params["wsizemm"], (float, int)):
+            raise StyxValidationError(f'`wsizemm` has the wrong type: Received `{type(params.get("wsizemm", None))}` expected `float | None`')
+    if params.get("polvw_size", None) is not None:
+        if not isinstance(params["polvw_size"], (float, int)):
+            raise StyxValidationError(f'`polvw_size` has the wrong type: Received `{type(params.get("polvw_size", None))}` expected `float | None`')
+    if params.get("polv_len", None) is not None:
+        if not isinstance(params["polv_len"], (float, int)):
+            raise StyxValidationError(f'`polv_len` has the wrong type: Received `{type(params.get("polv_len", None))}` expected `float | None`')
+    if params.get("datfile", None) is not None:
+        if not isinstance(params["datfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`datfile` has the wrong type: Received `{type(params.get("datfile", None))}` expected `InputPathType | None`')
+    if params.get("segmentation", None) is not None:
+        if not isinstance(params["segmentation"], str):
+            raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", None))}` expected `str | None`')
+    if params.get("diagno", None) is not None:
+        if not isinstance(params["diagno"], (float, int)):
+            raise StyxValidationError(f'`diagno` has the wrong type: Received `{type(params.get("diagno", None))}` expected `float | None`')
+    if params.get("diag_write", False) is None:
+        raise StyxValidationError("`diag_write` must not be None")
+    if not isinstance(params["diag_write"], bool):
+        raise StyxValidationError(f'`diag_write` has the wrong type: Received `{type(params.get("diag_write", False))}` expected `bool`')
+    if params.get("diag_verbose", False) is None:
+        raise StyxValidationError("`diag_verbose` must not be None")
+    if not isinstance(params["diag_verbose"], bool):
+        raise StyxValidationError(f'`diag_verbose` has the wrong type: Received `{type(params.get("diag_verbose", False))}` expected `bool`')
+
+
 def mri_segment_cargs(
     params: MriSegmentParameters,
     execution: Execution,
@@ -430,6 +563,7 @@ def mri_segment_execute(
     Returns:
         NamedTuple of outputs (described in `MriSegmentOutputs`).
     """
+    mri_segment_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SEGMENT_METADATA)
     params = execution.params(params)

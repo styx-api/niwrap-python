@@ -62,6 +62,32 @@ def mri_surfacemask_params(
     return params
 
 
+def mri_surfacemask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSurfacemaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_surfacemask_cargs(
     params: MriSurfacemaskParameters,
     execution: Execution,
@@ -123,6 +149,7 @@ def mri_surfacemask_execute(
     Returns:
         NamedTuple of outputs (described in `MriSurfacemaskOutputs`).
     """
+    mri_surfacemask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SURFACEMASK_METADATA)
     params = execution.params(params)

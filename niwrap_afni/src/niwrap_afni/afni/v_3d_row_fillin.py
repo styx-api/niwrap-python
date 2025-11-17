@@ -78,6 +78,37 @@ def v_3d_row_fillin_params(
     return params
 
 
+def v_3d_row_fillin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRowFillinParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("maxgap", None) is not None:
+        if not isinstance(params["maxgap"], (float, int)):
+            raise StyxValidationError(f'`maxgap` has the wrong type: Received `{type(params.get("maxgap", None))}` expected `float | None`')
+    if params.get("dir", None) is not None:
+        if not isinstance(params["dir"], str):
+            raise StyxValidationError(f'`dir` has the wrong type: Received `{type(params.get("dir", None))}` expected `str | None`')
+    if params.get("binary", False) is None:
+        raise StyxValidationError("`binary` must not be None")
+    if not isinstance(params["binary"], bool):
+        raise StyxValidationError(f'`binary` has the wrong type: Received `{type(params.get("binary", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_row_fillin_cargs(
     params: V3dRowFillinParameters,
     execution: Execution,
@@ -154,6 +185,7 @@ def v_3d_row_fillin_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRowFillinOutputs`).
     """
+    v_3d_row_fillin_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ROW_FILLIN_METADATA)
     params = execution.params(params)

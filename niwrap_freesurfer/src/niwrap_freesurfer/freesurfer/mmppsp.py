@@ -106,6 +106,61 @@ def mmppsp_params(
     return params
 
 
+def mmppsp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MmppspParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("samseg_dir", None) is None:
+        raise StyxValidationError("`samseg_dir` must not be None")
+    if not isinstance(params["samseg_dir"], str):
+        raise StyxValidationError(f'`samseg_dir` has the wrong type: Received `{type(params.get("samseg_dir", None))}` expected `str`')
+    if params.get("outdir", None) is None:
+        raise StyxValidationError("`outdir` must not be None")
+    if not isinstance(params["outdir"], str):
+        raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str`')
+    if params.get("lh_flag", False) is None:
+        raise StyxValidationError("`lh_flag` must not be None")
+    if not isinstance(params["lh_flag"], bool):
+        raise StyxValidationError(f'`lh_flag` has the wrong type: Received `{type(params.get("lh_flag", False))}` expected `bool`')
+    if params.get("rh_flag", False) is None:
+        raise StyxValidationError("`rh_flag` must not be None")
+    if not isinstance(params["rh_flag"], bool):
+        raise StyxValidationError(f'`rh_flag` has the wrong type: Received `{type(params.get("rh_flag", False))}` expected `bool`')
+    if params.get("likelihood_flag", False) is None:
+        raise StyxValidationError("`likelihood_flag` must not be None")
+    if not isinstance(params["likelihood_flag"], bool):
+        raise StyxValidationError(f'`likelihood_flag` has the wrong type: Received `{type(params.get("likelihood_flag", False))}` expected `bool`')
+    if params.get("posterior_flag", False) is None:
+        raise StyxValidationError("`posterior_flag` must not be None")
+    if not isinstance(params["posterior_flag"], bool):
+        raise StyxValidationError(f'`posterior_flag` has the wrong type: Received `{type(params.get("posterior_flag", False))}` expected `bool`')
+    if params.get("force_update_flag", False) is None:
+        raise StyxValidationError("`force_update_flag` must not be None")
+    if not isinstance(params["force_update_flag"], bool):
+        raise StyxValidationError(f'`force_update_flag` has the wrong type: Received `{type(params.get("force_update_flag", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("no_initsphreg_flag", False) is None:
+        raise StyxValidationError("`no_initsphreg_flag` must not be None")
+    if not isinstance(params["no_initsphreg_flag"], bool):
+        raise StyxValidationError(f'`no_initsphreg_flag` has the wrong type: Received `{type(params.get("no_initsphreg_flag", False))}` expected `bool`')
+    if params.get("stop_after", None) is not None:
+        if not isinstance(params["stop_after"], str):
+            raise StyxValidationError(f'`stop_after` has the wrong type: Received `{type(params.get("stop_after", None))}` expected `str | None`')
+    if params.get("wexpanddist", None) is not None:
+        if not isinstance(params["wexpanddist"], (float, int)):
+            raise StyxValidationError(f'`wexpanddist` has the wrong type: Received `{type(params.get("wexpanddist", None))}` expected `float | None`')
+
+
 def mmppsp_cargs(
     params: MmppspParameters,
     execution: Execution,
@@ -198,6 +253,7 @@ def mmppsp_execute(
     Returns:
         NamedTuple of outputs (described in `MmppspOutputs`).
     """
+    mmppsp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MMPPSP_METADATA)
     params = execution.params(params)

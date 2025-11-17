@@ -81,6 +81,47 @@ def mksubjdirs_params(
     return params
 
 
+def mksubjdirs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MksubjdirsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subj_name", None) is None:
+        raise StyxValidationError("`subj_name` must not be None")
+    if not isinstance(params["subj_name"], str):
+        raise StyxValidationError(f'`subj_name` has the wrong type: Received `{type(params.get("subj_name", None))}` expected `str`')
+    if params.get("mode", None) is not None:
+        if not isinstance(params["mode"], str):
+            raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str | None`')
+    if params.get("parents", False) is None:
+        raise StyxValidationError("`parents` must not be None")
+    if not isinstance(params["parents"], bool):
+        raise StyxValidationError(f'`parents` has the wrong type: Received `{type(params.get("parents", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("selinux_context", False) is None:
+        raise StyxValidationError("`selinux_context` must not be None")
+    if not isinstance(params["selinux_context"], bool):
+        raise StyxValidationError(f'`selinux_context` has the wrong type: Received `{type(params.get("selinux_context", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mksubjdirs_cargs(
     params: MksubjdirsParameters,
     execution: Execution,
@@ -153,6 +194,7 @@ def mksubjdirs_execute(
     Returns:
         NamedTuple of outputs (described in `MksubjdirsOutputs`).
     """
+    mksubjdirs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MKSUBJDIRS_METADATA)
     params = execution.params(params)

@@ -58,6 +58,32 @@ def volume_reorient_params(
     return params
 
 
+def volume_reorient_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeReorientParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("orient-string", None) is None:
+        raise StyxValidationError("`orient-string` must not be None")
+    if not isinstance(params["orient-string"], str):
+        raise StyxValidationError(f'`orient-string` has the wrong type: Received `{type(params.get("orient-string", None))}` expected `str`')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+
+
 def volume_reorient_cargs(
     params: VolumeReorientParameters,
     execution: Execution,
@@ -126,6 +152,7 @@ def volume_reorient_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeReorientOutputs`).
     """
+    volume_reorient_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_REORIENT_METADATA)
     params = execution.params(params)

@@ -83,6 +83,46 @@ def mris_simulate_atrophy_params(
     return params
 
 
+def mris_simulate_atrophy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSimulateAtrophyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], str):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str`')
+    if params.get("atrophy_fraction", None) is None:
+        raise StyxValidationError("`atrophy_fraction` must not be None")
+    if not isinstance(params["atrophy_fraction"], (float, int)):
+        raise StyxValidationError(f'`atrophy_fraction` has the wrong type: Received `{type(params.get("atrophy_fraction", None))}` expected `float`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("atrophy_percent", None) is not None:
+        if not isinstance(params["atrophy_percent"], (float, int)):
+            raise StyxValidationError(f'`atrophy_percent` has the wrong type: Received `{type(params.get("atrophy_percent", None))}` expected `float | None`')
+    if params.get("noise_level", None) is not None:
+        if not isinstance(params["noise_level"], (float, int)):
+            raise StyxValidationError(f'`noise_level` has the wrong type: Received `{type(params.get("noise_level", None))}` expected `float | None`')
+
+
 def mris_simulate_atrophy_cargs(
     params: MrisSimulateAtrophyParameters,
     execution: Execution,
@@ -155,6 +195,7 @@ def mris_simulate_atrophy_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSimulateAtrophyOutputs`).
     """
+    mris_simulate_atrophy_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SIMULATE_ATROPHY_METADATA)
     params = execution.params(params)

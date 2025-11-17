@@ -71,6 +71,40 @@ def cifti_pairwise_correlation_params(
     return params
 
 
+def cifti_pairwise_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiPairwiseCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("fisher-z", False) is None:
+        raise StyxValidationError("`fisher-z` must not be None")
+    if not isinstance(params["fisher-z"], bool):
+        raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
+    if params.get("override-mapping-check", False) is None:
+        raise StyxValidationError("`override-mapping-check` must not be None")
+    if not isinstance(params["override-mapping-check"], bool):
+        raise StyxValidationError(f'`override-mapping-check` has the wrong type: Received `{type(params.get("override-mapping-check", False))}` expected `bool`')
+    if params.get("cifti-a", None) is None:
+        raise StyxValidationError("`cifti-a` must not be None")
+    if not isinstance(params["cifti-a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-a` has the wrong type: Received `{type(params.get("cifti-a", None))}` expected `InputPathType`')
+    if params.get("cifti-b", None) is None:
+        raise StyxValidationError("`cifti-b` must not be None")
+    if not isinstance(params["cifti-b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-b` has the wrong type: Received `{type(params.get("cifti-b", None))}` expected `InputPathType`')
+
+
 def cifti_pairwise_correlation_cargs(
     params: CiftiPairwiseCorrelationParameters,
     execution: Execution,
@@ -134,6 +168,7 @@ def cifti_pairwise_correlation_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiPairwiseCorrelationOutputs`).
     """
+    cifti_pairwise_correlation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_PAIRWISE_CORRELATION_METADATA)
     params = execution.params(params)

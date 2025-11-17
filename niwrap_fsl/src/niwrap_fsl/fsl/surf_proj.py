@@ -107,6 +107,53 @@ def surf_proj_params(
     return params
 
 
+def surf_proj_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfProjParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data", None) is None:
+        raise StyxValidationError("`data` must not be None")
+    if not isinstance(params["data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data` has the wrong type: Received `{type(params.get("data", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("surface_reference", None) is not None:
+        if not isinstance(params["surface_reference"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_reference` has the wrong type: Received `{type(params.get("surface_reference", None))}` expected `InputPathType | None`')
+    if params.get("transform", None) is not None:
+        if not isinstance(params["transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType | None`')
+    if params.get("meshspace", None) is not None:
+        if not isinstance(params["meshspace"], str):
+            raise StyxValidationError(f'`meshspace` has the wrong type: Received `{type(params.get("meshspace", None))}` expected `str | None`')
+    if params.get("step_size", None) is not None:
+        if not isinstance(params["step_size"], (float, int)):
+            raise StyxValidationError(f'`step_size` has the wrong type: Received `{type(params.get("step_size", None))}` expected `float | None`')
+    if params.get("direction", None) is not None:
+        if not isinstance(params["direction"], (float, int)):
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `float | None`')
+    if params.get("operation", None) is not None:
+        if not isinstance(params["operation"], str):
+            raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str | None`')
+    if params.get("surface_output", None) is not None:
+        if not isinstance(params["surface_output"], str):
+            raise StyxValidationError(f'`surface_output` has the wrong type: Received `{type(params.get("surface_output", None))}` expected `str | None`')
+
+
 def surf_proj_cargs(
     params: SurfProjParameters,
     execution: Execution,
@@ -212,6 +259,7 @@ def surf_proj_execute(
     Returns:
         NamedTuple of outputs (described in `SurfProjOutputs`).
     """
+    surf_proj_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_PROJ_METADATA)
     params = execution.params(params)

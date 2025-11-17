@@ -98,6 +98,54 @@ def invwarp_params(
     return params
 
 
+def invwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InvwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warp", None) is None:
+        raise StyxValidationError("`warp` must not be None")
+    if not isinstance(params["warp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `InputPathType`')
+    if params.get("out_img", None) is None:
+        raise StyxValidationError("`out_img` must not be None")
+    if not isinstance(params["out_img"], str):
+        raise StyxValidationError(f'`out_img` has the wrong type: Received `{type(params.get("out_img", None))}` expected `str`')
+    if params.get("ref_img", None) is None:
+        raise StyxValidationError("`ref_img` must not be None")
+    if not isinstance(params["ref_img"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ref_img` has the wrong type: Received `{type(params.get("ref_img", None))}` expected `InputPathType`')
+    if params.get("absolute", False) is None:
+        raise StyxValidationError("`absolute` must not be None")
+    if not isinstance(params["absolute"], bool):
+        raise StyxValidationError(f'`absolute` has the wrong type: Received `{type(params.get("absolute", False))}` expected `bool`')
+    if params.get("relative", False) is None:
+        raise StyxValidationError("`relative` must not be None")
+    if not isinstance(params["relative"], bool):
+        raise StyxValidationError(f'`relative` has the wrong type: Received `{type(params.get("relative", False))}` expected `bool`')
+    if params.get("noconstraint", False) is None:
+        raise StyxValidationError("`noconstraint` must not be None")
+    if not isinstance(params["noconstraint"], bool):
+        raise StyxValidationError(f'`noconstraint` has the wrong type: Received `{type(params.get("noconstraint", False))}` expected `bool`')
+    if params.get("jacobian_min", None) is not None:
+        if not isinstance(params["jacobian_min"], (float, int)):
+            raise StyxValidationError(f'`jacobian_min` has the wrong type: Received `{type(params.get("jacobian_min", None))}` expected `float | None`')
+    if params.get("jacobian_max", None) is not None:
+        if not isinstance(params["jacobian_max"], (float, int)):
+            raise StyxValidationError(f'`jacobian_max` has the wrong type: Received `{type(params.get("jacobian_max", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def invwarp_cargs(
     params: InvwarpParameters,
     execution: Execution,
@@ -171,6 +219,7 @@ def invwarp_execute(
     Returns:
         NamedTuple of outputs (described in `InvwarpOutputs`).
     """
+    invwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INVWARP_METADATA)
     params = execution.params(params)

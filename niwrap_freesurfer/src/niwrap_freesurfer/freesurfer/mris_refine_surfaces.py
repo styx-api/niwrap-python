@@ -92,6 +92,49 @@ def mris_refine_surfaces_params(
     return params
 
 
+def mris_refine_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRefineSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("hires_volume", None) is None:
+        raise StyxValidationError("`hires_volume` must not be None")
+    if not isinstance(params["hires_volume"], str):
+        raise StyxValidationError(f'`hires_volume` has the wrong type: Received `{type(params.get("hires_volume", None))}` expected `str`')
+    if params.get("label_file", None) is None:
+        raise StyxValidationError("`label_file` must not be None")
+    if not isinstance(params["label_file"], str):
+        raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `str`')
+    if params.get("low_to_hires_xfm", None) is not None:
+        if not isinstance(params["low_to_hires_xfm"], str):
+            raise StyxValidationError(f'`low_to_hires_xfm` has the wrong type: Received `{type(params.get("low_to_hires_xfm", None))}` expected `str | None`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("use_mgz", False) is None:
+        raise StyxValidationError("`use_mgz` must not be None")
+    if not isinstance(params["use_mgz"], bool):
+        raise StyxValidationError(f'`use_mgz` has the wrong type: Received `{type(params.get("use_mgz", False))}` expected `bool`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+
+
 def mris_refine_surfaces_cargs(
     params: MrisRefineSurfacesParameters,
     execution: Execution,
@@ -168,6 +211,7 @@ def mris_refine_surfaces_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRefineSurfacesOutputs`).
     """
+    mris_refine_surfaces_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_REFINE_SURFACES_METADATA)
     params = execution.params(params)

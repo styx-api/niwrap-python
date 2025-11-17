@@ -73,6 +73,38 @@ def mris_segment_vals_params(
     return params
 
 
+def mris_segment_vals_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSegmentValsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("input_curv_file", None) is None:
+        raise StyxValidationError("`input_curv_file` must not be None")
+    if not isinstance(params["input_curv_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_curv_file` has the wrong type: Received `{type(params.get("input_curv_file", None))}` expected `InputPathType`')
+    if params.get("output_curv_file", None) is None:
+        raise StyxValidationError("`output_curv_file` must not be None")
+    if not isinstance(params["output_curv_file"], str):
+        raise StyxValidationError(f'`output_curv_file` has the wrong type: Received `{type(params.get("output_curv_file", None))}` expected `str`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("area_thresh", None) is not None:
+        if not isinstance(params["area_thresh"], (float, int)):
+            raise StyxValidationError(f'`area_thresh` has the wrong type: Received `{type(params.get("area_thresh", None))}` expected `float | None`')
+
+
 def mris_segment_vals_cargs(
     params: MrisSegmentValsParameters,
     execution: Execution,
@@ -143,6 +175,7 @@ def mris_segment_vals_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSegmentValsOutputs`).
     """
+    mris_segment_vals_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SEGMENT_VALS_METADATA)
     params = execution.params(params)

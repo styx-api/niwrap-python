@@ -201,6 +201,105 @@ def mri_compute_volume_fractions_params(
     return params
 
 
+def mri_compute_volume_fractions_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriComputeVolumeFractionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_stem", None) is None:
+        raise StyxValidationError("`output_stem` must not be None")
+    if not isinstance(params["output_stem"], str):
+        raise StyxValidationError(f'`output_stem` has the wrong type: Received `{type(params.get("output_stem", None))}` expected `str`')
+    if params.get("registration_file", None) is not None:
+        if not isinstance(params["registration_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`registration_file` has the wrong type: Received `{type(params.get("registration_file", None))}` expected `InputPathType | None`')
+    if params.get("regheader", None) is not None:
+        if not isinstance(params["regheader"], str):
+            raise StyxValidationError(f'`regheader` has the wrong type: Received `{type(params.get("regheader", None))}` expected `str | None`')
+    if params.get("usf", None) is not None:
+        if not isinstance(params["usf"], (float, int)):
+            raise StyxValidationError(f'`usf` has the wrong type: Received `{type(params.get("usf", None))}` expected `float | None`')
+    if params.get("resolution", None) is not None:
+        if not isinstance(params["resolution"], (float, int)):
+            raise StyxValidationError(f'`resolution` has the wrong type: Received `{type(params.get("resolution", None))}` expected `float | None`')
+    if params.get("resmm", None) is not None:
+        if not isinstance(params["resmm"], (float, int)):
+            raise StyxValidationError(f'`resmm` has the wrong type: Received `{type(params.get("resmm", None))}` expected `float | None`')
+    if params.get("segmentation_file", None) is not None:
+        if not isinstance(params["segmentation_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation_file` has the wrong type: Received `{type(params.get("segmentation_file", None))}` expected `InputPathType | None`')
+    if params.get("wsurf", None) is not None:
+        if not isinstance(params["wsurf"], str):
+            raise StyxValidationError(f'`wsurf` has the wrong type: Received `{type(params.get("wsurf", None))}` expected `str | None`')
+    if params.get("psurf", None) is not None:
+        if not isinstance(params["psurf"], str):
+            raise StyxValidationError(f'`psurf` has the wrong type: Received `{type(params.get("psurf", None))}` expected `str | None`')
+    if params.get("no_aseg", False) is None:
+        raise StyxValidationError("`no_aseg` must not be None")
+    if not isinstance(params["no_aseg"], bool):
+        raise StyxValidationError(f'`no_aseg` has the wrong type: Received `{type(params.get("no_aseg", False))}` expected `bool`')
+    if params.get("stackfile", None) is not None:
+        if not isinstance(params["stackfile"], str):
+            raise StyxValidationError(f'`stackfile` has the wrong type: Received `{type(params.get("stackfile", None))}` expected `str | None`')
+    if params.get("gmfile", None) is not None:
+        if not isinstance(params["gmfile"], str):
+            raise StyxValidationError(f'`gmfile` has the wrong type: Received `{type(params.get("gmfile", None))}` expected `str | None`')
+    if params.get("no_fill_csf", False) is None:
+        raise StyxValidationError("`no_fill_csf` must not be None")
+    if not isinstance(params["no_fill_csf"], bool):
+        raise StyxValidationError(f'`no_fill_csf` has the wrong type: Received `{type(params.get("no_fill_csf", False))}` expected `bool`')
+    if params.get("dilation", None) is not None:
+        if not isinstance(params["dilation"], (float, int)):
+            raise StyxValidationError(f'`dilation` has the wrong type: Received `{type(params.get("dilation", None))}` expected `float | None`')
+    if params.get("out_seg", None) is not None:
+        if not isinstance(params["out_seg"], str):
+            raise StyxValidationError(f'`out_seg` has the wrong type: Received `{type(params.get("out_seg", None))}` expected `str | None`')
+    if params.get("ttseg", None) is not None:
+        if not isinstance(params["ttseg"], str):
+            raise StyxValidationError(f'`ttseg` has the wrong type: Received `{type(params.get("ttseg", None))}` expected `str | None`')
+    if params.get("ttseg_ctab", None) is not None:
+        if not isinstance(params["ttseg_ctab"], str):
+            raise StyxValidationError(f'`ttseg_ctab` has the wrong type: Received `{type(params.get("ttseg_ctab", None))}` expected `str | None`')
+    if params.get("mgz_format", False) is None:
+        raise StyxValidationError("`mgz_format` must not be None")
+    if not isinstance(params["mgz_format"], bool):
+        raise StyxValidationError(f'`mgz_format` has the wrong type: Received `{type(params.get("mgz_format", False))}` expected `bool`')
+    if params.get("mgh_format", False) is None:
+        raise StyxValidationError("`mgh_format` must not be None")
+    if not isinstance(params["mgh_format"], bool):
+        raise StyxValidationError(f'`mgh_format` has the wrong type: Received `{type(params.get("mgh_format", False))}` expected `bool`')
+    if params.get("nii_format", False) is None:
+        raise StyxValidationError("`nii_format` must not be None")
+    if not isinstance(params["nii_format"], bool):
+        raise StyxValidationError(f'`nii_format` has the wrong type: Received `{type(params.get("nii_format", False))}` expected `bool`')
+    if params.get("nii_gz_format", False) is None:
+        raise StyxValidationError("`nii_gz_format` must not be None")
+    if not isinstance(params["nii_gz_format"], bool):
+        raise StyxValidationError(f'`nii_gz_format` has the wrong type: Received `{type(params.get("nii_gz_format", False))}` expected `bool`')
+    if params.get("ttype_head", False) is None:
+        raise StyxValidationError("`ttype_head` must not be None")
+    if not isinstance(params["ttype_head"], bool):
+        raise StyxValidationError(f'`ttype_head` has the wrong type: Received `{type(params.get("ttype_head", False))}` expected `bool`')
+    if params.get("vg_thresh", None) is not None:
+        if not isinstance(params["vg_thresh"], (float, int)):
+            raise StyxValidationError(f'`vg_thresh` has the wrong type: Received `{type(params.get("vg_thresh", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+
+
 def mri_compute_volume_fractions_cargs(
     params: MriComputeVolumeFractionsParameters,
     execution: Execution,
@@ -358,6 +457,7 @@ def mri_compute_volume_fractions_execute(
     Returns:
         NamedTuple of outputs (described in `MriComputeVolumeFractionsOutputs`).
     """
+    mri_compute_volume_fractions_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COMPUTE_VOLUME_FRACTIONS_METADATA)
     params = execution.params(params)

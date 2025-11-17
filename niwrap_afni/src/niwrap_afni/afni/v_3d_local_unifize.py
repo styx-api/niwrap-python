@@ -102,6 +102,51 @@ def v_3d_local_unifize_params(
     return params
 
 
+def v_3d_local_unifize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLocalUnifizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("working_dir", None) is not None:
+        if not isinstance(params["working_dir"], str):
+            raise StyxValidationError(f'`working_dir` has the wrong type: Received `{type(params.get("working_dir", None))}` expected `str | None`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("local_rad", None) is not None:
+        if not isinstance(params["local_rad"], (float, int)):
+            raise StyxValidationError(f'`local_rad` has the wrong type: Received `{type(params.get("local_rad", None))}` expected `float | None`')
+    if params.get("local_perc", None) is not None:
+        if not isinstance(params["local_perc"], (float, int)):
+            raise StyxValidationError(f'`local_perc` has the wrong type: Received `{type(params.get("local_perc", None))}` expected `float | None`')
+    if params.get("local_mask", None) is not None:
+        if not isinstance(params["local_mask"], str):
+            raise StyxValidationError(f'`local_mask` has the wrong type: Received `{type(params.get("local_mask", None))}` expected `str | None`')
+    if params.get("filter_thr", None) is not None:
+        if not isinstance(params["filter_thr"], (float, int)):
+            raise StyxValidationError(f'`filter_thr` has the wrong type: Received `{type(params.get("filter_thr", None))}` expected `float | None`')
+
+
 def v_3d_local_unifize_cargs(
     params: V3dLocalUnifizeParameters,
     execution: Execution,
@@ -195,6 +240,7 @@ def v_3d_local_unifize_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLocalUnifizeOutputs`).
     """
+    v_3d_local_unifize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOCAL_UNIFIZE_METADATA)
     params = execution.params(params)

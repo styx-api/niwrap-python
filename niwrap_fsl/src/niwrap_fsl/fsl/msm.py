@@ -152,6 +152,73 @@ def msm_params(
     return params
 
 
+def msm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `MsmParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inmesh", None) is None:
+        raise StyxValidationError("`inmesh` must not be None")
+    if not isinstance(params["inmesh"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inmesh` has the wrong type: Received `{type(params.get("inmesh", None))}` expected `InputPathType`')
+    if params.get("out", None) is None:
+        raise StyxValidationError("`out` must not be None")
+    if not isinstance(params["out"], str):
+        raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str`')
+    if params.get("refmesh", None) is not None:
+        if not isinstance(params["refmesh"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`refmesh` has the wrong type: Received `{type(params.get("refmesh", None))}` expected `InputPathType | None`')
+    if params.get("indata", None) is not None:
+        if not isinstance(params["indata"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`indata` has the wrong type: Received `{type(params.get("indata", None))}` expected `InputPathType | None`')
+    if params.get("refdata", None) is not None:
+        if not isinstance(params["refdata"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`refdata` has the wrong type: Received `{type(params.get("refdata", None))}` expected `InputPathType | None`')
+    if params.get("trans", None) is not None:
+        if not isinstance(params["trans"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `InputPathType | None`')
+    if params.get("in_register", None) is not None:
+        if not isinstance(params["in_register"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_register` has the wrong type: Received `{type(params.get("in_register", None))}` expected `InputPathType | None`')
+    if params.get("inweight", None) is not None:
+        if not isinstance(params["inweight"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`inweight` has the wrong type: Received `{type(params.get("inweight", None))}` expected `InputPathType | None`')
+    if params.get("refweight", None) is not None:
+        if not isinstance(params["refweight"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`refweight` has the wrong type: Received `{type(params.get("refweight", None))}` expected `InputPathType | None`')
+    if params.get("format", None) is not None:
+        if not isinstance(params["format"], str):
+            raise StyxValidationError(f'`format` has the wrong type: Received `{type(params.get("format", None))}` expected `str | None`')
+    if params.get("conf", None) is not None:
+        if not isinstance(params["conf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`conf` has the wrong type: Received `{type(params.get("conf", None))}` expected `InputPathType | None`')
+    if params.get("levels", None) is not None:
+        if not isinstance(params["levels"], (float, int)):
+            raise StyxValidationError(f'`levels` has the wrong type: Received `{type(params.get("levels", None))}` expected `float | None`')
+    if params.get("smoothout", None) is not None:
+        if not isinstance(params["smoothout"], (float, int)):
+            raise StyxValidationError(f'`smoothout` has the wrong type: Received `{type(params.get("smoothout", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("printoptions", False) is None:
+        raise StyxValidationError("`printoptions` must not be None")
+    if not isinstance(params["printoptions"], bool):
+        raise StyxValidationError(f'`printoptions` has the wrong type: Received `{type(params.get("printoptions", False))}` expected `bool`')
+
+
 def msm_cargs(
     params: MsmParameters,
     execution: Execution,
@@ -273,6 +340,7 @@ def msm_execute(
     Returns:
         NamedTuple of outputs (described in `MsmOutputs`).
     """
+    msm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MSM_METADATA)
     params = execution.params(params)

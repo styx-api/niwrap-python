@@ -78,6 +78,44 @@ def v_3d_nwarp_funcs_params(
     return params
 
 
+def v_3d_nwarp_funcs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNwarpFuncsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_warp", None) is None:
+        raise StyxValidationError("`input_warp` must not be None")
+    if not isinstance(params["input_warp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_warp` has the wrong type: Received `{type(params.get("input_warp", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("bulk_flag", False) is None:
+        raise StyxValidationError("`bulk_flag` must not be None")
+    if not isinstance(params["bulk_flag"], bool):
+        raise StyxValidationError(f'`bulk_flag` has the wrong type: Received `{type(params.get("bulk_flag", False))}` expected `bool`')
+    if params.get("shear_flag", False) is None:
+        raise StyxValidationError("`shear_flag` must not be None")
+    if not isinstance(params["shear_flag"], bool):
+        raise StyxValidationError(f'`shear_flag` has the wrong type: Received `{type(params.get("shear_flag", False))}` expected `bool`')
+    if params.get("vorticity_flag", False) is None:
+        raise StyxValidationError("`vorticity_flag` must not be None")
+    if not isinstance(params["vorticity_flag"], bool):
+        raise StyxValidationError(f'`vorticity_flag` has the wrong type: Received `{type(params.get("vorticity_flag", False))}` expected `bool`')
+    if params.get("all_flag", False) is None:
+        raise StyxValidationError("`all_flag` must not be None")
+    if not isinstance(params["all_flag"], bool):
+        raise StyxValidationError(f'`all_flag` has the wrong type: Received `{type(params.get("all_flag", False))}` expected `bool`')
+
+
 def v_3d_nwarp_funcs_cargs(
     params: V3dNwarpFuncsParameters,
     execution: Execution,
@@ -152,6 +190,7 @@ def v_3d_nwarp_funcs_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpFuncsOutputs`).
     """
+    v_3d_nwarp_funcs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NWARP_FUNCS_METADATA)
     params = execution.params(params)

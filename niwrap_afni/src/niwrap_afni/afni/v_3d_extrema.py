@@ -158,6 +158,93 @@ def v_3d_extrema_params(
     return params
 
 
+def v_3d_extrema_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dExtremaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("output_session", None) is not None:
+        if not isinstance(params["output_session"], str):
+            raise StyxValidationError(f'`output_session` has the wrong type: Received `{type(params.get("output_session", None))}` expected `str | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_threshold", None) is not None:
+        if not isinstance(params["mask_threshold"], (float, int)):
+            raise StyxValidationError(f'`mask_threshold` has the wrong type: Received `{type(params.get("mask_threshold", None))}` expected `float | None`')
+    if params.get("data_threshold", None) is not None:
+        if not isinstance(params["data_threshold"], (float, int)):
+            raise StyxValidationError(f'`data_threshold` has the wrong type: Received `{type(params.get("data_threshold", None))}` expected `float | None`')
+    if params.get("n_best", None) is not None:
+        if not isinstance(params["n_best"], (float, int)):
+            raise StyxValidationError(f'`n_best` has the wrong type: Received `{type(params.get("n_best", None))}` expected `float | None`')
+    if params.get("separation_distance", None) is not None:
+        if not isinstance(params["separation_distance"], (float, int)):
+            raise StyxValidationError(f'`separation_distance` has the wrong type: Received `{type(params.get("separation_distance", None))}` expected `float | None`')
+    if params.get("minima", False) is None:
+        raise StyxValidationError("`minima` must not be None")
+    if not isinstance(params["minima"], bool):
+        raise StyxValidationError(f'`minima` has the wrong type: Received `{type(params.get("minima", False))}` expected `bool`')
+    if params.get("maxima", False) is None:
+        raise StyxValidationError("`maxima` must not be None")
+    if not isinstance(params["maxima"], bool):
+        raise StyxValidationError(f'`maxima` has the wrong type: Received `{type(params.get("maxima", False))}` expected `bool`')
+    if params.get("strict", False) is None:
+        raise StyxValidationError("`strict` must not be None")
+    if not isinstance(params["strict"], bool):
+        raise StyxValidationError(f'`strict` has the wrong type: Received `{type(params.get("strict", False))}` expected `bool`')
+    if params.get("partial", False) is None:
+        raise StyxValidationError("`partial` must not be None")
+    if not isinstance(params["partial"], bool):
+        raise StyxValidationError(f'`partial` has the wrong type: Received `{type(params.get("partial", False))}` expected `bool`')
+    if params.get("interior", False) is None:
+        raise StyxValidationError("`interior` must not be None")
+    if not isinstance(params["interior"], bool):
+        raise StyxValidationError(f'`interior` has the wrong type: Received `{type(params.get("interior", False))}` expected `bool`')
+    if params.get("closure", False) is None:
+        raise StyxValidationError("`closure` must not be None")
+    if not isinstance(params["closure"], bool):
+        raise StyxValidationError(f'`closure` has the wrong type: Received `{type(params.get("closure", False))}` expected `bool`')
+    if params.get("slice", False) is None:
+        raise StyxValidationError("`slice` must not be None")
+    if not isinstance(params["slice"], bool):
+        raise StyxValidationError(f'`slice` has the wrong type: Received `{type(params.get("slice", False))}` expected `bool`')
+    if params.get("volume", False) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], bool):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", False))}` expected `bool`')
+    if params.get("remove", False) is None:
+        raise StyxValidationError("`remove` must not be None")
+    if not isinstance(params["remove"], bool):
+        raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", False))}` expected `bool`')
+    if params.get("average", False) is None:
+        raise StyxValidationError("`average` must not be None")
+    if not isinstance(params["average"], bool):
+        raise StyxValidationError(f'`average` has the wrong type: Received `{type(params.get("average", False))}` expected `bool`')
+    if params.get("weight", False) is None:
+        raise StyxValidationError("`weight` must not be None")
+    if not isinstance(params["weight"], bool):
+        raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", False))}` expected `bool`')
+
+
 def v_3d_extrema_cargs(
     params: V3dExtremaParameters,
     execution: Execution,
@@ -276,6 +363,7 @@ def v_3d_extrema_execute(
     Returns:
         NamedTuple of outputs (described in `V3dExtremaOutputs`).
     """
+    v_3d_extrema_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_EXTREMA_METADATA)
     params = execution.params(params)

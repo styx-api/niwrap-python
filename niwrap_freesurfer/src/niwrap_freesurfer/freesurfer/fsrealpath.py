@@ -54,6 +54,28 @@ def fsrealpath_params(
     return params
 
 
+def fsrealpath_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsrealpathParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("path", None) is None:
+        raise StyxValidationError("`path` must not be None")
+    if not isinstance(params["path"], str):
+        raise StyxValidationError(f'`path` has the wrong type: Received `{type(params.get("path", None))}` expected `str`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def fsrealpath_cargs(
     params: FsrealpathParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def fsrealpath_execute(
     Returns:
         NamedTuple of outputs (described in `FsrealpathOutputs`).
     """
+    fsrealpath_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSREALPATH_METADATA)
     params = execution.params(params)

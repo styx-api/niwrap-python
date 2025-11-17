@@ -73,6 +73,38 @@ def imstat_params(
     return params
 
 
+def imstat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImstatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("no_label", False) is None:
+        raise StyxValidationError("`no_label` must not be None")
+    if not isinstance(params["no_label"], bool):
+        raise StyxValidationError(f'`no_label` has the wrong type: Received `{type(params.get("no_label", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("pixstat_prefix", None) is not None:
+        if not isinstance(params["pixstat_prefix"], str):
+            raise StyxValidationError(f'`pixstat_prefix` has the wrong type: Received `{type(params.get("pixstat_prefix", None))}` expected `str | None`')
+    if params.get("image_files", None) is None:
+        raise StyxValidationError("`image_files` must not be None")
+    if not isinstance(params["image_files"], list):
+        raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+    for e in params["image_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+
+
 def imstat_cargs(
     params: ImstatParameters,
     execution: Execution,
@@ -141,6 +173,7 @@ def imstat_execute(
     Returns:
         NamedTuple of outputs (described in `ImstatOutputs`).
     """
+    imstat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMSTAT_METADATA)
     params = execution.params(params)

@@ -66,6 +66,35 @@ def siena_flow2std_params(
     return params
 
 
+def siena_flow2std_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SienaFlow2stdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fileroot1", None) is None:
+        raise StyxValidationError("`fileroot1` must not be None")
+    if not isinstance(params["fileroot1"], str):
+        raise StyxValidationError(f'`fileroot1` has the wrong type: Received `{type(params.get("fileroot1", None))}` expected `str`')
+    if params.get("fileroot2", None) is None:
+        raise StyxValidationError("`fileroot2` must not be None")
+    if not isinstance(params["fileroot2"], str):
+        raise StyxValidationError(f'`fileroot2` has the wrong type: Received `{type(params.get("fileroot2", None))}` expected `str`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def siena_flow2std_cargs(
     params: SienaFlow2stdParameters,
     execution: Execution,
@@ -131,6 +160,7 @@ def siena_flow2std_execute(
     Returns:
         NamedTuple of outputs (described in `SienaFlow2stdOutputs`).
     """
+    siena_flow2std_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIENA_FLOW2STD_METADATA)
     params = execution.params(params)

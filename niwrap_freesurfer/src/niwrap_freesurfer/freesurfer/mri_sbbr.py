@@ -181,6 +181,100 @@ def mri_sbbr_params(
     return params
 
 
+def mri_sbbr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSbbrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template_volume", None) is None:
+        raise StyxValidationError("`template_volume` must not be None")
+    if not isinstance(params["template_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template_volume` has the wrong type: Received `{type(params.get("template_volume", None))}` expected `InputPathType`')
+    if params.get("surface_file", None) is None:
+        raise StyxValidationError("`surface_file` must not be None")
+    if not isinstance(params["surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_file` has the wrong type: Received `{type(params.get("surface_file", None))}` expected `InputPathType`')
+    if params.get("init_reg_file", None) is None:
+        raise StyxValidationError("`init_reg_file` must not be None")
+    if not isinstance(params["init_reg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`init_reg_file` has the wrong type: Received `{type(params.get("init_reg_file", None))}` expected `InputPathType`')
+    if params.get("t1", False) is None:
+        raise StyxValidationError("`t1` must not be None")
+    if not isinstance(params["t1"], bool):
+        raise StyxValidationError(f'`t1` has the wrong type: Received `{type(params.get("t1", False))}` expected `bool`')
+    if params.get("t2", False) is None:
+        raise StyxValidationError("`t2` must not be None")
+    if not isinstance(params["t2"], bool):
+        raise StyxValidationError(f'`t2` has the wrong type: Received `{type(params.get("t2", False))}` expected `bool`')
+    if params.get("optimization_type", None) is not None:
+        if not isinstance(params["optimization_type"], (float, int)):
+            raise StyxValidationError(f'`optimization_type` has the wrong type: Received `{type(params.get("optimization_type", None))}` expected `float | None`')
+    if params.get("distance_in", None) is not None:
+        if not isinstance(params["distance_in"], (float, int)):
+            raise StyxValidationError(f'`distance_in` has the wrong type: Received `{type(params.get("distance_in", None))}` expected `float | None`')
+    if params.get("distance_out", None) is not None:
+        if not isinstance(params["distance_out"], (float, int)):
+            raise StyxValidationError(f'`distance_out` has the wrong type: Received `{type(params.get("distance_out", None))}` expected `float | None`')
+    if params.get("slope", None) is not None:
+        if not isinstance(params["slope"], (float, int)):
+            raise StyxValidationError(f'`slope` has the wrong type: Received `{type(params.get("slope", None))}` expected `float | None`')
+    if params.get("ftol", None) is not None:
+        if not isinstance(params["ftol"], (float, int)):
+            raise StyxValidationError(f'`ftol` has the wrong type: Received `{type(params.get("ftol", None))}` expected `float | None`')
+    if params.get("linmintol", None) is not None:
+        if not isinstance(params["linmintol"], (float, int)):
+            raise StyxValidationError(f'`linmintol` has the wrong type: Received `{type(params.get("linmintol", None))}` expected `float | None`')
+    if params.get("niters_max", None) is not None:
+        if not isinstance(params["niters_max"], (float, int)):
+            raise StyxValidationError(f'`niters_max` has the wrong type: Received `{type(params.get("niters_max", None))}` expected `float | None`')
+    if params.get("search", None) is not None:
+        if not isinstance(params["search"], str):
+            raise StyxValidationError(f'`search` has the wrong type: Received `{type(params.get("search", None))}` expected `str | None`')
+    if params.get("search1d", None) is not None:
+        if not isinstance(params["search1d"], str):
+            raise StyxValidationError(f'`search1d` has the wrong type: Received `{type(params.get("search1d", None))}` expected `str | None`')
+    if params.get("parameter_set", None) is not None:
+        if not isinstance(params["parameter_set"], str):
+            raise StyxValidationError(f'`parameter_set` has the wrong type: Received `{type(params.get("parameter_set", None))}` expected `str | None`')
+    if params.get("increment", None) is not None:
+        if not isinstance(params["increment"], (float, int)):
+            raise StyxValidationError(f'`increment` has the wrong type: Received `{type(params.get("increment", None))}` expected `float | None`')
+    if params.get("slice_number", None) is not None:
+        if not isinstance(params["slice_number"], (float, int)):
+            raise StyxValidationError(f'`slice_number` has the wrong type: Received `{type(params.get("slice_number", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("output_registration", None) is not None:
+        if not isinstance(params["output_registration"], str):
+            raise StyxValidationError(f'`output_registration` has the wrong type: Received `{type(params.get("output_registration", None))}` expected `str | None`')
+    if params.get("inverted_output_registration", None) is not None:
+        if not isinstance(params["inverted_output_registration"], str):
+            raise StyxValidationError(f'`inverted_output_registration` has the wrong type: Received `{type(params.get("inverted_output_registration", None))}` expected `str | None`')
+    if params.get("output_surface", None) is not None:
+        if not isinstance(params["output_surface"], str):
+            raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("diagnostic", False) is None:
+        raise StyxValidationError("`diagnostic` must not be None")
+    if not isinstance(params["diagnostic"], bool):
+        raise StyxValidationError(f'`diagnostic` has the wrong type: Received `{type(params.get("diagnostic", False))}` expected `bool`')
+    if params.get("check_options", False) is None:
+        raise StyxValidationError("`check_options` must not be None")
+    if not isinstance(params["check_options"], bool):
+        raise StyxValidationError(f'`check_options` has the wrong type: Received `{type(params.get("check_options", False))}` expected `bool`')
+
+
 def mri_sbbr_cargs(
     params: MriSbbrParameters,
     execution: Execution,
@@ -339,6 +433,7 @@ def mri_sbbr_execute(
     Returns:
         NamedTuple of outputs (described in `MriSbbrOutputs`).
     """
+    mri_sbbr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SBBR_METADATA)
     params = execution.params(params)

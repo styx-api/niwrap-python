@@ -84,6 +84,28 @@ def volume_dilate_presmooth_params(
     return params
 
 
+def volume_dilate_presmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeDilatePresmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+
+
 def volume_dilate_presmooth_cargs(
     params: VolumeDilatePresmoothParameters,
     execution: Execution,
@@ -125,6 +147,22 @@ def volume_dilate_grad_extrapolate_params(
     if presmooth is not None:
         params["presmooth"] = presmooth
     return params
+
+
+def volume_dilate_grad_extrapolate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeDilateGradExtrapolateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("presmooth", None) is not None:
+        volume_dilate_presmooth_validate(params["presmooth"])
 
 
 def volume_dilate_grad_extrapolate_cargs(
@@ -222,6 +260,54 @@ def volume_dilate_params(
     return params
 
 
+def volume_dilate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeDilateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("exponent", None) is not None:
+        if not isinstance(params["exponent"], (float, int)):
+            raise StyxValidationError(f'`exponent` has the wrong type: Received `{type(params.get("exponent", None))}` expected `float | None`')
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("legacy-cutoff", False) is None:
+        raise StyxValidationError("`legacy-cutoff` must not be None")
+    if not isinstance(params["legacy-cutoff"], bool):
+        raise StyxValidationError(f'`legacy-cutoff` has the wrong type: Received `{type(params.get("legacy-cutoff", False))}` expected `bool`')
+    if params.get("grad-extrapolate", None) is not None:
+        volume_dilate_grad_extrapolate_validate(params["grad-extrapolate"])
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
+
+
 def volume_dilate_cargs(
     params: VolumeDilateParameters,
     execution: Execution,
@@ -309,6 +395,7 @@ def volume_dilate_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeDilateOutputs`).
     """
+    volume_dilate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_DILATE_METADATA)
     params = execution.params(params)

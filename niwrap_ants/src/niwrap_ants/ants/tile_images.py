@@ -69,6 +69,41 @@ def tile_images_params(
     return params
 
 
+def tile_images_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TileImagesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("layout", None) is None:
+        raise StyxValidationError("`layout` must not be None")
+    if not isinstance(params["layout"], str):
+        raise StyxValidationError(f'`layout` has the wrong type: Received `{type(params.get("layout", None))}` expected `str`')
+    if params.get("input_images", None) is None:
+        raise StyxValidationError("`input_images` must not be None")
+    if not isinstance(params["input_images"], list):
+        raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    if len(params["input_images"]) >= 1:
+        raise StyxValidationError("Parameter `input_images` must contain at least 1 element")
+    for e in params["input_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+
+
 def tile_images_cargs(
     params: TileImagesParameters,
     execution: Execution,
@@ -132,6 +167,7 @@ def tile_images_execute(
     Returns:
         NamedTuple of outputs (described in `TileImagesOutputs`).
     """
+    tile_images_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TILE_IMAGES_METADATA)
     params = execution.params(params)

@@ -68,6 +68,36 @@ def simple_syn_registration_params(
     return params
 
 
+def simple_syn_registration_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SimpleSynRegistrationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("initial_transform", None) is None:
+        raise StyxValidationError("`initial_transform` must not be None")
+    if not isinstance(params["initial_transform"], str):
+        raise StyxValidationError(f'`initial_transform` has the wrong type: Received `{type(params.get("initial_transform", None))}` expected `str`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+
+
 def simple_syn_registration_cargs(
     params: SimpleSynRegistrationParameters,
     execution: Execution,
@@ -130,6 +160,7 @@ def simple_syn_registration_execute(
     Returns:
         NamedTuple of outputs (described in `SimpleSynRegistrationOutputs`).
     """
+    simple_syn_registration_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIMPLE_SYN_REGISTRATION_METADATA)
     params = execution.params(params)

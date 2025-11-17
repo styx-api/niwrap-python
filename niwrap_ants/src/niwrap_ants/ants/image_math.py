@@ -74,6 +74,41 @@ def image_math_params(
     return params
 
 
+def image_math_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImageMathParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `typing.Literal[2, 3, 4]`')
+    if params["image_dimension"] not in [2, 3, 4]:
+        raise StyxValidationError("Parameter `image_dimension` must be one of [2, 3, 4]")
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("operations_and_inputs", None) is None:
+        raise StyxValidationError("`operations_and_inputs` must not be None")
+    if not isinstance(params["operations_and_inputs"], str):
+        raise StyxValidationError(f'`operations_and_inputs` has the wrong type: Received `{type(params.get("operations_and_inputs", None))}` expected `str`')
+    if params.get("image1", None) is None:
+        raise StyxValidationError("`image1` must not be None")
+    if not isinstance(params["image1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image1` has the wrong type: Received `{type(params.get("image1", None))}` expected `InputPathType`')
+    if params.get("image2", None) is not None:
+        if not isinstance(params["image2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`image2` has the wrong type: Received `{type(params.get("image2", None))}` expected `InputPathType | None`')
+
+
 def image_math_cargs(
     params: ImageMathParameters,
     execution: Execution,
@@ -138,6 +173,7 @@ def image_math_execute(
     Returns:
         NamedTuple of outputs (described in `ImageMathOutputs`).
     """
+    image_math_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMAGE_MATH_METADATA)
     params = execution.params(params)

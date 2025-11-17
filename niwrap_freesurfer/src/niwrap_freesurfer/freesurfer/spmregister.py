@@ -123,6 +123,67 @@ def spmregister_params(
     return params
 
 
+def spmregister_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpmregisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjid", None) is None:
+        raise StyxValidationError("`subjid` must not be None")
+    if not isinstance(params["subjid"], str):
+        raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str`')
+    if params.get("mov", None) is None:
+        raise StyxValidationError("`mov` must not be None")
+    if not isinstance(params["mov"], str):
+        raise StyxValidationError(f'`mov` has the wrong type: Received `{type(params.get("mov", None))}` expected `str`')
+    if params.get("reg", None) is None:
+        raise StyxValidationError("`reg` must not be None")
+    if not isinstance(params["reg"], str):
+        raise StyxValidationError(f'`reg` has the wrong type: Received `{type(params.get("reg", None))}` expected `str`')
+    if params.get("frame", None) is not None:
+        if not isinstance(params["frame"], (float, int)):
+            raise StyxValidationError(f'`frame` has the wrong type: Received `{type(params.get("frame", None))}` expected `float | None`')
+    if params.get("mid_frame", False) is None:
+        raise StyxValidationError("`mid_frame` must not be None")
+    if not isinstance(params["mid_frame"], bool):
+        raise StyxValidationError(f'`mid_frame` has the wrong type: Received `{type(params.get("mid_frame", False))}` expected `bool`')
+    if params.get("template_out", None) is not None:
+        if not isinstance(params["template_out"], str):
+            raise StyxValidationError(f'`template_out` has the wrong type: Received `{type(params.get("template_out", None))}` expected `str | None`')
+    if params.get("fsvol", None) is not None:
+        if not isinstance(params["fsvol"], str):
+            raise StyxValidationError(f'`fsvol` has the wrong type: Received `{type(params.get("fsvol", None))}` expected `str | None`')
+    if params.get("force_ras", False) is None:
+        raise StyxValidationError("`force_ras` must not be None")
+    if not isinstance(params["force_ras"], bool):
+        raise StyxValidationError(f'`force_ras` has the wrong type: Received `{type(params.get("force_ras", False))}` expected `bool`')
+    if params.get("outvol", None) is not None:
+        if not isinstance(params["outvol"], str):
+            raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str | None`')
+    if params.get("tmpdir", None) is not None:
+        if not isinstance(params["tmpdir"], str):
+            raise StyxValidationError(f'`tmpdir` has the wrong type: Received `{type(params.get("tmpdir", None))}` expected `str | None`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def spmregister_cargs(
     params: SpmregisterParameters,
     execution: Execution,
@@ -228,6 +289,7 @@ def spmregister_execute(
     Returns:
         NamedTuple of outputs (described in `SpmregisterOutputs`).
     """
+    spmregister_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPMREGISTER_METADATA)
     params = execution.params(params)

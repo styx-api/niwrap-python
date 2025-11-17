@@ -137,6 +137,77 @@ def v_3d_tagalign_params(
     return params
 
 
+def v_3d_tagalign_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTagalignParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("master_dataset", None) is None:
+        raise StyxValidationError("`master_dataset` must not be None")
+    if not isinstance(params["master_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`master_dataset` has the wrong type: Received `{type(params.get("master_dataset", None))}` expected `InputPathType`')
+    if params.get("tagset_file", None) is not None:
+        if not isinstance(params["tagset_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tagset_file` has the wrong type: Received `{type(params.get("tagset_file", None))}` expected `InputPathType | None`')
+    if params.get("no_keep_tags", False) is None:
+        raise StyxValidationError("`no_keep_tags` must not be None")
+    if not isinstance(params["no_keep_tags"], bool):
+        raise StyxValidationError(f'`no_keep_tags` has the wrong type: Received `{type(params.get("no_keep_tags", False))}` expected `bool`')
+    if params.get("matvec_file", None) is not None:
+        if not isinstance(params["matvec_file"], str):
+            raise StyxValidationError(f'`matvec_file` has the wrong type: Received `{type(params.get("matvec_file", None))}` expected `str | None`')
+    if params.get("rotate", False) is None:
+        raise StyxValidationError("`rotate` must not be None")
+    if not isinstance(params["rotate"], bool):
+        raise StyxValidationError(f'`rotate` has the wrong type: Received `{type(params.get("rotate", False))}` expected `bool`')
+    if params.get("affine", False) is None:
+        raise StyxValidationError("`affine` must not be None")
+    if not isinstance(params["affine"], bool):
+        raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", False))}` expected `bool`')
+    if params.get("rotscl", False) is None:
+        raise StyxValidationError("`rotscl` must not be None")
+    if not isinstance(params["rotscl"], bool):
+        raise StyxValidationError(f'`rotscl` has the wrong type: Received `{type(params.get("rotscl", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("dummy", False) is None:
+        raise StyxValidationError("`dummy` must not be None")
+    if not isinstance(params["dummy"], bool):
+        raise StyxValidationError(f'`dummy` has the wrong type: Received `{type(params.get("dummy", False))}` expected `bool`')
+    if params.get("linear_interpolation", False) is None:
+        raise StyxValidationError("`linear_interpolation` must not be None")
+    if not isinstance(params["linear_interpolation"], bool):
+        raise StyxValidationError(f'`linear_interpolation` has the wrong type: Received `{type(params.get("linear_interpolation", False))}` expected `bool`')
+    if params.get("cubic_interpolation", False) is None:
+        raise StyxValidationError("`cubic_interpolation` must not be None")
+    if not isinstance(params["cubic_interpolation"], bool):
+        raise StyxValidationError(f'`cubic_interpolation` has the wrong type: Received `{type(params.get("cubic_interpolation", False))}` expected `bool`')
+    if params.get("nearest_neighbor_interpolation", False) is None:
+        raise StyxValidationError("`nearest_neighbor_interpolation` must not be None")
+    if not isinstance(params["nearest_neighbor_interpolation"], bool):
+        raise StyxValidationError(f'`nearest_neighbor_interpolation` has the wrong type: Received `{type(params.get("nearest_neighbor_interpolation", False))}` expected `bool`')
+    if params.get("quintic_interpolation", False) is None:
+        raise StyxValidationError("`quintic_interpolation` must not be None")
+    if not isinstance(params["quintic_interpolation"], bool):
+        raise StyxValidationError(f'`quintic_interpolation` has the wrong type: Received `{type(params.get("quintic_interpolation", False))}` expected `bool`')
+
+
 def v_3d_tagalign_cargs(
     params: V3dTagalignParameters,
     execution: Execution,
@@ -237,6 +308,7 @@ def v_3d_tagalign_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTagalignOutputs`).
     """
+    v_3d_tagalign_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TAGALIGN_METADATA)
     params = execution.params(params)

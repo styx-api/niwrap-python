@@ -111,6 +111,58 @@ def vecreg_params(
     return params
 
 
+def vecreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VecregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("reference_volume", None) is None:
+        raise StyxValidationError("`reference_volume` must not be None")
+    if not isinstance(params["reference_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_volume` has the wrong type: Received `{type(params.get("reference_volume", None))}` expected `InputPathType`')
+    if params.get("transform_file", None) is not None:
+        if not isinstance(params["transform_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("secondary_affine", None) is not None:
+        if not isinstance(params["secondary_affine"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`secondary_affine` has the wrong type: Received `{type(params.get("secondary_affine", None))}` expected `InputPathType | None`')
+    if params.get("secondary_warp", None) is not None:
+        if not isinstance(params["secondary_warp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`secondary_warp` has the wrong type: Received `{type(params.get("secondary_warp", None))}` expected `InputPathType | None`')
+    if params.get("interp_method", None) is not None:
+        if not isinstance(params["interp_method"], str):
+            raise StyxValidationError(f'`interp_method` has the wrong type: Received `{type(params.get("interp_method", None))}` expected `str | None`')
+    if params.get("brain_mask", None) is not None:
+        if not isinstance(params["brain_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brain_mask` has the wrong type: Received `{type(params.get("brain_mask", None))}` expected `InputPathType | None`')
+    if params.get("ref_brain_mask", None) is not None:
+        if not isinstance(params["ref_brain_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_brain_mask` has the wrong type: Received `{type(params.get("ref_brain_mask", None))}` expected `InputPathType | None`')
+
+
 def vecreg_cargs(
     params: VecregParameters,
     execution: Execution,
@@ -214,6 +266,7 @@ def vecreg_execute(
     Returns:
         NamedTuple of outputs (described in `VecregOutputs`).
     """
+    vecreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VECREG_METADATA)
     params = execution.params(params)

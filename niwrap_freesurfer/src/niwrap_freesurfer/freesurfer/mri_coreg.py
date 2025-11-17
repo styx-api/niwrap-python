@@ -361,6 +361,234 @@ def mri_coreg_params(
     return params
 
 
+def mri_coreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCoregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("movvol", None) is None:
+        raise StyxValidationError("`movvol` must not be None")
+    if not isinstance(params["movvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`movvol` has the wrong type: Received `{type(params.get("movvol", None))}` expected `InputPathType`')
+    if params.get("refvol", None) is None:
+        raise StyxValidationError("`refvol` must not be None")
+    if not isinstance(params["refvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`refvol` has the wrong type: Received `{type(params.get("refvol", None))}` expected `InputPathType`')
+    if params.get("reg", None) is None:
+        raise StyxValidationError("`reg` must not be None")
+    if not isinstance(params["reg"], str):
+        raise StyxValidationError(f'`reg` has the wrong type: Received `{type(params.get("reg", None))}` expected `str`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("dof", None) is not None:
+        if not isinstance(params["dof"], int):
+            raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `int | None`')
+    if params.get("zscale", False) is None:
+        raise StyxValidationError("`zscale` must not be None")
+    if not isinstance(params["zscale"], bool):
+        raise StyxValidationError(f'`zscale` has the wrong type: Received `{type(params.get("zscale", False))}` expected `bool`')
+    if params.get("xztrans_yrot", False) is None:
+        raise StyxValidationError("`xztrans_yrot` must not be None")
+    if not isinstance(params["xztrans_yrot"], bool):
+        raise StyxValidationError(f'`xztrans_yrot` has the wrong type: Received `{type(params.get("xztrans_yrot", False))}` expected `bool`')
+    if params.get("xytrans_zrot", False) is None:
+        raise StyxValidationError("`xytrans_zrot` must not be None")
+    if not isinstance(params["xytrans_zrot"], bool):
+        raise StyxValidationError(f'`xytrans_zrot` has the wrong type: Received `{type(params.get("xytrans_zrot", False))}` expected `bool`')
+    if params.get("xytrans_zrot_xyscale_xyshear", False) is None:
+        raise StyxValidationError("`xytrans_zrot_xyscale_xyshear` must not be None")
+    if not isinstance(params["xytrans_zrot_xyscale_xyshear"], bool):
+        raise StyxValidationError(f'`xytrans_zrot_xyscale_xyshear` has the wrong type: Received `{type(params.get("xytrans_zrot_xyscale_xyshear", False))}` expected `bool`')
+    if params.get("ref_maskvol", None) is not None:
+        if not isinstance(params["ref_maskvol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_maskvol` has the wrong type: Received `{type(params.get("ref_maskvol", None))}` expected `InputPathType | None`')
+    if params.get("no_ref_mask", False) is None:
+        raise StyxValidationError("`no_ref_mask` must not be None")
+    if not isinstance(params["no_ref_mask"], bool):
+        raise StyxValidationError(f'`no_ref_mask` has the wrong type: Received `{type(params.get("no_ref_mask", False))}` expected `bool`')
+    if params.get("mov_maskvol", None) is not None:
+        if not isinstance(params["mov_maskvol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mov_maskvol` has the wrong type: Received `{type(params.get("mov_maskvol", None))}` expected `InputPathType | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], int):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("regdat", None) is not None:
+        if not isinstance(params["regdat"], str):
+            raise StyxValidationError(f'`regdat` has the wrong type: Received `{type(params.get("regdat", None))}` expected `str | None`')
+    if params.get("no_coord_dither", False) is None:
+        raise StyxValidationError("`no_coord_dither` must not be None")
+    if not isinstance(params["no_coord_dither"], bool):
+        raise StyxValidationError(f'`no_coord_dither` has the wrong type: Received `{type(params.get("no_coord_dither", False))}` expected `bool`')
+    if params.get("no_intensity_dither", False) is None:
+        raise StyxValidationError("`no_intensity_dither` must not be None")
+    if not isinstance(params["no_intensity_dither"], bool):
+        raise StyxValidationError(f'`no_intensity_dither` has the wrong type: Received `{type(params.get("no_intensity_dither", False))}` expected `bool`')
+    if params.get("spatial_scales", None) is not None:
+        if not isinstance(params["spatial_scales"], list):
+            raise StyxValidationError(f'`spatial_scales` has the wrong type: Received `{type(params.get("spatial_scales", None))}` expected `list[str] | None`')
+        if 1 <= len(params["spatial_scales"]) <= 2:
+            raise StyxValidationError("Parameter `spatial_scales` must contain between 1 and 2 elements (inclusive)")
+        for e in params["spatial_scales"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`spatial_scales` has the wrong type: Received `{type(params.get("spatial_scales", None))}` expected `list[str] | None`')
+    if params.get("trans", None) is not None:
+        if not isinstance(params["trans"], list):
+            raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `list[float] | None`')
+        if len(params["trans"]) == 3:
+            raise StyxValidationError("Parameter `trans` must contain exactly 3 elements")
+        for e in params["trans"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`trans` has the wrong type: Received `{type(params.get("trans", None))}` expected `list[float] | None`')
+    if params.get("rot", None) is not None:
+        if not isinstance(params["rot"], list):
+            raise StyxValidationError(f'`rot` has the wrong type: Received `{type(params.get("rot", None))}` expected `list[float] | None`')
+        if len(params["rot"]) == 3:
+            raise StyxValidationError("Parameter `rot` must contain exactly 3 elements")
+        for e in params["rot"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rot` has the wrong type: Received `{type(params.get("rot", None))}` expected `list[float] | None`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], list):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `list[float] | None`')
+        if len(params["scale"]) == 3:
+            raise StyxValidationError("Parameter `scale` must contain exactly 3 elements")
+        for e in params["scale"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `list[float] | None`')
+    if params.get("shear", None) is not None:
+        if not isinstance(params["shear"], list):
+            raise StyxValidationError(f'`shear` has the wrong type: Received `{type(params.get("shear", None))}` expected `list[float] | None`')
+        if len(params["shear"]) == 3:
+            raise StyxValidationError("Parameter `shear` must contain exactly 3 elements")
+        for e in params["shear"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`shear` has the wrong type: Received `{type(params.get("shear", None))}` expected `list[float] | None`')
+    if params.get("init_reg", None) is not None:
+        if not isinstance(params["init_reg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_reg` has the wrong type: Received `{type(params.get("init_reg", None))}` expected `InputPathType | None`')
+    if params.get("out_param_file", None) is not None:
+        if not isinstance(params["out_param_file"], str):
+            raise StyxValidationError(f'`out_param_file` has the wrong type: Received `{type(params.get("out_param_file", None))}` expected `str | None`')
+    if params.get("out_cost_file", None) is not None:
+        if not isinstance(params["out_cost_file"], str):
+            raise StyxValidationError(f'`out_cost_file` has the wrong type: Received `{type(params.get("out_cost_file", None))}` expected `str | None`')
+    if params.get("no_cras0", False) is None:
+        raise StyxValidationError("`no_cras0` must not be None")
+    if not isinstance(params["no_cras0"], bool):
+        raise StyxValidationError(f'`no_cras0` has the wrong type: Received `{type(params.get("no_cras0", False))}` expected `bool`')
+    if params.get("centroid", False) is None:
+        raise StyxValidationError("`centroid` must not be None")
+    if not isinstance(params["centroid"], bool):
+        raise StyxValidationError(f'`centroid` has the wrong type: Received `{type(params.get("centroid", False))}` expected `bool`')
+    if params.get("ras2ras", False) is None:
+        raise StyxValidationError("`ras2ras` must not be None")
+    if not isinstance(params["ras2ras"], bool):
+        raise StyxValidationError(f'`ras2ras` has the wrong type: Received `{type(params.get("ras2ras", False))}` expected `bool`')
+    if params.get("nitersmax", None) is not None:
+        if not isinstance(params["nitersmax"], int):
+            raise StyxValidationError(f'`nitersmax` has the wrong type: Received `{type(params.get("nitersmax", None))}` expected `int | None`')
+    if params.get("ftol", None) is not None:
+        if not isinstance(params["ftol"], (float, int)):
+            raise StyxValidationError(f'`ftol` has the wrong type: Received `{type(params.get("ftol", None))}` expected `float | None`')
+    if params.get("linmintol", None) is not None:
+        if not isinstance(params["linmintol"], (float, int)):
+            raise StyxValidationError(f'`linmintol` has the wrong type: Received `{type(params.get("linmintol", None))}` expected `float | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], int):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `int | None`')
+    if params.get("sat", None) is not None:
+        if not isinstance(params["sat"], (float, int)):
+            raise StyxValidationError(f'`sat` has the wrong type: Received `{type(params.get("sat", None))}` expected `float | None`')
+    if params.get("conf_ref", False) is None:
+        raise StyxValidationError("`conf_ref` must not be None")
+    if not isinstance(params["conf_ref"], bool):
+        raise StyxValidationError(f'`conf_ref` has the wrong type: Received `{type(params.get("conf_ref", False))}` expected `bool`')
+    if params.get("no_bf", False) is None:
+        raise StyxValidationError("`no_bf` must not be None")
+    if not isinstance(params["no_bf"], bool):
+        raise StyxValidationError(f'`no_bf` has the wrong type: Received `{type(params.get("no_bf", False))}` expected `bool`')
+    if params.get("bf_lim", None) is not None:
+        if not isinstance(params["bf_lim"], (float, int)):
+            raise StyxValidationError(f'`bf_lim` has the wrong type: Received `{type(params.get("bf_lim", None))}` expected `float | None`')
+    if params.get("bf_nsamp", None) is not None:
+        if not isinstance(params["bf_nsamp"], int):
+            raise StyxValidationError(f'`bf_nsamp` has the wrong type: Received `{type(params.get("bf_nsamp", None))}` expected `int | None`')
+    if params.get("no_smooth", False) is None:
+        raise StyxValidationError("`no_smooth` must not be None")
+    if not isinstance(params["no_smooth"], bool):
+        raise StyxValidationError(f'`no_smooth` has the wrong type: Received `{type(params.get("no_smooth", False))}` expected `bool`')
+    if params.get("ref_fwhm", None) is not None:
+        if not isinstance(params["ref_fwhm"], (float, int)):
+            raise StyxValidationError(f'`ref_fwhm` has the wrong type: Received `{type(params.get("ref_fwhm", None))}` expected `float | None`')
+    if params.get("mov_oob", False) is None:
+        raise StyxValidationError("`mov_oob` must not be None")
+    if not isinstance(params["mov_oob"], bool):
+        raise StyxValidationError(f'`mov_oob` has the wrong type: Received `{type(params.get("mov_oob", False))}` expected `bool`')
+    if params.get("init_reg_save", None) is not None:
+        if not isinstance(params["init_reg_save"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_reg_save` has the wrong type: Received `{type(params.get("init_reg_save", None))}` expected `InputPathType | None`')
+    if params.get("init_reg_save_only", None) is not None:
+        if not isinstance(params["init_reg_save_only"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_reg_save_only` has the wrong type: Received `{type(params.get("init_reg_save_only", None))}` expected `InputPathType | None`')
+    if params.get("mat2par", None) is not None:
+        if not isinstance(params["mat2par"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mat2par` has the wrong type: Received `{type(params.get("mat2par", None))}` expected `InputPathType | None`')
+    if params.get("mat2rot", None) is not None:
+        if not isinstance(params["mat2rot"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mat2rot` has the wrong type: Received `{type(params.get("mat2rot", None))}` expected `InputPathType | None`')
+    if params.get("par2mat", None) is not None:
+        if not isinstance(params["par2mat"], str):
+            raise StyxValidationError(f'`par2mat` has the wrong type: Received `{type(params.get("par2mat", None))}` expected `str | None`')
+    if params.get("lrrev", None) is not None:
+        if not isinstance(params["lrrev"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lrrev` has the wrong type: Received `{type(params.get("lrrev", None))}` expected `InputPathType | None`')
+    if params.get("landmarks", None) is not None:
+        if not isinstance(params["landmarks"], list):
+            raise StyxValidationError(f'`landmarks` has the wrong type: Received `{type(params.get("landmarks", None))}` expected `list[str] | None`')
+        if len(params["landmarks"]) >= 6:
+            raise StyxValidationError("Parameter `landmarks` must contain at least 6 elements")
+        for e in params["landmarks"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`landmarks` has the wrong type: Received `{type(params.get("landmarks", None))}` expected `list[str] | None`')
+    if params.get("rms", None) is not None:
+        if not isinstance(params["rms"], list):
+            raise StyxValidationError(f'`rms` has the wrong type: Received `{type(params.get("rms", None))}` expected `list[str] | None`')
+        if len(params["rms"]) >= 4:
+            raise StyxValidationError("Parameter `rms` must contain at least 4 elements")
+        for e in params["rms"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`rms` has the wrong type: Received `{type(params.get("rms", None))}` expected `list[str] | None`')
+    if params.get("movout", None) is not None:
+        if not isinstance(params["movout"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`movout` has the wrong type: Received `{type(params.get("movout", None))}` expected `InputPathType | None`')
+    if params.get("mov_idither", None) is not None:
+        if not isinstance(params["mov_idither"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mov_idither` has the wrong type: Received `{type(params.get("mov_idither", None))}` expected `InputPathType | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_coreg_cargs(
     params: MriCoregParameters,
     execution: Execution,
@@ -636,6 +864,7 @@ def mri_coreg_execute(
     Returns:
         NamedTuple of outputs (described in `MriCoregOutputs`).
     """
+    mri_coreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COREG_METADATA)
     params = execution.params(params)

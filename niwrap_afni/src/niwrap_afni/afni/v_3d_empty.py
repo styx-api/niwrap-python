@@ -72,6 +72,37 @@ def v_3d_empty_params(
     return params
 
 
+def v_3d_empty_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dEmptyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("geometry", None) is not None:
+        if not isinstance(params["geometry"], str):
+            raise StyxValidationError(f'`geometry` has the wrong type: Received `{type(params.get("geometry", None))}` expected `str | None`')
+    if params.get("nxyz", None) is not None:
+        if not isinstance(params["nxyz"], list):
+            raise StyxValidationError(f'`nxyz` has the wrong type: Received `{type(params.get("nxyz", None))}` expected `list[float] | None`')
+        if len(params["nxyz"]) == 3:
+            raise StyxValidationError("Parameter `nxyz` must contain exactly 3 elements")
+        for e in params["nxyz"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`nxyz` has the wrong type: Received `{type(params.get("nxyz", None))}` expected `list[float] | None`')
+    if params.get("nt", None) is not None:
+        if not isinstance(params["nt"], (float, int)):
+            raise StyxValidationError(f'`nt` has the wrong type: Received `{type(params.get("nt", None))}` expected `float | None`')
+
+
 def v_3d_empty_cargs(
     params: V3dEmptyParameters,
     execution: Execution,
@@ -149,6 +180,7 @@ def v_3d_empty_execute(
     Returns:
         NamedTuple of outputs (described in `V3dEmptyOutputs`).
     """
+    v_3d_empty_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_EMPTY_METADATA)
     params = execution.params(params)

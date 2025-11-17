@@ -120,6 +120,66 @@ def signal2image_params(
     return params
 
 
+def signal2image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Signal2imageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pulse_sequence", None) is None:
+        raise StyxValidationError("`pulse_sequence` must not be None")
+    if not isinstance(params["pulse_sequence"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pulse_sequence` has the wrong type: Received `{type(params.get("pulse_sequence", None))}` expected `InputPathType`')
+    if params.get("input_signal", None) is not None:
+        if not isinstance(params["input_signal"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_signal` has the wrong type: Received `{type(params.get("input_signal", None))}` expected `InputPathType | None`')
+    if params.get("output_image", None) is not None:
+        if not isinstance(params["output_image"], str):
+            raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str | None`')
+    if params.get("kspace_coordinates", None) is not None:
+        if not isinstance(params["kspace_coordinates"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`kspace_coordinates` has the wrong type: Received `{type(params.get("kspace_coordinates", None))}` expected `InputPathType | None`')
+    if params.get("output_kspace", None) is not None:
+        if not isinstance(params["output_kspace"], str):
+            raise StyxValidationError(f'`output_kspace` has the wrong type: Received `{type(params.get("output_kspace", None))}` expected `str | None`')
+    if params.get("abs_flag", False) is None:
+        raise StyxValidationError("`abs_flag` must not be None")
+    if not isinstance(params["abs_flag"], bool):
+        raise StyxValidationError(f'`abs_flag` has the wrong type: Received `{type(params.get("abs_flag", False))}` expected `bool`')
+    if params.get("homodyne_flag", False) is None:
+        raise StyxValidationError("`homodyne_flag` must not be None")
+    if not isinstance(params["homodyne_flag"], bool):
+        raise StyxValidationError(f'`homodyne_flag` has the wrong type: Received `{type(params.get("homodyne_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("apodize_flag", False) is None:
+        raise StyxValidationError("`apodize_flag` must not be None")
+    if not isinstance(params["apodize_flag"], bool):
+        raise StyxValidationError(f'`apodize_flag` has the wrong type: Received `{type(params.get("apodize_flag", False))}` expected `bool`')
+    if params.get("cutoff", None) is not None:
+        if not isinstance(params["cutoff"], (float, int)):
+            raise StyxValidationError(f'`cutoff` has the wrong type: Received `{type(params.get("cutoff", None))}` expected `float | None`')
+    if params.get("rolloff", None) is not None:
+        if not isinstance(params["rolloff"], (float, int)):
+            raise StyxValidationError(f'`rolloff` has the wrong type: Received `{type(params.get("rolloff", None))}` expected `float | None`')
+    if params.get("save_flag", False) is None:
+        raise StyxValidationError("`save_flag` must not be None")
+    if not isinstance(params["save_flag"], bool):
+        raise StyxValidationError(f'`save_flag` has the wrong type: Received `{type(params.get("save_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def signal2image_cargs(
     params: Signal2imageParameters,
     execution: Execution,
@@ -225,6 +285,7 @@ def signal2image_execute(
     Returns:
         NamedTuple of outputs (described in `Signal2imageOutputs`).
     """
+    signal2image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIGNAL2IMAGE_METADATA)
     params = execution.params(params)

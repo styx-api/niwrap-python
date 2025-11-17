@@ -93,6 +93,24 @@ def mrstats_output_params(
     return params
 
 
+def mrstats_output_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrstatsOutputParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("field", None) is None:
+        raise StyxValidationError("`field` must not be None")
+    if not isinstance(params["field"], str):
+        raise StyxValidationError(f'`field` has the wrong type: Received `{type(params.get("field", None))}` expected `str`')
+
+
 def mrstats_output_cargs(
     params: MrstatsOutputParameters,
     execution: Execution,
@@ -131,6 +149,28 @@ def mrstats_config_params(
         "value": value,
     }
     return params
+
+
+def mrstats_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrstatsConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mrstats_config_cargs(
@@ -230,6 +270,72 @@ def mrstats_params(
     return params
 
 
+def mrstats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrstatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], list):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `list[MrstatsOutputParameters] | None`')
+        for e in params["output"]:
+            mrstats_output_validate(e)
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("ignorezero", False) is None:
+        raise StyxValidationError("`ignorezero` must not be None")
+    if not isinstance(params["ignorezero"], bool):
+        raise StyxValidationError(f'`ignorezero` has the wrong type: Received `{type(params.get("ignorezero", False))}` expected `bool`')
+    if params.get("allvolumes", False) is None:
+        raise StyxValidationError("`allvolumes` must not be None")
+    if not isinstance(params["allvolumes"], bool):
+        raise StyxValidationError(f'`allvolumes` has the wrong type: Received `{type(params.get("allvolumes", False))}` expected `bool`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrstatsConfigParameters] | None`')
+        for e in params["config"]:
+            mrstats_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+
+
 def mrstats_cargs(
     params: MrstatsParameters,
     execution: Execution,
@@ -323,6 +429,7 @@ def mrstats_execute(
     Returns:
         NamedTuple of outputs (described in `MrstatsOutputs`).
     """
+    mrstats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRSTATS_METADATA)
     params = execution.params(params)

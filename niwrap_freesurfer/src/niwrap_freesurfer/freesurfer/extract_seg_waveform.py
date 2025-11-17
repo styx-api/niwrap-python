@@ -85,6 +85,54 @@ def extract_seg_waveform_params(
     return params
 
 
+def extract_seg_waveform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtractSegWaveformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("seg_file", None) is None:
+        raise StyxValidationError("`seg_file` must not be None")
+    if not isinstance(params["seg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`seg_file` has the wrong type: Received `{type(params.get("seg_file", None))}` expected `InputPathType`')
+    if params.get("seg_indices", None) is None:
+        raise StyxValidationError("`seg_indices` must not be None")
+    if not isinstance(params["seg_indices"], list):
+        raise StyxValidationError(f'`seg_indices` has the wrong type: Received `{type(params.get("seg_indices", None))}` expected `list[float]`')
+    for e in params["seg_indices"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`seg_indices` has the wrong type: Received `{type(params.get("seg_indices", None))}` expected `list[float]`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("reg_file", None) is None:
+        raise StyxValidationError("`reg_file` must not be None")
+    if not isinstance(params["reg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `InputPathType`')
+    if params.get("vsm_file", None) is not None:
+        if not isinstance(params["vsm_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vsm_file` has the wrong type: Received `{type(params.get("vsm_file", None))}` expected `InputPathType | None`')
+    if params.get("regheader_flag", False) is None:
+        raise StyxValidationError("`regheader_flag` must not be None")
+    if not isinstance(params["regheader_flag"], bool):
+        raise StyxValidationError(f'`regheader_flag` has the wrong type: Received `{type(params.get("regheader_flag", False))}` expected `bool`')
+    if params.get("demean_flag", False) is None:
+        raise StyxValidationError("`demean_flag` must not be None")
+    if not isinstance(params["demean_flag"], bool):
+        raise StyxValidationError(f'`demean_flag` has the wrong type: Received `{type(params.get("demean_flag", False))}` expected `bool`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def extract_seg_waveform_cargs(
     params: ExtractSegWaveformParameters,
     execution: Execution,
@@ -174,6 +222,7 @@ def extract_seg_waveform_execute(
     Returns:
         NamedTuple of outputs (described in `ExtractSegWaveformOutputs`).
     """
+    extract_seg_waveform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EXTRACT_SEG_WAVEFORM_METADATA)
     params = execution.params(params)

@@ -67,6 +67,39 @@ def v_3d_edu_01_scale_params(
     return params
 
 
+def v_3d_edu_01_scale_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dEdu01ScaleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mult_factors", None) is not None:
+        if not isinstance(params["mult_factors"], list):
+            raise StyxValidationError(f'`mult_factors` has the wrong type: Received `{type(params.get("mult_factors", None))}` expected `list[float] | None`')
+        if len(params["mult_factors"]) == 2:
+            raise StyxValidationError("Parameter `mult_factors` must contain exactly 2 elements")
+        for e in params["mult_factors"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mult_factors` has the wrong type: Received `{type(params.get("mult_factors", None))}` expected `list[float] | None`')
+    if params.get("option_flag", False) is None:
+        raise StyxValidationError("`option_flag` must not be None")
+    if not isinstance(params["option_flag"], bool):
+        raise StyxValidationError(f'`option_flag` has the wrong type: Received `{type(params.get("option_flag", False))}` expected `bool`')
+
+
 def v_3d_edu_01_scale_cargs(
     params: V3dEdu01ScaleParameters,
     execution: Execution,
@@ -137,6 +170,7 @@ def v_3d_edu_01_scale_execute(
     Returns:
         NamedTuple of outputs (described in `V3dEdu01ScaleOutputs`).
     """
+    v_3d_edu_01_scale_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_EDU_01_SCALE_METADATA)
     params = execution.params(params)

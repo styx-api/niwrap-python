@@ -127,6 +127,68 @@ def mri_compute_layer_fractions_params(
     return params
 
 
+def mri_compute_layer_fractions_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriComputeLayerFractionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reg_file", None) is None:
+        raise StyxValidationError("`reg_file` must not be None")
+    if not isinstance(params["reg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `InputPathType`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_stem", None) is None:
+        raise StyxValidationError("`output_stem` must not be None")
+    if not isinstance(params["output_stem"], str):
+        raise StyxValidationError(f'`output_stem` has the wrong type: Received `{type(params.get("output_stem", None))}` expected `str`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+    if params.get("aseg_file", None) is not None:
+        if not isinstance(params["aseg_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aseg_file` has the wrong type: Received `{type(params.get("aseg_file", None))}` expected `InputPathType | None`')
+    if params.get("target_volume", None) is not None:
+        if not isinstance(params["target_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`target_volume` has the wrong type: Received `{type(params.get("target_volume", None))}` expected `InputPathType | None`')
+    if params.get("hemi_flag", False) is None:
+        raise StyxValidationError("`hemi_flag` must not be None")
+    if not isinstance(params["hemi_flag"], bool):
+        raise StyxValidationError(f'`hemi_flag` has the wrong type: Received `{type(params.get("hemi_flag", False))}` expected `bool`')
+    if params.get("fs_names_flag", False) is None:
+        raise StyxValidationError("`fs_names_flag` must not be None")
+    if not isinstance(params["fs_names_flag"], bool):
+        raise StyxValidationError(f'`fs_names_flag` has the wrong type: Received `{type(params.get("fs_names_flag", False))}` expected `bool`')
+    if params.get("subject_id", None) is not None:
+        if not isinstance(params["subject_id"], str):
+            raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str | None`')
+    if params.get("n_layers", None) is not None:
+        if not isinstance(params["n_layers"], (float, int)):
+            raise StyxValidationError(f'`n_layers` has the wrong type: Received `{type(params.get("n_layers", None))}` expected `float | None`')
+    if params.get("synth_flag", False) is None:
+        raise StyxValidationError("`synth_flag` must not be None")
+    if not isinstance(params["synth_flag"], bool):
+        raise StyxValidationError(f'`synth_flag` has the wrong type: Received `{type(params.get("synth_flag", False))}` expected `bool`')
+    if params.get("thickness", None) is not None:
+        if not isinstance(params["thickness"], (float, int)):
+            raise StyxValidationError(f'`thickness` has the wrong type: Received `{type(params.get("thickness", None))}` expected `float | None`')
+    if params.get("random_file", None) is not None:
+        if not isinstance(params["random_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`random_file` has the wrong type: Received `{type(params.get("random_file", None))}` expected `InputPathType | None`')
+    if params.get("identity_file", None) is not None:
+        if not isinstance(params["identity_file"], str):
+            raise StyxValidationError(f'`identity_file` has the wrong type: Received `{type(params.get("identity_file", None))}` expected `str | None`')
+
+
 def mri_compute_layer_fractions_cargs(
     params: MriComputeLayerFractionsParameters,
     execution: Execution,
@@ -229,6 +291,7 @@ def mri_compute_layer_fractions_execute(
     Returns:
         NamedTuple of outputs (described in `MriComputeLayerFractionsOutputs`).
     """
+    mri_compute_layer_fractions_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COMPUTE_LAYER_FRACTIONS_METADATA)
     params = execution.params(params)

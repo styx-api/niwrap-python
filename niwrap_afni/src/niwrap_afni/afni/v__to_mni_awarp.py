@@ -55,6 +55,31 @@ def v__to_mni_awarp_params(
     return params
 
 
+def v__to_mni_awarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VToMniAwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("directory", None) is None:
+        raise StyxValidationError("`directory` must not be None")
+    if not isinstance(params["directory"], str):
+        raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str`')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+
+
 def v__to_mni_awarp_cargs(
     params: VToMniAwarpParameters,
     execution: Execution,
@@ -114,6 +139,7 @@ def v__to_mni_awarp_execute(
     Returns:
         NamedTuple of outputs (described in `VToMniAwarpOutputs`).
     """
+    v__to_mni_awarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__TO_MNI_AWARP_METADATA)
     params = execution.params(params)

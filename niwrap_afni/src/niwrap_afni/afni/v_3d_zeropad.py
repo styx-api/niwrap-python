@@ -143,6 +143,68 @@ def v_3d_zeropad_params(
     return params
 
 
+def v_3d_zeropad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dZeropadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("I", None) is not None:
+        if not isinstance(params["I"], (float, int)):
+            raise StyxValidationError(f'`I` has the wrong type: Received `{type(params.get("I", None))}` expected `float | None`')
+    if params.get("S", None) is not None:
+        if not isinstance(params["S"], (float, int)):
+            raise StyxValidationError(f'`S` has the wrong type: Received `{type(params.get("S", None))}` expected `float | None`')
+    if params.get("A", None) is not None:
+        if not isinstance(params["A"], (float, int)):
+            raise StyxValidationError(f'`A` has the wrong type: Received `{type(params.get("A", None))}` expected `float | None`')
+    if params.get("P", None) is not None:
+        if not isinstance(params["P"], (float, int)):
+            raise StyxValidationError(f'`P` has the wrong type: Received `{type(params.get("P", None))}` expected `float | None`')
+    if params.get("L", None) is not None:
+        if not isinstance(params["L"], (float, int)):
+            raise StyxValidationError(f'`L` has the wrong type: Received `{type(params.get("L", None))}` expected `float | None`')
+    if params.get("R", None) is not None:
+        if not isinstance(params["R"], (float, int)):
+            raise StyxValidationError(f'`R` has the wrong type: Received `{type(params.get("R", None))}` expected `float | None`')
+    if params.get("z", None) is not None:
+        if not isinstance(params["z"], (float, int)):
+            raise StyxValidationError(f'`z` has the wrong type: Received `{type(params.get("z", None))}` expected `float | None`')
+    if params.get("RL", None) is not None:
+        if not isinstance(params["RL"], (float, int)):
+            raise StyxValidationError(f'`RL` has the wrong type: Received `{type(params.get("RL", None))}` expected `float | None`')
+    if params.get("AP", None) is not None:
+        if not isinstance(params["AP"], (float, int)):
+            raise StyxValidationError(f'`AP` has the wrong type: Received `{type(params.get("AP", None))}` expected `float | None`')
+    if params.get("IS", None) is not None:
+        if not isinstance(params["IS"], (float, int)):
+            raise StyxValidationError(f'`IS` has the wrong type: Received `{type(params.get("IS", None))}` expected `float | None`')
+    if params.get("pad2even", False) is None:
+        raise StyxValidationError("`pad2even` must not be None")
+    if not isinstance(params["pad2even"], bool):
+        raise StyxValidationError(f'`pad2even` has the wrong type: Received `{type(params.get("pad2even", False))}` expected `bool`')
+    if params.get("mm_flag", False) is None:
+        raise StyxValidationError("`mm_flag` must not be None")
+    if not isinstance(params["mm_flag"], bool):
+        raise StyxValidationError(f'`mm_flag` has the wrong type: Received `{type(params.get("mm_flag", False))}` expected `bool`')
+    if params.get("master_dataset", None) is not None:
+        if not isinstance(params["master_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`master_dataset` has the wrong type: Received `{type(params.get("master_dataset", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3d_zeropad_cargs(
     params: V3dZeropadParameters,
     execution: Execution,
@@ -267,6 +329,7 @@ def v_3d_zeropad_execute(
     Returns:
         NamedTuple of outputs (described in `V3dZeropadOutputs`).
     """
+    v_3d_zeropad_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ZEROPAD_METADATA)
     params = execution.params(params)

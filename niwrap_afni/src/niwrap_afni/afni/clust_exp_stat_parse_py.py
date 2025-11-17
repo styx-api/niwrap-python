@@ -134,6 +134,67 @@ def clust_exp_stat_parse_py_params(
     return params
 
 
+def clust_exp_stat_parse_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ClustExpStatParsePyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("statdset", None) is None:
+        raise StyxValidationError("`statdset` must not be None")
+    if not isinstance(params["statdset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`statdset` has the wrong type: Received `{type(params.get("statdset", None))}` expected `InputPathType`')
+    if params.get("meanbrik", None) is None:
+        raise StyxValidationError("`meanbrik` must not be None")
+    if not isinstance(params["meanbrik"], (float, int)):
+        raise StyxValidationError(f'`meanbrik` has the wrong type: Received `{type(params.get("meanbrik", None))}` expected `float`')
+    if params.get("threshbrik", None) is None:
+        raise StyxValidationError("`threshbrik` must not be None")
+    if not isinstance(params["threshbrik"], (float, int)):
+        raise StyxValidationError(f'`threshbrik` has the wrong type: Received `{type(params.get("threshbrik", None))}` expected `float`')
+    if params.get("subjdset", None) is None:
+        raise StyxValidationError("`subjdset` must not be None")
+    if not isinstance(params["subjdset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subjdset` has the wrong type: Received `{type(params.get("subjdset", None))}` expected `InputPathType`')
+    if params.get("subjtable", None) is None:
+        raise StyxValidationError("`subjtable` must not be None")
+    if not isinstance(params["subjtable"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subjtable` has the wrong type: Received `{type(params.get("subjtable", None))}` expected `InputPathType`')
+    if params.get("master", None) is None:
+        raise StyxValidationError("`master` must not be None")
+    if not isinstance(params["master"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`master` has the wrong type: Received `{type(params.get("master", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("pval", None) is not None:
+        if not isinstance(params["pval"], (float, int)):
+            raise StyxValidationError(f'`pval` has the wrong type: Received `{type(params.get("pval", None))}` expected `float | None`')
+    if params.get("minvox", None) is not None:
+        if not isinstance(params["minvox"], (float, int)):
+            raise StyxValidationError(f'`minvox` has the wrong type: Received `{type(params.get("minvox", None))}` expected `float | None`')
+    if params.get("atlas", None) is not None:
+        if not isinstance(params["atlas"], str):
+            raise StyxValidationError(f'`atlas` has the wrong type: Received `{type(params.get("atlas", None))}` expected `str | None`')
+    if params.get("session", None) is not None:
+        if not isinstance(params["session"], str):
+            raise StyxValidationError(f'`session` has the wrong type: Received `{type(params.get("session", None))}` expected `str | None`')
+    if params.get("noshiny", False) is None:
+        raise StyxValidationError("`noshiny` must not be None")
+    if not isinstance(params["noshiny"], bool):
+        raise StyxValidationError(f'`noshiny` has the wrong type: Received `{type(params.get("noshiny", False))}` expected `bool`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+
+
 def clust_exp_stat_parse_py_cargs(
     params: ClustExpStatParsePyParameters,
     execution: Execution,
@@ -252,6 +313,7 @@ def clust_exp_stat_parse_py_execute(
     Returns:
         NamedTuple of outputs (described in `ClustExpStatParsePyOutputs`).
     """
+    clust_exp_stat_parse_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CLUST_EXP_STAT_PARSE_PY_METADATA)
     params = execution.params(params)

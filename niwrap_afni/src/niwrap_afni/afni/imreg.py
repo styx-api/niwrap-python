@@ -161,6 +161,100 @@ def imreg_params(
     return params
 
 
+def imreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_image", None) is None:
+        raise StyxValidationError("`base_image` must not be None")
+    if not isinstance(params["base_image"], str):
+        raise StyxValidationError(f'`base_image` has the wrong type: Received `{type(params.get("base_image", None))}` expected `str`')
+    if params.get("image_sequence", None) is None:
+        raise StyxValidationError("`image_sequence` must not be None")
+    if not isinstance(params["image_sequence"], list):
+        raise StyxValidationError(f'`image_sequence` has the wrong type: Received `{type(params.get("image_sequence", None))}` expected `list[InputPathType]`')
+    for e in params["image_sequence"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`image_sequence` has the wrong type: Received `{type(params.get("image_sequence", None))}` expected `list[InputPathType]`')
+    if params.get("nowrite", False) is None:
+        raise StyxValidationError("`nowrite` must not be None")
+    if not isinstance(params["nowrite"], bool):
+        raise StyxValidationError(f'`nowrite` has the wrong type: Received `{type(params.get("nowrite", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("start", None) is not None:
+        if not isinstance(params["start"], (float, int)):
+            raise StyxValidationError(f'`start` has the wrong type: Received `{type(params.get("start", None))}` expected `float | None`')
+    if params.get("step", None) is not None:
+        if not isinstance(params["step"], (float, int)):
+            raise StyxValidationError(f'`step` has the wrong type: Received `{type(params.get("step", None))}` expected `float | None`')
+    if params.get("flim", False) is None:
+        raise StyxValidationError("`flim` must not be None")
+    if not isinstance(params["flim"], bool):
+        raise StyxValidationError(f'`flim` has the wrong type: Received `{type(params.get("flim", False))}` expected `bool`')
+    if params.get("keepsize", False) is None:
+        raise StyxValidationError("`keepsize` must not be None")
+    if not isinstance(params["keepsize"], bool):
+        raise StyxValidationError(f'`keepsize` has the wrong type: Received `{type(params.get("keepsize", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("dprefix", None) is not None:
+        if not isinstance(params["dprefix"], str):
+            raise StyxValidationError(f'`dprefix` has the wrong type: Received `{type(params.get("dprefix", None))}` expected `str | None`')
+    if params.get("bilinear", False) is None:
+        raise StyxValidationError("`bilinear` must not be None")
+    if not isinstance(params["bilinear"], bool):
+        raise StyxValidationError(f'`bilinear` has the wrong type: Received `{type(params.get("bilinear", False))}` expected `bool`')
+    if params.get("modes", None) is not None:
+        if not isinstance(params["modes"], str):
+            raise StyxValidationError(f'`modes` has the wrong type: Received `{type(params.get("modes", None))}` expected `str | None`')
+    if params.get("mlcf", False) is None:
+        raise StyxValidationError("`mlcf` must not be None")
+    if not isinstance(params["mlcf"], bool):
+        raise StyxValidationError(f'`mlcf` has the wrong type: Received `{type(params.get("mlcf", False))}` expected `bool`')
+    if params.get("wtim", None) is not None:
+        if not isinstance(params["wtim"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wtim` has the wrong type: Received `{type(params.get("wtim", None))}` expected `InputPathType | None`')
+    if params.get("dfspace", False) is None:
+        raise StyxValidationError("`dfspace` must not be None")
+    if not isinstance(params["dfspace"], bool):
+        raise StyxValidationError(f'`dfspace` has the wrong type: Received `{type(params.get("dfspace", False))}` expected `bool`')
+    if params.get("cmass", False) is None:
+        raise StyxValidationError("`cmass` must not be None")
+    if not isinstance(params["cmass"], bool):
+        raise StyxValidationError(f'`cmass` has the wrong type: Received `{type(params.get("cmass", False))}` expected `bool`')
+    if params.get("fine", None) is not None:
+        if not isinstance(params["fine"], list):
+            raise StyxValidationError(f'`fine` has the wrong type: Received `{type(params.get("fine", None))}` expected `list[float] | None`')
+        if len(params["fine"]) == 3:
+            raise StyxValidationError("Parameter `fine` must contain exactly 3 elements")
+        for e in params["fine"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fine` has the wrong type: Received `{type(params.get("fine", None))}` expected `list[float] | None`')
+    if params.get("nofine", False) is None:
+        raise StyxValidationError("`nofine` must not be None")
+    if not isinstance(params["nofine"], bool):
+        raise StyxValidationError(f'`nofine` has the wrong type: Received `{type(params.get("nofine", False))}` expected `bool`')
+
+
 def imreg_cargs(
     params: ImregParameters,
     execution: Execution,
@@ -283,6 +377,7 @@ def imreg_execute(
     Returns:
         NamedTuple of outputs (described in `ImregOutputs`).
     """
+    imreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMREG_METADATA)
     params = execution.params(params)

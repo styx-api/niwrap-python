@@ -95,6 +95,31 @@ def cifti_change_mapping_series_params(
     return params
 
 
+def cifti_change_mapping_series_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiChangeMappingSeriesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("step", None) is None:
+        raise StyxValidationError("`step` must not be None")
+    if not isinstance(params["step"], (float, int)):
+        raise StyxValidationError(f'`step` has the wrong type: Received `{type(params.get("step", None))}` expected `float`')
+    if params.get("start", None) is None:
+        raise StyxValidationError("`start` must not be None")
+    if not isinstance(params["start"], (float, int)):
+        raise StyxValidationError(f'`start` has the wrong type: Received `{type(params.get("start", None))}` expected `float`')
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], str):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
+
+
 def cifti_change_mapping_series_cargs(
     params: CiftiChangeMappingSeriesParameters,
     execution: Execution,
@@ -141,6 +166,23 @@ def cifti_change_mapping_scalar_params(
     return params
 
 
+def cifti_change_mapping_scalar_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiChangeMappingScalarParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+
+
 def cifti_change_mapping_scalar_cargs(
     params: CiftiChangeMappingScalarParameters,
     execution: Execution,
@@ -183,6 +225,28 @@ def cifti_change_mapping_from_cifti_params(
         "direction": direction,
     }
     return params
+
+
+def cifti_change_mapping_from_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiChangeMappingFromCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template-cifti", None) is None:
+        raise StyxValidationError("`template-cifti` must not be None")
+    if not isinstance(params["template-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template-cifti` has the wrong type: Received `{type(params.get("template-cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_change_mapping_from_cifti_cargs(
@@ -251,6 +315,38 @@ def cifti_change_mapping_params(
     if from_cifti is not None:
         params["from-cifti"] = from_cifti
     return params
+
+
+def cifti_change_mapping_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiChangeMappingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("series", None) is not None:
+        cifti_change_mapping_series_validate(params["series"])
+    if params.get("scalar", None) is not None:
+        cifti_change_mapping_scalar_validate(params["scalar"])
+    if params.get("from-cifti", None) is not None:
+        cifti_change_mapping_from_cifti_validate(params["from-cifti"])
+    if params.get("data-cifti", None) is None:
+        raise StyxValidationError("`data-cifti` must not be None")
+    if not isinstance(params["data-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data-cifti` has the wrong type: Received `{type(params.get("data-cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_change_mapping_cargs(
@@ -325,6 +421,7 @@ def cifti_change_mapping_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiChangeMappingOutputs`).
     """
+    cifti_change_mapping_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CHANGE_MAPPING_METADATA)
     params = execution.params(params)

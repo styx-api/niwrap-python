@@ -55,6 +55,28 @@ def fix_subject_rh_params(
     return params
 
 
+def fix_subject_rh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixSubjectRhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_directory", None) is None:
+        raise StyxValidationError("`input_directory` must not be None")
+    if not isinstance(params["input_directory"], str):
+        raise StyxValidationError(f'`input_directory` has the wrong type: Received `{type(params.get("input_directory", None))}` expected `str`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def fix_subject_rh_cargs(
     params: FixSubjectRhParameters,
     execution: Execution,
@@ -118,6 +140,7 @@ def fix_subject_rh_execute(
     Returns:
         NamedTuple of outputs (described in `FixSubjectRhOutputs`).
     """
+    fix_subject_rh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIX_SUBJECT_RH_METADATA)
     params = execution.params(params)

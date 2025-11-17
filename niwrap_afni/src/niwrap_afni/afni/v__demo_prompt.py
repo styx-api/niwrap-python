@@ -51,6 +51,24 @@ def v__demo_prompt_params(
     return params
 
 
+def v__demo_prompt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDemoPromptParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("message", None) is None:
+        raise StyxValidationError("`message` must not be None")
+    if not isinstance(params["message"], str):
+        raise StyxValidationError(f'`message` has the wrong type: Received `{type(params.get("message", None))}` expected `str`')
+
+
 def v__demo_prompt_cargs(
     params: VDemoPromptParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def v__demo_prompt_execute(
     Returns:
         NamedTuple of outputs (described in `VDemoPromptOutputs`).
     """
+    v__demo_prompt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DEMO_PROMPT_METADATA)
     params = execution.params(params)

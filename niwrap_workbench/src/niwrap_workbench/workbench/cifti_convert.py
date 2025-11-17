@@ -209,6 +209,28 @@ def cifti_convert_to_gifti_ext_params(
     return params
 
 
+def cifti_convert_to_gifti_ext_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertToGiftiExtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("gifti-out", None) is None:
+        raise StyxValidationError("`gifti-out` must not be None")
+    if not isinstance(params["gifti-out"], str):
+        raise StyxValidationError(f'`gifti-out` has the wrong type: Received `{type(params.get("gifti-out", None))}` expected `str`')
+
+
 def cifti_convert_to_gifti_ext_cargs(
     params: CiftiConvertToGiftiExtParameters,
     execution: Execution,
@@ -258,6 +280,31 @@ def cifti_convert_reset_timepoints_params(
     return params
 
 
+def cifti_convert_reset_timepoints_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertResetTimepointsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timestep", None) is None:
+        raise StyxValidationError("`timestep` must not be None")
+    if not isinstance(params["timestep"], (float, int)):
+        raise StyxValidationError(f'`timestep` has the wrong type: Received `{type(params.get("timestep", None))}` expected `float`')
+    if params.get("timestart", None) is None:
+        raise StyxValidationError("`timestart` must not be None")
+    if not isinstance(params["timestart"], (float, int)):
+        raise StyxValidationError(f'`timestart` has the wrong type: Received `{type(params.get("timestart", None))}` expected `float`')
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], str):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
+
+
 def cifti_convert_reset_timepoints_cargs(
     params: CiftiConvertResetTimepointsParameters,
     execution: Execution,
@@ -305,6 +352,32 @@ def cifti_convert_replace_binary_params(
         "transpose": transpose,
     }
     return params
+
+
+def cifti_convert_replace_binary_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertReplaceBinaryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("binary-in", None) is None:
+        raise StyxValidationError("`binary-in` must not be None")
+    if not isinstance(params["binary-in"], str):
+        raise StyxValidationError(f'`binary-in` has the wrong type: Received `{type(params.get("binary-in", None))}` expected `str`')
+    if params.get("flip-endian", False) is None:
+        raise StyxValidationError("`flip-endian` must not be None")
+    if not isinstance(params["flip-endian"], bool):
+        raise StyxValidationError(f'`flip-endian` has the wrong type: Received `{type(params.get("flip-endian", False))}` expected `bool`')
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
 
 
 def cifti_convert_replace_binary_cargs(
@@ -377,6 +450,40 @@ def cifti_convert_from_gifti_ext_params(
     if replace_binary is not None:
         params["replace-binary"] = replace_binary
     return params
+
+
+def cifti_convert_from_gifti_ext_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertFromGiftiExtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gifti-in", None) is None:
+        raise StyxValidationError("`gifti-in` must not be None")
+    if not isinstance(params["gifti-in"], str):
+        raise StyxValidationError(f'`gifti-in` has the wrong type: Received `{type(params.get("gifti-in", None))}` expected `str`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("reset-timepoints", None) is not None:
+        cifti_convert_reset_timepoints_validate(params["reset-timepoints"])
+    if params.get("reset-scalars", False) is None:
+        raise StyxValidationError("`reset-scalars` must not be None")
+    if not isinstance(params["reset-scalars"], bool):
+        raise StyxValidationError(f'`reset-scalars` has the wrong type: Received `{type(params.get("reset-scalars", False))}` expected `bool`')
+    if params.get("column-reset-scalars", False) is None:
+        raise StyxValidationError("`column-reset-scalars` must not be None")
+    if not isinstance(params["column-reset-scalars"], bool):
+        raise StyxValidationError(f'`column-reset-scalars` has the wrong type: Received `{type(params.get("column-reset-scalars", False))}` expected `bool`')
+    if params.get("replace-binary", None) is not None:
+        cifti_convert_replace_binary_validate(params["replace-binary"])
 
 
 def cifti_convert_from_gifti_ext_cargs(
@@ -464,6 +571,36 @@ def cifti_convert_to_nifti_params(
     return params
 
 
+def cifti_convert_to_nifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertToNiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("nifti-out", None) is None:
+        raise StyxValidationError("`nifti-out` must not be None")
+    if not isinstance(params["nifti-out"], str):
+        raise StyxValidationError(f'`nifti-out` has the wrong type: Received `{type(params.get("nifti-out", None))}` expected `str`')
+    if params.get("smaller-file", False) is None:
+        raise StyxValidationError("`smaller-file` must not be None")
+    if not isinstance(params["smaller-file"], bool):
+        raise StyxValidationError(f'`smaller-file` has the wrong type: Received `{type(params.get("smaller-file", False))}` expected `bool`')
+    if params.get("smaller-dims", False) is None:
+        raise StyxValidationError("`smaller-dims` must not be None")
+    if not isinstance(params["smaller-dims"], bool):
+        raise StyxValidationError(f'`smaller-dims` has the wrong type: Received `{type(params.get("smaller-dims", False))}` expected `bool`')
+
+
 def cifti_convert_to_nifti_cargs(
     params: CiftiConvertToNiftiParameters,
     execution: Execution,
@@ -536,6 +673,31 @@ def cifti_convert_reset_timepoints_params_(
     return params
 
 
+def cifti_convert_reset_timepoints_validate_(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertResetTimepointsParameters_` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timestep", None) is None:
+        raise StyxValidationError("`timestep` must not be None")
+    if not isinstance(params["timestep"], (float, int)):
+        raise StyxValidationError(f'`timestep` has the wrong type: Received `{type(params.get("timestep", None))}` expected `float`')
+    if params.get("timestart", None) is None:
+        raise StyxValidationError("`timestart` must not be None")
+    if not isinstance(params["timestart"], (float, int)):
+        raise StyxValidationError(f'`timestart` has the wrong type: Received `{type(params.get("timestart", None))}` expected `float`')
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], str):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
+
+
 def cifti_convert_reset_timepoints_cargs_(
     params: CiftiConvertResetTimepointsParameters_,
     execution: Execution,
@@ -603,6 +765,38 @@ def cifti_convert_from_nifti_params(
     if reset_timepoints is not None:
         params["reset-timepoints"] = reset_timepoints
     return params
+
+
+def cifti_convert_from_nifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertFromNiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nifti-in", None) is None:
+        raise StyxValidationError("`nifti-in` must not be None")
+    if not isinstance(params["nifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`nifti-in` has the wrong type: Received `{type(params.get("nifti-in", None))}` expected `InputPathType`')
+    if params.get("cifti-template", None) is None:
+        raise StyxValidationError("`cifti-template` must not be None")
+    if not isinstance(params["cifti-template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-template` has the wrong type: Received `{type(params.get("cifti-template", None))}` expected `InputPathType`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("reset-timepoints", None) is not None:
+        cifti_convert_reset_timepoints_validate_(params["reset-timepoints"])
+    if params.get("reset-scalars", False) is None:
+        raise StyxValidationError("`reset-scalars` must not be None")
+    if not isinstance(params["reset-scalars"], bool):
+        raise StyxValidationError(f'`reset-scalars` has the wrong type: Received `{type(params.get("reset-scalars", False))}` expected `bool`')
 
 
 def cifti_convert_from_nifti_cargs(
@@ -678,6 +872,31 @@ def cifti_convert_to_text_params(
     return params
 
 
+def cifti_convert_to_text_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertToTextParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("text-out", None) is None:
+        raise StyxValidationError("`text-out` must not be None")
+    if not isinstance(params["text-out"], str):
+        raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str`')
+    if params.get("delim-string", None) is not None:
+        if not isinstance(params["delim-string"], str):
+            raise StyxValidationError(f'`delim-string` has the wrong type: Received `{type(params.get("delim-string", None))}` expected `str | None`')
+
+
 def cifti_convert_to_text_cargs(
     params: CiftiConvertToTextParameters,
     execution: Execution,
@@ -728,6 +947,31 @@ def cifti_convert_reset_timepoints_params_2(
     if unit is not None:
         params["unit"] = unit
     return params
+
+
+def cifti_convert_reset_timepoints_validate_2(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertResetTimepointsParameters_2` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timestep", None) is None:
+        raise StyxValidationError("`timestep` must not be None")
+    if not isinstance(params["timestep"], (float, int)):
+        raise StyxValidationError(f'`timestep` has the wrong type: Received `{type(params.get("timestep", None))}` expected `float`')
+    if params.get("timestart", None) is None:
+        raise StyxValidationError("`timestart` must not be None")
+    if not isinstance(params["timestart"], (float, int)):
+        raise StyxValidationError(f'`timestart` has the wrong type: Received `{type(params.get("timestart", None))}` expected `float`')
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], str):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
 
 
 def cifti_convert_reset_timepoints_cargs_2(
@@ -803,6 +1047,41 @@ def cifti_convert_from_text_params(
     if reset_timepoints is not None:
         params["reset-timepoints"] = reset_timepoints
     return params
+
+
+def cifti_convert_from_text_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertFromTextParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("text-in", None) is None:
+        raise StyxValidationError("`text-in` must not be None")
+    if not isinstance(params["text-in"], str):
+        raise StyxValidationError(f'`text-in` has the wrong type: Received `{type(params.get("text-in", None))}` expected `str`')
+    if params.get("cifti-template", None) is None:
+        raise StyxValidationError("`cifti-template` must not be None")
+    if not isinstance(params["cifti-template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-template` has the wrong type: Received `{type(params.get("cifti-template", None))}` expected `InputPathType`')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("delim-string", None) is not None:
+        if not isinstance(params["delim-string"], str):
+            raise StyxValidationError(f'`delim-string` has the wrong type: Received `{type(params.get("delim-string", None))}` expected `str | None`')
+    if params.get("reset-timepoints", None) is not None:
+        cifti_convert_reset_timepoints_validate_2(params["reset-timepoints"])
+    if params.get("reset-scalars", False) is None:
+        raise StyxValidationError("`reset-scalars` must not be None")
+    if not isinstance(params["reset-scalars"], bool):
+        raise StyxValidationError(f'`reset-scalars` has the wrong type: Received `{type(params.get("reset-scalars", False))}` expected `bool`')
 
 
 def cifti_convert_from_text_cargs(
@@ -910,6 +1189,32 @@ def cifti_convert_params(
     return params
 
 
+def cifti_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("to-gifti-ext", None) is not None:
+        cifti_convert_to_gifti_ext_validate(params["to-gifti-ext"])
+    if params.get("from-gifti-ext", None) is not None:
+        cifti_convert_from_gifti_ext_validate(params["from-gifti-ext"])
+    if params.get("to-nifti", None) is not None:
+        cifti_convert_to_nifti_validate(params["to-nifti"])
+    if params.get("from-nifti", None) is not None:
+        cifti_convert_from_nifti_validate(params["from-nifti"])
+    if params.get("to-text", None) is not None:
+        cifti_convert_to_text_validate(params["to-text"])
+    if params.get("from-text", None) is not None:
+        cifti_convert_from_text_validate(params["from-text"])
+
+
 def cifti_convert_cargs(
     params: CiftiConvertParameters,
     execution: Execution,
@@ -1010,6 +1315,7 @@ def cifti_convert_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiConvertOutputs`).
     """
+    cifti_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CONVERT_METADATA)
     params = execution.params(params)

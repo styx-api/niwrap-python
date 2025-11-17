@@ -56,6 +56,31 @@ def mri_or_params(
     return params
 
 
+def mri_or_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriOrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("original_labels", False) is None:
+        raise StyxValidationError("`original_labels` must not be None")
+    if not isinstance(params["original_labels"], bool):
+        raise StyxValidationError(f'`original_labels` has the wrong type: Received `{type(params.get("original_labels", False))}` expected `bool`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def mri_or_cargs(
     params: MriOrParameters,
     execution: Execution,
@@ -115,6 +140,7 @@ def mri_or_execute(
     Returns:
         NamedTuple of outputs (described in `MriOrOutputs`).
     """
+    mri_or_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_OR_METADATA)
     params = execution.params(params)

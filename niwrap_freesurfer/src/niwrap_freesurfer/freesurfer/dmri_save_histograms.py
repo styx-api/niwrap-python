@@ -71,6 +71,43 @@ def dmri_save_histograms_params(
     return params
 
 
+def dmri_save_histograms_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriSaveHistogramsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("parcellation", None) is None:
+        raise StyxValidationError("`parcellation` must not be None")
+    if not isinstance(params["parcellation"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`parcellation` has the wrong type: Received `{type(params.get("parcellation", None))}` expected `InputPathType`')
+    if params.get("number_of_bundles", None) is None:
+        raise StyxValidationError("`number_of_bundles` must not be None")
+    if not isinstance(params["number_of_bundles"], (float, int)):
+        raise StyxValidationError(f'`number_of_bundles` has the wrong type: Received `{type(params.get("number_of_bundles", None))}` expected `float`')
+    if params.get("vtk_bundle_list", None) is None:
+        raise StyxValidationError("`vtk_bundle_list` must not be None")
+    if not isinstance(params["vtk_bundle_list"], list):
+        raise StyxValidationError(f'`vtk_bundle_list` has the wrong type: Received `{type(params.get("vtk_bundle_list", None))}` expected `list[InputPathType]`')
+    for e in params["vtk_bundle_list"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`vtk_bundle_list` has the wrong type: Received `{type(params.get("vtk_bundle_list", None))}` expected `list[InputPathType]`')
+    if params.get("output_csv", None) is None:
+        raise StyxValidationError("`output_csv` must not be None")
+    if not isinstance(params["output_csv"], str):
+        raise StyxValidationError(f'`output_csv` has the wrong type: Received `{type(params.get("output_csv", None))}` expected `str`')
+    if params.get("brain_bundle_flag", False) is None:
+        raise StyxValidationError("`brain_bundle_flag` must not be None")
+    if not isinstance(params["brain_bundle_flag"], bool):
+        raise StyxValidationError(f'`brain_bundle_flag` has the wrong type: Received `{type(params.get("brain_bundle_flag", False))}` expected `bool`')
+
+
 def dmri_save_histograms_cargs(
     params: DmriSaveHistogramsParameters,
     execution: Execution,
@@ -143,6 +180,7 @@ def dmri_save_histograms_execute(
     Returns:
         NamedTuple of outputs (described in `DmriSaveHistogramsOutputs`).
     """
+    dmri_save_histograms_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_SAVE_HISTOGRAMS_METADATA)
     params = execution.params(params)

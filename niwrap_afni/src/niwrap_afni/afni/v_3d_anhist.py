@@ -94,6 +94,49 @@ def v_3d_anhist_params(
     return params
 
 
+def v_3d_anhist_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAnhistParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("dump_histogram", False) is None:
+        raise StyxValidationError("`dump_histogram` must not be None")
+    if not isinstance(params["dump_histogram"], bool):
+        raise StyxValidationError(f'`dump_histogram` has the wrong type: Received `{type(params.get("dump_histogram", False))}` expected `bool`')
+    if params.get("no_scurve", False) is None:
+        raise StyxValidationError("`no_scurve` must not be None")
+    if not isinstance(params["no_scurve"], bool):
+        raise StyxValidationError(f'`no_scurve` has the wrong type: Received `{type(params.get("no_scurve", False))}` expected `bool`')
+    if params.get("winsorize", None) is not None:
+        if not isinstance(params["winsorize"], str):
+            raise StyxValidationError(f'`winsorize` has the wrong type: Received `{type(params.get("winsorize", None))}` expected `str | None`')
+    if params.get("top_2peaks", False) is None:
+        raise StyxValidationError("`top_2peaks` must not be None")
+    if not isinstance(params["top_2peaks"], bool):
+        raise StyxValidationError(f'`top_2peaks` has the wrong type: Received `{type(params.get("top_2peaks", False))}` expected `bool`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], str):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str | None`')
+    if params.get("filename", None) is not None:
+        if not isinstance(params["filename"], str):
+            raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str | None`')
+
+
 def v_3d_anhist_cargs(
     params: V3dAnhistParameters,
     execution: Execution,
@@ -177,6 +220,7 @@ def v_3d_anhist_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAnhistOutputs`).
     """
+    v_3d_anhist_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ANHIST_METADATA)
     params = execution.params(params)

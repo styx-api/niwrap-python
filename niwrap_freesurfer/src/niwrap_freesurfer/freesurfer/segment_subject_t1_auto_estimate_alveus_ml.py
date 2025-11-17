@@ -56,6 +56,28 @@ def segment_subject_t1_auto_estimate_alveus_ml_params(
     return params
 
 
+def segment_subject_t1_auto_estimate_alveus_ml_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentSubjectT1AutoEstimateAlveusMlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_file", None) is None:
+        raise StyxValidationError("`t1_file` must not be None")
+    if not isinstance(params["t1_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_file` has the wrong type: Received `{type(params.get("t1_file", None))}` expected `InputPathType`')
+    if params.get("output_folder", None) is None:
+        raise StyxValidationError("`output_folder` must not be None")
+    if not isinstance(params["output_folder"], str):
+        raise StyxValidationError(f'`output_folder` has the wrong type: Received `{type(params.get("output_folder", None))}` expected `str`')
+
+
 def segment_subject_t1_auto_estimate_alveus_ml_cargs(
     params: SegmentSubjectT1AutoEstimateAlveusMlParameters,
     execution: Execution,
@@ -116,6 +138,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT1AutoEstimateAlveusMlOutputs`).
     """
+    segment_subject_t1_auto_estimate_alveus_ml_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = execution.params(params)

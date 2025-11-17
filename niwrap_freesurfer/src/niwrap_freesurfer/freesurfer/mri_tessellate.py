@@ -80,6 +80,43 @@ def mri_tessellate_params(
     return params
 
 
+def mri_tessellate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriTessellateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("label_value", None) is None:
+        raise StyxValidationError("`label_value` must not be None")
+    if not isinstance(params["label_value"], int):
+        raise StyxValidationError(f'`label_value` has the wrong type: Received `{type(params.get("label_value", None))}` expected `int`')
+    if params.get("output_surf", None) is None:
+        raise StyxValidationError("`output_surf` must not be None")
+    if not isinstance(params["output_surf"], str):
+        raise StyxValidationError(f'`output_surf` has the wrong type: Received `{type(params.get("output_surf", None))}` expected `str`')
+    if params.get("different_labels", False) is None:
+        raise StyxValidationError("`different_labels` must not be None")
+    if not isinstance(params["different_labels"], bool):
+        raise StyxValidationError(f'`different_labels` has the wrong type: Received `{type(params.get("different_labels", False))}` expected `bool`')
+    if params.get("max_vertices", None) is not None:
+        if not isinstance(params["max_vertices"], int):
+            raise StyxValidationError(f'`max_vertices` has the wrong type: Received `{type(params.get("max_vertices", None))}` expected `int | None`')
+    if params.get("real_ras", False) is None:
+        raise StyxValidationError("`real_ras` must not be None")
+    if not isinstance(params["real_ras"], bool):
+        raise StyxValidationError(f'`real_ras` has the wrong type: Received `{type(params.get("real_ras", False))}` expected `bool`')
+
+
 def mri_tessellate_cargs(
     params: MriTessellateParameters,
     execution: Execution,
@@ -149,6 +186,7 @@ def mri_tessellate_execute(
     Returns:
         NamedTuple of outputs (described in `MriTessellateOutputs`).
     """
+    mri_tessellate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_TESSELLATE_METADATA)
     params = execution.params(params)

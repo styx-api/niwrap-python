@@ -84,6 +84,47 @@ def volume_parcel_smoothing_params(
     return params
 
 
+def volume_parcel_smoothing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeParcelSmoothingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+    if params.get("fix-zeros", False) is None:
+        raise StyxValidationError("`fix-zeros` must not be None")
+    if not isinstance(params["fix-zeros"], bool):
+        raise StyxValidationError(f'`fix-zeros` has the wrong type: Received `{type(params.get("fix-zeros", False))}` expected `bool`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("data-volume", None) is None:
+        raise StyxValidationError("`data-volume` must not be None")
+    if not isinstance(params["data-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data-volume` has the wrong type: Received `{type(params.get("data-volume", None))}` expected `InputPathType`')
+    if params.get("label-volume", None) is None:
+        raise StyxValidationError("`label-volume` must not be None")
+    if not isinstance(params["label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+
+
 def volume_parcel_smoothing_cargs(
     params: VolumeParcelSmoothingParameters,
     execution: Execution,
@@ -152,6 +193,7 @@ def volume_parcel_smoothing_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeParcelSmoothingOutputs`).
     """
+    volume_parcel_smoothing_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_PARCEL_SMOOTHING_METADATA)
     params = execution.params(params)

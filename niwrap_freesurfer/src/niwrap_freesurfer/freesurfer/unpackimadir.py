@@ -55,6 +55,28 @@ def unpackimadir_params(
     return params
 
 
+def unpackimadir_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UnpackimadirParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_directory", None) is None:
+        raise StyxValidationError("`source_directory` must not be None")
+    if not isinstance(params["source_directory"], str):
+        raise StyxValidationError(f'`source_directory` has the wrong type: Received `{type(params.get("source_directory", None))}` expected `str`')
+    if params.get("target_directory", None) is None:
+        raise StyxValidationError("`target_directory` must not be None")
+    if not isinstance(params["target_directory"], str):
+        raise StyxValidationError(f'`target_directory` has the wrong type: Received `{type(params.get("target_directory", None))}` expected `str`')
+
+
 def unpackimadir_cargs(
     params: UnpackimadirParameters,
     execution: Execution,
@@ -119,6 +141,7 @@ def unpackimadir_execute(
     Returns:
         NamedTuple of outputs (described in `UnpackimadirOutputs`).
     """
+    unpackimadir_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UNPACKIMADIR_METADATA)
     params = execution.params(params)

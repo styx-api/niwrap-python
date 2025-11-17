@@ -51,6 +51,24 @@ def feat_params(
     return params
 
 
+def feat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `FeatParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("design_file", None) is None:
+        raise StyxValidationError("`design_file` must not be None")
+    if not isinstance(params["design_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design_file` has the wrong type: Received `{type(params.get("design_file", None))}` expected `InputPathType`')
+
+
 def feat_cargs(
     params: FeatParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def feat_execute(
     Returns:
         NamedTuple of outputs (described in `FeatOutputs`).
     """
+    feat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FEAT_METADATA)
     params = execution.params(params)

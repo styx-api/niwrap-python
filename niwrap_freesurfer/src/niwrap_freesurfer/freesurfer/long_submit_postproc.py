@@ -89,6 +89,47 @@ def long_submit_postproc_params(
     return params
 
 
+def long_submit_postproc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongSubmitPostprocParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec", None) is None:
+        raise StyxValidationError("`qdec` must not be None")
+    if not isinstance(params["qdec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`qdec` has the wrong type: Received `{type(params.get("qdec", None))}` expected `InputPathType`')
+    if params.get("prog", None) is None:
+        raise StyxValidationError("`prog` must not be None")
+    if not isinstance(params["prog"], str):
+        raise StyxValidationError(f'`prog` has the wrong type: Received `{type(params.get("prog", None))}` expected `str`')
+    if params.get("flags", None) is not None:
+        if not isinstance(params["flags"], str):
+            raise StyxValidationError(f'`flags` has the wrong type: Received `{type(params.get("flags", None))}` expected `str | None`')
+    if params.get("dir", None) is not None:
+        if not isinstance(params["dir"], str):
+            raise StyxValidationError(f'`dir` has the wrong type: Received `{type(params.get("dir", None))}` expected `str | None`')
+    if params.get("simulate", False) is None:
+        raise StyxValidationError("`simulate` must not be None")
+    if not isinstance(params["simulate"], bool):
+        raise StyxValidationError(f'`simulate` has the wrong type: Received `{type(params.get("simulate", False))}` expected `bool`')
+    if params.get("pause", None) is not None:
+        if not isinstance(params["pause"], (float, int)):
+            raise StyxValidationError(f'`pause` has the wrong type: Received `{type(params.get("pause", None))}` expected `float | None`')
+    if params.get("max", None) is not None:
+        if not isinstance(params["max"], (float, int)):
+            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float | None`')
+    if params.get("queue", None) is not None:
+        if not isinstance(params["queue"], str):
+            raise StyxValidationError(f'`queue` has the wrong type: Received `{type(params.get("queue", None))}` expected `str | None`')
+
+
 def long_submit_postproc_cargs(
     params: LongSubmitPostprocParameters,
     execution: Execution,
@@ -181,6 +222,7 @@ def long_submit_postproc_execute(
     Returns:
         NamedTuple of outputs (described in `LongSubmitPostprocOutputs`).
     """
+    long_submit_postproc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_SUBMIT_POSTPROC_METADATA)
     params = execution.params(params)

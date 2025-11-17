@@ -54,6 +54,34 @@ def tbss_x_params(
     return params
 
 
+def tbss_x_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TbssXParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scalar_dirs", None) is None:
+        raise StyxValidationError("`scalar_dirs` must not be None")
+    if not isinstance(params["scalar_dirs"], list):
+        raise StyxValidationError(f'`scalar_dirs` has the wrong type: Received `{type(params.get("scalar_dirs", None))}` expected `list[str]`')
+    for e in params["scalar_dirs"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`scalar_dirs` has the wrong type: Received `{type(params.get("scalar_dirs", None))}` expected `list[str]`')
+    if params.get("vector_dirs", None) is None:
+        raise StyxValidationError("`vector_dirs` must not be None")
+    if not isinstance(params["vector_dirs"], list):
+        raise StyxValidationError(f'`vector_dirs` has the wrong type: Received `{type(params.get("vector_dirs", None))}` expected `list[str]`')
+    for e in params["vector_dirs"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`vector_dirs` has the wrong type: Received `{type(params.get("vector_dirs", None))}` expected `list[str]`')
+
+
 def tbss_x_cargs(
     params: TbssXParameters,
     execution: Execution,
@@ -112,6 +140,7 @@ def tbss_x_execute(
     Returns:
         NamedTuple of outputs (described in `TbssXOutputs`).
     """
+    tbss_x_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_X_METADATA)
     params = execution.params(params)

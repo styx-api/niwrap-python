@@ -171,6 +171,99 @@ def surf_patch_params(
     return params
 
 
+def surf_patch_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfPatchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("surf_A", None) is None:
+        raise StyxValidationError("`surf_A` must not be None")
+    if not isinstance(params["surf_A"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf_A` has the wrong type: Received `{type(params.get("surf_A", None))}` expected `InputPathType`')
+    if params.get("surf_B", None) is None:
+        raise StyxValidationError("`surf_B` must not be None")
+    if not isinstance(params["surf_B"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf_B` has the wrong type: Received `{type(params.get("surf_B", None))}` expected `InputPathType`')
+    if params.get("nodefile", None) is None:
+        raise StyxValidationError("`nodefile` must not be None")
+    if not isinstance(params["nodefile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`nodefile` has the wrong type: Received `{type(params.get("nodefile", None))}` expected `InputPathType`')
+    if params.get("inode", None) is None:
+        raise StyxValidationError("`inode` must not be None")
+    if not isinstance(params["inode"], (float, int)):
+        raise StyxValidationError(f'`inode` has the wrong type: Received `{type(params.get("inode", None))}` expected `float`')
+    if params.get("ilabel", None) is None:
+        raise StyxValidationError("`ilabel` must not be None")
+    if not isinstance(params["ilabel"], (float, int)):
+        raise StyxValidationError(f'`ilabel` has the wrong type: Received `{type(params.get("ilabel", None))}` expected `float`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("hits", None) is not None:
+        if not isinstance(params["hits"], (float, int)):
+            raise StyxValidationError(f'`hits` has the wrong type: Received `{type(params.get("hits", None))}` expected `float | None`')
+    if params.get("masklabel", None) is not None:
+        if not isinstance(params["masklabel"], str):
+            raise StyxValidationError(f'`masklabel` has the wrong type: Received `{type(params.get("masklabel", None))}` expected `str | None`')
+    if params.get("vol", False) is None:
+        raise StyxValidationError("`vol` must not be None")
+    if not isinstance(params["vol"], bool):
+        raise StyxValidationError(f'`vol` has the wrong type: Received `{type(params.get("vol", False))}` expected `bool`')
+    if params.get("vol_only", False) is None:
+        raise StyxValidationError("`vol_only` must not be None")
+    if not isinstance(params["vol_only"], bool):
+        raise StyxValidationError(f'`vol_only` has the wrong type: Received `{type(params.get("vol_only", False))}` expected `bool`')
+    if params.get("patch2surf", False) is None:
+        raise StyxValidationError("`patch2surf` must not be None")
+    if not isinstance(params["patch2surf"], bool):
+        raise StyxValidationError(f'`patch2surf` has the wrong type: Received `{type(params.get("patch2surf", False))}` expected `bool`')
+    if params.get("coord_gain", None) is not None:
+        if not isinstance(params["coord_gain"], (float, int)):
+            raise StyxValidationError(f'`coord_gain` has the wrong type: Received `{type(params.get("coord_gain", None))}` expected `float | None`')
+    if params.get("check_bowtie", False) is None:
+        raise StyxValidationError("`check_bowtie` must not be None")
+    if not isinstance(params["check_bowtie"], bool):
+        raise StyxValidationError(f'`check_bowtie` has the wrong type: Received `{type(params.get("check_bowtie", False))}` expected `bool`')
+    if params.get("fix_bowtie", False) is None:
+        raise StyxValidationError("`fix_bowtie` must not be None")
+    if not isinstance(params["fix_bowtie"], bool):
+        raise StyxValidationError(f'`fix_bowtie` has the wrong type: Received `{type(params.get("fix_bowtie", False))}` expected `bool`')
+    if params.get("ok_bowtie", False) is None:
+        raise StyxValidationError("`ok_bowtie` must not be None")
+    if not isinstance(params["ok_bowtie"], bool):
+        raise StyxValidationError(f'`ok_bowtie` has the wrong type: Received `{type(params.get("ok_bowtie", False))}` expected `bool`')
+    if params.get("adjust_contour", False) is None:
+        raise StyxValidationError("`adjust_contour` must not be None")
+    if not isinstance(params["adjust_contour"], bool):
+        raise StyxValidationError(f'`adjust_contour` has the wrong type: Received `{type(params.get("adjust_contour", False))}` expected `bool`')
+    if params.get("do_not_adjust_contour", False) is None:
+        raise StyxValidationError("`do_not_adjust_contour` must not be None")
+    if not isinstance(params["do_not_adjust_contour"], bool):
+        raise StyxValidationError(f'`do_not_adjust_contour` has the wrong type: Received `{type(params.get("do_not_adjust_contour", False))}` expected `bool`')
+    if params.get("stitched_surface", None) is not None:
+        if not isinstance(params["stitched_surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`stitched_surface` has the wrong type: Received `{type(params.get("stitched_surface", None))}` expected `InputPathType | None`')
+    if params.get("flip_orientation", False) is None:
+        raise StyxValidationError("`flip_orientation` must not be None")
+    if not isinstance(params["flip_orientation"], bool):
+        raise StyxValidationError(f'`flip_orientation` has the wrong type: Received `{type(params.get("flip_orientation", False))}` expected `bool`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+
+
 def surf_patch_cargs(
     params: SurfPatchParameters,
     execution: Execution,
@@ -293,6 +386,7 @@ def surf_patch_execute(
     Returns:
         NamedTuple of outputs (described in `SurfPatchOutputs`).
     """
+    surf_patch_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_PATCH_METADATA)
     params = execution.params(params)

@@ -207,6 +207,103 @@ def rba_params(
     return params
 
 
+def rba_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `RbaParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("dataTable", None) is None:
+        raise StyxValidationError("`dataTable` must not be None")
+    if not isinstance(params["dataTable"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataTable` has the wrong type: Received `{type(params.get("dataTable", None))}` expected `InputPathType`')
+    if params.get("chains", None) is not None:
+        if not isinstance(params["chains"], (float, int)):
+            raise StyxValidationError(f'`chains` has the wrong type: Received `{type(params.get("chains", None))}` expected `float | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], str):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str | None`')
+    if params.get("eoi", None) is not None:
+        if not isinstance(params["eoi"], str):
+            raise StyxValidationError(f'`eoi` has the wrong type: Received `{type(params.get("eoi", None))}` expected `str | None`')
+    if params.get("wcp", None) is not None:
+        if not isinstance(params["wcp"], (float, int)):
+            raise StyxValidationError(f'`wcp` has the wrong type: Received `{type(params.get("wcp", None))}` expected `float | None`')
+    if params.get("tstat", None) is not None:
+        if not isinstance(params["tstat"], str):
+            raise StyxValidationError(f'`tstat` has the wrong type: Received `{type(params.get("tstat", None))}` expected `str | None`')
+    if params.get("stdz", None) is not None:
+        if not isinstance(params["stdz"], str):
+            raise StyxValidationError(f'`stdz` has the wrong type: Received `{type(params.get("stdz", None))}` expected `str | None`')
+    if params.get("cVars", None) is not None:
+        if not isinstance(params["cVars"], str):
+            raise StyxValidationError(f'`cVars` has the wrong type: Received `{type(params.get("cVars", None))}` expected `str | None`')
+    if params.get("qVars", None) is not None:
+        if not isinstance(params["qVars"], str):
+            raise StyxValidationError(f'`qVars` has the wrong type: Received `{type(params.get("qVars", None))}` expected `str | None`')
+    if params.get("distROI", None) is not None:
+        if not isinstance(params["distROI"], str):
+            raise StyxValidationError(f'`distROI` has the wrong type: Received `{type(params.get("distROI", None))}` expected `str | None`')
+    if params.get("distSubj", None) is not None:
+        if not isinstance(params["distSubj"], str):
+            raise StyxValidationError(f'`distSubj` has the wrong type: Received `{type(params.get("distSubj", None))}` expected `str | None`')
+    if params.get("distY", None) is not None:
+        if not isinstance(params["distY"], str):
+            raise StyxValidationError(f'`distY` has the wrong type: Received `{type(params.get("distY", None))}` expected `str | None`')
+    if params.get("ridgePlot", None) is not None:
+        if not isinstance(params["ridgePlot"], str):
+            raise StyxValidationError(f'`ridgePlot` has the wrong type: Received `{type(params.get("ridgePlot", None))}` expected `str | None`')
+    if params.get("roi", None) is not None:
+        if not isinstance(params["roi"], str):
+            raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `str | None`')
+    if params.get("subj", None) is not None:
+        if not isinstance(params["subj"], str):
+            raise StyxValidationError(f'`subj` has the wrong type: Received `{type(params.get("subj", None))}` expected `str | None`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+    if params.get("se", None) is not None:
+        if not isinstance(params["se"], str):
+            raise StyxValidationError(f'`se` has the wrong type: Received `{type(params.get("se", None))}` expected `str | None`')
+    if params.get("pdp", None) is not None:
+        if not isinstance(params["pdp"], str):
+            raise StyxValidationError(f'`pdp` has the wrong type: Received `{type(params.get("pdp", None))}` expected `str | None`')
+    if params.get("mean", None) is not None:
+        if not isinstance(params["mean"], str):
+            raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", None))}` expected `str | None`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], str):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], (float, int)):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
+    if params.get("md", False) is None:
+        raise StyxValidationError("`md` must not be None")
+    if not isinstance(params["md"], bool):
+        raise StyxValidationError(f'`md` has the wrong type: Received `{type(params.get("md", False))}` expected `bool`')
+    if params.get("r2z", False) is None:
+        raise StyxValidationError("`r2z` must not be None")
+    if not isinstance(params["r2z"], bool):
+        raise StyxValidationError(f'`r2z` has the wrong type: Received `{type(params.get("r2z", False))}` expected `bool`')
+
+
 def rba_cargs(
     params: RbaParameters,
     execution: Execution,
@@ -384,6 +481,7 @@ def rba_execute(
     Returns:
         NamedTuple of outputs (described in `RbaOutputs`).
     """
+    rba_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RBA_METADATA)
     params = execution.params(params)

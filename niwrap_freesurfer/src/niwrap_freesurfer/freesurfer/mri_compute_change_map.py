@@ -80,6 +80,43 @@ def mri_compute_change_map_params(
     return params
 
 
+def mri_compute_change_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriComputeChangeMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mean_filter", False) is None:
+        raise StyxValidationError("`mean_filter` must not be None")
+    if not isinstance(params["mean_filter"], bool):
+        raise StyxValidationError(f'`mean_filter` has the wrong type: Received `{type(params.get("mean_filter", False))}` expected `bool`')
+    if params.get("gaussian_sigma", None) is not None:
+        if not isinstance(params["gaussian_sigma"], (float, int)):
+            raise StyxValidationError(f'`gaussian_sigma` has the wrong type: Received `{type(params.get("gaussian_sigma", None))}` expected `float | None`')
+    if params.get("volume1", None) is None:
+        raise StyxValidationError("`volume1` must not be None")
+    if not isinstance(params["volume1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume1` has the wrong type: Received `{type(params.get("volume1", None))}` expected `InputPathType`')
+    if params.get("volume2", None) is None:
+        raise StyxValidationError("`volume2` must not be None")
+    if not isinstance(params["volume2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume2` has the wrong type: Received `{type(params.get("volume2", None))}` expected `InputPathType`')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType`')
+    if params.get("outvolume", None) is None:
+        raise StyxValidationError("`outvolume` must not be None")
+    if not isinstance(params["outvolume"], str):
+        raise StyxValidationError(f'`outvolume` has the wrong type: Received `{type(params.get("outvolume", None))}` expected `str`')
+
+
 def mri_compute_change_map_cargs(
     params: MriComputeChangeMapParameters,
     execution: Execution,
@@ -148,6 +185,7 @@ def mri_compute_change_map_execute(
     Returns:
         NamedTuple of outputs (described in `MriComputeChangeMapOutputs`).
     """
+    mri_compute_change_map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COMPUTE_CHANGE_MAP_METADATA)
     params = execution.params(params)

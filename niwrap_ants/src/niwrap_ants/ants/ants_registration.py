@@ -559,18 +559,21 @@ def ants_registration_initial_moving_transform_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_registration_initial_moving_transform_outputs_dyn_fn(
+def ants_registration_initial_moving_transform_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "initial_moving_transform": ants_registration_initial_moving_transform_validate,
+        "initial_moving_transform_use_inverse": ants_registration_initial_moving_transform_use_inverse_validate,
+        "initial_moving_transform_initialization_feature": ants_registration_initial_moving_transform_initialization_feature_validate,
     }.get(t)
 
 
@@ -603,18 +606,32 @@ def ants_registration_transform_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_registration_transform_outputs_dyn_fn(
+def ants_registration_transform_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "transform_rigid": ants_registration_transform_rigid_validate,
+        "transform_affine": ants_registration_transform_affine_validate,
+        "transform_composite_affine": ants_registration_transform_composite_affine_validate,
+        "transform_similarity": ants_registration_transform_similarity_validate,
+        "transform_translation": ants_registration_transform_translation_validate,
+        "transform_bspline": ants_registration_transform_bspline_validate,
+        "transform_gaussian_displacement_field": ants_registration_transform_gaussian_displacement_field_validate,
+        "transform_bspline_displacement_field": ants_registration_transform_bspline_displacement_field_validate,
+        "transform_time_varying_velocity_field": ants_registration_transform_time_varying_velocity_field_validate,
+        "transform_time_varying_bspline_velocity_field": ants_registration_transform_time_varying_bspline_velocity_field_validate,
+        "transform_syn": ants_registration_transform_syn_validate,
+        "transform_bspline_syn": ants_registration_transform_bspline_syn_validate,
+        "transform_exponential": ants_registration_transform_exponential_validate,
+        "transform_bspline_exponential": ants_registration_transform_bspline_exponential_validate,
     }.get(t)
 
 
@@ -643,18 +660,28 @@ def ants_registration_metric_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_registration_metric_outputs_dyn_fn(
+def ants_registration_metric_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "metric_ants_neighbourhood_cross_correlation": ants_registration_metric_ants_neighbourhood_cross_correlation_validate,
+        "metric_mutual_information": ants_registration_metric_mutual_information_validate,
+        "metric_mattes": ants_registration_metric_mattes_validate,
+        "metric_mean_squares": ants_registration_metric_mean_squares_validate,
+        "metric_demons": ants_registration_metric_demons_validate,
+        "metric_global_correlation": ants_registration_metric_global_correlation_validate,
+        "metric_euclidean_icp": ants_registration_metric_euclidean_icp_validate,
+        "metric_point_set_expectation": ants_registration_metric_point_set_expectation_validate,
+        "metric_jensen_havrda_charvet_tsallis": ants_registration_metric_jensen_havrda_charvet_tsallis_validate,
+        "metric_igdm": ants_registration_metric_igdm_validate,
     }.get(t)
 
 
@@ -674,6 +701,24 @@ def ants_registration_initial_moving_transform_params(
         "initial_moving_transform": initial_moving_transform,
     }
     return params
+
+
+def ants_registration_initial_moving_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationInitialMovingTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("initial_moving_transform", None) is None:
+        raise StyxValidationError("`initial_moving_transform` must not be None")
+    if not isinstance(params["initial_moving_transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`initial_moving_transform` has the wrong type: Received `{type(params.get("initial_moving_transform", None))}` expected `InputPathType`')
 
 
 def ants_registration_initial_moving_transform_cargs(
@@ -714,6 +759,27 @@ def ants_registration_initial_moving_transform_use_inverse_params(
     if use_inverse is not None:
         params["use_inverse"] = use_inverse
     return params
+
+
+def ants_registration_initial_moving_transform_use_inverse_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationInitialMovingTransformUseInverseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("initial_moving_transform", None) is None:
+        raise StyxValidationError("`initial_moving_transform` must not be None")
+    if not isinstance(params["initial_moving_transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`initial_moving_transform` has the wrong type: Received `{type(params.get("initial_moving_transform", None))}` expected `InputPathType`')
+    if params.get("use_inverse", None) is not None:
+        if not isinstance(params["use_inverse"], bool):
+            raise StyxValidationError(f'`use_inverse` has the wrong type: Received `{type(params.get("use_inverse", None))}` expected `bool | None`')
 
 
 def ants_registration_initial_moving_transform_use_inverse_cargs(
@@ -760,6 +826,34 @@ def ants_registration_initial_moving_transform_initialization_feature_params(
     return params
 
 
+def ants_registration_initial_moving_transform_initialization_feature_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationInitialMovingTransformInitializationFeatureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("initialization_feature", None) is None:
+        raise StyxValidationError("`initialization_feature` must not be None")
+    if not isinstance(params["initialization_feature"], int):
+        raise StyxValidationError(f'`initialization_feature` has the wrong type: Received `{type(params.get("initialization_feature", None))}` expected `typing.Literal[0, 1, 2]`')
+    if params["initialization_feature"] not in [0, 1, 2]:
+        raise StyxValidationError("Parameter `initialization_feature` must be one of [0, 1, 2]")
+
+
 def ants_registration_initial_moving_transform_initialization_feature_cargs(
     params: AntsRegistrationInitialMovingTransformInitializationFeatureParameters,
     execution: Execution,
@@ -794,6 +888,24 @@ def ants_registration_transform_rigid_params(
         "gradient_step": gradient_step,
     }
     return params
+
+
+def ants_registration_transform_rigid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformRigidParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
 
 
 def ants_registration_transform_rigid_cargs(
@@ -832,6 +944,24 @@ def ants_registration_transform_affine_params(
     return params
 
 
+def ants_registration_transform_affine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformAffineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+
+
 def ants_registration_transform_affine_cargs(
     params: AntsRegistrationTransformAffineParameters,
     execution: Execution,
@@ -866,6 +996,24 @@ def ants_registration_transform_composite_affine_params(
         "gradient_step": gradient_step,
     }
     return params
+
+
+def ants_registration_transform_composite_affine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformCompositeAffineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
 
 
 def ants_registration_transform_composite_affine_cargs(
@@ -904,6 +1052,24 @@ def ants_registration_transform_similarity_params(
     return params
 
 
+def ants_registration_transform_similarity_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformSimilarityParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+
+
 def ants_registration_transform_similarity_cargs(
     params: AntsRegistrationTransformSimilarityParameters,
     execution: Execution,
@@ -938,6 +1104,24 @@ def ants_registration_transform_translation_params(
         "gradient_step": gradient_step,
     }
     return params
+
+
+def ants_registration_transform_translation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformTranslationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
 
 
 def ants_registration_transform_translation_cargs(
@@ -977,6 +1161,28 @@ def ants_registration_transform_bspline_params(
         "mesh_size_at_base_level": mesh_size_at_base_level,
     }
     return params
+
+
+def ants_registration_transform_bspline_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformBsplineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("mesh_size_at_base_level", None) is None:
+        raise StyxValidationError("`mesh_size_at_base_level` must not be None")
+    if not isinstance(params["mesh_size_at_base_level"], (float, int)):
+        raise StyxValidationError(f'`mesh_size_at_base_level` has the wrong type: Received `{type(params.get("mesh_size_at_base_level", None))}` expected `float`')
 
 
 def ants_registration_transform_bspline_cargs(
@@ -1019,6 +1225,32 @@ def ants_registration_transform_gaussian_displacement_field_params(
         "total_field_variance_in_voxel_space": total_field_variance_in_voxel_space,
     }
     return params
+
+
+def ants_registration_transform_gaussian_displacement_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformGaussianDisplacementFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("update_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`update_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["update_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`update_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("update_field_variance_in_voxel_space", None))}` expected `float`')
+    if params.get("total_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`total_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["total_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`total_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("total_field_variance_in_voxel_space", None))}` expected `float`')
 
 
 def ants_registration_transform_gaussian_displacement_field_cargs(
@@ -1066,6 +1298,34 @@ def ants_registration_transform_bspline_displacement_field_params(
     if spline_order is not None:
         params["spline_order"] = spline_order
     return params
+
+
+def ants_registration_transform_bspline_displacement_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformBsplineDisplacementFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("update_field_mesh_size_at_base_level", None) is None:
+        raise StyxValidationError("`update_field_mesh_size_at_base_level` must not be None")
+    if not isinstance(params["update_field_mesh_size_at_base_level"], (float, int)):
+        raise StyxValidationError(f'`update_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("update_field_mesh_size_at_base_level", None))}` expected `float`')
+    if params.get("total_field_mesh_size_at_base_level", None) is not None:
+        if not isinstance(params["total_field_mesh_size_at_base_level"], (float, int)):
+            raise StyxValidationError(f'`total_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("total_field_mesh_size_at_base_level", None))}` expected `float | None`')
+    if params.get("spline_order", None) is not None:
+        if not isinstance(params["spline_order"], (float, int)):
+            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
 
 
 def ants_registration_transform_bspline_displacement_field_cargs(
@@ -1120,6 +1380,44 @@ def ants_registration_transform_time_varying_velocity_field_params(
     return params
 
 
+def ants_registration_transform_time_varying_velocity_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformTimeVaryingVelocityFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("number_of_time_indices", None) is None:
+        raise StyxValidationError("`number_of_time_indices` must not be None")
+    if not isinstance(params["number_of_time_indices"], (float, int)):
+        raise StyxValidationError(f'`number_of_time_indices` has the wrong type: Received `{type(params.get("number_of_time_indices", None))}` expected `float`')
+    if params.get("update_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`update_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["update_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`update_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("update_field_variance_in_voxel_space", None))}` expected `float`')
+    if params.get("update_field_time_variance", None) is None:
+        raise StyxValidationError("`update_field_time_variance` must not be None")
+    if not isinstance(params["update_field_time_variance"], (float, int)):
+        raise StyxValidationError(f'`update_field_time_variance` has the wrong type: Received `{type(params.get("update_field_time_variance", None))}` expected `float`')
+    if params.get("total_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`total_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["total_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`total_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("total_field_variance_in_voxel_space", None))}` expected `float`')
+    if params.get("total_field_time_variance", None) is None:
+        raise StyxValidationError("`total_field_time_variance` must not be None")
+    if not isinstance(params["total_field_time_variance"], (float, int)):
+        raise StyxValidationError(f'`total_field_time_variance` has the wrong type: Received `{type(params.get("total_field_time_variance", None))}` expected `float`')
+
+
 def ants_registration_transform_time_varying_velocity_field_cargs(
     params: AntsRegistrationTransformTimeVaryingVelocityFieldParameters,
     execution: Execution,
@@ -1167,6 +1465,34 @@ def ants_registration_transform_time_varying_bspline_velocity_field_params(
     return params
 
 
+def ants_registration_transform_time_varying_bspline_velocity_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("velocity_field_mesh_size", None) is None:
+        raise StyxValidationError("`velocity_field_mesh_size` must not be None")
+    if not isinstance(params["velocity_field_mesh_size"], (float, int)):
+        raise StyxValidationError(f'`velocity_field_mesh_size` has the wrong type: Received `{type(params.get("velocity_field_mesh_size", None))}` expected `float`')
+    if params.get("number_of_time_point_samples", None) is not None:
+        if not isinstance(params["number_of_time_point_samples"], (float, int)):
+            raise StyxValidationError(f'`number_of_time_point_samples` has the wrong type: Received `{type(params.get("number_of_time_point_samples", None))}` expected `float | None`')
+    if params.get("spline_order", None) is not None:
+        if not isinstance(params["spline_order"], (float, int)):
+            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
+
+
 def ants_registration_transform_time_varying_bspline_velocity_field_cargs(
     params: AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters,
     execution: Execution,
@@ -1208,6 +1534,32 @@ def ants_registration_transform_syn_params(
         "total_field_variance_in_voxel_space": total_field_variance_in_voxel_space,
     }
     return params
+
+
+def ants_registration_transform_syn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformSynParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("update_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`update_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["update_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`update_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("update_field_variance_in_voxel_space", None))}` expected `float`')
+    if params.get("total_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`total_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["total_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`total_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("total_field_variance_in_voxel_space", None))}` expected `float`')
 
 
 def ants_registration_transform_syn_cargs(
@@ -1257,6 +1609,34 @@ def ants_registration_transform_bspline_syn_params(
     return params
 
 
+def ants_registration_transform_bspline_syn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformBsplineSynParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("update_field_mesh_size_at_base_level", None) is None:
+        raise StyxValidationError("`update_field_mesh_size_at_base_level` must not be None")
+    if not isinstance(params["update_field_mesh_size_at_base_level"], (float, int)):
+        raise StyxValidationError(f'`update_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("update_field_mesh_size_at_base_level", None))}` expected `float`')
+    if params.get("total_field_mesh_size_at_base_level", None) is not None:
+        if not isinstance(params["total_field_mesh_size_at_base_level"], (float, int)):
+            raise StyxValidationError(f'`total_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("total_field_mesh_size_at_base_level", None))}` expected `float | None`')
+    if params.get("spline_order", None) is not None:
+        if not isinstance(params["spline_order"], (float, int)):
+            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
+
+
 def ants_registration_transform_bspline_syn_cargs(
     params: AntsRegistrationTransformBsplineSynParameters,
     execution: Execution,
@@ -1301,6 +1681,36 @@ def ants_registration_transform_exponential_params(
         "number_of_integration_steps": number_of_integration_steps,
     }
     return params
+
+
+def ants_registration_transform_exponential_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformExponentialParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("update_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`update_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["update_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`update_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("update_field_variance_in_voxel_space", None))}` expected `float`')
+    if params.get("velocity_field_variance_in_voxel_space", None) is None:
+        raise StyxValidationError("`velocity_field_variance_in_voxel_space` must not be None")
+    if not isinstance(params["velocity_field_variance_in_voxel_space"], (float, int)):
+        raise StyxValidationError(f'`velocity_field_variance_in_voxel_space` has the wrong type: Received `{type(params.get("velocity_field_variance_in_voxel_space", None))}` expected `float`')
+    if params.get("number_of_integration_steps", None) is None:
+        raise StyxValidationError("`number_of_integration_steps` must not be None")
+    if not isinstance(params["number_of_integration_steps"], (float, int)):
+        raise StyxValidationError(f'`number_of_integration_steps` has the wrong type: Received `{type(params.get("number_of_integration_steps", None))}` expected `float`')
 
 
 def ants_registration_transform_exponential_cargs(
@@ -1352,6 +1762,37 @@ def ants_registration_transform_bspline_exponential_params(
     if spline_order is not None:
         params["spline_order"] = spline_order
     return params
+
+
+def ants_registration_transform_bspline_exponential_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationTransformBsplineExponentialParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_step", None) is None:
+        raise StyxValidationError("`gradient_step` must not be None")
+    if not isinstance(params["gradient_step"], (float, int)):
+        raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float`')
+    if params.get("update_field_mesh_size_at_base_level", None) is None:
+        raise StyxValidationError("`update_field_mesh_size_at_base_level` must not be None")
+    if not isinstance(params["update_field_mesh_size_at_base_level"], (float, int)):
+        raise StyxValidationError(f'`update_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("update_field_mesh_size_at_base_level", None))}` expected `float`')
+    if params.get("velocity_field_mesh_size_at_base_level", None) is not None:
+        if not isinstance(params["velocity_field_mesh_size_at_base_level"], (float, int)):
+            raise StyxValidationError(f'`velocity_field_mesh_size_at_base_level` has the wrong type: Received `{type(params.get("velocity_field_mesh_size_at_base_level", None))}` expected `float | None`')
+    if params.get("number_of_integration_steps", None) is not None:
+        if not isinstance(params["number_of_integration_steps"], (float, int)):
+            raise StyxValidationError(f'`number_of_integration_steps` has the wrong type: Received `{type(params.get("number_of_integration_steps", None))}` expected `float | None`')
+    if params.get("spline_order", None) is not None:
+        if not isinstance(params["spline_order"], (float, int)):
+            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `float | None`')
 
 
 def ants_registration_transform_bspline_exponential_cargs(
@@ -1413,6 +1854,48 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_params(
     return params
 
 
+def ants_registration_metric_ants_neighbourhood_cross_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], str):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+    if params.get("sampling_strategy", None) is not None:
+        if not isinstance(params["sampling_strategy"], str):
+            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
+        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
+            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("use_gradient_filter", None) is not None:
+        if not isinstance(params["use_gradient_filter"], bool):
+            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+
+
 def ants_registration_metric_ants_neighbourhood_cross_correlation_cargs(
     params: AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters,
     execution: Execution,
@@ -1470,6 +1953,48 @@ def ants_registration_metric_mutual_information_params(
     if use_gradient_filter is not None:
         params["use_gradient_filter"] = use_gradient_filter
     return params
+
+
+def ants_registration_metric_mutual_information_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricMutualInformationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], str):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("number_of_bins", None) is not None:
+        if not isinstance(params["number_of_bins"], (float, int)):
+            raise StyxValidationError(f'`number_of_bins` has the wrong type: Received `{type(params.get("number_of_bins", None))}` expected `float | None`')
+    if params.get("sampling_strategy", None) is not None:
+        if not isinstance(params["sampling_strategy"], str):
+            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
+        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
+            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("use_gradient_filter", None) is not None:
+        if not isinstance(params["use_gradient_filter"], bool):
+            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
 
 
 def ants_registration_metric_mutual_information_cargs(
@@ -1531,6 +2056,48 @@ def ants_registration_metric_mattes_params(
     return params
 
 
+def ants_registration_metric_mattes_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricMattesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], str):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("number_of_bins", None) is not None:
+        if not isinstance(params["number_of_bins"], (float, int)):
+            raise StyxValidationError(f'`number_of_bins` has the wrong type: Received `{type(params.get("number_of_bins", None))}` expected `float | None`')
+    if params.get("sampling_strategy", None) is not None:
+        if not isinstance(params["sampling_strategy"], str):
+            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
+        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
+            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("use_gradient_filter", None) is not None:
+        if not isinstance(params["use_gradient_filter"], bool):
+            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+
+
 def ants_registration_metric_mattes_cargs(
     params: AntsRegistrationMetricMattesParameters,
     execution: Execution,
@@ -1588,6 +2155,48 @@ def ants_registration_metric_mean_squares_params(
     if use_gradient_filter is not None:
         params["use_gradient_filter"] = use_gradient_filter
     return params
+
+
+def ants_registration_metric_mean_squares_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricMeanSquaresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], str):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+    if params.get("sampling_strategy", None) is not None:
+        if not isinstance(params["sampling_strategy"], str):
+            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
+        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
+            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("use_gradient_filter", None) is not None:
+        if not isinstance(params["use_gradient_filter"], bool):
+            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
 
 
 def ants_registration_metric_mean_squares_cargs(
@@ -1649,6 +2258,48 @@ def ants_registration_metric_demons_params(
     return params
 
 
+def ants_registration_metric_demons_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricDemonsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], str):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("number_of_bins", None) is not None:
+        if not isinstance(params["number_of_bins"], (float, int)):
+            raise StyxValidationError(f'`number_of_bins` has the wrong type: Received `{type(params.get("number_of_bins", None))}` expected `float | None`')
+    if params.get("sampling_strategy", None) is not None:
+        if not isinstance(params["sampling_strategy"], str):
+            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
+        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
+            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("use_gradient_filter", None) is not None:
+        if not isinstance(params["use_gradient_filter"], bool):
+            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+
+
 def ants_registration_metric_demons_cargs(
     params: AntsRegistrationMetricDemonsParameters,
     execution: Execution,
@@ -1708,6 +2359,48 @@ def ants_registration_metric_global_correlation_params(
     return params
 
 
+def ants_registration_metric_global_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricGlobalCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], str):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `str`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+    if params.get("sampling_strategy", None) is not None:
+        if not isinstance(params["sampling_strategy"], str):
+            raise StyxValidationError(f'`sampling_strategy` has the wrong type: Received `{type(params.get("sampling_strategy", None))}` expected `typing.Literal["None", "Regular", "Random"] | None`')
+        if params["sampling_strategy"] not in ["None", "Regular", "Random"]:
+            raise StyxValidationError("Parameter `sampling_strategy` must be one of [\"None\", \"Regular\", \"Random\"]")
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("use_gradient_filter", None) is not None:
+        if not isinstance(params["use_gradient_filter"], bool):
+            raise StyxValidationError(f'`use_gradient_filter` has the wrong type: Received `{type(params.get("use_gradient_filter", None))}` expected `bool | None`')
+
+
 def ants_registration_metric_global_correlation_cargs(
     params: AntsRegistrationMetricGlobalCorrelationParameters,
     execution: Execution,
@@ -1759,6 +2452,42 @@ def ants_registration_metric_euclidean_icp_params(
     return params
 
 
+def ants_registration_metric_euclidean_icp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricEuclideanIcpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_point_set", None) is None:
+        raise StyxValidationError("`fixed_point_set` must not be None")
+    if not isinstance(params["fixed_point_set"], str):
+        raise StyxValidationError(f'`fixed_point_set` has the wrong type: Received `{type(params.get("fixed_point_set", None))}` expected `str`')
+    if params.get("moving_point_set", None) is None:
+        raise StyxValidationError("`moving_point_set` must not be None")
+    if not isinstance(params["moving_point_set"], str):
+        raise StyxValidationError(f'`moving_point_set` has the wrong type: Received `{type(params.get("moving_point_set", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("boundary_points_only", None) is not None:
+        if not isinstance(params["boundary_points_only"], str):
+            raise StyxValidationError(f'`boundary_points_only` has the wrong type: Received `{type(params.get("boundary_points_only", None))}` expected `typing.Literal["0"] | None`')
+        if params["boundary_points_only"] not in ["0"]:
+            raise StyxValidationError("Parameter `boundary_points_only` must be one of [\"0\"]")
+
+
 def ants_registration_metric_euclidean_icp_cargs(
     params: AntsRegistrationMetricEuclideanIcpParameters,
     execution: Execution,
@@ -1802,6 +2531,32 @@ def ants_registration_metric_point_set_expectation_params(
     if sampling_percentage is not None:
         params["sampling_percentage"] = sampling_percentage
     return params
+
+
+def ants_registration_metric_point_set_expectation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricPointSetExpectationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("point_set_sigma", None) is not None:
+        if not isinstance(params["point_set_sigma"], (float, int)):
+            raise StyxValidationError(f'`point_set_sigma` has the wrong type: Received `{type(params.get("point_set_sigma", None))}` expected `float | None`')
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
 
 
 def ants_registration_metric_point_set_expectation_cargs(
@@ -1863,6 +2618,48 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_params(
     return params
 
 
+def ants_registration_metric_jensen_havrda_charvet_tsallis_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_point_set", None) is None:
+        raise StyxValidationError("`fixed_point_set` must not be None")
+    if not isinstance(params["fixed_point_set"], str):
+        raise StyxValidationError(f'`fixed_point_set` has the wrong type: Received `{type(params.get("fixed_point_set", None))}` expected `str`')
+    if params.get("moving_point_set", None) is None:
+        raise StyxValidationError("`moving_point_set` must not be None")
+    if not isinstance(params["moving_point_set"], str):
+        raise StyxValidationError(f'`moving_point_set` has the wrong type: Received `{type(params.get("moving_point_set", None))}` expected `str`')
+    if params.get("metric_weight", None) is None:
+        raise StyxValidationError("`metric_weight` must not be None")
+    if not isinstance(params["metric_weight"], (float, int)):
+        raise StyxValidationError(f'`metric_weight` has the wrong type: Received `{type(params.get("metric_weight", None))}` expected `float`')
+    if params.get("sampling_percentage", None) is not None:
+        if not isinstance(params["sampling_percentage"], (float, int)):
+            raise StyxValidationError(f'`sampling_percentage` has the wrong type: Received `{type(params.get("sampling_percentage", None))}` expected `float | None`')
+        if 0 <= params["sampling_percentage"] <= 1:
+            raise StyxValidationError("Parameter `sampling_percentage` must be between 0 and 1 (inclusive)")
+    if params.get("boundary_points_only", None) is not None:
+        if not isinstance(params["boundary_points_only"], str):
+            raise StyxValidationError(f'`boundary_points_only` has the wrong type: Received `{type(params.get("boundary_points_only", None))}` expected `typing.Literal["0"] | None`')
+        if params["boundary_points_only"] not in ["0"]:
+            raise StyxValidationError("Parameter `boundary_points_only` must be one of [\"0\"]")
+    if params.get("point_set_sigma", None) is not None:
+        if not isinstance(params["point_set_sigma"], (float, int)):
+            raise StyxValidationError(f'`point_set_sigma` has the wrong type: Received `{type(params.get("point_set_sigma", None))}` expected `float | None`')
+    if params.get("k_neighborhood", None) is not None:
+        if not isinstance(params["k_neighborhood"], (float, int)):
+            raise StyxValidationError(f'`k_neighborhood` has the wrong type: Received `{type(params.get("k_neighborhood", None))}` expected `float | None`')
+
+
 def ants_registration_metric_jensen_havrda_charvet_tsallis_cargs(
     params: AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters,
     execution: Execution,
@@ -1895,6 +2692,20 @@ def ants_registration_metric_igdm_params(
         "@type": "metric_igdm",
     }
     return params
+
+
+def ants_registration_metric_igdm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMetricIgdmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
 
 
 def ants_registration_metric_igdm_cargs(
@@ -1937,6 +2748,32 @@ def ants_registration_convergence_params(
         "convergence_window_size": convergence_window_size,
     }
     return params
+
+
+def ants_registration_convergence_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationConvergenceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("convergence", None) is None:
+        raise StyxValidationError("`convergence` must not be None")
+    if not isinstance(params["convergence"], str):
+        raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `str`')
+    if params.get("convergence_threshold", None) is None:
+        raise StyxValidationError("`convergence_threshold` must not be None")
+    if not isinstance(params["convergence_threshold"], (float, int)):
+        raise StyxValidationError(f'`convergence_threshold` has the wrong type: Received `{type(params.get("convergence_threshold", None))}` expected `float`')
+    if params.get("convergence_window_size", None) is None:
+        raise StyxValidationError("`convergence_window_size` must not be None")
+    if not isinstance(params["convergence_window_size"], int):
+        raise StyxValidationError(f'`convergence_window_size` has the wrong type: Received `{type(params.get("convergence_window_size", None))}` expected `int`')
 
 
 def ants_registration_convergence_cargs(
@@ -2017,6 +2854,48 @@ def ants_registration_stage_params(
     return params
 
 
+def ants_registration_stage_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationStageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["transform"])}\'')
+    if "@type" not in params["transform"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    ants_registration_transform_validate_dyn_fn(params["transform"]["@type"])(params["transform"])
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["metric"])}\'')
+    if "@type" not in params["metric"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    ants_registration_metric_validate_dyn_fn(params["metric"]["@type"])(params["metric"])
+    if params.get("convergence", None) is None:
+        raise StyxValidationError("`convergence` must not be None")
+    ants_registration_convergence_validate(params["convergence"])
+    if params.get("smoothing_sigmas", None) is None:
+        raise StyxValidationError("`smoothing_sigmas` must not be None")
+    if not isinstance(params["smoothing_sigmas"], str):
+        raise StyxValidationError(f'`smoothing_sigmas` has the wrong type: Received `{type(params.get("smoothing_sigmas", None))}` expected `str`')
+    if params.get("shrink_factors", None) is None:
+        raise StyxValidationError("`shrink_factors` must not be None")
+    if not isinstance(params["shrink_factors"], str):
+        raise StyxValidationError(f'`shrink_factors` has the wrong type: Received `{type(params.get("shrink_factors", None))}` expected `str`')
+    if params.get("use_histogram_matching", None) is not None:
+        if not isinstance(params["use_histogram_matching"], bool):
+            raise StyxValidationError(f'`use_histogram_matching` has the wrong type: Received `{type(params.get("use_histogram_matching", None))}` expected `bool | None`')
+
+
 def ants_registration_stage_cargs(
     params: AntsRegistrationStageParameters,
     execution: Execution,
@@ -2080,6 +2959,28 @@ def ants_registration_winsorize_image_intensities_params(
     return params
 
 
+def ants_registration_winsorize_image_intensities_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationWinsorizeImageIntensitiesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("lower_quantile", None) is None:
+        raise StyxValidationError("`lower_quantile` must not be None")
+    if not isinstance(params["lower_quantile"], (float, int)):
+        raise StyxValidationError(f'`lower_quantile` has the wrong type: Received `{type(params.get("lower_quantile", None))}` expected `float`')
+    if params.get("upper_quantile", None) is None:
+        raise StyxValidationError("`upper_quantile` must not be None")
+    if not isinstance(params["upper_quantile"], (float, int)):
+        raise StyxValidationError(f'`upper_quantile` has the wrong type: Received `{type(params.get("upper_quantile", None))}` expected `float`')
+
+
 def ants_registration_winsorize_image_intensities_cargs(
     params: AntsRegistrationWinsorizeImageIntensitiesParameters,
     execution: Execution,
@@ -2119,6 +3020,26 @@ def ants_registration_masks_params(
     if moving_mask is not None:
         params["moving_mask"] = moving_mask
     return params
+
+
+def ants_registration_masks_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationMasksParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_mask", None) is not None:
+        if not isinstance(params["fixed_mask"], str):
+            raise StyxValidationError(f'`fixed_mask` has the wrong type: Received `{type(params.get("fixed_mask", None))}` expected `str | None`')
+    if params.get("moving_mask", None) is not None:
+        if not isinstance(params["moving_mask"], str):
+            raise StyxValidationError(f'`moving_mask` has the wrong type: Received `{type(params.get("moving_mask", None))}` expected `str | None`')
 
 
 def ants_registration_masks_cargs(
@@ -2339,6 +3260,97 @@ def ants_registration_params(
     return params
 
 
+def ants_registration_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is not None:
+        if not isinstance(params["dimensionality"], int):
+            raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3, 4]")
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("save_state", None) is not None:
+        if not isinstance(params["save_state"], str):
+            raise StyxValidationError(f'`save_state` has the wrong type: Received `{type(params.get("save_state", None))}` expected `str | None`')
+    if params.get("restore_state", None) is not None:
+        if not isinstance(params["restore_state"], str):
+            raise StyxValidationError(f'`restore_state` has the wrong type: Received `{type(params.get("restore_state", None))}` expected `str | None`')
+    if params.get("write_composite_transform", None) is not None:
+        if not isinstance(params["write_composite_transform"], bool):
+            raise StyxValidationError(f'`write_composite_transform` has the wrong type: Received `{type(params.get("write_composite_transform", None))}` expected `bool | None`')
+    if params.get("print_similarity_measure_interval", None) is not None:
+        if not isinstance(params["print_similarity_measure_interval"], int):
+            raise StyxValidationError(f'`print_similarity_measure_interval` has the wrong type: Received `{type(params.get("print_similarity_measure_interval", None))}` expected `int | None`')
+    if params.get("write_interval_volumes", None) is not None:
+        if not isinstance(params["write_interval_volumes"], int):
+            raise StyxValidationError(f'`write_interval_volumes` has the wrong type: Received `{type(params.get("write_interval_volumes", None))}` expected `int | None`')
+        if params["write_interval_volumes"] >= 0:
+            raise StyxValidationError("Parameter `write_interval_volumes` must be at least 0")
+    if params.get("collapse_output_transforms", None) is not None:
+        if not isinstance(params["collapse_output_transforms"], bool):
+            raise StyxValidationError(f'`collapse_output_transforms` has the wrong type: Received `{type(params.get("collapse_output_transforms", None))}` expected `bool | None`')
+    if params.get("initialize_transforms_per_stage", None) is not None:
+        if not isinstance(params["initialize_transforms_per_stage"], bool):
+            raise StyxValidationError(f'`initialize_transforms_per_stage` has the wrong type: Received `{type(params.get("initialize_transforms_per_stage", None))}` expected `bool | None`')
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], str):
+            raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None`')
+        if params["interpolation"] not in ["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"]:
+            raise StyxValidationError("Parameter `interpolation` must be one of [\"Linear\", \"NearestNeighbor\", \"MultiLabel\", \"Gaussian\", \"BSpline\", \"CosineWindowedSinc\", \"WelchWindowedSinc\", \"HammingWindowedSinc\", \"LanczosWindowedSinc\", \"GenericLabel\"]")
+    if params.get("restrict_deformation", None) is not None:
+        if not isinstance(params["restrict_deformation"], list):
+            raise StyxValidationError(f'`restrict_deformation` has the wrong type: Received `{type(params.get("restrict_deformation", None))}` expected `list[bool] | None`')
+        if 3 <= len(params["restrict_deformation"]) <= 6:
+            raise StyxValidationError("Parameter `restrict_deformation` must contain between 3 and 6 elements (inclusive)")
+        for e in params["restrict_deformation"]:
+            if not isinstance(e, bool):
+                raise StyxValidationError(f'`restrict_deformation` has the wrong type: Received `{type(params.get("restrict_deformation", None))}` expected `list[bool] | None`')
+    if params.get("initial_fixed_transform", None) is not None:
+        if not isinstance(params["initial_fixed_transform"], str):
+            raise StyxValidationError(f'`initial_fixed_transform` has the wrong type: Received `{type(params.get("initial_fixed_transform", None))}` expected `str | None`')
+    if params.get("initial_moving_transform", None) is not None:
+        if not isinstance(params["initial_moving_transform"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["initial_moving_transform"])}\'')
+        if "@type" not in params["initial_moving_transform"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        ants_registration_initial_moving_transform_validate_dyn_fn(params["initial_moving_transform"]["@type"])(params["initial_moving_transform"])
+    if params.get("stages", None) is None:
+        raise StyxValidationError("`stages` must not be None")
+    if not isinstance(params["stages"], list):
+        raise StyxValidationError(f'`stages` has the wrong type: Received `{type(params.get("stages", None))}` expected `list[AntsRegistrationStageParameters]`')
+    for e in params["stages"]:
+        ants_registration_stage_validate(e)
+    if params.get("winsorize_image_intensities", None) is not None:
+        ants_registration_winsorize_image_intensities_validate(params["winsorize_image_intensities"])
+    if params.get("masks", None) is not None:
+        ants_registration_masks_validate(params["masks"])
+    if params.get("minc", None) is not None:
+        if not isinstance(params["minc"], bool):
+            raise StyxValidationError(f'`minc` has the wrong type: Received `{type(params.get("minc", None))}` expected `bool | None`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], int):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
+        if params["random_seed"] >= 1:
+            raise StyxValidationError("Parameter `random_seed` must be at least 1")
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+    if params.get("float", None) is not None:
+        if not isinstance(params["float"], bool):
+            raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", None))}` expected `bool | None`')
+
+
 def ants_registration_cargs(
     params: AntsRegistrationParameters,
     execution: Execution,
@@ -2501,6 +3513,7 @@ def ants_registration_execute(
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationOutputs`).
     """
+    ants_registration_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_REGISTRATION_METADATA)
     params = execution.params(params)

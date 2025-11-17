@@ -102,6 +102,63 @@ def tksurferfv_params(
     return params
 
 
+def tksurferfv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TksurferfvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("tksurfer", False) is None:
+        raise StyxValidationError("`tksurfer` must not be None")
+    if not isinstance(params["tksurfer"], bool):
+        raise StyxValidationError(f'`tksurfer` has the wrong type: Received `{type(params.get("tksurfer", False))}` expected `bool`')
+    if params.get("all_surfaces", False) is None:
+        raise StyxValidationError("`all_surfaces` must not be None")
+    if not isinstance(params["all_surfaces"], bool):
+        raise StyxValidationError(f'`all_surfaces` has the wrong type: Received `{type(params.get("all_surfaces", False))}` expected `bool`')
+    if params.get("vgl", False) is None:
+        raise StyxValidationError("`vgl` must not be None")
+    if not isinstance(params["vgl"], bool):
+        raise StyxValidationError(f'`vgl` has the wrong type: Received `{type(params.get("vgl", False))}` expected `bool`')
+    if params.get("no_vgl", False) is None:
+        raise StyxValidationError("`no_vgl` must not be None")
+    if not isinstance(params["no_vgl"], bool):
+        raise StyxValidationError(f'`no_vgl` has the wrong type: Received `{type(params.get("no_vgl", False))}` expected `bool`')
+    if params.get("no_outline", False) is None:
+        raise StyxValidationError("`no_outline` must not be None")
+    if not isinstance(params["no_outline"], bool):
+        raise StyxValidationError(f'`no_outline` has the wrong type: Received `{type(params.get("no_outline", False))}` expected `bool`')
+    if params.get("neuro_orientation", False) is None:
+        raise StyxValidationError("`neuro_orientation` must not be None")
+    if not isinstance(params["neuro_orientation"], bool):
+        raise StyxValidationError(f'`neuro_orientation` has the wrong type: Received `{type(params.get("neuro_orientation", False))}` expected `bool`')
+    if params.get("rotate_around_cursor", False) is None:
+        raise StyxValidationError("`rotate_around_cursor` must not be None")
+    if not isinstance(params["rotate_around_cursor"], bool):
+        raise StyxValidationError(f'`rotate_around_cursor` has the wrong type: Received `{type(params.get("rotate_around_cursor", False))}` expected `bool`')
+    if params.get("heat_scale", None) is not None:
+        if not isinstance(params["heat_scale"], str):
+            raise StyxValidationError(f'`heat_scale` has the wrong type: Received `{type(params.get("heat_scale", None))}` expected `str | None`')
+
+
 def tksurferfv_cargs(
     params: TksurferfvParameters,
     execution: Execution,
@@ -177,6 +234,7 @@ def tksurferfv_execute(
     Returns:
         NamedTuple of outputs (described in `TksurferfvOutputs`).
     """
+    tksurferfv_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TKSURFERFV_METADATA)
     params = execution.params(params)

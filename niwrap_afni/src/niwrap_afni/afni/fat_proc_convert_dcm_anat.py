@@ -109,6 +109,55 @@ def fat_proc_convert_dcm_anat_params(
     return params
 
 
+def fat_proc_convert_dcm_anat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcConvertDcmAnatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dicom_directory", None) is not None:
+        if not isinstance(params["dicom_directory"], str):
+            raise StyxValidationError(f'`dicom_directory` has the wrong type: Received `{type(params.get("dicom_directory", None))}` expected `str | None`')
+    if params.get("nifti_input", None) is not None:
+        if not isinstance(params["nifti_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nifti_input` has the wrong type: Received `{type(params.get("nifti_input", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("orient", None) is not None:
+        if not isinstance(params["orient"], str):
+            raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("reorig_reorient_off", False) is None:
+        raise StyxValidationError("`reorig_reorient_off` must not be None")
+    if not isinstance(params["reorig_reorient_off"], bool):
+        raise StyxValidationError(f'`reorig_reorient_off` has the wrong type: Received `{type(params.get("reorig_reorient_off", False))}` expected `bool`')
+    if params.get("qc_prefix", None) is not None:
+        if not isinstance(params["qc_prefix"], str):
+            raise StyxValidationError(f'`qc_prefix` has the wrong type: Received `{type(params.get("qc_prefix", None))}` expected `str | None`')
+    if params.get("no_cmd_out", False) is None:
+        raise StyxValidationError("`no_cmd_out` must not be None")
+    if not isinstance(params["no_cmd_out"], bool):
+        raise StyxValidationError(f'`no_cmd_out` has the wrong type: Received `{type(params.get("no_cmd_out", False))}` expected `bool`')
+    if params.get("no_qc_view", False) is None:
+        raise StyxValidationError("`no_qc_view` must not be None")
+    if not isinstance(params["no_qc_view"], bool):
+        raise StyxValidationError(f'`no_qc_view` has the wrong type: Received `{type(params.get("no_qc_view", False))}` expected `bool`')
+
+
 def fat_proc_convert_dcm_anat_cargs(
     params: FatProcConvertDcmAnatParameters,
     execution: Execution,
@@ -204,6 +253,7 @@ def fat_proc_convert_dcm_anat_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcConvertDcmAnatOutputs`).
     """
+    fat_proc_convert_dcm_anat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_CONVERT_DCM_ANAT_METADATA)
     params = execution.params(params)

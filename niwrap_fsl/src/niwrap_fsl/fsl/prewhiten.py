@@ -58,6 +58,27 @@ def prewhiten_params(
     return params
 
 
+def prewhiten_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PrewhitenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat_directory", None) is None:
+        raise StyxValidationError("`feat_directory` must not be None")
+    if not isinstance(params["feat_directory"], str):
+        raise StyxValidationError(f'`feat_directory` has the wrong type: Received `{type(params.get("feat_directory", None))}` expected `str`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+
+
 def prewhiten_cargs(
     params: PrewhitenParameters,
     execution: Execution,
@@ -121,6 +142,7 @@ def prewhiten_execute(
     Returns:
         NamedTuple of outputs (described in `PrewhitenOutputs`).
     """
+    prewhiten_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PREWHITEN_METADATA)
     params = execution.params(params)

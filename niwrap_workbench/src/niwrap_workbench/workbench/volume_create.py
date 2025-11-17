@@ -123,6 +123,48 @@ def volume_create_plumb_params(
     return params
 
 
+def volume_create_plumb_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeCreatePlumbParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("axis-order", None) is None:
+        raise StyxValidationError("`axis-order` must not be None")
+    if not isinstance(params["axis-order"], str):
+        raise StyxValidationError(f'`axis-order` has the wrong type: Received `{type(params.get("axis-order", None))}` expected `str`')
+    if params.get("x-spacing", None) is None:
+        raise StyxValidationError("`x-spacing` must not be None")
+    if not isinstance(params["x-spacing"], (float, int)):
+        raise StyxValidationError(f'`x-spacing` has the wrong type: Received `{type(params.get("x-spacing", None))}` expected `float`')
+    if params.get("y-spacing", None) is None:
+        raise StyxValidationError("`y-spacing` must not be None")
+    if not isinstance(params["y-spacing"], (float, int)):
+        raise StyxValidationError(f'`y-spacing` has the wrong type: Received `{type(params.get("y-spacing", None))}` expected `float`')
+    if params.get("z-spacing", None) is None:
+        raise StyxValidationError("`z-spacing` must not be None")
+    if not isinstance(params["z-spacing"], (float, int)):
+        raise StyxValidationError(f'`z-spacing` has the wrong type: Received `{type(params.get("z-spacing", None))}` expected `float`')
+    if params.get("x-offset", None) is None:
+        raise StyxValidationError("`x-offset` must not be None")
+    if not isinstance(params["x-offset"], (float, int)):
+        raise StyxValidationError(f'`x-offset` has the wrong type: Received `{type(params.get("x-offset", None))}` expected `float`')
+    if params.get("y-offset", None) is None:
+        raise StyxValidationError("`y-offset` must not be None")
+    if not isinstance(params["y-offset"], (float, int)):
+        raise StyxValidationError(f'`y-offset` has the wrong type: Received `{type(params.get("y-offset", None))}` expected `float`')
+    if params.get("z-offset", None) is None:
+        raise StyxValidationError("`z-offset` must not be None")
+    if not isinstance(params["z-offset"], (float, int)):
+        raise StyxValidationError(f'`z-offset` has the wrong type: Received `{type(params.get("z-offset", None))}` expected `float`')
+
+
 def volume_create_plumb_cargs(
     params: VolumeCreatePlumbParameters,
     execution: Execution,
@@ -199,6 +241,68 @@ def volume_create_sform_params(
         "z-offset": z_offset,
     }
     return params
+
+
+def volume_create_sform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeCreateSformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xi-spacing", None) is None:
+        raise StyxValidationError("`xi-spacing` must not be None")
+    if not isinstance(params["xi-spacing"], (float, int)):
+        raise StyxValidationError(f'`xi-spacing` has the wrong type: Received `{type(params.get("xi-spacing", None))}` expected `float`')
+    if params.get("xj-spacing", None) is None:
+        raise StyxValidationError("`xj-spacing` must not be None")
+    if not isinstance(params["xj-spacing"], (float, int)):
+        raise StyxValidationError(f'`xj-spacing` has the wrong type: Received `{type(params.get("xj-spacing", None))}` expected `float`')
+    if params.get("xk-spacing", None) is None:
+        raise StyxValidationError("`xk-spacing` must not be None")
+    if not isinstance(params["xk-spacing"], (float, int)):
+        raise StyxValidationError(f'`xk-spacing` has the wrong type: Received `{type(params.get("xk-spacing", None))}` expected `float`')
+    if params.get("x-offset", None) is None:
+        raise StyxValidationError("`x-offset` must not be None")
+    if not isinstance(params["x-offset"], (float, int)):
+        raise StyxValidationError(f'`x-offset` has the wrong type: Received `{type(params.get("x-offset", None))}` expected `float`')
+    if params.get("yi-spacing", None) is None:
+        raise StyxValidationError("`yi-spacing` must not be None")
+    if not isinstance(params["yi-spacing"], (float, int)):
+        raise StyxValidationError(f'`yi-spacing` has the wrong type: Received `{type(params.get("yi-spacing", None))}` expected `float`')
+    if params.get("yj-spacing", None) is None:
+        raise StyxValidationError("`yj-spacing` must not be None")
+    if not isinstance(params["yj-spacing"], (float, int)):
+        raise StyxValidationError(f'`yj-spacing` has the wrong type: Received `{type(params.get("yj-spacing", None))}` expected `float`')
+    if params.get("yk-spacing", None) is None:
+        raise StyxValidationError("`yk-spacing` must not be None")
+    if not isinstance(params["yk-spacing"], (float, int)):
+        raise StyxValidationError(f'`yk-spacing` has the wrong type: Received `{type(params.get("yk-spacing", None))}` expected `float`')
+    if params.get("y-offset", None) is None:
+        raise StyxValidationError("`y-offset` must not be None")
+    if not isinstance(params["y-offset"], (float, int)):
+        raise StyxValidationError(f'`y-offset` has the wrong type: Received `{type(params.get("y-offset", None))}` expected `float`')
+    if params.get("zi-spacing", None) is None:
+        raise StyxValidationError("`zi-spacing` must not be None")
+    if not isinstance(params["zi-spacing"], (float, int)):
+        raise StyxValidationError(f'`zi-spacing` has the wrong type: Received `{type(params.get("zi-spacing", None))}` expected `float`')
+    if params.get("zj-spacing", None) is None:
+        raise StyxValidationError("`zj-spacing` must not be None")
+    if not isinstance(params["zj-spacing"], (float, int)):
+        raise StyxValidationError(f'`zj-spacing` has the wrong type: Received `{type(params.get("zj-spacing", None))}` expected `float`')
+    if params.get("zk-spacing", None) is None:
+        raise StyxValidationError("`zk-spacing` must not be None")
+    if not isinstance(params["zk-spacing"], (float, int)):
+        raise StyxValidationError(f'`zk-spacing` has the wrong type: Received `{type(params.get("zk-spacing", None))}` expected `float`')
+    if params.get("z-offset", None) is None:
+        raise StyxValidationError("`z-offset` must not be None")
+    if not isinstance(params["z-offset"], (float, int)):
+        raise StyxValidationError(f'`z-offset` has the wrong type: Received `{type(params.get("z-offset", None))}` expected `float`')
 
 
 def volume_create_sform_cargs(
@@ -278,6 +382,40 @@ def volume_create_params(
     return params
 
 
+def volume_create_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeCreateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("plumb", None) is not None:
+        volume_create_plumb_validate(params["plumb"])
+    if params.get("sform", None) is not None:
+        volume_create_sform_validate(params["sform"])
+    if params.get("i-dim", None) is None:
+        raise StyxValidationError("`i-dim` must not be None")
+    if not isinstance(params["i-dim"], int):
+        raise StyxValidationError(f'`i-dim` has the wrong type: Received `{type(params.get("i-dim", None))}` expected `int`')
+    if params.get("j-dim", None) is None:
+        raise StyxValidationError("`j-dim` must not be None")
+    if not isinstance(params["j-dim"], int):
+        raise StyxValidationError(f'`j-dim` has the wrong type: Received `{type(params.get("j-dim", None))}` expected `int`')
+    if params.get("k-dim", None) is None:
+        raise StyxValidationError("`k-dim` must not be None")
+    if not isinstance(params["k-dim"], int):
+        raise StyxValidationError(f'`k-dim` has the wrong type: Received `{type(params.get("k-dim", None))}` expected `int`')
+
+
 def volume_create_cargs(
     params: VolumeCreateParameters,
     execution: Execution,
@@ -342,6 +480,7 @@ def volume_create_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeCreateOutputs`).
     """
+    volume_create_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_CREATE_METADATA)
     params = execution.params(params)

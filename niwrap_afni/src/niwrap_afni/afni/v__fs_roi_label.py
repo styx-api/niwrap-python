@@ -103,6 +103,47 @@ def v__fs_roi_label_params(
     return params
 
 
+def v__fs_roi_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VFsRoiLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label_int", None) is not None:
+        if not isinstance(params["label_int"], (float, int)):
+            raise StyxValidationError(f'`label_int` has the wrong type: Received `{type(params.get("label_int", None))}` expected `float | None`')
+    if params.get("lab_flag", None) is not None:
+        if not isinstance(params["lab_flag"], (float, int)):
+            raise StyxValidationError(f'`lab_flag` has the wrong type: Received `{type(params.get("lab_flag", None))}` expected `float | None`')
+    if params.get("rank_int", None) is not None:
+        if not isinstance(params["rank_int"], (float, int)):
+            raise StyxValidationError(f'`rank_int` has the wrong type: Received `{type(params.get("rank_int", None))}` expected `float | None`')
+    if params.get("rankmap_file", None) is not None:
+        if not isinstance(params["rankmap_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rankmap_file` has the wrong type: Received `{type(params.get("rankmap_file", None))}` expected `InputPathType | None`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("labeltable_file", None) is not None:
+        if not isinstance(params["labeltable_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labeltable_file` has the wrong type: Received `{type(params.get("labeltable_file", None))}` expected `InputPathType | None`')
+    if params.get("surf_annot_cmap", None) is not None:
+        if not isinstance(params["surf_annot_cmap"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_annot_cmap` has the wrong type: Received `{type(params.get("surf_annot_cmap", None))}` expected `InputPathType | None`')
+    if params.get("slab_int", None) is not None:
+        if not isinstance(params["slab_int"], (float, int)):
+            raise StyxValidationError(f'`slab_int` has the wrong type: Received `{type(params.get("slab_int", None))}` expected `float | None`')
+    if params.get("sname_name", None) is not None:
+        if not isinstance(params["sname_name"], str):
+            raise StyxValidationError(f'`sname_name` has the wrong type: Received `{type(params.get("sname_name", None))}` expected `str | None`')
+
+
 def v__fs_roi_label_cargs(
     params: VFsRoiLabelParameters,
     execution: Execution,
@@ -202,6 +243,7 @@ def v__fs_roi_label_execute(
     Returns:
         NamedTuple of outputs (described in `VFsRoiLabelOutputs`).
     """
+    v__fs_roi_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__FS_ROI_LABEL_METADATA)
     params = execution.params(params)

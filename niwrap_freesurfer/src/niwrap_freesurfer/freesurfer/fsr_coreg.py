@@ -82,6 +82,41 @@ def fsr_coreg_params(
     return params
 
 
+def fsr_coreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsrCoregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("import_dir", None) is None:
+        raise StyxValidationError("`import_dir` must not be None")
+    if not isinstance(params["import_dir"], str):
+        raise StyxValidationError(f'`import_dir` has the wrong type: Received `{type(params.get("import_dir", None))}` expected `str`')
+    if params.get("reference_mode", None) is None:
+        raise StyxValidationError("`reference_mode` must not be None")
+    if not isinstance(params["reference_mode"], str):
+        raise StyxValidationError(f'`reference_mode` has the wrong type: Received `{type(params.get("reference_mode", None))}` expected `str`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], (float, int)):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `float | None`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("expert_options", None) is not None:
+        if not isinstance(params["expert_options"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`expert_options` has the wrong type: Received `{type(params.get("expert_options", None))}` expected `InputPathType | None`')
+
+
 def fsr_coreg_cargs(
     params: FsrCoregParameters,
     execution: Execution,
@@ -165,6 +200,7 @@ def fsr_coreg_execute(
     Returns:
         NamedTuple of outputs (described in `FsrCoregOutputs`).
     """
+    fsr_coreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSR_COREG_METADATA)
     params = execution.params(params)

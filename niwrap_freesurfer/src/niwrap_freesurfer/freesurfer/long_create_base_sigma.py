@@ -54,6 +54,28 @@ def long_create_base_sigma_params(
     return params
 
 
+def long_create_base_sigma_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongCreateBaseSigmaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_id", None) is None:
+        raise StyxValidationError("`base_id` must not be None")
+    if not isinstance(params["base_id"], str):
+        raise StyxValidationError(f'`base_id` has the wrong type: Received `{type(params.get("base_id", None))}` expected `str`')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], int):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `int`')
+
+
 def long_create_base_sigma_cargs(
     params: LongCreateBaseSigmaParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def long_create_base_sigma_execute(
     Returns:
         NamedTuple of outputs (described in `LongCreateBaseSigmaOutputs`).
     """
+    long_create_base_sigma_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_CREATE_BASE_SIGMA_METADATA)
     params = execution.params(params)

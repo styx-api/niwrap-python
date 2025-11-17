@@ -51,6 +51,23 @@ def check_recons_sh_params(
     return params
 
 
+def check_recons_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CheckReconsShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_directory", None) is not None:
+        if not isinstance(params["subject_directory"], str):
+            raise StyxValidationError(f'`subject_directory` has the wrong type: Received `{type(params.get("subject_directory", None))}` expected `str | None`')
+
+
 def check_recons_sh_cargs(
     params: CheckReconsShParameters,
     execution: Execution,
@@ -110,6 +127,7 @@ def check_recons_sh_execute(
     Returns:
         NamedTuple of outputs (described in `CheckReconsShOutputs`).
     """
+    check_recons_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CHECK_RECONS_SH_METADATA)
     params = execution.params(params)

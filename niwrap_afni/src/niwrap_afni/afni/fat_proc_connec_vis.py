@@ -135,6 +135,59 @@ def fat_proc_connec_vis_params(
     return params
 
 
+def fat_proc_connec_vis_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcConnecVisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_rois", None) is None:
+        raise StyxValidationError("`in_rois` must not be None")
+    if not isinstance(params["in_rois"], str):
+        raise StyxValidationError(f'`in_rois` has the wrong type: Received `{type(params.get("in_rois", None))}` expected `str`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("prefix_file", None) is not None:
+        if not isinstance(params["prefix_file"], str):
+            raise StyxValidationError(f'`prefix_file` has the wrong type: Received `{type(params.get("prefix_file", None))}` expected `str | None`')
+    if params.get("tsmoo_kpb", None) is not None:
+        if not isinstance(params["tsmoo_kpb"], (float, int)):
+            raise StyxValidationError(f'`tsmoo_kpb` has the wrong type: Received `{type(params.get("tsmoo_kpb", None))}` expected `float | None`')
+    if params.get("tsmoo_niter", None) is not None:
+        if not isinstance(params["tsmoo_niter"], (float, int)):
+            raise StyxValidationError(f'`tsmoo_niter` has the wrong type: Received `{type(params.get("tsmoo_niter", None))}` expected `float | None`')
+    if params.get("iso_opt", None) is not None:
+        if not isinstance(params["iso_opt"], str):
+            raise StyxValidationError(f'`iso_opt` has the wrong type: Received `{type(params.get("iso_opt", None))}` expected `str | None`')
+    if params.get("trackid_no_or", False) is None:
+        raise StyxValidationError("`trackid_no_or` must not be None")
+    if not isinstance(params["trackid_no_or"], bool):
+        raise StyxValidationError(f'`trackid_no_or` has the wrong type: Received `{type(params.get("trackid_no_or", False))}` expected `bool`')
+    if params.get("output_tcat", False) is None:
+        raise StyxValidationError("`output_tcat` must not be None")
+    if not isinstance(params["output_tcat"], bool):
+        raise StyxValidationError(f'`output_tcat` has the wrong type: Received `{type(params.get("output_tcat", False))}` expected `bool`')
+    if params.get("output_tstat", False) is None:
+        raise StyxValidationError("`output_tstat` must not be None")
+    if not isinstance(params["output_tstat"], bool):
+        raise StyxValidationError(f'`output_tstat` has the wrong type: Received `{type(params.get("output_tstat", False))}` expected `bool`')
+    if params.get("wdir", None) is not None:
+        if not isinstance(params["wdir"], str):
+            raise StyxValidationError(f'`wdir` has the wrong type: Received `{type(params.get("wdir", None))}` expected `str | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def fat_proc_connec_vis_cargs(
     params: FatProcConnecVisParameters,
     execution: Execution,
@@ -232,6 +285,7 @@ def fat_proc_connec_vis_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcConnecVisOutputs`).
     """
+    fat_proc_connec_vis_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_CONNEC_VIS_METADATA)
     params = execution.params(params)

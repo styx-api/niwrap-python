@@ -61,6 +61,32 @@ def histo_compute_joint_density_params(
     return params
 
 
+def histo_compute_joint_density_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HistoComputeJointDensityParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume1", None) is None:
+        raise StyxValidationError("`volume1` must not be None")
+    if not isinstance(params["volume1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume1` has the wrong type: Received `{type(params.get("volume1", None))}` expected `InputPathType`')
+    if params.get("volume2", None) is None:
+        raise StyxValidationError("`volume2` must not be None")
+    if not isinstance(params["volume2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume2` has the wrong type: Received `{type(params.get("volume2", None))}` expected `InputPathType`')
+    if params.get("joint_density_file", None) is None:
+        raise StyxValidationError("`joint_density_file` must not be None")
+    if not isinstance(params["joint_density_file"], str):
+        raise StyxValidationError(f'`joint_density_file` has the wrong type: Received `{type(params.get("joint_density_file", None))}` expected `str`')
+
+
 def histo_compute_joint_density_cargs(
     params: HistoComputeJointDensityParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def histo_compute_joint_density_execute(
     Returns:
         NamedTuple of outputs (described in `HistoComputeJointDensityOutputs`).
     """
+    histo_compute_joint_density_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HISTO_COMPUTE_JOINT_DENSITY_METADATA)
     params = execution.params(params)

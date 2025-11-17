@@ -74,6 +74,44 @@ def fsl_ents_params(
     return params
 
 
+def fsl_ents_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslEntsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("icadir", None) is None:
+        raise StyxValidationError("`icadir` must not be None")
+    if not isinstance(params["icadir"], str):
+        raise StyxValidationError(f'`icadir` has the wrong type: Received `{type(params.get("icadir", None))}` expected `str`')
+    if params.get("components", None) is None:
+        raise StyxValidationError("`components` must not be None")
+    if not isinstance(params["components"], list):
+        raise StyxValidationError(f'`components` has the wrong type: Received `{type(params.get("components", None))}` expected `list[str]`')
+    for e in params["components"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`components` has the wrong type: Received `{type(params.get("components", None))}` expected `list[str]`')
+    if params.get("outfile", None) is not None:
+        if not isinstance(params["outfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("conffile", None) is not None:
+        if not isinstance(params["conffile"], list):
+            raise StyxValidationError(f'`conffile` has the wrong type: Received `{type(params.get("conffile", None))}` expected `list[InputPathType] | None`')
+        for e in params["conffile"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`conffile` has the wrong type: Received `{type(params.get("conffile", None))}` expected `list[InputPathType] | None`')
+
+
 def fsl_ents_cargs(
     params: FslEntsParameters,
     execution: Execution,
@@ -145,6 +183,7 @@ def fsl_ents_execute(
     Returns:
         NamedTuple of outputs (described in `FslEntsOutputs`).
     """
+    fsl_ents_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_ENTS_METADATA)
     params = execution.params(params)

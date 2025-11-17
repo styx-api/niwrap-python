@@ -85,6 +85,41 @@ def v__roi_decluster_params(
     return params
 
 
+def v__roi_decluster_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VRoiDeclusterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dset", None) is None:
+        raise StyxValidationError("`input_dset` must not be None")
+    if not isinstance(params["input_dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dset` has the wrong type: Received `{type(params.get("input_dset", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("nvox_thresh", None) is not None:
+        if not isinstance(params["nvox_thresh"], (float, int)):
+            raise StyxValidationError(f'`nvox_thresh` has the wrong type: Received `{type(params.get("nvox_thresh", None))}` expected `float | None`')
+    if params.get("frac_thresh", None) is not None:
+        if not isinstance(params["frac_thresh"], (float, int)):
+            raise StyxValidationError(f'`frac_thresh` has the wrong type: Received `{type(params.get("frac_thresh", None))}` expected `float | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("neighborhood_type", None) is not None:
+        if not isinstance(params["neighborhood_type"], int):
+            raise StyxValidationError(f'`neighborhood_type` has the wrong type: Received `{type(params.get("neighborhood_type", None))}` expected `int | None`')
+        if 1 <= params["neighborhood_type"] <= 3:
+            raise StyxValidationError("Parameter `neighborhood_type` must be between 1 and 3 (inclusive)")
+
+
 def v__roi_decluster_cargs(
     params: VRoiDeclusterParameters,
     execution: Execution,
@@ -172,6 +207,7 @@ def v__roi_decluster_execute(
     Returns:
         NamedTuple of outputs (described in `VRoiDeclusterOutputs`).
     """
+    v__roi_decluster_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ROI_DECLUSTER_METADATA)
     params = execution.params(params)

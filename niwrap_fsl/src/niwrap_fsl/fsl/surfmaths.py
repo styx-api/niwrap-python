@@ -62,6 +62,34 @@ def surfmaths_params(
     return params
 
 
+def surfmaths_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfmathsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("first_input", None) is None:
+        raise StyxValidationError("`first_input` must not be None")
+    if not isinstance(params["first_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`first_input` has the wrong type: Received `{type(params.get("first_input", None))}` expected `InputPathType`')
+    if params.get("operations_inputs", None) is not None:
+        if not isinstance(params["operations_inputs"], list):
+            raise StyxValidationError(f'`operations_inputs` has the wrong type: Received `{type(params.get("operations_inputs", None))}` expected `list[str] | None`')
+        for e in params["operations_inputs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`operations_inputs` has the wrong type: Received `{type(params.get("operations_inputs", None))}` expected `list[str] | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def surfmaths_cargs(
     params: SurfmathsParameters,
     execution: Execution,
@@ -124,6 +152,7 @@ def surfmaths_execute(
     Returns:
         NamedTuple of outputs (described in `SurfmathsOutputs`).
     """
+    surfmaths_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFMATHS_METADATA)
     params = execution.params(params)

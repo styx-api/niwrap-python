@@ -106,6 +106,57 @@ def ap_run_simple_rest_tcsh_params(
     return params
 
 
+def ap_run_simple_rest_tcsh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ApRunSimpleRestTcshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("anat", None) is not None:
+        if not isinstance(params["anat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`anat` has the wrong type: Received `{type(params.get("anat", None))}` expected `InputPathType | None`')
+    if params.get("epi", None) is None:
+        raise StyxValidationError("`epi` must not be None")
+    if not isinstance(params["epi"], list):
+        raise StyxValidationError(f'`epi` has the wrong type: Received `{type(params.get("epi", None))}` expected `list[InputPathType]`')
+    for e in params["epi"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`epi` has the wrong type: Received `{type(params.get("epi", None))}` expected `list[InputPathType]`')
+    if params.get("nt_rm", None) is not None:
+        if not isinstance(params["nt_rm"], (float, int)):
+            raise StyxValidationError(f'`nt_rm` has the wrong type: Received `{type(params.get("nt_rm", None))}` expected `float | None`')
+    if params.get("run_ap", False) is None:
+        raise StyxValidationError("`run_ap` must not be None")
+    if not isinstance(params["run_ap"], bool):
+        raise StyxValidationError(f'`run_ap` has the wrong type: Received `{type(params.get("run_ap", False))}` expected `bool`')
+    if params.get("run_proc", False) is None:
+        raise StyxValidationError("`run_proc` must not be None")
+    if not isinstance(params["run_proc"], bool):
+        raise StyxValidationError(f'`run_proc` has the wrong type: Received `{type(params.get("run_proc", False))}` expected `bool`')
+    if params.get("subjid", None) is not None:
+        if not isinstance(params["subjid"], str):
+            raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str | None`')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("compressor", None) is not None:
+        if not isinstance(params["compressor"], str):
+            raise StyxValidationError(f'`compressor` has the wrong type: Received `{type(params.get("compressor", None))}` expected `str | None`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+
+
 def ap_run_simple_rest_tcsh_cargs(
     params: ApRunSimpleRestTcshParameters,
     execution: Execution,
@@ -205,6 +256,7 @@ def ap_run_simple_rest_tcsh_execute(
     Returns:
         NamedTuple of outputs (described in `ApRunSimpleRestTcshOutputs`).
     """
+    ap_run_simple_rest_tcsh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AP_RUN_SIMPLE_REST_TCSH_METADATA)
     params = execution.params(params)

@@ -90,6 +90,59 @@ def v__scale_volume_params(
     return params
 
 
+def v__scale_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VScaleVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dset", None) is None:
+        raise StyxValidationError("`input_dset` must not be None")
+    if not isinstance(params["input_dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dset` has the wrong type: Received `{type(params.get("input_dset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("val_clip", None) is not None:
+        if not isinstance(params["val_clip"], list):
+            raise StyxValidationError(f'`val_clip` has the wrong type: Received `{type(params.get("val_clip", None))}` expected `list[float] | None`')
+        if len(params["val_clip"]) == 2:
+            raise StyxValidationError("Parameter `val_clip` must contain exactly 2 elements")
+        for e in params["val_clip"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`val_clip` has the wrong type: Received `{type(params.get("val_clip", None))}` expected `list[float] | None`')
+    if params.get("perc_clip", None) is not None:
+        if not isinstance(params["perc_clip"], list):
+            raise StyxValidationError(f'`perc_clip` has the wrong type: Received `{type(params.get("perc_clip", None))}` expected `list[float] | None`')
+        if len(params["perc_clip"]) == 2:
+            raise StyxValidationError("Parameter `perc_clip` must contain exactly 2 elements")
+        for e in params["perc_clip"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`perc_clip` has the wrong type: Received `{type(params.get("perc_clip", None))}` expected `list[float] | None`')
+    if params.get("scale_by_mean", False) is None:
+        raise StyxValidationError("`scale_by_mean` must not be None")
+    if not isinstance(params["scale_by_mean"], bool):
+        raise StyxValidationError(f'`scale_by_mean` has the wrong type: Received `{type(params.get("scale_by_mean", False))}` expected `bool`')
+    if params.get("scale_by_median", False) is None:
+        raise StyxValidationError("`scale_by_median` must not be None")
+    if not isinstance(params["scale_by_median"], bool):
+        raise StyxValidationError(f'`scale_by_median` has the wrong type: Received `{type(params.get("scale_by_median", False))}` expected `bool`')
+    if params.get("norm", False) is None:
+        raise StyxValidationError("`norm` must not be None")
+    if not isinstance(params["norm"], bool):
+        raise StyxValidationError(f'`norm` has the wrong type: Received `{type(params.get("norm", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+
+
 def v__scale_volume_cargs(
     params: VScaleVolumeParameters,
     execution: Execution,
@@ -170,6 +223,7 @@ def v__scale_volume_execute(
     Returns:
         NamedTuple of outputs (described in `VScaleVolumeOutputs`).
     """
+    v__scale_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SCALE_VOLUME_METADATA)
     params = execution.params(params)

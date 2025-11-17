@@ -148,6 +148,77 @@ def reg_feat2anat_params(
     return params
 
 
+def reg_feat2anat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegFeat2anatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat_dir", None) is None:
+        raise StyxValidationError("`feat_dir` must not be None")
+    if not isinstance(params["feat_dir"], str):
+        raise StyxValidationError(f'`feat_dir` has the wrong type: Received `{type(params.get("feat_dir", None))}` expected `str`')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("overwrite_exf2std", False) is None:
+        raise StyxValidationError("`overwrite_exf2std` must not be None")
+    if not isinstance(params["overwrite_exf2std"], bool):
+        raise StyxValidationError(f'`overwrite_exf2std` has the wrong type: Received `{type(params.get("overwrite_exf2std", False))}` expected `bool`')
+    if params.get("manual", False) is None:
+        raise StyxValidationError("`manual` must not be None")
+    if not isinstance(params["manual"], bool):
+        raise StyxValidationError(f'`manual` has the wrong type: Received `{type(params.get("manual", False))}` expected `bool`')
+    if params.get("manxfm_type", None) is not None:
+        if not isinstance(params["manxfm_type"], str):
+            raise StyxValidationError(f'`manxfm_type` has the wrong type: Received `{type(params.get("manxfm_type", None))}` expected `str | None`')
+    if params.get("dof", None) is not None:
+        if not isinstance(params["dof"], int):
+            raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `int | None`')
+    if params.get("bins", None) is not None:
+        if not isinstance(params["bins"], int):
+            raise StyxValidationError(f'`bins` has the wrong type: Received `{type(params.get("bins", None))}` expected `int | None`')
+    if params.get("cost", None) is not None:
+        if not isinstance(params["cost"], str):
+            raise StyxValidationError(f'`cost` has the wrong type: Received `{type(params.get("cost", None))}` expected `str | None`')
+    if params.get("max_angle", None) is not None:
+        if not isinstance(params["max_angle"], (float, int)):
+            raise StyxValidationError(f'`max_angle` has the wrong type: Received `{type(params.get("max_angle", None))}` expected `float | None`')
+    if params.get("bet", False) is None:
+        raise StyxValidationError("`bet` must not be None")
+    if not isinstance(params["bet"], bool):
+        raise StyxValidationError(f'`bet` has the wrong type: Received `{type(params.get("bet", False))}` expected `bool`')
+    if params.get("title", None) is not None:
+        if not isinstance(params["title"], str):
+            raise StyxValidationError(f'`title` has the wrong type: Received `{type(params.get("title", None))}` expected `str | None`')
+    if params.get("no_bbr", False) is None:
+        raise StyxValidationError("`no_bbr` must not be None")
+    if not isinstance(params["no_bbr"], bool):
+        raise StyxValidationError(f'`no_bbr` has the wrong type: Received `{type(params.get("no_bbr", False))}` expected `bool`')
+    if params.get("spm", False) is None:
+        raise StyxValidationError("`spm` must not be None")
+    if not isinstance(params["spm"], bool):
+        raise StyxValidationError(f'`spm` has the wrong type: Received `{type(params.get("spm", False))}` expected `bool`')
+    if params.get("no_inorm", False) is None:
+        raise StyxValidationError("`no_inorm` must not be None")
+    if not isinstance(params["no_inorm"], bool):
+        raise StyxValidationError(f'`no_inorm` has the wrong type: Received `{type(params.get("no_inorm", False))}` expected `bool`')
+    if params.get("fmov", None) is not None:
+        if not isinstance(params["fmov"], str):
+            raise StyxValidationError(f'`fmov` has the wrong type: Received `{type(params.get("fmov", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def reg_feat2anat_cargs(
     params: RegFeat2anatParameters,
     execution: Execution,
@@ -269,6 +340,7 @@ def reg_feat2anat_execute(
     Returns:
         NamedTuple of outputs (described in `RegFeat2anatOutputs`).
     """
+    reg_feat2anat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REG_FEAT2ANAT_METADATA)
     params = execution.params(params)

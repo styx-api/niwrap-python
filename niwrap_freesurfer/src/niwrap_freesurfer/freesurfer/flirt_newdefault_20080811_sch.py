@@ -60,6 +60,31 @@ def flirt_newdefault_20080811_sch_params(
     return params
 
 
+def flirt_newdefault_20080811_sch_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FlirtNewdefault20080811SchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("term_option", None) is not None:
+        if not isinstance(params["term_option"], str):
+            raise StyxValidationError(f'`term_option` has the wrong type: Received `{type(params.get("term_option", None))}` expected `str | None`')
+    if params.get("curses_flag", False) is None:
+        raise StyxValidationError("`curses_flag` must not be None")
+    if not isinstance(params["curses_flag"], bool):
+        raise StyxValidationError(f'`curses_flag` has the wrong type: Received `{type(params.get("curses_flag", False))}` expected `bool`')
+    if params.get("scrollback_flag", False) is None:
+        raise StyxValidationError("`scrollback_flag` must not be None")
+    if not isinstance(params["scrollback_flag"], bool):
+        raise StyxValidationError(f'`scrollback_flag` has the wrong type: Received `{type(params.get("scrollback_flag", False))}` expected `bool`')
+
+
 def flirt_newdefault_20080811_sch_cargs(
     params: FlirtNewdefault20080811SchParameters,
     execution: Execution,
@@ -126,6 +151,7 @@ def flirt_newdefault_20080811_sch_execute(
     Returns:
         NamedTuple of outputs (described in `FlirtNewdefault20080811SchOutputs`).
     """
+    flirt_newdefault_20080811_sch_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FLIRT_NEWDEFAULT_20080811_SCH_METADATA)
     params = execution.params(params)

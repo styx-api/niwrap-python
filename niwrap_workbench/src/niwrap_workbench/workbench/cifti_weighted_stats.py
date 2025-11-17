@@ -123,6 +123,38 @@ def cifti_weighted_stats_spatial_weights_params(
     return params
 
 
+def cifti_weighted_stats_spatial_weights_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiWeightedStatsSpatialWeightsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("left-surf", None) is not None:
+        if not isinstance(params["left-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
+    if params.get("right-surf", None) is not None:
+        if not isinstance(params["right-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
+    if params.get("cerebellum-surf", None) is not None:
+        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
+    if params.get("left-metric", None) is not None:
+        if not isinstance(params["left-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-metric` has the wrong type: Received `{type(params.get("left-metric", None))}` expected `InputPathType | None`')
+    if params.get("right-metric", None) is not None:
+        if not isinstance(params["right-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-metric` has the wrong type: Received `{type(params.get("right-metric", None))}` expected `InputPathType | None`')
+    if params.get("cerebellum-metric", None) is not None:
+        if not isinstance(params["cerebellum-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-metric` has the wrong type: Received `{type(params.get("cerebellum-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_weighted_stats_spatial_weights_cargs(
     params: CiftiWeightedStatsSpatialWeightsParameters,
     execution: Execution,
@@ -176,6 +208,28 @@ def cifti_weighted_stats_roi_params(
         "match-maps": match_maps,
     }
     return params
+
+
+def cifti_weighted_stats_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiWeightedStatsRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-cifti", None) is None:
+        raise StyxValidationError("`roi-cifti` must not be None")
+    if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType`')
+    if params.get("match-maps", False) is None:
+        raise StyxValidationError("`match-maps` must not be None")
+    if not isinstance(params["match-maps"], bool):
+        raise StyxValidationError(f'`match-maps` has the wrong type: Received `{type(params.get("match-maps", False))}` expected `bool`')
 
 
 def cifti_weighted_stats_roi_cargs(
@@ -268,6 +322,52 @@ def cifti_weighted_stats_params(
     return params
 
 
+def cifti_weighted_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiWeightedStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spatial-weights", None) is not None:
+        cifti_weighted_stats_spatial_weights_validate(params["spatial-weights"])
+    if params.get("weight-cifti", None) is not None:
+        if not isinstance(params["weight-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight-cifti` has the wrong type: Received `{type(params.get("weight-cifti", None))}` expected `InputPathType | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], int):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `int | None`')
+    if params.get("roi", None) is not None:
+        cifti_weighted_stats_roi_validate(params["roi"])
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
+    if params.get("sample", False) is not None:
+        if not isinstance(params["sample"], bool):
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", False))}` expected `bool | None`')
+    if params.get("percent", None) is not None:
+        if not isinstance(params["percent"], (float, int)):
+            raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("show-map-name", False) is None:
+        raise StyxValidationError("`show-map-name` must not be None")
+    if not isinstance(params["show-map-name"], bool):
+        raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+
+
 def cifti_weighted_stats_cargs(
     params: CiftiWeightedStatsParameters,
     execution: Execution,
@@ -351,6 +451,7 @@ def cifti_weighted_stats_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiWeightedStatsOutputs`).
     """
+    cifti_weighted_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_WEIGHTED_STATS_METADATA)
     params = execution.params(params)

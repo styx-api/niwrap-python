@@ -108,6 +108,49 @@ def create_dticohort_params(
     return params
 
 
+def create_dticohort_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateDticohortParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["image_dimensionality"] not in [2, 3]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3]")
+    if params.get("dti_atlas", None) is None:
+        raise StyxValidationError("`dti_atlas` must not be None")
+    if not isinstance(params["dti_atlas"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dti_atlas` has the wrong type: Received `{type(params.get("dti_atlas", None))}` expected `InputPathType`')
+    if params.get("label_mask_image", None) is not None:
+        if not isinstance(params["label_mask_image"], str):
+            raise StyxValidationError(f'`label_mask_image` has the wrong type: Received `{type(params.get("label_mask_image", None))}` expected `str | None`')
+    if params.get("noise_sigma", None) is not None:
+        if not isinstance(params["noise_sigma"], (float, int)):
+            raise StyxValidationError(f'`noise_sigma` has the wrong type: Received `{type(params.get("noise_sigma", None))}` expected `float | None`')
+    if params.get("pathology", None) is not None:
+        if not isinstance(params["pathology"], str):
+            raise StyxValidationError(f'`pathology` has the wrong type: Received `{type(params.get("pathology", None))}` expected `str | None`')
+    if params.get("dwi_parameters", None) is None:
+        raise StyxValidationError("`dwi_parameters` must not be None")
+    if not isinstance(params["dwi_parameters"], str):
+        raise StyxValidationError(f'`dwi_parameters` has the wrong type: Received `{type(params.get("dwi_parameters", None))}` expected `str`')
+    if params.get("registered_population", None) is not None:
+        if not isinstance(params["registered_population"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`registered_population` has the wrong type: Received `{type(params.get("registered_population", None))}` expected `InputPathType | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def create_dticohort_cargs(
     params: CreateDticohortParameters,
     execution: Execution,
@@ -205,6 +248,7 @@ def create_dticohort_execute(
     Returns:
         NamedTuple of outputs (described in `CreateDticohortOutputs`).
     """
+    create_dticohort_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CREATE_DTICOHORT_METADATA)
     params = execution.params(params)

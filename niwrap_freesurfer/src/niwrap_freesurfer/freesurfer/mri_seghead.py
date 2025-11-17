@@ -133,6 +133,75 @@ def mri_seghead_params(
     return params
 
 
+def mri_seghead_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSegheadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], str):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `str`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("fill_value", None) is not None:
+        if not isinstance(params["fill_value"], (float, int)):
+            raise StyxValidationError(f'`fill_value` has the wrong type: Received `{type(params.get("fill_value", None))}` expected `float | None`')
+    if params.get("fhi_value", None) is not None:
+        if not isinstance(params["fhi_value"], (float, int)):
+            raise StyxValidationError(f'`fhi_value` has the wrong type: Received `{type(params.get("fhi_value", None))}` expected `float | None`')
+    if params.get("thresh1_value", None) is not None:
+        if not isinstance(params["thresh1_value"], (float, int)):
+            raise StyxValidationError(f'`thresh1_value` has the wrong type: Received `{type(params.get("thresh1_value", None))}` expected `float | None`')
+    if params.get("thresh2_value", None) is not None:
+        if not isinstance(params["thresh2_value"], (float, int)):
+            raise StyxValidationError(f'`thresh2_value` has the wrong type: Received `{type(params.get("thresh2_value", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("nhitsmin_value", None) is not None:
+        if not isinstance(params["nhitsmin_value"], (float, int)):
+            raise StyxValidationError(f'`nhitsmin_value` has the wrong type: Received `{type(params.get("nhitsmin_value", None))}` expected `float | None`')
+    if params.get("hvoldat_file", None) is not None:
+        if not isinstance(params["hvoldat_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`hvoldat_file` has the wrong type: Received `{type(params.get("hvoldat_file", None))}` expected `InputPathType | None`')
+    if params.get("signal_behind_head", False) is None:
+        raise StyxValidationError("`signal_behind_head` must not be None")
+    if not isinstance(params["signal_behind_head"], bool):
+        raise StyxValidationError(f'`signal_behind_head` has the wrong type: Received `{type(params.get("signal_behind_head", False))}` expected `bool`')
+    if params.get("rescale", False) is None:
+        raise StyxValidationError("`rescale` must not be None")
+    if not isinstance(params["rescale"], bool):
+        raise StyxValidationError(f'`rescale` has the wrong type: Received `{type(params.get("rescale", False))}` expected `bool`')
+    if params.get("fill_holes_islands", False) is None:
+        raise StyxValidationError("`fill_holes_islands` must not be None")
+    if not isinstance(params["fill_holes_islands"], bool):
+        raise StyxValidationError(f'`fill_holes_islands` has the wrong type: Received `{type(params.get("fill_holes_islands", False))}` expected `bool`')
+    if params.get("seed_point", None) is not None:
+        if not isinstance(params["seed_point"], list):
+            raise StyxValidationError(f'`seed_point` has the wrong type: Received `{type(params.get("seed_point", None))}` expected `list[float] | None`')
+        if len(params["seed_point"]) == 3:
+            raise StyxValidationError("Parameter `seed_point` must contain exactly 3 elements")
+        for e in params["seed_point"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`seed_point` has the wrong type: Received `{type(params.get("seed_point", None))}` expected `list[float] | None`')
+    if params.get("or_mask_file", None) is not None:
+        if not isinstance(params["or_mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`or_mask_file` has the wrong type: Received `{type(params.get("or_mask_file", None))}` expected `InputPathType | None`')
+    if params.get("gdiag_option", None) is not None:
+        if not isinstance(params["gdiag_option"], str):
+            raise StyxValidationError(f'`gdiag_option` has the wrong type: Received `{type(params.get("gdiag_option", None))}` expected `str | None`')
+
+
 def mri_seghead_cargs(
     params: MriSegheadParameters,
     execution: Execution,
@@ -253,6 +322,7 @@ def mri_seghead_execute(
     Returns:
         NamedTuple of outputs (described in `MriSegheadOutputs`).
     """
+    mri_seghead_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SEGHEAD_METADATA)
     params = execution.params(params)

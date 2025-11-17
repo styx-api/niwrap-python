@@ -83,6 +83,40 @@ def v_3d_dteig_params(
     return params
 
 
+def v_3d_dteig_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDteigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], str):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `typing.Literal["byte", "short", "float"] | None`')
+        if params["datum"] not in ["byte", "short", "float"]:
+            raise StyxValidationError("Parameter `datum` must be one of [\"byte\", \"short\", \"float\"]")
+    if params.get("sep_dsets", False) is None:
+        raise StyxValidationError("`sep_dsets` must not be None")
+    if not isinstance(params["sep_dsets"], bool):
+        raise StyxValidationError(f'`sep_dsets` has the wrong type: Received `{type(params.get("sep_dsets", False))}` expected `bool`')
+    if params.get("uddata", False) is None:
+        raise StyxValidationError("`uddata` must not be None")
+    if not isinstance(params["uddata"], bool):
+        raise StyxValidationError(f'`uddata` has the wrong type: Received `{type(params.get("uddata", False))}` expected `bool`')
+
+
 def v_3d_dteig_cargs(
     params: V3dDteigParameters,
     execution: Execution,
@@ -159,6 +193,7 @@ def v_3d_dteig_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDteigOutputs`).
     """
+    v_3d_dteig_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DTEIG_METADATA)
     params = execution.params(params)

@@ -64,6 +64,33 @@ def v_3d_sharpen_params(
     return params
 
 
+def v_3d_sharpen_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSharpenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sharpening_factor", None) is not None:
+        if not isinstance(params["sharpening_factor"], (float, int)):
+            raise StyxValidationError(f'`sharpening_factor` has the wrong type: Received `{type(params.get("sharpening_factor", None))}` expected `float | None`')
+        if 0.1 <= params["sharpening_factor"] <= 0.9:
+            raise StyxValidationError("Parameter `sharpening_factor` must be between 0.1 and 0.9 (inclusive)")
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+
+
 def v_3d_sharpen_cargs(
     params: V3dSharpenParameters,
     execution: Execution,
@@ -132,6 +159,7 @@ def v_3d_sharpen_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSharpenOutputs`).
     """
+    v_3d_sharpen_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SHARPEN_METADATA)
     params = execution.params(params)

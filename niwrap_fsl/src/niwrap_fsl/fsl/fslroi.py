@@ -104,6 +104,52 @@ def fslroi_params(
     return params
 
 
+def fslroi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslroiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("xmin", None) is not None:
+        if not isinstance(params["xmin"], (float, int)):
+            raise StyxValidationError(f'`xmin` has the wrong type: Received `{type(params.get("xmin", None))}` expected `float | None`')
+    if params.get("xsize", None) is not None:
+        if not isinstance(params["xsize"], (float, int)):
+            raise StyxValidationError(f'`xsize` has the wrong type: Received `{type(params.get("xsize", None))}` expected `float | None`')
+    if params.get("ymin", None) is not None:
+        if not isinstance(params["ymin"], (float, int)):
+            raise StyxValidationError(f'`ymin` has the wrong type: Received `{type(params.get("ymin", None))}` expected `float | None`')
+    if params.get("ysize", None) is not None:
+        if not isinstance(params["ysize"], (float, int)):
+            raise StyxValidationError(f'`ysize` has the wrong type: Received `{type(params.get("ysize", None))}` expected `float | None`')
+    if params.get("zmin", None) is not None:
+        if not isinstance(params["zmin"], (float, int)):
+            raise StyxValidationError(f'`zmin` has the wrong type: Received `{type(params.get("zmin", None))}` expected `float | None`')
+    if params.get("zsize", None) is not None:
+        if not isinstance(params["zsize"], (float, int)):
+            raise StyxValidationError(f'`zsize` has the wrong type: Received `{type(params.get("zsize", None))}` expected `float | None`')
+    if params.get("tmin", None) is not None:
+        if not isinstance(params["tmin"], (float, int)):
+            raise StyxValidationError(f'`tmin` has the wrong type: Received `{type(params.get("tmin", None))}` expected `float | None`')
+    if params.get("tsize", None) is not None:
+        if not isinstance(params["tsize"], (float, int)):
+            raise StyxValidationError(f'`tsize` has the wrong type: Received `{type(params.get("tsize", None))}` expected `float | None`')
+
+
 def fslroi_cargs(
     params: FslroiParameters,
     execution: Execution,
@@ -179,6 +225,7 @@ def fslroi_execute(
     Returns:
         NamedTuple of outputs (described in `FslroiOutputs`).
     """
+    fslroi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLROI_METADATA)
     params = execution.params(params)

@@ -58,6 +58,28 @@ def old_betall_params(
     return params
 
 
+def old_betall_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `OldBetallParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_filerout", None) is None:
+        raise StyxValidationError("`t1_filerout` must not be None")
+    if not isinstance(params["t1_filerout"], str):
+        raise StyxValidationError(f'`t1_filerout` has the wrong type: Received `{type(params.get("t1_filerout", None))}` expected `str`')
+    if params.get("t2_filerout", None) is None:
+        raise StyxValidationError("`t2_filerout` must not be None")
+    if not isinstance(params["t2_filerout"], str):
+        raise StyxValidationError(f'`t2_filerout` has the wrong type: Received `{type(params.get("t2_filerout", None))}` expected `str`')
+
+
 def old_betall_cargs(
     params: OldBetallParameters,
     execution: Execution,
@@ -118,6 +140,7 @@ def old_betall_execute(
     Returns:
         NamedTuple of outputs (described in `OldBetallOutputs`).
     """
+    old_betall_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(OLD_BETALL_METADATA)
     params = execution.params(params)

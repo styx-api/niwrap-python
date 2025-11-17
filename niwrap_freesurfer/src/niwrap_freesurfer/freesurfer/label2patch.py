@@ -101,6 +101,55 @@ def label2patch_params(
     return params
 
 
+def label2patch_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Label2patchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("label_file", None) is None:
+        raise StyxValidationError("`label_file` must not be None")
+    if not isinstance(params["label_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType`')
+    if params.get("output_patch", None) is None:
+        raise StyxValidationError("`output_patch` must not be None")
+    if not isinstance(params["output_patch"], str):
+        raise StyxValidationError(f'`output_patch` has the wrong type: Received `{type(params.get("output_patch", None))}` expected `str`')
+    if params.get("dilate", None) is not None:
+        if not isinstance(params["dilate"], (float, int)):
+            raise StyxValidationError(f'`dilate` has the wrong type: Received `{type(params.get("dilate", None))}` expected `float | None`')
+    if params.get("erode", None) is not None:
+        if not isinstance(params["erode"], (float, int)):
+            raise StyxValidationError(f'`erode` has the wrong type: Received `{type(params.get("erode", None))}` expected `float | None`')
+    if params.get("close", None) is not None:
+        if not isinstance(params["close"], (float, int)):
+            raise StyxValidationError(f'`close` has the wrong type: Received `{type(params.get("close", None))}` expected `float | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("surface_name", None) is not None:
+        if not isinstance(params["surface_name"], str):
+            raise StyxValidationError(f'`surface_name` has the wrong type: Received `{type(params.get("surface_name", None))}` expected `str | None`')
+    if params.get("write_surface", False) is None:
+        raise StyxValidationError("`write_surface` must not be None")
+    if not isinstance(params["write_surface"], bool):
+        raise StyxValidationError(f'`write_surface` has the wrong type: Received `{type(params.get("write_surface", False))}` expected `bool`')
+
+
 def label2patch_cargs(
     params: Label2patchParameters,
     execution: Execution,
@@ -188,6 +237,7 @@ def label2patch_execute(
     Returns:
         NamedTuple of outputs (described in `Label2patchOutputs`).
     """
+    label2patch_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL2PATCH_METADATA)
     params = execution.params(params)

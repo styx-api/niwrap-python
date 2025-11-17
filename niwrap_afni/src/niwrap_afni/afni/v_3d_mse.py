@@ -103,6 +103,52 @@ def v_3d_mse_params(
     return params
 
 
+def v_3d_mse_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("polynomial_order", None) is not None:
+        if not isinstance(params["polynomial_order"], int):
+            raise StyxValidationError(f'`polynomial_order` has the wrong type: Received `{type(params.get("polynomial_order", None))}` expected `int | None`')
+        if -1 <= params["polynomial_order"] <= 3:
+            raise StyxValidationError("Parameter `polynomial_order` must be between -1 and 3 (inclusive)")
+    if params.get("autoclip", False) is None:
+        raise StyxValidationError("`autoclip` must not be None")
+    if not isinstance(params["autoclip"], bool):
+        raise StyxValidationError(f'`autoclip` has the wrong type: Received `{type(params.get("autoclip", False))}` expected `bool`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("scales", None) is not None:
+        if not isinstance(params["scales"], (float, int)):
+            raise StyxValidationError(f'`scales` has the wrong type: Received `{type(params.get("scales", None))}` expected `float | None`')
+    if params.get("entwin", None) is not None:
+        if not isinstance(params["entwin"], (float, int)):
+            raise StyxValidationError(f'`entwin` has the wrong type: Received `{type(params.get("entwin", None))}` expected `float | None`')
+    if params.get("rthresh", None) is not None:
+        if not isinstance(params["rthresh"], (float, int)):
+            raise StyxValidationError(f'`rthresh` has the wrong type: Received `{type(params.get("rthresh", None))}` expected `float | None`')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+
+
 def v_3d_mse_cargs(
     params: V3dMseParameters,
     execution: Execution,
@@ -196,6 +242,7 @@ def v_3d_mse_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMseOutputs`).
     """
+    v_3d_mse_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MSE_METADATA)
     params = execution.params(params)

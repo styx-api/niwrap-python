@@ -118,6 +118,63 @@ def fat_proc_align_anat_pair_params(
     return params
 
 
+def fat_proc_align_anat_pair_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcAlignAnatPairParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_t1w", None) is None:
+        raise StyxValidationError("`input_t1w` must not be None")
+    if not isinstance(params["input_t1w"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_t1w` has the wrong type: Received `{type(params.get("input_t1w", None))}` expected `InputPathType`')
+    if params.get("input_t2w", None) is None:
+        raise StyxValidationError("`input_t2w` must not be None")
+    if not isinstance(params["input_t2w"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_t2w` has the wrong type: Received `{type(params.get("input_t2w", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("output_grid", None) is not None:
+        if not isinstance(params["output_grid"], (float, int)):
+            raise StyxValidationError(f'`output_grid` has the wrong type: Received `{type(params.get("output_grid", None))}` expected `float | None`')
+    if params.get("out_t2w_grid", False) is None:
+        raise StyxValidationError("`out_t2w_grid` must not be None")
+    if not isinstance(params["out_t2w_grid"], bool):
+        raise StyxValidationError(f'`out_t2w_grid` has the wrong type: Received `{type(params.get("out_t2w_grid", False))}` expected `bool`')
+    if params.get("input_t2w_mask", None) is not None:
+        if not isinstance(params["input_t2w_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_t2w_mask` has the wrong type: Received `{type(params.get("input_t2w_mask", None))}` expected `InputPathType | None`')
+    if params.get("do_ss_tmp_t1w", False) is None:
+        raise StyxValidationError("`do_ss_tmp_t1w` must not be None")
+    if not isinstance(params["do_ss_tmp_t1w"], bool):
+        raise StyxValidationError(f'`do_ss_tmp_t1w` has the wrong type: Received `{type(params.get("do_ss_tmp_t1w", False))}` expected `bool`')
+    if params.get("warp", None) is not None:
+        if not isinstance(params["warp"], str):
+            raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `str | None`')
+    if params.get("matrix", None) is not None:
+        if not isinstance(params["matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `InputPathType | None`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("no_cmd_out", False) is None:
+        raise StyxValidationError("`no_cmd_out` must not be None")
+    if not isinstance(params["no_cmd_out"], bool):
+        raise StyxValidationError(f'`no_cmd_out` has the wrong type: Received `{type(params.get("no_cmd_out", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def fat_proc_align_anat_pair_cargs(
     params: FatProcAlignAnatPairParameters,
     execution: Execution,
@@ -223,6 +280,7 @@ def fat_proc_align_anat_pair_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcAlignAnatPairOutputs`).
     """
+    fat_proc_align_anat_pair_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_ALIGN_ANAT_PAIR_METADATA)
     params = execution.params(params)

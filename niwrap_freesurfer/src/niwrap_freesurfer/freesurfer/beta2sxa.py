@@ -67,6 +67,38 @@ def beta2sxa_params(
     return params
 
 
+def beta2sxa_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Beta2sxaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("beta_files", None) is None:
+        raise StyxValidationError("`beta_files` must not be None")
+    if not isinstance(params["beta_files"], list):
+        raise StyxValidationError(f'`beta_files` has the wrong type: Received `{type(params.get("beta_files", None))}` expected `list[InputPathType]`')
+    for e in params["beta_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`beta_files` has the wrong type: Received `{type(params.get("beta_files", None))}` expected `list[InputPathType]`')
+    if params.get("number_of_conditions", None) is None:
+        raise StyxValidationError("`number_of_conditions` must not be None")
+    if not isinstance(params["number_of_conditions"], (float, int)):
+        raise StyxValidationError(f'`number_of_conditions` has the wrong type: Received `{type(params.get("number_of_conditions", None))}` expected `float`')
+    if params.get("number_of_per_subjects", None) is None:
+        raise StyxValidationError("`number_of_per_subjects` must not be None")
+    if not isinstance(params["number_of_per_subjects"], (float, int)):
+        raise StyxValidationError(f'`number_of_per_subjects` has the wrong type: Received `{type(params.get("number_of_per_subjects", None))}` expected `float`')
+    if params.get("sxa_output", None) is not None:
+        if not isinstance(params["sxa_output"], str):
+            raise StyxValidationError(f'`sxa_output` has the wrong type: Received `{type(params.get("sxa_output", None))}` expected `str | None`')
+
+
 def beta2sxa_cargs(
     params: Beta2sxaParameters,
     execution: Execution,
@@ -142,6 +174,7 @@ def beta2sxa_execute(
     Returns:
         NamedTuple of outputs (described in `Beta2sxaOutputs`).
     """
+    beta2sxa_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BETA2SXA_METADATA)
     params = execution.params(params)

@@ -77,6 +77,45 @@ def predict_v1_sh_params(
     return params
 
 
+def predict_v1_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PredictV1ShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], str):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `str | None`')
+    if params.get("inflated_surface_flag", False) is None:
+        raise StyxValidationError("`inflated_surface_flag` must not be None")
+    if not isinstance(params["inflated_surface_flag"], bool):
+        raise StyxValidationError(f'`inflated_surface_flag` has the wrong type: Received `{type(params.get("inflated_surface_flag", False))}` expected `bool`')
+    if params.get("hemisphere", None) is not None:
+        if not isinstance(params["hemisphere"], str):
+            raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str | None`')
+    if params.get("print_mode_flag", False) is None:
+        raise StyxValidationError("`print_mode_flag` must not be None")
+    if not isinstance(params["print_mode_flag"], bool):
+        raise StyxValidationError(f'`print_mode_flag` has the wrong type: Received `{type(params.get("print_mode_flag", False))}` expected `bool`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("usage_flag", False) is None:
+        raise StyxValidationError("`usage_flag` must not be None")
+    if not isinstance(params["usage_flag"], bool):
+        raise StyxValidationError(f'`usage_flag` has the wrong type: Received `{type(params.get("usage_flag", False))}` expected `bool`')
+
+
 def predict_v1_sh_cargs(
     params: PredictV1ShParameters,
     execution: Execution,
@@ -150,6 +189,7 @@ def predict_v1_sh_execute(
     Returns:
         NamedTuple of outputs (described in `PredictV1ShOutputs`).
     """
+    predict_v1_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PREDICT_V1_SH_METADATA)
     params = execution.params(params)

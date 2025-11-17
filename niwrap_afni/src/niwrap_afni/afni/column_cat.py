@@ -64,6 +64,33 @@ def column_cat_params(
     return params
 
 
+def column_cat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ColumnCatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("line_number", None) is not None:
+        if not isinstance(params["line_number"], (float, int)):
+            raise StyxValidationError(f'`line_number` has the wrong type: Received `{type(params.get("line_number", None))}` expected `float | None`')
+    if params.get("separator_string", None) is not None:
+        if not isinstance(params["separator_string"], str):
+            raise StyxValidationError(f'`separator_string` has the wrong type: Received `{type(params.get("separator_string", None))}` expected `str | None`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def column_cat_cargs(
     params: ColumnCatParameters,
     execution: Execution,
@@ -134,6 +161,7 @@ def column_cat_execute(
     Returns:
         NamedTuple of outputs (described in `ColumnCatOutputs`).
     """
+    column_cat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(COLUMN_CAT_METADATA)
     params = execution.params(params)

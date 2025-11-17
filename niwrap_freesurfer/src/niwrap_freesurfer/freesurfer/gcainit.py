@@ -49,6 +49,24 @@ def gcainit_params(
     return params
 
 
+def gcainit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GcainitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gcadir", None) is None:
+        raise StyxValidationError("`gcadir` must not be None")
+    if not isinstance(params["gcadir"], str):
+        raise StyxValidationError(f'`gcadir` has the wrong type: Received `{type(params.get("gcadir", None))}` expected `str`')
+
+
 def gcainit_cargs(
     params: GcainitParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def gcainit_execute(
     Returns:
         NamedTuple of outputs (described in `GcainitOutputs`).
     """
+    gcainit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GCAINIT_METADATA)
     params = execution.params(params)

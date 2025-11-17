@@ -108,6 +108,56 @@ def mris_smooth_intracortical_params(
     return params
 
 
+def mris_smooth_intracortical_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSmoothIntracorticalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surf_dir", None) is None:
+        raise StyxValidationError("`surf_dir` must not be None")
+    if not isinstance(params["surf_dir"], str):
+        raise StyxValidationError(f'`surf_dir` has the wrong type: Received `{type(params.get("surf_dir", None))}` expected `str`')
+    if params.get("surf_name", None) is None:
+        raise StyxValidationError("`surf_name` must not be None")
+    if not isinstance(params["surf_name"], str):
+        raise StyxValidationError(f'`surf_name` has the wrong type: Received `{type(params.get("surf_name", None))}` expected `str`')
+    if params.get("overlay_dir", None) is None:
+        raise StyxValidationError("`overlay_dir` must not be None")
+    if not isinstance(params["overlay_dir"], str):
+        raise StyxValidationError(f'`overlay_dir` has the wrong type: Received `{type(params.get("overlay_dir", None))}` expected `str`')
+    if params.get("overlay_name", None) is None:
+        raise StyxValidationError("`overlay_name` must not be None")
+    if not isinstance(params["overlay_name"], str):
+        raise StyxValidationError(f'`overlay_name` has the wrong type: Received `{type(params.get("overlay_name", None))}` expected `str`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("output_name", None) is not None:
+        if not isinstance(params["output_name"], str):
+            raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str | None`')
+    if params.get("tan_size", None) is not None:
+        if not isinstance(params["tan_size"], int):
+            raise StyxValidationError(f'`tan_size` has the wrong type: Received `{type(params.get("tan_size", None))}` expected `int | None`')
+        if 0 <= params["tan_size"] <= 6:
+            raise StyxValidationError("Parameter `tan_size` must be between 0 and 6 (inclusive)")
+    if params.get("rad_size", None) is not None:
+        if not isinstance(params["rad_size"], (float, int)):
+            raise StyxValidationError(f'`rad_size` has the wrong type: Received `{type(params.get("rad_size", None))}` expected `float | None`')
+    if params.get("rad_start", None) is not None:
+        if not isinstance(params["rad_start"], (float, int)):
+            raise StyxValidationError(f'`rad_start` has the wrong type: Received `{type(params.get("rad_start", None))}` expected `float | None`')
+    if params.get("tan_weights", None) is not None:
+        if not isinstance(params["tan_weights"], str):
+            raise StyxValidationError(f'`tan_weights` has the wrong type: Received `{type(params.get("tan_weights", None))}` expected `str | None`')
+
+
 def mris_smooth_intracortical_cargs(
     params: MrisSmoothIntracorticalParameters,
     execution: Execution,
@@ -212,6 +262,7 @@ def mris_smooth_intracortical_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSmoothIntracorticalOutputs`).
     """
+    mris_smooth_intracortical_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SMOOTH_INTRACORTICAL_METADATA)
     params = execution.params(params)

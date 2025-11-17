@@ -130,6 +130,61 @@ def v_2d_im_reg_params(
     return params
 
 
+def v_2d_im_reg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V2dImRegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("base_file", None) is not None:
+        if not isinstance(params["base_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`base_file` has the wrong type: Received `{type(params.get("base_file", None))}` expected `InputPathType | None`')
+    if params.get("base", None) is not None:
+        if not isinstance(params["base"], (float, int)):
+            raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `float | None`')
+    if params.get("nofine", False) is None:
+        raise StyxValidationError("`nofine` must not be None")
+    if not isinstance(params["nofine"], bool):
+        raise StyxValidationError(f'`nofine` has the wrong type: Received `{type(params.get("nofine", False))}` expected `bool`')
+    if params.get("fine_blur", None) is not None:
+        if not isinstance(params["fine_blur"], (float, int)):
+            raise StyxValidationError(f'`fine_blur` has the wrong type: Received `{type(params.get("fine_blur", None))}` expected `float | None`')
+    if params.get("fine_dxy", None) is not None:
+        if not isinstance(params["fine_dxy"], (float, int)):
+            raise StyxValidationError(f'`fine_dxy` has the wrong type: Received `{type(params.get("fine_dxy", None))}` expected `float | None`')
+    if params.get("fine_dphi", None) is not None:
+        if not isinstance(params["fine_dphi"], (float, int)):
+            raise StyxValidationError(f'`fine_dphi` has the wrong type: Received `{type(params.get("fine_dphi", None))}` expected `float | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("dprefix", None) is not None:
+        if not isinstance(params["dprefix"], str):
+            raise StyxValidationError(f'`dprefix` has the wrong type: Received `{type(params.get("dprefix", None))}` expected `str | None`')
+    if params.get("dmm", False) is None:
+        raise StyxValidationError("`dmm` must not be None")
+    if not isinstance(params["dmm"], bool):
+        raise StyxValidationError(f'`dmm` has the wrong type: Received `{type(params.get("dmm", False))}` expected `bool`')
+    if params.get("rprefix", None) is not None:
+        if not isinstance(params["rprefix"], str):
+            raise StyxValidationError(f'`rprefix` has the wrong type: Received `{type(params.get("rprefix", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def v_2d_im_reg_cargs(
     params: V2dImRegParameters,
     execution: Execution,
@@ -215,6 +270,7 @@ def v_2d_im_reg_execute(
     Returns:
         NamedTuple of outputs (described in `V2dImRegOutputs`).
     """
+    v_2d_im_reg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_2D_IM_REG_METADATA)
     params = execution.params(params)

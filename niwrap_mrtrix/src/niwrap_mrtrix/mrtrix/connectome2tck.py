@@ -92,6 +92,28 @@ def connectome2tck_config_params(
     return params
 
 
+def connectome2tck_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Connectome2tckConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def connectome2tck_config_cargs(
     params: Connectome2tckConfigParameters,
     execution: Execution,
@@ -217,6 +239,94 @@ def connectome2tck_params(
     return params
 
 
+def connectome2tck_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Connectome2tckParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nodes", None) is not None:
+        if not isinstance(params["nodes"], list):
+            raise StyxValidationError(f'`nodes` has the wrong type: Received `{type(params.get("nodes", None))}` expected `list[int] | None`')
+        for e in params["nodes"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`nodes` has the wrong type: Received `{type(params.get("nodes", None))}` expected `list[int] | None`')
+    if params.get("exclusive", False) is None:
+        raise StyxValidationError("`exclusive` must not be None")
+    if not isinstance(params["exclusive"], bool):
+        raise StyxValidationError(f'`exclusive` has the wrong type: Received `{type(params.get("exclusive", False))}` expected `bool`')
+    if params.get("files", None) is not None:
+        if not isinstance(params["files"], str):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `str | None`')
+    if params.get("exemplars", None) is not None:
+        if not isinstance(params["exemplars"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exemplars` has the wrong type: Received `{type(params.get("exemplars", None))}` expected `InputPathType | None`')
+    if params.get("keep_unassigned", False) is None:
+        raise StyxValidationError("`keep_unassigned` must not be None")
+    if not isinstance(params["keep_unassigned"], bool):
+        raise StyxValidationError(f'`keep_unassigned` has the wrong type: Received `{type(params.get("keep_unassigned", False))}` expected `bool`')
+    if params.get("keep_self", False) is None:
+        raise StyxValidationError("`keep_self` must not be None")
+    if not isinstance(params["keep_self"], bool):
+        raise StyxValidationError(f'`keep_self` has the wrong type: Received `{type(params.get("keep_self", False))}` expected `bool`')
+    if params.get("tck_weights_in", None) is not None:
+        if not isinstance(params["tck_weights_in"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tck_weights_in` has the wrong type: Received `{type(params.get("tck_weights_in", None))}` expected `InputPathType | None`')
+    if params.get("prefix_tck_weights_out", None) is not None:
+        if not isinstance(params["prefix_tck_weights_out"], str):
+            raise StyxValidationError(f'`prefix_tck_weights_out` has the wrong type: Received `{type(params.get("prefix_tck_weights_out", None))}` expected `str | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Connectome2tckConfigParameters] | None`')
+        for e in params["config"]:
+            connectome2tck_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("tracks_in", None) is None:
+        raise StyxValidationError("`tracks_in` must not be None")
+    if not isinstance(params["tracks_in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tracks_in` has the wrong type: Received `{type(params.get("tracks_in", None))}` expected `InputPathType`')
+    if params.get("assignments_in", None) is None:
+        raise StyxValidationError("`assignments_in` must not be None")
+    if not isinstance(params["assignments_in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`assignments_in` has the wrong type: Received `{type(params.get("assignments_in", None))}` expected `InputPathType`')
+    if params.get("prefix_out", None) is None:
+        raise StyxValidationError("`prefix_out` must not be None")
+    if not isinstance(params["prefix_out"], str):
+        raise StyxValidationError(f'`prefix_out` has the wrong type: Received `{type(params.get("prefix_out", None))}` expected `str`')
+
+
 def connectome2tck_cargs(
     params: Connectome2tckParameters,
     execution: Execution,
@@ -339,6 +449,7 @@ def connectome2tck_execute(
     Returns:
         NamedTuple of outputs (described in `Connectome2tckOutputs`).
     """
+    connectome2tck_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONNECTOME2TCK_METADATA)
     params = execution.params(params)

@@ -179,6 +179,109 @@ def mri_mcsim_params(
     return params
 
 
+def mri_mcsim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMcsimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("top_output_dir", None) is None:
+        raise StyxValidationError("`top_output_dir` must not be None")
+    if not isinstance(params["top_output_dir"], str):
+        raise StyxValidationError(f'`top_output_dir` has the wrong type: Received `{type(params.get("top_output_dir", None))}` expected `str`')
+    if params.get("base_name", None) is None:
+        raise StyxValidationError("`base_name` must not be None")
+    if not isinstance(params["base_name"], str):
+        raise StyxValidationError(f'`base_name` has the wrong type: Received `{type(params.get("base_name", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], list):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[str]`')
+    if len(params["surface"]) == 2:
+        raise StyxValidationError("Parameter `surface` must contain exactly 2 elements")
+    for e in params["surface"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[str]`')
+    if params.get("num_repetitions", None) is None:
+        raise StyxValidationError("`num_repetitions` must not be None")
+    if not isinstance(params["num_repetitions"], (float, int)):
+        raise StyxValidationError(f'`num_repetitions` has the wrong type: Received `{type(params.get("num_repetitions", None))}` expected `float`')
+    if params.get("fwhm_values", None) is not None:
+        if not isinstance(params["fwhm_values"], list):
+            raise StyxValidationError(f'`fwhm_values` has the wrong type: Received `{type(params.get("fwhm_values", None))}` expected `list[float] | None`')
+        for e in params["fwhm_values"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fwhm_values` has the wrong type: Received `{type(params.get("fwhm_values", None))}` expected `list[float] | None`')
+    if params.get("fwhm_max", None) is not None:
+        if not isinstance(params["fwhm_max"], (float, int)):
+            raise StyxValidationError(f'`fwhm_max` has the wrong type: Received `{type(params.get("fwhm_max", None))}` expected `float | None`')
+    if params.get("avg_vertex_area", False) is None:
+        raise StyxValidationError("`avg_vertex_area` must not be None")
+    if not isinstance(params["avg_vertex_area"], bool):
+        raise StyxValidationError(f'`avg_vertex_area` has the wrong type: Received `{type(params.get("avg_vertex_area", False))}` expected `bool`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], (float, int)):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `float | None`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("no_label", False) is None:
+        raise StyxValidationError("`no_label` must not be None")
+    if not isinstance(params["no_label"], bool):
+        raise StyxValidationError(f'`no_label` has the wrong type: Received `{type(params.get("no_label", False))}` expected `bool`')
+    if params.get("no_save_mask", False) is None:
+        raise StyxValidationError("`no_save_mask` must not be None")
+    if not isinstance(params["no_save_mask"], bool):
+        raise StyxValidationError(f'`no_save_mask` has the wrong type: Received `{type(params.get("no_save_mask", False))}` expected `bool`')
+    if params.get("surface_name", None) is not None:
+        if not isinstance(params["surface_name"], str):
+            raise StyxValidationError(f'`surface_name` has the wrong type: Received `{type(params.get("surface_name", None))}` expected `str | None`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("done_file", None) is not None:
+        if not isinstance(params["done_file"], str):
+            raise StyxValidationError(f'`done_file` has the wrong type: Received `{type(params.get("done_file", None))}` expected `str | None`')
+    if params.get("stop_file", None) is not None:
+        if not isinstance(params["stop_file"], str):
+            raise StyxValidationError(f'`stop_file` has the wrong type: Received `{type(params.get("stop_file", None))}` expected `str | None`')
+    if params.get("save_file", None) is not None:
+        if not isinstance(params["save_file"], str):
+            raise StyxValidationError(f'`save_file` has the wrong type: Received `{type(params.get("save_file", None))}` expected `str | None`')
+    if params.get("save_iter", False) is None:
+        raise StyxValidationError("`save_iter` must not be None")
+    if not isinstance(params["save_iter"], bool):
+        raise StyxValidationError(f'`save_iter` has the wrong type: Received `{type(params.get("save_iter", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_mcsim_cargs(
     params: MriMcsimParameters,
     execution: Execution,
@@ -326,6 +429,7 @@ def mri_mcsim_execute(
     Returns:
         NamedTuple of outputs (described in `MriMcsimOutputs`).
     """
+    mri_mcsim_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MCSIM_METADATA)
     params = execution.params(params)

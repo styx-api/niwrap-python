@@ -50,6 +50,23 @@ def morph_tables_rh_params(
     return params
 
 
+def morph_tables_rh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MorphTablesRhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("options", None) is not None:
+        if not isinstance(params["options"], str):
+            raise StyxValidationError(f'`options` has the wrong type: Received `{type(params.get("options", None))}` expected `str | None`')
+
+
 def morph_tables_rh_cargs(
     params: MorphTablesRhParameters,
     execution: Execution,
@@ -112,6 +129,7 @@ def morph_tables_rh_execute(
     Returns:
         NamedTuple of outputs (described in `MorphTablesRhOutputs`).
     """
+    morph_tables_rh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MORPH_TABLES_RH_METADATA)
     params = execution.params(params)

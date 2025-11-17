@@ -120,6 +120,71 @@ def mri_cor2label_params(
     return params
 
 
+def mri_cor2label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCor2labelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("label_id", None) is None:
+        raise StyxValidationError("`label_id` must not be None")
+    if not isinstance(params["label_id"], (float, int)):
+        raise StyxValidationError(f'`label_id` has the wrong type: Received `{type(params.get("label_id", None))}` expected `float`')
+    if params.get("label_file", None) is None:
+        raise StyxValidationError("`label_file` must not be None")
+    if not isinstance(params["label_file"], str):
+        raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `str`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("volume_file", None) is not None:
+        if not isinstance(params["volume_file"], str):
+            raise StyxValidationError(f'`volume_file` has the wrong type: Received `{type(params.get("volume_file", None))}` expected `str | None`')
+    if params.get("surface_overlay", None) is not None:
+        if not isinstance(params["surface_overlay"], list):
+            raise StyxValidationError(f'`surface_overlay` has the wrong type: Received `{type(params.get("surface_overlay", None))}` expected `list[str] | None`')
+        if len(params["surface_overlay"]) == 3:
+            raise StyxValidationError("Parameter `surface_overlay` must contain exactly 3 elements")
+        for e in params["surface_overlay"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`surface_overlay` has the wrong type: Received `{type(params.get("surface_overlay", None))}` expected `list[str] | None`')
+    if params.get("surface_path", None) is not None:
+        if not isinstance(params["surface_path"], str):
+            raise StyxValidationError(f'`surface_path` has the wrong type: Received `{type(params.get("surface_path", None))}` expected `str | None`')
+    if params.get("optimize", None) is not None:
+        if not isinstance(params["optimize"], list):
+            raise StyxValidationError(f'`optimize` has the wrong type: Received `{type(params.get("optimize", None))}` expected `list[str] | None`')
+        if len(params["optimize"]) == 3:
+            raise StyxValidationError("Parameter `optimize` must contain exactly 3 elements")
+        for e in params["optimize"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`optimize` has the wrong type: Received `{type(params.get("optimize", None))}` expected `list[str] | None`')
+    if params.get("remove_holes_islands", False) is None:
+        raise StyxValidationError("`remove_holes_islands` must not be None")
+    if not isinstance(params["remove_holes_islands"], bool):
+        raise StyxValidationError(f'`remove_holes_islands` has the wrong type: Received `{type(params.get("remove_holes_islands", False))}` expected `bool`')
+    if params.get("dilate", None) is not None:
+        if not isinstance(params["dilate"], (float, int)):
+            raise StyxValidationError(f'`dilate` has the wrong type: Received `{type(params.get("dilate", None))}` expected `float | None`')
+    if params.get("erode", None) is not None:
+        if not isinstance(params["erode"], (float, int)):
+            raise StyxValidationError(f'`erode` has the wrong type: Received `{type(params.get("erode", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_cor2label_cargs(
     params: MriCor2labelParameters,
     execution: Execution,
@@ -230,6 +295,7 @@ def mri_cor2label_execute(
     Returns:
         NamedTuple of outputs (described in `MriCor2labelOutputs`).
     """
+    mri_cor2label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COR2LABEL_METADATA)
     params = execution.params(params)

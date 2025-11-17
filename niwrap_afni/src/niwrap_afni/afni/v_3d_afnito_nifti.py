@@ -88,6 +88,51 @@ def v_3d_afnito_nifti_params(
     return params
 
 
+def v_3d_afnito_nifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAfnitoNiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("force_float", False) is None:
+        raise StyxValidationError("`force_float` must not be None")
+    if not isinstance(params["force_float"], bool):
+        raise StyxValidationError(f'`force_float` has the wrong type: Received `{type(params.get("force_float", False))}` expected `bool`')
+    if params.get("pure", False) is None:
+        raise StyxValidationError("`pure` must not be None")
+    if not isinstance(params["pure"], bool):
+        raise StyxValidationError(f'`pure` has the wrong type: Received `{type(params.get("pure", False))}` expected `bool`')
+    if params.get("denote", False) is None:
+        raise StyxValidationError("`denote` must not be None")
+    if not isinstance(params["denote"], bool):
+        raise StyxValidationError(f'`denote` has the wrong type: Received `{type(params.get("denote", False))}` expected `bool`')
+    if params.get("oldid", False) is None:
+        raise StyxValidationError("`oldid` must not be None")
+    if not isinstance(params["oldid"], bool):
+        raise StyxValidationError(f'`oldid` has the wrong type: Received `{type(params.get("oldid", False))}` expected `bool`')
+    if params.get("newid", False) is None:
+        raise StyxValidationError("`newid` must not be None")
+    if not isinstance(params["newid"], bool):
+        raise StyxValidationError(f'`newid` has the wrong type: Received `{type(params.get("newid", False))}` expected `bool`')
+
+
 def v_3d_afnito_nifti_cargs(
     params: V3dAfnitoNiftiParameters,
     execution: Execution,
@@ -163,6 +208,7 @@ def v_3d_afnito_nifti_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoNiftiOutputs`).
     """
+    v_3d_afnito_nifti_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AFNITO_NIFTI_METADATA)
     params = execution.params(params)

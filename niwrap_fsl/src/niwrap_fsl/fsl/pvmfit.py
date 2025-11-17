@@ -132,6 +132,77 @@ def pvmfit_params(
     return params
 
 
+def pvmfit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PvmfitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data_file", None) is None:
+        raise StyxValidationError("`data_file` must not be None")
+    if not isinstance(params["data_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_file` has the wrong type: Received `{type(params.get("data_file", None))}` expected `InputPathType`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("bvec_file", None) is None:
+        raise StyxValidationError("`bvec_file` must not be None")
+    if not isinstance(params["bvec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvec_file` has the wrong type: Received `{type(params.get("bvec_file", None))}` expected `InputPathType`')
+    if params.get("bval_file", None) is None:
+        raise StyxValidationError("`bval_file` must not be None")
+    if not isinstance(params["bval_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bval_file` has the wrong type: Received `{type(params.get("bval_file", None))}` expected `InputPathType`')
+    if params.get("output_basename", None) is not None:
+        if not isinstance(params["output_basename"], str):
+            raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str | None`')
+    if params.get("number_of_fibres", None) is not None:
+        if not isinstance(params["number_of_fibres"], (float, int)):
+            raise StyxValidationError(f'`number_of_fibres` has the wrong type: Received `{type(params.get("number_of_fibres", None))}` expected `float | None`')
+    if params.get("model_type", None) is not None:
+        if not isinstance(params["model_type"], int):
+            raise StyxValidationError(f'`model_type` has the wrong type: Received `{type(params.get("model_type", None))}` expected `int | None`')
+    if params.get("fit_all_models", False) is None:
+        raise StyxValidationError("`fit_all_models` must not be None")
+    if not isinstance(params["fit_all_models"], bool):
+        raise StyxValidationError(f'`fit_all_models` has the wrong type: Received `{type(params.get("fit_all_models", False))}` expected `bool`')
+    if params.get("constrained_nonlinear", False) is None:
+        raise StyxValidationError("`constrained_nonlinear` must not be None")
+    if not isinstance(params["constrained_nonlinear"], bool):
+        raise StyxValidationError(f'`constrained_nonlinear` has the wrong type: Received `{type(params.get("constrained_nonlinear", False))}` expected `bool`')
+    if params.get("constrained_nonlinear_f", False) is None:
+        raise StyxValidationError("`constrained_nonlinear_f` must not be None")
+    if not isinstance(params["constrained_nonlinear_f"], bool):
+        raise StyxValidationError(f'`constrained_nonlinear_f` has the wrong type: Received `{type(params.get("constrained_nonlinear_f", False))}` expected `bool`')
+    if params.get("grid_search", False) is None:
+        raise StyxValidationError("`grid_search` must not be None")
+    if not isinstance(params["grid_search"], bool):
+        raise StyxValidationError(f'`grid_search` has the wrong type: Received `{type(params.get("grid_search", False))}` expected `bool`')
+    if params.get("include_noise_floor", False) is None:
+        raise StyxValidationError("`include_noise_floor` must not be None")
+    if not isinstance(params["include_noise_floor"], bool):
+        raise StyxValidationError(f'`include_noise_floor` has the wrong type: Received `{type(params.get("include_noise_floor", False))}` expected `bool`')
+    if params.get("save_bic", False) is None:
+        raise StyxValidationError("`save_bic` must not be None")
+    if not isinstance(params["save_bic"], bool):
+        raise StyxValidationError(f'`save_bic` has the wrong type: Received `{type(params.get("save_bic", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def pvmfit_cargs(
     params: PvmfitParameters,
     execution: Execution,
@@ -237,6 +308,7 @@ def pvmfit_execute(
     Returns:
         NamedTuple of outputs (described in `PvmfitOutputs`).
     """
+    pvmfit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PVMFIT_METADATA)
     params = execution.params(params)

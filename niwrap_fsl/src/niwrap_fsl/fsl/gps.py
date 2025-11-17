@@ -90,6 +90,49 @@ def gps_params(
     return params
 
 
+def gps_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `GpsParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ndir", None) is None:
+        raise StyxValidationError("`ndir` must not be None")
+    if not isinstance(params["ndir"], (float, int)):
+        raise StyxValidationError(f'`ndir` has the wrong type: Received `{type(params.get("ndir", None))}` expected `float`')
+    if params.get("optws", False) is None:
+        raise StyxValidationError("`optws` must not be None")
+    if not isinstance(params["optws"], bool):
+        raise StyxValidationError(f'`optws` has the wrong type: Received `{type(params.get("optws", False))}` expected `bool`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("ranseed", None) is not None:
+        if not isinstance(params["ranseed"], (float, int)):
+            raise StyxValidationError(f'`ranseed` has the wrong type: Received `{type(params.get("ranseed", None))}` expected `float | None`')
+    if params.get("init", None) is not None:
+        if not isinstance(params["init"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init` has the wrong type: Received `{type(params.get("init", None))}` expected `InputPathType | None`')
+    if params.get("report", False) is None:
+        raise StyxValidationError("`report` must not be None")
+    if not isinstance(params["report"], bool):
+        raise StyxValidationError(f'`report` has the wrong type: Received `{type(params.get("report", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def gps_cargs(
     params: GpsParameters,
     execution: Execution,
@@ -174,6 +217,7 @@ def gps_execute(
     Returns:
         NamedTuple of outputs (described in `GpsOutputs`).
     """
+    gps_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GPS_METADATA)
     params = execution.params(params)

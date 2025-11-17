@@ -62,6 +62,31 @@ def register_csh_params(
     return params
 
 
+def register_csh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegisterCshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_image", None) is None:
+        raise StyxValidationError("`base_image` must not be None")
+    if not isinstance(params["base_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_image` has the wrong type: Received `{type(params.get("base_image", None))}` expected `InputPathType`')
+    if params.get("new_image", None) is None:
+        raise StyxValidationError("`new_image` must not be None")
+    if not isinstance(params["new_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new_image` has the wrong type: Received `{type(params.get("new_image", None))}` expected `InputPathType`')
+    if params.get("options", None) is not None:
+        if not isinstance(params["options"], str):
+            raise StyxValidationError(f'`options` has the wrong type: Received `{type(params.get("options", None))}` expected `str | None`')
+
+
 def register_csh_cargs(
     params: RegisterCshParameters,
     execution: Execution,
@@ -123,6 +148,7 @@ def register_csh_execute(
     Returns:
         NamedTuple of outputs (described in `RegisterCshOutputs`).
     """
+    register_csh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REGISTER_CSH_METADATA)
     params = execution.params(params)

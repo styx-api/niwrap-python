@@ -92,6 +92,28 @@ def convert_warpfield_from_world_params(
     return params
 
 
+def convert_warpfield_from_world_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertWarpfieldFromWorldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], str):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str`')
+    if params.get("absolute", False) is None:
+        raise StyxValidationError("`absolute` must not be None")
+    if not isinstance(params["absolute"], bool):
+        raise StyxValidationError(f'`absolute` has the wrong type: Received `{type(params.get("absolute", False))}` expected `bool`')
+
+
 def convert_warpfield_from_world_cargs(
     params: ConvertWarpfieldFromWorldParameters,
     execution: Execution,
@@ -141,6 +163,32 @@ def convert_warpfield_from_fnirt_params(
     return params
 
 
+def convert_warpfield_from_fnirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertWarpfieldFromFnirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], str):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str`')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("absolute", False) is None:
+        raise StyxValidationError("`absolute` must not be None")
+    if not isinstance(params["absolute"], bool):
+        raise StyxValidationError(f'`absolute` has the wrong type: Received `{type(params.get("absolute", False))}` expected `bool`')
+
+
 def convert_warpfield_from_fnirt_cargs(
     params: ConvertWarpfieldFromFnirtParameters,
     execution: Execution,
@@ -184,6 +232,28 @@ def convert_warpfield_to_fnirt_params(
         "source-volume": source_volume,
     }
     return params
+
+
+def convert_warpfield_to_fnirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertWarpfieldToFnirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
 
 
 def convert_warpfield_to_fnirt_cargs(
@@ -259,6 +329,38 @@ def convert_warpfield_params(
     if to_fnirt is not None:
         params["to-fnirt"] = to_fnirt
     return params
+
+
+def convert_warpfield_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertWarpfieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("from-world", None) is not None:
+        convert_warpfield_from_world_validate(params["from-world"])
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], str):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str | None`')
+    if params.get("from-fnirt", None) is not None:
+        convert_warpfield_from_fnirt_validate(params["from-fnirt"])
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("to-fnirt", None) is not None:
+        if not isinstance(params["to-fnirt"], list):
+            raise StyxValidationError(f'`to-fnirt` has the wrong type: Received `{type(params.get("to-fnirt", None))}` expected `list[ConvertWarpfieldToFnirtParameters] | None`')
+        for e in params["to-fnirt"]:
+            convert_warpfield_to_fnirt_validate(e)
 
 
 def convert_warpfield_cargs(
@@ -337,6 +439,7 @@ def convert_warpfield_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertWarpfieldOutputs`).
     """
+    convert_warpfield_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_WARPFIELD_METADATA)
     params = execution.params(params)

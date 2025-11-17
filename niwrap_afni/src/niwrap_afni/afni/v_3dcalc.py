@@ -103,6 +103,53 @@ def v_3dcalc_params(
     return params
 
 
+def v_3dcalc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dcalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file_a", None) is None:
+        raise StyxValidationError("`in_file_a` must not be None")
+    if not isinstance(params["in_file_a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file_a` has the wrong type: Received `{type(params.get("in_file_a", None))}` expected `InputPathType`')
+    if params.get("in_file_b", None) is not None:
+        if not isinstance(params["in_file_b"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_file_b` has the wrong type: Received `{type(params.get("in_file_b", None))}` expected `InputPathType | None`')
+    if params.get("in_file_c", None) is not None:
+        if not isinstance(params["in_file_c"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_file_c` has the wrong type: Received `{type(params.get("in_file_c", None))}` expected `InputPathType | None`')
+    if params.get("other", None) is not None:
+        if not isinstance(params["other"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`other` has the wrong type: Received `{type(params.get("other", None))}` expected `InputPathType | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("single_idx", None) is not None:
+        if not isinstance(params["single_idx"], int):
+            raise StyxValidationError(f'`single_idx` has the wrong type: Received `{type(params.get("single_idx", None))}` expected `int | None`')
+    if params.get("start_idx", None) is not None:
+        if not isinstance(params["start_idx"], int):
+            raise StyxValidationError(f'`start_idx` has the wrong type: Received `{type(params.get("start_idx", None))}` expected `int | None`')
+    if params.get("stop_idx", None) is not None:
+        if not isinstance(params["stop_idx"], int):
+            raise StyxValidationError(f'`stop_idx` has the wrong type: Received `{type(params.get("stop_idx", None))}` expected `int | None`')
+    if params.get("expr", None) is None:
+        raise StyxValidationError("`expr` must not be None")
+    if not isinstance(params["expr"], str):
+        raise StyxValidationError(f'`expr` has the wrong type: Received `{type(params.get("expr", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3dcalc_cargs(
     params: V3dcalcParameters,
     execution: Execution,
@@ -193,6 +240,7 @@ def v_3dcalc_execute(
     Returns:
         NamedTuple of outputs (described in `V3dcalcOutputs`).
     """
+    v_3dcalc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DCALC_METADATA)
     params = execution.params(params)

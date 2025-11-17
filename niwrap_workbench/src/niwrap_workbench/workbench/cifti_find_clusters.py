@@ -137,6 +137,27 @@ def cifti_find_clusters_left_surface_params(
     return params
 
 
+def cifti_find_clusters_left_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFindClustersLeftSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_find_clusters_left_surface_cargs(
     params: CiftiFindClustersLeftSurfaceParameters,
     execution: Execution,
@@ -184,6 +205,27 @@ def cifti_find_clusters_right_surface_params(
     if area_metric is not None:
         params["area-metric"] = area_metric
     return params
+
+
+def cifti_find_clusters_right_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFindClustersRightSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_find_clusters_right_surface_cargs(
@@ -235,6 +277,27 @@ def cifti_find_clusters_cerebellum_surface_params(
     return params
 
 
+def cifti_find_clusters_cerebellum_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFindClustersCerebellumSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_find_clusters_cerebellum_surface_cargs(
     params: CiftiFindClustersCerebellumSurfaceParameters,
     execution: Execution,
@@ -280,6 +343,28 @@ def cifti_find_clusters_size_ratio_params(
     return params
 
 
+def cifti_find_clusters_size_ratio_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFindClustersSizeRatioParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-ratio", None) is None:
+        raise StyxValidationError("`surface-ratio` must not be None")
+    if not isinstance(params["surface-ratio"], (float, int)):
+        raise StyxValidationError(f'`surface-ratio` has the wrong type: Received `{type(params.get("surface-ratio", None))}` expected `float`')
+    if params.get("volume-ratio", None) is None:
+        raise StyxValidationError("`volume-ratio` must not be None")
+    if not isinstance(params["volume-ratio"], (float, int)):
+        raise StyxValidationError(f'`volume-ratio` has the wrong type: Received `{type(params.get("volume-ratio", None))}` expected `float`')
+
+
 def cifti_find_clusters_size_ratio_cargs(
     params: CiftiFindClustersSizeRatioParameters,
     execution: Execution,
@@ -323,6 +408,28 @@ def cifti_find_clusters_distance_params(
         "volume-distance": volume_distance,
     }
     return params
+
+
+def cifti_find_clusters_distance_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFindClustersDistanceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-distance", None) is None:
+        raise StyxValidationError("`surface-distance` must not be None")
+    if not isinstance(params["surface-distance"], (float, int)):
+        raise StyxValidationError(f'`surface-distance` has the wrong type: Received `{type(params.get("surface-distance", None))}` expected `float`')
+    if params.get("volume-distance", None) is None:
+        raise StyxValidationError("`volume-distance` must not be None")
+    if not isinstance(params["volume-distance"], (float, int)):
+        raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
 
 
 def cifti_find_clusters_distance_cargs(
@@ -435,6 +542,72 @@ def cifti_find_clusters_params(
     return params
 
 
+def cifti_find_clusters_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiFindClustersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("less-than", False) is None:
+        raise StyxValidationError("`less-than` must not be None")
+    if not isinstance(params["less-than"], bool):
+        raise StyxValidationError(f'`less-than` has the wrong type: Received `{type(params.get("less-than", False))}` expected `bool`')
+    if params.get("left-surface", None) is not None:
+        cifti_find_clusters_left_surface_validate(params["left-surface"])
+    if params.get("right-surface", None) is not None:
+        cifti_find_clusters_right_surface_validate(params["right-surface"])
+    if params.get("cerebellum-surface", None) is not None:
+        cifti_find_clusters_cerebellum_surface_validate(params["cerebellum-surface"])
+    if params.get("roi-cifti", None) is not None:
+        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
+    if params.get("size-ratio", None) is not None:
+        cifti_find_clusters_size_ratio_validate(params["size-ratio"])
+    if params.get("distance", None) is not None:
+        cifti_find_clusters_distance_validate(params["distance"])
+    if params.get("startval", None) is not None:
+        if not isinstance(params["startval"], int):
+            raise StyxValidationError(f'`startval` has the wrong type: Received `{type(params.get("startval", None))}` expected `int | None`')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("surface-value-threshold", None) is None:
+        raise StyxValidationError("`surface-value-threshold` must not be None")
+    if not isinstance(params["surface-value-threshold"], (float, int)):
+        raise StyxValidationError(f'`surface-value-threshold` has the wrong type: Received `{type(params.get("surface-value-threshold", None))}` expected `float`')
+    if params.get("surface-minimum-area", None) is None:
+        raise StyxValidationError("`surface-minimum-area` must not be None")
+    if not isinstance(params["surface-minimum-area"], (float, int)):
+        raise StyxValidationError(f'`surface-minimum-area` has the wrong type: Received `{type(params.get("surface-minimum-area", None))}` expected `float`')
+    if params.get("volume-value-threshold", None) is None:
+        raise StyxValidationError("`volume-value-threshold` must not be None")
+    if not isinstance(params["volume-value-threshold"], (float, int)):
+        raise StyxValidationError(f'`volume-value-threshold` has the wrong type: Received `{type(params.get("volume-value-threshold", None))}` expected `float`')
+    if params.get("volume-minimum-size", None) is None:
+        raise StyxValidationError("`volume-minimum-size` must not be None")
+    if not isinstance(params["volume-minimum-size"], (float, int)):
+        raise StyxValidationError(f'`volume-minimum-size` has the wrong type: Received `{type(params.get("volume-minimum-size", None))}` expected `float`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+
+
 def cifti_find_clusters_cargs(
     params: CiftiFindClustersParameters,
     execution: Execution,
@@ -518,6 +691,7 @@ def cifti_find_clusters_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiFindClustersOutputs`).
     """
+    cifti_find_clusters_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_FIND_CLUSTERS_METADATA)
     params = execution.params(params)

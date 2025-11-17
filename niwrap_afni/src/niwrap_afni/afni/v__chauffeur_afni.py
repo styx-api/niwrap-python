@@ -155,6 +155,81 @@ def v__chauffeur_afni_params(
     return params
 
 
+def v__chauffeur_afni_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VChauffeurAfniParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ulay", None) is None:
+        raise StyxValidationError("`ulay` must not be None")
+    if not isinstance(params["ulay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ulay` has the wrong type: Received `{type(params.get("ulay", None))}` expected `InputPathType`')
+    if params.get("olay", None) is not None:
+        if not isinstance(params["olay"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`olay` has the wrong type: Received `{type(params.get("olay", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("mode_4D", False) is None:
+        raise StyxValidationError("`mode_4D` must not be None")
+    if not isinstance(params["mode_4D"], bool):
+        raise StyxValidationError(f'`mode_4D` has the wrong type: Received `{type(params.get("mode_4D", False))}` expected `bool`')
+    if params.get("func_range", None) is not None:
+        if not isinstance(params["func_range"], (float, int)):
+            raise StyxValidationError(f'`func_range` has the wrong type: Received `{type(params.get("func_range", None))}` expected `float | None`')
+    if params.get("opacity", None) is not None:
+        if not isinstance(params["opacity"], (float, int)):
+            raise StyxValidationError(f'`opacity` has the wrong type: Received `{type(params.get("opacity", None))}` expected `float | None`')
+    if params.get("set_subbricks", None) is not None:
+        if not isinstance(params["set_subbricks"], str):
+            raise StyxValidationError(f'`set_subbricks` has the wrong type: Received `{type(params.get("set_subbricks", None))}` expected `str | None`')
+    if params.get("montx", None) is not None:
+        if not isinstance(params["montx"], (float, int)):
+            raise StyxValidationError(f'`montx` has the wrong type: Received `{type(params.get("montx", None))}` expected `float | None`')
+    if params.get("monty", None) is not None:
+        if not isinstance(params["monty"], (float, int)):
+            raise StyxValidationError(f'`monty` has the wrong type: Received `{type(params.get("monty", None))}` expected `float | None`')
+    if params.get("montgap", None) is not None:
+        if not isinstance(params["montgap"], (float, int)):
+            raise StyxValidationError(f'`montgap` has the wrong type: Received `{type(params.get("montgap", None))}` expected `float | None`')
+    if params.get("label_mode", None) is not None:
+        if not isinstance(params["label_mode"], (float, int)):
+            raise StyxValidationError(f'`label_mode` has the wrong type: Received `{type(params.get("label_mode", None))}` expected `float | None`')
+    if params.get("label_size", None) is not None:
+        if not isinstance(params["label_size"], (float, int)):
+            raise StyxValidationError(f'`label_size` has the wrong type: Received `{type(params.get("label_size", None))}` expected `float | None`')
+    if params.get("label_color", None) is not None:
+        if not isinstance(params["label_color"], str):
+            raise StyxValidationError(f'`label_color` has the wrong type: Received `{type(params.get("label_color", None))}` expected `str | None`')
+    if params.get("label_setback", None) is not None:
+        if not isinstance(params["label_setback"], (float, int)):
+            raise StyxValidationError(f'`label_setback` has the wrong type: Received `{type(params.get("label_setback", None))}` expected `float | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("do_clean", False) is None:
+        raise StyxValidationError("`do_clean` must not be None")
+    if not isinstance(params["do_clean"], bool):
+        raise StyxValidationError(f'`do_clean` has the wrong type: Received `{type(params.get("do_clean", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def v__chauffeur_afni_cargs(
     params: VChauffeurAfniParameters,
     execution: Execution,
@@ -281,6 +356,7 @@ def v__chauffeur_afni_execute(
     Returns:
         NamedTuple of outputs (described in `VChauffeurAfniOutputs`).
     """
+    v__chauffeur_afni_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__CHAUFFEUR_AFNI_METADATA)
     params = execution.params(params)

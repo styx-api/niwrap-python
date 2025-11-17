@@ -49,6 +49,24 @@ def csvprint_params(
     return params
 
 
+def csvprint_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CsvprintParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+
+
 def csvprint_cargs(
     params: CsvprintParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def csvprint_execute(
     Returns:
         NamedTuple of outputs (described in `CsvprintOutputs`).
     """
+    csvprint_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CSVPRINT_METADATA)
     params = execution.params(params)

@@ -113,6 +113,57 @@ def feat2surf_params(
     return params
 
 
+def feat2surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Feat2surfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat_dirs", None) is None:
+        raise StyxValidationError("`feat_dirs` must not be None")
+    if not isinstance(params["feat_dirs"], list):
+        raise StyxValidationError(f'`feat_dirs` has the wrong type: Received `{type(params.get("feat_dirs", None))}` expected `list[str]`')
+    for e in params["feat_dirs"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`feat_dirs` has the wrong type: Received `{type(params.get("feat_dirs", None))}` expected `list[str]`')
+    if params.get("feat_dirfile", None) is not None:
+        if not isinstance(params["feat_dirfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`feat_dirfile` has the wrong type: Received `{type(params.get("feat_dirfile", None))}` expected `InputPathType | None`')
+    if params.get("proj_frac", None) is not None:
+        if not isinstance(params["proj_frac"], (float, int)):
+            raise StyxValidationError(f'`proj_frac` has the wrong type: Received `{type(params.get("proj_frac", None))}` expected `float | None`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("target", None) is not None:
+        if not isinstance(params["target"], str):
+            raise StyxValidationError(f'`target` has the wrong type: Received `{type(params.get("target", None))}` expected `str | None`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+    if params.get("cope_only", False) is None:
+        raise StyxValidationError("`cope_only` must not be None")
+    if not isinstance(params["cope_only"], bool):
+        raise StyxValidationError(f'`cope_only` has the wrong type: Received `{type(params.get("cope_only", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("nolog_flag", False) is None:
+        raise StyxValidationError("`nolog_flag` must not be None")
+    if not isinstance(params["nolog_flag"], bool):
+        raise StyxValidationError(f'`nolog_flag` has the wrong type: Received `{type(params.get("nolog_flag", False))}` expected `bool`')
+    if params.get("out_dir", None) is not None:
+        if not isinstance(params["out_dir"], str):
+            raise StyxValidationError(f'`out_dir` has the wrong type: Received `{type(params.get("out_dir", None))}` expected `str | None`')
+
+
 def feat2surf_cargs(
     params: Feat2surfParameters,
     execution: Execution,
@@ -214,6 +265,7 @@ def feat2surf_execute(
     Returns:
         NamedTuple of outputs (described in `Feat2surfOutputs`).
     """
+    feat2surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FEAT2SURF_METADATA)
     params = execution.params(params)

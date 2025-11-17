@@ -82,6 +82,42 @@ def mris_resample_params(
     return params
 
 
+def mris_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("atlas_reg", None) is None:
+        raise StyxValidationError("`atlas_reg` must not be None")
+    if not isinstance(params["atlas_reg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`atlas_reg` has the wrong type: Received `{type(params.get("atlas_reg", None))}` expected `InputPathType`')
+    if params.get("subject_reg", None) is None:
+        raise StyxValidationError("`subject_reg` must not be None")
+    if not isinstance(params["subject_reg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subject_reg` has the wrong type: Received `{type(params.get("subject_reg", None))}` expected `InputPathType`')
+    if params.get("subject_surf", None) is None:
+        raise StyxValidationError("`subject_surf` must not be None")
+    if not isinstance(params["subject_surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subject_surf` has the wrong type: Received `{type(params.get("subject_surf", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("annot_in", None) is not None:
+        if not isinstance(params["annot_in"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annot_in` has the wrong type: Received `{type(params.get("annot_in", None))}` expected `InputPathType | None`')
+    if params.get("annot_out", None) is not None:
+        if not isinstance(params["annot_out"], str):
+            raise StyxValidationError(f'`annot_out` has the wrong type: Received `{type(params.get("annot_out", None))}` expected `str | None`')
+
+
 def mris_resample_cargs(
     params: MrisResampleParameters,
     execution: Execution,
@@ -166,6 +202,7 @@ def mris_resample_execute(
     Returns:
         NamedTuple of outputs (described in `MrisResampleOutputs`).
     """
+    mris_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_RESAMPLE_METADATA)
     params = execution.params(params)

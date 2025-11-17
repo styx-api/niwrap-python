@@ -71,6 +71,23 @@ def file_information_only_metadata_params(
     return params
 
 
+def file_information_only_metadata_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FileInformationOnlyMetadataParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is not None:
+        if not isinstance(params["key"], str):
+            raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str | None`')
+
+
 def file_information_only_metadata_cargs(
     params: FileInformationOnlyMetadataParameters,
     execution: Execution,
@@ -150,6 +167,58 @@ def file_information_params(
     if only_metadata is not None:
         params["only-metadata"] = only_metadata
     return params
+
+
+def file_information_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FileInformationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("no-map-info", False) is None:
+        raise StyxValidationError("`no-map-info` must not be None")
+    if not isinstance(params["no-map-info"], bool):
+        raise StyxValidationError(f'`no-map-info` has the wrong type: Received `{type(params.get("no-map-info", False))}` expected `bool`')
+    if params.get("only-step-interval", False) is None:
+        raise StyxValidationError("`only-step-interval` must not be None")
+    if not isinstance(params["only-step-interval"], bool):
+        raise StyxValidationError(f'`only-step-interval` has the wrong type: Received `{type(params.get("only-step-interval", False))}` expected `bool`')
+    if params.get("only-number-of-maps", False) is None:
+        raise StyxValidationError("`only-number-of-maps` must not be None")
+    if not isinstance(params["only-number-of-maps"], bool):
+        raise StyxValidationError(f'`only-number-of-maps` has the wrong type: Received `{type(params.get("only-number-of-maps", False))}` expected `bool`')
+    if params.get("only-map-names", False) is None:
+        raise StyxValidationError("`only-map-names` must not be None")
+    if not isinstance(params["only-map-names"], bool):
+        raise StyxValidationError(f'`only-map-names` has the wrong type: Received `{type(params.get("only-map-names", False))}` expected `bool`')
+    if params.get("only-metadata", None) is not None:
+        file_information_only_metadata_validate(params["only-metadata"])
+    if params.get("only-cifti-xml", False) is None:
+        raise StyxValidationError("`only-cifti-xml` must not be None")
+    if not isinstance(params["only-cifti-xml"], bool):
+        raise StyxValidationError(f'`only-cifti-xml` has the wrong type: Received `{type(params.get("only-cifti-xml", False))}` expected `bool`')
+    if params.get("czi", False) is None:
+        raise StyxValidationError("`czi` must not be None")
+    if not isinstance(params["czi"], bool):
+        raise StyxValidationError(f'`czi` has the wrong type: Received `{type(params.get("czi", False))}` expected `bool`')
+    if params.get("czi-all-sub-blocks", False) is None:
+        raise StyxValidationError("`czi-all-sub-blocks` must not be None")
+    if not isinstance(params["czi-all-sub-blocks"], bool):
+        raise StyxValidationError(f'`czi-all-sub-blocks` has the wrong type: Received `{type(params.get("czi-all-sub-blocks", False))}` expected `bool`')
+    if params.get("czi-xml", False) is None:
+        raise StyxValidationError("`czi-xml` must not be None")
+    if not isinstance(params["czi-xml"], bool):
+        raise StyxValidationError(f'`czi-xml` has the wrong type: Received `{type(params.get("czi-xml", False))}` expected `bool`')
+    if params.get("data-file", None) is None:
+        raise StyxValidationError("`data-file` must not be None")
+    if not isinstance(params["data-file"], str):
+        raise StyxValidationError(f'`data-file` has the wrong type: Received `{type(params.get("data-file", None))}` expected `str`')
 
 
 def file_information_cargs(
@@ -260,6 +329,7 @@ def file_information_execute(
     Returns:
         NamedTuple of outputs (described in `FileInformationOutputs`).
     """
+    file_information_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FILE_INFORMATION_METADATA)
     params = execution.params(params)

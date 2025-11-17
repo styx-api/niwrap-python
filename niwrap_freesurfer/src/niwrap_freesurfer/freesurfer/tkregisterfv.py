@@ -222,6 +222,135 @@ def tkregisterfv_params(
     return params
 
 
+def tkregisterfv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TkregisterfvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mov", None) is not None:
+        if not isinstance(params["mov"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mov` has the wrong type: Received `{type(params.get("mov", None))}` expected `InputPathType | None`')
+    if params.get("targ", None) is not None:
+        if not isinstance(params["targ"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`targ` has the wrong type: Received `{type(params.get("targ", None))}` expected `InputPathType | None`')
+    if params.get("reg", None) is None:
+        raise StyxValidationError("`reg` must not be None")
+    if not isinstance(params["reg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reg` has the wrong type: Received `{type(params.get("reg", None))}` expected `InputPathType`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("fstarg", None) is not None:
+        if not isinstance(params["fstarg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fstarg` has the wrong type: Received `{type(params.get("fstarg", None))}` expected `InputPathType | None`')
+    if params.get("sd", None) is not None:
+        if not isinstance(params["sd"], str):
+            raise StyxValidationError(f'`sd` has the wrong type: Received `{type(params.get("sd", None))}` expected `str | None`')
+    if params.get("seg", None) is not None:
+        if not isinstance(params["seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg` has the wrong type: Received `{type(params.get("seg", None))}` expected `InputPathType | None`')
+    if params.get("aseg_flag", False) is None:
+        raise StyxValidationError("`aseg_flag` must not be None")
+    if not isinstance(params["aseg_flag"], bool):
+        raise StyxValidationError(f'`aseg_flag` has the wrong type: Received `{type(params.get("aseg_flag", False))}` expected `bool`')
+    if params.get("aparc_aseg_flag", False) is None:
+        raise StyxValidationError("`aparc_aseg_flag` must not be None")
+    if not isinstance(params["aparc_aseg_flag"], bool):
+        raise StyxValidationError(f'`aparc_aseg_flag` has the wrong type: Received `{type(params.get("aparc_aseg_flag", False))}` expected `bool`')
+    if params.get("opacity", None) is not None:
+        if not isinstance(params["opacity"], (float, int)):
+            raise StyxValidationError(f'`opacity` has the wrong type: Received `{type(params.get("opacity", None))}` expected `float | None`')
+    if params.get("surfs_flag", False) is None:
+        raise StyxValidationError("`surfs_flag` must not be None")
+    if not isinstance(params["surfs_flag"], bool):
+        raise StyxValidationError(f'`surfs_flag` has the wrong type: Received `{type(params.get("surfs_flag", False))}` expected `bool`')
+    if params.get("pial_surfs_flag", False) is None:
+        raise StyxValidationError("`pial_surfs_flag` must not be None")
+    if not isinstance(params["pial_surfs_flag"], bool):
+        raise StyxValidationError(f'`pial_surfs_flag` has the wrong type: Received `{type(params.get("pial_surfs_flag", False))}` expected `bool`')
+    if params.get("all_surfs_flag", False) is None:
+        raise StyxValidationError("`all_surfs_flag` must not be None")
+    if not isinstance(params["all_surfs_flag"], bool):
+        raise StyxValidationError(f'`all_surfs_flag` has the wrong type: Received `{type(params.get("all_surfs_flag", False))}` expected `bool`')
+    if params.get("no_surfs_flag", False) is None:
+        raise StyxValidationError("`no_surfs_flag` must not be None")
+    if not isinstance(params["no_surfs_flag"], bool):
+        raise StyxValidationError(f'`no_surfs_flag` has the wrong type: Received `{type(params.get("no_surfs_flag", False))}` expected `bool`')
+    if params.get("lh_only_flag", False) is None:
+        raise StyxValidationError("`lh_only_flag` must not be None")
+    if not isinstance(params["lh_only_flag"], bool):
+        raise StyxValidationError(f'`lh_only_flag` has the wrong type: Received `{type(params.get("lh_only_flag", False))}` expected `bool`')
+    if params.get("rh_only_flag", False) is None:
+        raise StyxValidationError("`rh_only_flag` must not be None")
+    if not isinstance(params["rh_only_flag"], bool):
+        raise StyxValidationError(f'`rh_only_flag` has the wrong type: Received `{type(params.get("rh_only_flag", False))}` expected `bool`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `InputPathType | None`')
+    if params.get("aux_s", None) is not None:
+        if not isinstance(params["aux_s"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aux_s` has the wrong type: Received `{type(params.get("aux_s", None))}` expected `InputPathType | None`')
+    if params.get("plane", None) is not None:
+        if not isinstance(params["plane"], str):
+            raise StyxValidationError(f'`plane` has the wrong type: Received `{type(params.get("plane", None))}` expected `str | None`')
+    if params.get("no_config_flag", False) is None:
+        raise StyxValidationError("`no_config_flag` must not be None")
+    if not isinstance(params["no_config_flag"], bool):
+        raise StyxValidationError(f'`no_config_flag` has the wrong type: Received `{type(params.get("no_config_flag", False))}` expected `bool`')
+    if params.get("mov2", None) is not None:
+        if not isinstance(params["mov2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mov2` has the wrong type: Received `{type(params.get("mov2", None))}` expected `InputPathType | None`')
+    if params.get("reg2", None) is not None:
+        if not isinstance(params["reg2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reg2` has the wrong type: Received `{type(params.get("reg2", None))}` expected `InputPathType | None`')
+    if params.get("mov3", None) is not None:
+        if not isinstance(params["mov3"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mov3` has the wrong type: Received `{type(params.get("mov3", None))}` expected `InputPathType | None`')
+    if params.get("reg3", None) is not None:
+        if not isinstance(params["reg3"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reg3` has the wrong type: Received `{type(params.get("reg3", None))}` expected `InputPathType | None`')
+    if params.get("heat_flag", False) is None:
+        raise StyxValidationError("`heat_flag` must not be None")
+    if not isinstance(params["heat_flag"], bool):
+        raise StyxValidationError(f'`heat_flag` has the wrong type: Received `{type(params.get("heat_flag", False))}` expected `bool`')
+    if params.get("regheader_flag", False) is None:
+        raise StyxValidationError("`regheader_flag` must not be None")
+    if not isinstance(params["regheader_flag"], bool):
+        raise StyxValidationError(f'`regheader_flag` has the wrong type: Received `{type(params.get("regheader_flag", False))}` expected `bool`')
+    if params.get("params", None) is not None:
+        if not isinstance(params["params"], list):
+            raise StyxValidationError(f'`params` has the wrong type: Received `{type(params.get("params", None))}` expected `list[float] | None`')
+        for e in params["params"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`params` has the wrong type: Received `{type(params.get("params", None))}` expected `list[float] | None`')
+    if params.get("flip_x_flag", False) is None:
+        raise StyxValidationError("`flip_x_flag` must not be None")
+    if not isinstance(params["flip_x_flag"], bool):
+        raise StyxValidationError(f'`flip_x_flag` has the wrong type: Received `{type(params.get("flip_x_flag", False))}` expected `bool`')
+    if params.get("flip_y_flag", False) is None:
+        raise StyxValidationError("`flip_y_flag` must not be None")
+    if not isinstance(params["flip_y_flag"], bool):
+        raise StyxValidationError(f'`flip_y_flag` has the wrong type: Received `{type(params.get("flip_y_flag", False))}` expected `bool`')
+    if params.get("flip_z_flag", False) is None:
+        raise StyxValidationError("`flip_z_flag` must not be None")
+    if not isinstance(params["flip_z_flag"], bool):
+        raise StyxValidationError(f'`flip_z_flag` has the wrong type: Received `{type(params.get("flip_z_flag", False))}` expected `bool`')
+    if params.get("fstal", False) is None:
+        raise StyxValidationError("`fstal` must not be None")
+    if not isinstance(params["fstal"], bool):
+        raise StyxValidationError(f'`fstal` has the wrong type: Received `{type(params.get("fstal", False))}` expected `bool`')
+    if params.get("aux", None) is not None:
+        if not isinstance(params["aux"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aux` has the wrong type: Received `{type(params.get("aux", None))}` expected `InputPathType | None`')
+
+
 def tkregisterfv_cargs(
     params: TkregisterfvParameters,
     execution: Execution,
@@ -393,6 +522,7 @@ def tkregisterfv_execute(
     Returns:
         NamedTuple of outputs (described in `TkregisterfvOutputs`).
     """
+    tkregisterfv_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TKREGISTERFV_METADATA)
     params = execution.params(params)

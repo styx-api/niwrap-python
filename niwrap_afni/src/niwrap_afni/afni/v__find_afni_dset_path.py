@@ -64,6 +64,36 @@ def v__find_afni_dset_path_params(
     return params
 
 
+def v__find_afni_dset_path_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VFindAfniDsetPathParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dsetname", None) is None:
+        raise StyxValidationError("`dsetname` must not be None")
+    if not isinstance(params["dsetname"], str):
+        raise StyxValidationError(f'`dsetname` has the wrong type: Received `{type(params.get("dsetname", None))}` expected `str`')
+    if params.get("append_file", False) is None:
+        raise StyxValidationError("`append_file` must not be None")
+    if not isinstance(params["append_file"], bool):
+        raise StyxValidationError(f'`append_file` has the wrong type: Received `{type(params.get("append_file", False))}` expected `bool`')
+    if params.get("full_path", False) is None:
+        raise StyxValidationError("`full_path` must not be None")
+    if not isinstance(params["full_path"], bool):
+        raise StyxValidationError(f'`full_path` has the wrong type: Received `{type(params.get("full_path", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__find_afni_dset_path_cargs(
     params: VFindAfniDsetPathParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def v__find_afni_dset_path_execute(
     Returns:
         NamedTuple of outputs (described in `VFindAfniDsetPathOutputs`).
     """
+    v__find_afni_dset_path_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__FIND_AFNI_DSET_PATH_METADATA)
     params = execution.params(params)

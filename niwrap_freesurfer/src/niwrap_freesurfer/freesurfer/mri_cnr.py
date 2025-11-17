@@ -92,6 +92,62 @@ def mri_cnr_params(
     return params
 
 
+def mri_cnr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCnrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surf_dir", None) is None:
+        raise StyxValidationError("`surf_dir` must not be None")
+    if not isinstance(params["surf_dir"], str):
+        raise StyxValidationError(f'`surf_dir` has the wrong type: Received `{type(params.get("surf_dir", None))}` expected `str`')
+    if params.get("volume_files", None) is None:
+        raise StyxValidationError("`volume_files` must not be None")
+    if not isinstance(params["volume_files"], list):
+        raise StyxValidationError(f'`volume_files` has the wrong type: Received `{type(params.get("volume_files", None))}` expected `list[InputPathType]`')
+    for e in params["volume_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`volume_files` has the wrong type: Received `{type(params.get("volume_files", None))}` expected `list[InputPathType]`')
+    if params.get("slope", None) is not None:
+        if not isinstance(params["slope"], list):
+            raise StyxValidationError(f'`slope` has the wrong type: Received `{type(params.get("slope", None))}` expected `list[str] | None`')
+        if len(params["slope"]) == 5:
+            raise StyxValidationError("Parameter `slope` must contain exactly 5 elements")
+        for e in params["slope"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`slope` has the wrong type: Received `{type(params.get("slope", None))}` expected `list[str] | None`')
+    if params.get("logfile", None) is not None:
+        if not isinstance(params["logfile"], str):
+            raise StyxValidationError(f'`logfile` has the wrong type: Received `{type(params.get("logfile", None))}` expected `str | None`')
+    if params.get("labels", None) is not None:
+        if not isinstance(params["labels"], list):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+        if len(params["labels"]) == 2:
+            raise StyxValidationError("Parameter `labels` must contain exactly 2 elements")
+        for e in params["labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+    if params.get("print_total_cnr", False) is None:
+        raise StyxValidationError("`print_total_cnr` must not be None")
+    if not isinstance(params["print_total_cnr"], bool):
+        raise StyxValidationError(f'`print_total_cnr` has the wrong type: Received `{type(params.get("print_total_cnr", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def mri_cnr_cargs(
     params: MriCnrParameters,
     execution: Execution,
@@ -172,6 +228,7 @@ def mri_cnr_execute(
     Returns:
         NamedTuple of outputs (described in `MriCnrOutputs`).
     """
+    mri_cnr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CNR_METADATA)
     params = execution.params(params)

@@ -168,6 +168,78 @@ def convertwarp_params(
     return params
 
 
+def convertwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("abswarp", False) is None:
+        raise StyxValidationError("`abswarp` must not be None")
+    if not isinstance(params["abswarp"], bool):
+        raise StyxValidationError(f'`abswarp` has the wrong type: Received `{type(params.get("abswarp", False))}` expected `bool`')
+    if params.get("cons_jacobian", False) is None:
+        raise StyxValidationError("`cons_jacobian` must not be None")
+    if not isinstance(params["cons_jacobian"], bool):
+        raise StyxValidationError(f'`cons_jacobian` has the wrong type: Received `{type(params.get("cons_jacobian", False))}` expected `bool`')
+    if params.get("jacobian_max", None) is not None:
+        if not isinstance(params["jacobian_max"], (float, int)):
+            raise StyxValidationError(f'`jacobian_max` has the wrong type: Received `{type(params.get("jacobian_max", None))}` expected `float | None`')
+    if params.get("jacobian_min", None) is not None:
+        if not isinstance(params["jacobian_min"], (float, int)):
+            raise StyxValidationError(f'`jacobian_min` has the wrong type: Received `{type(params.get("jacobian_min", None))}` expected `float | None`')
+    if params.get("midmat", None) is not None:
+        if not isinstance(params["midmat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`midmat` has the wrong type: Received `{type(params.get("midmat", None))}` expected `InputPathType | None`')
+    if params.get("out_abswarp", False) is None:
+        raise StyxValidationError("`out_abswarp` must not be None")
+    if not isinstance(params["out_abswarp"], bool):
+        raise StyxValidationError(f'`out_abswarp` has the wrong type: Received `{type(params.get("out_abswarp", False))}` expected `bool`')
+    if params.get("out_relwarp", False) is None:
+        raise StyxValidationError("`out_relwarp` must not be None")
+    if not isinstance(params["out_relwarp"], bool):
+        raise StyxValidationError(f'`out_relwarp` has the wrong type: Received `{type(params.get("out_relwarp", False))}` expected `bool`')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None`')
+        if params["output_type"] not in ["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"NIFTI\", \"NIFTI_PAIR\", \"NIFTI_GZ\", \"NIFTI_PAIR_GZ\"]")
+    if params.get("postmat", None) is not None:
+        if not isinstance(params["postmat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`postmat` has the wrong type: Received `{type(params.get("postmat", None))}` expected `InputPathType | None`')
+    if params.get("premat", None) is not None:
+        if not isinstance(params["premat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`premat` has the wrong type: Received `{type(params.get("premat", None))}` expected `InputPathType | None`')
+    if params.get("reference", None) is None:
+        raise StyxValidationError("`reference` must not be None")
+    if not isinstance(params["reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference` has the wrong type: Received `{type(params.get("reference", None))}` expected `InputPathType`')
+    if params.get("relwarp", False) is None:
+        raise StyxValidationError("`relwarp` must not be None")
+    if not isinstance(params["relwarp"], bool):
+        raise StyxValidationError(f'`relwarp` has the wrong type: Received `{type(params.get("relwarp", False))}` expected `bool`')
+    if params.get("shift_direction", None) is not None:
+        if not isinstance(params["shift_direction"], str):
+            raise StyxValidationError(f'`shift_direction` has the wrong type: Received `{type(params.get("shift_direction", None))}` expected `typing.Literal["y-", "y", "x", "x-", "z", "z-"] | None`')
+        if params["shift_direction"] not in ["y-", "y", "x", "x-", "z", "z-"]:
+            raise StyxValidationError("Parameter `shift_direction` must be one of [\"y-\", \"y\", \"x\", \"x-\", \"z\", \"z-\"]")
+    if params.get("shift_in_file", None) is not None:
+        if not isinstance(params["shift_in_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`shift_in_file` has the wrong type: Received `{type(params.get("shift_in_file", None))}` expected `InputPathType | None`')
+    if params.get("warp1", None) is not None:
+        if not isinstance(params["warp1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp1` has the wrong type: Received `{type(params.get("warp1", None))}` expected `InputPathType | None`')
+    if params.get("warp2", None) is not None:
+        if not isinstance(params["warp2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp2` has the wrong type: Received `{type(params.get("warp2", None))}` expected `InputPathType | None`')
+
+
 def convertwarp_cargs(
     params: ConvertwarpParameters,
     execution: Execution,
@@ -257,6 +329,7 @@ def convertwarp_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertwarpOutputs`).
     """
+    convertwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERTWARP_METADATA)
     params = execution.params(params)

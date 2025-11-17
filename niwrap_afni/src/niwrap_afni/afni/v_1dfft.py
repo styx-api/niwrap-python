@@ -99,6 +99,59 @@ def v_1dfft_params(
     return params
 
 
+def v_1dfft_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dfftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], (float, int)):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `float | None`')
+        if params["ignore"] >= 0:
+            raise StyxValidationError("Parameter `ignore` must be at least 0")
+    if params.get("use", None) is not None:
+        if not isinstance(params["use"], (float, int)):
+            raise StyxValidationError(f'`use` has the wrong type: Received `{type(params.get("use", None))}` expected `float | None`')
+        if params["use"] >= 0:
+            raise StyxValidationError("Parameter `use` must be at least 0")
+    if params.get("nfft", None) is not None:
+        if not isinstance(params["nfft"], (float, int)):
+            raise StyxValidationError(f'`nfft` has the wrong type: Received `{type(params.get("nfft", None))}` expected `float | None`')
+        if params["nfft"] >= 1:
+            raise StyxValidationError("Parameter `nfft` must be at least 1")
+    if params.get("tocx", False) is None:
+        raise StyxValidationError("`tocx` must not be None")
+    if not isinstance(params["tocx"], bool):
+        raise StyxValidationError(f'`tocx` has the wrong type: Received `{type(params.get("tocx", False))}` expected `bool`')
+    if params.get("fromcx", False) is None:
+        raise StyxValidationError("`fromcx` must not be None")
+    if not isinstance(params["fromcx"], bool):
+        raise StyxValidationError(f'`fromcx` has the wrong type: Received `{type(params.get("fromcx", False))}` expected `bool`')
+    if params.get("hilbert", False) is None:
+        raise StyxValidationError("`hilbert` must not be None")
+    if not isinstance(params["hilbert"], bool):
+        raise StyxValidationError(f'`hilbert` has the wrong type: Received `{type(params.get("hilbert", False))}` expected `bool`')
+    if params.get("nodetrend", False) is None:
+        raise StyxValidationError("`nodetrend` must not be None")
+    if not isinstance(params["nodetrend"], bool):
+        raise StyxValidationError(f'`nodetrend` has the wrong type: Received `{type(params.get("nodetrend", False))}` expected `bool`')
+
+
 def v_1dfft_cargs(
     params: V1dfftParameters,
     execution: Execution,
@@ -181,6 +234,7 @@ def v_1dfft_execute(
     Returns:
         NamedTuple of outputs (described in `V1dfftOutputs`).
     """
+    v_1dfft_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DFFT_METADATA)
     params = execution.params(params)

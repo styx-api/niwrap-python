@@ -123,6 +123,62 @@ def surf_to_surf_params(
     return params
 
 
+def surf_to_surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfToSurfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface_1", None) is None:
+        raise StyxValidationError("`input_surface_1` must not be None")
+    if not isinstance(params["input_surface_1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface_1` has the wrong type: Received `{type(params.get("input_surface_1", None))}` expected `InputPathType`')
+    if params.get("input_surface_2", None) is None:
+        raise StyxValidationError("`input_surface_2` must not be None")
+    if not isinstance(params["input_surface_2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface_2` has the wrong type: Received `{type(params.get("input_surface_2", None))}` expected `InputPathType`')
+    if params.get("surface_volume", None) is not None:
+        if not isinstance(params["surface_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_volume` has the wrong type: Received `{type(params.get("surface_volume", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("output_params", None) is not None:
+        if not isinstance(params["output_params"], str):
+            raise StyxValidationError(f'`output_params` has the wrong type: Received `{type(params.get("output_params", None))}` expected `str | None`')
+    if params.get("node_indices", None) is not None:
+        if not isinstance(params["node_indices"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`node_indices` has the wrong type: Received `{type(params.get("node_indices", None))}` expected `InputPathType | None`')
+    if params.get("proj_dir", None) is not None:
+        if not isinstance(params["proj_dir"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`proj_dir` has the wrong type: Received `{type(params.get("proj_dir", None))}` expected `InputPathType | None`')
+    if params.get("data", None) is not None:
+        if not isinstance(params["data"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`data` has the wrong type: Received `{type(params.get("data", None))}` expected `InputPathType | None`')
+    if params.get("node_debug", None) is not None:
+        if not isinstance(params["node_debug"], (float, int)):
+            raise StyxValidationError(f'`node_debug` has the wrong type: Received `{type(params.get("node_debug", None))}` expected `float | None`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], (float, int)):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `float | None`')
+    if params.get("make_consistent", False) is None:
+        raise StyxValidationError("`make_consistent` must not be None")
+    if not isinstance(params["make_consistent"], bool):
+        raise StyxValidationError(f'`make_consistent` has the wrong type: Received `{type(params.get("make_consistent", False))}` expected `bool`')
+    if params.get("dset", None) is not None:
+        if not isinstance(params["dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType | None`')
+    if params.get("mapfile", None) is not None:
+        if not isinstance(params["mapfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mapfile` has the wrong type: Received `{type(params.get("mapfile", None))}` expected `InputPathType | None`')
+
+
 def surf_to_surf_cargs(
     params: SurfToSurfParameters,
     execution: Execution,
@@ -234,6 +290,7 @@ def surf_to_surf_execute(
     Returns:
         NamedTuple of outputs (described in `SurfToSurfOutputs`).
     """
+    surf_to_surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_TO_SURF_METADATA)
     params = execution.params(params)

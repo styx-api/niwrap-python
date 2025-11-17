@@ -65,6 +65,33 @@ def imaver_params(
     return params
 
 
+def imaver_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImaverParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("out_ave", None) is not None:
+        if not isinstance(params["out_ave"], str):
+            raise StyxValidationError(f'`out_ave` has the wrong type: Received `{type(params.get("out_ave", None))}` expected `str | None`')
+    if params.get("out_sig", None) is not None:
+        if not isinstance(params["out_sig"], str):
+            raise StyxValidationError(f'`out_sig` has the wrong type: Received `{type(params.get("out_sig", None))}` expected `str | None`')
+    if params.get("input_images", None) is None:
+        raise StyxValidationError("`input_images` must not be None")
+    if not isinstance(params["input_images"], list):
+        raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    for e in params["input_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+
+
 def imaver_cargs(
     params: ImaverParameters,
     execution: Execution,
@@ -129,6 +156,7 @@ def imaver_execute(
     Returns:
         NamedTuple of outputs (described in `ImaverOutputs`).
     """
+    imaver_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMAVER_METADATA)
     params = execution.params(params)

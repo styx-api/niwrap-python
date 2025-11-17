@@ -51,6 +51,23 @@ def uber_proc_py_params(
     return params
 
 
+def uber_proc_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UberProcPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("results_dir", None) is not None:
+        if not isinstance(params["results_dir"], str):
+            raise StyxValidationError(f'`results_dir` has the wrong type: Received `{type(params.get("results_dir", None))}` expected `str | None`')
+
+
 def uber_proc_py_cargs(
     params: UberProcPyParameters,
     execution: Execution,
@@ -109,6 +126,7 @@ def uber_proc_py_execute(
     Returns:
         NamedTuple of outputs (described in `UberProcPyOutputs`).
     """
+    uber_proc_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UBER_PROC_PY_METADATA)
     params = execution.params(params)

@@ -78,6 +78,36 @@ def imcalc_params(
     return params
 
 
+def imcalc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImcalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datum_type", None) is not None:
+        if not isinstance(params["datum_type"], str):
+            raise StyxValidationError(f'`datum_type` has the wrong type: Received `{type(params.get("datum_type", None))}` expected `str | None`')
+    if params.get("image_inputs", None) is not None:
+        if not isinstance(params["image_inputs"], list):
+            raise StyxValidationError(f'`image_inputs` has the wrong type: Received `{type(params.get("image_inputs", None))}` expected `list[InputPathType] | None`')
+        for e in params["image_inputs"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`image_inputs` has the wrong type: Received `{type(params.get("image_inputs", None))}` expected `list[InputPathType] | None`')
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
+    if params.get("output_name", None) is not None:
+        if not isinstance(params["output_name"], str):
+            raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str | None`')
+
+
 def imcalc_cargs(
     params: ImcalcParameters,
     execution: Execution,
@@ -154,6 +184,7 @@ def imcalc_execute(
     Returns:
         NamedTuple of outputs (described in `ImcalcOutputs`).
     """
+    imcalc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMCALC_METADATA)
     params = execution.params(params)

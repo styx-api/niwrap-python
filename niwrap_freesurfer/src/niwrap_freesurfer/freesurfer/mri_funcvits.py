@@ -113,6 +113,62 @@ def mri_funcvits_params(
     return params
 
 
+def mri_funcvits_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFuncvitsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stem", None) is None:
+        raise StyxValidationError("`stem` must not be None")
+    if not isinstance(params["stem"], str):
+        raise StyxValidationError(f'`stem` has the wrong type: Received `{type(params.get("stem", None))}` expected `str`')
+    if params.get("outdir", None) is None:
+        raise StyxValidationError("`outdir` must not be None")
+    if not isinstance(params["outdir"], str):
+        raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str`')
+    if params.get("reg", None) is not None:
+        if not isinstance(params["reg"], str):
+            raise StyxValidationError(f'`reg` has the wrong type: Received `{type(params.get("reg", None))}` expected `str | None`')
+    if params.get("paintsurf", None) is not None:
+        if not isinstance(params["paintsurf"], str):
+            raise StyxValidationError(f'`paintsurf` has the wrong type: Received `{type(params.get("paintsurf", None))}` expected `str | None`')
+    if params.get("sphere", None) is not None:
+        if not isinstance(params["sphere"], str):
+            raise StyxValidationError(f'`sphere` has the wrong type: Received `{type(params.get("sphere", None))}` expected `str | None`')
+    if params.get("icosize", None) is not None:
+        if not isinstance(params["icosize"], int):
+            raise StyxValidationError(f'`icosize` has the wrong type: Received `{type(params.get("icosize", None))}` expected `int | None`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], list):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `list[str] | None`')
+        for e in params["hemi"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `list[str] | None`')
+    if params.get("svitdir", None) is not None:
+        if not isinstance(params["svitdir"], str):
+            raise StyxValidationError(f'`svitdir` has the wrong type: Received `{type(params.get("svitdir", None))}` expected `str | None`')
+    if params.get("icodir", None) is not None:
+        if not isinstance(params["icodir"], str):
+            raise StyxValidationError(f'`icodir` has the wrong type: Received `{type(params.get("icodir", None))}` expected `str | None`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+    if params.get("mail", None) is not None:
+        if not isinstance(params["mail"], str):
+            raise StyxValidationError(f'`mail` has the wrong type: Received `{type(params.get("mail", None))}` expected `str | None`')
+    if params.get("noforce", False) is None:
+        raise StyxValidationError("`noforce` must not be None")
+    if not isinstance(params["noforce"], bool):
+        raise StyxValidationError(f'`noforce` has the wrong type: Received `{type(params.get("noforce", False))}` expected `bool`')
+
+
 def mri_funcvits_cargs(
     params: MriFuncvitsParameters,
     execution: Execution,
@@ -224,6 +280,7 @@ def mri_funcvits_execute(
     Returns:
         NamedTuple of outputs (described in `MriFuncvitsOutputs`).
     """
+    mri_funcvits_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FUNCVITS_METADATA)
     params = execution.params(params)

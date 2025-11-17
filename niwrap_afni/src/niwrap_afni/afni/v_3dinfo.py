@@ -649,6 +649,469 @@ def v_3dinfo_params(
     return params
 
 
+def v_3dinfo_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dinfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("orient", False) is None:
+        raise StyxValidationError("`orient` must not be None")
+    if not isinstance(params["orient"], bool):
+        raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", False))}` expected `bool`')
+    if params.get("Lextent", False) is None:
+        raise StyxValidationError("`Lextent` must not be None")
+    if not isinstance(params["Lextent"], bool):
+        raise StyxValidationError(f'`Lextent` has the wrong type: Received `{type(params.get("Lextent", False))}` expected `bool`')
+    if params.get("Rextent", False) is None:
+        raise StyxValidationError("`Rextent` must not be None")
+    if not isinstance(params["Rextent"], bool):
+        raise StyxValidationError(f'`Rextent` has the wrong type: Received `{type(params.get("Rextent", False))}` expected `bool`')
+    if params.get("Aextent", False) is None:
+        raise StyxValidationError("`Aextent` must not be None")
+    if not isinstance(params["Aextent"], bool):
+        raise StyxValidationError(f'`Aextent` has the wrong type: Received `{type(params.get("Aextent", False))}` expected `bool`')
+    if params.get("Pextent", False) is None:
+        raise StyxValidationError("`Pextent` must not be None")
+    if not isinstance(params["Pextent"], bool):
+        raise StyxValidationError(f'`Pextent` has the wrong type: Received `{type(params.get("Pextent", False))}` expected `bool`')
+    if params.get("Iextent", False) is None:
+        raise StyxValidationError("`Iextent` must not be None")
+    if not isinstance(params["Iextent"], bool):
+        raise StyxValidationError(f'`Iextent` has the wrong type: Received `{type(params.get("Iextent", False))}` expected `bool`')
+    if params.get("Sextent", False) is None:
+        raise StyxValidationError("`Sextent` must not be None")
+    if not isinstance(params["Sextent"], bool):
+        raise StyxValidationError(f'`Sextent` has the wrong type: Received `{type(params.get("Sextent", False))}` expected `bool`')
+    if params.get("all_names", False) is None:
+        raise StyxValidationError("`all_names` must not be None")
+    if not isinstance(params["all_names"], bool):
+        raise StyxValidationError(f'`all_names` has the wrong type: Received `{type(params.get("all_names", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+    if params.get("very_verbose", False) is None:
+        raise StyxValidationError("`very_verbose` must not be None")
+    if not isinstance(params["very_verbose"], bool):
+        raise StyxValidationError(f'`very_verbose` has the wrong type: Received `{type(params.get("very_verbose", False))}` expected `bool`')
+    if params.get("short", False) is None:
+        raise StyxValidationError("`short` must not be None")
+    if not isinstance(params["short"], bool):
+        raise StyxValidationError(f'`short` has the wrong type: Received `{type(params.get("short", False))}` expected `bool`')
+    if params.get("no_hist", False) is None:
+        raise StyxValidationError("`no_hist` must not be None")
+    if not isinstance(params["no_hist"], bool):
+        raise StyxValidationError(f'`no_hist` has the wrong type: Received `{type(params.get("no_hist", False))}` expected `bool`')
+    if params.get("h", False) is None:
+        raise StyxValidationError("`h` must not be None")
+    if not isinstance(params["h"], bool):
+        raise StyxValidationError(f'`h` has the wrong type: Received `{type(params.get("h", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("extreme_help", False) is None:
+        raise StyxValidationError("`extreme_help` must not be None")
+    if not isinstance(params["extreme_help"], bool):
+        raise StyxValidationError(f'`extreme_help` has the wrong type: Received `{type(params.get("extreme_help", False))}` expected `bool`')
+    if params.get("h_view", False) is None:
+        raise StyxValidationError("`h_view` must not be None")
+    if not isinstance(params["h_view"], bool):
+        raise StyxValidationError(f'`h_view` has the wrong type: Received `{type(params.get("h_view", False))}` expected `bool`')
+    if params.get("h_web", False) is None:
+        raise StyxValidationError("`h_web` must not be None")
+    if not isinstance(params["h_web"], bool):
+        raise StyxValidationError(f'`h_web` has the wrong type: Received `{type(params.get("h_web", False))}` expected `bool`')
+    if params.get("h_find", None) is not None:
+        if not isinstance(params["h_find"], str):
+            raise StyxValidationError(f'`h_find` has the wrong type: Received `{type(params.get("h_find", None))}` expected `str | None`')
+    if params.get("h_raw", False) is None:
+        raise StyxValidationError("`h_raw` must not be None")
+    if not isinstance(params["h_raw"], bool):
+        raise StyxValidationError(f'`h_raw` has the wrong type: Received `{type(params.get("h_raw", False))}` expected `bool`')
+    if params.get("h_spx", False) is None:
+        raise StyxValidationError("`h_spx` must not be None")
+    if not isinstance(params["h_spx"], bool):
+        raise StyxValidationError(f'`h_spx` has the wrong type: Received `{type(params.get("h_spx", False))}` expected `bool`')
+    if params.get("h_aspx", False) is None:
+        raise StyxValidationError("`h_aspx` must not be None")
+    if not isinstance(params["h_aspx"], bool):
+        raise StyxValidationError(f'`h_aspx` has the wrong type: Received `{type(params.get("h_aspx", False))}` expected `bool`')
+    if params.get("all_opts", False) is None:
+        raise StyxValidationError("`all_opts` must not be None")
+    if not isinstance(params["all_opts"], bool):
+        raise StyxValidationError(f'`all_opts` has the wrong type: Received `{type(params.get("all_opts", False))}` expected `bool`')
+    if params.get("label2index", None) is not None:
+        if not isinstance(params["label2index"], str):
+            raise StyxValidationError(f'`label2index` has the wrong type: Received `{type(params.get("label2index", None))}` expected `str | None`')
+    if params.get("niml_hdr", False) is None:
+        raise StyxValidationError("`niml_hdr` must not be None")
+    if not isinstance(params["niml_hdr"], bool):
+        raise StyxValidationError(f'`niml_hdr` has the wrong type: Received `{type(params.get("niml_hdr", False))}` expected `bool`')
+    if params.get("subbrick_info", False) is None:
+        raise StyxValidationError("`subbrick_info` must not be None")
+    if not isinstance(params["subbrick_info"], bool):
+        raise StyxValidationError(f'`subbrick_info` has the wrong type: Received `{type(params.get("subbrick_info", False))}` expected `bool`')
+    if params.get("exists", False) is None:
+        raise StyxValidationError("`exists` must not be None")
+    if not isinstance(params["exists"], bool):
+        raise StyxValidationError(f'`exists` has the wrong type: Received `{type(params.get("exists", False))}` expected `bool`')
+    if params.get("id", False) is None:
+        raise StyxValidationError("`id` must not be None")
+    if not isinstance(params["id"], bool):
+        raise StyxValidationError(f'`id` has the wrong type: Received `{type(params.get("id", False))}` expected `bool`')
+    if params.get("is_atlas", False) is None:
+        raise StyxValidationError("`is_atlas` must not be None")
+    if not isinstance(params["is_atlas"], bool):
+        raise StyxValidationError(f'`is_atlas` has the wrong type: Received `{type(params.get("is_atlas", False))}` expected `bool`')
+    if params.get("is_atlas_or_labeltable", False) is None:
+        raise StyxValidationError("`is_atlas_or_labeltable` must not be None")
+    if not isinstance(params["is_atlas_or_labeltable"], bool):
+        raise StyxValidationError(f'`is_atlas_or_labeltable` has the wrong type: Received `{type(params.get("is_atlas_or_labeltable", False))}` expected `bool`')
+    if params.get("is_nifti", False) is None:
+        raise StyxValidationError("`is_nifti` must not be None")
+    if not isinstance(params["is_nifti"], bool):
+        raise StyxValidationError(f'`is_nifti` has the wrong type: Received `{type(params.get("is_nifti", False))}` expected `bool`')
+    if params.get("dset_extension", False) is None:
+        raise StyxValidationError("`dset_extension` must not be None")
+    if not isinstance(params["dset_extension"], bool):
+        raise StyxValidationError(f'`dset_extension` has the wrong type: Received `{type(params.get("dset_extension", False))}` expected `bool`')
+    if params.get("storage_mode", False) is None:
+        raise StyxValidationError("`storage_mode` must not be None")
+    if not isinstance(params["storage_mode"], bool):
+        raise StyxValidationError(f'`storage_mode` has the wrong type: Received `{type(params.get("storage_mode", False))}` expected `bool`')
+    if params.get("space", False) is None:
+        raise StyxValidationError("`space` must not be None")
+    if not isinstance(params["space"], bool):
+        raise StyxValidationError(f'`space` has the wrong type: Received `{type(params.get("space", False))}` expected `bool`')
+    if params.get("gen_space", False) is None:
+        raise StyxValidationError("`gen_space` must not be None")
+    if not isinstance(params["gen_space"], bool):
+        raise StyxValidationError(f'`gen_space` has the wrong type: Received `{type(params.get("gen_space", False))}` expected `bool`')
+    if params.get("av_space", False) is None:
+        raise StyxValidationError("`av_space` must not be None")
+    if not isinstance(params["av_space"], bool):
+        raise StyxValidationError(f'`av_space` has the wrong type: Received `{type(params.get("av_space", False))}` expected `bool`')
+    if params.get("nifti_code", False) is None:
+        raise StyxValidationError("`nifti_code` must not be None")
+    if not isinstance(params["nifti_code"], bool):
+        raise StyxValidationError(f'`nifti_code` has the wrong type: Received `{type(params.get("nifti_code", False))}` expected `bool`')
+    if params.get("is_oblique", False) is None:
+        raise StyxValidationError("`is_oblique` must not be None")
+    if not isinstance(params["is_oblique"], bool):
+        raise StyxValidationError(f'`is_oblique` has the wrong type: Received `{type(params.get("is_oblique", False))}` expected `bool`')
+    if params.get("handedness", False) is None:
+        raise StyxValidationError("`handedness` must not be None")
+    if not isinstance(params["handedness"], bool):
+        raise StyxValidationError(f'`handedness` has the wrong type: Received `{type(params.get("handedness", False))}` expected `bool`')
+    if params.get("obliquity", False) is None:
+        raise StyxValidationError("`obliquity` must not be None")
+    if not isinstance(params["obliquity"], bool):
+        raise StyxValidationError(f'`obliquity` has the wrong type: Received `{type(params.get("obliquity", False))}` expected `bool`')
+    if params.get("prefix", False) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], bool):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", False))}` expected `bool`')
+    if params.get("prefix_noext", False) is None:
+        raise StyxValidationError("`prefix_noext` must not be None")
+    if not isinstance(params["prefix_noext"], bool):
+        raise StyxValidationError(f'`prefix_noext` has the wrong type: Received `{type(params.get("prefix_noext", False))}` expected `bool`')
+    if params.get("ni", False) is None:
+        raise StyxValidationError("`ni` must not be None")
+    if not isinstance(params["ni"], bool):
+        raise StyxValidationError(f'`ni` has the wrong type: Received `{type(params.get("ni", False))}` expected `bool`')
+    if params.get("nj", False) is None:
+        raise StyxValidationError("`nj` must not be None")
+    if not isinstance(params["nj"], bool):
+        raise StyxValidationError(f'`nj` has the wrong type: Received `{type(params.get("nj", False))}` expected `bool`')
+    if params.get("nk", False) is None:
+        raise StyxValidationError("`nk` must not be None")
+    if not isinstance(params["nk"], bool):
+        raise StyxValidationError(f'`nk` has the wrong type: Received `{type(params.get("nk", False))}` expected `bool`')
+    if params.get("nijk", False) is None:
+        raise StyxValidationError("`nijk` must not be None")
+    if not isinstance(params["nijk"], bool):
+        raise StyxValidationError(f'`nijk` has the wrong type: Received `{type(params.get("nijk", False))}` expected `bool`')
+    if params.get("nv", False) is None:
+        raise StyxValidationError("`nv` must not be None")
+    if not isinstance(params["nv"], bool):
+        raise StyxValidationError(f'`nv` has the wrong type: Received `{type(params.get("nv", False))}` expected `bool`')
+    if params.get("nt", False) is None:
+        raise StyxValidationError("`nt` must not be None")
+    if not isinstance(params["nt"], bool):
+        raise StyxValidationError(f'`nt` has the wrong type: Received `{type(params.get("nt", False))}` expected `bool`')
+    if params.get("n4", False) is None:
+        raise StyxValidationError("`n4` must not be None")
+    if not isinstance(params["n4"], bool):
+        raise StyxValidationError(f'`n4` has the wrong type: Received `{type(params.get("n4", False))}` expected `bool`')
+    if params.get("nvi", False) is None:
+        raise StyxValidationError("`nvi` must not be None")
+    if not isinstance(params["nvi"], bool):
+        raise StyxValidationError(f'`nvi` has the wrong type: Received `{type(params.get("nvi", False))}` expected `bool`')
+    if params.get("nti", False) is None:
+        raise StyxValidationError("`nti` must not be None")
+    if not isinstance(params["nti"], bool):
+        raise StyxValidationError(f'`nti` has the wrong type: Received `{type(params.get("nti", False))}` expected `bool`')
+    if params.get("ntimes", False) is None:
+        raise StyxValidationError("`ntimes` must not be None")
+    if not isinstance(params["ntimes"], bool):
+        raise StyxValidationError(f'`ntimes` has the wrong type: Received `{type(params.get("ntimes", False))}` expected `bool`')
+    if params.get("max_node", False) is None:
+        raise StyxValidationError("`max_node` must not be None")
+    if not isinstance(params["max_node"], bool):
+        raise StyxValidationError(f'`max_node` has the wrong type: Received `{type(params.get("max_node", False))}` expected `bool`')
+    if params.get("di", False) is None:
+        raise StyxValidationError("`di` must not be None")
+    if not isinstance(params["di"], bool):
+        raise StyxValidationError(f'`di` has the wrong type: Received `{type(params.get("di", False))}` expected `bool`')
+    if params.get("dj", False) is None:
+        raise StyxValidationError("`dj` must not be None")
+    if not isinstance(params["dj"], bool):
+        raise StyxValidationError(f'`dj` has the wrong type: Received `{type(params.get("dj", False))}` expected `bool`')
+    if params.get("dk", False) is None:
+        raise StyxValidationError("`dk` must not be None")
+    if not isinstance(params["dk"], bool):
+        raise StyxValidationError(f'`dk` has the wrong type: Received `{type(params.get("dk", False))}` expected `bool`')
+    if params.get("d3", False) is None:
+        raise StyxValidationError("`d3` must not be None")
+    if not isinstance(params["d3"], bool):
+        raise StyxValidationError(f'`d3` has the wrong type: Received `{type(params.get("d3", False))}` expected `bool`')
+    if params.get("adi", False) is None:
+        raise StyxValidationError("`adi` must not be None")
+    if not isinstance(params["adi"], bool):
+        raise StyxValidationError(f'`adi` has the wrong type: Received `{type(params.get("adi", False))}` expected `bool`')
+    if params.get("adj", False) is None:
+        raise StyxValidationError("`adj` must not be None")
+    if not isinstance(params["adj"], bool):
+        raise StyxValidationError(f'`adj` has the wrong type: Received `{type(params.get("adj", False))}` expected `bool`')
+    if params.get("adk", False) is None:
+        raise StyxValidationError("`adk` must not be None")
+    if not isinstance(params["adk"], bool):
+        raise StyxValidationError(f'`adk` has the wrong type: Received `{type(params.get("adk", False))}` expected `bool`')
+    if params.get("ad3", False) is None:
+        raise StyxValidationError("`ad3` must not be None")
+    if not isinstance(params["ad3"], bool):
+        raise StyxValidationError(f'`ad3` has the wrong type: Received `{type(params.get("ad3", False))}` expected `bool`')
+    if params.get("voxvol", False) is None:
+        raise StyxValidationError("`voxvol` must not be None")
+    if not isinstance(params["voxvol"], bool):
+        raise StyxValidationError(f'`voxvol` has the wrong type: Received `{type(params.get("voxvol", False))}` expected `bool`')
+    if params.get("oi", False) is None:
+        raise StyxValidationError("`oi` must not be None")
+    if not isinstance(params["oi"], bool):
+        raise StyxValidationError(f'`oi` has the wrong type: Received `{type(params.get("oi", False))}` expected `bool`')
+    if params.get("oj", False) is None:
+        raise StyxValidationError("`oj` must not be None")
+    if not isinstance(params["oj"], bool):
+        raise StyxValidationError(f'`oj` has the wrong type: Received `{type(params.get("oj", False))}` expected `bool`')
+    if params.get("ok", False) is None:
+        raise StyxValidationError("`ok` must not be None")
+    if not isinstance(params["ok"], bool):
+        raise StyxValidationError(f'`ok` has the wrong type: Received `{type(params.get("ok", False))}` expected `bool`')
+    if params.get("o3", False) is None:
+        raise StyxValidationError("`o3` must not be None")
+    if not isinstance(params["o3"], bool):
+        raise StyxValidationError(f'`o3` has the wrong type: Received `{type(params.get("o3", False))}` expected `bool`')
+    if params.get("dcx", False) is None:
+        raise StyxValidationError("`dcx` must not be None")
+    if not isinstance(params["dcx"], bool):
+        raise StyxValidationError(f'`dcx` has the wrong type: Received `{type(params.get("dcx", False))}` expected `bool`')
+    if params.get("dcy", False) is None:
+        raise StyxValidationError("`dcy` must not be None")
+    if not isinstance(params["dcy"], bool):
+        raise StyxValidationError(f'`dcy` has the wrong type: Received `{type(params.get("dcy", False))}` expected `bool`')
+    if params.get("dcz", False) is None:
+        raise StyxValidationError("`dcz` must not be None")
+    if not isinstance(params["dcz"], bool):
+        raise StyxValidationError(f'`dcz` has the wrong type: Received `{type(params.get("dcz", False))}` expected `bool`')
+    if params.get("dc3", False) is None:
+        raise StyxValidationError("`dc3` must not be None")
+    if not isinstance(params["dc3"], bool):
+        raise StyxValidationError(f'`dc3` has the wrong type: Received `{type(params.get("dc3", False))}` expected `bool`')
+    if params.get("tr", False) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], bool):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", False))}` expected `bool`')
+    if params.get("dmin", False) is None:
+        raise StyxValidationError("`dmin` must not be None")
+    if not isinstance(params["dmin"], bool):
+        raise StyxValidationError(f'`dmin` has the wrong type: Received `{type(params.get("dmin", False))}` expected `bool`')
+    if params.get("dmax", False) is None:
+        raise StyxValidationError("`dmax` must not be None")
+    if not isinstance(params["dmax"], bool):
+        raise StyxValidationError(f'`dmax` has the wrong type: Received `{type(params.get("dmax", False))}` expected `bool`')
+    if params.get("dminus", False) is None:
+        raise StyxValidationError("`dminus` must not be None")
+    if not isinstance(params["dminus"], bool):
+        raise StyxValidationError(f'`dminus` has the wrong type: Received `{type(params.get("dminus", False))}` expected `bool`')
+    if params.get("dmaxus", False) is None:
+        raise StyxValidationError("`dmaxus` must not be None")
+    if not isinstance(params["dmaxus"], bool):
+        raise StyxValidationError(f'`dmaxus` has the wrong type: Received `{type(params.get("dmaxus", False))}` expected `bool`')
+    if params.get("smode", False) is None:
+        raise StyxValidationError("`smode` must not be None")
+    if not isinstance(params["smode"], bool):
+        raise StyxValidationError(f'`smode` has the wrong type: Received `{type(params.get("smode", False))}` expected `bool`')
+    if params.get("header_name", False) is None:
+        raise StyxValidationError("`header_name` must not be None")
+    if not isinstance(params["header_name"], bool):
+        raise StyxValidationError(f'`header_name` has the wrong type: Received `{type(params.get("header_name", False))}` expected `bool`')
+    if params.get("brick_name", False) is None:
+        raise StyxValidationError("`brick_name` must not be None")
+    if not isinstance(params["brick_name"], bool):
+        raise StyxValidationError(f'`brick_name` has the wrong type: Received `{type(params.get("brick_name", False))}` expected `bool`')
+    if params.get("iname", False) is None:
+        raise StyxValidationError("`iname` must not be None")
+    if not isinstance(params["iname"], bool):
+        raise StyxValidationError(f'`iname` has the wrong type: Received `{type(params.get("iname", False))}` expected `bool`')
+    if params.get("extent", False) is None:
+        raise StyxValidationError("`extent` must not be None")
+    if not isinstance(params["extent"], bool):
+        raise StyxValidationError(f'`extent` has the wrong type: Received `{type(params.get("extent", False))}` expected `bool`')
+    if params.get("fac", False) is None:
+        raise StyxValidationError("`fac` must not be None")
+    if not isinstance(params["fac"], bool):
+        raise StyxValidationError(f'`fac` has the wrong type: Received `{type(params.get("fac", False))}` expected `bool`')
+    if params.get("label", False) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], bool):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", False))}` expected `bool`')
+    if params.get("datum", False) is None:
+        raise StyxValidationError("`datum` must not be None")
+    if not isinstance(params["datum"], bool):
+        raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", False))}` expected `bool`')
+    if params.get("min", False) is None:
+        raise StyxValidationError("`min` must not be None")
+    if not isinstance(params["min"], bool):
+        raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", False))}` expected `bool`')
+    if params.get("max", False) is None:
+        raise StyxValidationError("`max` must not be None")
+    if not isinstance(params["max"], bool):
+        raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", False))}` expected `bool`')
+    if params.get("minus", False) is None:
+        raise StyxValidationError("`minus` must not be None")
+    if not isinstance(params["minus"], bool):
+        raise StyxValidationError(f'`minus` has the wrong type: Received `{type(params.get("minus", False))}` expected `bool`')
+    if params.get("maxus", False) is None:
+        raise StyxValidationError("`maxus` must not be None")
+    if not isinstance(params["maxus"], bool):
+        raise StyxValidationError(f'`maxus` has the wrong type: Received `{type(params.get("maxus", False))}` expected `bool`')
+    if params.get("labeltable", False) is None:
+        raise StyxValidationError("`labeltable` must not be None")
+    if not isinstance(params["labeltable"], bool):
+        raise StyxValidationError(f'`labeltable` has the wrong type: Received `{type(params.get("labeltable", False))}` expected `bool`')
+    if params.get("labeltable_as_atlas_points", False) is None:
+        raise StyxValidationError("`labeltable_as_atlas_points` must not be None")
+    if not isinstance(params["labeltable_as_atlas_points"], bool):
+        raise StyxValidationError(f'`labeltable_as_atlas_points` has the wrong type: Received `{type(params.get("labeltable_as_atlas_points", False))}` expected `bool`')
+    if params.get("atlas_points", False) is None:
+        raise StyxValidationError("`atlas_points` must not be None")
+    if not isinstance(params["atlas_points"], bool):
+        raise StyxValidationError(f'`atlas_points` has the wrong type: Received `{type(params.get("atlas_points", False))}` expected `bool`')
+    if params.get("history", False) is None:
+        raise StyxValidationError("`history` must not be None")
+    if not isinstance(params["history"], bool):
+        raise StyxValidationError(f'`history` has the wrong type: Received `{type(params.get("history", False))}` expected `bool`')
+    if params.get("slice_timing", False) is None:
+        raise StyxValidationError("`slice_timing` must not be None")
+    if not isinstance(params["slice_timing"], bool):
+        raise StyxValidationError(f'`slice_timing` has the wrong type: Received `{type(params.get("slice_timing", False))}` expected `bool`')
+    if params.get("header_line", False) is None:
+        raise StyxValidationError("`header_line` must not be None")
+    if not isinstance(params["header_line"], bool):
+        raise StyxValidationError(f'`header_line` has the wrong type: Received `{type(params.get("header_line", False))}` expected `bool`')
+    if params.get("hdr", False) is None:
+        raise StyxValidationError("`hdr` must not be None")
+    if not isinstance(params["hdr"], bool):
+        raise StyxValidationError(f'`hdr` has the wrong type: Received `{type(params.get("hdr", False))}` expected `bool`')
+    if params.get("sb_delim", None) is not None:
+        if not isinstance(params["sb_delim"], str):
+            raise StyxValidationError(f'`sb_delim` has the wrong type: Received `{type(params.get("sb_delim", None))}` expected `str | None`')
+    if params.get("NA_flag", None) is not None:
+        if not isinstance(params["NA_flag"], str):
+            raise StyxValidationError(f'`NA_flag` has the wrong type: Received `{type(params.get("NA_flag", None))}` expected `str | None`')
+    if params.get("atr_delim", None) is not None:
+        if not isinstance(params["atr_delim"], str):
+            raise StyxValidationError(f'`atr_delim` has the wrong type: Received `{type(params.get("atr_delim", None))}` expected `str | None`')
+    if params.get("aform_real", False) is None:
+        raise StyxValidationError("`aform_real` must not be None")
+    if not isinstance(params["aform_real"], bool):
+        raise StyxValidationError(f'`aform_real` has the wrong type: Received `{type(params.get("aform_real", False))}` expected `bool`')
+    if params.get("aform_real_oneline", False) is None:
+        raise StyxValidationError("`aform_real_oneline` must not be None")
+    if not isinstance(params["aform_real_oneline"], bool):
+        raise StyxValidationError(f'`aform_real_oneline` has the wrong type: Received `{type(params.get("aform_real_oneline", False))}` expected `bool`')
+    if params.get("aform_real_refit_ori", False) is None:
+        raise StyxValidationError("`aform_real_refit_ori` must not be None")
+    if not isinstance(params["aform_real_refit_ori"], bool):
+        raise StyxValidationError(f'`aform_real_refit_ori` has the wrong type: Received `{type(params.get("aform_real_refit_ori", False))}` expected `bool`')
+    if params.get("is_aform_real_orth", False) is None:
+        raise StyxValidationError("`is_aform_real_orth` must not be None")
+    if not isinstance(params["is_aform_real_orth"], bool):
+        raise StyxValidationError(f'`is_aform_real_orth` has the wrong type: Received `{type(params.get("is_aform_real_orth", False))}` expected `bool`')
+    if params.get("aform_orth", False) is None:
+        raise StyxValidationError("`aform_orth` must not be None")
+    if not isinstance(params["aform_orth"], bool):
+        raise StyxValidationError(f'`aform_orth` has the wrong type: Received `{type(params.get("aform_orth", False))}` expected `bool`')
+    if params.get("perm_to_orient", None) is not None:
+        if not isinstance(params["perm_to_orient"], str):
+            raise StyxValidationError(f'`perm_to_orient` has the wrong type: Received `{type(params.get("perm_to_orient", None))}` expected `str | None`')
+    if params.get("same_grid", False) is None:
+        raise StyxValidationError("`same_grid` must not be None")
+    if not isinstance(params["same_grid"], bool):
+        raise StyxValidationError(f'`same_grid` has the wrong type: Received `{type(params.get("same_grid", False))}` expected `bool`')
+    if params.get("same_dim", False) is None:
+        raise StyxValidationError("`same_dim` must not be None")
+    if not isinstance(params["same_dim"], bool):
+        raise StyxValidationError(f'`same_dim` has the wrong type: Received `{type(params.get("same_dim", False))}` expected `bool`')
+    if params.get("same_delta", False) is None:
+        raise StyxValidationError("`same_delta` must not be None")
+    if not isinstance(params["same_delta"], bool):
+        raise StyxValidationError(f'`same_delta` has the wrong type: Received `{type(params.get("same_delta", False))}` expected `bool`')
+    if params.get("same_orient", False) is None:
+        raise StyxValidationError("`same_orient` must not be None")
+    if not isinstance(params["same_orient"], bool):
+        raise StyxValidationError(f'`same_orient` has the wrong type: Received `{type(params.get("same_orient", False))}` expected `bool`')
+    if params.get("same_center", False) is None:
+        raise StyxValidationError("`same_center` must not be None")
+    if not isinstance(params["same_center"], bool):
+        raise StyxValidationError(f'`same_center` has the wrong type: Received `{type(params.get("same_center", False))}` expected `bool`')
+    if params.get("same_obl", False) is None:
+        raise StyxValidationError("`same_obl` must not be None")
+    if not isinstance(params["same_obl"], bool):
+        raise StyxValidationError(f'`same_obl` has the wrong type: Received `{type(params.get("same_obl", False))}` expected `bool`')
+    if params.get("same_all_grid", False) is None:
+        raise StyxValidationError("`same_all_grid` must not be None")
+    if not isinstance(params["same_all_grid"], bool):
+        raise StyxValidationError(f'`same_all_grid` has the wrong type: Received `{type(params.get("same_all_grid", False))}` expected `bool`')
+    if params.get("val_diff", False) is None:
+        raise StyxValidationError("`val_diff` must not be None")
+    if not isinstance(params["val_diff"], bool):
+        raise StyxValidationError(f'`val_diff` has the wrong type: Received `{type(params.get("val_diff", False))}` expected `bool`')
+    if params.get("sval_diff", False) is None:
+        raise StyxValidationError("`sval_diff` must not be None")
+    if not isinstance(params["sval_diff"], bool):
+        raise StyxValidationError(f'`sval_diff` has the wrong type: Received `{type(params.get("sval_diff", False))}` expected `bool`')
+    if params.get("monog_pairs", False) is None:
+        raise StyxValidationError("`monog_pairs` must not be None")
+    if not isinstance(params["monog_pairs"], bool):
+        raise StyxValidationError(f'`monog_pairs` has the wrong type: Received `{type(params.get("monog_pairs", False))}` expected `bool`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], list):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `list[InputPathType]`')
+    for e in params["dataset"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `list[InputPathType]`')
+
+
 def v_3dinfo_cargs(
     params: V3dinfoParameters,
     execution: Execution,
@@ -949,6 +1412,7 @@ def v_3dinfo_execute(
     Returns:
         NamedTuple of outputs (described in `V3dinfoOutputs`).
     """
+    v_3dinfo_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DINFO_METADATA)
     params = execution.params(params)

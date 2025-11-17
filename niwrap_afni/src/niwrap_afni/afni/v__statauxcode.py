@@ -52,6 +52,24 @@ def v__statauxcode_params(
     return params
 
 
+def v__statauxcode_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VStatauxcodeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("code", None) is None:
+        raise StyxValidationError("`code` must not be None")
+    if not isinstance(params["code"], str):
+        raise StyxValidationError(f'`code` has the wrong type: Received `{type(params.get("code", None))}` expected `str`')
+
+
 def v__statauxcode_cargs(
     params: VStatauxcodeParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def v__statauxcode_execute(
     Returns:
         NamedTuple of outputs (described in `VStatauxcodeOutputs`).
     """
+    v__statauxcode_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__STATAUXCODE_METADATA)
     params = execution.params(params)

@@ -100,6 +100,51 @@ def v__align_partial_oblique_params(
     return params
 
 
+def v__align_partial_oblique_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAlignPartialObliqueParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base", None) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `InputPathType`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("keep_tmp", False) is None:
+        raise StyxValidationError("`keep_tmp` must not be None")
+    if not isinstance(params["keep_tmp"], bool):
+        raise StyxValidationError(f'`keep_tmp` has the wrong type: Received `{type(params.get("keep_tmp", False))}` expected `bool`')
+    if params.get("clean", False) is None:
+        raise StyxValidationError("`clean` must not be None")
+    if not isinstance(params["clean"], bool):
+        raise StyxValidationError(f'`clean` has the wrong type: Received `{type(params.get("clean", False))}` expected `bool`')
+    if params.get("dxyz", None) is not None:
+        if not isinstance(params["dxyz"], (float, int)):
+            raise StyxValidationError(f'`dxyz` has the wrong type: Received `{type(params.get("dxyz", None))}` expected `float | None`')
+    if params.get("dx", None) is not None:
+        if not isinstance(params["dx"], (float, int)):
+            raise StyxValidationError(f'`dx` has the wrong type: Received `{type(params.get("dx", None))}` expected `float | None`')
+    if params.get("dy", None) is not None:
+        if not isinstance(params["dy"], (float, int)):
+            raise StyxValidationError(f'`dy` has the wrong type: Received `{type(params.get("dy", None))}` expected `float | None`')
+    if params.get("dz", None) is not None:
+        if not isinstance(params["dz"], (float, int)):
+            raise StyxValidationError(f'`dz` has the wrong type: Received `{type(params.get("dz", None))}` expected `float | None`')
+
+
 def v__align_partial_oblique_cargs(
     params: VAlignPartialObliqueParameters,
     execution: Execution,
@@ -196,6 +241,7 @@ def v__align_partial_oblique_execute(
     Returns:
         NamedTuple of outputs (described in `VAlignPartialObliqueOutputs`).
     """
+    v__align_partial_oblique_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ALIGN_PARTIAL_OBLIQUE_METADATA)
     params = execution.params(params)

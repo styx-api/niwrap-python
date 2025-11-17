@@ -109,6 +109,65 @@ def v_3d_blur_in_mask_params(
     return params
 
 
+def v_3d_blur_in_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dBlurInMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("fwhm", None) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], (float, int)):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float`')
+    if params.get("fwhm_dataset", None) is not None:
+        if not isinstance(params["fwhm_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fwhm_dataset` has the wrong type: Received `{type(params.get("fwhm_dataset", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("multi_mask", None) is not None:
+        if not isinstance(params["multi_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`multi_mask` has the wrong type: Received `{type(params.get("multi_mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("preserve", False) is None:
+        raise StyxValidationError("`preserve` must not be None")
+    if not isinstance(params["preserve"], bool):
+        raise StyxValidationError(f'`preserve` has the wrong type: Received `{type(params.get("preserve", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("float", False) is None:
+        raise StyxValidationError("`float` must not be None")
+    if not isinstance(params["float"], bool):
+        raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", False))}` expected `bool`')
+    if params.get("fwhm_xyz", None) is not None:
+        if not isinstance(params["fwhm_xyz"], list):
+            raise StyxValidationError(f'`fwhm_xyz` has the wrong type: Received `{type(params.get("fwhm_xyz", None))}` expected `list[float] | None`')
+        if len(params["fwhm_xyz"]) <= 3:
+            raise StyxValidationError("Parameter `fwhm_xyz` must contain at most 3 elements")
+        for e in params["fwhm_xyz"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fwhm_xyz` has the wrong type: Received `{type(params.get("fwhm_xyz", None))}` expected `list[float] | None`')
+
+
 def v_3d_blur_in_mask_cargs(
     params: V3dBlurInMaskParameters,
     execution: Execution,
@@ -200,6 +259,7 @@ def v_3d_blur_in_mask_execute(
     Returns:
         NamedTuple of outputs (described in `V3dBlurInMaskOutputs`).
     """
+    v_3d_blur_in_mask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_BLUR_IN_MASK_METADATA)
     params = execution.params(params)

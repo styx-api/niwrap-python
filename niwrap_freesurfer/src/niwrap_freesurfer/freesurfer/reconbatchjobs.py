@@ -54,6 +54,31 @@ def reconbatchjobs_params(
     return params
 
 
+def reconbatchjobs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ReconbatchjobsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("logfile", None) is None:
+        raise StyxValidationError("`logfile` must not be None")
+    if not isinstance(params["logfile"], str):
+        raise StyxValidationError(f'`logfile` has the wrong type: Received `{type(params.get("logfile", None))}` expected `str`')
+    if params.get("cmdfiles", None) is None:
+        raise StyxValidationError("`cmdfiles` must not be None")
+    if not isinstance(params["cmdfiles"], list):
+        raise StyxValidationError(f'`cmdfiles` has the wrong type: Received `{type(params.get("cmdfiles", None))}` expected `list[str]`')
+    for e in params["cmdfiles"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`cmdfiles` has the wrong type: Received `{type(params.get("cmdfiles", None))}` expected `list[str]`')
+
+
 def reconbatchjobs_cargs(
     params: ReconbatchjobsParameters,
     execution: Execution,
@@ -112,6 +137,7 @@ def reconbatchjobs_execute(
     Returns:
         NamedTuple of outputs (described in `ReconbatchjobsOutputs`).
     """
+    reconbatchjobs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RECONBATCHJOBS_METADATA)
     params = execution.params(params)

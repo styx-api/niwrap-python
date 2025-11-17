@@ -243,6 +243,159 @@ def avw2fsl_params(
     return params
 
 
+def avw2fsl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Avw2fslParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source", None) is None:
+        raise StyxValidationError("`source` must not be None")
+    if not isinstance(params["source"], list):
+        raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `list[str]`')
+    for e in params["source"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `list[str]`')
+    if params.get("destination", None) is None:
+        raise StyxValidationError("`destination` must not be None")
+    if not isinstance(params["destination"], str):
+        raise StyxValidationError(f'`destination` has the wrong type: Received `{type(params.get("destination", None))}` expected `str`')
+    if params.get("archive", False) is None:
+        raise StyxValidationError("`archive` must not be None")
+    if not isinstance(params["archive"], bool):
+        raise StyxValidationError(f'`archive` has the wrong type: Received `{type(params.get("archive", False))}` expected `bool`')
+    if params.get("attributes_only", False) is None:
+        raise StyxValidationError("`attributes_only` must not be None")
+    if not isinstance(params["attributes_only"], bool):
+        raise StyxValidationError(f'`attributes_only` has the wrong type: Received `{type(params.get("attributes_only", False))}` expected `bool`')
+    if params.get("backup", None) is not None:
+        if not isinstance(params["backup"], str):
+            raise StyxValidationError(f'`backup` has the wrong type: Received `{type(params.get("backup", None))}` expected `str | None`')
+    if params.get("backup_noarg", False) is None:
+        raise StyxValidationError("`backup_noarg` must not be None")
+    if not isinstance(params["backup_noarg"], bool):
+        raise StyxValidationError(f'`backup_noarg` has the wrong type: Received `{type(params.get("backup_noarg", False))}` expected `bool`')
+    if params.get("copy_contents", False) is None:
+        raise StyxValidationError("`copy_contents` must not be None")
+    if not isinstance(params["copy_contents"], bool):
+        raise StyxValidationError(f'`copy_contents` has the wrong type: Received `{type(params.get("copy_contents", False))}` expected `bool`')
+    if params.get("no_dereference_preserve_links", False) is None:
+        raise StyxValidationError("`no_dereference_preserve_links` must not be None")
+    if not isinstance(params["no_dereference_preserve_links"], bool):
+        raise StyxValidationError(f'`no_dereference_preserve_links` has the wrong type: Received `{type(params.get("no_dereference_preserve_links", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("interactive", False) is None:
+        raise StyxValidationError("`interactive` must not be None")
+    if not isinstance(params["interactive"], bool):
+        raise StyxValidationError(f'`interactive` has the wrong type: Received `{type(params.get("interactive", False))}` expected `bool`')
+    if params.get("follow_symlinks_cmdline", False) is None:
+        raise StyxValidationError("`follow_symlinks_cmdline` must not be None")
+    if not isinstance(params["follow_symlinks_cmdline"], bool):
+        raise StyxValidationError(f'`follow_symlinks_cmdline` has the wrong type: Received `{type(params.get("follow_symlinks_cmdline", False))}` expected `bool`')
+    if params.get("hard_link", False) is None:
+        raise StyxValidationError("`hard_link` must not be None")
+    if not isinstance(params["hard_link"], bool):
+        raise StyxValidationError(f'`hard_link` has the wrong type: Received `{type(params.get("hard_link", False))}` expected `bool`')
+    if params.get("dereference", False) is None:
+        raise StyxValidationError("`dereference` must not be None")
+    if not isinstance(params["dereference"], bool):
+        raise StyxValidationError(f'`dereference` has the wrong type: Received `{type(params.get("dereference", False))}` expected `bool`')
+    if params.get("no_clobber", False) is None:
+        raise StyxValidationError("`no_clobber` must not be None")
+    if not isinstance(params["no_clobber"], bool):
+        raise StyxValidationError(f'`no_clobber` has the wrong type: Received `{type(params.get("no_clobber", False))}` expected `bool`')
+    if params.get("no_dereference", False) is None:
+        raise StyxValidationError("`no_dereference` must not be None")
+    if not isinstance(params["no_dereference"], bool):
+        raise StyxValidationError(f'`no_dereference` has the wrong type: Received `{type(params.get("no_dereference", False))}` expected `bool`')
+    if params.get("preserve", False) is None:
+        raise StyxValidationError("`preserve` must not be None")
+    if not isinstance(params["preserve"], bool):
+        raise StyxValidationError(f'`preserve` has the wrong type: Received `{type(params.get("preserve", False))}` expected `bool`')
+    if params.get("preserve_attr", None) is not None:
+        if not isinstance(params["preserve_attr"], str):
+            raise StyxValidationError(f'`preserve_attr` has the wrong type: Received `{type(params.get("preserve_attr", None))}` expected `str | None`')
+    if params.get("preserve_context", False) is None:
+        raise StyxValidationError("`preserve_context` must not be None")
+    if not isinstance(params["preserve_context"], bool):
+        raise StyxValidationError(f'`preserve_context` has the wrong type: Received `{type(params.get("preserve_context", False))}` expected `bool`')
+    if params.get("no_preserve", None) is not None:
+        if not isinstance(params["no_preserve"], str):
+            raise StyxValidationError(f'`no_preserve` has the wrong type: Received `{type(params.get("no_preserve", None))}` expected `str | None`')
+    if params.get("parents", False) is None:
+        raise StyxValidationError("`parents` must not be None")
+    if not isinstance(params["parents"], bool):
+        raise StyxValidationError(f'`parents` has the wrong type: Received `{type(params.get("parents", False))}` expected `bool`')
+    if params.get("recursive", False) is None:
+        raise StyxValidationError("`recursive` must not be None")
+    if not isinstance(params["recursive"], bool):
+        raise StyxValidationError(f'`recursive` has the wrong type: Received `{type(params.get("recursive", False))}` expected `bool`')
+    if params.get("reflink", None) is not None:
+        if not isinstance(params["reflink"], str):
+            raise StyxValidationError(f'`reflink` has the wrong type: Received `{type(params.get("reflink", None))}` expected `str | None`')
+    if params.get("remove_destination", False) is None:
+        raise StyxValidationError("`remove_destination` must not be None")
+    if not isinstance(params["remove_destination"], bool):
+        raise StyxValidationError(f'`remove_destination` has the wrong type: Received `{type(params.get("remove_destination", False))}` expected `bool`')
+    if params.get("sparse", None) is not None:
+        if not isinstance(params["sparse"], str):
+            raise StyxValidationError(f'`sparse` has the wrong type: Received `{type(params.get("sparse", None))}` expected `str | None`')
+    if params.get("strip_trailing_slashes", False) is None:
+        raise StyxValidationError("`strip_trailing_slashes` must not be None")
+    if not isinstance(params["strip_trailing_slashes"], bool):
+        raise StyxValidationError(f'`strip_trailing_slashes` has the wrong type: Received `{type(params.get("strip_trailing_slashes", False))}` expected `bool`')
+    if params.get("symbolic_link", False) is None:
+        raise StyxValidationError("`symbolic_link` must not be None")
+    if not isinstance(params["symbolic_link"], bool):
+        raise StyxValidationError(f'`symbolic_link` has the wrong type: Received `{type(params.get("symbolic_link", False))}` expected `bool`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("target_directory", None) is not None:
+        if not isinstance(params["target_directory"], str):
+            raise StyxValidationError(f'`target_directory` has the wrong type: Received `{type(params.get("target_directory", None))}` expected `str | None`')
+    if params.get("no_target_directory", False) is None:
+        raise StyxValidationError("`no_target_directory` must not be None")
+    if not isinstance(params["no_target_directory"], bool):
+        raise StyxValidationError(f'`no_target_directory` has the wrong type: Received `{type(params.get("no_target_directory", False))}` expected `bool`')
+    if params.get("update", False) is None:
+        raise StyxValidationError("`update` must not be None")
+    if not isinstance(params["update"], bool):
+        raise StyxValidationError(f'`update` has the wrong type: Received `{type(params.get("update", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("one_file_system", False) is None:
+        raise StyxValidationError("`one_file_system` must not be None")
+    if not isinstance(params["one_file_system"], bool):
+        raise StyxValidationError(f'`one_file_system` has the wrong type: Received `{type(params.get("one_file_system", False))}` expected `bool`')
+    if params.get("selinux_context", False) is None:
+        raise StyxValidationError("`selinux_context` must not be None")
+    if not isinstance(params["selinux_context"], bool):
+        raise StyxValidationError(f'`selinux_context` has the wrong type: Received `{type(params.get("selinux_context", False))}` expected `bool`')
+    if params.get("context", None) is not None:
+        if not isinstance(params["context"], str):
+            raise StyxValidationError(f'`context` has the wrong type: Received `{type(params.get("context", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def avw2fsl_cargs(
     params: Avw2fslParameters,
     execution: Execution,
@@ -370,6 +523,7 @@ def avw2fsl_execute(
     Returns:
         NamedTuple of outputs (described in `Avw2fslOutputs`).
     """
+    avw2fsl_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AVW2FSL_METADATA)
     params = execution.params(params)

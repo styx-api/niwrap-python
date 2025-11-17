@@ -68,6 +68,35 @@ def label_modify_keys_params(
     return params
 
 
+def label_modify_keys_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelModifyKeysParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+    if params.get("remap-file", None) is None:
+        raise StyxValidationError("`remap-file` must not be None")
+    if not isinstance(params["remap-file"], str):
+        raise StyxValidationError(f'`remap-file` has the wrong type: Received `{type(params.get("remap-file", None))}` expected `str`')
+
+
 def label_modify_keys_cargs(
     params: LabelModifyKeysParameters,
     execution: Execution,
@@ -142,6 +171,7 @@ def label_modify_keys_execute(
     Returns:
         NamedTuple of outputs (described in `LabelModifyKeysOutputs`).
     """
+    label_modify_keys_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL_MODIFY_KEYS_METADATA)
     params = execution.params(params)

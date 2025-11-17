@@ -78,6 +78,43 @@ def table2map_params(
     return params
 
 
+def table2map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Table2mapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_table", None) is None:
+        raise StyxValidationError("`input_table` must not be None")
+    if not isinstance(params["input_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_table` has the wrong type: Received `{type(params.get("input_table", None))}` expected `InputPathType`')
+    if params.get("output_map", None) is None:
+        raise StyxValidationError("`output_map` must not be None")
+    if not isinstance(params["output_map"], str):
+        raise StyxValidationError(f'`output_map` has the wrong type: Received `{type(params.get("output_map", None))}` expected `str`')
+    if params.get("segmentation", None) is not None:
+        if not isinstance(params["segmentation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", None))}` expected `InputPathType | None`')
+    if params.get("parcellation", None) is not None:
+        if not isinstance(params["parcellation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`parcellation` has the wrong type: Received `{type(params.get("parcellation", None))}` expected `InputPathType | None`')
+    if params.get("columns", None) is not None:
+        if not isinstance(params["columns"], list):
+            raise StyxValidationError(f'`columns` has the wrong type: Received `{type(params.get("columns", None))}` expected `list[str] | None`')
+        for e in params["columns"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`columns` has the wrong type: Received `{type(params.get("columns", None))}` expected `list[str] | None`')
+    if params.get("lookup_table", None) is not None:
+        if not isinstance(params["lookup_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lookup_table` has the wrong type: Received `{type(params.get("lookup_table", None))}` expected `InputPathType | None`')
+
+
 def table2map_cargs(
     params: Table2mapParameters,
     execution: Execution,
@@ -163,6 +200,7 @@ def table2map_execute(
     Returns:
         NamedTuple of outputs (described in `Table2mapOutputs`).
     """
+    table2map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TABLE2MAP_METADATA)
     params = execution.params(params)

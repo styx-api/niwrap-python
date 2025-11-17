@@ -98,6 +98,49 @@ def surf_extrema_params(
     return params
 
 
+def surf_extrema_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfExtremaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType | None`')
+    if params.get("hood", None) is not None:
+        if not isinstance(params["hood"], (float, int)):
+            raise StyxValidationError(f'`hood` has the wrong type: Received `{type(params.get("hood", None))}` expected `float | None`')
+    if params.get("thresh", None) is not None:
+        if not isinstance(params["thresh"], (float, int)):
+            raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `float | None`')
+    if params.get("gthresh", None) is not None:
+        if not isinstance(params["gthresh"], (float, int)):
+            raise StyxValidationError(f'`gthresh` has the wrong type: Received `{type(params.get("gthresh", None))}` expected `float | None`')
+    if params.get("gscale", None) is not None:
+        if not isinstance(params["gscale"], str):
+            raise StyxValidationError(f'`gscale` has the wrong type: Received `{type(params.get("gscale", None))}` expected `typing.Literal["NONE", "LMEAN", "GMEAN"] | None`')
+        if params["gscale"] not in ["NONE", "LMEAN", "GMEAN"]:
+            raise StyxValidationError("Parameter `gscale` must be one of [\"NONE\", \"LMEAN\", \"GMEAN\"]")
+    if params.get("extype", None) is not None:
+        if not isinstance(params["extype"], str):
+            raise StyxValidationError(f'`extype` has the wrong type: Received `{type(params.get("extype", None))}` expected `typing.Literal["MAX", "MIN", "ABS"] | None`')
+        if params["extype"] not in ["MAX", "MIN", "ABS"]:
+            raise StyxValidationError("Parameter `extype` must be one of [\"MAX\", \"MIN\", \"ABS\"]")
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("table", None) is not None:
+        if not isinstance(params["table"], str):
+            raise StyxValidationError(f'`table` has the wrong type: Received `{type(params.get("table", None))}` expected `str | None`')
+
+
 def surf_extrema_cargs(
     params: SurfExtremaParameters,
     execution: Execution,
@@ -195,6 +238,7 @@ def surf_extrema_execute(
     Returns:
         NamedTuple of outputs (described in `SurfExtremaOutputs`).
     """
+    surf_extrema_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_EXTREMA_METADATA)
     params = execution.params(params)

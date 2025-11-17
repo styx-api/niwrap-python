@@ -245,6 +245,147 @@ def optseq2_params(
     return params
 
 
+def optseq2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Optseq2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ntp", None) is None:
+        raise StyxValidationError("`ntp` must not be None")
+    if not isinstance(params["ntp"], (float, int)):
+        raise StyxValidationError(f'`ntp` has the wrong type: Received `{type(params.get("ntp", None))}` expected `float`')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("tprescan", None) is None:
+        raise StyxValidationError("`tprescan` must not be None")
+    if not isinstance(params["tprescan"], (float, int)):
+        raise StyxValidationError(f'`tprescan` has the wrong type: Received `{type(params.get("tprescan", None))}` expected `float`')
+    if params.get("psdwin", None) is None:
+        raise StyxValidationError("`psdwin` must not be None")
+    if not isinstance(params["psdwin"], list):
+        raise StyxValidationError(f'`psdwin` has the wrong type: Received `{type(params.get("psdwin", None))}` expected `list[float]`')
+    if 2 <= len(params["psdwin"]) <= 3:
+        raise StyxValidationError("Parameter `psdwin` must contain between 2 and 3 elements (inclusive)")
+    for e in params["psdwin"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`psdwin` has the wrong type: Received `{type(params.get("psdwin", None))}` expected `list[float]`')
+    if params.get("event", None) is not None:
+        if not isinstance(params["event"], list):
+            raise StyxValidationError(f'`event` has the wrong type: Received `{type(params.get("event", None))}` expected `list[str] | None`')
+        if len(params["event"]) == 3:
+            raise StyxValidationError("Parameter `event` must contain exactly 3 elements")
+        for e in params["event"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`event` has the wrong type: Received `{type(params.get("event", None))}` expected `list[str] | None`')
+    if params.get("repvar", None) is not None:
+        if not isinstance(params["repvar"], str):
+            raise StyxValidationError(f'`repvar` has the wrong type: Received `{type(params.get("repvar", None))}` expected `str | None`')
+    if params.get("polyfit", None) is not None:
+        if not isinstance(params["polyfit"], (float, int)):
+            raise StyxValidationError(f'`polyfit` has the wrong type: Received `{type(params.get("polyfit", None))}` expected `float | None`')
+    if params.get("tnullmin", None) is not None:
+        if not isinstance(params["tnullmin"], (float, int)):
+            raise StyxValidationError(f'`tnullmin` has the wrong type: Received `{type(params.get("tnullmin", None))}` expected `float | None`')
+    if params.get("tnullmax", None) is not None:
+        if not isinstance(params["tnullmax"], (float, int)):
+            raise StyxValidationError(f'`tnullmax` has the wrong type: Received `{type(params.get("tnullmax", None))}` expected `float | None`')
+    if params.get("nsearch", None) is not None:
+        if not isinstance(params["nsearch"], (float, int)):
+            raise StyxValidationError(f'`nsearch` has the wrong type: Received `{type(params.get("nsearch", None))}` expected `float | None`')
+    if params.get("tsearch", None) is not None:
+        if not isinstance(params["tsearch"], (float, int)):
+            raise StyxValidationError(f'`tsearch` has the wrong type: Received `{type(params.get("tsearch", None))}` expected `float | None`')
+    if params.get("first_order_cb", None) is not None:
+        if not isinstance(params["first_order_cb"], (float, int)):
+            raise StyxValidationError(f'`first_order_cb` has the wrong type: Received `{type(params.get("first_order_cb", None))}` expected `float | None`')
+    if params.get("ar1", None) is not None:
+        if not isinstance(params["ar1"], (float, int)):
+            raise StyxValidationError(f'`ar1` has the wrong type: Received `{type(params.get("ar1", None))}` expected `float | None`')
+        if -1 <= params["ar1"] <= 1:
+            raise StyxValidationError("Parameter `ar1` must be between -1 and 1 (inclusive)")
+    if params.get("penalize", None) is not None:
+        if not isinstance(params["penalize"], list):
+            raise StyxValidationError(f'`penalize` has the wrong type: Received `{type(params.get("penalize", None))}` expected `list[float] | None`')
+        if len(params["penalize"]) == 3:
+            raise StyxValidationError("Parameter `penalize` must contain exactly 3 elements")
+        for e in params["penalize"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`penalize` has the wrong type: Received `{type(params.get("penalize", None))}` expected `list[float] | None`')
+    if params.get("evc", None) is not None:
+        if not isinstance(params["evc"], list):
+            raise StyxValidationError(f'`evc` has the wrong type: Received `{type(params.get("evc", None))}` expected `list[float] | None`')
+        for e in params["evc"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`evc` has the wrong type: Received `{type(params.get("evc", None))}` expected `list[float] | None`')
+    if params.get("cmtx", None) is not None:
+        if not isinstance(params["cmtx"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cmtx` has the wrong type: Received `{type(params.get("cmtx", None))}` expected `InputPathType | None`')
+    if params.get("cost", None) is not None:
+        if not isinstance(params["cost"], str):
+            raise StyxValidationError(f'`cost` has the wrong type: Received `{type(params.get("cost", None))}` expected `str | None`')
+    if params.get("sumdelays", False) is None:
+        raise StyxValidationError("`sumdelays` must not be None")
+    if not isinstance(params["sumdelays"], bool):
+        raise StyxValidationError(f'`sumdelays` has the wrong type: Received `{type(params.get("sumdelays", False))}` expected `bool`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("nkeep", None) is not None:
+        if not isinstance(params["nkeep"], (float, int)):
+            raise StyxValidationError(f'`nkeep` has the wrong type: Received `{type(params.get("nkeep", None))}` expected `float | None`')
+    if params.get("outstem", None) is not None:
+        if not isinstance(params["outstem"], str):
+            raise StyxValidationError(f'`outstem` has the wrong type: Received `{type(params.get("outstem", None))}` expected `str | None`')
+    if params.get("mtxstem", None) is not None:
+        if not isinstance(params["mtxstem"], str):
+            raise StyxValidationError(f'`mtxstem` has the wrong type: Received `{type(params.get("mtxstem", None))}` expected `str | None`')
+    if params.get("cmtxfile", None) is not None:
+        if not isinstance(params["cmtxfile"], str):
+            raise StyxValidationError(f'`cmtxfile` has the wrong type: Received `{type(params.get("cmtxfile", None))}` expected `str | None`')
+    if params.get("summaryfile", None) is not None:
+        if not isinstance(params["summaryfile"], str):
+            raise StyxValidationError(f'`summaryfile` has the wrong type: Received `{type(params.get("summaryfile", None))}` expected `str | None`')
+    if params.get("logfile", None) is not None:
+        if not isinstance(params["logfile"], str):
+            raise StyxValidationError(f'`logfile` has the wrong type: Received `{type(params.get("logfile", None))}` expected `str | None`')
+    if params.get("pctupdate", None) is not None:
+        if not isinstance(params["pctupdate"], (float, int)):
+            raise StyxValidationError(f'`pctupdate` has the wrong type: Received `{type(params.get("pctupdate", None))}` expected `float | None`')
+    if params.get("sviterfile", None) is not None:
+        if not isinstance(params["sviterfile"], str):
+            raise StyxValidationError(f'`sviterfile` has the wrong type: Received `{type(params.get("sviterfile", None))}` expected `str | None`')
+    if params.get("instem", None) is not None:
+        if not isinstance(params["instem"], str):
+            raise StyxValidationError(f'`instem` has the wrong type: Received `{type(params.get("instem", None))}` expected `str | None`')
+    if params.get("input_schedule", None) is not None:
+        if not isinstance(params["input_schedule"], list):
+            raise StyxValidationError(f'`input_schedule` has the wrong type: Received `{type(params.get("input_schedule", None))}` expected `list[str] | None`')
+        for e in params["input_schedule"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`input_schedule` has the wrong type: Received `{type(params.get("input_schedule", None))}` expected `list[str] | None`')
+    if params.get("nosearch", False) is None:
+        raise StyxValidationError("`nosearch` must not be None")
+    if not isinstance(params["nosearch"], bool):
+        raise StyxValidationError(f'`nosearch` has the wrong type: Received `{type(params.get("nosearch", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def optseq2_cargs(
     params: Optseq2Parameters,
     execution: Execution,
@@ -452,6 +593,7 @@ def optseq2_execute(
     Returns:
         NamedTuple of outputs (described in `Optseq2Outputs`).
     """
+    optseq2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(OPTSEQ2_METADATA)
     params = execution.params(params)

@@ -157,6 +157,80 @@ def gca_apply_params(
     return params
 
 
+def gca_apply_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GcaApplyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gcafile", None) is None:
+        raise StyxValidationError("`gcafile` must not be None")
+    if not isinstance(params["gcafile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`gcafile` has the wrong type: Received `{type(params.get("gcafile", None))}` expected `InputPathType`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], (float, int)):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `float | None`')
+    if params.get("base", None) is not None:
+        if not isinstance(params["base"], str):
+            raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `str | None`')
+    if params.get("no_segstats", False) is None:
+        raise StyxValidationError("`no_segstats` must not be None")
+    if not isinstance(params["no_segstats"], bool):
+        raise StyxValidationError(f'`no_segstats` has the wrong type: Received `{type(params.get("no_segstats", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("dice_seg", None) is not None:
+        if not isinstance(params["dice_seg"], str):
+            raise StyxValidationError(f'`dice_seg` has the wrong type: Received `{type(params.get("dice_seg", None))}` expected `str | None`')
+    if params.get("dice_file", None) is not None:
+        if not isinstance(params["dice_file"], str):
+            raise StyxValidationError(f'`dice_file` has the wrong type: Received `{type(params.get("dice_file", None))}` expected `str | None`')
+    if params.get("lta", None) is not None:
+        if not isinstance(params["lta"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lta` has the wrong type: Received `{type(params.get("lta", None))}` expected `InputPathType | None`')
+    if params.get("norm", None) is not None:
+        if not isinstance(params["norm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`norm` has the wrong type: Received `{type(params.get("norm", None))}` expected `InputPathType | None`')
+    if params.get("input_mgz", None) is not None:
+        if not isinstance(params["input_mgz"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_mgz` has the wrong type: Received `{type(params.get("input_mgz", None))}` expected `InputPathType | None`')
+    if params.get("brainmask", None) is not None:
+        if not isinstance(params["brainmask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brainmask` has the wrong type: Received `{type(params.get("brainmask", None))}` expected `InputPathType | None`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("no_v6labopts", False) is None:
+        raise StyxValidationError("`no_v6labopts` must not be None")
+    if not isinstance(params["no_v6labopts"], bool):
+        raise StyxValidationError(f'`no_v6labopts` has the wrong type: Received `{type(params.get("no_v6labopts", False))}` expected `bool`')
+    if params.get("m3z_file", None) is not None:
+        if not isinstance(params["m3z_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`m3z_file` has the wrong type: Received `{type(params.get("m3z_file", None))}` expected `InputPathType | None`')
+    if params.get("gca_rb_2016", False) is None:
+        raise StyxValidationError("`gca_rb_2016` must not be None")
+    if not isinstance(params["gca_rb_2016"], bool):
+        raise StyxValidationError(f'`gca_rb_2016` has the wrong type: Received `{type(params.get("gca_rb_2016", False))}` expected `bool`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+    if params.get("gcareg_iters", None) is not None:
+        if not isinstance(params["gcareg_iters"], (float, int)):
+            raise StyxValidationError(f'`gcareg_iters` has the wrong type: Received `{type(params.get("gcareg_iters", None))}` expected `float | None`')
+
+
 def gca_apply_cargs(
     params: GcaApplyParameters,
     execution: Execution,
@@ -290,6 +364,7 @@ def gca_apply_execute(
     Returns:
         NamedTuple of outputs (described in `GcaApplyOutputs`).
     """
+    gca_apply_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GCA_APPLY_METADATA)
     params = execution.params(params)

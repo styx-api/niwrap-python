@@ -84,6 +84,44 @@ def v_3d_tcat_params(
     return params
 
 
+def v_3d_tcat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTcatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rlt", None) is not None:
+        if not isinstance(params["rlt"], str):
+            raise StyxValidationError(f'`rlt` has the wrong type: Received `{type(params.get("rlt", None))}` expected `typing.Literal["", "+", "++"] | None`')
+        if params["rlt"] not in ["", "+", "++"]:
+            raise StyxValidationError("Parameter `rlt` must be one of [\"\", \"+\", \"++\"]")
+    if params.get("in_files", None) is None:
+        raise StyxValidationError("`in_files` must not be None")
+    if not isinstance(params["in_files"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_files` has the wrong type: Received `{type(params.get("in_files", None))}` expected `InputPathType`')
+    if params.get("out_file", None) is not None:
+        if not isinstance(params["out_file"], str):
+            raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], int):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v_3d_tcat_cargs(
     params: V3dTcatParameters,
     execution: Execution,
@@ -159,6 +197,7 @@ def v_3d_tcat_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTcatOutputs`).
     """
+    v_3d_tcat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TCAT_METADATA)
     params = execution.params(params)

@@ -49,6 +49,24 @@ def v__surf_smooth_heat_07_examples_params(
     return params
 
 
+def v__surf_smooth_heat_07_examples_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSurfSmoothHeat07ExamplesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("path_to_suma_demo", None) is None:
+        raise StyxValidationError("`path_to_suma_demo` must not be None")
+    if not isinstance(params["path_to_suma_demo"], str):
+        raise StyxValidationError(f'`path_to_suma_demo` has the wrong type: Received `{type(params.get("path_to_suma_demo", None))}` expected `str`')
+
+
 def v__surf_smooth_heat_07_examples_cargs(
     params: VSurfSmoothHeat07ExamplesParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def v__surf_smooth_heat_07_examples_execute(
     Returns:
         NamedTuple of outputs (described in `VSurfSmoothHeat07ExamplesOutputs`).
     """
+    v__surf_smooth_heat_07_examples_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA)
     params = execution.params(params)

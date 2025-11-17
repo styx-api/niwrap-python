@@ -78,6 +78,43 @@ def systemnoise_params(
     return params
 
 
+def systemnoise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SystemnoiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_signal", None) is None:
+        raise StyxValidationError("`input_signal` must not be None")
+    if not isinstance(params["input_signal"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_signal` has the wrong type: Received `{type(params.get("input_signal", None))}` expected `InputPathType`')
+    if params.get("output_signal", None) is None:
+        raise StyxValidationError("`output_signal` must not be None")
+    if not isinstance(params["output_signal"], str):
+        raise StyxValidationError(f'`output_signal` has the wrong type: Received `{type(params.get("output_signal", None))}` expected `str`')
+    if params.get("noise_standard_deviation", None) is None:
+        raise StyxValidationError("`noise_standard_deviation` must not be None")
+    if not isinstance(params["noise_standard_deviation"], (float, int)):
+        raise StyxValidationError(f'`noise_standard_deviation` has the wrong type: Received `{type(params.get("noise_standard_deviation", None))}` expected `float`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def systemnoise_cargs(
     params: SystemnoiseParameters,
     execution: Execution,
@@ -156,6 +193,7 @@ def systemnoise_execute(
     Returns:
         NamedTuple of outputs (described in `SystemnoiseOutputs`).
     """
+    systemnoise_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SYSTEMNOISE_METADATA)
     params = execution.params(params)

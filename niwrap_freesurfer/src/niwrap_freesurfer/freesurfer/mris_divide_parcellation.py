@@ -84,6 +84,46 @@ def mris_divide_parcellation_params(
     return params
 
 
+def mris_divide_parcellation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisDivideParcellationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("sourceannot", None) is None:
+        raise StyxValidationError("`sourceannot` must not be None")
+    if not isinstance(params["sourceannot"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sourceannot` has the wrong type: Received `{type(params.get("sourceannot", None))}` expected `InputPathType`')
+    if params.get("splitfile_or_areathresh", None) is None:
+        raise StyxValidationError("`splitfile_or_areathresh` must not be None")
+    if not isinstance(params["splitfile_or_areathresh"], str):
+        raise StyxValidationError(f'`splitfile_or_areathresh` has the wrong type: Received `{type(params.get("splitfile_or_areathresh", None))}` expected `str`')
+    if params.get("outannot", None) is None:
+        raise StyxValidationError("`outannot` must not be None")
+    if not isinstance(params["outannot"], str):
+        raise StyxValidationError(f'`outannot` has the wrong type: Received `{type(params.get("outannot", None))}` expected `str`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+    if params.get("label_name", None) is not None:
+        if not isinstance(params["label_name"], str):
+            raise StyxValidationError(f'`label_name` has the wrong type: Received `{type(params.get("label_name", None))}` expected `str | None`')
+
+
 def mris_divide_parcellation_cargs(
     params: MrisDivideParcellationParameters,
     execution: Execution,
@@ -157,6 +197,7 @@ def mris_divide_parcellation_execute(
     Returns:
         NamedTuple of outputs (described in `MrisDivideParcellationOutputs`).
     """
+    mris_divide_parcellation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_DIVIDE_PARCELLATION_METADATA)
     params = execution.params(params)

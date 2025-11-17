@@ -82,6 +82,48 @@ def mri_synthesize_params(
     return params
 
 
+def mri_synthesize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSynthesizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("alpha", None) is None:
+        raise StyxValidationError("`alpha` must not be None")
+    if not isinstance(params["alpha"], (float, int)):
+        raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float`')
+    if params.get("te", None) is None:
+        raise StyxValidationError("`te` must not be None")
+    if not isinstance(params["te"], (float, int)):
+        raise StyxValidationError(f'`te` has the wrong type: Received `{type(params.get("te", None))}` expected `float`')
+    if params.get("t1_volume", None) is None:
+        raise StyxValidationError("`t1_volume` must not be None")
+    if not isinstance(params["t1_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_volume` has the wrong type: Received `{type(params.get("t1_volume", None))}` expected `InputPathType`')
+    if params.get("pd_volume", None) is None:
+        raise StyxValidationError("`pd_volume` must not be None")
+    if not isinstance(params["pd_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pd_volume` has the wrong type: Received `{type(params.get("pd_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("fixed_weight", False) is None:
+        raise StyxValidationError("`fixed_weight` must not be None")
+    if not isinstance(params["fixed_weight"], bool):
+        raise StyxValidationError(f'`fixed_weight` has the wrong type: Received `{type(params.get("fixed_weight", False))}` expected `bool`')
+
+
 def mri_synthesize_cargs(
     params: MriSynthesizeParameters,
     execution: Execution,
@@ -148,6 +190,7 @@ def mri_synthesize_execute(
     Returns:
         NamedTuple of outputs (described in `MriSynthesizeOutputs`).
     """
+    mri_synthesize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SYNTHESIZE_METADATA)
     params = execution.params(params)

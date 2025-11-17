@@ -241,6 +241,136 @@ def long_mris_slopes_params(
     return params
 
 
+def long_mris_slopes_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongMrisSlopesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec", None) is None:
+        raise StyxValidationError("`qdec` must not be None")
+    if not isinstance(params["qdec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`qdec` has the wrong type: Received `{type(params.get("qdec", None))}` expected `InputPathType`')
+    if params.get("meas", None) is None:
+        raise StyxValidationError("`meas` must not be None")
+    if not isinstance(params["meas"], str):
+        raise StyxValidationError(f'`meas` has the wrong type: Received `{type(params.get("meas", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("sd", None) is None:
+        raise StyxValidationError("`sd` must not be None")
+    if not isinstance(params["sd"], str):
+        raise StyxValidationError(f'`sd` has the wrong type: Received `{type(params.get("sd", None))}` expected `str`')
+    if params.get("do_avg", False) is None:
+        raise StyxValidationError("`do_avg` must not be None")
+    if not isinstance(params["do_avg"], bool):
+        raise StyxValidationError(f'`do_avg` has the wrong type: Received `{type(params.get("do_avg", False))}` expected `bool`')
+    if params.get("do_rate", False) is None:
+        raise StyxValidationError("`do_rate` must not be None")
+    if not isinstance(params["do_rate"], bool):
+        raise StyxValidationError(f'`do_rate` has the wrong type: Received `{type(params.get("do_rate", False))}` expected `bool`')
+    if params.get("do_pc1fit", False) is None:
+        raise StyxValidationError("`do_pc1fit` must not be None")
+    if not isinstance(params["do_pc1fit"], bool):
+        raise StyxValidationError(f'`do_pc1fit` has the wrong type: Received `{type(params.get("do_pc1fit", False))}` expected `bool`')
+    if params.get("do_pc1", False) is None:
+        raise StyxValidationError("`do_pc1` must not be None")
+    if not isinstance(params["do_pc1"], bool):
+        raise StyxValidationError(f'`do_pc1` has the wrong type: Received `{type(params.get("do_pc1", False))}` expected `bool`')
+    if params.get("do_spc", False) is None:
+        raise StyxValidationError("`do_spc` must not be None")
+    if not isinstance(params["do_spc"], bool):
+        raise StyxValidationError(f'`do_spc` has the wrong type: Received `{type(params.get("do_spc", False))}` expected `bool`')
+    if params.get("do_stack", False) is None:
+        raise StyxValidationError("`do_stack` must not be None")
+    if not isinstance(params["do_stack"], bool):
+        raise StyxValidationError(f'`do_stack` has the wrong type: Received `{type(params.get("do_stack", False))}` expected `bool`')
+    if params.get("do_label", False) is None:
+        raise StyxValidationError("`do_label` must not be None")
+    if not isinstance(params["do_label"], bool):
+        raise StyxValidationError(f'`do_label` has the wrong type: Received `{type(params.get("do_label", False))}` expected `bool`')
+    if params.get("qcache", None) is not None:
+        if not isinstance(params["qcache"], str):
+            raise StyxValidationError(f'`qcache` has the wrong type: Received `{type(params.get("qcache", None))}` expected `str | None`')
+    if params.get("resid", None) is not None:
+        if not isinstance(params["resid"], str):
+            raise StyxValidationError(f'`resid` has the wrong type: Received `{type(params.get("resid", None))}` expected `str | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], str):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `str | None`')
+    if params.get("nosmooth", False) is None:
+        raise StyxValidationError("`nosmooth` must not be None")
+    if not isinstance(params["nosmooth"], bool):
+        raise StyxValidationError(f'`nosmooth` has the wrong type: Received `{type(params.get("nosmooth", False))}` expected `bool`')
+    if params.get("time", None) is not None:
+        if not isinstance(params["time"], str):
+            raise StyxValidationError(f'`time` has the wrong type: Received `{type(params.get("time", None))}` expected `str | None`')
+    if params.get("generic_time", False) is None:
+        raise StyxValidationError("`generic_time` must not be None")
+    if not isinstance(params["generic_time"], bool):
+        raise StyxValidationError(f'`generic_time` has the wrong type: Received `{type(params.get("generic_time", False))}` expected `bool`')
+    if params.get("in_label", None) is not None:
+        if not isinstance(params["in_label"], str):
+            raise StyxValidationError(f'`in_label` has the wrong type: Received `{type(params.get("in_label", None))}` expected `str | None`')
+    if params.get("jac", False) is None:
+        raise StyxValidationError("`jac` must not be None")
+    if not isinstance(params["jac"], bool):
+        raise StyxValidationError(f'`jac` has the wrong type: Received `{type(params.get("jac", False))}` expected `bool`')
+    if params.get("name_avg", None) is not None:
+        if not isinstance(params["name_avg"], str):
+            raise StyxValidationError(f'`name_avg` has the wrong type: Received `{type(params.get("name_avg", None))}` expected `str | None`')
+    if params.get("name_rate", None) is not None:
+        if not isinstance(params["name_rate"], str):
+            raise StyxValidationError(f'`name_rate` has the wrong type: Received `{type(params.get("name_rate", None))}` expected `str | None`')
+    if params.get("name_pc1fit", None) is not None:
+        if not isinstance(params["name_pc1fit"], str):
+            raise StyxValidationError(f'`name_pc1fit` has the wrong type: Received `{type(params.get("name_pc1fit", None))}` expected `str | None`')
+    if params.get("name_pc1", None) is not None:
+        if not isinstance(params["name_pc1"], str):
+            raise StyxValidationError(f'`name_pc1` has the wrong type: Received `{type(params.get("name_pc1", None))}` expected `str | None`')
+    if params.get("name_spc", None) is not None:
+        if not isinstance(params["name_spc"], str):
+            raise StyxValidationError(f'`name_spc` has the wrong type: Received `{type(params.get("name_spc", None))}` expected `str | None`')
+    if params.get("name_resid", None) is not None:
+        if not isinstance(params["name_resid"], str):
+            raise StyxValidationError(f'`name_resid` has the wrong type: Received `{type(params.get("name_resid", None))}` expected `str | None`')
+    if params.get("out_stack", None) is not None:
+        if not isinstance(params["out_stack"], str):
+            raise StyxValidationError(f'`out_stack` has the wrong type: Received `{type(params.get("out_stack", None))}` expected `str | None`')
+    if params.get("out_label", None) is not None:
+        if not isinstance(params["out_label"], str):
+            raise StyxValidationError(f'`out_label` has the wrong type: Received `{type(params.get("out_label", None))}` expected `str | None`')
+    if params.get("isec_labels", None) is not None:
+        if not isinstance(params["isec_labels"], str):
+            raise StyxValidationError(f'`isec_labels` has the wrong type: Received `{type(params.get("isec_labels", None))}` expected `str | None`')
+    if params.get("stack_avg", None) is not None:
+        if not isinstance(params["stack_avg"], str):
+            raise StyxValidationError(f'`stack_avg` has the wrong type: Received `{type(params.get("stack_avg", None))}` expected `str | None`')
+    if params.get("stack_rate", None) is not None:
+        if not isinstance(params["stack_rate"], str):
+            raise StyxValidationError(f'`stack_rate` has the wrong type: Received `{type(params.get("stack_rate", None))}` expected `str | None`')
+    if params.get("stack_pc1fit", None) is not None:
+        if not isinstance(params["stack_pc1fit"], str):
+            raise StyxValidationError(f'`stack_pc1fit` has the wrong type: Received `{type(params.get("stack_pc1fit", None))}` expected `str | None`')
+    if params.get("stack_pc1", None) is not None:
+        if not isinstance(params["stack_pc1"], str):
+            raise StyxValidationError(f'`stack_pc1` has the wrong type: Received `{type(params.get("stack_pc1", None))}` expected `str | None`')
+    if params.get("stack_spc", None) is not None:
+        if not isinstance(params["stack_spc"], str):
+            raise StyxValidationError(f'`stack_spc` has the wrong type: Received `{type(params.get("stack_spc", None))}` expected `str | None`')
+    if params.get("stack_resid", None) is not None:
+        if not isinstance(params["stack_resid"], str):
+            raise StyxValidationError(f'`stack_resid` has the wrong type: Received `{type(params.get("stack_resid", None))}` expected `str | None`')
+
+
 def long_mris_slopes_cargs(
     params: LongMrisSlopesParameters,
     execution: Execution,
@@ -434,6 +564,7 @@ def long_mris_slopes_execute(
     Returns:
         NamedTuple of outputs (described in `LongMrisSlopesOutputs`).
     """
+    long_mris_slopes_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_MRIS_SLOPES_METADATA)
     params = execution.params(params)

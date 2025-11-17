@@ -216,6 +216,117 @@ def mri_surf2vol_params(
     return params
 
 
+def mri_surf2vol_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSurf2volParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface_overlay", None) is not None:
+        if not isinstance(params["surface_overlay"], list):
+            raise StyxValidationError(f'`surface_overlay` has the wrong type: Received `{type(params.get("surface_overlay", None))}` expected `list[str] | None`')
+        for e in params["surface_overlay"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`surface_overlay` has the wrong type: Received `{type(params.get("surface_overlay", None))}` expected `list[str] | None`')
+    if params.get("ltafile", None) is not None:
+        if not isinstance(params["ltafile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ltafile` has the wrong type: Received `{type(params.get("ltafile", None))}` expected `InputPathType | None`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("ribbonfile", None) is not None:
+        if not isinstance(params["ribbonfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ribbonfile` has the wrong type: Received `{type(params.get("ribbonfile", None))}` expected `InputPathType | None`')
+    if params.get("merge_volume", None) is not None:
+        if not isinstance(params["merge_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`merge_volume` has the wrong type: Received `{type(params.get("merge_volume", None))}` expected `InputPathType | None`')
+    if params.get("surface_values", None) is not None:
+        if not isinstance(params["surface_values"], str):
+            raise StyxValidationError(f'`surface_values` has the wrong type: Received `{type(params.get("surface_values", None))}` expected `str | None`')
+    if params.get("mkmask", False) is None:
+        raise StyxValidationError("`mkmask` must not be None")
+    if not isinstance(params["mkmask"], bool):
+        raise StyxValidationError(f'`mkmask` has the wrong type: Received `{type(params.get("mkmask", False))}` expected `bool`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("surfname", None) is not None:
+        if not isinstance(params["surfname"], str):
+            raise StyxValidationError(f'`surfname` has the wrong type: Received `{type(params.get("surfname", None))}` expected `str | None`')
+    if params.get("projfrac", None) is not None:
+        if not isinstance(params["projfrac"], (float, int)):
+            raise StyxValidationError(f'`projfrac` has the wrong type: Received `{type(params.get("projfrac", None))}` expected `float | None`')
+    if params.get("fill_ribbon", False) is None:
+        raise StyxValidationError("`fill_ribbon` must not be None")
+    if not isinstance(params["fill_ribbon"], bool):
+        raise StyxValidationError(f'`fill_ribbon` has the wrong type: Received `{type(params.get("fill_ribbon", False))}` expected `bool`')
+    if params.get("fill_projfrac", None) is not None:
+        if not isinstance(params["fill_projfrac"], str):
+            raise StyxValidationError(f'`fill_projfrac` has the wrong type: Received `{type(params.get("fill_projfrac", None))}` expected `str | None`')
+    if params.get("reg_volume", None) is not None:
+        if not isinstance(params["reg_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reg_volume` has the wrong type: Received `{type(params.get("reg_volume", None))}` expected `InputPathType | None`')
+    if params.get("identity", None) is not None:
+        if not isinstance(params["identity"], str):
+            raise StyxValidationError(f'`identity` has the wrong type: Received `{type(params.get("identity", None))}` expected `str | None`')
+    if params.get("template_volume", None) is not None:
+        if not isinstance(params["template_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template_volume` has the wrong type: Received `{type(params.get("template_volume", None))}` expected `InputPathType | None`')
+    if params.get("fstal_res", None) is not None:
+        if not isinstance(params["fstal_res"], str):
+            raise StyxValidationError(f'`fstal_res` has the wrong type: Received `{type(params.get("fstal_res", None))}` expected `str | None`')
+    if params.get("vtxvol", None) is not None:
+        if not isinstance(params["vtxvol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vtxvol` has the wrong type: Received `{type(params.get("vtxvol", None))}` expected `InputPathType | None`')
+    if params.get("flat2mri", None) is not None:
+        if not isinstance(params["flat2mri"], str):
+            raise StyxValidationError(f'`flat2mri` has the wrong type: Received `{type(params.get("flat2mri", None))}` expected `str | None`')
+    if params.get("sphpvf", None) is not None:
+        if not isinstance(params["sphpvf"], str):
+            raise StyxValidationError(f'`sphpvf` has the wrong type: Received `{type(params.get("sphpvf", None))}` expected `str | None`')
+    if params.get("mask_to_cortex", False) is None:
+        raise StyxValidationError("`mask_to_cortex` must not be None")
+    if not isinstance(params["mask_to_cortex"], bool):
+        raise StyxValidationError(f'`mask_to_cortex` has the wrong type: Received `{type(params.get("mask_to_cortex", False))}` expected `bool`')
+    if params.get("mask_to_label", None) is not None:
+        if not isinstance(params["mask_to_label"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_to_label` has the wrong type: Received `{type(params.get("mask_to_label", None))}` expected `InputPathType | None`')
+    if params.get("surface_mask", None) is not None:
+        if not isinstance(params["surface_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_mask` has the wrong type: Received `{type(params.get("surface_mask", None))}` expected `InputPathType | None`')
+    if params.get("add_const", None) is not None:
+        if not isinstance(params["add_const"], (float, int)):
+            raise StyxValidationError(f'`add_const` has the wrong type: Received `{type(params.get("add_const", None))}` expected `float | None`')
+    if params.get("copy_ctab", False) is None:
+        raise StyxValidationError("`copy_ctab` must not be None")
+    if not isinstance(params["copy_ctab"], bool):
+        raise StyxValidationError(f'`copy_ctab` has the wrong type: Received `{type(params.get("copy_ctab", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("gdiagno", None) is not None:
+        if not isinstance(params["gdiagno"], int):
+            raise StyxValidationError(f'`gdiagno` has the wrong type: Received `{type(params.get("gdiagno", None))}` expected `int | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_surf2vol_cargs(
     params: MriSurf2volParameters,
     execution: Execution,
@@ -400,6 +511,7 @@ def mri_surf2vol_execute(
     Returns:
         NamedTuple of outputs (described in `MriSurf2volOutputs`).
     """
+    mri_surf2vol_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SURF2VOL_METADATA)
     params = execution.params(params)

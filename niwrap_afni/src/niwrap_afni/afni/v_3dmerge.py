@@ -114,6 +114,71 @@ def v_3dmerge_params(
     return params
 
 
+def v_3dmerge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dmergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("blur_fwhm", None) is not None:
+        if not isinstance(params["blur_fwhm"], (float, int)):
+            raise StyxValidationError(f'`blur_fwhm` has the wrong type: Received `{type(params.get("blur_fwhm", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("clust", None) is not None:
+        if not isinstance(params["clust"], list):
+            raise StyxValidationError(f'`clust` has the wrong type: Received `{type(params.get("clust", None))}` expected `list[float] | None`')
+        if len(params["clust"]) == 2:
+            raise StyxValidationError("Parameter `clust` must contain exactly 2 elements")
+        for e in params["clust"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`clust` has the wrong type: Received `{type(params.get("clust", None))}` expected `list[float] | None`')
+    if params.get("dindex", None) is not None:
+        if not isinstance(params["dindex"], (float, int)):
+            raise StyxValidationError(f'`dindex` has the wrong type: Received `{type(params.get("dindex", None))}` expected `float | None`')
+    if params.get("tindex", None) is not None:
+        if not isinstance(params["tindex"], (float, int)):
+            raise StyxValidationError(f'`tindex` has the wrong type: Received `{type(params.get("tindex", None))}` expected `float | None`')
+    if params.get("absolute", False) is None:
+        raise StyxValidationError("`absolute` must not be None")
+    if not isinstance(params["absolute"], bool):
+        raise StyxValidationError(f'`absolute` has the wrong type: Received `{type(params.get("absolute", False))}` expected `bool`')
+    if params.get("dxyz", False) is None:
+        raise StyxValidationError("`dxyz` must not be None")
+    if not isinstance(params["dxyz"], bool):
+        raise StyxValidationError(f'`dxyz` has the wrong type: Received `{type(params.get("dxyz", False))}` expected `bool`')
+    if params.get("gmean", False) is None:
+        raise StyxValidationError("`gmean` must not be None")
+    if not isinstance(params["gmean"], bool):
+        raise StyxValidationError(f'`gmean` has the wrong type: Received `{type(params.get("gmean", False))}` expected `bool`')
+    if params.get("gmax", False) is None:
+        raise StyxValidationError("`gmax` must not be None")
+    if not isinstance(params["gmax"], bool):
+        raise StyxValidationError(f'`gmax` has the wrong type: Received `{type(params.get("gmax", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3dmerge_cargs(
     params: V3dmergeParameters,
     execution: Execution,
@@ -212,6 +277,7 @@ def v_3dmerge_execute(
     Returns:
         NamedTuple of outputs (described in `V3dmergeOutputs`).
     """
+    v_3dmerge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DMERGE_METADATA)
     params = execution.params(params)

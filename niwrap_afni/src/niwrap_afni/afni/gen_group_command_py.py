@@ -117,6 +117,73 @@ def gen_group_command_py_params(
     return params
 
 
+def gen_group_command_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GenGroupCommandPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("command_name", None) is None:
+        raise StyxValidationError("`command_name` must not be None")
+    if not isinstance(params["command_name"], str):
+        raise StyxValidationError(f'`command_name` has the wrong type: Received `{type(params.get("command_name", None))}` expected `str`')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    for e in params["datasets"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("set_labels", None) is not None:
+        if not isinstance(params["set_labels"], list):
+            raise StyxValidationError(f'`set_labels` has the wrong type: Received `{type(params.get("set_labels", None))}` expected `list[str] | None`')
+        for e in params["set_labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`set_labels` has the wrong type: Received `{type(params.get("set_labels", None))}` expected `list[str] | None`')
+    if params.get("subj_prefix", None) is not None:
+        if not isinstance(params["subj_prefix"], str):
+            raise StyxValidationError(f'`subj_prefix` has the wrong type: Received `{type(params.get("subj_prefix", None))}` expected `str | None`')
+    if params.get("subj_suffix", None) is not None:
+        if not isinstance(params["subj_suffix"], str):
+            raise StyxValidationError(f'`subj_suffix` has the wrong type: Received `{type(params.get("subj_suffix", None))}` expected `str | None`')
+    if params.get("subs_betas", None) is not None:
+        if not isinstance(params["subs_betas"], list):
+            raise StyxValidationError(f'`subs_betas` has the wrong type: Received `{type(params.get("subs_betas", None))}` expected `list[str] | None`')
+        for e in params["subs_betas"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subs_betas` has the wrong type: Received `{type(params.get("subs_betas", None))}` expected `list[str] | None`')
+    if params.get("subs_tstats", None) is not None:
+        if not isinstance(params["subs_tstats"], list):
+            raise StyxValidationError(f'`subs_tstats` has the wrong type: Received `{type(params.get("subs_tstats", None))}` expected `list[str] | None`')
+        for e in params["subs_tstats"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subs_tstats` has the wrong type: Received `{type(params.get("subs_tstats", None))}` expected `list[str] | None`')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], str):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `str | None`')
+    if params.get("write_script", None) is not None:
+        if not isinstance(params["write_script"], str):
+            raise StyxValidationError(f'`write_script` has the wrong type: Received `{type(params.get("write_script", None))}` expected `str | None`')
+    if params.get("other_options", None) is not None:
+        if not isinstance(params["other_options"], list):
+            raise StyxValidationError(f'`other_options` has the wrong type: Received `{type(params.get("other_options", None))}` expected `list[str] | None`')
+        for e in params["other_options"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`other_options` has the wrong type: Received `{type(params.get("other_options", None))}` expected `list[str] | None`')
+
+
 def gen_group_command_py_cargs(
     params: GenGroupCommandPyParameters,
     execution: Execution,
@@ -233,6 +300,7 @@ def gen_group_command_py_execute(
     Returns:
         NamedTuple of outputs (described in `GenGroupCommandPyOutputs`).
     """
+    gen_group_command_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GEN_GROUP_COMMAND_PY_METADATA)
     params = execution.params(params)

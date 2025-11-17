@@ -98,6 +98,46 @@ def bedpostx_params(
     return params
 
 
+def bedpostx_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BedpostxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], str):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str`')
+    if params.get("num_fibres", None) is not None:
+        if not isinstance(params["num_fibres"], (float, int)):
+            raise StyxValidationError(f'`num_fibres` has the wrong type: Received `{type(params.get("num_fibres", None))}` expected `float | None`')
+    if params.get("ard_weight", None) is not None:
+        if not isinstance(params["ard_weight"], (float, int)):
+            raise StyxValidationError(f'`ard_weight` has the wrong type: Received `{type(params.get("ard_weight", None))}` expected `float | None`')
+    if params.get("burnin", None) is not None:
+        if not isinstance(params["burnin"], (float, int)):
+            raise StyxValidationError(f'`burnin` has the wrong type: Received `{type(params.get("burnin", None))}` expected `float | None`')
+    if params.get("num_jumps", None) is not None:
+        if not isinstance(params["num_jumps"], (float, int)):
+            raise StyxValidationError(f'`num_jumps` has the wrong type: Received `{type(params.get("num_jumps", None))}` expected `float | None`')
+    if params.get("sample_every", None) is not None:
+        if not isinstance(params["sample_every"], (float, int)):
+            raise StyxValidationError(f'`sample_every` has the wrong type: Received `{type(params.get("sample_every", None))}` expected `float | None`')
+    if params.get("model_type", None) is not None:
+        if not isinstance(params["model_type"], (float, int)):
+            raise StyxValidationError(f'`model_type` has the wrong type: Received `{type(params.get("model_type", None))}` expected `float | None`')
+    if params.get("grad_nonlinear", False) is None:
+        raise StyxValidationError("`grad_nonlinear` must not be None")
+    if not isinstance(params["grad_nonlinear"], bool):
+        raise StyxValidationError(f'`grad_nonlinear` has the wrong type: Received `{type(params.get("grad_nonlinear", False))}` expected `bool`')
+
+
 def bedpostx_cargs(
     params: BedpostxParameters,
     execution: Execution,
@@ -190,6 +230,7 @@ def bedpostx_execute(
     Returns:
         NamedTuple of outputs (described in `BedpostxOutputs`).
     """
+    bedpostx_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BEDPOSTX_METADATA)
     params = execution.params(params)

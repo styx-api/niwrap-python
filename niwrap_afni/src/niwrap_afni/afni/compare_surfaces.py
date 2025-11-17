@@ -133,6 +133,83 @@ def compare_surfaces_params(
     return params
 
 
+def compare_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CompareSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `typing.Literal["L", "R"]`')
+    if params["hemisphere"] not in ["L", "R"]:
+        raise StyxValidationError("Parameter `hemisphere` must be one of [\"L\", \"R\"]")
+    if params.get("volume_parent_1", None) is None:
+        raise StyxValidationError("`volume_parent_1` must not be None")
+    if not isinstance(params["volume_parent_1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume_parent_1` has the wrong type: Received `{type(params.get("volume_parent_1", None))}` expected `InputPathType`')
+    if params.get("volume_parent_2", None) is None:
+        raise StyxValidationError("`volume_parent_2` must not be None")
+    if not isinstance(params["volume_parent_2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume_parent_2` has the wrong type: Received `{type(params.get("volume_parent_2", None))}` expected `InputPathType`')
+    if params.get("file_prefix", None) is not None:
+        if not isinstance(params["file_prefix"], str):
+            raise StyxValidationError(f'`file_prefix` has the wrong type: Received `{type(params.get("file_prefix", None))}` expected `str | None`')
+    if params.get("one_node", None) is not None:
+        if not isinstance(params["one_node"], (float, int)):
+            raise StyxValidationError(f'`one_node` has the wrong type: Received `{type(params.get("one_node", None))}` expected `float | None`')
+    if params.get("node_range", None) is not None:
+        if not isinstance(params["node_range"], list):
+            raise StyxValidationError(f'`node_range` has the wrong type: Received `{type(params.get("node_range", None))}` expected `list[float] | None`')
+        if len(params["node_range"]) <= 2:
+            raise StyxValidationError("Parameter `node_range` must contain at most 2 elements")
+        for e in params["node_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`node_range` has the wrong type: Received `{type(params.get("node_range", None))}` expected `list[float] | None`')
+    if params.get("no_consistency_check", False) is None:
+        raise StyxValidationError("`no_consistency_check` must not be None")
+    if not isinstance(params["no_consistency_check"], bool):
+        raise StyxValidationError(f'`no_consistency_check` has the wrong type: Received `{type(params.get("no_consistency_check", False))}` expected `bool`')
+    if params.get("no_volreg", False) is None:
+        raise StyxValidationError("`no_volreg` must not be None")
+    if not isinstance(params["no_volreg"], bool):
+        raise StyxValidationError(f'`no_volreg` has the wrong type: Received `{type(params.get("no_volreg", False))}` expected `bool`')
+    if params.get("no_transform", False) is None:
+        raise StyxValidationError("`no_transform` must not be None")
+    if not isinstance(params["no_transform"], bool):
+        raise StyxValidationError(f'`no_transform` has the wrong type: Received `{type(params.get("no_transform", False))}` expected `bool`')
+    if params.get("set_environment_variable", None) is not None:
+        if not isinstance(params["set_environment_variable"], str):
+            raise StyxValidationError(f'`set_environment_variable` has the wrong type: Received `{type(params.get("set_environment_variable", None))}` expected `str | None`')
+    if params.get("trace", False) is None:
+        raise StyxValidationError("`trace` must not be None")
+    if not isinstance(params["trace"], bool):
+        raise StyxValidationError(f'`trace` has the wrong type: Received `{type(params.get("trace", False))}` expected `bool`')
+    if params.get("extreme_trace", False) is None:
+        raise StyxValidationError("`extreme_trace` must not be None")
+    if not isinstance(params["extreme_trace"], bool):
+        raise StyxValidationError(f'`extreme_trace` has the wrong type: Received `{type(params.get("extreme_trace", False))}` expected `bool`')
+    if params.get("no_memory_trace", False) is None:
+        raise StyxValidationError("`no_memory_trace` must not be None")
+    if not isinstance(params["no_memory_trace"], bool):
+        raise StyxValidationError(f'`no_memory_trace` has the wrong type: Received `{type(params.get("no_memory_trace", False))}` expected `bool`')
+    if params.get("yes_memory_trace", False) is None:
+        raise StyxValidationError("`yes_memory_trace` must not be None")
+    if not isinstance(params["yes_memory_trace"], bool):
+        raise StyxValidationError(f'`yes_memory_trace` has the wrong type: Received `{type(params.get("yes_memory_trace", False))}` expected `bool`')
+
+
 def compare_surfaces_cargs(
     params: CompareSurfacesParameters,
     execution: Execution,
@@ -242,6 +319,7 @@ def compare_surfaces_execute(
     Returns:
         NamedTuple of outputs (described in `CompareSurfacesOutputs`).
     """
+    compare_surfaces_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(COMPARE_SURFACES_METADATA)
     params = execution.params(params)

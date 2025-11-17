@@ -80,6 +80,44 @@ def surf_localstat_params(
     return params
 
 
+def surf_localstat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfLocalstatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hood", None) is not None:
+        if not isinstance(params["hood"], (float, int)):
+            raise StyxValidationError(f'`hood` has the wrong type: Received `{type(params.get("hood", None))}` expected `float | None`')
+    if params.get("nbhd_rad", None) is not None:
+        if not isinstance(params["nbhd_rad"], (float, int)):
+            raise StyxValidationError(f'`nbhd_rad` has the wrong type: Received `{type(params.get("nbhd_rad", None))}` expected `float | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("stat", None) is None:
+        raise StyxValidationError("`stat` must not be None")
+    if not isinstance(params["stat"], str):
+        raise StyxValidationError(f'`stat` has the wrong type: Received `{type(params.get("stat", None))}` expected `typing.Literal["mean", "mode", "num", "FWHM", "ALL"]`')
+    if params["stat"] not in ["mean", "mode", "num", "FWHM", "ALL"]:
+        raise StyxValidationError("Parameter `stat` must be one of [\"mean\", \"mode\", \"num\", \"FWHM\", \"ALL\"]")
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def surf_localstat_cargs(
     params: SurfLocalstatParameters,
     execution: Execution,
@@ -163,6 +201,7 @@ def surf_localstat_execute(
     Returns:
         NamedTuple of outputs (described in `SurfLocalstatOutputs`).
     """
+    surf_localstat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_LOCALSTAT_METADATA)
     params = execution.params(params)

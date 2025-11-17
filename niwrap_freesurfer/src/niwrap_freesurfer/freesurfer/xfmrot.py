@@ -65,6 +65,31 @@ def xfmrot_params(
     return params
 
 
+def xfmrot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XfmrotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transform_file", None) is None:
+        raise StyxValidationError("`transform_file` must not be None")
+    if not isinstance(params["transform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType`')
+    if params.get("input_vector_file", None) is None:
+        raise StyxValidationError("`input_vector_file` must not be None")
+    if not isinstance(params["input_vector_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vector_file` has the wrong type: Received `{type(params.get("input_vector_file", None))}` expected `InputPathType`')
+    if params.get("output_vector_file", None) is not None:
+        if not isinstance(params["output_vector_file"], str):
+            raise StyxValidationError(f'`output_vector_file` has the wrong type: Received `{type(params.get("output_vector_file", None))}` expected `str | None`')
+
+
 def xfmrot_cargs(
     params: XfmrotParameters,
     execution: Execution,
@@ -127,6 +152,7 @@ def xfmrot_execute(
     Returns:
         NamedTuple of outputs (described in `XfmrotOutputs`).
     """
+    xfmrot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XFMROT_METADATA)
     params = execution.params(params)

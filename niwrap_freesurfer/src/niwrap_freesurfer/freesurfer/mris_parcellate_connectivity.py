@@ -68,6 +68,35 @@ def mris_parcellate_connectivity_params(
     return params
 
 
+def mris_parcellate_connectivity_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisParcellateConnectivityParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("smooth_iterations", None) is not None:
+        if not isinstance(params["smooth_iterations"], (float, int)):
+            raise StyxValidationError(f'`smooth_iterations` has the wrong type: Received `{type(params.get("smooth_iterations", None))}` expected `float | None`')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("input_correlations", None) is None:
+        raise StyxValidationError("`input_correlations` must not be None")
+    if not isinstance(params["input_correlations"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_correlations` has the wrong type: Received `{type(params.get("input_correlations", None))}` expected `InputPathType`')
+    if params.get("output_parcellation", None) is None:
+        raise StyxValidationError("`output_parcellation` must not be None")
+    if not isinstance(params["output_parcellation"], str):
+        raise StyxValidationError(f'`output_parcellation` has the wrong type: Received `{type(params.get("output_parcellation", None))}` expected `str`')
+
+
 def mris_parcellate_connectivity_cargs(
     params: MrisParcellateConnectivityParameters,
     execution: Execution,
@@ -133,6 +162,7 @@ def mris_parcellate_connectivity_execute(
     Returns:
         NamedTuple of outputs (described in `MrisParcellateConnectivityOutputs`).
     """
+    mris_parcellate_connectivity_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_PARCELLATE_CONNECTIVITY_METADATA)
     params = execution.params(params)

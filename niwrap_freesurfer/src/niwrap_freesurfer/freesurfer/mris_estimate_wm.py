@@ -93,6 +93,55 @@ def mris_estimate_wm_params(
     return params
 
 
+def mris_estimate_wm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisEstimateWmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjs", None) is None:
+        raise StyxValidationError("`subjs` must not be None")
+    if not isinstance(params["subjs"], list):
+        raise StyxValidationError(f'`subjs` has the wrong type: Received `{type(params.get("subjs", None))}` expected `list[str]`')
+    for e in params["subjs"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjs` has the wrong type: Received `{type(params.get("subjs", None))}` expected `list[str]`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], str):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("gpu", False) is None:
+        raise StyxValidationError("`gpu` must not be None")
+    if not isinstance(params["gpu"], bool):
+        raise StyxValidationError(f'`gpu` has the wrong type: Received `{type(params.get("gpu", False))}` expected `bool`')
+    if params.get("rsi", False) is None:
+        raise StyxValidationError("`rsi` must not be None")
+    if not isinstance(params["rsi"], bool):
+        raise StyxValidationError(f'`rsi` has the wrong type: Received `{type(params.get("rsi", False))}` expected `bool`')
+    if params.get("single_iter", False) is None:
+        raise StyxValidationError("`single_iter` must not be None")
+    if not isinstance(params["single_iter"], bool):
+        raise StyxValidationError(f'`single_iter` has the wrong type: Received `{type(params.get("single_iter", False))}` expected `bool`')
+    if params.get("vol", None) is not None:
+        if not isinstance(params["vol"], str):
+            raise StyxValidationError(f'`vol` has the wrong type: Received `{type(params.get("vol", None))}` expected `str | None`')
+
+
 def mris_estimate_wm_cargs(
     params: MrisEstimateWmParameters,
     execution: Execution,
@@ -183,6 +232,7 @@ def mris_estimate_wm_execute(
     Returns:
         NamedTuple of outputs (described in `MrisEstimateWmOutputs`).
     """
+    mris_estimate_wm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ESTIMATE_WM_METADATA)
     params = execution.params(params)

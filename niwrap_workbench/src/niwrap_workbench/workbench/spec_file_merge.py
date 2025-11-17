@@ -58,6 +58,32 @@ def spec_file_merge_params(
     return params
 
 
+def spec_file_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpecFileMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec-1", None) is None:
+        raise StyxValidationError("`spec-1` must not be None")
+    if not isinstance(params["spec-1"], str):
+        raise StyxValidationError(f'`spec-1` has the wrong type: Received `{type(params.get("spec-1", None))}` expected `str`')
+    if params.get("spec-2", None) is None:
+        raise StyxValidationError("`spec-2` must not be None")
+    if not isinstance(params["spec-2"], str):
+        raise StyxValidationError(f'`spec-2` has the wrong type: Received `{type(params.get("spec-2", None))}` expected `str`')
+    if params.get("out-spec", None) is None:
+        raise StyxValidationError("`out-spec` must not be None")
+    if not isinstance(params["out-spec"], str):
+        raise StyxValidationError(f'`out-spec` has the wrong type: Received `{type(params.get("out-spec", None))}` expected `str`')
+
+
 def spec_file_merge_cargs(
     params: SpecFileMergeParameters,
     execution: Execution,
@@ -117,6 +143,7 @@ def spec_file_merge_execute(
     Returns:
         NamedTuple of outputs (described in `SpecFileMergeOutputs`).
     """
+    spec_file_merge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPEC_FILE_MERGE_METADATA)
     params = execution.params(params)

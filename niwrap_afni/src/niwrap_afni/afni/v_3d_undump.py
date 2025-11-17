@@ -148,6 +148,82 @@ def v_3d_undump_params(
     return params
 
 
+def v_3d_undump_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dUndumpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("master", None) is not None:
+        if not isinstance(params["master"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`master` has the wrong type: Received `{type(params.get("master", None))}` expected `InputPathType | None`')
+    if params.get("dimensions", None) is not None:
+        if not isinstance(params["dimensions"], list):
+            raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `list[float] | None`')
+        if len(params["dimensions"]) <= 3:
+            raise StyxValidationError("Parameter `dimensions` must contain at most 3 elements")
+        for e in params["dimensions"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `list[float] | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `str | None`')
+    if params.get("dval", None) is not None:
+        if not isinstance(params["dval"], (float, int)):
+            raise StyxValidationError(f'`dval` has the wrong type: Received `{type(params.get("dval", None))}` expected `float | None`')
+    if params.get("fval", None) is not None:
+        if not isinstance(params["fval"], (float, int)):
+            raise StyxValidationError(f'`fval` has the wrong type: Received `{type(params.get("fval", None))}` expected `float | None`')
+    if params.get("ijk", False) is None:
+        raise StyxValidationError("`ijk` must not be None")
+    if not isinstance(params["ijk"], bool):
+        raise StyxValidationError(f'`ijk` has the wrong type: Received `{type(params.get("ijk", False))}` expected `bool`')
+    if params.get("xyz", False) is None:
+        raise StyxValidationError("`xyz` must not be None")
+    if not isinstance(params["xyz"], bool):
+        raise StyxValidationError(f'`xyz` has the wrong type: Received `{type(params.get("xyz", False))}` expected `bool`')
+    if params.get("sphere_radius", None) is not None:
+        if not isinstance(params["sphere_radius"], (float, int)):
+            raise StyxValidationError(f'`sphere_radius` has the wrong type: Received `{type(params.get("sphere_radius", None))}` expected `float | None`')
+    if params.get("cube_mode", False) is None:
+        raise StyxValidationError("`cube_mode` must not be None")
+    if not isinstance(params["cube_mode"], bool):
+        raise StyxValidationError(f'`cube_mode` has the wrong type: Received `{type(params.get("cube_mode", False))}` expected `bool`')
+    if params.get("orient", None) is not None:
+        if not isinstance(params["orient"], str):
+            raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str | None`')
+    if params.get("head_only", False) is None:
+        raise StyxValidationError("`head_only` must not be None")
+    if not isinstance(params["head_only"], bool):
+        raise StyxValidationError(f'`head_only` has the wrong type: Received `{type(params.get("head_only", False))}` expected `bool`')
+    if params.get("roimask", None) is not None:
+        if not isinstance(params["roimask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roimask` has the wrong type: Received `{type(params.get("roimask", None))}` expected `InputPathType | None`')
+    if params.get("allow_nan", False) is None:
+        raise StyxValidationError("`allow_nan` must not be None")
+    if not isinstance(params["allow_nan"], bool):
+        raise StyxValidationError(f'`allow_nan` has the wrong type: Received `{type(params.get("allow_nan", False))}` expected `bool`')
+
+
 def v_3d_undump_cargs(
     params: V3dUndumpParameters,
     execution: Execution,
@@ -267,6 +343,7 @@ def v_3d_undump_execute(
     Returns:
         NamedTuple of outputs (described in `V3dUndumpOutputs`).
     """
+    v_3d_undump_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_UNDUMP_METADATA)
     params = execution.params(params)

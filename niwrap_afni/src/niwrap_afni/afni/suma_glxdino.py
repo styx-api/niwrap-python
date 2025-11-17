@@ -49,6 +49,24 @@ def suma_glxdino_params(
     return params
 
 
+def suma_glxdino_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SumaGlxdinoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def suma_glxdino_cargs(
     params: SumaGlxdinoParameters,
     execution: Execution,
@@ -108,6 +126,7 @@ def suma_glxdino_execute(
     Returns:
         NamedTuple of outputs (described in `SumaGlxdinoOutputs`).
     """
+    suma_glxdino_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SUMA_GLXDINO_METADATA)
     params = execution.params(params)

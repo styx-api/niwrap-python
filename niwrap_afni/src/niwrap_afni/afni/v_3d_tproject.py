@@ -190,6 +190,94 @@ def v_3d_tproject_params(
     return params
 
 
+def v_3d_tproject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTprojectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("TR", None) is not None:
+        if not isinstance(params["TR"], (float, int)):
+            raise StyxValidationError(f'`TR` has the wrong type: Received `{type(params.get("TR", None))}` expected `float | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("bandpass", None) is not None:
+        if not isinstance(params["bandpass"], list):
+            raise StyxValidationError(f'`bandpass` has the wrong type: Received `{type(params.get("bandpass", None))}` expected `list[float] | None`')
+        if len(params["bandpass"]) == 2:
+            raise StyxValidationError("Parameter `bandpass` must contain exactly 2 elements")
+        for e in params["bandpass"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`bandpass` has the wrong type: Received `{type(params.get("bandpass", None))}` expected `list[float] | None`')
+    if params.get("blur", None) is not None:
+        if not isinstance(params["blur"], (float, int)):
+            raise StyxValidationError(f'`blur` has the wrong type: Received `{type(params.get("blur", None))}` expected `float | None`')
+    if params.get("cenmode", None) is not None:
+        if not isinstance(params["cenmode"], str):
+            raise StyxValidationError(f'`cenmode` has the wrong type: Received `{type(params.get("cenmode", None))}` expected `typing.Literal["kill", "zero", "ntrp"] | None`')
+        if params["cenmode"] not in ["kill", "zero", "ntrp"]:
+            raise StyxValidationError("Parameter `cenmode` must be one of [\"kill\", \"zero\", \"ntrp\"]")
+    if params.get("censor", None) is not None:
+        if not isinstance(params["censor"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`censor` has the wrong type: Received `{type(params.get("censor", None))}` expected `InputPathType | None`')
+    if params.get("censortr", None) is not None:
+        if not isinstance(params["censortr"], list):
+            raise StyxValidationError(f'`censortr` has the wrong type: Received `{type(params.get("censortr", None))}` expected `list[str] | None`')
+        for e in params["censortr"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`censortr` has the wrong type: Received `{type(params.get("censortr", None))}` expected `list[str] | None`')
+    if params.get("concat", None) is not None:
+        if not isinstance(params["concat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`concat` has the wrong type: Received `{type(params.get("concat", None))}` expected `InputPathType | None`')
+    if params.get("dsort", None) is not None:
+        if not isinstance(params["dsort"], list):
+            raise StyxValidationError(f'`dsort` has the wrong type: Received `{type(params.get("dsort", None))}` expected `list[InputPathType] | None`')
+        for e in params["dsort"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`dsort` has the wrong type: Received `{type(params.get("dsort", None))}` expected `list[InputPathType] | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("noblock", False) is None:
+        raise StyxValidationError("`noblock` must not be None")
+    if not isinstance(params["noblock"], bool):
+        raise StyxValidationError(f'`noblock` has the wrong type: Received `{type(params.get("noblock", False))}` expected `bool`')
+    if params.get("norm", False) is None:
+        raise StyxValidationError("`norm` must not be None")
+    if not isinstance(params["norm"], bool):
+        raise StyxValidationError(f'`norm` has the wrong type: Received `{type(params.get("norm", False))}` expected `bool`')
+    if params.get("ort", None) is not None:
+        if not isinstance(params["ort"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ort` has the wrong type: Received `{type(params.get("ort", None))}` expected `InputPathType | None`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], int):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `int | None`')
+    if params.get("stopband", None) is not None:
+        if not isinstance(params["stopband"], list):
+            raise StyxValidationError(f'`stopband` has the wrong type: Received `{type(params.get("stopband", None))}` expected `list[float] | None`')
+        if len(params["stopband"]) == 2:
+            raise StyxValidationError("Parameter `stopband` must contain exactly 2 elements")
+        for e in params["stopband"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`stopband` has the wrong type: Received `{type(params.get("stopband", None))}` expected `list[float] | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+
+
 def v_3d_tproject_cargs(
     params: V3dTprojectParameters,
     execution: Execution,
@@ -326,6 +414,7 @@ def v_3d_tproject_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTprojectOutputs`).
     """
+    v_3d_tproject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TPROJECT_METADATA)
     params = execution.params(params)

@@ -50,6 +50,27 @@ def v__no_pound_params(
     return params
 
 
+def v__no_pound_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VNoPoundParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("afni_files", None) is None:
+        raise StyxValidationError("`afni_files` must not be None")
+    if not isinstance(params["afni_files"], list):
+        raise StyxValidationError(f'`afni_files` has the wrong type: Received `{type(params.get("afni_files", None))}` expected `list[str]`')
+    for e in params["afni_files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`afni_files` has the wrong type: Received `{type(params.get("afni_files", None))}` expected `list[str]`')
+
+
 def v__no_pound_cargs(
     params: VNoPoundParameters,
     execution: Execution,
@@ -107,6 +128,7 @@ def v__no_pound_execute(
     Returns:
         NamedTuple of outputs (described in `VNoPoundOutputs`).
     """
+    v__no_pound_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__NO_POUND_METADATA)
     params = execution.params(params)

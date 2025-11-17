@@ -81,6 +81,42 @@ def mris_transform_params(
     return params
 
 
+def mris_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("trx_src", None) is not None:
+        if not isinstance(params["trx_src"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`trx_src` has the wrong type: Received `{type(params.get("trx_src", None))}` expected `InputPathType | None`')
+    if params.get("trx_dst", None) is not None:
+        if not isinstance(params["trx_dst"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`trx_dst` has the wrong type: Received `{type(params.get("trx_dst", None))}` expected `InputPathType | None`')
+    if params.get("is_inverse", False) is None:
+        raise StyxValidationError("`is_inverse` must not be None")
+    if not isinstance(params["is_inverse"], bool):
+        raise StyxValidationError(f'`is_inverse` has the wrong type: Received `{type(params.get("is_inverse", False))}` expected `bool`')
+
+
 def mris_transform_cargs(
     params: MrisTransformParameters,
     execution: Execution,
@@ -154,6 +190,7 @@ def mris_transform_execute(
     Returns:
         NamedTuple of outputs (described in `MrisTransformOutputs`).
     """
+    mris_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_TRANSFORM_METADATA)
     params = execution.params(params)

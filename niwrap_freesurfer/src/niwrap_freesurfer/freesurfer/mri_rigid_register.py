@@ -61,6 +61,32 @@ def mri_rigid_register_params(
     return params
 
 
+def mri_rigid_register_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriRigidRegisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_volume", None) is None:
+        raise StyxValidationError("`source_volume` must not be None")
+    if not isinstance(params["source_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_volume` has the wrong type: Received `{type(params.get("source_volume", None))}` expected `InputPathType`')
+    if params.get("target_volume", None) is None:
+        raise StyxValidationError("`target_volume` must not be None")
+    if not isinstance(params["target_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target_volume` has the wrong type: Received `{type(params.get("target_volume", None))}` expected `InputPathType`')
+    if params.get("transform_output", None) is None:
+        raise StyxValidationError("`transform_output` must not be None")
+    if not isinstance(params["transform_output"], str):
+        raise StyxValidationError(f'`transform_output` has the wrong type: Received `{type(params.get("transform_output", None))}` expected `str`')
+
+
 def mri_rigid_register_cargs(
     params: MriRigidRegisterParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mri_rigid_register_execute(
     Returns:
         NamedTuple of outputs (described in `MriRigidRegisterOutputs`).
     """
+    mri_rigid_register_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_RIGID_REGISTER_METADATA)
     params = execution.params(params)

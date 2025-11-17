@@ -91,6 +91,50 @@ def v_3d_dtto_dwi_params(
     return params
 
 
+def v_3d_dtto_dwi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDttoDwiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_file", None) is None:
+        raise StyxValidationError("`gradient_file` must not be None")
+    if not isinstance(params["gradient_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`gradient_file` has the wrong type: Received `{type(params.get("gradient_file", None))}` expected `InputPathType`')
+    if params.get("i0_dataset", None) is None:
+        raise StyxValidationError("`i0_dataset` must not be None")
+    if not isinstance(params["i0_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`i0_dataset` has the wrong type: Received `{type(params.get("i0_dataset", None))}` expected `InputPathType`')
+    if params.get("dt_dataset", None) is None:
+        raise StyxValidationError("`dt_dataset` must not be None")
+    if not isinstance(params["dt_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dt_dataset` has the wrong type: Received `{type(params.get("dt_dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("datum_type", None) is not None:
+        if not isinstance(params["datum_type"], str):
+            raise StyxValidationError(f'`datum_type` has the wrong type: Received `{type(params.get("datum_type", None))}` expected `str | None`')
+    if params.get("scale_out_1000", False) is None:
+        raise StyxValidationError("`scale_out_1000` must not be None")
+    if not isinstance(params["scale_out_1000"], bool):
+        raise StyxValidationError(f'`scale_out_1000` has the wrong type: Received `{type(params.get("scale_out_1000", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v_3d_dtto_dwi_cargs(
     params: V3dDttoDwiParameters,
     execution: Execution,
@@ -168,6 +212,7 @@ def v_3d_dtto_dwi_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDttoDwiOutputs`).
     """
+    v_3d_dtto_dwi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DTTO_DWI_METADATA)
     params = execution.params(params)

@@ -82,6 +82,49 @@ def cjpeg_params(
     return params
 
 
+def cjpeg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CjpegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("quality", None) is not None:
+        if not isinstance(params["quality"], (float, int)):
+            raise StyxValidationError(f'`quality` has the wrong type: Received `{type(params.get("quality", None))}` expected `float | None`')
+        if 0 <= params["quality"] <= 100:
+            raise StyxValidationError("Parameter `quality` must be between 0 and 100 (inclusive)")
+    if params.get("grayscale", False) is None:
+        raise StyxValidationError("`grayscale` must not be None")
+    if not isinstance(params["grayscale"], bool):
+        raise StyxValidationError(f'`grayscale` has the wrong type: Received `{type(params.get("grayscale", False))}` expected `bool`')
+    if params.get("optimize", False) is None:
+        raise StyxValidationError("`optimize` must not be None")
+    if not isinstance(params["optimize"], bool):
+        raise StyxValidationError(f'`optimize` has the wrong type: Received `{type(params.get("optimize", False))}` expected `bool`')
+    if params.get("baseline", False) is None:
+        raise StyxValidationError("`baseline` must not be None")
+    if not isinstance(params["baseline"], bool):
+        raise StyxValidationError(f'`baseline` has the wrong type: Received `{type(params.get("baseline", False))}` expected `bool`')
+    if params.get("progressive", False) is None:
+        raise StyxValidationError("`progressive` must not be None")
+    if not isinstance(params["progressive"], bool):
+        raise StyxValidationError(f'`progressive` has the wrong type: Received `{type(params.get("progressive", False))}` expected `bool`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+
+
 def cjpeg_cargs(
     params: CjpegParameters,
     execution: Execution,
@@ -154,6 +197,7 @@ def cjpeg_execute(
     Returns:
         NamedTuple of outputs (described in `CjpegOutputs`).
     """
+    cjpeg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CJPEG_METADATA)
     params = execution.params(params)

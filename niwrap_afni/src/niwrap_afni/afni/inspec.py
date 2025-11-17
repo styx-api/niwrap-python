@@ -87,6 +87,45 @@ def inspec_params(
     return params
 
 
+def inspec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InspecParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("specfile", None) is None:
+        raise StyxValidationError("`specfile` must not be None")
+    if not isinstance(params["specfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`specfile` has the wrong type: Received `{type(params.get("specfile", None))}` expected `InputPathType`')
+    if params.get("newspecname", None) is not None:
+        if not isinstance(params["newspecname"], str):
+            raise StyxValidationError(f'`newspecname` has the wrong type: Received `{type(params.get("newspecname", None))}` expected `str | None`')
+    if params.get("detail", None) is not None:
+        if not isinstance(params["detail"], (float, int)):
+            raise StyxValidationError(f'`detail` has the wrong type: Received `{type(params.get("detail", None))}` expected `float | None`')
+        if 0 <= params["detail"] <= 3:
+            raise StyxValidationError("Parameter `detail` must be between 0 and 3 (inclusive)")
+    if params.get("leftspec", None) is not None:
+        if not isinstance(params["leftspec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`leftspec` has the wrong type: Received `{type(params.get("leftspec", None))}` expected `InputPathType | None`')
+    if params.get("rightspec", None) is not None:
+        if not isinstance(params["rightspec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rightspec` has the wrong type: Received `{type(params.get("rightspec", None))}` expected `InputPathType | None`')
+    if params.get("state_rm", None) is not None:
+        if not isinstance(params["state_rm"], str):
+            raise StyxValidationError(f'`state_rm` has the wrong type: Received `{type(params.get("state_rm", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def inspec_cargs(
     params: InspecParameters,
     execution: Execution,
@@ -174,6 +213,7 @@ def inspec_execute(
     Returns:
         NamedTuple of outputs (described in `InspecOutputs`).
     """
+    inspec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INSPEC_METADATA)
     params = execution.params(params)

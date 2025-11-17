@@ -217,6 +217,126 @@ def mideface_params(
     return params
 
 
+def mideface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MidefaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("facemask", None) is not None:
+        if not isinstance(params["facemask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`facemask` has the wrong type: Received `{type(params.get("facemask", None))}` expected `InputPathType | None`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("exclusion_mask", None) is not None:
+        if not isinstance(params["exclusion_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exclusion_mask` has the wrong type: Received `{type(params.get("exclusion_mask", None))}` expected `InputPathType | None`')
+    if params.get("samseg_ndilations", None) is not None:
+        if not isinstance(params["samseg_ndilations"], (float, int)):
+            raise StyxValidationError(f'`samseg_ndilations` has the wrong type: Received `{type(params.get("samseg_ndilations", None))}` expected `float | None`')
+    if params.get("samseg_json", None) is not None:
+        if not isinstance(params["samseg_json"], str):
+            raise StyxValidationError(f'`samseg_json` has the wrong type: Received `{type(params.get("samseg_json", None))}` expected `str | None`')
+    if params.get("samseg_fast", False) is None:
+        raise StyxValidationError("`samseg_fast` must not be None")
+    if not isinstance(params["samseg_fast"], bool):
+        raise StyxValidationError(f'`samseg_fast` has the wrong type: Received `{type(params.get("samseg_fast", False))}` expected `bool`')
+    if params.get("no_samseg_fast", False) is None:
+        raise StyxValidationError("`no_samseg_fast` must not be None")
+    if not isinstance(params["no_samseg_fast"], bool):
+        raise StyxValidationError(f'`no_samseg_fast` has the wrong type: Received `{type(params.get("no_samseg_fast", False))}` expected `bool`')
+    if params.get("init_reg", None) is not None:
+        if not isinstance(params["init_reg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_reg` has the wrong type: Received `{type(params.get("init_reg", None))}` expected `InputPathType | None`')
+    if params.get("synthseg_ndilations", None) is not None:
+        if not isinstance(params["synthseg_ndilations"], (float, int)):
+            raise StyxValidationError(f'`synthseg_ndilations` has the wrong type: Received `{type(params.get("synthseg_ndilations", None))}` expected `float | None`')
+    if params.get("fill_const", None) is not None:
+        if not isinstance(params["fill_const"], list):
+            raise StyxValidationError(f'`fill_const` has the wrong type: Received `{type(params.get("fill_const", None))}` expected `list[float] | None`')
+        if len(params["fill_const"]) == 2:
+            raise StyxValidationError("Parameter `fill_const` must contain exactly 2 elements")
+        for e in params["fill_const"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fill_const` has the wrong type: Received `{type(params.get("fill_const", None))}` expected `list[float] | None`')
+    if params.get("fill_zero", False) is None:
+        raise StyxValidationError("`fill_zero` must not be None")
+    if not isinstance(params["fill_zero"], bool):
+        raise StyxValidationError(f'`fill_zero` has the wrong type: Received `{type(params.get("fill_zero", False))}` expected `bool`')
+    if params.get("fhi", None) is not None:
+        if not isinstance(params["fhi"], (float, int)):
+            raise StyxValidationError(f'`fhi` has the wrong type: Received `{type(params.get("fhi", None))}` expected `float | None`')
+    if params.get("no_ears", False) is None:
+        raise StyxValidationError("`no_ears` must not be None")
+    if not isinstance(params["no_ears"], bool):
+        raise StyxValidationError(f'`no_ears` has the wrong type: Received `{type(params.get("no_ears", False))}` expected `bool`')
+    if params.get("back_of_head", False) is None:
+        raise StyxValidationError("`back_of_head` must not be None")
+    if not isinstance(params["back_of_head"], bool):
+        raise StyxValidationError(f'`back_of_head` has the wrong type: Received `{type(params.get("back_of_head", False))}` expected `bool`')
+    if params.get("forehead", False) is None:
+        raise StyxValidationError("`forehead` must not be None")
+    if not isinstance(params["forehead"], bool):
+        raise StyxValidationError(f'`forehead` has the wrong type: Received `{type(params.get("forehead", False))}` expected `bool`')
+    if params.get("pics", False) is None:
+        raise StyxValidationError("`pics` must not be None")
+    if not isinstance(params["pics"], bool):
+        raise StyxValidationError(f'`pics` has the wrong type: Received `{type(params.get("pics", False))}` expected `bool`')
+    if params.get("code", None) is not None:
+        if not isinstance(params["code"], str):
+            raise StyxValidationError(f'`code` has the wrong type: Received `{type(params.get("code", None))}` expected `str | None`')
+    if params.get("image_convert", None) is not None:
+        if not isinstance(params["image_convert"], str):
+            raise StyxValidationError(f'`image_convert` has the wrong type: Received `{type(params.get("image_convert", None))}` expected `str | None`')
+    if params.get("no_post", False) is None:
+        raise StyxValidationError("`no_post` must not be None")
+    if not isinstance(params["no_post"], bool):
+        raise StyxValidationError(f'`no_post` has the wrong type: Received `{type(params.get("no_post", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("output_format", None) is not None:
+        if not isinstance(params["output_format"], str):
+            raise StyxValidationError(f'`output_format` has the wrong type: Received `{type(params.get("output_format", None))}` expected `str | None`')
+    if params.get("atlas", None) is not None:
+        if not isinstance(params["atlas"], str):
+            raise StyxValidationError(f'`atlas` has the wrong type: Received `{type(params.get("atlas", None))}` expected `str | None`')
+    if params.get("expert", None) is not None:
+        if not isinstance(params["expert"], str):
+            raise StyxValidationError(f'`expert` has the wrong type: Received `{type(params.get("expert", None))}` expected `str | None`')
+    if params.get("display_no", None) is not None:
+        if not isinstance(params["display_no"], (float, int)):
+            raise StyxValidationError(f'`display_no` has the wrong type: Received `{type(params.get("display_no", None))}` expected `float | None`')
+    if params.get("apply_volume", None) is not None:
+        if not isinstance(params["apply_volume"], str):
+            raise StyxValidationError(f'`apply_volume` has the wrong type: Received `{type(params.get("apply_volume", None))}` expected `str | None`')
+    if params.get("check_volume", None) is not None:
+        if not isinstance(params["check_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`check_volume` has the wrong type: Received `{type(params.get("check_volume", None))}` expected `InputPathType | None`')
+    if params.get("check_output_file", None) is not None:
+        if not isinstance(params["check_output_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`check_output_file` has the wrong type: Received `{type(params.get("check_output_file", None))}` expected `InputPathType | None`')
+
+
 def mideface_cargs(
     params: MidefaceParameters,
     execution: Execution,
@@ -396,6 +516,7 @@ def mideface_execute(
     Returns:
         NamedTuple of outputs (described in `MidefaceOutputs`).
     """
+    mideface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MIDEFACE_METADATA)
     params = execution.params(params)

@@ -61,6 +61,28 @@ def surface_apply_affine_flirt_params(
     return params
 
 
+def surface_apply_affine_flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceApplyAffineFlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("target-volume", None) is None:
+        raise StyxValidationError("`target-volume` must not be None")
+    if not isinstance(params["target-volume"], str):
+        raise StyxValidationError(f'`target-volume` has the wrong type: Received `{type(params.get("target-volume", None))}` expected `str`')
+
+
 def surface_apply_affine_flirt_cargs(
     params: SurfaceApplyAffineFlirtParameters,
     execution: Execution,
@@ -119,6 +141,34 @@ def surface_apply_affine_params(
     if flirt is not None:
         params["flirt"] = flirt
     return params
+
+
+def surface_apply_affine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceApplyAffineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("out-surf", None) is None:
+        raise StyxValidationError("`out-surf` must not be None")
+    if not isinstance(params["out-surf"], str):
+        raise StyxValidationError(f'`out-surf` has the wrong type: Received `{type(params.get("out-surf", None))}` expected `str`')
+    if params.get("flirt", None) is not None:
+        surface_apply_affine_flirt_validate(params["flirt"])
+    if params.get("in-surf", None) is None:
+        raise StyxValidationError("`in-surf` must not be None")
+    if not isinstance(params["in-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in-surf` has the wrong type: Received `{type(params.get("in-surf", None))}` expected `InputPathType`')
+    if params.get("affine", None) is None:
+        raise StyxValidationError("`affine` must not be None")
+    if not isinstance(params["affine"], str):
+        raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `str`')
 
 
 def surface_apply_affine_cargs(
@@ -186,6 +236,7 @@ def surface_apply_affine_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyAffineOutputs`).
     """
+    surface_apply_affine_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_APPLY_AFFINE_METADATA)
     params = execution.params(params)

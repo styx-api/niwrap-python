@@ -75,6 +75,38 @@ def mri_easywarp_params(
     return params
 
 
+def mri_easywarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriEasywarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("deformation_field", None) is not None:
+        if not isinstance(params["deformation_field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`deformation_field` has the wrong type: Received `{type(params.get("deformation_field", None))}` expected `InputPathType | None`')
+    if params.get("nearest_neighbor", False) is None:
+        raise StyxValidationError("`nearest_neighbor` must not be None")
+    if not isinstance(params["nearest_neighbor"], bool):
+        raise StyxValidationError(f'`nearest_neighbor` has the wrong type: Received `{type(params.get("nearest_neighbor", False))}` expected `bool`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], (float, int)):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `float | None`')
+
+
 def mri_easywarp_cargs(
     params: MriEasywarpParameters,
     execution: Execution,
@@ -152,6 +184,7 @@ def mri_easywarp_execute(
     Returns:
         NamedTuple of outputs (described in `MriEasywarpOutputs`).
     """
+    mri_easywarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EASYWARP_METADATA)
     params = execution.params(params)

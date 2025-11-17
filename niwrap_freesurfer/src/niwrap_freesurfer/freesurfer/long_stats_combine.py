@@ -93,6 +93,50 @@ def long_stats_combine_params(
     return params
 
 
+def long_stats_combine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongStatsCombineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec", None) is None:
+        raise StyxValidationError("`qdec` must not be None")
+    if not isinstance(params["qdec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`qdec` has the wrong type: Received `{type(params.get("qdec", None))}` expected `InputPathType`')
+    if params.get("stats", None) is None:
+        raise StyxValidationError("`stats` must not be None")
+    if not isinstance(params["stats"], str):
+        raise StyxValidationError(f'`stats` has the wrong type: Received `{type(params.get("stats", None))}` expected `str`')
+    if params.get("measure", None) is None:
+        raise StyxValidationError("`measure` must not be None")
+    if not isinstance(params["measure"], str):
+        raise StyxValidationError(f'`measure` has the wrong type: Received `{type(params.get("measure", None))}` expected `str`')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], str):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str`')
+    if params.get("output_qdec", None) is None:
+        raise StyxValidationError("`output_qdec` must not be None")
+    if not isinstance(params["output_qdec"], str):
+        raise StyxValidationError(f'`output_qdec` has the wrong type: Received `{type(params.get("output_qdec", None))}` expected `str`')
+    if params.get("output_stats", None) is not None:
+        if not isinstance(params["output_stats"], str):
+            raise StyxValidationError(f'`output_stats` has the wrong type: Received `{type(params.get("output_stats", None))}` expected `str | None`')
+    if params.get("input_stats", None) is not None:
+        if not isinstance(params["input_stats"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_stats` has the wrong type: Received `{type(params.get("input_stats", None))}` expected `InputPathType | None`')
+    if params.get("cross_sectional", False) is None:
+        raise StyxValidationError("`cross_sectional` must not be None")
+    if not isinstance(params["cross_sectional"], bool):
+        raise StyxValidationError(f'`cross_sectional` has the wrong type: Received `{type(params.get("cross_sectional", False))}` expected `bool`')
+
+
 def long_stats_combine_cargs(
     params: LongStatsCombineParameters,
     execution: Execution,
@@ -184,6 +228,7 @@ def long_stats_combine_execute(
     Returns:
         NamedTuple of outputs (described in `LongStatsCombineOutputs`).
     """
+    long_stats_combine_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_STATS_COMBINE_METADATA)
     params = execution.params(params)

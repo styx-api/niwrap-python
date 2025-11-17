@@ -197,6 +197,108 @@ def fat_mat2d_plot_py_params(
     return params
 
 
+def fat_mat2d_plot_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatMat2dPlotPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("matrices", None) is not None:
+        if not isinstance(params["matrices"], list):
+            raise StyxValidationError(f'`matrices` has the wrong type: Received `{type(params.get("matrices", None))}` expected `list[str] | None`')
+        for e in params["matrices"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`matrices` has the wrong type: Received `{type(params.get("matrices", None))}` expected `list[str] | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("file_type", None) is not None:
+        if not isinstance(params["file_type"], str):
+            raise StyxValidationError(f'`file_type` has the wrong type: Received `{type(params.get("file_type", None))}` expected `str | None`')
+    if params.get("dpi", None) is not None:
+        if not isinstance(params["dpi"], (float, int)):
+            raise StyxValidationError(f'`dpi` has the wrong type: Received `{type(params.get("dpi", None))}` expected `float | None`')
+    if params.get("min_colorbar", None) is not None:
+        if not isinstance(params["min_colorbar"], (float, int)):
+            raise StyxValidationError(f'`min_colorbar` has the wrong type: Received `{type(params.get("min_colorbar", None))}` expected `float | None`')
+    if params.get("max_colorbar", None) is not None:
+        if not isinstance(params["max_colorbar"], (float, int)):
+            raise StyxValidationError(f'`max_colorbar` has the wrong type: Received `{type(params.get("max_colorbar", None))}` expected `float | None`')
+    if params.get("fs_xticks", None) is not None:
+        if not isinstance(params["fs_xticks"], (float, int)):
+            raise StyxValidationError(f'`fs_xticks` has the wrong type: Received `{type(params.get("fs_xticks", None))}` expected `float | None`')
+    if params.get("fs_yticks", None) is not None:
+        if not isinstance(params["fs_yticks"], (float, int)):
+            raise StyxValidationError(f'`fs_yticks` has the wrong type: Received `{type(params.get("fs_yticks", None))}` expected `float | None`')
+    if params.get("fs_title", None) is not None:
+        if not isinstance(params["fs_title"], (float, int)):
+            raise StyxValidationError(f'`fs_title` has the wrong type: Received `{type(params.get("fs_title", None))}` expected `float | None`')
+    if params.get("fs_cbar", None) is not None:
+        if not isinstance(params["fs_cbar"], (float, int)):
+            raise StyxValidationError(f'`fs_cbar` has the wrong type: Received `{type(params.get("fs_cbar", None))}` expected `float | None`')
+    if params.get("cbar_n_intervals", None) is not None:
+        if not isinstance(params["cbar_n_intervals"], (float, int)):
+            raise StyxValidationError(f'`cbar_n_intervals` has the wrong type: Received `{type(params.get("cbar_n_intervals", None))}` expected `float | None`')
+    if params.get("cbar", None) is not None:
+        if not isinstance(params["cbar"], str):
+            raise StyxValidationError(f'`cbar` has the wrong type: Received `{type(params.get("cbar", None))}` expected `str | None`')
+    if params.get("cbar_width_perc", None) is not None:
+        if not isinstance(params["cbar_width_perc"], (float, int)):
+            raise StyxValidationError(f'`cbar_width_perc` has the wrong type: Received `{type(params.get("cbar_width_perc", None))}` expected `float | None`')
+    if params.get("no_colorbar", False) is None:
+        raise StyxValidationError("`no_colorbar` must not be None")
+    if not isinstance(params["no_colorbar"], bool):
+        raise StyxValidationError(f'`no_colorbar` has the wrong type: Received `{type(params.get("no_colorbar", False))}` expected `bool`')
+    if params.get("figsize_x", None) is not None:
+        if not isinstance(params["figsize_x"], (float, int)):
+            raise StyxValidationError(f'`figsize_x` has the wrong type: Received `{type(params.get("figsize_x", None))}` expected `float | None`')
+    if params.get("figsize_y", None) is not None:
+        if not isinstance(params["figsize_y"], (float, int)):
+            raise StyxValidationError(f'`figsize_y` has the wrong type: Received `{type(params.get("figsize_y", None))}` expected `float | None`')
+    if params.get("hold_image", False) is None:
+        raise StyxValidationError("`hold_image` must not be None")
+    if not isinstance(params["hold_image"], bool):
+        raise StyxValidationError(f'`hold_image` has the wrong type: Received `{type(params.get("hold_image", False))}` expected `bool`')
+    if params.get("tight_layout", False) is None:
+        raise StyxValidationError("`tight_layout` must not be None")
+    if not isinstance(params["tight_layout"], bool):
+        raise StyxValidationError(f'`tight_layout` has the wrong type: Received `{type(params.get("tight_layout", False))}` expected `bool`')
+    if params.get("xticks_off", False) is None:
+        raise StyxValidationError("`xticks_off` must not be None")
+    if not isinstance(params["xticks_off"], bool):
+        raise StyxValidationError(f'`xticks_off` has the wrong type: Received `{type(params.get("xticks_off", False))}` expected `bool`')
+    if params.get("yticks_off", False) is None:
+        raise StyxValidationError("`yticks_off` must not be None")
+    if not isinstance(params["yticks_off"], bool):
+        raise StyxValidationError(f'`yticks_off` has the wrong type: Received `{type(params.get("yticks_off", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("date", False) is None:
+        raise StyxValidationError("`date` must not be None")
+    if not isinstance(params["date"], bool):
+        raise StyxValidationError(f'`date` has the wrong type: Received `{type(params.get("date", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("help_view", False) is None:
+        raise StyxValidationError("`help_view` must not be None")
+    if not isinstance(params["help_view"], bool):
+        raise StyxValidationError(f'`help_view` has the wrong type: Received `{type(params.get("help_view", False))}` expected `bool`')
+
+
 def fat_mat2d_plot_py_cargs(
     params: FatMat2dPlotPyParameters,
     execution: Execution,
@@ -304,6 +406,7 @@ def fat_mat2d_plot_py_execute(
     Returns:
         NamedTuple of outputs (described in `FatMat2dPlotPyOutputs`).
     """
+    fat_mat2d_plot_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_MAT2D_PLOT_PY_METADATA)
     params = execution.params(params)

@@ -132,6 +132,77 @@ def mri_3d_photo_recon_params(
     return params
 
 
+def mri_3d_photo_recon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Mri3dPhotoReconParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_photo_dir", None) is None:
+        raise StyxValidationError("`input_photo_dir` must not be None")
+    if not isinstance(params["input_photo_dir"], list):
+        raise StyxValidationError(f'`input_photo_dir` has the wrong type: Received `{type(params.get("input_photo_dir", None))}` expected `list[InputPathType]`')
+    for e in params["input_photo_dir"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_photo_dir` has the wrong type: Received `{type(params.get("input_photo_dir", None))}` expected `list[InputPathType]`')
+    if params.get("input_segmentation_dir", None) is None:
+        raise StyxValidationError("`input_segmentation_dir` must not be None")
+    if not isinstance(params["input_segmentation_dir"], list):
+        raise StyxValidationError(f'`input_segmentation_dir` has the wrong type: Received `{type(params.get("input_segmentation_dir", None))}` expected `list[InputPathType]`')
+    for e in params["input_segmentation_dir"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_segmentation_dir` has the wrong type: Received `{type(params.get("input_segmentation_dir", None))}` expected `list[InputPathType]`')
+    if params.get("slice_thickness", None) is None:
+        raise StyxValidationError("`slice_thickness` must not be None")
+    if not isinstance(params["slice_thickness"], (float, int)):
+        raise StyxValidationError(f'`slice_thickness` has the wrong type: Received `{type(params.get("slice_thickness", None))}` expected `float`')
+    if params.get("photo_resolution", None) is None:
+        raise StyxValidationError("`photo_resolution` must not be None")
+    if not isinstance(params["photo_resolution"], (float, int)):
+        raise StyxValidationError(f'`photo_resolution` has the wrong type: Received `{type(params.get("photo_resolution", None))}` expected `float`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+    if params.get("ref_mask", None) is not None:
+        if not isinstance(params["ref_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_mask` has the wrong type: Received `{type(params.get("ref_mask", None))}` expected `InputPathType | None`')
+    if params.get("ref_surface", None) is not None:
+        if not isinstance(params["ref_surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_surface` has the wrong type: Received `{type(params.get("ref_surface", None))}` expected `InputPathType | None`')
+    if params.get("ref_soft_mask", None) is not None:
+        if not isinstance(params["ref_soft_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_soft_mask` has the wrong type: Received `{type(params.get("ref_soft_mask", None))}` expected `InputPathType | None`')
+    if params.get("mesh_reorient_with_indices", None) is not None:
+        if not isinstance(params["mesh_reorient_with_indices"], str):
+            raise StyxValidationError(f'`mesh_reorient_with_indices` has the wrong type: Received `{type(params.get("mesh_reorient_with_indices", None))}` expected `str | None`')
+    if params.get("photos_posterior_side", False) is None:
+        raise StyxValidationError("`photos_posterior_side` must not be None")
+    if not isinstance(params["photos_posterior_side"], bool):
+        raise StyxValidationError(f'`photos_posterior_side` has the wrong type: Received `{type(params.get("photos_posterior_side", False))}` expected `bool`')
+    if params.get("order_posterior_to_anterior", False) is None:
+        raise StyxValidationError("`order_posterior_to_anterior` must not be None")
+    if not isinstance(params["order_posterior_to_anterior"], bool):
+        raise StyxValidationError(f'`order_posterior_to_anterior` has the wrong type: Received `{type(params.get("order_posterior_to_anterior", False))}` expected `bool`')
+    if params.get("allow_z_stretch", False) is None:
+        raise StyxValidationError("`allow_z_stretch` must not be None")
+    if not isinstance(params["allow_z_stretch"], bool):
+        raise StyxValidationError(f'`allow_z_stretch` has the wrong type: Received `{type(params.get("allow_z_stretch", False))}` expected `bool`')
+    if params.get("rigid_only_for_photos", False) is None:
+        raise StyxValidationError("`rigid_only_for_photos` must not be None")
+    if not isinstance(params["rigid_only_for_photos"], bool):
+        raise StyxValidationError(f'`rigid_only_for_photos` has the wrong type: Received `{type(params.get("rigid_only_for_photos", False))}` expected `bool`')
+    if params.get("gpu_index", None) is not None:
+        if not isinstance(params["gpu_index"], (float, int)):
+            raise StyxValidationError(f'`gpu_index` has the wrong type: Received `{type(params.get("gpu_index", None))}` expected `float | None`')
+
+
 def mri_3d_photo_recon_cargs(
     params: Mri3dPhotoReconParameters,
     execution: Execution,
@@ -243,6 +314,7 @@ def mri_3d_photo_recon_execute(
     Returns:
         NamedTuple of outputs (described in `Mri3dPhotoReconOutputs`).
     """
+    mri_3d_photo_recon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_3D_PHOTO_RECON_METADATA)
     params = execution.params(params)

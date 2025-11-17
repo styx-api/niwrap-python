@@ -73,6 +73,28 @@ def cifti_average_exclude_outliers_params(
     return params
 
 
+def cifti_average_exclude_outliers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiAverageExcludeOutliersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma-below", None) is None:
+        raise StyxValidationError("`sigma-below` must not be None")
+    if not isinstance(params["sigma-below"], (float, int)):
+        raise StyxValidationError(f'`sigma-below` has the wrong type: Received `{type(params.get("sigma-below", None))}` expected `float`')
+    if params.get("sigma-above", None) is None:
+        raise StyxValidationError("`sigma-above` must not be None")
+    if not isinstance(params["sigma-above"], (float, int)):
+        raise StyxValidationError(f'`sigma-above` has the wrong type: Received `{type(params.get("sigma-above", None))}` expected `float`')
+
+
 def cifti_average_exclude_outliers_cargs(
     params: CiftiAverageExcludeOutliersParameters,
     execution: Execution,
@@ -117,6 +139,27 @@ def cifti_average_cifti_params(
     if weight is not None:
         params["weight"] = weight
     return params
+
+
+def cifti_average_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiAverageCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("weight", None) is not None:
+        if not isinstance(params["weight"], (float, int)):
+            raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float | None`')
 
 
 def cifti_average_cifti_cargs(
@@ -186,6 +229,34 @@ def cifti_average_params(
     return params
 
 
+def cifti_average_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiAverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("exclude-outliers", None) is not None:
+        cifti_average_exclude_outliers_validate(params["exclude-outliers"])
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("cifti", None) is not None:
+        if not isinstance(params["cifti"], list):
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageCiftiParameters] | None`')
+        for e in params["cifti"]:
+            cifti_average_cifti_validate(e)
+
+
 def cifti_average_cargs(
     params: CiftiAverageParameters,
     execution: Execution,
@@ -253,6 +324,7 @@ def cifti_average_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiAverageOutputs`).
     """
+    cifti_average_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_AVERAGE_METADATA)
     params = execution.params(params)

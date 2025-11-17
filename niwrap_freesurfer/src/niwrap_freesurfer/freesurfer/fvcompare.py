@@ -185,6 +185,117 @@ def fvcompare_params(
     return params
 
 
+def fvcompare_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FvcompareParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject1", None) is None:
+        raise StyxValidationError("`subject1` must not be None")
+    if not isinstance(params["subject1"], str):
+        raise StyxValidationError(f'`subject1` has the wrong type: Received `{type(params.get("subject1", None))}` expected `str`')
+    if params.get("subject2", None) is None:
+        raise StyxValidationError("`subject2` must not be None")
+    if not isinstance(params["subject2"], str):
+        raise StyxValidationError(f'`subject2` has the wrong type: Received `{type(params.get("subject2", None))}` expected `str`')
+    if params.get("subject_dir1", None) is not None:
+        if not isinstance(params["subject_dir1"], str):
+            raise StyxValidationError(f'`subject_dir1` has the wrong type: Received `{type(params.get("subject_dir1", None))}` expected `str | None`')
+    if params.get("subject_dir2", None) is not None:
+        if not isinstance(params["subject_dir2"], str):
+            raise StyxValidationError(f'`subject_dir2` has the wrong type: Received `{type(params.get("subject_dir2", None))}` expected `str | None`')
+    if params.get("name1", None) is not None:
+        if not isinstance(params["name1"], str):
+            raise StyxValidationError(f'`name1` has the wrong type: Received `{type(params.get("name1", None))}` expected `str | None`')
+    if params.get("name2", None) is not None:
+        if not isinstance(params["name2"], str):
+            raise StyxValidationError(f'`name2` has the wrong type: Received `{type(params.get("name2", None))}` expected `str | None`')
+    if params.get("color1", None) is not None:
+        if not isinstance(params["color1"], str):
+            raise StyxValidationError(f'`color1` has the wrong type: Received `{type(params.get("color1", None))}` expected `str | None`')
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], str):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `str | None`')
+    if params.get("segmentation", None) is not None:
+        if not isinstance(params["segmentation"], str):
+            raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", None))}` expected `str | None`')
+    if params.get("aseg", False) is None:
+        raise StyxValidationError("`aseg` must not be None")
+    if not isinstance(params["aseg"], bool):
+        raise StyxValidationError(f'`aseg` has the wrong type: Received `{type(params.get("aseg", False))}` expected `bool`')
+    if params.get("no_seg", False) is None:
+        raise StyxValidationError("`no_seg` must not be None")
+    if not isinstance(params["no_seg"], bool):
+        raise StyxValidationError(f'`no_seg` has the wrong type: Received `{type(params.get("no_seg", False))}` expected `bool`')
+    if params.get("left_hemi", False) is None:
+        raise StyxValidationError("`left_hemi` must not be None")
+    if not isinstance(params["left_hemi"], bool):
+        raise StyxValidationError(f'`left_hemi` has the wrong type: Received `{type(params.get("left_hemi", False))}` expected `bool`')
+    if params.get("right_hemi", False) is None:
+        raise StyxValidationError("`right_hemi` must not be None")
+    if not isinstance(params["right_hemi"], bool):
+        raise StyxValidationError(f'`right_hemi` has the wrong type: Received `{type(params.get("right_hemi", False))}` expected `bool`')
+    if params.get("no_surf", False) is None:
+        raise StyxValidationError("`no_surf` must not be None")
+    if not isinstance(params["no_surf"], bool):
+        raise StyxValidationError(f'`no_surf` has the wrong type: Received `{type(params.get("no_surf", False))}` expected `bool`')
+    if params.get("gray_levels", None) is not None:
+        if not isinstance(params["gray_levels"], list):
+            raise StyxValidationError(f'`gray_levels` has the wrong type: Received `{type(params.get("gray_levels", None))}` expected `list[float] | None`')
+        if len(params["gray_levels"]) == 2:
+            raise StyxValidationError("Parameter `gray_levels` must contain exactly 2 elements")
+        for e in params["gray_levels"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`gray_levels` has the wrong type: Received `{type(params.get("gray_levels", None))}` expected `list[float] | None`')
+    if params.get("cursor_position", None) is not None:
+        if not isinstance(params["cursor_position"], list):
+            raise StyxValidationError(f'`cursor_position` has the wrong type: Received `{type(params.get("cursor_position", None))}` expected `list[float] | None`')
+        if len(params["cursor_position"]) == 3:
+            raise StyxValidationError("Parameter `cursor_position` must contain exactly 3 elements")
+        for e in params["cursor_position"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`cursor_position` has the wrong type: Received `{type(params.get("cursor_position", None))}` expected `list[float] | None`')
+    if params.get("zoom_level", None) is not None:
+        if not isinstance(params["zoom_level"], (float, int)):
+            raise StyxValidationError(f'`zoom_level` has the wrong type: Received `{type(params.get("zoom_level", None))}` expected `float | None`')
+    if params.get("annotation", None) is not None:
+        if not isinstance(params["annotation"], str):
+            raise StyxValidationError(f'`annotation` has the wrong type: Received `{type(params.get("annotation", None))}` expected `str | None`')
+    if params.get("aparc", False) is None:
+        raise StyxValidationError("`aparc` must not be None")
+    if not isinstance(params["aparc"], bool):
+        raise StyxValidationError(f'`aparc` has the wrong type: Received `{type(params.get("aparc", False))}` expected `bool`')
+    if params.get("inflated", False) is None:
+        raise StyxValidationError("`inflated` must not be None")
+    if not isinstance(params["inflated"], bool):
+        raise StyxValidationError(f'`inflated` has the wrong type: Received `{type(params.get("inflated", False))}` expected `bool`')
+    if params.get("white", False) is None:
+        raise StyxValidationError("`white` must not be None")
+    if not isinstance(params["white"], bool):
+        raise StyxValidationError(f'`white` has the wrong type: Received `{type(params.get("white", False))}` expected `bool`')
+    if params.get("orig", False) is None:
+        raise StyxValidationError("`orig` must not be None")
+    if not isinstance(params["orig"], bool):
+        raise StyxValidationError(f'`orig` has the wrong type: Received `{type(params.get("orig", False))}` expected `bool`')
+    if params.get("surf_name", None) is not None:
+        if not isinstance(params["surf_name"], str):
+            raise StyxValidationError(f'`surf_name` has the wrong type: Received `{type(params.get("surf_name", None))}` expected `str | None`')
+    if params.get("pointset", None) is not None:
+        if not isinstance(params["pointset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pointset` has the wrong type: Received `{type(params.get("pointset", None))}` expected `InputPathType | None`')
+    if params.get("wot2", False) is None:
+        raise StyxValidationError("`wot2` must not be None")
+    if not isinstance(params["wot2"], bool):
+        raise StyxValidationError(f'`wot2` has the wrong type: Received `{type(params.get("wot2", False))}` expected `bool`')
+
+
 def fvcompare_cargs(
     params: FvcompareParameters,
     execution: Execution,
@@ -336,6 +447,7 @@ def fvcompare_execute(
     Returns:
         NamedTuple of outputs (described in `FvcompareOutputs`).
     """
+    fvcompare_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FVCOMPARE_METADATA)
     params = execution.params(params)

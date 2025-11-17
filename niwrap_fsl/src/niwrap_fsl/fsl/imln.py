@@ -56,6 +56,28 @@ def imln_params(
     return params
 
 
+def imln_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `ImlnParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("link_name", None) is None:
+        raise StyxValidationError("`link_name` must not be None")
+    if not isinstance(params["link_name"], str):
+        raise StyxValidationError(f'`link_name` has the wrong type: Received `{type(params.get("link_name", None))}` expected `str`')
+
+
 def imln_cargs(
     params: ImlnParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def imln_execute(
     Returns:
         NamedTuple of outputs (described in `ImlnOutputs`).
     """
+    imln_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMLN_METADATA)
     params = execution.params(params)

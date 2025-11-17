@@ -95,6 +95,52 @@ def xsanatreg_params(
     return params
 
 
+def xsanatreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XsanatregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("src_cordir", None) is None:
+        raise StyxValidationError("`src_cordir` must not be None")
+    if not isinstance(params["src_cordir"], str):
+        raise StyxValidationError(f'`src_cordir` has the wrong type: Received `{type(params.get("src_cordir", None))}` expected `str`')
+    if params.get("targ_cordir", None) is None:
+        raise StyxValidationError("`targ_cordir` must not be None")
+    if not isinstance(params["targ_cordir"], str):
+        raise StyxValidationError(f'`targ_cordir` has the wrong type: Received `{type(params.get("targ_cordir", None))}` expected `str`')
+    if params.get("transform_file", None) is None:
+        raise StyxValidationError("`transform_file` must not be None")
+    if not isinstance(params["transform_file"], str):
+        raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `str`')
+    if params.get("temp_directory", None) is not None:
+        if not isinstance(params["temp_directory"], str):
+            raise StyxValidationError(f'`temp_directory` has the wrong type: Received `{type(params.get("temp_directory", None))}` expected `str | None`')
+    if params.get("source_minc", None) is not None:
+        if not isinstance(params["source_minc"], str):
+            raise StyxValidationError(f'`source_minc` has the wrong type: Received `{type(params.get("source_minc", None))}` expected `str | None`')
+    if params.get("target_minc", None) is not None:
+        if not isinstance(params["target_minc"], str):
+            raise StyxValidationError(f'`target_minc` has the wrong type: Received `{type(params.get("target_minc", None))}` expected `str | None`')
+    if params.get("no_cleanup", False) is None:
+        raise StyxValidationError("`no_cleanup` must not be None")
+    if not isinstance(params["no_cleanup"], bool):
+        raise StyxValidationError(f'`no_cleanup` has the wrong type: Received `{type(params.get("no_cleanup", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+
+
 def xsanatreg_cargs(
     params: XsanatregParameters,
     execution: Execution,
@@ -187,6 +233,7 @@ def xsanatreg_execute(
     Returns:
         NamedTuple of outputs (described in `XsanatregOutputs`).
     """
+    xsanatreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XSANATREG_METADATA)
     params = execution.params(params)

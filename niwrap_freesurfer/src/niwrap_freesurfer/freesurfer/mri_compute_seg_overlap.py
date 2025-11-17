@@ -105,6 +105,56 @@ def mri_compute_seg_overlap_params(
     return params
 
 
+def mri_compute_seg_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriComputeSegOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("segvol1", None) is None:
+        raise StyxValidationError("`segvol1` must not be None")
+    if not isinstance(params["segvol1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segvol1` has the wrong type: Received `{type(params.get("segvol1", None))}` expected `InputPathType`')
+    if params.get("segvol2", None) is None:
+        raise StyxValidationError("`segvol2` must not be None")
+    if not isinstance(params["segvol2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segvol2` has the wrong type: Received `{type(params.get("segvol2", None))}` expected `InputPathType`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("mean_log_file", None) is not None:
+        if not isinstance(params["mean_log_file"], str):
+            raise StyxValidationError(f'`mean_log_file` has the wrong type: Received `{type(params.get("mean_log_file", None))}` expected `str | None`')
+    if params.get("std_log_file", None) is not None:
+        if not isinstance(params["std_log_file"], str):
+            raise StyxValidationError(f'`std_log_file` has the wrong type: Received `{type(params.get("std_log_file", None))}` expected `str | None`')
+    if params.get("overall_log_flag", False) is None:
+        raise StyxValidationError("`overall_log_flag` must not be None")
+    if not isinstance(params["overall_log_flag"], bool):
+        raise StyxValidationError(f'`overall_log_flag` has the wrong type: Received `{type(params.get("overall_log_flag", False))}` expected `bool`')
+    if params.get("exclude_cortex_flag", False) is None:
+        raise StyxValidationError("`exclude_cortex_flag` must not be None")
+    if not isinstance(params["exclude_cortex_flag"], bool):
+        raise StyxValidationError(f'`exclude_cortex_flag` has the wrong type: Received `{type(params.get("exclude_cortex_flag", False))}` expected `bool`')
+    if params.get("exclude_wm_flag", False) is None:
+        raise StyxValidationError("`exclude_wm_flag` must not be None")
+    if not isinstance(params["exclude_wm_flag"], bool):
+        raise StyxValidationError(f'`exclude_wm_flag` has the wrong type: Received `{type(params.get("exclude_wm_flag", False))}` expected `bool`')
+    if params.get("all_labels_flag", False) is None:
+        raise StyxValidationError("`all_labels_flag` must not be None")
+    if not isinstance(params["all_labels_flag"], bool):
+        raise StyxValidationError(f'`all_labels_flag` has the wrong type: Received `{type(params.get("all_labels_flag", False))}` expected `bool`')
+    if params.get("dice_params", None) is not None:
+        if not isinstance(params["dice_params"], str):
+            raise StyxValidationError(f'`dice_params` has the wrong type: Received `{type(params.get("dice_params", None))}` expected `str | None`')
+
+
 def mri_compute_seg_overlap_cargs(
     params: MriComputeSegOverlapParameters,
     execution: Execution,
@@ -191,6 +241,7 @@ def mri_compute_seg_overlap_execute(
     Returns:
         NamedTuple of outputs (described in `MriComputeSegOverlapOutputs`).
     """
+    mri_compute_seg_overlap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COMPUTE_SEG_OVERLAP_METADATA)
     params = execution.params(params)

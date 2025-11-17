@@ -73,6 +73,39 @@ def border_length_params(
     return params
 
 
+def border_length_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderLengthParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("separate-pieces", False) is None:
+        raise StyxValidationError("`separate-pieces` must not be None")
+    if not isinstance(params["separate-pieces"], bool):
+        raise StyxValidationError(f'`separate-pieces` has the wrong type: Received `{type(params.get("separate-pieces", False))}` expected `bool`')
+    if params.get("hide-border-name", False) is None:
+        raise StyxValidationError("`hide-border-name` must not be None")
+    if not isinstance(params["hide-border-name"], bool):
+        raise StyxValidationError(f'`hide-border-name` has the wrong type: Received `{type(params.get("hide-border-name", False))}` expected `bool`')
+    if params.get("border", None) is None:
+        raise StyxValidationError("`border` must not be None")
+    if not isinstance(params["border"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def border_length_cargs(
     params: BorderLengthParameters,
     execution: Execution,
@@ -141,6 +174,7 @@ def border_length_execute(
     Returns:
         NamedTuple of outputs (described in `BorderLengthOutputs`).
     """
+    border_length_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BORDER_LENGTH_METADATA)
     params = execution.params(params)

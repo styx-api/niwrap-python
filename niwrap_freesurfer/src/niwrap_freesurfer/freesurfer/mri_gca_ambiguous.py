@@ -56,6 +56,28 @@ def mri_gca_ambiguous_params(
     return params
 
 
+def mri_gca_ambiguous_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriGcaAmbiguousParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gca_file", None) is None:
+        raise StyxValidationError("`gca_file` must not be None")
+    if not isinstance(params["gca_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`gca_file` has the wrong type: Received `{type(params.get("gca_file", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_gca_ambiguous_cargs(
     params: MriGcaAmbiguousParameters,
     execution: Execution,
@@ -116,6 +138,7 @@ def mri_gca_ambiguous_execute(
     Returns:
         NamedTuple of outputs (described in `MriGcaAmbiguousOutputs`).
     """
+    mri_gca_ambiguous_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GCA_AMBIGUOUS_METADATA)
     params = execution.params(params)

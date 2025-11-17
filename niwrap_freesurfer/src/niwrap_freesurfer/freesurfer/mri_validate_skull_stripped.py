@@ -59,6 +59,34 @@ def mri_validate_skull_stripped_params(
     return params
 
 
+def mri_validate_skull_stripped_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriValidateSkullStrippedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mri_reference", None) is None:
+        raise StyxValidationError("`mri_reference` must not be None")
+    if not isinstance(params["mri_reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mri_reference` has the wrong type: Received `{type(params.get("mri_reference", None))}` expected `InputPathType`')
+    if params.get("mri_test", None) is None:
+        raise StyxValidationError("`mri_test` must not be None")
+    if not isinstance(params["mri_test"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mri_test` has the wrong type: Received `{type(params.get("mri_test", None))}` expected `InputPathType`')
+    if params.get("weight", None) is None:
+        raise StyxValidationError("`weight` must not be None")
+    if not isinstance(params["weight"], (float, int)):
+        raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float`')
+    if params["weight"] >= 1.01:
+        raise StyxValidationError("Parameter `weight` must be at least 1.01")
+
+
 def mri_validate_skull_stripped_cargs(
     params: MriValidateSkullStrippedParameters,
     execution: Execution,
@@ -118,6 +146,7 @@ def mri_validate_skull_stripped_execute(
     Returns:
         NamedTuple of outputs (described in `MriValidateSkullStrippedOutputs`).
     """
+    mri_validate_skull_stripped_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_VALIDATE_SKULL_STRIPPED_METADATA)
     params = execution.params(params)

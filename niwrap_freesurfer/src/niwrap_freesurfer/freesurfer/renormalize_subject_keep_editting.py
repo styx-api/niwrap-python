@@ -53,6 +53,23 @@ def renormalize_subject_keep_editting_params(
     return params
 
 
+def renormalize_subject_keep_editting_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RenormalizeSubjectKeepEdittingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("placeholder_input", None) is not None:
+        if not isinstance(params["placeholder_input"], str):
+            raise StyxValidationError(f'`placeholder_input` has the wrong type: Received `{type(params.get("placeholder_input", None))}` expected `str | None`')
+
+
 def renormalize_subject_keep_editting_cargs(
     params: RenormalizeSubjectKeepEdittingParameters,
     execution: Execution,
@@ -113,6 +130,7 @@ def renormalize_subject_keep_editting_execute(
     Returns:
         NamedTuple of outputs (described in `RenormalizeSubjectKeepEdittingOutputs`).
     """
+    renormalize_subject_keep_editting_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA)
     params = execution.params(params)

@@ -143,6 +143,71 @@ def v_3d_anova_params(
     return params
 
 
+def v_3d_anova_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAnovaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("levels", None) is None:
+        raise StyxValidationError("`levels` must not be None")
+    if not isinstance(params["levels"], int):
+        raise StyxValidationError(f'`levels` has the wrong type: Received `{type(params.get("levels", None))}` expected `int`')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    for e in params["datasets"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    if params.get("voxel", None) is not None:
+        if not isinstance(params["voxel"], int):
+            raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `int | None`')
+    if params.get("diskspace", False) is None:
+        raise StyxValidationError("`diskspace` must not be None")
+    if not isinstance(params["diskspace"], bool):
+        raise StyxValidationError(f'`diskspace` has the wrong type: Received `{type(params.get("diskspace", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], int):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `int | None`')
+    if params.get("ftr", None) is not None:
+        if not isinstance(params["ftr"], str):
+            raise StyxValidationError(f'`ftr` has the wrong type: Received `{type(params.get("ftr", None))}` expected `str | None`')
+    if params.get("mean", None) is not None:
+        if not isinstance(params["mean"], str):
+            raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", None))}` expected `str | None`')
+    if params.get("diff", None) is not None:
+        if not isinstance(params["diff"], str):
+            raise StyxValidationError(f'`diff` has the wrong type: Received `{type(params.get("diff", None))}` expected `str | None`')
+    if params.get("contr", None) is not None:
+        if not isinstance(params["contr"], str):
+            raise StyxValidationError(f'`contr` has the wrong type: Received `{type(params.get("contr", None))}` expected `str | None`')
+    if params.get("old_method", False) is None:
+        raise StyxValidationError("`old_method` must not be None")
+    if not isinstance(params["old_method"], bool):
+        raise StyxValidationError(f'`old_method` has the wrong type: Received `{type(params.get("old_method", False))}` expected `bool`')
+    if params.get("ok", False) is None:
+        raise StyxValidationError("`ok` must not be None")
+    if not isinstance(params["ok"], bool):
+        raise StyxValidationError(f'`ok` has the wrong type: Received `{type(params.get("ok", False))}` expected `bool`')
+    if params.get("assume_sph", False) is None:
+        raise StyxValidationError("`assume_sph` must not be None")
+    if not isinstance(params["assume_sph"], bool):
+        raise StyxValidationError(f'`assume_sph` has the wrong type: Received `{type(params.get("assume_sph", False))}` expected `bool`')
+    if params.get("bucket", None) is not None:
+        if not isinstance(params["bucket"], str):
+            raise StyxValidationError(f'`bucket` has the wrong type: Received `{type(params.get("bucket", None))}` expected `str | None`')
+
+
 def v_3d_anova_cargs(
     params: V3dAnovaParameters,
     execution: Execution,
@@ -265,6 +330,7 @@ def v_3d_anova_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAnovaOutputs`).
     """
+    v_3d_anova_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ANOVA_METADATA)
     params = execution.params(params)

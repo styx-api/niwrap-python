@@ -88,6 +88,28 @@ def volume_extrema_presmooth_params(
     return params
 
 
+def volume_extrema_presmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeExtremaPresmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+
+
 def volume_extrema_presmooth_cargs(
     params: VolumeExtremaPresmoothParameters,
     execution: Execution,
@@ -130,6 +152,28 @@ def volume_extrema_threshold_params(
         "high": high,
     }
     return params
+
+
+def volume_extrema_threshold_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeExtremaThresholdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("low", None) is None:
+        raise StyxValidationError("`low` must not be None")
+    if not isinstance(params["low"], (float, int)):
+        raise StyxValidationError(f'`low` has the wrong type: Received `{type(params.get("low", None))}` expected `float`')
+    if params.get("high", None) is None:
+        raise StyxValidationError("`high` must not be None")
+    if not isinstance(params["high"], (float, int)):
+        raise StyxValidationError(f'`high` has the wrong type: Received `{type(params.get("high", None))}` expected `float`')
 
 
 def volume_extrema_threshold_cargs(
@@ -223,6 +267,58 @@ def volume_extrema_params(
     return params
 
 
+def volume_extrema_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeExtremaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("presmooth", None) is not None:
+        volume_extrema_presmooth_validate(params["presmooth"])
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
+    if params.get("threshold", None) is not None:
+        volume_extrema_threshold_validate(params["threshold"])
+    if params.get("sum-subvols", False) is None:
+        raise StyxValidationError("`sum-subvols` must not be None")
+    if not isinstance(params["sum-subvols"], bool):
+        raise StyxValidationError(f'`sum-subvols` has the wrong type: Received `{type(params.get("sum-subvols", False))}` expected `bool`')
+    if params.get("consolidate-mode", False) is None:
+        raise StyxValidationError("`consolidate-mode` must not be None")
+    if not isinstance(params["consolidate-mode"], bool):
+        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
+    if params.get("only-maxima", False) is None:
+        raise StyxValidationError("`only-maxima` must not be None")
+    if not isinstance(params["only-maxima"], bool):
+        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
+    if params.get("only-minima", False) is None:
+        raise StyxValidationError("`only-minima` must not be None")
+    if not isinstance(params["only-minima"], bool):
+        raise StyxValidationError(f'`only-minima` has the wrong type: Received `{type(params.get("only-minima", False))}` expected `bool`')
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("distance", None) is None:
+        raise StyxValidationError("`distance` must not be None")
+    if not isinstance(params["distance"], (float, int)):
+        raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float`')
+
+
 def volume_extrema_cargs(
     params: VolumeExtremaParameters,
     execution: Execution,
@@ -312,6 +408,7 @@ def volume_extrema_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeExtremaOutputs`).
     """
+    volume_extrema_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_EXTREMA_METADATA)
     params = execution.params(params)

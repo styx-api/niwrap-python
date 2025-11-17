@@ -114,6 +114,73 @@ def make_stim_times_py_params(
     return params
 
 
+def make_stim_times_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeStimTimesPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("files", None) is None:
+        raise StyxValidationError("`files` must not be None")
+    if not isinstance(params["files"], list):
+        raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    for e in params["files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("nruns", None) is None:
+        raise StyxValidationError("`nruns` must not be None")
+    if not isinstance(params["nruns"], (float, int)):
+        raise StyxValidationError(f'`nruns` has the wrong type: Received `{type(params.get("nruns", None))}` expected `float`')
+    if params.get("nt", None) is None:
+        raise StyxValidationError("`nt` must not be None")
+    if not isinstance(params["nt"], (float, int)):
+        raise StyxValidationError(f'`nt` has the wrong type: Received `{type(params.get("nt", None))}` expected `float`')
+    if params.get("run_trs", None) is not None:
+        if not isinstance(params["run_trs"], list):
+            raise StyxValidationError(f'`run_trs` has the wrong type: Received `{type(params.get("run_trs", None))}` expected `list[float] | None`')
+        for e in params["run_trs"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`run_trs` has the wrong type: Received `{type(params.get("run_trs", None))}` expected `list[float] | None`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("labels", None) is not None:
+        if not isinstance(params["labels"], list):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+        for e in params["labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+    if params.get("no_consec_events", False) is None:
+        raise StyxValidationError("`no_consec_events` must not be None")
+    if not isinstance(params["no_consec_events"], bool):
+        raise StyxValidationError(f'`no_consec_events` has the wrong type: Received `{type(params.get("no_consec_events", False))}` expected `bool`')
+    if params.get("amplitudes", False) is None:
+        raise StyxValidationError("`amplitudes` must not be None")
+    if not isinstance(params["amplitudes"], bool):
+        raise StyxValidationError(f'`amplitudes` has the wrong type: Received `{type(params.get("amplitudes", False))}` expected `bool`')
+    if params.get("show_valid_opts", False) is None:
+        raise StyxValidationError("`show_valid_opts` must not be None")
+    if not isinstance(params["show_valid_opts"], bool):
+        raise StyxValidationError(f'`show_valid_opts` has the wrong type: Received `{type(params.get("show_valid_opts", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], (float, int)):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
+
+
 def make_stim_times_py_cargs(
     params: MakeStimTimesPyParameters,
     execution: Execution,
@@ -214,6 +281,7 @@ def make_stim_times_py_execute(
     Returns:
         NamedTuple of outputs (described in `MakeStimTimesPyOutputs`).
     """
+    make_stim_times_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_STIM_TIMES_PY_METADATA)
     params = execution.params(params)

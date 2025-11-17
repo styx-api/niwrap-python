@@ -75,6 +75,39 @@ def segment_ha_t1_sh_params(
     return params
 
 
+def segment_ha_t1_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentHaT1ShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+    if params.get("brain_mask", None) is not None:
+        if not isinstance(params["brain_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brain_mask` has the wrong type: Received `{type(params.get("brain_mask", None))}` expected `InputPathType | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def segment_ha_t1_sh_cargs(
     params: SegmentHaT1ShParameters,
     execution: Execution,
@@ -144,6 +177,7 @@ def segment_ha_t1_sh_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentHaT1ShOutputs`).
     """
+    segment_ha_t1_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_HA_T1_SH_METADATA)
     params = execution.params(params)

@@ -90,6 +90,54 @@ def v__move_to_series_dirs_params(
     return params
 
 
+def v__move_to_series_dirs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VMoveToSeriesDirsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("action", None) is not None:
+        if not isinstance(params["action"], str):
+            raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `typing.Literal["copy", "move"] | None`')
+        if params["action"] not in ["copy", "move"]:
+            raise StyxValidationError("Parameter `action` must be one of [\"copy\", \"move\"]")
+    if params.get("dprefix", None) is not None:
+        if not isinstance(params["dprefix"], str):
+            raise StyxValidationError(f'`dprefix` has the wrong type: Received `{type(params.get("dprefix", None))}` expected `str | None`')
+    if params.get("tag", None) is not None:
+        if not isinstance(params["tag"], str):
+            raise StyxValidationError(f'`tag` has the wrong type: Received `{type(params.get("tag", None))}` expected `str | None`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+    if params.get("dicom_files", None) is None:
+        raise StyxValidationError("`dicom_files` must not be None")
+    if not isinstance(params["dicom_files"], list):
+        raise StyxValidationError(f'`dicom_files` has the wrong type: Received `{type(params.get("dicom_files", None))}` expected `list[InputPathType]`')
+    for e in params["dicom_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`dicom_files` has the wrong type: Received `{type(params.get("dicom_files", None))}` expected `list[InputPathType]`')
+
+
 def v__move_to_series_dirs_cargs(
     params: VMoveToSeriesDirsParameters,
     execution: Execution,
@@ -171,6 +219,7 @@ def v__move_to_series_dirs_execute(
     Returns:
         NamedTuple of outputs (described in `VMoveToSeriesDirsOutputs`).
     """
+    v__move_to_series_dirs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__MOVE_TO_SERIES_DIRS_METADATA)
     params = execution.params(params)

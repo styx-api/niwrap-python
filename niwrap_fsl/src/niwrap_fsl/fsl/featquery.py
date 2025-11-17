@@ -121,6 +121,82 @@ def featquery_params(
     return params
 
 
+def featquery_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FeatqueryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("n_featdirs", None) is None:
+        raise StyxValidationError("`n_featdirs` must not be None")
+    if not isinstance(params["n_featdirs"], (float, int)):
+        raise StyxValidationError(f'`n_featdirs` has the wrong type: Received `{type(params.get("n_featdirs", None))}` expected `float`')
+    if params.get("featdirs", None) is None:
+        raise StyxValidationError("`featdirs` must not be None")
+    if not isinstance(params["featdirs"], list):
+        raise StyxValidationError(f'`featdirs` has the wrong type: Received `{type(params.get("featdirs", None))}` expected `list[str]`')
+    for e in params["featdirs"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`featdirs` has the wrong type: Received `{type(params.get("featdirs", None))}` expected `list[str]`')
+    if params.get("n_stats", None) is None:
+        raise StyxValidationError("`n_stats` must not be None")
+    if not isinstance(params["n_stats"], (float, int)):
+        raise StyxValidationError(f'`n_stats` has the wrong type: Received `{type(params.get("n_stats", None))}` expected `float`')
+    if params.get("stats", None) is None:
+        raise StyxValidationError("`stats` must not be None")
+    if not isinstance(params["stats"], list):
+        raise StyxValidationError(f'`stats` has the wrong type: Received `{type(params.get("stats", None))}` expected `list[str]`')
+    for e in params["stats"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`stats` has the wrong type: Received `{type(params.get("stats", None))}` expected `list[str]`')
+    if params.get("output_rootname", None) is None:
+        raise StyxValidationError("`output_rootname` must not be None")
+    if not isinstance(params["output_rootname"], str):
+        raise StyxValidationError(f'`output_rootname` has the wrong type: Received `{type(params.get("output_rootname", None))}` expected `str`')
+    if params.get("atlas_flag", None) is not None:
+        if not isinstance(params["atlas_flag"], str):
+            raise StyxValidationError(f'`atlas_flag` has the wrong type: Received `{type(params.get("atlas_flag", None))}` expected `str | None`')
+    if params.get("percent_convert_flag", False) is None:
+        raise StyxValidationError("`percent_convert_flag` must not be None")
+    if not isinstance(params["percent_convert_flag"], bool):
+        raise StyxValidationError(f'`percent_convert_flag` has the wrong type: Received `{type(params.get("percent_convert_flag", False))}` expected `bool`')
+    if params.get("thresh_flag", False) is None:
+        raise StyxValidationError("`thresh_flag` must not be None")
+    if not isinstance(params["thresh_flag"], bool):
+        raise StyxValidationError(f'`thresh_flag` has the wrong type: Received `{type(params.get("thresh_flag", False))}` expected `bool`')
+    if params.get("interp_thresh", None) is not None:
+        if not isinstance(params["interp_thresh"], (float, int)):
+            raise StyxValidationError(f'`interp_thresh` has the wrong type: Received `{type(params.get("interp_thresh", None))}` expected `float | None`')
+    if params.get("timeseries_flag", False) is None:
+        raise StyxValidationError("`timeseries_flag` must not be None")
+    if not isinstance(params["timeseries_flag"], bool):
+        raise StyxValidationError(f'`timeseries_flag` has the wrong type: Received `{type(params.get("timeseries_flag", False))}` expected `bool`')
+    if params.get("weight_flag", False) is None:
+        raise StyxValidationError("`weight_flag` must not be None")
+    if not isinstance(params["weight_flag"], bool):
+        raise StyxValidationError(f'`weight_flag` has the wrong type: Received `{type(params.get("weight_flag", False))}` expected `bool`')
+    if params.get("browser_flag", False) is None:
+        raise StyxValidationError("`browser_flag` must not be None")
+    if not isinstance(params["browser_flag"], bool):
+        raise StyxValidationError(f'`browser_flag` has the wrong type: Received `{type(params.get("browser_flag", False))}` expected `bool`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("coords", None) is not None:
+        if not isinstance(params["coords"], list):
+            raise StyxValidationError(f'`coords` has the wrong type: Received `{type(params.get("coords", None))}` expected `list[float] | None`')
+        for e in params["coords"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`coords` has the wrong type: Received `{type(params.get("coords", None))}` expected `list[float] | None`')
+
+
 def featquery_cargs(
     params: FeatqueryParameters,
     execution: Execution,
@@ -209,6 +285,7 @@ def featquery_execute(
     Returns:
         NamedTuple of outputs (described in `FeatqueryOutputs`).
     """
+    featquery_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FEATQUERY_METADATA)
     params = execution.params(params)

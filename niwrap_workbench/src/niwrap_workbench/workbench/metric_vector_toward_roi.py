@@ -68,6 +68,35 @@ def metric_vector_toward_roi_params(
     return params
 
 
+def metric_vector_toward_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricVectorTowardRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("target-roi", None) is None:
+        raise StyxValidationError("`target-roi` must not be None")
+    if not isinstance(params["target-roi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target-roi` has the wrong type: Received `{type(params.get("target-roi", None))}` expected `InputPathType`')
+
+
 def metric_vector_toward_roi_cargs(
     params: MetricVectorTowardRoiParameters,
     execution: Execution,
@@ -131,6 +160,7 @@ def metric_vector_toward_roi_execute(
     Returns:
         NamedTuple of outputs (described in `MetricVectorTowardRoiOutputs`).
     """
+    metric_vector_toward_roi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_VECTOR_TOWARD_ROI_METADATA)
     params = execution.params(params)

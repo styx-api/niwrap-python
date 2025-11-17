@@ -81,6 +81,48 @@ def v__shift_volume_params(
     return params
 
 
+def v__shift_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VShiftVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rai_shift_vector", None) is not None:
+        if not isinstance(params["rai_shift_vector"], list):
+            raise StyxValidationError(f'`rai_shift_vector` has the wrong type: Received `{type(params.get("rai_shift_vector", None))}` expected `list[float] | None`')
+        if len(params["rai_shift_vector"]) == 3:
+            raise StyxValidationError("Parameter `rai_shift_vector` must contain exactly 3 elements")
+        for e in params["rai_shift_vector"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rai_shift_vector` has the wrong type: Received `{type(params.get("rai_shift_vector", None))}` expected `list[float] | None`')
+    if params.get("mni_anat_to_mni", False) is None:
+        raise StyxValidationError("`mni_anat_to_mni` must not be None")
+    if not isinstance(params["mni_anat_to_mni"], bool):
+        raise StyxValidationError(f'`mni_anat_to_mni` has the wrong type: Received `{type(params.get("mni_anat_to_mni", False))}` expected `bool`')
+    if params.get("mni_to_mni_anat", False) is None:
+        raise StyxValidationError("`mni_to_mni_anat` must not be None")
+    if not isinstance(params["mni_to_mni_anat"], bool):
+        raise StyxValidationError(f'`mni_to_mni_anat` has the wrong type: Received `{type(params.get("mni_to_mni_anat", False))}` expected `bool`')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+    if params.get("no_cp", False) is None:
+        raise StyxValidationError("`no_cp` must not be None")
+    if not isinstance(params["no_cp"], bool):
+        raise StyxValidationError(f'`no_cp` has the wrong type: Received `{type(params.get("no_cp", False))}` expected `bool`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+
+
 def v__shift_volume_cargs(
     params: VShiftVolumeParameters,
     execution: Execution,
@@ -158,6 +200,7 @@ def v__shift_volume_execute(
     Returns:
         NamedTuple of outputs (described in `VShiftVolumeOutputs`).
     """
+    v__shift_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SHIFT_VOLUME_METADATA)
     params = execution.params(params)

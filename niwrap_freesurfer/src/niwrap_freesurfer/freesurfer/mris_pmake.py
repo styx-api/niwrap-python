@@ -120,6 +120,63 @@ def mris_pmake_params(
     return params
 
 
+def mris_pmake_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisPmakeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("options_file", None) is not None:
+        if not isinstance(params["options_file"], str):
+            raise StyxValidationError(f'`options_file` has the wrong type: Received `{type(params.get("options_file", None))}` expected `str | None`')
+    if params.get("working_dir", None) is not None:
+        if not isinstance(params["working_dir"], str):
+            raise StyxValidationError(f'`working_dir` has the wrong type: Received `{type(params.get("working_dir", None))}` expected `str | None`')
+    if params.get("listen_mode", False) is None:
+        raise StyxValidationError("`listen_mode` must not be None")
+    if not isinstance(params["listen_mode"], bool):
+        raise StyxValidationError(f'`listen_mode` has the wrong type: Received `{type(params.get("listen_mode", False))}` expected `bool`')
+    if params.get("listen_on_port", None) is not None:
+        if not isinstance(params["listen_on_port"], (float, int)):
+            raise StyxValidationError(f'`listen_on_port` has the wrong type: Received `{type(params.get("listen_on_port", None))}` expected `float | None`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("surface0", None) is not None:
+        if not isinstance(params["surface0"], str):
+            raise StyxValidationError(f'`surface0` has the wrong type: Received `{type(params.get("surface0", None))}` expected `str | None`')
+    if params.get("surface1", None) is not None:
+        if not isinstance(params["surface1"], str):
+            raise StyxValidationError(f'`surface1` has the wrong type: Received `{type(params.get("surface1", None))}` expected `str | None`')
+    if params.get("curve0", None) is not None:
+        if not isinstance(params["curve0"], str):
+            raise StyxValidationError(f'`curve0` has the wrong type: Received `{type(params.get("curve0", None))}` expected `str | None`')
+    if params.get("curve1", None) is not None:
+        if not isinstance(params["curve1"], str):
+            raise StyxValidationError(f'`curve1` has the wrong type: Received `{type(params.get("curve1", None))}` expected `str | None`')
+    if params.get("use_abs_curvs", False) is None:
+        raise StyxValidationError("`use_abs_curvs` must not be None")
+    if not isinstance(params["use_abs_curvs"], bool):
+        raise StyxValidationError(f'`use_abs_curvs` has the wrong type: Received `{type(params.get("use_abs_curvs", False))}` expected `bool`')
+    if params.get("mpm_prog", None) is not None:
+        if not isinstance(params["mpm_prog"], str):
+            raise StyxValidationError(f'`mpm_prog` has the wrong type: Received `{type(params.get("mpm_prog", None))}` expected `str | None`')
+    if params.get("mpm_args", None) is not None:
+        if not isinstance(params["mpm_args"], str):
+            raise StyxValidationError(f'`mpm_args` has the wrong type: Received `{type(params.get("mpm_args", None))}` expected `str | None`')
+
+
 def mris_pmake_cargs(
     params: MrisPmakeParameters,
     execution: Execution,
@@ -234,6 +291,7 @@ def mris_pmake_execute(
     Returns:
         NamedTuple of outputs (described in `MrisPmakeOutputs`).
     """
+    mris_pmake_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_PMAKE_METADATA)
     params = execution.params(params)

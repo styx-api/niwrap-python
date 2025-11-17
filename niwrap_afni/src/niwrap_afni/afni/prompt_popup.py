@@ -83,6 +83,45 @@ def prompt_popup_params(
     return params
 
 
+def prompt_popup_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PromptPopupParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("message", None) is None:
+        raise StyxValidationError("`message` must not be None")
+    if not isinstance(params["message"], str):
+        raise StyxValidationError(f'`message` has the wrong type: Received `{type(params.get("message", None))}` expected `str`')
+    if params.get("message_pause", None) is not None:
+        if not isinstance(params["message_pause"], str):
+            raise StyxValidationError(f'`message_pause` has the wrong type: Received `{type(params.get("message_pause", None))}` expected `str | None`')
+    if params.get("buttons", None) is not None:
+        if not isinstance(params["buttons"], list):
+            raise StyxValidationError(f'`buttons` has the wrong type: Received `{type(params.get("buttons", None))}` expected `list[str] | None`')
+        for e in params["buttons"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`buttons` has the wrong type: Received `{type(params.get("buttons", None))}` expected `list[str] | None`')
+    if params.get("buttons_b", None) is not None:
+        if not isinstance(params["buttons_b"], list):
+            raise StyxValidationError(f'`buttons_b` has the wrong type: Received `{type(params.get("buttons_b", None))}` expected `list[str] | None`')
+        for e in params["buttons_b"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`buttons_b` has the wrong type: Received `{type(params.get("buttons_b", None))}` expected `list[str] | None`')
+    if params.get("timeout", None) is not None:
+        if not isinstance(params["timeout"], (float, int)):
+            raise StyxValidationError(f'`timeout` has the wrong type: Received `{type(params.get("timeout", None))}` expected `float | None`')
+    if params.get("timeout_to", None) is not None:
+        if not isinstance(params["timeout_to"], (float, int)):
+            raise StyxValidationError(f'`timeout_to` has the wrong type: Received `{type(params.get("timeout_to", None))}` expected `float | None`')
+
+
 def prompt_popup_cargs(
     params: PromptPopupParameters,
     execution: Execution,
@@ -169,6 +208,7 @@ def prompt_popup_execute(
     Returns:
         NamedTuple of outputs (described in `PromptPopupOutputs`).
     """
+    prompt_popup_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PROMPT_POPUP_METADATA)
     params = execution.params(params)

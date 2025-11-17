@@ -51,6 +51,24 @@ def v__afni_refacer_make_onebig_a12_params(
     return params
 
 
+def v__afni_refacer_make_onebig_a12_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAfniRefacerMakeOnebigA12Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1w_dataset", None) is None:
+        raise StyxValidationError("`t1w_dataset` must not be None")
+    if not isinstance(params["t1w_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1w_dataset` has the wrong type: Received `{type(params.get("t1w_dataset", None))}` expected `InputPathType`')
+
+
 def v__afni_refacer_make_onebig_a12_cargs(
     params: VAfniRefacerMakeOnebigA12Parameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def v__afni_refacer_make_onebig_a12_execute(
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerMakeOnebigA12Outputs`).
     """
+    v__afni_refacer_make_onebig_a12_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA)
     params = execution.params(params)

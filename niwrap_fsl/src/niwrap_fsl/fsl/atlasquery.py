@@ -77,6 +77,41 @@ def atlasquery_params(
     return params
 
 
+def atlasquery_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AtlasqueryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dumpatlases_flag", False) is None:
+        raise StyxValidationError("`dumpatlases_flag` must not be None")
+    if not isinstance(params["dumpatlases_flag"], bool):
+        raise StyxValidationError(f'`dumpatlases_flag` has the wrong type: Received `{type(params.get("dumpatlases_flag", False))}` expected `bool`')
+    if params.get("atlas", None) is not None:
+        if not isinstance(params["atlas"], str):
+            raise StyxValidationError(f'`atlas` has the wrong type: Received `{type(params.get("atlas", None))}` expected `str | None`')
+    if params.get("coord", None) is not None:
+        if not isinstance(params["coord"], str):
+            raise StyxValidationError(f'`coord` has the wrong type: Received `{type(params.get("coord", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def atlasquery_cargs(
     params: AtlasqueryParameters,
     execution: Execution,
@@ -154,6 +189,7 @@ def atlasquery_execute(
     Returns:
         NamedTuple of outputs (described in `AtlasqueryOutputs`).
     """
+    atlasquery_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ATLASQUERY_METADATA)
     params = execution.params(params)

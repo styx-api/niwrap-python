@@ -70,6 +70,40 @@ def v_3d_aboverlap_params(
     return params
 
 
+def v_3d_aboverlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAboverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset_a", None) is None:
+        raise StyxValidationError("`dataset_a` must not be None")
+    if not isinstance(params["dataset_a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset_a` has the wrong type: Received `{type(params.get("dataset_a", None))}` expected `InputPathType`')
+    if params.get("dataset_b", None) is None:
+        raise StyxValidationError("`dataset_b` must not be None")
+    if not isinstance(params["dataset_b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset_b` has the wrong type: Received `{type(params.get("dataset_b", None))}` expected `InputPathType`')
+    if params.get("no_automask", False) is None:
+        raise StyxValidationError("`no_automask` must not be None")
+    if not isinstance(params["no_automask"], bool):
+        raise StyxValidationError(f'`no_automask` has the wrong type: Received `{type(params.get("no_automask", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v_3d_aboverlap_cargs(
     params: V3dAboverlapParameters,
     execution: Execution,
@@ -135,6 +169,7 @@ def v_3d_aboverlap_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAboverlapOutputs`).
     """
+    v_3d_aboverlap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ABOVERLAP_METADATA)
     params = execution.params(params)

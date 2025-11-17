@@ -64,6 +64,36 @@ def mris_annot_diff_params(
     return params
 
 
+def mris_annot_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisAnnotDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("annot1", None) is None:
+        raise StyxValidationError("`annot1` must not be None")
+    if not isinstance(params["annot1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`annot1` has the wrong type: Received `{type(params.get("annot1", None))}` expected `InputPathType`')
+    if params.get("annot2", None) is None:
+        raise StyxValidationError("`annot2` must not be None")
+    if not isinstance(params["annot2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`annot2` has the wrong type: Received `{type(params.get("annot2", None))}` expected `InputPathType`')
+    if params.get("diff_ctab", False) is None:
+        raise StyxValidationError("`diff_ctab` must not be None")
+    if not isinstance(params["diff_ctab"], bool):
+        raise StyxValidationError(f'`diff_ctab` has the wrong type: Received `{type(params.get("diff_ctab", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def mris_annot_diff_cargs(
     params: MrisAnnotDiffParameters,
     execution: Execution,
@@ -126,6 +156,7 @@ def mris_annot_diff_execute(
     Returns:
         NamedTuple of outputs (described in `MrisAnnotDiffOutputs`).
     """
+    mris_annot_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ANNOT_DIFF_METADATA)
     params = execution.params(params)

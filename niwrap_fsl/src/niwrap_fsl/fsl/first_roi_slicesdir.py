@@ -60,6 +60,28 @@ def first_roi_slicesdir_params(
     return params
 
 
+def first_roi_slicesdir_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FirstRoiSlicesdirParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_t1_images", None) is None:
+        raise StyxValidationError("`input_t1_images` must not be None")
+    if not isinstance(params["input_t1_images"], str):
+        raise StyxValidationError(f'`input_t1_images` has the wrong type: Received `{type(params.get("input_t1_images", None))}` expected `str`')
+    if params.get("input_label_images", None) is None:
+        raise StyxValidationError("`input_label_images` must not be None")
+    if not isinstance(params["input_label_images"], str):
+        raise StyxValidationError(f'`input_label_images` has the wrong type: Received `{type(params.get("input_label_images", None))}` expected `str`')
+
+
 def first_roi_slicesdir_cargs(
     params: FirstRoiSlicesdirParameters,
     execution: Execution,
@@ -120,6 +142,7 @@ def first_roi_slicesdir_execute(
     Returns:
         NamedTuple of outputs (described in `FirstRoiSlicesdirOutputs`).
     """
+    first_roi_slicesdir_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIRST_ROI_SLICESDIR_METADATA)
     params = execution.params(params)

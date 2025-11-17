@@ -106,6 +106,60 @@ def warp_tensor_image_multi_transform_params(
     return params
 
 
+def warp_tensor_image_multi_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WarpTensorImageMultiTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("reference_image", None) is not None:
+        if not isinstance(params["reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType | None`')
+    if params.get("tightest_bounding_box", False) is None:
+        raise StyxValidationError("`tightest_bounding_box` must not be None")
+    if not isinstance(params["tightest_bounding_box"], bool):
+        raise StyxValidationError(f'`tightest_bounding_box` has the wrong type: Received `{type(params.get("tightest_bounding_box", False))}` expected `bool`')
+    if params.get("reslice_by_header", False) is None:
+        raise StyxValidationError("`reslice_by_header` must not be None")
+    if not isinstance(params["reslice_by_header"], bool):
+        raise StyxValidationError(f'`reslice_by_header` has the wrong type: Received `{type(params.get("reslice_by_header", False))}` expected `bool`')
+    if params.get("use_nearest_neighbor", False) is None:
+        raise StyxValidationError("`use_nearest_neighbor` must not be None")
+    if not isinstance(params["use_nearest_neighbor"], bool):
+        raise StyxValidationError(f'`use_nearest_neighbor` has the wrong type: Received `{type(params.get("use_nearest_neighbor", False))}` expected `bool`')
+    if params.get("transforms", None) is None:
+        raise StyxValidationError("`transforms` must not be None")
+    if not isinstance(params["transforms"], list):
+        raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[str]`')
+    for e in params["transforms"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[str]`')
+    if params.get("ants_prefix", None) is not None:
+        if not isinstance(params["ants_prefix"], str):
+            raise StyxValidationError(f'`ants_prefix` has the wrong type: Received `{type(params.get("ants_prefix", None))}` expected `str | None`')
+    if params.get("ants_prefix_invert", None) is not None:
+        if not isinstance(params["ants_prefix_invert"], str):
+            raise StyxValidationError(f'`ants_prefix_invert` has the wrong type: Received `{type(params.get("ants_prefix_invert", None))}` expected `str | None`')
+
+
 def warp_tensor_image_multi_transform_cargs(
     params: WarpTensorImageMultiTransformParameters,
     execution: Execution,
@@ -191,6 +245,7 @@ def warp_tensor_image_multi_transform_execute(
     Returns:
         NamedTuple of outputs (described in `WarpTensorImageMultiTransformOutputs`).
     """
+    warp_tensor_image_multi_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA)
     params = execution.params(params)

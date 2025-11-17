@@ -76,6 +76,47 @@ def v__build_afni_xlib_params(
     return params
 
 
+def v__build_afni_xlib_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VBuildAfniXlibParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("afniX", False) is None:
+        raise StyxValidationError("`afniX` must not be None")
+    if not isinstance(params["afniX"], bool):
+        raise StyxValidationError(f'`afniX` has the wrong type: Received `{type(params.get("afniX", False))}` expected `bool`')
+    if params.get("localinstall", False) is None:
+        raise StyxValidationError("`localinstall` must not be None")
+    if not isinstance(params["localinstall"], bool):
+        raise StyxValidationError(f'`localinstall` has the wrong type: Received `{type(params.get("localinstall", False))}` expected `bool`')
+    if params.get("debug_symbols", False) is None:
+        raise StyxValidationError("`debug_symbols` must not be None")
+    if not isinstance(params["debug_symbols"], bool):
+        raise StyxValidationError(f'`debug_symbols` has the wrong type: Received `{type(params.get("debug_symbols", False))}` expected `bool`')
+    if params.get("lib32", False) is None:
+        raise StyxValidationError("`lib32` must not be None")
+    if not isinstance(params["lib32"], bool):
+        raise StyxValidationError(f'`lib32` has the wrong type: Received `{type(params.get("lib32", False))}` expected `bool`')
+    if params.get("lib64", False) is None:
+        raise StyxValidationError("`lib64` must not be None")
+    if not isinstance(params["lib64"], bool):
+        raise StyxValidationError(f'`lib64` has the wrong type: Received `{type(params.get("lib64", False))}` expected `bool`')
+    if params.get("packages", None) is None:
+        raise StyxValidationError("`packages` must not be None")
+    if not isinstance(params["packages"], list):
+        raise StyxValidationError(f'`packages` has the wrong type: Received `{type(params.get("packages", None))}` expected `list[str]`')
+    for e in params["packages"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`packages` has the wrong type: Received `{type(params.get("packages", None))}` expected `list[str]`')
+
+
 def v__build_afni_xlib_cargs(
     params: VBuildAfniXlibParameters,
     execution: Execution,
@@ -143,6 +184,7 @@ def v__build_afni_xlib_execute(
     Returns:
         NamedTuple of outputs (described in `VBuildAfniXlibOutputs`).
     """
+    v__build_afni_xlib_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__BUILD_AFNI_XLIB_METADATA)
     params = execution.params(params)

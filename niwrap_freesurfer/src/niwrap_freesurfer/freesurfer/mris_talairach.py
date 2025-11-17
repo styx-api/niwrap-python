@@ -49,6 +49,24 @@ def mris_talairach_params(
     return params
 
 
+def mris_talairach_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisTalairachParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+
+
 def mris_talairach_cargs(
     params: MrisTalairachParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def mris_talairach_execute(
     Returns:
         NamedTuple of outputs (described in `MrisTalairachOutputs`).
     """
+    mris_talairach_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_TALAIRACH_METADATA)
     params = execution.params(params)

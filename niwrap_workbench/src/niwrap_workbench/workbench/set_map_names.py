@@ -61,6 +61,28 @@ def set_map_names_map_params(
     return params
 
 
+def set_map_names_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SetMapNamesMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("index", None) is None:
+        raise StyxValidationError("`index` must not be None")
+    if not isinstance(params["index"], int):
+        raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", None))}` expected `int`')
+    if params.get("new-name", None) is None:
+        raise StyxValidationError("`new-name` must not be None")
+    if not isinstance(params["new-name"], str):
+        raise StyxValidationError(f'`new-name` has the wrong type: Received `{type(params.get("new-name", None))}` expected `str`')
+
+
 def set_map_names_map_cargs(
     params: SetMapNamesMapParameters,
     execution: Execution,
@@ -123,6 +145,35 @@ def set_map_names_params(
     if map_ is not None:
         params["map"] = map_
     return params
+
+
+def set_map_names_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SetMapNamesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("file", None) is not None:
+        if not isinstance(params["file"], str):
+            raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str | None`')
+    if params.get("map", None) is not None:
+        if not isinstance(params["map"], list):
+            raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `list[SetMapNamesMapParameters] | None`')
+        for e in params["map"]:
+            set_map_names_map_validate(e)
+    if params.get("data-file", None) is None:
+        raise StyxValidationError("`data-file` must not be None")
+    if not isinstance(params["data-file"], str):
+        raise StyxValidationError(f'`data-file` has the wrong type: Received `{type(params.get("data-file", None))}` expected `str`')
 
 
 def set_map_names_cargs(
@@ -190,6 +241,7 @@ def set_map_names_execute(
     Returns:
         NamedTuple of outputs (described in `SetMapNamesOutputs`).
     """
+    set_map_names_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SET_MAP_NAMES_METADATA)
     params = execution.params(params)

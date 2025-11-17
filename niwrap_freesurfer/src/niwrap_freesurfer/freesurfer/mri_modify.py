@@ -114,6 +114,88 @@ def mri_modify_params(
     return params
 
 
+def mri_modify_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriModifyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("x_ras", None) is None:
+        raise StyxValidationError("`x_ras` must not be None")
+    if not isinstance(params["x_ras"], list):
+        raise StyxValidationError(f'`x_ras` has the wrong type: Received `{type(params.get("x_ras", None))}` expected `list[float]`')
+    for e in params["x_ras"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`x_ras` has the wrong type: Received `{type(params.get("x_ras", None))}` expected `list[float]`')
+    if params.get("y_ras", None) is None:
+        raise StyxValidationError("`y_ras` must not be None")
+    if not isinstance(params["y_ras"], list):
+        raise StyxValidationError(f'`y_ras` has the wrong type: Received `{type(params.get("y_ras", None))}` expected `list[float]`')
+    for e in params["y_ras"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`y_ras` has the wrong type: Received `{type(params.get("y_ras", None))}` expected `list[float]`')
+    if params.get("z_ras", None) is None:
+        raise StyxValidationError("`z_ras` must not be None")
+    if not isinstance(params["z_ras"], list):
+        raise StyxValidationError(f'`z_ras` has the wrong type: Received `{type(params.get("z_ras", None))}` expected `list[float]`')
+    for e in params["z_ras"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`z_ras` has the wrong type: Received `{type(params.get("z_ras", None))}` expected `list[float]`')
+    if params.get("cras", None) is None:
+        raise StyxValidationError("`cras` must not be None")
+    if not isinstance(params["cras"], list):
+        raise StyxValidationError(f'`cras` has the wrong type: Received `{type(params.get("cras", None))}` expected `list[float]`')
+    for e in params["cras"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`cras` has the wrong type: Received `{type(params.get("cras", None))}` expected `list[float]`')
+    if params.get("x_size", None) is None:
+        raise StyxValidationError("`x_size` must not be None")
+    if not isinstance(params["x_size"], (float, int)):
+        raise StyxValidationError(f'`x_size` has the wrong type: Received `{type(params.get("x_size", None))}` expected `float`')
+    if params.get("y_size", None) is None:
+        raise StyxValidationError("`y_size` must not be None")
+    if not isinstance(params["y_size"], (float, int)):
+        raise StyxValidationError(f'`y_size` has the wrong type: Received `{type(params.get("y_size", None))}` expected `float`')
+    if params.get("z_size", None) is None:
+        raise StyxValidationError("`z_size` must not be None")
+    if not isinstance(params["z_size"], (float, int)):
+        raise StyxValidationError(f'`z_size` has the wrong type: Received `{type(params.get("z_size", None))}` expected `float`')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("te", None) is None:
+        raise StyxValidationError("`te` must not be None")
+    if not isinstance(params["te"], (float, int)):
+        raise StyxValidationError(f'`te` has the wrong type: Received `{type(params.get("te", None))}` expected `float`')
+    if params.get("ti", None) is None:
+        raise StyxValidationError("`ti` must not be None")
+    if not isinstance(params["ti"], (float, int)):
+        raise StyxValidationError(f'`ti` has the wrong type: Received `{type(params.get("ti", None))}` expected `float`')
+    if params.get("fa", None) is None:
+        raise StyxValidationError("`fa` must not be None")
+    if not isinstance(params["fa"], (float, int)):
+        raise StyxValidationError(f'`fa` has the wrong type: Received `{type(params.get("fa", None))}` expected `float`')
+    if params.get("xform", None) is None:
+        raise StyxValidationError("`xform` must not be None")
+    if not isinstance(params["xform"], str):
+        raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `str`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_modify_cargs(
     params: MriModifyParameters,
     execution: Execution,
@@ -220,6 +302,7 @@ def mri_modify_execute(
     Returns:
         NamedTuple of outputs (described in `MriModifyOutputs`).
     """
+    mri_modify_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MODIFY_METADATA)
     params = execution.params(params)

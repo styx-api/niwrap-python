@@ -51,6 +51,24 @@ def v__get_afni_id_params(
     return params
 
 
+def v__get_afni_id_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGetAfniIdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+
+
 def v__get_afni_id_cargs(
     params: VGetAfniIdParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def v__get_afni_id_execute(
     Returns:
         NamedTuple of outputs (described in `VGetAfniIdOutputs`).
     """
+    v__get_afni_id_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GET_AFNI_ID_METADATA)
     params = execution.params(params)

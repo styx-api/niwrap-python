@@ -80,6 +80,46 @@ def p2dsetstat_params(
     return params
 
 
+def p2dsetstat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `P2dsetstatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], str):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `str`')
+    if params.get("pvalue", None) is None:
+        raise StyxValidationError("`pvalue` must not be None")
+    if not isinstance(params["pvalue"], (float, int)):
+        raise StyxValidationError(f'`pvalue` has the wrong type: Received `{type(params.get("pvalue", None))}` expected `float`')
+    if 0 <= params["pvalue"] <= 1:
+        raise StyxValidationError("Parameter `pvalue` must be between 0 and 1 (inclusive)")
+    if params.get("bisided", False) is None:
+        raise StyxValidationError("`bisided` must not be None")
+    if not isinstance(params["bisided"], bool):
+        raise StyxValidationError(f'`bisided` has the wrong type: Received `{type(params.get("bisided", False))}` expected `bool`')
+    if params.get("twosided", False) is None:
+        raise StyxValidationError("`twosided` must not be None")
+    if not isinstance(params["twosided"], bool):
+        raise StyxValidationError(f'`twosided` has the wrong type: Received `{type(params.get("twosided", False))}` expected `bool`')
+    if params.get("onesided", False) is None:
+        raise StyxValidationError("`onesided` must not be None")
+    if not isinstance(params["onesided"], bool):
+        raise StyxValidationError(f'`onesided` has the wrong type: Received `{type(params.get("onesided", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def p2dsetstat_cargs(
     params: P2dsetstatParameters,
     execution: Execution,
@@ -154,6 +194,7 @@ def p2dsetstat_execute(
     Returns:
         NamedTuple of outputs (described in `P2dsetstatOutputs`).
     """
+    p2dsetstat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(P2DSETSTAT_METADATA)
     params = execution.params(params)

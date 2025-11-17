@@ -219,6 +219,153 @@ def tkmeditfv_params(
     return params
 
 
+def tkmeditfv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TkmeditfvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("mainvol", None) is None:
+        raise StyxValidationError("`mainvol` must not be None")
+    if not isinstance(params["mainvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mainvol` has the wrong type: Received `{type(params.get("mainvol", None))}` expected `InputPathType`')
+    if params.get("aux_volume", None) is not None:
+        if not isinstance(params["aux_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aux_volume` has the wrong type: Received `{type(params.get("aux_volume", None))}` expected `InputPathType | None`')
+    if params.get("seg_volume", None) is not None:
+        if not isinstance(params["seg_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg_volume` has the wrong type: Received `{type(params.get("seg_volume", None))}` expected `InputPathType | None`')
+    if params.get("overlay", None) is not None:
+        if not isinstance(params["overlay"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `InputPathType | None`')
+    if params.get("timecourse", None) is not None:
+        if not isinstance(params["timecourse"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`timecourse` has the wrong type: Received `{type(params.get("timecourse", None))}` expected `InputPathType | None`')
+    if params.get("overlay_registration", None) is not None:
+        if not isinstance(params["overlay_registration"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`overlay_registration` has the wrong type: Received `{type(params.get("overlay_registration", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], list):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[str] | None`')
+        for e in params["surface"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[str] | None`')
+    if params.get("extra_volumes", None) is not None:
+        if not isinstance(params["extra_volumes"], list):
+            raise StyxValidationError(f'`extra_volumes` has the wrong type: Received `{type(params.get("extra_volumes", None))}` expected `list[InputPathType] | None`')
+        for e in params["extra_volumes"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`extra_volumes` has the wrong type: Received `{type(params.get("extra_volumes", None))}` expected `list[InputPathType] | None`')
+    if params.get("crs_location", None) is not None:
+        if not isinstance(params["crs_location"], list):
+            raise StyxValidationError(f'`crs_location` has the wrong type: Received `{type(params.get("crs_location", None))}` expected `list[float] | None`')
+        if len(params["crs_location"]) == 3:
+            raise StyxValidationError("Parameter `crs_location` must contain exactly 3 elements")
+        for e in params["crs_location"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`crs_location` has the wrong type: Received `{type(params.get("crs_location", None))}` expected `list[float] | None`')
+    if params.get("zoom_level", None) is not None:
+        if not isinstance(params["zoom_level"], (float, int)):
+            raise StyxValidationError(f'`zoom_level` has the wrong type: Received `{type(params.get("zoom_level", None))}` expected `float | None`')
+    if params.get("additional_segments", None) is not None:
+        if not isinstance(params["additional_segments"], list):
+            raise StyxValidationError(f'`additional_segments` has the wrong type: Received `{type(params.get("additional_segments", None))}` expected `list[InputPathType] | None`')
+        for e in params["additional_segments"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`additional_segments` has the wrong type: Received `{type(params.get("additional_segments", None))}` expected `list[InputPathType] | None`')
+    if params.get("load_white", False) is None:
+        raise StyxValidationError("`load_white` must not be None")
+    if not isinstance(params["load_white"], bool):
+        raise StyxValidationError(f'`load_white` has the wrong type: Received `{type(params.get("load_white", False))}` expected `bool`')
+    if params.get("load_pial", False) is None:
+        raise StyxValidationError("`load_pial` must not be None")
+    if not isinstance(params["load_pial"], bool):
+        raise StyxValidationError(f'`load_pial` has the wrong type: Received `{type(params.get("load_pial", False))}` expected `bool`')
+    if params.get("load_orig", False) is None:
+        raise StyxValidationError("`load_orig` must not be None")
+    if not isinstance(params["load_orig"], bool):
+        raise StyxValidationError(f'`load_orig` has the wrong type: Received `{type(params.get("load_orig", False))}` expected `bool`')
+    if params.get("load_orig_nofix", False) is None:
+        raise StyxValidationError("`load_orig_nofix` must not be None")
+    if not isinstance(params["load_orig_nofix"], bool):
+        raise StyxValidationError(f'`load_orig_nofix` has the wrong type: Received `{type(params.get("load_orig_nofix", False))}` expected `bool`')
+    if params.get("load_smoothwm_nofix", False) is None:
+        raise StyxValidationError("`load_smoothwm_nofix` must not be None")
+    if not isinstance(params["load_smoothwm_nofix"], bool):
+        raise StyxValidationError(f'`load_smoothwm_nofix` has the wrong type: Received `{type(params.get("load_smoothwm_nofix", False))}` expected `bool`')
+    if params.get("load_white_preaparc", False) is None:
+        raise StyxValidationError("`load_white_preaparc` must not be None")
+    if not isinstance(params["load_white_preaparc"], bool):
+        raise StyxValidationError(f'`load_white_preaparc` has the wrong type: Received `{type(params.get("load_white_preaparc", False))}` expected `bool`')
+    if params.get("load_inflated", False) is None:
+        raise StyxValidationError("`load_inflated` must not be None")
+    if not isinstance(params["load_inflated"], bool):
+        raise StyxValidationError(f'`load_inflated` has the wrong type: Received `{type(params.get("load_inflated", False))}` expected `bool`')
+    if params.get("annot", None) is not None:
+        if not isinstance(params["annot"], str):
+            raise StyxValidationError(f'`annot` has the wrong type: Received `{type(params.get("annot", None))}` expected `str | None`')
+    if params.get("load_aparc", False) is None:
+        raise StyxValidationError("`load_aparc` must not be None")
+    if not isinstance(params["load_aparc"], bool):
+        raise StyxValidationError(f'`load_aparc` has the wrong type: Received `{type(params.get("load_aparc", False))}` expected `bool`')
+    if params.get("surfext", None) is not None:
+        if not isinstance(params["surfext"], str):
+            raise StyxValidationError(f'`surfext` has the wrong type: Received `{type(params.get("surfext", None))}` expected `str | None`')
+    if params.get("seg_outline", False) is None:
+        raise StyxValidationError("`seg_outline` must not be None")
+    if not isinstance(params["seg_outline"], bool):
+        raise StyxValidationError(f'`seg_outline` has the wrong type: Received `{type(params.get("seg_outline", False))}` expected `bool`')
+    if params.get("intensity_minmax", None) is not None:
+        if not isinstance(params["intensity_minmax"], list):
+            raise StyxValidationError(f'`intensity_minmax` has the wrong type: Received `{type(params.get("intensity_minmax", None))}` expected `list[float] | None`')
+        if len(params["intensity_minmax"]) == 2:
+            raise StyxValidationError("Parameter `intensity_minmax` must contain exactly 2 elements")
+        for e in params["intensity_minmax"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`intensity_minmax` has the wrong type: Received `{type(params.get("intensity_minmax", None))}` expected `list[float] | None`')
+    if params.get("load_defects", False) is None:
+        raise StyxValidationError("`load_defects` must not be None")
+    if not isinstance(params["load_defects"], bool):
+        raise StyxValidationError(f'`load_defects` has the wrong type: Received `{type(params.get("load_defects", False))}` expected `bool`')
+    if params.get("load_defect_pointset", False) is None:
+        raise StyxValidationError("`load_defect_pointset` must not be None")
+    if not isinstance(params["load_defect_pointset"], bool):
+        raise StyxValidationError(f'`load_defect_pointset` has the wrong type: Received `{type(params.get("load_defect_pointset", False))}` expected `bool`')
+    if params.get("trilin_interpolation", False) is None:
+        raise StyxValidationError("`trilin_interpolation` must not be None")
+    if not isinstance(params["trilin_interpolation"], bool):
+        raise StyxValidationError(f'`trilin_interpolation` has the wrong type: Received `{type(params.get("trilin_interpolation", False))}` expected `bool`')
+    if params.get("neurological_orientation", False) is None:
+        raise StyxValidationError("`neurological_orientation` must not be None")
+    if not isinstance(params["neurological_orientation"], bool):
+        raise StyxValidationError(f'`neurological_orientation` has the wrong type: Received `{type(params.get("neurological_orientation", False))}` expected `bool`')
+    if params.get("rotate_around_cursor", False) is None:
+        raise StyxValidationError("`rotate_around_cursor` must not be None")
+    if not isinstance(params["rotate_around_cursor"], bool):
+        raise StyxValidationError(f'`rotate_around_cursor` has the wrong type: Received `{type(params.get("rotate_around_cursor", False))}` expected `bool`')
+    if params.get("vgl_display", False) is None:
+        raise StyxValidationError("`vgl_display` must not be None")
+    if not isinstance(params["vgl_display"], bool):
+        raise StyxValidationError(f'`vgl_display` has the wrong type: Received `{type(params.get("vgl_display", False))}` expected `bool`')
+    if params.get("use_tkmedit", False) is None:
+        raise StyxValidationError("`use_tkmedit` must not be None")
+    if not isinstance(params["use_tkmedit"], bool):
+        raise StyxValidationError(f'`use_tkmedit` has the wrong type: Received `{type(params.get("use_tkmedit", False))}` expected `bool`')
+    if params.get("load_aparc_aseg", False) is None:
+        raise StyxValidationError("`load_aparc_aseg` must not be None")
+    if not isinstance(params["load_aparc_aseg"], bool):
+        raise StyxValidationError(f'`load_aparc_aseg` has the wrong type: Received `{type(params.get("load_aparc_aseg", False))}` expected `bool`')
+
+
 def tkmeditfv_cargs(
     params: TkmeditfvParameters,
     execution: Execution,
@@ -378,6 +525,7 @@ def tkmeditfv_execute(
     Returns:
         NamedTuple of outputs (described in `TkmeditfvOutputs`).
     """
+    tkmeditfv_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TKMEDITFV_METADATA)
     params = execution.params(params)

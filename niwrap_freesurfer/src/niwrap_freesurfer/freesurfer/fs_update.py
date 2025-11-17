@@ -66,6 +66,35 @@ def fs_update_params(
     return params
 
 
+def fs_update_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsUpdateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("update_path", None) is not None:
+        if not isinstance(params["update_path"], str):
+            raise StyxValidationError(f'`update_path` has the wrong type: Received `{type(params.get("update_path", None))}` expected `str | None`')
+    if params.get("help_short", False) is None:
+        raise StyxValidationError("`help_short` must not be None")
+    if not isinstance(params["help_short"], bool):
+        raise StyxValidationError(f'`help_short` has the wrong type: Received `{type(params.get("help_short", False))}` expected `bool`')
+    if params.get("help_medium", False) is None:
+        raise StyxValidationError("`help_medium` must not be None")
+    if not isinstance(params["help_medium"], bool):
+        raise StyxValidationError(f'`help_medium` has the wrong type: Received `{type(params.get("help_medium", False))}` expected `bool`')
+    if params.get("help_long", False) is None:
+        raise StyxValidationError("`help_long` must not be None")
+    if not isinstance(params["help_long"], bool):
+        raise StyxValidationError(f'`help_long` has the wrong type: Received `{type(params.get("help_long", False))}` expected `bool`')
+
+
 def fs_update_cargs(
     params: FsUpdateParameters,
     execution: Execution,
@@ -130,6 +159,7 @@ def fs_update_execute(
     Returns:
         NamedTuple of outputs (described in `FsUpdateOutputs`).
     """
+    fs_update_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_UPDATE_METADATA)
     params = execution.params(params)

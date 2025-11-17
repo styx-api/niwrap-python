@@ -65,6 +65,38 @@ def rmz_params(
     return params
 
 
+def rmz_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `RmzParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("hash_flag", None) is not None:
+        if not isinstance(params["hash_flag"], (float, int)):
+            raise StyxValidationError(f'`hash_flag` has the wrong type: Received `{type(params.get("hash_flag", None))}` expected `float | None`')
+    if params.get("keep_flag", False) is None:
+        raise StyxValidationError("`keep_flag` must not be None")
+    if not isinstance(params["keep_flag"], bool):
+        raise StyxValidationError(f'`keep_flag` has the wrong type: Received `{type(params.get("keep_flag", False))}` expected `bool`')
+    if params.get("filenames", None) is None:
+        raise StyxValidationError("`filenames` must not be None")
+    if not isinstance(params["filenames"], list):
+        raise StyxValidationError(f'`filenames` has the wrong type: Received `{type(params.get("filenames", None))}` expected `list[InputPathType]`')
+    for e in params["filenames"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`filenames` has the wrong type: Received `{type(params.get("filenames", None))}` expected `list[InputPathType]`')
+
+
 def rmz_cargs(
     params: RmzParameters,
     execution: Execution,
@@ -131,6 +163,7 @@ def rmz_execute(
     Returns:
         NamedTuple of outputs (described in `RmzOutputs`).
     """
+    rmz_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RMZ_METADATA)
     params = execution.params(params)

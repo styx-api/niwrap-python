@@ -258,6 +258,139 @@ def cluster_params(
     return params
 
 
+def cluster_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ClusterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("connectivity", None) is not None:
+        if not isinstance(params["connectivity"], int):
+            raise StyxValidationError(f'`connectivity` has the wrong type: Received `{type(params.get("connectivity", None))}` expected `int | None`')
+    if params.get("cope_file", None) is not None:
+        if not isinstance(params["cope_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cope_file` has the wrong type: Received `{type(params.get("cope_file", None))}` expected `InputPathType | None`')
+    if params.get("dlh", None) is not None:
+        if not isinstance(params["dlh"], (float, int)):
+            raise StyxValidationError(f'`dlh` has the wrong type: Received `{type(params.get("dlh", None))}` expected `float | None`')
+    if params.get("find_min", False) is None:
+        raise StyxValidationError("`find_min` must not be None")
+    if not isinstance(params["find_min"], bool):
+        raise StyxValidationError(f'`find_min` has the wrong type: Received `{type(params.get("find_min", False))}` expected `bool`')
+    if params.get("fractional", False) is None:
+        raise StyxValidationError("`fractional` must not be None")
+    if not isinstance(params["fractional"], bool):
+        raise StyxValidationError(f'`fractional` has the wrong type: Received `{type(params.get("fractional", False))}` expected `bool`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("minclustersize", False) is None:
+        raise StyxValidationError("`minclustersize` must not be None")
+    if not isinstance(params["minclustersize"], bool):
+        raise StyxValidationError(f'`minclustersize` has the wrong type: Received `{type(params.get("minclustersize", False))}` expected `bool`')
+    if params.get("no_table", False) is None:
+        raise StyxValidationError("`no_table` must not be None")
+    if not isinstance(params["no_table"], bool):
+        raise StyxValidationError(f'`no_table` has the wrong type: Received `{type(params.get("no_table", False))}` expected `bool`')
+    if params.get("num_maxima", None) is not None:
+        if not isinstance(params["num_maxima"], int):
+            raise StyxValidationError(f'`num_maxima` has the wrong type: Received `{type(params.get("num_maxima", None))}` expected `int | None`')
+    if params.get("out_index_file", None) is None:
+        raise StyxValidationError("`out_index_file` must not be None")
+    if not isinstance(params["out_index_file"], str):
+        raise StyxValidationError(f'`out_index_file` has the wrong type: Received `{type(params.get("out_index_file", None))}` expected `str`')
+    if params.get("out_index_file_2", None) is not None:
+        if not isinstance(params["out_index_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_index_file_2` has the wrong type: Received `{type(params.get("out_index_file_2", None))}` expected `InputPathType | None`')
+    if params.get("out_localmax_txt_file", None) is None:
+        raise StyxValidationError("`out_localmax_txt_file` must not be None")
+    if not isinstance(params["out_localmax_txt_file"], str):
+        raise StyxValidationError(f'`out_localmax_txt_file` has the wrong type: Received `{type(params.get("out_localmax_txt_file", None))}` expected `str`')
+    if params.get("out_localmax_txt_file_2", None) is not None:
+        if not isinstance(params["out_localmax_txt_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_localmax_txt_file_2` has the wrong type: Received `{type(params.get("out_localmax_txt_file_2", None))}` expected `InputPathType | None`')
+    if params.get("out_localmax_vol_file", None) is None:
+        raise StyxValidationError("`out_localmax_vol_file` must not be None")
+    if not isinstance(params["out_localmax_vol_file"], str):
+        raise StyxValidationError(f'`out_localmax_vol_file` has the wrong type: Received `{type(params.get("out_localmax_vol_file", None))}` expected `str`')
+    if params.get("out_localmax_vol_file_2", None) is not None:
+        if not isinstance(params["out_localmax_vol_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_localmax_vol_file_2` has the wrong type: Received `{type(params.get("out_localmax_vol_file_2", None))}` expected `InputPathType | None`')
+    if params.get("out_max_file", None) is None:
+        raise StyxValidationError("`out_max_file` must not be None")
+    if not isinstance(params["out_max_file"], str):
+        raise StyxValidationError(f'`out_max_file` has the wrong type: Received `{type(params.get("out_max_file", None))}` expected `str`')
+    if params.get("out_max_file_2", None) is not None:
+        if not isinstance(params["out_max_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_max_file_2` has the wrong type: Received `{type(params.get("out_max_file_2", None))}` expected `InputPathType | None`')
+    if params.get("out_mean_file", None) is None:
+        raise StyxValidationError("`out_mean_file` must not be None")
+    if not isinstance(params["out_mean_file"], str):
+        raise StyxValidationError(f'`out_mean_file` has the wrong type: Received `{type(params.get("out_mean_file", None))}` expected `str`')
+    if params.get("out_mean_file_2", None) is not None:
+        if not isinstance(params["out_mean_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_mean_file_2` has the wrong type: Received `{type(params.get("out_mean_file_2", None))}` expected `InputPathType | None`')
+    if params.get("out_pval_file", None) is None:
+        raise StyxValidationError("`out_pval_file` must not be None")
+    if not isinstance(params["out_pval_file"], str):
+        raise StyxValidationError(f'`out_pval_file` has the wrong type: Received `{type(params.get("out_pval_file", None))}` expected `str`')
+    if params.get("out_pval_file_2", None) is not None:
+        if not isinstance(params["out_pval_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_pval_file_2` has the wrong type: Received `{type(params.get("out_pval_file_2", None))}` expected `InputPathType | None`')
+    if params.get("out_size_file", None) is None:
+        raise StyxValidationError("`out_size_file` must not be None")
+    if not isinstance(params["out_size_file"], str):
+        raise StyxValidationError(f'`out_size_file` has the wrong type: Received `{type(params.get("out_size_file", None))}` expected `str`')
+    if params.get("out_size_file_2", None) is not None:
+        if not isinstance(params["out_size_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_size_file_2` has the wrong type: Received `{type(params.get("out_size_file_2", None))}` expected `InputPathType | None`')
+    if params.get("out_threshold_file", None) is None:
+        raise StyxValidationError("`out_threshold_file` must not be None")
+    if not isinstance(params["out_threshold_file"], str):
+        raise StyxValidationError(f'`out_threshold_file` has the wrong type: Received `{type(params.get("out_threshold_file", None))}` expected `str`')
+    if params.get("out_threshold_file_2", None) is not None:
+        if not isinstance(params["out_threshold_file_2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_threshold_file_2` has the wrong type: Received `{type(params.get("out_threshold_file_2", None))}` expected `InputPathType | None`')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None`')
+        if params["output_type"] not in ["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"NIFTI\", \"NIFTI_PAIR\", \"NIFTI_GZ\", \"NIFTI_PAIR_GZ\"]")
+    if params.get("peak_distance", None) is not None:
+        if not isinstance(params["peak_distance"], (float, int)):
+            raise StyxValidationError(f'`peak_distance` has the wrong type: Received `{type(params.get("peak_distance", None))}` expected `float | None`')
+    if params.get("pthreshold", None) is not None:
+        if not isinstance(params["pthreshold"], (float, int)):
+            raise StyxValidationError(f'`pthreshold` has the wrong type: Received `{type(params.get("pthreshold", None))}` expected `float | None`')
+    if params.get("std_space_file", None) is not None:
+        if not isinstance(params["std_space_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`std_space_file` has the wrong type: Received `{type(params.get("std_space_file", None))}` expected `InputPathType | None`')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
+    if params.get("use_mm", False) is None:
+        raise StyxValidationError("`use_mm` must not be None")
+    if not isinstance(params["use_mm"], bool):
+        raise StyxValidationError(f'`use_mm` has the wrong type: Received `{type(params.get("use_mm", False))}` expected `bool`')
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], int):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `int | None`')
+    if params.get("warpfield_file", None) is not None:
+        if not isinstance(params["warpfield_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warpfield_file` has the wrong type: Received `{type(params.get("warpfield_file", None))}` expected `InputPathType | None`')
+    if params.get("xfm_file", None) is not None:
+        if not isinstance(params["xfm_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xfm_file` has the wrong type: Received `{type(params.get("xfm_file", None))}` expected `InputPathType | None`')
+
+
 def cluster_cargs(
     params: ClusterParameters,
     execution: Execution,
@@ -380,6 +513,7 @@ def cluster_execute(
     Returns:
         NamedTuple of outputs (described in `ClusterOutputs`).
     """
+    cluster_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CLUSTER_METADATA)
     params = execution.params(params)

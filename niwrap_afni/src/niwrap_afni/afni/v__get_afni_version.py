@@ -52,6 +52,24 @@ def v__get_afni_version_params(
     return params
 
 
+def v__get_afni_version_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGetAfniVersionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("version", None) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], str):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", None))}` expected `str`')
+
+
 def v__get_afni_version_cargs(
     params: VGetAfniVersionParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def v__get_afni_version_execute(
     Returns:
         NamedTuple of outputs (described in `VGetAfniVersionOutputs`).
     """
+    v__get_afni_version_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GET_AFNI_VERSION_METADATA)
     params = execution.params(params)

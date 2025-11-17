@@ -87,6 +87,44 @@ def cutoffcalc_params(
     return params
 
 
+def cutoffcalc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CutoffcalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_design", None) is None:
+        raise StyxValidationError("`input_design` must not be None")
+    if not isinstance(params["input_design"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_design` has the wrong type: Received `{type(params.get("input_design", None))}` expected `InputPathType`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("lower_limit", None) is not None:
+        if not isinstance(params["lower_limit"], (float, int)):
+            raise StyxValidationError(f'`lower_limit` has the wrong type: Received `{type(params.get("lower_limit", None))}` expected `float | None`')
+    if params.get("example_sigma", None) is not None:
+        if not isinstance(params["example_sigma"], (float, int)):
+            raise StyxValidationError(f'`example_sigma` has the wrong type: Received `{type(params.get("example_sigma", None))}` expected `float | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def cutoffcalc_cargs(
     params: CutoffcalcParameters,
     execution: Execution,
@@ -158,6 +196,7 @@ def cutoffcalc_execute(
     Returns:
         NamedTuple of outputs (described in `CutoffcalcOutputs`).
     """
+    cutoffcalc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CUTOFFCALC_METADATA)
     params = execution.params(params)

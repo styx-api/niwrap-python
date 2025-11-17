@@ -60,6 +60,28 @@ def siena_flirt_params(
     return params
 
 
+def siena_flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SienaFlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input1_fileroot", None) is None:
+        raise StyxValidationError("`input1_fileroot` must not be None")
+    if not isinstance(params["input1_fileroot"], str):
+        raise StyxValidationError(f'`input1_fileroot` has the wrong type: Received `{type(params.get("input1_fileroot", None))}` expected `str`')
+    if params.get("input2_fileroot", None) is None:
+        raise StyxValidationError("`input2_fileroot` must not be None")
+    if not isinstance(params["input2_fileroot"], str):
+        raise StyxValidationError(f'`input2_fileroot` has the wrong type: Received `{type(params.get("input2_fileroot", None))}` expected `str`')
+
+
 def siena_flirt_cargs(
     params: SienaFlirtParameters,
     execution: Execution,
@@ -120,6 +142,7 @@ def siena_flirt_execute(
     Returns:
         NamedTuple of outputs (described in `SienaFlirtOutputs`).
     """
+    siena_flirt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIENA_FLIRT_METADATA)
     params = execution.params(params)

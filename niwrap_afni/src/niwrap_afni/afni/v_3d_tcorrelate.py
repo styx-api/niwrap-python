@@ -150,6 +150,82 @@ def v_3d_tcorrelate_params(
     return params
 
 
+def v_3d_tcorrelate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTcorrelateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xset", None) is None:
+        raise StyxValidationError("`xset` must not be None")
+    if not isinstance(params["xset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xset` has the wrong type: Received `{type(params.get("xset", None))}` expected `InputPathType`')
+    if params.get("yset", None) is None:
+        raise StyxValidationError("`yset` must not be None")
+    if not isinstance(params["yset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`yset` has the wrong type: Received `{type(params.get("yset", None))}` expected `InputPathType`')
+    if params.get("pearson", False) is None:
+        raise StyxValidationError("`pearson` must not be None")
+    if not isinstance(params["pearson"], bool):
+        raise StyxValidationError(f'`pearson` has the wrong type: Received `{type(params.get("pearson", False))}` expected `bool`')
+    if params.get("spearman", False) is None:
+        raise StyxValidationError("`spearman` must not be None")
+    if not isinstance(params["spearman"], bool):
+        raise StyxValidationError(f'`spearman` has the wrong type: Received `{type(params.get("spearman", False))}` expected `bool`')
+    if params.get("quadrant", False) is None:
+        raise StyxValidationError("`quadrant` must not be None")
+    if not isinstance(params["quadrant"], bool):
+        raise StyxValidationError(f'`quadrant` has the wrong type: Received `{type(params.get("quadrant", False))}` expected `bool`')
+    if params.get("ktaub", False) is None:
+        raise StyxValidationError("`ktaub` must not be None")
+    if not isinstance(params["ktaub"], bool):
+        raise StyxValidationError(f'`ktaub` has the wrong type: Received `{type(params.get("ktaub", False))}` expected `bool`')
+    if params.get("covariance", False) is None:
+        raise StyxValidationError("`covariance` must not be None")
+    if not isinstance(params["covariance"], bool):
+        raise StyxValidationError(f'`covariance` has the wrong type: Received `{type(params.get("covariance", False))}` expected `bool`')
+    if params.get("partial", None) is not None:
+        if not isinstance(params["partial"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`partial` has the wrong type: Received `{type(params.get("partial", None))}` expected `InputPathType | None`')
+    if params.get("ycoef", False) is None:
+        raise StyxValidationError("`ycoef` must not be None")
+    if not isinstance(params["ycoef"], bool):
+        raise StyxValidationError(f'`ycoef` has the wrong type: Received `{type(params.get("ycoef", False))}` expected `bool`')
+    if params.get("fisher", False) is None:
+        raise StyxValidationError("`fisher` must not be None")
+    if not isinstance(params["fisher"], bool):
+        raise StyxValidationError(f'`fisher` has the wrong type: Received `{type(params.get("fisher", False))}` expected `bool`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], int):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `int | None`')
+        if -1 <= params["polort"] <= 9:
+            raise StyxValidationError("Parameter `polort` must be between -1 and 9 (inclusive)")
+    if params.get("ort", None) is not None:
+        if not isinstance(params["ort"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ort` has the wrong type: Received `{type(params.get("ort", None))}` expected `InputPathType | None`')
+    if params.get("autoclip", False) is None:
+        raise StyxValidationError("`autoclip` must not be None")
+    if not isinstance(params["autoclip"], bool):
+        raise StyxValidationError(f'`autoclip` has the wrong type: Received `{type(params.get("autoclip", False))}` expected `bool`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("zcensor", False) is None:
+        raise StyxValidationError("`zcensor` must not be None")
+    if not isinstance(params["zcensor"], bool):
+        raise StyxValidationError(f'`zcensor` has the wrong type: Received `{type(params.get("zcensor", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3d_tcorrelate_cargs(
     params: V3dTcorrelateParameters,
     execution: Execution,
@@ -250,6 +326,7 @@ def v_3d_tcorrelate_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTcorrelateOutputs`).
     """
+    v_3d_tcorrelate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TCORRELATE_METADATA)
     params = execution.params(params)

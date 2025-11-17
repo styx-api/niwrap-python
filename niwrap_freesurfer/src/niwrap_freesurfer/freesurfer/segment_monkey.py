@@ -49,6 +49,29 @@ def segment_monkey_params(
     return params
 
 
+def segment_monkey_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentMonkeyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("control_points", None) is None:
+        raise StyxValidationError("`control_points` must not be None")
+    if not isinstance(params["control_points"], list):
+        raise StyxValidationError(f'`control_points` has the wrong type: Received `{type(params.get("control_points", None))}` expected `list[str]`')
+    if len(params["control_points"]) >= 1:
+        raise StyxValidationError("Parameter `control_points` must contain at least 1 element")
+    for e in params["control_points"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`control_points` has the wrong type: Received `{type(params.get("control_points", None))}` expected `list[str]`')
+
+
 def segment_monkey_cargs(
     params: SegmentMonkeyParameters,
     execution: Execution,
@@ -106,6 +129,7 @@ def segment_monkey_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentMonkeyOutputs`).
     """
+    segment_monkey_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_MONKEY_METADATA)
     params = execution.params(params)

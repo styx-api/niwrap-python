@@ -59,6 +59,32 @@ def dmri_violin_plots_params(
     return params
 
 
+def dmri_violin_plots_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriViolinPlotsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_directory", None) is None:
+        raise StyxValidationError("`input_directory` must not be None")
+    if not isinstance(params["input_directory"], str):
+        raise StyxValidationError(f'`input_directory` has the wrong type: Received `{type(params.get("input_directory", None))}` expected `str`')
+    if params.get("labels", None) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `InputPathType`')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+
+
 def dmri_violin_plots_cargs(
     params: DmriViolinPlotsParameters,
     execution: Execution,
@@ -127,6 +153,7 @@ def dmri_violin_plots_execute(
     Returns:
         NamedTuple of outputs (described in `DmriViolinPlotsOutputs`).
     """
+    dmri_violin_plots_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_VIOLIN_PLOTS_METADATA)
     params = execution.params(params)

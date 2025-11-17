@@ -69,6 +69,38 @@ def mri_xvolavg_params(
     return params
 
 
+def mri_xvolavg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriXvolavgParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volumes", None) is None:
+        raise StyxValidationError("`input_volumes` must not be None")
+    if not isinstance(params["input_volumes"], list):
+        raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+    for e in params["input_volumes"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+    if params.get("vol_type", None) is None:
+        raise StyxValidationError("`vol_type` must not be None")
+    if not isinstance(params["vol_type"], str):
+        raise StyxValidationError(f'`vol_type` has the wrong type: Received `{type(params.get("vol_type", None))}` expected `str`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `str | None`')
+
+
 def mri_xvolavg_cargs(
     params: MriXvolavgParameters,
     execution: Execution,
@@ -143,6 +175,7 @@ def mri_xvolavg_execute(
     Returns:
         NamedTuple of outputs (described in `MriXvolavgOutputs`).
     """
+    mri_xvolavg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_XVOLAVG_METADATA)
     params = execution.params(params)

@@ -69,6 +69,36 @@ def fs_lib_check_params(
     return params
 
 
+def fs_lib_check_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsLibCheckParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_ldconfig", False) is None:
+        raise StyxValidationError("`use_ldconfig` must not be None")
+    if not isinstance(params["use_ldconfig"], bool):
+        raise StyxValidationError(f'`use_ldconfig` has the wrong type: Received `{type(params.get("use_ldconfig", False))}` expected `bool`')
+    if params.get("use_rpm", False) is None:
+        raise StyxValidationError("`use_rpm` must not be None")
+    if not isinstance(params["use_rpm"], bool):
+        raise StyxValidationError(f'`use_rpm` has the wrong type: Received `{type(params.get("use_rpm", False))}` expected `bool`')
+    if params.get("show_help", False) is None:
+        raise StyxValidationError("`show_help` must not be None")
+    if not isinstance(params["show_help"], bool):
+        raise StyxValidationError(f'`show_help` has the wrong type: Received `{type(params.get("show_help", False))}` expected `bool`')
+    if params.get("show_version", False) is None:
+        raise StyxValidationError("`show_version` must not be None")
+    if not isinstance(params["show_version"], bool):
+        raise StyxValidationError(f'`show_version` has the wrong type: Received `{type(params.get("show_version", False))}` expected `bool`')
+
+
 def fs_lib_check_cargs(
     params: FsLibCheckParameters,
     execution: Execution,
@@ -134,6 +164,7 @@ def fs_lib_check_execute(
     Returns:
         NamedTuple of outputs (described in `FsLibCheckOutputs`).
     """
+    fs_lib_check_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_LIB_CHECK_METADATA)
     params = execution.params(params)

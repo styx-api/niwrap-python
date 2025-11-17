@@ -81,6 +81,42 @@ def cifti_cross_correlation_params(
     return params
 
 
+def cifti_cross_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCrossCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("weight-file", None) is not None:
+        if not isinstance(params["weight-file"], str):
+            raise StyxValidationError(f'`weight-file` has the wrong type: Received `{type(params.get("weight-file", None))}` expected `str | None`')
+    if params.get("fisher-z", False) is None:
+        raise StyxValidationError("`fisher-z` must not be None")
+    if not isinstance(params["fisher-z"], bool):
+        raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("cifti-a", None) is None:
+        raise StyxValidationError("`cifti-a` must not be None")
+    if not isinstance(params["cifti-a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-a` has the wrong type: Received `{type(params.get("cifti-a", None))}` expected `InputPathType`')
+    if params.get("cifti-b", None) is None:
+        raise StyxValidationError("`cifti-b` must not be None")
+    if not isinstance(params["cifti-b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-b` has the wrong type: Received `{type(params.get("cifti-b", None))}` expected `InputPathType`')
+
+
 def cifti_cross_correlation_cargs(
     params: CiftiCrossCorrelationParameters,
     execution: Execution,
@@ -153,6 +189,7 @@ def cifti_cross_correlation_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiCrossCorrelationOutputs`).
     """
+    cifti_cross_correlation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CROSS_CORRELATION_METADATA)
     params = execution.params(params)

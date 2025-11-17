@@ -82,6 +82,47 @@ def dmri_group_params(
     return params
 
 
+def dmri_group_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriGroupParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_list", None) is None:
+        raise StyxValidationError("`input_list` must not be None")
+    if not isinstance(params["input_list"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_list` has the wrong type: Received `{type(params.get("input_list", None))}` expected `InputPathType`')
+    if params.get("reference_volume", None) is None:
+        raise StyxValidationError("`reference_volume` must not be None")
+    if not isinstance(params["reference_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_volume` has the wrong type: Received `{type(params.get("reference_volume", None))}` expected `InputPathType`')
+    if params.get("output_base", None) is None:
+        raise StyxValidationError("`output_base` must not be None")
+    if not isinstance(params["output_base"], str):
+        raise StyxValidationError(f'`output_base` has the wrong type: Received `{type(params.get("output_base", None))}` expected `str`')
+    if params.get("no_interpolation", False) is None:
+        raise StyxValidationError("`no_interpolation` must not be None")
+    if not isinstance(params["no_interpolation"], bool):
+        raise StyxValidationError(f'`no_interpolation` has the wrong type: Received `{type(params.get("no_interpolation", False))}` expected `bool`')
+    if params.get("sections_num", None) is not None:
+        if not isinstance(params["sections_num"], (float, int)):
+            raise StyxValidationError(f'`sections_num` has the wrong type: Received `{type(params.get("sections_num", None))}` expected `float | None`')
+    if params.get("debug_mode", False) is None:
+        raise StyxValidationError("`debug_mode` must not be None")
+    if not isinstance(params["debug_mode"], bool):
+        raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", False))}` expected `bool`')
+    if params.get("check_options", False) is None:
+        raise StyxValidationError("`check_options` must not be None")
+    if not isinstance(params["check_options"], bool):
+        raise StyxValidationError(f'`check_options` has the wrong type: Received `{type(params.get("check_options", False))}` expected `bool`')
+
+
 def dmri_group_cargs(
     params: DmriGroupParameters,
     execution: Execution,
@@ -161,6 +202,7 @@ def dmri_group_execute(
     Returns:
         NamedTuple of outputs (described in `DmriGroupOutputs`).
     """
+    dmri_group_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_GROUP_METADATA)
     params = execution.params(params)

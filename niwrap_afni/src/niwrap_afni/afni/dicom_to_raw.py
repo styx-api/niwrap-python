@@ -51,6 +51,24 @@ def dicom_to_raw_params(
     return params
 
 
+def dicom_to_raw_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DicomToRawParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dicom", None) is None:
+        raise StyxValidationError("`input_dicom` must not be None")
+    if not isinstance(params["input_dicom"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dicom` has the wrong type: Received `{type(params.get("input_dicom", None))}` expected `InputPathType`')
+
+
 def dicom_to_raw_cargs(
     params: DicomToRawParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def dicom_to_raw_execute(
     Returns:
         NamedTuple of outputs (described in `DicomToRawOutputs`).
     """
+    dicom_to_raw_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DICOM_TO_RAW_METADATA)
     params = execution.params(params)

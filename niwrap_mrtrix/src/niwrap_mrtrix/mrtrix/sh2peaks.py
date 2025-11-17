@@ -103,6 +103,28 @@ def sh2peaks_direction_params(
     return params
 
 
+def sh2peaks_direction_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Sh2peaksDirectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("phi", None) is None:
+        raise StyxValidationError("`phi` must not be None")
+    if not isinstance(params["phi"], (float, int)):
+        raise StyxValidationError(f'`phi` has the wrong type: Received `{type(params.get("phi", None))}` expected `float`')
+    if params.get("theta", None) is None:
+        raise StyxValidationError("`theta` must not be None")
+    if not isinstance(params["theta"], (float, int)):
+        raise StyxValidationError(f'`theta` has the wrong type: Received `{type(params.get("theta", None))}` expected `float`')
+
+
 def sh2peaks_direction_cargs(
     params: Sh2peaksDirectionParameters,
     execution: Execution,
@@ -142,6 +164,28 @@ def sh2peaks_config_params(
         "value": value,
     }
     return params
+
+
+def sh2peaks_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Sh2peaksConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def sh2peaks_config_cargs(
@@ -260,6 +304,84 @@ def sh2peaks_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def sh2peaks_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Sh2peaksParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("num", None) is not None:
+        if not isinstance(params["num"], int):
+            raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `int | None`')
+    if params.get("direction", None) is not None:
+        if not isinstance(params["direction"], list):
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `list[Sh2peaksDirectionParameters] | None`')
+        for e in params["direction"]:
+            sh2peaks_direction_validate(e)
+    if params.get("peaks", None) is not None:
+        if not isinstance(params["peaks"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`peaks` has the wrong type: Received `{type(params.get("peaks", None))}` expected `InputPathType | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("seeds", None) is not None:
+        if not isinstance(params["seeds"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seeds` has the wrong type: Received `{type(params.get("seeds", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("fast", False) is None:
+        raise StyxValidationError("`fast` must not be None")
+    if not isinstance(params["fast"], bool):
+        raise StyxValidationError(f'`fast` has the wrong type: Received `{type(params.get("fast", False))}` expected `bool`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Sh2peaksConfigParameters] | None`')
+        for e in params["config"]:
+            sh2peaks_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("SH", None) is None:
+        raise StyxValidationError("`SH` must not be None")
+    if not isinstance(params["SH"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`SH` has the wrong type: Received `{type(params.get("SH", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def sh2peaks_cargs(
@@ -383,6 +505,7 @@ def sh2peaks_execute(
     Returns:
         NamedTuple of outputs (described in `Sh2peaksOutputs`).
     """
+    sh2peaks_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SH2PEAKS_METADATA)
     params = execution.params(params)

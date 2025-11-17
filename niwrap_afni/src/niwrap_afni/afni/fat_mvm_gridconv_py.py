@@ -62,6 +62,26 @@ def fat_mvm_gridconv_py_params(
     return params
 
 
+def fat_mvm_gridconv_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatMvmGridconvPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matrix_files", None) is not None:
+        if not isinstance(params["matrix_files"], str):
+            raise StyxValidationError(f'`matrix_files` has the wrong type: Received `{type(params.get("matrix_files", None))}` expected `str | None`')
+    if params.get("list_file", None) is not None:
+        if not isinstance(params["list_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`list_file` has the wrong type: Received `{type(params.get("list_file", None))}` expected `InputPathType | None`')
+
+
 def fat_mvm_gridconv_py_cargs(
     params: FatMvmGridconvPyParameters,
     execution: Execution,
@@ -128,6 +148,7 @@ def fat_mvm_gridconv_py_execute(
     Returns:
         NamedTuple of outputs (described in `FatMvmGridconvPyOutputs`).
     """
+    fat_mvm_gridconv_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_MVM_GRIDCONV_PY_METADATA)
     params = execution.params(params)

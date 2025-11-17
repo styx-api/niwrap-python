@@ -78,6 +78,44 @@ def v__skull_strip_touch_up_params(
     return params
 
 
+def v__skull_strip_touch_up_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSkullStripTouchUpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("brain_dataset", None) is None:
+        raise StyxValidationError("`brain_dataset` must not be None")
+    if not isinstance(params["brain_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain_dataset` has the wrong type: Received `{type(params.get("brain_dataset", None))}` expected `InputPathType`')
+    if params.get("head_dataset", None) is None:
+        raise StyxValidationError("`head_dataset` must not be None")
+    if not isinstance(params["head_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`head_dataset` has the wrong type: Received `{type(params.get("head_dataset", None))}` expected `InputPathType`')
+    if params.get("mask_out", False) is None:
+        raise StyxValidationError("`mask_out` must not be None")
+    if not isinstance(params["mask_out"], bool):
+        raise StyxValidationError(f'`mask_out` has the wrong type: Received `{type(params.get("mask_out", False))}` expected `bool`')
+    if params.get("orig_dim", False) is None:
+        raise StyxValidationError("`orig_dim` must not be None")
+    if not isinstance(params["orig_dim"], bool):
+        raise StyxValidationError(f'`orig_dim` has the wrong type: Received `{type(params.get("orig_dim", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__skull_strip_touch_up_cargs(
     params: VSkullStripTouchUpParameters,
     execution: Execution,
@@ -155,6 +193,7 @@ def v__skull_strip_touch_up_execute(
     Returns:
         NamedTuple of outputs (described in `VSkullStripTouchUpOutputs`).
     """
+    v__skull_strip_touch_up_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SKULL_STRIP_TOUCH_UP_METADATA)
     params = execution.params(params)

@@ -76,6 +76,41 @@ def v_3d_ball_match_params(
     return params
 
 
+def v_3d_ball_match_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dBallMatchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+    if params.get("dataset_option", None) is not None:
+        if not isinstance(params["dataset_option"], str):
+            raise StyxValidationError(f'`dataset_option` has the wrong type: Received `{type(params.get("dataset_option", None))}` expected `str | None`')
+    if params.get("ball_radius", None) is not None:
+        if not isinstance(params["ball_radius"], (float, int)):
+            raise StyxValidationError(f'`ball_radius` has the wrong type: Received `{type(params.get("ball_radius", None))}` expected `float | None`')
+    if params.get("spheroid_axes", None) is not None:
+        if not isinstance(params["spheroid_axes"], list):
+            raise StyxValidationError(f'`spheroid_axes` has the wrong type: Received `{type(params.get("spheroid_axes", None))}` expected `list[float] | None`')
+        if len(params["spheroid_axes"]) == 2:
+            raise StyxValidationError("Parameter `spheroid_axes` must contain exactly 2 elements")
+        for e in params["spheroid_axes"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`spheroid_axes` has the wrong type: Received `{type(params.get("spheroid_axes", None))}` expected `list[float] | None`')
+
+
 def v_3d_ball_match_cargs(
     params: V3dBallMatchParameters,
     execution: Execution,
@@ -153,6 +188,7 @@ def v_3d_ball_match_execute(
     Returns:
         NamedTuple of outputs (described in `V3dBallMatchOutputs`).
     """
+    v_3d_ball_match_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_BALL_MATCH_METADATA)
     params = execution.params(params)

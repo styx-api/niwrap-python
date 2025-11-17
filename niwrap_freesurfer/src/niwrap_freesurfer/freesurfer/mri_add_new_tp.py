@@ -54,6 +54,28 @@ def mri_add_new_tp_params(
     return params
 
 
+def mri_add_new_tp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriAddNewTpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_id", None) is None:
+        raise StyxValidationError("`base_id` must not be None")
+    if not isinstance(params["base_id"], str):
+        raise StyxValidationError(f'`base_id` has the wrong type: Received `{type(params.get("base_id", None))}` expected `str`')
+    if params.get("newtp_id", None) is None:
+        raise StyxValidationError("`newtp_id` must not be None")
+    if not isinstance(params["newtp_id"], str):
+        raise StyxValidationError(f'`newtp_id` has the wrong type: Received `{type(params.get("newtp_id", None))}` expected `str`')
+
+
 def mri_add_new_tp_cargs(
     params: MriAddNewTpParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def mri_add_new_tp_execute(
     Returns:
         NamedTuple of outputs (described in `MriAddNewTpOutputs`).
     """
+    mri_add_new_tp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_ADD_NEW_TP_METADATA)
     params = execution.params(params)

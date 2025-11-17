@@ -84,6 +84,48 @@ def convert_transform_file_params(
     return params
 
 
+def convert_transform_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertTransformFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensions", None) is None:
+        raise StyxValidationError("`dimensions` must not be None")
+    if not isinstance(params["dimensions"], int):
+        raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `int`')
+    if params.get("input_transform_file", None) is None:
+        raise StyxValidationError("`input_transform_file` must not be None")
+    if not isinstance(params["input_transform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_transform_file` has the wrong type: Received `{type(params.get("input_transform_file", None))}` expected `InputPathType`')
+    if params.get("output_transform_file", None) is None:
+        raise StyxValidationError("`output_transform_file` must not be None")
+    if not isinstance(params["output_transform_file"], str):
+        raise StyxValidationError(f'`output_transform_file` has the wrong type: Received `{type(params.get("output_transform_file", None))}` expected `str`')
+    if params.get("matrix", False) is None:
+        raise StyxValidationError("`matrix` must not be None")
+    if not isinstance(params["matrix"], bool):
+        raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", False))}` expected `bool`')
+    if params.get("homogeneous_matrix", False) is None:
+        raise StyxValidationError("`homogeneous_matrix` must not be None")
+    if not isinstance(params["homogeneous_matrix"], bool):
+        raise StyxValidationError(f'`homogeneous_matrix` has the wrong type: Received `{type(params.get("homogeneous_matrix", False))}` expected `bool`')
+    if params.get("RAS", False) is None:
+        raise StyxValidationError("`RAS` must not be None")
+    if not isinstance(params["RAS"], bool):
+        raise StyxValidationError(f'`RAS` has the wrong type: Received `{type(params.get("RAS", False))}` expected `bool`')
+    if params.get("convert_to_affine_type", False) is None:
+        raise StyxValidationError("`convert_to_affine_type` must not be None")
+    if not isinstance(params["convert_to_affine_type"], bool):
+        raise StyxValidationError(f'`convert_to_affine_type` has the wrong type: Received `{type(params.get("convert_to_affine_type", False))}` expected `bool`')
+
+
 def convert_transform_file_cargs(
     params: ConvertTransformFileParameters,
     execution: Execution,
@@ -154,6 +196,7 @@ def convert_transform_file_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertTransformFileOutputs`).
     """
+    convert_transform_file_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_TRANSFORM_FILE_METADATA)
     params = execution.params(params)

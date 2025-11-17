@@ -50,6 +50,24 @@ def fs_install_mcr_params(
     return params
 
 
+def fs_install_mcr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsInstallMcrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mcr_version", None) is None:
+        raise StyxValidationError("`mcr_version` must not be None")
+    if not isinstance(params["mcr_version"], str):
+        raise StyxValidationError(f'`mcr_version` has the wrong type: Received `{type(params.get("mcr_version", None))}` expected `str`')
+
+
 def fs_install_mcr_cargs(
     params: FsInstallMcrParameters,
     execution: Execution,
@@ -107,6 +125,7 @@ def fs_install_mcr_execute(
     Returns:
         NamedTuple of outputs (described in `FsInstallMcrOutputs`).
     """
+    fs_install_mcr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_INSTALL_MCR_METADATA)
     params = execution.params(params)

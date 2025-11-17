@@ -71,6 +71,39 @@ def dcmdir_info_mgh_params(
     return params
 
 
+def dcmdir_info_mgh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DcmdirInfoMghParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dicomdir", None) is None:
+        raise StyxValidationError("`dicomdir` must not be None")
+    if not isinstance(params["dicomdir"], str):
+        raise StyxValidationError(f'`dicomdir` has the wrong type: Received `{type(params.get("dicomdir", None))}` expected `str`')
+    if params.get("unpackdir", None) is not None:
+        if not isinstance(params["unpackdir"], str):
+            raise StyxValidationError(f'`unpackdir` has the wrong type: Received `{type(params.get("unpackdir", None))}` expected `str | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("nopre", False) is None:
+        raise StyxValidationError("`nopre` must not be None")
+    if not isinstance(params["nopre"], bool):
+        raise StyxValidationError(f'`nopre` has the wrong type: Received `{type(params.get("nopre", False))}` expected `bool`')
+
+
 def dcmdir_info_mgh_cargs(
     params: DcmdirInfoMghParameters,
     execution: Execution,
@@ -139,6 +172,7 @@ def dcmdir_info_mgh_execute(
     Returns:
         NamedTuple of outputs (described in `DcmdirInfoMghOutputs`).
     """
+    dcmdir_info_mgh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DCMDIR_INFO_MGH_METADATA)
     params = execution.params(params)

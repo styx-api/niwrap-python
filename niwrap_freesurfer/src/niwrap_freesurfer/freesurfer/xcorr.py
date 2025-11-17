@@ -80,6 +80,42 @@ def xcorr_params(
     return params
 
 
+def xcorr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XcorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input1", None) is None:
+        raise StyxValidationError("`input1` must not be None")
+    if not isinstance(params["input1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input1` has the wrong type: Received `{type(params.get("input1", None))}` expected `InputPathType`')
+    if params.get("input2", None) is None:
+        raise StyxValidationError("`input2` must not be None")
+    if not isinstance(params["input2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input2` has the wrong type: Received `{type(params.get("input2", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("tmp_dir", None) is not None:
+        if not isinstance(params["tmp_dir"], str):
+            raise StyxValidationError(f'`tmp_dir` has the wrong type: Received `{type(params.get("tmp_dir", None))}` expected `str | None`')
+    if params.get("no_cleanup", False) is None:
+        raise StyxValidationError("`no_cleanup` must not be None")
+    if not isinstance(params["no_cleanup"], bool):
+        raise StyxValidationError(f'`no_cleanup` has the wrong type: Received `{type(params.get("no_cleanup", False))}` expected `bool`')
+
+
 def xcorr_cargs(
     params: XcorrParameters,
     execution: Execution,
@@ -162,6 +198,7 @@ def xcorr_execute(
     Returns:
         NamedTuple of outputs (described in `XcorrOutputs`).
     """
+    xcorr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XCORR_METADATA)
     params = execution.params(params)

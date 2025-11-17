@@ -60,6 +60,32 @@ def volume_all_labels_to_rois_params(
     return params
 
 
+def volume_all_labels_to_rois_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeAllLabelsToRoisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+    if params.get("map", None) is None:
+        raise StyxValidationError("`map` must not be None")
+    if not isinstance(params["map"], str):
+        raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `str`')
+
+
 def volume_all_labels_to_rois_cargs(
     params: VolumeAllLabelsToRoisParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def volume_all_labels_to_rois_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeAllLabelsToRoisOutputs`).
     """
+    volume_all_labels_to_rois_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_ALL_LABELS_TO_ROIS_METADATA)
     params = execution.params(params)

@@ -116,6 +116,65 @@ def samseg2recon_params(
     return params
 
 
+def samseg2recon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Samseg2reconParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("samseg_dir", None) is not None:
+        if not isinstance(params["samseg_dir"], str):
+            raise StyxValidationError(f'`samseg_dir` has the wrong type: Received `{type(params.get("samseg_dir", None))}` expected `str | None`')
+    if params.get("no_cc", False) is None:
+        raise StyxValidationError("`no_cc` must not be None")
+    if not isinstance(params["no_cc"], bool):
+        raise StyxValidationError(f'`no_cc` has the wrong type: Received `{type(params.get("no_cc", False))}` expected `bool`')
+    if params.get("fill", False) is None:
+        raise StyxValidationError("`fill` must not be None")
+    if not isinstance(params["fill"], bool):
+        raise StyxValidationError(f'`fill` has the wrong type: Received `{type(params.get("fill", False))}` expected `bool`')
+    if params.get("normalization2", False) is None:
+        raise StyxValidationError("`normalization2` must not be None")
+    if not isinstance(params["normalization2"], bool):
+        raise StyxValidationError(f'`normalization2` has the wrong type: Received `{type(params.get("normalization2", False))}` expected `bool`')
+    if params.get("uchar", False) is None:
+        raise StyxValidationError("`uchar` must not be None")
+    if not isinstance(params["uchar"], bool):
+        raise StyxValidationError(f'`uchar` has the wrong type: Received `{type(params.get("uchar", False))}` expected `bool`')
+    if params.get("no_keep_exc", False) is None:
+        raise StyxValidationError("`no_keep_exc` must not be None")
+    if not isinstance(params["no_keep_exc"], bool):
+        raise StyxValidationError(f'`no_keep_exc` has the wrong type: Received `{type(params.get("no_keep_exc", False))}` expected `bool`')
+    if params.get("long_tp", None) is not None:
+        if not isinstance(params["long_tp"], (float, int)):
+            raise StyxValidationError(f'`long_tp` has the wrong type: Received `{type(params.get("long_tp", None))}` expected `float | None`')
+    if params.get("base", False) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], bool):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", False))}` expected `bool`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("from_recon_all", False) is None:
+        raise StyxValidationError("`from_recon_all` must not be None")
+    if not isinstance(params["from_recon_all"], bool):
+        raise StyxValidationError(f'`from_recon_all` has the wrong type: Received `{type(params.get("from_recon_all", False))}` expected `bool`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+
+
 def samseg2recon_cargs(
     params: Samseg2reconParameters,
     execution: Execution,
@@ -211,6 +270,7 @@ def samseg2recon_execute(
     Returns:
         NamedTuple of outputs (described in `Samseg2reconOutputs`).
     """
+    samseg2recon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SAMSEG2RECON_METADATA)
     params = execution.params(params)

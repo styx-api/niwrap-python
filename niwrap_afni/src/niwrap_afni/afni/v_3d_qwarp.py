@@ -152,6 +152,98 @@ def v_3d_qwarp_params(
     return params
 
 
+def v_3d_qwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dQwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_dataset", None) is None:
+        raise StyxValidationError("`base_dataset` must not be None")
+    if not isinstance(params["base_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_dataset` has the wrong type: Received `{type(params.get("base_dataset", None))}` expected `InputPathType`')
+    if params.get("source_dataset", None) is None:
+        raise StyxValidationError("`source_dataset` must not be None")
+    if not isinstance(params["source_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_dataset` has the wrong type: Received `{type(params.get("source_dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("no_warp", False) is None:
+        raise StyxValidationError("`no_warp` must not be None")
+    if not isinstance(params["no_warp"], bool):
+        raise StyxValidationError(f'`no_warp` has the wrong type: Received `{type(params.get("no_warp", False))}` expected `bool`')
+    if params.get("inverse_warp", False) is None:
+        raise StyxValidationError("`inverse_warp` must not be None")
+    if not isinstance(params["inverse_warp"], bool):
+        raise StyxValidationError(f'`inverse_warp` has the wrong type: Received `{type(params.get("inverse_warp", False))}` expected `bool`')
+    if params.get("no_dataset", False) is None:
+        raise StyxValidationError("`no_dataset` must not be None")
+    if not isinstance(params["no_dataset"], bool):
+        raise StyxValidationError(f'`no_dataset` has the wrong type: Received `{type(params.get("no_dataset", False))}` expected `bool`')
+    if params.get("a_warp", False) is None:
+        raise StyxValidationError("`a_warp` must not be None")
+    if not isinstance(params["a_warp"], bool):
+        raise StyxValidationError(f'`a_warp` has the wrong type: Received `{type(params.get("a_warp", False))}` expected `bool`')
+    if params.get("pcl", False) is None:
+        raise StyxValidationError("`pcl` must not be None")
+    if not isinstance(params["pcl"], bool):
+        raise StyxValidationError(f'`pcl` has the wrong type: Received `{type(params.get("pcl", False))}` expected `bool`')
+    if params.get("pear", False) is None:
+        raise StyxValidationError("`pear` must not be None")
+    if not isinstance(params["pear"], bool):
+        raise StyxValidationError(f'`pear` has the wrong type: Received `{type(params.get("pear", False))}` expected `bool`')
+    if params.get("hel", False) is None:
+        raise StyxValidationError("`hel` must not be None")
+    if not isinstance(params["hel"], bool):
+        raise StyxValidationError(f'`hel` has the wrong type: Received `{type(params.get("hel", False))}` expected `bool`')
+    if params.get("mi", False) is None:
+        raise StyxValidationError("`mi` must not be None")
+    if not isinstance(params["mi"], bool):
+        raise StyxValidationError(f'`mi` has the wrong type: Received `{type(params.get("mi", False))}` expected `bool`')
+    if params.get("nmi", False) is None:
+        raise StyxValidationError("`nmi` must not be None")
+    if not isinstance(params["nmi"], bool):
+        raise StyxValidationError(f'`nmi` has the wrong type: Received `{type(params.get("nmi", False))}` expected `bool`')
+    if params.get("lpc", False) is None:
+        raise StyxValidationError("`lpc` must not be None")
+    if not isinstance(params["lpc"], bool):
+        raise StyxValidationError(f'`lpc` has the wrong type: Received `{type(params.get("lpc", False))}` expected `bool`')
+    if params.get("lpa", False) is None:
+        raise StyxValidationError("`lpa` must not be None")
+    if not isinstance(params["lpa"], bool):
+        raise StyxValidationError(f'`lpa` has the wrong type: Received `{type(params.get("lpa", False))}` expected `bool`')
+    if params.get("noneg", False) is None:
+        raise StyxValidationError("`noneg` must not be None")
+    if not isinstance(params["noneg"], bool):
+        raise StyxValidationError(f'`noneg` has the wrong type: Received `{type(params.get("noneg", False))}` expected `bool`')
+    if params.get("nopenalty", False) is None:
+        raise StyxValidationError("`nopenalty` must not be None")
+    if not isinstance(params["nopenalty"], bool):
+        raise StyxValidationError(f'`nopenalty` has the wrong type: Received `{type(params.get("nopenalty", False))}` expected `bool`')
+    if params.get("minpatch", None) is not None:
+        if not isinstance(params["minpatch"], (float, int)):
+            raise StyxValidationError(f'`minpatch` has the wrong type: Received `{type(params.get("minpatch", None))}` expected `float | None`')
+    if params.get("maxlev", None) is not None:
+        if not isinstance(params["maxlev"], (float, int)):
+            raise StyxValidationError(f'`maxlev` has the wrong type: Received `{type(params.get("maxlev", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3d_qwarp_cargs(
     params: V3dQwarpParameters,
     execution: Execution,
@@ -255,6 +347,7 @@ def v_3d_qwarp_execute(
     Returns:
         NamedTuple of outputs (described in `V3dQwarpOutputs`).
     """
+    v_3d_qwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_QWARP_METADATA)
     params = execution.params(params)

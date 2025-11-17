@@ -107,6 +107,48 @@ def v_3dretroicor_params(
     return params
 
 
+def v_3dretroicor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dretroicorParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], (float, int)):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `float | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("card", None) is not None:
+        if not isinstance(params["card"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`card` has the wrong type: Received `{type(params.get("card", None))}` expected `InputPathType | None`')
+    if params.get("cardphase", None) is not None:
+        if not isinstance(params["cardphase"], str):
+            raise StyxValidationError(f'`cardphase` has the wrong type: Received `{type(params.get("cardphase", None))}` expected `str | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("resp", None) is not None:
+        if not isinstance(params["resp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`resp` has the wrong type: Received `{type(params.get("resp", None))}` expected `InputPathType | None`')
+    if params.get("respphase", None) is not None:
+        if not isinstance(params["respphase"], str):
+            raise StyxValidationError(f'`respphase` has the wrong type: Received `{type(params.get("respphase", None))}` expected `str | None`')
+    if params.get("order", None) is not None:
+        if not isinstance(params["order"], (float, int)):
+            raise StyxValidationError(f'`order` has the wrong type: Received `{type(params.get("order", None))}` expected `float | None`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+
+
 def v_3dretroicor_cargs(
     params: V3dretroicorParameters,
     execution: Execution,
@@ -208,6 +250,7 @@ def v_3dretroicor_execute(
     Returns:
         NamedTuple of outputs (described in `V3dretroicorOutputs`).
     """
+    v_3dretroicor_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DRETROICOR_METADATA)
     params = execution.params(params)

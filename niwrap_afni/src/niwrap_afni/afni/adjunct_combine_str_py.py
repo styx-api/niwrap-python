@@ -63,6 +63,35 @@ def adjunct_combine_str_py_params(
     return params
 
 
+def adjunct_combine_str_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctCombineStrPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("upper_index", None) is None:
+        raise StyxValidationError("`upper_index` must not be None")
+    if not isinstance(params["upper_index"], (float, int)):
+        raise StyxValidationError(f'`upper_index` has the wrong type: Received `{type(params.get("upper_index", None))}` expected `float`')
+    if params.get("string_selectors", None) is None:
+        raise StyxValidationError("`string_selectors` must not be None")
+    if not isinstance(params["string_selectors"], list):
+        raise StyxValidationError(f'`string_selectors` has the wrong type: Received `{type(params.get("string_selectors", None))}` expected `list[str]`')
+    for e in params["string_selectors"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`string_selectors` has the wrong type: Received `{type(params.get("string_selectors", None))}` expected `list[str]`')
+
+
 def adjunct_combine_str_py_cargs(
     params: AdjunctCombineStrPyParameters,
     execution: Execution,
@@ -124,6 +153,7 @@ def adjunct_combine_str_py_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctCombineStrPyOutputs`).
     """
+    adjunct_combine_str_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_COMBINE_STR_PY_METADATA)
     params = execution.params(params)

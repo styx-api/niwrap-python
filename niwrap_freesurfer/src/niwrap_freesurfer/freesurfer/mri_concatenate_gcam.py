@@ -86,6 +86,49 @@ def mri_concatenate_gcam_params(
     return params
 
 
+def mri_concatenate_gcam_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriConcatenateGcamParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputs", None) is None:
+        raise StyxValidationError("`inputs` must not be None")
+    if not isinstance(params["inputs"], list):
+        raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[InputPathType]`')
+    for e in params["inputs"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[InputPathType]`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("source_image", None) is not None:
+        if not isinstance(params["source_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`source_image` has the wrong type: Received `{type(params.get("source_image", None))}` expected `InputPathType | None`')
+    if params.get("target_image", None) is not None:
+        if not isinstance(params["target_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`target_image` has the wrong type: Received `{type(params.get("target_image", None))}` expected `InputPathType | None`')
+    if params.get("reduce", False) is None:
+        raise StyxValidationError("`reduce` must not be None")
+    if not isinstance(params["reduce"], bool):
+        raise StyxValidationError(f'`reduce` has the wrong type: Received `{type(params.get("reduce", False))}` expected `bool`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+    if params.get("downsample", False) is None:
+        raise StyxValidationError("`downsample` must not be None")
+    if not isinstance(params["downsample"], bool):
+        raise StyxValidationError(f'`downsample` has the wrong type: Received `{type(params.get("downsample", False))}` expected `bool`')
+
+
 def mri_concatenate_gcam_cargs(
     params: MriConcatenateGcamParameters,
     execution: Execution,
@@ -162,6 +205,7 @@ def mri_concatenate_gcam_execute(
     Returns:
         NamedTuple of outputs (described in `MriConcatenateGcamOutputs`).
     """
+    mri_concatenate_gcam_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CONCATENATE_GCAM_METADATA)
     params = execution.params(params)

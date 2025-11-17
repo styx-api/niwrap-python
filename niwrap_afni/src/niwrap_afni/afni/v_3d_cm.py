@@ -103,6 +103,61 @@ def v_3d_cm_params(
     return params
 
 
+def v_3d_cm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dCmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("set_origin", None) is not None:
+        if not isinstance(params["set_origin"], list):
+            raise StyxValidationError(f'`set_origin` has the wrong type: Received `{type(params.get("set_origin", None))}` expected `list[float] | None`')
+        if len(params["set_origin"]) == 3:
+            raise StyxValidationError("Parameter `set_origin` must contain exactly 3 elements")
+        for e in params["set_origin"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`set_origin` has the wrong type: Received `{type(params.get("set_origin", None))}` expected `list[float] | None`')
+    if params.get("local_ijk", False) is None:
+        raise StyxValidationError("`local_ijk` must not be None")
+    if not isinstance(params["local_ijk"], bool):
+        raise StyxValidationError(f'`local_ijk` has the wrong type: Received `{type(params.get("local_ijk", False))}` expected `bool`')
+    if params.get("roi_vals", None) is not None:
+        if not isinstance(params["roi_vals"], list):
+            raise StyxValidationError(f'`roi_vals` has the wrong type: Received `{type(params.get("roi_vals", None))}` expected `list[float] | None`')
+        for e in params["roi_vals"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`roi_vals` has the wrong type: Received `{type(params.get("roi_vals", None))}` expected `list[float] | None`')
+    if params.get("all_rois", False) is None:
+        raise StyxValidationError("`all_rois` must not be None")
+    if not isinstance(params["all_rois"], bool):
+        raise StyxValidationError(f'`all_rois` has the wrong type: Received `{type(params.get("all_rois", False))}` expected `bool`')
+    if params.get("icent", False) is None:
+        raise StyxValidationError("`icent` must not be None")
+    if not isinstance(params["icent"], bool):
+        raise StyxValidationError(f'`icent` has the wrong type: Received `{type(params.get("icent", False))}` expected `bool`')
+    if params.get("dcent", False) is None:
+        raise StyxValidationError("`dcent` must not be None")
+    if not isinstance(params["dcent"], bool):
+        raise StyxValidationError(f'`dcent` has the wrong type: Received `{type(params.get("dcent", False))}` expected `bool`')
+
+
 def v_3d_cm_cargs(
     params: V3dCmParameters,
     execution: Execution,
@@ -186,6 +241,7 @@ def v_3d_cm_execute(
     Returns:
         NamedTuple of outputs (described in `V3dCmOutputs`).
     """
+    v_3d_cm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_CM_METADATA)
     params = execution.params(params)

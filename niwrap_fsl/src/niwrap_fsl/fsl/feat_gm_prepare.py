@@ -54,6 +54,31 @@ def feat_gm_prepare_params(
     return params
 
 
+def feat_gm_prepare_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FeatGmPrepareParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gm_output", None) is None:
+        raise StyxValidationError("`gm_output` must not be None")
+    if not isinstance(params["gm_output"], str):
+        raise StyxValidationError(f'`gm_output` has the wrong type: Received `{type(params.get("gm_output", None))}` expected `str`')
+    if params.get("feat_dirs_list", None) is None:
+        raise StyxValidationError("`feat_dirs_list` must not be None")
+    if not isinstance(params["feat_dirs_list"], list):
+        raise StyxValidationError(f'`feat_dirs_list` has the wrong type: Received `{type(params.get("feat_dirs_list", None))}` expected `list[InputPathType]`')
+    for e in params["feat_dirs_list"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`feat_dirs_list` has the wrong type: Received `{type(params.get("feat_dirs_list", None))}` expected `list[InputPathType]`')
+
+
 def feat_gm_prepare_cargs(
     params: FeatGmPrepareParameters,
     execution: Execution,
@@ -112,6 +137,7 @@ def feat_gm_prepare_execute(
     Returns:
         NamedTuple of outputs (described in `FeatGmPrepareOutputs`).
     """
+    feat_gm_prepare_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FEAT_GM_PREPARE_METADATA)
     params = execution.params(params)

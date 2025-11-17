@@ -85,6 +85,41 @@ def surface_geodesic_distance_all_to_all_params(
     return params
 
 
+def surface_geodesic_distance_all_to_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceGeodesicDistanceAllToAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("limit-mm", None) is not None:
+        if not isinstance(params["limit-mm"], (float, int)):
+            raise StyxValidationError(f'`limit-mm` has the wrong type: Received `{type(params.get("limit-mm", None))}` expected `float | None`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("naive", False) is None:
+        raise StyxValidationError("`naive` must not be None")
+    if not isinstance(params["naive"], bool):
+        raise StyxValidationError(f'`naive` has the wrong type: Received `{type(params.get("naive", False))}` expected `bool`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def surface_geodesic_distance_all_to_all_cargs(
     params: SurfaceGeodesicDistanceAllToAllParameters,
     execution: Execution,
@@ -169,6 +204,7 @@ def surface_geodesic_distance_all_to_all_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceAllToAllOutputs`).
     """
+    surface_geodesic_distance_all_to_all_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA)
     params = execution.params(params)

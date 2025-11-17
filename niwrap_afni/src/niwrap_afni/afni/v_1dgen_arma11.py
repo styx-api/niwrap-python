@@ -123,6 +123,57 @@ def v_1dgen_arma11_params(
     return params
 
 
+def v_1dgen_arma11_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dgenArma11Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("length", None) is not None:
+        if not isinstance(params["length"], (float, int)):
+            raise StyxValidationError(f'`length` has the wrong type: Received `{type(params.get("length", None))}` expected `float | None`')
+    if params.get("length_alt", None) is not None:
+        if not isinstance(params["length_alt"], (float, int)):
+            raise StyxValidationError(f'`length_alt` has the wrong type: Received `{type(params.get("length_alt", None))}` expected `float | None`')
+    if params.get("num_series", None) is not None:
+        if not isinstance(params["num_series"], (float, int)):
+            raise StyxValidationError(f'`num_series` has the wrong type: Received `{type(params.get("num_series", None))}` expected `float | None`')
+    if params.get("param_a", None) is not None:
+        if not isinstance(params["param_a"], (float, int)):
+            raise StyxValidationError(f'`param_a` has the wrong type: Received `{type(params.get("param_a", None))}` expected `float | None`')
+    if params.get("param_b", None) is not None:
+        if not isinstance(params["param_b"], (float, int)):
+            raise StyxValidationError(f'`param_b` has the wrong type: Received `{type(params.get("param_b", None))}` expected `float | None`')
+    if params.get("param_lam", None) is not None:
+        if not isinstance(params["param_lam"], (float, int)):
+            raise StyxValidationError(f'`param_lam` has the wrong type: Received `{type(params.get("param_lam", None))}` expected `float | None`')
+    if params.get("std_dev", None) is not None:
+        if not isinstance(params["std_dev"], (float, int)):
+            raise StyxValidationError(f'`std_dev` has the wrong type: Received `{type(params.get("std_dev", None))}` expected `float | None`')
+    if params.get("normalize", False) is None:
+        raise StyxValidationError("`normalize` must not be None")
+    if not isinstance(params["normalize"], bool):
+        raise StyxValidationError(f'`normalize` has the wrong type: Received `{type(params.get("normalize", False))}` expected `bool`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("corcut", None) is not None:
+        if not isinstance(params["corcut"], (float, int)):
+            raise StyxValidationError(f'`corcut` has the wrong type: Received `{type(params.get("corcut", None))}` expected `float | None`')
+    if params.get("arma31", None) is not None:
+        if not isinstance(params["arma31"], str):
+            raise StyxValidationError(f'`arma31` has the wrong type: Received `{type(params.get("arma31", None))}` expected `str | None`')
+    if params.get("arma51", None) is not None:
+        if not isinstance(params["arma51"], str):
+            raise StyxValidationError(f'`arma51` has the wrong type: Received `{type(params.get("arma51", None))}` expected `str | None`')
+
+
 def v_1dgen_arma11_cargs(
     params: V1dgenArma11Parameters,
     execution: Execution,
@@ -238,6 +289,7 @@ def v_1dgen_arma11_execute(
     Returns:
         NamedTuple of outputs (described in `V1dgenArma11Outputs`).
     """
+    v_1dgen_arma11_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DGEN_ARMA11_METADATA)
     params = execution.params(params)

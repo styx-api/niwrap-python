@@ -67,6 +67,35 @@ def sratio_params(
     return params
 
 
+def sratio_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SratioParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("value_a", None) is None:
+        raise StyxValidationError("`value_a` must not be None")
+    if not isinstance(params["value_a"], (float, int)):
+        raise StyxValidationError(f'`value_a` has the wrong type: Received `{type(params.get("value_a", None))}` expected `float`')
+    if params.get("value_b", None) is None:
+        raise StyxValidationError("`value_b` must not be None")
+    if not isinstance(params["value_b"], (float, int)):
+        raise StyxValidationError(f'`value_b` has the wrong type: Received `{type(params.get("value_b", None))}` expected `float`')
+    if params.get("abs_flag", False) is None:
+        raise StyxValidationError("`abs_flag` must not be None")
+    if not isinstance(params["abs_flag"], bool):
+        raise StyxValidationError(f'`abs_flag` has the wrong type: Received `{type(params.get("abs_flag", False))}` expected `bool`')
+    if params.get("mask_threshold", None) is not None:
+        if not isinstance(params["mask_threshold"], (float, int)):
+            raise StyxValidationError(f'`mask_threshold` has the wrong type: Received `{type(params.get("mask_threshold", None))}` expected `float | None`')
+
+
 def sratio_cargs(
     params: SratioParameters,
     execution: Execution,
@@ -134,6 +163,7 @@ def sratio_execute(
     Returns:
         NamedTuple of outputs (described in `SratioOutputs`).
     """
+    sratio_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SRATIO_METADATA)
     params = execution.params(params)

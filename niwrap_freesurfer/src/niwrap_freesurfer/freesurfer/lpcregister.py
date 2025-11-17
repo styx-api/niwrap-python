@@ -124,6 +124,68 @@ def lpcregister_params(
     return params
 
 
+def lpcregister_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LpcregisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("mov_volume", None) is None:
+        raise StyxValidationError("`mov_volume` must not be None")
+    if not isinstance(params["mov_volume"], str):
+        raise StyxValidationError(f'`mov_volume` has the wrong type: Received `{type(params.get("mov_volume", None))}` expected `str`')
+    if params.get("reg_file", None) is None:
+        raise StyxValidationError("`reg_file` must not be None")
+    if not isinstance(params["reg_file"], str):
+        raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `str`')
+    if params.get("dof_9", False) is None:
+        raise StyxValidationError("`dof_9` must not be None")
+    if not isinstance(params["dof_9"], bool):
+        raise StyxValidationError(f'`dof_9` has the wrong type: Received `{type(params.get("dof_9", False))}` expected `bool`')
+    if params.get("dof_12", False) is None:
+        raise StyxValidationError("`dof_12` must not be None")
+    if not isinstance(params["dof_12"], bool):
+        raise StyxValidationError(f'`dof_12` has the wrong type: Received `{type(params.get("dof_12", False))}` expected `bool`')
+    if params.get("frame_number", None) is not None:
+        if not isinstance(params["frame_number"], (float, int)):
+            raise StyxValidationError(f'`frame_number` has the wrong type: Received `{type(params.get("frame_number", None))}` expected `float | None`')
+    if params.get("mid_frame", False) is None:
+        raise StyxValidationError("`mid_frame` must not be None")
+    if not isinstance(params["mid_frame"], bool):
+        raise StyxValidationError(f'`mid_frame` has the wrong type: Received `{type(params.get("mid_frame", False))}` expected `bool`')
+    if params.get("fsvol", None) is not None:
+        if not isinstance(params["fsvol"], str):
+            raise StyxValidationError(f'`fsvol` has the wrong type: Received `{type(params.get("fsvol", None))}` expected `str | None`')
+    if params.get("output_volume", None) is not None:
+        if not isinstance(params["output_volume"], str):
+            raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str | None`')
+    if params.get("tmp_dir", None) is not None:
+        if not isinstance(params["tmp_dir"], str):
+            raise StyxValidationError(f'`tmp_dir` has the wrong type: Received `{type(params.get("tmp_dir", None))}` expected `str | None`')
+    if params.get("no_cleanup", False) is None:
+        raise StyxValidationError("`no_cleanup` must not be None")
+    if not isinstance(params["no_cleanup"], bool):
+        raise StyxValidationError(f'`no_cleanup` has the wrong type: Received `{type(params.get("no_cleanup", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def lpcregister_cargs(
     params: LpcregisterParameters,
     execution: Execution,
@@ -228,6 +290,7 @@ def lpcregister_execute(
     Returns:
         NamedTuple of outputs (described in `LpcregisterOutputs`).
     """
+    lpcregister_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LPCREGISTER_METADATA)
     params = execution.params(params)

@@ -95,6 +95,46 @@ def v_3d_amp_to_rsfc_params(
     return params
 
 
+def v_3d_amp_to_rsfc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAmpToRsfcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_amp", None) is not None:
+        if not isinstance(params["in_amp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_amp` has the wrong type: Received `{type(params.get("in_amp", None))}` expected `InputPathType | None`')
+    if params.get("in_pow", None) is not None:
+        if not isinstance(params["in_pow"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_pow` has the wrong type: Received `{type(params.get("in_pow", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("band", None) is None:
+        raise StyxValidationError("`band` must not be None")
+    if not isinstance(params["band"], list):
+        raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float]`')
+    if len(params["band"]) == 2:
+        raise StyxValidationError("Parameter `band` must contain exactly 2 elements")
+    for e in params["band"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float]`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("nifti", False) is None:
+        raise StyxValidationError("`nifti` must not be None")
+    if not isinstance(params["nifti"], bool):
+        raise StyxValidationError(f'`nifti` has the wrong type: Received `{type(params.get("nifti", False))}` expected `bool`')
+
+
 def v_3d_amp_to_rsfc_cargs(
     params: V3dAmpToRsfcParameters,
     execution: Execution,
@@ -182,6 +222,7 @@ def v_3d_amp_to_rsfc_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAmpToRsfcOutputs`).
     """
+    v_3d_amp_to_rsfc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AMP_TO_RSFC_METADATA)
     params = execution.params(params)

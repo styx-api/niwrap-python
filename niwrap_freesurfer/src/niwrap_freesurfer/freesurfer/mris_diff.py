@@ -206,6 +206,121 @@ def mris_diff_params(
     return params
 
 
+def mris_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface1", None) is None:
+        raise StyxValidationError("`surface1` must not be None")
+    if not isinstance(params["surface1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface1` has the wrong type: Received `{type(params.get("surface1", None))}` expected `InputPathType`')
+    if params.get("surface2", None) is None:
+        raise StyxValidationError("`surface2` must not be None")
+    if not isinstance(params["surface2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface2` has the wrong type: Received `{type(params.get("surface2", None))}` expected `InputPathType`')
+    if params.get("subject1", None) is None:
+        raise StyxValidationError("`subject1` must not be None")
+    if not isinstance(params["subject1"], str):
+        raise StyxValidationError(f'`subject1` has the wrong type: Received `{type(params.get("subject1", None))}` expected `str`')
+    if params.get("subject2", None) is None:
+        raise StyxValidationError("`subject2` must not be None")
+    if not isinstance(params["subject2"], str):
+        raise StyxValidationError(f'`subject2` has the wrong type: Received `{type(params.get("subject2", None))}` expected `str`')
+    if params.get("subj_dir1", None) is not None:
+        if not isinstance(params["subj_dir1"], str):
+            raise StyxValidationError(f'`subj_dir1` has the wrong type: Received `{type(params.get("subj_dir1", None))}` expected `str | None`')
+    if params.get("subj_dir2", None) is not None:
+        if not isinstance(params["subj_dir2"], str):
+            raise StyxValidationError(f'`subj_dir2` has the wrong type: Received `{type(params.get("subj_dir2", None))}` expected `str | None`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+    if params.get("curv", None) is not None:
+        if not isinstance(params["curv"], str):
+            raise StyxValidationError(f'`curv` has the wrong type: Received `{type(params.get("curv", None))}` expected `str | None`')
+    if params.get("aparc", None) is not None:
+        if not isinstance(params["aparc"], str):
+            raise StyxValidationError(f'`aparc` has the wrong type: Received `{type(params.get("aparc", None))}` expected `str | None`')
+    if params.get("aparc2", None) is not None:
+        if not isinstance(params["aparc2"], str):
+            raise StyxValidationError(f'`aparc2` has the wrong type: Received `{type(params.get("aparc2", None))}` expected `str | None`')
+    if params.get("simple", False) is None:
+        raise StyxValidationError("`simple` must not be None")
+    if not isinstance(params["simple"], bool):
+        raise StyxValidationError(f'`simple` has the wrong type: Received `{type(params.get("simple", False))}` expected `bool`')
+    if params.get("simple_patch", False) is None:
+        raise StyxValidationError("`simple_patch` must not be None")
+    if not isinstance(params["simple_patch"], bool):
+        raise StyxValidationError(f'`simple_patch` has the wrong type: Received `{type(params.get("simple_patch", False))}` expected `bool`')
+    if params.get("thresh", None) is not None:
+        if not isinstance(params["thresh"], (float, int)):
+            raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `float | None`')
+    if params.get("maxerrs", None) is not None:
+        if not isinstance(params["maxerrs"], (float, int)):
+            raise StyxValidationError(f'`maxerrs` has the wrong type: Received `{type(params.get("maxerrs", None))}` expected `float | None`')
+    if params.get("renumbered", False) is None:
+        raise StyxValidationError("`renumbered` must not be None")
+    if not isinstance(params["renumbered"], bool):
+        raise StyxValidationError(f'`renumbered` has the wrong type: Received `{type(params.get("renumbered", False))}` expected `bool`')
+    if params.get("worst_bucket", None) is not None:
+        if not isinstance(params["worst_bucket"], str):
+            raise StyxValidationError(f'`worst_bucket` has the wrong type: Received `{type(params.get("worst_bucket", None))}` expected `str | None`')
+    if params.get("grid", None) is not None:
+        if not isinstance(params["grid"], str):
+            raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `str | None`')
+    if params.get("no_check_xyz", False) is None:
+        raise StyxValidationError("`no_check_xyz` must not be None")
+    if not isinstance(params["no_check_xyz"], bool):
+        raise StyxValidationError(f'`no_check_xyz` has the wrong type: Received `{type(params.get("no_check_xyz", False))}` expected `bool`')
+    if params.get("no_check_nxyz", False) is None:
+        raise StyxValidationError("`no_check_nxyz` must not be None")
+    if not isinstance(params["no_check_nxyz"], bool):
+        raise StyxValidationError(f'`no_check_nxyz` has the wrong type: Received `{type(params.get("no_check_nxyz", False))}` expected `bool`')
+    if params.get("xyz_rms", None) is not None:
+        if not isinstance(params["xyz_rms"], str):
+            raise StyxValidationError(f'`xyz_rms` has the wrong type: Received `{type(params.get("xyz_rms", None))}` expected `str | None`')
+    if params.get("angle_rms", None) is not None:
+        if not isinstance(params["angle_rms"], str):
+            raise StyxValidationError(f'`angle_rms` has the wrong type: Received `{type(params.get("angle_rms", None))}` expected `str | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("min_dist", None) is not None:
+        if not isinstance(params["min_dist"], str):
+            raise StyxValidationError(f'`min_dist` has the wrong type: Received `{type(params.get("min_dist", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("gdiag_no", None) is not None:
+        if not isinstance(params["gdiag_no"], (float, int)):
+            raise StyxValidationError(f'`gdiag_no` has the wrong type: Received `{type(params.get("gdiag_no", None))}` expected `float | None`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mris_diff_cargs(
     params: MrisDiffParameters,
     execution: Execution,
@@ -369,6 +484,7 @@ def mris_diff_execute(
     Returns:
         NamedTuple of outputs (described in `MrisDiffOutputs`).
     """
+    mris_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_DIFF_METADATA)
     params = execution.params(params)

@@ -76,6 +76,37 @@ def v_3d_trfix_params(
     return params
 
 
+def v_3d_trfix_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTrfixParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("tr_list", None) is not None:
+        if not isinstance(params["tr_list"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tr_list` has the wrong type: Received `{type(params.get("tr_list", None))}` expected `InputPathType | None`')
+    if params.get("time_list", None) is not None:
+        if not isinstance(params["time_list"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`time_list` has the wrong type: Received `{type(params.get("time_list", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("output_tr", None) is not None:
+        if not isinstance(params["output_tr"], (float, int)):
+            raise StyxValidationError(f'`output_tr` has the wrong type: Received `{type(params.get("output_tr", None))}` expected `float | None`')
+
+
 def v_3d_trfix_cargs(
     params: V3dTrfixParameters,
     execution: Execution,
@@ -158,6 +189,7 @@ def v_3d_trfix_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTrfixOutputs`).
     """
+    v_3d_trfix_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TRFIX_METADATA)
     params = execution.params(params)

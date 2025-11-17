@@ -107,6 +107,60 @@ def mris_seg2annot_params(
     return params
 
 
+def mris_seg2annot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSeg2annotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surfseg", None) is None:
+        raise StyxValidationError("`surfseg` must not be None")
+    if not isinstance(params["surfseg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surfseg` has the wrong type: Received `{type(params.get("surfseg", None))}` expected `InputPathType`')
+    if params.get("colortable", None) is not None:
+        if not isinstance(params["colortable"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`colortable` has the wrong type: Received `{type(params.get("colortable", None))}` expected `InputPathType | None`')
+    if params.get("auto_ctab", None) is not None:
+        if not isinstance(params["auto_ctab"], str):
+            raise StyxValidationError(f'`auto_ctab` has the wrong type: Received `{type(params.get("auto_ctab", None))}` expected `str | None`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("output_annotation", None) is None:
+        raise StyxValidationError("`output_annotation` must not be None")
+    if not isinstance(params["output_annotation"], str):
+        raise StyxValidationError(f'`output_annotation` has the wrong type: Received `{type(params.get("output_annotation", None))}` expected `str`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("debug_vertex", None) is not None:
+        if not isinstance(params["debug_vertex"], (float, int)):
+            raise StyxValidationError(f'`debug_vertex` has the wrong type: Received `{type(params.get("debug_vertex", None))}` expected `float | None`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mris_seg2annot_cargs(
     params: MrisSeg2annotParameters,
     execution: Execution,
@@ -206,6 +260,7 @@ def mris_seg2annot_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSeg2annotOutputs`).
     """
+    mris_seg2annot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SEG2ANNOT_METADATA)
     params = execution.params(params)

@@ -88,6 +88,54 @@ def v_3dresample_params(
     return params
 
 
+def v_3dresample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dresampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("master", None) is not None:
+        if not isinstance(params["master"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`master` has the wrong type: Received `{type(params.get("master", None))}` expected `InputPathType | None`')
+    if params.get("orientation", None) is not None:
+        if not isinstance(params["orientation"], str):
+            raise StyxValidationError(f'`orientation` has the wrong type: Received `{type(params.get("orientation", None))}` expected `typing.Literal["AIL", "AIR", "ASL", "ASR", "PIL", "PIR", "PSL", "PSR", "ALI", "ALS", "ARI", "ARS", "PLI", "PLS", "PRI", "PRS", "IAL", "IAR", "IPL", "IPR", "SAL", "SAR", "SPL", "SPR", "ILA", "ILP", "IRA", "IRP", "SLA", "SLP", "SRA", "SRP", "LAI", "LAS", "LPI", "LPS", "RAI", "RAS", "RPI", "RPS", "LIA", "LIP", "LSA", "LSP", "RIA", "RIP", "RSA", "RSP"] | None`')
+        if params["orientation"] not in ["AIL", "AIR", "ASL", "ASR", "PIL", "PIR", "PSL", "PSR", "ALI", "ALS", "ARI", "ARS", "PLI", "PLS", "PRI", "PRS", "IAL", "IAR", "IPL", "IPR", "SAL", "SAR", "SPL", "SPR", "ILA", "ILP", "IRA", "IRP", "SLA", "SLP", "SRA", "SRP", "LAI", "LAS", "LPI", "LPS", "RAI", "RAS", "RPI", "RPS", "LIA", "LIP", "LSA", "LSP", "RIA", "RIP", "RSA", "RSP"]:
+            raise StyxValidationError("Parameter `orientation` must be one of [\"AIL\", \"AIR\", \"ASL\", \"ASR\", \"PIL\", \"PIR\", \"PSL\", \"PSR\", \"ALI\", \"ALS\", \"ARI\", \"ARS\", \"PLI\", \"PLS\", \"PRI\", \"PRS\", \"IAL\", \"IAR\", \"IPL\", \"IPR\", \"SAL\", \"SAR\", \"SPL\", \"SPR\", \"ILA\", \"ILP\", \"IRA\", \"IRP\", \"SLA\", \"SLP\", \"SRA\", \"SRP\", \"LAI\", \"LAS\", \"LPI\", \"LPS\", \"RAI\", \"RAS\", \"RPI\", \"RPS\", \"LIA\", \"LIP\", \"LSA\", \"LSP\", \"RIA\", \"RIP\", \"RSA\", \"RSP\"]")
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("resample_mode", None) is not None:
+        if not isinstance(params["resample_mode"], str):
+            raise StyxValidationError(f'`resample_mode` has the wrong type: Received `{type(params.get("resample_mode", None))}` expected `typing.Literal["NN", "Li", "Cu", "Bk"] | None`')
+        if params["resample_mode"] not in ["NN", "Li", "Cu", "Bk"]:
+            raise StyxValidationError("Parameter `resample_mode` must be one of [\"NN\", \"Li\", \"Cu\", \"Bk\"]")
+    if params.get("voxel_size", None) is not None:
+        if not isinstance(params["voxel_size"], list):
+            raise StyxValidationError(f'`voxel_size` has the wrong type: Received `{type(params.get("voxel_size", None))}` expected `list[float] | None`')
+        if len(params["voxel_size"]) == 3:
+            raise StyxValidationError("Parameter `voxel_size` must contain exactly 3 elements")
+        for e in params["voxel_size"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`voxel_size` has the wrong type: Received `{type(params.get("voxel_size", None))}` expected `list[float] | None`')
+
+
 def v_3dresample_cargs(
     params: V3dresampleParameters,
     execution: Execution,
@@ -175,6 +223,7 @@ def v_3dresample_execute(
     Returns:
         NamedTuple of outputs (described in `V3dresampleOutputs`).
     """
+    v_3dresample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DRESAMPLE_METADATA)
     params = execution.params(params)

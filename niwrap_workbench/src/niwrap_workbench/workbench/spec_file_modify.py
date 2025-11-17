@@ -73,6 +73,28 @@ def spec_file_modify_add_params(
     return params
 
 
+def spec_file_modify_add_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpecFileModifyAddParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("file", None) is None:
+        raise StyxValidationError("`file` must not be None")
+    if not isinstance(params["file"], str):
+        raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", None))}` expected `str`')
+
+
 def spec_file_modify_add_cargs(
     params: SpecFileModifyAddParameters,
     execution: Execution,
@@ -119,6 +141,32 @@ def spec_file_modify_remove_params(
         "suffix": suffix,
     }
     return params
+
+
+def spec_file_modify_remove_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpecFileModifyRemoveParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filename", None) is None:
+        raise StyxValidationError("`filename` must not be None")
+    if not isinstance(params["filename"], str):
+        raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str`')
+    if params.get("recursive", False) is None:
+        raise StyxValidationError("`recursive` must not be None")
+    if not isinstance(params["recursive"], bool):
+        raise StyxValidationError(f'`recursive` has the wrong type: Received `{type(params.get("recursive", False))}` expected `bool`')
+    if params.get("suffix", False) is None:
+        raise StyxValidationError("`suffix` must not be None")
+    if not isinstance(params["suffix"], bool):
+        raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", False))}` expected `bool`')
 
 
 def spec_file_modify_remove_cargs(
@@ -177,6 +225,34 @@ def spec_file_modify_params(
     if remove is not None:
         params["remove"] = remove
     return params
+
+
+def spec_file_modify_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpecFileModifyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("add", None) is not None:
+        if not isinstance(params["add"], list):
+            raise StyxValidationError(f'`add` has the wrong type: Received `{type(params.get("add", None))}` expected `list[SpecFileModifyAddParameters] | None`')
+        for e in params["add"]:
+            spec_file_modify_add_validate(e)
+    if params.get("remove", None) is not None:
+        if not isinstance(params["remove"], list):
+            raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", None))}` expected `list[SpecFileModifyRemoveParameters] | None`')
+        for e in params["remove"]:
+            spec_file_modify_remove_validate(e)
+    if params.get("spec-file", None) is None:
+        raise StyxValidationError("`spec-file` must not be None")
+    if not isinstance(params["spec-file"], str):
+        raise StyxValidationError(f'`spec-file` has the wrong type: Received `{type(params.get("spec-file", None))}` expected `str`')
 
 
 def spec_file_modify_cargs(
@@ -280,6 +356,7 @@ def spec_file_modify_execute(
     Returns:
         NamedTuple of outputs (described in `SpecFileModifyOutputs`).
     """
+    spec_file_modify_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPEC_FILE_MODIFY_METADATA)
     params = execution.params(params)

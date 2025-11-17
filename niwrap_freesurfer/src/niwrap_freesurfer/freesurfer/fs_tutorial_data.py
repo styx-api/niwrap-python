@@ -52,6 +52,26 @@ def fs_tutorial_data_params(
     return params
 
 
+def fs_tutorial_data_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsTutorialDataParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rsync_options", None) is not None:
+        if not isinstance(params["rsync_options"], list):
+            raise StyxValidationError(f'`rsync_options` has the wrong type: Received `{type(params.get("rsync_options", None))}` expected `list[str] | None`')
+        for e in params["rsync_options"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`rsync_options` has the wrong type: Received `{type(params.get("rsync_options", None))}` expected `list[str] | None`')
+
+
 def fs_tutorial_data_cargs(
     params: FsTutorialDataParameters,
     execution: Execution,
@@ -111,6 +131,7 @@ def fs_tutorial_data_execute(
     Returns:
         NamedTuple of outputs (described in `FsTutorialDataOutputs`).
     """
+    fs_tutorial_data_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_TUTORIAL_DATA_METADATA)
     params = execution.params(params)

@@ -131,6 +131,78 @@ def mris_make_average_surface_params(
     return params
 
 
+def mris_make_average_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMakeAverageSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("outsurfname", None) is None:
+        raise StyxValidationError("`outsurfname` must not be None")
+    if not isinstance(params["outsurfname"], str):
+        raise StyxValidationError(f'`outsurfname` has the wrong type: Received `{type(params.get("outsurfname", None))}` expected `str`')
+    if params.get("cansurfname", None) is None:
+        raise StyxValidationError("`cansurfname` must not be None")
+    if not isinstance(params["cansurfname"], str):
+        raise StyxValidationError(f'`cansurfname` has the wrong type: Received `{type(params.get("cansurfname", None))}` expected `str`')
+    if params.get("outsubject", None) is None:
+        raise StyxValidationError("`outsubject` must not be None")
+    if not isinstance(params["outsubject"], str):
+        raise StyxValidationError(f'`outsubject` has the wrong type: Received `{type(params.get("outsubject", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("sdir_out", None) is not None:
+        if not isinstance(params["sdir_out"], str):
+            raise StyxValidationError(f'`sdir_out` has the wrong type: Received `{type(params.get("sdir_out", None))}` expected `str | None`')
+    if params.get("nonorm_flag", False) is None:
+        raise StyxValidationError("`nonorm_flag` must not be None")
+    if not isinstance(params["nonorm_flag"], bool):
+        raise StyxValidationError(f'`nonorm_flag` has the wrong type: Received `{type(params.get("nonorm_flag", False))}` expected `bool`')
+    if params.get("icoorder", None) is not None:
+        if not isinstance(params["icoorder"], (float, int)):
+            raise StyxValidationError(f'`icoorder` has the wrong type: Received `{type(params.get("icoorder", None))}` expected `float | None`')
+    if params.get("xfmname", None) is not None:
+        if not isinstance(params["xfmname"], str):
+            raise StyxValidationError(f'`xfmname` has the wrong type: Received `{type(params.get("xfmname", None))}` expected `str | None`')
+    if params.get("templatename", None) is not None:
+        if not isinstance(params["templatename"], str):
+            raise StyxValidationError(f'`templatename` has the wrong type: Received `{type(params.get("templatename", None))}` expected `str | None`')
+    if params.get("surfname", None) is not None:
+        if not isinstance(params["surfname"], str):
+            raise StyxValidationError(f'`surfname` has the wrong type: Received `{type(params.get("surfname", None))}` expected `str | None`')
+    if params.get("surf2surf_flag", False) is None:
+        raise StyxValidationError("`surf2surf_flag` must not be None")
+    if not isinstance(params["surf2surf_flag"], bool):
+        raise StyxValidationError(f'`surf2surf_flag` has the wrong type: Received `{type(params.get("surf2surf_flag", False))}` expected `bool`')
+    if params.get("simple", None) is not None:
+        if not isinstance(params["simple"], list):
+            raise StyxValidationError(f'`simple` has the wrong type: Received `{type(params.get("simple", None))}` expected `list[str] | None`')
+        for e in params["simple"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`simple` has the wrong type: Received `{type(params.get("simple", None))}` expected `list[str] | None`')
+    if params.get("diagno", None) is not None:
+        if not isinstance(params["diagno"], (float, int)):
+            raise StyxValidationError(f'`diagno` has the wrong type: Received `{type(params.get("diagno", None))}` expected `float | None`')
+
+
 def mris_make_average_surface_cargs(
     params: MrisMakeAverageSurfaceParameters,
     execution: Execution,
@@ -238,6 +310,7 @@ def mris_make_average_surface_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMakeAverageSurfaceOutputs`).
     """
+    mris_make_average_surface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MAKE_AVERAGE_SURFACE_METADATA)
     params = execution.params(params)

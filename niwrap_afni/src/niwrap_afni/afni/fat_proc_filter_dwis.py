@@ -121,6 +121,62 @@ def fat_proc_filter_dwis_params(
     return params
 
 
+def fat_proc_filter_dwis_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcFilterDwisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dwi", None) is None:
+        raise StyxValidationError("`input_dwi` must not be None")
+    if not isinstance(params["input_dwi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dwi` has the wrong type: Received `{type(params.get("input_dwi", None))}` expected `InputPathType`')
+    if params.get("input_gradient", None) is None:
+        raise StyxValidationError("`input_gradient` must not be None")
+    if not isinstance(params["input_gradient"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_gradient` has the wrong type: Received `{type(params.get("input_gradient", None))}` expected `InputPathType`')
+    if params.get("select_string", None) is None:
+        raise StyxValidationError("`select_string` must not be None")
+    if not isinstance(params["select_string"], str):
+        raise StyxValidationError(f'`select_string` has the wrong type: Received `{type(params.get("select_string", None))}` expected `str`')
+    if params.get("select_file", None) is not None:
+        if not isinstance(params["select_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`select_file` has the wrong type: Received `{type(params.get("select_file", None))}` expected `InputPathType | None`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("input_bvals", None) is not None:
+        if not isinstance(params["input_bvals"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_bvals` has the wrong type: Received `{type(params.get("input_bvals", None))}` expected `InputPathType | None`')
+    if params.get("unit_mag_out", False) is None:
+        raise StyxValidationError("`unit_mag_out` must not be None")
+    if not isinstance(params["unit_mag_out"], bool):
+        raise StyxValidationError(f'`unit_mag_out` has the wrong type: Received `{type(params.get("unit_mag_out", False))}` expected `bool`')
+    if params.get("qc_prefix", None) is not None:
+        if not isinstance(params["qc_prefix"], str):
+            raise StyxValidationError(f'`qc_prefix` has the wrong type: Received `{type(params.get("qc_prefix", None))}` expected `str | None`')
+    if params.get("no_qc_view", False) is None:
+        raise StyxValidationError("`no_qc_view` must not be None")
+    if not isinstance(params["no_qc_view"], bool):
+        raise StyxValidationError(f'`no_qc_view` has the wrong type: Received `{type(params.get("no_qc_view", False))}` expected `bool`')
+    if params.get("no_cmd_out", False) is None:
+        raise StyxValidationError("`no_cmd_out` must not be None")
+    if not isinstance(params["no_cmd_out"], bool):
+        raise StyxValidationError(f'`no_cmd_out` has the wrong type: Received `{type(params.get("no_cmd_out", False))}` expected `bool`')
+    if params.get("do_movie", None) is not None:
+        if not isinstance(params["do_movie"], str):
+            raise StyxValidationError(f'`do_movie` has the wrong type: Received `{type(params.get("do_movie", None))}` expected `typing.Literal["AGIF", "MPEG"] | None`')
+        if params["do_movie"] not in ["AGIF", "MPEG"]:
+            raise StyxValidationError("Parameter `do_movie` must be one of [\"AGIF\", \"MPEG\"]")
+
+
 def fat_proc_filter_dwis_cargs(
     params: FatProcFilterDwisParameters,
     execution: Execution,
@@ -222,6 +278,7 @@ def fat_proc_filter_dwis_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcFilterDwisOutputs`).
     """
+    fat_proc_filter_dwis_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_FILTER_DWIS_METADATA)
     params = execution.params(params)

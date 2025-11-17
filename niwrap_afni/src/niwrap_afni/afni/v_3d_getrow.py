@@ -81,6 +81,50 @@ def v_3d_getrow_params(
     return params
 
 
+def v_3d_getrow_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dGetrowParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xrow", None) is not None:
+        if not isinstance(params["xrow"], list):
+            raise StyxValidationError(f'`xrow` has the wrong type: Received `{type(params.get("xrow", None))}` expected `list[int] | None`')
+        if len(params["xrow"]) == 2:
+            raise StyxValidationError("Parameter `xrow` must contain exactly 2 elements")
+        for e in params["xrow"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`xrow` has the wrong type: Received `{type(params.get("xrow", None))}` expected `list[int] | None`')
+    if params.get("yrow", None) is not None:
+        if not isinstance(params["yrow"], list):
+            raise StyxValidationError(f'`yrow` has the wrong type: Received `{type(params.get("yrow", None))}` expected `list[int] | None`')
+        if len(params["yrow"]) == 2:
+            raise StyxValidationError("Parameter `yrow` must contain exactly 2 elements")
+        for e in params["yrow"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`yrow` has the wrong type: Received `{type(params.get("yrow", None))}` expected `list[int] | None`')
+    if params.get("zrow", None) is not None:
+        if not isinstance(params["zrow"], list):
+            raise StyxValidationError(f'`zrow` has the wrong type: Received `{type(params.get("zrow", None))}` expected `list[int] | None`')
+        if len(params["zrow"]) == 2:
+            raise StyxValidationError("Parameter `zrow` must contain exactly 2 elements")
+        for e in params["zrow"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`zrow` has the wrong type: Received `{type(params.get("zrow", None))}` expected `list[int] | None`')
+    if params.get("input_file", None) is not None:
+        if not isinstance(params["input_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+
+
 def v_3d_getrow_cargs(
     params: V3dGetrowParameters,
     execution: Execution,
@@ -163,6 +207,7 @@ def v_3d_getrow_execute(
     Returns:
         NamedTuple of outputs (described in `V3dGetrowOutputs`).
     """
+    v_3d_getrow_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_GETROW_METADATA)
     params = execution.params(params)

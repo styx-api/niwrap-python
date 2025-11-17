@@ -81,6 +81,51 @@ def mris_average_curvature_params(
     return params
 
 
+def mris_average_curvature_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisAverageCurvatureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_curvature_file", None) is None:
+        raise StyxValidationError("`input_curvature_file` must not be None")
+    if not isinstance(params["input_curvature_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_curvature_file` has the wrong type: Received `{type(params.get("input_curvature_file", None))}` expected `InputPathType`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_curvature_file", None) is None:
+        raise StyxValidationError("`output_curvature_file` must not be None")
+    if not isinstance(params["output_curvature_file"], str):
+        raise StyxValidationError(f'`output_curvature_file` has the wrong type: Received `{type(params.get("output_curvature_file", None))}` expected `str`')
+    if params.get("summary_stats_flag", False) is None:
+        raise StyxValidationError("`summary_stats_flag` must not be None")
+    if not isinstance(params["summary_stats_flag"], bool):
+        raise StyxValidationError(f'`summary_stats_flag` has the wrong type: Received `{type(params.get("summary_stats_flag", False))}` expected `bool`')
+    if params.get("output_surface_flag", False) is None:
+        raise StyxValidationError("`output_surface_flag` must not be None")
+    if not isinstance(params["output_surface_flag"], bool):
+        raise StyxValidationError(f'`output_surface_flag` has the wrong type: Received `{type(params.get("output_surface_flag", False))}` expected `bool`')
+
+
 def mris_average_curvature_cargs(
     params: MrisAverageCurvatureParameters,
     execution: Execution,
@@ -148,6 +193,7 @@ def mris_average_curvature_execute(
     Returns:
         NamedTuple of outputs (described in `MrisAverageCurvatureOutputs`).
     """
+    mris_average_curvature_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_AVERAGE_CURVATURE_METADATA)
     params = execution.params(params)

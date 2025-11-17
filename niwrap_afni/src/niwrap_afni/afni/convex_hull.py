@@ -149,6 +149,76 @@ def convex_hull_params(
     return params
 
 
+def convex_hull_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvexHullParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vol", None) is not None:
+        if not isinstance(params["vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vol` has the wrong type: Received `{type(params.get("vol", None))}` expected `InputPathType | None`')
+    if params.get("isoval", None) is not None:
+        if not isinstance(params["isoval"], (float, int)):
+            raise StyxValidationError(f'`isoval` has the wrong type: Received `{type(params.get("isoval", None))}` expected `float | None`')
+    if params.get("isorange", None) is not None:
+        if not isinstance(params["isorange"], list):
+            raise StyxValidationError(f'`isorange` has the wrong type: Received `{type(params.get("isorange", None))}` expected `list[float] | None`')
+        if len(params["isorange"]) == 2:
+            raise StyxValidationError("Parameter `isorange` must contain exactly 2 elements")
+        for e in params["isorange"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`isorange` has the wrong type: Received `{type(params.get("isorange", None))}` expected `list[float] | None`')
+    if params.get("isocmask", None) is not None:
+        if not isinstance(params["isocmask"], str):
+            raise StyxValidationError(f'`isocmask` has the wrong type: Received `{type(params.get("isocmask", None))}` expected `str | None`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], str):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `str | None`')
+    if params.get("surface_input", None) is not None:
+        if not isinstance(params["surface_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_input` has the wrong type: Received `{type(params.get("surface_input", None))}` expected `InputPathType | None`')
+    if params.get("surf_vol", None) is not None:
+        if not isinstance(params["surf_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_vol` has the wrong type: Received `{type(params.get("surf_vol", None))}` expected `InputPathType | None`')
+    if params.get("input_1d", None) is not None:
+        if not isinstance(params["input_1d"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_1d` has the wrong type: Received `{type(params.get("input_1d", None))}` expected `InputPathType | None`')
+    if params.get("q_opt", None) is not None:
+        if not isinstance(params["q_opt"], str):
+            raise StyxValidationError(f'`q_opt` has the wrong type: Received `{type(params.get("q_opt", None))}` expected `str | None`')
+    if params.get("proj_xy", False) is None:
+        raise StyxValidationError("`proj_xy` must not be None")
+    if not isinstance(params["proj_xy"], bool):
+        raise StyxValidationError(f'`proj_xy` has the wrong type: Received `{type(params.get("proj_xy", False))}` expected `bool`')
+    if params.get("orig_coord", False) is None:
+        raise StyxValidationError("`orig_coord` must not be None")
+    if not isinstance(params["orig_coord"], bool):
+        raise StyxValidationError(f'`orig_coord` has the wrong type: Received `{type(params.get("orig_coord", False))}` expected `bool`')
+    if params.get("these_coords", None) is not None:
+        if not isinstance(params["these_coords"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`these_coords` has the wrong type: Received `{type(params.get("these_coords", None))}` expected `InputPathType | None`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], str):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `str | None`')
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("setenv", None) is not None:
+        if not isinstance(params["setenv"], str):
+            raise StyxValidationError(f'`setenv` has the wrong type: Received `{type(params.get("setenv", None))}` expected `str | None`')
+
+
 def convex_hull_cargs(
     params: ConvexHullParameters,
     execution: Execution,
@@ -278,6 +348,7 @@ def convex_hull_execute(
     Returns:
         NamedTuple of outputs (described in `ConvexHullOutputs`).
     """
+    convex_hull_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVEX_HULL_METADATA)
     params = execution.params(params)

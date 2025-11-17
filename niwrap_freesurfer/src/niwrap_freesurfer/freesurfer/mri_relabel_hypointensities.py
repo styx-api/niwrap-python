@@ -61,6 +61,32 @@ def mri_relabel_hypointensities_params(
     return params
 
 
+def mri_relabel_hypointensities_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriRelabelHypointensitiesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_aseg", None) is None:
+        raise StyxValidationError("`input_aseg` must not be None")
+    if not isinstance(params["input_aseg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_aseg` has the wrong type: Received `{type(params.get("input_aseg", None))}` expected `InputPathType`')
+    if params.get("surface_directory", None) is None:
+        raise StyxValidationError("`surface_directory` must not be None")
+    if not isinstance(params["surface_directory"], str):
+        raise StyxValidationError(f'`surface_directory` has the wrong type: Received `{type(params.get("surface_directory", None))}` expected `str`')
+    if params.get("output_aseg", None) is None:
+        raise StyxValidationError("`output_aseg` must not be None")
+    if not isinstance(params["output_aseg"], str):
+        raise StyxValidationError(f'`output_aseg` has the wrong type: Received `{type(params.get("output_aseg", None))}` expected `str`')
+
+
 def mri_relabel_hypointensities_cargs(
     params: MriRelabelHypointensitiesParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mri_relabel_hypointensities_execute(
     Returns:
         NamedTuple of outputs (described in `MriRelabelHypointensitiesOutputs`).
     """
+    mri_relabel_hypointensities_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_RELABEL_HYPOINTENSITIES_METADATA)
     params = execution.params(params)

@@ -139,6 +139,78 @@ def mrisp_paint_params(
     return params
 
 
+def mrisp_paint_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrispPaintParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template_file", None) is None:
+        raise StyxValidationError("`template_file` must not be None")
+    if not isinstance(params["template_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template_file` has the wrong type: Received `{type(params.get("template_file", None))}` expected `InputPathType`')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("vertex_coords", None) is not None:
+        if not isinstance(params["vertex_coords"], str):
+            raise StyxValidationError(f'`vertex_coords` has the wrong type: Received `{type(params.get("vertex_coords", None))}` expected `str | None`')
+    if params.get("average_flag", None) is not None:
+        if not isinstance(params["average_flag"], (float, int)):
+            raise StyxValidationError(f'`average_flag` has the wrong type: Received `{type(params.get("average_flag", None))}` expected `float | None`')
+    if params.get("normalize_flag", False) is None:
+        raise StyxValidationError("`normalize_flag` must not be None")
+    if not isinstance(params["normalize_flag"], bool):
+        raise StyxValidationError(f'`normalize_flag` has the wrong type: Received `{type(params.get("normalize_flag", False))}` expected `bool`')
+    if params.get("frame_number", None) is not None:
+        if not isinstance(params["frame_number"], (float, int)):
+            raise StyxValidationError(f'`frame_number` has the wrong type: Received `{type(params.get("frame_number", None))}` expected `float | None`')
+    if params.get("square_root_flag", False) is None:
+        raise StyxValidationError("`square_root_flag` must not be None")
+    if not isinstance(params["square_root_flag"], bool):
+        raise StyxValidationError(f'`square_root_flag` has the wrong type: Received `{type(params.get("square_root_flag", False))}` expected `bool`')
+    if params.get("variance_params", None) is not None:
+        if not isinstance(params["variance_params"], str):
+            raise StyxValidationError(f'`variance_params` has the wrong type: Received `{type(params.get("variance_params", None))}` expected `str | None`')
+    if params.get("usage_flag", False) is None:
+        raise StyxValidationError("`usage_flag` must not be None")
+    if not isinstance(params["usage_flag"], bool):
+        raise StyxValidationError(f'`usage_flag` has the wrong type: Received `{type(params.get("usage_flag", False))}` expected `bool`')
+    if params.get("birn_info_flag", False) is None:
+        raise StyxValidationError("`birn_info_flag` must not be None")
+    if not isinstance(params["birn_info_flag"], bool):
+        raise StyxValidationError(f'`birn_info_flag` has the wrong type: Received `{type(params.get("birn_info_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("diag_vertex", None) is not None:
+        if not isinstance(params["diag_vertex"], (float, int)):
+            raise StyxValidationError(f'`diag_vertex` has the wrong type: Received `{type(params.get("diag_vertex", None))}` expected `float | None`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("diag_write_flag", False) is None:
+        raise StyxValidationError("`diag_write_flag` must not be None")
+    if not isinstance(params["diag_write_flag"], bool):
+        raise StyxValidationError(f'`diag_write_flag` has the wrong type: Received `{type(params.get("diag_write_flag", False))}` expected `bool`')
+
+
 def mrisp_paint_cargs(
     params: MrispPaintParameters,
     execution: Execution,
@@ -244,6 +316,7 @@ def mrisp_paint_execute(
     Returns:
         NamedTuple of outputs (described in `MrispPaintOutputs`).
     """
+    mrisp_paint_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRISP_PAINT_METADATA)
     params = execution.params(params)

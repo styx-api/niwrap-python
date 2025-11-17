@@ -168,6 +168,103 @@ def make_bianca_mask_params(
     return params
 
 
+def make_bianca_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeBiancaMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("overlay_flag", False) is None:
+        raise StyxValidationError("`overlay_flag` must not be None")
+    if not isinstance(params["overlay_flag"], bool):
+        raise StyxValidationError(f'`overlay_flag` has the wrong type: Received `{type(params.get("overlay_flag", False))}` expected `bool`')
+    if params.get("binary_mask_flag", False) is None:
+        raise StyxValidationError("`binary_mask_flag` must not be None")
+    if not isinstance(params["binary_mask_flag"], bool):
+        raise StyxValidationError(f'`binary_mask_flag` has the wrong type: Received `{type(params.get("binary_mask_flag", False))}` expected `bool`')
+    if params.get("approx_skull_flag", False) is None:
+        raise StyxValidationError("`approx_skull_flag` must not be None")
+    if not isinstance(params["approx_skull_flag"], bool):
+        raise StyxValidationError(f'`approx_skull_flag` has the wrong type: Received `{type(params.get("approx_skull_flag", False))}` expected `bool`')
+    if params.get("no_seg_output_flag", False) is None:
+        raise StyxValidationError("`no_seg_output_flag` must not be None")
+    if not isinstance(params["no_seg_output_flag"], bool):
+        raise StyxValidationError(f'`no_seg_output_flag` has the wrong type: Received `{type(params.get("no_seg_output_flag", False))}` expected `bool`')
+    if params.get("fractional_intensity", None) is not None:
+        if not isinstance(params["fractional_intensity"], (float, int)):
+            raise StyxValidationError(f'`fractional_intensity` has the wrong type: Received `{type(params.get("fractional_intensity", None))}` expected `float | None`')
+        if 0 <= params["fractional_intensity"] <= 1:
+            raise StyxValidationError("Parameter `fractional_intensity` must be between 0 and 1 (inclusive)")
+    if params.get("vg_fractional_intensity", None) is not None:
+        if not isinstance(params["vg_fractional_intensity"], (float, int)):
+            raise StyxValidationError(f'`vg_fractional_intensity` has the wrong type: Received `{type(params.get("vg_fractional_intensity", None))}` expected `float | None`')
+        if -1 <= params["vg_fractional_intensity"] <= 1:
+            raise StyxValidationError("Parameter `vg_fractional_intensity` must be between -1 and 1 (inclusive)")
+    if params.get("head_radius", None) is not None:
+        if not isinstance(params["head_radius"], (float, int)):
+            raise StyxValidationError(f'`head_radius` has the wrong type: Received `{type(params.get("head_radius", None))}` expected `float | None`')
+    if params.get("center_of_gravity", None) is not None:
+        if not isinstance(params["center_of_gravity"], str):
+            raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `str | None`')
+    if params.get("thresholding_flag", False) is None:
+        raise StyxValidationError("`thresholding_flag` must not be None")
+    if not isinstance(params["thresholding_flag"], bool):
+        raise StyxValidationError(f'`thresholding_flag` has the wrong type: Received `{type(params.get("thresholding_flag", False))}` expected `bool`')
+    if params.get("vtk_mesh", False) is None:
+        raise StyxValidationError("`vtk_mesh` must not be None")
+    if not isinstance(params["vtk_mesh"], bool):
+        raise StyxValidationError(f'`vtk_mesh` has the wrong type: Received `{type(params.get("vtk_mesh", False))}` expected `bool`')
+    if params.get("robust_iters_flag", False) is None:
+        raise StyxValidationError("`robust_iters_flag` must not be None")
+    if not isinstance(params["robust_iters_flag"], bool):
+        raise StyxValidationError(f'`robust_iters_flag` has the wrong type: Received `{type(params.get("robust_iters_flag", False))}` expected `bool`')
+    if params.get("residual_optic_cleanup_flag", False) is None:
+        raise StyxValidationError("`residual_optic_cleanup_flag` must not be None")
+    if not isinstance(params["residual_optic_cleanup_flag"], bool):
+        raise StyxValidationError(f'`residual_optic_cleanup_flag` has the wrong type: Received `{type(params.get("residual_optic_cleanup_flag", False))}` expected `bool`')
+    if params.get("reduce_bias_flag", False) is None:
+        raise StyxValidationError("`reduce_bias_flag` must not be None")
+    if not isinstance(params["reduce_bias_flag"], bool):
+        raise StyxValidationError(f'`reduce_bias_flag` has the wrong type: Received `{type(params.get("reduce_bias_flag", False))}` expected `bool`')
+    if params.get("slice_padding_flag", False) is None:
+        raise StyxValidationError("`slice_padding_flag` must not be None")
+    if not isinstance(params["slice_padding_flag"], bool):
+        raise StyxValidationError(f'`slice_padding_flag` has the wrong type: Received `{type(params.get("slice_padding_flag", False))}` expected `bool`')
+    if params.get("whole_set_mask_flag", False) is None:
+        raise StyxValidationError("`whole_set_mask_flag` must not be None")
+    if not isinstance(params["whole_set_mask_flag"], bool):
+        raise StyxValidationError(f'`whole_set_mask_flag` has the wrong type: Received `{type(params.get("whole_set_mask_flag", False))}` expected `bool`')
+    if params.get("additional_surfaces_flag", False) is None:
+        raise StyxValidationError("`additional_surfaces_flag` must not be None")
+    if not isinstance(params["additional_surfaces_flag"], bool):
+        raise StyxValidationError(f'`additional_surfaces_flag` has the wrong type: Received `{type(params.get("additional_surfaces_flag", False))}` expected `bool`')
+    if params.get("additional_surfaces_t2", None) is not None:
+        if not isinstance(params["additional_surfaces_t2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`additional_surfaces_t2` has the wrong type: Received `{type(params.get("additional_surfaces_t2", None))}` expected `InputPathType | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def make_bianca_mask_cargs(
     params: MakeBiancaMaskParameters,
     execution: Execution,
@@ -280,6 +377,7 @@ def make_bianca_mask_execute(
     Returns:
         NamedTuple of outputs (described in `MakeBiancaMaskOutputs`).
     """
+    make_bianca_mask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_BIANCA_MASK_METADATA)
     params = execution.params(params)

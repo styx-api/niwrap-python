@@ -77,6 +77,43 @@ def wfilemask_params(
     return params
 
 
+def wfilemask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WfilemaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("w_file", None) is None:
+        raise StyxValidationError("`w_file` must not be None")
+    if not isinstance(params["w_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`w_file` has the wrong type: Received `{type(params.get("w_file", None))}` expected `InputPathType`')
+    if params.get("label_file", None) is None:
+        raise StyxValidationError("`label_file` must not be None")
+    if not isinstance(params["label_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("permission_mask", None) is not None:
+        if not isinstance(params["permission_mask"], str):
+            raise StyxValidationError(f'`permission_mask` has the wrong type: Received `{type(params.get("permission_mask", None))}` expected `str | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+
+
 def wfilemask_cargs(
     params: WfilemaskParameters,
     execution: Execution,
@@ -155,6 +192,7 @@ def wfilemask_execute(
     Returns:
         NamedTuple of outputs (described in `WfilemaskOutputs`).
     """
+    wfilemask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WFILEMASK_METADATA)
     params = execution.params(params)

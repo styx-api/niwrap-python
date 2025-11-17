@@ -77,6 +77,38 @@ def mri_brainvol_stats_params(
     return params
 
 
+def mri_brainvol_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriBrainvolStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("xml_string", None) is not None:
+        if not isinstance(params["xml_string"], str):
+            raise StyxValidationError(f'`xml_string` has the wrong type: Received `{type(params.get("xml_string", None))}` expected `str | None`')
+    if params.get("no_surface", False) is None:
+        raise StyxValidationError("`no_surface` must not be None")
+    if not isinstance(params["no_surface"], bool):
+        raise StyxValidationError(f'`no_surface` has the wrong type: Received `{type(params.get("no_surface", False))}` expected `bool`')
+    if params.get("include_segmentation", False) is None:
+        raise StyxValidationError("`include_segmentation` must not be None")
+    if not isinstance(params["include_segmentation"], bool):
+        raise StyxValidationError(f'`include_segmentation` has the wrong type: Received `{type(params.get("include_segmentation", False))}` expected `bool`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+
+
 def mri_brainvol_stats_cargs(
     params: MriBrainvolStatsParameters,
     execution: Execution,
@@ -152,6 +184,7 @@ def mri_brainvol_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MriBrainvolStatsOutputs`).
     """
+    mri_brainvol_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_BRAINVOL_STATS_METADATA)
     params = execution.params(params)

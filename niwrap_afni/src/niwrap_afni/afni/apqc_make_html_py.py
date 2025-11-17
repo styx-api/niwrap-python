@@ -49,6 +49,24 @@ def apqc_make_html_py_params(
     return params
 
 
+def apqc_make_html_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ApqcMakeHtmlPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qc_dir", None) is None:
+        raise StyxValidationError("`qc_dir` must not be None")
+    if not isinstance(params["qc_dir"], str):
+        raise StyxValidationError(f'`qc_dir` has the wrong type: Received `{type(params.get("qc_dir", None))}` expected `str`')
+
+
 def apqc_make_html_py_cargs(
     params: ApqcMakeHtmlPyParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def apqc_make_html_py_execute(
     Returns:
         NamedTuple of outputs (described in `ApqcMakeHtmlPyOutputs`).
     """
+    apqc_make_html_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APQC_MAKE_HTML_PY_METADATA)
     params = execution.params(params)

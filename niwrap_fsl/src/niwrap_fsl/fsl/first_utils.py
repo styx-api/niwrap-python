@@ -216,6 +216,142 @@ def first_utils_params(
     return params
 
 
+def first_utils_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FirstUtilsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("norm_factors", None) is not None:
+        if not isinstance(params["norm_factors"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`norm_factors` has the wrong type: Received `{type(params.get("norm_factors", None))}` expected `InputPathType | None`')
+    if params.get("reference_image", None) is not None:
+        if not isinstance(params["reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType | None`')
+    if params.get("extra_path", None) is not None:
+        if not isinstance(params["extra_path"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`extra_path` has the wrong type: Received `{type(params.get("extra_path", None))}` expected `InputPathType | None`')
+    if params.get("flirt_matrices", None) is not None:
+        if not isinstance(params["flirt_matrices"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`flirt_matrices` has the wrong type: Received `{type(params.get("flirt_matrices", None))}` expected `InputPathType | None`')
+    if params.get("use_scale", False) is None:
+        raise StyxValidationError("`use_scale` must not be None")
+    if not isinstance(params["use_scale"], bool):
+        raise StyxValidationError(f'`use_scale` has the wrong type: Received `{type(params.get("use_scale", False))}` expected `bool`')
+    if params.get("dice_overlap", False) is None:
+        raise StyxValidationError("`dice_overlap` must not be None")
+    if not isinstance(params["dice_overlap"], bool):
+        raise StyxValidationError(f'`dice_overlap` has the wrong type: Received `{type(params.get("dice_overlap", False))}` expected `bool`')
+    if params.get("input_mesh", None) is not None:
+        if not isinstance(params["input_mesh"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_mesh` has the wrong type: Received `{type(params.get("input_mesh", None))}` expected `InputPathType | None`')
+    if params.get("use_norm", False) is None:
+        raise StyxValidationError("`use_norm` must not be None")
+    if not isinstance(params["use_norm"], bool):
+        raise StyxValidationError(f'`use_norm` has the wrong type: Received `{type(params.get("use_norm", False))}` expected `bool`')
+    if params.get("surface_out", False) is None:
+        raise StyxValidationError("`surface_out` must not be None")
+    if not isinstance(params["surface_out"], bool):
+        raise StyxValidationError(f'`surface_out` has the wrong type: Received `{type(params.get("surface_out", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+        if params["threshold"] >= 0:
+            raise StyxValidationError("Parameter `threshold` must be at least 0")
+    if params.get("mesh_label", None) is not None:
+        if not isinstance(params["mesh_label"], str):
+            raise StyxValidationError(f'`mesh_label` has the wrong type: Received `{type(params.get("mesh_label", None))}` expected `str | None`')
+    if params.get("use_bvars", False) is None:
+        raise StyxValidationError("`use_bvars` must not be None")
+    if not isinstance(params["use_bvars"], bool):
+        raise StyxValidationError(f'`use_bvars` has the wrong type: Received `{type(params.get("use_bvars", False))}` expected `bool`')
+    if params.get("use_recon_mni", False) is None:
+        raise StyxValidationError("`use_recon_mni` must not be None")
+    if not isinstance(params["use_recon_mni"], bool):
+        raise StyxValidationError(f'`use_recon_mni` has the wrong type: Received `{type(params.get("use_recon_mni", False))}` expected `bool`')
+    if params.get("vertex_analysis", False) is None:
+        raise StyxValidationError("`vertex_analysis` must not be None")
+    if not isinstance(params["vertex_analysis"], bool):
+        raise StyxValidationError(f'`vertex_analysis` has the wrong type: Received `{type(params.get("vertex_analysis", False))}` expected `bool`')
+    if params.get("use_recon_native", False) is None:
+        raise StyxValidationError("`use_recon_native` must not be None")
+    if not isinstance(params["use_recon_native"], bool):
+        raise StyxValidationError(f'`use_recon_native` has the wrong type: Received `{type(params.get("use_recon_native", False))}` expected `bool`')
+    if params.get("use_rigid_align", False) is None:
+        raise StyxValidationError("`use_rigid_align` must not be None")
+    if not isinstance(params["use_rigid_align"], bool):
+        raise StyxValidationError(f'`use_rigid_align` has the wrong type: Received `{type(params.get("use_rigid_align", False))}` expected `bool`')
+    if params.get("design_matrix", None) is not None:
+        if not isinstance(params["design_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`design_matrix` has the wrong type: Received `{type(params.get("design_matrix", None))}` expected `InputPathType | None`')
+    if params.get("recon_mesh_from_bvars", False) is None:
+        raise StyxValidationError("`recon_mesh_from_bvars` must not be None")
+    if not isinstance(params["recon_mesh_from_bvars"], bool):
+        raise StyxValidationError(f'`recon_mesh_from_bvars` has the wrong type: Received `{type(params.get("recon_mesh_from_bvars", False))}` expected `bool`')
+    if params.get("read_bvars", False) is None:
+        raise StyxValidationError("`read_bvars` must not be None")
+    if not isinstance(params["read_bvars"], bool):
+        raise StyxValidationError(f'`read_bvars` has the wrong type: Received `{type(params.get("read_bvars", False))}` expected `bool`')
+    if params.get("mesh_to_vol", False) is None:
+        raise StyxValidationError("`mesh_to_vol` must not be None")
+    if not isinstance(params["mesh_to_vol"], bool):
+        raise StyxValidationError(f'`mesh_to_vol` has the wrong type: Received `{type(params.get("mesh_to_vol", False))}` expected `bool`')
+    if params.get("centre_origin", False) is None:
+        raise StyxValidationError("`centre_origin` must not be None")
+    if not isinstance(params["centre_origin"], bool):
+        raise StyxValidationError(f'`centre_origin` has the wrong type: Received `{type(params.get("centre_origin", False))}` expected `bool`')
+    if params.get("save_vertices", None) is not None:
+        if not isinstance(params["save_vertices"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`save_vertices` has the wrong type: Received `{type(params.get("save_vertices", None))}` expected `InputPathType | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("use_pca_filter", False) is None:
+        raise StyxValidationError("`use_pca_filter` must not be None")
+    if not isinstance(params["use_pca_filter"], bool):
+        raise StyxValidationError(f'`use_pca_filter` has the wrong type: Received `{type(params.get("use_pca_filter", False))}` expected `bool`')
+    if params.get("num_modes", None) is not None:
+        if not isinstance(params["num_modes"], (float, int)):
+            raise StyxValidationError(f'`num_modes` has the wrong type: Received `{type(params.get("num_modes", None))}` expected `float | None`')
+        if params["num_modes"] >= 0:
+            raise StyxValidationError("Parameter `num_modes` must be at least 0")
+    if params.get("single_boundary_corr", False) is None:
+        raise StyxValidationError("`single_boundary_corr` must not be None")
+    if not isinstance(params["single_boundary_corr"], bool):
+        raise StyxValidationError(f'`single_boundary_corr` has the wrong type: Received `{type(params.get("single_boundary_corr", False))}` expected `bool`')
+    if params.get("do_mvglm", False) is None:
+        raise StyxValidationError("`do_mvglm` must not be None")
+    if not isinstance(params["do_mvglm"], bool):
+        raise StyxValidationError(f'`do_mvglm` has the wrong type: Received `{type(params.get("do_mvglm", False))}` expected `bool`')
+    if params.get("concat_bvars", False) is None:
+        raise StyxValidationError("`concat_bvars` must not be None")
+    if not isinstance(params["concat_bvars"], bool):
+        raise StyxValidationError(f'`concat_bvars` has the wrong type: Received `{type(params.get("concat_bvars", False))}` expected `bool`')
+    if params.get("debug_mode", False) is None:
+        raise StyxValidationError("`debug_mode` must not be None")
+    if not isinstance(params["debug_mode"], bool):
+        raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def first_utils_cargs(
     params: FirstUtilsParameters,
     execution: Execution,
@@ -370,6 +506,7 @@ def first_utils_execute(
     Returns:
         NamedTuple of outputs (described in `FirstUtilsOutputs`).
     """
+    first_utils_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIRST_UTILS_METADATA)
     params = execution.params(params)

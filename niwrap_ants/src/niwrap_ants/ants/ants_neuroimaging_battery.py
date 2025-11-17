@@ -157,6 +157,84 @@ def ants_neuroimaging_battery_params(
     return params
 
 
+def ants_neuroimaging_battery_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsNeuroimagingBatteryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_directory", None) is None:
+        raise StyxValidationError("`input_directory` must not be None")
+    if not isinstance(params["input_directory"], str):
+        raise StyxValidationError(f'`input_directory` has the wrong type: Received `{type(params.get("input_directory", None))}` expected `str`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("anatomical_image", None) is None:
+        raise StyxValidationError("`anatomical_image` must not be None")
+    if not isinstance(params["anatomical_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical_image` has the wrong type: Received `{type(params.get("anatomical_image", None))}` expected `InputPathType`')
+    if params.get("anatomical_mask", None) is None:
+        raise StyxValidationError("`anatomical_mask` must not be None")
+    if not isinstance(params["anatomical_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical_mask` has the wrong type: Received `{type(params.get("anatomical_mask", None))}` expected `InputPathType`')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("template_transform_name", None) is not None:
+        if not isinstance(params["template_transform_name"], str):
+            raise StyxValidationError(f'`template_transform_name` has the wrong type: Received `{type(params.get("template_transform_name", None))}` expected `str | None`')
+    if params.get("template_labels", None) is not None:
+        if not isinstance(params["template_labels"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template_labels` has the wrong type: Received `{type(params.get("template_labels", None))}` expected `InputPathType | None`')
+    if params.get("dti_flag", None) is not None:
+        if not isinstance(params["dti_flag"], str):
+            raise StyxValidationError(f'`dti_flag` has the wrong type: Received `{type(params.get("dti_flag", None))}` expected `str | None`')
+    if params.get("pcasl_flag", None) is not None:
+        if not isinstance(params["pcasl_flag"], str):
+            raise StyxValidationError(f'`pcasl_flag` has the wrong type: Received `{type(params.get("pcasl_flag", None))}` expected `str | None`')
+    if params.get("pasl_flag", None) is not None:
+        if not isinstance(params["pasl_flag"], str):
+            raise StyxValidationError(f'`pasl_flag` has the wrong type: Received `{type(params.get("pasl_flag", None))}` expected `str | None`')
+    if params.get("pasl_m0_flag", None) is not None:
+        if not isinstance(params["pasl_m0_flag"], str):
+            raise StyxValidationError(f'`pasl_m0_flag` has the wrong type: Received `{type(params.get("pasl_m0_flag", None))}` expected `str | None`')
+    if params.get("bold_flag", None) is not None:
+        if not isinstance(params["bold_flag"], str):
+            raise StyxValidationError(f'`bold_flag` has the wrong type: Received `{type(params.get("bold_flag", None))}` expected `str | None`')
+    if params.get("rsbold_flag", None) is not None:
+        if not isinstance(params["rsbold_flag"], str):
+            raise StyxValidationError(f'`rsbold_flag` has the wrong type: Received `{type(params.get("rsbold_flag", None))}` expected `str | None`')
+    if params.get("mt_flag", None) is not None:
+        if not isinstance(params["mt_flag"], str):
+            raise StyxValidationError(f'`mt_flag` has the wrong type: Received `{type(params.get("mt_flag", None))}` expected `str | None`')
+    if params.get("no_mt_flag", None) is not None:
+        if not isinstance(params["no_mt_flag"], str):
+            raise StyxValidationError(f'`no_mt_flag` has the wrong type: Received `{type(params.get("no_mt_flag", None))}` expected `str | None`')
+    if params.get("temp_directory", None) is not None:
+        if not isinstance(params["temp_directory"], str):
+            raise StyxValidationError(f'`temp_directory` has the wrong type: Received `{type(params.get("temp_directory", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("info_only", False) is None:
+        raise StyxValidationError("`info_only` must not be None")
+    if not isinstance(params["info_only"], bool):
+        raise StyxValidationError(f'`info_only` has the wrong type: Received `{type(params.get("info_only", False))}` expected `bool`')
+
+
 def ants_neuroimaging_battery_cargs(
     params: AntsNeuroimagingBatteryParameters,
     execution: Execution,
@@ -299,6 +377,7 @@ def ants_neuroimaging_battery_execute(
     Returns:
         NamedTuple of outputs (described in `AntsNeuroimagingBatteryOutputs`).
     """
+    ants_neuroimaging_battery_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_NEUROIMAGING_BATTERY_METADATA)
     params = execution.params(params)

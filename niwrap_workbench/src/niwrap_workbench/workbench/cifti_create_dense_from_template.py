@@ -139,6 +139,31 @@ def cifti_create_dense_from_template_series_params(
     return params
 
 
+def cifti_create_dense_from_template_series_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseFromTemplateSeriesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("step", None) is None:
+        raise StyxValidationError("`step` must not be None")
+    if not isinstance(params["step"], (float, int)):
+        raise StyxValidationError(f'`step` has the wrong type: Received `{type(params.get("step", None))}` expected `float`')
+    if params.get("start", None) is None:
+        raise StyxValidationError("`start` must not be None")
+    if not isinstance(params["start"], (float, int)):
+        raise StyxValidationError(f'`start` has the wrong type: Received `{type(params.get("start", None))}` expected `float`')
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], str):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `str | None`')
+
+
 def cifti_create_dense_from_template_series_cargs(
     params: CiftiCreateDenseFromTemplateSeriesParameters,
     execution: Execution,
@@ -186,6 +211,28 @@ def cifti_create_dense_from_template_volume_all_params(
     return params
 
 
+def cifti_create_dense_from_template_volume_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseFromTemplateVolumeAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("from-cropped", False) is None:
+        raise StyxValidationError("`from-cropped` must not be None")
+    if not isinstance(params["from-cropped"], bool):
+        raise StyxValidationError(f'`from-cropped` has the wrong type: Received `{type(params.get("from-cropped", False))}` expected `bool`')
+
+
 def cifti_create_dense_from_template_volume_all_cargs(
     params: CiftiCreateDenseFromTemplateVolumeAllParameters,
     execution: Execution,
@@ -225,6 +272,24 @@ def cifti_create_dense_from_template_cifti_params(
         "cifti-in": cifti_in,
     }
     return params
+
+
+def cifti_create_dense_from_template_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseFromTemplateCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
 
 
 def cifti_create_dense_from_template_cifti_cargs(
@@ -269,6 +334,28 @@ def cifti_create_dense_from_template_metric_params(
     return params
 
 
+def cifti_create_dense_from_template_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseFromTemplateMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+
+
 def cifti_create_dense_from_template_metric_cargs(
     params: CiftiCreateDenseFromTemplateMetricParameters,
     execution: Execution,
@@ -310,6 +397,28 @@ def cifti_create_dense_from_template_label_params(
         "label-in": label_in,
     }
     return params
+
+
+def cifti_create_dense_from_template_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseFromTemplateLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
 
 
 def cifti_create_dense_from_template_label_cargs(
@@ -356,6 +465,32 @@ def cifti_create_dense_from_template_volume_params(
         "from-cropped": from_cropped,
     }
     return params
+
+
+def cifti_create_dense_from_template_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseFromTemplateVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("from-cropped", False) is None:
+        raise StyxValidationError("`from-cropped` must not be None")
+    if not isinstance(params["from-cropped"], bool):
+        raise StyxValidationError(f'`from-cropped` has the wrong type: Received `{type(params.get("from-cropped", False))}` expected `bool`')
 
 
 def cifti_create_dense_from_template_volume_cargs(
@@ -442,6 +577,55 @@ def cifti_create_dense_from_template_params(
     if volume is not None:
         params["volume"] = volume
     return params
+
+
+def cifti_create_dense_from_template_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateDenseFromTemplateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("series", None) is not None:
+        cifti_create_dense_from_template_series_validate(params["series"])
+    if params.get("volume-all", None) is not None:
+        cifti_create_dense_from_template_volume_all_validate(params["volume-all"])
+    if params.get("action", None) is not None:
+        if not isinstance(params["action"], str):
+            raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
+    if params.get("cifti", None) is not None:
+        if not isinstance(params["cifti"], list):
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiCreateDenseFromTemplateCiftiParameters] | None`')
+        for e in params["cifti"]:
+            cifti_create_dense_from_template_cifti_validate(e)
+    if params.get("metric", None) is not None:
+        if not isinstance(params["metric"], list):
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiCreateDenseFromTemplateMetricParameters] | None`')
+        for e in params["metric"]:
+            cifti_create_dense_from_template_metric_validate(e)
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], list):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiCreateDenseFromTemplateLabelParameters] | None`')
+        for e in params["label"]:
+            cifti_create_dense_from_template_label_validate(e)
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], list):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiCreateDenseFromTemplateVolumeParameters] | None`')
+        for e in params["volume"]:
+            cifti_create_dense_from_template_volume_validate(e)
+    if params.get("template-cifti", None) is None:
+        raise StyxValidationError("`template-cifti` must not be None")
+    if not isinstance(params["template-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template-cifti` has the wrong type: Received `{type(params.get("template-cifti", None))}` expected `InputPathType`')
 
 
 def cifti_create_dense_from_template_cargs(
@@ -568,6 +752,7 @@ def cifti_create_dense_from_template_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseFromTemplateOutputs`).
     """
+    cifti_create_dense_from_template_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA)
     params = execution.params(params)

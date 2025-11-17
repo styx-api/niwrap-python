@@ -56,6 +56,31 @@ def find_the_biggest_params(
     return params
 
 
+def find_the_biggest_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FindTheBiggestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volumes_surfaces", None) is None:
+        raise StyxValidationError("`volumes_surfaces` must not be None")
+    if not isinstance(params["volumes_surfaces"], list):
+        raise StyxValidationError(f'`volumes_surfaces` has the wrong type: Received `{type(params.get("volumes_surfaces", None))}` expected `list[InputPathType]`')
+    for e in params["volumes_surfaces"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`volumes_surfaces` has the wrong type: Received `{type(params.get("volumes_surfaces", None))}` expected `list[InputPathType]`')
+    if params.get("output_index", None) is None:
+        raise StyxValidationError("`output_index` must not be None")
+    if not isinstance(params["output_index"], str):
+        raise StyxValidationError(f'`output_index` has the wrong type: Received `{type(params.get("output_index", None))}` expected `str`')
+
+
 def find_the_biggest_cargs(
     params: FindTheBiggestParameters,
     execution: Execution,
@@ -115,6 +140,7 @@ def find_the_biggest_execute(
     Returns:
         NamedTuple of outputs (described in `FindTheBiggestOutputs`).
     """
+    find_the_biggest_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIND_THE_BIGGEST_METADATA)
     params = execution.params(params)

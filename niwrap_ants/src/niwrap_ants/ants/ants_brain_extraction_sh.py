@@ -132,6 +132,73 @@ def ants_brain_extraction_sh_params(
     return params
 
 
+def ants_brain_extraction_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsBrainExtractionShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", 3) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", 3))}` expected `int`')
+    if params.get("anatomical_image", None) is None:
+        raise StyxValidationError("`anatomical_image` must not be None")
+    if not isinstance(params["anatomical_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical_image` has the wrong type: Received `{type(params.get("anatomical_image", None))}` expected `InputPathType`')
+    if params.get("template", None) is None:
+        raise StyxValidationError("`template` must not be None")
+    if not isinstance(params["template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType`')
+    if params.get("probability_mask", None) is None:
+        raise StyxValidationError("`probability_mask` must not be None")
+    if not isinstance(params["probability_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`probability_mask` has the wrong type: Received `{type(params.get("probability_mask", None))}` expected `InputPathType`')
+    if params.get("tissue_classification", None) is not None:
+        if not isinstance(params["tissue_classification"], str):
+            raise StyxValidationError(f'`tissue_classification` has the wrong type: Received `{type(params.get("tissue_classification", None))}` expected `str | None`')
+    if params.get("brain_extraction_registration_mask", None) is not None:
+        if not isinstance(params["brain_extraction_registration_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brain_extraction_registration_mask` has the wrong type: Received `{type(params.get("brain_extraction_registration_mask", None))}` expected `InputPathType | None`')
+    if params.get("keep_temporary_files", False) is None:
+        raise StyxValidationError("`keep_temporary_files` must not be None")
+    if not isinstance(params["keep_temporary_files"], bool):
+        raise StyxValidationError(f'`keep_temporary_files` has the wrong type: Received `{type(params.get("keep_temporary_files", False))}` expected `bool`')
+    if params.get("single_floating_point_precision", False) is None:
+        raise StyxValidationError("`single_floating_point_precision` must not be None")
+    if not isinstance(params["single_floating_point_precision"], bool):
+        raise StyxValidationError(f'`single_floating_point_precision` has the wrong type: Received `{type(params.get("single_floating_point_precision", False))}` expected `bool`')
+    if params.get("initial_moving_transform", None) is not None:
+        if not isinstance(params["initial_moving_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`initial_moving_transform` has the wrong type: Received `{type(params.get("initial_moving_transform", None))}` expected `InputPathType | None`')
+    if params.get("rotation_search_params", None) is not None:
+        if not isinstance(params["rotation_search_params"], str):
+            raise StyxValidationError(f'`rotation_search_params` has the wrong type: Received `{type(params.get("rotation_search_params", None))}` expected `str | None`')
+    if params.get("image_file_suffix", None) is not None:
+        if not isinstance(params["image_file_suffix"], str):
+            raise StyxValidationError(f'`image_file_suffix` has the wrong type: Received `{type(params.get("image_file_suffix", None))}` expected `str | None`')
+    if params.get("translation_search_params", None) is not None:
+        if not isinstance(params["translation_search_params"], str):
+            raise StyxValidationError(f'`translation_search_params` has the wrong type: Received `{type(params.get("translation_search_params", None))}` expected `str | None`')
+    if params.get("random_seeding", False) is None:
+        raise StyxValidationError("`random_seeding` must not be None")
+    if not isinstance(params["random_seeding"], bool):
+        raise StyxValidationError(f'`random_seeding` has the wrong type: Received `{type(params.get("random_seeding", False))}` expected `bool`')
+    if params.get("debug_mode", False) is None:
+        raise StyxValidationError("`debug_mode` must not be None")
+    if not isinstance(params["debug_mode"], bool):
+        raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", False))}` expected `bool`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+
+
 def ants_brain_extraction_sh_cargs(
     params: AntsBrainExtractionShParameters,
     execution: Execution,
@@ -250,6 +317,7 @@ def ants_brain_extraction_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsBrainExtractionShOutputs`).
     """
+    ants_brain_extraction_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_BRAIN_EXTRACTION_SH_METADATA)
     params = execution.params(params)

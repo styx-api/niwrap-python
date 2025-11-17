@@ -159,6 +159,102 @@ def qhull_params(
     return params
 
 
+def qhull_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QhullParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_coords", None) is None:
+        raise StyxValidationError("`input_coords` must not be None")
+    if not isinstance(params["input_coords"], str):
+        raise StyxValidationError(f'`input_coords` has the wrong type: Received `{type(params.get("input_coords", None))}` expected `str`')
+    if params.get("delaunay", False) is None:
+        raise StyxValidationError("`delaunay` must not be None")
+    if not isinstance(params["delaunay"], bool):
+        raise StyxValidationError(f'`delaunay` has the wrong type: Received `{type(params.get("delaunay", False))}` expected `bool`')
+    if params.get("furthest_delaunay", False) is None:
+        raise StyxValidationError("`furthest_delaunay` must not be None")
+    if not isinstance(params["furthest_delaunay"], bool):
+        raise StyxValidationError(f'`furthest_delaunay` has the wrong type: Received `{type(params.get("furthest_delaunay", False))}` expected `bool`')
+    if params.get("voronoi", False) is None:
+        raise StyxValidationError("`voronoi` must not be None")
+    if not isinstance(params["voronoi"], bool):
+        raise StyxValidationError(f'`voronoi` has the wrong type: Received `{type(params.get("voronoi", False))}` expected `bool`')
+    if params.get("furthest_voronoi", False) is None:
+        raise StyxValidationError("`furthest_voronoi` must not be None")
+    if not isinstance(params["furthest_voronoi"], bool):
+        raise StyxValidationError(f'`furthest_voronoi` has the wrong type: Received `{type(params.get("furthest_voronoi", False))}` expected `bool`')
+    if params.get("halfspace_intersection", False) is None:
+        raise StyxValidationError("`halfspace_intersection` must not be None")
+    if not isinstance(params["halfspace_intersection"], bool):
+        raise StyxValidationError(f'`halfspace_intersection` has the wrong type: Received `{type(params.get("halfspace_intersection", False))}` expected `bool`')
+    if params.get("triangulated_output", False) is None:
+        raise StyxValidationError("`triangulated_output` must not be None")
+    if not isinstance(params["triangulated_output"], bool):
+        raise StyxValidationError(f'`triangulated_output` has the wrong type: Received `{type(params.get("triangulated_output", False))}` expected `bool`')
+    if params.get("joggled_input", False) is None:
+        raise StyxValidationError("`joggled_input` must not be None")
+    if not isinstance(params["joggled_input"], bool):
+        raise StyxValidationError(f'`joggled_input` has the wrong type: Received `{type(params.get("joggled_input", False))}` expected `bool`')
+    if params.get("verify", False) is None:
+        raise StyxValidationError("`verify` must not be None")
+    if not isinstance(params["verify"], bool):
+        raise StyxValidationError(f'`verify` has the wrong type: Received `{type(params.get("verify", False))}` expected `bool`')
+    if params.get("summary", False) is None:
+        raise StyxValidationError("`summary` must not be None")
+    if not isinstance(params["summary"], bool):
+        raise StyxValidationError(f'`summary` has the wrong type: Received `{type(params.get("summary", False))}` expected `bool`')
+    if params.get("vertices_incident", False) is None:
+        raise StyxValidationError("`vertices_incident` must not be None")
+    if not isinstance(params["vertices_incident"], bool):
+        raise StyxValidationError(f'`vertices_incident` has the wrong type: Received `{type(params.get("vertices_incident", False))}` expected `bool`')
+    if params.get("normals", False) is None:
+        raise StyxValidationError("`normals` must not be None")
+    if not isinstance(params["normals"], bool):
+        raise StyxValidationError(f'`normals` has the wrong type: Received `{type(params.get("normals", False))}` expected `bool`')
+    if params.get("vertex_coordinates", False) is None:
+        raise StyxValidationError("`vertex_coordinates` must not be None")
+    if not isinstance(params["vertex_coordinates"], bool):
+        raise StyxValidationError(f'`vertex_coordinates` has the wrong type: Received `{type(params.get("vertex_coordinates", False))}` expected `bool`')
+    if params.get("halfspace_intersections", False) is None:
+        raise StyxValidationError("`halfspace_intersections` must not be None")
+    if not isinstance(params["halfspace_intersections"], bool):
+        raise StyxValidationError(f'`halfspace_intersections` has the wrong type: Received `{type(params.get("halfspace_intersections", False))}` expected `bool`')
+    if params.get("extreme_points", False) is None:
+        raise StyxValidationError("`extreme_points` must not be None")
+    if not isinstance(params["extreme_points"], bool):
+        raise StyxValidationError(f'`extreme_points` has the wrong type: Received `{type(params.get("extreme_points", False))}` expected `bool`')
+    if params.get("total_area_volume", False) is None:
+        raise StyxValidationError("`total_area_volume` must not be None")
+    if not isinstance(params["total_area_volume"], bool):
+        raise StyxValidationError(f'`total_area_volume` has the wrong type: Received `{type(params.get("total_area_volume", False))}` expected `bool`')
+    if params.get("off_format", False) is None:
+        raise StyxValidationError("`off_format` must not be None")
+    if not isinstance(params["off_format"], bool):
+        raise StyxValidationError(f'`off_format` has the wrong type: Received `{type(params.get("off_format", False))}` expected `bool`')
+    if params.get("geomview_output", False) is None:
+        raise StyxValidationError("`geomview_output` must not be None")
+    if not isinstance(params["geomview_output"], bool):
+        raise StyxValidationError(f'`geomview_output` has the wrong type: Received `{type(params.get("geomview_output", False))}` expected `bool`')
+    if params.get("mathematica_output", False) is None:
+        raise StyxValidationError("`mathematica_output` must not be None")
+    if not isinstance(params["mathematica_output"], bool):
+        raise StyxValidationError(f'`mathematica_output` has the wrong type: Received `{type(params.get("mathematica_output", False))}` expected `bool`')
+    if params.get("print_facets", None) is not None:
+        if not isinstance(params["print_facets"], str):
+            raise StyxValidationError(f'`print_facets` has the wrong type: Received `{type(params.get("print_facets", None))}` expected `str | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+
+
 def qhull_cargs(
     params: QhullParameters,
     execution: Execution,
@@ -263,6 +359,7 @@ def qhull_execute(
     Returns:
         NamedTuple of outputs (described in `QhullOutputs`).
     """
+    qhull_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QHULL_METADATA)
     params = execution.params(params)

@@ -95,6 +95,44 @@ def makevol_params(
     return params
 
 
+def makevol_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakevolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filename", None) is not None:
+        if not isinstance(params["filename"], str):
+            raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str | None`')
+    if params.get("width", None) is not None:
+        if not isinstance(params["width"], int):
+            raise StyxValidationError(f'`width` has the wrong type: Received `{type(params.get("width", None))}` expected `int | None`')
+    if params.get("height", None) is not None:
+        if not isinstance(params["height"], int):
+            raise StyxValidationError(f'`height` has the wrong type: Received `{type(params.get("height", None))}` expected `int | None`')
+    if params.get("depth", None) is not None:
+        if not isinstance(params["depth"], int):
+            raise StyxValidationError(f'`depth` has the wrong type: Received `{type(params.get("depth", None))}` expected `int | None`')
+    if params.get("sizex", None) is not None:
+        if not isinstance(params["sizex"], (float, int)):
+            raise StyxValidationError(f'`sizex` has the wrong type: Received `{type(params.get("sizex", None))}` expected `float | None`')
+    if params.get("sizey", None) is not None:
+        if not isinstance(params["sizey"], (float, int)):
+            raise StyxValidationError(f'`sizey` has the wrong type: Received `{type(params.get("sizey", None))}` expected `float | None`')
+    if params.get("sizez", None) is not None:
+        if not isinstance(params["sizez"], (float, int)):
+            raise StyxValidationError(f'`sizez` has the wrong type: Received `{type(params.get("sizez", None))}` expected `float | None`')
+    if params.get("set_method", None) is not None:
+        if not isinstance(params["set_method"], str):
+            raise StyxValidationError(f'`set_method` has the wrong type: Received `{type(params.get("set_method", None))}` expected `str | None`')
+
+
 def makevol_cargs(
     params: MakevolParameters,
     execution: Execution,
@@ -192,6 +230,7 @@ def makevol_execute(
     Returns:
         NamedTuple of outputs (described in `MakevolOutputs`).
     """
+    makevol_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKEVOL_METADATA)
     params = execution.params(params)

@@ -193,6 +193,103 @@ def film_gls_params(
     return params
 
 
+def film_gls_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FilmGlsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("ac_flag", False) is None:
+        raise StyxValidationError("`ac_flag` must not be None")
+    if not isinstance(params["ac_flag"], bool):
+        raise StyxValidationError(f'`ac_flag` has the wrong type: Received `{type(params.get("ac_flag", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("ar_flag", False) is None:
+        raise StyxValidationError("`ar_flag` must not be None")
+    if not isinstance(params["ar_flag"], bool):
+        raise StyxValidationError(f'`ar_flag` has the wrong type: Received `{type(params.get("ar_flag", False))}` expected `bool`')
+    if params.get("noest_flag", False) is None:
+        raise StyxValidationError("`noest_flag` must not be None")
+    if not isinstance(params["noest_flag"], bool):
+        raise StyxValidationError(f'`noest_flag` has the wrong type: Received `{type(params.get("noest_flag", False))}` expected `bool`')
+    if params.get("outputPW_flag", False) is None:
+        raise StyxValidationError("`outputPW_flag` must not be None")
+    if not isinstance(params["outputPW_flag"], bool):
+        raise StyxValidationError(f'`outputPW_flag` has the wrong type: Received `{type(params.get("outputPW_flag", False))}` expected `bool`')
+    if params.get("pava_flag", False) is None:
+        raise StyxValidationError("`pava_flag` must not be None")
+    if not isinstance(params["pava_flag"], bool):
+        raise StyxValidationError(f'`pava_flag` has the wrong type: Received `{type(params.get("pava_flag", False))}` expected `bool`')
+    if params.get("sa_flag", False) is None:
+        raise StyxValidationError("`sa_flag` must not be None")
+    if not isinstance(params["sa_flag"], bool):
+        raise StyxValidationError(f'`sa_flag` has the wrong type: Received `{type(params.get("sa_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("results_dir", None) is not None:
+        if not isinstance(params["results_dir"], str):
+            raise StyxValidationError(f'`results_dir` has the wrong type: Received `{type(params.get("results_dir", None))}` expected `str | None`')
+    if params.get("mode", None) is not None:
+        if not isinstance(params["mode"], str):
+            raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `str | None`')
+    if params.get("input_surface", None) is not None:
+        if not isinstance(params["input_surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType | None`')
+    if params.get("mean_func_file", None) is not None:
+        if not isinstance(params["mean_func_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mean_func_file` has the wrong type: Received `{type(params.get("mean_func_file", None))}` expected `InputPathType | None`')
+    if params.get("min_timepoint_file", None) is not None:
+        if not isinstance(params["min_timepoint_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`min_timepoint_file` has the wrong type: Received `{type(params.get("min_timepoint_file", None))}` expected `InputPathType | None`')
+    if params.get("paradigm_file", None) is not None:
+        if not isinstance(params["paradigm_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`paradigm_file` has the wrong type: Received `{type(params.get("paradigm_file", None))}` expected `InputPathType | None`')
+    if params.get("t_contrasts_file", None) is not None:
+        if not isinstance(params["t_contrasts_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t_contrasts_file` has the wrong type: Received `{type(params.get("t_contrasts_file", None))}` expected `InputPathType | None`')
+    if params.get("f_contrasts_file", None) is not None:
+        if not isinstance(params["f_contrasts_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`f_contrasts_file` has the wrong type: Received `{type(params.get("f_contrasts_file", None))}` expected `InputPathType | None`')
+    if params.get("epith", None) is not None:
+        if not isinstance(params["epith"], (float, int)):
+            raise StyxValidationError(f'`epith` has the wrong type: Received `{type(params.get("epith", None))}` expected `float | None`')
+    if params.get("ms", None) is not None:
+        if not isinstance(params["ms"], (float, int)):
+            raise StyxValidationError(f'`ms` has the wrong type: Received `{type(params.get("ms", None))}` expected `float | None`')
+    if params.get("tukey", None) is not None:
+        if not isinstance(params["tukey"], (float, int)):
+            raise StyxValidationError(f'`tukey` has the wrong type: Received `{type(params.get("tukey", None))}` expected `float | None`')
+    if params.get("mt", None) is not None:
+        if not isinstance(params["mt"], (float, int)):
+            raise StyxValidationError(f'`mt` has the wrong type: Received `{type(params.get("mt", None))}` expected `float | None`')
+    if params.get("ven", None) is not None:
+        if not isinstance(params["ven"], list):
+            raise StyxValidationError(f'`ven` has the wrong type: Received `{type(params.get("ven", None))}` expected `list[str] | None`')
+        for e in params["ven"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ven` has the wrong type: Received `{type(params.get("ven", None))}` expected `list[str] | None`')
+    if params.get("vef", None) is not None:
+        if not isinstance(params["vef"], list):
+            raise StyxValidationError(f'`vef` has the wrong type: Received `{type(params.get("vef", None))}` expected `list[InputPathType] | None`')
+        for e in params["vef"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`vef` has the wrong type: Received `{type(params.get("vef", None))}` expected `list[InputPathType] | None`')
+
+
 def film_gls_cargs(
     params: FilmGlsParameters,
     execution: Execution,
@@ -342,6 +439,7 @@ def film_gls_execute(
     Returns:
         NamedTuple of outputs (described in `FilmGlsOutputs`).
     """
+    film_gls_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FILM_GLS_METADATA)
     params = execution.params(params)

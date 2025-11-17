@@ -59,6 +59,35 @@ def imglob_params(
     return params
 
 
+def imglob_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImglobParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("multiple_extensions", False) is None:
+        raise StyxValidationError("`multiple_extensions` must not be None")
+    if not isinstance(params["multiple_extensions"], bool):
+        raise StyxValidationError(f'`multiple_extensions` has the wrong type: Received `{type(params.get("multiple_extensions", False))}` expected `bool`')
+    if params.get("input_list", None) is None:
+        raise StyxValidationError("`input_list` must not be None")
+    if not isinstance(params["input_list"], list):
+        raise StyxValidationError(f'`input_list` has the wrong type: Received `{type(params.get("input_list", None))}` expected `list[str]`')
+    for e in params["input_list"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`input_list` has the wrong type: Received `{type(params.get("input_list", None))}` expected `list[str]`')
+    if params.get("single_extension", False) is None:
+        raise StyxValidationError("`single_extension` must not be None")
+    if not isinstance(params["single_extension"], bool):
+        raise StyxValidationError(f'`single_extension` has the wrong type: Received `{type(params.get("single_extension", False))}` expected `bool`')
+
+
 def imglob_cargs(
     params: ImglobParameters,
     execution: Execution,
@@ -120,6 +149,7 @@ def imglob_execute(
     Returns:
         NamedTuple of outputs (described in `ImglobOutputs`).
     """
+    imglob_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMGLOB_METADATA)
     params = execution.params(params)

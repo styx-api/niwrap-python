@@ -241,6 +241,168 @@ def v_1dplot_py_params(
     return params
 
 
+def v_1dplot_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dplotPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infiles", None) is None:
+        raise StyxValidationError("`infiles` must not be None")
+    if not isinstance(params["infiles"], list):
+        raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    for e in params["infiles"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("boxplot_on", False) is None:
+        raise StyxValidationError("`boxplot_on` must not be None")
+    if not isinstance(params["boxplot_on"], bool):
+        raise StyxValidationError(f'`boxplot_on` has the wrong type: Received `{type(params.get("boxplot_on", False))}` expected `bool`')
+    if params.get("bplot_view", None) is not None:
+        if not isinstance(params["bplot_view"], str):
+            raise StyxValidationError(f'`bplot_view` has the wrong type: Received `{type(params.get("bplot_view", None))}` expected `str | None`')
+    if params.get("margin_off", False) is None:
+        raise StyxValidationError("`margin_off` must not be None")
+    if not isinstance(params["margin_off"], bool):
+        raise StyxValidationError(f'`margin_off` has the wrong type: Received `{type(params.get("margin_off", False))}` expected `bool`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], list):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `list[str] | None`')
+        for e in params["scale"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `list[str] | None`')
+    if params.get("xfile", None) is not None:
+        if not isinstance(params["xfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xfile` has the wrong type: Received `{type(params.get("xfile", None))}` expected `InputPathType | None`')
+    if params.get("xvals", None) is not None:
+        if not isinstance(params["xvals"], list):
+            raise StyxValidationError(f'`xvals` has the wrong type: Received `{type(params.get("xvals", None))}` expected `list[float] | None`')
+        if len(params["xvals"]) == 3:
+            raise StyxValidationError("Parameter `xvals` must contain exactly 3 elements")
+        for e in params["xvals"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`xvals` has the wrong type: Received `{type(params.get("xvals", None))}` expected `list[float] | None`')
+    if params.get("yaxis", None) is not None:
+        if not isinstance(params["yaxis"], list):
+            raise StyxValidationError(f'`yaxis` has the wrong type: Received `{type(params.get("yaxis", None))}` expected `list[str] | None`')
+        for e in params["yaxis"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`yaxis` has the wrong type: Received `{type(params.get("yaxis", None))}` expected `list[str] | None`')
+    if params.get("ylabels", None) is not None:
+        if not isinstance(params["ylabels"], list):
+            raise StyxValidationError(f'`ylabels` has the wrong type: Received `{type(params.get("ylabels", None))}` expected `list[str] | None`')
+        for e in params["ylabels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ylabels` has the wrong type: Received `{type(params.get("ylabels", None))}` expected `list[str] | None`')
+    if params.get("ylabels_maxlen", None) is not None:
+        if not isinstance(params["ylabels_maxlen"], (float, int)):
+            raise StyxValidationError(f'`ylabels_maxlen` has the wrong type: Received `{type(params.get("ylabels_maxlen", None))}` expected `float | None`')
+    if params.get("legend_on", False) is None:
+        raise StyxValidationError("`legend_on` must not be None")
+    if not isinstance(params["legend_on"], bool):
+        raise StyxValidationError(f'`legend_on` has the wrong type: Received `{type(params.get("legend_on", False))}` expected `bool`')
+    if params.get("legend_labels", None) is not None:
+        if not isinstance(params["legend_labels"], list):
+            raise StyxValidationError(f'`legend_labels` has the wrong type: Received `{type(params.get("legend_labels", None))}` expected `list[str] | None`')
+        for e in params["legend_labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`legend_labels` has the wrong type: Received `{type(params.get("legend_labels", None))}` expected `list[str] | None`')
+    if params.get("legend_locs", None) is not None:
+        if not isinstance(params["legend_locs"], list):
+            raise StyxValidationError(f'`legend_locs` has the wrong type: Received `{type(params.get("legend_locs", None))}` expected `list[str] | None`')
+        for e in params["legend_locs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`legend_locs` has the wrong type: Received `{type(params.get("legend_locs", None))}` expected `list[str] | None`')
+    if params.get("xlabel", None) is not None:
+        if not isinstance(params["xlabel"], str):
+            raise StyxValidationError(f'`xlabel` has the wrong type: Received `{type(params.get("xlabel", None))}` expected `str | None`')
+    if params.get("title", None) is not None:
+        if not isinstance(params["title"], str):
+            raise StyxValidationError(f'`title` has the wrong type: Received `{type(params.get("title", None))}` expected `str | None`')
+    if params.get("reverse_order", False) is None:
+        raise StyxValidationError("`reverse_order` must not be None")
+    if not isinstance(params["reverse_order"], bool):
+        raise StyxValidationError(f'`reverse_order` has the wrong type: Received `{type(params.get("reverse_order", False))}` expected `bool`')
+    if params.get("sepscl", False) is None:
+        raise StyxValidationError("`sepscl` must not be None")
+    if not isinstance(params["sepscl"], bool):
+        raise StyxValidationError(f'`sepscl` has the wrong type: Received `{type(params.get("sepscl", False))}` expected `bool`')
+    if params.get("one_graph", False) is None:
+        raise StyxValidationError("`one_graph` must not be None")
+    if not isinstance(params["one_graph"], bool):
+        raise StyxValidationError(f'`one_graph` has the wrong type: Received `{type(params.get("one_graph", False))}` expected `bool`')
+    if params.get("dpi", None) is not None:
+        if not isinstance(params["dpi"], (float, int)):
+            raise StyxValidationError(f'`dpi` has the wrong type: Received `{type(params.get("dpi", None))}` expected `float | None`')
+    if params.get("figsize", None) is not None:
+        if not isinstance(params["figsize"], list):
+            raise StyxValidationError(f'`figsize` has the wrong type: Received `{type(params.get("figsize", None))}` expected `list[float] | None`')
+        if len(params["figsize"]) == 2:
+            raise StyxValidationError("Parameter `figsize` must contain exactly 2 elements")
+        for e in params["figsize"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`figsize` has the wrong type: Received `{type(params.get("figsize", None))}` expected `list[float] | None`')
+    if params.get("fontsize", None) is not None:
+        if not isinstance(params["fontsize"], (float, int)):
+            raise StyxValidationError(f'`fontsize` has the wrong type: Received `{type(params.get("fontsize", None))}` expected `float | None`')
+    if params.get("fontfamily", None) is not None:
+        if not isinstance(params["fontfamily"], str):
+            raise StyxValidationError(f'`fontfamily` has the wrong type: Received `{type(params.get("fontfamily", None))}` expected `str | None`')
+    if params.get("fontstyles", None) is not None:
+        if not isinstance(params["fontstyles"], str):
+            raise StyxValidationError(f'`fontstyles` has the wrong type: Received `{type(params.get("fontstyles", None))}` expected `str | None`')
+    if params.get("colors", None) is not None:
+        if not isinstance(params["colors"], list):
+            raise StyxValidationError(f'`colors` has the wrong type: Received `{type(params.get("colors", None))}` expected `list[str] | None`')
+        for e in params["colors"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`colors` has the wrong type: Received `{type(params.get("colors", None))}` expected `list[str] | None`')
+    if params.get("patches", None) is not None:
+        if not isinstance(params["patches"], list):
+            raise StyxValidationError(f'`patches` has the wrong type: Received `{type(params.get("patches", None))}` expected `list[str] | None`')
+        for e in params["patches"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`patches` has the wrong type: Received `{type(params.get("patches", None))}` expected `list[str] | None`')
+    if params.get("censor_trs", None) is not None:
+        if not isinstance(params["censor_trs"], list):
+            raise StyxValidationError(f'`censor_trs` has the wrong type: Received `{type(params.get("censor_trs", None))}` expected `list[str] | None`')
+        for e in params["censor_trs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`censor_trs` has the wrong type: Received `{type(params.get("censor_trs", None))}` expected `list[str] | None`')
+    if params.get("censor_files", None) is not None:
+        if not isinstance(params["censor_files"], list):
+            raise StyxValidationError(f'`censor_files` has the wrong type: Received `{type(params.get("censor_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["censor_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`censor_files` has the wrong type: Received `{type(params.get("censor_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("censor_hline", None) is not None:
+        if not isinstance(params["censor_hline"], list):
+            raise StyxValidationError(f'`censor_hline` has the wrong type: Received `{type(params.get("censor_hline", None))}` expected `list[str] | None`')
+        for e in params["censor_hline"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`censor_hline` has the wrong type: Received `{type(params.get("censor_hline", None))}` expected `list[str] | None`')
+    if params.get("censor_rgb", None) is not None:
+        if not isinstance(params["censor_rgb"], str):
+            raise StyxValidationError(f'`censor_rgb` has the wrong type: Received `{type(params.get("censor_rgb", None))}` expected `str | None`')
+    if params.get("bkgd_color", None) is not None:
+        if not isinstance(params["bkgd_color"], str):
+            raise StyxValidationError(f'`bkgd_color` has the wrong type: Received `{type(params.get("bkgd_color", None))}` expected `str | None`')
+
+
 def v_1dplot_py_cargs(
     params: V1dplotPyParameters,
     execution: Execution,
@@ -436,6 +598,7 @@ def v_1dplot_py_execute(
     Returns:
         NamedTuple of outputs (described in `V1dplotPyOutputs`).
     """
+    v_1dplot_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DPLOT_PY_METADATA)
     params = execution.params(params)

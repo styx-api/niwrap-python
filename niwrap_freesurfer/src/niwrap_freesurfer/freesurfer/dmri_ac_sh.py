@@ -50,6 +50,23 @@ def dmri_ac_sh_params(
     return params
 
 
+def dmri_ac_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriAcShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("additional_args", None) is not None:
+        if not isinstance(params["additional_args"], str):
+            raise StyxValidationError(f'`additional_args` has the wrong type: Received `{type(params.get("additional_args", None))}` expected `str | None`')
+
+
 def dmri_ac_sh_cargs(
     params: DmriAcShParameters,
     execution: Execution,
@@ -108,6 +125,7 @@ def dmri_ac_sh_execute(
     Returns:
         NamedTuple of outputs (described in `DmriAcShOutputs`).
     """
+    dmri_ac_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_AC_SH_METADATA)
     params = execution.params(params)

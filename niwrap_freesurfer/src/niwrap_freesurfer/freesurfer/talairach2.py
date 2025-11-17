@@ -55,6 +55,27 @@ def talairach2_params(
     return params
 
 
+def talairach2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Talairach2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("mgz_flag", None) is not None:
+        if not isinstance(params["mgz_flag"], str):
+            raise StyxValidationError(f'`mgz_flag` has the wrong type: Received `{type(params.get("mgz_flag", None))}` expected `str | None`')
+
+
 def talairach2_cargs(
     params: Talairach2Parameters,
     execution: Execution,
@@ -114,6 +135,7 @@ def talairach2_execute(
     Returns:
         NamedTuple of outputs (described in `Talairach2Outputs`).
     """
+    talairach2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TALAIRACH2_METADATA)
     params = execution.params(params)

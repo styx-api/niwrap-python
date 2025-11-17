@@ -66,6 +66,35 @@ def mri_extract_fcd_features_params(
     return params
 
 
+def mri_extract_fcd_features_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriExtractFcdFeaturesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `InputPathType`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+
+
 def mri_extract_fcd_features_cargs(
     params: MriExtractFcdFeaturesParameters,
     execution: Execution,
@@ -130,6 +159,7 @@ def mri_extract_fcd_features_execute(
     Returns:
         NamedTuple of outputs (described in `MriExtractFcdFeaturesOutputs`).
     """
+    mri_extract_fcd_features_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EXTRACT_FCD_FEATURES_METADATA)
     params = execution.params(params)

@@ -104,6 +104,63 @@ def dmri_match_params(
     return params
 
 
+def dmri_match_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriMatchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("parcellation1", None) is None:
+        raise StyxValidationError("`parcellation1` must not be None")
+    if not isinstance(params["parcellation1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`parcellation1` has the wrong type: Received `{type(params.get("parcellation1", None))}` expected `InputPathType`')
+    if params.get("parcellation2", None) is None:
+        raise StyxValidationError("`parcellation2` must not be None")
+    if not isinstance(params["parcellation2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`parcellation2` has the wrong type: Received `{type(params.get("parcellation2", None))}` expected `InputPathType`')
+    if params.get("num_clusters", None) is None:
+        raise StyxValidationError("`num_clusters` must not be None")
+    if not isinstance(params["num_clusters"], (float, int)):
+        raise StyxValidationError(f'`num_clusters` has the wrong type: Received `{type(params.get("num_clusters", None))}` expected `float`')
+    if params.get("clustering_path1", None) is None:
+        raise StyxValidationError("`clustering_path1` must not be None")
+    if not isinstance(params["clustering_path1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`clustering_path1` has the wrong type: Received `{type(params.get("clustering_path1", None))}` expected `InputPathType`')
+    if params.get("clustering_path2", None) is None:
+        raise StyxValidationError("`clustering_path2` must not be None")
+    if not isinstance(params["clustering_path2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`clustering_path2` has the wrong type: Received `{type(params.get("clustering_path2", None))}` expected `InputPathType`')
+    if params.get("labels", False) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], bool):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", False))}` expected `bool`')
+    if params.get("euclidean", False) is None:
+        raise StyxValidationError("`euclidean` must not be None")
+    if not isinstance(params["euclidean"], bool):
+        raise StyxValidationError(f'`euclidean` has the wrong type: Received `{type(params.get("euclidean", False))}` expected `bool`')
+    if params.get("bounding_box", False) is None:
+        raise StyxValidationError("`bounding_box` must not be None")
+    if not isinstance(params["bounding_box"], bool):
+        raise StyxValidationError(f'`bounding_box` has the wrong type: Received `{type(params.get("bounding_box", False))}` expected `bool`')
+    if params.get("symmetry", False) is None:
+        raise StyxValidationError("`symmetry` must not be None")
+    if not isinstance(params["symmetry"], bool):
+        raise StyxValidationError(f'`symmetry` has the wrong type: Received `{type(params.get("symmetry", False))}` expected `bool`')
+    if params.get("inter_hemi_ratio_removal", None) is not None:
+        if not isinstance(params["inter_hemi_ratio_removal"], str):
+            raise StyxValidationError(f'`inter_hemi_ratio_removal` has the wrong type: Received `{type(params.get("inter_hemi_ratio_removal", None))}` expected `str | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def dmri_match_cargs(
     params: DmriMatchParameters,
     execution: Execution,
@@ -195,6 +252,7 @@ def dmri_match_execute(
     Returns:
         NamedTuple of outputs (described in `DmriMatchOutputs`).
     """
+    dmri_match_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_MATCH_METADATA)
     params = execution.params(params)

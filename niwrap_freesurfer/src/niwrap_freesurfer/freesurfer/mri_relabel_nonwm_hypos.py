@@ -79,6 +79,46 @@ def mri_relabel_nonwm_hypos_params(
     return params
 
 
+def mri_relabel_nonwm_hypos_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriRelabelNonwmHyposParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputseg", None) is None:
+        raise StyxValidationError("`inputseg` must not be None")
+    if not isinstance(params["inputseg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputseg` has the wrong type: Received `{type(params.get("inputseg", None))}` expected `InputPathType`')
+    if params.get("outputseg", None) is None:
+        raise StyxValidationError("`outputseg` must not be None")
+    if not isinstance(params["outputseg"], str):
+        raise StyxValidationError(f'`outputseg` has the wrong type: Received `{type(params.get("outputseg", None))}` expected `str`')
+    if params.get("segments", None) is not None:
+        if not isinstance(params["segments"], list):
+            raise StyxValidationError(f'`segments` has the wrong type: Received `{type(params.get("segments", None))}` expected `list[str] | None`')
+        for e in params["segments"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`segments` has the wrong type: Received `{type(params.get("segments", None))}` expected `list[str] | None`')
+    if params.get("seg_default", False) is None:
+        raise StyxValidationError("`seg_default` must not be None")
+    if not isinstance(params["seg_default"], bool):
+        raise StyxValidationError(f'`seg_default` has the wrong type: Received `{type(params.get("seg_default", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+
+
 def mri_relabel_nonwm_hypos_cargs(
     params: MriRelabelNonwmHyposParameters,
     execution: Execution,
@@ -155,6 +195,7 @@ def mri_relabel_nonwm_hypos_execute(
     Returns:
         NamedTuple of outputs (described in `MriRelabelNonwmHyposOutputs`).
     """
+    mri_relabel_nonwm_hypos_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_RELABEL_NONWM_HYPOS_METADATA)
     params = execution.params(params)

@@ -54,6 +54,31 @@ def afni_run_r_params(
     return params
 
 
+def afni_run_r_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AfniRunRParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("r_script", None) is None:
+        raise StyxValidationError("`r_script` must not be None")
+    if not isinstance(params["r_script"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`r_script` has the wrong type: Received `{type(params.get("r_script", None))}` expected `InputPathType`')
+    if params.get("r_args", None) is None:
+        raise StyxValidationError("`r_args` must not be None")
+    if not isinstance(params["r_args"], list):
+        raise StyxValidationError(f'`r_args` has the wrong type: Received `{type(params.get("r_args", None))}` expected `list[str]`')
+    for e in params["r_args"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`r_args` has the wrong type: Received `{type(params.get("r_args", None))}` expected `list[str]`')
+
+
 def afni_run_r_cargs(
     params: AfniRunRParameters,
     execution: Execution,
@@ -112,6 +137,7 @@ def afni_run_r_execute(
     Returns:
         NamedTuple of outputs (described in `AfniRunROutputs`).
     """
+    afni_run_r_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_RUN_R_METADATA)
     params = execution.params(params)

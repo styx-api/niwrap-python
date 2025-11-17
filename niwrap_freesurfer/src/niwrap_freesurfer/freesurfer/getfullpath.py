@@ -49,6 +49,24 @@ def getfullpath_params(
     return params
 
 
+def getfullpath_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GetfullpathParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filename", None) is None:
+        raise StyxValidationError("`filename` must not be None")
+    if not isinstance(params["filename"], str):
+        raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str`')
+
+
 def getfullpath_cargs(
     params: GetfullpathParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def getfullpath_execute(
     Returns:
         NamedTuple of outputs (described in `GetfullpathOutputs`).
     """
+    getfullpath_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GETFULLPATH_METADATA)
     params = execution.params(params)

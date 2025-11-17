@@ -116,6 +116,62 @@ def mris_smooth_params(
     return params
 
 
+def mris_smooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("average_iters", None) is not None:
+        if not isinstance(params["average_iters"], (float, int)):
+            raise StyxValidationError(f'`average_iters` has the wrong type: Received `{type(params.get("average_iters", None))}` expected `float | None`')
+    if params.get("smoothing_iters", None) is not None:
+        if not isinstance(params["smoothing_iters"], (float, int)):
+            raise StyxValidationError(f'`smoothing_iters` has the wrong type: Received `{type(params.get("smoothing_iters", None))}` expected `float | None`')
+    if params.get("no_write", False) is None:
+        raise StyxValidationError("`no_write` must not be None")
+    if not isinstance(params["no_write"], bool):
+        raise StyxValidationError(f'`no_write` has the wrong type: Received `{type(params.get("no_write", False))}` expected `bool`')
+    if params.get("curvature_name", None) is not None:
+        if not isinstance(params["curvature_name"], str):
+            raise StyxValidationError(f'`curvature_name` has the wrong type: Received `{type(params.get("curvature_name", None))}` expected `str | None`')
+    if params.get("area_name", None) is not None:
+        if not isinstance(params["area_name"], str):
+            raise StyxValidationError(f'`area_name` has the wrong type: Received `{type(params.get("area_name", None))}` expected `str | None`')
+    if params.get("gaussian_params", None) is not None:
+        if not isinstance(params["gaussian_params"], list):
+            raise StyxValidationError(f'`gaussian_params` has the wrong type: Received `{type(params.get("gaussian_params", None))}` expected `list[float] | None`')
+        if len(params["gaussian_params"]) == 2:
+            raise StyxValidationError("Parameter `gaussian_params` must contain exactly 2 elements")
+        for e in params["gaussian_params"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`gaussian_params` has the wrong type: Received `{type(params.get("gaussian_params", None))}` expected `list[float] | None`')
+    if params.get("normalize_area", False) is None:
+        raise StyxValidationError("`normalize_area` must not be None")
+    if not isinstance(params["normalize_area"], bool):
+        raise StyxValidationError(f'`normalize_area` has the wrong type: Received `{type(params.get("normalize_area", False))}` expected `bool`')
+    if params.get("momentum", None) is not None:
+        if not isinstance(params["momentum"], (float, int)):
+            raise StyxValidationError(f'`momentum` has the wrong type: Received `{type(params.get("momentum", None))}` expected `float | None`')
+    if params.get("snapshot_interval", None) is not None:
+        if not isinstance(params["snapshot_interval"], (float, int)):
+            raise StyxValidationError(f'`snapshot_interval` has the wrong type: Received `{type(params.get("snapshot_interval", None))}` expected `float | None`')
+
+
 def mris_smooth_cargs(
     params: MrisSmoothParameters,
     execution: Execution,
@@ -217,6 +273,7 @@ def mris_smooth_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSmoothOutputs`).
     """
+    mris_smooth_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SMOOTH_METADATA)
     params = execution.params(params)

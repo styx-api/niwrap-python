@@ -119,6 +119,64 @@ def v_1d_tool_py_params(
     return params
 
 
+def v_1d_tool_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dToolPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("write", None) is not None:
+        if not isinstance(params["write"], str):
+            raise StyxValidationError(f'`write` has the wrong type: Received `{type(params.get("write", None))}` expected `str | None`')
+    if params.get("select_cols", None) is not None:
+        if not isinstance(params["select_cols"], str):
+            raise StyxValidationError(f'`select_cols` has the wrong type: Received `{type(params.get("select_cols", None))}` expected `str | None`')
+    if params.get("select_rows", None) is not None:
+        if not isinstance(params["select_rows"], str):
+            raise StyxValidationError(f'`select_rows` has the wrong type: Received `{type(params.get("select_rows", None))}` expected `str | None`')
+    if params.get("select_groups", None) is not None:
+        if not isinstance(params["select_groups"], str):
+            raise StyxValidationError(f'`select_groups` has the wrong type: Received `{type(params.get("select_groups", None))}` expected `str | None`')
+    if params.get("censor_motion", None) is not None:
+        if not isinstance(params["censor_motion"], (float, int)):
+            raise StyxValidationError(f'`censor_motion` has the wrong type: Received `{type(params.get("censor_motion", None))}` expected `float | None`')
+    if params.get("pad_into_many_runs", None) is not None:
+        if not isinstance(params["pad_into_many_runs"], str):
+            raise StyxValidationError(f'`pad_into_many_runs` has the wrong type: Received `{type(params.get("pad_into_many_runs", None))}` expected `str | None`')
+    if params.get("set_nruns", None) is not None:
+        if not isinstance(params["set_nruns"], (float, int)):
+            raise StyxValidationError(f'`set_nruns` has the wrong type: Received `{type(params.get("set_nruns", None))}` expected `float | None`')
+    if params.get("set_run_lengths", None) is not None:
+        if not isinstance(params["set_run_lengths"], str):
+            raise StyxValidationError(f'`set_run_lengths` has the wrong type: Received `{type(params.get("set_run_lengths", None))}` expected `str | None`')
+    if params.get("show_rows_cols", False) is None:
+        raise StyxValidationError("`show_rows_cols` must not be None")
+    if not isinstance(params["show_rows_cols"], bool):
+        raise StyxValidationError(f'`show_rows_cols` has the wrong type: Received `{type(params.get("show_rows_cols", False))}` expected `bool`')
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+    if params.get("show_max_displace", False) is None:
+        raise StyxValidationError("`show_max_displace` must not be None")
+    if not isinstance(params["show_max_displace"], bool):
+        raise StyxValidationError(f'`show_max_displace` has the wrong type: Received `{type(params.get("show_max_displace", False))}` expected `bool`')
+
+
 def v_1d_tool_py_cargs(
     params: V1dToolPyParameters,
     execution: Execution,
@@ -228,6 +286,7 @@ def v_1d_tool_py_execute(
     Returns:
         NamedTuple of outputs (described in `V1dToolPyOutputs`).
     """
+    v_1d_tool_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_TOOL_PY_METADATA)
     params = execution.params(params)

@@ -71,6 +71,34 @@ def label_geometry_measures_params(
     return params
 
 
+def label_geometry_measures_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelGeometryMeasuresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("label_image", None) is None:
+        raise StyxValidationError("`label_image` must not be None")
+    if not isinstance(params["label_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_image` has the wrong type: Received `{type(params.get("label_image", None))}` expected `InputPathType`')
+    if params.get("intensity_image", None) is not None:
+        if not isinstance(params["intensity_image"], str):
+            raise StyxValidationError(f'`intensity_image` has the wrong type: Received `{type(params.get("intensity_image", None))}` expected `str | None`')
+    if params.get("csv_file", None) is not None:
+        if not isinstance(params["csv_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`csv_file` has the wrong type: Received `{type(params.get("csv_file", None))}` expected `InputPathType | None`')
+
+
 def label_geometry_measures_cargs(
     params: LabelGeometryMeasuresParameters,
     execution: Execution,
@@ -135,6 +163,7 @@ def label_geometry_measures_execute(
     Returns:
         NamedTuple of outputs (described in `LabelGeometryMeasuresOutputs`).
     """
+    label_geometry_measures_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL_GEOMETRY_MEASURES_METADATA)
     params = execution.params(params)

@@ -108,6 +108,68 @@ def v_3dinfill_params(
     return params
 
 
+def v_3dinfill_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dinfillParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("niter", None) is not None:
+        if not isinstance(params["niter"], (float, int)):
+            raise StyxValidationError(f'`niter` has the wrong type: Received `{type(params.get("niter", None))}` expected `float | None`')
+    if params.get("blend", None) is not None:
+        if not isinstance(params["blend"], str):
+            raise StyxValidationError(f'`blend` has the wrong type: Received `{type(params.get("blend", None))}` expected `typing.Literal["MODE", "AVG", "AUTO", "SOLID", "SOLID_CLEAN"] | None`')
+        if params["blend"] not in ["MODE", "AVG", "AUTO", "SOLID", "SOLID_CLEAN"]:
+            raise StyxValidationError("Parameter `blend` must be one of [\"MODE\", \"AVG\", \"AUTO\", \"SOLID\", \"SOLID_CLEAN\"]")
+    if params.get("minhits", None) is not None:
+        if not isinstance(params["minhits"], (float, int)):
+            raise StyxValidationError(f'`minhits` has the wrong type: Received `{type(params.get("minhits", None))}` expected `float | None`')
+    if params.get("ed", None) is not None:
+        if not isinstance(params["ed"], list):
+            raise StyxValidationError(f'`ed` has the wrong type: Received `{type(params.get("ed", None))}` expected `list[float] | None`')
+        if len(params["ed"]) == 2:
+            raise StyxValidationError("Parameter `ed` must contain exactly 2 elements")
+        for e in params["ed"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ed` has the wrong type: Received `{type(params.get("ed", None))}` expected `list[float] | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_range", None) is not None:
+        if not isinstance(params["mask_range"], list):
+            raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
+        if len(params["mask_range"]) == 2:
+            raise StyxValidationError("Parameter `mask_range` must contain exactly 2 elements")
+        for e in params["mask_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
+    if params.get("mrange", None) is not None:
+        if not isinstance(params["mrange"], list):
+            raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+        if len(params["mrange"]) == 2:
+            raise StyxValidationError("Parameter `mrange` must contain exactly 2 elements")
+        for e in params["mrange"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+    if params.get("cmask", None) is not None:
+        if not isinstance(params["cmask"], str):
+            raise StyxValidationError(f'`cmask` has the wrong type: Received `{type(params.get("cmask", None))}` expected `str | None`')
+
+
 def v_3dinfill_cargs(
     params: V3dinfillParameters,
     execution: Execution,
@@ -214,6 +276,7 @@ def v_3dinfill_execute(
     Returns:
         NamedTuple of outputs (described in `V3dinfillOutputs`).
     """
+    v_3dinfill_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DINFILL_METADATA)
     params = execution.params(params)

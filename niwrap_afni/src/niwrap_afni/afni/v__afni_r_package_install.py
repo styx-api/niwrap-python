@@ -84,6 +84,46 @@ def v__afni_r_package_install_params(
     return params
 
 
+def v__afni_r_package_install_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAfniRPackageInstallParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("afni", False) is None:
+        raise StyxValidationError("`afni` must not be None")
+    if not isinstance(params["afni"], bool):
+        raise StyxValidationError(f'`afni` has the wrong type: Received `{type(params.get("afni", False))}` expected `bool`')
+    if params.get("shiny", False) is None:
+        raise StyxValidationError("`shiny` must not be None")
+    if not isinstance(params["shiny"], bool):
+        raise StyxValidationError(f'`shiny` has the wrong type: Received `{type(params.get("shiny", False))}` expected `bool`')
+    if params.get("bayes_view", False) is None:
+        raise StyxValidationError("`bayes_view` must not be None")
+    if not isinstance(params["bayes_view"], bool):
+        raise StyxValidationError(f'`bayes_view` has the wrong type: Received `{type(params.get("bayes_view", False))}` expected `bool`')
+    if params.get("circos", False) is None:
+        raise StyxValidationError("`circos` must not be None")
+    if not isinstance(params["circos"], bool):
+        raise StyxValidationError(f'`circos` has the wrong type: Received `{type(params.get("circos", False))}` expected `bool`')
+    if params.get("custom_packages", None) is not None:
+        if not isinstance(params["custom_packages"], str):
+            raise StyxValidationError(f'`custom_packages` has the wrong type: Received `{type(params.get("custom_packages", None))}` expected `str | None`')
+    if params.get("mirror", None) is not None:
+        if not isinstance(params["mirror"], str):
+            raise StyxValidationError(f'`mirror` has the wrong type: Received `{type(params.get("mirror", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__afni_r_package_install_cargs(
     params: VAfniRPackageInstallParameters,
     execution: Execution,
@@ -161,6 +201,7 @@ def v__afni_r_package_install_execute(
     Returns:
         NamedTuple of outputs (described in `VAfniRPackageInstallOutputs`).
     """
+    v__afni_r_package_install_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AFNI_R_PACKAGE_INSTALL_METADATA)
     params = execution.params(params)

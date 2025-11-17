@@ -49,6 +49,24 @@ def rca_config2csh_params(
     return params
 
 
+def rca_config2csh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RcaConfig2cshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("configfile", None) is None:
+        raise StyxValidationError("`configfile` must not be None")
+    if not isinstance(params["configfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`configfile` has the wrong type: Received `{type(params.get("configfile", None))}` expected `InputPathType`')
+
+
 def rca_config2csh_cargs(
     params: RcaConfig2cshParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def rca_config2csh_execute(
     Returns:
         NamedTuple of outputs (described in `RcaConfig2cshOutputs`).
     """
+    rca_config2csh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RCA_CONFIG2CSH_METADATA)
     params = execution.params(params)

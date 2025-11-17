@@ -287,6 +287,168 @@ def v_3d_vol2_surf_params(
     return params
 
 
+def v_3d_vol2_surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dVol2SurfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("sv", None) is None:
+        raise StyxValidationError("`sv` must not be None")
+    if not isinstance(params["sv"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sv` has the wrong type: Received `{type(params.get("sv", None))}` expected `InputPathType`')
+    if params.get("grid_parent", None) is None:
+        raise StyxValidationError("`grid_parent` must not be None")
+    if not isinstance(params["grid_parent"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`grid_parent` has the wrong type: Received `{type(params.get("grid_parent", None))}` expected `InputPathType`')
+    if params.get("map_func", None) is None:
+        raise StyxValidationError("`map_func` must not be None")
+    if not isinstance(params["map_func"], str):
+        raise StyxValidationError(f'`map_func` has the wrong type: Received `{type(params.get("map_func", None))}` expected `str`')
+    if params.get("surf_A", None) is None:
+        raise StyxValidationError("`surf_A` must not be None")
+    if not isinstance(params["surf_A"], str):
+        raise StyxValidationError(f'`surf_A` has the wrong type: Received `{type(params.get("surf_A", None))}` expected `str`')
+    if params.get("surf_B", None) is not None:
+        if not isinstance(params["surf_B"], str):
+            raise StyxValidationError(f'`surf_B` has the wrong type: Received `{type(params.get("surf_B", None))}` expected `str | None`')
+    if params.get("out_1D", None) is not None:
+        if not isinstance(params["out_1D"], str):
+            raise StyxValidationError(f'`out_1D` has the wrong type: Received `{type(params.get("out_1D", None))}` expected `str | None`')
+    if params.get("out_niml", None) is not None:
+        if not isinstance(params["out_niml"], str):
+            raise StyxValidationError(f'`out_niml` has the wrong type: Received `{type(params.get("out_niml", None))}` expected `str | None`')
+    if params.get("use_norms", False) is None:
+        raise StyxValidationError("`use_norms` must not be None")
+    if not isinstance(params["use_norms"], bool):
+        raise StyxValidationError(f'`use_norms` has the wrong type: Received `{type(params.get("use_norms", False))}` expected `bool`')
+    if params.get("norm_len", None) is not None:
+        if not isinstance(params["norm_len"], (float, int)):
+            raise StyxValidationError(f'`norm_len` has the wrong type: Received `{type(params.get("norm_len", None))}` expected `float | None`')
+    if params.get("first_node", None) is not None:
+        if not isinstance(params["first_node"], (float, int)):
+            raise StyxValidationError(f'`first_node` has the wrong type: Received `{type(params.get("first_node", None))}` expected `float | None`')
+    if params.get("last_node", None) is not None:
+        if not isinstance(params["last_node"], (float, int)):
+            raise StyxValidationError(f'`last_node` has the wrong type: Received `{type(params.get("last_node", None))}` expected `float | None`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], (float, int)):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `float | None`')
+    if params.get("dnode", None) is not None:
+        if not isinstance(params["dnode"], (float, int)):
+            raise StyxValidationError(f'`dnode` has the wrong type: Received `{type(params.get("dnode", None))}` expected `float | None`')
+    if params.get("f_steps", None) is not None:
+        if not isinstance(params["f_steps"], (float, int)):
+            raise StyxValidationError(f'`f_steps` has the wrong type: Received `{type(params.get("f_steps", None))}` expected `float | None`')
+    if params.get("f_index", None) is not None:
+        if not isinstance(params["f_index"], str):
+            raise StyxValidationError(f'`f_index` has the wrong type: Received `{type(params.get("f_index", None))}` expected `str | None`')
+    if params.get("f_p1_mm", None) is not None:
+        if not isinstance(params["f_p1_mm"], (float, int)):
+            raise StyxValidationError(f'`f_p1_mm` has the wrong type: Received `{type(params.get("f_p1_mm", None))}` expected `float | None`')
+    if params.get("f_pn_mm", None) is not None:
+        if not isinstance(params["f_pn_mm"], (float, int)):
+            raise StyxValidationError(f'`f_pn_mm` has the wrong type: Received `{type(params.get("f_pn_mm", None))}` expected `float | None`')
+    if params.get("f_p1_fr", None) is not None:
+        if not isinstance(params["f_p1_fr"], (float, int)):
+            raise StyxValidationError(f'`f_p1_fr` has the wrong type: Received `{type(params.get("f_p1_fr", None))}` expected `float | None`')
+    if params.get("f_pn_fr", None) is not None:
+        if not isinstance(params["f_pn_fr"], (float, int)):
+            raise StyxValidationError(f'`f_pn_fr` has the wrong type: Received `{type(params.get("f_pn_fr", None))}` expected `float | None`')
+    if params.get("skip_col_nodes", False) is None:
+        raise StyxValidationError("`skip_col_nodes` must not be None")
+    if not isinstance(params["skip_col_nodes"], bool):
+        raise StyxValidationError(f'`skip_col_nodes` has the wrong type: Received `{type(params.get("skip_col_nodes", False))}` expected `bool`')
+    if params.get("skip_col_1dindex", False) is None:
+        raise StyxValidationError("`skip_col_1dindex` must not be None")
+    if not isinstance(params["skip_col_1dindex"], bool):
+        raise StyxValidationError(f'`skip_col_1dindex` has the wrong type: Received `{type(params.get("skip_col_1dindex", False))}` expected `bool`')
+    if params.get("skip_col_i", False) is None:
+        raise StyxValidationError("`skip_col_i` must not be None")
+    if not isinstance(params["skip_col_i"], bool):
+        raise StyxValidationError(f'`skip_col_i` has the wrong type: Received `{type(params.get("skip_col_i", False))}` expected `bool`')
+    if params.get("skip_col_j", False) is None:
+        raise StyxValidationError("`skip_col_j` must not be None")
+    if not isinstance(params["skip_col_j"], bool):
+        raise StyxValidationError(f'`skip_col_j` has the wrong type: Received `{type(params.get("skip_col_j", False))}` expected `bool`')
+    if params.get("skip_col_k", False) is None:
+        raise StyxValidationError("`skip_col_k` must not be None")
+    if not isinstance(params["skip_col_k"], bool):
+        raise StyxValidationError(f'`skip_col_k` has the wrong type: Received `{type(params.get("skip_col_k", False))}` expected `bool`')
+    if params.get("skip_col_vals", False) is None:
+        raise StyxValidationError("`skip_col_vals` must not be None")
+    if not isinstance(params["skip_col_vals"], bool):
+        raise StyxValidationError(f'`skip_col_vals` has the wrong type: Received `{type(params.get("skip_col_vals", False))}` expected `bool`')
+    if params.get("no_headers", False) is None:
+        raise StyxValidationError("`no_headers` must not be None")
+    if not isinstance(params["no_headers"], bool):
+        raise StyxValidationError(f'`no_headers` has the wrong type: Received `{type(params.get("no_headers", False))}` expected `bool`')
+    if params.get("save_seg_coords", None) is not None:
+        if not isinstance(params["save_seg_coords"], str):
+            raise StyxValidationError(f'`save_seg_coords` has the wrong type: Received `{type(params.get("save_seg_coords", None))}` expected `str | None`')
+    if params.get("cmask", None) is not None:
+        if not isinstance(params["cmask"], str):
+            raise StyxValidationError(f'`cmask` has the wrong type: Received `{type(params.get("cmask", None))}` expected `str | None`')
+    if params.get("gp_index", None) is not None:
+        if not isinstance(params["gp_index"], (float, int)):
+            raise StyxValidationError(f'`gp_index` has the wrong type: Received `{type(params.get("gp_index", None))}` expected `float | None`')
+    if params.get("oob_index", None) is not None:
+        if not isinstance(params["oob_index"], (float, int)):
+            raise StyxValidationError(f'`oob_index` has the wrong type: Received `{type(params.get("oob_index", None))}` expected `float | None`')
+    if params.get("oob_value", None) is not None:
+        if not isinstance(params["oob_value"], (float, int)):
+            raise StyxValidationError(f'`oob_value` has the wrong type: Received `{type(params.get("oob_value", None))}` expected `float | None`')
+    if params.get("oom_value", None) is not None:
+        if not isinstance(params["oom_value"], (float, int)):
+            raise StyxValidationError(f'`oom_value` has the wrong type: Received `{type(params.get("oom_value", None))}` expected `float | None`')
+    if params.get("outcols_afni_nsd", False) is None:
+        raise StyxValidationError("`outcols_afni_nsd` must not be None")
+    if not isinstance(params["outcols_afni_nsd"], bool):
+        raise StyxValidationError(f'`outcols_afni_nsd` has the wrong type: Received `{type(params.get("outcols_afni_nsd", False))}` expected `bool`')
+    if params.get("outcols_1_result", False) is None:
+        raise StyxValidationError("`outcols_1_result` must not be None")
+    if not isinstance(params["outcols_1_result"], bool):
+        raise StyxValidationError(f'`outcols_1_result` has the wrong type: Received `{type(params.get("outcols_1_result", False))}` expected `bool`')
+    if params.get("outcols_results", False) is None:
+        raise StyxValidationError("`outcols_results` must not be None")
+    if not isinstance(params["outcols_results"], bool):
+        raise StyxValidationError(f'`outcols_results` has the wrong type: Received `{type(params.get("outcols_results", False))}` expected `bool`')
+    if params.get("outcols_nsd_format", False) is None:
+        raise StyxValidationError("`outcols_nsd_format` must not be None")
+    if not isinstance(params["outcols_nsd_format"], bool):
+        raise StyxValidationError(f'`outcols_nsd_format` has the wrong type: Received `{type(params.get("outcols_nsd_format", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("keep_norm_dir", False) is None:
+        raise StyxValidationError("`keep_norm_dir` must not be None")
+    if not isinstance(params["keep_norm_dir"], bool):
+        raise StyxValidationError(f'`keep_norm_dir` has the wrong type: Received `{type(params.get("keep_norm_dir", False))}` expected `bool`')
+    if params.get("reverse_norm_dir", False) is None:
+        raise StyxValidationError("`reverse_norm_dir` must not be None")
+    if not isinstance(params["reverse_norm_dir"], bool):
+        raise StyxValidationError(f'`reverse_norm_dir` has the wrong type: Received `{type(params.get("reverse_norm_dir", False))}` expected `bool`')
+
+
 def v_3d_vol2_surf_cargs(
     params: V3dVol2SurfParameters,
     execution: Execution,
@@ -497,6 +659,7 @@ def v_3d_vol2_surf_execute(
     Returns:
         NamedTuple of outputs (described in `V3dVol2SurfOutputs`).
     """
+    v_3d_vol2_surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_VOL2_SURF_METADATA)
     params = execution.params(params)

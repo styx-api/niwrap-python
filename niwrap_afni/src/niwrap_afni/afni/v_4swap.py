@@ -54,6 +54,31 @@ def v_4swap_params(
     return params
 
 
+def v_4swap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V4swapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("files", None) is None:
+        raise StyxValidationError("`files` must not be None")
+    if not isinstance(params["files"], list):
+        raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    for e in params["files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_4swap_cargs(
     params: V4swapParameters,
     execution: Execution,
@@ -113,6 +138,7 @@ def v_4swap_execute(
     Returns:
         NamedTuple of outputs (described in `V4swapOutputs`).
     """
+    v_4swap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_4SWAP_METADATA)
     params = execution.params(params)

@@ -79,6 +79,38 @@ def rca_fix_ento_params(
     return params
 
 
+def rca_fix_ento_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RcaFixEntoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("submit", False) is None:
+        raise StyxValidationError("`submit` must not be None")
+    if not isinstance(params["submit"], bool):
+        raise StyxValidationError(f'`submit` has the wrong type: Received `{type(params.get("submit", False))}` expected `bool`')
+    if params.get("account", None) is not None:
+        if not isinstance(params["account"], str):
+            raise StyxValidationError(f'`account` has the wrong type: Received `{type(params.get("account", None))}` expected `str | None`')
+    if params.get("brain_mask", False) is None:
+        raise StyxValidationError("`brain_mask` must not be None")
+    if not isinstance(params["brain_mask"], bool):
+        raise StyxValidationError(f'`brain_mask` has the wrong type: Received `{type(params.get("brain_mask", False))}` expected `bool`')
+
+
 def rca_fix_ento_cargs(
     params: RcaFixEntoParameters,
     execution: Execution,
@@ -157,6 +189,7 @@ def rca_fix_ento_execute(
     Returns:
         NamedTuple of outputs (described in `RcaFixEntoOutputs`).
     """
+    rca_fix_ento_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RCA_FIX_ENTO_METADATA)
     params = execution.params(params)

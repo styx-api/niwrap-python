@@ -71,6 +71,40 @@ def mri_stats2seg_params(
     return params
 
 
+def mri_stats2seg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriStats2segParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stat_file", None) is None:
+        raise StyxValidationError("`stat_file` must not be None")
+    if not isinstance(params["stat_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`stat_file` has the wrong type: Received `{type(params.get("stat_file", None))}` expected `InputPathType`')
+    if params.get("segmentation_volume", None) is None:
+        raise StyxValidationError("`segmentation_volume` must not be None")
+    if not isinstance(params["segmentation_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segmentation_volume` has the wrong type: Received `{type(params.get("segmentation_volume", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+
+
 def mri_stats2seg_cargs(
     params: MriStats2segParameters,
     execution: Execution,
@@ -144,6 +178,7 @@ def mri_stats2seg_execute(
     Returns:
         NamedTuple of outputs (described in `MriStats2segOutputs`).
     """
+    mri_stats2seg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_STATS2SEG_METADATA)
     params = execution.params(params)

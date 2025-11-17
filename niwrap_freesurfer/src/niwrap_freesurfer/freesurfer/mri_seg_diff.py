@@ -103,6 +103,55 @@ def mri_seg_diff_params(
     return params
 
 
+def mri_seg_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSegDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("seg1", None) is not None:
+        if not isinstance(params["seg1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg1` has the wrong type: Received `{type(params.get("seg1", None))}` expected `InputPathType | None`')
+    if params.get("seg2", None) is not None:
+        if not isinstance(params["seg2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg2` has the wrong type: Received `{type(params.get("seg2", None))}` expected `InputPathType | None`')
+    if params.get("seg", None) is not None:
+        if not isinstance(params["seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg` has the wrong type: Received `{type(params.get("seg", None))}` expected `InputPathType | None`')
+    if params.get("diff", None) is None:
+        raise StyxValidationError("`diff` must not be None")
+    if not isinstance(params["diff"], str):
+        raise StyxValidationError(f'`diff` has the wrong type: Received `{type(params.get("diff", None))}` expected `str`')
+    if params.get("diff_in", None) is not None:
+        if not isinstance(params["diff_in"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`diff_in` has the wrong type: Received `{type(params.get("diff_in", None))}` expected `InputPathType | None`')
+    if params.get("merged", None) is not None:
+        if not isinstance(params["merged"], str):
+            raise StyxValidationError(f'`merged` has the wrong type: Received `{type(params.get("merged", None))}` expected `str | None`')
+    if params.get("diff_force", False) is None:
+        raise StyxValidationError("`diff_force` must not be None")
+    if not isinstance(params["diff_force"], bool):
+        raise StyxValidationError(f'`diff_force` has the wrong type: Received `{type(params.get("diff_force", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_seg_diff_cargs(
     params: MriSegDiffParameters,
     execution: Execution,
@@ -199,6 +248,7 @@ def mri_seg_diff_execute(
     Returns:
         NamedTuple of outputs (described in `MriSegDiffOutputs`).
     """
+    mri_seg_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SEG_DIFF_METADATA)
     params = execution.params(params)

@@ -155,6 +155,77 @@ def bianca_params(
     return params
 
 
+def bianca_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BiancaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("master_file", None) is None:
+        raise StyxValidationError("`master_file` must not be None")
+    if not isinstance(params["master_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`master_file` has the wrong type: Received `{type(params.get("master_file", None))}` expected `InputPathType`')
+    if params.get("label_feature_num", None) is None:
+        raise StyxValidationError("`label_feature_num` must not be None")
+    if not isinstance(params["label_feature_num"], (float, int)):
+        raise StyxValidationError(f'`label_feature_num` has the wrong type: Received `{type(params.get("label_feature_num", None))}` expected `float`')
+    if params.get("brain_mask_feature_num", None) is None:
+        raise StyxValidationError("`brain_mask_feature_num` must not be None")
+    if not isinstance(params["brain_mask_feature_num"], (float, int)):
+        raise StyxValidationError(f'`brain_mask_feature_num` has the wrong type: Received `{type(params.get("brain_mask_feature_num", None))}` expected `float`')
+    if params.get("query_subject_num", None) is None:
+        raise StyxValidationError("`query_subject_num` must not be None")
+    if not isinstance(params["query_subject_num"], (float, int)):
+        raise StyxValidationError(f'`query_subject_num` has the wrong type: Received `{type(params.get("query_subject_num", None))}` expected `float`')
+    if params.get("training_nums", None) is not None:
+        if not isinstance(params["training_nums"], str):
+            raise StyxValidationError(f'`training_nums` has the wrong type: Received `{type(params.get("training_nums", None))}` expected `str | None`')
+    if params.get("feature_subset", None) is not None:
+        if not isinstance(params["feature_subset"], str):
+            raise StyxValidationError(f'`feature_subset` has the wrong type: Received `{type(params.get("feature_subset", None))}` expected `str | None`')
+    if params.get("mat_feature_num", None) is not None:
+        if not isinstance(params["mat_feature_num"], (float, int)):
+            raise StyxValidationError(f'`mat_feature_num` has the wrong type: Received `{type(params.get("mat_feature_num", None))}` expected `float | None`')
+    if params.get("spatial_weight", None) is not None:
+        if not isinstance(params["spatial_weight"], (float, int)):
+            raise StyxValidationError(f'`spatial_weight` has the wrong type: Received `{type(params.get("spatial_weight", None))}` expected `float | None`')
+    if params.get("patch_sizes", None) is not None:
+        if not isinstance(params["patch_sizes"], str):
+            raise StyxValidationError(f'`patch_sizes` has the wrong type: Received `{type(params.get("patch_sizes", None))}` expected `str | None`')
+    if params.get("patch_3d", False) is None:
+        raise StyxValidationError("`patch_3d` must not be None")
+    if not isinstance(params["patch_3d"], bool):
+        raise StyxValidationError(f'`patch_3d` has the wrong type: Received `{type(params.get("patch_3d", False))}` expected `bool`')
+    if params.get("select_pts", None) is not None:
+        if not isinstance(params["select_pts"], str):
+            raise StyxValidationError(f'`select_pts` has the wrong type: Received `{type(params.get("select_pts", None))}` expected `str | None`')
+    if params.get("training_pts", None) is not None:
+        if not isinstance(params["training_pts"], str):
+            raise StyxValidationError(f'`training_pts` has the wrong type: Received `{type(params.get("training_pts", None))}` expected `str | None`')
+    if params.get("non_les_pts", None) is not None:
+        if not isinstance(params["non_les_pts"], str):
+            raise StyxValidationError(f'`non_les_pts` has the wrong type: Received `{type(params.get("non_les_pts", None))}` expected `str | None`')
+    if params.get("load_classifier_data", None) is not None:
+        if not isinstance(params["load_classifier_data"], str):
+            raise StyxValidationError(f'`load_classifier_data` has the wrong type: Received `{type(params.get("load_classifier_data", None))}` expected `str | None`')
+    if params.get("save_classifier_data", None) is not None:
+        if not isinstance(params["save_classifier_data"], str):
+            raise StyxValidationError(f'`save_classifier_data` has the wrong type: Received `{type(params.get("save_classifier_data", None))}` expected `str | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("out_name", None) is not None:
+        if not isinstance(params["out_name"], str):
+            raise StyxValidationError(f'`out_name` has the wrong type: Received `{type(params.get("out_name", None))}` expected `str | None`')
+
+
 def bianca_cargs(
     params: BiancaParameters,
     execution: Execution,
@@ -245,6 +316,7 @@ def bianca_execute(
     Returns:
         NamedTuple of outputs (described in `BiancaOutputs`).
     """
+    bianca_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BIANCA_METADATA)
     params = execution.params(params)

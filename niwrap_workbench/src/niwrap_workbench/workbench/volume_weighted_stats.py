@@ -84,6 +84,28 @@ def volume_weighted_stats_weight_volume_params(
     return params
 
 
+def volume_weighted_stats_weight_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeWeightedStatsWeightVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("weight-volume", None) is None:
+        raise StyxValidationError("`weight-volume` must not be None")
+    if not isinstance(params["weight-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`weight-volume` has the wrong type: Received `{type(params.get("weight-volume", None))}` expected `InputPathType`')
+    if params.get("match-maps", False) is None:
+        raise StyxValidationError("`match-maps` must not be None")
+    if not isinstance(params["match-maps"], bool):
+        raise StyxValidationError(f'`match-maps` has the wrong type: Received `{type(params.get("match-maps", False))}` expected `bool`')
+
+
 def volume_weighted_stats_weight_volume_cargs(
     params: VolumeWeightedStatsWeightVolumeParameters,
     execution: Execution,
@@ -127,6 +149,28 @@ def volume_weighted_stats_roi_params(
         "match-maps": match_maps,
     }
     return params
+
+
+def volume_weighted_stats_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeWeightedStatsRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-volume", None) is None:
+        raise StyxValidationError("`roi-volume` must not be None")
+    if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType`')
+    if params.get("match-maps", False) is None:
+        raise StyxValidationError("`match-maps` must not be None")
+    if not isinstance(params["match-maps"], bool):
+        raise StyxValidationError(f'`match-maps` has the wrong type: Received `{type(params.get("match-maps", False))}` expected `bool`')
 
 
 def volume_weighted_stats_roi_cargs(
@@ -213,6 +257,49 @@ def volume_weighted_stats_params(
     return params
 
 
+def volume_weighted_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeWeightedStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("weight-volume", None) is not None:
+        volume_weighted_stats_weight_volume_validate(params["weight-volume"])
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
+    if params.get("roi", None) is not None:
+        volume_weighted_stats_roi_validate(params["roi"])
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
+    if params.get("sample", False) is not None:
+        if not isinstance(params["sample"], bool):
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", False))}` expected `bool | None`')
+    if params.get("percent", None) is not None:
+        if not isinstance(params["percent"], (float, int)):
+            raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("show-map-name", False) is None:
+        raise StyxValidationError("`show-map-name` must not be None")
+    if not isinstance(params["show-map-name"], bool):
+        raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+
+
 def volume_weighted_stats_cargs(
     params: VolumeWeightedStatsParameters,
     execution: Execution,
@@ -290,6 +377,7 @@ def volume_weighted_stats_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeWeightedStatsOutputs`).
     """
+    volume_weighted_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_WEIGHTED_STATS_METADATA)
     params = execution.params(params)

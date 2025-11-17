@@ -160,6 +160,102 @@ def dmri_pathstats_params(
     return params
 
 
+def dmri_pathstats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriPathstatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("intrk", None) is None:
+        raise StyxValidationError("`intrk` must not be None")
+    if not isinstance(params["intrk"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`intrk` has the wrong type: Received `{type(params.get("intrk", None))}` expected `InputPathType`')
+    if params.get("rois", None) is not None:
+        if not isinstance(params["rois"], list):
+            raise StyxValidationError(f'`rois` has the wrong type: Received `{type(params.get("rois", None))}` expected `list[InputPathType] | None`')
+        if len(params["rois"]) >= 0:
+            raise StyxValidationError("Parameter `rois` must contain at least 0 elements")
+        for e in params["rois"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`rois` has the wrong type: Received `{type(params.get("rois", None))}` expected `list[InputPathType] | None`')
+    if params.get("intrc", None) is None:
+        raise StyxValidationError("`intrc` must not be None")
+    if not isinstance(params["intrc"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`intrc` has the wrong type: Received `{type(params.get("intrc", None))}` expected `InputPathType`')
+    if params.get("meas", None) is not None:
+        if not isinstance(params["meas"], list):
+            raise StyxValidationError(f'`meas` has the wrong type: Received `{type(params.get("meas", None))}` expected `list[InputPathType] | None`')
+        if len(params["meas"]) >= 0:
+            raise StyxValidationError("Parameter `meas` must contain at least 0 elements")
+        for e in params["meas"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`meas` has the wrong type: Received `{type(params.get("meas", None))}` expected `list[InputPathType] | None`')
+    if params.get("measname", None) is not None:
+        if not isinstance(params["measname"], list):
+            raise StyxValidationError(f'`measname` has the wrong type: Received `{type(params.get("measname", None))}` expected `list[str] | None`')
+        if len(params["measname"]) >= 0:
+            raise StyxValidationError("Parameter `measname` must contain at least 0 elements")
+        for e in params["measname"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`measname` has the wrong type: Received `{type(params.get("measname", None))}` expected `list[str] | None`')
+    if params.get("dtbase", None) is not None:
+        if not isinstance(params["dtbase"], str):
+            raise StyxValidationError(f'`dtbase` has the wrong type: Received `{type(params.get("dtbase", None))}` expected `str | None`')
+    if params.get("path", None) is not None:
+        if not isinstance(params["path"], str):
+            raise StyxValidationError(f'`path` has the wrong type: Received `{type(params.get("path", None))}` expected `str | None`')
+    if params.get("subj", None) is not None:
+        if not isinstance(params["subj"], str):
+            raise StyxValidationError(f'`subj` has the wrong type: Received `{type(params.get("subj", None))}` expected `str | None`')
+    if params.get("out", None) is not None:
+        if not isinstance(params["out"], str):
+            raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str | None`')
+    if params.get("outvox", None) is not None:
+        if not isinstance(params["outvox"], str):
+            raise StyxValidationError(f'`outvox` has the wrong type: Received `{type(params.get("outvox", None))}` expected `str | None`')
+    if params.get("median", None) is not None:
+        if not isinstance(params["median"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`median` has the wrong type: Received `{type(params.get("median", None))}` expected `InputPathType | None`')
+    if params.get("ends", None) is not None:
+        if not isinstance(params["ends"], str):
+            raise StyxValidationError(f'`ends` has the wrong type: Received `{type(params.get("ends", None))}` expected `str | None`')
+    if params.get("ref", None) is not None:
+        if not isinstance(params["ref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref` has the wrong type: Received `{type(params.get("ref", None))}` expected `InputPathType | None`')
+    if params.get("pthr", None) is not None:
+        if not isinstance(params["pthr"], (float, int)):
+            raise StyxValidationError(f'`pthr` has the wrong type: Received `{type(params.get("pthr", None))}` expected `float | None`')
+        if 0 <= params["pthr"] <= 1:
+            raise StyxValidationError("Parameter `pthr` must be between 0 and 1 (inclusive)")
+    if params.get("fthr", None) is not None:
+        if not isinstance(params["fthr"], (float, int)):
+            raise StyxValidationError(f'`fthr` has the wrong type: Received `{type(params.get("fthr", None))}` expected `float | None`')
+        if 0 <= params["fthr"] <= 1:
+            raise StyxValidationError("Parameter `fthr` must be between 0 and 1 (inclusive)")
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def dmri_pathstats_cargs(
     params: DmriPathstatsParameters,
     execution: Execution,
@@ -301,6 +397,7 @@ def dmri_pathstats_execute(
     Returns:
         NamedTuple of outputs (described in `DmriPathstatsOutputs`).
     """
+    dmri_pathstats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_PATHSTATS_METADATA)
     params = execution.params(params)

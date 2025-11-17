@@ -62,6 +62,29 @@ def rca_base_init_params(
     return params
 
 
+def rca_base_init_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RcaBaseInitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("status_file", None) is not None:
+        if not isinstance(params["status_file"], str):
+            raise StyxValidationError(f'`status_file` has the wrong type: Received `{type(params.get("status_file", None))}` expected `str | None`')
+    if params.get("cmd_file", None) is not None:
+        if not isinstance(params["cmd_file"], str):
+            raise StyxValidationError(f'`cmd_file` has the wrong type: Received `{type(params.get("cmd_file", None))}` expected `str | None`')
+
+
 def rca_base_init_cargs(
     params: RcaBaseInitParameters,
     execution: Execution,
@@ -127,6 +150,7 @@ def rca_base_init_execute(
     Returns:
         NamedTuple of outputs (described in `RcaBaseInitOutputs`).
     """
+    rca_base_init_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RCA_BASE_INIT_METADATA)
     params = execution.params(params)

@@ -150,6 +150,72 @@ def surf_smooth_params(
     return params
 
 
+def surf_smooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfSmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
+    if params.get("input_data", None) is not None:
+        if not isinstance(params["input_data"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_data` has the wrong type: Received `{type(params.get("input_data", None))}` expected `InputPathType | None`')
+    if params.get("target_fwhm", None) is not None:
+        if not isinstance(params["target_fwhm"], (float, int)):
+            raise StyxValidationError(f'`target_fwhm` has the wrong type: Received `{type(params.get("target_fwhm", None))}` expected `float | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("number_iterations", None) is not None:
+        if not isinstance(params["number_iterations"], (float, int)):
+            raise StyxValidationError(f'`number_iterations` has the wrong type: Received `{type(params.get("number_iterations", None))}` expected `float | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("band_pass_frequency", None) is not None:
+        if not isinstance(params["band_pass_frequency"], (float, int)):
+            raise StyxValidationError(f'`band_pass_frequency` has the wrong type: Received `{type(params.get("band_pass_frequency", None))}` expected `float | None`')
+    if params.get("lambda_mu", None) is not None:
+        if not isinstance(params["lambda_mu"], str):
+            raise StyxValidationError(f'`lambda_mu` has the wrong type: Received `{type(params.get("lambda_mu", None))}` expected `str | None`')
+    if params.get("interp_weights", None) is not None:
+        if not isinstance(params["interp_weights"], str):
+            raise StyxValidationError(f'`interp_weights` has the wrong type: Received `{type(params.get("interp_weights", None))}` expected `str | None`')
+    if params.get("node_mask", None) is not None:
+        if not isinstance(params["node_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`node_mask` has the wrong type: Received `{type(params.get("node_mask", None))}` expected `InputPathType | None`')
+    if params.get("surface_output", None) is not None:
+        if not isinstance(params["surface_output"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_output` has the wrong type: Received `{type(params.get("surface_output", None))}` expected `InputPathType | None`')
+    if params.get("dbg_node", None) is not None:
+        if not isinstance(params["dbg_node"], (float, int)):
+            raise StyxValidationError(f'`dbg_node` has the wrong type: Received `{type(params.get("dbg_node", None))}` expected `float | None`')
+    if params.get("use_neighbors_outside_mask", False) is None:
+        raise StyxValidationError("`use_neighbors_outside_mask` must not be None")
+    if not isinstance(params["use_neighbors_outside_mask"], bool):
+        raise StyxValidationError(f'`use_neighbors_outside_mask` has the wrong type: Received `{type(params.get("use_neighbors_outside_mask", False))}` expected `bool`')
+    if params.get("talk_suma", False) is None:
+        raise StyxValidationError("`talk_suma` must not be None")
+    if not isinstance(params["talk_suma"], bool):
+        raise StyxValidationError(f'`talk_suma` has the wrong type: Received `{type(params.get("talk_suma", False))}` expected `bool`')
+    if params.get("refresh_rate", None) is not None:
+        if not isinstance(params["refresh_rate"], (float, int)):
+            raise StyxValidationError(f'`refresh_rate` has the wrong type: Received `{type(params.get("refresh_rate", None))}` expected `float | None`')
+
+
 def surf_smooth_cargs(
     params: SurfSmoothParameters,
     execution: Execution,
@@ -279,6 +345,7 @@ def surf_smooth_execute(
     Returns:
         NamedTuple of outputs (described in `SurfSmoothOutputs`).
     """
+    surf_smooth_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_SMOOTH_METADATA)
     params = execution.params(params)

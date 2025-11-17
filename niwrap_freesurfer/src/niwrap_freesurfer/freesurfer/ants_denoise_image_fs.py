@@ -61,6 +61,32 @@ def ants_denoise_image_fs_params(
     return params
 
 
+def ants_denoise_image_fs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsDenoiseImageFsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", "output.nii") is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", "output.nii"))}` expected `str`')
+    if params.get("rician_flag", False) is None:
+        raise StyxValidationError("`rician_flag` must not be None")
+    if not isinstance(params["rician_flag"], bool):
+        raise StyxValidationError(f'`rician_flag` has the wrong type: Received `{type(params.get("rician_flag", False))}` expected `bool`')
+
+
 def ants_denoise_image_fs_cargs(
     params: AntsDenoiseImageFsParameters,
     execution: Execution,
@@ -129,6 +155,7 @@ def ants_denoise_image_fs_execute(
     Returns:
         NamedTuple of outputs (described in `AntsDenoiseImageFsOutputs`).
     """
+    ants_denoise_image_fs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_DENOISE_IMAGE_FS_METADATA)
     params = execution.params(params)

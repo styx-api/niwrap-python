@@ -233,6 +233,135 @@ def filmbabe_params(
     return params
 
 
+def filmbabe_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FilmbabeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datafile", None) is None:
+        raise StyxValidationError("`datafile` must not be None")
+    if not isinstance(params["datafile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datafile` has the wrong type: Received `{type(params.get("datafile", None))}` expected `InputPathType`')
+    if params.get("datafile_alias", None) is None:
+        raise StyxValidationError("`datafile_alias` must not be None")
+    if not isinstance(params["datafile_alias"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datafile_alias` has the wrong type: Received `{type(params.get("datafile_alias", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("mask_alias", None) is None:
+        raise StyxValidationError("`mask_alias` must not be None")
+    if not isinstance(params["mask_alias"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_alias` has the wrong type: Received `{type(params.get("mask_alias", None))}` expected `InputPathType`')
+    if params.get("designfile", None) is None:
+        raise StyxValidationError("`designfile` must not be None")
+    if not isinstance(params["designfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`designfile` has the wrong type: Received `{type(params.get("designfile", None))}` expected `InputPathType`')
+    if params.get("designfile_alias_1", None) is None:
+        raise StyxValidationError("`designfile_alias_1` must not be None")
+    if not isinstance(params["designfile_alias_1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`designfile_alias_1` has the wrong type: Received `{type(params.get("designfile_alias_1", None))}` expected `InputPathType`')
+    if params.get("designfile_alias_2", None) is None:
+        raise StyxValidationError("`designfile_alias_2` must not be None")
+    if not isinstance(params["designfile_alias_2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`designfile_alias_2` has the wrong type: Received `{type(params.get("designfile_alias_2", None))}` expected `InputPathType`')
+    if params.get("frf", None) is None:
+        raise StyxValidationError("`frf` must not be None")
+    if not isinstance(params["frf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`frf` has the wrong type: Received `{type(params.get("frf", None))}` expected `InputPathType`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("verbose_flag_alias", False) is None:
+        raise StyxValidationError("`verbose_flag_alias` must not be None")
+    if not isinstance(params["verbose_flag_alias"], bool):
+        raise StyxValidationError(f'`verbose_flag_alias` has the wrong type: Received `{type(params.get("verbose_flag_alias", False))}` expected `bool`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], str):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `str | None`')
+    if params.get("debug_level_alias_1", None) is not None:
+        if not isinstance(params["debug_level_alias_1"], str):
+            raise StyxValidationError(f'`debug_level_alias_1` has the wrong type: Received `{type(params.get("debug_level_alias_1", None))}` expected `str | None`')
+    if params.get("debug_level_alias_2", None) is not None:
+        if not isinstance(params["debug_level_alias_2"], str):
+            raise StyxValidationError(f'`debug_level_alias_2` has the wrong type: Received `{type(params.get("debug_level_alias_2", None))}` expected `str | None`')
+    if params.get("timing_on_flag", False) is None:
+        raise StyxValidationError("`timing_on_flag` must not be None")
+    if not isinstance(params["timing_on_flag"], bool):
+        raise StyxValidationError(f'`timing_on_flag` has the wrong type: Received `{type(params.get("timing_on_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("help_flag_alias", False) is None:
+        raise StyxValidationError("`help_flag_alias` must not be None")
+    if not isinstance(params["help_flag_alias"], bool):
+        raise StyxValidationError(f'`help_flag_alias` has the wrong type: Received `{type(params.get("help_flag_alias", False))}` expected `bool`')
+    if params.get("flobs_prior_off_flag", False) is None:
+        raise StyxValidationError("`flobs_prior_off_flag` must not be None")
+    if not isinstance(params["flobs_prior_off_flag"], bool):
+        raise StyxValidationError(f'`flobs_prior_off_flag` has the wrong type: Received `{type(params.get("flobs_prior_off_flag", False))}` expected `bool`')
+    if params.get("flobs_prior_off_alias", False) is None:
+        raise StyxValidationError("`flobs_prior_off_alias` must not be None")
+    if not isinstance(params["flobs_prior_off_alias"], bool):
+        raise StyxValidationError(f'`flobs_prior_off_alias` has the wrong type: Received `{type(params.get("flobs_prior_off_alias", False))}` expected `bool`')
+    if params.get("flobs_dir", None) is not None:
+        if not isinstance(params["flobs_dir"], str):
+            raise StyxValidationError(f'`flobs_dir` has the wrong type: Received `{type(params.get("flobs_dir", None))}` expected `str | None`')
+    if params.get("prior_covar_file", None) is not None:
+        if not isinstance(params["prior_covar_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prior_covar_file` has the wrong type: Received `{type(params.get("prior_covar_file", None))}` expected `InputPathType | None`')
+    if params.get("prior_covar_file_alias", None) is not None:
+        if not isinstance(params["prior_covar_file_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prior_covar_file_alias` has the wrong type: Received `{type(params.get("prior_covar_file_alias", None))}` expected `InputPathType | None`')
+    if params.get("prior_mean_file", None) is not None:
+        if not isinstance(params["prior_mean_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prior_mean_file` has the wrong type: Received `{type(params.get("prior_mean_file", None))}` expected `InputPathType | None`')
+    if params.get("prior_mean_file_alias", None) is not None:
+        if not isinstance(params["prior_mean_file_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prior_mean_file_alias` has the wrong type: Received `{type(params.get("prior_mean_file_alias", None))}` expected `InputPathType | None`')
+    if params.get("log_dir", None) is not None:
+        if not isinstance(params["log_dir"], str):
+            raise StyxValidationError(f'`log_dir` has the wrong type: Received `{type(params.get("log_dir", None))}` expected `str | None`')
+    if params.get("log_dir_alias_1", None) is not None:
+        if not isinstance(params["log_dir_alias_1"], str):
+            raise StyxValidationError(f'`log_dir_alias_1` has the wrong type: Received `{type(params.get("log_dir_alias_1", None))}` expected `str | None`')
+    if params.get("log_dir_alias_2", None) is not None:
+        if not isinstance(params["log_dir_alias_2"], str):
+            raise StyxValidationError(f'`log_dir_alias_2` has the wrong type: Received `{type(params.get("log_dir_alias_2", None))}` expected `str | None`')
+    if params.get("num_iterations", None) is not None:
+        if not isinstance(params["num_iterations"], int):
+            raise StyxValidationError(f'`num_iterations` has the wrong type: Received `{type(params.get("num_iterations", None))}` expected `int | None`')
+    if params.get("temporal_ar_mrf_prec", None) is not None:
+        if not isinstance(params["temporal_ar_mrf_prec"], (float, int)):
+            raise StyxValidationError(f'`temporal_ar_mrf_prec` has the wrong type: Received `{type(params.get("temporal_ar_mrf_prec", None))}` expected `float | None`')
+    if params.get("temporal_ar_mrf_prec_alias", None) is not None:
+        if not isinstance(params["temporal_ar_mrf_prec_alias"], (float, int)):
+            raise StyxValidationError(f'`temporal_ar_mrf_prec_alias` has the wrong type: Received `{type(params.get("temporal_ar_mrf_prec_alias", None))}` expected `float | None`')
+    if params.get("temporal_ar_flag", False) is None:
+        raise StyxValidationError("`temporal_ar_flag` must not be None")
+    if not isinstance(params["temporal_ar_flag"], bool):
+        raise StyxValidationError(f'`temporal_ar_flag` has the wrong type: Received `{type(params.get("temporal_ar_flag", False))}` expected `bool`')
+    if params.get("num_trace_samples", None) is not None:
+        if not isinstance(params["num_trace_samples"], int):
+            raise StyxValidationError(f'`num_trace_samples` has the wrong type: Received `{type(params.get("num_trace_samples", None))}` expected `int | None`')
+    if params.get("num_trace_samples_alias", None) is not None:
+        if not isinstance(params["num_trace_samples_alias"], int):
+            raise StyxValidationError(f'`num_trace_samples_alias` has the wrong type: Received `{type(params.get("num_trace_samples_alias", None))}` expected `int | None`')
+    if params.get("temporal_ar_order", None) is not None:
+        if not isinstance(params["temporal_ar_order"], int):
+            raise StyxValidationError(f'`temporal_ar_order` has the wrong type: Received `{type(params.get("temporal_ar_order", None))}` expected `int | None`')
+
+
 def filmbabe_cargs(
     params: FilmbabeParameters,
     execution: Execution,
@@ -422,6 +551,7 @@ def filmbabe_execute(
     Returns:
         NamedTuple of outputs (described in `FilmbabeOutputs`).
     """
+    filmbabe_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FILMBABE_METADATA)
     params = execution.params(params)

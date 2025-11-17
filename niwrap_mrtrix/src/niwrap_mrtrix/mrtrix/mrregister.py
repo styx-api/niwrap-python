@@ -235,6 +235,24 @@ def mrregister_transformed_params(
     return params
 
 
+def mrregister_transformed_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrregisterTransformedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], str):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `str`')
+
+
 def mrregister_transformed_cargs(
     params: MrregisterTransformedParameters,
     execution: Execution,
@@ -315,6 +333,28 @@ def mrregister_transformed_midway_params(
         "image2_transformed": image2_transformed,
     }
     return params
+
+
+def mrregister_transformed_midway_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrregisterTransformedMidwayParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image1_transformed", None) is None:
+        raise StyxValidationError("`image1_transformed` must not be None")
+    if not isinstance(params["image1_transformed"], str):
+        raise StyxValidationError(f'`image1_transformed` has the wrong type: Received `{type(params.get("image1_transformed", None))}` expected `str`')
+    if params.get("image2_transformed", None) is None:
+        raise StyxValidationError("`image2_transformed` must not be None")
+    if not isinstance(params["image2_transformed"], str):
+        raise StyxValidationError(f'`image2_transformed` has the wrong type: Received `{type(params.get("image2_transformed", None))}` expected `str`')
 
 
 def mrregister_transformed_midway_cargs(
@@ -403,6 +443,28 @@ def mrregister_nl_warp_params(
     return params
 
 
+def mrregister_nl_warp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrregisterNlWarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warp1", None) is None:
+        raise StyxValidationError("`warp1` must not be None")
+    if not isinstance(params["warp1"], str):
+        raise StyxValidationError(f'`warp1` has the wrong type: Received `{type(params.get("warp1", None))}` expected `str`')
+    if params.get("warp2", None) is None:
+        raise StyxValidationError("`warp2` must not be None")
+    if not isinstance(params["warp2"], str):
+        raise StyxValidationError(f'`warp2` has the wrong type: Received `{type(params.get("warp2", None))}` expected `str`')
+
+
 def mrregister_nl_warp_cargs(
     params: MrregisterNlWarpParameters,
     execution: Execution,
@@ -463,6 +525,28 @@ def mrregister_config_params(
         "value": value,
     }
     return params
+
+
+def mrregister_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrregisterConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mrregister_config_cargs(
@@ -932,6 +1016,282 @@ def mrregister_params(
     return params
 
 
+def mrregister_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrregisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
+    if params.get("transformed", None) is not None:
+        if not isinstance(params["transformed"], list):
+            raise StyxValidationError(f'`transformed` has the wrong type: Received `{type(params.get("transformed", None))}` expected `list[MrregisterTransformedParameters] | None`')
+        for e in params["transformed"]:
+            mrregister_transformed_validate(e)
+    if params.get("transformed_midway", None) is not None:
+        if not isinstance(params["transformed_midway"], list):
+            raise StyxValidationError(f'`transformed_midway` has the wrong type: Received `{type(params.get("transformed_midway", None))}` expected `list[MrregisterTransformedMidwayParameters] | None`')
+        for e in params["transformed_midway"]:
+            mrregister_transformed_midway_validate(e)
+    if params.get("mask1", None) is not None:
+        if not isinstance(params["mask1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask1` has the wrong type: Received `{type(params.get("mask1", None))}` expected `InputPathType | None`')
+    if params.get("mask2", None) is not None:
+        if not isinstance(params["mask2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask2` has the wrong type: Received `{type(params.get("mask2", None))}` expected `InputPathType | None`')
+    if params.get("nan", False) is None:
+        raise StyxValidationError("`nan` must not be None")
+    if not isinstance(params["nan"], bool):
+        raise StyxValidationError(f'`nan` has the wrong type: Received `{type(params.get("nan", False))}` expected `bool`')
+    if params.get("rigid", None) is not None:
+        if not isinstance(params["rigid"], str):
+            raise StyxValidationError(f'`rigid` has the wrong type: Received `{type(params.get("rigid", None))}` expected `str | None`')
+    if params.get("rigid_1tomidway", None) is not None:
+        if not isinstance(params["rigid_1tomidway"], str):
+            raise StyxValidationError(f'`rigid_1tomidway` has the wrong type: Received `{type(params.get("rigid_1tomidway", None))}` expected `str | None`')
+    if params.get("rigid_2tomidway", None) is not None:
+        if not isinstance(params["rigid_2tomidway"], str):
+            raise StyxValidationError(f'`rigid_2tomidway` has the wrong type: Received `{type(params.get("rigid_2tomidway", None))}` expected `str | None`')
+    if params.get("rigid_init_translation", None) is not None:
+        if not isinstance(params["rigid_init_translation"], str):
+            raise StyxValidationError(f'`rigid_init_translation` has the wrong type: Received `{type(params.get("rigid_init_translation", None))}` expected `str | None`')
+    if params.get("rigid_init_rotation", None) is not None:
+        if not isinstance(params["rigid_init_rotation"], str):
+            raise StyxValidationError(f'`rigid_init_rotation` has the wrong type: Received `{type(params.get("rigid_init_rotation", None))}` expected `str | None`')
+    if params.get("rigid_init_matrix", None) is not None:
+        if not isinstance(params["rigid_init_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rigid_init_matrix` has the wrong type: Received `{type(params.get("rigid_init_matrix", None))}` expected `InputPathType | None`')
+    if params.get("rigid_scale", None) is not None:
+        if not isinstance(params["rigid_scale"], list):
+            raise StyxValidationError(f'`rigid_scale` has the wrong type: Received `{type(params.get("rigid_scale", None))}` expected `list[float] | None`')
+        for e in params["rigid_scale"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rigid_scale` has the wrong type: Received `{type(params.get("rigid_scale", None))}` expected `list[float] | None`')
+    if params.get("rigid_niter", None) is not None:
+        if not isinstance(params["rigid_niter"], list):
+            raise StyxValidationError(f'`rigid_niter` has the wrong type: Received `{type(params.get("rigid_niter", None))}` expected `list[int] | None`')
+        for e in params["rigid_niter"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`rigid_niter` has the wrong type: Received `{type(params.get("rigid_niter", None))}` expected `list[int] | None`')
+    if params.get("rigid_metric", None) is not None:
+        if not isinstance(params["rigid_metric"], str):
+            raise StyxValidationError(f'`rigid_metric` has the wrong type: Received `{type(params.get("rigid_metric", None))}` expected `str | None`')
+    if params.get("rigid_metric_diff_estimator", None) is not None:
+        if not isinstance(params["rigid_metric_diff_estimator"], str):
+            raise StyxValidationError(f'`rigid_metric_diff_estimator` has the wrong type: Received `{type(params.get("rigid_metric_diff_estimator", None))}` expected `str | None`')
+    if params.get("rigid_lmax", None) is not None:
+        if not isinstance(params["rigid_lmax"], list):
+            raise StyxValidationError(f'`rigid_lmax` has the wrong type: Received `{type(params.get("rigid_lmax", None))}` expected `list[int] | None`')
+        for e in params["rigid_lmax"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`rigid_lmax` has the wrong type: Received `{type(params.get("rigid_lmax", None))}` expected `list[int] | None`')
+    if params.get("rigid_log", None) is not None:
+        if not isinstance(params["rigid_log"], str):
+            raise StyxValidationError(f'`rigid_log` has the wrong type: Received `{type(params.get("rigid_log", None))}` expected `str | None`')
+    if params.get("affine", None) is not None:
+        if not isinstance(params["affine"], str):
+            raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `str | None`')
+    if params.get("affine_1tomidway", None) is not None:
+        if not isinstance(params["affine_1tomidway"], str):
+            raise StyxValidationError(f'`affine_1tomidway` has the wrong type: Received `{type(params.get("affine_1tomidway", None))}` expected `str | None`')
+    if params.get("affine_2tomidway", None) is not None:
+        if not isinstance(params["affine_2tomidway"], str):
+            raise StyxValidationError(f'`affine_2tomidway` has the wrong type: Received `{type(params.get("affine_2tomidway", None))}` expected `str | None`')
+    if params.get("affine_init_translation", None) is not None:
+        if not isinstance(params["affine_init_translation"], str):
+            raise StyxValidationError(f'`affine_init_translation` has the wrong type: Received `{type(params.get("affine_init_translation", None))}` expected `str | None`')
+    if params.get("affine_init_rotation", None) is not None:
+        if not isinstance(params["affine_init_rotation"], str):
+            raise StyxValidationError(f'`affine_init_rotation` has the wrong type: Received `{type(params.get("affine_init_rotation", None))}` expected `str | None`')
+    if params.get("affine_init_matrix", None) is not None:
+        if not isinstance(params["affine_init_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`affine_init_matrix` has the wrong type: Received `{type(params.get("affine_init_matrix", None))}` expected `InputPathType | None`')
+    if params.get("affine_scale", None) is not None:
+        if not isinstance(params["affine_scale"], list):
+            raise StyxValidationError(f'`affine_scale` has the wrong type: Received `{type(params.get("affine_scale", None))}` expected `list[float] | None`')
+        for e in params["affine_scale"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`affine_scale` has the wrong type: Received `{type(params.get("affine_scale", None))}` expected `list[float] | None`')
+    if params.get("affine_niter", None) is not None:
+        if not isinstance(params["affine_niter"], list):
+            raise StyxValidationError(f'`affine_niter` has the wrong type: Received `{type(params.get("affine_niter", None))}` expected `list[int] | None`')
+        for e in params["affine_niter"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`affine_niter` has the wrong type: Received `{type(params.get("affine_niter", None))}` expected `list[int] | None`')
+    if params.get("affine_metric", None) is not None:
+        if not isinstance(params["affine_metric"], str):
+            raise StyxValidationError(f'`affine_metric` has the wrong type: Received `{type(params.get("affine_metric", None))}` expected `str | None`')
+    if params.get("affine_metric_diff_estimator", None) is not None:
+        if not isinstance(params["affine_metric_diff_estimator"], str):
+            raise StyxValidationError(f'`affine_metric_diff_estimator` has the wrong type: Received `{type(params.get("affine_metric_diff_estimator", None))}` expected `str | None`')
+    if params.get("affine_lmax", None) is not None:
+        if not isinstance(params["affine_lmax"], list):
+            raise StyxValidationError(f'`affine_lmax` has the wrong type: Received `{type(params.get("affine_lmax", None))}` expected `list[int] | None`')
+        for e in params["affine_lmax"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`affine_lmax` has the wrong type: Received `{type(params.get("affine_lmax", None))}` expected `list[int] | None`')
+    if params.get("affine_log", None) is not None:
+        if not isinstance(params["affine_log"], str):
+            raise StyxValidationError(f'`affine_log` has the wrong type: Received `{type(params.get("affine_log", None))}` expected `str | None`')
+    if params.get("init_translation_unmasked1", False) is None:
+        raise StyxValidationError("`init_translation_unmasked1` must not be None")
+    if not isinstance(params["init_translation_unmasked1"], bool):
+        raise StyxValidationError(f'`init_translation_unmasked1` has the wrong type: Received `{type(params.get("init_translation_unmasked1", False))}` expected `bool`')
+    if params.get("init_translation_unmasked2", False) is None:
+        raise StyxValidationError("`init_translation_unmasked2` must not be None")
+    if not isinstance(params["init_translation_unmasked2"], bool):
+        raise StyxValidationError(f'`init_translation_unmasked2` has the wrong type: Received `{type(params.get("init_translation_unmasked2", False))}` expected `bool`')
+    if params.get("init_rotation_unmasked1", False) is None:
+        raise StyxValidationError("`init_rotation_unmasked1` must not be None")
+    if not isinstance(params["init_rotation_unmasked1"], bool):
+        raise StyxValidationError(f'`init_rotation_unmasked1` has the wrong type: Received `{type(params.get("init_rotation_unmasked1", False))}` expected `bool`')
+    if params.get("init_rotation_unmasked2", False) is None:
+        raise StyxValidationError("`init_rotation_unmasked2` must not be None")
+    if not isinstance(params["init_rotation_unmasked2"], bool):
+        raise StyxValidationError(f'`init_rotation_unmasked2` has the wrong type: Received `{type(params.get("init_rotation_unmasked2", False))}` expected `bool`')
+    if params.get("init_rotation_search_angles", None) is not None:
+        if not isinstance(params["init_rotation_search_angles"], list):
+            raise StyxValidationError(f'`init_rotation_search_angles` has the wrong type: Received `{type(params.get("init_rotation_search_angles", None))}` expected `list[float] | None`')
+        for e in params["init_rotation_search_angles"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`init_rotation_search_angles` has the wrong type: Received `{type(params.get("init_rotation_search_angles", None))}` expected `list[float] | None`')
+    if params.get("init_rotation_search_scale", None) is not None:
+        if not isinstance(params["init_rotation_search_scale"], (float, int)):
+            raise StyxValidationError(f'`init_rotation_search_scale` has the wrong type: Received `{type(params.get("init_rotation_search_scale", None))}` expected `float | None`')
+    if params.get("init_rotation_search_directions", None) is not None:
+        if not isinstance(params["init_rotation_search_directions"], int):
+            raise StyxValidationError(f'`init_rotation_search_directions` has the wrong type: Received `{type(params.get("init_rotation_search_directions", None))}` expected `int | None`')
+    if params.get("init_rotation_search_run_global", False) is None:
+        raise StyxValidationError("`init_rotation_search_run_global` must not be None")
+    if not isinstance(params["init_rotation_search_run_global"], bool):
+        raise StyxValidationError(f'`init_rotation_search_run_global` has the wrong type: Received `{type(params.get("init_rotation_search_run_global", False))}` expected `bool`')
+    if params.get("init_rotation_search_global_iterations", None) is not None:
+        if not isinstance(params["init_rotation_search_global_iterations"], int):
+            raise StyxValidationError(f'`init_rotation_search_global_iterations` has the wrong type: Received `{type(params.get("init_rotation_search_global_iterations", None))}` expected `int | None`')
+    if params.get("linstage_iterations", None) is not None:
+        if not isinstance(params["linstage_iterations"], list):
+            raise StyxValidationError(f'`linstage_iterations` has the wrong type: Received `{type(params.get("linstage_iterations", None))}` expected `list[int] | None`')
+        for e in params["linstage_iterations"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`linstage_iterations` has the wrong type: Received `{type(params.get("linstage_iterations", None))}` expected `list[int] | None`')
+    if params.get("linstage_optimiser_first", None) is not None:
+        if not isinstance(params["linstage_optimiser_first"], str):
+            raise StyxValidationError(f'`linstage_optimiser_first` has the wrong type: Received `{type(params.get("linstage_optimiser_first", None))}` expected `str | None`')
+    if params.get("linstage_optimiser_last", None) is not None:
+        if not isinstance(params["linstage_optimiser_last"], str):
+            raise StyxValidationError(f'`linstage_optimiser_last` has the wrong type: Received `{type(params.get("linstage_optimiser_last", None))}` expected `str | None`')
+    if params.get("linstage_optimiser_default", None) is not None:
+        if not isinstance(params["linstage_optimiser_default"], str):
+            raise StyxValidationError(f'`linstage_optimiser_default` has the wrong type: Received `{type(params.get("linstage_optimiser_default", None))}` expected `str | None`')
+    if params.get("linstage_diagnostics_prefix", None) is not None:
+        if not isinstance(params["linstage_diagnostics_prefix"], str):
+            raise StyxValidationError(f'`linstage_diagnostics_prefix` has the wrong type: Received `{type(params.get("linstage_diagnostics_prefix", None))}` expected `str | None`')
+    if params.get("nl_warp", None) is not None:
+        mrregister_nl_warp_validate(params["nl_warp"])
+    if params.get("nl_warp_full", None) is not None:
+        if not isinstance(params["nl_warp_full"], str):
+            raise StyxValidationError(f'`nl_warp_full` has the wrong type: Received `{type(params.get("nl_warp_full", None))}` expected `str | None`')
+    if params.get("nl_init", None) is not None:
+        if not isinstance(params["nl_init"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nl_init` has the wrong type: Received `{type(params.get("nl_init", None))}` expected `InputPathType | None`')
+    if params.get("nl_scale", None) is not None:
+        if not isinstance(params["nl_scale"], list):
+            raise StyxValidationError(f'`nl_scale` has the wrong type: Received `{type(params.get("nl_scale", None))}` expected `list[float] | None`')
+        for e in params["nl_scale"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`nl_scale` has the wrong type: Received `{type(params.get("nl_scale", None))}` expected `list[float] | None`')
+    if params.get("nl_niter", None) is not None:
+        if not isinstance(params["nl_niter"], list):
+            raise StyxValidationError(f'`nl_niter` has the wrong type: Received `{type(params.get("nl_niter", None))}` expected `list[int] | None`')
+        for e in params["nl_niter"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`nl_niter` has the wrong type: Received `{type(params.get("nl_niter", None))}` expected `list[int] | None`')
+    if params.get("nl_update_smooth", None) is not None:
+        if not isinstance(params["nl_update_smooth"], (float, int)):
+            raise StyxValidationError(f'`nl_update_smooth` has the wrong type: Received `{type(params.get("nl_update_smooth", None))}` expected `float | None`')
+    if params.get("nl_disp_smooth", None) is not None:
+        if not isinstance(params["nl_disp_smooth"], (float, int)):
+            raise StyxValidationError(f'`nl_disp_smooth` has the wrong type: Received `{type(params.get("nl_disp_smooth", None))}` expected `float | None`')
+    if params.get("nl_grad_step", None) is not None:
+        if not isinstance(params["nl_grad_step"], (float, int)):
+            raise StyxValidationError(f'`nl_grad_step` has the wrong type: Received `{type(params.get("nl_grad_step", None))}` expected `float | None`')
+    if params.get("nl_lmax", None) is not None:
+        if not isinstance(params["nl_lmax"], list):
+            raise StyxValidationError(f'`nl_lmax` has the wrong type: Received `{type(params.get("nl_lmax", None))}` expected `list[int] | None`')
+        for e in params["nl_lmax"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`nl_lmax` has the wrong type: Received `{type(params.get("nl_lmax", None))}` expected `list[int] | None`')
+    if params.get("diagnostics_image", None) is not None:
+        if not isinstance(params["diagnostics_image"], str):
+            raise StyxValidationError(f'`diagnostics_image` has the wrong type: Received `{type(params.get("diagnostics_image", None))}` expected `str | None`')
+    if params.get("directions", None) is not None:
+        if not isinstance(params["directions"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`directions` has the wrong type: Received `{type(params.get("directions", None))}` expected `InputPathType | None`')
+    if params.get("noreorientation", False) is None:
+        raise StyxValidationError("`noreorientation` must not be None")
+    if not isinstance(params["noreorientation"], bool):
+        raise StyxValidationError(f'`noreorientation` has the wrong type: Received `{type(params.get("noreorientation", False))}` expected `bool`')
+    if params.get("mc_weights", None) is not None:
+        if not isinstance(params["mc_weights"], list):
+            raise StyxValidationError(f'`mc_weights` has the wrong type: Received `{type(params.get("mc_weights", None))}` expected `list[float] | None`')
+        for e in params["mc_weights"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mc_weights` has the wrong type: Received `{type(params.get("mc_weights", None))}` expected `list[float] | None`')
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `str | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrregisterConfigParameters] | None`')
+        for e in params["config"]:
+            mrregister_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("image1_image2", None) is None:
+        raise StyxValidationError("`image1_image2` must not be None")
+    if not isinstance(params["image1_image2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image1_image2` has the wrong type: Received `{type(params.get("image1_image2", None))}` expected `InputPathType`')
+    if params.get("contrast1_contrast2", None) is not None:
+        if not isinstance(params["contrast1_contrast2"], list):
+            raise StyxValidationError(f'`contrast1_contrast2` has the wrong type: Received `{type(params.get("contrast1_contrast2", None))}` expected `list[InputPathType] | None`')
+        for e in params["contrast1_contrast2"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`contrast1_contrast2` has the wrong type: Received `{type(params.get("contrast1_contrast2", None))}` expected `list[InputPathType] | None`')
+
+
 def mrregister_cargs(
     params: MrregisterParameters,
     execution: Execution,
@@ -1317,6 +1677,7 @@ def mrregister_execute(
     Returns:
         NamedTuple of outputs (described in `MrregisterOutputs`).
     """
+    mrregister_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRREGISTER_METADATA)
     params = execution.params(params)

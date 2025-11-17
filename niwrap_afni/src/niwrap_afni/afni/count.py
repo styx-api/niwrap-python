@@ -124,6 +124,66 @@ def count_params(
     return params
 
 
+def count_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CountParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bot", None) is None:
+        raise StyxValidationError("`bot` must not be None")
+    if not isinstance(params["bot"], str):
+        raise StyxValidationError(f'`bot` has the wrong type: Received `{type(params.get("bot", None))}` expected `str`')
+    if params.get("top", None) is None:
+        raise StyxValidationError("`top` must not be None")
+    if not isinstance(params["top"], str):
+        raise StyxValidationError(f'`top` has the wrong type: Received `{type(params.get("top", None))}` expected `str`')
+    if params.get("step", None) is not None:
+        if not isinstance(params["step"], str):
+            raise StyxValidationError(f'`step` has the wrong type: Received `{type(params.get("step", None))}` expected `str | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("sseed", None) is not None:
+        if not isinstance(params["sseed"], str):
+            raise StyxValidationError(f'`sseed` has the wrong type: Received `{type(params.get("sseed", None))}` expected `str | None`')
+    if params.get("column", False) is None:
+        raise StyxValidationError("`column` must not be None")
+    if not isinstance(params["column"], bool):
+        raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", False))}` expected `bool`')
+    if params.get("digits", None) is not None:
+        if not isinstance(params["digits"], (float, int)):
+            raise StyxValidationError(f'`digits` has the wrong type: Received `{type(params.get("digits", None))}` expected `float | None`')
+    if params.get("form", None) is not None:
+        if not isinstance(params["form"], str):
+            raise StyxValidationError(f'`form` has the wrong type: Received `{type(params.get("form", None))}` expected `str | None`')
+    if params.get("root", None) is not None:
+        if not isinstance(params["root"], str):
+            raise StyxValidationError(f'`root` has the wrong type: Received `{type(params.get("root", None))}` expected `str | None`')
+    if params.get("sep", None) is not None:
+        if not isinstance(params["sep"], str):
+            raise StyxValidationError(f'`sep` has the wrong type: Received `{type(params.get("sep", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+    if params.get("comma", False) is None:
+        raise StyxValidationError("`comma` must not be None")
+    if not isinstance(params["comma"], bool):
+        raise StyxValidationError(f'`comma` has the wrong type: Received `{type(params.get("comma", False))}` expected `bool`')
+    if params.get("skipnmodm", None) is not None:
+        if not isinstance(params["skipnmodm"], str):
+            raise StyxValidationError(f'`skipnmodm` has the wrong type: Received `{type(params.get("skipnmodm", None))}` expected `str | None`')
+
+
 def count_cargs(
     params: CountParameters,
     execution: Execution,
@@ -234,6 +294,7 @@ def count_execute(
     Returns:
         NamedTuple of outputs (described in `CountOutputs`).
     """
+    count_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(COUNT_METADATA)
     params = execution.params(params)

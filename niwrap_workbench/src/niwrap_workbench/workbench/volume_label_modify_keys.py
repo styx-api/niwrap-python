@@ -68,6 +68,35 @@ def volume_label_modify_keys_params(
     return params
 
 
+def volume_label_modify_keys_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeLabelModifyKeysParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("remap-file", None) is None:
+        raise StyxValidationError("`remap-file` must not be None")
+    if not isinstance(params["remap-file"], str):
+        raise StyxValidationError(f'`remap-file` has the wrong type: Received `{type(params.get("remap-file", None))}` expected `str`')
+
+
 def volume_label_modify_keys_cargs(
     params: VolumeLabelModifyKeysParameters,
     execution: Execution,
@@ -142,6 +171,7 @@ def volume_label_modify_keys_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelModifyKeysOutputs`).
     """
+    volume_label_modify_keys_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_LABEL_MODIFY_KEYS_METADATA)
     params = execution.params(params)

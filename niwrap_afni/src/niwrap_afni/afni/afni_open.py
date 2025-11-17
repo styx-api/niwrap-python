@@ -121,6 +121,82 @@ def afni_open_params(
     return params
 
 
+def afni_open_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AfniOpenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("files", None) is None:
+        raise StyxValidationError("`files` must not be None")
+    if not isinstance(params["files"], list):
+        raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    for e in params["files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[InputPathType]`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("editor", False) is None:
+        raise StyxValidationError("`editor` must not be None")
+    if not isinstance(params["editor"], bool):
+        raise StyxValidationError(f'`editor` has the wrong type: Received `{type(params.get("editor", False))}` expected `bool`')
+    if params.get("downloader", False) is None:
+        raise StyxValidationError("`downloader` must not be None")
+    if not isinstance(params["downloader"], bool):
+        raise StyxValidationError(f'`downloader` has the wrong type: Received `{type(params.get("downloader", False))}` expected `bool`')
+    if params.get("examinexmat", False) is None:
+        raise StyxValidationError("`examinexmat` must not be None")
+    if not isinstance(params["examinexmat"], bool):
+        raise StyxValidationError(f'`examinexmat` has the wrong type: Received `{type(params.get("examinexmat", False))}` expected `bool`')
+    if params.get("browser", False) is None:
+        raise StyxValidationError("`browser` must not be None")
+    if not isinstance(params["browser"], bool):
+        raise StyxValidationError(f'`browser` has the wrong type: Received `{type(params.get("browser", False))}` expected `bool`')
+    if params.get("readme", False) is None:
+        raise StyxValidationError("`readme` must not be None")
+    if not isinstance(params["readme"], bool):
+        raise StyxValidationError(f'`readme` has the wrong type: Received `{type(params.get("readme", False))}` expected `bool`')
+    if params.get("afniweb", False) is None:
+        raise StyxValidationError("`afniweb` must not be None")
+    if not isinstance(params["afniweb"], bool):
+        raise StyxValidationError(f'`afniweb` has the wrong type: Received `{type(params.get("afniweb", False))}` expected `bool`')
+    if params.get("global_help", False) is None:
+        raise StyxValidationError("`global_help` must not be None")
+    if not isinstance(params["global_help"], bool):
+        raise StyxValidationError(f'`global_help` has the wrong type: Received `{type(params.get("global_help", False))}` expected `bool`')
+    if params.get("gopts_help", False) is None:
+        raise StyxValidationError("`gopts_help` must not be None")
+    if not isinstance(params["gopts_help"], bool):
+        raise StyxValidationError(f'`gopts_help` has the wrong type: Received `{type(params.get("gopts_help", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("mini_help", False) is None:
+        raise StyxValidationError("`mini_help` must not be None")
+    if not isinstance(params["mini_help"], bool):
+        raise StyxValidationError(f'`mini_help` has the wrong type: Received `{type(params.get("mini_help", False))}` expected `bool`')
+    if params.get("extreme_help", False) is None:
+        raise StyxValidationError("`extreme_help` must not be None")
+    if not isinstance(params["extreme_help"], bool):
+        raise StyxValidationError(f'`extreme_help` has the wrong type: Received `{type(params.get("extreme_help", False))}` expected `bool`')
+    if params.get("h_view", False) is None:
+        raise StyxValidationError("`h_view` must not be None")
+    if not isinstance(params["h_view"], bool):
+        raise StyxValidationError(f'`h_view` has the wrong type: Received `{type(params.get("h_view", False))}` expected `bool`')
+    if params.get("h_web", False) is None:
+        raise StyxValidationError("`h_web` must not be None")
+    if not isinstance(params["h_web"], bool):
+        raise StyxValidationError(f'`h_web` has the wrong type: Received `{type(params.get("h_web", False))}` expected `bool`')
+
+
 def afni_open_cargs(
     params: AfniOpenParameters,
     execution: Execution,
@@ -209,6 +285,7 @@ def afni_open_execute(
     Returns:
         NamedTuple of outputs (described in `AfniOpenOutputs`).
     """
+    afni_open_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_OPEN_METADATA)
     params = execution.params(params)

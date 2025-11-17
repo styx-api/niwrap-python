@@ -70,6 +70,35 @@ def surface_generate_inflated_params(
     return params
 
 
+def surface_generate_inflated_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceGenerateInflatedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inflated-surface-out", None) is None:
+        raise StyxValidationError("`inflated-surface-out` must not be None")
+    if not isinstance(params["inflated-surface-out"], str):
+        raise StyxValidationError(f'`inflated-surface-out` has the wrong type: Received `{type(params.get("inflated-surface-out", None))}` expected `str`')
+    if params.get("very-inflated-surface-out", None) is None:
+        raise StyxValidationError("`very-inflated-surface-out` must not be None")
+    if not isinstance(params["very-inflated-surface-out"], str):
+        raise StyxValidationError(f'`very-inflated-surface-out` has the wrong type: Received `{type(params.get("very-inflated-surface-out", None))}` expected `str`')
+    if params.get("iterations-scale-value", None) is not None:
+        if not isinstance(params["iterations-scale-value"], (float, int)):
+            raise StyxValidationError(f'`iterations-scale-value` has the wrong type: Received `{type(params.get("iterations-scale-value", None))}` expected `float | None`')
+    if params.get("anatomical-surface-in", None) is None:
+        raise StyxValidationError("`anatomical-surface-in` must not be None")
+    if not isinstance(params["anatomical-surface-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical-surface-in` has the wrong type: Received `{type(params.get("anatomical-surface-in", None))}` expected `InputPathType`')
+
+
 def surface_generate_inflated_cargs(
     params: SurfaceGenerateInflatedParameters,
     execution: Execution,
@@ -137,6 +166,7 @@ def surface_generate_inflated_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceGenerateInflatedOutputs`).
     """
+    surface_generate_inflated_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_GENERATE_INFLATED_METADATA)
     params = execution.params(params)

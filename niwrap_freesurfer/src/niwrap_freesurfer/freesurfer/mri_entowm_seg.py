@@ -200,6 +200,112 @@ def mri_entowm_seg_params(
     return params
 
 
+def mri_entowm_seg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriEntowmSegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is not None:
+        if not isinstance(params["input_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType | None`')
+    if params.get("output_segmentation", None) is not None:
+        if not isinstance(params["output_segmentation"], str):
+            raise StyxValidationError(f'`output_segmentation` has the wrong type: Received `{type(params.get("output_segmentation", None))}` expected `str | None`')
+    if params.get("recon_subjects", None) is not None:
+        if not isinstance(params["recon_subjects"], list):
+            raise StyxValidationError(f'`recon_subjects` has the wrong type: Received `{type(params.get("recon_subjects", None))}` expected `list[str] | None`')
+        for e in params["recon_subjects"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`recon_subjects` has the wrong type: Received `{type(params.get("recon_subjects", None))}` expected `list[str] | None`')
+    if params.get("subjects_directory", None) is not None:
+        if not isinstance(params["subjects_directory"], str):
+            raise StyxValidationError(f'`subjects_directory` has the wrong type: Received `{type(params.get("subjects_directory", None))}` expected `str | None`')
+    if params.get("conform", False) is None:
+        raise StyxValidationError("`conform` must not be None")
+    if not isinstance(params["conform"], bool):
+        raise StyxValidationError(f'`conform` has the wrong type: Received `{type(params.get("conform", False))}` expected `bool`')
+    if params.get("etiv", False) is None:
+        raise StyxValidationError("`etiv` must not be None")
+    if not isinstance(params["etiv"], bool):
+        raise StyxValidationError(f'`etiv` has the wrong type: Received `{type(params.get("etiv", False))}` expected `bool`')
+    if params.get("tal", None) is not None:
+        if not isinstance(params["tal"], str):
+            raise StyxValidationError(f'`tal` has the wrong type: Received `{type(params.get("tal", None))}` expected `str | None`')
+    if params.get("write_posteriors", False) is None:
+        raise StyxValidationError("`write_posteriors` must not be None")
+    if not isinstance(params["write_posteriors"], bool):
+        raise StyxValidationError(f'`write_posteriors` has the wrong type: Received `{type(params.get("write_posteriors", False))}` expected `bool`')
+    if params.get("write_volumes", False) is None:
+        raise StyxValidationError("`write_volumes` must not be None")
+    if not isinstance(params["write_volumes"], bool):
+        raise StyxValidationError(f'`write_volumes` has the wrong type: Received `{type(params.get("write_volumes", False))}` expected `bool`')
+    if params.get("write_qa_stats", False) is None:
+        raise StyxValidationError("`write_qa_stats` must not be None")
+    if not isinstance(params["write_qa_stats"], bool):
+        raise StyxValidationError(f'`write_qa_stats` has the wrong type: Received `{type(params.get("write_qa_stats", False))}` expected `bool`')
+    if params.get("exclude_labels", None) is not None:
+        if not isinstance(params["exclude_labels"], list):
+            raise StyxValidationError(f'`exclude_labels` has the wrong type: Received `{type(params.get("exclude_labels", None))}` expected `list[str] | None`')
+        for e in params["exclude_labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`exclude_labels` has the wrong type: Received `{type(params.get("exclude_labels", None))}` expected `list[str] | None`')
+    if params.get("keep_ac", False) is None:
+        raise StyxValidationError("`keep_ac` must not be None")
+    if not isinstance(params["keep_ac"], bool):
+        raise StyxValidationError(f'`keep_ac` has the wrong type: Received `{type(params.get("keep_ac", False))}` expected `bool`')
+    if params.get("vox_count_volumes", False) is None:
+        raise StyxValidationError("`vox_count_volumes` must not be None")
+    if not isinstance(params["vox_count_volumes"], bool):
+        raise StyxValidationError(f'`vox_count_volumes` has the wrong type: Received `{type(params.get("vox_count_volumes", False))}` expected `bool`')
+    if params.get("model_weights", None) is not None:
+        if not isinstance(params["model_weights"], str):
+            raise StyxValidationError(f'`model_weights` has the wrong type: Received `{type(params.get("model_weights", None))}` expected `str | None`')
+    if params.get("color_table", None) is not None:
+        if not isinstance(params["color_table"], str):
+            raise StyxValidationError(f'`color_table` has the wrong type: Received `{type(params.get("color_table", None))}` expected `str | None`')
+    if params.get("population_stats", None) is not None:
+        if not isinstance(params["population_stats"], str):
+            raise StyxValidationError(f'`population_stats` has the wrong type: Received `{type(params.get("population_stats", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("vmp", False) is None:
+        raise StyxValidationError("`vmp` must not be None")
+    if not isinstance(params["vmp"], bool):
+        raise StyxValidationError(f'`vmp` has the wrong type: Received `{type(params.get("vmp", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("seven_tesla", False) is None:
+        raise StyxValidationError("`seven_tesla` must not be None")
+    if not isinstance(params["seven_tesla"], bool):
+        raise StyxValidationError(f'`seven_tesla` has the wrong type: Received `{type(params.get("seven_tesla", False))}` expected `bool`')
+    if params.get("percentile", None) is not None:
+        if not isinstance(params["percentile"], (float, int)):
+            raise StyxValidationError(f'`percentile` has the wrong type: Received `{type(params.get("percentile", None))}` expected `float | None`')
+    if params.get("cuda_device", None) is not None:
+        if not isinstance(params["cuda_device"], str):
+            raise StyxValidationError(f'`cuda_device` has the wrong type: Received `{type(params.get("cuda_device", None))}` expected `str | None`')
+    if params.get("output_base", None) is not None:
+        if not isinstance(params["output_base"], str):
+            raise StyxValidationError(f'`output_base` has the wrong type: Received `{type(params.get("output_base", None))}` expected `str | None`')
+    if params.get("no_cite_sclimbic", False) is None:
+        raise StyxValidationError("`no_cite_sclimbic` must not be None")
+    if not isinstance(params["no_cite_sclimbic"], bool):
+        raise StyxValidationError(f'`no_cite_sclimbic` has the wrong type: Received `{type(params.get("no_cite_sclimbic", False))}` expected `bool`')
+    if params.get("nchannels", None) is not None:
+        if not isinstance(params["nchannels"], (float, int)):
+            raise StyxValidationError(f'`nchannels` has the wrong type: Received `{type(params.get("nchannels", None))}` expected `float | None`')
+
+
 def mri_entowm_seg_cargs(
     params: MriEntowmSegParameters,
     execution: Execution,
@@ -353,6 +459,7 @@ def mri_entowm_seg_execute(
     Returns:
         NamedTuple of outputs (described in `MriEntowmSegOutputs`).
     """
+    mri_entowm_seg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_ENTOWM_SEG_METADATA)
     params = execution.params(params)

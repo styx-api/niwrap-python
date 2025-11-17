@@ -74,6 +74,41 @@ def slices_params(
     return params
 
 
+def slices_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlicesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("primary_input", None) is None:
+        raise StyxValidationError("`primary_input` must not be None")
+    if not isinstance(params["primary_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`primary_input` has the wrong type: Received `{type(params.get("primary_input", None))}` expected `InputPathType`')
+    if params.get("secondary_input", None) is not None:
+        if not isinstance(params["secondary_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`secondary_input` has the wrong type: Received `{type(params.get("secondary_input", None))}` expected `InputPathType | None`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("intensity_range", None) is not None:
+        if not isinstance(params["intensity_range"], list):
+            raise StyxValidationError(f'`intensity_range` has the wrong type: Received `{type(params.get("intensity_range", None))}` expected `list[float] | None`')
+        if len(params["intensity_range"]) == 2:
+            raise StyxValidationError("Parameter `intensity_range` must contain exactly 2 elements")
+        for e in params["intensity_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`intensity_range` has the wrong type: Received `{type(params.get("intensity_range", None))}` expected `list[float] | None`')
+    if params.get("output_gif", None) is not None:
+        if not isinstance(params["output_gif"], str):
+            raise StyxValidationError(f'`output_gif` has the wrong type: Received `{type(params.get("output_gif", None))}` expected `str | None`')
+
+
 def slices_cargs(
     params: SlicesParameters,
     execution: Execution,
@@ -149,6 +184,7 @@ def slices_execute(
     Returns:
         NamedTuple of outputs (described in `SlicesOutputs`).
     """
+    slices_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLICES_METADATA)
     params = execution.params(params)

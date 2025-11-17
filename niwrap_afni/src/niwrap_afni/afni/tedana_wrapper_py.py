@@ -123,6 +123,73 @@ def tedana_wrapper_py_params(
     return params
 
 
+def tedana_wrapper_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TedanaWrapperPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("echo_times", None) is None:
+        raise StyxValidationError("`echo_times` must not be None")
+    if not isinstance(params["echo_times"], list):
+        raise StyxValidationError(f'`echo_times` has the wrong type: Received `{type(params.get("echo_times", None))}` expected `list[float]`')
+    for e in params["echo_times"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`echo_times` has the wrong type: Received `{type(params.get("echo_times", None))}` expected `list[float]`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("results_dir", None) is not None:
+        if not isinstance(params["results_dir"], str):
+            raise StyxValidationError(f'`results_dir` has the wrong type: Received `{type(params.get("results_dir", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("save_all", False) is None:
+        raise StyxValidationError("`save_all` must not be None")
+    if not isinstance(params["save_all"], bool):
+        raise StyxValidationError(f'`save_all` has the wrong type: Received `{type(params.get("save_all", False))}` expected `bool`')
+    if params.get("prep_only", False) is None:
+        raise StyxValidationError("`prep_only` must not be None")
+    if not isinstance(params["prep_only"], bool):
+        raise StyxValidationError(f'`prep_only` has the wrong type: Received `{type(params.get("prep_only", False))}` expected `bool`')
+    if params.get("tedana_prog", None) is not None:
+        if not isinstance(params["tedana_prog"], str):
+            raise StyxValidationError(f'`tedana_prog` has the wrong type: Received `{type(params.get("tedana_prog", None))}` expected `str | None`')
+    if params.get("tedana_is_exec", False) is None:
+        raise StyxValidationError("`tedana_is_exec` must not be None")
+    if not isinstance(params["tedana_is_exec"], bool):
+        raise StyxValidationError(f'`tedana_is_exec` has the wrong type: Received `{type(params.get("tedana_is_exec", False))}` expected `bool`')
+    if params.get("ted_label", None) is not None:
+        if not isinstance(params["ted_label"], str):
+            raise StyxValidationError(f'`ted_label` has the wrong type: Received `{type(params.get("ted_label", None))}` expected `str | None`')
+    if params.get("tedana_opts", None) is not None:
+        if not isinstance(params["tedana_opts"], str):
+            raise StyxValidationError(f'`tedana_opts` has the wrong type: Received `{type(params.get("tedana_opts", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("detailed_help", False) is None:
+        raise StyxValidationError("`detailed_help` must not be None")
+    if not isinstance(params["detailed_help"], bool):
+        raise StyxValidationError(f'`detailed_help` has the wrong type: Received `{type(params.get("detailed_help", False))}` expected `bool`')
+
+
 def tedana_wrapper_py_cargs(
     params: TedanaWrapperPyParameters,
     execution: Execution,
@@ -228,6 +295,7 @@ def tedana_wrapper_py_execute(
     Returns:
         NamedTuple of outputs (described in `TedanaWrapperPyOutputs`).
     """
+    tedana_wrapper_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TEDANA_WRAPPER_PY_METADATA)
     params = execution.params(params)

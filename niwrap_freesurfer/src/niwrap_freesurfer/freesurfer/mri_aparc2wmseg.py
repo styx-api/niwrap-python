@@ -64,6 +64,36 @@ def mri_aparc2wmseg_params(
     return params
 
 
+def mri_aparc2wmseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriAparc2wmsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("wmseg_file", None) is None:
+        raise StyxValidationError("`wmseg_file` must not be None")
+    if not isinstance(params["wmseg_file"], str):
+        raise StyxValidationError(f'`wmseg_file` has the wrong type: Received `{type(params.get("wmseg_file", None))}` expected `str`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_aparc2wmseg_cargs(
     params: MriAparc2wmsegParameters,
     execution: Execution,
@@ -133,6 +163,7 @@ def mri_aparc2wmseg_execute(
     Returns:
         NamedTuple of outputs (described in `MriAparc2wmsegOutputs`).
     """
+    mri_aparc2wmseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_APARC2WMSEG_METADATA)
     params = execution.params(params)

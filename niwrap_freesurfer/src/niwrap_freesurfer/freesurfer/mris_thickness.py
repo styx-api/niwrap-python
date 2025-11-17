@@ -88,6 +88,55 @@ def mris_thickness_params(
     return params
 
 
+def mris_thickness_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisThicknessParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("thickness_file", None) is None:
+        raise StyxValidationError("`thickness_file` must not be None")
+    if not isinstance(params["thickness_file"], str):
+        raise StyxValidationError(f'`thickness_file` has the wrong type: Received `{type(params.get("thickness_file", None))}` expected `str`')
+    if params.get("max_threshold", None) is not None:
+        if not isinstance(params["max_threshold"], (float, int)):
+            raise StyxValidationError(f'`max_threshold` has the wrong type: Received `{type(params.get("max_threshold", None))}` expected `float | None`')
+    if params.get("fill_holes", None) is not None:
+        if not isinstance(params["fill_holes"], list):
+            raise StyxValidationError(f'`fill_holes` has the wrong type: Received `{type(params.get("fill_holes", None))}` expected `list[str] | None`')
+        if len(params["fill_holes"]) == 2:
+            raise StyxValidationError("Parameter `fill_holes` must contain exactly 2 elements")
+        for e in params["fill_holes"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`fill_holes` has the wrong type: Received `{type(params.get("fill_holes", None))}` expected `list[str] | None`')
+    if params.get("thickness_from_seg", None) is not None:
+        if not isinstance(params["thickness_from_seg"], list):
+            raise StyxValidationError(f'`thickness_from_seg` has the wrong type: Received `{type(params.get("thickness_from_seg", None))}` expected `list[str] | None`')
+        if len(params["thickness_from_seg"]) == 5:
+            raise StyxValidationError("Parameter `thickness_from_seg` must contain exactly 5 elements")
+        for e in params["thickness_from_seg"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`thickness_from_seg` has the wrong type: Received `{type(params.get("thickness_from_seg", None))}` expected `list[str] | None`')
+    if params.get("vector", False) is None:
+        raise StyxValidationError("`vector` must not be None")
+    if not isinstance(params["vector"], bool):
+        raise StyxValidationError(f'`vector` has the wrong type: Received `{type(params.get("vector", False))}` expected `bool`')
+
+
 def mris_thickness_cargs(
     params: MrisThicknessParameters,
     execution: Execution,
@@ -165,6 +214,7 @@ def mris_thickness_execute(
     Returns:
         NamedTuple of outputs (described in `MrisThicknessOutputs`).
     """
+    mris_thickness_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_THICKNESS_METADATA)
     params = execution.params(params)

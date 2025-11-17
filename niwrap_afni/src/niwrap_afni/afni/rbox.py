@@ -163,6 +163,106 @@ def rbox_params(
     return params
 
 
+def rbox_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `RboxParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("number_points", None) is None:
+        raise StyxValidationError("`number_points` must not be None")
+    if not isinstance(params["number_points"], str):
+        raise StyxValidationError(f'`number_points` has the wrong type: Received `{type(params.get("number_points", None))}` expected `str`')
+    if params.get("dimension", None) is not None:
+        if not isinstance(params["dimension"], str):
+            raise StyxValidationError(f'`dimension` has the wrong type: Received `{type(params.get("dimension", None))}` expected `str | None`')
+    if params.get("unit_cube", False) is None:
+        raise StyxValidationError("`unit_cube` must not be None")
+    if not isinstance(params["unit_cube"], bool):
+        raise StyxValidationError(f'`unit_cube` has the wrong type: Received `{type(params.get("unit_cube", False))}` expected `bool`')
+    if params.get("unit_diamond", False) is None:
+        raise StyxValidationError("`unit_diamond` must not be None")
+    if not isinstance(params["unit_diamond"], bool):
+        raise StyxValidationError(f'`unit_diamond` has the wrong type: Received `{type(params.get("unit_diamond", False))}` expected `bool`')
+    if params.get("spiral", False) is None:
+        raise StyxValidationError("`spiral` must not be None")
+    if not isinstance(params["spiral"], bool):
+        raise StyxValidationError(f'`spiral` has the wrong type: Received `{type(params.get("spiral", False))}` expected `bool`')
+    if params.get("regular_polygon", False) is None:
+        raise StyxValidationError("`regular_polygon` must not be None")
+    if not isinstance(params["regular_polygon"], bool):
+        raise StyxValidationError(f'`regular_polygon` has the wrong type: Received `{type(params.get("regular_polygon", False))}` expected `bool`')
+    if params.get("cospherical_points", False) is None:
+        raise StyxValidationError("`cospherical_points` must not be None")
+    if not isinstance(params["cospherical_points"], bool):
+        raise StyxValidationError(f'`cospherical_points` has the wrong type: Received `{type(params.get("cospherical_points", False))}` expected `bool`')
+    if params.get("simplex_points", False) is None:
+        raise StyxValidationError("`simplex_points` must not be None")
+    if not isinstance(params["simplex_points"], bool):
+        raise StyxValidationError(f'`simplex_points` has the wrong type: Received `{type(params.get("simplex_points", False))}` expected `bool`')
+    if params.get("simplex_plus_points", False) is None:
+        raise StyxValidationError("`simplex_plus_points` must not be None")
+    if not isinstance(params["simplex_plus_points"], bool):
+        raise StyxValidationError(f'`simplex_plus_points` has the wrong type: Received `{type(params.get("simplex_plus_points", False))}` expected `bool`')
+    if params.get("add_point", None) is not None:
+        if not isinstance(params["add_point"], list):
+            raise StyxValidationError(f'`add_point` has the wrong type: Received `{type(params.get("add_point", None))}` expected `list[str] | None`')
+        if len(params["add_point"]) >= 1:
+            raise StyxValidationError("Parameter `add_point` must contain at least 1 element")
+        for e in params["add_point"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`add_point` has the wrong type: Received `{type(params.get("add_point", None))}` expected `list[str] | None`')
+    if params.get("lens_distribution", None) is not None:
+        if not isinstance(params["lens_distribution"], str):
+            raise StyxValidationError(f'`lens_distribution` has the wrong type: Received `{type(params.get("lens_distribution", None))}` expected `str | None`')
+    if params.get("random_within", False) is None:
+        raise StyxValidationError("`random_within` must not be None")
+    if not isinstance(params["random_within"], bool):
+        raise StyxValidationError(f'`random_within` has the wrong type: Received `{type(params.get("random_within", False))}` expected `bool`')
+    if params.get("random_disk", None) is not None:
+        if not isinstance(params["random_disk"], str):
+            raise StyxValidationError(f'`random_disk` has the wrong type: Received `{type(params.get("random_disk", None))}` expected `str | None`')
+    if params.get("bounding_box", None) is not None:
+        if not isinstance(params["bounding_box"], (float, int)):
+            raise StyxValidationError(f'`bounding_box` has the wrong type: Received `{type(params.get("bounding_box", None))}` expected `float | None`')
+    if params.get("homogeneous_coordinates", False) is None:
+        raise StyxValidationError("`homogeneous_coordinates` must not be None")
+    if not isinstance(params["homogeneous_coordinates"], bool):
+        raise StyxValidationError(f'`homogeneous_coordinates` has the wrong type: Received `{type(params.get("homogeneous_coordinates", False))}` expected `bool`')
+    if params.get("remove_command_line", False) is None:
+        raise StyxValidationError("`remove_command_line` must not be None")
+    if not isinstance(params["remove_command_line"], bool):
+        raise StyxValidationError(f'`remove_command_line` has the wrong type: Received `{type(params.get("remove_command_line", False))}` expected `bool`')
+    if params.get("time_seed", False) is None:
+        raise StyxValidationError("`time_seed` must not be None")
+    if not isinstance(params["time_seed"], bool):
+        raise StyxValidationError(f'`time_seed` has the wrong type: Received `{type(params.get("time_seed", False))}` expected `bool`')
+    if params.get("integer_coordinates", False) is None:
+        raise StyxValidationError("`integer_coordinates` must not be None")
+    if not isinstance(params["integer_coordinates"], bool):
+        raise StyxValidationError(f'`integer_coordinates` has the wrong type: Received `{type(params.get("integer_coordinates", False))}` expected `bool`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("user_seed", None) is not None:
+        if not isinstance(params["user_seed"], (float, int)):
+            raise StyxValidationError(f'`user_seed` has the wrong type: Received `{type(params.get("user_seed", None))}` expected `float | None`')
+    if params.get("mesh_lattice", None) is not None:
+        if not isinstance(params["mesh_lattice"], list):
+            raise StyxValidationError(f'`mesh_lattice` has the wrong type: Received `{type(params.get("mesh_lattice", None))}` expected `list[str] | None`')
+        if len(params["mesh_lattice"]) >= 3:
+            raise StyxValidationError("Parameter `mesh_lattice` must contain at least 3 elements")
+        for e in params["mesh_lattice"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mesh_lattice` has the wrong type: Received `{type(params.get("mesh_lattice", None))}` expected `list[str] | None`')
+
+
 def rbox_cargs(
     params: RboxParameters,
     execution: Execution,
@@ -281,6 +381,7 @@ def rbox_execute(
     Returns:
         NamedTuple of outputs (described in `RboxOutputs`).
     """
+    rbox_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RBOX_METADATA)
     params = execution.params(params)

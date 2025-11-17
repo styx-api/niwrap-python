@@ -59,6 +59,28 @@ def v__suma_fsvol_to_brik_params(
     return params
 
 
+def v__suma_fsvol_to_brik_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSumaFsvolToBrikParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fs_vol_data", None) is None:
+        raise StyxValidationError("`fs_vol_data` must not be None")
+    if not isinstance(params["fs_vol_data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fs_vol_data` has the wrong type: Received `{type(params.get("fs_vol_data", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+
+
 def v__suma_fsvol_to_brik_cargs(
     params: VSumaFsvolToBrikParameters,
     execution: Execution,
@@ -119,6 +141,7 @@ def v__suma_fsvol_to_brik_execute(
     Returns:
         NamedTuple of outputs (described in `VSumaFsvolToBrikOutputs`).
     """
+    v__suma_fsvol_to_brik_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SUMA_FSVOL_TO_BRIK_METADATA)
     params = execution.params(params)

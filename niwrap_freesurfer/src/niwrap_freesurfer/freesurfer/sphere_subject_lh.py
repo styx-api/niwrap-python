@@ -49,6 +49,24 @@ def sphere_subject_lh_params(
     return params
 
 
+def sphere_subject_lh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SphereSubjectLhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("license_file", None) is None:
+        raise StyxValidationError("`license_file` must not be None")
+    if not isinstance(params["license_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`license_file` has the wrong type: Received `{type(params.get("license_file", None))}` expected `InputPathType`')
+
+
 def sphere_subject_lh_cargs(
     params: SphereSubjectLhParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def sphere_subject_lh_execute(
     Returns:
         NamedTuple of outputs (described in `SphereSubjectLhOutputs`).
     """
+    sphere_subject_lh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPHERE_SUBJECT_LH_METADATA)
     params = execution.params(params)

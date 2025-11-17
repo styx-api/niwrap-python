@@ -82,6 +82,43 @@ def multiply_images_params(
     return params
 
 
+def multiply_images_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MultiplyImagesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimension", None) is None:
+        raise StyxValidationError("`dimension` must not be None")
+    if not isinstance(params["dimension"], int):
+        raise StyxValidationError(f'`dimension` has the wrong type: Received `{type(params.get("dimension", None))}` expected `typing.Literal[3, 2]`')
+    if params["dimension"] not in [3, 2]:
+        raise StyxValidationError("Parameter `dimension` must be one of [3, 2]")
+    if params.get("first_input", None) is None:
+        raise StyxValidationError("`first_input` must not be None")
+    if not isinstance(params["first_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`first_input` has the wrong type: Received `{type(params.get("first_input", None))}` expected `InputPathType`')
+    if params.get("second_input", None) is not None:
+        if not isinstance(params["second_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`second_input` has the wrong type: Received `{type(params.get("second_input", None))}` expected `InputPathType | None`')
+    if params.get("second_input_2", None) is not None:
+        if not isinstance(params["second_input_2"], (float, int)):
+            raise StyxValidationError(f'`second_input_2` has the wrong type: Received `{type(params.get("second_input_2", None))}` expected `float | None`')
+    if params.get("output_product_image", None) is None:
+        raise StyxValidationError("`output_product_image` must not be None")
+    if not isinstance(params["output_product_image"], str):
+        raise StyxValidationError(f'`output_product_image` has the wrong type: Received `{type(params.get("output_product_image", None))}` expected `str`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], int):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
+
+
 def multiply_images_cargs(
     params: MultiplyImagesParameters,
     execution: Execution,
@@ -150,6 +187,7 @@ def multiply_images_execute(
     Returns:
         NamedTuple of outputs (described in `MultiplyImagesOutputs`).
     """
+    multiply_images_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MULTIPLY_IMAGES_METADATA)
     params = execution.params(params)

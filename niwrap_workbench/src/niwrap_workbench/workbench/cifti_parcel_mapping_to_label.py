@@ -66,6 +66,36 @@ def cifti_parcel_mapping_to_label_params(
     return params
 
 
+def cifti_parcel_mapping_to_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiParcelMappingToLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dlabel-out", None) is None:
+        raise StyxValidationError("`dlabel-out` must not be None")
+    if not isinstance(params["dlabel-out"], str):
+        raise StyxValidationError(f'`dlabel-out` has the wrong type: Received `{type(params.get("dlabel-out", None))}` expected `str`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+    if params.get("template-cifti", None) is None:
+        raise StyxValidationError("`template-cifti` must not be None")
+    if not isinstance(params["template-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template-cifti` has the wrong type: Received `{type(params.get("template-cifti", None))}` expected `InputPathType`')
+
+
 def cifti_parcel_mapping_to_label_cargs(
     params: CiftiParcelMappingToLabelParameters,
     execution: Execution,
@@ -130,6 +160,7 @@ def cifti_parcel_mapping_to_label_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiParcelMappingToLabelOutputs`).
     """
+    cifti_parcel_mapping_to_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA)
     params = execution.params(params)

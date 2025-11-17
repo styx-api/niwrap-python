@@ -75,6 +75,43 @@ def fslsmoothfill_params(
     return params
 
 
+def fslsmoothfill_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslsmoothfillParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("mask_image", None) is None:
+        raise StyxValidationError("`mask_image` must not be None")
+    if not isinstance(params["mask_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("number_of_iterations", None) is not None:
+        if not isinstance(params["number_of_iterations"], int):
+            raise StyxValidationError(f'`number_of_iterations` has the wrong type: Received `{type(params.get("number_of_iterations", None))}` expected `int | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def fslsmoothfill_cargs(
     params: FslsmoothfillParameters,
     execution: Execution,
@@ -144,6 +181,7 @@ def fslsmoothfill_execute(
     Returns:
         NamedTuple of outputs (described in `FslsmoothfillOutputs`).
     """
+    fslsmoothfill_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLSMOOTHFILL_METADATA)
     params = execution.params(params)

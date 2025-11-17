@@ -58,6 +58,32 @@ def gifti_convert_params(
     return params
 
 
+def gifti_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GiftiConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gifti-encoding", None) is None:
+        raise StyxValidationError("`gifti-encoding` must not be None")
+    if not isinstance(params["gifti-encoding"], str):
+        raise StyxValidationError(f'`gifti-encoding` has the wrong type: Received `{type(params.get("gifti-encoding", None))}` expected `str`')
+    if params.get("input-gifti-file", None) is None:
+        raise StyxValidationError("`input-gifti-file` must not be None")
+    if not isinstance(params["input-gifti-file"], str):
+        raise StyxValidationError(f'`input-gifti-file` has the wrong type: Received `{type(params.get("input-gifti-file", None))}` expected `str`')
+    if params.get("output-gifti-file", None) is None:
+        raise StyxValidationError("`output-gifti-file` must not be None")
+    if not isinstance(params["output-gifti-file"], str):
+        raise StyxValidationError(f'`output-gifti-file` has the wrong type: Received `{type(params.get("output-gifti-file", None))}` expected `str`')
+
+
 def gifti_convert_cargs(
     params: GiftiConvertParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def gifti_convert_execute(
     Returns:
         NamedTuple of outputs (described in `GiftiConvertOutputs`).
     """
+    gifti_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GIFTI_CONVERT_METADATA)
     params = execution.params(params)

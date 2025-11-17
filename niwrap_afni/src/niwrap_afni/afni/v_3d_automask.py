@@ -91,6 +91,44 @@ def v_3d_automask_params(
     return params
 
 
+def v_3d_automask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAutomaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("apply_prefix", None) is not None:
+        if not isinstance(params["apply_prefix"], str):
+            raise StyxValidationError(f'`apply_prefix` has the wrong type: Received `{type(params.get("apply_prefix", None))}` expected `str | None`')
+    if params.get("clfrac", None) is not None:
+        if not isinstance(params["clfrac"], (float, int)):
+            raise StyxValidationError(f'`clfrac` has the wrong type: Received `{type(params.get("clfrac", None))}` expected `float | None`')
+    if params.get("dilate", None) is not None:
+        if not isinstance(params["dilate"], int):
+            raise StyxValidationError(f'`dilate` has the wrong type: Received `{type(params.get("dilate", None))}` expected `int | None`')
+    if params.get("erode", None) is not None:
+        if not isinstance(params["erode"], int):
+            raise StyxValidationError(f'`erode` has the wrong type: Received `{type(params.get("erode", None))}` expected `int | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+
+
 def v_3d_automask_cargs(
     params: V3dAutomaskParameters,
     execution: Execution,
@@ -177,6 +215,7 @@ def v_3d_automask_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAutomaskOutputs`).
     """
+    v_3d_automask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AUTOMASK_METADATA)
     params = execution.params(params)

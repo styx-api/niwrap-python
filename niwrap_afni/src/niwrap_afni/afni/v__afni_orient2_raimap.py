@@ -49,6 +49,24 @@ def v__afni_orient2_raimap_params(
     return params
 
 
+def v__afni_orient2_raimap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAfniOrient2RaimapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("orientation_code", None) is None:
+        raise StyxValidationError("`orientation_code` must not be None")
+    if not isinstance(params["orientation_code"], str):
+        raise StyxValidationError(f'`orientation_code` has the wrong type: Received `{type(params.get("orientation_code", None))}` expected `str`')
+
+
 def v__afni_orient2_raimap_cargs(
     params: VAfniOrient2RaimapParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def v__afni_orient2_raimap_execute(
     Returns:
         NamedTuple of outputs (described in `VAfniOrient2RaimapOutputs`).
     """
+    v__afni_orient2_raimap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AFNI_ORIENT2_RAIMAP_METADATA)
     params = execution.params(params)

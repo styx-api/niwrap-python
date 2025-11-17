@@ -115,6 +115,66 @@ def pctsurfcon_params(
     return params
 
 
+def pctsurfcon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PctsurfconParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("fsvol", None) is not None:
+        if not isinstance(params["fsvol"], str):
+            raise StyxValidationError(f'`fsvol` has the wrong type: Received `{type(params.get("fsvol", None))}` expected `str | None`')
+    if params.get("outbase", None) is not None:
+        if not isinstance(params["outbase"], str):
+            raise StyxValidationError(f'`outbase` has the wrong type: Received `{type(params.get("outbase", None))}` expected `str | None`')
+    if params.get("lh_only", False) is None:
+        raise StyxValidationError("`lh_only` must not be None")
+    if not isinstance(params["lh_only"], bool):
+        raise StyxValidationError(f'`lh_only` has the wrong type: Received `{type(params.get("lh_only", False))}` expected `bool`')
+    if params.get("rh_only", False) is None:
+        raise StyxValidationError("`rh_only` must not be None")
+    if not isinstance(params["rh_only"], bool):
+        raise StyxValidationError(f'`rh_only` has the wrong type: Received `{type(params.get("rh_only", False))}` expected `bool`')
+    if params.get("gm_proj_frac", None) is not None:
+        if not isinstance(params["gm_proj_frac"], (float, int)):
+            raise StyxValidationError(f'`gm_proj_frac` has the wrong type: Received `{type(params.get("gm_proj_frac", None))}` expected `float | None`')
+    if params.get("gm_proj_abs", None) is not None:
+        if not isinstance(params["gm_proj_abs"], (float, int)):
+            raise StyxValidationError(f'`gm_proj_abs` has the wrong type: Received `{type(params.get("gm_proj_abs", None))}` expected `float | None`')
+    if params.get("wm_proj_abs", None) is not None:
+        if not isinstance(params["wm_proj_abs"], (float, int)):
+            raise StyxValidationError(f'`wm_proj_abs` has the wrong type: Received `{type(params.get("wm_proj_abs", None))}` expected `float | None`')
+    if params.get("neg", False) is None:
+        raise StyxValidationError("`neg` must not be None")
+    if not isinstance(params["neg"], bool):
+        raise StyxValidationError(f'`neg` has the wrong type: Received `{type(params.get("neg", False))}` expected `bool`')
+    if params.get("no_mask", False) is None:
+        raise StyxValidationError("`no_mask` must not be None")
+    if not isinstance(params["no_mask"], bool):
+        raise StyxValidationError(f'`no_mask` has the wrong type: Received `{type(params.get("no_mask", False))}` expected `bool`')
+    if params.get("pial", False) is None:
+        raise StyxValidationError("`pial` must not be None")
+    if not isinstance(params["pial"], bool):
+        raise StyxValidationError(f'`pial` has the wrong type: Received `{type(params.get("pial", False))}` expected `bool`')
+    if params.get("tmp", None) is not None:
+        if not isinstance(params["tmp"], str):
+            raise StyxValidationError(f'`tmp` has the wrong type: Received `{type(params.get("tmp", None))}` expected `str | None`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+
+
 def pctsurfcon_cargs(
     params: PctsurfconParameters,
     execution: Execution,
@@ -217,6 +277,7 @@ def pctsurfcon_execute(
     Returns:
         NamedTuple of outputs (described in `PctsurfconOutputs`).
     """
+    pctsurfcon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PCTSURFCON_METADATA)
     params = execution.params(params)

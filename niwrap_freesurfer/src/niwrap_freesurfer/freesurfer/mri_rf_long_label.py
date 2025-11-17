@@ -50,6 +50,23 @@ def mri_rf_long_label_params(
     return params
 
 
+def mri_rf_long_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriRfLongLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("help_flag", None) is not None:
+        if not isinstance(params["help_flag"], str):
+            raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", None))}` expected `str | None`')
+
+
 def mri_rf_long_label_cargs(
     params: MriRfLongLabelParameters,
     execution: Execution,
@@ -108,6 +125,7 @@ def mri_rf_long_label_execute(
     Returns:
         NamedTuple of outputs (described in `MriRfLongLabelOutputs`).
     """
+    mri_rf_long_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_RF_LONG_LABEL_METADATA)
     params = execution.params(params)

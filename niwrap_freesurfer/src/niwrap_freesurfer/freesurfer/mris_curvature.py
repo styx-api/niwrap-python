@@ -132,6 +132,67 @@ def mris_curvature_params(
     return params
 
 
+def mris_curvature_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisCurvatureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("save_curvature_files", False) is None:
+        raise StyxValidationError("`save_curvature_files` must not be None")
+    if not isinstance(params["save_curvature_files"], bool):
+        raise StyxValidationError(f'`save_curvature_files` has the wrong type: Received `{type(params.get("save_curvature_files", False))}` expected `bool`')
+    if params.get("max_principal_curvature", False) is None:
+        raise StyxValidationError("`max_principal_curvature` must not be None")
+    if not isinstance(params["max_principal_curvature"], bool):
+        raise StyxValidationError(f'`max_principal_curvature` has the wrong type: Received `{type(params.get("max_principal_curvature", False))}` expected `bool`')
+    if params.get("mgh_output_format", False) is None:
+        raise StyxValidationError("`mgh_output_format` must not be None")
+    if not isinstance(params["mgh_output_format"], bool):
+        raise StyxValidationError(f'`mgh_output_format` has the wrong type: Received `{type(params.get("mgh_output_format", False))}` expected `bool`')
+    if params.get("min_principal_curvature", False) is None:
+        raise StyxValidationError("`min_principal_curvature` must not be None")
+    if not isinstance(params["min_principal_curvature"], bool):
+        raise StyxValidationError(f'`min_principal_curvature` has the wrong type: Received `{type(params.get("min_principal_curvature", False))}` expected `bool`')
+    if params.get("iterative_averages", None) is not None:
+        if not isinstance(params["iterative_averages"], (float, int)):
+            raise StyxValidationError(f'`iterative_averages` has the wrong type: Received `{type(params.get("iterative_averages", None))}` expected `float | None`')
+    if params.get("neighborhood_size", None) is not None:
+        if not isinstance(params["neighborhood_size"], (float, int)):
+            raise StyxValidationError(f'`neighborhood_size` has the wrong type: Received `{type(params.get("neighborhood_size", None))}` expected `float | None`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], (float, int)):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `float | None`')
+    if params.get("curvatures", None) is not None:
+        if not isinstance(params["curvatures"], str):
+            raise StyxValidationError(f'`curvatures` has the wrong type: Received `{type(params.get("curvatures", None))}` expected `str | None`')
+    if params.get("H_curvature", None) is not None:
+        if not isinstance(params["H_curvature"], str):
+            raise StyxValidationError(f'`H_curvature` has the wrong type: Received `{type(params.get("H_curvature", None))}` expected `str | None`')
+    if params.get("K_curvature", None) is not None:
+        if not isinstance(params["K_curvature"], str):
+            raise StyxValidationError(f'`K_curvature` has the wrong type: Received `{type(params.get("K_curvature", None))}` expected `str | None`')
+    if params.get("k1_curvature", None) is not None:
+        if not isinstance(params["k1_curvature"], str):
+            raise StyxValidationError(f'`k1_curvature` has the wrong type: Received `{type(params.get("k1_curvature", None))}` expected `str | None`')
+    if params.get("k2_curvature", None) is not None:
+        if not isinstance(params["k2_curvature"], str):
+            raise StyxValidationError(f'`k2_curvature` has the wrong type: Received `{type(params.get("k2_curvature", None))}` expected `str | None`')
+    if params.get("k1k2_curvature", None) is not None:
+        if not isinstance(params["k1k2_curvature"], str):
+            raise StyxValidationError(f'`k1k2_curvature` has the wrong type: Received `{type(params.get("k1k2_curvature", None))}` expected `str | None`')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+
+
 def mris_curvature_cargs(
     params: MrisCurvatureParameters,
     execution: Execution,
@@ -243,6 +304,7 @@ def mris_curvature_execute(
     Returns:
         NamedTuple of outputs (described in `MrisCurvatureOutputs`).
     """
+    mris_curvature_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CURVATURE_METADATA)
     params = execution.params(params)

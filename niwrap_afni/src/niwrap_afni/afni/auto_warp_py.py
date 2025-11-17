@@ -226,6 +226,138 @@ def auto_warp_py_params(
     return params
 
 
+def auto_warp_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AutoWarpPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base", None) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `InputPathType`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("skull_strip_input", False) is None:
+        raise StyxValidationError("`skull_strip_input` must not be None")
+    if not isinstance(params["skull_strip_input"], bool):
+        raise StyxValidationError(f'`skull_strip_input` has the wrong type: Received `{type(params.get("skull_strip_input", False))}` expected `bool`')
+    if params.get("qblur", None) is not None:
+        if not isinstance(params["qblur"], str):
+            raise StyxValidationError(f'`qblur` has the wrong type: Received `{type(params.get("qblur", None))}` expected `str | None`')
+    if params.get("qworkhard", None) is not None:
+        if not isinstance(params["qworkhard"], str):
+            raise StyxValidationError(f'`qworkhard` has the wrong type: Received `{type(params.get("qworkhard", None))}` expected `str | None`')
+    if params.get("qw_opts", None) is not None:
+        if not isinstance(params["qw_opts"], str):
+            raise StyxValidationError(f'`qw_opts` has the wrong type: Received `{type(params.get("qw_opts", None))}` expected `str | None`')
+    if params.get("keep_rm_files", False) is None:
+        raise StyxValidationError("`keep_rm_files` must not be None")
+    if not isinstance(params["keep_rm_files"], bool):
+        raise StyxValidationError(f'`keep_rm_files` has the wrong type: Received `{type(params.get("keep_rm_files", False))}` expected `bool`')
+    if params.get("prep_only", False) is None:
+        raise StyxValidationError("`prep_only` must not be None")
+    if not isinstance(params["prep_only"], bool):
+        raise StyxValidationError(f'`prep_only` has the wrong type: Received `{type(params.get("prep_only", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hview", False) is None:
+        raise StyxValidationError("`hview` must not be None")
+    if not isinstance(params["hview"], bool):
+        raise StyxValidationError(f'`hview` has the wrong type: Received `{type(params.get("hview", False))}` expected `bool`')
+    if params.get("limited_help", False) is None:
+        raise StyxValidationError("`limited_help` must not be None")
+    if not isinstance(params["limited_help"], bool):
+        raise StyxValidationError(f'`limited_help` has the wrong type: Received `{type(params.get("limited_help", False))}` expected `bool`')
+    if params.get("option_help", False) is None:
+        raise StyxValidationError("`option_help` must not be None")
+    if not isinstance(params["option_help"], bool):
+        raise StyxValidationError(f'`option_help` has the wrong type: Received `{type(params.get("option_help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+    if params.get("save_script", False) is None:
+        raise StyxValidationError("`save_script` must not be None")
+    if not isinstance(params["save_script"], bool):
+        raise StyxValidationError(f'`save_script` has the wrong type: Received `{type(params.get("save_script", False))}` expected `bool`')
+    if params.get("skip_affine", False) is None:
+        raise StyxValidationError("`skip_affine` must not be None")
+    if not isinstance(params["skip_affine"], bool):
+        raise StyxValidationError(f'`skip_affine` has the wrong type: Received `{type(params.get("skip_affine", False))}` expected `bool`')
+    if params.get("skull_strip_base", False) is None:
+        raise StyxValidationError("`skull_strip_base` must not be None")
+    if not isinstance(params["skull_strip_base"], bool):
+        raise StyxValidationError(f'`skull_strip_base` has the wrong type: Received `{type(params.get("skull_strip_base", False))}` expected `bool`')
+    if params.get("ex_mode", None) is not None:
+        if not isinstance(params["ex_mode"], str):
+            raise StyxValidationError(f'`ex_mode` has the wrong type: Received `{type(params.get("ex_mode", None))}` expected `str | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("child_anat", None) is not None:
+        if not isinstance(params["child_anat"], str):
+            raise StyxValidationError(f'`child_anat` has the wrong type: Received `{type(params.get("child_anat", None))}` expected `str | None`')
+    if params.get("warp_dxyz", None) is not None:
+        if not isinstance(params["warp_dxyz"], (float, int)):
+            raise StyxValidationError(f'`warp_dxyz` has the wrong type: Received `{type(params.get("warp_dxyz", None))}` expected `float | None`')
+    if params.get("affine_dxyz", None) is not None:
+        if not isinstance(params["affine_dxyz"], (float, int)):
+            raise StyxValidationError(f'`affine_dxyz` has the wrong type: Received `{type(params.get("affine_dxyz", None))}` expected `float | None`')
+    if params.get("affine_input_xmat", None) is not None:
+        if not isinstance(params["affine_input_xmat"], str):
+            raise StyxValidationError(f'`affine_input_xmat` has the wrong type: Received `{type(params.get("affine_input_xmat", None))}` expected `str | None`')
+    if params.get("smooth_anat", False) is None:
+        raise StyxValidationError("`smooth_anat` must not be None")
+    if not isinstance(params["smooth_anat"], bool):
+        raise StyxValidationError(f'`smooth_anat` has the wrong type: Received `{type(params.get("smooth_anat", False))}` expected `bool`')
+    if params.get("smooth_base", False) is None:
+        raise StyxValidationError("`smooth_base` must not be None")
+    if not isinstance(params["smooth_base"], bool):
+        raise StyxValidationError(f'`smooth_base` has the wrong type: Received `{type(params.get("smooth_base", False))}` expected `bool`')
+    if params.get("unifize_input", False) is None:
+        raise StyxValidationError("`unifize_input` must not be None")
+    if not isinstance(params["unifize_input"], bool):
+        raise StyxValidationError(f'`unifize_input` has the wrong type: Received `{type(params.get("unifize_input", False))}` expected `bool`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("followers", None) is not None:
+        if not isinstance(params["followers"], str):
+            raise StyxValidationError(f'`followers` has the wrong type: Received `{type(params.get("followers", None))}` expected `str | None`')
+    if params.get("affine_followers_xmat", None) is not None:
+        if not isinstance(params["affine_followers_xmat"], str):
+            raise StyxValidationError(f'`affine_followers_xmat` has the wrong type: Received `{type(params.get("affine_followers_xmat", None))}` expected `str | None`')
+    if params.get("skullstrip_opts", None) is not None:
+        if not isinstance(params["skullstrip_opts"], str):
+            raise StyxValidationError(f'`skullstrip_opts` has the wrong type: Received `{type(params.get("skullstrip_opts", None))}` expected `str | None`')
+    if params.get("at_opts", None) is not None:
+        if not isinstance(params["at_opts"], str):
+            raise StyxValidationError(f'`at_opts` has the wrong type: Received `{type(params.get("at_opts", None))}` expected `str | None`')
+
+
 def auto_warp_py_cargs(
     params: AutoWarpPyParameters,
     execution: Execution,
@@ -394,6 +526,7 @@ def auto_warp_py_execute(
     Returns:
         NamedTuple of outputs (described in `AutoWarpPyOutputs`).
     """
+    auto_warp_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AUTO_WARP_PY_METADATA)
     params = execution.params(params)

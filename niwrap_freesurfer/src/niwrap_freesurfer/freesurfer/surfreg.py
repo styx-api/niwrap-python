@@ -131,6 +131,79 @@ def surfreg_params(
     return params
 
 
+def surfreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("target", None) is None:
+        raise StyxValidationError("`target` must not be None")
+    if not isinstance(params["target"], str):
+        raise StyxValidationError(f'`target` has the wrong type: Received `{type(params.get("target", None))}` expected `str`')
+    if params.get("cross_hemi", False) is None:
+        raise StyxValidationError("`cross_hemi` must not be None")
+    if not isinstance(params["cross_hemi"], bool):
+        raise StyxValidationError(f'`cross_hemi` has the wrong type: Received `{type(params.get("cross_hemi", False))}` expected `bool`')
+    if params.get("reg_lh", False) is None:
+        raise StyxValidationError("`reg_lh` must not be None")
+    if not isinstance(params["reg_lh"], bool):
+        raise StyxValidationError(f'`reg_lh` has the wrong type: Received `{type(params.get("reg_lh", False))}` expected `bool`')
+    if params.get("reg_rh", False) is None:
+        raise StyxValidationError("`reg_rh` must not be None")
+    if not isinstance(params["reg_rh"], bool):
+        raise StyxValidationError(f'`reg_rh` has the wrong type: Received `{type(params.get("reg_rh", False))}` expected `bool`')
+    if params.get("reg_both", False) is None:
+        raise StyxValidationError("`reg_both` must not be None")
+    if not isinstance(params["reg_both"], bool):
+        raise StyxValidationError(f'`reg_both` has the wrong type: Received `{type(params.get("reg_both", False))}` expected `bool`')
+    if params.get("no_annot", False) is None:
+        raise StyxValidationError("`no_annot` must not be None")
+    if not isinstance(params["no_annot"], bool):
+        raise StyxValidationError(f'`no_annot` has the wrong type: Received `{type(params.get("no_annot", False))}` expected `bool`')
+    if params.get("annot", None) is not None:
+        if not isinstance(params["annot"], str):
+            raise StyxValidationError(f'`annot` has the wrong type: Received `{type(params.get("annot", None))}` expected `str | None`')
+    if params.get("aparc", False) is None:
+        raise StyxValidationError("`aparc` must not be None")
+    if not isinstance(params["aparc"], bool):
+        raise StyxValidationError(f'`aparc` has the wrong type: Received `{type(params.get("aparc", False))}` expected `bool`')
+    if params.get("noneg", False) is None:
+        raise StyxValidationError("`noneg` must not be None")
+    if not isinstance(params["noneg"], bool):
+        raise StyxValidationError(f'`noneg` has the wrong type: Received `{type(params.get("noneg", False))}` expected `bool`')
+    if params.get("init_reg", None) is not None:
+        if not isinstance(params["init_reg"], str):
+            raise StyxValidationError(f'`init_reg` has the wrong type: Received `{type(params.get("init_reg", None))}` expected `str | None`')
+    if params.get("lta", None) is not None:
+        if not isinstance(params["lta"], str):
+            raise StyxValidationError(f'`lta` has the wrong type: Received `{type(params.get("lta", None))}` expected `str | None`')
+    if params.get("init_from_tal", False) is None:
+        raise StyxValidationError("`init_from_tal` must not be None")
+    if not isinstance(params["init_from_tal"], bool):
+        raise StyxValidationError(f'`init_from_tal` has the wrong type: Received `{type(params.get("init_from_tal", False))}` expected `bool`')
+    if params.get("outsurf", None) is not None:
+        if not isinstance(params["outsurf"], str):
+            raise StyxValidationError(f'`outsurf` has the wrong type: Received `{type(params.get("outsurf", None))}` expected `str | None`')
+    if params.get("no_set_vol_geom", False) is None:
+        raise StyxValidationError("`no_set_vol_geom` must not be None")
+    if not isinstance(params["no_set_vol_geom"], bool):
+        raise StyxValidationError(f'`no_set_vol_geom` has the wrong type: Received `{type(params.get("no_set_vol_geom", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+
+
 def surfreg_cargs(
     params: SurfregParameters,
     execution: Execution,
@@ -241,6 +314,7 @@ def surfreg_execute(
     Returns:
         NamedTuple of outputs (described in `SurfregOutputs`).
     """
+    surfreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFREG_METADATA)
     params = execution.params(params)

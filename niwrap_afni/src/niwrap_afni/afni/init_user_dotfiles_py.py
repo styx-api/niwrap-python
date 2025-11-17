@@ -139,6 +139,90 @@ def init_user_dotfiles_py_params(
     return params
 
 
+def init_user_dotfiles_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InitUserDotfilesPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("help_dotfiles_all", False) is None:
+        raise StyxValidationError("`help_dotfiles_all` must not be None")
+    if not isinstance(params["help_dotfiles_all"], bool):
+        raise StyxValidationError(f'`help_dotfiles_all` has the wrong type: Received `{type(params.get("help_dotfiles_all", False))}` expected `bool`')
+    if params.get("help_dotfiles_mod", False) is None:
+        raise StyxValidationError("`help_dotfiles_mod` must not be None")
+    if not isinstance(params["help_dotfiles_mod"], bool):
+        raise StyxValidationError(f'`help_dotfiles_mod` has the wrong type: Received `{type(params.get("help_dotfiles_mod", False))}` expected `bool`')
+    if params.get("help_shells", False) is None:
+        raise StyxValidationError("`help_shells` must not be None")
+    if not isinstance(params["help_shells"], bool):
+        raise StyxValidationError(f'`help_shells` has the wrong type: Received `{type(params.get("help_shells", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("show_valid_opts", False) is None:
+        raise StyxValidationError("`show_valid_opts` must not be None")
+    if not isinstance(params["show_valid_opts"], bool):
+        raise StyxValidationError(f'`show_valid_opts` has the wrong type: Received `{type(params.get("show_valid_opts", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+    if params.get("dot_files_list", None) is not None:
+        if not isinstance(params["dot_files_list"], list):
+            raise StyxValidationError(f'`dot_files_list` has the wrong type: Received `{type(params.get("dot_files_list", None))}` expected `list[str] | None`')
+        for e in params["dot_files_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`dot_files_list` has the wrong type: Received `{type(params.get("dot_files_list", None))}` expected `list[str] | None`')
+    if params.get("dir_bin", None) is not None:
+        if not isinstance(params["dir_bin"], str):
+            raise StyxValidationError(f'`dir_bin` has the wrong type: Received `{type(params.get("dir_bin", None))}` expected `str | None`')
+    if params.get("dir_dot", None) is not None:
+        if not isinstance(params["dir_dot"], str):
+            raise StyxValidationError(f'`dir_dot` has the wrong type: Received `{type(params.get("dir_dot", None))}` expected `str | None`')
+    if params.get("do_updates", None) is not None:
+        if not isinstance(params["do_updates"], list):
+            raise StyxValidationError(f'`do_updates` has the wrong type: Received `{type(params.get("do_updates", None))}` expected `list[str] | None`')
+        for e in params["do_updates"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`do_updates` has the wrong type: Received `{type(params.get("do_updates", None))}` expected `list[str] | None`')
+    if params.get("dry_run", False) is None:
+        raise StyxValidationError("`dry_run` must not be None")
+    if not isinstance(params["dry_run"], bool):
+        raise StyxValidationError(f'`dry_run` has the wrong type: Received `{type(params.get("dry_run", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("make_backup", None) is not None:
+        if not isinstance(params["make_backup"], str):
+            raise StyxValidationError(f'`make_backup` has the wrong type: Received `{type(params.get("make_backup", None))}` expected `str | None`')
+    if params.get("shell_list", None) is not None:
+        if not isinstance(params["shell_list"], list):
+            raise StyxValidationError(f'`shell_list` has the wrong type: Received `{type(params.get("shell_list", None))}` expected `list[str] | None`')
+        for e in params["shell_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`shell_list` has the wrong type: Received `{type(params.get("shell_list", None))}` expected `list[str] | None`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+    if params.get("verbosity_level", None) is not None:
+        if not isinstance(params["verbosity_level"], int):
+            raise StyxValidationError(f'`verbosity_level` has the wrong type: Received `{type(params.get("verbosity_level", None))}` expected `int | None`')
+
+
 def init_user_dotfiles_py_cargs(
     params: InitUserDotfilesPyParameters,
     execution: Execution,
@@ -251,6 +335,7 @@ def init_user_dotfiles_py_execute(
     Returns:
         NamedTuple of outputs (described in `InitUserDotfilesPyOutputs`).
     """
+    init_user_dotfiles_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INIT_USER_DOTFILES_PY_METADATA)
     params = execution.params(params)

@@ -127,6 +127,74 @@ def v_3d_toy_prog_params(
     return params
 
 
+def v_3d_toy_prog_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dToyProgParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("output_datum", None) is not None:
+        if not isinstance(params["output_datum"], str):
+            raise StyxValidationError(f'`output_datum` has the wrong type: Received `{type(params.get("output_datum", None))}` expected `typing.Literal["float", "short"] | None`')
+        if params["output_datum"] not in ["float", "short"]:
+            raise StyxValidationError("Parameter `output_datum` must be one of [\"float\", \"short\"]")
+    if params.get("mini_help", False) is None:
+        raise StyxValidationError("`mini_help` must not be None")
+    if not isinstance(params["mini_help"], bool):
+        raise StyxValidationError(f'`mini_help` has the wrong type: Received `{type(params.get("mini_help", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("extreme_help", False) is None:
+        raise StyxValidationError("`extreme_help` must not be None")
+    if not isinstance(params["extreme_help"], bool):
+        raise StyxValidationError(f'`extreme_help` has the wrong type: Received `{type(params.get("extreme_help", False))}` expected `bool`')
+    if params.get("help_view", False) is None:
+        raise StyxValidationError("`help_view` must not be None")
+    if not isinstance(params["help_view"], bool):
+        raise StyxValidationError(f'`help_view` has the wrong type: Received `{type(params.get("help_view", False))}` expected `bool`')
+    if params.get("help_web", False) is None:
+        raise StyxValidationError("`help_web` must not be None")
+    if not isinstance(params["help_web"], bool):
+        raise StyxValidationError(f'`help_web` has the wrong type: Received `{type(params.get("help_web", False))}` expected `bool`')
+    if params.get("help_find", None) is not None:
+        if not isinstance(params["help_find"], str):
+            raise StyxValidationError(f'`help_find` has the wrong type: Received `{type(params.get("help_find", None))}` expected `str | None`')
+    if params.get("help_raw", False) is None:
+        raise StyxValidationError("`help_raw` must not be None")
+    if not isinstance(params["help_raw"], bool):
+        raise StyxValidationError(f'`help_raw` has the wrong type: Received `{type(params.get("help_raw", False))}` expected `bool`')
+    if params.get("help_spx", False) is None:
+        raise StyxValidationError("`help_spx` must not be None")
+    if not isinstance(params["help_spx"], bool):
+        raise StyxValidationError(f'`help_spx` has the wrong type: Received `{type(params.get("help_spx", False))}` expected `bool`')
+    if params.get("help_aspx", False) is None:
+        raise StyxValidationError("`help_aspx` must not be None")
+    if not isinstance(params["help_aspx"], bool):
+        raise StyxValidationError(f'`help_aspx` has the wrong type: Received `{type(params.get("help_aspx", False))}` expected `bool`')
+    if params.get("help_all_opts", False) is None:
+        raise StyxValidationError("`help_all_opts` must not be None")
+    if not isinstance(params["help_all_opts"], bool):
+        raise StyxValidationError(f'`help_all_opts` has the wrong type: Received `{type(params.get("help_all_opts", False))}` expected `bool`')
+
+
 def v_3d_toy_prog_cargs(
     params: V3dToyProgParameters,
     execution: Execution,
@@ -226,6 +294,7 @@ def v_3d_toy_prog_execute(
     Returns:
         NamedTuple of outputs (described in `V3dToyProgOutputs`).
     """
+    v_3d_toy_prog_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TOY_PROG_METADATA)
     params = execution.params(params)

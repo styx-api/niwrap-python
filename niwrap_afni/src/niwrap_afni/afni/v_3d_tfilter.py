@@ -61,6 +61,35 @@ def v_3d_tfilter_params(
     return params
 
 
+def v_3d_tfilter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTfilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputdataset", None) is None:
+        raise StyxValidationError("`inputdataset` must not be None")
+    if not isinstance(params["inputdataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputdataset` has the wrong type: Received `{type(params.get("inputdataset", None))}` expected `InputPathType`')
+    if params.get("outputdataset", None) is None:
+        raise StyxValidationError("`outputdataset` must not be None")
+    if not isinstance(params["outputdataset"], str):
+        raise StyxValidationError(f'`outputdataset` has the wrong type: Received `{type(params.get("outputdataset", None))}` expected `str`')
+    if params.get("filters", None) is None:
+        raise StyxValidationError("`filters` must not be None")
+    if not isinstance(params["filters"], list):
+        raise StyxValidationError(f'`filters` has the wrong type: Received `{type(params.get("filters", None))}` expected `list[str]`')
+    for e in params["filters"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`filters` has the wrong type: Received `{type(params.get("filters", None))}` expected `list[str]`')
+
+
 def v_3d_tfilter_cargs(
     params: V3dTfilterParameters,
     execution: Execution,
@@ -131,6 +160,7 @@ def v_3d_tfilter_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTfilterOutputs`).
     """
+    v_3d_tfilter_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TFILTER_METADATA)
     params = execution.params(params)

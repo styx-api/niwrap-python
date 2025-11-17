@@ -99,6 +99,61 @@ def v__afni_env_params(
     return params
 
 
+def v__afni_env_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAfniEnvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("set_flag", None) is not None:
+        if not isinstance(params["set_flag"], list):
+            raise StyxValidationError(f'`set_flag` has the wrong type: Received `{type(params.get("set_flag", None))}` expected `list[str] | None`')
+        if len(params["set_flag"]) == 2:
+            raise StyxValidationError("Parameter `set_flag` must contain exactly 2 elements")
+        for e in params["set_flag"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`set_flag` has the wrong type: Received `{type(params.get("set_flag", None))}` expected `list[str] | None`')
+    if params.get("unset_flag", None) is not None:
+        if not isinstance(params["unset_flag"], str):
+            raise StyxValidationError(f'`unset_flag` has the wrong type: Received `{type(params.get("unset_flag", None))}` expected `str | None`')
+    if params.get("get_flag", None) is not None:
+        if not isinstance(params["get_flag"], str):
+            raise StyxValidationError(f'`get_flag` has the wrong type: Received `{type(params.get("get_flag", None))}` expected `str | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("help_web_flag", False) is None:
+        raise StyxValidationError("`help_web_flag` must not be None")
+    if not isinstance(params["help_web_flag"], bool):
+        raise StyxValidationError(f'`help_web_flag` has the wrong type: Received `{type(params.get("help_web_flag", False))}` expected `bool`')
+    if params.get("help_web_flag_alias", False) is None:
+        raise StyxValidationError("`help_web_flag_alias` must not be None")
+    if not isinstance(params["help_web_flag_alias"], bool):
+        raise StyxValidationError(f'`help_web_flag_alias` has the wrong type: Received `{type(params.get("help_web_flag_alias", False))}` expected `bool`')
+    if params.get("help_view_flag", False) is None:
+        raise StyxValidationError("`help_view_flag` must not be None")
+    if not isinstance(params["help_view_flag"], bool):
+        raise StyxValidationError(f'`help_view_flag` has the wrong type: Received `{type(params.get("help_view_flag", False))}` expected `bool`')
+    if params.get("help_view_flag_alias", False) is None:
+        raise StyxValidationError("`help_view_flag_alias` must not be None")
+    if not isinstance(params["help_view_flag_alias"], bool):
+        raise StyxValidationError(f'`help_view_flag_alias` has the wrong type: Received `{type(params.get("help_view_flag_alias", False))}` expected `bool`')
+    if params.get("all_opts_flag", False) is None:
+        raise StyxValidationError("`all_opts_flag` must not be None")
+    if not isinstance(params["all_opts_flag"], bool):
+        raise StyxValidationError(f'`all_opts_flag` has the wrong type: Received `{type(params.get("all_opts_flag", False))}` expected `bool`')
+    if params.get("help_find_flag", None) is not None:
+        if not isinstance(params["help_find_flag"], str):
+            raise StyxValidationError(f'`help_find_flag` has the wrong type: Received `{type(params.get("help_find_flag", None))}` expected `str | None`')
+
+
 def v__afni_env_cargs(
     params: VAfniEnvParameters,
     execution: Execution,
@@ -187,6 +242,7 @@ def v__afni_env_execute(
     Returns:
         NamedTuple of outputs (described in `VAfniEnvOutputs`).
     """
+    v__afni_env_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AFNI_ENV_METADATA)
     params = execution.params(params)

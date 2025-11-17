@@ -128,6 +128,69 @@ def ccops_params(
     return params
 
 
+def ccops_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CcopsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("basename", None) is None:
+        raise StyxValidationError("`basename` must not be None")
+    if not isinstance(params["basename"], str):
+        raise StyxValidationError(f'`basename` has the wrong type: Received `{type(params.get("basename", None))}` expected `str`')
+    if params.get("infile", None) is not None:
+        if not isinstance(params["infile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType | None`')
+    if params.get("tract_dir", None) is not None:
+        if not isinstance(params["tract_dir"], str):
+            raise StyxValidationError(f'`tract_dir` has the wrong type: Received `{type(params.get("tract_dir", None))}` expected `str | None`')
+    if params.get("exclusion_mask", None) is not None:
+        if not isinstance(params["exclusion_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exclusion_mask` has the wrong type: Received `{type(params.get("exclusion_mask", None))}` expected `InputPathType | None`')
+    if params.get("reorder_seedspace", False) is None:
+        raise StyxValidationError("`reorder_seedspace` must not be None")
+    if not isinstance(params["reorder_seedspace"], bool):
+        raise StyxValidationError(f'`reorder_seedspace` has the wrong type: Received `{type(params.get("reorder_seedspace", False))}` expected `bool`')
+    if params.get("reorder_tractspace", False) is None:
+        raise StyxValidationError("`reorder_tractspace` must not be None")
+    if not isinstance(params["reorder_tractspace"], bool):
+        raise StyxValidationError(f'`reorder_tractspace` has the wrong type: Received `{type(params.get("reorder_tractspace", False))}` expected `bool`')
+    if params.get("tract_reord", False) is None:
+        raise StyxValidationError("`tract_reord` must not be None")
+    if not isinstance(params["tract_reord"], bool):
+        raise StyxValidationError(f'`tract_reord` has the wrong type: Received `{type(params.get("tract_reord", False))}` expected `bool`')
+    if params.get("connexity_constraint", None) is not None:
+        if not isinstance(params["connexity_constraint"], (float, int)):
+            raise StyxValidationError(f'`connexity_constraint` has the wrong type: Received `{type(params.get("connexity_constraint", None))}` expected `float | None`')
+        if 0 <= params["connexity_constraint"] <= 1:
+            raise StyxValidationError("Parameter `connexity_constraint` must be between 0 and 1 (inclusive)")
+    if params.get("binarise_val", None) is not None:
+        if not isinstance(params["binarise_val"], (float, int)):
+            raise StyxValidationError(f'`binarise_val` has the wrong type: Received `{type(params.get("binarise_val", None))}` expected `float | None`')
+    if params.get("matrix_power", None) is not None:
+        if not isinstance(params["matrix_power"], (float, int)):
+            raise StyxValidationError(f'`matrix_power` has the wrong type: Received `{type(params.get("matrix_power", None))}` expected `float | None`')
+    if params.get("brain_mask", None) is not None:
+        if not isinstance(params["brain_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brain_mask` has the wrong type: Received `{type(params.get("brain_mask", None))}` expected `InputPathType | None`')
+    if params.get("scheme", None) is not None:
+        if not isinstance(params["scheme"], str):
+            raise StyxValidationError(f'`scheme` has the wrong type: Received `{type(params.get("scheme", None))}` expected `str | None`')
+    if params.get("nclusters", None) is not None:
+        if not isinstance(params["nclusters"], (float, int)):
+            raise StyxValidationError(f'`nclusters` has the wrong type: Received `{type(params.get("nclusters", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def ccops_cargs(
     params: CcopsParameters,
     execution: Execution,
@@ -242,6 +305,7 @@ def ccops_execute(
     Returns:
         NamedTuple of outputs (described in `CcopsOutputs`).
     """
+    ccops_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CCOPS_METADATA)
     params = execution.params(params)

@@ -431,6 +431,291 @@ def recon_all_params(
     return params
 
 
+def recon_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ReconAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjid", None) is None:
+        raise StyxValidationError("`subjid` must not be None")
+    if not isinstance(params["subjid"], str):
+        raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str`')
+    if params.get("all_flag", False) is None:
+        raise StyxValidationError("`all_flag` must not be None")
+    if not isinstance(params["all_flag"], bool):
+        raise StyxValidationError(f'`all_flag` has the wrong type: Received `{type(params.get("all_flag", False))}` expected `bool`')
+    if params.get("autorecon_all_flag", False) is None:
+        raise StyxValidationError("`autorecon_all_flag` must not be None")
+    if not isinstance(params["autorecon_all_flag"], bool):
+        raise StyxValidationError(f'`autorecon_all_flag` has the wrong type: Received `{type(params.get("autorecon_all_flag", False))}` expected `bool`')
+    if params.get("autorecon1_flag", False) is None:
+        raise StyxValidationError("`autorecon1_flag` must not be None")
+    if not isinstance(params["autorecon1_flag"], bool):
+        raise StyxValidationError(f'`autorecon1_flag` has the wrong type: Received `{type(params.get("autorecon1_flag", False))}` expected `bool`')
+    if params.get("autorecon2_flag", False) is None:
+        raise StyxValidationError("`autorecon2_flag` must not be None")
+    if not isinstance(params["autorecon2_flag"], bool):
+        raise StyxValidationError(f'`autorecon2_flag` has the wrong type: Received `{type(params.get("autorecon2_flag", False))}` expected `bool`')
+    if params.get("autorecon2_cp_flag", False) is None:
+        raise StyxValidationError("`autorecon2_cp_flag` must not be None")
+    if not isinstance(params["autorecon2_cp_flag"], bool):
+        raise StyxValidationError(f'`autorecon2_cp_flag` has the wrong type: Received `{type(params.get("autorecon2_cp_flag", False))}` expected `bool`')
+    if params.get("autorecon2_wm_flag", False) is None:
+        raise StyxValidationError("`autorecon2_wm_flag` must not be None")
+    if not isinstance(params["autorecon2_wm_flag"], bool):
+        raise StyxValidationError(f'`autorecon2_wm_flag` has the wrong type: Received `{type(params.get("autorecon2_wm_flag", False))}` expected `bool`')
+    if params.get("autorecon2_inflate1_flag", False) is None:
+        raise StyxValidationError("`autorecon2_inflate1_flag` must not be None")
+    if not isinstance(params["autorecon2_inflate1_flag"], bool):
+        raise StyxValidationError(f'`autorecon2_inflate1_flag` has the wrong type: Received `{type(params.get("autorecon2_inflate1_flag", False))}` expected `bool`')
+    if params.get("autorecon2_perhemi_flag", False) is None:
+        raise StyxValidationError("`autorecon2_perhemi_flag` must not be None")
+    if not isinstance(params["autorecon2_perhemi_flag"], bool):
+        raise StyxValidationError(f'`autorecon2_perhemi_flag` has the wrong type: Received `{type(params.get("autorecon2_perhemi_flag", False))}` expected `bool`')
+    if params.get("autorecon3_flag", False) is None:
+        raise StyxValidationError("`autorecon3_flag` must not be None")
+    if not isinstance(params["autorecon3_flag"], bool):
+        raise StyxValidationError(f'`autorecon3_flag` has the wrong type: Received `{type(params.get("autorecon3_flag", False))}` expected `bool`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("pons_crs", None) is not None:
+        if not isinstance(params["pons_crs"], list):
+            raise StyxValidationError(f'`pons_crs` has the wrong type: Received `{type(params.get("pons_crs", None))}` expected `list[float] | None`')
+        if len(params["pons_crs"]) == 3:
+            raise StyxValidationError("Parameter `pons_crs` must contain exactly 3 elements")
+        for e in params["pons_crs"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`pons_crs` has the wrong type: Received `{type(params.get("pons_crs", None))}` expected `list[float] | None`')
+    if params.get("cc_crs", None) is not None:
+        if not isinstance(params["cc_crs"], list):
+            raise StyxValidationError(f'`cc_crs` has the wrong type: Received `{type(params.get("cc_crs", None))}` expected `list[float] | None`')
+        if len(params["cc_crs"]) == 3:
+            raise StyxValidationError("Parameter `cc_crs` must contain exactly 3 elements")
+        for e in params["cc_crs"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`cc_crs` has the wrong type: Received `{type(params.get("cc_crs", None))}` expected `list[float] | None`')
+    if params.get("lh_crs", None) is not None:
+        if not isinstance(params["lh_crs"], list):
+            raise StyxValidationError(f'`lh_crs` has the wrong type: Received `{type(params.get("lh_crs", None))}` expected `list[float] | None`')
+        if len(params["lh_crs"]) == 3:
+            raise StyxValidationError("Parameter `lh_crs` must contain exactly 3 elements")
+        for e in params["lh_crs"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`lh_crs` has the wrong type: Received `{type(params.get("lh_crs", None))}` expected `list[float] | None`')
+    if params.get("rh_crs", None) is not None:
+        if not isinstance(params["rh_crs"], list):
+            raise StyxValidationError(f'`rh_crs` has the wrong type: Received `{type(params.get("rh_crs", None))}` expected `list[float] | None`')
+        if len(params["rh_crs"]) == 3:
+            raise StyxValidationError("Parameter `rh_crs` must contain exactly 3 elements")
+        for e in params["rh_crs"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rh_crs` has the wrong type: Received `{type(params.get("rh_crs", None))}` expected `list[float] | None`')
+    if params.get("nofill", False) is None:
+        raise StyxValidationError("`nofill` must not be None")
+    if not isinstance(params["nofill"], bool):
+        raise StyxValidationError(f'`nofill` has the wrong type: Received `{type(params.get("nofill", False))}` expected `bool`')
+    if params.get("watershed", None) is not None:
+        if not isinstance(params["watershed"], str):
+            raise StyxValidationError(f'`watershed` has the wrong type: Received `{type(params.get("watershed", None))}` expected `str | None`')
+    if params.get("external_brain_mask", None) is not None:
+        if not isinstance(params["external_brain_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`external_brain_mask` has the wrong type: Received `{type(params.get("external_brain_mask", None))}` expected `InputPathType | None`')
+    if params.get("wsless", False) is None:
+        raise StyxValidationError("`wsless` must not be None")
+    if not isinstance(params["wsless"], bool):
+        raise StyxValidationError(f'`wsless` has the wrong type: Received `{type(params.get("wsless", False))}` expected `bool`')
+    if params.get("wsmore", False) is None:
+        raise StyxValidationError("`wsmore` must not be None")
+    if not isinstance(params["wsmore"], bool):
+        raise StyxValidationError(f'`wsmore` has the wrong type: Received `{type(params.get("wsmore", False))}` expected `bool`')
+    if params.get("wsatlas", False) is None:
+        raise StyxValidationError("`wsatlas` must not be None")
+    if not isinstance(params["wsatlas"], bool):
+        raise StyxValidationError(f'`wsatlas` has the wrong type: Received `{type(params.get("wsatlas", False))}` expected `bool`')
+    if params.get("no_wsatlas", False) is None:
+        raise StyxValidationError("`no_wsatlas` must not be None")
+    if not isinstance(params["no_wsatlas"], bool):
+        raise StyxValidationError(f'`no_wsatlas` has the wrong type: Received `{type(params.get("no_wsatlas", False))}` expected `bool`')
+    if params.get("no_wsgcaatlas", False) is None:
+        raise StyxValidationError("`no_wsgcaatlas` must not be None")
+    if not isinstance(params["no_wsgcaatlas"], bool):
+        raise StyxValidationError(f'`no_wsgcaatlas` has the wrong type: Received `{type(params.get("no_wsgcaatlas", False))}` expected `bool`')
+    if params.get("wsthresh", None) is not None:
+        if not isinstance(params["wsthresh"], (float, int)):
+            raise StyxValidationError(f'`wsthresh` has the wrong type: Received `{type(params.get("wsthresh", None))}` expected `float | None`')
+    if params.get("wsseed", None) is not None:
+        if not isinstance(params["wsseed"], list):
+            raise StyxValidationError(f'`wsseed` has the wrong type: Received `{type(params.get("wsseed", None))}` expected `list[float] | None`')
+        if len(params["wsseed"]) == 3:
+            raise StyxValidationError("Parameter `wsseed` must contain exactly 3 elements")
+        for e in params["wsseed"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`wsseed` has the wrong type: Received `{type(params.get("wsseed", None))}` expected `list[float] | None`')
+    if params.get("norm_3d_iters", None) is not None:
+        if not isinstance(params["norm_3d_iters"], (float, int)):
+            raise StyxValidationError(f'`norm_3d_iters` has the wrong type: Received `{type(params.get("norm_3d_iters", None))}` expected `float | None`')
+    if params.get("norm_max_grad", None) is not None:
+        if not isinstance(params["norm_max_grad"], (float, int)):
+            raise StyxValidationError(f'`norm_max_grad` has the wrong type: Received `{type(params.get("norm_max_grad", None))}` expected `float | None`')
+    if params.get("norm1_b", None) is not None:
+        if not isinstance(params["norm1_b"], (float, int)):
+            raise StyxValidationError(f'`norm1_b` has the wrong type: Received `{type(params.get("norm1_b", None))}` expected `float | None`')
+    if params.get("norm2_b", None) is not None:
+        if not isinstance(params["norm2_b"], (float, int)):
+            raise StyxValidationError(f'`norm2_b` has the wrong type: Received `{type(params.get("norm2_b", None))}` expected `float | None`')
+    if params.get("norm1_n", None) is not None:
+        if not isinstance(params["norm1_n"], (float, int)):
+            raise StyxValidationError(f'`norm1_n` has the wrong type: Received `{type(params.get("norm1_n", None))}` expected `float | None`')
+    if params.get("norm2_n", None) is not None:
+        if not isinstance(params["norm2_n"], (float, int)):
+            raise StyxValidationError(f'`norm2_n` has the wrong type: Received `{type(params.get("norm2_n", None))}` expected `float | None`')
+    if params.get("cm", False) is None:
+        raise StyxValidationError("`cm` must not be None")
+    if not isinstance(params["cm"], bool):
+        raise StyxValidationError(f'`cm` has the wrong type: Received `{type(params.get("cm", False))}` expected `bool`')
+    if params.get("no_fix_with_ga", False) is None:
+        raise StyxValidationError("`no_fix_with_ga` must not be None")
+    if not isinstance(params["no_fix_with_ga"], bool):
+        raise StyxValidationError(f'`no_fix_with_ga` has the wrong type: Received `{type(params.get("no_fix_with_ga", False))}` expected `bool`')
+    if params.get("fix_diag_only", False) is None:
+        raise StyxValidationError("`fix_diag_only` must not be None")
+    if not isinstance(params["fix_diag_only"], bool):
+        raise StyxValidationError(f'`fix_diag_only` has the wrong type: Received `{type(params.get("fix_diag_only", False))}` expected `bool`')
+    if params.get("seg_wlo", None) is not None:
+        if not isinstance(params["seg_wlo"], (float, int)):
+            raise StyxValidationError(f'`seg_wlo` has the wrong type: Received `{type(params.get("seg_wlo", None))}` expected `float | None`')
+    if params.get("seg_ghi", None) is not None:
+        if not isinstance(params["seg_ghi"], (float, int)):
+            raise StyxValidationError(f'`seg_ghi` has the wrong type: Received `{type(params.get("seg_ghi", None))}` expected `float | None`')
+    if params.get("nothicken", False) is None:
+        raise StyxValidationError("`nothicken` must not be None")
+    if not isinstance(params["nothicken"], bool):
+        raise StyxValidationError(f'`nothicken` has the wrong type: Received `{type(params.get("nothicken", False))}` expected `bool`')
+    if params.get("no_ca_align_after", False) is None:
+        raise StyxValidationError("`no_ca_align_after` must not be None")
+    if not isinstance(params["no_ca_align_after"], bool):
+        raise StyxValidationError(f'`no_ca_align_after` has the wrong type: Received `{type(params.get("no_ca_align_after", False))}` expected `bool`')
+    if params.get("no_ca_align", False) is None:
+        raise StyxValidationError("`no_ca_align` must not be None")
+    if not isinstance(params["no_ca_align"], bool):
+        raise StyxValidationError(f'`no_ca_align` has the wrong type: Received `{type(params.get("no_ca_align", False))}` expected `bool`')
+    if params.get("deface", False) is None:
+        raise StyxValidationError("`deface` must not be None")
+    if not isinstance(params["deface"], bool):
+        raise StyxValidationError(f'`deface` has the wrong type: Received `{type(params.get("deface", False))}` expected `bool`')
+    if params.get("expert_file", None) is not None:
+        if not isinstance(params["expert_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`expert_file` has the wrong type: Received `{type(params.get("expert_file", None))}` expected `InputPathType | None`')
+    if params.get("xopts_use", False) is None:
+        raise StyxValidationError("`xopts_use` must not be None")
+    if not isinstance(params["xopts_use"], bool):
+        raise StyxValidationError(f'`xopts_use` has the wrong type: Received `{type(params.get("xopts_use", False))}` expected `bool`')
+    if params.get("xopts_clean", False) is None:
+        raise StyxValidationError("`xopts_clean` must not be None")
+    if not isinstance(params["xopts_clean"], bool):
+        raise StyxValidationError(f'`xopts_clean` has the wrong type: Received `{type(params.get("xopts_clean", False))}` expected `bool`')
+    if params.get("xopts_overwrite", False) is None:
+        raise StyxValidationError("`xopts_overwrite` must not be None")
+    if not isinstance(params["xopts_overwrite"], bool):
+        raise StyxValidationError(f'`xopts_overwrite` has the wrong type: Received `{type(params.get("xopts_overwrite", False))}` expected `bool`')
+    if params.get("termscript_file", None) is not None:
+        if not isinstance(params["termscript_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`termscript_file` has the wrong type: Received `{type(params.get("termscript_file", None))}` expected `InputPathType | None`')
+    if params.get("mprage", False) is None:
+        raise StyxValidationError("`mprage` must not be None")
+    if not isinstance(params["mprage"], bool):
+        raise StyxValidationError(f'`mprage` has the wrong type: Received `{type(params.get("mprage", False))}` expected `bool`')
+    if params.get("washu_mprage", False) is None:
+        raise StyxValidationError("`washu_mprage` must not be None")
+    if not isinstance(params["washu_mprage"], bool):
+        raise StyxValidationError(f'`washu_mprage` has the wrong type: Received `{type(params.get("washu_mprage", False))}` expected `bool`')
+    if params.get("schwartzya3t_atlas", False) is None:
+        raise StyxValidationError("`schwartzya3t_atlas` must not be None")
+    if not isinstance(params["schwartzya3t_atlas"], bool):
+        raise StyxValidationError(f'`schwartzya3t_atlas` has the wrong type: Received `{type(params.get("schwartzya3t_atlas", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("waitfor_file", None) is not None:
+        if not isinstance(params["waitfor_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`waitfor_file` has the wrong type: Received `{type(params.get("waitfor_file", None))}` expected `InputPathType | None`')
+    if params.get("notify_file", None) is not None:
+        if not isinstance(params["notify_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`notify_file` has the wrong type: Received `{type(params.get("notify_file", None))}` expected `InputPathType | None`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `InputPathType | None`')
+    if params.get("status_file", None) is not None:
+        if not isinstance(params["status_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`status_file` has the wrong type: Received `{type(params.get("status_file", None))}` expected `InputPathType | None`')
+    if params.get("noappend", False) is None:
+        raise StyxValidationError("`noappend` must not be None")
+    if not isinstance(params["noappend"], bool):
+        raise StyxValidationError(f'`noappend` has the wrong type: Received `{type(params.get("noappend", False))}` expected `bool`')
+    if params.get("no_isrunning", False) is None:
+        raise StyxValidationError("`no_isrunning` must not be None")
+    if not isinstance(params["no_isrunning"], bool):
+        raise StyxValidationError(f'`no_isrunning` has the wrong type: Received `{type(params.get("no_isrunning", False))}` expected `bool`')
+    if params.get("hippocampal_subfields_t1", False) is None:
+        raise StyxValidationError("`hippocampal_subfields_t1` must not be None")
+    if not isinstance(params["hippocampal_subfields_t1"], bool):
+        raise StyxValidationError(f'`hippocampal_subfields_t1` has the wrong type: Received `{type(params.get("hippocampal_subfields_t1", False))}` expected `bool`')
+    if params.get("hippocampal_subfields_t2", None) is not None:
+        if not isinstance(params["hippocampal_subfields_t2"], str):
+            raise StyxValidationError(f'`hippocampal_subfields_t2` has the wrong type: Received `{type(params.get("hippocampal_subfields_t2", None))}` expected `str | None`')
+    if params.get("hippocampal_subfields_t1t2", None) is not None:
+        if not isinstance(params["hippocampal_subfields_t1t2"], str):
+            raise StyxValidationError(f'`hippocampal_subfields_t1t2` has the wrong type: Received `{type(params.get("hippocampal_subfields_t1t2", None))}` expected `str | None`')
+    if params.get("brainstem_structures", False) is None:
+        raise StyxValidationError("`brainstem_structures` must not be None")
+    if not isinstance(params["brainstem_structures"], bool):
+        raise StyxValidationError(f'`brainstem_structures` has the wrong type: Received `{type(params.get("brainstem_structures", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("mail_user", None) is not None:
+        if not isinstance(params["mail_user"], str):
+            raise StyxValidationError(f'`mail_user` has the wrong type: Received `{type(params.get("mail_user", None))}` expected `str | None`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+    if params.get("group_id", None) is not None:
+        if not isinstance(params["group_id"], str):
+            raise StyxValidationError(f'`group_id` has the wrong type: Received `{type(params.get("group_id", None))}` expected `str | None`')
+    if params.get("only_versions", False) is None:
+        raise StyxValidationError("`only_versions` must not be None")
+    if not isinstance(params["only_versions"], bool):
+        raise StyxValidationError(f'`only_versions` has the wrong type: Received `{type(params.get("only_versions", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("allow_coredump", False) is None:
+        raise StyxValidationError("`allow_coredump` must not be None")
+    if not isinstance(params["allow_coredump"], bool):
+        raise StyxValidationError(f'`allow_coredump` has the wrong type: Received `{type(params.get("allow_coredump", False))}` expected `bool`')
+    if params.get("dontrun", False) is None:
+        raise StyxValidationError("`dontrun` must not be None")
+    if not isinstance(params["dontrun"], bool):
+        raise StyxValidationError(f'`dontrun` has the wrong type: Received `{type(params.get("dontrun", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def recon_all_cargs(
     params: ReconAllParameters,
     execution: Execution,
@@ -720,6 +1005,7 @@ def recon_all_execute(
     Returns:
         NamedTuple of outputs (described in `ReconAllOutputs`).
     """
+    recon_all_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RECON_ALL_METADATA)
     params = execution.params(params)

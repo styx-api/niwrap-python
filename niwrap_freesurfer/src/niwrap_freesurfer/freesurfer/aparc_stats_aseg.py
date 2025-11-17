@@ -164,6 +164,105 @@ def aparc_stats_aseg_params(
     return params
 
 
+def aparc_stats_aseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AparcStatsAsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("gcs_name", None) is None:
+        raise StyxValidationError("`gcs_name` must not be None")
+    if not isinstance(params["gcs_name"], str):
+        raise StyxValidationError(f'`gcs_name` has the wrong type: Received `{type(params.get("gcs_name", None))}` expected `str`')
+    if params.get("subject_dir", None) is not None:
+        if not isinstance(params["subject_dir"], str):
+            raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str | None`')
+    if params.get("gcs_dir", None) is not None:
+        if not isinstance(params["gcs_dir"], str):
+            raise StyxValidationError(f'`gcs_dir` has the wrong type: Received `{type(params.get("gcs_dir", None))}` expected `str | None`')
+    if params.get("parc_name", None) is not None:
+        if not isinstance(params["parc_name"], str):
+            raise StyxValidationError(f'`parc_name` has the wrong type: Received `{type(params.get("parc_name", None))}` expected `str | None`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("lh_flag", False) is None:
+        raise StyxValidationError("`lh_flag` must not be None")
+    if not isinstance(params["lh_flag"], bool):
+        raise StyxValidationError(f'`lh_flag` has the wrong type: Received `{type(params.get("lh_flag", False))}` expected `bool`')
+    if params.get("rh_flag", False) is None:
+        raise StyxValidationError("`rh_flag` must not be None")
+    if not isinstance(params["rh_flag"], bool):
+        raise StyxValidationError(f'`rh_flag` has the wrong type: Received `{type(params.get("rh_flag", False))}` expected `bool`')
+    if params.get("a2009s_flag", False) is None:
+        raise StyxValidationError("`a2009s_flag` must not be None")
+    if not isinstance(params["a2009s_flag"], bool):
+        raise StyxValidationError(f'`a2009s_flag` has the wrong type: Received `{type(params.get("a2009s_flag", False))}` expected `bool`')
+    if params.get("no_aseg_flag", False) is None:
+        raise StyxValidationError("`no_aseg_flag` must not be None")
+    if not isinstance(params["no_aseg_flag"], bool):
+        raise StyxValidationError(f'`no_aseg_flag` has the wrong type: Received `{type(params.get("no_aseg_flag", False))}` expected `bool`')
+    if params.get("no_cortparc_flag", False) is None:
+        raise StyxValidationError("`no_cortparc_flag` must not be None")
+    if not isinstance(params["no_cortparc_flag"], bool):
+        raise StyxValidationError(f'`no_cortparc_flag` has the wrong type: Received `{type(params.get("no_cortparc_flag", False))}` expected `bool`')
+    if params.get("no_parcstats_flag", False) is None:
+        raise StyxValidationError("`no_parcstats_flag` must not be None")
+    if not isinstance(params["no_parcstats_flag"], bool):
+        raise StyxValidationError(f'`no_parcstats_flag` has the wrong type: Received `{type(params.get("no_parcstats_flag", False))}` expected `bool`')
+    if params.get("no_aparc2aseg_flag", False) is None:
+        raise StyxValidationError("`no_aparc2aseg_flag` must not be None")
+    if not isinstance(params["no_aparc2aseg_flag"], bool):
+        raise StyxValidationError(f'`no_aparc2aseg_flag` has the wrong type: Received `{type(params.get("no_aparc2aseg_flag", False))}` expected `bool`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], (float, int)):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `float | None`')
+    if params.get("th3_flag", False) is None:
+        raise StyxValidationError("`th3_flag` must not be None")
+    if not isinstance(params["th3_flag"], bool):
+        raise StyxValidationError(f'`th3_flag` has the wrong type: Received `{type(params.get("th3_flag", False))}` expected `bool`')
+    if params.get("no_th3_flag", False) is None:
+        raise StyxValidationError("`no_th3_flag` must not be None")
+    if not isinstance(params["no_th3_flag"], bool):
+        raise StyxValidationError(f'`no_th3_flag` has the wrong type: Received `{type(params.get("no_th3_flag", False))}` expected `bool`')
+    if params.get("longitudinal", None) is not None:
+        if not isinstance(params["longitudinal"], list):
+            raise StyxValidationError(f'`longitudinal` has the wrong type: Received `{type(params.get("longitudinal", None))}` expected `list[str] | None`')
+        if len(params["longitudinal"]) == 2:
+            raise StyxValidationError("Parameter `longitudinal` must contain exactly 2 elements")
+        for e in params["longitudinal"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`longitudinal` has the wrong type: Received `{type(params.get("longitudinal", None))}` expected `list[str] | None`')
+    if params.get("expert_file", None) is not None:
+        if not isinstance(params["expert_file"], str):
+            raise StyxValidationError(f'`expert_file` has the wrong type: Received `{type(params.get("expert_file", None))}` expected `str | None`')
+    if params.get("expert_use_flag", False) is None:
+        raise StyxValidationError("`expert_use_flag` must not be None")
+    if not isinstance(params["expert_use_flag"], bool):
+        raise StyxValidationError(f'`expert_use_flag` has the wrong type: Received `{type(params.get("expert_use_flag", False))}` expected `bool`')
+    if params.get("expert_clean_flag", False) is None:
+        raise StyxValidationError("`expert_clean_flag` must not be None")
+    if not isinstance(params["expert_clean_flag"], bool):
+        raise StyxValidationError(f'`expert_clean_flag` has the wrong type: Received `{type(params.get("expert_clean_flag", False))}` expected `bool`')
+    if params.get("expert_overwrite_flag", False) is None:
+        raise StyxValidationError("`expert_overwrite_flag` must not be None")
+    if not isinstance(params["expert_overwrite_flag"], bool):
+        raise StyxValidationError(f'`expert_overwrite_flag` has the wrong type: Received `{type(params.get("expert_overwrite_flag", False))}` expected `bool`')
+
+
 def aparc_stats_aseg_cargs(
     params: AparcStatsAsegParameters,
     execution: Execution,
@@ -292,6 +391,7 @@ def aparc_stats_aseg_execute(
     Returns:
         NamedTuple of outputs (described in `AparcStatsAsegOutputs`).
     """
+    aparc_stats_aseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APARC_STATS_ASEG_METADATA)
     params = execution.params(params)

@@ -107,6 +107,62 @@ def eddy_combine_params(
     return params
 
 
+def eddy_combine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EddyCombineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pos_data", None) is None:
+        raise StyxValidationError("`pos_data` must not be None")
+    if not isinstance(params["pos_data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pos_data` has the wrong type: Received `{type(params.get("pos_data", None))}` expected `InputPathType`')
+    if params.get("pos_bvals", None) is None:
+        raise StyxValidationError("`pos_bvals` must not be None")
+    if not isinstance(params["pos_bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pos_bvals` has the wrong type: Received `{type(params.get("pos_bvals", None))}` expected `InputPathType`')
+    if params.get("pos_bvecs", None) is None:
+        raise StyxValidationError("`pos_bvecs` must not be None")
+    if not isinstance(params["pos_bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pos_bvecs` has the wrong type: Received `{type(params.get("pos_bvecs", None))}` expected `InputPathType`')
+    if params.get("pos_series_vol", None) is None:
+        raise StyxValidationError("`pos_series_vol` must not be None")
+    if not isinstance(params["pos_series_vol"], (float, int)):
+        raise StyxValidationError(f'`pos_series_vol` has the wrong type: Received `{type(params.get("pos_series_vol", None))}` expected `float`')
+    if params.get("neg_data", None) is None:
+        raise StyxValidationError("`neg_data` must not be None")
+    if not isinstance(params["neg_data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`neg_data` has the wrong type: Received `{type(params.get("neg_data", None))}` expected `InputPathType`')
+    if params.get("neg_bvals", None) is None:
+        raise StyxValidationError("`neg_bvals` must not be None")
+    if not isinstance(params["neg_bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`neg_bvals` has the wrong type: Received `{type(params.get("neg_bvals", None))}` expected `InputPathType`')
+    if params.get("neg_bvecs", None) is None:
+        raise StyxValidationError("`neg_bvecs` must not be None")
+    if not isinstance(params["neg_bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`neg_bvecs` has the wrong type: Received `{type(params.get("neg_bvecs", None))}` expected `InputPathType`')
+    if params.get("neg_series_vol", None) is None:
+        raise StyxValidationError("`neg_series_vol` must not be None")
+    if not isinstance(params["neg_series_vol"], (float, int)):
+        raise StyxValidationError(f'`neg_series_vol` has the wrong type: Received `{type(params.get("neg_series_vol", None))}` expected `float`')
+    if params.get("output_path", None) is None:
+        raise StyxValidationError("`output_path` must not be None")
+    if not isinstance(params["output_path"], str):
+        raise StyxValidationError(f'`output_path` has the wrong type: Received `{type(params.get("output_path", None))}` expected `str`')
+    if params.get("only_matched_flag", None) is None:
+        raise StyxValidationError("`only_matched_flag` must not be None")
+    if not isinstance(params["only_matched_flag"], int):
+        raise StyxValidationError(f'`only_matched_flag` has the wrong type: Received `{type(params.get("only_matched_flag", None))}` expected `int`')
+    if 0 <= params["only_matched_flag"] <= 1:
+        raise StyxValidationError("Parameter `only_matched_flag` must be between 0 and 1 (inclusive)")
+
+
 def eddy_combine_cargs(
     params: EddyCombineParameters,
     execution: Execution,
@@ -177,6 +233,7 @@ def eddy_combine_execute(
     Returns:
         NamedTuple of outputs (described in `EddyCombineOutputs`).
     """
+    eddy_combine_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EDDY_COMBINE_METADATA)
     params = execution.params(params)

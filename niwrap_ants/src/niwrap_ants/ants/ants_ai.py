@@ -126,6 +126,77 @@ def ants_ai_params(
     return params
 
 
+def ants_ai_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is not None:
+        if not isinstance(params["dimensionality"], int):
+            raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["dimensionality"] not in [2, 3]:
+            raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3]")
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"]`')
+    if params["metric"] not in ["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"]:
+        raise StyxValidationError("Parameter `metric` must be one of [\"Mattes[fixedImage,movingImage]\", \"GC[fixedImage,movingImage]\", \"MI[fixedImage,movingImage]\"]")
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], str):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"]`')
+    if params["transform"] not in ["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"]:
+        raise StyxValidationError("Parameter `transform` must be one of [\"Rigid[gradientStep]\", \"Affine[gradientStep]\", \"Similarity[gradientStep]\", \"AlignGeometricCenters\", \"AlignCentersOfMass\"]")
+    if params.get("align_principal_axes", None) is not None:
+        if not isinstance(params["align_principal_axes"], bool):
+            raise StyxValidationError(f'`align_principal_axes` has the wrong type: Received `{type(params.get("align_principal_axes", None))}` expected `bool | None`')
+    if params.get("align_blobs", None) is not None:
+        if not isinstance(params["align_blobs"], str):
+            raise StyxValidationError(f'`align_blobs` has the wrong type: Received `{type(params.get("align_blobs", None))}` expected `typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None`')
+        if params["align_blobs"] not in ["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"]:
+            raise StyxValidationError("Parameter `align_blobs` must be one of [\"numberOfBlobsToExtract\", \"[numberOfBlobsToExtract,numberOfBlobsToMatch]\"]")
+    if params.get("search_factor", None) is not None:
+        if not isinstance(params["search_factor"], str):
+            raise StyxValidationError(f'`search_factor` has the wrong type: Received `{type(params.get("search_factor", None))}` expected `typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None`')
+        if params["search_factor"] not in ["searchFactor", "[searchFactor,arcFraction]"]:
+            raise StyxValidationError("Parameter `search_factor` must be one of [\"searchFactor\", \"[searchFactor,arcFraction]\"]")
+    if params.get("translation_search_grid", None) is not None:
+        if not isinstance(params["translation_search_grid"], str):
+            raise StyxValidationError(f'`translation_search_grid` has the wrong type: Received `{type(params.get("translation_search_grid", None))}` expected `typing.Literal["[stepSize, AxBxC]"] | None`')
+        if params["translation_search_grid"] not in ["[stepSize, AxBxC]"]:
+            raise StyxValidationError("Parameter `translation_search_grid` must be one of [\"[stepSize, AxBxC]\"]")
+    if params.get("convergence", None) is not None:
+        if not isinstance(params["convergence"], str):
+            raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None`')
+        if params["convergence"] not in ["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"]:
+            raise StyxValidationError("Parameter `convergence` must be one of [\"numberOfIterations\", \"[numberOfIterations,convergenceThreshold,convergenceWindowSize]\"]")
+    if params.get("masks", None) is not None:
+        if not isinstance(params["masks"], str):
+            raise StyxValidationError(f'`masks` has the wrong type: Received `{type(params.get("masks", None))}` expected `typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None`')
+        if params["masks"] not in ["fixedImageMask", "[fixedImageMask,movingImageMask]"]:
+            raise StyxValidationError("Parameter `masks` must be one of [\"fixedImageMask\", \"[fixedImageMask,movingImageMask]\"]")
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], int):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
+        if params["random_seed"] >= 0:
+            raise StyxValidationError("Parameter `random_seed` must be at least 0")
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def ants_ai_cargs(
     params: AntsAiParameters,
     execution: Execution,
@@ -241,6 +312,7 @@ def ants_ai_execute(
     Returns:
         NamedTuple of outputs (described in `AntsAiOutputs`).
     """
+    ants_ai_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_AI_METADATA)
     params = execution.params(params)

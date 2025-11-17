@@ -52,6 +52,24 @@ def v__get_afni_view_params(
     return params
 
 
+def v__get_afni_view_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGetAfniViewParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset_name", None) is None:
+        raise StyxValidationError("`dataset_name` must not be None")
+    if not isinstance(params["dataset_name"], str):
+        raise StyxValidationError(f'`dataset_name` has the wrong type: Received `{type(params.get("dataset_name", None))}` expected `str`')
+
+
 def v__get_afni_view_cargs(
     params: VGetAfniViewParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def v__get_afni_view_execute(
     Returns:
         NamedTuple of outputs (described in `VGetAfniViewOutputs`).
     """
+    v__get_afni_view_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GET_AFNI_VIEW_METADATA)
     params = execution.params(params)

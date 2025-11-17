@@ -98,6 +98,59 @@ def v__examine_gen_feat_dists_params(
     return params
 
 
+def v__examine_gen_feat_dists_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VExamineGenFeatDistsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("features_dir", None) is None:
+        raise StyxValidationError("`features_dir` must not be None")
+    if not isinstance(params["features_dir"], str):
+        raise StyxValidationError(f'`features_dir` has the wrong type: Received `{type(params.get("features_dir", None))}` expected `str`')
+    if params.get("wildcards", None) is not None:
+        if not isinstance(params["wildcards"], list):
+            raise StyxValidationError(f'`wildcards` has the wrong type: Received `{type(params.get("wildcards", None))}` expected `list[str] | None`')
+        for e in params["wildcards"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`wildcards` has the wrong type: Received `{type(params.get("wildcards", None))}` expected `list[str] | None`')
+    if params.get("output_suffix", None) is not None:
+        if not isinstance(params["output_suffix"], str):
+            raise StyxValidationError(f'`output_suffix` has the wrong type: Received `{type(params.get("output_suffix", None))}` expected `str | None`')
+    if params.get("exclude_features", None) is not None:
+        if not isinstance(params["exclude_features"], list):
+            raise StyxValidationError(f'`exclude_features` has the wrong type: Received `{type(params.get("exclude_features", None))}` expected `list[str] | None`')
+        for e in params["exclude_features"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`exclude_features` has the wrong type: Received `{type(params.get("exclude_features", None))}` expected `list[str] | None`')
+    if params.get("exclude_classes", None) is not None:
+        if not isinstance(params["exclude_classes"], list):
+            raise StyxValidationError(f'`exclude_classes` has the wrong type: Received `{type(params.get("exclude_classes", None))}` expected `list[str] | None`')
+        for e in params["exclude_classes"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`exclude_classes` has the wrong type: Received `{type(params.get("exclude_classes", None))}` expected `list[str] | None`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("panels_horizontal", None) is not None:
+        if not isinstance(params["panels_horizontal"], (float, int)):
+            raise StyxValidationError(f'`panels_horizontal` has the wrong type: Received `{type(params.get("panels_horizontal", None))}` expected `float | None`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__examine_gen_feat_dists_cargs(
     params: VExamineGenFeatDistsParameters,
     execution: Execution,
@@ -192,6 +245,7 @@ def v__examine_gen_feat_dists_execute(
     Returns:
         NamedTuple of outputs (described in `VExamineGenFeatDistsOutputs`).
     """
+    v__examine_gen_feat_dists_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__EXAMINE_GEN_FEAT_DISTS_METADATA)
     params = execution.params(params)

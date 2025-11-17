@@ -84,6 +84,45 @@ def mris_reposition_surface_params(
     return params
 
 
+def mris_reposition_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRepositionSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surf", None) is None:
+        raise StyxValidationError("`surf` must not be None")
+    if not isinstance(params["surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `InputPathType`')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("points", None) is None:
+        raise StyxValidationError("`points` must not be None")
+    if not isinstance(params["points"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`points` has the wrong type: Received `{type(params.get("points", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("size", None) is not None:
+        if not isinstance(params["size"], (float, int)):
+            raise StyxValidationError(f'`size` has the wrong type: Received `{type(params.get("size", None))}` expected `float | None`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+
+
 def mris_reposition_surface_cargs(
     params: MrisRepositionSurfaceParameters,
     execution: Execution,
@@ -172,6 +211,7 @@ def mris_reposition_surface_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRepositionSurfaceOutputs`).
     """
+    mris_reposition_surface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_REPOSITION_SURFACE_METADATA)
     params = execution.params(params)

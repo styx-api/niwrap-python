@@ -53,6 +53,24 @@ def surface_fdr_params(
     return params
 
 
+def surface_fdr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceFdrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_vtk", None) is None:
+        raise StyxValidationError("`input_vtk` must not be None")
+    if not isinstance(params["input_vtk"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vtk` has the wrong type: Received `{type(params.get("input_vtk", None))}` expected `InputPathType`')
+
+
 def surface_fdr_cargs(
     params: SurfaceFdrParameters,
     execution: Execution,
@@ -112,6 +130,7 @@ def surface_fdr_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceFdrOutputs`).
     """
+    surface_fdr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_FDR_METADATA)
     params = execution.params(params)

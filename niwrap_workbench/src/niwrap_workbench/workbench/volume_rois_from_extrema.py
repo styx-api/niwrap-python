@@ -92,6 +92,44 @@ def volume_rois_from_extrema_params(
     return params
 
 
+def volume_rois_from_extrema_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeRoisFromExtremaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("limit", None) is None:
+        raise StyxValidationError("`limit` must not be None")
+    if not isinstance(params["limit"], (float, int)):
+        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
+
+
 def volume_rois_from_extrema_cargs(
     params: VolumeRoisFromExtremaParameters,
     execution: Execution,
@@ -167,6 +205,7 @@ def volume_rois_from_extrema_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeRoisFromExtremaOutputs`).
     """
+    volume_rois_from_extrema_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_ROIS_FROM_EXTREMA_METADATA)
     params = execution.params(params)

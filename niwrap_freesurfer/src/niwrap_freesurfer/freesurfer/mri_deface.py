@@ -67,6 +67,36 @@ def mri_deface_params(
     return params
 
 
+def mri_deface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriDefaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("brain_template", None) is None:
+        raise StyxValidationError("`brain_template` must not be None")
+    if not isinstance(params["brain_template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain_template` has the wrong type: Received `{type(params.get("brain_template", None))}` expected `InputPathType`')
+    if params.get("face_template", None) is None:
+        raise StyxValidationError("`face_template` must not be None")
+    if not isinstance(params["face_template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`face_template` has the wrong type: Received `{type(params.get("face_template", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_deface_cargs(
     params: MriDefaceParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def mri_deface_execute(
     Returns:
         NamedTuple of outputs (described in `MriDefaceOutputs`).
     """
+    mri_deface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_DEFACE_METADATA)
     params = execution.params(params)

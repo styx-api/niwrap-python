@@ -62,6 +62,31 @@ def dtistudio_fiberto_segments_params(
     return params
 
 
+def dtistudio_fiberto_segments_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DtistudioFibertoSegmentsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("swap_flag", False) is None:
+        raise StyxValidationError("`swap_flag` must not be None")
+    if not isinstance(params["swap_flag"], bool):
+        raise StyxValidationError(f'`swap_flag` has the wrong type: Received `{type(params.get("swap_flag", False))}` expected `bool`')
+
+
 def dtistudio_fiberto_segments_cargs(
     params: DtistudioFibertoSegmentsParameters,
     execution: Execution,
@@ -127,6 +152,7 @@ def dtistudio_fiberto_segments_execute(
     Returns:
         NamedTuple of outputs (described in `DtistudioFibertoSegmentsOutputs`).
     """
+    dtistudio_fiberto_segments_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DTISTUDIO_FIBERTO_SEGMENTS_METADATA)
     params = execution.params(params)

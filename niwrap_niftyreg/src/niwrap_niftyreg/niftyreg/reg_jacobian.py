@@ -96,6 +96,42 @@ def reg_jacobian_params(
     return params
 
 
+def reg_jacobian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegJacobianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("deformation_field", None) is not None:
+        if not isinstance(params["deformation_field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`deformation_field` has the wrong type: Received `{type(params.get("deformation_field", None))}` expected `InputPathType | None`')
+    if params.get("control_point_lattice", None) is not None:
+        if not isinstance(params["control_point_lattice"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`control_point_lattice` has the wrong type: Received `{type(params.get("control_point_lattice", None))}` expected `InputPathType | None`')
+    if params.get("output_jacobian", None) is not None:
+        if not isinstance(params["output_jacobian"], str):
+            raise StyxValidationError(f'`output_jacobian` has the wrong type: Received `{type(params.get("output_jacobian", None))}` expected `str | None`')
+    if params.get("output_jacobian_matrix", None) is not None:
+        if not isinstance(params["output_jacobian_matrix"], str):
+            raise StyxValidationError(f'`output_jacobian_matrix` has the wrong type: Received `{type(params.get("output_jacobian_matrix", None))}` expected `str | None`')
+    if params.get("output_log_jacobian", None) is not None:
+        if not isinstance(params["output_log_jacobian"], str):
+            raise StyxValidationError(f'`output_log_jacobian` has the wrong type: Received `{type(params.get("output_log_jacobian", None))}` expected `str | None`')
+    if params.get("affine_matrix", None) is not None:
+        if not isinstance(params["affine_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`affine_matrix` has the wrong type: Received `{type(params.get("affine_matrix", None))}` expected `InputPathType | None`')
+
+
 def reg_jacobian_cargs(
     params: RegJacobianParameters,
     execution: Execution,
@@ -190,6 +226,7 @@ def reg_jacobian_execute(
     Returns:
         NamedTuple of outputs (described in `RegJacobianOutputs`).
     """
+    reg_jacobian_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REG_JACOBIAN_METADATA)
     params = execution.params(params)

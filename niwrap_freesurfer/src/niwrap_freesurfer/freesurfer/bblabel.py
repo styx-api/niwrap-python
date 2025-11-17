@@ -103,6 +103,53 @@ def bblabel_params(
     return params
 
 
+def bblabel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BblabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("labelfile", None) is None:
+        raise StyxValidationError("`labelfile` must not be None")
+    if not isinstance(params["labelfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`labelfile` has the wrong type: Received `{type(params.get("labelfile", None))}` expected `InputPathType`')
+    if params.get("xmin", None) is not None:
+        if not isinstance(params["xmin"], (float, int)):
+            raise StyxValidationError(f'`xmin` has the wrong type: Received `{type(params.get("xmin", None))}` expected `float | None`')
+    if params.get("xmax", None) is not None:
+        if not isinstance(params["xmax"], (float, int)):
+            raise StyxValidationError(f'`xmax` has the wrong type: Received `{type(params.get("xmax", None))}` expected `float | None`')
+    if params.get("ymin", None) is not None:
+        if not isinstance(params["ymin"], (float, int)):
+            raise StyxValidationError(f'`ymin` has the wrong type: Received `{type(params.get("ymin", None))}` expected `float | None`')
+    if params.get("ymax", None) is not None:
+        if not isinstance(params["ymax"], (float, int)):
+            raise StyxValidationError(f'`ymax` has the wrong type: Received `{type(params.get("ymax", None))}` expected `float | None`')
+    if params.get("zmin", None) is not None:
+        if not isinstance(params["zmin"], (float, int)):
+            raise StyxValidationError(f'`zmin` has the wrong type: Received `{type(params.get("zmin", None))}` expected `float | None`')
+    if params.get("zmax", None) is not None:
+        if not isinstance(params["zmax"], (float, int)):
+            raise StyxValidationError(f'`zmax` has the wrong type: Received `{type(params.get("zmax", None))}` expected `float | None`')
+    if params.get("outlabelfile", None) is None:
+        raise StyxValidationError("`outlabelfile` must not be None")
+    if not isinstance(params["outlabelfile"], str):
+        raise StyxValidationError(f'`outlabelfile` has the wrong type: Received `{type(params.get("outlabelfile", None))}` expected `str`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+
+
 def bblabel_cargs(
     params: BblabelParameters,
     execution: Execution,
@@ -206,6 +253,7 @@ def bblabel_execute(
     Returns:
         NamedTuple of outputs (described in `BblabelOutputs`).
     """
+    bblabel_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BBLABEL_METADATA)
     params = execution.params(params)

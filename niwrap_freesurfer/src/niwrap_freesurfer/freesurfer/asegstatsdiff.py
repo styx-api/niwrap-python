@@ -63,6 +63,31 @@ def asegstatsdiff_params(
     return params
 
 
+def asegstatsdiff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AsegstatsdiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject1", None) is None:
+        raise StyxValidationError("`subject1` must not be None")
+    if not isinstance(params["subject1"], str):
+        raise StyxValidationError(f'`subject1` has the wrong type: Received `{type(params.get("subject1", None))}` expected `str`')
+    if params.get("subject2", None) is None:
+        raise StyxValidationError("`subject2` must not be None")
+    if not isinstance(params["subject2"], str):
+        raise StyxValidationError(f'`subject2` has the wrong type: Received `{type(params.get("subject2", None))}` expected `str`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+
+
 def asegstatsdiff_cargs(
     params: AsegstatsdiffParameters,
     execution: Execution,
@@ -124,6 +149,7 @@ def asegstatsdiff_execute(
     Returns:
         NamedTuple of outputs (described in `AsegstatsdiffOutputs`).
     """
+    asegstatsdiff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ASEGSTATSDIFF_METADATA)
     params = execution.params(params)

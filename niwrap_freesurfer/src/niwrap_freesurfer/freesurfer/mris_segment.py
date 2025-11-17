@@ -61,6 +61,35 @@ def mris_segment_params(
     return params
 
 
+def mris_segment_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSegmentParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_subject", None) is None:
+        raise StyxValidationError("`output_subject` must not be None")
+    if not isinstance(params["output_subject"], str):
+        raise StyxValidationError(f'`output_subject` has the wrong type: Received `{type(params.get("output_subject", None))}` expected `str`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def mris_segment_cargs(
     params: MrisSegmentParameters,
     execution: Execution,
@@ -121,6 +150,7 @@ def mris_segment_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSegmentOutputs`).
     """
+    mris_segment_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SEGMENT_METADATA)
     params = execution.params(params)

@@ -54,6 +54,24 @@ def wbsparse_merge_dense_wbsparse_params(
     return params
 
 
+def wbsparse_merge_dense_wbsparse_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WbsparseMergeDenseWbsparseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("wbsparse-in", None) is None:
+        raise StyxValidationError("`wbsparse-in` must not be None")
+    if not isinstance(params["wbsparse-in"], str):
+        raise StyxValidationError(f'`wbsparse-in` has the wrong type: Received `{type(params.get("wbsparse-in", None))}` expected `str`')
+
+
 def wbsparse_merge_dense_wbsparse_cargs(
     params: WbsparseMergeDenseWbsparseParameters,
     execution: Execution,
@@ -106,6 +124,33 @@ def wbsparse_merge_dense_params(
     if wbsparse is not None:
         params["wbsparse"] = wbsparse
     return params
+
+
+def wbsparse_merge_dense_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WbsparseMergeDenseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("wbsparse", None) is not None:
+        if not isinstance(params["wbsparse"], list):
+            raise StyxValidationError(f'`wbsparse` has the wrong type: Received `{type(params.get("wbsparse", None))}` expected `list[WbsparseMergeDenseWbsparseParameters] | None`')
+        for e in params["wbsparse"]:
+            wbsparse_merge_dense_wbsparse_validate(e)
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+    if params.get("wbsparse-out", None) is None:
+        raise StyxValidationError("`wbsparse-out` must not be None")
+    if not isinstance(params["wbsparse-out"], str):
+        raise StyxValidationError(f'`wbsparse-out` has the wrong type: Received `{type(params.get("wbsparse-out", None))}` expected `str`')
 
 
 def wbsparse_merge_dense_cargs(
@@ -169,6 +214,7 @@ def wbsparse_merge_dense_execute(
     Returns:
         NamedTuple of outputs (described in `WbsparseMergeDenseOutputs`).
     """
+    wbsparse_merge_dense_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WBSPARSE_MERGE_DENSE_METADATA)
     params = execution.params(params)

@@ -59,6 +59,29 @@ def print_header_params(
     return params
 
 
+def print_header_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PrintHeaderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+    if params.get("what_information", None) is not None:
+        if not isinstance(params["what_information"], int):
+            raise StyxValidationError(f'`what_information` has the wrong type: Received `{type(params.get("what_information", None))}` expected `typing.Literal[0, 1, 2, 3, 4] | None`')
+        if params["what_information"] not in [0, 1, 2, 3, 4]:
+            raise StyxValidationError("Parameter `what_information` must be one of [0, 1, 2, 3, 4]")
+
+
 def print_header_cargs(
     params: PrintHeaderParameters,
     execution: Execution,
@@ -119,6 +142,7 @@ def print_header_execute(
     Returns:
         NamedTuple of outputs (described in `PrintHeaderOutputs`).
     """
+    print_header_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PRINT_HEADER_METADATA)
     params = execution.params(params)

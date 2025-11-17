@@ -77,6 +77,46 @@ def read_matlab_files_py_params(
     return params
 
 
+def read_matlab_files_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ReadMatlabFilesPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infiles", None) is None:
+        raise StyxValidationError("`infiles` must not be None")
+    if not isinstance(params["infiles"], list):
+        raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[str]`')
+    for e in params["infiles"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[str]`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("history", False) is None:
+        raise StyxValidationError("`history` must not be None")
+    if not isinstance(params["history"], bool):
+        raise StyxValidationError(f'`history` has the wrong type: Received `{type(params.get("history", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def read_matlab_files_py_cargs(
     params: ReadMatlabFilesPyParameters,
     execution: Execution,
@@ -148,6 +188,7 @@ def read_matlab_files_py_execute(
     Returns:
         NamedTuple of outputs (described in `ReadMatlabFilesPyOutputs`).
     """
+    read_matlab_files_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(READ_MATLAB_FILES_PY_METADATA)
     params = execution.params(params)

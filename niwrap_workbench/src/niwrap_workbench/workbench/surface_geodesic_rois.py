@@ -99,6 +99,48 @@ def surface_geodesic_rois_params(
     return params
 
 
+def surface_geodesic_rois_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceGeodesicRoisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("name-list-file", None) is not None:
+        if not isinstance(params["name-list-file"], str):
+            raise StyxValidationError(f'`name-list-file` has the wrong type: Received `{type(params.get("name-list-file", None))}` expected `str | None`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("limit", None) is None:
+        raise StyxValidationError("`limit` must not be None")
+    if not isinstance(params["limit"], (float, int)):
+        raise StyxValidationError(f'`limit` has the wrong type: Received `{type(params.get("limit", None))}` expected `float`')
+    if params.get("vertex-list-file", None) is None:
+        raise StyxValidationError("`vertex-list-file` must not be None")
+    if not isinstance(params["vertex-list-file"], str):
+        raise StyxValidationError(f'`vertex-list-file` has the wrong type: Received `{type(params.get("vertex-list-file", None))}` expected `str`')
+
+
 def surface_geodesic_rois_cargs(
     params: SurfaceGeodesicRoisParameters,
     execution: Execution,
@@ -179,6 +221,7 @@ def surface_geodesic_rois_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicRoisOutputs`).
     """
+    surface_geodesic_rois_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_GEODESIC_ROIS_METADATA)
     params = execution.params(params)

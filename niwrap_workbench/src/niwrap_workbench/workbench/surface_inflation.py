@@ -80,6 +80,48 @@ def surface_inflation_params(
     return params
 
 
+def surface_inflation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceInflationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
+    if params.get("anatomical-surface-in", None) is None:
+        raise StyxValidationError("`anatomical-surface-in` must not be None")
+    if not isinstance(params["anatomical-surface-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical-surface-in` has the wrong type: Received `{type(params.get("anatomical-surface-in", None))}` expected `InputPathType`')
+    if params.get("surface-in", None) is None:
+        raise StyxValidationError("`surface-in` must not be None")
+    if not isinstance(params["surface-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-in` has the wrong type: Received `{type(params.get("surface-in", None))}` expected `InputPathType`')
+    if params.get("number-of-smoothing-cycles", None) is None:
+        raise StyxValidationError("`number-of-smoothing-cycles` must not be None")
+    if not isinstance(params["number-of-smoothing-cycles"], int):
+        raise StyxValidationError(f'`number-of-smoothing-cycles` has the wrong type: Received `{type(params.get("number-of-smoothing-cycles", None))}` expected `int`')
+    if params.get("smoothing-strength", None) is None:
+        raise StyxValidationError("`smoothing-strength` must not be None")
+    if not isinstance(params["smoothing-strength"], (float, int)):
+        raise StyxValidationError(f'`smoothing-strength` has the wrong type: Received `{type(params.get("smoothing-strength", None))}` expected `float`')
+    if params.get("smoothing-iterations", None) is None:
+        raise StyxValidationError("`smoothing-iterations` must not be None")
+    if not isinstance(params["smoothing-iterations"], int):
+        raise StyxValidationError(f'`smoothing-iterations` has the wrong type: Received `{type(params.get("smoothing-iterations", None))}` expected `int`')
+    if params.get("inflation-factor", None) is None:
+        raise StyxValidationError("`inflation-factor` must not be None")
+    if not isinstance(params["inflation-factor"], (float, int)):
+        raise StyxValidationError(f'`inflation-factor` has the wrong type: Received `{type(params.get("inflation-factor", None))}` expected `float`')
+
+
 def surface_inflation_cargs(
     params: SurfaceInflationParameters,
     execution: Execution,
@@ -144,6 +186,7 @@ def surface_inflation_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceInflationOutputs`).
     """
+    surface_inflation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_INFLATION_METADATA)
     params = execution.params(params)

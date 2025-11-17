@@ -83,6 +83,46 @@ def v_1dgrayplot_params(
     return params
 
 
+def v_1dgrayplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dgrayplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tsfile", None) is None:
+        raise StyxValidationError("`tsfile` must not be None")
+    if not isinstance(params["tsfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tsfile` has the wrong type: Received `{type(params.get("tsfile", None))}` expected `InputPathType`')
+    if params.get("install", False) is None:
+        raise StyxValidationError("`install` must not be None")
+    if not isinstance(params["install"], bool):
+        raise StyxValidationError(f'`install` has the wrong type: Received `{type(params.get("install", False))}` expected `bool`')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], (float, int)):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `float | None`')
+    if params.get("flip", False) is None:
+        raise StyxValidationError("`flip` must not be None")
+    if not isinstance(params["flip"], bool):
+        raise StyxValidationError(f'`flip` has the wrong type: Received `{type(params.get("flip", False))}` expected `bool`')
+    if params.get("sep", False) is None:
+        raise StyxValidationError("`sep` must not be None")
+    if not isinstance(params["sep"], bool):
+        raise StyxValidationError(f'`sep` has the wrong type: Received `{type(params.get("sep", False))}` expected `bool`')
+    if params.get("use", None) is not None:
+        if not isinstance(params["use"], (float, int)):
+            raise StyxValidationError(f'`use` has the wrong type: Received `{type(params.get("use", None))}` expected `float | None`')
+    if params.get("ps", False) is None:
+        raise StyxValidationError("`ps` must not be None")
+    if not isinstance(params["ps"], bool):
+        raise StyxValidationError(f'`ps` has the wrong type: Received `{type(params.get("ps", False))}` expected `bool`')
+
+
 def v_1dgrayplot_cargs(
     params: V1dgrayplotParameters,
     execution: Execution,
@@ -159,6 +199,7 @@ def v_1dgrayplot_execute(
     Returns:
         NamedTuple of outputs (described in `V1dgrayplotOutputs`).
     """
+    v_1dgrayplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DGRAYPLOT_METADATA)
     params = execution.params(params)

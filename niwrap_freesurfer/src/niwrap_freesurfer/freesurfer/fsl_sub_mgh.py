@@ -124,6 +124,61 @@ def fsl_sub_mgh_params(
     return params
 
 
+def fsl_sub_mgh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslSubMghParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("estimated_time", None) is not None:
+        if not isinstance(params["estimated_time"], int):
+            raise StyxValidationError(f'`estimated_time` has the wrong type: Received `{type(params.get("estimated_time", None))}` expected `int | None`')
+    if params.get("queue_name", None) is not None:
+        if not isinstance(params["queue_name"], str):
+            raise StyxValidationError(f'`queue_name` has the wrong type: Received `{type(params.get("queue_name", None))}` expected `str | None`')
+    if params.get("architecture", None) is not None:
+        if not isinstance(params["architecture"], str):
+            raise StyxValidationError(f'`architecture` has the wrong type: Received `{type(params.get("architecture", None))}` expected `str | None`')
+    if params.get("job_priority", None) is not None:
+        if not isinstance(params["job_priority"], int):
+            raise StyxValidationError(f'`job_priority` has the wrong type: Received `{type(params.get("job_priority", None))}` expected `int | None`')
+    if params.get("email_address", None) is not None:
+        if not isinstance(params["email_address"], str):
+            raise StyxValidationError(f'`email_address` has the wrong type: Received `{type(params.get("email_address", None))}` expected `str | None`')
+    if params.get("hold_job", None) is not None:
+        if not isinstance(params["hold_job"], str):
+            raise StyxValidationError(f'`hold_job` has the wrong type: Received `{type(params.get("hold_job", None))}` expected `str | None`')
+    if params.get("task_file", None) is not None:
+        if not isinstance(params["task_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`task_file` has the wrong type: Received `{type(params.get("task_file", None))}` expected `InputPathType | None`')
+    if params.get("job_name", None) is not None:
+        if not isinstance(params["job_name"], str):
+            raise StyxValidationError(f'`job_name` has the wrong type: Received `{type(params.get("job_name", None))}` expected `str | None`')
+    if params.get("log_dir", None) is not None:
+        if not isinstance(params["log_dir"], str):
+            raise StyxValidationError(f'`log_dir` has the wrong type: Received `{type(params.get("log_dir", None))}` expected `str | None`')
+    if params.get("mail_options", None) is not None:
+        if not isinstance(params["mail_options"], str):
+            raise StyxValidationError(f'`mail_options` has the wrong type: Received `{type(params.get("mail_options", None))}` expected `str | None`')
+    if params.get("flags_in_scripts", False) is None:
+        raise StyxValidationError("`flags_in_scripts` must not be None")
+    if not isinstance(params["flags_in_scripts"], bool):
+        raise StyxValidationError(f'`flags_in_scripts` has the wrong type: Received `{type(params.get("flags_in_scripts", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("shell_path", None) is not None:
+        if not isinstance(params["shell_path"], str):
+            raise StyxValidationError(f'`shell_path` has the wrong type: Received `{type(params.get("shell_path", None))}` expected `str | None`')
+
+
 def fsl_sub_mgh_cargs(
     params: FslSubMghParameters,
     execution: Execution,
@@ -240,6 +295,7 @@ def fsl_sub_mgh_execute(
     Returns:
         NamedTuple of outputs (described in `FslSubMghOutputs`).
     """
+    fsl_sub_mgh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_SUB_MGH_METADATA)
     params = execution.params(params)

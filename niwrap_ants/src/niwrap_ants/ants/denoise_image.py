@@ -78,20 +78,20 @@ def denoise_image_output_cargs_dyn_fn(
     }.get(t)
 
 
-def denoise_image_output_outputs_dyn_fn(
+def denoise_image_output_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
-        "correctedOutput": denoise_image_corrected_output_outputs,
-        "correctedOutputNoise": denoise_image_corrected_output_noise_outputs,
+        "correctedOutput": denoise_image_corrected_output_validate,
+        "correctedOutputNoise": denoise_image_corrected_output_noise_validate,
     }.get(t)
 
 
@@ -121,6 +121,24 @@ def denoise_image_corrected_output_params(
         "correctedOutputFileName": corrected_output_file_name,
     }
     return params
+
+
+def denoise_image_corrected_output_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DenoiseImageCorrectedOutputParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("correctedOutputFileName", None) is None:
+        raise StyxValidationError("`correctedOutputFileName` must not be None")
+    if not isinstance(params["correctedOutputFileName"], str):
+        raise StyxValidationError(f'`correctedOutputFileName` has the wrong type: Received `{type(params.get("correctedOutputFileName", None))}` expected `str`')
 
 
 def denoise_image_corrected_output_cargs(
@@ -193,6 +211,27 @@ def denoise_image_corrected_output_noise_params(
     if noise_file is not None:
         params["noiseFile"] = noise_file
     return params
+
+
+def denoise_image_corrected_output_noise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DenoiseImageCorrectedOutputNoiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("correctedOutputFileName", None) is None:
+        raise StyxValidationError("`correctedOutputFileName` must not be None")
+    if not isinstance(params["correctedOutputFileName"], str):
+        raise StyxValidationError(f'`correctedOutputFileName` has the wrong type: Received `{type(params.get("correctedOutputFileName", None))}` expected `str`')
+    if params.get("noiseFile", None) is not None:
+        if not isinstance(params["noiseFile"], str):
+            raise StyxValidationError(f'`noiseFile` has the wrong type: Received `{type(params.get("noiseFile", None))}` expected `str | None`')
 
 
 def denoise_image_corrected_output_noise_cargs(
@@ -306,6 +345,56 @@ def denoise_image_params(
     return params
 
 
+def denoise_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DenoiseImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["image_dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3, 4]")
+    if params.get("noise_model", None) is not None:
+        if not isinstance(params["noise_model"], str):
+            raise StyxValidationError(f'`noise_model` has the wrong type: Received `{type(params.get("noise_model", None))}` expected `typing.Literal["Gaussian", "Rician"] | None`')
+        if params["noise_model"] not in ["Gaussian", "Rician"]:
+            raise StyxValidationError("Parameter `noise_model` must be one of [\"Gaussian\", \"Rician\"]")
+    if params.get("shrink_factor", None) is not None:
+        if not isinstance(params["shrink_factor"], int):
+            raise StyxValidationError(f'`shrink_factor` has the wrong type: Received `{type(params.get("shrink_factor", None))}` expected `int | None`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("patch_radius", None) is not None:
+        if not isinstance(params["patch_radius"], str):
+            raise StyxValidationError(f'`patch_radius` has the wrong type: Received `{type(params.get("patch_radius", None))}` expected `str | None`')
+    if params.get("search_radius", None) is not None:
+        if not isinstance(params["search_radius"], str):
+            raise StyxValidationError(f'`search_radius` has the wrong type: Received `{type(params.get("search_radius", None))}` expected `str | None`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
+    if "@type" not in params["output"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    denoise_image_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
+
+
 def denoise_image_cargs(
     params: DenoiseImageParameters,
     execution: Execution,
@@ -409,6 +498,7 @@ def denoise_image_execute(
     Returns:
         NamedTuple of outputs (described in `DenoiseImageOutputs`).
     """
+    denoise_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DENOISE_IMAGE_METADATA)
     params = execution.params(params)

@@ -86,6 +86,45 @@ def mris_expand_params(
     return params
 
 
+def mris_expand_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisExpandParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("expansion_distance", None) is None:
+        raise StyxValidationError("`expansion_distance` must not be None")
+    if not isinstance(params["expansion_distance"], (float, int)):
+        raise StyxValidationError(f'`expansion_distance` has the wrong type: Received `{type(params.get("expansion_distance", None))}` expected `float`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("thickness", False) is None:
+        raise StyxValidationError("`thickness` must not be None")
+    if not isinstance(params["thickness"], bool):
+        raise StyxValidationError(f'`thickness` has the wrong type: Received `{type(params.get("thickness", False))}` expected `bool`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], str):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str | None`')
+    if params.get("tmap", None) is not None:
+        if not isinstance(params["tmap"], str):
+            raise StyxValidationError(f'`tmap` has the wrong type: Received `{type(params.get("tmap", None))}` expected `str | None`')
+    if params.get("tmap_random", None) is not None:
+        if not isinstance(params["tmap_random"], str):
+            raise StyxValidationError(f'`tmap_random` has the wrong type: Received `{type(params.get("tmap_random", None))}` expected `str | None`')
+
+
 def mris_expand_cargs(
     params: MrisExpandParameters,
     execution: Execution,
@@ -163,6 +202,7 @@ def mris_expand_execute(
     Returns:
         NamedTuple of outputs (described in `MrisExpandOutputs`).
     """
+    mris_expand_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_EXPAND_METADATA)
     params = execution.params(params)

@@ -104,6 +104,28 @@ def tckdfc_dynamic_params(
     return params
 
 
+def tckdfc_dynamic_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckdfcDynamicParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("shape", None) is None:
+        raise StyxValidationError("`shape` must not be None")
+    if not isinstance(params["shape"], str):
+        raise StyxValidationError(f'`shape` has the wrong type: Received `{type(params.get("shape", None))}` expected `str`')
+    if params.get("width", None) is None:
+        raise StyxValidationError("`width` must not be None")
+    if not isinstance(params["width"], int):
+        raise StyxValidationError(f'`width` has the wrong type: Received `{type(params.get("width", None))}` expected `int`')
+
+
 def tckdfc_dynamic_cargs(
     params: TckdfcDynamicParameters,
     execution: Execution,
@@ -143,6 +165,28 @@ def tckdfc_config_params(
         "value": value,
     }
     return params
+
+
+def tckdfc_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckdfcConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def tckdfc_config_cargs(
@@ -263,6 +307,89 @@ def tckdfc_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def tckdfc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TckdfcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("static", False) is None:
+        raise StyxValidationError("`static` must not be None")
+    if not isinstance(params["static"], bool):
+        raise StyxValidationError(f'`static` has the wrong type: Received `{type(params.get("static", False))}` expected `bool`')
+    if params.get("dynamic", None) is not None:
+        tckdfc_dynamic_validate(params["dynamic"])
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("vox", None) is not None:
+        if not isinstance(params["vox"], list):
+            raise StyxValidationError(f'`vox` has the wrong type: Received `{type(params.get("vox", None))}` expected `list[float] | None`')
+        for e in params["vox"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`vox` has the wrong type: Received `{type(params.get("vox", None))}` expected `list[float] | None`')
+    if params.get("stat_vox", None) is not None:
+        if not isinstance(params["stat_vox"], str):
+            raise StyxValidationError(f'`stat_vox` has the wrong type: Received `{type(params.get("stat_vox", None))}` expected `str | None`')
+    if params.get("backtrack", False) is None:
+        raise StyxValidationError("`backtrack` must not be None")
+    if not isinstance(params["backtrack"], bool):
+        raise StyxValidationError(f'`backtrack` has the wrong type: Received `{type(params.get("backtrack", False))}` expected `bool`')
+    if params.get("upsample", None) is not None:
+        if not isinstance(params["upsample"], int):
+            raise StyxValidationError(f'`upsample` has the wrong type: Received `{type(params.get("upsample", None))}` expected `int | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TckdfcConfigParameters] | None`')
+        for e in params["config"]:
+            tckdfc_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("tracks", None) is None:
+        raise StyxValidationError("`tracks` must not be None")
+    if not isinstance(params["tracks"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tracks` has the wrong type: Received `{type(params.get("tracks", None))}` expected `InputPathType`')
+    if params.get("fmri", None) is None:
+        raise StyxValidationError("`fmri` must not be None")
+    if not isinstance(params["fmri"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fmri` has the wrong type: Received `{type(params.get("fmri", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def tckdfc_cargs(
@@ -405,6 +532,7 @@ def tckdfc_execute(
     Returns:
         NamedTuple of outputs (described in `TckdfcOutputs`).
     """
+    tckdfc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCKDFC_METADATA)
     params = execution.params(params)

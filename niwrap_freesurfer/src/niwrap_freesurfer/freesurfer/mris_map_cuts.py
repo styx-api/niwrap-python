@@ -54,6 +54,28 @@ def mris_map_cuts_params(
     return params
 
 
+def mris_map_cuts_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMapCutsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_patch", None) is None:
+        raise StyxValidationError("`input_patch` must not be None")
+    if not isinstance(params["input_patch"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_patch` has the wrong type: Received `{type(params.get("input_patch", None))}` expected `InputPathType`')
+    if params.get("output_patch", None) is None:
+        raise StyxValidationError("`output_patch` must not be None")
+    if not isinstance(params["output_patch"], str):
+        raise StyxValidationError(f'`output_patch` has the wrong type: Received `{type(params.get("output_patch", None))}` expected `str`')
+
+
 def mris_map_cuts_cargs(
     params: MrisMapCutsParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def mris_map_cuts_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMapCutsOutputs`).
     """
+    mris_map_cuts_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MAP_CUTS_METADATA)
     params = execution.params(params)

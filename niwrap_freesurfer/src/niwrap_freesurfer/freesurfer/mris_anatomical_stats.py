@@ -132,6 +132,72 @@ def mris_anatomical_stats_params(
     return params
 
 
+def mris_anatomical_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisAnatomicalStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjectname", None) is None:
+        raise StyxValidationError("`subjectname` must not be None")
+    if not isinstance(params["subjectname"], str):
+        raise StyxValidationError(f'`subjectname` has the wrong type: Received `{type(params.get("subjectname", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("surfacename", None) is not None:
+        if not isinstance(params["surfacename"], str):
+            raise StyxValidationError(f'`surfacename` has the wrong type: Received `{type(params.get("surfacename", None))}` expected `str | None`')
+    if params.get("thickness_range", None) is not None:
+        if not isinstance(params["thickness_range"], list):
+            raise StyxValidationError(f'`thickness_range` has the wrong type: Received `{type(params.get("thickness_range", None))}` expected `list[float] | None`')
+        if len(params["thickness_range"]) == 2:
+            raise StyxValidationError("Parameter `thickness_range` must contain exactly 2 elements")
+        for e in params["thickness_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`thickness_range` has the wrong type: Received `{type(params.get("thickness_range", None))}` expected `list[float] | None`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("thickness_file", None) is not None:
+        if not isinstance(params["thickness_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`thickness_file` has the wrong type: Received `{type(params.get("thickness_file", None))}` expected `InputPathType | None`')
+    if params.get("annotation_file", None) is not None:
+        if not isinstance(params["annotation_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annotation_file` has the wrong type: Received `{type(params.get("annotation_file", None))}` expected `InputPathType | None`')
+    if params.get("tabular_output", False) is None:
+        raise StyxValidationError("`tabular_output` must not be None")
+    if not isinstance(params["tabular_output"], bool):
+        raise StyxValidationError(f'`tabular_output` has the wrong type: Received `{type(params.get("tabular_output", False))}` expected `bool`')
+    if params.get("tablefile", None) is not None:
+        if not isinstance(params["tablefile"], str):
+            raise StyxValidationError(f'`tablefile` has the wrong type: Received `{type(params.get("tablefile", None))}` expected `str | None`')
+    if params.get("logfile", None) is not None:
+        if not isinstance(params["logfile"], str):
+            raise StyxValidationError(f'`logfile` has the wrong type: Received `{type(params.get("logfile", None))}` expected `str | None`')
+    if params.get("nsmooth", None) is not None:
+        if not isinstance(params["nsmooth"], (float, int)):
+            raise StyxValidationError(f'`nsmooth` has the wrong type: Received `{type(params.get("nsmooth", None))}` expected `float | None`')
+    if params.get("color_table", None) is not None:
+        if not isinstance(params["color_table"], str):
+            raise StyxValidationError(f'`color_table` has the wrong type: Received `{type(params.get("color_table", None))}` expected `str | None`')
+    if params.get("noglobal", False) is None:
+        raise StyxValidationError("`noglobal` must not be None")
+    if not isinstance(params["noglobal"], bool):
+        raise StyxValidationError(f'`noglobal` has the wrong type: Received `{type(params.get("noglobal", False))}` expected `bool`')
+    if params.get("th3_computation", False) is None:
+        raise StyxValidationError("`th3_computation` must not be None")
+    if not isinstance(params["th3_computation"], bool):
+        raise StyxValidationError(f'`th3_computation` has the wrong type: Received `{type(params.get("th3_computation", False))}` expected `bool`')
+
+
 def mris_anatomical_stats_cargs(
     params: MrisAnatomicalStatsParameters,
     execution: Execution,
@@ -241,6 +307,7 @@ def mris_anatomical_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MrisAnatomicalStatsOutputs`).
     """
+    mris_anatomical_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ANATOMICAL_STATS_METADATA)
     params = execution.params(params)

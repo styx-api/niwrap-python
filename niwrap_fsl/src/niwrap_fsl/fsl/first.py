@@ -132,6 +132,76 @@ def first_params(
     return params
 
 
+def first_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FirstParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("input_model", None) is None:
+        raise StyxValidationError("`input_model` must not be None")
+    if not isinstance(params["input_model"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_model` has the wrong type: Received `{type(params.get("input_model", None))}` expected `InputPathType`')
+    if params.get("flirt_matrix", None) is None:
+        raise StyxValidationError("`flirt_matrix` must not be None")
+    if not isinstance(params["flirt_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`flirt_matrix` has the wrong type: Received `{type(params.get("flirt_matrix", None))}` expected `InputPathType`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("input_model2", None) is not None:
+        if not isinstance(params["input_model2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_model2` has the wrong type: Received `{type(params.get("input_model2", None))}` expected `InputPathType | None`')
+    if params.get("nmodes", None) is not None:
+        if not isinstance(params["nmodes"], (float, int)):
+            raise StyxValidationError(f'`nmodes` has the wrong type: Received `{type(params.get("nmodes", None))}` expected `float | None`')
+    if params.get("intref", False) is None:
+        raise StyxValidationError("`intref` must not be None")
+    if not isinstance(params["intref"], bool):
+        raise StyxValidationError(f'`intref` has the wrong type: Received `{type(params.get("intref", False))}` expected `bool`')
+    if params.get("multi_image_input", False) is None:
+        raise StyxValidationError("`multi_image_input` must not be None")
+    if not isinstance(params["multi_image_input"], bool):
+        raise StyxValidationError(f'`multi_image_input` has the wrong type: Received `{type(params.get("multi_image_input", False))}` expected `bool`')
+    if params.get("binary_surface_output", False) is None:
+        raise StyxValidationError("`binary_surface_output` must not be None")
+    if not isinstance(params["binary_surface_output"], bool):
+        raise StyxValidationError(f'`binary_surface_output` has the wrong type: Received `{type(params.get("binary_surface_output", False))}` expected `bool`')
+    if params.get("bmap_name", None) is not None:
+        if not isinstance(params["bmap_name"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bmap_name` has the wrong type: Received `{type(params.get("bmap_name", None))}` expected `InputPathType | None`')
+    if params.get("bvars", None) is not None:
+        if not isinstance(params["bvars"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bvars` has the wrong type: Received `{type(params.get("bvars", None))}` expected `InputPathType | None`')
+    if params.get("shcond", False) is None:
+        raise StyxValidationError("`shcond` must not be None")
+    if not isinstance(params["shcond"], bool):
+        raise StyxValidationError(f'`shcond` has the wrong type: Received `{type(params.get("shcond", False))}` expected `bool`')
+    if params.get("loadbvars", False) is None:
+        raise StyxValidationError("`loadbvars` must not be None")
+    if not isinstance(params["loadbvars"], bool):
+        raise StyxValidationError(f'`loadbvars` has the wrong type: Received `{type(params.get("loadbvars", False))}` expected `bool`')
+
+
 def first_cargs(
     params: FirstParameters,
     execution: Execution,
@@ -240,6 +310,7 @@ def first_execute(
     Returns:
         NamedTuple of outputs (described in `FirstOutputs`).
     """
+    first_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIRST_METADATA)
     params = execution.params(params)

@@ -50,6 +50,24 @@ def ms_refine_subject_params(
     return params
 
 
+def ms_refine_subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MsRefineSubjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+
+
 def ms_refine_subject_cargs(
     params: MsRefineSubjectParameters,
     execution: Execution,
@@ -107,6 +125,7 @@ def ms_refine_subject_execute(
     Returns:
         NamedTuple of outputs (described in `MsRefineSubjectOutputs`).
     """
+    ms_refine_subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MS_REFINE_SUBJECT_METADATA)
     params = execution.params(params)

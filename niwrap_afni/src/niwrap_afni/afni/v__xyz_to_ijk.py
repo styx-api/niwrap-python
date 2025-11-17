@@ -72,6 +72,39 @@ def v__xyz_to_ijk_params(
     return params
 
 
+def v__xyz_to_ijk_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VXyzToIjkParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("x_coord", None) is None:
+        raise StyxValidationError("`x_coord` must not be None")
+    if not isinstance(params["x_coord"], (float, int)):
+        raise StyxValidationError(f'`x_coord` has the wrong type: Received `{type(params.get("x_coord", None))}` expected `float`')
+    if params.get("y_coord", None) is None:
+        raise StyxValidationError("`y_coord` must not be None")
+    if not isinstance(params["y_coord"], (float, int)):
+        raise StyxValidationError(f'`y_coord` has the wrong type: Received `{type(params.get("y_coord", None))}` expected `float`')
+    if params.get("z_coord", None) is None:
+        raise StyxValidationError("`z_coord` must not be None")
+    if not isinstance(params["z_coord"], (float, int)):
+        raise StyxValidationError(f'`z_coord` has the wrong type: Received `{type(params.get("z_coord", None))}` expected `float`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v__xyz_to_ijk_cargs(
     params: VXyzToIjkParameters,
     execution: Execution,
@@ -145,6 +178,7 @@ def v__xyz_to_ijk_execute(
     Returns:
         NamedTuple of outputs (described in `VXyzToIjkOutputs`).
     """
+    v__xyz_to_ijk_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__XYZ_TO_IJK_METADATA)
     params = execution.params(params)

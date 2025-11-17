@@ -67,6 +67,36 @@ def border_resample_params(
     return params
 
 
+def border_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border-out", None) is None:
+        raise StyxValidationError("`border-out` must not be None")
+    if not isinstance(params["border-out"], str):
+        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
+    if params.get("border-in", None) is None:
+        raise StyxValidationError("`border-in` must not be None")
+    if not isinstance(params["border-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border-in` has the wrong type: Received `{type(params.get("border-in", None))}` expected `InputPathType`')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+
+
 def border_resample_cargs(
     params: BorderResampleParameters,
     execution: Execution,
@@ -129,6 +159,7 @@ def border_resample_execute(
     Returns:
         NamedTuple of outputs (described in `BorderResampleOutputs`).
     """
+    border_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BORDER_RESAMPLE_METADATA)
     params = execution.params(params)

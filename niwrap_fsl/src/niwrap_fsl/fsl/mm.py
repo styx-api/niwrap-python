@@ -141,6 +141,79 @@ def mm_params(
     return params
 
 
+def mm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `MmParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spatial_data_file", None) is None:
+        raise StyxValidationError("`spatial_data_file` must not be None")
+    if not isinstance(params["spatial_data_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spatial_data_file` has the wrong type: Received `{type(params.get("spatial_data_file", None))}` expected `InputPathType`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], str):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `str | None`')
+    if params.get("timing_flag", False) is None:
+        raise StyxValidationError("`timing_flag` must not be None")
+    if not isinstance(params["timing_flag"], bool):
+        raise StyxValidationError(f'`timing_flag` has the wrong type: Received `{type(params.get("timing_flag", False))}` expected `bool`')
+    if params.get("example_epi_file", None) is not None:
+        if not isinstance(params["example_epi_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`example_epi_file` has the wrong type: Received `{type(params.get("example_epi_file", None))}` expected `InputPathType | None`')
+    if params.get("log_directory", None) is not None:
+        if not isinstance(params["log_directory"], str):
+            raise StyxValidationError(f'`log_directory` has the wrong type: Received `{type(params.get("log_directory", None))}` expected `str | None`')
+    if params.get("nonspatial_flag", False) is None:
+        raise StyxValidationError("`nonspatial_flag` must not be None")
+    if not isinstance(params["nonspatial_flag"], bool):
+        raise StyxValidationError(f'`nonspatial_flag` has the wrong type: Received `{type(params.get("nonspatial_flag", False))}` expected `bool`')
+    if params.get("fix_mrf_precision_flag", False) is None:
+        raise StyxValidationError("`fix_mrf_precision_flag` must not be None")
+    if not isinstance(params["fix_mrf_precision_flag"], bool):
+        raise StyxValidationError(f'`fix_mrf_precision_flag` has the wrong type: Received `{type(params.get("fix_mrf_precision_flag", False))}` expected `bool`')
+    if params.get("mrf_prec_start", None) is not None:
+        if not isinstance(params["mrf_prec_start"], (float, int)):
+            raise StyxValidationError(f'`mrf_prec_start` has the wrong type: Received `{type(params.get("mrf_prec_start", None))}` expected `float | None`')
+    if params.get("mrf_prec_multiplier", None) is not None:
+        if not isinstance(params["mrf_prec_multiplier"], (float, int)):
+            raise StyxValidationError(f'`mrf_prec_multiplier` has the wrong type: Received `{type(params.get("mrf_prec_multiplier", None))}` expected `float | None`')
+    if params.get("init_multiplier", None) is not None:
+        if not isinstance(params["init_multiplier"], (float, int)):
+            raise StyxValidationError(f'`init_multiplier` has the wrong type: Received `{type(params.get("init_multiplier", None))}` expected `float | None`')
+    if params.get("no_update_theta_flag", False) is None:
+        raise StyxValidationError("`no_update_theta_flag` must not be None")
+    if not isinstance(params["no_update_theta_flag"], bool):
+        raise StyxValidationError(f'`no_update_theta_flag` has the wrong type: Received `{type(params.get("no_update_theta_flag", False))}` expected `bool`')
+    if params.get("zfstat_flag", False) is None:
+        raise StyxValidationError("`zfstat_flag` must not be None")
+    if not isinstance(params["zfstat_flag"], bool):
+        raise StyxValidationError(f'`zfstat_flag` has the wrong type: Received `{type(params.get("zfstat_flag", False))}` expected `bool`')
+    if params.get("phi", None) is not None:
+        if not isinstance(params["phi"], (float, int)):
+            raise StyxValidationError(f'`phi` has the wrong type: Received `{type(params.get("phi", None))}` expected `float | None`')
+    if params.get("niters", None) is not None:
+        if not isinstance(params["niters"], (float, int)):
+            raise StyxValidationError(f'`niters` has the wrong type: Received `{type(params.get("niters", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+
+
 def mm_cargs(
     params: MmParameters,
     execution: Execution,
@@ -262,6 +335,7 @@ def mm_execute(
     Returns:
         NamedTuple of outputs (described in `MmOutputs`).
     """
+    mm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MM_METADATA)
     params = execution.params(params)

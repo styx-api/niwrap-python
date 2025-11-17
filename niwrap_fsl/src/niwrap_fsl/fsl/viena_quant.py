@@ -61,6 +61,32 @@ def viena_quant_params(
     return params
 
 
+def viena_quant_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VienaQuantParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input1", None) is None:
+        raise StyxValidationError("`input1` must not be None")
+    if not isinstance(params["input1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input1` has the wrong type: Received `{type(params.get("input1", None))}` expected `InputPathType`')
+    if params.get("input2", None) is None:
+        raise StyxValidationError("`input2` must not be None")
+    if not isinstance(params["input2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input2` has the wrong type: Received `{type(params.get("input2", None))}` expected `InputPathType`')
+    if params.get("ventricle_mask", None) is None:
+        raise StyxValidationError("`ventricle_mask` must not be None")
+    if not isinstance(params["ventricle_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ventricle_mask` has the wrong type: Received `{type(params.get("ventricle_mask", None))}` expected `InputPathType`')
+
+
 def viena_quant_cargs(
     params: VienaQuantParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def viena_quant_execute(
     Returns:
         NamedTuple of outputs (described in `VienaQuantOutputs`).
     """
+    viena_quant_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VIENA_QUANT_METADATA)
     params = execution.params(params)

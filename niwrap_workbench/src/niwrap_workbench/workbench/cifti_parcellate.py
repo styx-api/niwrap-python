@@ -129,6 +129,38 @@ def cifti_parcellate_spatial_weights_params(
     return params
 
 
+def cifti_parcellate_spatial_weights_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiParcellateSpatialWeightsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("left-surf", None) is not None:
+        if not isinstance(params["left-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
+    if params.get("right-surf", None) is not None:
+        if not isinstance(params["right-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
+    if params.get("cerebellum-surf", None) is not None:
+        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
+    if params.get("left-metric", None) is not None:
+        if not isinstance(params["left-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-metric` has the wrong type: Received `{type(params.get("left-metric", None))}` expected `InputPathType | None`')
+    if params.get("right-metric", None) is not None:
+        if not isinstance(params["right-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-metric` has the wrong type: Received `{type(params.get("right-metric", None))}` expected `InputPathType | None`')
+    if params.get("cerebellum-metric", None) is not None:
+        if not isinstance(params["cerebellum-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-metric` has the wrong type: Received `{type(params.get("cerebellum-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_parcellate_spatial_weights_cargs(
     params: CiftiParcellateSpatialWeightsParameters,
     execution: Execution,
@@ -181,6 +213,28 @@ def cifti_parcellate_exclude_outliers_params(
         "sigma-above": sigma_above,
     }
     return params
+
+
+def cifti_parcellate_exclude_outliers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiParcellateExcludeOutliersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma-below", None) is None:
+        raise StyxValidationError("`sigma-below` must not be None")
+    if not isinstance(params["sigma-below"], (float, int)):
+        raise StyxValidationError(f'`sigma-below` has the wrong type: Received `{type(params.get("sigma-below", None))}` expected `float`')
+    if params.get("sigma-above", None) is None:
+        raise StyxValidationError("`sigma-above` must not be None")
+    if not isinstance(params["sigma-above"], (float, int)):
+        raise StyxValidationError(f'`sigma-above` has the wrong type: Received `{type(params.get("sigma-above", None))}` expected `float`')
 
 
 def cifti_parcellate_exclude_outliers_cargs(
@@ -288,6 +342,64 @@ def cifti_parcellate_params(
     if mask_out is not None:
         params["mask-out"] = mask_out
     return params
+
+
+def cifti_parcellate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiParcellateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("spatial-weights", None) is not None:
+        cifti_parcellate_spatial_weights_validate(params["spatial-weights"])
+    if params.get("weight-cifti", None) is not None:
+        if not isinstance(params["weight-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight-cifti` has the wrong type: Received `{type(params.get("weight-cifti", None))}` expected `InputPathType | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("exclude-outliers", None) is not None:
+        cifti_parcellate_exclude_outliers_validate(params["exclude-outliers"])
+    if params.get("only-numeric", False) is None:
+        raise StyxValidationError("`only-numeric` must not be None")
+    if not isinstance(params["only-numeric"], bool):
+        raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], (float, int)):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
+    if params.get("mask-out", None) is not None:
+        if not isinstance(params["mask-out"], str):
+            raise StyxValidationError(f'`mask-out` has the wrong type: Received `{type(params.get("mask-out", None))}` expected `str | None`')
+    if params.get("legacy-mode", False) is None:
+        raise StyxValidationError("`legacy-mode` must not be None")
+    if not isinstance(params["legacy-mode"], bool):
+        raise StyxValidationError(f'`legacy-mode` has the wrong type: Received `{type(params.get("legacy-mode", False))}` expected `bool`')
+    if params.get("include-empty", False) is None:
+        raise StyxValidationError("`include-empty` must not be None")
+    if not isinstance(params["include-empty"], bool):
+        raise StyxValidationError(f'`include-empty` has the wrong type: Received `{type(params.get("include-empty", False))}` expected `bool`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("cifti-label", None) is None:
+        raise StyxValidationError("`cifti-label` must not be None")
+    if not isinstance(params["cifti-label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-label` has the wrong type: Received `{type(params.get("cifti-label", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_parcellate_cargs(
@@ -398,6 +510,7 @@ def cifti_parcellate_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiParcellateOutputs`).
     """
+    cifti_parcellate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_PARCELLATE_METADATA)
     params = execution.params(params)

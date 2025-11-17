@@ -56,6 +56,28 @@ def zeropad_params(
     return params
 
 
+def zeropad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ZeropadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_number", None) is None:
+        raise StyxValidationError("`input_number` must not be None")
+    if not isinstance(params["input_number"], str):
+        raise StyxValidationError(f'`input_number` has the wrong type: Received `{type(params.get("input_number", None))}` expected `str`')
+    if params.get("length", None) is None:
+        raise StyxValidationError("`length` must not be None")
+    if not isinstance(params["length"], (float, int)):
+        raise StyxValidationError(f'`length` has the wrong type: Received `{type(params.get("length", None))}` expected `float`')
+
+
 def zeropad_cargs(
     params: ZeropadParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def zeropad_execute(
     Returns:
         NamedTuple of outputs (described in `ZeropadOutputs`).
     """
+    zeropad_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ZEROPAD_METADATA)
     params = execution.params(params)

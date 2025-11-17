@@ -67,6 +67,35 @@ def mris_make_face_parcellation_params(
     return params
 
 
+def mris_make_face_parcellation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMakeFaceParcellationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("ico_file", None) is None:
+        raise StyxValidationError("`ico_file` must not be None")
+    if not isinstance(params["ico_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ico_file` has the wrong type: Received `{type(params.get("ico_file", None))}` expected `InputPathType`')
+    if params.get("output_annot", None) is None:
+        raise StyxValidationError("`output_annot` must not be None")
+    if not isinstance(params["output_annot"], str):
+        raise StyxValidationError(f'`output_annot` has the wrong type: Received `{type(params.get("output_annot", None))}` expected `str`')
+    if params.get("colortable", None) is not None:
+        if not isinstance(params["colortable"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`colortable` has the wrong type: Received `{type(params.get("colortable", None))}` expected `InputPathType | None`')
+
+
 def mris_make_face_parcellation_cargs(
     params: MrisMakeFaceParcellationParameters,
     execution: Execution,
@@ -133,6 +162,7 @@ def mris_make_face_parcellation_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMakeFaceParcellationOutputs`).
     """
+    mris_make_face_parcellation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MAKE_FACE_PARCELLATION_METADATA)
     params = execution.params(params)

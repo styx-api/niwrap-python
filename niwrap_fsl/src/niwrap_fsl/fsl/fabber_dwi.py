@@ -259,6 +259,154 @@ def fabber_dwi_params(
     return params
 
 
+def fabber_dwi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FabberDwiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
+    if params.get("model", None) is None:
+        raise StyxValidationError("`model` must not be None")
+    if not isinstance(params["model"], str):
+        raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str`')
+    if params.get("data_file", None) is None:
+        raise StyxValidationError("`data_file` must not be None")
+    if not isinstance(params["data_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_file` has the wrong type: Received `{type(params.get("data_file", None))}` expected `InputPathType`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("listmethods_flag", False) is None:
+        raise StyxValidationError("`listmethods_flag` must not be None")
+    if not isinstance(params["listmethods_flag"], bool):
+        raise StyxValidationError(f'`listmethods_flag` has the wrong type: Received `{type(params.get("listmethods_flag", False))}` expected `bool`')
+    if params.get("listmodels_flag", False) is None:
+        raise StyxValidationError("`listmodels_flag` must not be None")
+    if not isinstance(params["listmodels_flag"], bool):
+        raise StyxValidationError(f'`listmodels_flag` has the wrong type: Received `{type(params.get("listmodels_flag", False))}` expected `bool`')
+    if params.get("listparams_flag", False) is None:
+        raise StyxValidationError("`listparams_flag` must not be None")
+    if not isinstance(params["listparams_flag"], bool):
+        raise StyxValidationError(f'`listparams_flag` has the wrong type: Received `{type(params.get("listparams_flag", False))}` expected `bool`')
+    if params.get("descparams_flag", False) is None:
+        raise StyxValidationError("`descparams_flag` must not be None")
+    if not isinstance(params["descparams_flag"], bool):
+        raise StyxValidationError(f'`descparams_flag` has the wrong type: Received `{type(params.get("descparams_flag", False))}` expected `bool`')
+    if params.get("listoutputs_flag", False) is None:
+        raise StyxValidationError("`listoutputs_flag` must not be None")
+    if not isinstance(params["listoutputs_flag"], bool):
+        raise StyxValidationError(f'`listoutputs_flag` has the wrong type: Received `{type(params.get("listoutputs_flag", False))}` expected `bool`')
+    if params.get("evaluate", None) is not None:
+        if not isinstance(params["evaluate"], str):
+            raise StyxValidationError(f'`evaluate` has the wrong type: Received `{type(params.get("evaluate", None))}` expected `str | None`')
+    if params.get("evaluate_params", None) is not None:
+        if not isinstance(params["evaluate_params"], str):
+            raise StyxValidationError(f'`evaluate_params` has the wrong type: Received `{type(params.get("evaluate_params", None))}` expected `str | None`')
+    if params.get("evaluate_nt", None) is not None:
+        if not isinstance(params["evaluate_nt"], int):
+            raise StyxValidationError(f'`evaluate_nt` has the wrong type: Received `{type(params.get("evaluate_nt", None))}` expected `int | None`')
+    if params.get("simple_output_flag", False) is None:
+        raise StyxValidationError("`simple_output_flag` must not be None")
+    if not isinstance(params["simple_output_flag"], bool):
+        raise StyxValidationError(f'`simple_output_flag` has the wrong type: Received `{type(params.get("simple_output_flag", False))}` expected `bool`')
+    if params.get("overwrite_flag", False) is None:
+        raise StyxValidationError("`overwrite_flag` must not be None")
+    if not isinstance(params["overwrite_flag"], bool):
+        raise StyxValidationError(f'`overwrite_flag` has the wrong type: Received `{type(params.get("overwrite_flag", False))}` expected `bool`')
+    if params.get("link_to_latest_flag", False) is None:
+        raise StyxValidationError("`link_to_latest_flag` must not be None")
+    if not isinstance(params["link_to_latest_flag"], bool):
+        raise StyxValidationError(f'`link_to_latest_flag` has the wrong type: Received `{type(params.get("link_to_latest_flag", False))}` expected `bool`')
+    if params.get("loadmodels", None) is not None:
+        if not isinstance(params["loadmodels"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`loadmodels` has the wrong type: Received `{type(params.get("loadmodels", None))}` expected `InputPathType | None`')
+    if params.get("multiple_data_files", None) is not None:
+        if not isinstance(params["multiple_data_files"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`multiple_data_files` has the wrong type: Received `{type(params.get("multiple_data_files", None))}` expected `InputPathType | None`')
+    if params.get("data_order", None) is not None:
+        if not isinstance(params["data_order"], str):
+            raise StyxValidationError(f'`data_order` has the wrong type: Received `{type(params.get("data_order", None))}` expected `str | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("masked_timepoints", None) is not None:
+        if not isinstance(params["masked_timepoints"], int):
+            raise StyxValidationError(f'`masked_timepoints` has the wrong type: Received `{type(params.get("masked_timepoints", None))}` expected `int | None`')
+    if params.get("supp_data", None) is not None:
+        if not isinstance(params["supp_data"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`supp_data` has the wrong type: Received `{type(params.get("supp_data", None))}` expected `InputPathType | None`')
+    if params.get("dump_param_names_flag", False) is None:
+        raise StyxValidationError("`dump_param_names_flag` must not be None")
+    if not isinstance(params["dump_param_names_flag"], bool):
+        raise StyxValidationError(f'`dump_param_names_flag` has the wrong type: Received `{type(params.get("dump_param_names_flag", False))}` expected `bool`')
+    if params.get("save_model_fit_flag", False) is None:
+        raise StyxValidationError("`save_model_fit_flag` must not be None")
+    if not isinstance(params["save_model_fit_flag"], bool):
+        raise StyxValidationError(f'`save_model_fit_flag` has the wrong type: Received `{type(params.get("save_model_fit_flag", False))}` expected `bool`')
+    if params.get("save_residuals_flag", False) is None:
+        raise StyxValidationError("`save_residuals_flag` must not be None")
+    if not isinstance(params["save_residuals_flag"], bool):
+        raise StyxValidationError(f'`save_residuals_flag` has the wrong type: Received `{type(params.get("save_residuals_flag", False))}` expected `bool`')
+    if params.get("save_model_extras_flag", False) is None:
+        raise StyxValidationError("`save_model_extras_flag` must not be None")
+    if not isinstance(params["save_model_extras_flag"], bool):
+        raise StyxValidationError(f'`save_model_extras_flag` has the wrong type: Received `{type(params.get("save_model_extras_flag", False))}` expected `bool`')
+    if params.get("save_mvn_flag", False) is None:
+        raise StyxValidationError("`save_mvn_flag` must not be None")
+    if not isinstance(params["save_mvn_flag"], bool):
+        raise StyxValidationError(f'`save_mvn_flag` has the wrong type: Received `{type(params.get("save_mvn_flag", False))}` expected `bool`')
+    if params.get("save_mean_flag", False) is None:
+        raise StyxValidationError("`save_mean_flag` must not be None")
+    if not isinstance(params["save_mean_flag"], bool):
+        raise StyxValidationError(f'`save_mean_flag` has the wrong type: Received `{type(params.get("save_mean_flag", False))}` expected `bool`')
+    if params.get("save_std_flag", False) is None:
+        raise StyxValidationError("`save_std_flag` must not be None")
+    if not isinstance(params["save_std_flag"], bool):
+        raise StyxValidationError(f'`save_std_flag` has the wrong type: Received `{type(params.get("save_std_flag", False))}` expected `bool`')
+    if params.get("save_var_flag", False) is None:
+        raise StyxValidationError("`save_var_flag` must not be None")
+    if not isinstance(params["save_var_flag"], bool):
+        raise StyxValidationError(f'`save_var_flag` has the wrong type: Received `{type(params.get("save_var_flag", False))}` expected `bool`')
+    if params.get("save_zstat_flag", False) is None:
+        raise StyxValidationError("`save_zstat_flag` must not be None")
+    if not isinstance(params["save_zstat_flag"], bool):
+        raise StyxValidationError(f'`save_zstat_flag` has the wrong type: Received `{type(params.get("save_zstat_flag", False))}` expected `bool`')
+    if params.get("save_noise_mean_flag", False) is None:
+        raise StyxValidationError("`save_noise_mean_flag` must not be None")
+    if not isinstance(params["save_noise_mean_flag"], bool):
+        raise StyxValidationError(f'`save_noise_mean_flag` has the wrong type: Received `{type(params.get("save_noise_mean_flag", False))}` expected `bool`')
+    if params.get("save_noise_std_flag", False) is None:
+        raise StyxValidationError("`save_noise_std_flag` must not be None")
+    if not isinstance(params["save_noise_std_flag"], bool):
+        raise StyxValidationError(f'`save_noise_std_flag` has the wrong type: Received `{type(params.get("save_noise_std_flag", False))}` expected `bool`')
+    if params.get("save_free_energy_flag", False) is None:
+        raise StyxValidationError("`save_free_energy_flag` must not be None")
+    if not isinstance(params["save_free_energy_flag"], bool):
+        raise StyxValidationError(f'`save_free_energy_flag` has the wrong type: Received `{type(params.get("save_free_energy_flag", False))}` expected `bool`')
+    if params.get("optfile", None) is not None:
+        if not isinstance(params["optfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`optfile` has the wrong type: Received `{type(params.get("optfile", None))}` expected `InputPathType | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def fabber_dwi_cargs(
     params: FabberDwiParameters,
     execution: Execution,
@@ -427,6 +575,7 @@ def fabber_dwi_execute(
     Returns:
         NamedTuple of outputs (described in `FabberDwiOutputs`).
     """
+    fabber_dwi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FABBER_DWI_METADATA)
     params = execution.params(params)

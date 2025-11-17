@@ -65,6 +65,34 @@ def v_3d_overlap_params(
     return params
 
 
+def v_3d_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset1", None) is None:
+        raise StyxValidationError("`dataset1` must not be None")
+    if not isinstance(params["dataset1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset1` has the wrong type: Received `{type(params.get("dataset1", None))}` expected `InputPathType`')
+    if params.get("dataset2", None) is None:
+        raise StyxValidationError("`dataset2` must not be None")
+    if not isinstance(params["dataset2"], list):
+        raise StyxValidationError(f'`dataset2` has the wrong type: Received `{type(params.get("dataset2", None))}` expected `list[InputPathType]`')
+    for e in params["dataset2"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`dataset2` has the wrong type: Received `{type(params.get("dataset2", None))}` expected `list[InputPathType]`')
+    if params.get("save_prefix", None) is not None:
+        if not isinstance(params["save_prefix"], str):
+            raise StyxValidationError(f'`save_prefix` has the wrong type: Received `{type(params.get("save_prefix", None))}` expected `str | None`')
+
+
 def v_3d_overlap_cargs(
     params: V3dOverlapParameters,
     execution: Execution,
@@ -130,6 +158,7 @@ def v_3d_overlap_execute(
     Returns:
         NamedTuple of outputs (described in `V3dOverlapOutputs`).
     """
+    v_3d_overlap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_OVERLAP_METADATA)
     params = execution.params(params)

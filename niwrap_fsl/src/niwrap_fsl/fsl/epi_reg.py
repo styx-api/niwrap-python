@@ -148,6 +148,67 @@ def epi_reg_params(
     return params
 
 
+def epi_reg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EpiRegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("epi", None) is None:
+        raise StyxValidationError("`epi` must not be None")
+    if not isinstance(params["epi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`epi` has the wrong type: Received `{type(params.get("epi", None))}` expected `InputPathType`')
+    if params.get("t1_head", None) is None:
+        raise StyxValidationError("`t1_head` must not be None")
+    if not isinstance(params["t1_head"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_head` has the wrong type: Received `{type(params.get("t1_head", None))}` expected `InputPathType`')
+    if params.get("t1_brain", None) is None:
+        raise StyxValidationError("`t1_brain` must not be None")
+    if not isinstance(params["t1_brain"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_brain` has the wrong type: Received `{type(params.get("t1_brain", None))}` expected `InputPathType`')
+    if params.get("out_base_name", None) is None:
+        raise StyxValidationError("`out_base_name` must not be None")
+    if not isinstance(params["out_base_name"], str):
+        raise StyxValidationError(f'`out_base_name` has the wrong type: Received `{type(params.get("out_base_name", None))}` expected `str`')
+    if params.get("echospacing", None) is not None:
+        if not isinstance(params["echospacing"], (float, int)):
+            raise StyxValidationError(f'`echospacing` has the wrong type: Received `{type(params.get("echospacing", None))}` expected `float | None`')
+    if params.get("fmap", None) is not None:
+        if not isinstance(params["fmap"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fmap` has the wrong type: Received `{type(params.get("fmap", None))}` expected `InputPathType | None`')
+    if params.get("fmapmag", None) is not None:
+        if not isinstance(params["fmapmag"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fmapmag` has the wrong type: Received `{type(params.get("fmapmag", None))}` expected `InputPathType | None`')
+    if params.get("fmapmagbrain", None) is not None:
+        if not isinstance(params["fmapmagbrain"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fmapmagbrain` has the wrong type: Received `{type(params.get("fmapmagbrain", None))}` expected `InputPathType | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("no_fmapreg", False) is None:
+        raise StyxValidationError("`no_fmapreg` must not be None")
+    if not isinstance(params["no_fmapreg"], bool):
+        raise StyxValidationError(f'`no_fmapreg` has the wrong type: Received `{type(params.get("no_fmapreg", False))}` expected `bool`')
+    if params.get("pedir", None) is not None:
+        if not isinstance(params["pedir"], str):
+            raise StyxValidationError(f'`pedir` has the wrong type: Received `{type(params.get("pedir", None))}` expected `typing.Literal["x", "y", "z", "-x", "-y", "-z"] | None`')
+        if params["pedir"] not in ["x", "y", "z", "-x", "-y", "-z"]:
+            raise StyxValidationError("Parameter `pedir` must be one of [\"x\", \"y\", \"z\", \"-x\", \"-y\", \"-z\"]")
+    if params.get("weight_image", None) is not None:
+        if not isinstance(params["weight_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight_image` has the wrong type: Received `{type(params.get("weight_image", None))}` expected `InputPathType | None`')
+    if params.get("wmseg", None) is not None:
+        if not isinstance(params["wmseg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wmseg` has the wrong type: Received `{type(params.get("wmseg", None))}` expected `InputPathType | None`')
+
+
 def epi_reg_cargs(
     params: EpiRegParameters,
     execution: Execution,
@@ -241,6 +302,7 @@ def epi_reg_execute(
     Returns:
         NamedTuple of outputs (described in `EpiRegOutputs`).
     """
+    epi_reg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EPI_REG_METADATA)
     params = execution.params(params)

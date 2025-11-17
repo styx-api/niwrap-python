@@ -74,6 +74,28 @@ def metric_smoothing_roi_params(
     return params
 
 
+def metric_smoothing_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricSmoothingRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-metric", None) is None:
+        raise StyxValidationError("`roi-metric` must not be None")
+    if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType`')
+    if params.get("match-columns", False) is None:
+        raise StyxValidationError("`match-columns` must not be None")
+    if not isinstance(params["match-columns"], bool):
+        raise StyxValidationError(f'`match-columns` has the wrong type: Received `{type(params.get("match-columns", False))}` expected `bool`')
+
+
 def metric_smoothing_roi_cargs(
     params: MetricSmoothingRoiParameters,
     execution: Execution,
@@ -162,6 +184,55 @@ def metric_smoothing_params(
     if method is not None:
         params["method"] = method
     return params
+
+
+def metric_smoothing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricSmoothingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+    if params.get("roi", None) is not None:
+        metric_smoothing_roi_validate(params["roi"])
+    if params.get("fix-zeros", False) is None:
+        raise StyxValidationError("`fix-zeros` must not be None")
+    if not isinstance(params["fix-zeros"], bool):
+        raise StyxValidationError(f'`fix-zeros` has the wrong type: Received `{type(params.get("fix-zeros", False))}` expected `bool`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("smoothing-kernel", None) is None:
+        raise StyxValidationError("`smoothing-kernel` must not be None")
+    if not isinstance(params["smoothing-kernel"], (float, int)):
+        raise StyxValidationError(f'`smoothing-kernel` has the wrong type: Received `{type(params.get("smoothing-kernel", None))}` expected `float`')
 
 
 def metric_smoothing_cargs(
@@ -276,6 +347,7 @@ def metric_smoothing_execute(
     Returns:
         NamedTuple of outputs (described in `MetricSmoothingOutputs`).
     """
+    metric_smoothing_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_SMOOTHING_METADATA)
     params = execution.params(params)

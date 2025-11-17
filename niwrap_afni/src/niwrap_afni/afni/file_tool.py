@@ -264,6 +264,183 @@ def file_tool_params(
     return params
 
 
+def file_tool_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FileToolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("infiles", None) is None:
+        raise StyxValidationError("`infiles` must not be None")
+    if not isinstance(params["infiles"], list):
+        raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    for e in params["infiles"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    if params.get("ge_all", False) is None:
+        raise StyxValidationError("`ge_all` must not be None")
+    if not isinstance(params["ge_all"], bool):
+        raise StyxValidationError(f'`ge_all` has the wrong type: Received `{type(params.get("ge_all", False))}` expected `bool`')
+    if params.get("ge_header", False) is None:
+        raise StyxValidationError("`ge_header` must not be None")
+    if not isinstance(params["ge_header"], bool):
+        raise StyxValidationError(f'`ge_header` has the wrong type: Received `{type(params.get("ge_header", False))}` expected `bool`')
+    if params.get("ge_extras", False) is None:
+        raise StyxValidationError("`ge_extras` must not be None")
+    if not isinstance(params["ge_extras"], bool):
+        raise StyxValidationError(f'`ge_extras` has the wrong type: Received `{type(params.get("ge_extras", False))}` expected `bool`')
+    if params.get("ge_uv17", False) is None:
+        raise StyxValidationError("`ge_uv17` must not be None")
+    if not isinstance(params["ge_uv17"], bool):
+        raise StyxValidationError(f'`ge_uv17` has the wrong type: Received `{type(params.get("ge_uv17", False))}` expected `bool`')
+    if params.get("ge_run", False) is None:
+        raise StyxValidationError("`ge_run` must not be None")
+    if not isinstance(params["ge_run"], bool):
+        raise StyxValidationError(f'`ge_run` has the wrong type: Received `{type(params.get("ge_run", False))}` expected `bool`')
+    if params.get("ge_off", False) is None:
+        raise StyxValidationError("`ge_off` must not be None")
+    if not isinstance(params["ge_off"], bool):
+        raise StyxValidationError(f'`ge_off` has the wrong type: Received `{type(params.get("ge_off", False))}` expected `bool`')
+    if params.get("ge4_all", False) is None:
+        raise StyxValidationError("`ge4_all` must not be None")
+    if not isinstance(params["ge4_all"], bool):
+        raise StyxValidationError(f'`ge4_all` has the wrong type: Received `{type(params.get("ge4_all", False))}` expected `bool`')
+    if params.get("ge4_image", False) is None:
+        raise StyxValidationError("`ge4_image` must not be None")
+    if not isinstance(params["ge4_image"], bool):
+        raise StyxValidationError(f'`ge4_image` has the wrong type: Received `{type(params.get("ge4_image", False))}` expected `bool`')
+    if params.get("ge4_series", False) is None:
+        raise StyxValidationError("`ge4_series` must not be None")
+    if not isinstance(params["ge4_series"], bool):
+        raise StyxValidationError(f'`ge4_series` has the wrong type: Received `{type(params.get("ge4_series", False))}` expected `bool`')
+    if params.get("ge4_study", False) is None:
+        raise StyxValidationError("`ge4_study` must not be None")
+    if not isinstance(params["ge4_study"], bool):
+        raise StyxValidationError(f'`ge4_study` has the wrong type: Received `{type(params.get("ge4_study", False))}` expected `bool`')
+    if params.get("def_ana_hdr", False) is None:
+        raise StyxValidationError("`def_ana_hdr` must not be None")
+    if not isinstance(params["def_ana_hdr"], bool):
+        raise StyxValidationError(f'`def_ana_hdr` has the wrong type: Received `{type(params.get("def_ana_hdr", False))}` expected `bool`')
+    if params.get("diff_ana_hdrs", False) is None:
+        raise StyxValidationError("`diff_ana_hdrs` must not be None")
+    if not isinstance(params["diff_ana_hdrs"], bool):
+        raise StyxValidationError(f'`diff_ana_hdrs` has the wrong type: Received `{type(params.get("diff_ana_hdrs", False))}` expected `bool`')
+    if params.get("disp_ana_hdr", False) is None:
+        raise StyxValidationError("`disp_ana_hdr` must not be None")
+    if not isinstance(params["disp_ana_hdr"], bool):
+        raise StyxValidationError(f'`disp_ana_hdr` has the wrong type: Received `{type(params.get("disp_ana_hdr", False))}` expected `bool`')
+    if params.get("hex", False) is None:
+        raise StyxValidationError("`hex` must not be None")
+    if not isinstance(params["hex"], bool):
+        raise StyxValidationError(f'`hex` has the wrong type: Received `{type(params.get("hex", False))}` expected `bool`')
+    if params.get("mod_ana_hdr", False) is None:
+        raise StyxValidationError("`mod_ana_hdr` must not be None")
+    if not isinstance(params["mod_ana_hdr"], bool):
+        raise StyxValidationError(f'`mod_ana_hdr` has the wrong type: Received `{type(params.get("mod_ana_hdr", False))}` expected `bool`')
+    if params.get("mod_field", None) is not None:
+        if not isinstance(params["mod_field"], str):
+            raise StyxValidationError(f'`mod_field` has the wrong type: Received `{type(params.get("mod_field", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("show_bad_all", False) is None:
+        raise StyxValidationError("`show_bad_all` must not be None")
+    if not isinstance(params["show_bad_all"], bool):
+        raise StyxValidationError(f'`show_bad_all` has the wrong type: Received `{type(params.get("show_bad_all", False))}` expected `bool`')
+    if params.get("show_bad_backslash", False) is None:
+        raise StyxValidationError("`show_bad_backslash` must not be None")
+    if not isinstance(params["show_bad_backslash"], bool):
+        raise StyxValidationError(f'`show_bad_backslash` has the wrong type: Received `{type(params.get("show_bad_backslash", False))}` expected `bool`')
+    if params.get("show_bad_char", False) is None:
+        raise StyxValidationError("`show_bad_char` must not be None")
+    if not isinstance(params["show_bad_char"], bool):
+        raise StyxValidationError(f'`show_bad_char` has the wrong type: Received `{type(params.get("show_bad_char", False))}` expected `bool`')
+    if params.get("show_file_type", False) is None:
+        raise StyxValidationError("`show_file_type` must not be None")
+    if not isinstance(params["show_file_type"], bool):
+        raise StyxValidationError(f'`show_file_type` has the wrong type: Received `{type(params.get("show_file_type", False))}` expected `bool`')
+    if params.get("fix_rich_quotes", None) is not None:
+        if not isinstance(params["fix_rich_quotes"], str):
+            raise StyxValidationError(f'`fix_rich_quotes` has the wrong type: Received `{type(params.get("fix_rich_quotes", None))}` expected `str | None`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+    if params.get("length", None) is not None:
+        if not isinstance(params["length"], (float, int)):
+            raise StyxValidationError(f'`length` has the wrong type: Received `{type(params.get("length", None))}` expected `float | None`')
+    if params.get("mod_data", None) is not None:
+        if not isinstance(params["mod_data"], str):
+            raise StyxValidationError(f'`mod_data` has the wrong type: Received `{type(params.get("mod_data", None))}` expected `str | None`')
+    if params.get("mod_type", None) is not None:
+        if not isinstance(params["mod_type"], str):
+            raise StyxValidationError(f'`mod_type` has the wrong type: Received `{type(params.get("mod_type", None))}` expected `str | None`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("disp_hex", False) is None:
+        raise StyxValidationError("`disp_hex` must not be None")
+    if not isinstance(params["disp_hex"], bool):
+        raise StyxValidationError(f'`disp_hex` has the wrong type: Received `{type(params.get("disp_hex", False))}` expected `bool`')
+    if params.get("disp_hex1", False) is None:
+        raise StyxValidationError("`disp_hex1` must not be None")
+    if not isinstance(params["disp_hex1"], bool):
+        raise StyxValidationError(f'`disp_hex1` has the wrong type: Received `{type(params.get("disp_hex1", False))}` expected `bool`')
+    if params.get("disp_hex2", False) is None:
+        raise StyxValidationError("`disp_hex2` must not be None")
+    if not isinstance(params["disp_hex2"], bool):
+        raise StyxValidationError(f'`disp_hex2` has the wrong type: Received `{type(params.get("disp_hex2", False))}` expected `bool`')
+    if params.get("disp_hex4", False) is None:
+        raise StyxValidationError("`disp_hex4` must not be None")
+    if not isinstance(params["disp_hex4"], bool):
+        raise StyxValidationError(f'`disp_hex4` has the wrong type: Received `{type(params.get("disp_hex4", False))}` expected `bool`')
+    if params.get("disp_int2", False) is None:
+        raise StyxValidationError("`disp_int2` must not be None")
+    if not isinstance(params["disp_int2"], bool):
+        raise StyxValidationError(f'`disp_int2` has the wrong type: Received `{type(params.get("disp_int2", False))}` expected `bool`')
+    if params.get("disp_int4", False) is None:
+        raise StyxValidationError("`disp_int4` must not be None")
+    if not isinstance(params["disp_int4"], bool):
+        raise StyxValidationError(f'`disp_int4` has the wrong type: Received `{type(params.get("disp_int4", False))}` expected `bool`')
+    if params.get("disp_real4", False) is None:
+        raise StyxValidationError("`disp_real4` must not be None")
+    if not isinstance(params["disp_real4"], bool):
+        raise StyxValidationError(f'`disp_real4` has the wrong type: Received `{type(params.get("disp_real4", False))}` expected `bool`')
+    if params.get("swap_bytes", False) is None:
+        raise StyxValidationError("`swap_bytes` must not be None")
+    if not isinstance(params["swap_bytes"], bool):
+        raise StyxValidationError(f'`swap_bytes` has the wrong type: Received `{type(params.get("swap_bytes", False))}` expected `bool`')
+
+
 def file_tool_cargs(
     params: FileToolParameters,
     execution: Execution,
@@ -431,6 +608,7 @@ def file_tool_execute(
     Returns:
         NamedTuple of outputs (described in `FileToolOutputs`).
     """
+    file_tool_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FILE_TOOL_METADATA)
     params = execution.params(params)

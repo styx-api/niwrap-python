@@ -91,6 +91,55 @@ def v_3d_space_time_corr_params(
     return params
 
 
+def v_3d_space_time_corr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSpaceTimeCorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("insetA", None) is None:
+        raise StyxValidationError("`insetA` must not be None")
+    if not isinstance(params["insetA"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`insetA` has the wrong type: Received `{type(params.get("insetA", None))}` expected `InputPathType`')
+    if params.get("insetB", None) is None:
+        raise StyxValidationError("`insetB` must not be None")
+    if not isinstance(params["insetB"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`insetB` has the wrong type: Received `{type(params.get("insetB", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("out_Zcorr", False) is None:
+        raise StyxValidationError("`out_Zcorr` must not be None")
+    if not isinstance(params["out_Zcorr"], bool):
+        raise StyxValidationError(f'`out_Zcorr` has the wrong type: Received `{type(params.get("out_Zcorr", False))}` expected `bool`')
+    if params.get("freeze_insetA_ijk", None) is not None:
+        if not isinstance(params["freeze_insetA_ijk"], list):
+            raise StyxValidationError(f'`freeze_insetA_ijk` has the wrong type: Received `{type(params.get("freeze_insetA_ijk", None))}` expected `list[float] | None`')
+        if len(params["freeze_insetA_ijk"]) == 3:
+            raise StyxValidationError("Parameter `freeze_insetA_ijk` must contain exactly 3 elements")
+        for e in params["freeze_insetA_ijk"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`freeze_insetA_ijk` has the wrong type: Received `{type(params.get("freeze_insetA_ijk", None))}` expected `list[float] | None`')
+    if params.get("freeze_insetA_xyz", None) is not None:
+        if not isinstance(params["freeze_insetA_xyz"], list):
+            raise StyxValidationError(f'`freeze_insetA_xyz` has the wrong type: Received `{type(params.get("freeze_insetA_xyz", None))}` expected `list[float] | None`')
+        if len(params["freeze_insetA_xyz"]) == 3:
+            raise StyxValidationError("Parameter `freeze_insetA_xyz` must contain exactly 3 elements")
+        for e in params["freeze_insetA_xyz"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`freeze_insetA_xyz` has the wrong type: Received `{type(params.get("freeze_insetA_xyz", None))}` expected `list[float] | None`')
+
+
 def v_3d_space_time_corr_cargs(
     params: V3dSpaceTimeCorrParameters,
     execution: Execution,
@@ -178,6 +227,7 @@ def v_3d_space_time_corr_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSpaceTimeCorrOutputs`).
     """
+    v_3d_space_time_corr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SPACE_TIME_CORR_METADATA)
     params = execution.params(params)

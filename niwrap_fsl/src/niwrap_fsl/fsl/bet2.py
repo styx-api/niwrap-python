@@ -142,6 +142,84 @@ def bet2_params(
     return params
 
 
+def bet2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `Bet2Parameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_fileroot", None) is None:
+        raise StyxValidationError("`input_fileroot` must not be None")
+    if not isinstance(params["input_fileroot"], str):
+        raise StyxValidationError(f'`input_fileroot` has the wrong type: Received `{type(params.get("input_fileroot", None))}` expected `str`')
+    if params.get("output_fileroot", None) is None:
+        raise StyxValidationError("`output_fileroot` must not be None")
+    if not isinstance(params["output_fileroot"], str):
+        raise StyxValidationError(f'`output_fileroot` has the wrong type: Received `{type(params.get("output_fileroot", None))}` expected `str`')
+    if params.get("fractional_intensity", None) is not None:
+        if not isinstance(params["fractional_intensity"], (float, int)):
+            raise StyxValidationError(f'`fractional_intensity` has the wrong type: Received `{type(params.get("fractional_intensity", None))}` expected `float | None`')
+        if 0 <= params["fractional_intensity"] <= 1:
+            raise StyxValidationError("Parameter `fractional_intensity` must be between 0 and 1 (inclusive)")
+    if params.get("vertical_gradient", None) is not None:
+        if not isinstance(params["vertical_gradient"], (float, int)):
+            raise StyxValidationError(f'`vertical_gradient` has the wrong type: Received `{type(params.get("vertical_gradient", None))}` expected `float | None`')
+        if -1 <= params["vertical_gradient"] <= 1:
+            raise StyxValidationError("Parameter `vertical_gradient` must be between -1 and 1 (inclusive)")
+    if params.get("center_of_gravity", None) is not None:
+        if not isinstance(params["center_of_gravity"], list):
+            raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
+        if len(params["center_of_gravity"]) == 3:
+            raise StyxValidationError("Parameter `center_of_gravity` must contain exactly 3 elements")
+        for e in params["center_of_gravity"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
+    if params.get("outline_flag", False) is None:
+        raise StyxValidationError("`outline_flag` must not be None")
+    if not isinstance(params["outline_flag"], bool):
+        raise StyxValidationError(f'`outline_flag` has the wrong type: Received `{type(params.get("outline_flag", False))}` expected `bool`')
+    if params.get("mask_flag", False) is None:
+        raise StyxValidationError("`mask_flag` must not be None")
+    if not isinstance(params["mask_flag"], bool):
+        raise StyxValidationError(f'`mask_flag` has the wrong type: Received `{type(params.get("mask_flag", False))}` expected `bool`')
+    if params.get("skull_flag", False) is None:
+        raise StyxValidationError("`skull_flag` must not be None")
+    if not isinstance(params["skull_flag"], bool):
+        raise StyxValidationError(f'`skull_flag` has the wrong type: Received `{type(params.get("skull_flag", False))}` expected `bool`')
+    if params.get("no_output_flag", False) is None:
+        raise StyxValidationError("`no_output_flag` must not be None")
+    if not isinstance(params["no_output_flag"], bool):
+        raise StyxValidationError(f'`no_output_flag` has the wrong type: Received `{type(params.get("no_output_flag", False))}` expected `bool`')
+    if params.get("mesh_flag", False) is None:
+        raise StyxValidationError("`mesh_flag` must not be None")
+    if not isinstance(params["mesh_flag"], bool):
+        raise StyxValidationError(f'`mesh_flag` has the wrong type: Received `{type(params.get("mesh_flag", False))}` expected `bool`')
+    if params.get("head_radius", None) is not None:
+        if not isinstance(params["head_radius"], (float, int)):
+            raise StyxValidationError(f'`head_radius` has the wrong type: Received `{type(params.get("head_radius", None))}` expected `float | None`')
+    if params.get("smooth_factor", None) is not None:
+        if not isinstance(params["smooth_factor"], (float, int)):
+            raise StyxValidationError(f'`smooth_factor` has the wrong type: Received `{type(params.get("smooth_factor", None))}` expected `float | None`')
+    if params.get("threshold_flag", False) is None:
+        raise StyxValidationError("`threshold_flag` must not be None")
+    if not isinstance(params["threshold_flag"], bool):
+        raise StyxValidationError(f'`threshold_flag` has the wrong type: Received `{type(params.get("threshold_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def bet2_cargs(
     params: Bet2Parameters,
     execution: Execution,
@@ -245,6 +323,7 @@ def bet2_execute(
     Returns:
         NamedTuple of outputs (described in `Bet2Outputs`).
     """
+    bet2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BET2_METADATA)
     params = execution.params(params)

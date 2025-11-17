@@ -333,18 +333,21 @@ def greedy_interpolation_cargs_dyn_fn(
     }.get(t)
 
 
-def greedy_interpolation_outputs_dyn_fn(
+def greedy_interpolation_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "nn": greedy_nn_validate,
+        "linear": greedy_linear_validate,
+        "label": greedy_label_validate,
     }.get(t)
 
 
@@ -367,6 +370,28 @@ def greedy_input_images_params(
         "moving": moving,
     }
     return params
+
+
+def greedy_input_images_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyInputImagesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed", None) is None:
+        raise StyxValidationError("`fixed` must not be None")
+    if not isinstance(params["fixed"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed` has the wrong type: Received `{type(params.get("fixed", None))}` expected `InputPathType`')
+    if params.get("moving", None) is None:
+        raise StyxValidationError("`moving` must not be None")
+    if not isinstance(params["moving"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving` has the wrong type: Received `{type(params.get("moving", None))}` expected `InputPathType`')
 
 
 def greedy_input_images_cargs(
@@ -417,6 +442,28 @@ def greedy_invert_params(
         "outwarp": outwarp,
     }
     return params
+
+
+def greedy_invert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyInvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inwarp", None) is None:
+        raise StyxValidationError("`inwarp` must not be None")
+    if not isinstance(params["inwarp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inwarp` has the wrong type: Received `{type(params.get("inwarp", None))}` expected `InputPathType`')
+    if params.get("outwarp", None) is None:
+        raise StyxValidationError("`outwarp` must not be None")
+    if not isinstance(params["outwarp"], str):
+        raise StyxValidationError(f'`outwarp` has the wrong type: Received `{type(params.get("outwarp", None))}` expected `str`')
 
 
 def greedy_invert_cargs(
@@ -492,6 +539,32 @@ def greedy_root_params(
     return params
 
 
+def greedy_root_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyRootParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inwarp", None) is None:
+        raise StyxValidationError("`inwarp` must not be None")
+    if not isinstance(params["inwarp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inwarp` has the wrong type: Received `{type(params.get("inwarp", None))}` expected `InputPathType`')
+    if params.get("outwarp", None) is None:
+        raise StyxValidationError("`outwarp` must not be None")
+    if not isinstance(params["outwarp"], str):
+        raise StyxValidationError(f'`outwarp` has the wrong type: Received `{type(params.get("outwarp", None))}` expected `str`')
+    if params.get("n", None) is None:
+        raise StyxValidationError("`n` must not be None")
+    if not isinstance(params["n"], int):
+        raise StyxValidationError(f'`n` has the wrong type: Received `{type(params.get("n", None))}` expected `int`')
+
+
 def greedy_root_cargs(
     params: GreedyRootParameters,
     execution: Execution,
@@ -563,6 +636,28 @@ def greedy_jacobian_params(
     return params
 
 
+def greedy_jacobian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyJacobianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inwarp", None) is None:
+        raise StyxValidationError("`inwarp` must not be None")
+    if not isinstance(params["inwarp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inwarp` has the wrong type: Received `{type(params.get("inwarp", None))}` expected `InputPathType`')
+    if params.get("outjac", None) is None:
+        raise StyxValidationError("`outjac` must not be None")
+    if not isinstance(params["outjac"], str):
+        raise StyxValidationError(f'`outjac` has the wrong type: Received `{type(params.get("outjac", None))}` expected `str`')
+
+
 def greedy_jacobian_cargs(
     params: GreedyJacobianParameters,
     execution: Execution,
@@ -624,6 +719,29 @@ def greedy_metric_params(
     return params
 
 
+def greedy_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric_type", None) is None:
+        raise StyxValidationError("`metric_type` must not be None")
+    if not isinstance(params["metric_type"], str):
+        raise StyxValidationError(f'`metric_type` has the wrong type: Received `{type(params.get("metric_type", None))}` expected `typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"]`')
+    if params["metric_type"] not in ["SSD", "MI", "NMI", "NCC", "MAHAL"]:
+        raise StyxValidationError("Parameter `metric_type` must be one of [\"SSD\", \"MI\", \"NMI\", \"NCC\", \"MAHAL\"]")
+    if params.get("metric_param", None) is not None:
+        if not isinstance(params["metric_param"], (float, int)):
+            raise StyxValidationError(f'`metric_param` has the wrong type: Received `{type(params.get("metric_param", None))}` expected `float | None`')
+
+
 def greedy_metric_cargs(
     params: GreedyMetricParameters,
     execution: Execution,
@@ -663,6 +781,28 @@ def greedy_tjr_params(
         "weight": weight,
     }
     return params
+
+
+def greedy_tjr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyTjrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mesh", None) is None:
+        raise StyxValidationError("`mesh` must not be None")
+    if not isinstance(params["mesh"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mesh` has the wrong type: Received `{type(params.get("mesh", None))}` expected `InputPathType`')
+    if params.get("weight", None) is None:
+        raise StyxValidationError("`weight` must not be None")
+    if not isinstance(params["weight"], (float, int)):
+        raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float`')
 
 
 def greedy_tjr_cargs(
@@ -707,6 +847,32 @@ def greedy_search_params(
         "tran": tran,
     }
     return params
+
+
+def greedy_search_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedySearchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("n", None) is None:
+        raise StyxValidationError("`n` must not be None")
+    if not isinstance(params["n"], int):
+        raise StyxValidationError(f'`n` has the wrong type: Received `{type(params.get("n", None))}` expected `int`')
+    if params.get("rot", None) is None:
+        raise StyxValidationError("`rot` must not be None")
+    if not isinstance(params["rot"], str):
+        raise StyxValidationError(f'`rot` has the wrong type: Received `{type(params.get("rot", None))}` expected `str`')
+    if params.get("tran", None) is None:
+        raise StyxValidationError("`tran` must not be None")
+    if not isinstance(params["tran"], (float, int)):
+        raise StyxValidationError(f'`tran` has the wrong type: Received `{type(params.get("tran", None))}` expected `float`')
 
 
 def greedy_search_cargs(
@@ -758,6 +924,28 @@ def greedy_reslice_moving_image_params(
         "output": output,
     }
     return params
+
+
+def greedy_reslice_moving_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyResliceMovingImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("moving", None) is None:
+        raise StyxValidationError("`moving` must not be None")
+    if not isinstance(params["moving"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving` has the wrong type: Received `{type(params.get("moving", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def greedy_reslice_moving_image_cargs(
@@ -830,6 +1018,28 @@ def greedy_reslice_surface_params(
     return params
 
 
+def greedy_reslice_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyResliceSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inmesh", None) is None:
+        raise StyxValidationError("`inmesh` must not be None")
+    if not isinstance(params["inmesh"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inmesh` has the wrong type: Received `{type(params.get("inmesh", None))}` expected `InputPathType`')
+    if params.get("outmesh", None) is None:
+        raise StyxValidationError("`outmesh` must not be None")
+    if not isinstance(params["outmesh"], str):
+        raise StyxValidationError(f'`outmesh` has the wrong type: Received `{type(params.get("outmesh", None))}` expected `str`')
+
+
 def greedy_reslice_surface_cargs(
     params: GreedyResliceSurfaceParameters,
     execution: Execution,
@@ -884,6 +1094,20 @@ def greedy_nn_params(
     return params
 
 
+def greedy_nn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyNnParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
 def greedy_nn_cargs(
     params: GreedyNnParameters,
     execution: Execution,
@@ -915,6 +1139,20 @@ def greedy_linear_params(
         "@type": "linear",
     }
     return params
+
+
+def greedy_linear_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyLinearParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
 
 
 def greedy_linear_cargs(
@@ -955,6 +1193,24 @@ def greedy_label_params(
         "sigma_spec": sigma_spec,
     }
     return params
+
+
+def greedy_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma_spec", None) is None:
+        raise StyxValidationError("`sigma_spec` must not be None")
+    if not isinstance(params["sigma_spec"], str):
+        raise StyxValidationError(f'`sigma_spec` has the wrong type: Received `{type(params.get("sigma_spec", None))}` expected `str`')
 
 
 def greedy_label_cargs(
@@ -1005,6 +1261,28 @@ def greedy_reslice_simplex_jacobian_params(
         "outmesh": outmesh,
     }
     return params
+
+
+def greedy_reslice_simplex_jacobian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyResliceSimplexJacobianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inmesh", None) is None:
+        raise StyxValidationError("`inmesh` must not be None")
+    if not isinstance(params["inmesh"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inmesh` has the wrong type: Received `{type(params.get("inmesh", None))}` expected `InputPathType`')
+    if params.get("outmesh", None) is None:
+        raise StyxValidationError("`outmesh` must not be None")
+    if not isinstance(params["outmesh"], str):
+        raise StyxValidationError(f'`outmesh` has the wrong type: Received `{type(params.get("outmesh", None))}` expected `str`')
 
 
 def greedy_reslice_simplex_jacobian_cargs(
@@ -1383,6 +1661,266 @@ def greedy_params(
     return params
 
 
+def greedy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GreedyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensions", None) is None:
+        raise StyxValidationError("`dimensions` must not be None")
+    if not isinstance(params["dimensions"], int):
+        raise StyxValidationError(f'`dimensions` has the wrong type: Received `{type(params.get("dimensions", None))}` expected `int`')
+    if params.get("input_images", None) is not None:
+        greedy_input_images_validate(params["input_images"])
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("affine", False) is None:
+        raise StyxValidationError("`affine` must not be None")
+    if not isinstance(params["affine"], bool):
+        raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", False))}` expected `bool`')
+    if params.get("brute", None) is not None:
+        if not isinstance(params["brute"], str):
+            raise StyxValidationError(f'`brute` has the wrong type: Received `{type(params.get("brute", None))}` expected `str | None`')
+    if params.get("moments", None) is not None:
+        if not isinstance(params["moments"], int):
+            raise StyxValidationError(f'`moments` has the wrong type: Received `{type(params.get("moments", None))}` expected `typing.Literal[1, 2] | None`')
+        if params["moments"] not in [1, 2]:
+            raise StyxValidationError("Parameter `moments` must be one of [1, 2]")
+    if params.get("reslice", None) is not None:
+        if not isinstance(params["reslice"], list):
+            raise StyxValidationError(f'`reslice` has the wrong type: Received `{type(params.get("reslice", None))}` expected `list[InputPathType] | None`')
+        for e in params["reslice"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`reslice` has the wrong type: Received `{type(params.get("reslice", None))}` expected `list[InputPathType] | None`')
+    if params.get("invert", None) is not None:
+        greedy_invert_validate(params["invert"])
+    if params.get("root", None) is not None:
+        greedy_root_validate(params["root"])
+    if params.get("jacobian", None) is not None:
+        greedy_jacobian_validate(params["jacobian"])
+    if params.get("metric_mode", False) is None:
+        raise StyxValidationError("`metric_mode` must not be None")
+    if not isinstance(params["metric_mode"], bool):
+        raise StyxValidationError(f'`metric_mode` has the wrong type: Received `{type(params.get("metric_mode", False))}` expected `bool`')
+    if params.get("defopt", False) is None:
+        raise StyxValidationError("`defopt` must not be None")
+    if not isinstance(params["defopt"], bool):
+        raise StyxValidationError(f'`defopt` has the wrong type: Received `{type(params.get("defopt", False))}` expected `bool`')
+    if params.get("weight", None) is not None:
+        if not isinstance(params["weight"], (float, int)):
+            raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float | None`')
+    if params.get("metric", None) is not None:
+        greedy_metric_validate(params["metric"])
+    if params.get("step_size", None) is not None:
+        if not isinstance(params["step_size"], str):
+            raise StyxValidationError(f'`step_size` has the wrong type: Received `{type(params.get("step_size", None))}` expected `str | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], str):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `str | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], int):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int | None`')
+    if params.get("fixed_mask", None) is not None:
+        if not isinstance(params["fixed_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fixed_mask` has the wrong type: Received `{type(params.get("fixed_mask", None))}` expected `InputPathType | None`')
+    if params.get("gm_trim", None) is not None:
+        if not isinstance(params["gm_trim"], (float, int)):
+            raise StyxValidationError(f'`gm_trim` has the wrong type: Received `{type(params.get("gm_trim", None))}` expected `float | None`')
+    if params.get("moving_mask", None) is not None:
+        if not isinstance(params["moving_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`moving_mask` has the wrong type: Received `{type(params.get("moving_mask", None))}` expected `InputPathType | None`')
+    if params.get("wncc_mask_dilate", False) is None:
+        raise StyxValidationError("`wncc_mask_dilate` must not be None")
+    if not isinstance(params["wncc_mask_dilate"], bool):
+        raise StyxValidationError(f'`wncc_mask_dilate` has the wrong type: Received `{type(params.get("wncc_mask_dilate", False))}` expected `bool`')
+    if params.get("reference_image", None) is not None:
+        if not isinstance(params["reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType | None`')
+    if params.get("ref_pad", None) is not None:
+        if not isinstance(params["ref_pad"], (float, int)):
+            raise StyxValidationError(f'`ref_pad` has the wrong type: Received `{type(params.get("ref_pad", None))}` expected `float | None`')
+    if params.get("background", None) is not None:
+        if not isinstance(params["background"], str):
+            raise StyxValidationError(f'`background` has the wrong type: Received `{type(params.get("background", None))}` expected `str | None`')
+    if params.get("input_transform", None) is not None:
+        if not isinstance(params["input_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_transform` has the wrong type: Received `{type(params.get("input_transform", None))}` expected `InputPathType | None`')
+    if params.get("zero_last_dimension", False) is None:
+        raise StyxValidationError("`zero_last_dimension` must not be None")
+    if not isinstance(params["zero_last_dimension"], bool):
+        raise StyxValidationError(f'`zero_last_dimension` has the wrong type: Received `{type(params.get("zero_last_dimension", False))}` expected `bool`')
+    if params.get("time_step_mode", None) is not None:
+        if not isinstance(params["time_step_mode"], str):
+            raise StyxValidationError(f'`time_step_mode` has the wrong type: Received `{type(params.get("time_step_mode", None))}` expected `typing.Literal["CONST", "SCALE", "SCALEDOWN"] | None`')
+        if params["time_step_mode"] not in ["CONST", "SCALE", "SCALEDOWN"]:
+            raise StyxValidationError("Parameter `time_step_mode` must be one of [\"CONST\", \"SCALE\", \"SCALEDOWN\"]")
+    if params.get("smoothing", None) is not None:
+        if not isinstance(params["smoothing"], str):
+            raise StyxValidationError(f'`smoothing` has the wrong type: Received `{type(params.get("smoothing", None))}` expected `str | None`')
+    if params.get("inverse_warp", None) is not None:
+        if not isinstance(params["inverse_warp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`inverse_warp` has the wrong type: Received `{type(params.get("inverse_warp", None))}` expected `InputPathType | None`')
+    if params.get("root_warp", None) is not None:
+        if not isinstance(params["root_warp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`root_warp` has the wrong type: Received `{type(params.get("root_warp", None))}` expected `InputPathType | None`')
+    if params.get("warp_precision", None) is not None:
+        if not isinstance(params["warp_precision"], (float, int)):
+            raise StyxValidationError(f'`warp_precision` has the wrong type: Received `{type(params.get("warp_precision", None))}` expected `float | None`')
+    if params.get("noise", None) is not None:
+        if not isinstance(params["noise"], (float, int)):
+            raise StyxValidationError(f'`noise` has the wrong type: Received `{type(params.get("noise", None))}` expected `float | None`')
+    if params.get("exponent", None) is not None:
+        if not isinstance(params["exponent"], (float, int)):
+            raise StyxValidationError(f'`exponent` has the wrong type: Received `{type(params.get("exponent", None))}` expected `float | None`')
+    if params.get("svf_mode", False) is None:
+        raise StyxValidationError("`svf_mode` must not be None")
+    if not isinstance(params["svf_mode"], bool):
+        raise StyxValidationError(f'`svf_mode` has the wrong type: Received `{type(params.get("svf_mode", False))}` expected `bool`')
+    if params.get("svlb", False) is None:
+        raise StyxValidationError("`svlb` must not be None")
+    if not isinstance(params["svlb"], bool):
+        raise StyxValidationError(f'`svlb` has the wrong type: Received `{type(params.get("svlb", False))}` expected `bool`')
+    if params.get("sv_incompr", False) is None:
+        raise StyxValidationError("`sv_incompr` must not be None")
+    if not isinstance(params["sv_incompr"], bool):
+        raise StyxValidationError(f'`sv_incompr` has the wrong type: Received `{type(params.get("sv_incompr", False))}` expected `bool`')
+    if params.get("initial_warp", None) is not None:
+        if not isinstance(params["initial_warp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`initial_warp` has the wrong type: Received `{type(params.get("initial_warp", None))}` expected `InputPathType | None`')
+    if params.get("tjr", None) is not None:
+        greedy_tjr_validate(params["tjr"])
+    if params.get("wr", None) is not None:
+        if not isinstance(params["wr"], (float, int)):
+            raise StyxValidationError(f'`wr` has the wrong type: Received `{type(params.get("wr", None))}` expected `float | None`')
+    if params.get("initial_affine", None) is not None:
+        if not isinstance(params["initial_affine"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`initial_affine` has the wrong type: Received `{type(params.get("initial_affine", None))}` expected `InputPathType | None`')
+    if params.get("ia_identity", False) is None:
+        raise StyxValidationError("`ia_identity` must not be None")
+    if not isinstance(params["ia_identity"], bool):
+        raise StyxValidationError(f'`ia_identity` has the wrong type: Received `{type(params.get("ia_identity", False))}` expected `bool`')
+    if params.get("ia_voxel_grid", False) is None:
+        raise StyxValidationError("`ia_voxel_grid` must not be None")
+    if not isinstance(params["ia_voxel_grid"], bool):
+        raise StyxValidationError(f'`ia_voxel_grid` has the wrong type: Received `{type(params.get("ia_voxel_grid", False))}` expected `bool`')
+    if params.get("ia_image_centers", False) is None:
+        raise StyxValidationError("`ia_image_centers` must not be None")
+    if not isinstance(params["ia_image_centers"], bool):
+        raise StyxValidationError(f'`ia_image_centers` has the wrong type: Received `{type(params.get("ia_image_centers", False))}` expected `bool`')
+    if params.get("ia_image_side", None) is not None:
+        if not isinstance(params["ia_image_side"], str):
+            raise StyxValidationError(f'`ia_image_side` has the wrong type: Received `{type(params.get("ia_image_side", None))}` expected `str | None`')
+    if params.get("ia_moments", None) is not None:
+        if not isinstance(params["ia_moments"], int):
+            raise StyxValidationError(f'`ia_moments` has the wrong type: Received `{type(params.get("ia_moments", None))}` expected `typing.Literal[1, 2] | None`')
+        if params["ia_moments"] not in [1, 2]:
+            raise StyxValidationError("Parameter `ia_moments` must be one of [1, 2]")
+    if params.get("affine_dof", None) is not None:
+        if not isinstance(params["affine_dof"], int):
+            raise StyxValidationError(f'`affine_dof` has the wrong type: Received `{type(params.get("affine_dof", None))}` expected `typing.Literal[6, 7, 12] | None`')
+        if params["affine_dof"] not in [6, 7, 12]:
+            raise StyxValidationError("Parameter `affine_dof` must be one of [6, 7, 12]")
+    if params.get("jitter", None) is not None:
+        if not isinstance(params["jitter"], (float, int)):
+            raise StyxValidationError(f'`jitter` has the wrong type: Received `{type(params.get("jitter", None))}` expected `float | None`')
+    if params.get("search", None) is not None:
+        greedy_search_validate(params["search"])
+    if params.get("det", None) is not None:
+        if not isinstance(params["det"], int):
+            raise StyxValidationError(f'`det` has the wrong type: Received `{type(params.get("det", None))}` expected `typing.Literal[-1, 1] | None`')
+        if params["det"] not in [-1, 1]:
+            raise StyxValidationError("Parameter `det` must be one of [-1, 1]")
+    if params.get("cov_id", False) is None:
+        raise StyxValidationError("`cov_id` must not be None")
+    if not isinstance(params["cov_id"], bool):
+        raise StyxValidationError(f'`cov_id` has the wrong type: Received `{type(params.get("cov_id", False))}` expected `bool`')
+    if params.get("fixed_reslicing_image", None) is not None:
+        if not isinstance(params["fixed_reslicing_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fixed_reslicing_image` has the wrong type: Received `{type(params.get("fixed_reslicing_image", None))}` expected `InputPathType | None`')
+    if params.get("reslice_moving_image", None) is not None:
+        greedy_reslice_moving_image_validate(params["reslice_moving_image"])
+    if params.get("reslice_surface", None) is not None:
+        greedy_reslice_surface_validate(params["reslice_surface"])
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["interpolation"])}\'')
+        if "@type" not in params["interpolation"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        greedy_interpolation_validate_dyn_fn(params["interpolation"]["@type"])(params["interpolation"])
+    if params.get("reslice_background", None) is not None:
+        if not isinstance(params["reslice_background"], (float, int)):
+            raise StyxValidationError(f'`reslice_background` has the wrong type: Received `{type(params.get("reslice_background", None))}` expected `float | None`')
+    if params.get("reslice_datatype", None) is not None:
+        if not isinstance(params["reslice_datatype"], str):
+            raise StyxValidationError(f'`reslice_datatype` has the wrong type: Received `{type(params.get("reslice_datatype", None))}` expected `typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None`')
+        if params["reslice_datatype"] not in ["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"]:
+            raise StyxValidationError("Parameter `reslice_datatype` must be one of [\"auto\", \"double\", \"float\", \"uint\", \"int\", \"ushort\", \"short\", \"uchar\", \"char\"]")
+    if params.get("reslice_composite", None) is not None:
+        if not isinstance(params["reslice_composite"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reslice_composite` has the wrong type: Received `{type(params.get("reslice_composite", None))}` expected `InputPathType | None`')
+    if params.get("reslice_jacobian", None) is not None:
+        if not isinstance(params["reslice_jacobian"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reslice_jacobian` has the wrong type: Received `{type(params.get("reslice_jacobian", None))}` expected `InputPathType | None`')
+    if params.get("reslice_simplex_jacobian", None) is not None:
+        greedy_reslice_simplex_jacobian_validate(params["reslice_simplex_jacobian"])
+    if params.get("reslice_mask", None) is not None:
+        if not isinstance(params["reslice_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reslice_mask` has the wrong type: Received `{type(params.get("reslice_mask", None))}` expected `InputPathType | None`')
+    if params.get("metric_gradient", None) is not None:
+        if not isinstance(params["metric_gradient"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`metric_gradient` has the wrong type: Received `{type(params.get("metric_gradient", None))}` expected `InputPathType | None`')
+    if params.get("debug_deriv", False) is None:
+        raise StyxValidationError("`debug_deriv` must not be None")
+    if not isinstance(params["debug_deriv"], bool):
+        raise StyxValidationError(f'`debug_deriv` has the wrong type: Received `{type(params.get("debug_deriv", False))}` expected `bool`')
+    if params.get("debug_deriv_eps", None) is not None:
+        if not isinstance(params["debug_deriv_eps"], (float, int)):
+            raise StyxValidationError(f'`debug_deriv_eps` has the wrong type: Received `{type(params.get("debug_deriv_eps", None))}` expected `float | None`')
+    if params.get("debug_aff_obj", False) is None:
+        raise StyxValidationError("`debug_aff_obj` must not be None")
+    if not isinstance(params["debug_aff_obj"], bool):
+        raise StyxValidationError(f'`debug_aff_obj` has the wrong type: Received `{type(params.get("debug_aff_obj", False))}` expected `bool`')
+    if params.get("dump_pyramid", False) is None:
+        raise StyxValidationError("`dump_pyramid` must not be None")
+    if not isinstance(params["dump_pyramid"], bool):
+        raise StyxValidationError(f'`dump_pyramid` has the wrong type: Received `{type(params.get("dump_pyramid", False))}` expected `bool`')
+    if params.get("dump_moving", False) is None:
+        raise StyxValidationError("`dump_moving` must not be None")
+    if not isinstance(params["dump_moving"], bool):
+        raise StyxValidationError(f'`dump_moving` has the wrong type: Received `{type(params.get("dump_moving", False))}` expected `bool`')
+    if params.get("dump_frequency", None) is not None:
+        if not isinstance(params["dump_frequency"], (float, int)):
+            raise StyxValidationError(f'`dump_frequency` has the wrong type: Received `{type(params.get("dump_frequency", None))}` expected `float | None`')
+    if params.get("dump_prefix", None) is not None:
+        if not isinstance(params["dump_prefix"], str):
+            raise StyxValidationError(f'`dump_prefix` has the wrong type: Received `{type(params.get("dump_prefix", None))}` expected `str | None`')
+    if params.get("powell", False) is None:
+        raise StyxValidationError("`powell` must not be None")
+    if not isinstance(params["powell"], bool):
+        raise StyxValidationError(f'`powell` has the wrong type: Received `{type(params.get("powell", False))}` expected `bool`')
+    if params.get("float", False) is None:
+        raise StyxValidationError("`float` must not be None")
+    if not isinstance(params["float"], bool):
+        raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], int):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `typing.Literal[0, 1, 2] | None`')
+        if params["verbosity"] not in [0, 1, 2]:
+            raise StyxValidationError("Parameter `verbosity` must be one of [0, 1, 2]")
+
+
 def greedy_cargs(
     params: GreedyParameters,
     execution: Execution,
@@ -1748,6 +2286,7 @@ def greedy_execute(
     Returns:
         NamedTuple of outputs (described in `GreedyOutputs`).
     """
+    greedy_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GREEDY_METADATA)
     params = execution.params(params)

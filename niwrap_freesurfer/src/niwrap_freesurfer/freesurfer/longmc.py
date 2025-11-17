@@ -80,6 +80,47 @@ def longmc_params(
     return params
 
 
+def longmc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongmcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cross_tp_name", None) is None:
+        raise StyxValidationError("`cross_tp_name` must not be None")
+    if not isinstance(params["cross_tp_name"], str):
+        raise StyxValidationError(f'`cross_tp_name` has the wrong type: Received `{type(params.get("cross_tp_name", None))}` expected `str`')
+    if params.get("base_name", None) is None:
+        raise StyxValidationError("`base_name` must not be None")
+    if not isinstance(params["base_name"], str):
+        raise StyxValidationError(f'`base_name` has the wrong type: Received `{type(params.get("base_name", None))}` expected `str`')
+    if params.get("conform_to_hires", False) is None:
+        raise StyxValidationError("`conform_to_hires` must not be None")
+    if not isinstance(params["conform_to_hires"], bool):
+        raise StyxValidationError(f'`conform_to_hires` has the wrong type: Received `{type(params.get("conform_to_hires", False))}` expected `bool`')
+    if params.get("no_conform_to_hires", False) is None:
+        raise StyxValidationError("`no_conform_to_hires` must not be None")
+    if not isinstance(params["no_conform_to_hires"], bool):
+        raise StyxValidationError(f'`no_conform_to_hires` has the wrong type: Received `{type(params.get("no_conform_to_hires", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("subject_name", None) is not None:
+        if not isinstance(params["subject_name"], str):
+            raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str | None`')
+    if params.get("no_force_update", False) is None:
+        raise StyxValidationError("`no_force_update` must not be None")
+    if not isinstance(params["no_force_update"], bool):
+        raise StyxValidationError(f'`no_force_update` has the wrong type: Received `{type(params.get("no_force_update", False))}` expected `bool`')
+
+
 def longmc_cargs(
     params: LongmcParameters,
     execution: Execution,
@@ -157,6 +198,7 @@ def longmc_execute(
     Returns:
         NamedTuple of outputs (described in `LongmcOutputs`).
     """
+    longmc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONGMC_METADATA)
     params = execution.params(params)

@@ -67,6 +67,35 @@ def segment_subject_sc_params(
     return params
 
 
+def segment_subject_sc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentSubjectScParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("invol", None) is None:
+        raise StyxValidationError("`invol` must not be None")
+    if not isinstance(params["invol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`invol` has the wrong type: Received `{type(params.get("invol", None))}` expected `InputPathType`')
+    if params.get("outxfm", None) is None:
+        raise StyxValidationError("`outxfm` must not be None")
+    if not isinstance(params["outxfm"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outxfm` has the wrong type: Received `{type(params.get("outxfm", None))}` expected `InputPathType`')
+    if params.get("log", None) is not None:
+        if not isinstance(params["log"], str):
+            raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def segment_subject_sc_cargs(
     params: SegmentSubjectScParameters,
     execution: Execution,
@@ -140,6 +169,7 @@ def segment_subject_sc_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectScOutputs`).
     """
+    segment_subject_sc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_SUBJECT_SC_METADATA)
     params = execution.params(params)

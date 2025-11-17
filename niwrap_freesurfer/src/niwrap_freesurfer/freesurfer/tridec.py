@@ -66,6 +66,36 @@ def tridec_params(
     return params
 
 
+def tridec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TridecParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("fine_file", None) is None:
+        raise StyxValidationError("`fine_file` must not be None")
+    if not isinstance(params["fine_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fine_file` has the wrong type: Received `{type(params.get("fine_file", None))}` expected `InputPathType`')
+    if params.get("ico_file", None) is None:
+        raise StyxValidationError("`ico_file` must not be None")
+    if not isinstance(params["ico_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ico_file` has the wrong type: Received `{type(params.get("ico_file", None))}` expected `InputPathType`')
+    if params.get("out_file", None) is None:
+        raise StyxValidationError("`out_file` must not be None")
+    if not isinstance(params["out_file"], str):
+        raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str`')
+
+
 def tridec_cargs(
     params: TridecParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def tridec_execute(
     Returns:
         NamedTuple of outputs (described in `TridecOutputs`).
     """
+    tridec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TRIDEC_METADATA)
     params = execution.params(params)

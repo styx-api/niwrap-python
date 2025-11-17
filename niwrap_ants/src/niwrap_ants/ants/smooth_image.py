@@ -81,6 +81,42 @@ def smooth_image_params(
     return params
 
 
+def smooth_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SmoothImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("image_ext", None) is None:
+        raise StyxValidationError("`image_ext` must not be None")
+    if not isinstance(params["image_ext"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image_ext` has the wrong type: Received `{type(params.get("image_ext", None))}` expected `InputPathType`')
+    if params.get("smoothing_sigma", None) is None:
+        raise StyxValidationError("`smoothing_sigma` must not be None")
+    if not isinstance(params["smoothing_sigma"], str):
+        raise StyxValidationError(f'`smoothing_sigma` has the wrong type: Received `{type(params.get("smoothing_sigma", None))}` expected `str`')
+    if params.get("out_image_ext", None) is None:
+        raise StyxValidationError("`out_image_ext` must not be None")
+    if not isinstance(params["out_image_ext"], str):
+        raise StyxValidationError(f'`out_image_ext` has the wrong type: Received `{type(params.get("out_image_ext", None))}` expected `str`')
+    if params.get("sigma_units", None) is not None:
+        if not isinstance(params["sigma_units"], bool):
+            raise StyxValidationError(f'`sigma_units` has the wrong type: Received `{type(params.get("sigma_units", None))}` expected `bool | None`')
+    if params.get("median_filter", None) is not None:
+        if not isinstance(params["median_filter"], bool):
+            raise StyxValidationError(f'`median_filter` has the wrong type: Received `{type(params.get("median_filter", None))}` expected `bool | None`')
+
+
 def smooth_image_cargs(
     params: SmoothImageParameters,
     execution: Execution,
@@ -147,6 +183,7 @@ def smooth_image_execute(
     Returns:
         NamedTuple of outputs (described in `SmoothImageOutputs`).
     """
+    smooth_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SMOOTH_IMAGE_METADATA)
     params = execution.params(params)

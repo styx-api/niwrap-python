@@ -61,6 +61,32 @@ def v__djunct_dwi_selector_tcsh_params(
     return params
 
 
+def v__djunct_dwi_selector_tcsh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunctDwiSelectorTcshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dwi", None) is None:
+        raise StyxValidationError("`dwi` must not be None")
+    if not isinstance(params["dwi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", None))}` expected `InputPathType`')
+    if params.get("png", None) is None:
+        raise StyxValidationError("`png` must not be None")
+    if not isinstance(params["png"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`png` has the wrong type: Received `{type(params.get("png", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+
+
 def v__djunct_dwi_selector_tcsh_cargs(
     params: VDjunctDwiSelectorTcshParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def v__djunct_dwi_selector_tcsh_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunctDwiSelectorTcshOutputs`).
     """
+    v__djunct_dwi_selector_tcsh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_DWI_SELECTOR_TCSH_METADATA)
     params = execution.params(params)

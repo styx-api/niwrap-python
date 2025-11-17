@@ -65,6 +65,36 @@ def volume_copy_extensions_params(
     return params
 
 
+def volume_copy_extensions_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeCopyExtensionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("drop-unknown", False) is None:
+        raise StyxValidationError("`drop-unknown` must not be None")
+    if not isinstance(params["drop-unknown"], bool):
+        raise StyxValidationError(f'`drop-unknown` has the wrong type: Received `{type(params.get("drop-unknown", False))}` expected `bool`')
+    if params.get("data-volume", None) is None:
+        raise StyxValidationError("`data-volume` must not be None")
+    if not isinstance(params["data-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data-volume` has the wrong type: Received `{type(params.get("data-volume", None))}` expected `InputPathType`')
+    if params.get("extension-volume", None) is None:
+        raise StyxValidationError("`extension-volume` must not be None")
+    if not isinstance(params["extension-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`extension-volume` has the wrong type: Received `{type(params.get("extension-volume", None))}` expected `InputPathType`')
+
+
 def volume_copy_extensions_cargs(
     params: VolumeCopyExtensionsParameters,
     execution: Execution,
@@ -129,6 +159,7 @@ def volume_copy_extensions_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeCopyExtensionsOutputs`).
     """
+    volume_copy_extensions_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_COPY_EXTENSIONS_METADATA)
     params = execution.params(params)

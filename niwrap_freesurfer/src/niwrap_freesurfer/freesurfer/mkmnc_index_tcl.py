@@ -56,6 +56,28 @@ def mkmnc_index_tcl_params(
     return params
 
 
+def mkmnc_index_tcl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MkmncIndexTclParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+
+
 def mkmnc_index_tcl_cargs(
     params: MkmncIndexTclParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def mkmnc_index_tcl_execute(
     Returns:
         NamedTuple of outputs (described in `MkmncIndexTclOutputs`).
     """
+    mkmnc_index_tcl_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MKMNC_INDEX_TCL_METADATA)
     params = execution.params(params)

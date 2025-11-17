@@ -110,6 +110,58 @@ def mrisp_write_params(
     return params
 
 
+def mrisp_write_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrispWriteParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("overlay_filename", None) is None:
+        raise StyxValidationError("`overlay_filename` must not be None")
+    if not isinstance(params["overlay_filename"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`overlay_filename` has the wrong type: Received `{type(params.get("overlay_filename", None))}` expected `InputPathType`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("coords", None) is not None:
+        if not isinstance(params["coords"], str):
+            raise StyxValidationError(f'`coords` has the wrong type: Received `{type(params.get("coords", None))}` expected `str | None`')
+    if params.get("average_curvature", None) is not None:
+        if not isinstance(params["average_curvature"], (float, int)):
+            raise StyxValidationError(f'`average_curvature` has the wrong type: Received `{type(params.get("average_curvature", None))}` expected `float | None`')
+    if params.get("correlation_matrix", None) is not None:
+        if not isinstance(params["correlation_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`correlation_matrix` has the wrong type: Received `{type(params.get("correlation_matrix", None))}` expected `InputPathType | None`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("normalize_curvature", False) is None:
+        raise StyxValidationError("`normalize_curvature` must not be None")
+    if not isinstance(params["normalize_curvature"], bool):
+        raise StyxValidationError(f'`normalize_curvature` has the wrong type: Received `{type(params.get("normalize_curvature", False))}` expected `bool`')
+    if params.get("verbose_vertex", None) is not None:
+        if not isinstance(params["verbose_vertex"], (float, int)):
+            raise StyxValidationError(f'`verbose_vertex` has the wrong type: Received `{type(params.get("verbose_vertex", None))}` expected `float | None`')
+    if params.get("write_diagnostics", False) is None:
+        raise StyxValidationError("`write_diagnostics` must not be None")
+    if not isinstance(params["write_diagnostics"], bool):
+        raise StyxValidationError(f'`write_diagnostics` has the wrong type: Received `{type(params.get("write_diagnostics", False))}` expected `bool`')
+
+
 def mrisp_write_cargs(
     params: MrispWriteParameters,
     execution: Execution,
@@ -204,6 +256,7 @@ def mrisp_write_execute(
     Returns:
         NamedTuple of outputs (described in `MrispWriteOutputs`).
     """
+    mrisp_write_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRISP_WRITE_METADATA)
     params = execution.params(params)

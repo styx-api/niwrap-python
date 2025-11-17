@@ -62,6 +62,32 @@ def v__clust_exp_cat_lab_params(
     return params
 
 
+def v__clust_exp_cat_lab_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VClustExpCatLabParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__clust_exp_cat_lab_cargs(
     params: VClustExpCatLabParameters,
     execution: Execution,
@@ -129,6 +155,7 @@ def v__clust_exp_cat_lab_execute(
     Returns:
         NamedTuple of outputs (described in `VClustExpCatLabOutputs`).
     """
+    v__clust_exp_cat_lab_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__CLUST_EXP_CAT_LAB_METADATA)
     params = execution.params(params)

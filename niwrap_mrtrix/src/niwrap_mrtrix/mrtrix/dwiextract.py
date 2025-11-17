@@ -150,18 +150,20 @@ def dwiextract_strides_cargs_dyn_fn(
     }.get(t)
 
 
-def dwiextract_strides_outputs_dyn_fn(
+def dwiextract_strides_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": dwiextract_various_string_validate,
+        "VariousFile": dwiextract_various_file_validate,
     }.get(t)
 
 
@@ -190,6 +192,28 @@ def dwiextract_fslgrad_params(
         "bvals": bvals,
     }
     return params
+
+
+def dwiextract_fslgrad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwiextractFslgradParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
 
 
 def dwiextract_fslgrad_cargs(
@@ -247,6 +271,28 @@ def dwiextract_export_grad_fsl_params(
         "bvals_path": bvals_path,
     }
     return params
+
+
+def dwiextract_export_grad_fsl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwiextractExportGradFslParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs_path", None) is None:
+        raise StyxValidationError("`bvecs_path` must not be None")
+    if not isinstance(params["bvecs_path"], str):
+        raise StyxValidationError(f'`bvecs_path` has the wrong type: Received `{type(params.get("bvecs_path", None))}` expected `str`')
+    if params.get("bvals_path", None) is None:
+        raise StyxValidationError("`bvals_path` must not be None")
+    if not isinstance(params["bvals_path"], str):
+        raise StyxValidationError(f'`bvals_path` has the wrong type: Received `{type(params.get("bvals_path", None))}` expected `str`')
 
 
 def dwiextract_export_grad_fsl_cargs(
@@ -313,6 +359,28 @@ def dwiextract_import_pe_eddy_params(
     return params
 
 
+def dwiextract_import_pe_eddy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwiextractImportPeEddyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("config", None) is None:
+        raise StyxValidationError("`config` must not be None")
+    if not isinstance(params["config"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `InputPathType`')
+    if params.get("indices", None) is None:
+        raise StyxValidationError("`indices` must not be None")
+    if not isinstance(params["indices"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`indices` has the wrong type: Received `{type(params.get("indices", None))}` expected `InputPathType`')
+
+
 def dwiextract_import_pe_eddy_cargs(
     params: DwiextractImportPeEddyParameters,
     execution: Execution,
@@ -351,6 +419,24 @@ def dwiextract_various_string_params(
     return params
 
 
+def dwiextract_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwiextractVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def dwiextract_various_string_cargs(
     params: DwiextractVariousStringParameters,
     execution: Execution,
@@ -385,6 +471,24 @@ def dwiextract_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def dwiextract_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwiextractVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def dwiextract_various_file_cargs(
@@ -424,6 +528,28 @@ def dwiextract_config_params(
         "value": value,
     }
     return params
+
+
+def dwiextract_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwiextractConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def dwiextract_config_cargs(
@@ -586,6 +712,105 @@ def dwiextract_params(
     return params
 
 
+def dwiextract_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DwiextractParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bzero", False) is None:
+        raise StyxValidationError("`bzero` must not be None")
+    if not isinstance(params["bzero"], bool):
+        raise StyxValidationError(f'`bzero` has the wrong type: Received `{type(params.get("bzero", False))}` expected `bool`')
+    if params.get("no_bzero", False) is None:
+        raise StyxValidationError("`no_bzero` must not be None")
+    if not isinstance(params["no_bzero"], bool):
+        raise StyxValidationError(f'`no_bzero` has the wrong type: Received `{type(params.get("no_bzero", False))}` expected `bool`')
+    if params.get("singleshell", False) is None:
+        raise StyxValidationError("`singleshell` must not be None")
+    if not isinstance(params["singleshell"], bool):
+        raise StyxValidationError(f'`singleshell` has the wrong type: Received `{type(params.get("singleshell", False))}` expected `bool`')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("fslgrad", None) is not None:
+        dwiextract_fslgrad_validate(params["fslgrad"])
+    if params.get("shells", None) is not None:
+        if not isinstance(params["shells"], list):
+            raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+        for e in params["shells"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+    if params.get("export_grad_mrtrix", None) is not None:
+        if not isinstance(params["export_grad_mrtrix"], str):
+            raise StyxValidationError(f'`export_grad_mrtrix` has the wrong type: Received `{type(params.get("export_grad_mrtrix", None))}` expected `str | None`')
+    if params.get("export_grad_fsl", None) is not None:
+        dwiextract_export_grad_fsl_validate(params["export_grad_fsl"])
+    if params.get("import_pe_table", None) is not None:
+        if not isinstance(params["import_pe_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`import_pe_table` has the wrong type: Received `{type(params.get("import_pe_table", None))}` expected `InputPathType | None`')
+    if params.get("import_pe_eddy", None) is not None:
+        dwiextract_import_pe_eddy_validate(params["import_pe_eddy"])
+    if params.get("pe", None) is not None:
+        if not isinstance(params["pe"], list):
+            raise StyxValidationError(f'`pe` has the wrong type: Received `{type(params.get("pe", None))}` expected `list[float] | None`')
+        for e in params["pe"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`pe` has the wrong type: Received `{type(params.get("pe", None))}` expected `list[float] | None`')
+    if params.get("strides", None) is not None:
+        if not isinstance(params["strides"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
+        if "@type" not in params["strides"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        dwiextract_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DwiextractConfigParameters] | None`')
+        for e in params["config"]:
+            dwiextract_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def dwiextract_cargs(
     params: DwiextractParameters,
     execution: Execution,
@@ -715,6 +940,7 @@ def dwiextract_execute(
     Returns:
         NamedTuple of outputs (described in `DwiextractOutputs`).
     """
+    dwiextract_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DWIEXTRACT_METADATA)
     params = execution.params(params)

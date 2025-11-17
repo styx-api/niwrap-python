@@ -144,22 +144,22 @@ def v_5ttgen_algorithm_cargs_dyn_fn(
     }.get(t)
 
 
-def v_5ttgen_algorithm_outputs_dyn_fn(
+def v_5ttgen_algorithm_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
-        "freesurfer": v_5ttgen_freesurfer_outputs,
-        "fsl": v_5ttgen_fsl_outputs,
-        "gif": v_5ttgen_gif_outputs,
-        "hsvs": v_5ttgen_hsvs_outputs,
+        "freesurfer": v_5ttgen_freesurfer_validate,
+        "fsl": v_5ttgen_fsl_validate,
+        "gif": v_5ttgen_gif_validate,
+        "hsvs": v_5ttgen_hsvs_validate,
     }.get(t)
 
 
@@ -198,6 +198,31 @@ def v_5ttgen_freesurfer_params(
     if lut is not None:
         params["lut"] = lut
     return params
+
+
+def v_5ttgen_freesurfer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V5ttgenFreesurferParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("lut", None) is not None:
+        if not isinstance(params["lut"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lut` has the wrong type: Received `{type(params.get("lut", None))}` expected `InputPathType | None`')
 
 
 def v_5ttgen_freesurfer_cargs(
@@ -290,6 +315,38 @@ def v_5ttgen_fsl_params(
     return params
 
 
+def v_5ttgen_fsl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V5ttgenFslParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("t2", None) is not None:
+        if not isinstance(params["t2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t2` has the wrong type: Received `{type(params.get("t2", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("premasked", False) is None:
+        raise StyxValidationError("`premasked` must not be None")
+    if not isinstance(params["premasked"], bool):
+        raise StyxValidationError(f'`premasked` has the wrong type: Received `{type(params.get("premasked", False))}` expected `bool`')
+
+
 def v_5ttgen_fsl_cargs(
     params: V5ttgenFslParameters,
     execution: Execution,
@@ -371,6 +428,28 @@ def v_5ttgen_gif_params(
         "output": output,
     }
     return params
+
+
+def v_5ttgen_gif_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V5ttgenGifParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def v_5ttgen_gif_cargs(
@@ -462,6 +541,45 @@ def v_5ttgen_hsvs_params(
     return params
 
 
+def v_5ttgen_hsvs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V5ttgenHsvsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("hippocampi", None) is not None:
+        if not isinstance(params["hippocampi"], str):
+            raise StyxValidationError(f'`hippocampi` has the wrong type: Received `{type(params.get("hippocampi", None))}` expected `typing.Literal["subfields", "first", "aseg"] | None`')
+        if params["hippocampi"] not in ["subfields", "first", "aseg"]:
+            raise StyxValidationError("Parameter `hippocampi` must be one of [\"subfields\", \"first\", \"aseg\"]")
+    if params.get("thalami", None) is not None:
+        if not isinstance(params["thalami"], str):
+            raise StyxValidationError(f'`thalami` has the wrong type: Received `{type(params.get("thalami", None))}` expected `typing.Literal["nuclei", "first", "aseg"] | None`')
+        if params["thalami"] not in ["nuclei", "first", "aseg"]:
+            raise StyxValidationError("Parameter `thalami` must be one of [\"nuclei\", \"first\", \"aseg\"]")
+    if params.get("white_stem", False) is None:
+        raise StyxValidationError("`white_stem` must not be None")
+    if not isinstance(params["white_stem"], bool):
+        raise StyxValidationError(f'`white_stem` has the wrong type: Received `{type(params.get("white_stem", False))}` expected `bool`')
+
+
 def v_5ttgen_hsvs_cargs(
     params: V5ttgenHsvsParameters,
     execution: Execution,
@@ -538,6 +656,28 @@ def v_5ttgen_config_params(
         "value": value,
     }
     return params
+
+
+def v_5ttgen_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V5ttgenConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def v_5ttgen_config_cargs(
@@ -644,6 +784,77 @@ def v_5ttgen_params(
     return params
 
 
+def v_5ttgen_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V5ttgenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("algorithm", None) is None:
+        raise StyxValidationError("`algorithm` must not be None")
+    if not isinstance(params["algorithm"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["algorithm"])}\'')
+    if "@type" not in params["algorithm"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    v_5ttgen_algorithm_validate_dyn_fn(params["algorithm"]["@type"])(params["algorithm"])
+    if params.get("nocrop", False) is None:
+        raise StyxValidationError("`nocrop` must not be None")
+    if not isinstance(params["nocrop"], bool):
+        raise StyxValidationError(f'`nocrop` has the wrong type: Received `{type(params.get("nocrop", False))}` expected `bool`')
+    if params.get("sgm_amyg_hipp", False) is None:
+        raise StyxValidationError("`sgm_amyg_hipp` must not be None")
+    if not isinstance(params["sgm_amyg_hipp"], bool):
+        raise StyxValidationError(f'`sgm_amyg_hipp` has the wrong type: Received `{type(params.get("sgm_amyg_hipp", False))}` expected `bool`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+    if params.get("scratch", None) is not None:
+        if not isinstance(params["scratch"], str):
+            raise StyxValidationError(f'`scratch` has the wrong type: Received `{type(params.get("scratch", None))}` expected `str | None`')
+    if params.get("continue", None) is not None:
+        if not isinstance(params["continue"], str):
+            raise StyxValidationError(f'`continue` has the wrong type: Received `{type(params.get("continue", None))}` expected `str | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[V5ttgenConfigParameters] | None`')
+        for e in params["config"]:
+            v_5ttgen_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def v_5ttgen_cargs(
     params: V5ttgenParameters,
     execution: Execution,
@@ -748,6 +959,7 @@ def v_5ttgen_execute(
     Returns:
         NamedTuple of outputs (described in `V5ttgenOutputs`).
     """
+    v_5ttgen_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_5TTGEN_METADATA)
     params = execution.params(params)

@@ -155,6 +155,76 @@ def v_3d_zipper_zapper_params(
     return params
 
 
+def v_3d_zipper_zapper_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dZipperZapperParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("min_slice_nvox", None) is not None:
+        if not isinstance(params["min_slice_nvox"], (float, int)):
+            raise StyxValidationError(f'`min_slice_nvox` has the wrong type: Received `{type(params.get("min_slice_nvox", None))}` expected `float | None`')
+    if params.get("min_streak_len", None) is not None:
+        if not isinstance(params["min_streak_len"], (float, int)):
+            raise StyxValidationError(f'`min_streak_len` has the wrong type: Received `{type(params.get("min_streak_len", None))}` expected `float | None`')
+    if params.get("do_out_slice_param", False) is None:
+        raise StyxValidationError("`do_out_slice_param` must not be None")
+    if not isinstance(params["do_out_slice_param"], bool):
+        raise StyxValidationError(f'`do_out_slice_param` has the wrong type: Received `{type(params.get("do_out_slice_param", False))}` expected `bool`')
+    if params.get("no_out_bad_mask", False) is None:
+        raise StyxValidationError("`no_out_bad_mask` must not be None")
+    if not isinstance(params["no_out_bad_mask"], bool):
+        raise StyxValidationError(f'`no_out_bad_mask` has the wrong type: Received `{type(params.get("no_out_bad_mask", False))}` expected `bool`')
+    if params.get("no_out_text_vals", False) is None:
+        raise StyxValidationError("`no_out_text_vals` must not be None")
+    if not isinstance(params["no_out_text_vals"], bool):
+        raise StyxValidationError(f'`no_out_text_vals` has the wrong type: Received `{type(params.get("no_out_text_vals", False))}` expected `bool`')
+    if params.get("dont_use_streak", False) is None:
+        raise StyxValidationError("`dont_use_streak` must not be None")
+    if not isinstance(params["dont_use_streak"], bool):
+        raise StyxValidationError(f'`dont_use_streak` has the wrong type: Received `{type(params.get("dont_use_streak", False))}` expected `bool`')
+    if params.get("dont_use_drop", False) is None:
+        raise StyxValidationError("`dont_use_drop` must not be None")
+    if not isinstance(params["dont_use_drop"], bool):
+        raise StyxValidationError(f'`dont_use_drop` has the wrong type: Received `{type(params.get("dont_use_drop", False))}` expected `bool`')
+    if params.get("dont_use_corr", False) is None:
+        raise StyxValidationError("`dont_use_corr` must not be None")
+    if not isinstance(params["dont_use_corr"], bool):
+        raise StyxValidationError(f'`dont_use_corr` has the wrong type: Received `{type(params.get("dont_use_corr", False))}` expected `bool`')
+    if params.get("min_streak_val", None) is not None:
+        if not isinstance(params["min_streak_val"], (float, int)):
+            raise StyxValidationError(f'`min_streak_val` has the wrong type: Received `{type(params.get("min_streak_val", None))}` expected `float | None`')
+    if params.get("min_drop_frac", None) is not None:
+        if not isinstance(params["min_drop_frac"], (float, int)):
+            raise StyxValidationError(f'`min_drop_frac` has the wrong type: Received `{type(params.get("min_drop_frac", None))}` expected `float | None`')
+    if params.get("min_drop_diff", None) is not None:
+        if not isinstance(params["min_drop_diff"], (float, int)):
+            raise StyxValidationError(f'`min_drop_diff` has the wrong type: Received `{type(params.get("min_drop_diff", None))}` expected `float | None`')
+    if params.get("min_corr_len", None) is not None:
+        if not isinstance(params["min_corr_len"], (float, int)):
+            raise StyxValidationError(f'`min_corr_len` has the wrong type: Received `{type(params.get("min_corr_len", None))}` expected `float | None`')
+    if params.get("min_corr_corr", None) is not None:
+        if not isinstance(params["min_corr_corr"], (float, int)):
+            raise StyxValidationError(f'`min_corr_corr` has the wrong type: Received `{type(params.get("min_corr_corr", None))}` expected `float | None`')
+
+
 def v_3d_zipper_zapper_cargs(
     params: V3dZipperZapperParameters,
     execution: Execution,
@@ -277,6 +347,7 @@ def v_3d_zipper_zapper_execute(
     Returns:
         NamedTuple of outputs (described in `V3dZipperZapperOutputs`).
     """
+    v_3d_zipper_zapper_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ZIPPER_ZAPPER_METADATA)
     params = execution.params(params)

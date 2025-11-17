@@ -64,6 +64,34 @@ def imand_params(
     return params
 
 
+def imand_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImandParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("input_images", None) is None:
+        raise StyxValidationError("`input_images` must not be None")
+    if not isinstance(params["input_images"], list):
+        raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    for e in params["input_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+
+
 def imand_cargs(
     params: ImandParameters,
     execution: Execution,
@@ -129,6 +157,7 @@ def imand_execute(
     Returns:
         NamedTuple of outputs (described in `ImandOutputs`).
     """
+    imand_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMAND_METADATA)
     params = execution.params(params)

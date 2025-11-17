@@ -52,6 +52,24 @@ def ants_transform_info_params(
     return params
 
 
+def ants_transform_info_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsTransformInfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transform_file", None) is None:
+        raise StyxValidationError("`transform_file` must not be None")
+    if not isinstance(params["transform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType`')
+
+
 def ants_transform_info_cargs(
     params: AntsTransformInfoParameters,
     execution: Execution,
@@ -113,6 +131,7 @@ def ants_transform_info_execute(
     Returns:
         NamedTuple of outputs (described in `AntsTransformInfoOutputs`).
     """
+    ants_transform_info_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_TRANSFORM_INFO_METADATA)
     params = execution.params(params)

@@ -138,6 +138,74 @@ def build_afni_py_params(
     return params
 
 
+def build_afni_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BuildAfniPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("build_root", None) is None:
+        raise StyxValidationError("`build_root` must not be None")
+    if not isinstance(params["build_root"], str):
+        raise StyxValidationError(f'`build_root` has the wrong type: Received `{type(params.get("build_root", None))}` expected `str`')
+    if params.get("clean_root", None) is not None:
+        if not isinstance(params["clean_root"], str):
+            raise StyxValidationError(f'`clean_root` has the wrong type: Received `{type(params.get("clean_root", None))}` expected `str | None`')
+    if params.get("git_branch", None) is not None:
+        if not isinstance(params["git_branch"], str):
+            raise StyxValidationError(f'`git_branch` has the wrong type: Received `{type(params.get("git_branch", None))}` expected `str | None`')
+    if params.get("git_tag", None) is not None:
+        if not isinstance(params["git_tag"], str):
+            raise StyxValidationError(f'`git_tag` has the wrong type: Received `{type(params.get("git_tag", None))}` expected `str | None`')
+    if params.get("git_update", None) is not None:
+        if not isinstance(params["git_update"], str):
+            raise StyxValidationError(f'`git_update` has the wrong type: Received `{type(params.get("git_update", None))}` expected `str | None`')
+    if params.get("make_target", None) is not None:
+        if not isinstance(params["make_target"], str):
+            raise StyxValidationError(f'`make_target` has the wrong type: Received `{type(params.get("make_target", None))}` expected `str | None`')
+    if params.get("makefile", None) is not None:
+        if not isinstance(params["makefile"], str):
+            raise StyxValidationError(f'`makefile` has the wrong type: Received `{type(params.get("makefile", None))}` expected `str | None`')
+    if params.get("package", None) is not None:
+        if not isinstance(params["package"], str):
+            raise StyxValidationError(f'`package` has the wrong type: Received `{type(params.get("package", None))}` expected `str | None`')
+    if params.get("prep_only", False) is None:
+        raise StyxValidationError("`prep_only` must not be None")
+    if not isinstance(params["prep_only"], bool):
+        raise StyxValidationError(f'`prep_only` has the wrong type: Received `{type(params.get("prep_only", False))}` expected `bool`')
+    if params.get("run_cmake", None) is not None:
+        if not isinstance(params["run_cmake"], str):
+            raise StyxValidationError(f'`run_cmake` has the wrong type: Received `{type(params.get("run_cmake", None))}` expected `str | None`')
+    if params.get("run_make", None) is not None:
+        if not isinstance(params["run_make"], str):
+            raise StyxValidationError(f'`run_make` has the wrong type: Received `{type(params.get("run_make", None))}` expected `str | None`')
+    if params.get("verbose_level", None) is not None:
+        if not isinstance(params["verbose_level"], (float, int)):
+            raise StyxValidationError(f'`verbose_level` has the wrong type: Received `{type(params.get("verbose_level", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("history", False) is None:
+        raise StyxValidationError("`history` must not be None")
+    if not isinstance(params["history"], bool):
+        raise StyxValidationError(f'`history` has the wrong type: Received `{type(params.get("history", False))}` expected `bool`')
+    if params.get("show_valid_opts", False) is None:
+        raise StyxValidationError("`show_valid_opts` must not be None")
+    if not isinstance(params["show_valid_opts"], bool):
+        raise StyxValidationError(f'`show_valid_opts` has the wrong type: Received `{type(params.get("show_valid_opts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def build_afni_py_cargs(
     params: BuildAfniPyParameters,
     execution: Execution,
@@ -260,6 +328,7 @@ def build_afni_py_execute(
     Returns:
         NamedTuple of outputs (described in `BuildAfniPyOutputs`).
     """
+    build_afni_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BUILD_AFNI_PY_METADATA)
     params = execution.params(params)

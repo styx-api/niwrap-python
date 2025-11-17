@@ -111,6 +111,62 @@ def mri_concatenate_lta_params(
     return params
 
 
+def mri_concatenate_lta_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriConcatenateLtaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("lta_1", None) is None:
+        raise StyxValidationError("`lta_1` must not be None")
+    if not isinstance(params["lta_1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lta_1` has the wrong type: Received `{type(params.get("lta_1", None))}` expected `InputPathType`')
+    if params.get("lta_2", None) is None:
+        raise StyxValidationError("`lta_2` must not be None")
+    if not isinstance(params["lta_2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lta_2` has the wrong type: Received `{type(params.get("lta_2", None))}` expected `InputPathType`')
+    if params.get("lta_final", None) is None:
+        raise StyxValidationError("`lta_final` must not be None")
+    if not isinstance(params["lta_final"], str):
+        raise StyxValidationError(f'`lta_final` has the wrong type: Received `{type(params.get("lta_final", None))}` expected `str`')
+    if params.get("tal_src", None) is not None:
+        if not isinstance(params["tal_src"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tal_src` has the wrong type: Received `{type(params.get("tal_src", None))}` expected `InputPathType | None`')
+    if params.get("tal_template", None) is not None:
+        if not isinstance(params["tal_template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tal_template` has the wrong type: Received `{type(params.get("tal_template", None))}` expected `InputPathType | None`')
+    if params.get("invert1", False) is None:
+        raise StyxValidationError("`invert1` must not be None")
+    if not isinstance(params["invert1"], bool):
+        raise StyxValidationError(f'`invert1` has the wrong type: Received `{type(params.get("invert1", False))}` expected `bool`')
+    if params.get("invert2", False) is None:
+        raise StyxValidationError("`invert2` must not be None")
+    if not isinstance(params["invert2"], bool):
+        raise StyxValidationError(f'`invert2` has the wrong type: Received `{type(params.get("invert2", False))}` expected `bool`')
+    if params.get("invertout", False) is None:
+        raise StyxValidationError("`invertout` must not be None")
+    if not isinstance(params["invertout"], bool):
+        raise StyxValidationError(f'`invertout` has the wrong type: Received `{type(params.get("invertout", False))}` expected `bool`')
+    if params.get("out_type", None) is not None:
+        if not isinstance(params["out_type"], (float, int)):
+            raise StyxValidationError(f'`out_type` has the wrong type: Received `{type(params.get("out_type", None))}` expected `float | None`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("rmsdiff_radius", None) is not None:
+        if not isinstance(params["rmsdiff_radius"], (float, int)):
+            raise StyxValidationError(f'`rmsdiff_radius` has the wrong type: Received `{type(params.get("rmsdiff_radius", None))}` expected `float | None`')
+    if params.get("rmsdiff_outputfile", None) is not None:
+        if not isinstance(params["rmsdiff_outputfile"], str):
+            raise StyxValidationError(f'`rmsdiff_outputfile` has the wrong type: Received `{type(params.get("rmsdiff_outputfile", None))}` expected `str | None`')
+
+
 def mri_concatenate_lta_cargs(
     params: MriConcatenateLtaParameters,
     execution: Execution,
@@ -201,6 +257,7 @@ def mri_concatenate_lta_execute(
     Returns:
         NamedTuple of outputs (described in `MriConcatenateLtaOutputs`).
     """
+    mri_concatenate_lta_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CONCATENATE_LTA_METADATA)
     params = execution.params(params)

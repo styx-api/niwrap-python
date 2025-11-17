@@ -219,6 +219,122 @@ def fat_proc_dwi_to_dt_params(
     return params
 
 
+def fat_proc_dwi_to_dt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcDwiToDtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_dwi", None) is None:
+        raise StyxValidationError("`in_dwi` must not be None")
+    if not isinstance(params["in_dwi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_dwi` has the wrong type: Received `{type(params.get("in_dwi", None))}` expected `InputPathType`')
+    if params.get("in_gradmat", None) is None:
+        raise StyxValidationError("`in_gradmat` must not be None")
+    if not isinstance(params["in_gradmat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_gradmat` has the wrong type: Received `{type(params.get("in_gradmat", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("in_bvals", None) is not None:
+        if not isinstance(params["in_bvals"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_bvals` has the wrong type: Received `{type(params.get("in_bvals", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_from_struc", False) is None:
+        raise StyxValidationError("`mask_from_struc` must not be None")
+    if not isinstance(params["mask_from_struc"], bool):
+        raise StyxValidationError(f'`mask_from_struc` has the wrong type: Received `{type(params.get("mask_from_struc", False))}` expected `bool`')
+    if params.get("in_struc_res", None) is not None:
+        if not isinstance(params["in_struc_res"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_struc_res` has the wrong type: Received `{type(params.get("in_struc_res", None))}` expected `InputPathType | None`')
+    if params.get("in_ref_orig", None) is not None:
+        if not isinstance(params["in_ref_orig"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_ref_orig` has the wrong type: Received `{type(params.get("in_ref_orig", None))}` expected `InputPathType | None`')
+    if params.get("prefix_dti", None) is not None:
+        if not isinstance(params["prefix_dti"], str):
+            raise StyxValidationError(f'`prefix_dti` has the wrong type: Received `{type(params.get("prefix_dti", None))}` expected `str | None`')
+    if params.get("flip_x", False) is None:
+        raise StyxValidationError("`flip_x` must not be None")
+    if not isinstance(params["flip_x"], bool):
+        raise StyxValidationError(f'`flip_x` has the wrong type: Received `{type(params.get("flip_x", False))}` expected `bool`')
+    if params.get("flip_y", False) is None:
+        raise StyxValidationError("`flip_y` must not be None")
+    if not isinstance(params["flip_y"], bool):
+        raise StyxValidationError(f'`flip_y` has the wrong type: Received `{type(params.get("flip_y", False))}` expected `bool`')
+    if params.get("flip_z", False) is None:
+        raise StyxValidationError("`flip_z` must not be None")
+    if not isinstance(params["flip_z"], bool):
+        raise StyxValidationError(f'`flip_z` has the wrong type: Received `{type(params.get("flip_z", False))}` expected `bool`')
+    if params.get("no_flip", False) is None:
+        raise StyxValidationError("`no_flip` must not be None")
+    if not isinstance(params["no_flip"], bool):
+        raise StyxValidationError(f'`no_flip` has the wrong type: Received `{type(params.get("no_flip", False))}` expected `bool`')
+    if params.get("no_scale_out_1000", False) is None:
+        raise StyxValidationError("`no_scale_out_1000` must not be None")
+    if not isinstance(params["no_scale_out_1000"], bool):
+        raise StyxValidationError(f'`no_scale_out_1000` has the wrong type: Received `{type(params.get("no_scale_out_1000", False))}` expected `bool`')
+    if params.get("no_reweight", False) is None:
+        raise StyxValidationError("`no_reweight` must not be None")
+    if not isinstance(params["no_reweight"], bool):
+        raise StyxValidationError(f'`no_reweight` has the wrong type: Received `{type(params.get("no_reweight", False))}` expected `bool`')
+    if params.get("no_cumulative_wts", False) is None:
+        raise StyxValidationError("`no_cumulative_wts` must not be None")
+    if not isinstance(params["no_cumulative_wts"], bool):
+        raise StyxValidationError(f'`no_cumulative_wts` has the wrong type: Received `{type(params.get("no_cumulative_wts", False))}` expected `bool`')
+    if params.get("qc_fa_thr", None) is not None:
+        if not isinstance(params["qc_fa_thr"], (float, int)):
+            raise StyxValidationError(f'`qc_fa_thr` has the wrong type: Received `{type(params.get("qc_fa_thr", None))}` expected `float | None`')
+    if params.get("qc_fa_max", None) is not None:
+        if not isinstance(params["qc_fa_max"], (float, int)):
+            raise StyxValidationError(f'`qc_fa_max` has the wrong type: Received `{type(params.get("qc_fa_max", None))}` expected `float | None`')
+    if params.get("qc_fa_unc_max", None) is not None:
+        if not isinstance(params["qc_fa_unc_max"], (float, int)):
+            raise StyxValidationError(f'`qc_fa_unc_max` has the wrong type: Received `{type(params.get("qc_fa_unc_max", None))}` expected `float | None`')
+    if params.get("qc_v12_unc_max", None) is not None:
+        if not isinstance(params["qc_v12_unc_max"], (float, int)):
+            raise StyxValidationError(f'`qc_v12_unc_max` has the wrong type: Received `{type(params.get("qc_v12_unc_max", None))}` expected `float | None`')
+    if params.get("qc_prefix", None) is not None:
+        if not isinstance(params["qc_prefix"], str):
+            raise StyxValidationError(f'`qc_prefix` has the wrong type: Received `{type(params.get("qc_prefix", None))}` expected `str | None`')
+    if params.get("no_qc_view", False) is None:
+        raise StyxValidationError("`no_qc_view` must not be None")
+    if not isinstance(params["no_qc_view"], bool):
+        raise StyxValidationError(f'`no_qc_view` has the wrong type: Received `{type(params.get("no_qc_view", False))}` expected `bool`')
+    if params.get("no_cmd_out", False) is None:
+        raise StyxValidationError("`no_cmd_out` must not be None")
+    if not isinstance(params["no_cmd_out"], bool):
+        raise StyxValidationError(f'`no_cmd_out` has the wrong type: Received `{type(params.get("no_cmd_out", False))}` expected `bool`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("uncert_off", False) is None:
+        raise StyxValidationError("`uncert_off` must not be None")
+    if not isinstance(params["uncert_off"], bool):
+        raise StyxValidationError(f'`uncert_off` has the wrong type: Received `{type(params.get("uncert_off", False))}` expected `bool`')
+    if params.get("uncert_iters", None) is not None:
+        if not isinstance(params["uncert_iters"], (float, int)):
+            raise StyxValidationError(f'`uncert_iters` has the wrong type: Received `{type(params.get("uncert_iters", None))}` expected `float | None`')
+    if params.get("uncert_extra_cmds", None) is not None:
+        if not isinstance(params["uncert_extra_cmds"], str):
+            raise StyxValidationError(f'`uncert_extra_cmds` has the wrong type: Received `{type(params.get("uncert_extra_cmds", None))}` expected `str | None`')
+    if params.get("check_abs_min", None) is not None:
+        if not isinstance(params["check_abs_min"], (float, int)):
+            raise StyxValidationError(f'`check_abs_min` has the wrong type: Received `{type(params.get("check_abs_min", None))}` expected `float | None`')
+
+
 def fat_proc_dwi_to_dt_cargs(
     params: FatProcDwiToDtParameters,
     execution: Execution,
@@ -379,6 +495,7 @@ def fat_proc_dwi_to_dt_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcDwiToDtOutputs`).
     """
+    fat_proc_dwi_to_dt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_DWI_TO_DT_METADATA)
     params = execution.params(params)

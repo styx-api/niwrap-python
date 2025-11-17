@@ -60,6 +60,32 @@ def gifti_label_add_prefix_params(
     return params
 
 
+def gifti_label_add_prefix_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GiftiLabelAddPrefixParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+
+
 def gifti_label_add_prefix_cargs(
     params: GiftiLabelAddPrefixParameters,
     execution: Execution,
@@ -119,6 +145,7 @@ def gifti_label_add_prefix_execute(
     Returns:
         NamedTuple of outputs (described in `GiftiLabelAddPrefixOutputs`).
     """
+    gifti_label_add_prefix_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GIFTI_LABEL_ADD_PREFIX_METADATA)
     params = execution.params(params)

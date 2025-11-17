@@ -101,6 +101,58 @@ def mris_ms_refine_params(
     return params
 
 
+def mris_ms_refine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMsRefineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("xform", None) is None:
+        raise StyxValidationError("`xform` must not be None")
+    if not isinstance(params["xform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `InputPathType`')
+    if params.get("flash_files", None) is None:
+        raise StyxValidationError("`flash_files` must not be None")
+    if not isinstance(params["flash_files"], list):
+        raise StyxValidationError(f'`flash_files` has the wrong type: Received `{type(params.get("flash_files", None))}` expected `list[InputPathType]`')
+    for e in params["flash_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`flash_files` has the wrong type: Received `{type(params.get("flash_files", None))}` expected `list[InputPathType]`')
+    if params.get("residuals", None) is None:
+        raise StyxValidationError("`residuals` must not be None")
+    if not isinstance(params["residuals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`residuals` has the wrong type: Received `{type(params.get("residuals", None))}` expected `InputPathType`')
+    if params.get("omit_self_intersection", False) is None:
+        raise StyxValidationError("`omit_self_intersection` must not be None")
+    if not isinstance(params["omit_self_intersection"], bool):
+        raise StyxValidationError(f'`omit_self_intersection` has the wrong type: Received `{type(params.get("omit_self_intersection", False))}` expected `bool`')
+    if params.get("create_curvature_files", False) is None:
+        raise StyxValidationError("`create_curvature_files` must not be None")
+    if not isinstance(params["create_curvature_files"], bool):
+        raise StyxValidationError(f'`create_curvature_files` has the wrong type: Received `{type(params.get("create_curvature_files", False))}` expected `bool`')
+    if params.get("average_curvature", None) is not None:
+        if not isinstance(params["average_curvature"], (float, int)):
+            raise StyxValidationError(f'`average_curvature` has the wrong type: Received `{type(params.get("average_curvature", None))}` expected `float | None`')
+    if params.get("white_only", False) is None:
+        raise StyxValidationError("`white_only` must not be None")
+    if not isinstance(params["white_only"], bool):
+        raise StyxValidationError(f'`white_only` has the wrong type: Received `{type(params.get("white_only", False))}` expected `bool`')
+
+
 def mris_ms_refine_cargs(
     params: MrisMsRefineParameters,
     execution: Execution,
@@ -180,6 +232,7 @@ def mris_ms_refine_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMsRefineOutputs`).
     """
+    mris_ms_refine_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MS_REFINE_METADATA)
     params = execution.params(params)

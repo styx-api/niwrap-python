@@ -64,6 +64,30 @@ def surface_curvature_params(
     return params
 
 
+def surface_curvature_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceCurvatureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mean-out", None) is not None:
+        if not isinstance(params["mean-out"], str):
+            raise StyxValidationError(f'`mean-out` has the wrong type: Received `{type(params.get("mean-out", None))}` expected `str | None`')
+    if params.get("gauss-out", None) is not None:
+        if not isinstance(params["gauss-out"], str):
+            raise StyxValidationError(f'`gauss-out` has the wrong type: Received `{type(params.get("gauss-out", None))}` expected `str | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def surface_curvature_cargs(
     params: SurfaceCurvatureParameters,
     execution: Execution,
@@ -127,6 +151,7 @@ def surface_curvature_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).
     """
+    surface_curvature_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_CURVATURE_METADATA)
     params = execution.params(params)

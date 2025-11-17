@@ -67,6 +67,38 @@ def mris_morph_stats_params(
     return params
 
 
+def mris_morph_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMorphStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `typing.Literal["lh", "rh"]`')
+    if params["hemisphere"] not in ["lh", "rh"]:
+        raise StyxValidationError("Parameter `hemisphere` must be one of [\"lh\", \"rh\"]")
+    if params.get("morphed_surface", None) is None:
+        raise StyxValidationError("`morphed_surface` must not be None")
+    if not isinstance(params["morphed_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`morphed_surface` has the wrong type: Received `{type(params.get("morphed_surface", None))}` expected `InputPathType`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+
+
 def mris_morph_stats_cargs(
     params: MrisMorphStatsParameters,
     execution: Execution,
@@ -129,6 +161,7 @@ def mris_morph_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMorphStatsOutputs`).
     """
+    mris_morph_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MORPH_STATS_METADATA)
     params = execution.params(params)

@@ -74,6 +74,43 @@ def v_3d_kruskal_wallis_params(
     return params
 
 
+def v_3d_kruskal_wallis_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dKruskalWallisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("levels", None) is None:
+        raise StyxValidationError("`levels` must not be None")
+    if not isinstance(params["levels"], int):
+        raise StyxValidationError(f'`levels` has the wrong type: Received `{type(params.get("levels", None))}` expected `int`')
+    if params["levels"] >= 2:
+        raise StyxValidationError("Parameter `levels` must be at least 2")
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    for e in params["datasets"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    if params.get("workmem", None) is not None:
+        if not isinstance(params["workmem"], int):
+            raise StyxValidationError(f'`workmem` has the wrong type: Received `{type(params.get("workmem", None))}` expected `int | None`')
+    if params.get("voxel", None) is not None:
+        if not isinstance(params["voxel"], int):
+            raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `int | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def v_3d_kruskal_wallis_cargs(
     params: V3dKruskalWallisParameters,
     execution: Execution,
@@ -154,6 +191,7 @@ def v_3d_kruskal_wallis_execute(
     Returns:
         NamedTuple of outputs (described in `V3dKruskalWallisOutputs`).
     """
+    v_3d_kruskal_wallis_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_KRUSKAL_WALLIS_METADATA)
     params = execution.params(params)

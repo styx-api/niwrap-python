@@ -198,6 +198,114 @@ def v_3d_gen_priors_params(
     return params
 
 
+def v_3d_gen_priors_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dGenPriorsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigs", None) is None:
+        raise StyxValidationError("`sigs` must not be None")
+    if not isinstance(params["sigs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sigs` has the wrong type: Received `{type(params.get("sigs", None))}` expected `InputPathType`')
+    if params.get("tdist", None) is None:
+        raise StyxValidationError("`tdist` must not be None")
+    if not isinstance(params["tdist"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tdist` has the wrong type: Received `{type(params.get("tdist", None))}` expected `InputPathType`')
+    if params.get("cprefix", None) is None:
+        raise StyxValidationError("`cprefix` must not be None")
+    if not isinstance(params["cprefix"], str):
+        raise StyxValidationError(f'`cprefix` has the wrong type: Received `{type(params.get("cprefix", None))}` expected `str`')
+    if params.get("pprefix", None) is None:
+        raise StyxValidationError("`pprefix` must not be None")
+    if not isinstance(params["pprefix"], str):
+        raise StyxValidationError(f'`pprefix` has the wrong type: Received `{type(params.get("pprefix", None))}` expected `str`')
+    if params.get("labeltable", None) is None:
+        raise StyxValidationError("`labeltable` must not be None")
+    if not isinstance(params["labeltable"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`labeltable` has the wrong type: Received `{type(params.get("labeltable", None))}` expected `InputPathType`')
+    if params.get("do", None) is None:
+        raise StyxValidationError("`do` must not be None")
+    if not isinstance(params["do"], str):
+        raise StyxValidationError(f'`do` has the wrong type: Received `{type(params.get("do", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("cmask", None) is not None:
+        if not isinstance(params["cmask"], str):
+            raise StyxValidationError(f'`cmask` has the wrong type: Received `{type(params.get("cmask", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], str):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `str | None`')
+    if params.get("mrange", None) is not None:
+        if not isinstance(params["mrange"], list):
+            raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+        if len(params["mrange"]) == 2:
+            raise StyxValidationError("Parameter `mrange` must contain exactly 2 elements")
+        for e in params["mrange"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mrange` has the wrong type: Received `{type(params.get("mrange", None))}` expected `list[float] | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("vox_debug", None) is not None:
+        if not isinstance(params["vox_debug"], str):
+            raise StyxValidationError(f'`vox_debug` has the wrong type: Received `{type(params.get("vox_debug", None))}` expected `str | None`')
+    if params.get("vox_debug_file", None) is not None:
+        if not isinstance(params["vox_debug_file"], str):
+            raise StyxValidationError(f'`vox_debug_file` has the wrong type: Received `{type(params.get("vox_debug_file", None))}` expected `str | None`')
+    if params.get("uid", None) is not None:
+        if not isinstance(params["uid"], str):
+            raise StyxValidationError(f'`uid` has the wrong type: Received `{type(params.get("uid", None))}` expected `str | None`')
+    if params.get("use_tmp", False) is None:
+        raise StyxValidationError("`use_tmp` must not be None")
+    if not isinstance(params["use_tmp"], bool):
+        raise StyxValidationError(f'`use_tmp` has the wrong type: Received `{type(params.get("use_tmp", False))}` expected `bool`')
+    if params.get("no_tmp", False) is None:
+        raise StyxValidationError("`no_tmp` must not be None")
+    if not isinstance(params["no_tmp"], bool):
+        raise StyxValidationError(f'`no_tmp` has the wrong type: Received `{type(params.get("no_tmp", False))}` expected `bool`')
+    if params.get("pset", None) is not None:
+        if not isinstance(params["pset"], str):
+            raise StyxValidationError(f'`pset` has the wrong type: Received `{type(params.get("pset", None))}` expected `str | None`')
+    if params.get("cset", None) is not None:
+        if not isinstance(params["cset"], str):
+            raise StyxValidationError(f'`cset` has the wrong type: Received `{type(params.get("cset", None))}` expected `str | None`')
+    if params.get("regroup_classes", None) is not None:
+        if not isinstance(params["regroup_classes"], str):
+            raise StyxValidationError(f'`regroup_classes` has the wrong type: Received `{type(params.get("regroup_classes", None))}` expected `str | None`')
+    if params.get("classes", None) is not None:
+        if not isinstance(params["classes"], str):
+            raise StyxValidationError(f'`classes` has the wrong type: Received `{type(params.get("classes", None))}` expected `str | None`')
+    if params.get("features", None) is not None:
+        if not isinstance(params["features"], str):
+            raise StyxValidationError(f'`features` has the wrong type: Received `{type(params.get("features", None))}` expected `str | None`')
+    if params.get("strict_feature_match", False) is None:
+        raise StyxValidationError("`strict_feature_match` must not be None")
+    if not isinstance(params["strict_feature_match"], bool):
+        raise StyxValidationError(f'`strict_feature_match` has the wrong type: Received `{type(params.get("strict_feature_match", False))}` expected `bool`')
+    if params.get("featgroups", None) is not None:
+        if not isinstance(params["featgroups"], str):
+            raise StyxValidationError(f'`featgroups` has the wrong type: Received `{type(params.get("featgroups", None))}` expected `str | None`')
+    if params.get("show_this_dist", None) is not None:
+        if not isinstance(params["show_this_dist"], str):
+            raise StyxValidationError(f'`show_this_dist` has the wrong type: Received `{type(params.get("show_this_dist", None))}` expected `str | None`')
+    if params.get("fast", False) is None:
+        raise StyxValidationError("`fast` must not be None")
+    if not isinstance(params["fast"], bool):
+        raise StyxValidationError(f'`fast` has the wrong type: Received `{type(params.get("fast", False))}` expected `bool`')
+    if params.get("slow", False) is None:
+        raise StyxValidationError("`slow` must not be None")
+    if not isinstance(params["slow"], bool):
+        raise StyxValidationError(f'`slow` has the wrong type: Received `{type(params.get("slow", False))}` expected `bool`')
+
+
 def v_3d_gen_priors_cargs(
     params: V3dGenPriorsParameters,
     execution: Execution,
@@ -365,6 +473,7 @@ def v_3d_gen_priors_execute(
     Returns:
         NamedTuple of outputs (described in `V3dGenPriorsOutputs`).
     """
+    v_3d_gen_priors_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_GEN_PRIORS_METADATA)
     params = execution.params(params)

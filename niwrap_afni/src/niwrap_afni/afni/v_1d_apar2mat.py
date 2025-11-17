@@ -104,6 +104,80 @@ def v_1d_apar2mat_params(
     return params
 
 
+def v_1d_apar2mat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dApar2matParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("x_shift", None) is None:
+        raise StyxValidationError("`x_shift` must not be None")
+    if not isinstance(params["x_shift"], (float, int)):
+        raise StyxValidationError(f'`x_shift` has the wrong type: Received `{type(params.get("x_shift", None))}` expected `float`')
+    if params.get("y_shift", None) is None:
+        raise StyxValidationError("`y_shift` must not be None")
+    if not isinstance(params["y_shift"], (float, int)):
+        raise StyxValidationError(f'`y_shift` has the wrong type: Received `{type(params.get("y_shift", None))}` expected `float`')
+    if params.get("z_shift", None) is None:
+        raise StyxValidationError("`z_shift` must not be None")
+    if not isinstance(params["z_shift"], (float, int)):
+        raise StyxValidationError(f'`z_shift` has the wrong type: Received `{type(params.get("z_shift", None))}` expected `float`')
+    if params.get("z_angle", None) is None:
+        raise StyxValidationError("`z_angle` must not be None")
+    if not isinstance(params["z_angle"], (float, int)):
+        raise StyxValidationError(f'`z_angle` has the wrong type: Received `{type(params.get("z_angle", None))}` expected `float`')
+    if params.get("x_angle", None) is None:
+        raise StyxValidationError("`x_angle` must not be None")
+    if not isinstance(params["x_angle"], (float, int)):
+        raise StyxValidationError(f'`x_angle` has the wrong type: Received `{type(params.get("x_angle", None))}` expected `float`')
+    if params.get("y_angle", None) is None:
+        raise StyxValidationError("`y_angle` must not be None")
+    if not isinstance(params["y_angle"], (float, int)):
+        raise StyxValidationError(f'`y_angle` has the wrong type: Received `{type(params.get("y_angle", None))}` expected `float`')
+    if params.get("x_scale", None) is None:
+        raise StyxValidationError("`x_scale` must not be None")
+    if not isinstance(params["x_scale"], (float, int)):
+        raise StyxValidationError(f'`x_scale` has the wrong type: Received `{type(params.get("x_scale", None))}` expected `float`')
+    if 0.1 <= params["x_scale"] <= 10.0:
+        raise StyxValidationError("Parameter `x_scale` must be between 0.1 and 10.0 (inclusive)")
+    if params.get("y_scale", None) is None:
+        raise StyxValidationError("`y_scale` must not be None")
+    if not isinstance(params["y_scale"], (float, int)):
+        raise StyxValidationError(f'`y_scale` has the wrong type: Received `{type(params.get("y_scale", None))}` expected `float`')
+    if 0.1 <= params["y_scale"] <= 10.0:
+        raise StyxValidationError("Parameter `y_scale` must be between 0.1 and 10.0 (inclusive)")
+    if params.get("z_scale", None) is None:
+        raise StyxValidationError("`z_scale` must not be None")
+    if not isinstance(params["z_scale"], (float, int)):
+        raise StyxValidationError(f'`z_scale` has the wrong type: Received `{type(params.get("z_scale", None))}` expected `float`')
+    if 0.1 <= params["z_scale"] <= 10.0:
+        raise StyxValidationError("Parameter `z_scale` must be between 0.1 and 10.0 (inclusive)")
+    if params.get("y_x_shear", None) is None:
+        raise StyxValidationError("`y_x_shear` must not be None")
+    if not isinstance(params["y_x_shear"], (float, int)):
+        raise StyxValidationError(f'`y_x_shear` has the wrong type: Received `{type(params.get("y_x_shear", None))}` expected `float`')
+    if -0.3333 <= params["y_x_shear"] <= 0.3333:
+        raise StyxValidationError("Parameter `y_x_shear` must be between -0.3333 and 0.3333 (inclusive)")
+    if params.get("z_x_shear", None) is None:
+        raise StyxValidationError("`z_x_shear` must not be None")
+    if not isinstance(params["z_x_shear"], (float, int)):
+        raise StyxValidationError(f'`z_x_shear` has the wrong type: Received `{type(params.get("z_x_shear", None))}` expected `float`')
+    if -0.3333 <= params["z_x_shear"] <= 0.3333:
+        raise StyxValidationError("Parameter `z_x_shear` must be between -0.3333 and 0.3333 (inclusive)")
+    if params.get("z_y_shear", None) is None:
+        raise StyxValidationError("`z_y_shear` must not be None")
+    if not isinstance(params["z_y_shear"], (float, int)):
+        raise StyxValidationError(f'`z_y_shear` has the wrong type: Received `{type(params.get("z_y_shear", None))}` expected `float`')
+    if -0.3333 <= params["z_y_shear"] <= 0.3333:
+        raise StyxValidationError("Parameter `z_y_shear` must be between -0.3333 and 0.3333 (inclusive)")
+
+
 def v_1d_apar2mat_cargs(
     params: V1dApar2matParameters,
     execution: Execution,
@@ -173,6 +247,7 @@ def v_1d_apar2mat_execute(
     Returns:
         NamedTuple of outputs (described in `V1dApar2matOutputs`).
     """
+    v_1d_apar2mat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_APAR2MAT_METADATA)
     params = execution.params(params)

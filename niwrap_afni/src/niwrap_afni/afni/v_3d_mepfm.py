@@ -90,6 +90,40 @@ def v_3d_mepfm_params(
     return params
 
 
+def v_3d_mepfm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMepfmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+    for e in params["input_files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+    if params.get("dbgArgs", False) is None:
+        raise StyxValidationError("`dbgArgs` must not be None")
+    if not isinstance(params["dbgArgs"], bool):
+        raise StyxValidationError(f'`dbgArgs` has the wrong type: Received `{type(params.get("dbgArgs", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("hrf_model", None) is not None:
+        if not isinstance(params["hrf_model"], str):
+            raise StyxValidationError(f'`hrf_model` has the wrong type: Received `{type(params.get("hrf_model", None))}` expected `str | None`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], int):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `int | None`')
+
+
 def v_3d_mepfm_cargs(
     params: V3dMepfmParameters,
     execution: Execution,
@@ -175,6 +209,7 @@ def v_3d_mepfm_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMepfmOutputs`).
     """
+    v_3d_mepfm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MEPFM_METADATA)
     params = execution.params(params)

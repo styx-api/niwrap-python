@@ -105,6 +105,56 @@ def from3d_params(
     return params
 
 
+def from3d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `From3dParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("nsize", False) is None:
+        raise StyxValidationError("`nsize` must not be None")
+    if not isinstance(params["nsize"], bool):
+        raise StyxValidationError(f'`nsize` has the wrong type: Received `{type(params.get("nsize", False))}` expected `bool`')
+    if params.get("raw", False) is None:
+        raise StyxValidationError("`raw` must not be None")
+    if not isinstance(params["raw"], bool):
+        raise StyxValidationError(f'`raw` has the wrong type: Received `{type(params.get("raw", False))}` expected `bool`')
+    if params.get("float", False) is None:
+        raise StyxValidationError("`float` must not be None")
+    if not isinstance(params["float"], bool):
+        raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", False))}` expected `bool`')
+    if params.get("zfirst", None) is not None:
+        if not isinstance(params["zfirst"], (float, int)):
+            raise StyxValidationError(f'`zfirst` has the wrong type: Received `{type(params.get("zfirst", None))}` expected `float | None`')
+    if params.get("zlast", None) is not None:
+        if not isinstance(params["zlast"], (float, int)):
+            raise StyxValidationError(f'`zlast` has the wrong type: Received `{type(params.get("zlast", None))}` expected `float | None`')
+    if params.get("tfirst", None) is not None:
+        if not isinstance(params["tfirst"], (float, int)):
+            raise StyxValidationError(f'`tfirst` has the wrong type: Received `{type(params.get("tfirst", None))}` expected `float | None`')
+    if params.get("tlast", None) is not None:
+        if not isinstance(params["tlast"], (float, int)):
+            raise StyxValidationError(f'`tlast` has the wrong type: Received `{type(params.get("tlast", None))}` expected `float | None`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+
+
 def from3d_cargs(
     params: From3dParameters,
     execution: Execution,
@@ -197,6 +247,7 @@ def from3d_execute(
     Returns:
         NamedTuple of outputs (described in `From3dOutputs`).
     """
+    from3d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FROM3D_METADATA)
     params = execution.params(params)

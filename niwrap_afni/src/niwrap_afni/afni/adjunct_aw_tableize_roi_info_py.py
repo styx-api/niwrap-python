@@ -79,6 +79,44 @@ def adjunct_aw_tableize_roi_info_py_params(
     return params
 
 
+def adjunct_aw_tableize_roi_info_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctAwTableizeRoiInfoPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("warped_atlas", None) is None:
+        raise StyxValidationError("`warped_atlas` must not be None")
+    if not isinstance(params["warped_atlas"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`warped_atlas` has the wrong type: Received `{type(params.get("warped_atlas", None))}` expected `InputPathType`')
+    if params.get("warped_mask", None) is None:
+        raise StyxValidationError("`warped_mask` must not be None")
+    if not isinstance(params["warped_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`warped_mask` has the wrong type: Received `{type(params.get("warped_mask", None))}` expected `InputPathType`')
+    if params.get("reference_atlas", None) is None:
+        raise StyxValidationError("`reference_atlas` must not be None")
+    if not isinstance(params["reference_atlas"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_atlas` has the wrong type: Received `{type(params.get("reference_atlas", None))}` expected `InputPathType`')
+    if params.get("reference_mask", None) is None:
+        raise StyxValidationError("`reference_mask` must not be None")
+    if not isinstance(params["reference_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_mask` has the wrong type: Received `{type(params.get("reference_mask", None))}` expected `InputPathType`')
+    if params.get("modesmooth_value", None) is None:
+        raise StyxValidationError("`modesmooth_value` must not be None")
+    if not isinstance(params["modesmooth_value"], (float, int)):
+        raise StyxValidationError(f'`modesmooth_value` has the wrong type: Received `{type(params.get("modesmooth_value", None))}` expected `float`')
+
+
 def adjunct_aw_tableize_roi_info_py_cargs(
     params: AdjunctAwTableizeRoiInfoPyParameters,
     execution: Execution,
@@ -143,6 +181,7 @@ def adjunct_aw_tableize_roi_info_py_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctAwTableizeRoiInfoPyOutputs`).
     """
+    adjunct_aw_tableize_roi_info_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA)
     params = execution.params(params)

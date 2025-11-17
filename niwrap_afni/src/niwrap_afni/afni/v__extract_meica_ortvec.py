@@ -83,6 +83,43 @@ def v__extract_meica_ortvec_params(
     return params
 
 
+def v__extract_meica_ortvec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VExtractMeicaOrtvecParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("meica_dir", None) is not None:
+        if not isinstance(params["meica_dir"], str):
+            raise StyxValidationError(f'`meica_dir` has the wrong type: Received `{type(params.get("meica_dir", None))}` expected `str | None`')
+    if params.get("reject_ignored", None) is not None:
+        if not isinstance(params["reject_ignored"], int):
+            raise StyxValidationError(f'`reject_ignored` has the wrong type: Received `{type(params.get("reject_ignored", None))}` expected `int | None`')
+        if 0 <= params["reject_ignored"] <= 1:
+            raise StyxValidationError("Parameter `reject_ignored` must be between 0 and 1 (inclusive)")
+    if params.get("reject_midk", None) is not None:
+        if not isinstance(params["reject_midk"], int):
+            raise StyxValidationError(f'`reject_midk` has the wrong type: Received `{type(params.get("reject_midk", None))}` expected `int | None`')
+        if 0 <= params["reject_midk"] <= 1:
+            raise StyxValidationError("Parameter `reject_midk` must be between 0 and 1 (inclusive)")
+    if params.get("work_dir", None) is not None:
+        if not isinstance(params["work_dir"], str):
+            raise StyxValidationError(f'`work_dir` has the wrong type: Received `{type(params.get("work_dir", None))}` expected `str | None`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], str):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `str | None`')
+
+
 def v__extract_meica_ortvec_cargs(
     params: VExtractMeicaOrtvecParameters,
     execution: Execution,
@@ -169,6 +206,7 @@ def v__extract_meica_ortvec_execute(
     Returns:
         NamedTuple of outputs (described in `VExtractMeicaOrtvecOutputs`).
     """
+    v__extract_meica_ortvec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__EXTRACT_MEICA_ORTVEC_METADATA)
     params = execution.params(params)

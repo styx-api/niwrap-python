@@ -96,6 +96,65 @@ def applytopup_params(
     return params
 
 
+def applytopup_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ApplytopupParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("imain", None) is None:
+        raise StyxValidationError("`imain` must not be None")
+    if not isinstance(params["imain"], list):
+        raise StyxValidationError(f'`imain` has the wrong type: Received `{type(params.get("imain", None))}` expected `list[InputPathType]`')
+    for e in params["imain"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`imain` has the wrong type: Received `{type(params.get("imain", None))}` expected `list[InputPathType]`')
+    if params.get("datain", None) is None:
+        raise StyxValidationError("`datain` must not be None")
+    if not isinstance(params["datain"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datain` has the wrong type: Received `{type(params.get("datain", None))}` expected `InputPathType`')
+    if params.get("inindex", None) is None:
+        raise StyxValidationError("`inindex` must not be None")
+    if not isinstance(params["inindex"], list):
+        raise StyxValidationError(f'`inindex` has the wrong type: Received `{type(params.get("inindex", None))}` expected `list[str]`')
+    for e in params["inindex"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`inindex` has the wrong type: Received `{type(params.get("inindex", None))}` expected `list[str]`')
+    if params.get("topup", None) is None:
+        raise StyxValidationError("`topup` must not be None")
+    if not isinstance(params["topup"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`topup` has the wrong type: Received `{type(params.get("topup", None))}` expected `InputPathType`')
+    if params.get("out", None) is None:
+        raise StyxValidationError("`out` must not be None")
+    if not isinstance(params["out"], str):
+        raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `typing.Literal["jac", "lsr"] | None`')
+        if params["method"] not in ["jac", "lsr"]:
+            raise StyxValidationError("Parameter `method` must be one of [\"jac\", \"lsr\"]")
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["trilinear", "spline"] | None`')
+        if params["interp"] not in ["trilinear", "spline"]:
+            raise StyxValidationError("Parameter `interp` must be one of [\"trilinear\", \"spline\"]")
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `typing.Literal["char", "short", "int", "float", "double"] | None`')
+        if params["datatype"] not in ["char", "short", "int", "float", "double"]:
+            raise StyxValidationError("Parameter `datatype` must be one of [\"char\", \"short\", \"int\", \"float\", \"double\"]")
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def applytopup_cargs(
     params: ApplytopupParameters,
     execution: Execution,
@@ -167,6 +226,7 @@ def applytopup_execute(
     Returns:
         NamedTuple of outputs (described in `ApplytopupOutputs`).
     """
+    applytopup_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APPLYTOPUP_METADATA)
     params = execution.params(params)

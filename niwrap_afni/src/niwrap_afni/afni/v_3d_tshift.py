@@ -134,6 +134,70 @@ def v_3d_tshift_params(
     return params
 
 
+def v_3d_tshift_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTshiftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], int):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `int | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic"] | None`')
+        if params["interp"] not in ["Fourier", "linear", "cubic", "quintic", "heptic"]:
+            raise StyxValidationError("Parameter `interp` must be one of [\"Fourier\", \"linear\", \"cubic\", \"quintic\", \"heptic\"]")
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], int):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("rlt", False) is None:
+        raise StyxValidationError("`rlt` must not be None")
+    if not isinstance(params["rlt"], bool):
+        raise StyxValidationError(f'`rlt` has the wrong type: Received `{type(params.get("rlt", False))}` expected `bool`')
+    if params.get("rltplus", False) is None:
+        raise StyxValidationError("`rltplus` must not be None")
+    if not isinstance(params["rltplus"], bool):
+        raise StyxValidationError(f'`rltplus` has the wrong type: Received `{type(params.get("rltplus", False))}` expected `bool`')
+    if params.get("slice_encoding_direction", None) is not None:
+        if not isinstance(params["slice_encoding_direction"], str):
+            raise StyxValidationError(f'`slice_encoding_direction` has the wrong type: Received `{type(params.get("slice_encoding_direction", None))}` expected `typing.Literal["k", "k-"] | None`')
+        if params["slice_encoding_direction"] not in ["k", "k-"]:
+            raise StyxValidationError("Parameter `slice_encoding_direction` must be one of [\"k\", \"k-\"]")
+    if params.get("tpattern", None) is not None:
+        if not isinstance(params["tpattern"], str):
+            raise StyxValidationError(f'`tpattern` has the wrong type: Received `{type(params.get("tpattern", None))}` expected `typing.Literal["alt+z", "altplus", "alt+z2", "alt-z", "altminus", "alt-z2", "seq+z", "seqplus", "seq-z", "seqminus"] | None`')
+        if params["tpattern"] not in ["alt+z", "altplus", "alt+z2", "alt-z", "altminus", "alt-z2", "seq+z", "seqplus", "seq-z", "seqminus"]:
+            raise StyxValidationError("Parameter `tpattern` must be one of [\"alt+z\", \"altplus\", \"alt+z2\", \"alt-z\", \"altminus\", \"alt-z2\", \"seq+z\", \"seqplus\", \"seq-z\", \"seqminus\"]")
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("tslice", None) is not None:
+        if not isinstance(params["tslice"], int):
+            raise StyxValidationError(f'`tslice` has the wrong type: Received `{type(params.get("tslice", None))}` expected `int | None`')
+    if params.get("tzero", None) is not None:
+        if not isinstance(params["tzero"], (float, int)):
+            raise StyxValidationError(f'`tzero` has the wrong type: Received `{type(params.get("tzero", None))}` expected `float | None`')
+
+
 def v_3d_tshift_cargs(
     params: V3dTshiftParameters,
     execution: Execution,
@@ -239,6 +303,7 @@ def v_3d_tshift_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTshiftOutputs`).
     """
+    v_3d_tshift_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TSHIFT_METADATA)
     params = execution.params(params)

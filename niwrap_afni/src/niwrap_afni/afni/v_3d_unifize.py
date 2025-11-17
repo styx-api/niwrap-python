@@ -148,6 +148,75 @@ def v_3d_unifize_params(
     return params
 
 
+def v_3d_unifize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dUnifizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cl_frac", None) is not None:
+        if not isinstance(params["cl_frac"], (float, int)):
+            raise StyxValidationError(f'`cl_frac` has the wrong type: Received `{type(params.get("cl_frac", None))}` expected `float | None`')
+    if params.get("epi", False) is None:
+        raise StyxValidationError("`epi` must not be None")
+    if not isinstance(params["epi"], bool):
+        raise StyxValidationError(f'`epi` has the wrong type: Received `{type(params.get("epi", False))}` expected `bool`')
+    if params.get("gm", False) is None:
+        raise StyxValidationError("`gm` must not be None")
+    if not isinstance(params["gm"], bool):
+        raise StyxValidationError(f'`gm` has the wrong type: Received `{type(params.get("gm", False))}` expected `bool`')
+    if params.get("no_duplo", False) is None:
+        raise StyxValidationError("`no_duplo` must not be None")
+    if not isinstance(params["no_duplo"], bool):
+        raise StyxValidationError(f'`no_duplo` has the wrong type: Received `{type(params.get("no_duplo", False))}` expected `bool`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], int):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("rbt", None) is not None:
+        if not isinstance(params["rbt"], list):
+            raise StyxValidationError(f'`rbt` has the wrong type: Received `{type(params.get("rbt", None))}` expected `list[float] | None`')
+        if len(params["rbt"]) == 3:
+            raise StyxValidationError("Parameter `rbt` must contain exactly 3 elements")
+        for e in params["rbt"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rbt` has the wrong type: Received `{type(params.get("rbt", None))}` expected `list[float] | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("scale_file", None) is not None:
+        if not isinstance(params["scale_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`scale_file` has the wrong type: Received `{type(params.get("scale_file", None))}` expected `InputPathType | None`')
+    if params.get("t2", False) is None:
+        raise StyxValidationError("`t2` must not be None")
+    if not isinstance(params["t2"], bool):
+        raise StyxValidationError(f'`t2` has the wrong type: Received `{type(params.get("t2", False))}` expected `bool`')
+    if params.get("t2_up", None) is not None:
+        if not isinstance(params["t2_up"], (float, int)):
+            raise StyxValidationError(f'`t2_up` has the wrong type: Received `{type(params.get("t2_up", None))}` expected `float | None`')
+    if params.get("urad", None) is not None:
+        if not isinstance(params["urad"], (float, int)):
+            raise StyxValidationError(f'`urad` has the wrong type: Received `{type(params.get("urad", None))}` expected `float | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+
+
 def v_3d_unifize_cargs(
     params: V3dUnifizeParameters,
     execution: Execution,
@@ -271,6 +340,7 @@ def v_3d_unifize_execute(
     Returns:
         NamedTuple of outputs (described in `V3dUnifizeOutputs`).
     """
+    v_3d_unifize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_UNIFIZE_METADATA)
     params = execution.params(params)

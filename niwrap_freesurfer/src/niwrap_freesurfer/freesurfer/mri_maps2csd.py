@@ -108,6 +108,59 @@ def mri_maps2csd_params(
     return params
 
 
+def mri_maps2csd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMaps2csdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+    for e in params["input_files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[str]`')
+    if params.get("csd_file", None) is not None:
+        if not isinstance(params["csd_file"], str):
+            raise StyxValidationError(f'`csd_file` has the wrong type: Received `{type(params.get("csd_file", None))}` expected `str | None`')
+    if params.get("pdf_file", None) is not None:
+        if not isinstance(params["pdf_file"], str):
+            raise StyxValidationError(f'`pdf_file` has the wrong type: Received `{type(params.get("pdf_file", None))}` expected `str | None`')
+    if params.get("subject_hemi_surf", None) is not None:
+        if not isinstance(params["subject_hemi_surf"], str):
+            raise StyxValidationError(f'`subject_hemi_surf` has the wrong type: Received `{type(params.get("subject_hemi_surf", None))}` expected `str | None`')
+    if params.get("thresh", None) is not None:
+        if not isinstance(params["thresh"], (float, int)):
+            raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `float | None`')
+    if params.get("sign", None) is not None:
+        if not isinstance(params["sign"], str):
+            raise StyxValidationError(f'`sign` has the wrong type: Received `{type(params.get("sign", None))}` expected `str | None`')
+    if params.get("csd_apply_file", None) is not None:
+        if not isinstance(params["csd_apply_file"], str):
+            raise StyxValidationError(f'`csd_apply_file` has the wrong type: Received `{type(params.get("csd_apply_file", None))}` expected `str | None`')
+    if params.get("apply_out", None) is not None:
+        if not isinstance(params["apply_out"], str):
+            raise StyxValidationError(f'`apply_out` has the wrong type: Received `{type(params.get("apply_out", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+
+
 def mri_maps2csd_cargs(
     params: MriMaps2csdParameters,
     execution: Execution,
@@ -209,6 +262,7 @@ def mri_maps2csd_execute(
     Returns:
         NamedTuple of outputs (described in `MriMaps2csdOutputs`).
     """
+    mri_maps2csd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MAPS2CSD_METADATA)
     params = execution.params(params)

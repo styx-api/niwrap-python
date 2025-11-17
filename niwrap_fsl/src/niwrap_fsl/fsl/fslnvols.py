@@ -49,6 +49,24 @@ def fslnvols_params(
     return params
 
 
+def fslnvols_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslnvolsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+
+
 def fslnvols_cargs(
     params: FslnvolsParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def fslnvols_execute(
     Returns:
         NamedTuple of outputs (described in `FslnvolsOutputs`).
     """
+    fslnvols_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLNVOLS_METADATA)
     params = execution.params(params)

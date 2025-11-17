@@ -116,6 +116,60 @@ def v_3d_multi_thresh_params(
     return params
 
 
+def v_3d_multi_thresh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMultiThreshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mthresh_file", None) is None:
+        raise StyxValidationError("`mthresh_file` must not be None")
+    if not isinstance(params["mthresh_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mthresh_file` has the wrong type: Received `{type(params.get("mthresh_file", None))}` expected `InputPathType`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("index", None) is not None:
+        if not isinstance(params["index"], (float, int)):
+            raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", None))}` expected `float | None`')
+    if params.get("signed_flag", None) is not None:
+        if not isinstance(params["signed_flag"], str):
+            raise StyxValidationError(f'`signed_flag` has the wrong type: Received `{type(params.get("signed_flag", None))}` expected `str | None`')
+    if params.get("positive_sign_flag", False) is None:
+        raise StyxValidationError("`positive_sign_flag` must not be None")
+    if not isinstance(params["positive_sign_flag"], bool):
+        raise StyxValidationError(f'`positive_sign_flag` has the wrong type: Received `{type(params.get("positive_sign_flag", False))}` expected `bool`')
+    if params.get("negative_sign_flag", False) is None:
+        raise StyxValidationError("`negative_sign_flag` must not be None")
+    if not isinstance(params["negative_sign_flag"], bool):
+        raise StyxValidationError(f'`negative_sign_flag` has the wrong type: Received `{type(params.get("negative_sign_flag", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("mask_only_flag", False) is None:
+        raise StyxValidationError("`mask_only_flag` must not be None")
+    if not isinstance(params["mask_only_flag"], bool):
+        raise StyxValidationError(f'`mask_only_flag` has the wrong type: Received `{type(params.get("mask_only_flag", False))}` expected `bool`')
+    if params.get("all_mask", None) is not None:
+        if not isinstance(params["all_mask"], str):
+            raise StyxValidationError(f'`all_mask` has the wrong type: Received `{type(params.get("all_mask", None))}` expected `str | None`')
+    if params.get("no_zero_flag", False) is None:
+        raise StyxValidationError("`no_zero_flag` must not be None")
+    if not isinstance(params["no_zero_flag"], bool):
+        raise StyxValidationError(f'`no_zero_flag` has the wrong type: Received `{type(params.get("no_zero_flag", False))}` expected `bool`')
+    if params.get("quiet_flag", False) is None:
+        raise StyxValidationError("`quiet_flag` must not be None")
+    if not isinstance(params["quiet_flag"], bool):
+        raise StyxValidationError(f'`quiet_flag` has the wrong type: Received `{type(params.get("quiet_flag", False))}` expected `bool`')
+
+
 def v_3d_multi_thresh_cargs(
     params: V3dMultiThreshParameters,
     execution: Execution,
@@ -213,6 +267,7 @@ def v_3d_multi_thresh_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMultiThreshOutputs`).
     """
+    v_3d_multi_thresh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MULTI_THRESH_METADATA)
     params = execution.params(params)

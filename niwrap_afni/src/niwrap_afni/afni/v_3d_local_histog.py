@@ -112,6 +112,61 @@ def v_3d_local_histog_params(
     return params
 
 
+def v_3d_local_histog_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLocalHistogParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nbhd_option", None) is not None:
+        if not isinstance(params["nbhd_option"], str):
+            raise StyxValidationError(f'`nbhd_option` has the wrong type: Received `{type(params.get("nbhd_option", None))}` expected `str | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("hsave", None) is not None:
+        if not isinstance(params["hsave"], str):
+            raise StyxValidationError(f'`hsave` has the wrong type: Received `{type(params.get("hsave", None))}` expected `str | None`')
+    if params.get("lab_file", None) is not None:
+        if not isinstance(params["lab_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lab_file` has the wrong type: Received `{type(params.get("lab_file", None))}` expected `InputPathType | None`')
+    if params.get("exclude", None) is not None:
+        if not isinstance(params["exclude"], list):
+            raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[str] | None`')
+        for e in params["exclude"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`exclude` has the wrong type: Received `{type(params.get("exclude", None))}` expected `list[str] | None`')
+    if params.get("exc_nonlab", False) is None:
+        raise StyxValidationError("`exc_nonlab` must not be None")
+    if not isinstance(params["exc_nonlab"], bool):
+        raise StyxValidationError(f'`exc_nonlab` has the wrong type: Received `{type(params.get("exc_nonlab", False))}` expected `bool`')
+    if params.get("mincount", None) is not None:
+        if not isinstance(params["mincount"], (float, int)):
+            raise StyxValidationError(f'`mincount` has the wrong type: Received `{type(params.get("mincount", None))}` expected `float | None`')
+    if params.get("probability", False) is None:
+        raise StyxValidationError("`probability` must not be None")
+    if not isinstance(params["probability"], bool):
+        raise StyxValidationError(f'`probability` has the wrong type: Received `{type(params.get("probability", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("input_datasets", None) is None:
+        raise StyxValidationError("`input_datasets` must not be None")
+    if not isinstance(params["input_datasets"], list):
+        raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+    for e in params["input_datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+
+
 def v_3d_local_histog_cargs(
     params: V3dLocalHistogParameters,
     execution: Execution,
@@ -207,6 +262,7 @@ def v_3d_local_histog_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLocalHistogOutputs`).
     """
+    v_3d_local_histog_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOCAL_HISTOG_METADATA)
     params = execution.params(params)

@@ -91,6 +91,50 @@ def siena_diff_params(
     return params
 
 
+def siena_diff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SienaDiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input1_basename", None) is None:
+        raise StyxValidationError("`input1_basename` must not be None")
+    if not isinstance(params["input1_basename"], str):
+        raise StyxValidationError(f'`input1_basename` has the wrong type: Received `{type(params.get("input1_basename", None))}` expected `str`')
+    if params.get("input2_basename", None) is None:
+        raise StyxValidationError("`input2_basename` must not be None")
+    if not isinstance(params["input2_basename"], str):
+        raise StyxValidationError(f'`input2_basename` has the wrong type: Received `{type(params.get("input2_basename", None))}` expected `str`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("no_seg_flag", False) is None:
+        raise StyxValidationError("`no_seg_flag` must not be None")
+    if not isinstance(params["no_seg_flag"], bool):
+        raise StyxValidationError(f'`no_seg_flag` has the wrong type: Received `{type(params.get("no_seg_flag", False))}` expected `bool`')
+    if params.get("self_corr_factor", None) is not None:
+        if not isinstance(params["self_corr_factor"], (float, int)):
+            raise StyxValidationError(f'`self_corr_factor` has the wrong type: Received `{type(params.get("self_corr_factor", None))}` expected `float | None`')
+    if params.get("ignore_z_flow_flag", False) is None:
+        raise StyxValidationError("`ignore_z_flow_flag` must not be None")
+    if not isinstance(params["ignore_z_flow_flag"], bool):
+        raise StyxValidationError(f'`ignore_z_flow_flag` has the wrong type: Received `{type(params.get("ignore_z_flow_flag", False))}` expected `bool`')
+    if params.get("apply_std_mask_flag", False) is None:
+        raise StyxValidationError("`apply_std_mask_flag` must not be None")
+    if not isinstance(params["apply_std_mask_flag"], bool):
+        raise StyxValidationError(f'`apply_std_mask_flag` has the wrong type: Received `{type(params.get("apply_std_mask_flag", False))}` expected `bool`')
+    if params.get("segment_options", None) is not None:
+        if not isinstance(params["segment_options"], str):
+            raise StyxValidationError(f'`segment_options` has the wrong type: Received `{type(params.get("segment_options", None))}` expected `str | None`')
+
+
 def siena_diff_cargs(
     params: SienaDiffParameters,
     execution: Execution,
@@ -167,6 +211,7 @@ def siena_diff_execute(
     Returns:
         NamedTuple of outputs (described in `SienaDiffOutputs`).
     """
+    siena_diff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIENA_DIFF_METADATA)
     params = execution.params(params)

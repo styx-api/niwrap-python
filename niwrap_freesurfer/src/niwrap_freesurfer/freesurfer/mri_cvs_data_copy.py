@@ -71,6 +71,40 @@ def mri_cvs_data_copy_params(
     return params
 
 
+def mri_cvs_data_copy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCvsDataCopyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjid", None) is None:
+        raise StyxValidationError("`subjid` must not be None")
+    if not isinstance(params["subjid"], str):
+        raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str`')
+    if params.get("olddir", None) is None:
+        raise StyxValidationError("`olddir` must not be None")
+    if not isinstance(params["olddir"], str):
+        raise StyxValidationError(f'`olddir` has the wrong type: Received `{type(params.get("olddir", None))}` expected `str`')
+    if params.get("newdir", None) is None:
+        raise StyxValidationError("`newdir` must not be None")
+    if not isinstance(params["newdir"], str):
+        raise StyxValidationError(f'`newdir` has the wrong type: Received `{type(params.get("newdir", None))}` expected `str`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_cvs_data_copy_cargs(
     params: MriCvsDataCopyParameters,
     execution: Execution,
@@ -143,6 +177,7 @@ def mri_cvs_data_copy_execute(
     Returns:
         NamedTuple of outputs (described in `MriCvsDataCopyOutputs`).
     """
+    mri_cvs_data_copy_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CVS_DATA_COPY_METADATA)
     params = execution.params(params)

@@ -108,6 +108,54 @@ def neuro_deconvolve_py_params(
     return params
 
 
+def neuro_deconvolve_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NeuroDeconvolvePyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("script", None) is None:
+        raise StyxValidationError("`script` must not be None")
+    if not isinstance(params["script"], str):
+        raise StyxValidationError(f'`script` has the wrong type: Received `{type(params.get("script", None))}` expected `str`')
+    if params.get("kernel", None) is not None:
+        if not isinstance(params["kernel"], str):
+            raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `str | None`')
+    if params.get("kernel_file", None) is not None:
+        if not isinstance(params["kernel_file"], str):
+            raise StyxValidationError(f'`kernel_file` has the wrong type: Received `{type(params.get("kernel_file", None))}` expected `str | None`')
+    if params.get("mask_dset", None) is not None:
+        if not isinstance(params["mask_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dset` has the wrong type: Received `{type(params.get("mask_dset", None))}` expected `InputPathType | None`')
+    if params.get("old_style", False) is None:
+        raise StyxValidationError("`old_style` must not be None")
+    if not isinstance(params["old_style"], bool):
+        raise StyxValidationError(f'`old_style` has the wrong type: Received `{type(params.get("old_style", False))}` expected `bool`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("tr_nup", None) is not None:
+        if not isinstance(params["tr_nup"], (float, int)):
+            raise StyxValidationError(f'`tr_nup` has the wrong type: Received `{type(params.get("tr_nup", None))}` expected `float | None`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+
+
 def neuro_deconvolve_py_cargs(
     params: NeuroDeconvolvePyParameters,
     execution: Execution,
@@ -203,6 +251,7 @@ def neuro_deconvolve_py_execute(
     Returns:
         NamedTuple of outputs (described in `NeuroDeconvolvePyOutputs`).
     """
+    neuro_deconvolve_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NEURO_DECONVOLVE_PY_METADATA)
     params = execution.params(params)

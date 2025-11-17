@@ -104,6 +104,64 @@ def mri_seg_overlap_params(
     return params
 
 
+def mri_seg_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSegOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vol1", None) is None:
+        raise StyxValidationError("`vol1` must not be None")
+    if not isinstance(params["vol1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol1` has the wrong type: Received `{type(params.get("vol1", None))}` expected `InputPathType`')
+    if params.get("vol2", None) is None:
+        raise StyxValidationError("`vol2` must not be None")
+    if not isinstance(params["vol2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vol2` has the wrong type: Received `{type(params.get("vol2", None))}` expected `InputPathType`')
+    if params.get("out_file", None) is not None:
+        if not isinstance(params["out_file"], str):
+            raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str | None`')
+    if params.get("measures", None) is not None:
+        if not isinstance(params["measures"], list):
+            raise StyxValidationError(f'`measures` has the wrong type: Received `{type(params.get("measures", None))}` expected `list[str] | None`')
+        for e in params["measures"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`measures` has the wrong type: Received `{type(params.get("measures", None))}` expected `list[str] | None`')
+    if params.get("labels", None) is not None:
+        if not isinstance(params["labels"], list):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+        for e in params["labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+    if params.get("label_names", None) is not None:
+        if not isinstance(params["label_names"], list):
+            raise StyxValidationError(f'`label_names` has the wrong type: Received `{type(params.get("label_names", None))}` expected `list[str] | None`')
+        for e in params["label_names"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`label_names` has the wrong type: Received `{type(params.get("label_names", None))}` expected `list[str] | None`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("no_names_flag", False) is None:
+        raise StyxValidationError("`no_names_flag` must not be None")
+    if not isinstance(params["no_names_flag"], bool):
+        raise StyxValidationError(f'`no_names_flag` has the wrong type: Received `{type(params.get("no_names_flag", False))}` expected `bool`')
+    if params.get("seg_flag", False) is None:
+        raise StyxValidationError("`seg_flag` must not be None")
+    if not isinstance(params["seg_flag"], bool):
+        raise StyxValidationError(f'`seg_flag` has the wrong type: Received `{type(params.get("seg_flag", False))}` expected `bool`')
+    if params.get("quiet_flag", False) is None:
+        raise StyxValidationError("`quiet_flag` must not be None")
+    if not isinstance(params["quiet_flag"], bool):
+        raise StyxValidationError(f'`quiet_flag` has the wrong type: Received `{type(params.get("quiet_flag", False))}` expected `bool`')
+
+
 def mri_seg_overlap_cargs(
     params: MriSegOverlapParameters,
     execution: Execution,
@@ -194,6 +252,7 @@ def mri_seg_overlap_execute(
     Returns:
         NamedTuple of outputs (described in `MriSegOverlapOutputs`).
     """
+    mri_seg_overlap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SEG_OVERLAP_METADATA)
     params = execution.params(params)

@@ -127,6 +127,86 @@ def mris_make_template_params(
     return params
 
 
+def mris_make_template_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMakeTemplateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surface_name", None) is None:
+        raise StyxValidationError("`surface_name` must not be None")
+    if not isinstance(params["surface_name"], str):
+        raise StyxValidationError(f'`surface_name` has the wrong type: Received `{type(params.get("surface_name", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("addframe_parameters", None) is not None:
+        if not isinstance(params["addframe_parameters"], list):
+            raise StyxValidationError(f'`addframe_parameters` has the wrong type: Received `{type(params.get("addframe_parameters", None))}` expected `list[str] | None`')
+        if len(params["addframe_parameters"]) == 2:
+            raise StyxValidationError("Parameter `addframe_parameters` must contain exactly 2 elements")
+        for e in params["addframe_parameters"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`addframe_parameters` has the wrong type: Received `{type(params.get("addframe_parameters", None))}` expected `list[str] | None`')
+    if params.get("vector", False) is None:
+        raise StyxValidationError("`vector` must not be None")
+    if not isinstance(params["vector"], bool):
+        raise StyxValidationError(f'`vector` has the wrong type: Received `{type(params.get("vector", False))}` expected `bool`')
+    if params.get("norot", False) is None:
+        raise StyxValidationError("`norot` must not be None")
+    if not isinstance(params["norot"], bool):
+        raise StyxValidationError(f'`norot` has the wrong type: Received `{type(params.get("norot", False))}` expected `bool`')
+    if params.get("rot", False) is None:
+        raise StyxValidationError("`rot` must not be None")
+    if not isinstance(params["rot"], bool):
+        raise StyxValidationError(f'`rot` has the wrong type: Received `{type(params.get("rot", False))}` expected `bool`')
+    if params.get("annot", False) is None:
+        raise StyxValidationError("`annot` must not be None")
+    if not isinstance(params["annot"], bool):
+        raise StyxValidationError(f'`annot` has the wrong type: Received `{type(params.get("annot", False))}` expected `bool`')
+    if params.get("overlay_parameters", None) is not None:
+        if not isinstance(params["overlay_parameters"], list):
+            raise StyxValidationError(f'`overlay_parameters` has the wrong type: Received `{type(params.get("overlay_parameters", None))}` expected `list[str] | None`')
+        if len(params["overlay_parameters"]) == 2:
+            raise StyxValidationError("Parameter `overlay_parameters` must contain exactly 2 elements")
+        for e in params["overlay_parameters"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`overlay_parameters` has the wrong type: Received `{type(params.get("overlay_parameters", None))}` expected `list[str] | None`')
+    if params.get("overlay_dir", None) is not None:
+        if not isinstance(params["overlay_dir"], str):
+            raise StyxValidationError(f'`overlay_dir` has the wrong type: Received `{type(params.get("overlay_dir", None))}` expected `str | None`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+    if params.get("surf_dir", None) is not None:
+        if not isinstance(params["surf_dir"], str):
+            raise StyxValidationError(f'`surf_dir` has the wrong type: Received `{type(params.get("surf_dir", None))}` expected `str | None`')
+    if params.get("smooth_iterations", None) is not None:
+        if not isinstance(params["smooth_iterations"], (float, int)):
+            raise StyxValidationError(f'`smooth_iterations` has the wrong type: Received `{type(params.get("smooth_iterations", None))}` expected `float | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+
+
 def mris_make_template_cargs(
     params: MrisMakeTemplateParameters,
     execution: Execution,
@@ -230,6 +310,7 @@ def mris_make_template_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMakeTemplateOutputs`).
     """
+    mris_make_template_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MAKE_TEMPLATE_METADATA)
     params = execution.params(params)

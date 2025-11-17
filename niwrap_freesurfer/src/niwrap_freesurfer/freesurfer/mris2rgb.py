@@ -50,6 +50,24 @@ def mris2rgb_params(
     return params
 
 
+def mris2rgb_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Mris2rgbParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("library_path", None) is None:
+        raise StyxValidationError("`library_path` must not be None")
+    if not isinstance(params["library_path"], str):
+        raise StyxValidationError(f'`library_path` has the wrong type: Received `{type(params.get("library_path", None))}` expected `str`')
+
+
 def mris2rgb_cargs(
     params: Mris2rgbParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def mris2rgb_execute(
     Returns:
         NamedTuple of outputs (described in `Mris2rgbOutputs`).
     """
+    mris2rgb_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS2RGB_METADATA)
     params = execution.params(params)

@@ -162,6 +162,99 @@ def v_3dclust_params(
     return params
 
 
+def v_3dclust_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dclustParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rmm", None) is not None:
+        if not isinstance(params["rmm"], (float, int)):
+            raise StyxValidationError(f'`rmm` has the wrong type: Received `{type(params.get("rmm", None))}` expected `float | None`')
+    if params.get("vmul", None) is not None:
+        if not isinstance(params["vmul"], (float, int)):
+            raise StyxValidationError(f'`vmul` has the wrong type: Received `{type(params.get("vmul", None))}` expected `float | None`')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    if params.get("nn1", False) is None:
+        raise StyxValidationError("`nn1` must not be None")
+    if not isinstance(params["nn1"], bool):
+        raise StyxValidationError(f'`nn1` has the wrong type: Received `{type(params.get("nn1", False))}` expected `bool`')
+    if params.get("nn2", False) is None:
+        raise StyxValidationError("`nn2` must not be None")
+    if not isinstance(params["nn2"], bool):
+        raise StyxValidationError(f'`nn2` has the wrong type: Received `{type(params.get("nn2", False))}` expected `bool`')
+    if params.get("nn3", False) is None:
+        raise StyxValidationError("`nn3` must not be None")
+    if not isinstance(params["nn3"], bool):
+        raise StyxValidationError(f'`nn3` has the wrong type: Received `{type(params.get("nn3", False))}` expected `bool`')
+    if params.get("noabs", False) is None:
+        raise StyxValidationError("`noabs` must not be None")
+    if not isinstance(params["noabs"], bool):
+        raise StyxValidationError(f'`noabs` has the wrong type: Received `{type(params.get("noabs", False))}` expected `bool`')
+    if params.get("summarize", False) is None:
+        raise StyxValidationError("`summarize` must not be None")
+    if not isinstance(params["summarize"], bool):
+        raise StyxValidationError(f'`summarize` has the wrong type: Received `{type(params.get("summarize", False))}` expected `bool`')
+    if params.get("nosum", False) is None:
+        raise StyxValidationError("`nosum` must not be None")
+    if not isinstance(params["nosum"], bool):
+        raise StyxValidationError(f'`nosum` has the wrong type: Received `{type(params.get("nosum", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+    if params.get("oned_format", False) is None:
+        raise StyxValidationError("`oned_format` must not be None")
+    if not isinstance(params["oned_format"], bool):
+        raise StyxValidationError(f'`oned_format` has the wrong type: Received `{type(params.get("oned_format", False))}` expected `bool`')
+    if params.get("no_oned_format", False) is None:
+        raise StyxValidationError("`no_oned_format` must not be None")
+    if not isinstance(params["no_oned_format"], bool):
+        raise StyxValidationError(f'`no_oned_format` has the wrong type: Received `{type(params.get("no_oned_format", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("mni", False) is None:
+        raise StyxValidationError("`mni` must not be None")
+    if not isinstance(params["mni"], bool):
+        raise StyxValidationError(f'`mni` has the wrong type: Received `{type(params.get("mni", False))}` expected `bool`')
+    if params.get("isovalue", False) is None:
+        raise StyxValidationError("`isovalue` must not be None")
+    if not isinstance(params["isovalue"], bool):
+        raise StyxValidationError(f'`isovalue` has the wrong type: Received `{type(params.get("isovalue", False))}` expected `bool`')
+    if params.get("isomerge", False) is None:
+        raise StyxValidationError("`isomerge` must not be None")
+    if not isinstance(params["isomerge"], bool):
+        raise StyxValidationError(f'`isomerge` has the wrong type: Received `{type(params.get("isomerge", False))}` expected `bool`')
+    if params.get("inmask", False) is None:
+        raise StyxValidationError("`inmask` must not be None")
+    if not isinstance(params["inmask"], bool):
+        raise StyxValidationError(f'`inmask` has the wrong type: Received `{type(params.get("inmask", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("savemask", None) is not None:
+        if not isinstance(params["savemask"], str):
+            raise StyxValidationError(f'`savemask` has the wrong type: Received `{type(params.get("savemask", None))}` expected `str | None`')
+    if params.get("binary", False) is None:
+        raise StyxValidationError("`binary` must not be None")
+    if not isinstance(params["binary"], bool):
+        raise StyxValidationError(f'`binary` has the wrong type: Received `{type(params.get("binary", False))}` expected `bool`')
+
+
 def v_3dclust_cargs(
     params: V3dclustParameters,
     execution: Execution,
@@ -265,6 +358,7 @@ def v_3dclust_execute(
     Returns:
         NamedTuple of outputs (described in `V3dclustOutputs`).
     """
+    v_3dclust_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DCLUST_METADATA)
     params = execution.params(params)

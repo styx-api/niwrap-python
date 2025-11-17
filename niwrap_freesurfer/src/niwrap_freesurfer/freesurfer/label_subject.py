@@ -59,6 +59,26 @@ def label_subject_params(
     return params
 
 
+def label_subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelSubjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nu_file", None) is not None:
+        if not isinstance(params["nu_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nu_file` has the wrong type: Received `{type(params.get("nu_file", None))}` expected `InputPathType | None`')
+    if params.get("orig_dir", None) is not None:
+        if not isinstance(params["orig_dir"], str):
+            raise StyxValidationError(f'`orig_dir` has the wrong type: Received `{type(params.get("orig_dir", None))}` expected `str | None`')
+
+
 def label_subject_cargs(
     params: LabelSubjectParameters,
     execution: Execution,
@@ -120,6 +140,7 @@ def label_subject_execute(
     Returns:
         NamedTuple of outputs (described in `LabelSubjectOutputs`).
     """
+    label_subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL_SUBJECT_METADATA)
     params = execution.params(params)

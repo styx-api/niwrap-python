@@ -102,6 +102,66 @@ def v__diff_files_params(
     return params
 
 
+def v__diff_files_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDiffFilesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("files", None) is None:
+        raise StyxValidationError("`files` must not be None")
+    if not isinstance(params["files"], list):
+        raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[str]`')
+    for e in params["files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`files` has the wrong type: Received `{type(params.get("files", None))}` expected `list[str]`')
+    if params.get("old_dir", None) is None:
+        raise StyxValidationError("`old_dir` must not be None")
+    if not isinstance(params["old_dir"], str):
+        raise StyxValidationError(f'`old_dir` has the wrong type: Received `{type(params.get("old_dir", None))}` expected `str`')
+    if params.get("diff_opts", None) is not None:
+        if not isinstance(params["diff_opts"], str):
+            raise StyxValidationError(f'`diff_opts` has the wrong type: Received `{type(params.get("diff_opts", None))}` expected `str | None`')
+    if params.get("diff_prog", None) is not None:
+        if not isinstance(params["diff_prog"], str):
+            raise StyxValidationError(f'`diff_prog` has the wrong type: Received `{type(params.get("diff_prog", None))}` expected `str | None`')
+    if params.get("ignore_missing", False) is None:
+        raise StyxValidationError("`ignore_missing` must not be None")
+    if not isinstance(params["ignore_missing"], bool):
+        raise StyxValidationError(f'`ignore_missing` has the wrong type: Received `{type(params.get("ignore_missing", False))}` expected `bool`')
+    if params.get("longlist", False) is None:
+        raise StyxValidationError("`longlist` must not be None")
+    if not isinstance(params["longlist"], bool):
+        raise StyxValidationError(f'`longlist` has the wrong type: Received `{type(params.get("longlist", False))}` expected `bool`')
+    if params.get("save", False) is None:
+        raise StyxValidationError("`save` must not be None")
+    if not isinstance(params["save"], bool):
+        raise StyxValidationError(f'`save` has the wrong type: Received `{type(params.get("save", False))}` expected `bool`')
+    if params.get("show", False) is None:
+        raise StyxValidationError("`show` must not be None")
+    if not isinstance(params["show"], bool):
+        raise StyxValidationError(f'`show` has the wrong type: Received `{type(params.get("show", False))}` expected `bool`')
+    if params.get("xxdiff", False) is None:
+        raise StyxValidationError("`xxdiff` must not be None")
+    if not isinstance(params["xxdiff"], bool):
+        raise StyxValidationError(f'`xxdiff` has the wrong type: Received `{type(params.get("xxdiff", False))}` expected `bool`')
+    if params.get("X_flag", False) is None:
+        raise StyxValidationError("`X_flag` must not be None")
+    if not isinstance(params["X_flag"], bool):
+        raise StyxValidationError(f'`X_flag` has the wrong type: Received `{type(params.get("X_flag", False))}` expected `bool`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+        if 1 <= params["verbosity"] <= 3:
+            raise StyxValidationError("Parameter `verbosity` must be between 1 and 3 (inclusive)")
+
+
 def v__diff_files_cargs(
     params: VDiffFilesParameters,
     execution: Execution,
@@ -188,6 +248,7 @@ def v__diff_files_execute(
     Returns:
         NamedTuple of outputs (described in `VDiffFilesOutputs`).
     """
+    v__diff_files_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DIFF_FILES_METADATA)
     params = execution.params(params)

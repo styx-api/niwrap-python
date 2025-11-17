@@ -173,6 +173,100 @@ def mris_apply_reg_params(
     return params
 
 
+def mris_apply_reg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisApplyRegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("src_input", None) is None:
+        raise StyxValidationError("`src_input` must not be None")
+    if not isinstance(params["src_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`src_input` has the wrong type: Received `{type(params.get("src_input", None))}` expected `InputPathType`')
+    if params.get("trg_output", None) is None:
+        raise StyxValidationError("`trg_output` must not be None")
+    if not isinstance(params["trg_output"], str):
+        raise StyxValidationError(f'`trg_output` has the wrong type: Received `{type(params.get("trg_output", None))}` expected `str`')
+    if params.get("streg_pair", None) is None:
+        raise StyxValidationError("`streg_pair` must not be None")
+    if not isinstance(params["streg_pair"], str):
+        raise StyxValidationError(f'`streg_pair` has the wrong type: Received `{type(params.get("streg_pair", None))}` expected `str`')
+    if params.get("src_label", None) is not None:
+        if not isinstance(params["src_label"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`src_label` has the wrong type: Received `{type(params.get("src_label", None))}` expected `InputPathType | None`')
+    if params.get("src_annotation", None) is not None:
+        if not isinstance(params["src_annotation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`src_annotation` has the wrong type: Received `{type(params.get("src_annotation", None))}` expected `InputPathType | None`')
+    if params.get("src_xyz", None) is not None:
+        if not isinstance(params["src_xyz"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`src_xyz` has the wrong type: Received `{type(params.get("src_xyz", None))}` expected `InputPathType | None`')
+    if params.get("jacobian", False) is None:
+        raise StyxValidationError("`jacobian` must not be None")
+    if not isinstance(params["jacobian"], bool):
+        raise StyxValidationError(f'`jacobian` has the wrong type: Received `{type(params.get("jacobian", False))}` expected `bool`')
+    if params.get("no_reverse", False) is None:
+        raise StyxValidationError("`no_reverse` must not be None")
+    if not isinstance(params["no_reverse"], bool):
+        raise StyxValidationError(f'`no_reverse` has the wrong type: Received `{type(params.get("no_reverse", False))}` expected `bool`')
+    if params.get("rand_noise", False) is None:
+        raise StyxValidationError("`rand_noise` must not be None")
+    if not isinstance(params["rand_noise"], bool):
+        raise StyxValidationError(f'`rand_noise` has the wrong type: Received `{type(params.get("rand_noise", False))}` expected `bool`')
+    if params.get("replace_ones", False) is None:
+        raise StyxValidationError("`replace_ones` must not be None")
+    if not isinstance(params["replace_ones"], bool):
+        raise StyxValidationError(f'`replace_ones` has the wrong type: Received `{type(params.get("replace_ones", False))}` expected `bool`')
+    if params.get("center_output", False) is None:
+        raise StyxValidationError("`center_output` must not be None")
+    if not isinstance(params["center_output"], bool):
+        raise StyxValidationError(f'`center_output` has the wrong type: Received `{type(params.get("center_output", False))}` expected `bool`')
+    if params.get("curv_format", False) is None:
+        raise StyxValidationError("`curv_format` must not be None")
+    if not isinstance(params["curv_format"], bool):
+        raise StyxValidationError(f'`curv_format` has the wrong type: Received `{type(params.get("curv_format", False))}` expected `bool`')
+    if params.get("lta_transform", None) is not None:
+        if not isinstance(params["lta_transform"], str):
+            raise StyxValidationError(f'`lta_transform` has the wrong type: Received `{type(params.get("lta_transform", None))}` expected `str | None`')
+    if params.get("lta_patch_transform", None) is not None:
+        if not isinstance(params["lta_patch_transform"], str):
+            raise StyxValidationError(f'`lta_patch_transform` has the wrong type: Received `{type(params.get("lta_patch_transform", None))}` expected `str | None`')
+    if params.get("reverse_surface", None) is not None:
+        if not isinstance(params["reverse_surface"], str):
+            raise StyxValidationError(f'`reverse_surface` has the wrong type: Received `{type(params.get("reverse_surface", None))}` expected `str | None`')
+    if params.get("patch_apply", None) is not None:
+        if not isinstance(params["patch_apply"], str):
+            raise StyxValidationError(f'`patch_apply` has the wrong type: Received `{type(params.get("patch_apply", None))}` expected `str | None`')
+    if params.get("save_vertex_pair", None) is not None:
+        if not isinstance(params["save_vertex_pair"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`save_vertex_pair` has the wrong type: Received `{type(params.get("save_vertex_pair", None))}` expected `InputPathType | None`')
+    if params.get("m3z_transform", None) is not None:
+        if not isinstance(params["m3z_transform"], str):
+            raise StyxValidationError(f'`m3z_transform` has the wrong type: Received `{type(params.get("m3z_transform", None))}` expected `str | None`')
+    if params.get("inv_m3z_transform", None) is not None:
+        if not isinstance(params["inv_m3z_transform"], str):
+            raise StyxValidationError(f'`inv_m3z_transform` has the wrong type: Received `{type(params.get("inv_m3z_transform", None))}` expected `str | None`')
+    if params.get("src_reg_scale", None) is not None:
+        if not isinstance(params["src_reg_scale"], (float, int)):
+            raise StyxValidationError(f'`src_reg_scale` has the wrong type: Received `{type(params.get("src_reg_scale", None))}` expected `float | None`')
+    if params.get("trg_reg_scale", None) is not None:
+        if not isinstance(params["trg_reg_scale"], (float, int)):
+            raise StyxValidationError(f'`trg_reg_scale` has the wrong type: Received `{type(params.get("trg_reg_scale", None))}` expected `float | None`')
+    if params.get("debug_mode", False) is None:
+        raise StyxValidationError("`debug_mode` must not be None")
+    if not isinstance(params["debug_mode"], bool):
+        raise StyxValidationError(f'`debug_mode` has the wrong type: Received `{type(params.get("debug_mode", False))}` expected `bool`')
+    if params.get("check_options", False) is None:
+        raise StyxValidationError("`check_options` must not be None")
+    if not isinstance(params["check_options"], bool):
+        raise StyxValidationError(f'`check_options` has the wrong type: Received `{type(params.get("check_options", False))}` expected `bool`')
+
+
 def mris_apply_reg_cargs(
     params: MrisApplyRegParameters,
     execution: Execution,
@@ -318,6 +412,7 @@ def mris_apply_reg_execute(
     Returns:
         NamedTuple of outputs (described in `MrisApplyRegOutputs`).
     """
+    mris_apply_reg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_APPLY_REG_METADATA)
     params = execution.params(params)

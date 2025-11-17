@@ -92,6 +92,47 @@ def mris_warp_params(
     return params
 
 
+def mris_warp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisWarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("deformvol", None) is not None:
+        if not isinstance(params["deformvol"], str):
+            raise StyxValidationError(f'`deformvol` has the wrong type: Received `{type(params.get("deformvol", None))}` expected `str | None`')
+    if params.get("m3z", None) is not None:
+        if not isinstance(params["m3z"], str):
+            raise StyxValidationError(f'`m3z` has the wrong type: Received `{type(params.get("m3z", None))}` expected `str | None`')
+    if params.get("regfile", None) is not None:
+        if not isinstance(params["regfile"], str):
+            raise StyxValidationError(f'`regfile` has the wrong type: Received `{type(params.get("regfile", None))}` expected `str | None`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+    if params.get("out", None) is not None:
+        if not isinstance(params["out"], str):
+            raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str | None`')
+    if params.get("abs", False) is None:
+        raise StyxValidationError("`abs` must not be None")
+    if not isinstance(params["abs"], bool):
+        raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mris_warp_cargs(
     params: MrisWarpParameters,
     execution: Execution,
@@ -180,6 +221,7 @@ def mris_warp_execute(
     Returns:
         NamedTuple of outputs (described in `MrisWarpOutputs`).
     """
+    mris_warp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_WARP_METADATA)
     params = execution.params(params)

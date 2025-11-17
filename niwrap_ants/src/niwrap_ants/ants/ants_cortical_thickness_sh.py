@@ -219,6 +219,103 @@ def ants_cortical_thickness_sh_params(
     return params
 
 
+def ants_cortical_thickness_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsCorticalThicknessShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `typing.Literal[2, 3]`')
+    if params["image_dimension"] not in [2, 3]:
+        raise StyxValidationError("Parameter `image_dimension` must be one of [2, 3]")
+    if params.get("anatomical_image", None) is None:
+        raise StyxValidationError("`anatomical_image` must not be None")
+    if not isinstance(params["anatomical_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anatomical_image` has the wrong type: Received `{type(params.get("anatomical_image", None))}` expected `InputPathType`')
+    if params.get("brain_template", None) is None:
+        raise StyxValidationError("`brain_template` must not be None")
+    if not isinstance(params["brain_template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain_template` has the wrong type: Received `{type(params.get("brain_template", None))}` expected `InputPathType`')
+    if params.get("brain_extraction_probability_mask", None) is None:
+        raise StyxValidationError("`brain_extraction_probability_mask` must not be None")
+    if not isinstance(params["brain_extraction_probability_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain_extraction_probability_mask` has the wrong type: Received `{type(params.get("brain_extraction_probability_mask", None))}` expected `InputPathType`')
+    if params.get("brain_segmentation_priors", None) is None:
+        raise StyxValidationError("`brain_segmentation_priors` must not be None")
+    if not isinstance(params["brain_segmentation_priors"], str):
+        raise StyxValidationError(f'`brain_segmentation_priors` has the wrong type: Received `{type(params.get("brain_segmentation_priors", None))}` expected `str`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("image_file_suffix", None) is not None:
+        if not isinstance(params["image_file_suffix"], str):
+            raise StyxValidationError(f'`image_file_suffix` has the wrong type: Received `{type(params.get("image_file_suffix", None))}` expected `str | None`')
+    if params.get("template_for_t1_registration", None) is not None:
+        if not isinstance(params["template_for_t1_registration"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template_for_t1_registration` has the wrong type: Received `{type(params.get("template_for_t1_registration", None))}` expected `InputPathType | None`')
+    if params.get("extraction_registration_mask", None) is not None:
+        if not isinstance(params["extraction_registration_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`extraction_registration_mask` has the wrong type: Received `{type(params.get("extraction_registration_mask", None))}` expected `InputPathType | None`')
+    if params.get("keep_temporary_files", None) is not None:
+        if not isinstance(params["keep_temporary_files"], bool):
+            raise StyxValidationError(f'`keep_temporary_files` has the wrong type: Received `{type(params.get("keep_temporary_files", None))}` expected `bool | None`')
+    if params.get("denoise_anatomical_images", None) is not None:
+        if not isinstance(params["denoise_anatomical_images"], bool):
+            raise StyxValidationError(f'`denoise_anatomical_images` has the wrong type: Received `{type(params.get("denoise_anatomical_images", None))}` expected `bool | None`')
+    if params.get("max_iterations_for_registration", None) is not None:
+        if not isinstance(params["max_iterations_for_registration"], str):
+            raise StyxValidationError(f'`max_iterations_for_registration` has the wrong type: Received `{type(params.get("max_iterations_for_registration", None))}` expected `str | None`')
+    if params.get("atropos_prior_segmentation_weight", None) is not None:
+        if not isinstance(params["atropos_prior_segmentation_weight"], (float, int)):
+            raise StyxValidationError(f'`atropos_prior_segmentation_weight` has the wrong type: Received `{type(params.get("atropos_prior_segmentation_weight", None))}` expected `float | None`')
+    if params.get("number_of_segmentation_iterations", None) is not None:
+        if not isinstance(params["number_of_segmentation_iterations"], int):
+            raise StyxValidationError(f'`number_of_segmentation_iterations` has the wrong type: Received `{type(params.get("number_of_segmentation_iterations", None))}` expected `int | None`')
+    if params.get("posterior_formulation", None) is not None:
+        if not isinstance(params["posterior_formulation"], str):
+            raise StyxValidationError(f'`posterior_formulation` has the wrong type: Received `{type(params.get("posterior_formulation", None))}` expected `str | None`')
+    if params.get("use_floating_point_precision", None) is not None:
+        if not isinstance(params["use_floating_point_precision"], bool):
+            raise StyxValidationError(f'`use_floating_point_precision` has the wrong type: Received `{type(params.get("use_floating_point_precision", None))}` expected `bool | None`')
+    if params.get("use_random_seeding", None) is not None:
+        if not isinstance(params["use_random_seeding"], bool):
+            raise StyxValidationError(f'`use_random_seeding` has the wrong type: Received `{type(params.get("use_random_seeding", None))}` expected `bool | None`')
+    if params.get("use_b_spline_smoothing", None) is not None:
+        if not isinstance(params["use_b_spline_smoothing"], bool):
+            raise StyxValidationError(f'`use_b_spline_smoothing` has the wrong type: Received `{type(params.get("use_b_spline_smoothing", None))}` expected `bool | None`')
+    if params.get("cortical_thickness_prior_image", None) is not None:
+        if not isinstance(params["cortical_thickness_prior_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cortical_thickness_prior_image` has the wrong type: Received `{type(params.get("cortical_thickness_prior_image", None))}` expected `InputPathType | None`')
+    if params.get("label_propagation", None) is not None:
+        if not isinstance(params["label_propagation"], str):
+            raise StyxValidationError(f'`label_propagation` has the wrong type: Received `{type(params.get("label_propagation", None))}` expected `str | None`')
+    if params.get("additional_priors_for_thickness", None) is not None:
+        if not isinstance(params["additional_priors_for_thickness"], str):
+            raise StyxValidationError(f'`additional_priors_for_thickness` has the wrong type: Received `{type(params.get("additional_priors_for_thickness", None))}` expected `str | None`')
+    if params.get("use_quick_registration_parameters", None) is not None:
+        if not isinstance(params["use_quick_registration_parameters"], bool):
+            raise StyxValidationError(f'`use_quick_registration_parameters` has the wrong type: Received `{type(params.get("use_quick_registration_parameters", None))}` expected `bool | None`')
+    if params.get("atropos_iterations", None) is not None:
+        if not isinstance(params["atropos_iterations"], int):
+            raise StyxValidationError(f'`atropos_iterations` has the wrong type: Received `{type(params.get("atropos_iterations", None))}` expected `int | None`')
+    if params.get("script_stage_to_run", None) is not None:
+        if not isinstance(params["script_stage_to_run"], int):
+            raise StyxValidationError(f'`script_stage_to_run` has the wrong type: Received `{type(params.get("script_stage_to_run", None))}` expected `int | None`')
+    if params.get("test_debug_mode", None) is not None:
+        if not isinstance(params["test_debug_mode"], int):
+            raise StyxValidationError(f'`test_debug_mode` has the wrong type: Received `{type(params.get("test_debug_mode", None))}` expected `int | None`')
+
+
 def ants_cortical_thickness_sh_cargs(
     params: AntsCorticalThicknessShParameters,
     execution: Execution,
@@ -400,6 +497,7 @@ def ants_cortical_thickness_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsCorticalThicknessShOutputs`).
     """
+    ants_cortical_thickness_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_CORTICAL_THICKNESS_SH_METADATA)
     params = execution.params(params)

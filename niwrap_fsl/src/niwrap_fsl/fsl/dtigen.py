@@ -89,6 +89,51 @@ def dtigen_params(
     return params
 
 
+def dtigen_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DtigenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tensor", None) is None:
+        raise StyxValidationError("`tensor` must not be None")
+    if not isinstance(params["tensor"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tensor` has the wrong type: Received `{type(params.get("tensor", None))}` expected `InputPathType`')
+    if params.get("s0", None) is None:
+        raise StyxValidationError("`s0` must not be None")
+    if not isinstance(params["s0"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`s0` has the wrong type: Received `{type(params.get("s0", None))}` expected `InputPathType`')
+    if params.get("output_data", None) is None:
+        raise StyxValidationError("`output_data` must not be None")
+    if not isinstance(params["output_data"], str):
+        raise StyxValidationError(f'`output_data` has the wrong type: Received `{type(params.get("output_data", None))}` expected `str`')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
+    if params.get("brainmask", None) is None:
+        raise StyxValidationError("`brainmask` must not be None")
+    if not isinstance(params["brainmask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brainmask` has the wrong type: Received `{type(params.get("brainmask", None))}` expected `InputPathType`')
+    if params.get("kurtosis", None) is not None:
+        if not isinstance(params["kurtosis"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`kurtosis` has the wrong type: Received `{type(params.get("kurtosis", None))}` expected `InputPathType | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def dtigen_cargs(
     params: DtigenParameters,
     execution: Execution,
@@ -178,6 +223,7 @@ def dtigen_execute(
     Returns:
         NamedTuple of outputs (described in `DtigenOutputs`).
     """
+    dtigen_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DTIGEN_METADATA)
     params = execution.params(params)

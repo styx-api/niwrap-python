@@ -274,6 +274,119 @@ def ants_multivariate_template_construction2_sh_params(
     return params
 
 
+def ants_multivariate_template_construction2_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsMultivariateTemplateConstruction2ShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimension", None) is None:
+        raise StyxValidationError("`dimension` must not be None")
+    if not isinstance(params["dimension"], int):
+        raise StyxValidationError(f'`dimension` has the wrong type: Received `{type(params.get("dimension", None))}` expected `typing.Literal[2, 3, 4]`')
+    if params["dimension"] not in [2, 3, 4]:
+        raise StyxValidationError("Parameter `dimension` must be one of [2, 3, 4]")
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("image_statistic", None) is not None:
+        if not isinstance(params["image_statistic"], int):
+            raise StyxValidationError(f'`image_statistic` has the wrong type: Received `{type(params.get("image_statistic", None))}` expected `typing.Literal[0, 1, 2] | None`')
+        if params["image_statistic"] not in [0, 1, 2]:
+            raise StyxValidationError("Parameter `image_statistic` must be one of [0, 1, 2]")
+    if params.get("sharpening", None) is not None:
+        if not isinstance(params["sharpening"], int):
+            raise StyxValidationError(f'`sharpening` has the wrong type: Received `{type(params.get("sharpening", None))}` expected `typing.Literal[0, 1, 2] | None`')
+        if params["sharpening"] not in [0, 1, 2]:
+            raise StyxValidationError("Parameter `sharpening` must be one of [0, 1, 2]")
+    if params.get("backup_images", None) is not None:
+        if not isinstance(params["backup_images"], bool):
+            raise StyxValidationError(f'`backup_images` has the wrong type: Received `{type(params.get("backup_images", None))}` expected `bool | None`')
+    if params.get("parallel_control", None) is not None:
+        if not isinstance(params["parallel_control"], int):
+            raise StyxValidationError(f'`parallel_control` has the wrong type: Received `{type(params.get("parallel_control", None))}` expected `typing.Literal[0, 1, 2, 3, 4, 5] | None`')
+        if params["parallel_control"] not in [0, 1, 2, 3, 4, 5]:
+            raise StyxValidationError("Parameter `parallel_control` must be one of [0, 1, 2, 3, 4, 5]")
+    if params.get("single_precision", None) is not None:
+        if not isinstance(params["single_precision"], bool):
+            raise StyxValidationError(f'`single_precision` has the wrong type: Received `{type(params.get("single_precision", None))}` expected `bool | None`')
+    if params.get("gradient_step", None) is not None:
+        if not isinstance(params["gradient_step"], (float, int)):
+            raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float | None`')
+        if params["gradient_step"] <= 0.25:
+            raise StyxValidationError("Parameter `gradient_step` must be at most 0.25")
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], int):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `int | None`')
+    if params.get("cpu_cores", None) is not None:
+        if not isinstance(params["cpu_cores"], int):
+            raise StyxValidationError(f'`cpu_cores` has the wrong type: Received `{type(params.get("cpu_cores", None))}` expected `int | None`')
+    if params.get("num_modalities", None) is not None:
+        if not isinstance(params["num_modalities"], int):
+            raise StyxValidationError(f'`num_modalities` has the wrong type: Received `{type(params.get("num_modalities", None))}` expected `int | None`')
+    if params.get("modality_weights", None) is not None:
+        if not isinstance(params["modality_weights"], str):
+            raise StyxValidationError(f'`modality_weights` has the wrong type: Received `{type(params.get("modality_weights", None))}` expected `str | None`')
+    if params.get("max_iterations", None) is not None:
+        if not isinstance(params["max_iterations"], str):
+            raise StyxValidationError(f'`max_iterations` has the wrong type: Received `{type(params.get("max_iterations", None))}` expected `str | None`')
+    if params.get("shrink_factors", None) is not None:
+        if not isinstance(params["shrink_factors"], str):
+            raise StyxValidationError(f'`shrink_factors` has the wrong type: Received `{type(params.get("shrink_factors", None))}` expected `str | None`')
+    if params.get("smoothing_kernels", None) is not None:
+        if not isinstance(params["smoothing_kernels"], str):
+            raise StyxValidationError(f'`smoothing_kernels` has the wrong type: Received `{type(params.get("smoothing_kernels", None))}` expected `str | None`')
+    if params.get("n4_bias_correction", None) is not None:
+        if not isinstance(params["n4_bias_correction"], bool):
+            raise StyxValidationError(f'`n4_bias_correction` has the wrong type: Received `{type(params.get("n4_bias_correction", None))}` expected `bool | None`')
+    if params.get("prepend_commands", None) is not None:
+        if not isinstance(params["prepend_commands"], str):
+            raise StyxValidationError(f'`prepend_commands` has the wrong type: Received `{type(params.get("prepend_commands", None))}` expected `str | None`')
+    if params.get("rigid_registration", None) is not None:
+        if not isinstance(params["rigid_registration"], bool):
+            raise StyxValidationError(f'`rigid_registration` has the wrong type: Received `{type(params.get("rigid_registration", None))}` expected `bool | None`')
+    if params.get("linear_registration", None) is not None:
+        if not isinstance(params["linear_registration"], bool):
+            raise StyxValidationError(f'`linear_registration` has the wrong type: Received `{type(params.get("linear_registration", None))}` expected `bool | None`')
+    if params.get("similarity_metric", None) is not None:
+        if not isinstance(params["similarity_metric"], str):
+            raise StyxValidationError(f'`similarity_metric` has the wrong type: Received `{type(params.get("similarity_metric", None))}` expected `str | None`')
+    if params.get("transformation_type", None) is not None:
+        if not isinstance(params["transformation_type"], str):
+            raise StyxValidationError(f'`transformation_type` has the wrong type: Received `{type(params.get("transformation_type", None))}` expected `str | None`')
+    if params.get("walltime", None) is not None:
+        if not isinstance(params["walltime"], str):
+            raise StyxValidationError(f'`walltime` has the wrong type: Received `{type(params.get("walltime", None))}` expected `str | None`')
+    if params.get("memory_limit", None) is not None:
+        if not isinstance(params["memory_limit"], str):
+            raise StyxValidationError(f'`memory_limit` has the wrong type: Received `{type(params.get("memory_limit", None))}` expected `str | None`')
+    if params.get("xgrid_args", None) is not None:
+        if not isinstance(params["xgrid_args"], str):
+            raise StyxValidationError(f'`xgrid_args` has the wrong type: Received `{type(params.get("xgrid_args", None))}` expected `str | None`')
+    if params.get("update_template", None) is not None:
+        if not isinstance(params["update_template"], bool):
+            raise StyxValidationError(f'`update_template` has the wrong type: Received `{type(params.get("update_template", None))}` expected `bool | None`')
+    if params.get("target_volume", None) is not None:
+        if not isinstance(params["target_volume"], list):
+            raise StyxValidationError(f'`target_volume` has the wrong type: Received `{type(params.get("target_volume", None))}` expected `list[InputPathType] | None`')
+        for e in params["target_volume"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`target_volume` has the wrong type: Received `{type(params.get("target_volume", None))}` expected `list[InputPathType] | None`')
+    if params.get("input_images", None) is None:
+        raise StyxValidationError("`input_images` must not be None")
+    if not isinstance(params["input_images"], list):
+        raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    for e in params["input_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+
+
 def ants_multivariate_template_construction2_sh_cargs(
     params: AntsMultivariateTemplateConstruction2ShParameters,
     execution: Execution,
@@ -463,6 +576,7 @@ def ants_multivariate_template_construction2_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsMultivariateTemplateConstruction2ShOutputs`).
     """
+    ants_multivariate_template_construction2_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA)
     params = execution.params(params)

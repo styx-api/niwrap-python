@@ -83,6 +83,48 @@ def v__djunct_montage_coordinator_params(
     return params
 
 
+def v__djunct_montage_coordinator_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunctMontageCoordinatorParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("montx", None) is None:
+        raise StyxValidationError("`montx` must not be None")
+    if not isinstance(params["montx"], (float, int)):
+        raise StyxValidationError(f'`montx` has the wrong type: Received `{type(params.get("montx", None))}` expected `float`')
+    if params.get("monty", None) is None:
+        raise StyxValidationError("`monty` must not be None")
+    if not isinstance(params["monty"], (float, int)):
+        raise StyxValidationError(f'`monty` has the wrong type: Received `{type(params.get("monty", None))}` expected `float`')
+    if params.get("out_ijk", False) is None:
+        raise StyxValidationError("`out_ijk` must not be None")
+    if not isinstance(params["out_ijk"], bool):
+        raise StyxValidationError(f'`out_ijk` has the wrong type: Received `{type(params.get("out_ijk", False))}` expected `bool`')
+    if params.get("out_xyz", False) is None:
+        raise StyxValidationError("`out_xyz` must not be None")
+    if not isinstance(params["out_xyz"], bool):
+        raise StyxValidationError(f'`out_xyz` has the wrong type: Received `{type(params.get("out_xyz", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def v__djunct_montage_coordinator_cargs(
     params: VDjunctMontageCoordinatorParameters,
     execution: Execution,
@@ -161,6 +203,7 @@ def v__djunct_montage_coordinator_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunctMontageCoordinatorOutputs`).
     """
+    v__djunct_montage_coordinator_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_MONTAGE_COORDINATOR_METADATA)
     params = execution.params(params)

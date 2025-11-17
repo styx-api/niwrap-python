@@ -74,6 +74,37 @@ def convert_xfm_params(
     return params
 
 
+def convert_xfm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertXfmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("out_file", None) is not None:
+        if not isinstance(params["out_file"], str):
+            raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str | None`')
+    if params.get("invert_xfm", False) is None:
+        raise StyxValidationError("`invert_xfm` must not be None")
+    if not isinstance(params["invert_xfm"], bool):
+        raise StyxValidationError(f'`invert_xfm` has the wrong type: Received `{type(params.get("invert_xfm", False))}` expected `bool`')
+    if params.get("concat_xfm", None) is not None:
+        if not isinstance(params["concat_xfm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`concat_xfm` has the wrong type: Received `{type(params.get("concat_xfm", None))}` expected `InputPathType | None`')
+    if params.get("fix_scale_skew", None) is not None:
+        if not isinstance(params["fix_scale_skew"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fix_scale_skew` has the wrong type: Received `{type(params.get("fix_scale_skew", None))}` expected `InputPathType | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+
+
 def convert_xfm_cargs(
     params: ConvertXfmParameters,
     execution: Execution,
@@ -153,6 +184,7 @@ def convert_xfm_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertXfmOutputs`).
     """
+    convert_xfm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_XFM_METADATA)
     params = execution.params(params)

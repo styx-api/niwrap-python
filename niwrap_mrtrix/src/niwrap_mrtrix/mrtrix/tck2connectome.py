@@ -108,6 +108,28 @@ def tck2connectome_config_params(
     return params
 
 
+def tck2connectome_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tck2connectomeConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def tck2connectome_config_cargs(
     params: Tck2connectomeConfigParameters,
     execution: Execution,
@@ -273,6 +295,121 @@ def tck2connectome_params(
     return params
 
 
+def tck2connectome_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tck2connectomeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("assignment_end_voxels", False) is None:
+        raise StyxValidationError("`assignment_end_voxels` must not be None")
+    if not isinstance(params["assignment_end_voxels"], bool):
+        raise StyxValidationError(f'`assignment_end_voxels` has the wrong type: Received `{type(params.get("assignment_end_voxels", False))}` expected `bool`')
+    if params.get("assignment_radial_search", None) is not None:
+        if not isinstance(params["assignment_radial_search"], (float, int)):
+            raise StyxValidationError(f'`assignment_radial_search` has the wrong type: Received `{type(params.get("assignment_radial_search", None))}` expected `float | None`')
+    if params.get("assignment_reverse_search", None) is not None:
+        if not isinstance(params["assignment_reverse_search"], (float, int)):
+            raise StyxValidationError(f'`assignment_reverse_search` has the wrong type: Received `{type(params.get("assignment_reverse_search", None))}` expected `float | None`')
+    if params.get("assignment_forward_search", None) is not None:
+        if not isinstance(params["assignment_forward_search"], (float, int)):
+            raise StyxValidationError(f'`assignment_forward_search` has the wrong type: Received `{type(params.get("assignment_forward_search", None))}` expected `float | None`')
+    if params.get("assignment_all_voxels", False) is None:
+        raise StyxValidationError("`assignment_all_voxels` must not be None")
+    if not isinstance(params["assignment_all_voxels"], bool):
+        raise StyxValidationError(f'`assignment_all_voxels` has the wrong type: Received `{type(params.get("assignment_all_voxels", False))}` expected `bool`')
+    if params.get("scale_length", False) is None:
+        raise StyxValidationError("`scale_length` must not be None")
+    if not isinstance(params["scale_length"], bool):
+        raise StyxValidationError(f'`scale_length` has the wrong type: Received `{type(params.get("scale_length", False))}` expected `bool`')
+    if params.get("scale_invlength", False) is None:
+        raise StyxValidationError("`scale_invlength` must not be None")
+    if not isinstance(params["scale_invlength"], bool):
+        raise StyxValidationError(f'`scale_invlength` has the wrong type: Received `{type(params.get("scale_invlength", False))}` expected `bool`')
+    if params.get("scale_invnodevol", False) is None:
+        raise StyxValidationError("`scale_invnodevol` must not be None")
+    if not isinstance(params["scale_invnodevol"], bool):
+        raise StyxValidationError(f'`scale_invnodevol` has the wrong type: Received `{type(params.get("scale_invnodevol", False))}` expected `bool`')
+    if params.get("scale_file", None) is not None:
+        if not isinstance(params["scale_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`scale_file` has the wrong type: Received `{type(params.get("scale_file", None))}` expected `InputPathType | None`')
+    if params.get("symmetric", False) is None:
+        raise StyxValidationError("`symmetric` must not be None")
+    if not isinstance(params["symmetric"], bool):
+        raise StyxValidationError(f'`symmetric` has the wrong type: Received `{type(params.get("symmetric", False))}` expected `bool`')
+    if params.get("zero_diagonal", False) is None:
+        raise StyxValidationError("`zero_diagonal` must not be None")
+    if not isinstance(params["zero_diagonal"], bool):
+        raise StyxValidationError(f'`zero_diagonal` has the wrong type: Received `{type(params.get("zero_diagonal", False))}` expected `bool`')
+    if params.get("stat_edge", None) is not None:
+        if not isinstance(params["stat_edge"], str):
+            raise StyxValidationError(f'`stat_edge` has the wrong type: Received `{type(params.get("stat_edge", None))}` expected `str | None`')
+    if params.get("tck_weights_in", None) is not None:
+        if not isinstance(params["tck_weights_in"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tck_weights_in` has the wrong type: Received `{type(params.get("tck_weights_in", None))}` expected `InputPathType | None`')
+    if params.get("keep_unassigned", False) is None:
+        raise StyxValidationError("`keep_unassigned` must not be None")
+    if not isinstance(params["keep_unassigned"], bool):
+        raise StyxValidationError(f'`keep_unassigned` has the wrong type: Received `{type(params.get("keep_unassigned", False))}` expected `bool`')
+    if params.get("out_assignments", None) is not None:
+        if not isinstance(params["out_assignments"], str):
+            raise StyxValidationError(f'`out_assignments` has the wrong type: Received `{type(params.get("out_assignments", None))}` expected `str | None`')
+    if params.get("vector", False) is None:
+        raise StyxValidationError("`vector` must not be None")
+    if not isinstance(params["vector"], bool):
+        raise StyxValidationError(f'`vector` has the wrong type: Received `{type(params.get("vector", False))}` expected `bool`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Tck2connectomeConfigParameters] | None`')
+        for e in params["config"]:
+            tck2connectome_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("tracks_in", None) is None:
+        raise StyxValidationError("`tracks_in` must not be None")
+    if not isinstance(params["tracks_in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tracks_in` has the wrong type: Received `{type(params.get("tracks_in", None))}` expected `InputPathType`')
+    if params.get("nodes_in", None) is None:
+        raise StyxValidationError("`nodes_in` must not be None")
+    if not isinstance(params["nodes_in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`nodes_in` has the wrong type: Received `{type(params.get("nodes_in", None))}` expected `InputPathType`')
+    if params.get("connectome_out", None) is None:
+        raise StyxValidationError("`connectome_out` must not be None")
+    if not isinstance(params["connectome_out"], str):
+        raise StyxValidationError(f'`connectome_out` has the wrong type: Received `{type(params.get("connectome_out", None))}` expected `str`')
+
+
 def tck2connectome_cargs(
     params: Tck2connectomeParameters,
     execution: Execution,
@@ -421,6 +558,7 @@ def tck2connectome_execute(
     Returns:
         NamedTuple of outputs (described in `Tck2connectomeOutputs`).
     """
+    tck2connectome_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCK2CONNECTOME_METADATA)
     params = execution.params(params)

@@ -90,6 +90,46 @@ def fat_mvm_prep_py_params(
     return params
 
 
+def fat_mvm_prep_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatMvmPrepPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("csv_file", None) is None:
+        raise StyxValidationError("`csv_file` must not be None")
+    if not isinstance(params["csv_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`csv_file` has the wrong type: Received `{type(params.get("csv_file", None))}` expected `InputPathType`')
+    if params.get("matrix_files", None) is not None:
+        if not isinstance(params["matrix_files"], str):
+            raise StyxValidationError(f'`matrix_files` has the wrong type: Received `{type(params.get("matrix_files", None))}` expected `str | None`')
+    if params.get("list_match", None) is not None:
+        if not isinstance(params["list_match"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`list_match` has the wrong type: Received `{type(params.get("list_match", None))}` expected `InputPathType | None`')
+    if params.get("unionize_rois", False) is None:
+        raise StyxValidationError("`unionize_rois` must not be None")
+    if not isinstance(params["unionize_rois"], bool):
+        raise StyxValidationError(f'`unionize_rois` has the wrong type: Received `{type(params.get("unionize_rois", False))}` expected `bool`')
+    if params.get("na_warn_off", False) is None:
+        raise StyxValidationError("`na_warn_off` must not be None")
+    if not isinstance(params["na_warn_off"], bool):
+        raise StyxValidationError(f'`na_warn_off` has the wrong type: Received `{type(params.get("na_warn_off", False))}` expected `bool`')
+    if params.get("extern_labels_no", False) is None:
+        raise StyxValidationError("`extern_labels_no` must not be None")
+    if not isinstance(params["extern_labels_no"], bool):
+        raise StyxValidationError(f'`extern_labels_no` has the wrong type: Received `{type(params.get("extern_labels_no", False))}` expected `bool`')
+
+
 def fat_mvm_prep_py_cargs(
     params: FatMvmPrepPyParameters,
     execution: Execution,
@@ -172,6 +212,7 @@ def fat_mvm_prep_py_execute(
     Returns:
         NamedTuple of outputs (described in `FatMvmPrepPyOutputs`).
     """
+    fat_mvm_prep_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_MVM_PREP_PY_METADATA)
     params = execution.params(params)

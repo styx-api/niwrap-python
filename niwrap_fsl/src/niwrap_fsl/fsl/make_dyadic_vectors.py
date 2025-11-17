@@ -74,6 +74,38 @@ def make_dyadic_vectors_params(
     return params
 
 
+def make_dyadic_vectors_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeDyadicVectorsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("theta_vol", None) is None:
+        raise StyxValidationError("`theta_vol` must not be None")
+    if not isinstance(params["theta_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`theta_vol` has the wrong type: Received `{type(params.get("theta_vol", None))}` expected `InputPathType`')
+    if params.get("phi_vol", None) is None:
+        raise StyxValidationError("`phi_vol` must not be None")
+    if not isinstance(params["phi_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`phi_vol` has the wrong type: Received `{type(params.get("phi_vol", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("perc", None) is not None:
+        if not isinstance(params["perc"], (float, int)):
+            raise StyxValidationError(f'`perc` has the wrong type: Received `{type(params.get("perc", None))}` expected `float | None`')
+
+
 def make_dyadic_vectors_cargs(
     params: MakeDyadicVectorsParameters,
     execution: Execution,
@@ -138,6 +170,7 @@ def make_dyadic_vectors_execute(
     Returns:
         NamedTuple of outputs (described in `MakeDyadicVectorsOutputs`).
     """
+    make_dyadic_vectors_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_DYADIC_VECTORS_METADATA)
     params = execution.params(params)

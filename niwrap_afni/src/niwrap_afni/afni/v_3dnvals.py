@@ -59,6 +59,35 @@ def v_3dnvals_params(
     return params
 
 
+def v_3dnvals_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dnvalsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    if params.get("all_flag", False) is None:
+        raise StyxValidationError("`all_flag` must not be None")
+    if not isinstance(params["all_flag"], bool):
+        raise StyxValidationError(f'`all_flag` has the wrong type: Received `{type(params.get("all_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def v_3dnvals_cargs(
     params: V3dnvalsParameters,
     execution: Execution,
@@ -120,6 +149,7 @@ def v_3dnvals_execute(
     Returns:
         NamedTuple of outputs (described in `V3dnvalsOutputs`).
     """
+    v_3dnvals_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DNVALS_METADATA)
     params = execution.params(params)

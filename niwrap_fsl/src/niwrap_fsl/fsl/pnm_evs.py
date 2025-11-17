@@ -169,6 +169,86 @@ def pnm_evs_params(
     return params
 
 
+def pnm_evs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PnmEvsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("tr_value", None) is None:
+        raise StyxValidationError("`tr_value` must not be None")
+    if not isinstance(params["tr_value"], (float, int)):
+        raise StyxValidationError(f'`tr_value` has the wrong type: Received `{type(params.get("tr_value", None))}` expected `float`')
+    if params.get("cardiac_file", None) is not None:
+        if not isinstance(params["cardiac_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cardiac_file` has the wrong type: Received `{type(params.get("cardiac_file", None))}` expected `InputPathType | None`')
+    if params.get("respiratory_file", None) is not None:
+        if not isinstance(params["respiratory_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`respiratory_file` has the wrong type: Received `{type(params.get("respiratory_file", None))}` expected `InputPathType | None`')
+    if params.get("order_cardiac", None) is not None:
+        if not isinstance(params["order_cardiac"], (float, int)):
+            raise StyxValidationError(f'`order_cardiac` has the wrong type: Received `{type(params.get("order_cardiac", None))}` expected `float | None`')
+    if params.get("order_respiratory", None) is not None:
+        if not isinstance(params["order_respiratory"], (float, int)):
+            raise StyxValidationError(f'`order_respiratory` has the wrong type: Received `{type(params.get("order_respiratory", None))}` expected `float | None`')
+    if params.get("order_mult_cardiac", None) is not None:
+        if not isinstance(params["order_mult_cardiac"], (float, int)):
+            raise StyxValidationError(f'`order_mult_cardiac` has the wrong type: Received `{type(params.get("order_mult_cardiac", None))}` expected `float | None`')
+    if params.get("order_mult_respiratory", None) is not None:
+        if not isinstance(params["order_mult_respiratory"], (float, int)):
+            raise StyxValidationError(f'`order_mult_respiratory` has the wrong type: Received `{type(params.get("order_mult_respiratory", None))}` expected `float | None`')
+    if params.get("csf_mask", None) is not None:
+        if not isinstance(params["csf_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`csf_mask` has the wrong type: Received `{type(params.get("csf_mask", None))}` expected `InputPathType | None`')
+    if params.get("rvt_file", None) is not None:
+        if not isinstance(params["rvt_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rvt_file` has the wrong type: Received `{type(params.get("rvt_file", None))}` expected `InputPathType | None`')
+    if params.get("heartrate_file", None) is not None:
+        if not isinstance(params["heartrate_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`heartrate_file` has the wrong type: Received `{type(params.get("heartrate_file", None))}` expected `InputPathType | None`')
+    if params.get("rvt_smooth", None) is not None:
+        if not isinstance(params["rvt_smooth"], (float, int)):
+            raise StyxValidationError(f'`rvt_smooth` has the wrong type: Received `{type(params.get("rvt_smooth", None))}` expected `float | None`')
+    if params.get("heartrate_smooth", None) is not None:
+        if not isinstance(params["heartrate_smooth"], (float, int)):
+            raise StyxValidationError(f'`heartrate_smooth` has the wrong type: Received `{type(params.get("heartrate_smooth", None))}` expected `float | None`')
+    if params.get("slice_direction", None) is not None:
+        if not isinstance(params["slice_direction"], str):
+            raise StyxValidationError(f'`slice_direction` has the wrong type: Received `{type(params.get("slice_direction", None))}` expected `str | None`')
+    if params.get("slice_order", None) is not None:
+        if not isinstance(params["slice_order"], str):
+            raise StyxValidationError(f'`slice_order` has the wrong type: Received `{type(params.get("slice_order", None))}` expected `str | None`')
+    if params.get("slice_timing_file", None) is not None:
+        if not isinstance(params["slice_timing_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`slice_timing_file` has the wrong type: Received `{type(params.get("slice_timing_file", None))}` expected `InputPathType | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def pnm_evs_cargs(
     params: PnmEvsParameters,
     execution: Execution,
@@ -314,6 +394,7 @@ def pnm_evs_execute(
     Returns:
         NamedTuple of outputs (described in `PnmEvsOutputs`).
     """
+    pnm_evs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PNM_EVS_METADATA)
     params = execution.params(params)

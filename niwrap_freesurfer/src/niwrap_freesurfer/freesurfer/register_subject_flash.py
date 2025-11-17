@@ -51,6 +51,27 @@ def register_subject_flash_params(
     return params
 
 
+def register_subject_flash_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegisterSubjectFlashParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volumes", None) is None:
+        raise StyxValidationError("`input_volumes` must not be None")
+    if not isinstance(params["input_volumes"], list):
+        raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+    for e in params["input_volumes"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+
+
 def register_subject_flash_cargs(
     params: RegisterSubjectFlashParameters,
     execution: Execution,
@@ -109,6 +130,7 @@ def register_subject_flash_execute(
     Returns:
         NamedTuple of outputs (described in `RegisterSubjectFlashOutputs`).
     """
+    register_subject_flash_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REGISTER_SUBJECT_FLASH_METADATA)
     params = execution.params(params)

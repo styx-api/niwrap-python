@@ -59,6 +59,32 @@ def cp_dicom_params(
     return params
 
 
+def cp_dicom_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CpDicomParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dicom_dir", None) is None:
+        raise StyxValidationError("`dicom_dir` must not be None")
+    if not isinstance(params["dicom_dir"], str):
+        raise StyxValidationError(f'`dicom_dir` has the wrong type: Received `{type(params.get("dicom_dir", None))}` expected `str`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def cp_dicom_cargs(
     params: CpDicomParameters,
     execution: Execution,
@@ -126,6 +152,7 @@ def cp_dicom_execute(
     Returns:
         NamedTuple of outputs (described in `CpDicomOutputs`).
     """
+    cp_dicom_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CP_DICOM_METADATA)
     params = execution.params(params)

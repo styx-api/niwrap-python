@@ -66,6 +66,39 @@ def mris_segmentation_stats_params(
     return params
 
 
+def mris_segmentation_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSegmentationStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("overlay_name", None) is None:
+        raise StyxValidationError("`overlay_name` must not be None")
+    if not isinstance(params["overlay_name"], str):
+        raise StyxValidationError(f'`overlay_name` has the wrong type: Received `{type(params.get("overlay_name", None))}` expected `str`')
+    if params.get("segmentation_label_name", None) is None:
+        raise StyxValidationError("`segmentation_label_name` must not be None")
+    if not isinstance(params["segmentation_label_name"], str):
+        raise StyxValidationError(f'`segmentation_label_name` has the wrong type: Received `{type(params.get("segmentation_label_name", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("roc_file", None) is None:
+        raise StyxValidationError("`roc_file` must not be None")
+    if not isinstance(params["roc_file"], str):
+        raise StyxValidationError(f'`roc_file` has the wrong type: Received `{type(params.get("roc_file", None))}` expected `str`')
+
+
 def mris_segmentation_stats_cargs(
     params: MrisSegmentationStatsParameters,
     execution: Execution,
@@ -127,6 +160,7 @@ def mris_segmentation_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSegmentationStatsOutputs`).
     """
+    mris_segmentation_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SEGMENTATION_STATS_METADATA)
     params = execution.params(params)

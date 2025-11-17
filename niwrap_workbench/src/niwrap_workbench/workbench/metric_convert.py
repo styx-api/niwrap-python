@@ -81,6 +81,28 @@ def metric_convert_to_nifti_params(
     return params
 
 
+def metric_convert_to_nifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricConvertToNiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("nifti-out", None) is None:
+        raise StyxValidationError("`nifti-out` must not be None")
+    if not isinstance(params["nifti-out"], str):
+        raise StyxValidationError(f'`nifti-out` has the wrong type: Received `{type(params.get("nifti-out", None))}` expected `str`')
+
+
 def metric_convert_to_nifti_cargs(
     params: MetricConvertToNiftiParameters,
     execution: Execution,
@@ -155,6 +177,32 @@ def metric_convert_from_nifti_params(
         "metric-out": metric_out,
     }
     return params
+
+
+def metric_convert_from_nifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricConvertFromNiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nifti-in", None) is None:
+        raise StyxValidationError("`nifti-in` must not be None")
+    if not isinstance(params["nifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`nifti-in` has the wrong type: Received `{type(params.get("nifti-in", None))}` expected `InputPathType`')
+    if params.get("surface-in", None) is None:
+        raise StyxValidationError("`surface-in` must not be None")
+    if not isinstance(params["surface-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-in` has the wrong type: Received `{type(params.get("surface-in", None))}` expected `InputPathType`')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
 
 
 def metric_convert_from_nifti_cargs(
@@ -235,6 +283,24 @@ def metric_convert_params(
     return params
 
 
+def metric_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("to-nifti", None) is not None:
+        metric_convert_to_nifti_validate(params["to-nifti"])
+    if params.get("from-nifti", None) is not None:
+        metric_convert_from_nifti_validate(params["from-nifti"])
+
+
 def metric_convert_cargs(
     params: MetricConvertParameters,
     execution: Execution,
@@ -297,6 +363,7 @@ def metric_convert_execute(
     Returns:
         NamedTuple of outputs (described in `MetricConvertOutputs`).
     """
+    metric_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_CONVERT_METADATA)
     params = execution.params(params)

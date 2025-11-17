@@ -110,6 +110,28 @@ def probtrackx_dot_convert_row_voxels_params(
     return params
 
 
+def probtrackx_dot_convert_row_voxels_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ProbtrackxDotConvertRowVoxelsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("voxel-list-file", None) is None:
+        raise StyxValidationError("`voxel-list-file` must not be None")
+    if not isinstance(params["voxel-list-file"], str):
+        raise StyxValidationError(f'`voxel-list-file` has the wrong type: Received `{type(params.get("voxel-list-file", None))}` expected `str`')
+    if params.get("label-vol", None) is None:
+        raise StyxValidationError("`label-vol` must not be None")
+    if not isinstance(params["label-vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-vol` has the wrong type: Received `{type(params.get("label-vol", None))}` expected `InputPathType`')
+
+
 def probtrackx_dot_convert_row_voxels_cargs(
     params: ProbtrackxDotConvertRowVoxelsParameters,
     execution: Execution,
@@ -151,6 +173,28 @@ def probtrackx_dot_convert_row_cifti_params(
         "direction": direction,
     }
     return params
+
+
+def probtrackx_dot_convert_row_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ProbtrackxDotConvertRowCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def probtrackx_dot_convert_row_cifti_cargs(
@@ -197,6 +241,28 @@ def probtrackx_dot_convert_col_voxels_params(
     return params
 
 
+def probtrackx_dot_convert_col_voxels_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ProbtrackxDotConvertColVoxelsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("voxel-list-file", None) is None:
+        raise StyxValidationError("`voxel-list-file` must not be None")
+    if not isinstance(params["voxel-list-file"], str):
+        raise StyxValidationError(f'`voxel-list-file` has the wrong type: Received `{type(params.get("voxel-list-file", None))}` expected `str`')
+    if params.get("label-vol", None) is None:
+        raise StyxValidationError("`label-vol` must not be None")
+    if not isinstance(params["label-vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-vol` has the wrong type: Received `{type(params.get("label-vol", None))}` expected `InputPathType`')
+
+
 def probtrackx_dot_convert_col_voxels_cargs(
     params: ProbtrackxDotConvertColVoxelsParameters,
     execution: Execution,
@@ -238,6 +304,28 @@ def probtrackx_dot_convert_col_cifti_params(
         "direction": direction,
     }
     return params
+
+
+def probtrackx_dot_convert_col_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ProbtrackxDotConvertColCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def probtrackx_dot_convert_col_cifti_cargs(
@@ -325,6 +413,50 @@ def probtrackx_dot_convert_params(
     if col_cifti is not None:
         params["col-cifti"] = col_cifti
     return params
+
+
+def probtrackx_dot_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ProbtrackxDotConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("row-voxels", None) is not None:
+        probtrackx_dot_convert_row_voxels_validate(params["row-voxels"])
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("row-cifti", None) is not None:
+        probtrackx_dot_convert_row_cifti_validate(params["row-cifti"])
+    if params.get("col-voxels", None) is not None:
+        probtrackx_dot_convert_col_voxels_validate(params["col-voxels"])
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("col-cifti", None) is not None:
+        probtrackx_dot_convert_col_cifti_validate(params["col-cifti"])
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
+    if params.get("make-symmetric", False) is None:
+        raise StyxValidationError("`make-symmetric` must not be None")
+    if not isinstance(params["make-symmetric"], bool):
+        raise StyxValidationError(f'`make-symmetric` has the wrong type: Received `{type(params.get("make-symmetric", False))}` expected `bool`')
+    if params.get("dot-file", None) is None:
+        raise StyxValidationError("`dot-file` must not be None")
+    if not isinstance(params["dot-file"], str):
+        raise StyxValidationError(f'`dot-file` has the wrong type: Received `{type(params.get("dot-file", None))}` expected `str`')
 
 
 def probtrackx_dot_convert_cargs(
@@ -442,6 +574,7 @@ def probtrackx_dot_convert_execute(
     Returns:
         NamedTuple of outputs (described in `ProbtrackxDotConvertOutputs`).
     """
+    probtrackx_dot_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PROBTRACKX_DOT_CONVERT_METADATA)
     params = execution.params(params)

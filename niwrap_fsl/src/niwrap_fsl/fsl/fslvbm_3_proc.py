@@ -230,6 +230,124 @@ def fslvbm_3_proc_params(
     return params
 
 
+def fslvbm_3_proc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Fslvbm3ProcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("arch", None) is not None:
+        if not isinstance(params["arch"], str):
+            raise StyxValidationError(f'`arch` has the wrong type: Received `{type(params.get("arch", None))}` expected `str | None`')
+    if params.get("coprocessor", None) is not None:
+        if not isinstance(params["coprocessor"], str):
+            raise StyxValidationError(f'`coprocessor` has the wrong type: Received `{type(params.get("coprocessor", None))}` expected `str | None`')
+    if params.get("coprocessor_multi", None) is not None:
+        if not isinstance(params["coprocessor_multi"], str):
+            raise StyxValidationError(f'`coprocessor_multi` has the wrong type: Received `{type(params.get("coprocessor_multi", None))}` expected `str | None`')
+    if params.get("coprocessor_class", None) is not None:
+        if not isinstance(params["coprocessor_class"], str):
+            raise StyxValidationError(f'`coprocessor_class` has the wrong type: Received `{type(params.get("coprocessor_class", None))}` expected `str | None`')
+    if params.get("coprocessor_class_strict", False) is None:
+        raise StyxValidationError("`coprocessor_class_strict` must not be None")
+    if not isinstance(params["coprocessor_class_strict"], bool):
+        raise StyxValidationError(f'`coprocessor_class_strict` has the wrong type: Received `{type(params.get("coprocessor_class_strict", False))}` expected `bool`')
+    if params.get("coprocessor_toolkit", None) is not None:
+        if not isinstance(params["coprocessor_toolkit"], str):
+            raise StyxValidationError(f'`coprocessor_toolkit` has the wrong type: Received `{type(params.get("coprocessor_toolkit", None))}` expected `str | None`')
+    if params.get("not_requeueable", False) is None:
+        raise StyxValidationError("`not_requeueable` must not be None")
+    if not isinstance(params["not_requeueable"], bool):
+        raise StyxValidationError(f'`not_requeueable` has the wrong type: Received `{type(params.get("not_requeueable", False))}` expected `bool`')
+    if params.get("jobhold", None) is not None:
+        if not isinstance(params["jobhold"], str):
+            raise StyxValidationError(f'`jobhold` has the wrong type: Received `{type(params.get("jobhold", None))}` expected `str | None`')
+    if params.get("array_hold", None) is not None:
+        if not isinstance(params["array_hold"], str):
+            raise StyxValidationError(f'`array_hold` has the wrong type: Received `{type(params.get("array_hold", None))}` expected `str | None`')
+    if params.get("logdir", None) is not None:
+        if not isinstance(params["logdir"], str):
+            raise StyxValidationError(f'`logdir` has the wrong type: Received `{type(params.get("logdir", None))}` expected `str | None`')
+    if params.get("mailoptions", None) is not None:
+        if not isinstance(params["mailoptions"], str):
+            raise StyxValidationError(f'`mailoptions` has the wrong type: Received `{type(params.get("mailoptions", None))}` expected `str | None`')
+    if params.get("mailto", None) is not None:
+        if not isinstance(params["mailto"], str):
+            raise StyxValidationError(f'`mailto` has the wrong type: Received `{type(params.get("mailto", None))}` expected `str | None`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("priority", None) is not None:
+        if not isinstance(params["priority"], str):
+            raise StyxValidationError(f'`priority` has the wrong type: Received `{type(params.get("priority", None))}` expected `str | None`')
+    if params.get("queue", None) is not None:
+        if not isinstance(params["queue"], str):
+            raise StyxValidationError(f'`queue` has the wrong type: Received `{type(params.get("queue", None))}` expected `str | None`')
+    if params.get("resource", None) is not None:
+        if not isinstance(params["resource"], str):
+            raise StyxValidationError(f'`resource` has the wrong type: Received `{type(params.get("resource", None))}` expected `str | None`')
+    if params.get("delete_job", None) is not None:
+        if not isinstance(params["delete_job"], str):
+            raise StyxValidationError(f'`delete_job` has the wrong type: Received `{type(params.get("delete_job", None))}` expected `str | None`')
+    if params.get("memory_gb", None) is not None:
+        if not isinstance(params["memory_gb"], (float, int)):
+            raise StyxValidationError(f'`memory_gb` has the wrong type: Received `{type(params.get("memory_gb", None))}` expected `float | None`')
+    if params.get("parallel_env_threads", None) is not None:
+        if not isinstance(params["parallel_env_threads"], str):
+            raise StyxValidationError(f'`parallel_env_threads` has the wrong type: Received `{type(params.get("parallel_env_threads", None))}` expected `str | None`')
+    if params.get("array_task", None) is not None:
+        if not isinstance(params["array_task"], str):
+            raise StyxValidationError(f'`array_task` has the wrong type: Received `{type(params.get("array_task", None))}` expected `str | None`')
+    if params.get("array_native", None) is not None:
+        if not isinstance(params["array_native"], str):
+            raise StyxValidationError(f'`array_native` has the wrong type: Received `{type(params.get("array_native", None))}` expected `str | None`')
+    if params.get("number_jobscripts", None) is not None:
+        if not isinstance(params["number_jobscripts"], (float, int)):
+            raise StyxValidationError(f'`number_jobscripts` has the wrong type: Received `{type(params.get("number_jobscripts", None))}` expected `float | None`')
+    if params.get("keep_jobscript", False) is None:
+        raise StyxValidationError("`keep_jobscript` must not be None")
+    if not isinstance(params["keep_jobscript"], bool):
+        raise StyxValidationError(f'`keep_jobscript` has the wrong type: Received `{type(params.get("keep_jobscript", False))}` expected `bool`')
+    if params.get("coprocessor_name", None) is not None:
+        if not isinstance(params["coprocessor_name"], str):
+            raise StyxValidationError(f'`coprocessor_name` has the wrong type: Received `{type(params.get("coprocessor_name", None))}` expected `str | None`')
+    if params.get("has_queues", False) is None:
+        raise StyxValidationError("`has_queues` must not be None")
+    if not isinstance(params["has_queues"], bool):
+        raise StyxValidationError(f'`has_queues` has the wrong type: Received `{type(params.get("has_queues", False))}` expected `bool`')
+    if params.get("project", None) is not None:
+        if not isinstance(params["project"], str):
+            raise StyxValidationError(f'`project` has the wrong type: Received `{type(params.get("project", None))}` expected `str | None`')
+    if params.get("submit_scheduler", False) is None:
+        raise StyxValidationError("`submit_scheduler` must not be None")
+    if not isinstance(params["submit_scheduler"], bool):
+        raise StyxValidationError(f'`submit_scheduler` has the wrong type: Received `{type(params.get("submit_scheduler", False))}` expected `bool`')
+    if params.get("runtime_limit", None) is not None:
+        if not isinstance(params["runtime_limit"], (float, int)):
+            raise StyxValidationError(f'`runtime_limit` has the wrong type: Received `{type(params.get("runtime_limit", None))}` expected `float | None`')
+    if params.get("show_config", False) is None:
+        raise StyxValidationError("`show_config` must not be None")
+    if not isinstance(params["show_config"], bool):
+        raise StyxValidationError(f'`show_config` has the wrong type: Received `{type(params.get("show_config", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("config_file", None) is not None:
+        if not isinstance(params["config_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`config_file` has the wrong type: Received `{type(params.get("config_file", None))}` expected `InputPathType | None`')
+
+
 def fslvbm_3_proc_cargs(
     params: Fslvbm3ProcParameters,
     execution: Execution,
@@ -423,6 +541,7 @@ def fslvbm_3_proc_execute(
     Returns:
         NamedTuple of outputs (described in `Fslvbm3ProcOutputs`).
     """
+    fslvbm_3_proc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLVBM_3_PROC_METADATA)
     params = execution.params(params)

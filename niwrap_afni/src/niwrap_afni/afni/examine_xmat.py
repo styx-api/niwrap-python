@@ -102,6 +102,48 @@ def examine_xmat_params(
     return params
 
 
+def examine_xmat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExamineXmatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is not None:
+        if not isinstance(params["input_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType | None`')
+    if params.get("interactive", False) is None:
+        raise StyxValidationError("`interactive` must not be None")
+    if not isinstance(params["interactive"], bool):
+        raise StyxValidationError(f'`interactive` has the wrong type: Received `{type(params.get("interactive", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("cprefix", None) is not None:
+        if not isinstance(params["cprefix"], str):
+            raise StyxValidationError(f'`cprefix` has the wrong type: Received `{type(params.get("cprefix", None))}` expected `str | None`')
+    if params.get("pprefix", None) is not None:
+        if not isinstance(params["pprefix"], str):
+            raise StyxValidationError(f'`pprefix` has the wrong type: Received `{type(params.get("pprefix", None))}` expected `str | None`')
+    if params.get("select", None) is not None:
+        if not isinstance(params["select"], str):
+            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `str | None`')
+    if params.get("msg_trace", False) is None:
+        raise StyxValidationError("`msg_trace` must not be None")
+    if not isinstance(params["msg_trace"], bool):
+        raise StyxValidationError(f'`msg_trace` has the wrong type: Received `{type(params.get("msg_trace", False))}` expected `bool`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+        if params["verbosity"] >= 0:
+            raise StyxValidationError("Parameter `verbosity` must be at least 0")
+
+
 def examine_xmat_cargs(
     params: ExamineXmatParameters,
     execution: Execution,
@@ -197,6 +239,7 @@ def examine_xmat_execute(
     Returns:
         NamedTuple of outputs (described in `ExamineXmatOutputs`).
     """
+    examine_xmat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EXAMINE_XMAT_METADATA)
     params = execution.params(params)

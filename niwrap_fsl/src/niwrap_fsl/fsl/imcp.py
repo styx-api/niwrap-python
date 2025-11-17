@@ -56,6 +56,31 @@ def imcp_params(
     return params
 
 
+def imcp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `ImcpParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infiles", None) is None:
+        raise StyxValidationError("`infiles` must not be None")
+    if not isinstance(params["infiles"], list):
+        raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    for e in params["infiles"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`infiles` has the wrong type: Received `{type(params.get("infiles", None))}` expected `list[InputPathType]`')
+    if params.get("output_location", None) is None:
+        raise StyxValidationError("`output_location` must not be None")
+    if not isinstance(params["output_location"], str):
+        raise StyxValidationError(f'`output_location` has the wrong type: Received `{type(params.get("output_location", None))}` expected `str`')
+
+
 def imcp_cargs(
     params: ImcpParameters,
     execution: Execution,
@@ -115,6 +140,7 @@ def imcp_execute(
     Returns:
         NamedTuple of outputs (described in `ImcpOutputs`).
     """
+    imcp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMCP_METADATA)
     params = execution.params(params)

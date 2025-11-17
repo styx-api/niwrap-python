@@ -74,6 +74,40 @@ def fs_time_params(
     return params
 
 
+def fs_time_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsTimeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("key", None) is not None:
+        if not isinstance(params["key"], str):
+            raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str | None`')
+    if params.get("load_avg", False) is None:
+        raise StyxValidationError("`load_avg` must not be None")
+    if not isinstance(params["load_avg"], bool):
+        raise StyxValidationError(f'`load_avg` has the wrong type: Received `{type(params.get("load_avg", False))}` expected `bool`')
+    if params.get("command", None) is None:
+        raise StyxValidationError("`command` must not be None")
+    if not isinstance(params["command"], str):
+        raise StyxValidationError(f'`command` has the wrong type: Received `{type(params.get("command", None))}` expected `str`')
+    if params.get("args", None) is not None:
+        if not isinstance(params["args"], list):
+            raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `list[str] | None`')
+        for e in params["args"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `list[str] | None`')
+
+
 def fs_time_cargs(
     params: FsTimeParameters,
     execution: Execution,
@@ -147,6 +181,7 @@ def fs_time_execute(
     Returns:
         NamedTuple of outputs (described in `FsTimeOutputs`).
     """
+    fs_time_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_TIME_METADATA)
     params = execution.params(params)

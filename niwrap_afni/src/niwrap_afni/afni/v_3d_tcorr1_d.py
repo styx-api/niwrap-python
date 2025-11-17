@@ -90,6 +90,52 @@ def v_3d_tcorr1_d_params(
     return params
 
 
+def v_3d_tcorr1_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTcorr1DParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ktaub", False) is None:
+        raise StyxValidationError("`ktaub` must not be None")
+    if not isinstance(params["ktaub"], bool):
+        raise StyxValidationError(f'`ktaub` has the wrong type: Received `{type(params.get("ktaub", False))}` expected `bool`')
+    if params.get("num_threads", None) is not None:
+        if not isinstance(params["num_threads"], int):
+            raise StyxValidationError(f'`num_threads` has the wrong type: Received `{type(params.get("num_threads", None))}` expected `int | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("pearson", False) is None:
+        raise StyxValidationError("`pearson` must not be None")
+    if not isinstance(params["pearson"], bool):
+        raise StyxValidationError(f'`pearson` has the wrong type: Received `{type(params.get("pearson", False))}` expected `bool`')
+    if params.get("quadrant", False) is None:
+        raise StyxValidationError("`quadrant` must not be None")
+    if not isinstance(params["quadrant"], bool):
+        raise StyxValidationError(f'`quadrant` has the wrong type: Received `{type(params.get("quadrant", False))}` expected `bool`')
+    if params.get("spearman", False) is None:
+        raise StyxValidationError("`spearman` must not be None")
+    if not isinstance(params["spearman"], bool):
+        raise StyxValidationError(f'`spearman` has the wrong type: Received `{type(params.get("spearman", False))}` expected `bool`')
+    if params.get("xset", None) is None:
+        raise StyxValidationError("`xset` must not be None")
+    if not isinstance(params["xset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xset` has the wrong type: Received `{type(params.get("xset", None))}` expected `InputPathType`')
+    if params.get("y_1d", None) is None:
+        raise StyxValidationError("`y_1d` must not be None")
+    if not isinstance(params["y_1d"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`y_1d` has the wrong type: Received `{type(params.get("y_1d", None))}` expected `InputPathType`')
+
+
 def v_3d_tcorr1_d_cargs(
     params: V3dTcorr1DParameters,
     execution: Execution,
@@ -161,6 +207,7 @@ def v_3d_tcorr1_d_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTcorr1DOutputs`).
     """
+    v_3d_tcorr1_d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TCORR1_D_METADATA)
     params = execution.params(params)

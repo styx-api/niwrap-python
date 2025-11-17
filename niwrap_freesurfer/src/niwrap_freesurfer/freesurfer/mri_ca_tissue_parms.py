@@ -66,6 +66,39 @@ def mri_ca_tissue_parms_params(
     return params
 
 
+def mri_ca_tissue_parms_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCaTissueParmsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("spacing_flag", False) is None:
+        raise StyxValidationError("`spacing_flag` must not be None")
+    if not isinstance(params["spacing_flag"], bool):
+        raise StyxValidationError(f'`spacing_flag` has the wrong type: Received `{type(params.get("spacing_flag", False))}` expected `bool`')
+    if params.get("gradient_flag", False) is None:
+        raise StyxValidationError("`gradient_flag` must not be None")
+    if not isinstance(params["gradient_flag"], bool):
+        raise StyxValidationError(f'`gradient_flag` has the wrong type: Received `{type(params.get("gradient_flag", False))}` expected `bool`')
+
+
 def mri_ca_tissue_parms_cargs(
     params: MriCaTissueParmsParameters,
     execution: Execution,
@@ -129,6 +162,7 @@ def mri_ca_tissue_parms_execute(
     Returns:
         NamedTuple of outputs (described in `MriCaTissueParmsOutputs`).
     """
+    mri_ca_tissue_parms_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CA_TISSUE_PARMS_METADATA)
     params = execution.params(params)

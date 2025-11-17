@@ -107,6 +107,51 @@ def adwarp_params(
     return params
 
 
+def adwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("apar", None) is None:
+        raise StyxValidationError("`apar` must not be None")
+    if not isinstance(params["apar"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`apar` has the wrong type: Received `{type(params.get("apar", None))}` expected `InputPathType`')
+    if params.get("dpar", None) is None:
+        raise StyxValidationError("`dpar` must not be None")
+    if not isinstance(params["dpar"], str):
+        raise StyxValidationError(f'`dpar` has the wrong type: Received `{type(params.get("dpar", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("dxyz", None) is not None:
+        if not isinstance(params["dxyz"], (float, int)):
+            raise StyxValidationError(f'`dxyz` has the wrong type: Received `{type(params.get("dxyz", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("resam", None) is not None:
+        if not isinstance(params["resam"], str):
+            raise StyxValidationError(f'`resam` has the wrong type: Received `{type(params.get("resam", None))}` expected `str | None`')
+    if params.get("thr", None) is not None:
+        if not isinstance(params["thr"], str):
+            raise StyxValidationError(f'`thr` has the wrong type: Received `{type(params.get("thr", None))}` expected `str | None`')
+    if params.get("func", None) is not None:
+        if not isinstance(params["func"], str):
+            raise StyxValidationError(f'`func` has the wrong type: Received `{type(params.get("func", None))}` expected `str | None`')
+
+
 def adwarp_cargs(
     params: AdwarpParameters,
     execution: Execution,
@@ -203,6 +248,7 @@ def adwarp_execute(
     Returns:
         NamedTuple of outputs (described in `AdwarpOutputs`).
     """
+    adwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADWARP_METADATA)
     params = execution.params(params)

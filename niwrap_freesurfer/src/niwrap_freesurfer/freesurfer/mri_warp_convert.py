@@ -129,6 +129,63 @@ def mri_warp_convert_params(
     return params
 
 
+def mri_warp_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriWarpConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inm3z", None) is not None:
+        if not isinstance(params["inm3z"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`inm3z` has the wrong type: Received `{type(params.get("inm3z", None))}` expected `InputPathType | None`')
+    if params.get("infsl", None) is not None:
+        if not isinstance(params["infsl"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`infsl` has the wrong type: Received `{type(params.get("infsl", None))}` expected `InputPathType | None`')
+    if params.get("inlps", None) is not None:
+        if not isinstance(params["inlps"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`inlps` has the wrong type: Received `{type(params.get("inlps", None))}` expected `InputPathType | None`')
+    if params.get("initk", None) is not None:
+        if not isinstance(params["initk"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`initk` has the wrong type: Received `{type(params.get("initk", None))}` expected `InputPathType | None`')
+    if params.get("inras", None) is not None:
+        if not isinstance(params["inras"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`inras` has the wrong type: Received `{type(params.get("inras", None))}` expected `InputPathType | None`')
+    if params.get("invox", None) is not None:
+        if not isinstance(params["invox"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`invox` has the wrong type: Received `{type(params.get("invox", None))}` expected `InputPathType | None`')
+    if params.get("outm3z", None) is not None:
+        if not isinstance(params["outm3z"], str):
+            raise StyxValidationError(f'`outm3z` has the wrong type: Received `{type(params.get("outm3z", None))}` expected `str | None`')
+    if params.get("outfsl", None) is not None:
+        if not isinstance(params["outfsl"], str):
+            raise StyxValidationError(f'`outfsl` has the wrong type: Received `{type(params.get("outfsl", None))}` expected `str | None`')
+    if params.get("outlps", None) is not None:
+        if not isinstance(params["outlps"], str):
+            raise StyxValidationError(f'`outlps` has the wrong type: Received `{type(params.get("outlps", None))}` expected `str | None`')
+    if params.get("outitk", None) is not None:
+        if not isinstance(params["outitk"], str):
+            raise StyxValidationError(f'`outitk` has the wrong type: Received `{type(params.get("outitk", None))}` expected `str | None`')
+    if params.get("outras", None) is not None:
+        if not isinstance(params["outras"], str):
+            raise StyxValidationError(f'`outras` has the wrong type: Received `{type(params.get("outras", None))}` expected `str | None`')
+    if params.get("outvox", None) is not None:
+        if not isinstance(params["outvox"], str):
+            raise StyxValidationError(f'`outvox` has the wrong type: Received `{type(params.get("outvox", None))}` expected `str | None`')
+    if params.get("insrcgeom", None) is not None:
+        if not isinstance(params["insrcgeom"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`insrcgeom` has the wrong type: Received `{type(params.get("insrcgeom", None))}` expected `InputPathType | None`')
+    if params.get("downsample", False) is None:
+        raise StyxValidationError("`downsample` must not be None")
+    if not isinstance(params["downsample"], bool):
+        raise StyxValidationError(f'`downsample` has the wrong type: Received `{type(params.get("downsample", False))}` expected `bool`')
+
+
 def mri_warp_convert_cargs(
     params: MriWarpConvertParameters,
     execution: Execution,
@@ -253,6 +310,7 @@ def mri_warp_convert_execute(
     Returns:
         NamedTuple of outputs (described in `MriWarpConvertOutputs`).
     """
+    mri_warp_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_WARP_CONVERT_METADATA)
     params = execution.params(params)

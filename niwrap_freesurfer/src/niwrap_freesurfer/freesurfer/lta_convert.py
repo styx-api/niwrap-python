@@ -170,6 +170,87 @@ def lta_convert_params(
     return params
 
 
+def lta_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LtaConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_lta", None) is not None:
+        if not isinstance(params["in_lta"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_lta` has the wrong type: Received `{type(params.get("in_lta", None))}` expected `InputPathType | None`')
+    if params.get("in_fsl", None) is not None:
+        if not isinstance(params["in_fsl"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_fsl` has the wrong type: Received `{type(params.get("in_fsl", None))}` expected `InputPathType | None`')
+    if params.get("in_mni", None) is not None:
+        if not isinstance(params["in_mni"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_mni` has the wrong type: Received `{type(params.get("in_mni", None))}` expected `InputPathType | None`')
+    if params.get("in_reg", None) is not None:
+        if not isinstance(params["in_reg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_reg` has the wrong type: Received `{type(params.get("in_reg", None))}` expected `InputPathType | None`')
+    if params.get("in_niftyreg", None) is not None:
+        if not isinstance(params["in_niftyreg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_niftyreg` has the wrong type: Received `{type(params.get("in_niftyreg", None))}` expected `InputPathType | None`')
+    if params.get("in_itk", None) is not None:
+        if not isinstance(params["in_itk"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_itk` has the wrong type: Received `{type(params.get("in_itk", None))}` expected `InputPathType | None`')
+    if params.get("in_vox", None) is not None:
+        if not isinstance(params["in_vox"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_vox` has the wrong type: Received `{type(params.get("in_vox", None))}` expected `InputPathType | None`')
+    if params.get("out_lta", None) is not None:
+        if not isinstance(params["out_lta"], str):
+            raise StyxValidationError(f'`out_lta` has the wrong type: Received `{type(params.get("out_lta", None))}` expected `str | None`')
+    if params.get("out_fsl", None) is not None:
+        if not isinstance(params["out_fsl"], str):
+            raise StyxValidationError(f'`out_fsl` has the wrong type: Received `{type(params.get("out_fsl", None))}` expected `str | None`')
+    if params.get("out_mni", None) is not None:
+        if not isinstance(params["out_mni"], str):
+            raise StyxValidationError(f'`out_mni` has the wrong type: Received `{type(params.get("out_mni", None))}` expected `str | None`')
+    if params.get("out_reg", None) is not None:
+        if not isinstance(params["out_reg"], str):
+            raise StyxValidationError(f'`out_reg` has the wrong type: Received `{type(params.get("out_reg", None))}` expected `str | None`')
+    if params.get("out_niftyreg", None) is not None:
+        if not isinstance(params["out_niftyreg"], str):
+            raise StyxValidationError(f'`out_niftyreg` has the wrong type: Received `{type(params.get("out_niftyreg", None))}` expected `str | None`')
+    if params.get("out_itk", None) is not None:
+        if not isinstance(params["out_itk"], str):
+            raise StyxValidationError(f'`out_itk` has the wrong type: Received `{type(params.get("out_itk", None))}` expected `str | None`')
+    if params.get("out_vox", None) is not None:
+        if not isinstance(params["out_vox"], str):
+            raise StyxValidationError(f'`out_vox` has the wrong type: Received `{type(params.get("out_vox", None))}` expected `str | None`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+    if params.get("ltavox2vox", False) is None:
+        raise StyxValidationError("`ltavox2vox` must not be None")
+    if not isinstance(params["ltavox2vox"], bool):
+        raise StyxValidationError(f'`ltavox2vox` has the wrong type: Received `{type(params.get("ltavox2vox", False))}` expected `bool`')
+    if params.get("ltatkreg", False) is None:
+        raise StyxValidationError("`ltatkreg` must not be None")
+    if not isinstance(params["ltatkreg"], bool):
+        raise StyxValidationError(f'`ltatkreg` has the wrong type: Received `{type(params.get("ltatkreg", False))}` expected `bool`')
+    if params.get("src_geometry", None) is not None:
+        if not isinstance(params["src_geometry"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`src_geometry` has the wrong type: Received `{type(params.get("src_geometry", None))}` expected `InputPathType | None`')
+    if params.get("trg_geometry", None) is not None:
+        if not isinstance(params["trg_geometry"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`trg_geometry` has the wrong type: Received `{type(params.get("trg_geometry", None))}` expected `InputPathType | None`')
+    if params.get("trg_conform", False) is None:
+        raise StyxValidationError("`trg_conform` must not be None")
+    if not isinstance(params["trg_conform"], bool):
+        raise StyxValidationError(f'`trg_conform` has the wrong type: Received `{type(params.get("trg_conform", False))}` expected `bool`')
+    if params.get("subject_name", None) is not None:
+        if not isinstance(params["subject_name"], str):
+            raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str | None`')
+
+
 def lta_convert_cargs(
     params: LtaConvertParameters,
     execution: Execution,
@@ -320,6 +401,7 @@ def lta_convert_execute(
     Returns:
         NamedTuple of outputs (described in `LtaConvertOutputs`).
     """
+    lta_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LTA_CONVERT_METADATA)
     params = execution.params(params)

@@ -198,6 +198,110 @@ def mkheadsurf_params(
     return params
 
 
+def mkheadsurf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MkheadsurfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_vol", None) is None:
+        raise StyxValidationError("`input_vol` must not be None")
+    if not isinstance(params["input_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vol` has the wrong type: Received `{type(params.get("input_vol", None))}` expected `InputPathType`')
+    if params.get("output_vol", None) is None:
+        raise StyxValidationError("`output_vol` must not be None")
+    if not isinstance(params["output_vol"], str):
+        raise StyxValidationError(f'`output_vol` has the wrong type: Received `{type(params.get("output_vol", None))}` expected `str`')
+    if params.get("output_surf", None) is None:
+        raise StyxValidationError("`output_surf` must not be None")
+    if not isinstance(params["output_surf"], str):
+        raise StyxValidationError(f'`output_surf` has the wrong type: Received `{type(params.get("output_surf", None))}` expected `str`')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("nsmooth", None) is not None:
+        if not isinstance(params["nsmooth"], (float, int)):
+            raise StyxValidationError(f'`nsmooth` has the wrong type: Received `{type(params.get("nsmooth", None))}` expected `float | None`')
+    if params.get("noseghead", False) is None:
+        raise StyxValidationError("`noseghead` must not be None")
+    if not isinstance(params["noseghead"], bool):
+        raise StyxValidationError(f'`noseghead` has the wrong type: Received `{type(params.get("noseghead", False))}` expected `bool`')
+    if params.get("thresh1", None) is not None:
+        if not isinstance(params["thresh1"], (float, int)):
+            raise StyxValidationError(f'`thresh1` has the wrong type: Received `{type(params.get("thresh1", None))}` expected `float | None`')
+    if params.get("thresh2", None) is not None:
+        if not isinstance(params["thresh2"], (float, int)):
+            raise StyxValidationError(f'`thresh2` has the wrong type: Received `{type(params.get("thresh2", None))}` expected `float | None`')
+    if params.get("nhitsmin", None) is not None:
+        if not isinstance(params["nhitsmin"], (float, int)):
+            raise StyxValidationError(f'`nhitsmin` has the wrong type: Received `{type(params.get("nhitsmin", None))}` expected `float | None`')
+    if params.get("ndilate", None) is not None:
+        if not isinstance(params["ndilate"], (float, int)):
+            raise StyxValidationError(f'`ndilate` has the wrong type: Received `{type(params.get("ndilate", None))}` expected `float | None`')
+    if params.get("nerode", None) is not None:
+        if not isinstance(params["nerode"], (float, int)):
+            raise StyxValidationError(f'`nerode` has the wrong type: Received `{type(params.get("nerode", None))}` expected `float | None`')
+    if params.get("fillval", None) is not None:
+        if not isinstance(params["fillval"], (float, int)):
+            raise StyxValidationError(f'`fillval` has the wrong type: Received `{type(params.get("fillval", None))}` expected `float | None`')
+    if params.get("fhi", None) is not None:
+        if not isinstance(params["fhi"], (float, int)):
+            raise StyxValidationError(f'`fhi` has the wrong type: Received `{type(params.get("fhi", None))}` expected `float | None`')
+    if params.get("no_rescale", False) is None:
+        raise StyxValidationError("`no_rescale` must not be None")
+    if not isinstance(params["no_rescale"], bool):
+        raise StyxValidationError(f'`no_rescale` has the wrong type: Received `{type(params.get("no_rescale", False))}` expected `bool`')
+    if params.get("no_fill_holes_islands", False) is None:
+        raise StyxValidationError("`no_fill_holes_islands` must not be None")
+    if not isinstance(params["no_fill_holes_islands"], bool):
+        raise StyxValidationError(f'`no_fill_holes_islands` has the wrong type: Received `{type(params.get("no_fill_holes_islands", False))}` expected `bool`')
+    if params.get("or_mask", None) is not None:
+        if not isinstance(params["or_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`or_mask` has the wrong type: Received `{type(params.get("or_mask", None))}` expected `InputPathType | None`')
+    if params.get("tessellation_method", None) is not None:
+        if not isinstance(params["tessellation_method"], str):
+            raise StyxValidationError(f'`tessellation_method` has the wrong type: Received `{type(params.get("tessellation_method", None))}` expected `str | None`')
+    if params.get("inflate", False) is None:
+        raise StyxValidationError("`inflate` must not be None")
+    if not isinstance(params["inflate"], bool):
+        raise StyxValidationError(f'`inflate` has the wrong type: Received `{type(params.get("inflate", False))}` expected `bool`')
+    if params.get("curv", False) is None:
+        raise StyxValidationError("`curv` must not be None")
+    if not isinstance(params["curv"], bool):
+        raise StyxValidationError(f'`curv` has the wrong type: Received `{type(params.get("curv", False))}` expected `bool`')
+    if params.get("srcvol", None) is not None:
+        if not isinstance(params["srcvol"], str):
+            raise StyxValidationError(f'`srcvol` has the wrong type: Received `{type(params.get("srcvol", None))}` expected `str | None`')
+    if params.get("headvol", None) is not None:
+        if not isinstance(params["headvol"], str):
+            raise StyxValidationError(f'`headvol` has the wrong type: Received `{type(params.get("headvol", None))}` expected `str | None`')
+    if params.get("headsurf", None) is not None:
+        if not isinstance(params["headsurf"], str):
+            raise StyxValidationError(f'`headsurf` has the wrong type: Received `{type(params.get("headsurf", None))}` expected `str | None`')
+    if params.get("smheadsurf", None) is not None:
+        if not isinstance(params["smheadsurf"], str):
+            raise StyxValidationError(f'`smheadsurf` has the wrong type: Received `{type(params.get("smheadsurf", None))}` expected `str | None`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], (float, int)):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `float | None`')
+    if params.get("logfile", None) is not None:
+        if not isinstance(params["logfile"], str):
+            raise StyxValidationError(f'`logfile` has the wrong type: Received `{type(params.get("logfile", None))}` expected `str | None`')
+
+
 def mkheadsurf_cargs(
     params: MkheadsurfParameters,
     execution: Execution,
@@ -371,6 +475,7 @@ def mkheadsurf_execute(
     Returns:
         NamedTuple of outputs (described in `MkheadsurfOutputs`).
     """
+    mkheadsurf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MKHEADSURF_METADATA)
     params = execution.params(params)

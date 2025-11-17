@@ -74,6 +74,39 @@ def zip_spec_file_params(
     return params
 
 
+def zip_spec_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ZipSpecFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("directory", None) is not None:
+        if not isinstance(params["directory"], str):
+            raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str | None`')
+    if params.get("skip-missing", False) is None:
+        raise StyxValidationError("`skip-missing` must not be None")
+    if not isinstance(params["skip-missing"], bool):
+        raise StyxValidationError(f'`skip-missing` has the wrong type: Received `{type(params.get("skip-missing", False))}` expected `bool`')
+    if params.get("spec-file", None) is None:
+        raise StyxValidationError("`spec-file` must not be None")
+    if not isinstance(params["spec-file"], str):
+        raise StyxValidationError(f'`spec-file` has the wrong type: Received `{type(params.get("spec-file", None))}` expected `str`')
+    if params.get("extract-folder", None) is None:
+        raise StyxValidationError("`extract-folder` must not be None")
+    if not isinstance(params["extract-folder"], str):
+        raise StyxValidationError(f'`extract-folder` has the wrong type: Received `{type(params.get("extract-folder", None))}` expected `str`')
+    if params.get("zip-file", None) is None:
+        raise StyxValidationError("`zip-file` must not be None")
+    if not isinstance(params["zip-file"], str):
+        raise StyxValidationError(f'`zip-file` has the wrong type: Received `{type(params.get("zip-file", None))}` expected `str`')
+
+
 def zip_spec_file_cargs(
     params: ZipSpecFileParameters,
     execution: Execution,
@@ -141,6 +174,7 @@ def zip_spec_file_execute(
     Returns:
         NamedTuple of outputs (described in `ZipSpecFileOutputs`).
     """
+    zip_spec_file_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ZIP_SPEC_FILE_METADATA)
     params = execution.params(params)

@@ -56,6 +56,28 @@ def aff2rigid_params(
     return params
 
 
+def aff2rigid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Aff2rigidParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_transform", None) is None:
+        raise StyxValidationError("`input_transform` must not be None")
+    if not isinstance(params["input_transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_transform` has the wrong type: Received `{type(params.get("input_transform", None))}` expected `InputPathType`')
+    if params.get("output_transform", None) is None:
+        raise StyxValidationError("`output_transform` must not be None")
+    if not isinstance(params["output_transform"], str):
+        raise StyxValidationError(f'`output_transform` has the wrong type: Received `{type(params.get("output_transform", None))}` expected `str`')
+
+
 def aff2rigid_cargs(
     params: Aff2rigidParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def aff2rigid_execute(
     Returns:
         NamedTuple of outputs (described in `Aff2rigidOutputs`).
     """
+    aff2rigid_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFF2RIGID_METADATA)
     params = execution.params(params)

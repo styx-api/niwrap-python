@@ -161,6 +161,97 @@ def v_3drefit_params(
     return params
 
 
+def v_3drefit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3drefitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("atrcopy", None) is not None:
+        if not isinstance(params["atrcopy"], list):
+            raise StyxValidationError(f'`atrcopy` has the wrong type: Received `{type(params.get("atrcopy", None))}` expected `list[str] | None`')
+        if len(params["atrcopy"]) == 2:
+            raise StyxValidationError("Parameter `atrcopy` must contain exactly 2 elements")
+        for e in params["atrcopy"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`atrcopy` has the wrong type: Received `{type(params.get("atrcopy", None))}` expected `list[str] | None`')
+    if params.get("atrfloat", None) is not None:
+        if not isinstance(params["atrfloat"], list):
+            raise StyxValidationError(f'`atrfloat` has the wrong type: Received `{type(params.get("atrfloat", None))}` expected `list[str] | None`')
+        if len(params["atrfloat"]) == 2:
+            raise StyxValidationError("Parameter `atrfloat` must contain exactly 2 elements")
+        for e in params["atrfloat"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`atrfloat` has the wrong type: Received `{type(params.get("atrfloat", None))}` expected `list[str] | None`')
+    if params.get("atrint", None) is not None:
+        if not isinstance(params["atrint"], list):
+            raise StyxValidationError(f'`atrint` has the wrong type: Received `{type(params.get("atrint", None))}` expected `list[str] | None`')
+        if len(params["atrint"]) == 2:
+            raise StyxValidationError("Parameter `atrint` must contain exactly 2 elements")
+        for e in params["atrint"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`atrint` has the wrong type: Received `{type(params.get("atrint", None))}` expected `list[str] | None`')
+    if params.get("atrstring", None) is not None:
+        if not isinstance(params["atrstring"], list):
+            raise StyxValidationError(f'`atrstring` has the wrong type: Received `{type(params.get("atrstring", None))}` expected `list[str] | None`')
+        if len(params["atrstring"]) == 2:
+            raise StyxValidationError("Parameter `atrstring` must contain exactly 2 elements")
+        for e in params["atrstring"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`atrstring` has the wrong type: Received `{type(params.get("atrstring", None))}` expected `list[str] | None`')
+    if params.get("deoblique", False) is None:
+        raise StyxValidationError("`deoblique` must not be None")
+    if not isinstance(params["deoblique"], bool):
+        raise StyxValidationError(f'`deoblique` has the wrong type: Received `{type(params.get("deoblique", False))}` expected `bool`')
+    if params.get("duporigin_file", None) is not None:
+        if not isinstance(params["duporigin_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`duporigin_file` has the wrong type: Received `{type(params.get("duporigin_file", None))}` expected `InputPathType | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("nosaveatr", False) is None:
+        raise StyxValidationError("`nosaveatr` must not be None")
+    if not isinstance(params["nosaveatr"], bool):
+        raise StyxValidationError(f'`nosaveatr` has the wrong type: Received `{type(params.get("nosaveatr", False))}` expected `bool`')
+    if params.get("saveatr", False) is None:
+        raise StyxValidationError("`saveatr` must not be None")
+    if not isinstance(params["saveatr"], bool):
+        raise StyxValidationError(f'`saveatr` has the wrong type: Received `{type(params.get("saveatr", False))}` expected `bool`')
+    if params.get("space", None) is not None:
+        if not isinstance(params["space"], str):
+            raise StyxValidationError(f'`space` has the wrong type: Received `{type(params.get("space", None))}` expected `typing.Literal["TLRC", "MNI", "ORIG"] | None`')
+        if params["space"] not in ["TLRC", "MNI", "ORIG"]:
+            raise StyxValidationError("Parameter `space` must be one of [\"TLRC\", \"MNI\", \"ORIG\"]")
+    if params.get("xdel", None) is not None:
+        if not isinstance(params["xdel"], (float, int)):
+            raise StyxValidationError(f'`xdel` has the wrong type: Received `{type(params.get("xdel", None))}` expected `float | None`')
+    if params.get("xorigin", None) is not None:
+        if not isinstance(params["xorigin"], str):
+            raise StyxValidationError(f'`xorigin` has the wrong type: Received `{type(params.get("xorigin", None))}` expected `str | None`')
+    if params.get("xyzscale", None) is not None:
+        if not isinstance(params["xyzscale"], (float, int)):
+            raise StyxValidationError(f'`xyzscale` has the wrong type: Received `{type(params.get("xyzscale", None))}` expected `float | None`')
+    if params.get("ydel", None) is not None:
+        if not isinstance(params["ydel"], (float, int)):
+            raise StyxValidationError(f'`ydel` has the wrong type: Received `{type(params.get("ydel", None))}` expected `float | None`')
+    if params.get("yorigin", None) is not None:
+        if not isinstance(params["yorigin"], str):
+            raise StyxValidationError(f'`yorigin` has the wrong type: Received `{type(params.get("yorigin", None))}` expected `str | None`')
+    if params.get("zdel", None) is not None:
+        if not isinstance(params["zdel"], (float, int)):
+            raise StyxValidationError(f'`zdel` has the wrong type: Received `{type(params.get("zdel", None))}` expected `float | None`')
+    if params.get("zorigin", None) is not None:
+        if not isinstance(params["zorigin"], str):
+            raise StyxValidationError(f'`zorigin` has the wrong type: Received `{type(params.get("zorigin", None))}` expected `str | None`')
+
+
 def v_3drefit_cargs(
     params: V3drefitParameters,
     execution: Execution,
@@ -290,6 +381,7 @@ def v_3drefit_execute(
     Returns:
         NamedTuple of outputs (described in `V3drefitOutputs`).
     """
+    v_3drefit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DREFIT_METADATA)
     params = execution.params(params)

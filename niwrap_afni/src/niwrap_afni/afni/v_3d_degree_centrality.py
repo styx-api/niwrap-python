@@ -95,6 +95,47 @@ def v_3d_degree_centrality_params(
     return params
 
 
+def v_3d_degree_centrality_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDegreeCentralityParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("autoclip", False) is None:
+        raise StyxValidationError("`autoclip` must not be None")
+    if not isinstance(params["autoclip"], bool):
+        raise StyxValidationError(f'`autoclip` has the wrong type: Received `{type(params.get("autoclip", False))}` expected `bool`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("oned_file", None) is not None:
+        if not isinstance(params["oned_file"], str):
+            raise StyxValidationError(f'`oned_file` has the wrong type: Received `{type(params.get("oned_file", None))}` expected `str | None`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], int):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `int | None`')
+    if params.get("sparsity", None) is not None:
+        if not isinstance(params["sparsity"], (float, int)):
+            raise StyxValidationError(f'`sparsity` has the wrong type: Received `{type(params.get("sparsity", None))}` expected `float | None`')
+    if params.get("thresh", None) is not None:
+        if not isinstance(params["thresh"], (float, int)):
+            raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `float | None`')
+
+
 def v_3d_degree_centrality_cargs(
     params: V3dDegreeCentralityParameters,
     execution: Execution,
@@ -186,6 +227,7 @@ def v_3d_degree_centrality_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDegreeCentralityOutputs`).
     """
+    v_3d_degree_centrality_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DEGREE_CENTRALITY_METADATA)
     params = execution.params(params)

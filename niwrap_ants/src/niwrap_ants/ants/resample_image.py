@@ -82,6 +82,46 @@ def resample_image_params(
     return params
 
 
+def resample_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ResampleImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("size_spacing", None) is None:
+        raise StyxValidationError("`size_spacing` must not be None")
+    if not isinstance(params["size_spacing"], str):
+        raise StyxValidationError(f'`size_spacing` has the wrong type: Received `{type(params.get("size_spacing", None))}` expected `str`')
+    if params.get("interpolate_type", None) is not None:
+        if not isinstance(params["interpolate_type"], str):
+            raise StyxValidationError(f'`interpolate_type` has the wrong type: Received `{type(params.get("interpolate_type", None))}` expected `typing.Literal["0", "1", "2", "3", "4"] | None`')
+        if params["interpolate_type"] not in ["0", "1", "2", "3", "4"]:
+            raise StyxValidationError("Parameter `interpolate_type` must be one of [\"0\", \"1\", \"2\", \"3\", \"4\"]")
+    if params.get("pixeltype", None) is not None:
+        if not isinstance(params["pixeltype"], str):
+            raise StyxValidationError(f'`pixeltype` has the wrong type: Received `{type(params.get("pixeltype", None))}` expected `typing.Literal["0", "1", "2", "3", "4", "5", "6", "7"] | None`')
+        if params["pixeltype"] not in ["0", "1", "2", "3", "4", "5", "6", "7"]:
+            raise StyxValidationError("Parameter `pixeltype` must be one of [\"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\"]")
+
+
 def resample_image_cargs(
     params: ResampleImageParameters,
     execution: Execution,
@@ -148,6 +188,7 @@ def resample_image_execute(
     Returns:
         NamedTuple of outputs (described in `ResampleImageOutputs`).
     """
+    resample_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RESAMPLE_IMAGE_METADATA)
     params = execution.params(params)

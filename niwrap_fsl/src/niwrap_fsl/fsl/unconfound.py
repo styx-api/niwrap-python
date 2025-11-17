@@ -62,6 +62,32 @@ def unconfound_params(
     return params
 
 
+def unconfound_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UnconfoundParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in4d", None) is None:
+        raise StyxValidationError("`in4d` must not be None")
+    if not isinstance(params["in4d"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in4d` has the wrong type: Received `{type(params.get("in4d", None))}` expected `InputPathType`')
+    if params.get("out4d", None) is None:
+        raise StyxValidationError("`out4d` must not be None")
+    if not isinstance(params["out4d"], str):
+        raise StyxValidationError(f'`out4d` has the wrong type: Received `{type(params.get("out4d", None))}` expected `str`')
+    if params.get("confound_mat", None) is None:
+        raise StyxValidationError("`confound_mat` must not be None")
+    if not isinstance(params["confound_mat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`confound_mat` has the wrong type: Received `{type(params.get("confound_mat", None))}` expected `InputPathType`')
+
+
 def unconfound_cargs(
     params: UnconfoundParameters,
     execution: Execution,
@@ -122,6 +148,7 @@ def unconfound_execute(
     Returns:
         NamedTuple of outputs (described in `UnconfoundOutputs`).
     """
+    unconfound_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UNCONFOUND_METADATA)
     params = execution.params(params)

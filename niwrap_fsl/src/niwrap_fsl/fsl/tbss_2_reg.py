@@ -62,6 +62,31 @@ def tbss_2_reg_params(
     return params
 
 
+def tbss_2_reg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tbss2RegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("use_fmrib58_fa_1mm", False) is None:
+        raise StyxValidationError("`use_fmrib58_fa_1mm` must not be None")
+    if not isinstance(params["use_fmrib58_fa_1mm"], bool):
+        raise StyxValidationError(f'`use_fmrib58_fa_1mm` has the wrong type: Received `{type(params.get("use_fmrib58_fa_1mm", False))}` expected `bool`')
+    if params.get("target_image", None) is not None:
+        if not isinstance(params["target_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`target_image` has the wrong type: Received `{type(params.get("target_image", None))}` expected `InputPathType | None`')
+    if params.get("find_best_target", False) is None:
+        raise StyxValidationError("`find_best_target` must not be None")
+    if not isinstance(params["find_best_target"], bool):
+        raise StyxValidationError(f'`find_best_target` has the wrong type: Received `{type(params.get("find_best_target", False))}` expected `bool`')
+
+
 def tbss_2_reg_cargs(
     params: Tbss2RegParameters,
     execution: Execution,
@@ -128,6 +153,7 @@ def tbss_2_reg_execute(
     Returns:
         NamedTuple of outputs (described in `Tbss2RegOutputs`).
     """
+    tbss_2_reg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_2_REG_METADATA)
     params = execution.params(params)

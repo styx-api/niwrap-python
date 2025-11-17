@@ -65,6 +65,35 @@ def v_3d_tsplit4_d_params(
     return params
 
 
+def v_3d_tsplit4_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTsplit4DParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("keep_datum", False) is None:
+        raise StyxValidationError("`keep_datum` must not be None")
+    if not isinstance(params["keep_datum"], bool):
+        raise StyxValidationError(f'`keep_datum` has the wrong type: Received `{type(params.get("keep_datum", False))}` expected `bool`')
+    if params.get("digits", None) is not None:
+        if not isinstance(params["digits"], (float, int)):
+            raise StyxValidationError(f'`digits` has the wrong type: Received `{type(params.get("digits", None))}` expected `float | None`')
+
+
 def v_3d_tsplit4_d_cargs(
     params: V3dTsplit4DParameters,
     execution: Execution,
@@ -133,6 +162,7 @@ def v_3d_tsplit4_d_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTsplit4DOutputs`).
     """
+    v_3d_tsplit4_d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TSPLIT4_D_METADATA)
     params = execution.params(params)

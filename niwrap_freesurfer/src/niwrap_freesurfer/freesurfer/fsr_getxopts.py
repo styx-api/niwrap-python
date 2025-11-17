@@ -49,6 +49,24 @@ def fsr_getxopts_params(
     return params
 
 
+def fsr_getxopts_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsrGetxoptsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def fsr_getxopts_cargs(
     params: FsrGetxoptsParameters,
     execution: Execution,
@@ -107,6 +125,7 @@ def fsr_getxopts_execute(
     Returns:
         NamedTuple of outputs (described in `FsrGetxoptsOutputs`).
     """
+    fsr_getxopts_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSR_GETXOPTS_METADATA)
     params = execution.params(params)

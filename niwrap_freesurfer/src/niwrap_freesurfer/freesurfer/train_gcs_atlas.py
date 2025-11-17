@@ -114,6 +114,60 @@ def train_gcs_atlas_params(
     return params
 
 
+def train_gcs_atlas_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TrainGcsAtlasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("manual_parcellation", None) is not None:
+        if not isinstance(params["manual_parcellation"], str):
+            raise StyxValidationError(f'`manual_parcellation` has the wrong type: Received `{type(params.get("manual_parcellation", None))}` expected `str | None`')
+    if params.get("subjlist_file", None) is not None:
+        if not isinstance(params["subjlist_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subjlist_file` has the wrong type: Received `{type(params.get("subjlist_file", None))}` expected `InputPathType | None`')
+    if params.get("left_hemi", False) is None:
+        raise StyxValidationError("`left_hemi` must not be None")
+    if not isinstance(params["left_hemi"], bool):
+        raise StyxValidationError(f'`left_hemi` has the wrong type: Received `{type(params.get("left_hemi", False))}` expected `bool`')
+    if params.get("right_hemi", False) is None:
+        raise StyxValidationError("`right_hemi` must not be None")
+    if not isinstance(params["right_hemi"], bool):
+        raise StyxValidationError(f'`right_hemi` has the wrong type: Received `{type(params.get("right_hemi", False))}` expected `bool`')
+    if params.get("hemi_spec", None) is not None:
+        if not isinstance(params["hemi_spec"], str):
+            raise StyxValidationError(f'`hemi_spec` has the wrong type: Received `{type(params.get("hemi_spec", None))}` expected `str | None`')
+    if params.get("output_gcs", None) is None:
+        raise StyxValidationError("`output_gcs` must not be None")
+    if not isinstance(params["output_gcs"], str):
+        raise StyxValidationError(f'`output_gcs` has the wrong type: Received `{type(params.get("output_gcs", None))}` expected `str`')
+    if params.get("surf_reg", None) is not None:
+        if not isinstance(params["surf_reg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_reg` has the wrong type: Received `{type(params.get("surf_reg", None))}` expected `InputPathType | None`')
+    if params.get("color_table", None) is not None:
+        if not isinstance(params["color_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`color_table` has the wrong type: Received `{type(params.get("color_table", None))}` expected `InputPathType | None`')
+    if params.get("exclude_subject", None) is not None:
+        if not isinstance(params["exclude_subject"], str):
+            raise StyxValidationError(f'`exclude_subject` has the wrong type: Received `{type(params.get("exclude_subject", None))}` expected `str | None`')
+    if params.get("jackknife_flag", False) is None:
+        raise StyxValidationError("`jackknife_flag` must not be None")
+    if not isinstance(params["jackknife_flag"], bool):
+        raise StyxValidationError(f'`jackknife_flag` has the wrong type: Received `{type(params.get("jackknife_flag", False))}` expected `bool`')
+    if params.get("aseg_filename", None) is not None:
+        if not isinstance(params["aseg_filename"], str):
+            raise StyxValidationError(f'`aseg_filename` has the wrong type: Received `{type(params.get("aseg_filename", None))}` expected `str | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+
+
 def train_gcs_atlas_cargs(
     params: TrainGcsAtlasParameters,
     execution: Execution,
@@ -222,6 +276,7 @@ def train_gcs_atlas_execute(
     Returns:
         NamedTuple of outputs (described in `TrainGcsAtlasOutputs`).
     """
+    train_gcs_atlas_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TRAIN_GCS_ATLAS_METADATA)
     params = execution.params(params)

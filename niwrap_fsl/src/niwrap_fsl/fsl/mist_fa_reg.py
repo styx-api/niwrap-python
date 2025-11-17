@@ -66,6 +66,36 @@ def mist_fa_reg_params(
     return params
 
 
+def mist_fa_reg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MistFaRegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fa_volume", None) is None:
+        raise StyxValidationError("`fa_volume` must not be None")
+    if not isinstance(params["fa_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fa_volume` has the wrong type: Received `{type(params.get("fa_volume", None))}` expected `InputPathType`')
+    if params.get("s0_volume", None) is None:
+        raise StyxValidationError("`s0_volume` must not be None")
+    if not isinstance(params["s0_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`s0_volume` has the wrong type: Received `{type(params.get("s0_volume", None))}` expected `InputPathType`')
+    if params.get("reference_t1_volume", None) is None:
+        raise StyxValidationError("`reference_t1_volume` must not be None")
+    if not isinstance(params["reference_t1_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_t1_volume` has the wrong type: Received `{type(params.get("reference_t1_volume", None))}` expected `InputPathType`')
+    if params.get("output_filename", None) is None:
+        raise StyxValidationError("`output_filename` must not be None")
+    if not isinstance(params["output_filename"], str):
+        raise StyxValidationError(f'`output_filename` has the wrong type: Received `{type(params.get("output_filename", None))}` expected `str`')
+
+
 def mist_fa_reg_cargs(
     params: MistFaRegParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def mist_fa_reg_execute(
     Returns:
         NamedTuple of outputs (described in `MistFaRegOutputs`).
     """
+    mist_fa_reg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MIST_FA_REG_METADATA)
     params = execution.params(params)

@@ -65,6 +65,35 @@ def bugr_params(
     return params
 
 
+def bugr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `BugrParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("command_line", None) is None:
+        raise StyxValidationError("`command_line` must not be None")
+    if not isinstance(params["command_line"], str):
+        raise StyxValidationError(f'`command_line` has the wrong type: Received `{type(params.get("command_line", None))}` expected `str`')
+    if params.get("error_message", None) is None:
+        raise StyxValidationError("`error_message` must not be None")
+    if not isinstance(params["error_message"], str):
+        raise StyxValidationError(f'`error_message` has the wrong type: Received `{type(params.get("error_message", None))}` expected `str`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `InputPathType | None`')
+
+
 def bugr_cargs(
     params: BugrParameters,
     execution: Execution,
@@ -138,6 +167,7 @@ def bugr_execute(
     Returns:
         NamedTuple of outputs (described in `BugrOutputs`).
     """
+    bugr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BUGR_METADATA)
     params = execution.params(params)

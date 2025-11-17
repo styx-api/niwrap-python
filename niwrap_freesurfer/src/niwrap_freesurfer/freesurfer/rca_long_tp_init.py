@@ -77,6 +77,43 @@ def rca_long_tp_init_params(
     return params
 
 
+def rca_long_tp_init_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RcaLongTpInitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timepoint", None) is None:
+        raise StyxValidationError("`timepoint` must not be None")
+    if not isinstance(params["timepoint"], str):
+        raise StyxValidationError(f'`timepoint` has the wrong type: Received `{type(params.get("timepoint", None))}` expected `str`')
+    if params.get("base", None) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], str):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `str`')
+    if params.get("use_long_base_ctrl_vol", False) is None:
+        raise StyxValidationError("`use_long_base_ctrl_vol` must not be None")
+    if not isinstance(params["use_long_base_ctrl_vol"], bool):
+        raise StyxValidationError(f'`use_long_base_ctrl_vol` has the wrong type: Received `{type(params.get("use_long_base_ctrl_vol", False))}` expected `bool`')
+    if params.get("hemisphere", None) is not None:
+        if not isinstance(params["hemisphere"], str):
+            raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `typing.Literal["lh", "rh"] | None`')
+        if params["hemisphere"] not in ["lh", "rh"]:
+            raise StyxValidationError("Parameter `hemisphere` must be one of [\"lh\", \"rh\"]")
+    if params.get("expert_opts", None) is not None:
+        if not isinstance(params["expert_opts"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`expert_opts` has the wrong type: Received `{type(params.get("expert_opts", None))}` expected `InputPathType | None`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+
+
 def rca_long_tp_init_cargs(
     params: RcaLongTpInitParameters,
     execution: Execution,
@@ -155,6 +192,7 @@ def rca_long_tp_init_execute(
     Returns:
         NamedTuple of outputs (described in `RcaLongTpInitOutputs`).
     """
+    rca_long_tp_init_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RCA_LONG_TP_INIT_METADATA)
     params = execution.params(params)

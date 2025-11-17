@@ -174,6 +174,111 @@ def run_samseg_long_params(
     return params
 
 
+def run_samseg_long_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunSamsegLongParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timepoint", None) is None:
+        raise StyxValidationError("`timepoint` must not be None")
+    if not isinstance(params["timepoint"], list):
+        raise StyxValidationError(f'`timepoint` has the wrong type: Received `{type(params.get("timepoint", None))}` expected `list[InputPathType]`')
+    for e in params["timepoint"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`timepoint` has the wrong type: Received `{type(params.get("timepoint", None))}` expected `list[InputPathType]`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("lesion", False) is None:
+        raise StyxValidationError("`lesion` must not be None")
+    if not isinstance(params["lesion"], bool):
+        raise StyxValidationError(f'`lesion` has the wrong type: Received `{type(params.get("lesion", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("samples", None) is not None:
+        if not isinstance(params["samples"], (float, int)):
+            raise StyxValidationError(f'`samples` has the wrong type: Received `{type(params.get("samples", None))}` expected `float | None`')
+    if params.get("burnin", None) is not None:
+        if not isinstance(params["burnin"], (float, int)):
+            raise StyxValidationError(f'`burnin` has the wrong type: Received `{type(params.get("burnin", None))}` expected `float | None`')
+    if params.get("lesion_mask_structure", None) is not None:
+        if not isinstance(params["lesion_mask_structure"], str):
+            raise StyxValidationError(f'`lesion_mask_structure` has the wrong type: Received `{type(params.get("lesion_mask_structure", None))}` expected `str | None`')
+    if params.get("lesion_mask_pattern", None) is not None:
+        if not isinstance(params["lesion_mask_pattern"], list):
+            raise StyxValidationError(f'`lesion_mask_pattern` has the wrong type: Received `{type(params.get("lesion_mask_pattern", None))}` expected `list[float] | None`')
+        for e in params["lesion_mask_pattern"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`lesion_mask_pattern` has the wrong type: Received `{type(params.get("lesion_mask_pattern", None))}` expected `list[float] | None`')
+    if params.get("mode", None) is not None:
+        if not isinstance(params["mode"], list):
+            raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `list[str] | None`')
+        for e in params["mode"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `list[str] | None`')
+    if params.get("atlas", None) is not None:
+        if not isinstance(params["atlas"], str):
+            raise StyxValidationError(f'`atlas` has the wrong type: Received `{type(params.get("atlas", None))}` expected `str | None`')
+    if params.get("deformation_hyperprior", None) is not None:
+        if not isinstance(params["deformation_hyperprior"], (float, int)):
+            raise StyxValidationError(f'`deformation_hyperprior` has the wrong type: Received `{type(params.get("deformation_hyperprior", None))}` expected `float | None`')
+    if params.get("gmm_hyperprior", None) is not None:
+        if not isinstance(params["gmm_hyperprior"], (float, int)):
+            raise StyxValidationError(f'`gmm_hyperprior` has the wrong type: Received `{type(params.get("gmm_hyperprior", None))}` expected `float | None`')
+    if params.get("save_warp", False) is None:
+        raise StyxValidationError("`save_warp` must not be None")
+    if not isinstance(params["save_warp"], bool):
+        raise StyxValidationError(f'`save_warp` has the wrong type: Received `{type(params.get("save_warp", False))}` expected `bool`')
+    if params.get("save_mesh", False) is None:
+        raise StyxValidationError("`save_mesh` must not be None")
+    if not isinstance(params["save_mesh"], bool):
+        raise StyxValidationError(f'`save_mesh` has the wrong type: Received `{type(params.get("save_mesh", False))}` expected `bool`')
+    if params.get("save_posteriors", None) is not None:
+        if not isinstance(params["save_posteriors"], list):
+            raise StyxValidationError(f'`save_posteriors` has the wrong type: Received `{type(params.get("save_posteriors", None))}` expected `list[str] | None`')
+        for e in params["save_posteriors"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`save_posteriors` has the wrong type: Received `{type(params.get("save_posteriors", None))}` expected `list[str] | None`')
+    if params.get("pallidum_separate", False) is None:
+        raise StyxValidationError("`pallidum_separate` must not be None")
+    if not isinstance(params["pallidum_separate"], bool):
+        raise StyxValidationError(f'`pallidum_separate` has the wrong type: Received `{type(params.get("pallidum_separate", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("tp_to_base_transform", None) is not None:
+        if not isinstance(params["tp_to_base_transform"], list):
+            raise StyxValidationError(f'`tp_to_base_transform` has the wrong type: Received `{type(params.get("tp_to_base_transform", None))}` expected `list[InputPathType] | None`')
+        for e in params["tp_to_base_transform"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`tp_to_base_transform` has the wrong type: Received `{type(params.get("tp_to_base_transform", None))}` expected `list[InputPathType] | None`')
+    if params.get("force_different_resolutions", False) is None:
+        raise StyxValidationError("`force_different_resolutions` must not be None")
+    if not isinstance(params["force_different_resolutions"], bool):
+        raise StyxValidationError(f'`force_different_resolutions` has the wrong type: Received `{type(params.get("force_different_resolutions", False))}` expected `bool`')
+    if params.get("history", False) is None:
+        raise StyxValidationError("`history` must not be None")
+    if not isinstance(params["history"], bool):
+        raise StyxValidationError(f'`history` has the wrong type: Received `{type(params.get("history", False))}` expected `bool`')
+    if params.get("showfigs", False) is None:
+        raise StyxValidationError("`showfigs` must not be None")
+    if not isinstance(params["showfigs"], bool):
+        raise StyxValidationError(f'`showfigs` has the wrong type: Received `{type(params.get("showfigs", False))}` expected `bool`')
+    if params.get("movie", False) is None:
+        raise StyxValidationError("`movie` must not be None")
+    if not isinstance(params["movie"], bool):
+        raise StyxValidationError(f'`movie` has the wrong type: Received `{type(params.get("movie", False))}` expected `bool`')
+
+
 def run_samseg_long_cargs(
     params: RunSamsegLongParameters,
     execution: Execution,
@@ -314,6 +419,7 @@ def run_samseg_long_execute(
     Returns:
         NamedTuple of outputs (described in `RunSamsegLongOutputs`).
     """
+    run_samseg_long_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_SAMSEG_LONG_METADATA)
     params = execution.params(params)

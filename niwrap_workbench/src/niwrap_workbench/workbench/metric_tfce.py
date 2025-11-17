@@ -82,6 +82,28 @@ def metric_tfce_presmooth_params(
     return params
 
 
+def metric_tfce_presmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricTfcePresmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+
+
 def metric_tfce_presmooth_cargs(
     params: MetricTfcePresmoothParameters,
     execution: Execution,
@@ -124,6 +146,28 @@ def metric_tfce_parameters_params(
         "H": h,
     }
     return params
+
+
+def metric_tfce_parameters_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricTfceParametersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("E", None) is None:
+        raise StyxValidationError("`E` must not be None")
+    if not isinstance(params["E"], (float, int)):
+        raise StyxValidationError(f'`E` has the wrong type: Received `{type(params.get("E", None))}` expected `float`')
+    if params.get("H", None) is None:
+        raise StyxValidationError("`H` must not be None")
+    if not isinstance(params["H"], (float, int)):
+        raise StyxValidationError(f'`H` has the wrong type: Received `{type(params.get("H", None))}` expected `float`')
 
 
 def metric_tfce_parameters_cargs(
@@ -207,6 +251,45 @@ def metric_tfce_params(
     if area_metric is not None:
         params["area-metric"] = area_metric
     return params
+
+
+def metric_tfce_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricTfceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("presmooth", None) is not None:
+        metric_tfce_presmooth_validate(params["presmooth"])
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("parameters", None) is not None:
+        metric_tfce_parameters_validate(params["parameters"])
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("area-metric", None) is not None:
+        if not isinstance(params["area-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-metric` has the wrong type: Received `{type(params.get("area-metric", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
 
 
 def metric_tfce_cargs(
@@ -300,6 +383,7 @@ def metric_tfce_execute(
     Returns:
         NamedTuple of outputs (described in `MetricTfceOutputs`).
     """
+    metric_tfce_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_TFCE_METADATA)
     params = execution.params(params)

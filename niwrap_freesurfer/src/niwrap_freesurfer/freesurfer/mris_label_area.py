@@ -86,6 +86,53 @@ def mris_label_area_params(
     return params
 
 
+def mris_label_area_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisLabelAreaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pct_flag", False) is None:
+        raise StyxValidationError("`pct_flag` must not be None")
+    if not isinstance(params["pct_flag"], bool):
+        raise StyxValidationError(f'`pct_flag` has the wrong type: Received `{type(params.get("pct_flag", False))}` expected `bool`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("brain_vol", None) is not None:
+        if not isinstance(params["brain_vol"], str):
+            raise StyxValidationError(f'`brain_vol` has the wrong type: Received `{type(params.get("brain_vol", None))}` expected `str | None`')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surf_name", None) is None:
+        raise StyxValidationError("`surf_name` must not be None")
+    if not isinstance(params["surf_name"], str):
+        raise StyxValidationError(f'`surf_name` has the wrong type: Received `{type(params.get("surf_name", None))}` expected `str`')
+    if params.get("annot_name", None) is None:
+        raise StyxValidationError("`annot_name` must not be None")
+    if not isinstance(params["annot_name"], str):
+        raise StyxValidationError(f'`annot_name` has the wrong type: Received `{type(params.get("annot_name", None))}` expected `str`')
+    if params.get("labels", None) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], list):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    for e in params["labels"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+
+
 def mris_label_area_cargs(
     params: MrisLabelAreaParameters,
     execution: Execution,
@@ -160,6 +207,7 @@ def mris_label_area_execute(
     Returns:
         NamedTuple of outputs (described in `MrisLabelAreaOutputs`).
     """
+    mris_label_area_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_LABEL_AREA_METADATA)
     params = execution.params(params)

@@ -61,6 +61,32 @@ def inflate_subject_sc_params(
     return params
 
 
+def inflate_subject_sc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InflateSubjectScParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], str):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def inflate_subject_sc_cargs(
     params: InflateSubjectScParameters,
     execution: Execution,
@@ -124,6 +150,7 @@ def inflate_subject_sc_execute(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectScOutputs`).
     """
+    inflate_subject_sc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INFLATE_SUBJECT_SC_METADATA)
     params = execution.params(params)

@@ -79,6 +79,40 @@ def adjunct_make_script_and_rst_py_params(
     return params
 
 
+def adjunct_make_script_and_rst_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctMakeScriptAndRstPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_script", None) is None:
+        raise StyxValidationError("`input_script` must not be None")
+    if not isinstance(params["input_script"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_script` has the wrong type: Received `{type(params.get("input_script", None))}` expected `InputPathType`')
+    if params.get("prefix_rst", None) is None:
+        raise StyxValidationError("`prefix_rst` must not be None")
+    if not isinstance(params["prefix_rst"], str):
+        raise StyxValidationError(f'`prefix_rst` has the wrong type: Received `{type(params.get("prefix_rst", None))}` expected `str`')
+    if params.get("prefix_script", None) is None:
+        raise StyxValidationError("`prefix_script` must not be None")
+    if not isinstance(params["prefix_script"], str):
+        raise StyxValidationError(f'`prefix_script` has the wrong type: Received `{type(params.get("prefix_script", None))}` expected `str`')
+    if params.get("reflink", None) is None:
+        raise StyxValidationError("`reflink` must not be None")
+    if not isinstance(params["reflink"], str):
+        raise StyxValidationError(f'`reflink` has the wrong type: Received `{type(params.get("reflink", None))}` expected `str`')
+    if params.get("execute_script", False) is None:
+        raise StyxValidationError("`execute_script` must not be None")
+    if not isinstance(params["execute_script"], bool):
+        raise StyxValidationError(f'`execute_script` has the wrong type: Received `{type(params.get("execute_script", False))}` expected `bool`')
+
+
 def adjunct_make_script_and_rst_py_cargs(
     params: AdjunctMakeScriptAndRstPyParameters,
     execution: Execution,
@@ -157,6 +191,7 @@ def adjunct_make_script_and_rst_py_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctMakeScriptAndRstPyOutputs`).
     """
+    adjunct_make_script_and_rst_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA)
     params = execution.params(params)

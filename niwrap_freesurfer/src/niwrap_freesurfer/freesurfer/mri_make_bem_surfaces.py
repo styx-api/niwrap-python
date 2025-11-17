@@ -59,6 +59,27 @@ def mri_make_bem_surfaces_params(
     return params
 
 
+def mri_make_bem_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMakeBemSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is None:
+        raise StyxValidationError("`name` must not be None")
+    if not isinstance(params["name"], str):
+        raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str`')
+    if params.get("mfile", None) is not None:
+        if not isinstance(params["mfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mfile` has the wrong type: Received `{type(params.get("mfile", None))}` expected `InputPathType | None`')
+
+
 def mri_make_bem_surfaces_cargs(
     params: MriMakeBemSurfacesParameters,
     execution: Execution,
@@ -120,6 +141,7 @@ def mri_make_bem_surfaces_execute(
     Returns:
         NamedTuple of outputs (described in `MriMakeBemSurfacesOutputs`).
     """
+    mri_make_bem_surfaces_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MAKE_BEM_SURFACES_METADATA)
     params = execution.params(params)

@@ -122,18 +122,20 @@ def fixelconvert_fixel_in_cargs_dyn_fn(
     }.get(t)
 
 
-def fixelconvert_fixel_in_outputs_dyn_fn(
+def fixelconvert_fixel_in_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": fixelconvert_various_string_validate,
+        "VariousFile": fixelconvert_various_file_validate,
     }.get(t)
 
 
@@ -154,18 +156,20 @@ def fixelconvert_fixel_out_cargs_dyn_fn(
     }.get(t)
 
 
-def fixelconvert_fixel_out_outputs_dyn_fn(
+def fixelconvert_fixel_out_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString_1": fixelconvert_various_string_1_validate,
+        "VariousFile_1": fixelconvert_various_file_1_validate,
     }.get(t)
 
 
@@ -188,6 +192,28 @@ def fixelconvert_config_params(
         "value": value,
     }
     return params
+
+
+def fixelconvert_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelconvertConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def fixelconvert_config_cargs(
@@ -228,6 +254,24 @@ def fixelconvert_various_string_params(
     return params
 
 
+def fixelconvert_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelconvertVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def fixelconvert_various_string_cargs(
     params: FixelconvertVariousStringParameters,
     execution: Execution,
@@ -262,6 +306,24 @@ def fixelconvert_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def fixelconvert_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelconvertVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def fixelconvert_various_file_cargs(
@@ -300,6 +362,24 @@ def fixelconvert_various_string_1_params(
     return params
 
 
+def fixelconvert_various_string_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelconvertVariousString1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def fixelconvert_various_string_1_cargs(
     params: FixelconvertVariousString1Parameters,
     execution: Execution,
@@ -334,6 +414,24 @@ def fixelconvert_various_file_1_params(
         "obj": obj,
     }
     return params
+
+
+def fixelconvert_various_file_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelconvertVariousFile1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def fixelconvert_various_file_1_cargs(
@@ -437,6 +535,86 @@ def fixelconvert_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def fixelconvert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixelconvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("nii", False) is None:
+        raise StyxValidationError("`nii` must not be None")
+    if not isinstance(params["nii"], bool):
+        raise StyxValidationError(f'`nii` has the wrong type: Received `{type(params.get("nii", False))}` expected `bool`')
+    if params.get("out_size", False) is None:
+        raise StyxValidationError("`out_size` must not be None")
+    if not isinstance(params["out_size"], bool):
+        raise StyxValidationError(f'`out_size` has the wrong type: Received `{type(params.get("out_size", False))}` expected `bool`')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `InputPathType | None`')
+    if params.get("in_size", None) is not None:
+        if not isinstance(params["in_size"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_size` has the wrong type: Received `{type(params.get("in_size", None))}` expected `InputPathType | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[FixelconvertConfigParameters] | None`')
+        for e in params["config"]:
+            fixelconvert_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("fixel_in", None) is None:
+        raise StyxValidationError("`fixel_in` must not be None")
+    if not isinstance(params["fixel_in"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["fixel_in"])}\'')
+    if "@type" not in params["fixel_in"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    fixelconvert_fixel_in_validate_dyn_fn(params["fixel_in"]["@type"])(params["fixel_in"])
+    if params.get("fixel_out", None) is None:
+        raise StyxValidationError("`fixel_out` must not be None")
+    if not isinstance(params["fixel_out"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["fixel_out"])}\'')
+    if "@type" not in params["fixel_out"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    fixelconvert_fixel_out_validate_dyn_fn(params["fixel_out"]["@type"])(params["fixel_out"])
 
 
 def fixelconvert_cargs(
@@ -547,6 +725,7 @@ def fixelconvert_execute(
     Returns:
         NamedTuple of outputs (described in `FixelconvertOutputs`).
     """
+    fixelconvert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIXELCONVERT_METADATA)
     params = execution.params(params)

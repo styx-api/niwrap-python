@@ -59,6 +59,32 @@ def polyorder_params(
     return params
 
 
+def polyorder_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PolyorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ntp", None) is None:
+        raise StyxValidationError("`ntp` must not be None")
+    if not isinstance(params["ntp"], (float, int)):
+        raise StyxValidationError(f'`ntp` has the wrong type: Received `{type(params.get("ntp", None))}` expected `float`')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("cutoff", None) is None:
+        raise StyxValidationError("`cutoff` must not be None")
+    if not isinstance(params["cutoff"], (float, int)):
+        raise StyxValidationError(f'`cutoff` has the wrong type: Received `{type(params.get("cutoff", None))}` expected `float`')
+
+
 def polyorder_cargs(
     params: PolyorderParameters,
     execution: Execution,
@@ -128,6 +154,7 @@ def polyorder_execute(
     Returns:
         NamedTuple of outputs (described in `PolyorderOutputs`).
     """
+    polyorder_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POLYORDER_METADATA)
     params = execution.params(params)

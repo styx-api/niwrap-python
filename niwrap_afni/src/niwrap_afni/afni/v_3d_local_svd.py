@@ -89,6 +89,48 @@ def v_3d_local_svd_params(
     return params
 
 
+def v_3d_local_svd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLocalSvdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("auto_mask", False) is None:
+        raise StyxValidationError("`auto_mask` must not be None")
+    if not isinstance(params["auto_mask"], bool):
+        raise StyxValidationError(f'`auto_mask` has the wrong type: Received `{type(params.get("auto_mask", False))}` expected `bool`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("nbhd", None) is not None:
+        if not isinstance(params["nbhd"], str):
+            raise StyxValidationError(f'`nbhd` has the wrong type: Received `{type(params.get("nbhd", None))}` expected `str | None`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], str):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `str | None`')
+    if params.get("vnorm", False) is None:
+        raise StyxValidationError("`vnorm` must not be None")
+    if not isinstance(params["vnorm"], bool):
+        raise StyxValidationError(f'`vnorm` has the wrong type: Received `{type(params.get("vnorm", False))}` expected `bool`')
+    if params.get("vproj", None) is not None:
+        if not isinstance(params["vproj"], (float, int)):
+            raise StyxValidationError(f'`vproj` has the wrong type: Received `{type(params.get("vproj", None))}` expected `float | None`')
+
+
 def v_3d_local_svd_cargs(
     params: V3dLocalSvdParameters,
     execution: Execution,
@@ -177,6 +219,7 @@ def v_3d_local_svd_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLocalSvdOutputs`).
     """
+    v_3d_local_svd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOCAL_SVD_METADATA)
     params = execution.params(params)

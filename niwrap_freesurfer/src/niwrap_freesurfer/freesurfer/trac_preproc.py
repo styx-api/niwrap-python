@@ -109,6 +109,64 @@ def trac_preproc_params(
     return params
 
 
+def trac_preproc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TracPreprocParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dmrirc_file", None) is None:
+        raise StyxValidationError("`dmrirc_file` must not be None")
+    if not isinstance(params["dmrirc_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dmrirc_file` has the wrong type: Received `{type(params.get("dmrirc_file", None))}` expected `InputPathType`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("nolog", False) is None:
+        raise StyxValidationError("`nolog` must not be None")
+    if not isinstance(params["nolog"], bool):
+        raise StyxValidationError(f'`nolog` has the wrong type: Received `{type(params.get("nolog", False))}` expected `bool`')
+    if params.get("cmd_file", None) is not None:
+        if not isinstance(params["cmd_file"], str):
+            raise StyxValidationError(f'`cmd_file` has the wrong type: Received `{type(params.get("cmd_file", None))}` expected `str | None`')
+    if params.get("nocmd", False) is None:
+        raise StyxValidationError("`nocmd` must not be None")
+    if not isinstance(params["nocmd"], bool):
+        raise StyxValidationError(f'`nocmd` has the wrong type: Received `{type(params.get("nocmd", False))}` expected `bool`')
+    if params.get("no_isrunning", False) is None:
+        raise StyxValidationError("`no_isrunning` must not be None")
+    if not isinstance(params["no_isrunning"], bool):
+        raise StyxValidationError(f'`no_isrunning` has the wrong type: Received `{type(params.get("no_isrunning", False))}` expected `bool`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+    if params.get("group_id", None) is not None:
+        if not isinstance(params["group_id"], str):
+            raise StyxValidationError(f'`group_id` has the wrong type: Received `{type(params.get("group_id", None))}` expected `str | None`')
+    if params.get("allow_core_dump", False) is None:
+        raise StyxValidationError("`allow_core_dump` must not be None")
+    if not isinstance(params["allow_core_dump"], bool):
+        raise StyxValidationError(f'`allow_core_dump` has the wrong type: Received `{type(params.get("allow_core_dump", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("dontrun", False) is None:
+        raise StyxValidationError("`dontrun` must not be None")
+    if not isinstance(params["dontrun"], bool):
+        raise StyxValidationError(f'`dontrun` has the wrong type: Received `{type(params.get("dontrun", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def trac_preproc_cargs(
     params: TracPreprocParameters,
     execution: Execution,
@@ -203,6 +261,7 @@ def trac_preproc_execute(
     Returns:
         NamedTuple of outputs (described in `TracPreprocOutputs`).
     """
+    trac_preproc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TRAC_PREPROC_METADATA)
     params = execution.params(params)

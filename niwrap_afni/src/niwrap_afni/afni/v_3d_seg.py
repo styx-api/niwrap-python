@@ -172,6 +172,79 @@ def v_3d_seg_params(
     return params
 
 
+def v_3d_seg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("anat", None) is None:
+        raise StyxValidationError("`anat` must not be None")
+    if not isinstance(params["anat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anat` has the wrong type: Received `{type(params.get("anat", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], str):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `str | None`')
+    if params.get("blur_meth", None) is not None:
+        if not isinstance(params["blur_meth"], str):
+            raise StyxValidationError(f'`blur_meth` has the wrong type: Received `{type(params.get("blur_meth", None))}` expected `str | None`')
+    if params.get("bias_fwhm", None) is not None:
+        if not isinstance(params["bias_fwhm"], (float, int)):
+            raise StyxValidationError(f'`bias_fwhm` has the wrong type: Received `{type(params.get("bias_fwhm", None))}` expected `float | None`')
+    if params.get("classes", None) is not None:
+        if not isinstance(params["classes"], str):
+            raise StyxValidationError(f'`classes` has the wrong type: Received `{type(params.get("classes", None))}` expected `str | None`')
+    if params.get("Bmrf", None) is not None:
+        if not isinstance(params["Bmrf"], (float, int)):
+            raise StyxValidationError(f'`Bmrf` has the wrong type: Received `{type(params.get("Bmrf", None))}` expected `float | None`')
+    if params.get("bias_classes", None) is not None:
+        if not isinstance(params["bias_classes"], str):
+            raise StyxValidationError(f'`bias_classes` has the wrong type: Received `{type(params.get("bias_classes", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("mixfrac", None) is not None:
+        if not isinstance(params["mixfrac"], str):
+            raise StyxValidationError(f'`mixfrac` has the wrong type: Received `{type(params.get("mixfrac", None))}` expected `str | None`')
+    if params.get("mixfloor", None) is not None:
+        if not isinstance(params["mixfloor"], (float, int)):
+            raise StyxValidationError(f'`mixfloor` has the wrong type: Received `{type(params.get("mixfloor", None))}` expected `float | None`')
+    if params.get("gold", None) is not None:
+        if not isinstance(params["gold"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gold` has the wrong type: Received `{type(params.get("gold", None))}` expected `InputPathType | None`')
+    if params.get("gold_bias", None) is not None:
+        if not isinstance(params["gold_bias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gold_bias` has the wrong type: Received `{type(params.get("gold_bias", None))}` expected `InputPathType | None`')
+    if params.get("main_N", None) is not None:
+        if not isinstance(params["main_N"], (float, int)):
+            raise StyxValidationError(f'`main_N` has the wrong type: Received `{type(params.get("main_N", None))}` expected `float | None`')
+    if params.get("cset", None) is not None:
+        if not isinstance(params["cset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cset` has the wrong type: Received `{type(params.get("cset", None))}` expected `InputPathType | None`')
+    if params.get("labeltable", None) is not None:
+        if not isinstance(params["labeltable"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labeltable` has the wrong type: Received `{type(params.get("labeltable", None))}` expected `InputPathType | None`')
+    if params.get("vox_debug", None) is not None:
+        if not isinstance(params["vox_debug"], str):
+            raise StyxValidationError(f'`vox_debug` has the wrong type: Received `{type(params.get("vox_debug", None))}` expected `str | None`')
+    if params.get("vox_debug_file", None) is not None:
+        if not isinstance(params["vox_debug_file"], str):
+            raise StyxValidationError(f'`vox_debug_file` has the wrong type: Received `{type(params.get("vox_debug_file", None))}` expected `str | None`')
+
+
 def v_3d_seg_cargs(
     params: V3dSegParameters,
     execution: Execution,
@@ -323,6 +396,7 @@ def v_3d_seg_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSegOutputs`).
     """
+    v_3d_seg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SEG_METADATA)
     params = execution.params(params)

@@ -56,6 +56,28 @@ def fsl_fix_text_params(
     return params
 
 
+def fsl_fix_text_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslFixTextParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_text_file", None) is None:
+        raise StyxValidationError("`input_text_file` must not be None")
+    if not isinstance(params["input_text_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_text_file` has the wrong type: Received `{type(params.get("input_text_file", None))}` expected `InputPathType`')
+    if params.get("output_text_file", None) is None:
+        raise StyxValidationError("`output_text_file` must not be None")
+    if not isinstance(params["output_text_file"], str):
+        raise StyxValidationError(f'`output_text_file` has the wrong type: Received `{type(params.get("output_text_file", None))}` expected `str`')
+
+
 def fsl_fix_text_cargs(
     params: FslFixTextParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def fsl_fix_text_execute(
     Returns:
         NamedTuple of outputs (described in `FslFixTextOutputs`).
     """
+    fsl_fix_text_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_FIX_TEXT_METADATA)
     params = execution.params(params)

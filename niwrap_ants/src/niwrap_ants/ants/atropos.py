@@ -181,6 +181,85 @@ def atropos_params(
     return params
 
 
+def atropos_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AtroposParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["image_dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3, 4]")
+    if params.get("intensity_image", None) is None:
+        raise StyxValidationError("`intensity_image` must not be None")
+    if not isinstance(params["intensity_image"], str):
+        raise StyxValidationError(f'`intensity_image` has the wrong type: Received `{type(params.get("intensity_image", None))}` expected `str`')
+    if params.get("bspline", None) is not None:
+        if not isinstance(params["bspline"], str):
+            raise StyxValidationError(f'`bspline` has the wrong type: Received `{type(params.get("bspline", None))}` expected `str | None`')
+    if params.get("initialization", None) is None:
+        raise StyxValidationError("`initialization` must not be None")
+    if not isinstance(params["initialization"], str):
+        raise StyxValidationError(f'`initialization` has the wrong type: Received `{type(params.get("initialization", None))}` expected `str`')
+    if params.get("partial_volume_label_set", None) is not None:
+        if not isinstance(params["partial_volume_label_set"], str):
+            raise StyxValidationError(f'`partial_volume_label_set` has the wrong type: Received `{type(params.get("partial_volume_label_set", None))}` expected `str | None`')
+    if params.get("use_partial_volume_likelihoods", None) is not None:
+        if not isinstance(params["use_partial_volume_likelihoods"], bool):
+            raise StyxValidationError(f'`use_partial_volume_likelihoods` has the wrong type: Received `{type(params.get("use_partial_volume_likelihoods", None))}` expected `bool | None`')
+    if params.get("posterior_formulation", None) is not None:
+        if not isinstance(params["posterior_formulation"], str):
+            raise StyxValidationError(f'`posterior_formulation` has the wrong type: Received `{type(params.get("posterior_formulation", None))}` expected `str | None`')
+    if params.get("mask_image", None) is None:
+        raise StyxValidationError("`mask_image` must not be None")
+    if not isinstance(params["mask_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType`')
+    if params.get("convergence", None) is None:
+        raise StyxValidationError("`convergence` must not be None")
+    if not isinstance(params["convergence"], str):
+        raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `str`')
+    if params.get("likelihood_model", None) is None:
+        raise StyxValidationError("`likelihood_model` must not be None")
+    if not isinstance(params["likelihood_model"], str):
+        raise StyxValidationError(f'`likelihood_model` has the wrong type: Received `{type(params.get("likelihood_model", None))}` expected `str`')
+    if params.get("mrf", None) is not None:
+        if not isinstance(params["mrf"], str):
+            raise StyxValidationError(f'`mrf` has the wrong type: Received `{type(params.get("mrf", None))}` expected `str | None`')
+    if params.get("icm", None) is not None:
+        if not isinstance(params["icm"], str):
+            raise StyxValidationError(f'`icm` has the wrong type: Received `{type(params.get("icm", None))}` expected `str | None`')
+    if params.get("use_random_seed", None) is not None:
+        if not isinstance(params["use_random_seed"], bool):
+            raise StyxValidationError(f'`use_random_seed` has the wrong type: Received `{type(params.get("use_random_seed", None))}` expected `bool | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("minimize_memory_usage", None) is not None:
+        if not isinstance(params["minimize_memory_usage"], bool):
+            raise StyxValidationError(f'`minimize_memory_usage` has the wrong type: Received `{type(params.get("minimize_memory_usage", None))}` expected `bool | None`')
+    if params.get("winsorize_outliers", None) is not None:
+        if not isinstance(params["winsorize_outliers"], str):
+            raise StyxValidationError(f'`winsorize_outliers` has the wrong type: Received `{type(params.get("winsorize_outliers", None))}` expected `str | None`')
+    if params.get("use_euclidean_distance", None) is not None:
+        if not isinstance(params["use_euclidean_distance"], bool):
+            raise StyxValidationError(f'`use_euclidean_distance` has the wrong type: Received `{type(params.get("use_euclidean_distance", None))}` expected `bool | None`')
+    if params.get("label_propagation", None) is not None:
+        if not isinstance(params["label_propagation"], str):
+            raise StyxValidationError(f'`label_propagation` has the wrong type: Received `{type(params.get("label_propagation", None))}` expected `str | None`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def atropos_cargs(
     params: AtroposParameters,
     execution: Execution,
@@ -330,6 +409,7 @@ def atropos_execute(
     Returns:
         NamedTuple of outputs (described in `AtroposOutputs`).
     """
+    atropos_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ATROPOS_METADATA)
     params = execution.params(params)

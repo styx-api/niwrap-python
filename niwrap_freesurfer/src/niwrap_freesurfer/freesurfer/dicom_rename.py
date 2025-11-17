@@ -67,6 +67,39 @@ def dicom_rename_params(
     return params
 
 
+def dicom_rename_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DicomRenameParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("output_base", None) is None:
+        raise StyxValidationError("`output_base` must not be None")
+    if not isinstance(params["output_base"], str):
+        raise StyxValidationError(f'`output_base` has the wrong type: Received `{type(params.get("output_base", None))}` expected `str`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def dicom_rename_cargs(
     params: DicomRenameParameters,
     execution: Execution,
@@ -136,6 +169,7 @@ def dicom_rename_execute(
     Returns:
         NamedTuple of outputs (described in `DicomRenameOutputs`).
     """
+    dicom_rename_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DICOM_RENAME_METADATA)
     params = execution.params(params)

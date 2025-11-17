@@ -88,6 +88,50 @@ def v_3d_tnorm_params(
     return params
 
 
+def v_3d_tnorm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTnormParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("norm2", False) is None:
+        raise StyxValidationError("`norm2` must not be None")
+    if not isinstance(params["norm2"], bool):
+        raise StyxValidationError(f'`norm2` has the wrong type: Received `{type(params.get("norm2", False))}` expected `bool`')
+    if params.get("normR", False) is None:
+        raise StyxValidationError("`normR` must not be None")
+    if not isinstance(params["normR"], bool):
+        raise StyxValidationError(f'`normR` has the wrong type: Received `{type(params.get("normR", False))}` expected `bool`')
+    if params.get("norm1", False) is None:
+        raise StyxValidationError("`norm1` must not be None")
+    if not isinstance(params["norm1"], bool):
+        raise StyxValidationError(f'`norm1` has the wrong type: Received `{type(params.get("norm1", False))}` expected `bool`')
+    if params.get("normx", False) is None:
+        raise StyxValidationError("`normx` must not be None")
+    if not isinstance(params["normx"], bool):
+        raise StyxValidationError(f'`normx` has the wrong type: Received `{type(params.get("normx", False))}` expected `bool`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], (float, int)):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `float | None`')
+    if params.get("L1fit", False) is None:
+        raise StyxValidationError("`L1fit` must not be None")
+    if not isinstance(params["L1fit"], bool):
+        raise StyxValidationError(f'`L1fit` has the wrong type: Received `{type(params.get("L1fit", False))}` expected `bool`')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_tnorm_cargs(
     params: V3dTnormParameters,
     execution: Execution,
@@ -166,6 +210,7 @@ def v_3d_tnorm_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTnormOutputs`).
     """
+    v_3d_tnorm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TNORM_METADATA)
     params = execution.params(params)

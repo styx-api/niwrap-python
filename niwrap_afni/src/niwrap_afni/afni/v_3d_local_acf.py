@@ -73,6 +73,38 @@ def v_3d_local_acf_params(
     return params
 
 
+def v_3d_local_acf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLocalAcfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("neighborhood", None) is not None:
+        if not isinstance(params["neighborhood"], str):
+            raise StyxValidationError(f'`neighborhood` has the wrong type: Received `{type(params.get("neighborhood", None))}` expected `str | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("auto_mask", False) is None:
+        raise StyxValidationError("`auto_mask` must not be None")
+    if not isinstance(params["auto_mask"], bool):
+        raise StyxValidationError(f'`auto_mask` has the wrong type: Received `{type(params.get("auto_mask", False))}` expected `bool`')
+
+
 def v_3d_local_acf_cargs(
     params: V3dLocalAcfParameters,
     execution: Execution,
@@ -148,6 +180,7 @@ def v_3d_local_acf_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLocalAcfOutputs`).
     """
+    v_3d_local_acf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOCAL_ACF_METADATA)
     params = execution.params(params)

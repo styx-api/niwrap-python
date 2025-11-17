@@ -312,6 +312,197 @@ def flirt_params(
     return params
 
 
+def flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("reference", None) is None:
+        raise StyxValidationError("`reference` must not be None")
+    if not isinstance(params["reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference` has the wrong type: Received `{type(params.get("reference", None))}` expected `InputPathType`')
+    if params.get("out_file", None) is None:
+        raise StyxValidationError("`out_file` must not be None")
+    if not isinstance(params["out_file"], str):
+        raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str`')
+    if params.get("out_matrix_file", None) is None:
+        raise StyxValidationError("`out_matrix_file` must not be None")
+    if not isinstance(params["out_matrix_file"], str):
+        raise StyxValidationError(f'`out_matrix_file` has the wrong type: Received `{type(params.get("out_matrix_file", None))}` expected `str`')
+    if params.get("angle_rep", None) is not None:
+        if not isinstance(params["angle_rep"], str):
+            raise StyxValidationError(f'`angle_rep` has the wrong type: Received `{type(params.get("angle_rep", None))}` expected `typing.Literal["quaternion", "euler"] | None`')
+        if params["angle_rep"] not in ["quaternion", "euler"]:
+            raise StyxValidationError("Parameter `angle_rep` must be one of [\"quaternion\", \"euler\"]")
+    if params.get("apply_isoxfm", None) is not None:
+        if not isinstance(params["apply_isoxfm"], (float, int)):
+            raise StyxValidationError(f'`apply_isoxfm` has the wrong type: Received `{type(params.get("apply_isoxfm", None))}` expected `float | None`')
+    if params.get("apply_xfm", False) is None:
+        raise StyxValidationError("`apply_xfm` must not be None")
+    if not isinstance(params["apply_xfm"], bool):
+        raise StyxValidationError(f'`apply_xfm` has the wrong type: Received `{type(params.get("apply_xfm", False))}` expected `bool`')
+    if params.get("bbrslope", None) is not None:
+        if not isinstance(params["bbrslope"], (float, int)):
+            raise StyxValidationError(f'`bbrslope` has the wrong type: Received `{type(params.get("bbrslope", None))}` expected `float | None`')
+    if params.get("bbrtype", None) is not None:
+        if not isinstance(params["bbrtype"], str):
+            raise StyxValidationError(f'`bbrtype` has the wrong type: Received `{type(params.get("bbrtype", None))}` expected `typing.Literal["signed", "global_abs", "local_abs"] | None`')
+        if params["bbrtype"] not in ["signed", "global_abs", "local_abs"]:
+            raise StyxValidationError("Parameter `bbrtype` must be one of [\"signed\", \"global_abs\", \"local_abs\"]")
+    if params.get("bgvalue", None) is not None:
+        if not isinstance(params["bgvalue"], (float, int)):
+            raise StyxValidationError(f'`bgvalue` has the wrong type: Received `{type(params.get("bgvalue", None))}` expected `float | None`')
+    if params.get("bins", None) is not None:
+        if not isinstance(params["bins"], int):
+            raise StyxValidationError(f'`bins` has the wrong type: Received `{type(params.get("bins", None))}` expected `int | None`')
+    if params.get("coarse_search", None) is not None:
+        if not isinstance(params["coarse_search"], int):
+            raise StyxValidationError(f'`coarse_search` has the wrong type: Received `{type(params.get("coarse_search", None))}` expected `int | None`')
+    if params.get("cost", None) is not None:
+        if not isinstance(params["cost"], str):
+            raise StyxValidationError(f'`cost` has the wrong type: Received `{type(params.get("cost", None))}` expected `typing.Literal["mutualinfo", "corratio", "normcorr", "normmi", "leastsq", "labeldiff", "bbr"] | None`')
+        if params["cost"] not in ["mutualinfo", "corratio", "normcorr", "normmi", "leastsq", "labeldiff", "bbr"]:
+            raise StyxValidationError("Parameter `cost` must be one of [\"mutualinfo\", \"corratio\", \"normcorr\", \"normmi\", \"leastsq\", \"labeldiff\", \"bbr\"]")
+    if params.get("cost_func", None) is not None:
+        if not isinstance(params["cost_func"], str):
+            raise StyxValidationError(f'`cost_func` has the wrong type: Received `{type(params.get("cost_func", None))}` expected `typing.Literal["mutualinfo", "corratio", "normcorr", "normmi", "leastsq", "labeldiff", "bbr"] | None`')
+        if params["cost_func"] not in ["mutualinfo", "corratio", "normcorr", "normmi", "leastsq", "labeldiff", "bbr"]:
+            raise StyxValidationError("Parameter `cost_func` must be one of [\"mutualinfo\", \"corratio\", \"normcorr\", \"normmi\", \"leastsq\", \"labeldiff\", \"bbr\"]")
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `typing.Literal["char", "short", "int", "float", "double"] | None`')
+        if params["datatype"] not in ["char", "short", "int", "float", "double"]:
+            raise StyxValidationError("Parameter `datatype` must be one of [\"char\", \"short\", \"int\", \"float\", \"double\"]")
+    if params.get("display_init", False) is None:
+        raise StyxValidationError("`display_init` must not be None")
+    if not isinstance(params["display_init"], bool):
+        raise StyxValidationError(f'`display_init` has the wrong type: Received `{type(params.get("display_init", False))}` expected `bool`')
+    if params.get("dof", None) is not None:
+        if not isinstance(params["dof"], int):
+            raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `int | None`')
+    if params.get("echospacing", None) is not None:
+        if not isinstance(params["echospacing"], (float, int)):
+            raise StyxValidationError(f'`echospacing` has the wrong type: Received `{type(params.get("echospacing", None))}` expected `float | None`')
+    if params.get("fieldmap", None) is not None:
+        if not isinstance(params["fieldmap"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fieldmap` has the wrong type: Received `{type(params.get("fieldmap", None))}` expected `InputPathType | None`')
+    if params.get("fieldmapmask", None) is not None:
+        if not isinstance(params["fieldmapmask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fieldmapmask` has the wrong type: Received `{type(params.get("fieldmapmask", None))}` expected `InputPathType | None`')
+    if params.get("fine_search", None) is not None:
+        if not isinstance(params["fine_search"], int):
+            raise StyxValidationError(f'`fine_search` has the wrong type: Received `{type(params.get("fine_search", None))}` expected `int | None`')
+    if params.get("force_scaling", False) is None:
+        raise StyxValidationError("`force_scaling` must not be None")
+    if not isinstance(params["force_scaling"], bool):
+        raise StyxValidationError(f'`force_scaling` has the wrong type: Received `{type(params.get("force_scaling", False))}` expected `bool`')
+    if params.get("in_matrix_file", None) is not None:
+        if not isinstance(params["in_matrix_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_matrix_file` has the wrong type: Received `{type(params.get("in_matrix_file", None))}` expected `InputPathType | None`')
+    if params.get("in_weight", None) is not None:
+        if not isinstance(params["in_weight"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_weight` has the wrong type: Received `{type(params.get("in_weight", None))}` expected `InputPathType | None`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `typing.Literal["trilinear", "nearestneighbour", "sinc", "spline"] | None`')
+        if params["interp"] not in ["trilinear", "nearestneighbour", "sinc", "spline"]:
+            raise StyxValidationError("Parameter `interp` must be one of [\"trilinear\", \"nearestneighbour\", \"sinc\", \"spline\"]")
+    if params.get("min_sampling", None) is not None:
+        if not isinstance(params["min_sampling"], (float, int)):
+            raise StyxValidationError(f'`min_sampling` has the wrong type: Received `{type(params.get("min_sampling", None))}` expected `float | None`')
+    if params.get("no_clamp", False) is None:
+        raise StyxValidationError("`no_clamp` must not be None")
+    if not isinstance(params["no_clamp"], bool):
+        raise StyxValidationError(f'`no_clamp` has the wrong type: Received `{type(params.get("no_clamp", False))}` expected `bool`')
+    if params.get("no_resample", False) is None:
+        raise StyxValidationError("`no_resample` must not be None")
+    if not isinstance(params["no_resample"], bool):
+        raise StyxValidationError(f'`no_resample` has the wrong type: Received `{type(params.get("no_resample", False))}` expected `bool`')
+    if params.get("no_resample_blur", False) is None:
+        raise StyxValidationError("`no_resample_blur` must not be None")
+    if not isinstance(params["no_resample_blur"], bool):
+        raise StyxValidationError(f'`no_resample_blur` has the wrong type: Received `{type(params.get("no_resample_blur", False))}` expected `bool`')
+    if params.get("no_search", False) is None:
+        raise StyxValidationError("`no_search` must not be None")
+    if not isinstance(params["no_search"], bool):
+        raise StyxValidationError(f'`no_search` has the wrong type: Received `{type(params.get("no_search", False))}` expected `bool`')
+    if params.get("padding_size", None) is not None:
+        if not isinstance(params["padding_size"], int):
+            raise StyxValidationError(f'`padding_size` has the wrong type: Received `{type(params.get("padding_size", None))}` expected `int | None`')
+    if params.get("pedir", None) is not None:
+        if not isinstance(params["pedir"], int):
+            raise StyxValidationError(f'`pedir` has the wrong type: Received `{type(params.get("pedir", None))}` expected `int | None`')
+    if params.get("ref_weight", None) is not None:
+        if not isinstance(params["ref_weight"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_weight` has the wrong type: Received `{type(params.get("ref_weight", None))}` expected `InputPathType | None`')
+    if params.get("rigid2D", False) is None:
+        raise StyxValidationError("`rigid2D` must not be None")
+    if not isinstance(params["rigid2D"], bool):
+        raise StyxValidationError(f'`rigid2D` has the wrong type: Received `{type(params.get("rigid2D", False))}` expected `bool`')
+    if params.get("schedule", None) is not None:
+        if not isinstance(params["schedule"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`schedule` has the wrong type: Received `{type(params.get("schedule", None))}` expected `InputPathType | None`')
+    if params.get("searchr_x", None) is not None:
+        if not isinstance(params["searchr_x"], list):
+            raise StyxValidationError(f'`searchr_x` has the wrong type: Received `{type(params.get("searchr_x", None))}` expected `list[int] | None`')
+        if len(params["searchr_x"]) == 2:
+            raise StyxValidationError("Parameter `searchr_x` must contain exactly 2 elements")
+        for e in params["searchr_x"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`searchr_x` has the wrong type: Received `{type(params.get("searchr_x", None))}` expected `list[int] | None`')
+    if params.get("searchr_y", None) is not None:
+        if not isinstance(params["searchr_y"], list):
+            raise StyxValidationError(f'`searchr_y` has the wrong type: Received `{type(params.get("searchr_y", None))}` expected `list[int] | None`')
+        if len(params["searchr_y"]) == 2:
+            raise StyxValidationError("Parameter `searchr_y` must contain exactly 2 elements")
+        for e in params["searchr_y"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`searchr_y` has the wrong type: Received `{type(params.get("searchr_y", None))}` expected `list[int] | None`')
+    if params.get("searchr_z", None) is not None:
+        if not isinstance(params["searchr_z"], list):
+            raise StyxValidationError(f'`searchr_z` has the wrong type: Received `{type(params.get("searchr_z", None))}` expected `list[int] | None`')
+        if len(params["searchr_z"]) == 2:
+            raise StyxValidationError("Parameter `searchr_z` must contain exactly 2 elements")
+        for e in params["searchr_z"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`searchr_z` has the wrong type: Received `{type(params.get("searchr_z", None))}` expected `list[int] | None`')
+    if params.get("sinc_width", None) is not None:
+        if not isinstance(params["sinc_width"], int):
+            raise StyxValidationError(f'`sinc_width` has the wrong type: Received `{type(params.get("sinc_width", None))}` expected `int | None`')
+    if params.get("sinc_window", None) is not None:
+        if not isinstance(params["sinc_window"], str):
+            raise StyxValidationError(f'`sinc_window` has the wrong type: Received `{type(params.get("sinc_window", None))}` expected `typing.Literal["rectangular", "hanning", "blackman"] | None`')
+        if params["sinc_window"] not in ["rectangular", "hanning", "blackman"]:
+            raise StyxValidationError("Parameter `sinc_window` must be one of [\"rectangular\", \"hanning\", \"blackman\"]")
+    if params.get("uses_qform", False) is None:
+        raise StyxValidationError("`uses_qform` must not be None")
+    if not isinstance(params["uses_qform"], bool):
+        raise StyxValidationError(f'`uses_qform` has the wrong type: Received `{type(params.get("uses_qform", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], int):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `int | None`')
+    if params.get("wm_seg", None) is not None:
+        if not isinstance(params["wm_seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wm_seg` has the wrong type: Received `{type(params.get("wm_seg", None))}` expected `InputPathType | None`')
+    if params.get("wmcoords", None) is not None:
+        if not isinstance(params["wmcoords"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wmcoords` has the wrong type: Received `{type(params.get("wmcoords", None))}` expected `InputPathType | None`')
+    if params.get("wmnorms", None) is not None:
+        if not isinstance(params["wmnorms"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wmnorms` has the wrong type: Received `{type(params.get("wmnorms", None))}` expected `InputPathType | None`')
+
+
 def flirt_cargs(
     params: FlirtParameters,
     execution: Execution,
@@ -566,6 +757,7 @@ def flirt_execute(
     Returns:
         NamedTuple of outputs (described in `FlirtOutputs`).
     """
+    flirt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FLIRT_METADATA)
     params = execution.params(params)

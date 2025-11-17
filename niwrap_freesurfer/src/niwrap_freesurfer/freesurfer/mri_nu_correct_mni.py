@@ -120,6 +120,68 @@ def mri_nu_correct_mni_params(
     return params
 
 
+def mri_nu_correct_mni_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriNuCorrectMniParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("iterations", None) is None:
+        raise StyxValidationError("`iterations` must not be None")
+    if not isinstance(params["iterations"], (float, int)):
+        raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float`')
+    if params.get("proto_iterations", None) is not None:
+        if not isinstance(params["proto_iterations"], (float, int)):
+            raise StyxValidationError(f'`proto_iterations` has the wrong type: Received `{type(params.get("proto_iterations", None))}` expected `float | None`')
+    if params.get("mask_volume", None) is not None:
+        if not isinstance(params["mask_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `InputPathType | None`')
+    if params.get("stop_threshold", None) is not None:
+        if not isinstance(params["stop_threshold"], (float, int)):
+            raise StyxValidationError(f'`stop_threshold` has the wrong type: Received `{type(params.get("stop_threshold", None))}` expected `float | None`')
+    if params.get("uchar_transform", None) is not None:
+        if not isinstance(params["uchar_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`uchar_transform` has the wrong type: Received `{type(params.get("uchar_transform", None))}` expected `InputPathType | None`')
+    if params.get("ants_n3", False) is None:
+        raise StyxValidationError("`ants_n3` must not be None")
+    if not isinstance(params["ants_n3"], bool):
+        raise StyxValidationError(f'`ants_n3` has the wrong type: Received `{type(params.get("ants_n3", False))}` expected `bool`')
+    if params.get("ants_n4", False) is None:
+        raise StyxValidationError("`ants_n4` must not be None")
+    if not isinstance(params["ants_n4"], bool):
+        raise StyxValidationError(f'`ants_n4` has the wrong type: Received `{type(params.get("ants_n4", False))}` expected `bool`')
+    if params.get("no_uchar", False) is None:
+        raise StyxValidationError("`no_uchar` must not be None")
+    if not isinstance(params["no_uchar"], bool):
+        raise StyxValidationError(f'`no_uchar` has the wrong type: Received `{type(params.get("no_uchar", False))}` expected `bool`')
+    if params.get("ants_n4_replace_zeros", False) is None:
+        raise StyxValidationError("`ants_n4_replace_zeros` must not be None")
+    if not isinstance(params["ants_n4_replace_zeros"], bool):
+        raise StyxValidationError(f'`ants_n4_replace_zeros` has the wrong type: Received `{type(params.get("ants_n4_replace_zeros", False))}` expected `bool`')
+    if params.get("cm_flag", False) is None:
+        raise StyxValidationError("`cm_flag` must not be None")
+    if not isinstance(params["cm_flag"], bool):
+        raise StyxValidationError(f'`cm_flag` has the wrong type: Received `{type(params.get("cm_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def mri_nu_correct_mni_cargs(
     params: MriNuCorrectMniParameters,
     execution: Execution,
@@ -222,6 +284,7 @@ def mri_nu_correct_mni_execute(
     Returns:
         NamedTuple of outputs (described in `MriNuCorrectMniOutputs`).
     """
+    mri_nu_correct_mni_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_NU_CORRECT_MNI_METADATA)
     params = execution.params(params)

@@ -110,6 +110,62 @@ def serial_helper_params(
     return params
 
 
+def serial_helper_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SerialHelperParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("serial_port", None) is None:
+        raise StyxValidationError("`serial_port` must not be None")
+    if not isinstance(params["serial_port"], str):
+        raise StyxValidationError(f'`serial_port` has the wrong type: Received `{type(params.get("serial_port", None))}` expected `str`')
+    if params.get("sock_num", None) is not None:
+        if not isinstance(params["sock_num"], (float, int)):
+            raise StyxValidationError(f'`sock_num` has the wrong type: Received `{type(params.get("sock_num", None))}` expected `float | None`')
+    if params.get("mp_max", None) is not None:
+        if not isinstance(params["mp_max"], (float, int)):
+            raise StyxValidationError(f'`mp_max` has the wrong type: Received `{type(params.get("mp_max", None))}` expected `float | None`')
+    if params.get("mp_min", None) is not None:
+        if not isinstance(params["mp_min"], (float, int)):
+            raise StyxValidationError(f'`mp_min` has the wrong type: Received `{type(params.get("mp_min", None))}` expected `float | None`')
+    if params.get("num_extra", None) is not None:
+        if not isinstance(params["num_extra"], (float, int)):
+            raise StyxValidationError(f'`num_extra` has the wrong type: Received `{type(params.get("num_extra", None))}` expected `float | None`')
+    if params.get("disp_all", None) is not None:
+        if not isinstance(params["disp_all"], (float, int)):
+            raise StyxValidationError(f'`disp_all` has the wrong type: Received `{type(params.get("disp_all", None))}` expected `float | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("show_times", False) is None:
+        raise StyxValidationError("`show_times` must not be None")
+    if not isinstance(params["show_times"], bool):
+        raise StyxValidationError(f'`show_times` has the wrong type: Received `{type(params.get("show_times", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("no_serial", False) is None:
+        raise StyxValidationError("`no_serial` must not be None")
+    if not isinstance(params["no_serial"], bool):
+        raise StyxValidationError(f'`no_serial` has the wrong type: Received `{type(params.get("no_serial", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def serial_helper_cargs(
     params: SerialHelperParameters,
     execution: Execution,
@@ -210,6 +266,7 @@ def serial_helper_execute(
     Returns:
         NamedTuple of outputs (described in `SerialHelperOutputs`).
     """
+    serial_helper_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SERIAL_HELPER_METADATA)
     params = execution.params(params)

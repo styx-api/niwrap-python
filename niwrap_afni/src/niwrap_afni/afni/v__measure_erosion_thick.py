@@ -126,6 +126,53 @@ def v__measure_erosion_thick_params(
     return params
 
 
+def v__measure_erosion_thick_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VMeasureErosionThickParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("maskset", None) is None:
+        raise StyxValidationError("`maskset` must not be None")
+    if not isinstance(params["maskset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskset` has the wrong type: Received `{type(params.get("maskset", None))}` expected `InputPathType`')
+    if params.get("surfset", None) is None:
+        raise StyxValidationError("`surfset` must not be None")
+    if not isinstance(params["surfset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surfset` has the wrong type: Received `{type(params.get("surfset", None))}` expected `InputPathType`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+    if params.get("resample", None) is not None:
+        if not isinstance(params["resample"], str):
+            raise StyxValidationError(f'`resample` has the wrong type: Received `{type(params.get("resample", None))}` expected `str | None`')
+    if params.get("surfsmooth", None) is not None:
+        if not isinstance(params["surfsmooth"], (float, int)):
+            raise StyxValidationError(f'`surfsmooth` has the wrong type: Received `{type(params.get("surfsmooth", None))}` expected `float | None`')
+    if params.get("smoothmm", None) is not None:
+        if not isinstance(params["smoothmm"], (float, int)):
+            raise StyxValidationError(f'`smoothmm` has the wrong type: Received `{type(params.get("smoothmm", None))}` expected `float | None`')
+    if params.get("maxthick", None) is not None:
+        if not isinstance(params["maxthick"], (float, int)):
+            raise StyxValidationError(f'`maxthick` has the wrong type: Received `{type(params.get("maxthick", None))}` expected `float | None`')
+    if params.get("depthsearch", None) is not None:
+        if not isinstance(params["depthsearch"], (float, int)):
+            raise StyxValidationError(f'`depthsearch` has the wrong type: Received `{type(params.get("depthsearch", None))}` expected `float | None`')
+    if params.get("keep_temp_files", False) is None:
+        raise StyxValidationError("`keep_temp_files` must not be None")
+    if not isinstance(params["keep_temp_files"], bool):
+        raise StyxValidationError(f'`keep_temp_files` has the wrong type: Received `{type(params.get("keep_temp_files", False))}` expected `bool`')
+    if params.get("surfsmooth_method", None) is not None:
+        if not isinstance(params["surfsmooth_method"], str):
+            raise StyxValidationError(f'`surfsmooth_method` has the wrong type: Received `{type(params.get("surfsmooth_method", None))}` expected `str | None`')
+
+
 def v__measure_erosion_thick_cargs(
     params: VMeasureErosionThickParameters,
     execution: Execution,
@@ -236,6 +283,7 @@ def v__measure_erosion_thick_execute(
     Returns:
         NamedTuple of outputs (described in `VMeasureErosionThickOutputs`).
     """
+    v__measure_erosion_thick_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__MEASURE_EROSION_THICK_METADATA)
     params = execution.params(params)

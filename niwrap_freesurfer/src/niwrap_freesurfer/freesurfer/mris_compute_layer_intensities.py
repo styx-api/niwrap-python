@@ -66,6 +66,36 @@ def mris_compute_layer_intensities_params(
     return params
 
 
+def mris_compute_layer_intensities_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisComputeLayerIntensitiesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_intensity_volume", None) is None:
+        raise StyxValidationError("`input_intensity_volume` must not be None")
+    if not isinstance(params["input_intensity_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_intensity_volume` has the wrong type: Received `{type(params.get("input_intensity_volume", None))}` expected `InputPathType`')
+    if params.get("layer_volume_fractions_file", None) is None:
+        raise StyxValidationError("`layer_volume_fractions_file` must not be None")
+    if not isinstance(params["layer_volume_fractions_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`layer_volume_fractions_file` has the wrong type: Received `{type(params.get("layer_volume_fractions_file", None))}` expected `InputPathType`')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("output_overlay", None) is None:
+        raise StyxValidationError("`output_overlay` must not be None")
+    if not isinstance(params["output_overlay"], str):
+        raise StyxValidationError(f'`output_overlay` has the wrong type: Received `{type(params.get("output_overlay", None))}` expected `str`')
+
+
 def mris_compute_layer_intensities_cargs(
     params: MrisComputeLayerIntensitiesParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def mris_compute_layer_intensities_execute(
     Returns:
         NamedTuple of outputs (described in `MrisComputeLayerIntensitiesOutputs`).
     """
+    mris_compute_layer_intensities_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_COMPUTE_LAYER_INTENSITIES_METADATA)
     params = execution.params(params)

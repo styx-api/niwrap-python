@@ -73,6 +73,41 @@ def rebase_tensor_image_params(
     return params
 
 
+def rebase_tensor_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RebaseTensorImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimension", None) is None:
+        raise StyxValidationError("`dimension` must not be None")
+    if not isinstance(params["dimension"], int):
+        raise StyxValidationError(f'`dimension` has the wrong type: Received `{type(params.get("dimension", None))}` expected `int`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `typing.Literal["PHYSICAL", "LOCAL"]`')
+    if params["method"] not in ["PHYSICAL", "LOCAL"]:
+        raise StyxValidationError("Parameter `method` must be one of [\"PHYSICAL\", \"LOCAL\"]")
+    if params.get("reference", None) is not None:
+        if not isinstance(params["reference"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference` has the wrong type: Received `{type(params.get("reference", None))}` expected `InputPathType | None`')
+
+
 def rebase_tensor_image_cargs(
     params: RebaseTensorImageParameters,
     execution: Execution,
@@ -136,6 +171,7 @@ def rebase_tensor_image_execute(
     Returns:
         NamedTuple of outputs (described in `RebaseTensorImageOutputs`).
     """
+    rebase_tensor_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REBASE_TENSOR_IMAGE_METADATA)
     params = execution.params(params)

@@ -101,6 +101,61 @@ def fslmerge_params(
     return params
 
 
+def fslmerge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslmergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("merge_time", False) is None:
+        raise StyxValidationError("`merge_time` must not be None")
+    if not isinstance(params["merge_time"], bool):
+        raise StyxValidationError(f'`merge_time` has the wrong type: Received `{type(params.get("merge_time", False))}` expected `bool`')
+    if params.get("merge_x", False) is None:
+        raise StyxValidationError("`merge_x` must not be None")
+    if not isinstance(params["merge_x"], bool):
+        raise StyxValidationError(f'`merge_x` has the wrong type: Received `{type(params.get("merge_x", False))}` expected `bool`')
+    if params.get("merge_y", False) is None:
+        raise StyxValidationError("`merge_y` must not be None")
+    if not isinstance(params["merge_y"], bool):
+        raise StyxValidationError(f'`merge_y` has the wrong type: Received `{type(params.get("merge_y", False))}` expected `bool`')
+    if params.get("merge_z", False) is None:
+        raise StyxValidationError("`merge_z` must not be None")
+    if not isinstance(params["merge_z"], bool):
+        raise StyxValidationError(f'`merge_z` has the wrong type: Received `{type(params.get("merge_z", False))}` expected `bool`')
+    if params.get("auto_choose", False) is None:
+        raise StyxValidationError("`auto_choose` must not be None")
+    if not isinstance(params["auto_choose"], bool):
+        raise StyxValidationError(f'`auto_choose` has the wrong type: Received `{type(params.get("auto_choose", False))}` expected `bool`')
+    if params.get("merge_set_tr", False) is None:
+        raise StyxValidationError("`merge_set_tr` must not be None")
+    if not isinstance(params["merge_set_tr"], bool):
+        raise StyxValidationError(f'`merge_set_tr` has the wrong type: Received `{type(params.get("merge_set_tr", False))}` expected `bool`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("volume_number", None) is not None:
+        if not isinstance(params["volume_number"], (float, int)):
+            raise StyxValidationError(f'`volume_number` has the wrong type: Received `{type(params.get("volume_number", None))}` expected `float | None`')
+    if params.get("tr_value", None) is not None:
+        if not isinstance(params["tr_value"], (float, int)):
+            raise StyxValidationError(f'`tr_value` has the wrong type: Received `{type(params.get("tr_value", None))}` expected `float | None`')
+
+
 def fslmerge_cargs(
     params: FslmergeParameters,
     execution: Execution,
@@ -179,6 +234,7 @@ def fslmerge_execute(
     Returns:
         NamedTuple of outputs (described in `FslmergeOutputs`).
     """
+    fslmerge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLMERGE_METADATA)
     params = execution.params(params)

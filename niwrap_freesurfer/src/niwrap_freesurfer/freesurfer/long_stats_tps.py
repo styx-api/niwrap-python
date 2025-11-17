@@ -88,6 +88,51 @@ def long_stats_tps_params(
     return params
 
 
+def long_stats_tps_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongStatsTpsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec_table", None) is None:
+        raise StyxValidationError("`qdec_table` must not be None")
+    if not isinstance(params["qdec_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`qdec_table` has the wrong type: Received `{type(params.get("qdec_table", None))}` expected `InputPathType`')
+    if params.get("stats_file", None) is None:
+        raise StyxValidationError("`stats_file` must not be None")
+    if not isinstance(params["stats_file"], str):
+        raise StyxValidationError(f'`stats_file` has the wrong type: Received `{type(params.get("stats_file", None))}` expected `str`')
+    if params.get("measure", None) is None:
+        raise StyxValidationError("`measure` must not be None")
+    if not isinstance(params["measure"], str):
+        raise StyxValidationError(f'`measure` has the wrong type: Received `{type(params.get("measure", None))}` expected `str`')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("time_point", None) is None:
+        raise StyxValidationError("`time_point` must not be None")
+    if not isinstance(params["time_point"], (float, int)):
+        raise StyxValidationError(f'`time_point` has the wrong type: Received `{type(params.get("time_point", None))}` expected `float`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("qcolumn", None) is not None:
+        if not isinstance(params["qcolumn"], str):
+            raise StyxValidationError(f'`qcolumn` has the wrong type: Received `{type(params.get("qcolumn", None))}` expected `str | None`')
+    if params.get("cross_sectional", False) is None:
+        raise StyxValidationError("`cross_sectional` must not be None")
+    if not isinstance(params["cross_sectional"], bool):
+        raise StyxValidationError(f'`cross_sectional` has the wrong type: Received `{type(params.get("cross_sectional", False))}` expected `bool`')
+
+
 def long_stats_tps_cargs(
     params: LongStatsTpsParameters,
     execution: Execution,
@@ -176,6 +221,7 @@ def long_stats_tps_execute(
     Returns:
         NamedTuple of outputs (described in `LongStatsTpsOutputs`).
     """
+    long_stats_tps_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_STATS_TPS_METADATA)
     params = execution.params(params)

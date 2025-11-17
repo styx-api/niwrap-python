@@ -108,6 +108,66 @@ def stattablediff_params(
     return params
 
 
+def stattablediff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `StattablediffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1", None) is None:
+        raise StyxValidationError("`t1` must not be None")
+    if not isinstance(params["t1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1` has the wrong type: Received `{type(params.get("t1", None))}` expected `InputPathType`')
+    if params.get("t2", None) is None:
+        raise StyxValidationError("`t2` must not be None")
+    if not isinstance(params["t2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t2` has the wrong type: Received `{type(params.get("t2", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("percent_diff", False) is None:
+        raise StyxValidationError("`percent_diff` must not be None")
+    if not isinstance(params["percent_diff"], bool):
+        raise StyxValidationError(f'`percent_diff` has the wrong type: Received `{type(params.get("percent_diff", False))}` expected `bool`')
+    if params.get("percent_diff_t1", False) is None:
+        raise StyxValidationError("`percent_diff_t1` must not be None")
+    if not isinstance(params["percent_diff_t1"], bool):
+        raise StyxValidationError(f'`percent_diff_t1` has the wrong type: Received `{type(params.get("percent_diff_t1", False))}` expected `bool`')
+    if params.get("percent_diff_t2", False) is None:
+        raise StyxValidationError("`percent_diff_t2` must not be None")
+    if not isinstance(params["percent_diff_t2"], bool):
+        raise StyxValidationError(f'`percent_diff_t2` has the wrong type: Received `{type(params.get("percent_diff_t2", False))}` expected `bool`')
+    if params.get("multiply", None) is not None:
+        if not isinstance(params["multiply"], (float, int)):
+            raise StyxValidationError(f'`multiply` has the wrong type: Received `{type(params.get("multiply", None))}` expected `float | None`')
+    if params.get("divide", None) is not None:
+        if not isinstance(params["divide"], (float, int)):
+            raise StyxValidationError(f'`divide` has the wrong type: Received `{type(params.get("divide", None))}` expected `float | None`')
+    if params.get("common", False) is None:
+        raise StyxValidationError("`common` must not be None")
+    if not isinstance(params["common"], bool):
+        raise StyxValidationError(f'`common` has the wrong type: Received `{type(params.get("common", False))}` expected `bool`')
+    if params.get("remove_exvivo", False) is None:
+        raise StyxValidationError("`remove_exvivo` must not be None")
+    if not isinstance(params["remove_exvivo"], bool):
+        raise StyxValidationError(f'`remove_exvivo` has the wrong type: Received `{type(params.get("remove_exvivo", False))}` expected `bool`')
+    if params.get("diff_subjects", False) is None:
+        raise StyxValidationError("`diff_subjects` must not be None")
+    if not isinstance(params["diff_subjects"], bool):
+        raise StyxValidationError(f'`diff_subjects` has the wrong type: Received `{type(params.get("diff_subjects", False))}` expected `bool`')
+    if params.get("noreplace53", False) is None:
+        raise StyxValidationError("`noreplace53` must not be None")
+    if not isinstance(params["noreplace53"], bool):
+        raise StyxValidationError(f'`noreplace53` has the wrong type: Received `{type(params.get("noreplace53", False))}` expected `bool`')
+
+
 def stattablediff_cargs(
     params: StattablediffParameters,
     execution: Execution,
@@ -192,6 +252,7 @@ def stattablediff_execute(
     Returns:
         NamedTuple of outputs (described in `StattablediffOutputs`).
     """
+    stattablediff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(STATTABLEDIFF_METADATA)
     params = execution.params(params)

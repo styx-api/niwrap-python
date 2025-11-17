@@ -49,6 +49,24 @@ def check_mcr_sh_params(
     return params
 
 
+def check_mcr_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CheckMcrShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def check_mcr_sh_cargs(
     params: CheckMcrShParameters,
     execution: Execution,
@@ -108,6 +126,7 @@ def check_mcr_sh_execute(
     Returns:
         NamedTuple of outputs (described in `CheckMcrShOutputs`).
     """
+    check_mcr_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CHECK_MCR_SH_METADATA)
     params = execution.params(params)

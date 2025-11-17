@@ -97,6 +97,51 @@ def mri_edit_segmentation_with_surfaces_params(
     return params
 
 
+def mri_edit_segmentation_with_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriEditSegmentationWithSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("aseg_name", None) is None:
+        raise StyxValidationError("`aseg_name` must not be None")
+    if not isinstance(params["aseg_name"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aseg_name` has the wrong type: Received `{type(params.get("aseg_name", None))}` expected `InputPathType`')
+    if params.get("surface_dir", None) is None:
+        raise StyxValidationError("`surface_dir` must not be None")
+    if not isinstance(params["surface_dir"], str):
+        raise StyxValidationError(f'`surface_dir` has the wrong type: Received `{type(params.get("surface_dir", None))}` expected `str`')
+    if params.get("norm_volume", None) is None:
+        raise StyxValidationError("`norm_volume` must not be None")
+    if not isinstance(params["norm_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`norm_volume` has the wrong type: Received `{type(params.get("norm_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("hypo_flag", None) is not None:
+        if not isinstance(params["hypo_flag"], bool):
+            raise StyxValidationError(f'`hypo_flag` has the wrong type: Received `{type(params.get("hypo_flag", None))}` expected `bool | None`')
+    if params.get("cerebellum_flag", None) is not None:
+        if not isinstance(params["cerebellum_flag"], bool):
+            raise StyxValidationError(f'`cerebellum_flag` has the wrong type: Received `{type(params.get("cerebellum_flag", None))}` expected `bool | None`')
+    if params.get("cortex_flag", None) is not None:
+        if not isinstance(params["cortex_flag"], bool):
+            raise StyxValidationError(f'`cortex_flag` has the wrong type: Received `{type(params.get("cortex_flag", None))}` expected `bool | None`')
+    if params.get("annotation_file", None) is not None:
+        if not isinstance(params["annotation_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annotation_file` has the wrong type: Received `{type(params.get("annotation_file", None))}` expected `InputPathType | None`')
+
+
 def mri_edit_segmentation_with_surfaces_cargs(
     params: MriEditSegmentationWithSurfacesParameters,
     execution: Execution,
@@ -183,6 +228,7 @@ def mri_edit_segmentation_with_surfaces_execute(
     Returns:
         NamedTuple of outputs (described in `MriEditSegmentationWithSurfacesOutputs`).
     """
+    mri_edit_segmentation_with_surfaces_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA)
     params = execution.params(params)

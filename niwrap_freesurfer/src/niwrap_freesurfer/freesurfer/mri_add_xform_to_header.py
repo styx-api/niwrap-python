@@ -71,6 +71,40 @@ def mri_add_xform_to_header_params(
     return params
 
 
+def mri_add_xform_to_header_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriAddXformToHeaderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xfm_file", None) is None:
+        raise StyxValidationError("`xfm_file` must not be None")
+    if not isinstance(params["xfm_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xfm_file` has the wrong type: Received `{type(params.get("xfm_file", None))}` expected `InputPathType`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("copy_name", False) is None:
+        raise StyxValidationError("`copy_name` must not be None")
+    if not isinstance(params["copy_name"], bool):
+        raise StyxValidationError(f'`copy_name` has the wrong type: Received `{type(params.get("copy_name", False))}` expected `bool`')
+
+
 def mri_add_xform_to_header_cargs(
     params: MriAddXformToHeaderParameters,
     execution: Execution,
@@ -135,6 +169,7 @@ def mri_add_xform_to_header_execute(
     Returns:
         NamedTuple of outputs (described in `MriAddXformToHeaderOutputs`).
     """
+    mri_add_xform_to_header_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_ADD_XFORM_TO_HEADER_METADATA)
     params = execution.params(params)

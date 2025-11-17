@@ -283,6 +283,27 @@ def cifti_resample_dconn_memory_weighted_params(
     return params
 
 
+def cifti_resample_dconn_memory_weighted_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryWeightedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("exponent", None) is not None:
+        if not isinstance(params["exponent"], (float, int)):
+            raise StyxValidationError(f'`exponent` has the wrong type: Received `{type(params.get("exponent", None))}` expected `float | None`')
+    if params.get("legacy-cutoff", False) is None:
+        raise StyxValidationError("`legacy-cutoff` must not be None")
+    if not isinstance(params["legacy-cutoff"], bool):
+        raise StyxValidationError(f'`legacy-cutoff` has the wrong type: Received `{type(params.get("legacy-cutoff", False))}` expected `bool`')
+
+
 def cifti_resample_dconn_memory_weighted_cargs(
     params: CiftiResampleDconnMemoryWeightedParameters,
     execution: Execution,
@@ -332,6 +353,30 @@ def cifti_resample_dconn_memory_volume_predilate_params(
     return params
 
 
+def cifti_resample_dconn_memory_volume_predilate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryVolumePredilateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dilate-mm", None) is None:
+        raise StyxValidationError("`dilate-mm` must not be None")
+    if not isinstance(params["dilate-mm"], (float, int)):
+        raise StyxValidationError(f'`dilate-mm` has the wrong type: Received `{type(params.get("dilate-mm", None))}` expected `float`')
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
+    if params.get("weighted", None) is not None:
+        cifti_resample_dconn_memory_weighted_validate(params["weighted"])
+
+
 def cifti_resample_dconn_memory_volume_predilate_cargs(
     params: CiftiResampleDconnMemoryVolumePredilateParameters,
     execution: Execution,
@@ -379,6 +424,27 @@ def cifti_resample_dconn_memory_weighted_params_(
     if exponent is not None:
         params["exponent"] = exponent
     return params
+
+
+def cifti_resample_dconn_memory_weighted_validate_(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryWeightedParameters_` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("exponent", None) is not None:
+        if not isinstance(params["exponent"], (float, int)):
+            raise StyxValidationError(f'`exponent` has the wrong type: Received `{type(params.get("exponent", None))}` expected `float | None`')
+    if params.get("legacy-cutoff", False) is None:
+        raise StyxValidationError("`legacy-cutoff` must not be None")
+    if not isinstance(params["legacy-cutoff"], bool):
+        raise StyxValidationError(f'`legacy-cutoff` has the wrong type: Received `{type(params.get("legacy-cutoff", False))}` expected `bool`')
 
 
 def cifti_resample_dconn_memory_weighted_cargs_(
@@ -433,6 +499,34 @@ def cifti_resample_dconn_memory_surface_postdilate_params(
     return params
 
 
+def cifti_resample_dconn_memory_surface_postdilate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemorySurfacePostdilateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dilate-mm", None) is None:
+        raise StyxValidationError("`dilate-mm` must not be None")
+    if not isinstance(params["dilate-mm"], (float, int)):
+        raise StyxValidationError(f'`dilate-mm` has the wrong type: Received `{type(params.get("dilate-mm", None))}` expected `float`')
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
+    if params.get("linear", False) is None:
+        raise StyxValidationError("`linear` must not be None")
+    if not isinstance(params["linear"], bool):
+        raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
+    if params.get("weighted", None) is not None:
+        cifti_resample_dconn_memory_weighted_validate_(params["weighted"])
+
+
 def cifti_resample_dconn_memory_surface_postdilate_cargs(
     params: CiftiResampleDconnMemorySurfacePostdilateParameters,
     execution: Execution,
@@ -479,6 +573,28 @@ def cifti_resample_dconn_memory_flirt_params(
     return params
 
 
+def cifti_resample_dconn_memory_flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryFlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("target-volume", None) is None:
+        raise StyxValidationError("`target-volume` must not be None")
+    if not isinstance(params["target-volume"], str):
+        raise StyxValidationError(f'`target-volume` has the wrong type: Received `{type(params.get("target-volume", None))}` expected `str`')
+
+
 def cifti_resample_dconn_memory_flirt_cargs(
     params: CiftiResampleDconnMemoryFlirtParameters,
     execution: Execution,
@@ -521,6 +637,26 @@ def cifti_resample_dconn_memory_affine_params(
     if flirt is not None:
         params["flirt"] = flirt
     return params
+
+
+def cifti_resample_dconn_memory_affine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryAffineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("affine-file", None) is None:
+        raise StyxValidationError("`affine-file` must not be None")
+    if not isinstance(params["affine-file"], str):
+        raise StyxValidationError(f'`affine-file` has the wrong type: Received `{type(params.get("affine-file", None))}` expected `str`')
+    if params.get("flirt", None) is not None:
+        cifti_resample_dconn_memory_flirt_validate(params["flirt"])
 
 
 def cifti_resample_dconn_memory_affine_cargs(
@@ -570,6 +706,27 @@ def cifti_resample_dconn_memory_warpfield_params(
     return params
 
 
+def cifti_resample_dconn_memory_warpfield_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryWarpfieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warpfield", None) is None:
+        raise StyxValidationError("`warpfield` must not be None")
+    if not isinstance(params["warpfield"], str):
+        raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
+    if params.get("source-volume", None) is not None:
+        if not isinstance(params["source-volume"], str):
+            raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str | None`')
+
+
 def cifti_resample_dconn_memory_warpfield_cargs(
     params: CiftiResampleDconnMemoryWarpfieldParameters,
     execution: Execution,
@@ -615,6 +772,28 @@ def cifti_resample_dconn_memory_left_area_surfs_params(
     return params
 
 
+def cifti_resample_dconn_memory_left_area_surfs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryLeftAreaSurfsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
+
+
 def cifti_resample_dconn_memory_left_area_surfs_cargs(
     params: CiftiResampleDconnMemoryLeftAreaSurfsParameters,
     execution: Execution,
@@ -656,6 +835,28 @@ def cifti_resample_dconn_memory_left_area_metrics_params(
         "new-area": new_area,
     }
     return params
+
+
+def cifti_resample_dconn_memory_left_area_metrics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryLeftAreaMetricsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
 
 
 def cifti_resample_dconn_memory_left_area_metrics_cargs(
@@ -712,6 +913,32 @@ def cifti_resample_dconn_memory_left_spheres_params(
     return params
 
 
+def cifti_resample_dconn_memory_left_spheres_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryLeftSpheresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("left-area-surfs", None) is not None:
+        cifti_resample_dconn_memory_left_area_surfs_validate(params["left-area-surfs"])
+    if params.get("left-area-metrics", None) is not None:
+        cifti_resample_dconn_memory_left_area_metrics_validate(params["left-area-metrics"])
+
+
 def cifti_resample_dconn_memory_left_spheres_cargs(
     params: CiftiResampleDconnMemoryLeftSpheresParameters,
     execution: Execution,
@@ -758,6 +985,28 @@ def cifti_resample_dconn_memory_right_area_surfs_params(
     return params
 
 
+def cifti_resample_dconn_memory_right_area_surfs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryRightAreaSurfsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
+
+
 def cifti_resample_dconn_memory_right_area_surfs_cargs(
     params: CiftiResampleDconnMemoryRightAreaSurfsParameters,
     execution: Execution,
@@ -799,6 +1048,28 @@ def cifti_resample_dconn_memory_right_area_metrics_params(
         "new-area": new_area,
     }
     return params
+
+
+def cifti_resample_dconn_memory_right_area_metrics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryRightAreaMetricsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
 
 
 def cifti_resample_dconn_memory_right_area_metrics_cargs(
@@ -856,6 +1127,32 @@ def cifti_resample_dconn_memory_right_spheres_params(
     return params
 
 
+def cifti_resample_dconn_memory_right_spheres_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryRightSpheresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("right-area-surfs", None) is not None:
+        cifti_resample_dconn_memory_right_area_surfs_validate(params["right-area-surfs"])
+    if params.get("right-area-metrics", None) is not None:
+        cifti_resample_dconn_memory_right_area_metrics_validate(params["right-area-metrics"])
+
+
 def cifti_resample_dconn_memory_right_spheres_cargs(
     params: CiftiResampleDconnMemoryRightSpheresParameters,
     execution: Execution,
@@ -903,6 +1200,28 @@ def cifti_resample_dconn_memory_cerebellum_area_surfs_params(
     return params
 
 
+def cifti_resample_dconn_memory_cerebellum_area_surfs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryCerebellumAreaSurfsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
+
+
 def cifti_resample_dconn_memory_cerebellum_area_surfs_cargs(
     params: CiftiResampleDconnMemoryCerebellumAreaSurfsParameters,
     execution: Execution,
@@ -944,6 +1263,28 @@ def cifti_resample_dconn_memory_cerebellum_area_metrics_params(
         "new-area": new_area,
     }
     return params
+
+
+def cifti_resample_dconn_memory_cerebellum_area_metrics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryCerebellumAreaMetricsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
 
 
 def cifti_resample_dconn_memory_cerebellum_area_metrics_cargs(
@@ -999,6 +1340,32 @@ def cifti_resample_dconn_memory_cerebellum_spheres_params(
     if cerebellum_area_metrics is not None:
         params["cerebellum-area-metrics"] = cerebellum_area_metrics
     return params
+
+
+def cifti_resample_dconn_memory_cerebellum_spheres_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryCerebellumSpheresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("cerebellum-area-surfs", None) is not None:
+        cifti_resample_dconn_memory_cerebellum_area_surfs_validate(params["cerebellum-area-surfs"])
+    if params.get("cerebellum-area-metrics", None) is not None:
+        cifti_resample_dconn_memory_cerebellum_area_metrics_validate(params["cerebellum-area-metrics"])
 
 
 def cifti_resample_dconn_memory_cerebellum_spheres_cargs(
@@ -1102,6 +1469,62 @@ def cifti_resample_dconn_memory_params(
     return params
 
 
+def cifti_resample_dconn_memory_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiResampleDconnMemoryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("surface-largest", False) is None:
+        raise StyxValidationError("`surface-largest` must not be None")
+    if not isinstance(params["surface-largest"], bool):
+        raise StyxValidationError(f'`surface-largest` has the wrong type: Received `{type(params.get("surface-largest", False))}` expected `bool`')
+    if params.get("volume-predilate", None) is not None:
+        cifti_resample_dconn_memory_volume_predilate_validate(params["volume-predilate"])
+    if params.get("surface-postdilate", None) is not None:
+        cifti_resample_dconn_memory_surface_postdilate_validate(params["surface-postdilate"])
+    if params.get("affine", None) is not None:
+        cifti_resample_dconn_memory_affine_validate(params["affine"])
+    if params.get("warpfield", None) is not None:
+        cifti_resample_dconn_memory_warpfield_validate(params["warpfield"])
+    if params.get("left-spheres", None) is not None:
+        cifti_resample_dconn_memory_left_spheres_validate(params["left-spheres"])
+    if params.get("right-spheres", None) is not None:
+        cifti_resample_dconn_memory_right_spheres_validate(params["right-spheres"])
+    if params.get("cerebellum-spheres", None) is not None:
+        cifti_resample_dconn_memory_cerebellum_spheres_validate(params["cerebellum-spheres"])
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("cifti-template", None) is None:
+        raise StyxValidationError("`cifti-template` must not be None")
+    if not isinstance(params["cifti-template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-template` has the wrong type: Received `{type(params.get("cifti-template", None))}` expected `InputPathType`')
+    if params.get("template-direction", None) is None:
+        raise StyxValidationError("`template-direction` must not be None")
+    if not isinstance(params["template-direction"], str):
+        raise StyxValidationError(f'`template-direction` has the wrong type: Received `{type(params.get("template-direction", None))}` expected `str`')
+    if params.get("surface-method", None) is None:
+        raise StyxValidationError("`surface-method` must not be None")
+    if not isinstance(params["surface-method"], str):
+        raise StyxValidationError(f'`surface-method` has the wrong type: Received `{type(params.get("surface-method", None))}` expected `str`')
+    if params.get("volume-method", None) is None:
+        raise StyxValidationError("`volume-method` must not be None")
+    if not isinstance(params["volume-method"], str):
+        raise StyxValidationError(f'`volume-method` has the wrong type: Received `{type(params.get("volume-method", None))}` expected `str`')
+
+
 def cifti_resample_dconn_memory_cargs(
     params: CiftiResampleDconnMemoryParameters,
     execution: Execution,
@@ -1200,6 +1623,7 @@ def cifti_resample_dconn_memory_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiResampleDconnMemoryOutputs`).
     """
+    cifti_resample_dconn_memory_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_RESAMPLE_DCONN_MEMORY_METADATA)
     params = execution.params(params)

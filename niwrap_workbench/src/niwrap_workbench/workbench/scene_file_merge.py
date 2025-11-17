@@ -81,6 +81,28 @@ def scene_file_merge_up_to_params(
     return params
 
 
+def scene_file_merge_up_to_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileMergeUpToParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("last-column", None) is None:
+        raise StyxValidationError("`last-column` must not be None")
+    if not isinstance(params["last-column"], str):
+        raise StyxValidationError(f'`last-column` has the wrong type: Received `{type(params.get("last-column", None))}` expected `str`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+
+
 def scene_file_merge_up_to_cargs(
     params: SceneFileMergeUpToParameters,
     execution: Execution,
@@ -126,6 +148,26 @@ def scene_file_merge_scene_params(
     return params
 
 
+def scene_file_merge_scene_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileMergeSceneParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scene", None) is None:
+        raise StyxValidationError("`scene` must not be None")
+    if not isinstance(params["scene"], str):
+        raise StyxValidationError(f'`scene` has the wrong type: Received `{type(params.get("scene", None))}` expected `str`')
+    if params.get("up-to", None) is not None:
+        scene_file_merge_up_to_validate(params["up-to"])
+
+
 def scene_file_merge_scene_cargs(
     params: SceneFileMergeSceneParameters,
     execution: Execution,
@@ -169,6 +211,29 @@ def scene_file_merge_scene_file_params(
     if scene is not None:
         params["scene"] = scene
     return params
+
+
+def scene_file_merge_scene_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileMergeSceneFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scene-file", None) is None:
+        raise StyxValidationError("`scene-file` must not be None")
+    if not isinstance(params["scene-file"], str):
+        raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `str`')
+    if params.get("scene", None) is not None:
+        if not isinstance(params["scene"], list):
+            raise StyxValidationError(f'`scene` has the wrong type: Received `{type(params.get("scene", None))}` expected `list[SceneFileMergeSceneParameters] | None`')
+        for e in params["scene"]:
+            scene_file_merge_scene_validate(e)
 
 
 def scene_file_merge_scene_file_cargs(
@@ -222,6 +287,29 @@ def scene_file_merge_params(
     if scene_file is not None:
         params["scene-file"] = scene_file
     return params
+
+
+def scene_file_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scene-file", None) is not None:
+        if not isinstance(params["scene-file"], list):
+            raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `list[SceneFileMergeSceneFileParameters] | None`')
+        for e in params["scene-file"]:
+            scene_file_merge_scene_file_validate(e)
+    if params.get("scene-file-out", None) is None:
+        raise StyxValidationError("`scene-file-out` must not be None")
+    if not isinstance(params["scene-file-out"], str):
+        raise StyxValidationError(f'`scene-file-out` has the wrong type: Received `{type(params.get("scene-file-out", None))}` expected `str`')
 
 
 def scene_file_merge_cargs(
@@ -289,6 +377,7 @@ def scene_file_merge_execute(
     Returns:
         NamedTuple of outputs (described in `SceneFileMergeOutputs`).
     """
+    scene_file_merge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SCENE_FILE_MERGE_METADATA)
     params = execution.params(params)

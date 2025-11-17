@@ -144,6 +144,85 @@ def v__diff_tree_params(
     return params
 
 
+def v__diff_tree_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDiffTreeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("new_dir", None) is None:
+        raise StyxValidationError("`new_dir` must not be None")
+    if not isinstance(params["new_dir"], str):
+        raise StyxValidationError(f'`new_dir` has the wrong type: Received `{type(params.get("new_dir", None))}` expected `str`')
+    if params.get("old_dir", None) is None:
+        raise StyxValidationError("`old_dir` must not be None")
+    if not isinstance(params["old_dir"], str):
+        raise StyxValidationError(f'`old_dir` has the wrong type: Received `{type(params.get("old_dir", None))}` expected `str`')
+    if params.get("diff_opts", None) is not None:
+        if not isinstance(params["diff_opts"], str):
+            raise StyxValidationError(f'`diff_opts` has the wrong type: Received `{type(params.get("diff_opts", None))}` expected `str | None`')
+    if params.get("ignore_append", None) is not None:
+        if not isinstance(params["ignore_append"], str):
+            raise StyxValidationError(f'`ignore_append` has the wrong type: Received `{type(params.get("ignore_append", None))}` expected `str | None`')
+    if params.get("ia", None) is not None:
+        if not isinstance(params["ia"], str):
+            raise StyxValidationError(f'`ia` has the wrong type: Received `{type(params.get("ia", None))}` expected `str | None`')
+    if params.get("ignore_list", None) is not None:
+        if not isinstance(params["ignore_list"], str):
+            raise StyxValidationError(f'`ignore_list` has the wrong type: Received `{type(params.get("ignore_list", None))}` expected `str | None`')
+    if params.get("il", None) is not None:
+        if not isinstance(params["il"], str):
+            raise StyxValidationError(f'`il` has the wrong type: Received `{type(params.get("il", None))}` expected `str | None`')
+    if params.get("ignore_missing", False) is None:
+        raise StyxValidationError("`ignore_missing` must not be None")
+    if not isinstance(params["ignore_missing"], bool):
+        raise StyxValidationError(f'`ignore_missing` has the wrong type: Received `{type(params.get("ignore_missing", False))}` expected `bool`')
+    if params.get("no_diffs", False) is None:
+        raise StyxValidationError("`no_diffs` must not be None")
+    if not isinstance(params["no_diffs"], bool):
+        raise StyxValidationError(f'`no_diffs` has the wrong type: Received `{type(params.get("no_diffs", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("save", False) is None:
+        raise StyxValidationError("`save` must not be None")
+    if not isinstance(params["save"], bool):
+        raise StyxValidationError(f'`save` has the wrong type: Received `{type(params.get("save", False))}` expected `bool`')
+    if params.get("show", False) is None:
+        raise StyxValidationError("`show` must not be None")
+    if not isinstance(params["show"], bool):
+        raise StyxValidationError(f'`show` has the wrong type: Received `{type(params.get("show", False))}` expected `bool`')
+    if params.get("show_list_comp", False) is None:
+        raise StyxValidationError("`show_list_comp` must not be None")
+    if not isinstance(params["show_list_comp"], bool):
+        raise StyxValidationError(f'`show_list_comp` has the wrong type: Received `{type(params.get("show_list_comp", False))}` expected `bool`')
+    if params.get("skip_data", False) is None:
+        raise StyxValidationError("`skip_data` must not be None")
+    if not isinstance(params["skip_data"], bool):
+        raise StyxValidationError(f'`skip_data` has the wrong type: Received `{type(params.get("skip_data", False))}` expected `bool`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], str):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `str | None`')
+    if params.get("diff_prog", None) is not None:
+        if not isinstance(params["diff_prog"], str):
+            raise StyxValidationError(f'`diff_prog` has the wrong type: Received `{type(params.get("diff_prog", None))}` expected `str | None`')
+    if params.get("xxdiff", False) is None:
+        raise StyxValidationError("`xxdiff` must not be None")
+    if not isinstance(params["xxdiff"], bool):
+        raise StyxValidationError(f'`xxdiff` has the wrong type: Received `{type(params.get("xxdiff", False))}` expected `bool`')
+    if params.get("X_option", False) is None:
+        raise StyxValidationError("`X_option` must not be None")
+    if not isinstance(params["X_option"], bool):
+        raise StyxValidationError(f'`X_option` has the wrong type: Received `{type(params.get("X_option", False))}` expected `bool`')
+
+
 def v__diff_tree_cargs(
     params: VDiffTreeParameters,
     execution: Execution,
@@ -255,6 +334,7 @@ def v__diff_tree_execute(
     Returns:
         NamedTuple of outputs (described in `VDiffTreeOutputs`).
     """
+    v__diff_tree_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DIFF_TREE_METADATA)
     params = execution.params(params)

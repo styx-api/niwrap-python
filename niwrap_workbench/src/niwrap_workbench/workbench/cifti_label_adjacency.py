@@ -79,6 +79,37 @@ def cifti_label_adjacency_params(
     return params
 
 
+def cifti_label_adjacency_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiLabelAdjacencyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("adjacency-out", None) is None:
+        raise StyxValidationError("`adjacency-out` must not be None")
+    if not isinstance(params["adjacency-out"], str):
+        raise StyxValidationError(f'`adjacency-out` has the wrong type: Received `{type(params.get("adjacency-out", None))}` expected `str`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+
+
 def cifti_label_adjacency_cargs(
     params: CiftiLabelAdjacencyParameters,
     execution: Execution,
@@ -147,6 +178,7 @@ def cifti_label_adjacency_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelAdjacencyOutputs`).
     """
+    cifti_label_adjacency_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_LABEL_ADJACENCY_METADATA)
     params = execution.params(params)

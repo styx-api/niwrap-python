@@ -96,6 +96,63 @@ def defect2seg_params(
     return params
 
 
+def defect2seg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Defect2segParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_seg", None) is None:
+        raise StyxValidationError("`output_seg` must not be None")
+    if not isinstance(params["output_seg"], str):
+        raise StyxValidationError(f'`output_seg` has the wrong type: Received `{type(params.get("output_seg", None))}` expected `str`')
+    if params.get("template", None) is None:
+        raise StyxValidationError("`template` must not be None")
+    if not isinstance(params["template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType`')
+    if params.get("left_hemisphere", None) is not None:
+        if not isinstance(params["left_hemisphere"], list):
+            raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", None))}` expected `list[str] | None`')
+        if len(params["left_hemisphere"]) <= 4:
+            raise StyxValidationError("Parameter `left_hemisphere` must contain at most 4 elements")
+        for e in params["left_hemisphere"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", None))}` expected `list[str] | None`')
+    if params.get("right_hemisphere", None) is not None:
+        if not isinstance(params["right_hemisphere"], list):
+            raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", None))}` expected `list[str] | None`')
+        if len(params["right_hemisphere"]) <= 4:
+            raise StyxValidationError("Parameter `right_hemisphere` must contain at most 4 elements")
+        for e in params["right_hemisphere"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", None))}` expected `list[str] | None`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("lh_only", False) is None:
+        raise StyxValidationError("`lh_only` must not be None")
+    if not isinstance(params["lh_only"], bool):
+        raise StyxValidationError(f'`lh_only` has the wrong type: Received `{type(params.get("lh_only", False))}` expected `bool`')
+    if params.get("rh_only", False) is None:
+        raise StyxValidationError("`rh_only` must not be None")
+    if not isinstance(params["rh_only"], bool):
+        raise StyxValidationError(f'`rh_only` has the wrong type: Received `{type(params.get("rh_only", False))}` expected `bool`')
+    if params.get("cortex", False) is None:
+        raise StyxValidationError("`cortex` must not be None")
+    if not isinstance(params["cortex"], bool):
+        raise StyxValidationError(f'`cortex` has the wrong type: Received `{type(params.get("cortex", False))}` expected `bool`')
+    if params.get("no_cortex", False) is None:
+        raise StyxValidationError("`no_cortex` must not be None")
+    if not isinstance(params["no_cortex"], bool):
+        raise StyxValidationError(f'`no_cortex` has the wrong type: Received `{type(params.get("no_cortex", False))}` expected `bool`')
+
+
 def defect2seg_cargs(
     params: Defect2segParameters,
     execution: Execution,
@@ -184,6 +241,7 @@ def defect2seg_execute(
     Returns:
         NamedTuple of outputs (described in `Defect2segOutputs`).
     """
+    defect2seg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DEFECT2SEG_METADATA)
     params = execution.params(params)

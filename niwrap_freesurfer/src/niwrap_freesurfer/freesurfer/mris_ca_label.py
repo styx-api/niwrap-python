@@ -157,6 +157,86 @@ def mris_ca_label_params(
     return params
 
 
+def mris_ca_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisCaLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("canonsurf", None) is None:
+        raise StyxValidationError("`canonsurf` must not be None")
+    if not isinstance(params["canonsurf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`canonsurf` has the wrong type: Received `{type(params.get("canonsurf", None))}` expected `InputPathType`')
+    if params.get("classifier", None) is None:
+        raise StyxValidationError("`classifier` must not be None")
+    if not isinstance(params["classifier"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`classifier` has the wrong type: Received `{type(params.get("classifier", None))}` expected `InputPathType`')
+    if params.get("outputfile", None) is None:
+        raise StyxValidationError("`outputfile` must not be None")
+    if not isinstance(params["outputfile"], str):
+        raise StyxValidationError(f'`outputfile` has the wrong type: Received `{type(params.get("outputfile", None))}` expected `str`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("orig", None) is not None:
+        if not isinstance(params["orig"], str):
+            raise StyxValidationError(f'`orig` has the wrong type: Received `{type(params.get("orig", None))}` expected `str | None`')
+    if params.get("long_flag", False) is None:
+        raise StyxValidationError("`long_flag` must not be None")
+    if not isinstance(params["long_flag"], bool):
+        raise StyxValidationError(f'`long_flag` has the wrong type: Received `{type(params.get("long_flag", False))}` expected `bool`')
+    if params.get("r", None) is not None:
+        if not isinstance(params["r"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`r` has the wrong type: Received `{type(params.get("r", None))}` expected `InputPathType | None`')
+    if params.get("novar_flag", False) is None:
+        raise StyxValidationError("`novar_flag` must not be None")
+    if not isinstance(params["novar_flag"], bool):
+        raise StyxValidationError(f'`novar_flag` has the wrong type: Received `{type(params.get("novar_flag", False))}` expected `bool`')
+    if params.get("nbrs", None) is not None:
+        if not isinstance(params["nbrs"], (float, int)):
+            raise StyxValidationError(f'`nbrs` has the wrong type: Received `{type(params.get("nbrs", None))}` expected `float | None`')
+    if params.get("f", None) is not None:
+        if not isinstance(params["f"], (float, int)):
+            raise StyxValidationError(f'`f` has the wrong type: Received `{type(params.get("f", None))}` expected `float | None`')
+    if params.get("t", None) is not None:
+        if not isinstance(params["t"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t` has the wrong type: Received `{type(params.get("t", None))}` expected `InputPathType | None`')
+    if params.get("p", None) is not None:
+        if not isinstance(params["p"], str):
+            raise StyxValidationError(f'`p` has the wrong type: Received `{type(params.get("p", None))}` expected `str | None`')
+    if params.get("v", None) is not None:
+        if not isinstance(params["v"], (float, int)):
+            raise StyxValidationError(f'`v` has the wrong type: Received `{type(params.get("v", None))}` expected `float | None`')
+    if params.get("w", None) is not None:
+        if not isinstance(params["w"], str):
+            raise StyxValidationError(f'`w` has the wrong type: Received `{type(params.get("w", None))}` expected `str | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+
+
 def mris_ca_label_cargs(
     params: MrisCaLabelParameters,
     execution: Execution,
@@ -278,6 +358,7 @@ def mris_ca_label_execute(
     Returns:
         NamedTuple of outputs (described in `MrisCaLabelOutputs`).
     """
+    mris_ca_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CA_LABEL_METADATA)
     params = execution.params(params)

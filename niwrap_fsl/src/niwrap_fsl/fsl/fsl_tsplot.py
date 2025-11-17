@@ -140,6 +140,71 @@ def fsl_tsplot_params(
     return params
 
 
+def fsl_tsplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslTsplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], str):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `str`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("title", None) is not None:
+        if not isinstance(params["title"], str):
+            raise StyxValidationError(f'`title` has the wrong type: Received `{type(params.get("title", None))}` expected `str | None`')
+    if params.get("legend_file", None) is not None:
+        if not isinstance(params["legend_file"], str):
+            raise StyxValidationError(f'`legend_file` has the wrong type: Received `{type(params.get("legend_file", None))}` expected `str | None`')
+    if params.get("labels", None) is not None:
+        if not isinstance(params["labels"], str):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `str | None`')
+    if params.get("ymin", None) is not None:
+        if not isinstance(params["ymin"], (float, int)):
+            raise StyxValidationError(f'`ymin` has the wrong type: Received `{type(params.get("ymin", None))}` expected `float | None`')
+    if params.get("ymax", None) is not None:
+        if not isinstance(params["ymax"], (float, int)):
+            raise StyxValidationError(f'`ymax` has the wrong type: Received `{type(params.get("ymax", None))}` expected `float | None`')
+    if params.get("xlabel", None) is not None:
+        if not isinstance(params["xlabel"], str):
+            raise StyxValidationError(f'`xlabel` has the wrong type: Received `{type(params.get("xlabel", None))}` expected `str | None`')
+    if params.get("ylabel", None) is not None:
+        if not isinstance(params["ylabel"], str):
+            raise StyxValidationError(f'`ylabel` has the wrong type: Received `{type(params.get("ylabel", None))}` expected `str | None`')
+    if params.get("height", None) is not None:
+        if not isinstance(params["height"], (float, int)):
+            raise StyxValidationError(f'`height` has the wrong type: Received `{type(params.get("height", None))}` expected `float | None`')
+    if params.get("width", None) is not None:
+        if not isinstance(params["width"], (float, int)):
+            raise StyxValidationError(f'`width` has the wrong type: Received `{type(params.get("width", None))}` expected `float | None`')
+    if params.get("unit", None) is not None:
+        if not isinstance(params["unit"], (float, int)):
+            raise StyxValidationError(f'`unit` has the wrong type: Received `{type(params.get("unit", None))}` expected `float | None`')
+    if params.get("precision", None) is not None:
+        if not isinstance(params["precision"], (float, int)):
+            raise StyxValidationError(f'`precision` has the wrong type: Received `{type(params.get("precision", None))}` expected `float | None`')
+    if params.get("sci_flag", False) is None:
+        raise StyxValidationError("`sci_flag` must not be None")
+    if not isinstance(params["sci_flag"], bool):
+        raise StyxValidationError(f'`sci_flag` has the wrong type: Received `{type(params.get("sci_flag", False))}` expected `bool`')
+    if params.get("start_col", None) is not None:
+        if not isinstance(params["start_col"], (float, int)):
+            raise StyxValidationError(f'`start_col` has the wrong type: Received `{type(params.get("start_col", None))}` expected `float | None`')
+    if params.get("end_col", None) is not None:
+        if not isinstance(params["end_col"], (float, int)):
+            raise StyxValidationError(f'`end_col` has the wrong type: Received `{type(params.get("end_col", None))}` expected `float | None`')
+
+
 def fsl_tsplot_cargs(
     params: FslTsplotParameters,
     execution: Execution,
@@ -272,6 +337,7 @@ def fsl_tsplot_execute(
     Returns:
         NamedTuple of outputs (described in `FslTsplotOutputs`).
     """
+    fsl_tsplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_TSPLOT_METADATA)
     params = execution.params(params)

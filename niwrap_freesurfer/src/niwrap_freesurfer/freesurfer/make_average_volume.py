@@ -126,6 +126,77 @@ def make_average_volume_params(
     return params
 
 
+def make_average_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeAverageVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("fsgd", None) is not None:
+        if not isinstance(params["fsgd"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsgd` has the wrong type: Received `{type(params.get("fsgd", None))}` expected `InputPathType | None`')
+    if params.get("out", None) is not None:
+        if not isinstance(params["out"], str):
+            raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str | None`')
+    if params.get("topdir", None) is not None:
+        if not isinstance(params["topdir"], str):
+            raise StyxValidationError(f'`topdir` has the wrong type: Received `{type(params.get("topdir", None))}` expected `str | None`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], str):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `str | None`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("sd_flag", False) is None:
+        raise StyxValidationError("`sd_flag` must not be None")
+    if not isinstance(params["sd_flag"], bool):
+        raise StyxValidationError(f'`sd_flag` has the wrong type: Received `{type(params.get("sd_flag", False))}` expected `bool`')
+    if params.get("force_flag", False) is None:
+        raise StyxValidationError("`force_flag` must not be None")
+    if not isinstance(params["force_flag"], bool):
+        raise StyxValidationError(f'`force_flag` has the wrong type: Received `{type(params.get("force_flag", False))}` expected `bool`')
+    if params.get("keep_all_orig_flag", False) is None:
+        raise StyxValidationError("`keep_all_orig_flag` must not be None")
+    if not isinstance(params["keep_all_orig_flag"], bool):
+        raise StyxValidationError(f'`keep_all_orig_flag` has the wrong type: Received `{type(params.get("keep_all_orig_flag", False))}` expected `bool`')
+    if params.get("no_aseg_flag", False) is None:
+        raise StyxValidationError("`no_aseg_flag` must not be None")
+    if not isinstance(params["no_aseg_flag"], bool):
+        raise StyxValidationError(f'`no_aseg_flag` has the wrong type: Received `{type(params.get("no_aseg_flag", False))}` expected `bool`')
+    if params.get("ctab", None) is not None:
+        if not isinstance(params["ctab"], str):
+            raise StyxValidationError(f'`ctab` has the wrong type: Received `{type(params.get("ctab", None))}` expected `str | None`')
+    if params.get("ctab_default_flag", False) is None:
+        raise StyxValidationError("`ctab_default_flag` must not be None")
+    if not isinstance(params["ctab_default_flag"], bool):
+        raise StyxValidationError(f'`ctab_default_flag` has the wrong type: Received `{type(params.get("ctab_default_flag", False))}` expected `bool`')
+    if params.get("echo_flag", False) is None:
+        raise StyxValidationError("`echo_flag` must not be None")
+    if not isinstance(params["echo_flag"], bool):
+        raise StyxValidationError(f'`echo_flag` has the wrong type: Received `{type(params.get("echo_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("nocleanup_flag", False) is None:
+        raise StyxValidationError("`nocleanup_flag` must not be None")
+    if not isinstance(params["nocleanup_flag"], bool):
+        raise StyxValidationError(f'`nocleanup_flag` has the wrong type: Received `{type(params.get("nocleanup_flag", False))}` expected `bool`')
+
+
 def make_average_volume_cargs(
     params: MakeAverageVolumeParameters,
     execution: Execution,
@@ -232,6 +303,7 @@ def make_average_volume_execute(
     Returns:
         NamedTuple of outputs (described in `MakeAverageVolumeOutputs`).
     """
+    make_average_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_AVERAGE_VOLUME_METADATA)
     params = execution.params(params)

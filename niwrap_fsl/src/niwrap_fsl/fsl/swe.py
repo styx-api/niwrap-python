@@ -256,6 +256,148 @@ def swe_params(
     return params
 
 
+def swe_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `SweParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_root", None) is None:
+        raise StyxValidationError("`output_root` must not be None")
+    if not isinstance(params["output_root"], str):
+        raise StyxValidationError(f'`output_root` has the wrong type: Received `{type(params.get("output_root", None))}` expected `str`')
+    if params.get("design_mat", None) is None:
+        raise StyxValidationError("`design_mat` must not be None")
+    if not isinstance(params["design_mat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design_mat` has the wrong type: Received `{type(params.get("design_mat", None))}` expected `InputPathType`')
+    if params.get("design_con", None) is None:
+        raise StyxValidationError("`design_con` must not be None")
+    if not isinstance(params["design_con"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design_con` has the wrong type: Received `{type(params.get("design_con", None))}` expected `InputPathType`')
+    if params.get("design_sub", None) is None:
+        raise StyxValidationError("`design_sub` must not be None")
+    if not isinstance(params["design_sub"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design_sub` has the wrong type: Received `{type(params.get("design_sub", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("fcon", None) is not None:
+        if not isinstance(params["fcon"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fcon` has the wrong type: Received `{type(params.get("fcon", None))}` expected `InputPathType | None`')
+    if params.get("modified", False) is None:
+        raise StyxValidationError("`modified` must not be None")
+    if not isinstance(params["modified"], bool):
+        raise StyxValidationError(f'`modified` has the wrong type: Received `{type(params.get("modified", False))}` expected `bool`')
+    if params.get("wild_bootstrap", False) is None:
+        raise StyxValidationError("`wild_bootstrap` must not be None")
+    if not isinstance(params["wild_bootstrap"], bool):
+        raise StyxValidationError(f'`wild_bootstrap` has the wrong type: Received `{type(params.get("wild_bootstrap", False))}` expected `bool`')
+    if params.get("logp", False) is None:
+        raise StyxValidationError("`logp` must not be None")
+    if not isinstance(params["logp"], bool):
+        raise StyxValidationError(f'`logp` has the wrong type: Received `{type(params.get("logp", False))}` expected `bool`')
+    if params.get("nboot", None) is not None:
+        if not isinstance(params["nboot"], (float, int)):
+            raise StyxValidationError(f'`nboot` has the wrong type: Received `{type(params.get("nboot", None))}` expected `float | None`')
+    if params.get("corrp", False) is None:
+        raise StyxValidationError("`corrp` must not be None")
+    if not isinstance(params["corrp"], bool):
+        raise StyxValidationError(f'`corrp` has the wrong type: Received `{type(params.get("corrp", False))}` expected `bool`')
+    if params.get("fonly", False) is None:
+        raise StyxValidationError("`fonly` must not be None")
+    if not isinstance(params["fonly"], bool):
+        raise StyxValidationError(f'`fonly` has the wrong type: Received `{type(params.get("fonly", False))}` expected `bool`')
+    if params.get("tfce", False) is None:
+        raise StyxValidationError("`tfce` must not be None")
+    if not isinstance(params["tfce"], bool):
+        raise StyxValidationError(f'`tfce` has the wrong type: Received `{type(params.get("tfce", False))}` expected `bool`')
+    if params.get("tfce_2d", False) is None:
+        raise StyxValidationError("`tfce_2d` must not be None")
+    if not isinstance(params["tfce_2d"], bool):
+        raise StyxValidationError(f'`tfce_2d` has the wrong type: Received `{type(params.get("tfce_2d", False))}` expected `bool`')
+    if params.get("cluster_t", None) is not None:
+        if not isinstance(params["cluster_t"], (float, int)):
+            raise StyxValidationError(f'`cluster_t` has the wrong type: Received `{type(params.get("cluster_t", None))}` expected `float | None`')
+    if params.get("cluster_t_mass", None) is not None:
+        if not isinstance(params["cluster_t_mass"], (float, int)):
+            raise StyxValidationError(f'`cluster_t_mass` has the wrong type: Received `{type(params.get("cluster_t_mass", None))}` expected `float | None`')
+    if params.get("cluster_f", None) is not None:
+        if not isinstance(params["cluster_f"], (float, int)):
+            raise StyxValidationError(f'`cluster_f` has the wrong type: Received `{type(params.get("cluster_f", None))}` expected `float | None`')
+    if params.get("cluster_f_mass", None) is not None:
+        if not isinstance(params["cluster_f_mass"], (float, int)):
+            raise StyxValidationError(f'`cluster_f_mass` has the wrong type: Received `{type(params.get("cluster_f_mass", None))}` expected `float | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("raw", False) is None:
+        raise StyxValidationError("`raw` must not be None")
+    if not isinstance(params["raw"], bool):
+        raise StyxValidationError(f'`raw` has the wrong type: Received `{type(params.get("raw", False))}` expected `bool`')
+    if params.get("equiv", False) is None:
+        raise StyxValidationError("`equiv` must not be None")
+    if not isinstance(params["equiv"], bool):
+        raise StyxValidationError(f'`equiv` has the wrong type: Received `{type(params.get("equiv", False))}` expected `bool`')
+    if params.get("dof", False) is None:
+        raise StyxValidationError("`dof` must not be None")
+    if not isinstance(params["dof"], bool):
+        raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", False))}` expected `bool`')
+    if params.get("uncorr_p", False) is None:
+        raise StyxValidationError("`uncorr_p` must not be None")
+    if not isinstance(params["uncorr_p"], bool):
+        raise StyxValidationError(f'`uncorr_p` has the wrong type: Received `{type(params.get("uncorr_p", False))}` expected `bool`')
+    if params.get("null_dist", False) is None:
+        raise StyxValidationError("`null_dist` must not be None")
+    if not isinstance(params["null_dist"], bool):
+        raise StyxValidationError(f'`null_dist` has the wrong type: Received `{type(params.get("null_dist", False))}` expected `bool`')
+    if params.get("no_rc_mask", False) is None:
+        raise StyxValidationError("`no_rc_mask` must not be None")
+    if not isinstance(params["no_rc_mask"], bool):
+        raise StyxValidationError(f'`no_rc_mask` has the wrong type: Received `{type(params.get("no_rc_mask", False))}` expected `bool`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("tfce_h", None) is not None:
+        if not isinstance(params["tfce_h"], (float, int)):
+            raise StyxValidationError(f'`tfce_h` has the wrong type: Received `{type(params.get("tfce_h", None))}` expected `float | None`')
+    if params.get("tfce_d", None) is not None:
+        if not isinstance(params["tfce_d"], (float, int)):
+            raise StyxValidationError(f'`tfce_d` has the wrong type: Received `{type(params.get("tfce_d", None))}` expected `float | None`')
+    if params.get("tfce_e", None) is not None:
+        if not isinstance(params["tfce_e"], (float, int)):
+            raise StyxValidationError(f'`tfce_e` has the wrong type: Received `{type(params.get("tfce_e", None))}` expected `float | None`')
+    if params.get("tfce_c", None) is not None:
+        if not isinstance(params["tfce_c"], (float, int)):
+            raise StyxValidationError(f'`tfce_c` has the wrong type: Received `{type(params.get("tfce_c", None))}` expected `float | None`')
+    if params.get("voxelwise_ev", None) is not None:
+        if not isinstance(params["voxelwise_ev"], list):
+            raise StyxValidationError(f'`voxelwise_ev` has the wrong type: Received `{type(params.get("voxelwise_ev", None))}` expected `list[float] | None`')
+        for e in params["voxelwise_ev"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`voxelwise_ev` has the wrong type: Received `{type(params.get("voxelwise_ev", None))}` expected `list[float] | None`')
+    if params.get("voxelwise_evs", None) is not None:
+        if not isinstance(params["voxelwise_evs"], list):
+            raise StyxValidationError(f'`voxelwise_evs` has the wrong type: Received `{type(params.get("voxelwise_evs", None))}` expected `list[InputPathType] | None`')
+        for e in params["voxelwise_evs"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`voxelwise_evs` has the wrong type: Received `{type(params.get("voxelwise_evs", None))}` expected `list[InputPathType] | None`')
+    if params.get("glm_output", False) is None:
+        raise StyxValidationError("`glm_output` must not be None")
+    if not isinstance(params["glm_output"], bool):
+        raise StyxValidationError(f'`glm_output` has the wrong type: Received `{type(params.get("glm_output", False))}` expected `bool`')
+
+
 def swe_cargs(
     params: SweParameters,
     execution: Execution,
@@ -440,6 +582,7 @@ def swe_execute(
     Returns:
         NamedTuple of outputs (described in `SweOutputs`).
     """
+    swe_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SWE_METADATA)
     params = execution.params(params)

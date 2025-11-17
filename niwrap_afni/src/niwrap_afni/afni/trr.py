@@ -158,6 +158,84 @@ def trr_params(
     return params
 
 
+def trr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `TrrParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("chains", None) is not None:
+        if not isinstance(params["chains"], (float, int)):
+            raise StyxValidationError(f'`chains` has the wrong type: Received `{type(params.get("chains", None))}` expected `float | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+    if params.get("response_var", None) is None:
+        raise StyxValidationError("`response_var` must not be None")
+    if not isinstance(params["response_var"], str):
+        raise StyxValidationError(f'`response_var` has the wrong type: Received `{type(params.get("response_var", None))}` expected `str`')
+    if params.get("subject_var", None) is None:
+        raise StyxValidationError("`subject_var` must not be None")
+    if not isinstance(params["subject_var"], str):
+        raise StyxValidationError(f'`subject_var` has the wrong type: Received `{type(params.get("subject_var", None))}` expected `str`')
+    if params.get("repetition_var", None) is not None:
+        if not isinstance(params["repetition_var"], str):
+            raise StyxValidationError(f'`repetition_var` has the wrong type: Received `{type(params.get("repetition_var", None))}` expected `str | None`')
+    if params.get("condition_var", None) is not None:
+        if not isinstance(params["condition_var"], str):
+            raise StyxValidationError(f'`condition_var` has the wrong type: Received `{type(params.get("condition_var", None))}` expected `str | None`')
+    if params.get("data_table", None) is None:
+        raise StyxValidationError("`data_table` must not be None")
+    if not isinstance(params["data_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_table` has the wrong type: Received `{type(params.get("data_table", None))}` expected `InputPathType`')
+    if params.get("categorical_vars", None) is not None:
+        if not isinstance(params["categorical_vars"], str):
+            raise StyxValidationError(f'`categorical_vars` has the wrong type: Received `{type(params.get("categorical_vars", None))}` expected `str | None`')
+    if params.get("quantitative_vars", None) is not None:
+        if not isinstance(params["quantitative_vars"], str):
+            raise StyxValidationError(f'`quantitative_vars` has the wrong type: Received `{type(params.get("quantitative_vars", None))}` expected `str | None`')
+    if params.get("response_dist", None) is not None:
+        if not isinstance(params["response_dist"], str):
+            raise StyxValidationError(f'`response_dist` has the wrong type: Received `{type(params.get("response_dist", None))}` expected `str | None`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], str):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str | None`')
+    if params.get("plot_size", None) is not None:
+        if not isinstance(params["plot_size"], list):
+            raise StyxValidationError(f'`plot_size` has the wrong type: Received `{type(params.get("plot_size", None))}` expected `list[float] | None`')
+        if len(params["plot_size"]) == 2:
+            raise StyxValidationError("Parameter `plot_size` must contain exactly 2 elements")
+        for e in params["plot_size"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`plot_size` has the wrong type: Received `{type(params.get("plot_size", None))}` expected `list[float] | None`')
+    if params.get("standard_error", None) is not None:
+        if not isinstance(params["standard_error"], str):
+            raise StyxValidationError(f'`standard_error` has the wrong type: Received `{type(params.get("standard_error", None))}` expected `str | None`')
+    if params.get("t_stat", None) is not None:
+        if not isinstance(params["t_stat"], str):
+            raise StyxValidationError(f'`t_stat` has the wrong type: Received `{type(params.get("t_stat", None))}` expected `str | None`')
+    if params.get("within_chain_parallelization", None) is not None:
+        if not isinstance(params["within_chain_parallelization"], (float, int)):
+            raise StyxValidationError(f'`within_chain_parallelization` has the wrong type: Received `{type(params.get("within_chain_parallelization", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], (float, int)):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
+
+
 def trr_cargs(
     params: TrrParameters,
     execution: Execution,
@@ -300,6 +378,7 @@ def trr_execute(
     Returns:
         NamedTuple of outputs (described in `TrrOutputs`).
     """
+    trr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TRR_METADATA)
     params = execution.params(params)

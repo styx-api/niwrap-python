@@ -124,6 +124,83 @@ def responsemean_params(
     return params
 
 
+def responsemean_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ResponsemeanParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_response", None) is None:
+        raise StyxValidationError("`input_response` must not be None")
+    if not isinstance(params["input_response"], list):
+        raise StyxValidationError(f'`input_response` has the wrong type: Received `{type(params.get("input_response", None))}` expected `list[InputPathType]`')
+    for e in params["input_response"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_response` has the wrong type: Received `{type(params.get("input_response", None))}` expected `list[InputPathType]`')
+    if params.get("output_response", None) is None:
+        raise StyxValidationError("`output_response` must not be None")
+    if not isinstance(params["output_response"], str):
+        raise StyxValidationError(f'`output_response` has the wrong type: Received `{type(params.get("output_response", None))}` expected `str`')
+    if params.get("legacy", False) is None:
+        raise StyxValidationError("`legacy` must not be None")
+    if not isinstance(params["legacy"], bool):
+        raise StyxValidationError(f'`legacy` has the wrong type: Received `{type(params.get("legacy", False))}` expected `bool`')
+    if params.get("nocleanup", False) is None:
+        raise StyxValidationError("`nocleanup` must not be None")
+    if not isinstance(params["nocleanup"], bool):
+        raise StyxValidationError(f'`nocleanup` has the wrong type: Received `{type(params.get("nocleanup", False))}` expected `bool`')
+    if params.get("scratch_dir", None) is not None:
+        if not isinstance(params["scratch_dir"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`scratch_dir` has the wrong type: Received `{type(params.get("scratch_dir", None))}` expected `InputPathType | None`')
+    if params.get("continue_scratch_dir", None) is not None:
+        if not isinstance(params["continue_scratch_dir"], list):
+            raise StyxValidationError(f'`continue_scratch_dir` has the wrong type: Received `{type(params.get("continue_scratch_dir", None))}` expected `list[InputPathType] | None`')
+        if len(params["continue_scratch_dir"]) == 2:
+            raise StyxValidationError("Parameter `continue_scratch_dir` must contain exactly 2 elements")
+        for e in params["continue_scratch_dir"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`continue_scratch_dir` has the wrong type: Received `{type(params.get("continue_scratch_dir", None))}` expected `list[InputPathType] | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], (float, int)):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `float | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[str] | None`')
+        for e in params["config"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[str] | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def responsemean_cargs(
     params: ResponsemeanParameters,
     execution: Execution,
@@ -219,6 +296,7 @@ def responsemean_execute(
     Returns:
         NamedTuple of outputs (described in `ResponsemeanOutputs`).
     """
+    responsemean_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RESPONSEMEAN_METADATA)
     params = execution.params(params)

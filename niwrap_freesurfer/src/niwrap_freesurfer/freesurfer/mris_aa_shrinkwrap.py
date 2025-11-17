@@ -83,6 +83,47 @@ def mris_aa_shrinkwrap_params(
     return params
 
 
+def mris_aa_shrinkwrap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisAaShrinkwrapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_vol", None) is None:
+        raise StyxValidationError("`t1_vol` must not be None")
+    if not isinstance(params["t1_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_vol` has the wrong type: Received `{type(params.get("t1_vol", None))}` expected `InputPathType`')
+    if params.get("pd_vol", None) is None:
+        raise StyxValidationError("`pd_vol` must not be None")
+    if not isinstance(params["pd_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`pd_vol` has the wrong type: Received `{type(params.get("pd_vol", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("omit_self_intersection", False) is None:
+        raise StyxValidationError("`omit_self_intersection` must not be None")
+    if not isinstance(params["omit_self_intersection"], bool):
+        raise StyxValidationError(f'`omit_self_intersection` has the wrong type: Received `{type(params.get("omit_self_intersection", False))}` expected `bool`')
+    if params.get("create_curvature_area", False) is None:
+        raise StyxValidationError("`create_curvature_area` must not be None")
+    if not isinstance(params["create_curvature_area"], bool):
+        raise StyxValidationError(f'`create_curvature_area` has the wrong type: Received `{type(params.get("create_curvature_area", False))}` expected `bool`')
+    if params.get("average_curvature", None) is not None:
+        if not isinstance(params["average_curvature"], (float, int)):
+            raise StyxValidationError(f'`average_curvature` has the wrong type: Received `{type(params.get("average_curvature", None))}` expected `float | None`')
+    if params.get("white_only", False) is None:
+        raise StyxValidationError("`white_only` must not be None")
+    if not isinstance(params["white_only"], bool):
+        raise StyxValidationError(f'`white_only` has the wrong type: Received `{type(params.get("white_only", False))}` expected `bool`')
+
+
 def mris_aa_shrinkwrap_cargs(
     params: MrisAaShrinkwrapParameters,
     execution: Execution,
@@ -156,6 +197,7 @@ def mris_aa_shrinkwrap_execute(
     Returns:
         NamedTuple of outputs (described in `MrisAaShrinkwrapOutputs`).
     """
+    mris_aa_shrinkwrap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_AA_SHRINKWRAP_METADATA)
     params = execution.params(params)

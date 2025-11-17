@@ -64,6 +64,32 @@ def v__suma_make_spec_sf_params(
     return params
 
 
+def v__suma_make_spec_sf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSumaMakeSpecSfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], int):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `int | None`')
+        if params["debug_level"] <= 2:
+            raise StyxValidationError("Parameter `debug_level` must be at most 2")
+    if params.get("surface_path", None) is not None:
+        if not isinstance(params["surface_path"], str):
+            raise StyxValidationError(f'`surface_path` has the wrong type: Received `{type(params.get("surface_path", None))}` expected `str | None`')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+
+
 def v__suma_make_spec_sf_cargs(
     params: VSumaMakeSpecSfParameters,
     execution: Execution,
@@ -135,6 +161,7 @@ def v__suma_make_spec_sf_execute(
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecSfOutputs`).
     """
+    v__suma_make_spec_sf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SUMA_MAKE_SPEC_SF_METADATA)
     params = execution.params(params)

@@ -161,6 +161,89 @@ def vol2subfield_params(
     return params
 
 
+def vol2subfield_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Vol2subfieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("subfield_volume", None) is None:
+        raise StyxValidationError("`subfield_volume` must not be None")
+    if not isinstance(params["subfield_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subfield_volume` has the wrong type: Received `{type(params.get("subfield_volume", None))}` expected `InputPathType`')
+    if params.get("registration_file", None) is None:
+        raise StyxValidationError("`registration_file` must not be None")
+    if not isinstance(params["registration_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`registration_file` has the wrong type: Received `{type(params.get("registration_file", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is not None:
+        if not isinstance(params["output_volume"], str):
+            raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str | None`')
+    if params.get("output_registration", None) is not None:
+        if not isinstance(params["output_registration"], str):
+            raise StyxValidationError(f'`output_registration` has the wrong type: Received `{type(params.get("output_registration", None))}` expected `str | None`')
+    if params.get("stats_output", None) is not None:
+        if not isinstance(params["stats_output"], str):
+            raise StyxValidationError(f'`stats_output` has the wrong type: Received `{type(params.get("stats_output", None))}` expected `str | None`')
+    if params.get("avgwf_output", None) is not None:
+        if not isinstance(params["avgwf_output"], str):
+            raise StyxValidationError(f'`avgwf_output` has the wrong type: Received `{type(params.get("avgwf_output", None))}` expected `str | None`')
+    if params.get("avgwfvol_output", None) is not None:
+        if not isinstance(params["avgwfvol_output"], str):
+            raise StyxValidationError(f'`avgwfvol_output` has the wrong type: Received `{type(params.get("avgwfvol_output", None))}` expected `str | None`')
+    if params.get("color_table", None) is not None:
+        if not isinstance(params["color_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`color_table` has the wrong type: Received `{type(params.get("color_table", None))}` expected `InputPathType | None`')
+    if params.get("interpolation_nearest", False) is None:
+        raise StyxValidationError("`interpolation_nearest` must not be None")
+    if not isinstance(params["interpolation_nearest"], bool):
+        raise StyxValidationError(f'`interpolation_nearest` has the wrong type: Received `{type(params.get("interpolation_nearest", False))}` expected `bool`')
+    if params.get("interpolation_trilin", False) is None:
+        raise StyxValidationError("`interpolation_trilin` must not be None")
+    if not isinstance(params["interpolation_trilin"], bool):
+        raise StyxValidationError(f'`interpolation_trilin` has the wrong type: Received `{type(params.get("interpolation_trilin", False))}` expected `bool`')
+    if params.get("interpolation_cubic", False) is None:
+        raise StyxValidationError("`interpolation_cubic` must not be None")
+    if not isinstance(params["interpolation_cubic"], bool):
+        raise StyxValidationError(f'`interpolation_cubic` has the wrong type: Received `{type(params.get("interpolation_cubic", False))}` expected `bool`')
+    if params.get("tmp_directory", None) is not None:
+        if not isinstance(params["tmp_directory"], str):
+            raise StyxValidationError(f'`tmp_directory` has the wrong type: Received `{type(params.get("tmp_directory", None))}` expected `str | None`')
+    if params.get("preset_subfield_lh_hippoamyg", False) is None:
+        raise StyxValidationError("`preset_subfield_lh_hippoamyg` must not be None")
+    if not isinstance(params["preset_subfield_lh_hippoamyg"], bool):
+        raise StyxValidationError(f'`preset_subfield_lh_hippoamyg` has the wrong type: Received `{type(params.get("preset_subfield_lh_hippoamyg", False))}` expected `bool`')
+    if params.get("preset_subfield_rh_hippoamyg", False) is None:
+        raise StyxValidationError("`preset_subfield_rh_hippoamyg` must not be None")
+    if not isinstance(params["preset_subfield_rh_hippoamyg"], bool):
+        raise StyxValidationError(f'`preset_subfield_rh_hippoamyg` has the wrong type: Received `{type(params.get("preset_subfield_rh_hippoamyg", False))}` expected `bool`')
+    if params.get("preset_subfield_lh_hbt", False) is None:
+        raise StyxValidationError("`preset_subfield_lh_hbt` must not be None")
+    if not isinstance(params["preset_subfield_lh_hbt"], bool):
+        raise StyxValidationError(f'`preset_subfield_lh_hbt` has the wrong type: Received `{type(params.get("preset_subfield_lh_hbt", False))}` expected `bool`')
+    if params.get("preset_subfield_rh_hbt", False) is None:
+        raise StyxValidationError("`preset_subfield_rh_hbt` must not be None")
+    if not isinstance(params["preset_subfield_rh_hbt"], bool):
+        raise StyxValidationError(f'`preset_subfield_rh_hbt` has the wrong type: Received `{type(params.get("preset_subfield_rh_hbt", False))}` expected `bool`')
+    if params.get("preset_subfield_thalamus", False) is None:
+        raise StyxValidationError("`preset_subfield_thalamus` must not be None")
+    if not isinstance(params["preset_subfield_thalamus"], bool):
+        raise StyxValidationError(f'`preset_subfield_thalamus` has the wrong type: Received `{type(params.get("preset_subfield_thalamus", False))}` expected `bool`')
+    if params.get("preset_subfield_brainstem", False) is None:
+        raise StyxValidationError("`preset_subfield_brainstem` must not be None")
+    if not isinstance(params["preset_subfield_brainstem"], bool):
+        raise StyxValidationError(f'`preset_subfield_brainstem` has the wrong type: Received `{type(params.get("preset_subfield_brainstem", False))}` expected `bool`')
+
+
 def vol2subfield_cargs(
     params: Vol2subfieldParameters,
     execution: Execution,
@@ -288,6 +371,7 @@ def vol2subfield_execute(
     Returns:
         NamedTuple of outputs (described in `Vol2subfieldOutputs`).
     """
+    vol2subfield_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOL2SUBFIELD_METADATA)
     params = execution.params(params)

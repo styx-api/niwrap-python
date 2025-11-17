@@ -65,6 +65,29 @@ def apas2aseg_params(
     return params
 
 
+def apas2aseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Apas2asegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("input_aparc_aseg", None) is not None:
+        if not isinstance(params["input_aparc_aseg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_aparc_aseg` has the wrong type: Received `{type(params.get("input_aparc_aseg", None))}` expected `InputPathType | None`')
+    if params.get("output_seg", None) is not None:
+        if not isinstance(params["output_seg"], str):
+            raise StyxValidationError(f'`output_seg` has the wrong type: Received `{type(params.get("output_seg", None))}` expected `str | None`')
+
+
 def apas2aseg_cargs(
     params: Apas2asegParameters,
     execution: Execution,
@@ -138,6 +161,7 @@ def apas2aseg_execute(
     Returns:
         NamedTuple of outputs (described in `Apas2asegOutputs`).
     """
+    apas2aseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APAS2ASEG_METADATA)
     params = execution.params(params)

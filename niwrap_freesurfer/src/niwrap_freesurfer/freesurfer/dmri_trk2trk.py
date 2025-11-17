@@ -210,6 +210,130 @@ def dmri_trk2trk_params(
     return params
 
 
+def dmri_trk2trk_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriTrk2trkParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_trk", None) is None:
+        raise StyxValidationError("`in_trk` must not be None")
+    if not isinstance(params["in_trk"], list):
+        raise StyxValidationError(f'`in_trk` has the wrong type: Received `{type(params.get("in_trk", None))}` expected `list[InputPathType]`')
+    for e in params["in_trk"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_trk` has the wrong type: Received `{type(params.get("in_trk", None))}` expected `list[InputPathType]`')
+    if params.get("in_asc", None) is not None:
+        if not isinstance(params["in_asc"], list):
+            raise StyxValidationError(f'`in_asc` has the wrong type: Received `{type(params.get("in_asc", None))}` expected `list[InputPathType] | None`')
+        for e in params["in_asc"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`in_asc` has the wrong type: Received `{type(params.get("in_asc", None))}` expected `list[InputPathType] | None`')
+    if params.get("in_dir", None) is not None:
+        if not isinstance(params["in_dir"], str):
+            raise StyxValidationError(f'`in_dir` has the wrong type: Received `{type(params.get("in_dir", None))}` expected `str | None`')
+    if params.get("out_trk", None) is not None:
+        if not isinstance(params["out_trk"], str):
+            raise StyxValidationError(f'`out_trk` has the wrong type: Received `{type(params.get("out_trk", None))}` expected `str | None`')
+    if params.get("out_asc", None) is not None:
+        if not isinstance(params["out_asc"], str):
+            raise StyxValidationError(f'`out_asc` has the wrong type: Received `{type(params.get("out_asc", None))}` expected `str | None`')
+    if params.get("out_vol", None) is not None:
+        if not isinstance(params["out_vol"], str):
+            raise StyxValidationError(f'`out_vol` has the wrong type: Received `{type(params.get("out_vol", None))}` expected `str | None`')
+    if params.get("out_dir", None) is not None:
+        if not isinstance(params["out_dir"], str):
+            raise StyxValidationError(f'`out_dir` has the wrong type: Received `{type(params.get("out_dir", None))}` expected `str | None`')
+    if params.get("in_ref", None) is not None:
+        if not isinstance(params["in_ref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_ref` has the wrong type: Received `{type(params.get("in_ref", None))}` expected `InputPathType | None`')
+    if params.get("out_ref", None) is not None:
+        if not isinstance(params["out_ref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`out_ref` has the wrong type: Received `{type(params.get("out_ref", None))}` expected `InputPathType | None`')
+    if params.get("reg_file", None) is not None:
+        if not isinstance(params["reg_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `InputPathType | None`')
+    if params.get("regnl_file", None) is not None:
+        if not isinstance(params["regnl_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`regnl_file` has the wrong type: Received `{type(params.get("regnl_file", None))}` expected `InputPathType | None`')
+    if params.get("inv_flag", False) is None:
+        raise StyxValidationError("`inv_flag` must not be None")
+    if not isinstance(params["inv_flag"], bool):
+        raise StyxValidationError(f'`inv_flag` has the wrong type: Received `{type(params.get("inv_flag", False))}` expected `bool`')
+    if params.get("fill_flag", False) is None:
+        raise StyxValidationError("`fill_flag` must not be None")
+    if not isinstance(params["fill_flag"], bool):
+        raise StyxValidationError(f'`fill_flag` has the wrong type: Received `{type(params.get("fill_flag", False))}` expected `bool`')
+    if params.get("overlay", None) is not None:
+        if not isinstance(params["overlay"], list):
+            raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `list[InputPathType] | None`')
+        for e in params["overlay"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `list[InputPathType] | None`')
+    if params.get("inclusion_mask", None) is not None:
+        if not isinstance(params["inclusion_mask"], list):
+            raise StyxValidationError(f'`inclusion_mask` has the wrong type: Received `{type(params.get("inclusion_mask", None))}` expected `list[InputPathType] | None`')
+        for e in params["inclusion_mask"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`inclusion_mask` has the wrong type: Received `{type(params.get("inclusion_mask", None))}` expected `list[InputPathType] | None`')
+    if params.get("exclusion_mask", None) is not None:
+        if not isinstance(params["exclusion_mask"], list):
+            raise StyxValidationError(f'`exclusion_mask` has the wrong type: Received `{type(params.get("exclusion_mask", None))}` expected `list[InputPathType] | None`')
+        for e in params["exclusion_mask"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`exclusion_mask` has the wrong type: Received `{type(params.get("exclusion_mask", None))}` expected `list[InputPathType] | None`')
+    if params.get("terminal_inclusion_mask", None) is not None:
+        if not isinstance(params["terminal_inclusion_mask"], list):
+            raise StyxValidationError(f'`terminal_inclusion_mask` has the wrong type: Received `{type(params.get("terminal_inclusion_mask", None))}` expected `list[InputPathType] | None`')
+        for e in params["terminal_inclusion_mask"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`terminal_inclusion_mask` has the wrong type: Received `{type(params.get("terminal_inclusion_mask", None))}` expected `list[InputPathType] | None`')
+    if params.get("terminal_exclusion_mask", None) is not None:
+        if not isinstance(params["terminal_exclusion_mask"], list):
+            raise StyxValidationError(f'`terminal_exclusion_mask` has the wrong type: Received `{type(params.get("terminal_exclusion_mask", None))}` expected `list[InputPathType] | None`')
+        for e in params["terminal_exclusion_mask"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`terminal_exclusion_mask` has the wrong type: Received `{type(params.get("terminal_exclusion_mask", None))}` expected `list[InputPathType] | None`')
+    if params.get("length_min", None) is not None:
+        if not isinstance(params["length_min"], (float, int)):
+            raise StyxValidationError(f'`length_min` has the wrong type: Received `{type(params.get("length_min", None))}` expected `float | None`')
+    if params.get("length_max", None) is not None:
+        if not isinstance(params["length_max"], (float, int)):
+            raise StyxValidationError(f'`length_max` has the wrong type: Received `{type(params.get("length_max", None))}` expected `float | None`')
+    if params.get("mean_flag", False) is None:
+        raise StyxValidationError("`mean_flag` must not be None")
+    if not isinstance(params["mean_flag"], bool):
+        raise StyxValidationError(f'`mean_flag` has the wrong type: Received `{type(params.get("mean_flag", False))}` expected `bool`')
+    if params.get("nearmean_flag", False) is None:
+        raise StyxValidationError("`nearmean_flag` must not be None")
+    if not isinstance(params["nearmean_flag"], bool):
+        raise StyxValidationError(f'`nearmean_flag` has the wrong type: Received `{type(params.get("nearmean_flag", False))}` expected `bool`')
+    if params.get("nth_streamline", None) is not None:
+        if not isinstance(params["nth_streamline"], (float, int)):
+            raise StyxValidationError(f'`nth_streamline` has the wrong type: Received `{type(params.get("nth_streamline", None))}` expected `float | None`')
+    if params.get("every_nth_streamline", None) is not None:
+        if not isinstance(params["every_nth_streamline"], (float, int)):
+            raise StyxValidationError(f'`every_nth_streamline` has the wrong type: Received `{type(params.get("every_nth_streamline", None))}` expected `float | None`')
+    if params.get("smooth_flag", False) is None:
+        raise StyxValidationError("`smooth_flag` must not be None")
+    if not isinstance(params["smooth_flag"], bool):
+        raise StyxValidationError(f'`smooth_flag` has the wrong type: Received `{type(params.get("smooth_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+
+
 def dmri_trk2trk_cargs(
     params: DmriTrk2trkParameters,
     execution: Execution,
@@ -382,6 +506,7 @@ def dmri_trk2trk_execute(
     Returns:
         NamedTuple of outputs (described in `DmriTrk2trkOutputs`).
     """
+    dmri_trk2trk_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_TRK2TRK_METADATA)
     params = execution.params(params)

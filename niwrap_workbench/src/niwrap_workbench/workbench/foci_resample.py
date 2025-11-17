@@ -91,6 +91,28 @@ def foci_resample_left_surfaces_params(
     return params
 
 
+def foci_resample_left_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociResampleLeftSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-surf", None) is None:
+        raise StyxValidationError("`current-surf` must not be None")
+    if not isinstance(params["current-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-surf` has the wrong type: Received `{type(params.get("current-surf", None))}` expected `InputPathType`')
+    if params.get("new-surf", None) is None:
+        raise StyxValidationError("`new-surf` must not be None")
+    if not isinstance(params["new-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-surf` has the wrong type: Received `{type(params.get("new-surf", None))}` expected `InputPathType`')
+
+
 def foci_resample_left_surfaces_cargs(
     params: FociResampleLeftSurfacesParameters,
     execution: Execution,
@@ -134,6 +156,28 @@ def foci_resample_right_surfaces_params(
     return params
 
 
+def foci_resample_right_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociResampleRightSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-surf", None) is None:
+        raise StyxValidationError("`current-surf` must not be None")
+    if not isinstance(params["current-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-surf` has the wrong type: Received `{type(params.get("current-surf", None))}` expected `InputPathType`')
+    if params.get("new-surf", None) is None:
+        raise StyxValidationError("`new-surf` must not be None")
+    if not isinstance(params["new-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-surf` has the wrong type: Received `{type(params.get("new-surf", None))}` expected `InputPathType`')
+
+
 def foci_resample_right_surfaces_cargs(
     params: FociResampleRightSurfacesParameters,
     execution: Execution,
@@ -175,6 +219,28 @@ def foci_resample_cerebellum_surfaces_params(
         "new-surf": new_surf,
     }
     return params
+
+
+def foci_resample_cerebellum_surfaces_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociResampleCerebellumSurfacesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-surf", None) is None:
+        raise StyxValidationError("`current-surf` must not be None")
+    if not isinstance(params["current-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-surf` has the wrong type: Received `{type(params.get("current-surf", None))}` expected `InputPathType`')
+    if params.get("new-surf", None) is None:
+        raise StyxValidationError("`new-surf` must not be None")
+    if not isinstance(params["new-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-surf` has the wrong type: Received `{type(params.get("new-surf", None))}` expected `InputPathType`')
 
 
 def foci_resample_cerebellum_surfaces_cargs(
@@ -250,6 +316,42 @@ def foci_resample_params(
     return params
 
 
+def foci_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FociResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("foci-out", None) is None:
+        raise StyxValidationError("`foci-out` must not be None")
+    if not isinstance(params["foci-out"], str):
+        raise StyxValidationError(f'`foci-out` has the wrong type: Received `{type(params.get("foci-out", None))}` expected `str`')
+    if params.get("left-surfaces", None) is not None:
+        foci_resample_left_surfaces_validate(params["left-surfaces"])
+    if params.get("right-surfaces", None) is not None:
+        foci_resample_right_surfaces_validate(params["right-surfaces"])
+    if params.get("cerebellum-surfaces", None) is not None:
+        foci_resample_cerebellum_surfaces_validate(params["cerebellum-surfaces"])
+    if params.get("discard-distance-from-surface", False) is None:
+        raise StyxValidationError("`discard-distance-from-surface` must not be None")
+    if not isinstance(params["discard-distance-from-surface"], bool):
+        raise StyxValidationError(f'`discard-distance-from-surface` has the wrong type: Received `{type(params.get("discard-distance-from-surface", False))}` expected `bool`')
+    if params.get("restore-xyz", False) is None:
+        raise StyxValidationError("`restore-xyz` must not be None")
+    if not isinstance(params["restore-xyz"], bool):
+        raise StyxValidationError(f'`restore-xyz` has the wrong type: Received `{type(params.get("restore-xyz", False))}` expected `bool`')
+    if params.get("foci-in", None) is None:
+        raise StyxValidationError("`foci-in` must not be None")
+    if not isinstance(params["foci-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`foci-in` has the wrong type: Received `{type(params.get("foci-in", None))}` expected `InputPathType`')
+
+
 def foci_resample_cargs(
     params: FociResampleParameters,
     execution: Execution,
@@ -318,6 +420,7 @@ def foci_resample_execute(
     Returns:
         NamedTuple of outputs (described in `FociResampleOutputs`).
     """
+    foci_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FOCI_RESAMPLE_METADATA)
     params = execution.params(params)

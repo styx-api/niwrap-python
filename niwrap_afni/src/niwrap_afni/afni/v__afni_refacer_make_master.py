@@ -52,6 +52,27 @@ def v__afni_refacer_make_master_params(
     return params
 
 
+def v__afni_refacer_make_master_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAfniRefacerMakeMasterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_datasets", None) is None:
+        raise StyxValidationError("`input_datasets` must not be None")
+    if not isinstance(params["input_datasets"], list):
+        raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+    for e in params["input_datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+
+
 def v__afni_refacer_make_master_cargs(
     params: VAfniRefacerMakeMasterParameters,
     execution: Execution,
@@ -111,6 +132,7 @@ def v__afni_refacer_make_master_execute(
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerMakeMasterOutputs`).
     """
+    v__afni_refacer_make_master_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AFNI_REFACER_MAKE_MASTER_METADATA)
     params = execution.params(params)

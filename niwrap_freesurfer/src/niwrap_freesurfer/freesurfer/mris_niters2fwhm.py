@@ -89,6 +89,56 @@ def mris_niters2fwhm_params(
     return params
 
 
+def mris_niters2fwhm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisNiters2fwhmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surf", None) is None:
+        raise StyxValidationError("`surf` must not be None")
+    if not isinstance(params["surf"], str):
+        raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str`')
+    if params.get("dof", None) is None:
+        raise StyxValidationError("`dof` must not be None")
+    if not isinstance(params["dof"], (float, int)):
+        raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `float`')
+    if params.get("niters", None) is None:
+        raise StyxValidationError("`niters` must not be None")
+    if not isinstance(params["niters"], (float, int)):
+        raise StyxValidationError(f'`niters` has the wrong type: Received `{type(params.get("niters", None))}` expected `float`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mris_niters2fwhm_cargs(
     params: MrisNiters2fwhmParameters,
     execution: Execution,
@@ -174,6 +224,7 @@ def mris_niters2fwhm_execute(
     Returns:
         NamedTuple of outputs (described in `MrisNiters2fwhmOutputs`).
     """
+    mris_niters2fwhm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_NITERS2FWHM_METADATA)
     params = execution.params(params)

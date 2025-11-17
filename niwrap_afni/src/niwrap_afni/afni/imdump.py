@@ -52,6 +52,24 @@ def imdump_params(
     return params
 
 
+def imdump_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImdumpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+
+
 def imdump_cargs(
     params: ImdumpParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def imdump_execute(
     Returns:
         NamedTuple of outputs (described in `ImdumpOutputs`).
     """
+    imdump_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMDUMP_METADATA)
     params = execution.params(params)

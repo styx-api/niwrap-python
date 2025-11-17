@@ -66,6 +66,35 @@ def mri_mi_params(
     return params
 
 
+def mri_mi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file1", None) is None:
+        raise StyxValidationError("`input_file1` must not be None")
+    if not isinstance(params["input_file1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file1` has the wrong type: Received `{type(params.get("input_file1", None))}` expected `InputPathType`')
+    if params.get("input_file2", None) is None:
+        raise StyxValidationError("`input_file2` must not be None")
+    if not isinstance(params["input_file2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file2` has the wrong type: Received `{type(params.get("input_file2", None))}` expected `InputPathType`')
+    if params.get("bins", None) is not None:
+        if not isinstance(params["bins"], str):
+            raise StyxValidationError(f'`bins` has the wrong type: Received `{type(params.get("bins", None))}` expected `str | None`')
+    if params.get("silent", False) is None:
+        raise StyxValidationError("`silent` must not be None")
+    if not isinstance(params["silent"], bool):
+        raise StyxValidationError(f'`silent` has the wrong type: Received `{type(params.get("silent", False))}` expected `bool`')
+
+
 def mri_mi_cargs(
     params: MriMiParameters,
     execution: Execution,
@@ -131,6 +160,7 @@ def mri_mi_execute(
     Returns:
         NamedTuple of outputs (described in `MriMiOutputs`).
     """
+    mri_mi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MI_METADATA)
     params = execution.params(params)

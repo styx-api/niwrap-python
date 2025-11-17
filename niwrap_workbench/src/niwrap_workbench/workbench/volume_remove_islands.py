@@ -55,6 +55,28 @@ def volume_remove_islands_params(
     return params
 
 
+def volume_remove_islands_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeRemoveIslandsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+
+
 def volume_remove_islands_cargs(
     params: VolumeRemoveIslandsParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def volume_remove_islands_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeRemoveIslandsOutputs`).
     """
+    volume_remove_islands_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_REMOVE_ISLANDS_METADATA)
     params = execution.params(params)

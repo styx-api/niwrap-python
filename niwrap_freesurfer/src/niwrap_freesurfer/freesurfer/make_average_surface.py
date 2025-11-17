@@ -164,6 +164,108 @@ def make_average_surface_params(
     return params
 
 
+def make_average_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeAverageSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("fsgd_file", None) is not None:
+        if not isinstance(params["fsgd_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsgd_file` has the wrong type: Received `{type(params.get("fsgd_file", None))}` expected `InputPathType | None`')
+    if params.get("average_subject_name", None) is not None:
+        if not isinstance(params["average_subject_name"], str):
+            raise StyxValidationError(f'`average_subject_name` has the wrong type: Received `{type(params.get("average_subject_name", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("sd_out_dir", None) is not None:
+        if not isinstance(params["sd_out_dir"], str):
+            raise StyxValidationError(f'`sd_out_dir` has the wrong type: Received `{type(params.get("sd_out_dir", None))}` expected `str | None`')
+    if params.get("transform_file", None) is not None:
+        if not isinstance(params["transform_file"], str):
+            raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `str | None`')
+    if params.get("icosahedron_number", None) is not None:
+        if not isinstance(params["icosahedron_number"], (float, int)):
+            raise StyxValidationError(f'`icosahedron_number` has the wrong type: Received `{type(params.get("icosahedron_number", None))}` expected `float | None`')
+    if params.get("surf_reg", None) is not None:
+        if not isinstance(params["surf_reg"], str):
+            raise StyxValidationError(f'`surf_reg` has the wrong type: Received `{type(params.get("surf_reg", None))}` expected `str | None`')
+    if params.get("left_hemi", False) is None:
+        raise StyxValidationError("`left_hemi` must not be None")
+    if not isinstance(params["left_hemi"], bool):
+        raise StyxValidationError(f'`left_hemi` has the wrong type: Received `{type(params.get("left_hemi", False))}` expected `bool`')
+    if params.get("right_hemi", False) is None:
+        raise StyxValidationError("`right_hemi` must not be None")
+    if not isinstance(params["right_hemi"], bool):
+        raise StyxValidationError(f'`right_hemi` has the wrong type: Received `{type(params.get("right_hemi", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("annot_template", False) is None:
+        raise StyxValidationError("`annot_template` must not be None")
+    if not isinstance(params["annot_template"], bool):
+        raise StyxValidationError(f'`annot_template` has the wrong type: Received `{type(params.get("annot_template", False))}` expected `bool`')
+    if params.get("template_only", False) is None:
+        raise StyxValidationError("`template_only` must not be None")
+    if not isinstance(params["template_only"], bool):
+        raise StyxValidationError(f'`template_only` has the wrong type: Received `{type(params.get("template_only", False))}` expected `bool`')
+    if params.get("no_template_only", False) is None:
+        raise StyxValidationError("`no_template_only` must not be None")
+    if not isinstance(params["no_template_only"], bool):
+        raise StyxValidationError(f'`no_template_only` has the wrong type: Received `{type(params.get("no_template_only", False))}` expected `bool`')
+    if params.get("no_annot", False) is None:
+        raise StyxValidationError("`no_annot` must not be None")
+    if not isinstance(params["no_annot"], bool):
+        raise StyxValidationError(f'`no_annot` has the wrong type: Received `{type(params.get("no_annot", False))}` expected `bool`')
+    if params.get("no_cortex_label", False) is None:
+        raise StyxValidationError("`no_cortex_label` must not be None")
+    if not isinstance(params["no_cortex_label"], bool):
+        raise StyxValidationError(f'`no_cortex_label` has the wrong type: Received `{type(params.get("no_cortex_label", False))}` expected `bool`')
+    if params.get("annot_list", None) is not None:
+        if not isinstance(params["annot_list"], list):
+            raise StyxValidationError(f'`annot_list` has the wrong type: Received `{type(params.get("annot_list", None))}` expected `list[str] | None`')
+        for e in params["annot_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`annot_list` has the wrong type: Received `{type(params.get("annot_list", None))}` expected `list[str] | None`')
+    if params.get("meas_list", None) is not None:
+        if not isinstance(params["meas_list"], list):
+            raise StyxValidationError(f'`meas_list` has the wrong type: Received `{type(params.get("meas_list", None))}` expected `list[str] | None`')
+        for e in params["meas_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`meas_list` has the wrong type: Received `{type(params.get("meas_list", None))}` expected `list[str] | None`')
+    if params.get("no_surf2surf", False) is None:
+        raise StyxValidationError("`no_surf2surf` must not be None")
+    if not isinstance(params["no_surf2surf"], bool):
+        raise StyxValidationError(f'`no_surf2surf` has the wrong type: Received `{type(params.get("no_surf2surf", False))}` expected `bool`')
+    if params.get("no_symlink", False) is None:
+        raise StyxValidationError("`no_symlink` must not be None")
+    if not isinstance(params["no_symlink"], bool):
+        raise StyxValidationError(f'`no_symlink` has the wrong type: Received `{type(params.get("no_symlink", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+
+
 def make_average_surface_cargs(
     params: MakeAverageSurfaceParameters,
     execution: Execution,
@@ -290,6 +392,7 @@ def make_average_surface_execute(
     Returns:
         NamedTuple of outputs (described in `MakeAverageSurfaceOutputs`).
     """
+    make_average_surface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_AVERAGE_SURFACE_METADATA)
     params = execution.params(params)

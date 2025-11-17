@@ -84,6 +84,28 @@ def cifti_average_dense_roi_cifti_roi_params(
     return params
 
 
+def cifti_average_dense_roi_cifti_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiAverageDenseRoiCiftiRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-cifti", None) is None:
+        raise StyxValidationError("`roi-cifti` must not be None")
+    if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType`')
+    if params.get("in-memory", False) is None:
+        raise StyxValidationError("`in-memory` must not be None")
+    if not isinstance(params["in-memory"], bool):
+        raise StyxValidationError(f'`in-memory` has the wrong type: Received `{type(params.get("in-memory", False))}` expected `bool`')
+
+
 def cifti_average_dense_roi_cifti_roi_cargs(
     params: CiftiAverageDenseRoiCiftiRoiParameters,
     execution: Execution,
@@ -123,6 +145,24 @@ def cifti_average_dense_roi_cifti_params(
         "cifti-in": cifti_in,
     }
     return params
+
+
+def cifti_average_dense_roi_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiAverageDenseRoiCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
 
 
 def cifti_average_dense_roi_cifti_cargs(
@@ -225,6 +265,52 @@ def cifti_average_dense_roi_params(
     return params
 
 
+def cifti_average_dense_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiAverageDenseRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("cifti-roi", None) is not None:
+        cifti_average_dense_roi_cifti_roi_validate(params["cifti-roi"])
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
+    if params.get("left-surf", None) is not None:
+        if not isinstance(params["left-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`left-surf` has the wrong type: Received `{type(params.get("left-surf", None))}` expected `InputPathType | None`')
+    if params.get("right-surf", None) is not None:
+        if not isinstance(params["right-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`right-surf` has the wrong type: Received `{type(params.get("right-surf", None))}` expected `InputPathType | None`')
+    if params.get("cerebellum-surf", None) is not None:
+        if not isinstance(params["cerebellum-surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cerebellum-surf` has the wrong type: Received `{type(params.get("cerebellum-surf", None))}` expected `InputPathType | None`')
+    if params.get("cifti", None) is not None:
+        if not isinstance(params["cifti"], list):
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiAverageDenseRoiCiftiParameters] | None`')
+        for e in params["cifti"]:
+            cifti_average_dense_roi_cifti_validate(e)
+
+
 def cifti_average_dense_roi_cargs(
     params: CiftiAverageDenseRoiParameters,
     execution: Execution,
@@ -304,6 +390,7 @@ def cifti_average_dense_roi_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiAverageDenseRoiOutputs`).
     """
+    cifti_average_dense_roi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_AVERAGE_DENSE_ROI_METADATA)
     params = execution.params(params)

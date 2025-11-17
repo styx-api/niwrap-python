@@ -67,6 +67,31 @@ def v_3d_zcutup_params(
     return params
 
 
+def v_3d_zcutup_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dZcutupParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("keep_slices", None) is None:
+        raise StyxValidationError("`keep_slices` must not be None")
+    if not isinstance(params["keep_slices"], str):
+        raise StyxValidationError(f'`keep_slices` has the wrong type: Received `{type(params.get("keep_slices", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_zcutup_cargs(
     params: V3dZcutupParameters,
     execution: Execution,
@@ -135,6 +160,7 @@ def v_3d_zcutup_execute(
     Returns:
         NamedTuple of outputs (described in `V3dZcutupOutputs`).
     """
+    v_3d_zcutup_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ZCUTUP_METADATA)
     params = execution.params(params)

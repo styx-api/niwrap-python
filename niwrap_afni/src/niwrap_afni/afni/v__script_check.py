@@ -64,6 +64,34 @@ def v__script_check_params(
     return params
 
 
+def v__script_check_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VScriptCheckParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("clean", False) is None:
+        raise StyxValidationError("`clean` must not be None")
+    if not isinstance(params["clean"], bool):
+        raise StyxValidationError(f'`clean` has the wrong type: Received `{type(params.get("clean", False))}` expected `bool`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("scripts", None) is None:
+        raise StyxValidationError("`scripts` must not be None")
+    if not isinstance(params["scripts"], list):
+        raise StyxValidationError(f'`scripts` has the wrong type: Received `{type(params.get("scripts", None))}` expected `list[InputPathType]`')
+    for e in params["scripts"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`scripts` has the wrong type: Received `{type(params.get("scripts", None))}` expected `list[InputPathType]`')
+
+
 def v__script_check_cargs(
     params: VScriptCheckParameters,
     execution: Execution,
@@ -130,6 +158,7 @@ def v__script_check_execute(
     Returns:
         NamedTuple of outputs (described in `VScriptCheckOutputs`).
     """
+    v__script_check_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SCRIPT_CHECK_METADATA)
     params = execution.params(params)

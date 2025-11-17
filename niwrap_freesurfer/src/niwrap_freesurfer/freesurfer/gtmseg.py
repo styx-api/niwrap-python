@@ -148,6 +148,84 @@ def gtmseg_params(
     return params
 
 
+def gtmseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GtmsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("outvol", None) is not None:
+        if not isinstance(params["outvol"], str):
+            raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str | None`')
+    if params.get("usf", None) is not None:
+        if not isinstance(params["usf"], (float, int)):
+            raise StyxValidationError(f'`usf` has the wrong type: Received `{type(params.get("usf", None))}` expected `float | None`')
+    if params.get("subsegwm", False) is None:
+        raise StyxValidationError("`subsegwm` must not be None")
+    if not isinstance(params["subsegwm"], bool):
+        raise StyxValidationError(f'`subsegwm` has the wrong type: Received `{type(params.get("subsegwm", False))}` expected `bool`')
+    if params.get("keep_hypo", False) is None:
+        raise StyxValidationError("`keep_hypo` must not be None")
+    if not isinstance(params["keep_hypo"], bool):
+        raise StyxValidationError(f'`keep_hypo` has the wrong type: Received `{type(params.get("keep_hypo", False))}` expected `bool`')
+    if params.get("keep_cc", False) is None:
+        raise StyxValidationError("`keep_cc` must not be None")
+    if not isinstance(params["keep_cc"], bool):
+        raise StyxValidationError(f'`keep_cc` has the wrong type: Received `{type(params.get("keep_cc", False))}` expected `bool`')
+    if params.get("dmax", None) is not None:
+        if not isinstance(params["dmax"], (float, int)):
+            raise StyxValidationError(f'`dmax` has the wrong type: Received `{type(params.get("dmax", None))}` expected `float | None`')
+    if params.get("ctx_annot", None) is not None:
+        if not isinstance(params["ctx_annot"], str):
+            raise StyxValidationError(f'`ctx_annot` has the wrong type: Received `{type(params.get("ctx_annot", None))}` expected `str | None`')
+    if params.get("wm_annot", None) is not None:
+        if not isinstance(params["wm_annot"], str):
+            raise StyxValidationError(f'`wm_annot` has the wrong type: Received `{type(params.get("wm_annot", None))}` expected `str | None`')
+    if params.get("output_usf", None) is not None:
+        if not isinstance(params["output_usf"], (float, int)):
+            raise StyxValidationError(f'`output_usf` has the wrong type: Received `{type(params.get("output_usf", None))}` expected `float | None`')
+    if params.get("head", None) is not None:
+        if not isinstance(params["head"], str):
+            raise StyxValidationError(f'`head` has the wrong type: Received `{type(params.get("head", None))}` expected `str | None`')
+    if params.get("subseg_cbwm", False) is None:
+        raise StyxValidationError("`subseg_cbwm` must not be None")
+    if not isinstance(params["subseg_cbwm"], bool):
+        raise StyxValidationError(f'`subseg_cbwm` has the wrong type: Received `{type(params.get("subseg_cbwm", False))}` expected `bool`')
+    if params.get("no_pons", False) is None:
+        raise StyxValidationError("`no_pons` must not be None")
+    if not isinstance(params["no_pons"], bool):
+        raise StyxValidationError(f'`no_pons` has the wrong type: Received `{type(params.get("no_pons", False))}` expected `bool`')
+    if params.get("no_vermis", False) is None:
+        raise StyxValidationError("`no_vermis` must not be None")
+    if not isinstance(params["no_vermis"], bool):
+        raise StyxValidationError(f'`no_vermis` has the wrong type: Received `{type(params.get("no_vermis", False))}` expected `bool`')
+    if params.get("ctab", None) is not None:
+        if not isinstance(params["ctab"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab` has the wrong type: Received `{type(params.get("ctab", None))}` expected `InputPathType | None`')
+    if params.get("no_seg_stats", False) is None:
+        raise StyxValidationError("`no_seg_stats` must not be None")
+    if not isinstance(params["no_seg_stats"], bool):
+        raise StyxValidationError(f'`no_seg_stats` has the wrong type: Received `{type(params.get("no_seg_stats", False))}` expected `bool`')
+    if params.get("xcerseg", False) is None:
+        raise StyxValidationError("`xcerseg` must not be None")
+    if not isinstance(params["xcerseg"], bool):
+        raise StyxValidationError(f'`xcerseg` has the wrong type: Received `{type(params.get("xcerseg", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def gtmseg_cargs(
     params: GtmsegParameters,
     execution: Execution,
@@ -269,6 +347,7 @@ def gtmseg_execute(
     Returns:
         NamedTuple of outputs (described in `GtmsegOutputs`).
     """
+    gtmseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GTMSEG_METADATA)
     params = execution.params(params)

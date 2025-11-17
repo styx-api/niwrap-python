@@ -77,6 +77,40 @@ def mri_gcut_params(
     return params
 
 
+def mri_gcut_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriGcutParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("wmmask_110", False) is None:
+        raise StyxValidationError("`wmmask_110` must not be None")
+    if not isinstance(params["wmmask_110"], bool):
+        raise StyxValidationError(f'`wmmask_110` has the wrong type: Received `{type(params.get("wmmask_110", False))}` expected `bool`')
+    if params.get("mult_file", None) is not None:
+        if not isinstance(params["mult_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mult_file` has the wrong type: Received `{type(params.get("mult_file", None))}` expected `InputPathType | None`')
+    if params.get("threshold_value", None) is not None:
+        if not isinstance(params["threshold_value"], (float, int)):
+            raise StyxValidationError(f'`threshold_value` has the wrong type: Received `{type(params.get("threshold_value", None))}` expected `float | None`')
+        if 0 <= params["threshold_value"] <= 1:
+            raise StyxValidationError("Parameter `threshold_value` must be between 0 and 1 (inclusive)")
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+
+
 def mri_gcut_cargs(
     params: MriGcutParameters,
     execution: Execution,
@@ -148,6 +182,7 @@ def mri_gcut_execute(
     Returns:
         NamedTuple of outputs (described in `MriGcutOutputs`).
     """
+    mri_gcut_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GCUT_METADATA)
     params = execution.params(params)

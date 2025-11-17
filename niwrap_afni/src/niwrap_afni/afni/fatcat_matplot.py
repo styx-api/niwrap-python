@@ -54,6 +54,28 @@ def fatcat_matplot_params(
     return params
 
 
+def fatcat_matplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatcatMatplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("directory", None) is None:
+        raise StyxValidationError("`directory` must not be None")
+    if not isinstance(params["directory"], str):
+        raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str`')
+    if params.get("shiny_folder", False) is None:
+        raise StyxValidationError("`shiny_folder` must not be None")
+    if not isinstance(params["shiny_folder"], bool):
+        raise StyxValidationError(f'`shiny_folder` has the wrong type: Received `{type(params.get("shiny_folder", False))}` expected `bool`')
+
+
 def fatcat_matplot_cargs(
     params: FatcatMatplotParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def fatcat_matplot_execute(
     Returns:
         NamedTuple of outputs (described in `FatcatMatplotOutputs`).
     """
+    fatcat_matplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FATCAT_MATPLOT_METADATA)
     params = execution.params(params)

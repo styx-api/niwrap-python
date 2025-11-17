@@ -82,6 +82,47 @@ def sigloss_params(
     return params
 
 
+def sigloss_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SiglossParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_b0map", None) is None:
+        raise StyxValidationError("`input_b0map` must not be None")
+    if not isinstance(params["input_b0map"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_b0map` has the wrong type: Received `{type(params.get("input_b0map", None))}` expected `InputPathType`')
+    if params.get("output_sigloss", None) is None:
+        raise StyxValidationError("`output_sigloss` must not be None")
+    if not isinstance(params["output_sigloss"], str):
+        raise StyxValidationError(f'`output_sigloss` has the wrong type: Received `{type(params.get("output_sigloss", None))}` expected `str`')
+    if params.get("input_mask", None) is not None:
+        if not isinstance(params["input_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_mask` has the wrong type: Received `{type(params.get("input_mask", None))}` expected `InputPathType | None`')
+    if params.get("echo_time", None) is not None:
+        if not isinstance(params["echo_time"], (float, int)):
+            raise StyxValidationError(f'`echo_time` has the wrong type: Received `{type(params.get("echo_time", None))}` expected `float | None`')
+    if params.get("slice_direction", None) is not None:
+        if not isinstance(params["slice_direction"], str):
+            raise StyxValidationError(f'`slice_direction` has the wrong type: Received `{type(params.get("slice_direction", None))}` expected `typing.Literal["x", "y", "z"] | None`')
+        if params["slice_direction"] not in ["x", "y", "z"]:
+            raise StyxValidationError("Parameter `slice_direction` must be one of [\"x\", \"y\", \"z\"]")
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def sigloss_cargs(
     params: SiglossParameters,
     execution: Execution,
@@ -165,6 +206,7 @@ def sigloss_execute(
     Returns:
         NamedTuple of outputs (described in `SiglossOutputs`).
     """
+    sigloss_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIGLOSS_METADATA)
     params = execution.params(params)

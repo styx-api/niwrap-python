@@ -57,6 +57,28 @@ def medianfilter_params(
     return params
 
 
+def medianfilter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MedianfilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType`')
+
+
 def medianfilter_cargs(
     params: MedianfilterParameters,
     execution: Execution,
@@ -116,6 +138,7 @@ def medianfilter_execute(
     Returns:
         NamedTuple of outputs (described in `MedianfilterOutputs`).
     """
+    medianfilter_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MEDIANFILTER_METADATA)
     params = execution.params(params)

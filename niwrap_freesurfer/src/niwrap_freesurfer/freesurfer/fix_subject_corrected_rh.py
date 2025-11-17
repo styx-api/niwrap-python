@@ -51,6 +51,24 @@ def fix_subject_corrected_rh_params(
     return params
 
 
+def fix_subject_corrected_rh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixSubjectCorrectedRhParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_dir", None) is None:
+        raise StyxValidationError("`subject_dir` must not be None")
+    if not isinstance(params["subject_dir"], str):
+        raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str`')
+
+
 def fix_subject_corrected_rh_cargs(
     params: FixSubjectCorrectedRhParameters,
     execution: Execution,
@@ -112,6 +130,7 @@ def fix_subject_corrected_rh_execute(
     Returns:
         NamedTuple of outputs (described in `FixSubjectCorrectedRhOutputs`).
     """
+    fix_subject_corrected_rh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIX_SUBJECT_CORRECTED_RH_METADATA)
     params = execution.params(params)

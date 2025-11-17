@@ -51,6 +51,23 @@ def segment_bs_sh_params(
     return params
 
 
+def segment_bs_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentBsShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matlab_runtime", None) is not None:
+        if not isinstance(params["matlab_runtime"], str):
+            raise StyxValidationError(f'`matlab_runtime` has the wrong type: Received `{type(params.get("matlab_runtime", None))}` expected `str | None`')
+
+
 def segment_bs_sh_cargs(
     params: SegmentBsShParameters,
     execution: Execution,
@@ -109,6 +126,7 @@ def segment_bs_sh_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentBsShOutputs`).
     """
+    segment_bs_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_BS_SH_METADATA)
     params = execution.params(params)

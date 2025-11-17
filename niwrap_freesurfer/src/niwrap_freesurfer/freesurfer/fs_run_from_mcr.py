@@ -66,6 +66,34 @@ def fs_run_from_mcr_params(
     return params
 
 
+def fs_run_from_mcr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsRunFromMcrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("command", None) is not None:
+        if not isinstance(params["command"], str):
+            raise StyxValidationError(f'`command` has the wrong type: Received `{type(params.get("command", None))}` expected `str | None`')
+    if params.get("zeroth_flag", False) is None:
+        raise StyxValidationError("`zeroth_flag` must not be None")
+    if not isinstance(params["zeroth_flag"], bool):
+        raise StyxValidationError(f'`zeroth_flag` has the wrong type: Received `{type(params.get("zeroth_flag", False))}` expected `bool`')
+    if params.get("empty_env_flag", False) is None:
+        raise StyxValidationError("`empty_env_flag` must not be None")
+    if not isinstance(params["empty_env_flag"], bool):
+        raise StyxValidationError(f'`empty_env_flag` has the wrong type: Received `{type(params.get("empty_env_flag", False))}` expected `bool`')
+
+
 def fs_run_from_mcr_cargs(
     params: FsRunFromMcrParameters,
     execution: Execution,
@@ -133,6 +161,7 @@ def fs_run_from_mcr_execute(
     Returns:
         NamedTuple of outputs (described in `FsRunFromMcrOutputs`).
     """
+    fs_run_from_mcr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_RUN_FROM_MCR_METADATA)
     params = execution.params(params)

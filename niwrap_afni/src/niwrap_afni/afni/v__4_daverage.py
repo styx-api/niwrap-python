@@ -55,6 +55,31 @@ def v__4_daverage_params(
     return params
 
 
+def v__4_daverage_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V4DaverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def v__4_daverage_cargs(
     params: V4DaverageParameters,
     execution: Execution,
@@ -113,6 +138,7 @@ def v__4_daverage_execute(
     Returns:
         NamedTuple of outputs (described in `V4DaverageOutputs`).
     """
+    v__4_daverage_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__4_DAVERAGE_METADATA)
     params = execution.params(params)

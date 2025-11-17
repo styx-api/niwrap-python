@@ -131,6 +131,68 @@ def v_3d_nwarp_apply_params(
     return params
 
 
+def v_3d_nwarp_apply_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNwarpApplyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nwarp", None) is None:
+        raise StyxValidationError("`nwarp` must not be None")
+    if not isinstance(params["nwarp"], str):
+        raise StyxValidationError(f'`nwarp` has the wrong type: Received `{type(params.get("nwarp", None))}` expected `str`')
+    if params.get("iwarp", False) is None:
+        raise StyxValidationError("`iwarp` must not be None")
+    if not isinstance(params["iwarp"], bool):
+        raise StyxValidationError(f'`iwarp` has the wrong type: Received `{type(params.get("iwarp", False))}` expected `bool`')
+    if params.get("source", None) is None:
+        raise StyxValidationError("`source` must not be None")
+    if not isinstance(params["source"], str):
+        raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `str`')
+    if params.get("master", None) is not None:
+        if not isinstance(params["master"], str):
+            raise StyxValidationError(f'`master` has the wrong type: Received `{type(params.get("master", None))}` expected `str | None`')
+    if params.get("newgrid", None) is not None:
+        if not isinstance(params["newgrid"], str):
+            raise StyxValidationError(f'`newgrid` has the wrong type: Received `{type(params.get("newgrid", None))}` expected `str | None`')
+    if params.get("dxyz", None) is not None:
+        if not isinstance(params["dxyz"], str):
+            raise StyxValidationError(f'`dxyz` has the wrong type: Received `{type(params.get("dxyz", None))}` expected `str | None`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `str | None`')
+    if params.get("ainterp", None) is not None:
+        if not isinstance(params["ainterp"], str):
+            raise StyxValidationError(f'`ainterp` has the wrong type: Received `{type(params.get("ainterp", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("short", False) is None:
+        raise StyxValidationError("`short` must not be None")
+    if not isinstance(params["short"], bool):
+        raise StyxValidationError(f'`short` has the wrong type: Received `{type(params.get("short", False))}` expected `bool`')
+    if params.get("wprefix", None) is not None:
+        if not isinstance(params["wprefix"], str):
+            raise StyxValidationError(f'`wprefix` has the wrong type: Received `{type(params.get("wprefix", None))}` expected `str | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+
+
 def v_3d_nwarp_apply_cargs(
     params: V3dNwarpApplyParameters,
     execution: Execution,
@@ -245,6 +307,7 @@ def v_3d_nwarp_apply_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpApplyOutputs`).
     """
+    v_3d_nwarp_apply_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NWARP_APPLY_METADATA)
     params = execution.params(params)

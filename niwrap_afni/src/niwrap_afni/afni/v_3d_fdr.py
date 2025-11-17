@@ -131,6 +131,75 @@ def v_3d_fdr_params(
     return params
 
 
+def v_3d_fdr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dFdrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("input1d_file", None) is not None:
+        if not isinstance(params["input1d_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input1d_file` has the wrong type: Received `{type(params.get("input1d_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_threshold", None) is not None:
+        if not isinstance(params["mask_threshold"], (float, int)):
+            raise StyxValidationError(f'`mask_threshold` has the wrong type: Received `{type(params.get("mask_threshold", None))}` expected `float | None`')
+    if params.get("constant_type", None) is not None:
+        if not isinstance(params["constant_type"], str):
+            raise StyxValidationError(f'`constant_type` has the wrong type: Received `{type(params.get("constant_type", None))}` expected `typing.Literal["cind", "cdep"] | None`')
+        if params["constant_type"] not in ["cind", "cdep"]:
+            raise StyxValidationError("Parameter `constant_type` must be one of [\"cind\", \"cdep\"]")
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("list", False) is None:
+        raise StyxValidationError("`list` must not be None")
+    if not isinstance(params["list"], bool):
+        raise StyxValidationError(f'`list` has the wrong type: Received `{type(params.get("list", False))}` expected `bool`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("mode_option", None) is not None:
+        if not isinstance(params["mode_option"], str):
+            raise StyxValidationError(f'`mode_option` has the wrong type: Received `{type(params.get("mode_option", None))}` expected `typing.Literal["old", "new"] | None`')
+        if params["mode_option"] not in ["old", "new"]:
+            raise StyxValidationError("Parameter `mode_option` must be one of [\"old\", \"new\"]")
+    if params.get("pmask", False) is None:
+        raise StyxValidationError("`pmask` must not be None")
+    if not isinstance(params["pmask"], bool):
+        raise StyxValidationError(f'`pmask` has the wrong type: Received `{type(params.get("pmask", False))}` expected `bool`')
+    if params.get("nopmask", False) is None:
+        raise StyxValidationError("`nopmask` must not be None")
+    if not isinstance(params["nopmask"], bool):
+        raise StyxValidationError(f'`nopmask` has the wrong type: Received `{type(params.get("nopmask", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("float", False) is None:
+        raise StyxValidationError("`float` must not be None")
+    if not isinstance(params["float"], bool):
+        raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", False))}` expected `bool`')
+    if params.get("qval", False) is None:
+        raise StyxValidationError("`qval` must not be None")
+    if not isinstance(params["qval"], bool):
+        raise StyxValidationError(f'`qval` has the wrong type: Received `{type(params.get("qval", False))}` expected `bool`')
+
+
 def v_3d_fdr_cargs(
     params: V3dFdrParameters,
     execution: Execution,
@@ -238,6 +307,7 @@ def v_3d_fdr_execute(
     Returns:
         NamedTuple of outputs (described in `V3dFdrOutputs`).
     """
+    v_3d_fdr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_FDR_METADATA)
     params = execution.params(params)

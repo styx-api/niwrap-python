@@ -64,6 +64,28 @@ def volume_warpfield_affine_regression_flirt_out_params(
     return params
 
 
+def volume_warpfield_affine_regression_flirt_out_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeWarpfieldAffineRegressionFlirtOutParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("target-volume", None) is None:
+        raise StyxValidationError("`target-volume` must not be None")
+    if not isinstance(params["target-volume"], str):
+        raise StyxValidationError(f'`target-volume` has the wrong type: Received `{type(params.get("target-volume", None))}` expected `str`')
+
+
 def volume_warpfield_affine_regression_flirt_out_cargs(
     params: VolumeWarpfieldAffineRegressionFlirtOutParameters,
     execution: Execution,
@@ -130,6 +152,36 @@ def volume_warpfield_affine_regression_params(
     if flirt_out is not None:
         params["flirt-out"] = flirt_out
     return params
+
+
+def volume_warpfield_affine_regression_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeWarpfieldAffineRegressionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
+    if params.get("source-volume", None) is not None:
+        if not isinstance(params["source-volume"], str):
+            raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str | None`')
+    if params.get("flirt-out", None) is not None:
+        volume_warpfield_affine_regression_flirt_out_validate(params["flirt-out"])
+    if params.get("warpfield", None) is None:
+        raise StyxValidationError("`warpfield` must not be None")
+    if not isinstance(params["warpfield"], str):
+        raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
+    if params.get("affine-out", None) is None:
+        raise StyxValidationError("`affine-out` must not be None")
+    if not isinstance(params["affine-out"], str):
+        raise StyxValidationError(f'`affine-out` has the wrong type: Received `{type(params.get("affine-out", None))}` expected `str`')
 
 
 def volume_warpfield_affine_regression_cargs(
@@ -202,6 +254,7 @@ def volume_warpfield_affine_regression_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeWarpfieldAffineRegressionOutputs`).
     """
+    volume_warpfield_affine_regression_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA)
     params = execution.params(params)

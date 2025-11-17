@@ -151,6 +151,86 @@ def annot2std_params(
     return params
 
 
+def annot2std_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Annot2stdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_annot_path", None) is None:
+        raise StyxValidationError("`output_annot_path` must not be None")
+    if not isinstance(params["output_annot_path"], str):
+        raise StyxValidationError(f'`output_annot_path` has the wrong type: Received `{type(params.get("output_annot_path", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("fsgd_file", None) is not None:
+        if not isinstance(params["fsgd_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsgd_file` has the wrong type: Received `{type(params.get("fsgd_file", None))}` expected `InputPathType | None`')
+    if params.get("subject_list_file", None) is not None:
+        if not isinstance(params["subject_list_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subject_list_file` has the wrong type: Received `{type(params.get("subject_list_file", None))}` expected `InputPathType | None`')
+    if params.get("target", None) is not None:
+        if not isinstance(params["target"], str):
+            raise StyxValidationError(f'`target` has the wrong type: Received `{type(params.get("target", None))}` expected `str | None`')
+    if params.get("left_hemisphere", False) is None:
+        raise StyxValidationError("`left_hemisphere` must not be None")
+    if not isinstance(params["left_hemisphere"], bool):
+        raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", False))}` expected `bool`')
+    if params.get("right_hemisphere", False) is None:
+        raise StyxValidationError("`right_hemisphere` must not be None")
+    if not isinstance(params["right_hemisphere"], bool):
+        raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", False))}` expected `bool`')
+    if params.get("xhemi", False) is None:
+        raise StyxValidationError("`xhemi` must not be None")
+    if not isinstance(params["xhemi"], bool):
+        raise StyxValidationError(f'`xhemi` has the wrong type: Received `{type(params.get("xhemi", False))}` expected `bool`')
+    if params.get("surfreg", None) is not None:
+        if not isinstance(params["surfreg"], str):
+            raise StyxValidationError(f'`surfreg` has the wrong type: Received `{type(params.get("surfreg", None))}` expected `str | None`')
+    if params.get("srcsurfreg", None) is not None:
+        if not isinstance(params["srcsurfreg"], str):
+            raise StyxValidationError(f'`srcsurfreg` has the wrong type: Received `{type(params.get("srcsurfreg", None))}` expected `str | None`')
+    if params.get("trgsurfreg", None) is not None:
+        if not isinstance(params["trgsurfreg"], str):
+            raise StyxValidationError(f'`trgsurfreg` has the wrong type: Received `{type(params.get("trgsurfreg", None))}` expected `str | None`')
+    if params.get("annotname", None) is not None:
+        if not isinstance(params["annotname"], str):
+            raise StyxValidationError(f'`annotname` has the wrong type: Received `{type(params.get("annotname", None))}` expected `str | None`')
+    if params.get("aparc", False) is None:
+        raise StyxValidationError("`aparc` must not be None")
+    if not isinstance(params["aparc"], bool):
+        raise StyxValidationError(f'`aparc` has the wrong type: Received `{type(params.get("aparc", False))}` expected `bool`')
+    if params.get("a2009s", False) is None:
+        raise StyxValidationError("`a2009s` must not be None")
+    if not isinstance(params["a2009s"], bool):
+        raise StyxValidationError(f'`a2009s` has the wrong type: Received `{type(params.get("a2009s", False))}` expected `bool`')
+    if params.get("segmentation", None) is not None:
+        if not isinstance(params["segmentation"], str):
+            raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", None))}` expected `str | None`')
+    if params.get("stack", None) is not None:
+        if not isinstance(params["stack"], str):
+            raise StyxValidationError(f'`stack` has the wrong type: Received `{type(params.get("stack", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def annot2std_cargs(
     params: Annot2stdParameters,
     execution: Execution,
@@ -279,6 +359,7 @@ def annot2std_execute(
     Returns:
         NamedTuple of outputs (described in `Annot2stdOutputs`).
     """
+    annot2std_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANNOT2STD_METADATA)
     params = execution.params(params)

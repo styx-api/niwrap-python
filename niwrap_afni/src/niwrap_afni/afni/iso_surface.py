@@ -132,6 +132,75 @@ def iso_surface_params(
     return params
 
 
+def iso_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `IsoSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_vol", None) is not None:
+        if not isinstance(params["input_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_vol` has the wrong type: Received `{type(params.get("input_vol", None))}` expected `InputPathType | None`')
+    if params.get("shape_spec", None) is not None:
+        if not isinstance(params["shape_spec"], list):
+            raise StyxValidationError(f'`shape_spec` has the wrong type: Received `{type(params.get("shape_spec", None))}` expected `list[str] | None`')
+        for e in params["shape_spec"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`shape_spec` has the wrong type: Received `{type(params.get("shape_spec", None))}` expected `list[str] | None`')
+    if params.get("isorois", False) is None:
+        raise StyxValidationError("`isorois` must not be None")
+    if not isinstance(params["isorois"], bool):
+        raise StyxValidationError(f'`isorois` has the wrong type: Received `{type(params.get("isorois", False))}` expected `bool`')
+    if params.get("isoval", None) is not None:
+        if not isinstance(params["isoval"], str):
+            raise StyxValidationError(f'`isoval` has the wrong type: Received `{type(params.get("isoval", None))}` expected `str | None`')
+    if params.get("isorange", None) is not None:
+        if not isinstance(params["isorange"], list):
+            raise StyxValidationError(f'`isorange` has the wrong type: Received `{type(params.get("isorange", None))}` expected `list[str] | None`')
+        for e in params["isorange"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`isorange` has the wrong type: Received `{type(params.get("isorange", None))}` expected `list[str] | None`')
+    if params.get("isocmask", None) is not None:
+        if not isinstance(params["isocmask"], str):
+            raise StyxValidationError(f'`isocmask` has the wrong type: Received `{type(params.get("isocmask", None))}` expected `str | None`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("tsmooth", None) is not None:
+        if not isinstance(params["tsmooth"], list):
+            raise StyxValidationError(f'`tsmooth` has the wrong type: Received `{type(params.get("tsmooth", None))}` expected `list[str] | None`')
+        for e in params["tsmooth"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`tsmooth` has the wrong type: Received `{type(params.get("tsmooth", None))}` expected `list[str] | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], str):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `str | None`')
+    if params.get("autocrop", False) is None:
+        raise StyxValidationError("`autocrop` must not be None")
+    if not isinstance(params["autocrop"], bool):
+        raise StyxValidationError(f'`autocrop` has the wrong type: Received `{type(params.get("autocrop", False))}` expected `bool`')
+    if params.get("remesh", None) is not None:
+        if not isinstance(params["remesh"], str):
+            raise StyxValidationError(f'`remesh` has the wrong type: Received `{type(params.get("remesh", None))}` expected `str | None`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], str):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `str | None`')
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("noxform", False) is None:
+        raise StyxValidationError("`noxform` must not be None")
+    if not isinstance(params["noxform"], bool):
+        raise StyxValidationError(f'`noxform` has the wrong type: Received `{type(params.get("noxform", False))}` expected `bool`')
+
+
 def iso_surface_cargs(
     params: IsoSurfaceParameters,
     execution: Execution,
@@ -249,6 +318,7 @@ def iso_surface_execute(
     Returns:
         NamedTuple of outputs (described in `IsoSurfaceOutputs`).
     """
+    iso_surface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ISO_SURFACE_METADATA)
     params = execution.params(params)

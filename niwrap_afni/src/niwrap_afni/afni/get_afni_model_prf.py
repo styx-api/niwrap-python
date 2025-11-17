@@ -64,6 +64,36 @@ def get_afni_model_prf_params(
     return params
 
 
+def get_afni_model_prf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GetAfniModelPrfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("amplitude", None) is None:
+        raise StyxValidationError("`amplitude` must not be None")
+    if not isinstance(params["amplitude"], (float, int)):
+        raise StyxValidationError(f'`amplitude` has the wrong type: Received `{type(params.get("amplitude", None))}` expected `float`')
+    if params.get("x_coord", None) is None:
+        raise StyxValidationError("`x_coord` must not be None")
+    if not isinstance(params["x_coord"], (float, int)):
+        raise StyxValidationError(f'`x_coord` has the wrong type: Received `{type(params.get("x_coord", None))}` expected `float`')
+    if params.get("y_coord", None) is None:
+        raise StyxValidationError("`y_coord` must not be None")
+    if not isinstance(params["y_coord"], (float, int)):
+        raise StyxValidationError(f'`y_coord` has the wrong type: Received `{type(params.get("y_coord", None))}` expected `float`')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], (float, int)):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float`')
+
+
 def get_afni_model_prf_cargs(
     params: GetAfniModelPrfParameters,
     execution: Execution,
@@ -124,6 +154,7 @@ def get_afni_model_prf_execute(
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrfOutputs`).
     """
+    get_afni_model_prf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GET_AFNI_MODEL_PRF_METADATA)
     params = execution.params(params)

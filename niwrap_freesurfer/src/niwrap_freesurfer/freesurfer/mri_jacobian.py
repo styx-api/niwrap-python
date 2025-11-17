@@ -118,6 +118,79 @@ def mri_jacobian_params(
     return params
 
 
+def mri_jacobian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriJacobianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("morph_file", None) is None:
+        raise StyxValidationError("`morph_file` must not be None")
+    if not isinstance(params["morph_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`morph_file` has the wrong type: Received `{type(params.get("morph_file", None))}` expected `InputPathType`')
+    if params.get("template_vol", None) is None:
+        raise StyxValidationError("`template_vol` must not be None")
+    if not isinstance(params["template_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template_vol` has the wrong type: Received `{type(params.get("template_vol", None))}` expected `InputPathType`')
+    if params.get("output_vol", None) is None:
+        raise StyxValidationError("`output_vol` must not be None")
+    if not isinstance(params["output_vol"], str):
+        raise StyxValidationError(f'`output_vol` has the wrong type: Received `{type(params.get("output_vol", None))}` expected `str`')
+    if params.get("atlas_coord", False) is None:
+        raise StyxValidationError("`atlas_coord` must not be None")
+    if not isinstance(params["atlas_coord"], bool):
+        raise StyxValidationError(f'`atlas_coord` has the wrong type: Received `{type(params.get("atlas_coord", False))}` expected `bool`')
+    if params.get("write_area_vols", False) is None:
+        raise StyxValidationError("`write_area_vols` must not be None")
+    if not isinstance(params["write_area_vols"], bool):
+        raise StyxValidationError(f'`write_area_vols` has the wrong type: Received `{type(params.get("write_area_vols", False))}` expected `bool`')
+    if params.get("log_jacobian", False) is None:
+        raise StyxValidationError("`log_jacobian` must not be None")
+    if not isinstance(params["log_jacobian"], bool):
+        raise StyxValidationError(f'`log_jacobian` has the wrong type: Received `{type(params.get("log_jacobian", False))}` expected `bool`')
+    if params.get("smooth_sigma", None) is not None:
+        if not isinstance(params["smooth_sigma"], (float, int)):
+            raise StyxValidationError(f'`smooth_sigma` has the wrong type: Received `{type(params.get("smooth_sigma", None))}` expected `float | None`')
+    if params.get("zero_mean_log", False) is None:
+        raise StyxValidationError("`zero_mean_log` must not be None")
+    if not isinstance(params["zero_mean_log"], bool):
+        raise StyxValidationError(f'`zero_mean_log` has the wrong type: Received `{type(params.get("zero_mean_log", False))}` expected `bool`')
+    if params.get("tm3d", False) is None:
+        raise StyxValidationError("`tm3d` must not be None")
+    if not isinstance(params["tm3d"], bool):
+        raise StyxValidationError(f'`tm3d` has the wrong type: Received `{type(params.get("tm3d", False))}` expected `bool`')
+    if params.get("help1", False) is None:
+        raise StyxValidationError("`help1` must not be None")
+    if not isinstance(params["help1"], bool):
+        raise StyxValidationError(f'`help1` has the wrong type: Received `{type(params.get("help1", False))}` expected `bool`')
+    if params.get("help2", False) is None:
+        raise StyxValidationError("`help2` must not be None")
+    if not isinstance(params["help2"], bool):
+        raise StyxValidationError(f'`help2` has the wrong type: Received `{type(params.get("help2", False))}` expected `bool`')
+    if params.get("dt", False) is None:
+        raise StyxValidationError("`dt` must not be None")
+    if not isinstance(params["dt"], bool):
+        raise StyxValidationError(f'`dt` has the wrong type: Received `{type(params.get("dt", False))}` expected `bool`')
+    if params.get("debug_voxel", None) is not None:
+        if not isinstance(params["debug_voxel"], list):
+            raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+        if len(params["debug_voxel"]) == 3:
+            raise StyxValidationError("Parameter `debug_voxel` must contain exactly 3 elements")
+        for e in params["debug_voxel"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+    if params.get("remove", False) is None:
+        raise StyxValidationError("`remove` must not be None")
+    if not isinstance(params["remove"], bool):
+        raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", False))}` expected `bool`')
+
+
 def mri_jacobian_cargs(
     params: MriJacobianParameters,
     execution: Execution,
@@ -206,6 +279,7 @@ def mri_jacobian_execute(
     Returns:
         NamedTuple of outputs (described in `MriJacobianOutputs`).
     """
+    mri_jacobian_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_JACOBIAN_METADATA)
     params = execution.params(params)

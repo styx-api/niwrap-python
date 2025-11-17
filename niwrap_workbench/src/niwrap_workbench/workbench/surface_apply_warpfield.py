@@ -68,6 +68,35 @@ def surface_apply_warpfield_params(
     return params
 
 
+def surface_apply_warpfield_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceApplyWarpfieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("out-surf", None) is None:
+        raise StyxValidationError("`out-surf` must not be None")
+    if not isinstance(params["out-surf"], str):
+        raise StyxValidationError(f'`out-surf` has the wrong type: Received `{type(params.get("out-surf", None))}` expected `str`')
+    if params.get("forward-warp", None) is not None:
+        if not isinstance(params["forward-warp"], str):
+            raise StyxValidationError(f'`forward-warp` has the wrong type: Received `{type(params.get("forward-warp", None))}` expected `str | None`')
+    if params.get("in-surf", None) is None:
+        raise StyxValidationError("`in-surf` must not be None")
+    if not isinstance(params["in-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in-surf` has the wrong type: Received `{type(params.get("in-surf", None))}` expected `InputPathType`')
+    if params.get("warpfield", None) is None:
+        raise StyxValidationError("`warpfield` must not be None")
+    if not isinstance(params["warpfield"], str):
+        raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
+
+
 def surface_apply_warpfield_cargs(
     params: SurfaceApplyWarpfieldParameters,
     execution: Execution,
@@ -136,6 +165,7 @@ def surface_apply_warpfield_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyWarpfieldOutputs`).
     """
+    surface_apply_warpfield_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_APPLY_WARPFIELD_METADATA)
     params = execution.params(params)

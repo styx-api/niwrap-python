@@ -82,6 +82,47 @@ def v__reorder_params(
     return params
 
 
+def v__reorder_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VReorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("mapfile", None) is None:
+        raise StyxValidationError("`mapfile` must not be None")
+    if not isinstance(params["mapfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mapfile` has the wrong type: Received `{type(params.get("mapfile", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("save_work", False) is None:
+        raise StyxValidationError("`save_work` must not be None")
+    if not isinstance(params["save_work"], bool):
+        raise StyxValidationError(f'`save_work` has the wrong type: Received `{type(params.get("save_work", False))}` expected `bool`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__reorder_cargs(
     params: VReorderParameters,
     execution: Execution,
@@ -154,6 +195,7 @@ def v__reorder_execute(
     Returns:
         NamedTuple of outputs (described in `VReorderOutputs`).
     """
+    v__reorder_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__REORDER_METADATA)
     params = execution.params(params)

@@ -117,6 +117,74 @@ def niccc_params(
     return params
 
 
+def niccc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NicccParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("streamspec", None) is None:
+        raise StyxValidationError("`streamspec` must not be None")
+    if not isinstance(params["streamspec"], str):
+        raise StyxValidationError(f'`streamspec` has the wrong type: Received `{type(params.get("streamspec", None))}` expected `str`')
+    if params.get("duplicate", False) is None:
+        raise StyxValidationError("`duplicate` must not be None")
+    if not isinstance(params["duplicate"], bool):
+        raise StyxValidationError(f'`duplicate` has the wrong type: Received `{type(params.get("duplicate", False))}` expected `bool`')
+    if params.get("nodata", False) is None:
+        raise StyxValidationError("`nodata` must not be None")
+    if not isinstance(params["nodata"], bool):
+        raise StyxValidationError(f'`nodata` has the wrong type: Received `{type(params.get("nodata", False))}` expected `bool`')
+    if params.get("attribute", None) is not None:
+        if not isinstance(params["attribute"], str):
+            raise StyxValidationError(f'`attribute` has the wrong type: Received `{type(params.get("attribute", None))}` expected `str | None`')
+    if params.get("match", None) is not None:
+        if not isinstance(params["match"], str):
+            raise StyxValidationError(f'`match` has the wrong type: Received `{type(params.get("match", None))}` expected `str | None`')
+    if params.get("file", False) is None:
+        raise StyxValidationError("`file` must not be None")
+    if not isinstance(params["file"], bool):
+        raise StyxValidationError(f'`file` has the wrong type: Received `{type(params.get("file", False))}` expected `bool`')
+    if params.get("string", False) is None:
+        raise StyxValidationError("`string` must not be None")
+    if not isinstance(params["string"], bool):
+        raise StyxValidationError(f'`string` has the wrong type: Received `{type(params.get("string", False))}` expected `bool`')
+    if params.get("stdout", False) is None:
+        raise StyxValidationError("`stdout` must not be None")
+    if not isinstance(params["stdout"], bool):
+        raise StyxValidationError(f'`stdout` has the wrong type: Received `{type(params.get("stdout", False))}` expected `bool`')
+    if params.get("hash", False) is None:
+        raise StyxValidationError("`hash` must not be None")
+    if not isinstance(params["hash"], bool):
+        raise StyxValidationError(f'`hash` has the wrong type: Received `{type(params.get("hash", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("find_attr", None) is not None:
+        if not isinstance(params["find_attr"], list):
+            raise StyxValidationError(f'`find_attr` has the wrong type: Received `{type(params.get("find_attr", None))}` expected `list[str] | None`')
+        if len(params["find_attr"]) == 2:
+            raise StyxValidationError("Parameter `find_attr` must contain exactly 2 elements")
+        for e in params["find_attr"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`find_attr` has the wrong type: Received `{type(params.get("find_attr", None))}` expected `list[str] | None`')
+    if params.get("skip_attr", None) is not None:
+        if not isinstance(params["skip_attr"], list):
+            raise StyxValidationError(f'`skip_attr` has the wrong type: Received `{type(params.get("skip_attr", None))}` expected `list[str] | None`')
+        if len(params["skip_attr"]) == 2:
+            raise StyxValidationError("Parameter `skip_attr` must contain exactly 2 elements")
+        for e in params["skip_attr"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`skip_attr` has the wrong type: Received `{type(params.get("skip_attr", None))}` expected `list[str] | None`')
+
+
 def niccc_cargs(
     params: NicccParameters,
     execution: Execution,
@@ -210,6 +278,7 @@ def niccc_execute(
     Returns:
         NamedTuple of outputs (described in `NicccOutputs`).
     """
+    niccc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NICCC_METADATA)
     params = execution.params(params)

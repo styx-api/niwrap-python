@@ -167,6 +167,98 @@ def afni_history_params(
     return params
 
 
+def afni_history_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AfniHistoryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verb_level", None) is not None:
+        if not isinstance(params["verb_level"], int):
+            raise StyxValidationError(f'`verb_level` has the wrong type: Received `{type(params.get("verb_level", None))}` expected `int | None`')
+        if 0 <= params["verb_level"] <= 6:
+            raise StyxValidationError("Parameter `verb_level` must be between 0 and 6 (inclusive)")
+    if params.get("check_date", None) is not None:
+        if not isinstance(params["check_date"], str):
+            raise StyxValidationError(f'`check_date` has the wrong type: Received `{type(params.get("check_date", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("history", False) is None:
+        raise StyxValidationError("`history` must not be None")
+    if not isinstance(params["history"], bool):
+        raise StyxValidationError(f'`history` has the wrong type: Received `{type(params.get("history", False))}` expected `bool`')
+    if params.get("list_authors", False) is None:
+        raise StyxValidationError("`list_authors` must not be None")
+    if not isinstance(params["list_authors"], bool):
+        raise StyxValidationError(f'`list_authors` has the wrong type: Received `{type(params.get("list_authors", False))}` expected `bool`')
+    if params.get("list_types", False) is None:
+        raise StyxValidationError("`list_types` must not be None")
+    if not isinstance(params["list_types"], bool):
+        raise StyxValidationError(f'`list_types` has the wrong type: Received `{type(params.get("list_types", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("author", None) is not None:
+        if not isinstance(params["author"], str):
+            raise StyxValidationError(f'`author` has the wrong type: Received `{type(params.get("author", None))}` expected `str | None`')
+    if params.get("level", None) is not None:
+        if not isinstance(params["level"], int):
+            raise StyxValidationError(f'`level` has the wrong type: Received `{type(params.get("level", None))}` expected `int | None`')
+        if 1 <= params["level"] <= 5:
+            raise StyxValidationError("Parameter `level` must be between 1 and 5 (inclusive)")
+    if params.get("min_level", None) is not None:
+        if not isinstance(params["min_level"], int):
+            raise StyxValidationError(f'`min_level` has the wrong type: Received `{type(params.get("min_level", None))}` expected `int | None`')
+        if 1 <= params["min_level"] <= 5:
+            raise StyxValidationError("Parameter `min_level` must be between 1 and 5 (inclusive)")
+    if params.get("program", None) is not None:
+        if not isinstance(params["program"], str):
+            raise StyxValidationError(f'`program` has the wrong type: Received `{type(params.get("program", None))}` expected `str | None`')
+    if params.get("past_entries", None) is not None:
+        if not isinstance(params["past_entries"], int):
+            raise StyxValidationError(f'`past_entries` has the wrong type: Received `{type(params.get("past_entries", None))}` expected `int | None`')
+    if params.get("past_days", None) is not None:
+        if not isinstance(params["past_days"], int):
+            raise StyxValidationError(f'`past_days` has the wrong type: Received `{type(params.get("past_days", None))}` expected `int | None`')
+    if params.get("past_months", None) is not None:
+        if not isinstance(params["past_months"], int):
+            raise StyxValidationError(f'`past_months` has the wrong type: Received `{type(params.get("past_months", None))}` expected `int | None`')
+    if params.get("past_years", None) is not None:
+        if not isinstance(params["past_years"], int):
+            raise StyxValidationError(f'`past_years` has the wrong type: Received `{type(params.get("past_years", None))}` expected `int | None`')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `str | None`')
+    if params.get("html", False) is None:
+        raise StyxValidationError("`html` must not be None")
+    if not isinstance(params["html"], bool):
+        raise StyxValidationError(f'`html` has the wrong type: Received `{type(params.get("html", False))}` expected `bool`')
+    if params.get("dline", False) is None:
+        raise StyxValidationError("`dline` must not be None")
+    if not isinstance(params["dline"], bool):
+        raise StyxValidationError(f'`dline` has the wrong type: Received `{type(params.get("dline", False))}` expected `bool`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+    if params.get("show_field", None) is not None:
+        if not isinstance(params["show_field"], str):
+            raise StyxValidationError(f'`show_field` has the wrong type: Received `{type(params.get("show_field", None))}` expected `str | None`')
+    if params.get("show_field_names", False) is None:
+        raise StyxValidationError("`show_field_names` must not be None")
+    if not isinstance(params["show_field_names"], bool):
+        raise StyxValidationError(f'`show_field_names` has the wrong type: Received `{type(params.get("show_field_names", False))}` expected `bool`')
+
+
 def afni_history_cargs(
     params: AfniHistoryParameters,
     execution: Execution,
@@ -301,6 +393,7 @@ def afni_history_execute(
     Returns:
         NamedTuple of outputs (described in `AfniHistoryOutputs`).
     """
+    afni_history_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_HISTORY_METADATA)
     params = execution.params(params)

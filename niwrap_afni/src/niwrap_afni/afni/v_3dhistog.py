@@ -145,6 +145,88 @@ def v_3dhistog_params(
     return params
 
 
+def v_3dhistog_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dhistogParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("nbin", None) is not None:
+        if not isinstance(params["nbin"], (float, int)):
+            raise StyxValidationError(f'`nbin` has the wrong type: Received `{type(params.get("nbin", None))}` expected `float | None`')
+    if params.get("dind", None) is not None:
+        if not isinstance(params["dind"], (float, int)):
+            raise StyxValidationError(f'`dind` has the wrong type: Received `{type(params.get("dind", None))}` expected `float | None`')
+    if params.get("omit", None) is not None:
+        if not isinstance(params["omit"], list):
+            raise StyxValidationError(f'`omit` has the wrong type: Received `{type(params.get("omit", None))}` expected `list[float] | None`')
+        if len(params["omit"]) <= 100:
+            raise StyxValidationError("Parameter `omit` must contain at most 100 elements")
+        for e in params["omit"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`omit` has the wrong type: Received `{type(params.get("omit", None))}` expected `list[float] | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("roi_mask", None) is not None:
+        if not isinstance(params["roi_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi_mask` has the wrong type: Received `{type(params.get("roi_mask", None))}` expected `InputPathType | None`')
+    if params.get("doall", False) is None:
+        raise StyxValidationError("`doall` must not be None")
+    if not isinstance(params["doall"], bool):
+        raise StyxValidationError(f'`doall` has the wrong type: Received `{type(params.get("doall", False))}` expected `bool`')
+    if params.get("noempty", False) is None:
+        raise StyxValidationError("`noempty` must not be None")
+    if not isinstance(params["noempty"], bool):
+        raise StyxValidationError(f'`noempty` has the wrong type: Received `{type(params.get("noempty", False))}` expected `bool`')
+    if params.get("notitle", False) is None:
+        raise StyxValidationError("`notitle` must not be None")
+    if not isinstance(params["notitle"], bool):
+        raise StyxValidationError(f'`notitle` has the wrong type: Received `{type(params.get("notitle", False))}` expected `bool`')
+    if params.get("log10", False) is None:
+        raise StyxValidationError("`log10` must not be None")
+    if not isinstance(params["log10"], bool):
+        raise StyxValidationError(f'`log10` has the wrong type: Received `{type(params.get("log10", False))}` expected `bool`')
+    if params.get("pdf", False) is None:
+        raise StyxValidationError("`pdf` must not be None")
+    if not isinstance(params["pdf"], bool):
+        raise StyxValidationError(f'`pdf` has the wrong type: Received `{type(params.get("pdf", False))}` expected `bool`')
+    if params.get("min", None) is not None:
+        if not isinstance(params["min"], (float, int)):
+            raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `float | None`')
+    if params.get("max", None) is not None:
+        if not isinstance(params["max"], (float, int)):
+            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float | None`')
+    if params.get("igfac", False) is None:
+        raise StyxValidationError("`igfac` must not be None")
+    if not isinstance(params["igfac"], bool):
+        raise StyxValidationError(f'`igfac` has the wrong type: Received `{type(params.get("igfac", False))}` expected `bool`')
+    if params.get("int", False) is None:
+        raise StyxValidationError("`int` must not be None")
+    if not isinstance(params["int"], bool):
+        raise StyxValidationError(f'`int` has the wrong type: Received `{type(params.get("int", False))}` expected `bool`')
+    if params.get("float", False) is None:
+        raise StyxValidationError("`float` must not be None")
+    if not isinstance(params["float"], bool):
+        raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", False))}` expected `bool`')
+    if params.get("unq", None) is not None:
+        if not isinstance(params["unq"], str):
+            raise StyxValidationError(f'`unq` has the wrong type: Received `{type(params.get("unq", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3dhistog_cargs(
     params: V3dhistogParameters,
     execution: Execution,
@@ -264,6 +346,7 @@ def v_3dhistog_execute(
     Returns:
         NamedTuple of outputs (described in `V3dhistogOutputs`).
     """
+    v_3dhistog_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DHISTOG_METADATA)
     params = execution.params(params)

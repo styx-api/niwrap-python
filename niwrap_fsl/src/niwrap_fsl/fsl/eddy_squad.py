@@ -74,6 +74,37 @@ def eddy_squad_params(
     return params
 
 
+def eddy_squad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EddySquadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("grouping", None) is not None:
+        if not isinstance(params["grouping"], str):
+            raise StyxValidationError(f'`grouping` has the wrong type: Received `{type(params.get("grouping", None))}` expected `str | None`')
+    if params.get("group_db", None) is not None:
+        if not isinstance(params["group_db"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`group_db` has the wrong type: Received `{type(params.get("group_db", None))}` expected `InputPathType | None`')
+    if params.get("update", False) is None:
+        raise StyxValidationError("`update` must not be None")
+    if not isinstance(params["update"], bool):
+        raise StyxValidationError(f'`update` has the wrong type: Received `{type(params.get("update", False))}` expected `bool`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("subject_list", None) is None:
+        raise StyxValidationError("`subject_list` must not be None")
+    if not isinstance(params["subject_list"], str):
+        raise StyxValidationError(f'`subject_list` has the wrong type: Received `{type(params.get("subject_list", None))}` expected `str`')
+
+
 def eddy_squad_cargs(
     params: EddySquadParameters,
     execution: Execution,
@@ -149,6 +180,7 @@ def eddy_squad_execute(
     Returns:
         NamedTuple of outputs (described in `EddySquadOutputs`).
     """
+    eddy_squad_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EDDY_SQUAD_METADATA)
     params = execution.params(params)

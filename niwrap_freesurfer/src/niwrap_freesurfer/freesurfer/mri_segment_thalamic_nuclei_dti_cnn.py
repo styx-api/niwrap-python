@@ -107,6 +107,55 @@ def mri_segment_thalamic_nuclei_dti_cnn_params(
     return params
 
 
+def mri_segment_thalamic_nuclei_dti_cnn_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSegmentThalamicNucleiDtiCnnParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_images", None) is None:
+        raise StyxValidationError("`t1_images` must not be None")
+    if not isinstance(params["t1_images"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_images` has the wrong type: Received `{type(params.get("t1_images", None))}` expected `InputPathType`')
+    if params.get("aseg", None) is not None:
+        if not isinstance(params["aseg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aseg` has the wrong type: Received `{type(params.get("aseg", None))}` expected `InputPathType | None`')
+    if params.get("fa", None) is None:
+        raise StyxValidationError("`fa` must not be None")
+    if not isinstance(params["fa"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fa` has the wrong type: Received `{type(params.get("fa", None))}` expected `InputPathType`')
+    if params.get("v1", None) is None:
+        raise StyxValidationError("`v1` must not be None")
+    if not isinstance(params["v1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`v1` has the wrong type: Received `{type(params.get("v1", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("volume_output", None) is not None:
+        if not isinstance(params["volume_output"], str):
+            raise StyxValidationError(f'`volume_output` has the wrong type: Received `{type(params.get("volume_output", None))}` expected `str | None`')
+    if params.get("posteriors_output", None) is not None:
+        if not isinstance(params["posteriors_output"], str):
+            raise StyxValidationError(f'`posteriors_output` has the wrong type: Received `{type(params.get("posteriors_output", None))}` expected `str | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("force_cpu", False) is None:
+        raise StyxValidationError("`force_cpu` must not be None")
+    if not isinstance(params["force_cpu"], bool):
+        raise StyxValidationError(f'`force_cpu` has the wrong type: Received `{type(params.get("force_cpu", False))}` expected `bool`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `InputPathType | None`')
+
+
 def mri_segment_thalamic_nuclei_dti_cnn_cargs(
     params: MriSegmentThalamicNucleiDtiCnnParameters,
     execution: Execution,
@@ -210,6 +259,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_execute(
     Returns:
         NamedTuple of outputs (described in `MriSegmentThalamicNucleiDtiCnnOutputs`).
     """
+    mri_segment_thalamic_nuclei_dti_cnn_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA)
     params = execution.params(params)

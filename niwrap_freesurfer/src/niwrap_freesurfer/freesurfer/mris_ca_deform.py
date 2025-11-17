@@ -73,6 +73,40 @@ def mris_ca_deform_params(
     return params
 
 
+def mris_ca_deform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisCaDeformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("label_vol", None) is None:
+        raise StyxValidationError("`label_vol` must not be None")
+    if not isinstance(params["label_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_vol` has the wrong type: Received `{type(params.get("label_vol", None))}` expected `InputPathType`')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType`')
+    if params.get("intensity_vol", None) is None:
+        raise StyxValidationError("`intensity_vol` must not be None")
+    if not isinstance(params["intensity_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`intensity_vol` has the wrong type: Received `{type(params.get("intensity_vol", None))}` expected `InputPathType`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+
+
 def mris_ca_deform_cargs(
     params: MrisCaDeformParameters,
     execution: Execution,
@@ -135,6 +169,7 @@ def mris_ca_deform_execute(
     Returns:
         NamedTuple of outputs (described in `MrisCaDeformOutputs`).
     """
+    mris_ca_deform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CA_DEFORM_METADATA)
     params = execution.params(params)

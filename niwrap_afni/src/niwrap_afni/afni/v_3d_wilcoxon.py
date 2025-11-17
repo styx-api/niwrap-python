@@ -76,6 +76,44 @@ def v_3d_wilcoxon_params(
     return params
 
 
+def v_3d_wilcoxon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dWilcoxonParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("workmem", None) is not None:
+        if not isinstance(params["workmem"], (float, int)):
+            raise StyxValidationError(f'`workmem` has the wrong type: Received `{type(params.get("workmem", None))}` expected `float | None`')
+    if params.get("voxel", None) is not None:
+        if not isinstance(params["voxel"], (float, int)):
+            raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `float | None`')
+    if params.get("dset1_x", None) is None:
+        raise StyxValidationError("`dset1_x` must not be None")
+    if not isinstance(params["dset1_x"], list):
+        raise StyxValidationError(f'`dset1_x` has the wrong type: Received `{type(params.get("dset1_x", None))}` expected `list[InputPathType]`')
+    for e in params["dset1_x"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`dset1_x` has the wrong type: Received `{type(params.get("dset1_x", None))}` expected `list[InputPathType]`')
+    if params.get("dset2_y", None) is None:
+        raise StyxValidationError("`dset2_y` must not be None")
+    if not isinstance(params["dset2_y"], list):
+        raise StyxValidationError(f'`dset2_y` has the wrong type: Received `{type(params.get("dset2_y", None))}` expected `list[InputPathType]`')
+    for e in params["dset2_y"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`dset2_y` has the wrong type: Received `{type(params.get("dset2_y", None))}` expected `list[InputPathType]`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+
+
 def v_3d_wilcoxon_cargs(
     params: V3dWilcoxonParameters,
     execution: Execution,
@@ -156,6 +194,7 @@ def v_3d_wilcoxon_execute(
     Returns:
         NamedTuple of outputs (described in `V3dWilcoxonOutputs`).
     """
+    v_3d_wilcoxon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_WILCOXON_METADATA)
     params = execution.params(params)

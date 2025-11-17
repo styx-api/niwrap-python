@@ -95,6 +95,60 @@ def fsr_import_params(
     return params
 
 
+def fsr_import_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsrImportParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outdir", None) is None:
+        raise StyxValidationError("`outdir` must not be None")
+    if not isinstance(params["outdir"], str):
+        raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str`')
+    if params.get("t1w_input", None) is not None:
+        if not isinstance(params["t1w_input"], list):
+            raise StyxValidationError(f'`t1w_input` has the wrong type: Received `{type(params.get("t1w_input", None))}` expected `list[InputPathType] | None`')
+        for e in params["t1w_input"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`t1w_input` has the wrong type: Received `{type(params.get("t1w_input", None))}` expected `list[InputPathType] | None`')
+    if params.get("t2w_input", None) is not None:
+        if not isinstance(params["t2w_input"], list):
+            raise StyxValidationError(f'`t2w_input` has the wrong type: Received `{type(params.get("t2w_input", None))}` expected `list[InputPathType] | None`')
+        for e in params["t2w_input"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`t2w_input` has the wrong type: Received `{type(params.get("t2w_input", None))}` expected `list[InputPathType] | None`')
+    if params.get("flair_input", None) is not None:
+        if not isinstance(params["flair_input"], list):
+            raise StyxValidationError(f'`flair_input` has the wrong type: Received `{type(params.get("flair_input", None))}` expected `list[InputPathType] | None`')
+        for e in params["flair_input"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`flair_input` has the wrong type: Received `{type(params.get("flair_input", None))}` expected `list[InputPathType] | None`')
+    if params.get("custom_mode_input", None) is not None:
+        if not isinstance(params["custom_mode_input"], list):
+            raise StyxValidationError(f'`custom_mode_input` has the wrong type: Received `{type(params.get("custom_mode_input", None))}` expected `list[str] | None`')
+        for e in params["custom_mode_input"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`custom_mode_input` has the wrong type: Received `{type(params.get("custom_mode_input", None))}` expected `list[str] | None`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+    if params.get("no_conform", False) is None:
+        raise StyxValidationError("`no_conform` must not be None")
+    if not isinstance(params["no_conform"], bool):
+        raise StyxValidationError(f'`no_conform` has the wrong type: Received `{type(params.get("no_conform", False))}` expected `bool`')
+    if params.get("hires", False) is None:
+        raise StyxValidationError("`hires` must not be None")
+    if not isinstance(params["hires"], bool):
+        raise StyxValidationError(f'`hires` has the wrong type: Received `{type(params.get("hires", False))}` expected `bool`')
+
+
 def fsr_import_cargs(
     params: FsrImportParameters,
     execution: Execution,
@@ -184,6 +238,7 @@ def fsr_import_execute(
     Returns:
         NamedTuple of outputs (described in `FsrImportOutputs`).
     """
+    fsr_import_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSR_IMPORT_METADATA)
     params = execution.params(params)

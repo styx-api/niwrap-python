@@ -78,6 +78,42 @@ def extract_region_from_image_by_mask_params(
     return params
 
 
+def extract_region_from_image_by_mask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtractRegionFromImageByMaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `InputPathType`')
+    if params.get("label_mask_image", None) is None:
+        raise StyxValidationError("`label_mask_image` must not be None")
+    if not isinstance(params["label_mask_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_mask_image` has the wrong type: Received `{type(params.get("label_mask_image", None))}` expected `InputPathType`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], int):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `int | None`')
+    if params.get("pad_radius", None) is not None:
+        if not isinstance(params["pad_radius"], int):
+            raise StyxValidationError(f'`pad_radius` has the wrong type: Received `{type(params.get("pad_radius", None))}` expected `int | None`')
+
+
 def extract_region_from_image_by_mask_cargs(
     params: ExtractRegionFromImageByMaskParameters,
     execution: Execution,
@@ -143,6 +179,7 @@ def extract_region_from_image_by_mask_execute(
     Returns:
         NamedTuple of outputs (described in `ExtractRegionFromImageByMaskOutputs`).
     """
+    extract_region_from_image_by_mask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA)
     params = execution.params(params)

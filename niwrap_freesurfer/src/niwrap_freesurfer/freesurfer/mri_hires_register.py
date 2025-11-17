@@ -66,6 +66,36 @@ def mri_hires_register_params(
     return params
 
 
+def mri_hires_register_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriHiresRegisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hires_labeling", None) is None:
+        raise StyxValidationError("`hires_labeling` must not be None")
+    if not isinstance(params["hires_labeling"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`hires_labeling` has the wrong type: Received `{type(params.get("hires_labeling", None))}` expected `InputPathType`')
+    if params.get("input_intensity", None) is None:
+        raise StyxValidationError("`input_intensity` must not be None")
+    if not isinstance(params["input_intensity"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_intensity` has the wrong type: Received `{type(params.get("input_intensity", None))}` expected `InputPathType`')
+    if params.get("input_aseg", None) is None:
+        raise StyxValidationError("`input_aseg` must not be None")
+    if not isinstance(params["input_aseg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_aseg` has the wrong type: Received `{type(params.get("input_aseg", None))}` expected `InputPathType`')
+    if params.get("output_xform", None) is None:
+        raise StyxValidationError("`output_xform` must not be None")
+    if not isinstance(params["output_xform"], str):
+        raise StyxValidationError(f'`output_xform` has the wrong type: Received `{type(params.get("output_xform", None))}` expected `str`')
+
+
 def mri_hires_register_cargs(
     params: MriHiresRegisterParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def mri_hires_register_execute(
     Returns:
         NamedTuple of outputs (described in `MriHiresRegisterOutputs`).
     """
+    mri_hires_register_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_HIRES_REGISTER_METADATA)
     params = execution.params(params)

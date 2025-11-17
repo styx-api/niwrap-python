@@ -85,6 +85,58 @@ def mri_fuse_segmentations_params(
     return params
 
 
+def mri_fuse_segmentations_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFuseSegmentationsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("asegs", None) is None:
+        raise StyxValidationError("`asegs` must not be None")
+    if not isinstance(params["asegs"], list):
+        raise StyxValidationError(f'`asegs` has the wrong type: Received `{type(params.get("asegs", None))}` expected `list[InputPathType]`')
+    for e in params["asegs"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`asegs` has the wrong type: Received `{type(params.get("asegs", None))}` expected `list[InputPathType]`')
+    if params.get("nocc_asegs", None) is None:
+        raise StyxValidationError("`nocc_asegs` must not be None")
+    if not isinstance(params["nocc_asegs"], list):
+        raise StyxValidationError(f'`nocc_asegs` has the wrong type: Received `{type(params.get("nocc_asegs", None))}` expected `list[InputPathType]`')
+    for e in params["nocc_asegs"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`nocc_asegs` has the wrong type: Received `{type(params.get("nocc_asegs", None))}` expected `list[InputPathType]`')
+    if params.get("norm_volumes", None) is None:
+        raise StyxValidationError("`norm_volumes` must not be None")
+    if not isinstance(params["norm_volumes"], list):
+        raise StyxValidationError(f'`norm_volumes` has the wrong type: Received `{type(params.get("norm_volumes", None))}` expected `list[InputPathType]`')
+    for e in params["norm_volumes"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`norm_volumes` has the wrong type: Received `{type(params.get("norm_volumes", None))}` expected `list[InputPathType]`')
+    if params.get("transforms", None) is not None:
+        if not isinstance(params["transforms"], list):
+            raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[InputPathType] | None`')
+        for e in params["transforms"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[InputPathType] | None`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def mri_fuse_segmentations_cargs(
     params: MriFuseSegmentationsParameters,
     execution: Execution,
@@ -167,6 +219,7 @@ def mri_fuse_segmentations_execute(
     Returns:
         NamedTuple of outputs (described in `MriFuseSegmentationsOutputs`).
     """
+    mri_fuse_segmentations_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FUSE_SEGMENTATIONS_METADATA)
     params = execution.params(params)

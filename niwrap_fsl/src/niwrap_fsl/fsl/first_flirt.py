@@ -96,6 +96,50 @@ def first_flirt_params(
     return params
 
 
+def first_flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FirstFlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_basename", None) is None:
+        raise StyxValidationError("`output_basename` must not be None")
+    if not isinstance(params["output_basename"], str):
+        raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str`')
+    if params.get("already_brain_extracted_flag", False) is None:
+        raise StyxValidationError("`already_brain_extracted_flag` must not be None")
+    if not isinstance(params["already_brain_extracted_flag"], bool):
+        raise StyxValidationError(f'`already_brain_extracted_flag` has the wrong type: Received `{type(params.get("already_brain_extracted_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("inweight_flag", False) is None:
+        raise StyxValidationError("`inweight_flag` must not be None")
+    if not isinstance(params["inweight_flag"], bool):
+        raise StyxValidationError(f'`inweight_flag` has the wrong type: Received `{type(params.get("inweight_flag", False))}` expected `bool`')
+    if params.get("strucweight_mask", None) is not None:
+        if not isinstance(params["strucweight_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`strucweight_mask` has the wrong type: Received `{type(params.get("strucweight_mask", None))}` expected `InputPathType | None`')
+    if params.get("cort_flag", False) is None:
+        raise StyxValidationError("`cort_flag` must not be None")
+    if not isinstance(params["cort_flag"], bool):
+        raise StyxValidationError(f'`cort_flag` has the wrong type: Received `{type(params.get("cort_flag", False))}` expected `bool`')
+    if params.get("cost_function", None) is not None:
+        if not isinstance(params["cost_function"], str):
+            raise StyxValidationError(f'`cost_function` has the wrong type: Received `{type(params.get("cost_function", None))}` expected `str | None`')
+
+
 def first_flirt_cargs(
     params: FirstFlirtParameters,
     execution: Execution,
@@ -176,6 +220,7 @@ def first_flirt_execute(
     Returns:
         NamedTuple of outputs (described in `FirstFlirtOutputs`).
     """
+    first_flirt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIRST_FLIRT_METADATA)
     params = execution.params(params)

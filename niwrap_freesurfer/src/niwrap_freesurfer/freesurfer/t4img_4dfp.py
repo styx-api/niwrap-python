@@ -63,6 +63,31 @@ def t4img_4dfp_params(
     return params
 
 
+def t4img_4dfp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `T4img4dfpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t4file", None) is None:
+        raise StyxValidationError("`t4file` must not be None")
+    if not isinstance(params["t4file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t4file` has the wrong type: Received `{type(params.get("t4file", None))}` expected `InputPathType`')
+    if params.get("imgfile", None) is None:
+        raise StyxValidationError("`imgfile` must not be None")
+    if not isinstance(params["imgfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`imgfile` has the wrong type: Received `{type(params.get("imgfile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is not None:
+        if not isinstance(params["outfile"], str):
+            raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str | None`')
+
+
 def t4img_4dfp_cargs(
     params: T4img4dfpParameters,
     execution: Execution,
@@ -124,6 +149,7 @@ def t4img_4dfp_execute(
     Returns:
         NamedTuple of outputs (described in `T4img4dfpOutputs`).
     """
+    t4img_4dfp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(T4IMG_4DFP_METADATA)
     params = execution.params(params)

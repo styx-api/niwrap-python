@@ -100,6 +100,55 @@ def dual_regression_params(
     return params
 
 
+def dual_regression_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DualRegressionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("group_ic_maps", None) is None:
+        raise StyxValidationError("`group_ic_maps` must not be None")
+    if not isinstance(params["group_ic_maps"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`group_ic_maps` has the wrong type: Received `{type(params.get("group_ic_maps", None))}` expected `InputPathType`')
+    if params.get("des_norm", None) is None:
+        raise StyxValidationError("`des_norm` must not be None")
+    if not isinstance(params["des_norm"], (float, int)):
+        raise StyxValidationError(f'`des_norm` has the wrong type: Received `{type(params.get("des_norm", None))}` expected `float`')
+    if params.get("design_mat", None) is None:
+        raise StyxValidationError("`design_mat` must not be None")
+    if not isinstance(params["design_mat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design_mat` has the wrong type: Received `{type(params.get("design_mat", None))}` expected `InputPathType`')
+    if params.get("design_con", None) is None:
+        raise StyxValidationError("`design_con` must not be None")
+    if not isinstance(params["design_con"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design_con` has the wrong type: Received `{type(params.get("design_con", None))}` expected `InputPathType`')
+    if params.get("n_perm", None) is None:
+        raise StyxValidationError("`n_perm` must not be None")
+    if not isinstance(params["n_perm"], (float, int)):
+        raise StyxValidationError(f'`n_perm` has the wrong type: Received `{type(params.get("n_perm", None))}` expected `float`')
+    if params.get("thr_flag", False) is None:
+        raise StyxValidationError("`thr_flag` must not be None")
+    if not isinstance(params["thr_flag"], bool):
+        raise StyxValidationError(f'`thr_flag` has the wrong type: Received `{type(params.get("thr_flag", False))}` expected `bool`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def dual_regression_cargs(
     params: DualRegressionParameters,
     execution: Execution,
@@ -169,6 +218,7 @@ def dual_regression_execute(
     Returns:
         NamedTuple of outputs (described in `DualRegressionOutputs`).
     """
+    dual_regression_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DUAL_REGRESSION_METADATA)
     params = execution.params(params)

@@ -311,6 +311,186 @@ def mris_place_surface_params(
     return params
 
 
+def mris_place_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisPlaceSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], str):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `str`')
+    if params.get("autodetect_gray_white_stats", None) is None:
+        raise StyxValidationError("`autodetect_gray_white_stats` must not be None")
+    if not isinstance(params["autodetect_gray_white_stats"], str):
+        raise StyxValidationError(f'`autodetect_gray_white_stats` has the wrong type: Received `{type(params.get("autodetect_gray_white_stats", None))}` expected `str`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], str):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `str`')
+    if params.get("surface_type_group", None) is None:
+        raise StyxValidationError("`surface_type_group` must not be None")
+    if not isinstance(params["surface_type_group"], str):
+        raise StyxValidationError(f'`surface_type_group` has the wrong type: Received `{type(params.get("surface_type_group", None))}` expected `typing.Literal["--white", "--pial"]`')
+    if params["surface_type_group"] not in ["--white", "--pial"]:
+        raise StyxValidationError("Parameter `surface_type_group` must be one of [\"--white\", \"--pial\"]")
+    if params.get("hemi_group", None) is None:
+        raise StyxValidationError("`hemi_group` must not be None")
+    if not isinstance(params["hemi_group"], str):
+        raise StyxValidationError(f'`hemi_group` has the wrong type: Received `{type(params.get("hemi_group", None))}` expected `typing.Literal["--lh", "--rh"]`')
+    if params["hemi_group"] not in ["--lh", "--rh"]:
+        raise StyxValidationError("Parameter `hemi_group` must be one of [\"--lh\", \"--rh\"]")
+    if params.get("wm_segment", None) is not None:
+        if not isinstance(params["wm_segment"], str):
+            raise StyxValidationError(f'`wm_segment` has the wrong type: Received `{type(params.get("wm_segment", None))}` expected `str | None`')
+    if params.get("out_volume", None) is not None:
+        if not isinstance(params["out_volume"], str):
+            raise StyxValidationError(f'`out_volume` has the wrong type: Received `{type(params.get("out_volume", None))}` expected `str | None`')
+    if params.get("out_volume_only", None) is not None:
+        if not isinstance(params["out_volume_only"], str):
+            raise StyxValidationError(f'`out_volume_only` has the wrong type: Received `{type(params.get("out_volume_only", None))}` expected `str | None`')
+    if params.get("restore_255", False) is None:
+        raise StyxValidationError("`restore_255` must not be None")
+    if not isinstance(params["restore_255"], bool):
+        raise StyxValidationError(f'`restore_255` has the wrong type: Received `{type(params.get("restore_255", False))}` expected `bool`')
+    if params.get("segmentation", None) is not None:
+        if not isinstance(params["segmentation"], str):
+            raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", None))}` expected `str | None`')
+    if params.get("cortical_parcellation", None) is not None:
+        if not isinstance(params["cortical_parcellation"], str):
+            raise StyxValidationError(f'`cortical_parcellation` has the wrong type: Received `{type(params.get("cortical_parcellation", None))}` expected `str | None`')
+    if params.get("nsmooth", None) is not None:
+        if not isinstance(params["nsmooth"], (float, int)):
+            raise StyxValidationError(f'`nsmooth` has the wrong type: Received `{type(params.get("nsmooth", None))}` expected `float | None`')
+    if params.get("smooth_after_rip", False) is None:
+        raise StyxValidationError("`smooth_after_rip` must not be None")
+    if not isinstance(params["smooth_after_rip"], bool):
+        raise StyxValidationError(f'`smooth_after_rip` has the wrong type: Received `{type(params.get("smooth_after_rip", False))}` expected `bool`')
+    if params.get("max_cbv_dist", None) is not None:
+        if not isinstance(params["max_cbv_dist"], (float, int)):
+            raise StyxValidationError(f'`max_cbv_dist` has the wrong type: Received `{type(params.get("max_cbv_dist", None))}` expected `float | None`')
+    if params.get("rip_label", None) is not None:
+        if not isinstance(params["rip_label"], str):
+            raise StyxValidationError(f'`rip_label` has the wrong type: Received `{type(params.get("rip_label", None))}` expected `str | None`')
+    if params.get("rip_midline", False) is None:
+        raise StyxValidationError("`rip_midline` must not be None")
+    if not isinstance(params["rip_midline"], bool):
+        raise StyxValidationError(f'`rip_midline` has the wrong type: Received `{type(params.get("rip_midline", False))}` expected `bool`')
+    if params.get("rip_bg", False) is None:
+        raise StyxValidationError("`rip_bg` must not be None")
+    if not isinstance(params["rip_bg"], bool):
+        raise StyxValidationError(f'`rip_bg` has the wrong type: Received `{type(params.get("rip_bg", False))}` expected `bool`')
+    if params.get("rip_bg_no_annot", False) is None:
+        raise StyxValidationError("`rip_bg_no_annot` must not be None")
+    if not isinstance(params["rip_bg_no_annot"], bool):
+        raise StyxValidationError(f'`rip_bg_no_annot` has the wrong type: Received `{type(params.get("rip_bg_no_annot", False))}` expected `bool`')
+    if params.get("no_rip_freeze", False) is None:
+        raise StyxValidationError("`no_rip_freeze` must not be None")
+    if not isinstance(params["no_rip_freeze"], bool):
+        raise StyxValidationError(f'`no_rip_freeze` has the wrong type: Received `{type(params.get("no_rip_freeze", False))}` expected `bool`')
+    if params.get("rip_wmsa", False) is None:
+        raise StyxValidationError("`rip_wmsa` must not be None")
+    if not isinstance(params["rip_wmsa"], bool):
+        raise StyxValidationError(f'`rip_wmsa` has the wrong type: Received `{type(params.get("rip_wmsa", False))}` expected `bool`')
+    if params.get("rip_lesion", False) is None:
+        raise StyxValidationError("`rip_lesion` must not be None")
+    if not isinstance(params["rip_lesion"], bool):
+        raise StyxValidationError(f'`rip_lesion` has the wrong type: Received `{type(params.get("rip_lesion", False))}` expected `bool`')
+    if params.get("no_rip", False) is None:
+        raise StyxValidationError("`no_rip` must not be None")
+    if not isinstance(params["no_rip"], bool):
+        raise StyxValidationError(f'`no_rip` has the wrong type: Received `{type(params.get("no_rip", False))}` expected `bool`')
+    if params.get("rip_overlay", None) is not None:
+        if not isinstance(params["rip_overlay"], str):
+            raise StyxValidationError(f'`rip_overlay` has the wrong type: Received `{type(params.get("rip_overlay", None))}` expected `str | None`')
+    if params.get("rip_surface", None) is not None:
+        if not isinstance(params["rip_surface"], str):
+            raise StyxValidationError(f'`rip_surface` has the wrong type: Received `{type(params.get("rip_surface", None))}` expected `str | None`')
+    if params.get("rip_projection", None) is not None:
+        if not isinstance(params["rip_projection"], list):
+            raise StyxValidationError(f'`rip_projection` has the wrong type: Received `{type(params.get("rip_projection", None))}` expected `list[float] | None`')
+        if len(params["rip_projection"]) == 3:
+            raise StyxValidationError("Parameter `rip_projection` must contain exactly 3 elements")
+        for e in params["rip_projection"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rip_projection` has the wrong type: Received `{type(params.get("rip_projection", None))}` expected `list[float] | None`')
+    if params.get("repulse_surface", None) is not None:
+        if not isinstance(params["repulse_surface"], str):
+            raise StyxValidationError(f'`repulse_surface` has the wrong type: Received `{type(params.get("repulse_surface", None))}` expected `str | None`')
+    if params.get("white_surface", None) is not None:
+        if not isinstance(params["white_surface"], str):
+            raise StyxValidationError(f'`white_surface` has the wrong type: Received `{type(params.get("white_surface", None))}` expected `str | None`')
+    if params.get("blend_surface", None) is not None:
+        if not isinstance(params["blend_surface"], str):
+            raise StyxValidationError(f'`blend_surface` has the wrong type: Received `{type(params.get("blend_surface", None))}` expected `str | None`')
+    if params.get("multimodal_input", None) is not None:
+        if not isinstance(params["multimodal_input"], str):
+            raise StyxValidationError(f'`multimodal_input` has the wrong type: Received `{type(params.get("multimodal_input", None))}` expected `str | None`')
+    if params.get("mm_refine", False) is None:
+        raise StyxValidationError("`mm_refine` must not be None")
+    if not isinstance(params["mm_refine"], bool):
+        raise StyxValidationError(f'`mm_refine` has the wrong type: Received `{type(params.get("mm_refine", False))}` expected `bool`')
+    if params.get("pin_medial_wall", None) is not None:
+        if not isinstance(params["pin_medial_wall"], str):
+            raise StyxValidationError(f'`pin_medial_wall` has the wrong type: Received `{type(params.get("pin_medial_wall", None))}` expected `str | None`')
+    if params.get("no_intensity_proc", False) is None:
+        raise StyxValidationError("`no_intensity_proc` must not be None")
+    if not isinstance(params["no_intensity_proc"], bool):
+        raise StyxValidationError(f'`no_intensity_proc` has the wrong type: Received `{type(params.get("no_intensity_proc", False))}` expected `bool`')
+    if params.get("debug_vertex", None) is not None:
+        if not isinstance(params["debug_vertex"], (float, int)):
+            raise StyxValidationError(f'`debug_vertex` has the wrong type: Received `{type(params.get("debug_vertex", None))}` expected `float | None`')
+    if params.get("ripflag_out", None) is not None:
+        if not isinstance(params["ripflag_out"], str):
+            raise StyxValidationError(f'`ripflag_out` has the wrong type: Received `{type(params.get("ripflag_out", None))}` expected `str | None`')
+    if params.get("local_max", None) is not None:
+        if not isinstance(params["local_max"], str):
+            raise StyxValidationError(f'`local_max` has the wrong type: Received `{type(params.get("local_max", None))}` expected `str | None`')
+    if params.get("target_surf", None) is not None:
+        if not isinstance(params["target_surf"], str):
+            raise StyxValidationError(f'`target_surf` has the wrong type: Received `{type(params.get("target_surf", None))}` expected `str | None`')
+    if params.get("stop_mask", False) is None:
+        raise StyxValidationError("`stop_mask` must not be None")
+    if not isinstance(params["stop_mask"], bool):
+        raise StyxValidationError(f'`stop_mask` has the wrong type: Received `{type(params.get("stop_mask", False))}` expected `bool`')
+    if params.get("mm_intensity_limits", None) is not None:
+        if not isinstance(params["mm_intensity_limits"], str):
+            raise StyxValidationError(f'`mm_intensity_limits` has the wrong type: Received `{type(params.get("mm_intensity_limits", None))}` expected `str | None`')
+    if params.get("cover_seg", None) is not None:
+        if not isinstance(params["cover_seg"], str):
+            raise StyxValidationError(f'`cover_seg` has the wrong type: Received `{type(params.get("cover_seg", None))}` expected `str | None`')
+    if params.get("first_peak_d1", False) is None:
+        raise StyxValidationError("`first_peak_d1` must not be None")
+    if not isinstance(params["first_peak_d1"], bool):
+        raise StyxValidationError(f'`first_peak_d1` has the wrong type: Received `{type(params.get("first_peak_d1", False))}` expected `bool`')
+    if params.get("first_peak_d2", False) is None:
+        raise StyxValidationError("`first_peak_d2` must not be None")
+    if not isinstance(params["first_peak_d2"], bool):
+        raise StyxValidationError(f'`first_peak_d2` has the wrong type: Received `{type(params.get("first_peak_d2", False))}` expected `bool`')
+    if params.get("white_border_low_factor", None) is not None:
+        if not isinstance(params["white_border_low_factor"], (float, int)):
+            raise StyxValidationError(f'`white_border_low_factor` has the wrong type: Received `{type(params.get("white_border_low_factor", None))}` expected `float | None`')
+    if params.get("fill_lateral_ventricles", None) is not None:
+        if not isinstance(params["fill_lateral_ventricles"], list):
+            raise StyxValidationError(f'`fill_lateral_ventricles` has the wrong type: Received `{type(params.get("fill_lateral_ventricles", None))}` expected `list[float] | None`')
+        if len(params["fill_lateral_ventricles"]) >= 3:
+            raise StyxValidationError("Parameter `fill_lateral_ventricles` must contain at least 3 elements")
+        for e in params["fill_lateral_ventricles"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fill_lateral_ventricles` has the wrong type: Received `{type(params.get("fill_lateral_ventricles", None))}` expected `list[float] | None`')
+
+
 def mris_place_surface_cargs(
     params: MrisPlaceSurfaceParameters,
     execution: Execution,
@@ -535,6 +715,7 @@ def mris_place_surface_execute(
     Returns:
         NamedTuple of outputs (described in `MrisPlaceSurfaceOutputs`).
     """
+    mris_place_surface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_PLACE_SURFACE_METADATA)
     params = execution.params(params)

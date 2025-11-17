@@ -52,6 +52,23 @@ def inflate_subject_params(
     return params
 
 
+def inflate_subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `InflateSubjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("args", None) is not None:
+        if not isinstance(params["args"], str):
+            raise StyxValidationError(f'`args` has the wrong type: Received `{type(params.get("args", None))}` expected `str | None`')
+
+
 def inflate_subject_cargs(
     params: InflateSubjectParameters,
     execution: Execution,
@@ -111,6 +128,7 @@ def inflate_subject_execute(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectOutputs`).
     """
+    inflate_subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(INFLATE_SUBJECT_METADATA)
     params = execution.params(params)

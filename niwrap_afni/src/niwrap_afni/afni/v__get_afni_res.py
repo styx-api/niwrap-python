@@ -56,6 +56,29 @@ def v__get_afni_res_params(
     return params
 
 
+def v__get_afni_res_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGetAfniResParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["-min", "-max", "-mean"] | None`')
+        if params["output_type"] not in ["-min", "-max", "-mean"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"-min\", \"-max\", \"-mean\"]")
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+
+
 def v__get_afni_res_cargs(
     params: VGetAfniResParameters,
     execution: Execution,
@@ -115,6 +138,7 @@ def v__get_afni_res_execute(
     Returns:
         NamedTuple of outputs (described in `VGetAfniResOutputs`).
     """
+    v__get_afni_res_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GET_AFNI_RES_METADATA)
     params = execution.params(params)

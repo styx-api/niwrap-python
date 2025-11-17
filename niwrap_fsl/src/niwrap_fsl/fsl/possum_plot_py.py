@@ -55,6 +55,28 @@ def possum_plot_py_params(
     return params
 
 
+def possum_plot_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PossumPlotPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_basename", None) is None:
+        raise StyxValidationError("`output_basename` must not be None")
+    if not isinstance(params["output_basename"], str):
+        raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str`')
+
+
 def possum_plot_py_cargs(
     params: PossumPlotPyParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def possum_plot_py_execute(
     Returns:
         NamedTuple of outputs (described in `PossumPlotPyOutputs`).
     """
+    possum_plot_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POSSUM_PLOT_PY_METADATA)
     params = execution.params(params)

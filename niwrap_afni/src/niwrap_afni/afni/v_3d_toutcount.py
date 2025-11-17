@@ -108,6 +108,58 @@ def v_3d_toutcount_params(
     return params
 
 
+def v_3d_toutcount_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dToutcountParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], str):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `str`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], str):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `str | None`')
+    if params.get("q_threshold", None) is not None:
+        if not isinstance(params["q_threshold"], (float, int)):
+            raise StyxValidationError(f'`q_threshold` has the wrong type: Received `{type(params.get("q_threshold", None))}` expected `float | None`')
+        if 0 <= params["q_threshold"] <= 1:
+            raise StyxValidationError("Parameter `q_threshold` must be between 0 and 1 (inclusive)")
+    if params.get("autoclip", False) is None:
+        raise StyxValidationError("`autoclip` must not be None")
+    if not isinstance(params["autoclip"], bool):
+        raise StyxValidationError(f'`autoclip` has the wrong type: Received `{type(params.get("autoclip", False))}` expected `bool`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("fraction", False) is None:
+        raise StyxValidationError("`fraction` must not be None")
+    if not isinstance(params["fraction"], bool):
+        raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", False))}` expected `bool`')
+    if params.get("range", False) is None:
+        raise StyxValidationError("`range` must not be None")
+    if not isinstance(params["range"], bool):
+        raise StyxValidationError(f'`range` has the wrong type: Received `{type(params.get("range", False))}` expected `bool`')
+    if params.get("polort_order", None) is not None:
+        if not isinstance(params["polort_order"], (float, int)):
+            raise StyxValidationError(f'`polort_order` has the wrong type: Received `{type(params.get("polort_order", None))}` expected `float | None`')
+    if params.get("legendre", False) is None:
+        raise StyxValidationError("`legendre` must not be None")
+    if not isinstance(params["legendre"], bool):
+        raise StyxValidationError(f'`legendre` has the wrong type: Received `{type(params.get("legendre", False))}` expected `bool`')
+
+
 def v_3d_toutcount_cargs(
     params: V3dToutcountParameters,
     execution: Execution,
@@ -194,6 +246,7 @@ def v_3d_toutcount_execute(
     Returns:
         NamedTuple of outputs (described in `V3dToutcountOutputs`).
     """
+    v_3d_toutcount_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TOUTCOUNT_METADATA)
     params = execution.params(params)

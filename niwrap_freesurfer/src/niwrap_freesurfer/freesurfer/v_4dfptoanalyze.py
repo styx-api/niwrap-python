@@ -75,6 +75,38 @@ def v_4dfptoanalyze_params(
     return params
 
 
+def v_4dfptoanalyze_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V4dfptoanalyzeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("output_8bit", False) is None:
+        raise StyxValidationError("`output_8bit` must not be None")
+    if not isinstance(params["output_8bit"], bool):
+        raise StyxValidationError(f'`output_8bit` has the wrong type: Received `{type(params.get("output_8bit", False))}` expected `bool`')
+    if params.get("spm99", False) is None:
+        raise StyxValidationError("`spm99` must not be None")
+    if not isinstance(params["spm99"], bool):
+        raise StyxValidationError(f'`spm99` has the wrong type: Received `{type(params.get("spm99", False))}` expected `bool`')
+    if params.get("endianness", None) is not None:
+        if not isinstance(params["endianness"], str):
+            raise StyxValidationError(f'`endianness` has the wrong type: Received `{type(params.get("endianness", None))}` expected `str | None`')
+
+
 def v_4dfptoanalyze_cargs(
     params: V4dfptoanalyzeParameters,
     execution: Execution,
@@ -148,6 +180,7 @@ def v_4dfptoanalyze_execute(
     Returns:
         NamedTuple of outputs (described in `V4dfptoanalyzeOutputs`).
     """
+    v_4dfptoanalyze_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_4DFPTOANALYZE_METADATA)
     params = execution.params(params)

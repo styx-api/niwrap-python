@@ -130,6 +130,80 @@ def fslorient_params(
     return params
 
 
+def fslorient_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslorientParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("get_orient", False) is None:
+        raise StyxValidationError("`get_orient` must not be None")
+    if not isinstance(params["get_orient"], bool):
+        raise StyxValidationError(f'`get_orient` has the wrong type: Received `{type(params.get("get_orient", False))}` expected `bool`')
+    if params.get("get_sform", False) is None:
+        raise StyxValidationError("`get_sform` must not be None")
+    if not isinstance(params["get_sform"], bool):
+        raise StyxValidationError(f'`get_sform` has the wrong type: Received `{type(params.get("get_sform", False))}` expected `bool`')
+    if params.get("get_qform", False) is None:
+        raise StyxValidationError("`get_qform` must not be None")
+    if not isinstance(params["get_qform"], bool):
+        raise StyxValidationError(f'`get_qform` has the wrong type: Received `{type(params.get("get_qform", False))}` expected `bool`')
+    if params.get("set_sform", None) is not None:
+        if not isinstance(params["set_sform"], str):
+            raise StyxValidationError(f'`set_sform` has the wrong type: Received `{type(params.get("set_sform", None))}` expected `str | None`')
+    if params.get("set_qform", None) is not None:
+        if not isinstance(params["set_qform"], str):
+            raise StyxValidationError(f'`set_qform` has the wrong type: Received `{type(params.get("set_qform", None))}` expected `str | None`')
+    if params.get("set_sform_code", None) is not None:
+        if not isinstance(params["set_sform_code"], str):
+            raise StyxValidationError(f'`set_sform_code` has the wrong type: Received `{type(params.get("set_sform_code", None))}` expected `str | None`')
+    if params.get("set_qform_code", None) is not None:
+        if not isinstance(params["set_qform_code"], str):
+            raise StyxValidationError(f'`set_qform_code` has the wrong type: Received `{type(params.get("set_qform_code", None))}` expected `str | None`')
+    if params.get("get_qform_code", False) is None:
+        raise StyxValidationError("`get_qform_code` must not be None")
+    if not isinstance(params["get_qform_code"], bool):
+        raise StyxValidationError(f'`get_qform_code` has the wrong type: Received `{type(params.get("get_qform_code", False))}` expected `bool`')
+    if params.get("get_sform_code", False) is None:
+        raise StyxValidationError("`get_sform_code` must not be None")
+    if not isinstance(params["get_sform_code"], bool):
+        raise StyxValidationError(f'`get_sform_code` has the wrong type: Received `{type(params.get("get_sform_code", False))}` expected `bool`')
+    if params.get("copy_qform_to_sform", False) is None:
+        raise StyxValidationError("`copy_qform_to_sform` must not be None")
+    if not isinstance(params["copy_qform_to_sform"], bool):
+        raise StyxValidationError(f'`copy_qform_to_sform` has the wrong type: Received `{type(params.get("copy_qform_to_sform", False))}` expected `bool`')
+    if params.get("copy_sform_to_qform", False) is None:
+        raise StyxValidationError("`copy_sform_to_qform` must not be None")
+    if not isinstance(params["copy_sform_to_qform"], bool):
+        raise StyxValidationError(f'`copy_sform_to_qform` has the wrong type: Received `{type(params.get("copy_sform_to_qform", False))}` expected `bool`')
+    if params.get("delete_orient", False) is None:
+        raise StyxValidationError("`delete_orient` must not be None")
+    if not isinstance(params["delete_orient"], bool):
+        raise StyxValidationError(f'`delete_orient` has the wrong type: Received `{type(params.get("delete_orient", False))}` expected `bool`')
+    if params.get("force_neurological", False) is None:
+        raise StyxValidationError("`force_neurological` must not be None")
+    if not isinstance(params["force_neurological"], bool):
+        raise StyxValidationError(f'`force_neurological` has the wrong type: Received `{type(params.get("force_neurological", False))}` expected `bool`')
+    if params.get("force_radiological", False) is None:
+        raise StyxValidationError("`force_radiological` must not be None")
+    if not isinstance(params["force_radiological"], bool):
+        raise StyxValidationError(f'`force_radiological` has the wrong type: Received `{type(params.get("force_radiological", False))}` expected `bool`')
+    if params.get("swap_orient", False) is None:
+        raise StyxValidationError("`swap_orient` must not be None")
+    if not isinstance(params["swap_orient"], bool):
+        raise StyxValidationError(f'`swap_orient` has the wrong type: Received `{type(params.get("swap_orient", False))}` expected `bool`')
+    if params.get("filename", None) is None:
+        raise StyxValidationError("`filename` must not be None")
+    if not isinstance(params["filename"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `InputPathType`')
+
+
 def fslorient_cargs(
     params: FslorientParameters,
     execution: Execution,
@@ -227,6 +301,7 @@ def fslorient_execute(
     Returns:
         NamedTuple of outputs (described in `FslorientOutputs`).
     """
+    fslorient_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLORIENT_METADATA)
     params = execution.params(params)

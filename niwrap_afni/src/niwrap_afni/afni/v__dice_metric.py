@@ -122,6 +122,71 @@ def v__dice_metric_params(
     return params
 
 
+def v__dice_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDiceMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base", None) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `InputPathType`')
+    if params.get("dsets", None) is None:
+        raise StyxValidationError("`dsets` must not be None")
+    if not isinstance(params["dsets"], list):
+        raise StyxValidationError(f'`dsets` has the wrong type: Received `{type(params.get("dsets", None))}` expected `list[InputPathType]`')
+    for e in params["dsets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`dsets` has the wrong type: Received `{type(params.get("dsets", None))}` expected `list[InputPathType]`')
+    if params.get("max_roi", None) is not None:
+        if not isinstance(params["max_roi"], (float, int)):
+            raise StyxValidationError(f'`max_roi` has the wrong type: Received `{type(params.get("max_roi", None))}` expected `float | None`')
+    if params.get("labeltable", None) is not None:
+        if not isinstance(params["labeltable"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labeltable` has the wrong type: Received `{type(params.get("labeltable", None))}` expected `InputPathType | None`')
+    if params.get("forceoutput", None) is not None:
+        if not isinstance(params["forceoutput"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`forceoutput` has the wrong type: Received `{type(params.get("forceoutput", None))}` expected `InputPathType | None`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("save_match", False) is None:
+        raise StyxValidationError("`save_match` must not be None")
+    if not isinstance(params["save_match"], bool):
+        raise StyxValidationError(f'`save_match` has the wrong type: Received `{type(params.get("save_match", False))}` expected `bool`')
+    if params.get("save_diff", False) is None:
+        raise StyxValidationError("`save_diff` must not be None")
+    if not isinstance(params["save_diff"], bool):
+        raise StyxValidationError(f'`save_diff` has the wrong type: Received `{type(params.get("save_diff", False))}` expected `bool`')
+    if params.get("do_not_mask_by_base", False) is None:
+        raise StyxValidationError("`do_not_mask_by_base` must not be None")
+    if not isinstance(params["do_not_mask_by_base"], bool):
+        raise StyxValidationError(f'`do_not_mask_by_base` has the wrong type: Received `{type(params.get("do_not_mask_by_base", False))}` expected `bool`')
+    if params.get("mask_by_base", False) is None:
+        raise StyxValidationError("`mask_by_base` must not be None")
+    if not isinstance(params["mask_by_base"], bool):
+        raise StyxValidationError(f'`mask_by_base` has the wrong type: Received `{type(params.get("mask_by_base", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("ignore_bad", False) is None:
+        raise StyxValidationError("`ignore_bad` must not be None")
+    if not isinstance(params["ignore_bad"], bool):
+        raise StyxValidationError(f'`ignore_bad` has the wrong type: Received `{type(params.get("ignore_bad", False))}` expected `bool`')
+    if params.get("keep_tmp", False) is None:
+        raise StyxValidationError("`keep_tmp` must not be None")
+    if not isinstance(params["keep_tmp"], bool):
+        raise StyxValidationError(f'`keep_tmp` has the wrong type: Received `{type(params.get("keep_tmp", False))}` expected `bool`')
+
+
 def v__dice_metric_cargs(
     params: VDiceMetricParameters,
     execution: Execution,
@@ -220,6 +285,7 @@ def v__dice_metric_execute(
     Returns:
         NamedTuple of outputs (described in `VDiceMetricOutputs`).
     """
+    v__dice_metric_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DICE_METRIC_METADATA)
     params = execution.params(params)

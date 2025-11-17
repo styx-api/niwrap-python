@@ -119,6 +119,57 @@ def v_3d_local_pv_params(
     return params
 
 
+def v_3d_local_pv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLocalPvParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("prefix2", None) is not None:
+        if not isinstance(params["prefix2"], str):
+            raise StyxValidationError(f'`prefix2` has the wrong type: Received `{type(params.get("prefix2", None))}` expected `str | None`')
+    if params.get("evprefix", None) is not None:
+        if not isinstance(params["evprefix"], str):
+            raise StyxValidationError(f'`evprefix` has the wrong type: Received `{type(params.get("evprefix", None))}` expected `str | None`')
+    if params.get("neighborhood", None) is not None:
+        if not isinstance(params["neighborhood"], str):
+            raise StyxValidationError(f'`neighborhood` has the wrong type: Received `{type(params.get("neighborhood", None))}` expected `str | None`')
+    if params.get("despike", False) is None:
+        raise StyxValidationError("`despike` must not be None")
+    if not isinstance(params["despike"], bool):
+        raise StyxValidationError(f'`despike` has the wrong type: Received `{type(params.get("despike", False))}` expected `bool`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], (float, int)):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `float | None`')
+    if params.get("vnorm", False) is None:
+        raise StyxValidationError("`vnorm` must not be None")
+    if not isinstance(params["vnorm"], bool):
+        raise StyxValidationError(f'`vnorm` has the wrong type: Received `{type(params.get("vnorm", False))}` expected `bool`')
+    if params.get("vproj", None) is not None:
+        if not isinstance(params["vproj"], str):
+            raise StyxValidationError(f'`vproj` has the wrong type: Received `{type(params.get("vproj", None))}` expected `str | None`')
+
+
 def v_3d_local_pv_cargs(
     params: V3dLocalPvParameters,
     execution: Execution,
@@ -222,6 +273,7 @@ def v_3d_local_pv_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLocalPvOutputs`).
     """
+    v_3d_local_pv_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOCAL_PV_METADATA)
     params = execution.params(params)

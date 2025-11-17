@@ -83,6 +83,46 @@ def wm_anat_snr_params(
     return params
 
 
+def wm_anat_snr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WmAnatSnrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nerode", None) is not None:
+        if not isinstance(params["nerode"], int):
+            raise StyxValidationError(f'`nerode` has the wrong type: Received `{type(params.get("nerode", None))}` expected `int | None`')
+    if params.get("tmp_dir", None) is not None:
+        if not isinstance(params["tmp_dir"], str):
+            raise StyxValidationError(f'`tmp_dir` has the wrong type: Received `{type(params.get("tmp_dir", None))}` expected `str | None`')
+    if params.get("cleanup", False) is None:
+        raise StyxValidationError("`cleanup` must not be None")
+    if not isinstance(params["cleanup"], bool):
+        raise StyxValidationError(f'`cleanup` has the wrong type: Received `{type(params.get("cleanup", False))}` expected `bool`')
+    if params.get("no_cleanup", False) is None:
+        raise StyxValidationError("`no_cleanup` must not be None")
+    if not isinstance(params["no_cleanup"], bool):
+        raise StyxValidationError(f'`no_cleanup` has the wrong type: Received `{type(params.get("no_cleanup", False))}` expected `bool`')
+
+
 def wm_anat_snr_cargs(
     params: WmAnatSnrParameters,
     execution: Execution,
@@ -165,6 +205,7 @@ def wm_anat_snr_execute(
     Returns:
         NamedTuple of outputs (described in `WmAnatSnrOutputs`).
     """
+    wm_anat_snr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WM_ANAT_SNR_METADATA)
     params = execution.params(params)

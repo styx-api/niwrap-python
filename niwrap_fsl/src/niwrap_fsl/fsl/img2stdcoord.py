@@ -107,6 +107,60 @@ def img2stdcoord_params(
     return params
 
 
+def img2stdcoord_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Img2stdcoordParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("coordinate_file", None) is None:
+        raise StyxValidationError("`coordinate_file` must not be None")
+    if not isinstance(params["coordinate_file"], str):
+        raise StyxValidationError(f'`coordinate_file` has the wrong type: Received `{type(params.get("coordinate_file", None))}` expected `str`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("standard_image", None) is not None:
+        if not isinstance(params["standard_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`standard_image` has the wrong type: Received `{type(params.get("standard_image", None))}` expected `InputPathType | None`')
+    if params.get("affine_transform", None) is not None:
+        if not isinstance(params["affine_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`affine_transform` has the wrong type: Received `{type(params.get("affine_transform", None))}` expected `InputPathType | None`')
+    if params.get("warp_field", None) is not None:
+        if not isinstance(params["warp_field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp_field` has the wrong type: Received `{type(params.get("warp_field", None))}` expected `InputPathType | None`')
+    if params.get("prewarp_affine_transform", None) is not None:
+        if not isinstance(params["prewarp_affine_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prewarp_affine_transform` has the wrong type: Received `{type(params.get("prewarp_affine_transform", None))}` expected `InputPathType | None`')
+    if params.get("voxel_flag", False) is None:
+        raise StyxValidationError("`voxel_flag` must not be None")
+    if not isinstance(params["voxel_flag"], bool):
+        raise StyxValidationError(f'`voxel_flag` has the wrong type: Received `{type(params.get("voxel_flag", False))}` expected `bool`')
+    if params.get("mm_flag", False) is None:
+        raise StyxValidationError("`mm_flag` must not be None")
+    if not isinstance(params["mm_flag"], bool):
+        raise StyxValidationError(f'`mm_flag` has the wrong type: Received `{type(params.get("mm_flag", False))}` expected `bool`')
+    if params.get("verbose_flag_1", False) is None:
+        raise StyxValidationError("`verbose_flag_1` must not be None")
+    if not isinstance(params["verbose_flag_1"], bool):
+        raise StyxValidationError(f'`verbose_flag_1` has the wrong type: Received `{type(params.get("verbose_flag_1", False))}` expected `bool`')
+    if params.get("verbose_flag_2", False) is None:
+        raise StyxValidationError("`verbose_flag_2` must not be None")
+    if not isinstance(params["verbose_flag_2"], bool):
+        raise StyxValidationError(f'`verbose_flag_2` has the wrong type: Received `{type(params.get("verbose_flag_2", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def img2stdcoord_cargs(
     params: Img2stdcoordParameters,
     execution: Execution,
@@ -198,6 +252,7 @@ def img2stdcoord_execute(
     Returns:
         NamedTuple of outputs (described in `Img2stdcoordOutputs`).
     """
+    img2stdcoord_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMG2STDCOORD_METADATA)
     params = execution.params(params)

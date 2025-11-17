@@ -74,6 +74,41 @@ def slicesdir_params(
     return params
 
 
+def slicesdir_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlicesdirParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("flag_filelist", False) is None:
+        raise StyxValidationError("`flag_filelist` must not be None")
+    if not isinstance(params["flag_filelist"], bool):
+        raise StyxValidationError(f'`flag_filelist` has the wrong type: Received `{type(params.get("flag_filelist", False))}` expected `bool`')
+    if params.get("outline_image", None) is not None:
+        if not isinstance(params["outline_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outline_image` has the wrong type: Received `{type(params.get("outline_image", None))}` expected `InputPathType | None`')
+    if params.get("edge_threshold", None) is not None:
+        if not isinstance(params["edge_threshold"], (float, int)):
+            raise StyxValidationError(f'`edge_threshold` has the wrong type: Received `{type(params.get("edge_threshold", None))}` expected `float | None`')
+    if params.get("slice_option", False) is None:
+        raise StyxValidationError("`slice_option` must not be None")
+    if not isinstance(params["slice_option"], bool):
+        raise StyxValidationError(f'`slice_option` has the wrong type: Received `{type(params.get("slice_option", False))}` expected `bool`')
+    if params.get("filelist", None) is None:
+        raise StyxValidationError("`filelist` must not be None")
+    if not isinstance(params["filelist"], list):
+        raise StyxValidationError(f'`filelist` has the wrong type: Received `{type(params.get("filelist", None))}` expected `list[str]`')
+    for e in params["filelist"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`filelist` has the wrong type: Received `{type(params.get("filelist", None))}` expected `list[str]`')
+
+
 def slicesdir_cargs(
     params: SlicesdirParameters,
     execution: Execution,
@@ -146,6 +181,7 @@ def slicesdir_execute(
     Returns:
         NamedTuple of outputs (described in `SlicesdirOutputs`).
     """
+    slicesdir_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLICESDIR_METADATA)
     params = execution.params(params)

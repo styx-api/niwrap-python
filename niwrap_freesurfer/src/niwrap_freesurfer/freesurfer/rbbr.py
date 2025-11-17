@@ -171,6 +171,97 @@ def rbbr_params(
     return params
 
 
+def rbbr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `RbbrParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], str):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `str`')
+    if params.get("t1_contrast", False) is None:
+        raise StyxValidationError("`t1_contrast` must not be None")
+    if not isinstance(params["t1_contrast"], bool):
+        raise StyxValidationError(f'`t1_contrast` has the wrong type: Received `{type(params.get("t1_contrast", False))}` expected `bool`')
+    if params.get("t2_contrast", False) is None:
+        raise StyxValidationError("`t2_contrast` must not be None")
+    if not isinstance(params["t2_contrast"], bool):
+        raise StyxValidationError(f'`t2_contrast` has the wrong type: Received `{type(params.get("t2_contrast", False))}` expected `bool`')
+    if params.get("init_reg", False) is None:
+        raise StyxValidationError("`init_reg` must not be None")
+    if not isinstance(params["init_reg"], bool):
+        raise StyxValidationError(f'`init_reg` has the wrong type: Received `{type(params.get("init_reg", False))}` expected `bool`')
+    if params.get("init_spm", False) is None:
+        raise StyxValidationError("`init_spm` must not be None")
+    if not isinstance(params["init_spm"], bool):
+        raise StyxValidationError(f'`init_spm` has the wrong type: Received `{type(params.get("init_spm", False))}` expected `bool`')
+    if params.get("init_fsl", False) is None:
+        raise StyxValidationError("`init_fsl` must not be None")
+    if not isinstance(params["init_fsl"], bool):
+        raise StyxValidationError(f'`init_fsl` has the wrong type: Received `{type(params.get("init_fsl", False))}` expected `bool`')
+    if params.get("init_header", False) is None:
+        raise StyxValidationError("`init_header` must not be None")
+    if not isinstance(params["init_header"], bool):
+        raise StyxValidationError(f'`init_header` has the wrong type: Received `{type(params.get("init_header", False))}` expected `bool`')
+    if params.get("cost_threshold", None) is not None:
+        if not isinstance(params["cost_threshold"], (float, int)):
+            raise StyxValidationError(f'`cost_threshold` has the wrong type: Received `{type(params.get("cost_threshold", None))}` expected `float | None`')
+    if params.get("gtm_synthesize", None) is not None:
+        if not isinstance(params["gtm_synthesize"], str):
+            raise StyxValidationError(f'`gtm_synthesize` has the wrong type: Received `{type(params.get("gtm_synthesize", None))}` expected `str | None`')
+    if params.get("tt_reduce", False) is None:
+        raise StyxValidationError("`tt_reduce` must not be None")
+    if not isinstance(params["tt_reduce"], bool):
+        raise StyxValidationError(f'`tt_reduce` has the wrong type: Received `{type(params.get("tt_reduce", False))}` expected `bool`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+    if params.get("output_reg", None) is not None:
+        if not isinstance(params["output_reg"], str):
+            raise StyxValidationError(f'`output_reg` has the wrong type: Received `{type(params.get("output_reg", None))}` expected `str | None`')
+    if params.get("output_lta", None) is not None:
+        if not isinstance(params["output_lta"], str):
+            raise StyxValidationError(f'`output_lta` has the wrong type: Received `{type(params.get("output_lta", None))}` expected `str | None`')
+    if params.get("left_hemi", False) is None:
+        raise StyxValidationError("`left_hemi` must not be None")
+    if not isinstance(params["left_hemi"], bool):
+        raise StyxValidationError(f'`left_hemi` has the wrong type: Received `{type(params.get("left_hemi", False))}` expected `bool`')
+    if params.get("right_hemi", False) is None:
+        raise StyxValidationError("`right_hemi` must not be None")
+    if not isinstance(params["right_hemi"], bool):
+        raise StyxValidationError(f'`right_hemi` has the wrong type: Received `{type(params.get("right_hemi", False))}` expected `bool`')
+    if params.get("gm_proj_frac", None) is not None:
+        if not isinstance(params["gm_proj_frac"], (float, int)):
+            raise StyxValidationError(f'`gm_proj_frac` has the wrong type: Received `{type(params.get("gm_proj_frac", None))}` expected `float | None`')
+    if params.get("gm_proj_abs", None) is not None:
+        if not isinstance(params["gm_proj_abs"], (float, int)):
+            raise StyxValidationError(f'`gm_proj_abs` has the wrong type: Received `{type(params.get("gm_proj_abs", None))}` expected `float | None`')
+    if params.get("wm_proj_abs", None) is not None:
+        if not isinstance(params["wm_proj_abs"], (float, int)):
+            raise StyxValidationError(f'`wm_proj_abs` has the wrong type: Received `{type(params.get("wm_proj_abs", None))}` expected `float | None`')
+    if params.get("frame_no", None) is not None:
+        if not isinstance(params["frame_no"], (float, int)):
+            raise StyxValidationError(f'`frame_no` has the wrong type: Received `{type(params.get("frame_no", None))}` expected `float | None`')
+    if params.get("output_template", None) is not None:
+        if not isinstance(params["output_template"], str):
+            raise StyxValidationError(f'`output_template` has the wrong type: Received `{type(params.get("output_template", None))}` expected `str | None`')
+    if params.get("no_merge", False) is None:
+        raise StyxValidationError("`no_merge` must not be None")
+    if not isinstance(params["no_merge"], bool):
+        raise StyxValidationError(f'`no_merge` has the wrong type: Received `{type(params.get("no_merge", False))}` expected `bool`')
+
+
 def rbbr_cargs(
     params: RbbrParameters,
     execution: Execution,
@@ -309,6 +400,7 @@ def rbbr_execute(
     Returns:
         NamedTuple of outputs (described in `RbbrOutputs`).
     """
+    rbbr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RBBR_METADATA)
     params = execution.params(params)

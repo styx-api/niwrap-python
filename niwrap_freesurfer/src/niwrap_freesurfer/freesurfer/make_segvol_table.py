@@ -106,6 +106,61 @@ def make_segvol_table_params(
     return params
 
 
+def make_segvol_table_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeSegvolTableParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("subject_file", None) is None:
+        raise StyxValidationError("`subject_file` must not be None")
+    if not isinstance(params["subject_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`subject_file` has the wrong type: Received `{type(params.get("subject_file", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("idmap", None) is not None:
+        if not isinstance(params["idmap"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`idmap` has the wrong type: Received `{type(params.get("idmap", None))}` expected `InputPathType | None`')
+    if params.get("structure_ids", None) is not None:
+        if not isinstance(params["structure_ids"], list):
+            raise StyxValidationError(f'`structure_ids` has the wrong type: Received `{type(params.get("structure_ids", None))}` expected `list[str] | None`')
+        for e in params["structure_ids"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`structure_ids` has the wrong type: Received `{type(params.get("structure_ids", None))}` expected `list[str] | None`')
+    if params.get("segdir", None) is not None:
+        if not isinstance(params["segdir"], str):
+            raise StyxValidationError(f'`segdir` has the wrong type: Received `{type(params.get("segdir", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def make_segvol_table_cargs(
     params: MakeSegvolTableParameters,
     execution: Execution,
@@ -205,6 +260,7 @@ def make_segvol_table_execute(
     Returns:
         NamedTuple of outputs (described in `MakeSegvolTableOutputs`).
     """
+    make_segvol_table_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_SEGVOL_TABLE_METADATA)
     params = execution.params(params)

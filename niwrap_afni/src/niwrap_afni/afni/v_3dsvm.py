@@ -217,6 +217,116 @@ def v_3dsvm_params(
     return params
 
 
+def v_3dsvm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dsvmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("train_vol", None) is not None:
+        if not isinstance(params["train_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`train_vol` has the wrong type: Received `{type(params.get("train_vol", None))}` expected `InputPathType | None`')
+    if params.get("train_labels", None) is not None:
+        if not isinstance(params["train_labels"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`train_labels` has the wrong type: Received `{type(params.get("train_labels", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("no_model_mask", False) is None:
+        raise StyxValidationError("`no_model_mask` must not be None")
+    if not isinstance(params["no_model_mask"], bool):
+        raise StyxValidationError(f'`no_model_mask` has the wrong type: Received `{type(params.get("no_model_mask", False))}` expected `bool`')
+    if params.get("model", None) is None:
+        raise StyxValidationError("`model` must not be None")
+    if not isinstance(params["model"], str):
+        raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str`')
+    if params.get("alpha", None) is not None:
+        if not isinstance(params["alpha"], str):
+            raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `str | None`')
+    if params.get("bucket", None) is not None:
+        if not isinstance(params["bucket"], str):
+            raise StyxValidationError(f'`bucket` has the wrong type: Received `{type(params.get("bucket", None))}` expected `str | None`')
+    if params.get("type", None) is not None:
+        if not isinstance(params["type"], str):
+            raise StyxValidationError(f'`type` has the wrong type: Received `{type(params.get("type", None))}` expected `typing.Literal["classification", "regression"] | None`')
+        if params["type"] not in ["classification", "regression"]:
+            raise StyxValidationError("Parameter `type` must be one of [\"classification\", \"regression\"]")
+    if params.get("c_value", None) is not None:
+        if not isinstance(params["c_value"], (float, int)):
+            raise StyxValidationError(f'`c_value` has the wrong type: Received `{type(params.get("c_value", None))}` expected `float | None`')
+    if params.get("epsilon", None) is not None:
+        if not isinstance(params["epsilon"], (float, int)):
+            raise StyxValidationError(f'`epsilon` has the wrong type: Received `{type(params.get("epsilon", None))}` expected `float | None`')
+    if params.get("kernel", None) is not None:
+        if not isinstance(params["kernel"], str):
+            raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `typing.Literal["linear", "polynomial", "rbf", "sigmoid"] | None`')
+        if params["kernel"] not in ["linear", "polynomial", "rbf", "sigmoid"]:
+            raise StyxValidationError("Parameter `kernel` must be one of [\"linear\", \"polynomial\", \"rbf\", \"sigmoid\"]")
+    if params.get("d_value", None) is not None:
+        if not isinstance(params["d_value"], (float, int)):
+            raise StyxValidationError(f'`d_value` has the wrong type: Received `{type(params.get("d_value", None))}` expected `float | None`')
+    if params.get("gamma", None) is not None:
+        if not isinstance(params["gamma"], (float, int)):
+            raise StyxValidationError(f'`gamma` has the wrong type: Received `{type(params.get("gamma", None))}` expected `float | None`')
+    if params.get("s_value", None) is not None:
+        if not isinstance(params["s_value"], (float, int)):
+            raise StyxValidationError(f'`s_value` has the wrong type: Received `{type(params.get("s_value", None))}` expected `float | None`')
+    if params.get("r_value", None) is not None:
+        if not isinstance(params["r_value"], (float, int)):
+            raise StyxValidationError(f'`r_value` has the wrong type: Received `{type(params.get("r_value", None))}` expected `float | None`')
+    if params.get("max_iterations", None) is not None:
+        if not isinstance(params["max_iterations"], (float, int)):
+            raise StyxValidationError(f'`max_iterations` has the wrong type: Received `{type(params.get("max_iterations", None))}` expected `float | None`')
+    if params.get("wout", False) is None:
+        raise StyxValidationError("`wout` must not be None")
+    if not isinstance(params["wout"], bool):
+        raise StyxValidationError(f'`wout` has the wrong type: Received `{type(params.get("wout", False))}` expected `bool`')
+    if params.get("test_vol", None) is not None:
+        if not isinstance(params["test_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`test_vol` has the wrong type: Received `{type(params.get("test_vol", None))}` expected `InputPathType | None`')
+    if params.get("predictions", None) is not None:
+        if not isinstance(params["predictions"], str):
+            raise StyxValidationError(f'`predictions` has the wrong type: Received `{type(params.get("predictions", None))}` expected `str | None`')
+    if params.get("classout", False) is None:
+        raise StyxValidationError("`classout` must not be None")
+    if not isinstance(params["classout"], bool):
+        raise StyxValidationError(f'`classout` has the wrong type: Received `{type(params.get("classout", False))}` expected `bool`')
+    if params.get("nopred_censored", False) is None:
+        raise StyxValidationError("`nopred_censored` must not be None")
+    if not isinstance(params["nopred_censored"], bool):
+        raise StyxValidationError(f'`nopred_censored` has the wrong type: Received `{type(params.get("nopred_censored", False))}` expected `bool`')
+    if params.get("nodetrend", False) is None:
+        raise StyxValidationError("`nodetrend` must not be None")
+    if not isinstance(params["nodetrend"], bool):
+        raise StyxValidationError(f'`nodetrend` has the wrong type: Received `{type(params.get("nodetrend", False))}` expected `bool`')
+    if params.get("nopred_scale", False) is None:
+        raise StyxValidationError("`nopred_scale` must not be None")
+    if not isinstance(params["nopred_scale"], bool):
+        raise StyxValidationError(f'`nopred_scale` has the wrong type: Received `{type(params.get("nopred_scale", False))}` expected `bool`')
+    if params.get("test_labels", None) is not None:
+        if not isinstance(params["test_labels"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`test_labels` has the wrong type: Received `{type(params.get("test_labels", None))}` expected `InputPathType | None`')
+    if params.get("multiclass", None) is not None:
+        if not isinstance(params["multiclass"], str):
+            raise StyxValidationError(f'`multiclass` has the wrong type: Received `{type(params.get("multiclass", None))}` expected `typing.Literal["DAG", "vote"] | None`')
+        if params["multiclass"] not in ["DAG", "vote"]:
+            raise StyxValidationError("Parameter `multiclass` must be one of [\"DAG\", \"vote\"]")
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def v_3dsvm_cargs(
     params: V3dsvmParameters,
     execution: Execution,
@@ -387,6 +497,7 @@ def v_3dsvm_execute(
     Returns:
         NamedTuple of outputs (described in `V3dsvmOutputs`).
     """
+    v_3dsvm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DSVM_METADATA)
     params = execution.params(params)

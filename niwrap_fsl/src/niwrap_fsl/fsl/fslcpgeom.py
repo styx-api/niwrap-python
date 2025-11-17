@@ -59,6 +59,32 @@ def fslcpgeom_params(
     return params
 
 
+def fslcpgeom_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslcpgeomParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_file", None) is None:
+        raise StyxValidationError("`source_file` must not be None")
+    if not isinstance(params["source_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_file` has the wrong type: Received `{type(params.get("source_file", None))}` expected `InputPathType`')
+    if params.get("destination_file", None) is None:
+        raise StyxValidationError("`destination_file` must not be None")
+    if not isinstance(params["destination_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`destination_file` has the wrong type: Received `{type(params.get("destination_file", None))}` expected `InputPathType`')
+    if params.get("dimensions_flag", False) is None:
+        raise StyxValidationError("`dimensions_flag` must not be None")
+    if not isinstance(params["dimensions_flag"], bool):
+        raise StyxValidationError(f'`dimensions_flag` has the wrong type: Received `{type(params.get("dimensions_flag", False))}` expected `bool`')
+
+
 def fslcpgeom_cargs(
     params: FslcpgeomParameters,
     execution: Execution,
@@ -119,6 +145,7 @@ def fslcpgeom_execute(
     Returns:
         NamedTuple of outputs (described in `FslcpgeomOutputs`).
     """
+    fslcpgeom_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLCPGEOM_METADATA)
     params = execution.params(params)

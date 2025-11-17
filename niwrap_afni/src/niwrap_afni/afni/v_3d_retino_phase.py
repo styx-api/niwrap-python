@@ -148,6 +148,71 @@ def v_3d_retino_phase_params(
     return params
 
 
+def v_3d_retino_phase_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRetinoPhaseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("exp", None) is not None:
+        if not isinstance(params["exp"], str):
+            raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", None))}` expected `str | None`')
+    if params.get("con", None) is not None:
+        if not isinstance(params["con"], str):
+            raise StyxValidationError(f'`con` has the wrong type: Received `{type(params.get("con", None))}` expected `str | None`')
+    if params.get("clw", None) is not None:
+        if not isinstance(params["clw"], str):
+            raise StyxValidationError(f'`clw` has the wrong type: Received `{type(params.get("clw", None))}` expected `str | None`')
+    if params.get("ccw", None) is not None:
+        if not isinstance(params["ccw"], str):
+            raise StyxValidationError(f'`ccw` has the wrong type: Received `{type(params.get("ccw", None))}` expected `str | None`')
+    if params.get("spectra", False) is None:
+        raise StyxValidationError("`spectra` must not be None")
+    if not isinstance(params["spectra"], bool):
+        raise StyxValidationError(f'`spectra` has the wrong type: Received `{type(params.get("spectra", False))}` expected `bool`')
+    if params.get("tstim", None) is not None:
+        if not isinstance(params["tstim"], (float, int)):
+            raise StyxValidationError(f'`tstim` has the wrong type: Received `{type(params.get("tstim", None))}` expected `float | None`')
+    if params.get("nrings", None) is not None:
+        if not isinstance(params["nrings"], (float, int)):
+            raise StyxValidationError(f'`nrings` has the wrong type: Received `{type(params.get("nrings", None))}` expected `float | None`')
+    if params.get("nwedges", None) is not None:
+        if not isinstance(params["nwedges"], (float, int)):
+            raise StyxValidationError(f'`nwedges` has the wrong type: Received `{type(params.get("nwedges", None))}` expected `float | None`')
+    if params.get("ort_adjust", None) is not None:
+        if not isinstance(params["ort_adjust"], (float, int)):
+            raise StyxValidationError(f'`ort_adjust` has the wrong type: Received `{type(params.get("ort_adjust", None))}` expected `float | None`')
+    if params.get("pre_stim", None) is not None:
+        if not isinstance(params["pre_stim"], (float, int)):
+            raise StyxValidationError(f'`pre_stim` has the wrong type: Received `{type(params.get("pre_stim", None))}` expected `float | None`')
+    if params.get("sum_adjust", None) is not None:
+        if not isinstance(params["sum_adjust"], str):
+            raise StyxValidationError(f'`sum_adjust` has the wrong type: Received `{type(params.get("sum_adjust", None))}` expected `str | None`')
+    if params.get("phase_estimate", None) is not None:
+        if not isinstance(params["phase_estimate"], str):
+            raise StyxValidationError(f'`phase_estimate` has the wrong type: Received `{type(params.get("phase_estimate", None))}` expected `str | None`')
+    if params.get("ref_ts", None) is not None:
+        if not isinstance(params["ref_ts"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_ts` has the wrong type: Received `{type(params.get("ref_ts", None))}` expected `InputPathType | None`')
+    if params.get("multi_ref_ts", None) is not None:
+        if not isinstance(params["multi_ref_ts"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`multi_ref_ts` has the wrong type: Received `{type(params.get("multi_ref_ts", None))}` expected `InputPathType | None`')
+
+
 def v_3d_retino_phase_cargs(
     params: V3dRetinoPhaseParameters,
     execution: Execution,
@@ -278,6 +343,7 @@ def v_3d_retino_phase_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRetinoPhaseOutputs`).
     """
+    v_3d_retino_phase_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_RETINO_PHASE_METADATA)
     params = execution.params(params)

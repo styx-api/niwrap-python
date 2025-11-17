@@ -77,6 +77,44 @@ def fslselectvols_params(
     return params
 
 
+def fslselectvols_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslselectvolsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("vols_list", None) is None:
+        raise StyxValidationError("`vols_list` must not be None")
+    if not isinstance(params["vols_list"], str):
+        raise StyxValidationError(f'`vols_list` has the wrong type: Received `{type(params.get("vols_list", None))}` expected `str`')
+    if params.get("output_mean_flag", False) is None:
+        raise StyxValidationError("`output_mean_flag` must not be None")
+    if not isinstance(params["output_mean_flag"], bool):
+        raise StyxValidationError(f'`output_mean_flag` has the wrong type: Received `{type(params.get("output_mean_flag", False))}` expected `bool`')
+    if params.get("output_variance_flag", False) is None:
+        raise StyxValidationError("`output_variance_flag` must not be None")
+    if not isinstance(params["output_variance_flag"], bool):
+        raise StyxValidationError(f'`output_variance_flag` has the wrong type: Received `{type(params.get("output_variance_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def fslselectvols_cargs(
     params: FslselectvolsParameters,
     execution: Execution,
@@ -152,6 +190,7 @@ def fslselectvols_execute(
     Returns:
         NamedTuple of outputs (described in `FslselectvolsOutputs`).
     """
+    fslselectvols_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLSELECTVOLS_METADATA)
     params = execution.params(params)

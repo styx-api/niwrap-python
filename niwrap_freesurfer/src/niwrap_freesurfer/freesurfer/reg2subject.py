@@ -49,6 +49,24 @@ def reg2subject_params(
     return params
 
 
+def reg2subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Reg2subjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("regfile", None) is None:
+        raise StyxValidationError("`regfile` must not be None")
+    if not isinstance(params["regfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`regfile` has the wrong type: Received `{type(params.get("regfile", None))}` expected `InputPathType`')
+
+
 def reg2subject_cargs(
     params: Reg2subjectParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def reg2subject_execute(
     Returns:
         NamedTuple of outputs (described in `Reg2subjectOutputs`).
     """
+    reg2subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REG2SUBJECT_METADATA)
     params = execution.params(params)

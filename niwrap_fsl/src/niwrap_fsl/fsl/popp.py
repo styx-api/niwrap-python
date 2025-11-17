@@ -248,6 +248,131 @@ def popp_params(
     return params
 
 
+def popp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `PoppParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_basename", None) is None:
+        raise StyxValidationError("`output_basename` must not be None")
+    if not isinstance(params["output_basename"], str):
+        raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str`')
+    if params.get("sampling_rate", None) is not None:
+        if not isinstance(params["sampling_rate"], (float, int)):
+            raise StyxValidationError(f'`sampling_rate` has the wrong type: Received `{type(params.get("sampling_rate", None))}` expected `float | None`')
+    if params.get("tr_value", None) is not None:
+        if not isinstance(params["tr_value"], (float, int)):
+            raise StyxValidationError(f'`tr_value` has the wrong type: Received `{type(params.get("tr_value", None))}` expected `float | None`')
+    if params.get("resp_column", None) is not None:
+        if not isinstance(params["resp_column"], (float, int)):
+            raise StyxValidationError(f'`resp_column` has the wrong type: Received `{type(params.get("resp_column", None))}` expected `float | None`')
+    if params.get("cardiac_column", None) is not None:
+        if not isinstance(params["cardiac_column"], (float, int)):
+            raise StyxValidationError(f'`cardiac_column` has the wrong type: Received `{type(params.get("cardiac_column", None))}` expected `float | None`')
+    if params.get("trigger_column", None) is not None:
+        if not isinstance(params["trigger_column"], (float, int)):
+            raise StyxValidationError(f'`trigger_column` has the wrong type: Received `{type(params.get("trigger_column", None))}` expected `float | None`')
+    if params.get("rvt_flag", False) is None:
+        raise StyxValidationError("`rvt_flag` must not be None")
+    if not isinstance(params["rvt_flag"], bool):
+        raise StyxValidationError(f'`rvt_flag` has the wrong type: Received `{type(params.get("rvt_flag", False))}` expected `bool`')
+    if params.get("heart_rate_flag", False) is None:
+        raise StyxValidationError("`heart_rate_flag` must not be None")
+    if not isinstance(params["heart_rate_flag"], bool):
+        raise StyxValidationError(f'`heart_rate_flag` has the wrong type: Received `{type(params.get("heart_rate_flag", False))}` expected `bool`')
+    if params.get("pulseox_trigger_flag", False) is None:
+        raise StyxValidationError("`pulseox_trigger_flag` must not be None")
+    if not isinstance(params["pulseox_trigger_flag"], bool):
+        raise StyxValidationError(f'`pulseox_trigger_flag` has the wrong type: Received `{type(params.get("pulseox_trigger_flag", False))}` expected `bool`')
+    if params.get("smooth_card", None) is not None:
+        if not isinstance(params["smooth_card"], (float, int)):
+            raise StyxValidationError(f'`smooth_card` has the wrong type: Received `{type(params.get("smooth_card", None))}` expected `float | None`')
+    if params.get("smooth_resp", None) is not None:
+        if not isinstance(params["smooth_resp"], (float, int)):
+            raise StyxValidationError(f'`smooth_resp` has the wrong type: Received `{type(params.get("smooth_resp", None))}` expected `float | None`')
+    if params.get("high_freq_cutoff", None) is not None:
+        if not isinstance(params["high_freq_cutoff"], (float, int)):
+            raise StyxValidationError(f'`high_freq_cutoff` has the wrong type: Received `{type(params.get("high_freq_cutoff", None))}` expected `float | None`')
+    if params.get("low_freq_cutoff", None) is not None:
+        if not isinstance(params["low_freq_cutoff"], (float, int)):
+            raise StyxValidationError(f'`low_freq_cutoff` has the wrong type: Received `{type(params.get("low_freq_cutoff", None))}` expected `float | None`')
+    if params.get("init_thresh_c", None) is not None:
+        if not isinstance(params["init_thresh_c"], (float, int)):
+            raise StyxValidationError(f'`init_thresh_c` has the wrong type: Received `{type(params.get("init_thresh_c", None))}` expected `float | None`')
+    if params.get("n_thresh_c", None) is not None:
+        if not isinstance(params["n_thresh_c"], (float, int)):
+            raise StyxValidationError(f'`n_thresh_c` has the wrong type: Received `{type(params.get("n_thresh_c", None))}` expected `float | None`')
+    if params.get("init_thresh_r", None) is not None:
+        if not isinstance(params["init_thresh_r"], (float, int)):
+            raise StyxValidationError(f'`init_thresh_r` has the wrong type: Received `{type(params.get("init_thresh_r", None))}` expected `float | None`')
+    if params.get("n_thresh_r", None) is not None:
+        if not isinstance(params["n_thresh_r"], (float, int)):
+            raise StyxValidationError(f'`n_thresh_r` has the wrong type: Received `{type(params.get("n_thresh_r", None))}` expected `float | None`')
+    if params.get("invert_resp_flag", False) is None:
+        raise StyxValidationError("`invert_resp_flag` must not be None")
+    if not isinstance(params["invert_resp_flag"], bool):
+        raise StyxValidationError(f'`invert_resp_flag` has the wrong type: Received `{type(params.get("invert_resp_flag", False))}` expected `bool`')
+    if params.get("invert_cardiac_flag", False) is None:
+        raise StyxValidationError("`invert_cardiac_flag` must not be None")
+    if not isinstance(params["invert_cardiac_flag"], bool):
+        raise StyxValidationError(f'`invert_cardiac_flag` has the wrong type: Received `{type(params.get("invert_cardiac_flag", False))}` expected `bool`')
+    if params.get("noclean1_flag", False) is None:
+        raise StyxValidationError("`noclean1_flag` must not be None")
+    if not isinstance(params["noclean1_flag"], bool):
+        raise StyxValidationError(f'`noclean1_flag` has the wrong type: Received `{type(params.get("noclean1_flag", False))}` expected `bool`')
+    if params.get("noclean2_flag", False) is None:
+        raise StyxValidationError("`noclean2_flag` must not be None")
+    if not isinstance(params["noclean2_flag"], bool):
+        raise StyxValidationError(f'`noclean2_flag` has the wrong type: Received `{type(params.get("noclean2_flag", False))}` expected `bool`')
+    if params.get("load_card_phase", None) is not None:
+        if not isinstance(params["load_card_phase"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`load_card_phase` has the wrong type: Received `{type(params.get("load_card_phase", None))}` expected `InputPathType | None`')
+    if params.get("load_resp_phase", None) is not None:
+        if not isinstance(params["load_resp_phase"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`load_resp_phase` has the wrong type: Received `{type(params.get("load_resp_phase", None))}` expected `InputPathType | None`')
+    if params.get("vol_file", None) is not None:
+        if not isinstance(params["vol_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vol_file` has the wrong type: Received `{type(params.get("vol_file", None))}` expected `InputPathType | None`')
+    if params.get("start_sample", None) is not None:
+        if not isinstance(params["start_sample"], (float, int)):
+            raise StyxValidationError(f'`start_sample` has the wrong type: Received `{type(params.get("start_sample", None))}` expected `float | None`')
+    if params.get("resp_add", None) is not None:
+        if not isinstance(params["resp_add"], str):
+            raise StyxValidationError(f'`resp_add` has the wrong type: Received `{type(params.get("resp_add", None))}` expected `str | None`')
+    if params.get("resp_del", None) is not None:
+        if not isinstance(params["resp_del"], str):
+            raise StyxValidationError(f'`resp_del` has the wrong type: Received `{type(params.get("resp_del", None))}` expected `str | None`')
+    if params.get("card_add", None) is not None:
+        if not isinstance(params["card_add"], str):
+            raise StyxValidationError(f'`card_add` has the wrong type: Received `{type(params.get("card_add", None))}` expected `str | None`')
+    if params.get("card_del", None) is not None:
+        if not isinstance(params["card_del"], str):
+            raise StyxValidationError(f'`card_del` has the wrong type: Received `{type(params.get("card_del", None))}` expected `str | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def popp_cargs(
     params: PoppParameters,
     execution: Execution,
@@ -441,6 +566,7 @@ def popp_execute(
     Returns:
         NamedTuple of outputs (described in `PoppOutputs`).
     """
+    popp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POPP_METADATA)
     params = execution.params(params)

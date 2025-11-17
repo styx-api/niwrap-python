@@ -132,6 +132,60 @@ def create_tiled_mosaic_params(
     return params
 
 
+def create_tiled_mosaic_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateTiledMosaicParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("rgb_image", None) is not None:
+        if not isinstance(params["rgb_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rgb_image` has the wrong type: Received `{type(params.get("rgb_image", None))}` expected `InputPathType | None`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("alpha", None) is not None:
+        if not isinstance(params["alpha"], (float, int)):
+            raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float | None`')
+    if params.get("functional_overlay", None) is not None:
+        if not isinstance(params["functional_overlay"], str):
+            raise StyxValidationError(f'`functional_overlay` has the wrong type: Received `{type(params.get("functional_overlay", None))}` expected `str | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("tile_geometry", None) is not None:
+        if not isinstance(params["tile_geometry"], str):
+            raise StyxValidationError(f'`tile_geometry` has the wrong type: Received `{type(params.get("tile_geometry", None))}` expected `str | None`')
+    if params.get("direction", None) is not None:
+        if not isinstance(params["direction"], str):
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `typing.Literal["0", "1", "2", "x", "y", "z"] | None`')
+        if params["direction"] not in ["0", "1", "2", "x", "y", "z"]:
+            raise StyxValidationError("Parameter `direction` must be one of [\"0\", \"1\", \"2\", \"x\", \"y\", \"z\"]")
+    if params.get("pad_or_crop", None) is not None:
+        if not isinstance(params["pad_or_crop"], str):
+            raise StyxValidationError(f'`pad_or_crop` has the wrong type: Received `{type(params.get("pad_or_crop", None))}` expected `str | None`')
+    if params.get("slices", None) is not None:
+        if not isinstance(params["slices"], str):
+            raise StyxValidationError(f'`slices` has the wrong type: Received `{type(params.get("slices", None))}` expected `str | None`')
+    if params.get("flip_slice", None) is not None:
+        if not isinstance(params["flip_slice"], str):
+            raise StyxValidationError(f'`flip_slice` has the wrong type: Received `{type(params.get("flip_slice", None))}` expected `str | None`')
+    if params.get("permute_axes", None) is not None:
+        if not isinstance(params["permute_axes"], bool):
+            raise StyxValidationError(f'`permute_axes` has the wrong type: Received `{type(params.get("permute_axes", None))}` expected `bool | None`')
+
+
 def create_tiled_mosaic_cargs(
     params: CreateTiledMosaicParameters,
     execution: Execution,
@@ -247,6 +301,7 @@ def create_tiled_mosaic_execute(
     Returns:
         NamedTuple of outputs (described in `CreateTiledMosaicOutputs`).
     """
+    create_tiled_mosaic_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CREATE_TILED_MOSAIC_METADATA)
     params = execution.params(params)

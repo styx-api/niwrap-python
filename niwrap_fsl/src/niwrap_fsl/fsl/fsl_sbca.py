@@ -143,6 +143,88 @@ def fsl_sbca_params(
     return params
 
 
+def fsl_sbca_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslSbcaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("seed", None) is None:
+        raise StyxValidationError("`seed` must not be None")
+    if not isinstance(params["seed"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `InputPathType`')
+    if params.get("target", None) is None:
+        raise StyxValidationError("`target` must not be None")
+    if not isinstance(params["target"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target` has the wrong type: Received `{type(params.get("target", None))}` expected `InputPathType`')
+    if params.get("out", None) is None:
+        raise StyxValidationError("`out` must not be None")
+    if not isinstance(params["out"], str):
+        raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str`')
+    if params.get("reg_flag", False) is None:
+        raise StyxValidationError("`reg_flag` must not be None")
+    if not isinstance(params["reg_flag"], bool):
+        raise StyxValidationError(f'`reg_flag` has the wrong type: Received `{type(params.get("reg_flag", False))}` expected `bool`')
+    if params.get("conf_files", None) is not None:
+        if not isinstance(params["conf_files"], list):
+            raise StyxValidationError(f'`conf_files` has the wrong type: Received `{type(params.get("conf_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["conf_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`conf_files` has the wrong type: Received `{type(params.get("conf_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("seed_data", None) is not None:
+        if not isinstance(params["seed_data"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seed_data` has the wrong type: Received `{type(params.get("seed_data", None))}` expected `InputPathType | None`')
+    if params.get("binarise_flag", False) is None:
+        raise StyxValidationError("`binarise_flag` must not be None")
+    if not isinstance(params["binarise_flag"], bool):
+        raise StyxValidationError(f'`binarise_flag` has the wrong type: Received `{type(params.get("binarise_flag", False))}` expected `bool`')
+    if params.get("mean_flag", False) is None:
+        raise StyxValidationError("`mean_flag` must not be None")
+    if not isinstance(params["mean_flag"], bool):
+        raise StyxValidationError(f'`mean_flag` has the wrong type: Received `{type(params.get("mean_flag", False))}` expected `bool`')
+    if params.get("abs_cc_flag", False) is None:
+        raise StyxValidationError("`abs_cc_flag` must not be None")
+    if not isinstance(params["abs_cc_flag"], bool):
+        raise StyxValidationError(f'`abs_cc_flag` has the wrong type: Received `{type(params.get("abs_cc_flag", False))}` expected `bool`')
+    if params.get("order", None) is not None:
+        if not isinstance(params["order"], (float, int)):
+            raise StyxValidationError(f'`order` has the wrong type: Received `{type(params.get("order", None))}` expected `float | None`')
+    if params.get("out_seeds_flag", False) is None:
+        raise StyxValidationError("`out_seeds_flag` must not be None")
+    if not isinstance(params["out_seeds_flag"], bool):
+        raise StyxValidationError(f'`out_seeds_flag` has the wrong type: Received `{type(params.get("out_seeds_flag", False))}` expected `bool`')
+    if params.get("out_seedmask_flag", False) is None:
+        raise StyxValidationError("`out_seedmask_flag` must not be None")
+    if not isinstance(params["out_seedmask_flag"], bool):
+        raise StyxValidationError(f'`out_seedmask_flag` has the wrong type: Received `{type(params.get("out_seedmask_flag", False))}` expected `bool`')
+    if params.get("out_ttcs_flag", False) is None:
+        raise StyxValidationError("`out_ttcs_flag` must not be None")
+    if not isinstance(params["out_ttcs_flag"], bool):
+        raise StyxValidationError(f'`out_ttcs_flag` has the wrong type: Received `{type(params.get("out_ttcs_flag", False))}` expected `bool`')
+    if params.get("out_conf_flag", False) is None:
+        raise StyxValidationError("`out_conf_flag` must not be None")
+    if not isinstance(params["out_conf_flag"], bool):
+        raise StyxValidationError(f'`out_conf_flag` has the wrong type: Received `{type(params.get("out_conf_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def fsl_sbca_cargs(
     params: FslSbcaParameters,
     execution: Execution,
@@ -254,6 +336,7 @@ def fsl_sbca_execute(
     Returns:
         NamedTuple of outputs (described in `FslSbcaOutputs`).
     """
+    fsl_sbca_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_SBCA_METADATA)
     params = execution.params(params)

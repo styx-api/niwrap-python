@@ -184,6 +184,90 @@ def waver_params(
     return params
 
 
+def waver_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WaverParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("wav", False) is None:
+        raise StyxValidationError("`wav` must not be None")
+    if not isinstance(params["wav"], bool):
+        raise StyxValidationError(f'`wav` has the wrong type: Received `{type(params.get("wav", False))}` expected `bool`')
+    if params.get("gam", False) is None:
+        raise StyxValidationError("`gam` must not be None")
+    if not isinstance(params["gam"], bool):
+        raise StyxValidationError(f'`gam` has the wrong type: Received `{type(params.get("gam", False))}` expected `bool`')
+    if params.get("expr", None) is not None:
+        if not isinstance(params["expr"], str):
+            raise StyxValidationError(f'`expr` has the wrong type: Received `{type(params.get("expr", None))}` expected `str | None`')
+    if params.get("file_opt", None) is not None:
+        if not isinstance(params["file_opt"], str):
+            raise StyxValidationError(f'`file_opt` has the wrong type: Received `{type(params.get("file_opt", None))}` expected `str | None`')
+    if params.get("delay_time", None) is not None:
+        if not isinstance(params["delay_time"], (float, int)):
+            raise StyxValidationError(f'`delay_time` has the wrong type: Received `{type(params.get("delay_time", None))}` expected `float | None`')
+    if params.get("rise_time", None) is not None:
+        if not isinstance(params["rise_time"], (float, int)):
+            raise StyxValidationError(f'`rise_time` has the wrong type: Received `{type(params.get("rise_time", None))}` expected `float | None`')
+    if params.get("fall_time", None) is not None:
+        if not isinstance(params["fall_time"], (float, int)):
+            raise StyxValidationError(f'`fall_time` has the wrong type: Received `{type(params.get("fall_time", None))}` expected `float | None`')
+    if params.get("undershoot", None) is not None:
+        if not isinstance(params["undershoot"], (float, int)):
+            raise StyxValidationError(f'`undershoot` has the wrong type: Received `{type(params.get("undershoot", None))}` expected `float | None`')
+    if params.get("restore_time", None) is not None:
+        if not isinstance(params["restore_time"], (float, int)):
+            raise StyxValidationError(f'`restore_time` has the wrong type: Received `{type(params.get("restore_time", None))}` expected `float | None`')
+    if params.get("gamb", None) is not None:
+        if not isinstance(params["gamb"], (float, int)):
+            raise StyxValidationError(f'`gamb` has the wrong type: Received `{type(params.get("gamb", None))}` expected `float | None`')
+    if params.get("gamc", None) is not None:
+        if not isinstance(params["gamc"], (float, int)):
+            raise StyxValidationError(f'`gamc` has the wrong type: Received `{type(params.get("gamc", None))}` expected `float | None`')
+    if params.get("gamd", None) is not None:
+        if not isinstance(params["gamd"], (float, int)):
+            raise StyxValidationError(f'`gamd` has the wrong type: Received `{type(params.get("gamd", None))}` expected `float | None`')
+    if params.get("peak", None) is not None:
+        if not isinstance(params["peak"], (float, int)):
+            raise StyxValidationError(f'`peak` has the wrong type: Received `{type(params.get("peak", None))}` expected `float | None`')
+    if params.get("dt", None) is not None:
+        if not isinstance(params["dt"], (float, int)):
+            raise StyxValidationError(f'`dt` has the wrong type: Received `{type(params.get("dt", None))}` expected `float | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("xyout", False) is None:
+        raise StyxValidationError("`xyout` must not be None")
+    if not isinstance(params["xyout"], bool):
+        raise StyxValidationError(f'`xyout` has the wrong type: Received `{type(params.get("xyout", False))}` expected `bool`')
+    if params.get("input_file", None) is not None:
+        if not isinstance(params["input_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType | None`')
+    if params.get("inline_data", None) is not None:
+        if not isinstance(params["inline_data"], str):
+            raise StyxValidationError(f'`inline_data` has the wrong type: Received `{type(params.get("inline_data", None))}` expected `str | None`')
+    if params.get("tstim_data", None) is not None:
+        if not isinstance(params["tstim_data"], str):
+            raise StyxValidationError(f'`tstim_data` has the wrong type: Received `{type(params.get("tstim_data", None))}` expected `str | None`')
+    if params.get("when_data", None) is not None:
+        if not isinstance(params["when_data"], str):
+            raise StyxValidationError(f'`when_data` has the wrong type: Received `{type(params.get("when_data", None))}` expected `str | None`')
+    if params.get("numout", None) is not None:
+        if not isinstance(params["numout"], int):
+            raise StyxValidationError(f'`numout` has the wrong type: Received `{type(params.get("numout", None))}` expected `int | None`')
+    if params.get("ver_flag", False) is None:
+        raise StyxValidationError("`ver_flag` must not be None")
+    if not isinstance(params["ver_flag"], bool):
+        raise StyxValidationError(f'`ver_flag` has the wrong type: Received `{type(params.get("ver_flag", False))}` expected `bool`')
+
+
 def waver_cargs(
     params: WaverParameters,
     execution: Execution,
@@ -339,6 +423,7 @@ def waver_execute(
     Returns:
         NamedTuple of outputs (described in `WaverOutputs`).
     """
+    waver_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WAVER_METADATA)
     params = execution.params(params)

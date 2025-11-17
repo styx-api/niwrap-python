@@ -87,6 +87,28 @@ def metric_resample_area_surfs_params(
     return params
 
 
+def metric_resample_area_surfs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricResampleAreaSurfsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
+
+
 def metric_resample_area_surfs_cargs(
     params: MetricResampleAreaSurfsParameters,
     execution: Execution,
@@ -128,6 +150,28 @@ def metric_resample_area_metrics_params(
         "new-area": new_area,
     }
     return params
+
+
+def metric_resample_area_metrics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricResampleAreaMetricsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("current-area", None) is None:
+        raise StyxValidationError("`current-area` must not be None")
+    if not isinstance(params["current-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-area` has the wrong type: Received `{type(params.get("current-area", None))}` expected `InputPathType`')
+    if params.get("new-area", None) is None:
+        raise StyxValidationError("`new-area` must not be None")
+    if not isinstance(params["new-area"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-area` has the wrong type: Received `{type(params.get("new-area", None))}` expected `InputPathType`')
 
 
 def metric_resample_area_metrics_cargs(
@@ -224,6 +268,58 @@ def metric_resample_params(
     return params
 
 
+def metric_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("area-surfs", None) is not None:
+        metric_resample_area_surfs_validate(params["area-surfs"])
+    if params.get("area-metrics", None) is not None:
+        metric_resample_area_metrics_validate(params["area-metrics"])
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-out", None) is not None:
+        if not isinstance(params["roi-out"], str):
+            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("largest", False) is None:
+        raise StyxValidationError("`largest` must not be None")
+    if not isinstance(params["largest"], bool):
+        raise StyxValidationError(f'`largest` has the wrong type: Received `{type(params.get("largest", False))}` expected `bool`')
+    if params.get("bypass-sphere-check", False) is None:
+        raise StyxValidationError("`bypass-sphere-check` must not be None")
+    if not isinstance(params["bypass-sphere-check"], bool):
+        raise StyxValidationError(f'`bypass-sphere-check` has the wrong type: Received `{type(params.get("bypass-sphere-check", False))}` expected `bool`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("current-sphere", None) is None:
+        raise StyxValidationError("`current-sphere` must not be None")
+    if not isinstance(params["current-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`current-sphere` has the wrong type: Received `{type(params.get("current-sphere", None))}` expected `InputPathType`')
+    if params.get("new-sphere", None) is None:
+        raise StyxValidationError("`new-sphere` must not be None")
+    if not isinstance(params["new-sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-sphere` has the wrong type: Received `{type(params.get("new-sphere", None))}` expected `InputPathType`')
+    if params.get("method", None) is None:
+        raise StyxValidationError("`method` must not be None")
+    if not isinstance(params["method"], str):
+        raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str`')
+
+
 def metric_resample_cargs(
     params: MetricResampleParameters,
     execution: Execution,
@@ -316,6 +412,7 @@ def metric_resample_execute(
     Returns:
         NamedTuple of outputs (described in `MetricResampleOutputs`).
     """
+    metric_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_RESAMPLE_METADATA)
     params = execution.params(params)

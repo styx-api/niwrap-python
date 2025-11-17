@@ -70,6 +70,42 @@ def parse_fs_lt_log_py_params(
     return params
 
 
+def parse_fs_lt_log_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ParseFsLtLogPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("logfile", None) is None:
+        raise StyxValidationError("`logfile` must not be None")
+    if not isinstance(params["logfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`logfile` has the wrong type: Received `{type(params.get("logfile", None))}` expected `InputPathType`')
+    if params.get("labels", None) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], list):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    for e in params["labels"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    if params.get("show_orig", False) is None:
+        raise StyxValidationError("`show_orig` must not be None")
+    if not isinstance(params["show_orig"], bool):
+        raise StyxValidationError(f'`show_orig` has the wrong type: Received `{type(params.get("show_orig", False))}` expected `bool`')
+    if params.get("show_all_orig", False) is None:
+        raise StyxValidationError("`show_all_orig` must not be None")
+    if not isinstance(params["show_all_orig"], bool):
+        raise StyxValidationError(f'`show_all_orig` has the wrong type: Received `{type(params.get("show_all_orig", False))}` expected `bool`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+
+
 def parse_fs_lt_log_py_cargs(
     params: ParseFsLtLogPyParameters,
     execution: Execution,
@@ -143,6 +179,7 @@ def parse_fs_lt_log_py_execute(
     Returns:
         NamedTuple of outputs (described in `ParseFsLtLogPyOutputs`).
     """
+    parse_fs_lt_log_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PARSE_FS_LT_LOG_PY_METADATA)
     params = execution.params(params)

@@ -76,6 +76,44 @@ def mris_compute_volume_fractions_params(
     return params
 
 
+def mris_compute_volume_fractions_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisComputeVolumeFractionsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume_file", None) is None:
+        raise StyxValidationError("`volume_file` must not be None")
+    if not isinstance(params["volume_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume_file` has the wrong type: Received `{type(params.get("volume_file", None))}` expected `InputPathType`')
+    if params.get("surface_file", None) is None:
+        raise StyxValidationError("`surface_file` must not be None")
+    if not isinstance(params["surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_file` has the wrong type: Received `{type(params.get("surface_file", None))}` expected `InputPathType`')
+    if params.get("accuracy", None) is None:
+        raise StyxValidationError("`accuracy` must not be None")
+    if not isinstance(params["accuracy"], (float, int)):
+        raise StyxValidationError(f'`accuracy` has the wrong type: Received `{type(params.get("accuracy", None))}` expected `float`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+
+
 def mris_compute_volume_fractions_cargs(
     params: MrisComputeVolumeFractionsParameters,
     execution: Execution,
@@ -153,6 +191,7 @@ def mris_compute_volume_fractions_execute(
     Returns:
         NamedTuple of outputs (described in `MrisComputeVolumeFractionsOutputs`).
     """
+    mris_compute_volume_fractions_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA)
     params = execution.params(params)

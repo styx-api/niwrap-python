@@ -207,6 +207,123 @@ def mri_ca_normalize_params(
     return params
 
 
+def mri_ca_normalize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCaNormalizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_brain_volumes", None) is None:
+        raise StyxValidationError("`input_brain_volumes` must not be None")
+    if not isinstance(params["input_brain_volumes"], list):
+        raise StyxValidationError(f'`input_brain_volumes` has the wrong type: Received `{type(params.get("input_brain_volumes", None))}` expected `list[InputPathType]`')
+    for e in params["input_brain_volumes"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_brain_volumes` has the wrong type: Received `{type(params.get("input_brain_volumes", None))}` expected `list[InputPathType]`')
+    if params.get("atlas_file", None) is None:
+        raise StyxValidationError("`atlas_file` must not be None")
+    if not isinstance(params["atlas_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`atlas_file` has the wrong type: Received `{type(params.get("atlas_file", None))}` expected `InputPathType`')
+    if params.get("xform_file", None) is None:
+        raise StyxValidationError("`xform_file` must not be None")
+    if not isinstance(params["xform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xform_file` has the wrong type: Received `{type(params.get("xform_file", None))}` expected `InputPathType`')
+    if params.get("output_volumes", None) is None:
+        raise StyxValidationError("`output_volumes` must not be None")
+    if not isinstance(params["output_volumes"], list):
+        raise StyxValidationError(f'`output_volumes` has the wrong type: Received `{type(params.get("output_volumes", None))}` expected `list[str]`')
+    for e in params["output_volumes"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`output_volumes` has the wrong type: Received `{type(params.get("output_volumes", None))}` expected `list[str]`')
+    if params.get("seg_file", None) is not None:
+        if not isinstance(params["seg_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg_file` has the wrong type: Received `{type(params.get("seg_file", None))}` expected `InputPathType | None`')
+    if params.get("sigma_value", None) is not None:
+        if not isinstance(params["sigma_value"], (float, int)):
+            raise StyxValidationError(f'`sigma_value` has the wrong type: Received `{type(params.get("sigma_value", None))}` expected `float | None`')
+    if params.get("fsamples_file", None) is not None:
+        if not isinstance(params["fsamples_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsamples_file` has the wrong type: Received `{type(params.get("fsamples_file", None))}` expected `InputPathType | None`')
+    if params.get("dilate_iters", None) is not None:
+        if not isinstance(params["dilate_iters"], (float, int)):
+            raise StyxValidationError(f'`dilate_iters` has the wrong type: Received `{type(params.get("dilate_iters", None))}` expected `float | None`')
+    if params.get("nsamples_file", None) is not None:
+        if not isinstance(params["nsamples_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nsamples_file` has the wrong type: Received `{type(params.get("nsamples_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_vol", None) is not None:
+        if not isinstance(params["mask_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_vol` has the wrong type: Received `{type(params.get("mask_vol", None))}` expected `InputPathType | None`')
+    if params.get("control_points_file", None) is not None:
+        if not isinstance(params["control_points_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`control_points_file` has the wrong type: Received `{type(params.get("control_points_file", None))}` expected `InputPathType | None`')
+    if params.get("fonly_file", None) is not None:
+        if not isinstance(params["fonly_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fonly_file` has the wrong type: Received `{type(params.get("fonly_file", None))}` expected `InputPathType | None`')
+    if params.get("diag_file", None) is not None:
+        if not isinstance(params["diag_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`diag_file` has the wrong type: Received `{type(params.get("diag_file", None))}` expected `InputPathType | None`')
+    if params.get("debug_voxel_coords", None) is not None:
+        if not isinstance(params["debug_voxel_coords"], list):
+            raise StyxValidationError(f'`debug_voxel_coords` has the wrong type: Received `{type(params.get("debug_voxel_coords", None))}` expected `list[float] | None`')
+        if len(params["debug_voxel_coords"]) == 3:
+            raise StyxValidationError("Parameter `debug_voxel_coords` must contain exactly 3 elements")
+        for e in params["debug_voxel_coords"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_voxel_coords` has the wrong type: Received `{type(params.get("debug_voxel_coords", None))}` expected `list[float] | None`')
+    if params.get("debug_node_coords", None) is not None:
+        if not isinstance(params["debug_node_coords"], list):
+            raise StyxValidationError(f'`debug_node_coords` has the wrong type: Received `{type(params.get("debug_node_coords", None))}` expected `list[float] | None`')
+        if len(params["debug_node_coords"]) == 3:
+            raise StyxValidationError("Parameter `debug_node_coords` must contain exactly 3 elements")
+        for e in params["debug_node_coords"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_node_coords` has the wrong type: Received `{type(params.get("debug_node_coords", None))}` expected `list[float] | None`')
+    if params.get("tr_value", None) is not None:
+        if not isinstance(params["tr_value"], (float, int)):
+            raise StyxValidationError(f'`tr_value` has the wrong type: Received `{type(params.get("tr_value", None))}` expected `float | None`')
+    if params.get("te_value", None) is not None:
+        if not isinstance(params["te_value"], (float, int)):
+            raise StyxValidationError(f'`te_value` has the wrong type: Received `{type(params.get("te_value", None))}` expected `float | None`')
+    if params.get("alpha_value", None) is not None:
+        if not isinstance(params["alpha_value"], (float, int)):
+            raise StyxValidationError(f'`alpha_value` has the wrong type: Received `{type(params.get("alpha_value", None))}` expected `float | None`')
+    if params.get("example_mri_vol", None) is not None:
+        if not isinstance(params["example_mri_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`example_mri_vol` has the wrong type: Received `{type(params.get("example_mri_vol", None))}` expected `InputPathType | None`')
+    if params.get("extra_norm_pctl", None) is not None:
+        if not isinstance(params["extra_norm_pctl"], (float, int)):
+            raise StyxValidationError(f'`extra_norm_pctl` has the wrong type: Received `{type(params.get("extra_norm_pctl", None))}` expected `float | None`')
+    if params.get("prior_threshold", None) is not None:
+        if not isinstance(params["prior_threshold"], (float, int)):
+            raise StyxValidationError(f'`prior_threshold` has the wrong type: Received `{type(params.get("prior_threshold", None))}` expected `float | None`')
+    if params.get("n_regions", None) is not None:
+        if not isinstance(params["n_regions"], (float, int)):
+            raise StyxValidationError(f'`n_regions` has the wrong type: Received `{type(params.get("n_regions", None))}` expected `float | None`')
+    if params.get("verbose_value", None) is not None:
+        if not isinstance(params["verbose_value"], (float, int)):
+            raise StyxValidationError(f'`verbose_value` has the wrong type: Received `{type(params.get("verbose_value", None))}` expected `float | None`')
+    if params.get("top_percent", None) is not None:
+        if not isinstance(params["top_percent"], (float, int)):
+            raise StyxValidationError(f'`top_percent` has the wrong type: Received `{type(params.get("top_percent", None))}` expected `float | None`')
+    if params.get("novar_flag", False) is None:
+        raise StyxValidationError("`novar_flag` must not be None")
+    if not isinstance(params["novar_flag"], bool):
+        raise StyxValidationError(f'`novar_flag` has the wrong type: Received `{type(params.get("novar_flag", False))}` expected `bool`')
+    if params.get("renorm_file", None) is not None:
+        if not isinstance(params["renorm_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`renorm_file` has the wrong type: Received `{type(params.get("renorm_file", None))}` expected `InputPathType | None`')
+    if params.get("flash_flag", False) is None:
+        raise StyxValidationError("`flash_flag` must not be None")
+    if not isinstance(params["flash_flag"], bool):
+        raise StyxValidationError(f'`flash_flag` has the wrong type: Received `{type(params.get("flash_flag", False))}` expected `bool`')
+
+
 def mri_ca_normalize_cargs(
     params: MriCaNormalizeParameters,
     execution: Execution,
@@ -378,6 +495,7 @@ def mri_ca_normalize_execute(
     Returns:
         NamedTuple of outputs (described in `MriCaNormalizeOutputs`).
     """
+    mri_ca_normalize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CA_NORMALIZE_METADATA)
     params = execution.params(params)

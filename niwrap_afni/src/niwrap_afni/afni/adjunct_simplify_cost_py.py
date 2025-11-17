@@ -49,6 +49,24 @@ def adjunct_simplify_cost_py_params(
     return params
 
 
+def adjunct_simplify_cost_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctSimplifyCostPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cost_function", None) is None:
+        raise StyxValidationError("`cost_function` must not be None")
+    if not isinstance(params["cost_function"], str):
+        raise StyxValidationError(f'`cost_function` has the wrong type: Received `{type(params.get("cost_function", None))}` expected `str`')
+
+
 def adjunct_simplify_cost_py_cargs(
     params: AdjunctSimplifyCostPyParameters,
     execution: Execution,
@@ -107,6 +125,7 @@ def adjunct_simplify_cost_py_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctSimplifyCostPyOutputs`).
     """
+    adjunct_simplify_cost_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_SIMPLIFY_COST_PY_METADATA)
     params = execution.params(params)

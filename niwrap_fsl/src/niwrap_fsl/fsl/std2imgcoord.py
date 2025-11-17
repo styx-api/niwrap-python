@@ -101,6 +101,56 @@ def std2imgcoord_params(
     return params
 
 
+def std2imgcoord_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Std2imgcoordParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filename_coordinates", None) is None:
+        raise StyxValidationError("`filename_coordinates` must not be None")
+    if not isinstance(params["filename_coordinates"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`filename_coordinates` has the wrong type: Received `{type(params.get("filename_coordinates", None))}` expected `InputPathType`')
+    if params.get("standard_image", None) is not None:
+        if not isinstance(params["standard_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`standard_image` has the wrong type: Received `{type(params.get("standard_image", None))}` expected `InputPathType | None`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("affine_transform", None) is not None:
+        if not isinstance(params["affine_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`affine_transform` has the wrong type: Received `{type(params.get("affine_transform", None))}` expected `InputPathType | None`')
+    if params.get("warp_field", None) is not None:
+        if not isinstance(params["warp_field"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp_field` has the wrong type: Received `{type(params.get("warp_field", None))}` expected `InputPathType | None`')
+    if params.get("prewarp_affine_transform", None) is not None:
+        if not isinstance(params["prewarp_affine_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prewarp_affine_transform` has the wrong type: Received `{type(params.get("prewarp_affine_transform", None))}` expected `InputPathType | None`')
+    if params.get("output_mm", False) is None:
+        raise StyxValidationError("`output_mm` must not be None")
+    if not isinstance(params["output_mm"], bool):
+        raise StyxValidationError(f'`output_mm` has the wrong type: Received `{type(params.get("output_mm", False))}` expected `bool`')
+    if params.get("output_vox", False) is None:
+        raise StyxValidationError("`output_vox` must not be None")
+    if not isinstance(params["output_vox"], bool):
+        raise StyxValidationError(f'`output_vox` has the wrong type: Received `{type(params.get("output_vox", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("more_verbose", False) is None:
+        raise StyxValidationError("`more_verbose` must not be None")
+    if not isinstance(params["more_verbose"], bool):
+        raise StyxValidationError(f'`more_verbose` has the wrong type: Received `{type(params.get("more_verbose", False))}` expected `bool`')
+
+
 def std2imgcoord_cargs(
     params: Std2imgcoordParameters,
     execution: Execution,
@@ -190,6 +240,7 @@ def std2imgcoord_execute(
     Returns:
         NamedTuple of outputs (described in `Std2imgcoordOutputs`).
     """
+    std2imgcoord_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(STD2IMGCOORD_METADATA)
     params = execution.params(params)

@@ -137,6 +137,83 @@ def v_3dpc_params(
     return params
 
 
+def v_3dpc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dpcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    if params.get("dmean", False) is None:
+        raise StyxValidationError("`dmean` must not be None")
+    if not isinstance(params["dmean"], bool):
+        raise StyxValidationError(f'`dmean` has the wrong type: Received `{type(params.get("dmean", False))}` expected `bool`')
+    if params.get("vmean", False) is None:
+        raise StyxValidationError("`vmean` must not be None")
+    if not isinstance(params["vmean"], bool):
+        raise StyxValidationError(f'`vmean` has the wrong type: Received `{type(params.get("vmean", False))}` expected `bool`')
+    if params.get("vnorm", False) is None:
+        raise StyxValidationError("`vnorm` must not be None")
+    if not isinstance(params["vnorm"], bool):
+        raise StyxValidationError(f'`vnorm` has the wrong type: Received `{type(params.get("vnorm", False))}` expected `bool`')
+    if params.get("normalize", False) is None:
+        raise StyxValidationError("`normalize` must not be None")
+    if not isinstance(params["normalize"], bool):
+        raise StyxValidationError(f'`normalize` has the wrong type: Received `{type(params.get("normalize", False))}` expected `bool`')
+    if params.get("nscale", False) is None:
+        raise StyxValidationError("`nscale` must not be None")
+    if not isinstance(params["nscale"], bool):
+        raise StyxValidationError(f'`nscale` has the wrong type: Received `{type(params.get("nscale", False))}` expected `bool`')
+    if params.get("pcsave", None) is not None:
+        if not isinstance(params["pcsave"], str):
+            raise StyxValidationError(f'`pcsave` has the wrong type: Received `{type(params.get("pcsave", None))}` expected `str | None`')
+    if params.get("reduce", None) is not None:
+        if not isinstance(params["reduce"], list):
+            raise StyxValidationError(f'`reduce` has the wrong type: Received `{type(params.get("reduce", None))}` expected `list[str] | None`')
+        if len(params["reduce"]) == 2:
+            raise StyxValidationError("Parameter `reduce` must contain exactly 2 elements")
+        for e in params["reduce"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`reduce` has the wrong type: Received `{type(params.get("reduce", None))}` expected `list[str] | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("dummy_lines", None) is not None:
+        if not isinstance(params["dummy_lines"], int):
+            raise StyxValidationError(f'`dummy_lines` has the wrong type: Received `{type(params.get("dummy_lines", None))}` expected `int | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("eigonly", False) is None:
+        raise StyxValidationError("`eigonly` must not be None")
+    if not isinstance(params["eigonly"], bool):
+        raise StyxValidationError(f'`eigonly` has the wrong type: Received `{type(params.get("eigonly", False))}` expected `bool`')
+    if params.get("float", False) is None:
+        raise StyxValidationError("`float` must not be None")
+    if not isinstance(params["float"], bool):
+        raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+
+
 def v_3dpc_cargs(
     params: V3dpcParameters,
     execution: Execution,
@@ -242,6 +319,7 @@ def v_3dpc_execute(
     Returns:
         NamedTuple of outputs (described in `V3dpcOutputs`).
     """
+    v_3dpc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DPC_METADATA)
     params = execution.params(params)

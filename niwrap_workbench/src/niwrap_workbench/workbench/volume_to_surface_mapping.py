@@ -141,6 +141,28 @@ def volume_to_surface_mapping_volume_roi_params(
     return params
 
 
+def volume_to_surface_mapping_volume_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeToSurfaceMappingVolumeRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-volume", None) is None:
+        raise StyxValidationError("`roi-volume` must not be None")
+    if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType`')
+    if params.get("weighted", False) is None:
+        raise StyxValidationError("`weighted` must not be None")
+    if not isinstance(params["weighted"], bool):
+        raise StyxValidationError(f'`weighted` has the wrong type: Received `{type(params.get("weighted", False))}` expected `bool`')
+
+
 def volume_to_surface_mapping_volume_roi_cargs(
     params: VolumeToSurfaceMappingVolumeRoiParameters,
     execution: Execution,
@@ -183,6 +205,28 @@ def volume_to_surface_mapping_dilate_missing_params(
         "nearest": nearest,
     }
     return params
+
+
+def volume_to_surface_mapping_dilate_missing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeToSurfaceMappingDilateMissingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dist", None) is None:
+        raise StyxValidationError("`dist` must not be None")
+    if not isinstance(params["dist"], (float, int)):
+        raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float`')
+    if params.get("nearest", False) is None:
+        raise StyxValidationError("`nearest` must not be None")
+    if not isinstance(params["nearest"], bool):
+        raise StyxValidationError(f'`nearest` has the wrong type: Received `{type(params.get("nearest", False))}` expected `bool`')
 
 
 def volume_to_surface_mapping_dilate_missing_cargs(
@@ -237,6 +281,28 @@ def volume_to_surface_mapping_output_weights_params(
         "weights-out": weights_out,
     }
     return params
+
+
+def volume_to_surface_mapping_output_weights_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeToSurfaceMappingOutputWeightsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vertex", None) is None:
+        raise StyxValidationError("`vertex` must not be None")
+    if not isinstance(params["vertex"], int):
+        raise StyxValidationError(f'`vertex` has the wrong type: Received `{type(params.get("vertex", None))}` expected `int`')
+    if params.get("weights-out", None) is None:
+        raise StyxValidationError("`weights-out` must not be None")
+    if not isinstance(params["weights-out"], str):
+        raise StyxValidationError(f'`weights-out` has the wrong type: Received `{type(params.get("weights-out", None))}` expected `str`')
 
 
 def volume_to_surface_mapping_output_weights_cargs(
@@ -360,6 +426,53 @@ def volume_to_surface_mapping_ribbon_constrained_params(
     return params
 
 
+def volume_to_surface_mapping_ribbon_constrained_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeToSurfaceMappingRibbonConstrainedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inner-surf", None) is None:
+        raise StyxValidationError("`inner-surf` must not be None")
+    if not isinstance(params["inner-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inner-surf` has the wrong type: Received `{type(params.get("inner-surf", None))}` expected `InputPathType`')
+    if params.get("outer-surf", None) is None:
+        raise StyxValidationError("`outer-surf` must not be None")
+    if not isinstance(params["outer-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outer-surf` has the wrong type: Received `{type(params.get("outer-surf", None))}` expected `InputPathType`')
+    if params.get("volume-roi", None) is not None:
+        volume_to_surface_mapping_volume_roi_validate(params["volume-roi"])
+    if params.get("dilate-missing", None) is not None:
+        volume_to_surface_mapping_dilate_missing_validate(params["dilate-missing"])
+    if params.get("subdiv-num", None) is not None:
+        if not isinstance(params["subdiv-num"], int):
+            raise StyxValidationError(f'`subdiv-num` has the wrong type: Received `{type(params.get("subdiv-num", None))}` expected `int | None`')
+    if params.get("thin-columns", False) is None:
+        raise StyxValidationError("`thin-columns` must not be None")
+    if not isinstance(params["thin-columns"], bool):
+        raise StyxValidationError(f'`thin-columns` has the wrong type: Received `{type(params.get("thin-columns", False))}` expected `bool`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("roi-out", None) is not None:
+        if not isinstance(params["roi-out"], str):
+            raise StyxValidationError(f'`roi-out` has the wrong type: Received `{type(params.get("roi-out", None))}` expected `str | None`')
+    if params.get("output-weights", None) is not None:
+        volume_to_surface_mapping_output_weights_validate(params["output-weights"])
+    if params.get("text-out", None) is not None:
+        if not isinstance(params["text-out"], str):
+            raise StyxValidationError(f'`text-out` has the wrong type: Received `{type(params.get("text-out", None))}` expected `str | None`')
+
+
 def volume_to_surface_mapping_ribbon_constrained_cargs(
     params: VolumeToSurfaceMappingRibbonConstrainedParameters,
     execution: Execution,
@@ -445,6 +558,36 @@ def volume_to_surface_mapping_myelin_style_params(
     return params
 
 
+def volume_to_surface_mapping_myelin_style_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeToSurfaceMappingMyelinStyleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ribbon-roi", None) is None:
+        raise StyxValidationError("`ribbon-roi` must not be None")
+    if not isinstance(params["ribbon-roi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ribbon-roi` has the wrong type: Received `{type(params.get("ribbon-roi", None))}` expected `InputPathType`')
+    if params.get("thickness", None) is None:
+        raise StyxValidationError("`thickness` must not be None")
+    if not isinstance(params["thickness"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`thickness` has the wrong type: Received `{type(params.get("thickness", None))}` expected `InputPathType`')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], (float, int)):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float`')
+    if params.get("legacy-bug", False) is None:
+        raise StyxValidationError("`legacy-bug` must not be None")
+    if not isinstance(params["legacy-bug"], bool):
+        raise StyxValidationError(f'`legacy-bug` has the wrong type: Received `{type(params.get("legacy-bug", False))}` expected `bool`')
+
+
 def volume_to_surface_mapping_myelin_style_cargs(
     params: VolumeToSurfaceMappingMyelinStyleParameters,
     execution: Execution,
@@ -527,6 +670,51 @@ def volume_to_surface_mapping_params(
     if subvol is not None:
         params["subvol"] = subvol
     return params
+
+
+def volume_to_surface_mapping_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeToSurfaceMappingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("trilinear", False) is None:
+        raise StyxValidationError("`trilinear` must not be None")
+    if not isinstance(params["trilinear"], bool):
+        raise StyxValidationError(f'`trilinear` has the wrong type: Received `{type(params.get("trilinear", False))}` expected `bool`')
+    if params.get("enclosing", False) is None:
+        raise StyxValidationError("`enclosing` must not be None")
+    if not isinstance(params["enclosing"], bool):
+        raise StyxValidationError(f'`enclosing` has the wrong type: Received `{type(params.get("enclosing", False))}` expected `bool`')
+    if params.get("cubic", False) is None:
+        raise StyxValidationError("`cubic` must not be None")
+    if not isinstance(params["cubic"], bool):
+        raise StyxValidationError(f'`cubic` has the wrong type: Received `{type(params.get("cubic", False))}` expected `bool`')
+    if params.get("ribbon-constrained", None) is not None:
+        volume_to_surface_mapping_ribbon_constrained_validate(params["ribbon-constrained"])
+    if params.get("myelin-style", None) is not None:
+        volume_to_surface_mapping_myelin_style_validate(params["myelin-style"])
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
 
 
 def volume_to_surface_mapping_cargs(
@@ -633,6 +821,7 @@ def volume_to_surface_mapping_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeToSurfaceMappingOutputs`).
     """
+    volume_to_surface_mapping_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_TO_SURFACE_MAPPING_METADATA)
     params = execution.params(params)

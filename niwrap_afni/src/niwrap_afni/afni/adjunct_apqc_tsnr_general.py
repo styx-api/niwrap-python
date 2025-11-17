@@ -178,6 +178,128 @@ def adjunct_apqc_tsnr_general_params(
     return params
 
 
+def adjunct_apqc_tsnr_general_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctApqcTsnrGeneralParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("montgap", None) is not None:
+        if not isinstance(params["montgap"], str):
+            raise StyxValidationError(f'`montgap` has the wrong type: Received `{type(params.get("montgap", None))}` expected `str | None`')
+    if params.get("montcolor", None) is not None:
+        if not isinstance(params["montcolor"], str):
+            raise StyxValidationError(f'`montcolor` has the wrong type: Received `{type(params.get("montcolor", None))}` expected `str | None`')
+    if params.get("montx", None) is not None:
+        if not isinstance(params["montx"], str):
+            raise StyxValidationError(f'`montx` has the wrong type: Received `{type(params.get("montx", None))}` expected `str | None`')
+    if params.get("monty", None) is not None:
+        if not isinstance(params["monty"], str):
+            raise StyxValidationError(f'`monty` has the wrong type: Received `{type(params.get("monty", None))}` expected `str | None`')
+    if params.get("opacity", None) is not None:
+        if not isinstance(params["opacity"], str):
+            raise StyxValidationError(f'`opacity` has the wrong type: Received `{type(params.get("opacity", None))}` expected `str | None`')
+    if params.get("blowup", None) is not None:
+        if not isinstance(params["blowup"], str):
+            raise StyxValidationError(f'`blowup` has the wrong type: Received `{type(params.get("blowup", None))}` expected `str | None`')
+    if params.get("save_ftype", None) is not None:
+        if not isinstance(params["save_ftype"], str):
+            raise StyxValidationError(f'`save_ftype` has the wrong type: Received `{type(params.get("save_ftype", None))}` expected `str | None`')
+    if params.get("set_dicom_xyz", None) is not None:
+        if not isinstance(params["set_dicom_xyz"], list):
+            raise StyxValidationError(f'`set_dicom_xyz` has the wrong type: Received `{type(params.get("set_dicom_xyz", None))}` expected `list[str] | None`')
+        if len(params["set_dicom_xyz"]) <= 3:
+            raise StyxValidationError("Parameter `set_dicom_xyz` must contain at most 3 elements")
+        for e in params["set_dicom_xyz"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`set_dicom_xyz` has the wrong type: Received `{type(params.get("set_dicom_xyz", None))}` expected `list[str] | None`')
+    if params.get("set_ijk", None) is not None:
+        if not isinstance(params["set_ijk"], list):
+            raise StyxValidationError(f'`set_ijk` has the wrong type: Received `{type(params.get("set_ijk", None))}` expected `list[str] | None`')
+        if len(params["set_ijk"]) <= 3:
+            raise StyxValidationError("Parameter `set_ijk` must contain at most 3 elements")
+        for e in params["set_ijk"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`set_ijk` has the wrong type: Received `{type(params.get("set_ijk", None))}` expected `list[str] | None`')
+    if params.get("set_subbricks", None) is not None:
+        if not isinstance(params["set_subbricks"], list):
+            raise StyxValidationError(f'`set_subbricks` has the wrong type: Received `{type(params.get("set_subbricks", None))}` expected `list[str] | None`')
+        if len(params["set_subbricks"]) <= 3:
+            raise StyxValidationError("Parameter `set_subbricks` must contain at most 3 elements")
+        for e in params["set_subbricks"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`set_subbricks` has the wrong type: Received `{type(params.get("set_subbricks", None))}` expected `list[str] | None`')
+    if params.get("olay_alpha", None) is not None:
+        if not isinstance(params["olay_alpha"], str):
+            raise StyxValidationError(f'`olay_alpha` has the wrong type: Received `{type(params.get("olay_alpha", None))}` expected `str | None`')
+    if params.get("olay_boxed", None) is not None:
+        if not isinstance(params["olay_boxed"], str):
+            raise StyxValidationError(f'`olay_boxed` has the wrong type: Received `{type(params.get("olay_boxed", None))}` expected `str | None`')
+    if params.get("thr_olay", None) is not None:
+        if not isinstance(params["thr_olay"], str):
+            raise StyxValidationError(f'`thr_olay` has the wrong type: Received `{type(params.get("thr_olay", None))}` expected `str | None`')
+    if params.get("ulay_range_nz", None) is not None:
+        if not isinstance(params["ulay_range_nz"], list):
+            raise StyxValidationError(f'`ulay_range_nz` has the wrong type: Received `{type(params.get("ulay_range_nz", None))}` expected `list[str] | None`')
+        if len(params["ulay_range_nz"]) <= 2:
+            raise StyxValidationError("Parameter `ulay_range_nz` must contain at most 2 elements")
+        for e in params["ulay_range_nz"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ulay_range_nz` has the wrong type: Received `{type(params.get("ulay_range_nz", None))}` expected `list[str] | None`')
+    if params.get("ulay_range", None) is not None:
+        if not isinstance(params["ulay_range"], list):
+            raise StyxValidationError(f'`ulay_range` has the wrong type: Received `{type(params.get("ulay_range", None))}` expected `list[str] | None`')
+        if len(params["ulay_range"]) <= 2:
+            raise StyxValidationError("Parameter `ulay_range` must contain at most 2 elements")
+        for e in params["ulay_range"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ulay_range` has the wrong type: Received `{type(params.get("ulay_range", None))}` expected `list[str] | None`')
+    if params.get("delta_slices", None) is not None:
+        if not isinstance(params["delta_slices"], list):
+            raise StyxValidationError(f'`delta_slices` has the wrong type: Received `{type(params.get("delta_slices", None))}` expected `list[str] | None`')
+        if len(params["delta_slices"]) <= 3:
+            raise StyxValidationError("Parameter `delta_slices` must contain at most 3 elements")
+        for e in params["delta_slices"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`delta_slices` has the wrong type: Received `{type(params.get("delta_slices", None))}` expected `list[str] | None`')
+    if params.get("olay_disc_hot_range", None) is not None:
+        if not isinstance(params["olay_disc_hot_range"], list):
+            raise StyxValidationError(f'`olay_disc_hot_range` has the wrong type: Received `{type(params.get("olay_disc_hot_range", None))}` expected `list[str] | None`')
+        if len(params["olay_disc_hot_range"]) <= 2:
+            raise StyxValidationError("Parameter `olay_disc_hot_range` must contain at most 2 elements")
+        for e in params["olay_disc_hot_range"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`olay_disc_hot_range` has the wrong type: Received `{type(params.get("olay_disc_hot_range", None))}` expected `list[str] | None`')
+    if params.get("olay_cont_max", None) is not None:
+        if not isinstance(params["olay_cont_max"], str):
+            raise StyxValidationError(f'`olay_cont_max` has the wrong type: Received `{type(params.get("olay_cont_max", None))}` expected `str | None`')
+    if params.get("cbar_cont", None) is not None:
+        if not isinstance(params["cbar_cont"], str):
+            raise StyxValidationError(f'`cbar_cont` has the wrong type: Received `{type(params.get("cbar_cont", None))}` expected `str | None`')
+    if params.get("no_cor", False) is None:
+        raise StyxValidationError("`no_cor` must not be None")
+    if not isinstance(params["no_cor"], bool):
+        raise StyxValidationError(f'`no_cor` has the wrong type: Received `{type(params.get("no_cor", False))}` expected `bool`')
+    if params.get("no_sag", False) is None:
+        raise StyxValidationError("`no_sag` must not be None")
+    if not isinstance(params["no_sag"], bool):
+        raise StyxValidationError(f'`no_sag` has the wrong type: Received `{type(params.get("no_sag", False))}` expected `bool`')
+    if params.get("no_axi", False) is None:
+        raise StyxValidationError("`no_axi` must not be None")
+    if not isinstance(params["no_axi"], bool):
+        raise StyxValidationError(f'`no_axi` has the wrong type: Received `{type(params.get("no_axi", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+
+
 def adjunct_apqc_tsnr_general_cargs(
     params: AdjunctApqcTsnrGeneralParameters,
     execution: Execution,
@@ -337,6 +459,7 @@ def adjunct_apqc_tsnr_general_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctApqcTsnrGeneralOutputs`).
     """
+    adjunct_apqc_tsnr_general_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_APQC_TSNR_GENERAL_METADATA)
     params = execution.params(params)

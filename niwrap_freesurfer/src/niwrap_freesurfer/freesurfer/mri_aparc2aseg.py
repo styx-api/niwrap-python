@@ -168,6 +168,95 @@ def mri_aparc2aseg_params(
     return params
 
 
+def mri_aparc2aseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriAparc2asegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("output_volfile", None) is not None:
+        if not isinstance(params["output_volfile"], str):
+            raise StyxValidationError(f'`output_volfile` has the wrong type: Received `{type(params.get("output_volfile", None))}` expected `str | None`')
+    if params.get("old_ribbon", False) is None:
+        raise StyxValidationError("`old_ribbon` must not be None")
+    if not isinstance(params["old_ribbon"], bool):
+        raise StyxValidationError(f'`old_ribbon` has the wrong type: Received `{type(params.get("old_ribbon", False))}` expected `bool`')
+    if params.get("new_ribbon", False) is None:
+        raise StyxValidationError("`new_ribbon` must not be None")
+    if not isinstance(params["new_ribbon"], bool):
+        raise StyxValidationError(f'`new_ribbon` has the wrong type: Received `{type(params.get("new_ribbon", False))}` expected `bool`')
+    if params.get("a2005s", False) is None:
+        raise StyxValidationError("`a2005s` must not be None")
+    if not isinstance(params["a2005s"], bool):
+        raise StyxValidationError(f'`a2005s` has the wrong type: Received `{type(params.get("a2005s", False))}` expected `bool`')
+    if params.get("a2009s", False) is None:
+        raise StyxValidationError("`a2009s` must not be None")
+    if not isinstance(params["a2009s"], bool):
+        raise StyxValidationError(f'`a2009s` has the wrong type: Received `{type(params.get("a2009s", False))}` expected `bool`')
+    if params.get("annot_name", None) is not None:
+        if not isinstance(params["annot_name"], str):
+            raise StyxValidationError(f'`annot_name` has the wrong type: Received `{type(params.get("annot_name", None))}` expected `str | None`')
+    if params.get("annot_table", None) is not None:
+        if not isinstance(params["annot_table"], str):
+            raise StyxValidationError(f'`annot_table` has the wrong type: Received `{type(params.get("annot_table", None))}` expected `str | None`')
+    if params.get("base_offset", None) is not None:
+        if not isinstance(params["base_offset"], (float, int)):
+            raise StyxValidationError(f'`base_offset` has the wrong type: Received `{type(params.get("base_offset", None))}` expected `float | None`')
+    if params.get("label_wm", False) is None:
+        raise StyxValidationError("`label_wm` must not be None")
+    if not isinstance(params["label_wm"], bool):
+        raise StyxValidationError(f'`label_wm` has the wrong type: Received `{type(params.get("label_wm", False))}` expected `bool`')
+    if params.get("wmparc_dmax", None) is not None:
+        if not isinstance(params["wmparc_dmax"], (float, int)):
+            raise StyxValidationError(f'`wmparc_dmax` has the wrong type: Received `{type(params.get("wmparc_dmax", None))}` expected `float | None`')
+    if params.get("rip_unknown", False) is None:
+        raise StyxValidationError("`rip_unknown` must not be None")
+    if not isinstance(params["rip_unknown"], bool):
+        raise StyxValidationError(f'`rip_unknown` has the wrong type: Received `{type(params.get("rip_unknown", False))}` expected `bool`')
+    if params.get("hypo_as_wm", False) is None:
+        raise StyxValidationError("`hypo_as_wm` must not be None")
+    if not isinstance(params["hypo_as_wm"], bool):
+        raise StyxValidationError(f'`hypo_as_wm` has the wrong type: Received `{type(params.get("hypo_as_wm", False))}` expected `bool`')
+    if params.get("no_fix_parahip", False) is None:
+        raise StyxValidationError("`no_fix_parahip` must not be None")
+    if not isinstance(params["no_fix_parahip"], bool):
+        raise StyxValidationError(f'`no_fix_parahip` has the wrong type: Received `{type(params.get("no_fix_parahip", False))}` expected `bool`')
+    if params.get("smooth_normals", None) is not None:
+        if not isinstance(params["smooth_normals"], (float, int)):
+            raise StyxValidationError(f'`smooth_normals` has the wrong type: Received `{type(params.get("smooth_normals", None))}` expected `float | None`')
+    if params.get("crs_test", None) is not None:
+        if not isinstance(params["crs_test"], str):
+            raise StyxValidationError(f'`crs_test` has the wrong type: Received `{type(params.get("crs_test", None))}` expected `str | None`')
+    if params.get("left_hemisphere", False) is None:
+        raise StyxValidationError("`left_hemisphere` must not be None")
+    if not isinstance(params["left_hemisphere"], bool):
+        raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", False))}` expected `bool`')
+    if params.get("right_hemisphere", False) is None:
+        raise StyxValidationError("`right_hemisphere` must not be None")
+    if not isinstance(params["right_hemisphere"], bool):
+        raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_aparc2aseg_cargs(
     params: MriAparc2asegParameters,
     execution: Execution,
@@ -295,6 +384,7 @@ def mri_aparc2aseg_execute(
     Returns:
         NamedTuple of outputs (described in `MriAparc2asegOutputs`).
     """
+    mri_aparc2aseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_APARC2ASEG_METADATA)
     params = execution.params(params)

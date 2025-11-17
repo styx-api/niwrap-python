@@ -65,6 +65,35 @@ def bianca_cluster_stats_params(
     return params
 
 
+def bianca_cluster_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BiancaClusterStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bianca_output_map", None) is None:
+        raise StyxValidationError("`bianca_output_map` must not be None")
+    if not isinstance(params["bianca_output_map"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bianca_output_map` has the wrong type: Received `{type(params.get("bianca_output_map", None))}` expected `InputPathType`')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
+    if params.get("min_cluster_size", None) is None:
+        raise StyxValidationError("`min_cluster_size` must not be None")
+    if not isinstance(params["min_cluster_size"], (float, int)):
+        raise StyxValidationError(f'`min_cluster_size` has the wrong type: Received `{type(params.get("min_cluster_size", None))}` expected `float`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+
+
 def bianca_cluster_stats_cargs(
     params: BiancaClusterStatsParameters,
     execution: Execution,
@@ -126,6 +155,7 @@ def bianca_cluster_stats_execute(
     Returns:
         NamedTuple of outputs (described in `BiancaClusterStatsOutputs`).
     """
+    bianca_cluster_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BIANCA_CLUSTER_STATS_METADATA)
     params = execution.params(params)

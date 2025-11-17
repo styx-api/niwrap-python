@@ -268,6 +268,157 @@ def v_3d_warp_drive_params(
     return params
 
 
+def v_3d_warp_drive_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dWarpDriveParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("base_dataset", None) is None:
+        raise StyxValidationError("`base_dataset` must not be None")
+    if not isinstance(params["base_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_dataset` has the wrong type: Received `{type(params.get("base_dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("shift_only", False) is None:
+        raise StyxValidationError("`shift_only` must not be None")
+    if not isinstance(params["shift_only"], bool):
+        raise StyxValidationError(f'`shift_only` has the wrong type: Received `{type(params.get("shift_only", False))}` expected `bool`')
+    if params.get("shift_rotate", False) is None:
+        raise StyxValidationError("`shift_rotate` must not be None")
+    if not isinstance(params["shift_rotate"], bool):
+        raise StyxValidationError(f'`shift_rotate` has the wrong type: Received `{type(params.get("shift_rotate", False))}` expected `bool`')
+    if params.get("shift_rotate_scale", False) is None:
+        raise StyxValidationError("`shift_rotate_scale` must not be None")
+    if not isinstance(params["shift_rotate_scale"], bool):
+        raise StyxValidationError(f'`shift_rotate_scale` has the wrong type: Received `{type(params.get("shift_rotate_scale", False))}` expected `bool`')
+    if params.get("affine_general", False) is None:
+        raise StyxValidationError("`affine_general` must not be None")
+    if not isinstance(params["affine_general"], bool):
+        raise StyxValidationError(f'`affine_general` has the wrong type: Received `{type(params.get("affine_general", False))}` expected `bool`')
+    if params.get("bilinear_general", False) is None:
+        raise StyxValidationError("`bilinear_general` must not be None")
+    if not isinstance(params["bilinear_general"], bool):
+        raise StyxValidationError(f'`bilinear_general` has the wrong type: Received `{type(params.get("bilinear_general", False))}` expected `bool`')
+    if params.get("linear", False) is None:
+        raise StyxValidationError("`linear` must not be None")
+    if not isinstance(params["linear"], bool):
+        raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
+    if params.get("cubic", False) is None:
+        raise StyxValidationError("`cubic` must not be None")
+    if not isinstance(params["cubic"], bool):
+        raise StyxValidationError(f'`cubic` has the wrong type: Received `{type(params.get("cubic", False))}` expected `bool`')
+    if params.get("NN", False) is None:
+        raise StyxValidationError("`NN` must not be None")
+    if not isinstance(params["NN"], bool):
+        raise StyxValidationError(f'`NN` has the wrong type: Received `{type(params.get("NN", False))}` expected `bool`')
+    if params.get("quintic", False) is None:
+        raise StyxValidationError("`quintic` must not be None")
+    if not isinstance(params["quintic"], bool):
+        raise StyxValidationError(f'`quintic` has the wrong type: Received `{type(params.get("quintic", False))}` expected `bool`')
+    if params.get("input_dataset", None) is not None:
+        if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType | None`')
+    if params.get("verbosity_flag", False) is None:
+        raise StyxValidationError("`verbosity_flag` must not be None")
+    if not isinstance(params["verbosity_flag"], bool):
+        raise StyxValidationError(f'`verbosity_flag` has the wrong type: Received `{type(params.get("verbosity_flag", False))}` expected `bool`')
+    if params.get("summary_file", None) is not None:
+        if not isinstance(params["summary_file"], str):
+            raise StyxValidationError(f'`summary_file` has the wrong type: Received `{type(params.get("summary_file", None))}` expected `str | None`')
+    if params.get("max_iterations", None) is not None:
+        if not isinstance(params["max_iterations"], int):
+            raise StyxValidationError(f'`max_iterations` has the wrong type: Received `{type(params.get("max_iterations", None))}` expected `int | None`')
+    if params.get("delta", None) is not None:
+        if not isinstance(params["delta"], (float, int)):
+            raise StyxValidationError(f'`delta` has the wrong type: Received `{type(params.get("delta", None))}` expected `float | None`')
+    if params.get("weight", None) is not None:
+        if not isinstance(params["weight"], str):
+            raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `str | None`')
+    if params.get("convergence_thresh", None) is not None:
+        if not isinstance(params["convergence_thresh"], (float, int)):
+            raise StyxValidationError(f'`convergence_thresh` has the wrong type: Received `{type(params.get("convergence_thresh", None))}` expected `float | None`')
+    if params.get("twopass", False) is None:
+        raise StyxValidationError("`twopass` must not be None")
+    if not isinstance(params["twopass"], bool):
+        raise StyxValidationError(f'`twopass` has the wrong type: Received `{type(params.get("twopass", False))}` expected `bool`')
+    if params.get("final_mode", None) is not None:
+        if not isinstance(params["final_mode"], str):
+            raise StyxValidationError(f'`final_mode` has the wrong type: Received `{type(params.get("final_mode", None))}` expected `str | None`')
+    if params.get("parfix", None) is not None:
+        if not isinstance(params["parfix"], list):
+            raise StyxValidationError(f'`parfix` has the wrong type: Received `{type(params.get("parfix", None))}` expected `list[str] | None`')
+        for e in params["parfix"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`parfix` has the wrong type: Received `{type(params.get("parfix", None))}` expected `list[str] | None`')
+    if params.get("oned_file", None) is not None:
+        if not isinstance(params["oned_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`oned_file` has the wrong type: Received `{type(params.get("oned_file", None))}` expected `InputPathType | None`')
+    if params.get("float_format", False) is None:
+        raise StyxValidationError("`float_format` must not be None")
+    if not isinstance(params["float_format"], bool):
+        raise StyxValidationError(f'`float_format` has the wrong type: Received `{type(params.get("float_format", False))}` expected `bool`')
+    if params.get("coarserot_init", False) is None:
+        raise StyxValidationError("`coarserot_init` must not be None")
+    if not isinstance(params["coarserot_init"], bool):
+        raise StyxValidationError(f'`coarserot_init` has the wrong type: Received `{type(params.get("coarserot_init", False))}` expected `bool`')
+    if params.get("oned_matrix_save", None) is not None:
+        if not isinstance(params["oned_matrix_save"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`oned_matrix_save` has the wrong type: Received `{type(params.get("oned_matrix_save", None))}` expected `InputPathType | None`')
+    if params.get("sdu_order", False) is None:
+        raise StyxValidationError("`sdu_order` must not be None")
+    if not isinstance(params["sdu_order"], bool):
+        raise StyxValidationError(f'`sdu_order` has the wrong type: Received `{type(params.get("sdu_order", False))}` expected `bool`')
+    if params.get("sud_order", False) is None:
+        raise StyxValidationError("`sud_order` must not be None")
+    if not isinstance(params["sud_order"], bool):
+        raise StyxValidationError(f'`sud_order` has the wrong type: Received `{type(params.get("sud_order", False))}` expected `bool`')
+    if params.get("dsu_order", False) is None:
+        raise StyxValidationError("`dsu_order` must not be None")
+    if not isinstance(params["dsu_order"], bool):
+        raise StyxValidationError(f'`dsu_order` has the wrong type: Received `{type(params.get("dsu_order", False))}` expected `bool`')
+    if params.get("dus_order", False) is None:
+        raise StyxValidationError("`dus_order` must not be None")
+    if not isinstance(params["dus_order"], bool):
+        raise StyxValidationError(f'`dus_order` has the wrong type: Received `{type(params.get("dus_order", False))}` expected `bool`')
+    if params.get("usd_order", False) is None:
+        raise StyxValidationError("`usd_order` must not be None")
+    if not isinstance(params["usd_order"], bool):
+        raise StyxValidationError(f'`usd_order` has the wrong type: Received `{type(params.get("usd_order", False))}` expected `bool`')
+    if params.get("uds_order", False) is None:
+        raise StyxValidationError("`uds_order` must not be None")
+    if not isinstance(params["uds_order"], bool):
+        raise StyxValidationError(f'`uds_order` has the wrong type: Received `{type(params.get("uds_order", False))}` expected `bool`')
+    if params.get("supper_s_matrix", False) is None:
+        raise StyxValidationError("`supper_s_matrix` must not be None")
+    if not isinstance(params["supper_s_matrix"], bool):
+        raise StyxValidationError(f'`supper_s_matrix` has the wrong type: Received `{type(params.get("supper_s_matrix", False))}` expected `bool`')
+    if params.get("slower_s_matrix", False) is None:
+        raise StyxValidationError("`slower_s_matrix` must not be None")
+    if not isinstance(params["slower_s_matrix"], bool):
+        raise StyxValidationError(f'`slower_s_matrix` has the wrong type: Received `{type(params.get("slower_s_matrix", False))}` expected `bool`')
+    if params.get("ashift", False) is None:
+        raise StyxValidationError("`ashift` must not be None")
+    if not isinstance(params["ashift"], bool):
+        raise StyxValidationError(f'`ashift` has the wrong type: Received `{type(params.get("ashift", False))}` expected `bool`')
+    if params.get("bshift", False) is None:
+        raise StyxValidationError("`bshift` must not be None")
+    if not isinstance(params["bshift"], bool):
+        raise StyxValidationError(f'`bshift` has the wrong type: Received `{type(params.get("bshift", False))}` expected `bool`')
+
+
 def v_3d_warp_drive_cargs(
     params: V3dWarpDriveParameters,
     execution: Execution,
@@ -434,6 +585,7 @@ def v_3d_warp_drive_execute(
     Returns:
         NamedTuple of outputs (described in `V3dWarpDriveOutputs`).
     """
+    v_3d_warp_drive_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_WARP_DRIVE_METADATA)
     params = execution.params(params)

@@ -88,6 +88,40 @@ def rcbf_prep_params(
     return params
 
 
+def rcbf_prep_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RcbfPrepParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outdir", None) is None:
+        raise StyxValidationError("`outdir` must not be None")
+    if not isinstance(params["outdir"], str):
+        raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str`')
+    if params.get("rcbfvol", None) is None:
+        raise StyxValidationError("`rcbfvol` must not be None")
+    if not isinstance(params["rcbfvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rcbfvol` has the wrong type: Received `{type(params.get("rcbfvol", None))}` expected `InputPathType`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("roitab", None) is not None:
+        if not isinstance(params["roitab"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roitab` has the wrong type: Received `{type(params.get("roitab", None))}` expected `InputPathType | None`')
+    if params.get("register", None) is not None:
+        if not isinstance(params["register"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`register` has the wrong type: Received `{type(params.get("register", None))}` expected `InputPathType | None`')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+
+
 def rcbf_prep_cargs(
     params: RcbfPrepParameters,
     execution: Execution,
@@ -177,6 +211,7 @@ def rcbf_prep_execute(
     Returns:
         NamedTuple of outputs (described in `RcbfPrepOutputs`).
     """
+    rcbf_prep_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RCBF_PREP_METADATA)
     params = execution.params(params)

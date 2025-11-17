@@ -71,6 +71,43 @@ def dmri_stats_ac_params(
     return params
 
 
+def dmri_stats_ac_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriStatsAcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("anatomicuts_folder", None) is None:
+        raise StyxValidationError("`anatomicuts_folder` must not be None")
+    if not isinstance(params["anatomicuts_folder"], str):
+        raise StyxValidationError(f'`anatomicuts_folder` has the wrong type: Received `{type(params.get("anatomicuts_folder", None))}` expected `str`')
+    if params.get("num_clusters", None) is None:
+        raise StyxValidationError("`num_clusters` must not be None")
+    if not isinstance(params["num_clusters"], int):
+        raise StyxValidationError(f'`num_clusters` has the wrong type: Received `{type(params.get("num_clusters", None))}` expected `int`')
+    if params.get("correspondence_file", None) is None:
+        raise StyxValidationError("`correspondence_file` must not be None")
+    if not isinstance(params["correspondence_file"], str):
+        raise StyxValidationError(f'`correspondence_file` has the wrong type: Received `{type(params.get("correspondence_file", None))}` expected `str`')
+    if params.get("measures", None) is None:
+        raise StyxValidationError("`measures` must not be None")
+    if not isinstance(params["measures"], list):
+        raise StyxValidationError(f'`measures` has the wrong type: Received `{type(params.get("measures", None))}` expected `list[str]`')
+    for e in params["measures"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`measures` has the wrong type: Received `{type(params.get("measures", None))}` expected `list[str]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def dmri_stats_ac_cargs(
     params: DmriStatsAcParameters,
     execution: Execution,
@@ -148,6 +185,7 @@ def dmri_stats_ac_execute(
     Returns:
         NamedTuple of outputs (described in `DmriStatsAcOutputs`).
     """
+    dmri_stats_ac_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_STATS_AC_METADATA)
     params = execution.params(params)

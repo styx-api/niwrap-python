@@ -112,6 +112,56 @@ def dmri_bset_params(
     return params
 
 
+def dmri_bset_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriBsetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dwi", None) is None:
+        raise StyxValidationError("`input_dwi` must not be None")
+    if not isinstance(params["input_dwi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dwi` has the wrong type: Received `{type(params.get("input_dwi", None))}` expected `InputPathType`')
+    if params.get("output_dwi", None) is None:
+        raise StyxValidationError("`output_dwi` must not be None")
+    if not isinstance(params["output_dwi"], str):
+        raise StyxValidationError(f'`output_dwi` has the wrong type: Received `{type(params.get("output_dwi", None))}` expected `str`')
+    if params.get("b_values", None) is not None:
+        if not isinstance(params["b_values"], list):
+            raise StyxValidationError(f'`b_values` has the wrong type: Received `{type(params.get("b_values", None))}` expected `list[float] | None`')
+        for e in params["b_values"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`b_values` has the wrong type: Received `{type(params.get("b_values", None))}` expected `list[float] | None`')
+    if params.get("btol", None) is not None:
+        if not isinstance(params["btol"], (float, int)):
+            raise StyxValidationError(f'`btol` has the wrong type: Received `{type(params.get("btol", None))}` expected `float | None`')
+    if params.get("bsort", False) is None:
+        raise StyxValidationError("`bsort` must not be None")
+    if not isinstance(params["bsort"], bool):
+        raise StyxValidationError(f'`bsort` has the wrong type: Received `{type(params.get("bsort", False))}` expected `bool`')
+    if params.get("bmax", None) is not None:
+        if not isinstance(params["bmax"], (float, int)):
+            raise StyxValidationError(f'`bmax` has the wrong type: Received `{type(params.get("bmax", None))}` expected `float | None`')
+    if params.get("input_b_table", None) is not None:
+        if not isinstance(params["input_b_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_b_table` has the wrong type: Received `{type(params.get("input_b_table", None))}` expected `InputPathType | None`')
+    if params.get("input_g_table", None) is not None:
+        if not isinstance(params["input_g_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_g_table` has the wrong type: Received `{type(params.get("input_g_table", None))}` expected `InputPathType | None`')
+    if params.get("output_b_table", None) is not None:
+        if not isinstance(params["output_b_table"], str):
+            raise StyxValidationError(f'`output_b_table` has the wrong type: Received `{type(params.get("output_b_table", None))}` expected `str | None`')
+    if params.get("output_g_table", None) is not None:
+        if not isinstance(params["output_g_table"], str):
+            raise StyxValidationError(f'`output_g_table` has the wrong type: Received `{type(params.get("output_g_table", None))}` expected `str | None`')
+
+
 def dmri_bset_cargs(
     params: DmriBsetParameters,
     execution: Execution,
@@ -211,6 +261,7 @@ def dmri_bset_execute(
     Returns:
         NamedTuple of outputs (described in `DmriBsetOutputs`).
     """
+    dmri_bset_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_BSET_METADATA)
     params = execution.params(params)

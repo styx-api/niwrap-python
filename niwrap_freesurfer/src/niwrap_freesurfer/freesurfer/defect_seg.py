@@ -87,6 +87,32 @@ def defect_seg_params(
     return params
 
 
+def defect_seg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DefectSegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("lh_only", False) is None:
+        raise StyxValidationError("`lh_only` must not be None")
+    if not isinstance(params["lh_only"], bool):
+        raise StyxValidationError(f'`lh_only` has the wrong type: Received `{type(params.get("lh_only", False))}` expected `bool`')
+    if params.get("rh_only", False) is None:
+        raise StyxValidationError("`rh_only` must not be None")
+    if not isinstance(params["rh_only"], bool):
+        raise StyxValidationError(f'`rh_only` has the wrong type: Received `{type(params.get("rh_only", False))}` expected `bool`')
+
+
 def defect_seg_cargs(
     params: DefectSegParameters,
     execution: Execution,
@@ -166,6 +192,7 @@ def defect_seg_execute(
     Returns:
         NamedTuple of outputs (described in `DefectSegOutputs`).
     """
+    defect_seg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DEFECT_SEG_METADATA)
     params = execution.params(params)

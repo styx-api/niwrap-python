@@ -125,6 +125,65 @@ def v_3d_tsgen_params(
     return params
 
 
+def v_3d_tsgen_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTsgenParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("in_tr_flag", False) is None:
+        raise StyxValidationError("`in_tr_flag` must not be None")
+    if not isinstance(params["in_tr_flag"], bool):
+        raise StyxValidationError(f'`in_tr_flag` has the wrong type: Received `{type(params.get("in_tr_flag", False))}` expected `bool`')
+    if params.get("signal_label", None) is None:
+        raise StyxValidationError("`signal_label` must not be None")
+    if not isinstance(params["signal_label"], str):
+        raise StyxValidationError(f'`signal_label` has the wrong type: Received `{type(params.get("signal_label", None))}` expected `str`')
+    if params.get("noise_label", None) is None:
+        raise StyxValidationError("`noise_label` must not be None")
+    if not isinstance(params["noise_label"], str):
+        raise StyxValidationError(f'`noise_label` has the wrong type: Received `{type(params.get("noise_label", None))}` expected `str`')
+    if params.get("signal_constr", None) is not None:
+        if not isinstance(params["signal_constr"], str):
+            raise StyxValidationError(f'`signal_constr` has the wrong type: Received `{type(params.get("signal_constr", None))}` expected `str | None`')
+    if params.get("noise_constr", None) is not None:
+        if not isinstance(params["noise_constr"], str):
+            raise StyxValidationError(f'`noise_constr` has the wrong type: Received `{type(params.get("noise_constr", None))}` expected `str | None`')
+    if params.get("sigma_value", None) is None:
+        raise StyxValidationError("`sigma_value` must not be None")
+    if not isinstance(params["sigma_value"], (float, int)):
+        raise StyxValidationError(f'`sigma_value` has the wrong type: Received `{type(params.get("sigma_value", None))}` expected `float`')
+    if params.get("voxel_number", None) is not None:
+        if not isinstance(params["voxel_number"], (float, int)):
+            raise StyxValidationError(f'`voxel_number` has the wrong type: Received `{type(params.get("voxel_number", None))}` expected `float | None`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("signal_coef", None) is not None:
+        if not isinstance(params["signal_coef"], str):
+            raise StyxValidationError(f'`signal_coef` has the wrong type: Received `{type(params.get("signal_coef", None))}` expected `str | None`')
+    if params.get("noise_coef", None) is not None:
+        if not isinstance(params["noise_coef"], str):
+            raise StyxValidationError(f'`noise_coef` has the wrong type: Received `{type(params.get("noise_coef", None))}` expected `str | None`')
+    if params.get("bucket_config", None) is not None:
+        if not isinstance(params["bucket_config"], str):
+            raise StyxValidationError(f'`bucket_config` has the wrong type: Received `{type(params.get("bucket_config", None))}` expected `str | None`')
+    if params.get("brick_config", None) is not None:
+        if not isinstance(params["brick_config"], str):
+            raise StyxValidationError(f'`brick_config` has the wrong type: Received `{type(params.get("brick_config", None))}` expected `str | None`')
+
+
 def v_3d_tsgen_cargs(
     params: V3dTsgenParameters,
     execution: Execution,
@@ -236,6 +295,7 @@ def v_3d_tsgen_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTsgenOutputs`).
     """
+    v_3d_tsgen_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TSGEN_METADATA)
     params = execution.params(params)

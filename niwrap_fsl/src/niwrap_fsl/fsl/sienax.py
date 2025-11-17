@@ -115,6 +115,58 @@ def sienax_params(
     return params
 
 
+def sienax_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SienaxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("bet_options", None) is not None:
+        if not isinstance(params["bet_options"], str):
+            raise StyxValidationError(f'`bet_options` has the wrong type: Received `{type(params.get("bet_options", None))}` expected `str | None`')
+    if params.get("twoclass_segment_flag", False) is None:
+        raise StyxValidationError("`twoclass_segment_flag` must not be None")
+    if not isinstance(params["twoclass_segment_flag"], bool):
+        raise StyxValidationError(f'`twoclass_segment_flag` has the wrong type: Received `{type(params.get("twoclass_segment_flag", False))}` expected `bool`')
+    if params.get("t2_flag", False) is None:
+        raise StyxValidationError("`t2_flag` must not be None")
+    if not isinstance(params["t2_flag"], bool):
+        raise StyxValidationError(f'`t2_flag` has the wrong type: Received `{type(params.get("t2_flag", False))}` expected `bool`')
+    if params.get("top_threshold", None) is not None:
+        if not isinstance(params["top_threshold"], (float, int)):
+            raise StyxValidationError(f'`top_threshold` has the wrong type: Received `{type(params.get("top_threshold", None))}` expected `float | None`')
+    if params.get("bottom_threshold", None) is not None:
+        if not isinstance(params["bottom_threshold"], (float, int)):
+            raise StyxValidationError(f'`bottom_threshold` has the wrong type: Received `{type(params.get("bottom_threshold", None))}` expected `float | None`')
+    if params.get("regional_flag", False) is None:
+        raise StyxValidationError("`regional_flag` must not be None")
+    if not isinstance(params["regional_flag"], bool):
+        raise StyxValidationError(f'`regional_flag` has the wrong type: Received `{type(params.get("regional_flag", False))}` expected `bool`')
+    if params.get("lesion_mask", None) is not None:
+        if not isinstance(params["lesion_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lesion_mask` has the wrong type: Received `{type(params.get("lesion_mask", None))}` expected `InputPathType | None`')
+    if params.get("fast_options", None) is not None:
+        if not isinstance(params["fast_options"], str):
+            raise StyxValidationError(f'`fast_options` has the wrong type: Received `{type(params.get("fast_options", None))}` expected `str | None`')
+
+
 def sienax_cargs(
     params: SienaxParameters,
     execution: Execution,
@@ -213,6 +265,7 @@ def sienax_execute(
     Returns:
         NamedTuple of outputs (described in `SienaxOutputs`).
     """
+    sienax_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIENAX_METADATA)
     params = execution.params(params)

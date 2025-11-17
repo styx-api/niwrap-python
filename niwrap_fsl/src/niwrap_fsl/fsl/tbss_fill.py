@@ -71,6 +71,40 @@ def tbss_fill_params(
     return params
 
 
+def tbss_fill_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TbssFillParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stats_image", None) is None:
+        raise StyxValidationError("`stats_image` must not be None")
+    if not isinstance(params["stats_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`stats_image` has the wrong type: Received `{type(params.get("stats_image", None))}` expected `InputPathType`')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
+    if params.get("mean_fa", None) is None:
+        raise StyxValidationError("`mean_fa` must not be None")
+    if not isinstance(params["mean_fa"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mean_fa` has the wrong type: Received `{type(params.get("mean_fa", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("include_negative_flag", False) is None:
+        raise StyxValidationError("`include_negative_flag` must not be None")
+    if not isinstance(params["include_negative_flag"], bool):
+        raise StyxValidationError(f'`include_negative_flag` has the wrong type: Received `{type(params.get("include_negative_flag", False))}` expected `bool`')
+
+
 def tbss_fill_cargs(
     params: TbssFillParameters,
     execution: Execution,
@@ -134,6 +168,7 @@ def tbss_fill_execute(
     Returns:
         NamedTuple of outputs (described in `TbssFillOutputs`).
     """
+    tbss_fill_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_FILL_METADATA)
     params = execution.params(params)

@@ -116,6 +116,57 @@ def fnirtfileutils_params(
     return params
 
 
+def fnirtfileutils_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FnirtfileutilsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_coefs", None) is None:
+        raise StyxValidationError("`input_coefs` must not be None")
+    if not isinstance(params["input_coefs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_coefs` has the wrong type: Received `{type(params.get("input_coefs", None))}` expected `InputPathType`')
+    if params.get("ref_volume", None) is not None:
+        if not isinstance(params["ref_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_volume` has the wrong type: Received `{type(params.get("ref_volume", None))}` expected `InputPathType | None`')
+    if params.get("out_field", None) is not None:
+        if not isinstance(params["out_field"], str):
+            raise StyxValidationError(f'`out_field` has the wrong type: Received `{type(params.get("out_field", None))}` expected `str | None`')
+    if params.get("output_format", None) is not None:
+        if not isinstance(params["output_format"], str):
+            raise StyxValidationError(f'`output_format` has the wrong type: Received `{type(params.get("output_format", None))}` expected `str | None`')
+    if params.get("warp_res", None) is not None:
+        if not isinstance(params["warp_res"], (float, int)):
+            raise StyxValidationError(f'`warp_res` has the wrong type: Received `{type(params.get("warp_res", None))}` expected `float | None`')
+    if params.get("knot_space", None) is not None:
+        if not isinstance(params["knot_space"], (float, int)):
+            raise StyxValidationError(f'`knot_space` has the wrong type: Received `{type(params.get("knot_space", None))}` expected `float | None`')
+    if params.get("jacobian_output", None) is not None:
+        if not isinstance(params["jacobian_output"], str):
+            raise StyxValidationError(f'`jacobian_output` has the wrong type: Received `{type(params.get("jacobian_output", None))}` expected `str | None`')
+    if params.get("jacobian_matrix_output", None) is not None:
+        if not isinstance(params["jacobian_matrix_output"], str):
+            raise StyxValidationError(f'`jacobian_matrix_output` has the wrong type: Received `{type(params.get("jacobian_matrix_output", None))}` expected `str | None`')
+    if params.get("with_aff", False) is None:
+        raise StyxValidationError("`with_aff` must not be None")
+    if not isinstance(params["with_aff"], bool):
+        raise StyxValidationError(f'`with_aff` has the wrong type: Received `{type(params.get("with_aff", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def fnirtfileutils_cargs(
     params: FnirtfileutilsParameters,
     execution: Execution,
@@ -221,6 +272,7 @@ def fnirtfileutils_execute(
     Returns:
         NamedTuple of outputs (described in `FnirtfileutilsOutputs`).
     """
+    fnirtfileutils_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FNIRTFILEUTILS_METADATA)
     params = execution.params(params)

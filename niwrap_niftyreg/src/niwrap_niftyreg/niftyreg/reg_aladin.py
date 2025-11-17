@@ -119,6 +119,65 @@ def reg_aladin_params(
     return params
 
 
+def reg_aladin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegAladinParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("floating_image", None) is None:
+        raise StyxValidationError("`floating_image` must not be None")
+    if not isinstance(params["floating_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`floating_image` has the wrong type: Received `{type(params.get("floating_image", None))}` expected `InputPathType`')
+    if params.get("symmetric", False) is None:
+        raise StyxValidationError("`symmetric` must not be None")
+    if not isinstance(params["symmetric"], bool):
+        raise StyxValidationError(f'`symmetric` has the wrong type: Received `{type(params.get("symmetric", False))}` expected `bool`')
+    if params.get("output_affine", None) is not None:
+        if not isinstance(params["output_affine"], str):
+            raise StyxValidationError(f'`output_affine` has the wrong type: Received `{type(params.get("output_affine", None))}` expected `str | None`')
+    if params.get("rigid_only", False) is None:
+        raise StyxValidationError("`rigid_only` must not be None")
+    if not isinstance(params["rigid_only"], bool):
+        raise StyxValidationError(f'`rigid_only` has the wrong type: Received `{type(params.get("rigid_only", False))}` expected `bool`')
+    if params.get("direct_affine", False) is None:
+        raise StyxValidationError("`direct_affine` must not be None")
+    if not isinstance(params["direct_affine"], bool):
+        raise StyxValidationError(f'`direct_affine` has the wrong type: Received `{type(params.get("direct_affine", False))}` expected `bool`')
+    if params.get("smooth_ref", None) is not None:
+        if not isinstance(params["smooth_ref"], (float, int)):
+            raise StyxValidationError(f'`smooth_ref` has the wrong type: Received `{type(params.get("smooth_ref", None))}` expected `float | None`')
+    if params.get("smooth_float", None) is not None:
+        if not isinstance(params["smooth_float"], (float, int)):
+            raise StyxValidationError(f'`smooth_float` has the wrong type: Received `{type(params.get("smooth_float", None))}` expected `float | None`')
+    if params.get("num_levels", None) is not None:
+        if not isinstance(params["num_levels"], (float, int)):
+            raise StyxValidationError(f'`num_levels` has the wrong type: Received `{type(params.get("num_levels", None))}` expected `float | None`')
+    if params.get("first_levels", None) is not None:
+        if not isinstance(params["first_levels"], (float, int)):
+            raise StyxValidationError(f'`first_levels` has the wrong type: Received `{type(params.get("first_levels", None))}` expected `float | None`')
+    if params.get("use_nifti_origin", False) is None:
+        raise StyxValidationError("`use_nifti_origin` must not be None")
+    if not isinstance(params["use_nifti_origin"], bool):
+        raise StyxValidationError(f'`use_nifti_origin` has the wrong type: Received `{type(params.get("use_nifti_origin", False))}` expected `bool`')
+    if params.get("percent_block", None) is not None:
+        if not isinstance(params["percent_block"], (float, int)):
+            raise StyxValidationError(f'`percent_block` has the wrong type: Received `{type(params.get("percent_block", None))}` expected `float | None`')
+    if params.get("percent_inlier", None) is not None:
+        if not isinstance(params["percent_inlier"], (float, int)):
+            raise StyxValidationError(f'`percent_inlier` has the wrong type: Received `{type(params.get("percent_inlier", None))}` expected `float | None`')
+
+
 def reg_aladin_cargs(
     params: RegAladinParameters,
     execution: Execution,
@@ -229,6 +288,7 @@ def reg_aladin_execute(
     Returns:
         NamedTuple of outputs (described in `RegAladinOutputs`).
     """
+    reg_aladin_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REG_ALADIN_METADATA)
     params = execution.params(params)

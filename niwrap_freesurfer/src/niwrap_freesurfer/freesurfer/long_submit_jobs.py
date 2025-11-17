@@ -186,6 +186,105 @@ def long_submit_jobs_params(
     return params
 
 
+def long_submit_jobs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LongSubmitJobsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qdec", None) is None:
+        raise StyxValidationError("`qdec` must not be None")
+    if not isinstance(params["qdec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`qdec` has the wrong type: Received `{type(params.get("qdec", None))}` expected `InputPathType`')
+    if params.get("cdir", None) is None:
+        raise StyxValidationError("`cdir` must not be None")
+    if not isinstance(params["cdir"], str):
+        raise StyxValidationError(f'`cdir` has the wrong type: Received `{type(params.get("cdir", None))}` expected `str`')
+    if params.get("bdir", None) is not None:
+        if not isinstance(params["bdir"], str):
+            raise StyxValidationError(f'`bdir` has the wrong type: Received `{type(params.get("bdir", None))}` expected `str | None`')
+    if params.get("ldir", None) is not None:
+        if not isinstance(params["ldir"], str):
+            raise StyxValidationError(f'`ldir` has the wrong type: Received `{type(params.get("ldir", None))}` expected `str | None`')
+    if params.get("scriptsdir", None) is not None:
+        if not isinstance(params["scriptsdir"], str):
+            raise StyxValidationError(f'`scriptsdir` has the wrong type: Received `{type(params.get("scriptsdir", None))}` expected `str | None`')
+    if params.get("cross", False) is None:
+        raise StyxValidationError("`cross` must not be None")
+    if not isinstance(params["cross"], bool):
+        raise StyxValidationError(f'`cross` has the wrong type: Received `{type(params.get("cross", False))}` expected `bool`')
+    if params.get("base", False) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], bool):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", False))}` expected `bool`')
+    if params.get("long", False) is None:
+        raise StyxValidationError("`long` must not be None")
+    if not isinstance(params["long"], bool):
+        raise StyxValidationError(f'`long` has the wrong type: Received `{type(params.get("long", False))}` expected `bool`')
+    if params.get("cflags", None) is not None:
+        if not isinstance(params["cflags"], str):
+            raise StyxValidationError(f'`cflags` has the wrong type: Received `{type(params.get("cflags", None))}` expected `str | None`')
+    if params.get("bflags", None) is not None:
+        if not isinstance(params["bflags"], str):
+            raise StyxValidationError(f'`bflags` has the wrong type: Received `{type(params.get("bflags", None))}` expected `str | None`')
+    if params.get("lflags", None) is not None:
+        if not isinstance(params["lflags"], str):
+            raise StyxValidationError(f'`lflags` has the wrong type: Received `{type(params.get("lflags", None))}` expected `str | None`')
+    if params.get("affine", False) is None:
+        raise StyxValidationError("`affine` must not be None")
+    if not isinstance(params["affine"], bool):
+        raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("simulate", False) is None:
+        raise StyxValidationError("`simulate` must not be None")
+    if not isinstance(params["simulate"], bool):
+        raise StyxValidationError(f'`simulate` has the wrong type: Received `{type(params.get("simulate", False))}` expected `bool`')
+    if params.get("simfiles", False) is None:
+        raise StyxValidationError("`simfiles` must not be None")
+    if not isinstance(params["simfiles"], bool):
+        raise StyxValidationError(f'`simfiles` has the wrong type: Received `{type(params.get("simfiles", False))}` expected `bool`')
+    if params.get("check", False) is None:
+        raise StyxValidationError("`check` must not be None")
+    if not isinstance(params["check"], bool):
+        raise StyxValidationError(f'`check` has the wrong type: Received `{type(params.get("check", False))}` expected `bool`')
+    if params.get("pause", None) is not None:
+        if not isinstance(params["pause"], (float, int)):
+            raise StyxValidationError(f'`pause` has the wrong type: Received `{type(params.get("pause", None))}` expected `float | None`')
+    if params.get("max", None) is not None:
+        if not isinstance(params["max"], (float, int)):
+            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float | None`')
+    if params.get("queue", None) is not None:
+        if not isinstance(params["queue"], str):
+            raise StyxValidationError(f'`queue` has the wrong type: Received `{type(params.get("queue", None))}` expected `str | None`')
+    if params.get("cmem", None) is not None:
+        if not isinstance(params["cmem"], (float, int)):
+            raise StyxValidationError(f'`cmem` has the wrong type: Received `{type(params.get("cmem", None))}` expected `float | None`')
+    if params.get("bmem", None) is not None:
+        if not isinstance(params["bmem"], (float, int)):
+            raise StyxValidationError(f'`bmem` has the wrong type: Received `{type(params.get("bmem", None))}` expected `float | None`')
+    if params.get("lmem", None) is not None:
+        if not isinstance(params["lmem"], (float, int)):
+            raise StyxValidationError(f'`lmem` has the wrong type: Received `{type(params.get("lmem", None))}` expected `float | None`')
+    if params.get("cnodes", None) is not None:
+        if not isinstance(params["cnodes"], (float, int)):
+            raise StyxValidationError(f'`cnodes` has the wrong type: Received `{type(params.get("cnodes", None))}` expected `float | None`')
+    if params.get("bnodes", None) is not None:
+        if not isinstance(params["bnodes"], (float, int)):
+            raise StyxValidationError(f'`bnodes` has the wrong type: Received `{type(params.get("bnodes", None))}` expected `float | None`')
+    if params.get("lnodes", None) is not None:
+        if not isinstance(params["lnodes"], (float, int)):
+            raise StyxValidationError(f'`lnodes` has the wrong type: Received `{type(params.get("lnodes", None))}` expected `float | None`')
+
+
 def long_submit_jobs_cargs(
     params: LongSubmitJobsParameters,
     execution: Execution,
@@ -342,6 +441,7 @@ def long_submit_jobs_execute(
     Returns:
         NamedTuple of outputs (described in `LongSubmitJobsOutputs`).
     """
+    long_submit_jobs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LONG_SUBMIT_JOBS_METADATA)
     params = execution.params(params)

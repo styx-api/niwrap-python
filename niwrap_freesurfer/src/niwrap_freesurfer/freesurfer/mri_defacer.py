@@ -181,6 +181,122 @@ def mri_defacer_params(
     return params
 
 
+def mri_defacer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriDefacerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("headmask", None) is None:
+        raise StyxValidationError("`headmask` must not be None")
+    if not isinstance(params["headmask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`headmask` has the wrong type: Received `{type(params.get("headmask", None))}` expected `InputPathType`')
+    if params.get("tempsurf", None) is None:
+        raise StyxValidationError("`tempsurf` must not be None")
+    if not isinstance(params["tempsurf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tempsurf` has the wrong type: Received `{type(params.get("tempsurf", None))}` expected `InputPathType`')
+    if params.get("templabel", None) is not None:
+        if not isinstance(params["templabel"], list):
+            raise StyxValidationError(f'`templabel` has the wrong type: Received `{type(params.get("templabel", None))}` expected `list[InputPathType] | None`')
+        for e in params["templabel"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`templabel` has the wrong type: Received `{type(params.get("templabel", None))}` expected `list[InputPathType] | None`')
+    if params.get("watermark", None) is not None:
+        if not isinstance(params["watermark"], (float, int)):
+            raise StyxValidationError(f'`watermark` has the wrong type: Received `{type(params.get("watermark", None))}` expected `float | None`')
+    if params.get("defaced_volume", None) is None:
+        raise StyxValidationError("`defaced_volume` must not be None")
+    if not isinstance(params["defaced_volume"], str):
+        raise StyxValidationError(f'`defaced_volume` has the wrong type: Received `{type(params.get("defaced_volume", None))}` expected `str`')
+    if params.get("facemask", None) is not None:
+        if not isinstance(params["facemask"], str):
+            raise StyxValidationError(f'`facemask` has the wrong type: Received `{type(params.get("facemask", None))}` expected `str | None`')
+    if params.get("fill_constants", None) is not None:
+        if not isinstance(params["fill_constants"], list):
+            raise StyxValidationError(f'`fill_constants` has the wrong type: Received `{type(params.get("fill_constants", None))}` expected `list[float] | None`')
+        if len(params["fill_constants"]) == 2:
+            raise StyxValidationError("Parameter `fill_constants` must contain exactly 2 elements")
+        for e in params["fill_constants"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fill_constants` has the wrong type: Received `{type(params.get("fill_constants", None))}` expected `list[float] | None`')
+    if params.get("exclude_mask", None) is not None:
+        if not isinstance(params["exclude_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exclude_mask` has the wrong type: Received `{type(params.get("exclude_mask", None))}` expected `InputPathType | None`')
+    if params.get("tempreg", None) is not None:
+        if not isinstance(params["tempreg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tempreg` has the wrong type: Received `{type(params.get("tempreg", None))}` expected `InputPathType | None`')
+    if params.get("minsurfpath", None) is not None:
+        if not isinstance(params["minsurfpath"], str):
+            raise StyxValidationError(f'`minsurfpath` has the wrong type: Received `{type(params.get("minsurfpath", None))}` expected `str | None`')
+    if params.get("maxsurfpath", None) is not None:
+        if not isinstance(params["maxsurfpath"], str):
+            raise StyxValidationError(f'`maxsurfpath` has the wrong type: Received `{type(params.get("maxsurfpath", None))}` expected `str | None`')
+    if params.get("distbounds", None) is not None:
+        if not isinstance(params["distbounds"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`distbounds` has the wrong type: Received `{type(params.get("distbounds", None))}` expected `InputPathType | None`')
+    if params.get("distoverlay", None) is not None:
+        if not isinstance(params["distoverlay"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`distoverlay` has the wrong type: Received `{type(params.get("distoverlay", None))}` expected `InputPathType | None`')
+    if params.get("distdat", None) is not None:
+        if not isinstance(params["distdat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`distdat` has the wrong type: Received `{type(params.get("distdat", None))}` expected `InputPathType | None`')
+    if params.get("statspath", None) is not None:
+        if not isinstance(params["statspath"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`statspath` has the wrong type: Received `{type(params.get("statspath", None))}` expected `InputPathType | None`')
+    if params.get("output_tempsurf", None) is not None:
+        if not isinstance(params["output_tempsurf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`output_tempsurf` has the wrong type: Received `{type(params.get("output_tempsurf", None))}` expected `InputPathType | None`')
+    if params.get("apply_to_volume", None) is not None:
+        if not isinstance(params["apply_to_volume"], list):
+            raise StyxValidationError(f'`apply_to_volume` has the wrong type: Received `{type(params.get("apply_to_volume", None))}` expected `list[str] | None`')
+        if len(params["apply_to_volume"]) == 4:
+            raise StyxValidationError("Parameter `apply_to_volume` must contain exactly 4 elements")
+        for e in params["apply_to_volume"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`apply_to_volume` has the wrong type: Received `{type(params.get("apply_to_volume", None))}` expected `list[str] | None`')
+    if params.get("ripple_center", None) is not None:
+        if not isinstance(params["ripple_center"], list):
+            raise StyxValidationError(f'`ripple_center` has the wrong type: Received `{type(params.get("ripple_center", None))}` expected `list[float] | None`')
+        if len(params["ripple_center"]) == 3:
+            raise StyxValidationError("Parameter `ripple_center` must contain exactly 3 elements")
+        for e in params["ripple_center"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ripple_center` has the wrong type: Received `{type(params.get("ripple_center", None))}` expected `list[float] | None`')
+    if params.get("apply_ripple", None) is not None:
+        if not isinstance(params["apply_ripple"], list):
+            raise StyxValidationError(f'`apply_ripple` has the wrong type: Received `{type(params.get("apply_ripple", None))}` expected `list[str] | None`')
+        if len(params["apply_ripple"]) == 6:
+            raise StyxValidationError("Parameter `apply_ripple` must contain exactly 6 elements")
+        for e in params["apply_ripple"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`apply_ripple` has the wrong type: Received `{type(params.get("apply_ripple", None))}` expected `list[str] | None`')
+    if params.get("diagnostic_level", None) is not None:
+        if not isinstance(params["diagnostic_level"], (float, int)):
+            raise StyxValidationError(f'`diagnostic_level` has the wrong type: Received `{type(params.get("diagnostic_level", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mri_defacer_cargs(
     params: MriDefacerParameters,
     execution: Execution,
@@ -344,6 +460,7 @@ def mri_defacer_execute(
     Returns:
         NamedTuple of outputs (described in `MriDefacerOutputs`).
     """
+    mri_defacer_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_DEFACER_METADATA)
     params = execution.params(params)

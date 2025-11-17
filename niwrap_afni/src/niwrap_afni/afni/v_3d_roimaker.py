@@ -177,6 +177,89 @@ def v_3d_roimaker_params(
     return params
 
 
+def v_3d_roimaker_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRoimakerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("thresh", None) is None:
+        raise StyxValidationError("`thresh` must not be None")
+    if not isinstance(params["thresh"], (float, int)):
+        raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `float`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("refset", None) is not None:
+        if not isinstance(params["refset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`refset` has the wrong type: Received `{type(params.get("refset", None))}` expected `InputPathType | None`')
+    if params.get("volthr", None) is not None:
+        if not isinstance(params["volthr"], (float, int)):
+            raise StyxValidationError(f'`volthr` has the wrong type: Received `{type(params.get("volthr", None))}` expected `float | None`')
+    if params.get("only_some_top", None) is not None:
+        if not isinstance(params["only_some_top"], (float, int)):
+            raise StyxValidationError(f'`only_some_top` has the wrong type: Received `{type(params.get("only_some_top", None))}` expected `float | None`')
+    if params.get("only_conn_top", None) is not None:
+        if not isinstance(params["only_conn_top"], (float, int)):
+            raise StyxValidationError(f'`only_conn_top` has the wrong type: Received `{type(params.get("only_conn_top", None))}` expected `float | None`')
+    if params.get("inflate", None) is not None:
+        if not isinstance(params["inflate"], (float, int)):
+            raise StyxValidationError(f'`inflate` has the wrong type: Received `{type(params.get("inflate", None))}` expected `float | None`')
+    if params.get("trim_off_wm", False) is None:
+        raise StyxValidationError("`trim_off_wm` must not be None")
+    if not isinstance(params["trim_off_wm"], bool):
+        raise StyxValidationError(f'`trim_off_wm` has the wrong type: Received `{type(params.get("trim_off_wm", False))}` expected `bool`')
+    if params.get("wm_skel", None) is not None:
+        if not isinstance(params["wm_skel"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wm_skel` has the wrong type: Received `{type(params.get("wm_skel", None))}` expected `InputPathType | None`')
+    if params.get("skel_thr", None) is not None:
+        if not isinstance(params["skel_thr"], (float, int)):
+            raise StyxValidationError(f'`skel_thr` has the wrong type: Received `{type(params.get("skel_thr", None))}` expected `float | None`')
+    if params.get("skel_stop", False) is None:
+        raise StyxValidationError("`skel_stop` must not be None")
+    if not isinstance(params["skel_stop"], bool):
+        raise StyxValidationError(f'`skel_stop` has the wrong type: Received `{type(params.get("skel_stop", False))}` expected `bool`')
+    if params.get("skel_stop_strict", False) is None:
+        raise StyxValidationError("`skel_stop_strict` must not be None")
+    if not isinstance(params["skel_stop_strict"], bool):
+        raise StyxValidationError(f'`skel_stop_strict` has the wrong type: Received `{type(params.get("skel_stop_strict", False))}` expected `bool`')
+    if params.get("csf_skel", None) is not None:
+        if not isinstance(params["csf_skel"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`csf_skel` has the wrong type: Received `{type(params.get("csf_skel", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("neigh_upto_vert", False) is None:
+        raise StyxValidationError("`neigh_upto_vert` must not be None")
+    if not isinstance(params["neigh_upto_vert"], bool):
+        raise StyxValidationError(f'`neigh_upto_vert` has the wrong type: Received `{type(params.get("neigh_upto_vert", False))}` expected `bool`')
+    if params.get("nifti", False) is None:
+        raise StyxValidationError("`nifti` must not be None")
+    if not isinstance(params["nifti"], bool):
+        raise StyxValidationError(f'`nifti` has the wrong type: Received `{type(params.get("nifti", False))}` expected `bool`')
+    if params.get("preinfl_inset", None) is not None:
+        if not isinstance(params["preinfl_inset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`preinfl_inset` has the wrong type: Received `{type(params.get("preinfl_inset", None))}` expected `InputPathType | None`')
+    if params.get("preinfl_inflate", None) is not None:
+        if not isinstance(params["preinfl_inflate"], (float, int)):
+            raise StyxValidationError(f'`preinfl_inflate` has the wrong type: Received `{type(params.get("preinfl_inflate", None))}` expected `float | None`')
+    if params.get("dump_no_labtab", False) is None:
+        raise StyxValidationError("`dump_no_labtab` must not be None")
+    if not isinstance(params["dump_no_labtab"], bool):
+        raise StyxValidationError(f'`dump_no_labtab` has the wrong type: Received `{type(params.get("dump_no_labtab", False))}` expected `bool`')
+
+
 def v_3d_roimaker_cargs(
     params: V3dRoimakerParameters,
     execution: Execution,
@@ -312,6 +395,7 @@ def v_3d_roimaker_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRoimakerOutputs`).
     """
+    v_3d_roimaker_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ROIMAKER_METADATA)
     params = execution.params(params)

@@ -136,6 +136,65 @@ def fat_mvm_scripter_py_params(
     return params
 
 
+def fat_mvm_scripter_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatMvmScripterPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("table", None) is None:
+        raise StyxValidationError("`table` must not be None")
+    if not isinstance(params["table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`table` has the wrong type: Received `{type(params.get("table", None))}` expected `InputPathType`')
+    if params.get("log", None) is None:
+        raise StyxValidationError("`log` must not be None")
+    if not isinstance(params["log"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`log` has the wrong type: Received `{type(params.get("log", None))}` expected `InputPathType`')
+    if params.get("vars", None) is not None:
+        if not isinstance(params["vars"], str):
+            raise StyxValidationError(f'`vars` has the wrong type: Received `{type(params.get("vars", None))}` expected `str | None`')
+    if params.get("file_vars", None) is not None:
+        if not isinstance(params["file_vars"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`file_vars` has the wrong type: Received `{type(params.get("file_vars", None))}` expected `InputPathType | None`')
+    if params.get("Pars", None) is not None:
+        if not isinstance(params["Pars"], str):
+            raise StyxValidationError(f'`Pars` has the wrong type: Received `{type(params.get("Pars", None))}` expected `str | None`')
+    if params.get("file_Pars", None) is not None:
+        if not isinstance(params["file_Pars"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`file_Pars` has the wrong type: Received `{type(params.get("file_Pars", None))}` expected `InputPathType | None`')
+    if params.get("rois", None) is not None:
+        if not isinstance(params["rois"], str):
+            raise StyxValidationError(f'`rois` has the wrong type: Received `{type(params.get("rois", None))}` expected `str | None`')
+    if params.get("file_rois", None) is not None:
+        if not isinstance(params["file_rois"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`file_rois` has the wrong type: Received `{type(params.get("file_rois", None))}` expected `InputPathType | None`')
+    if params.get("no_posthoc", False) is None:
+        raise StyxValidationError("`no_posthoc` must not be None")
+    if not isinstance(params["no_posthoc"], bool):
+        raise StyxValidationError(f'`no_posthoc` has the wrong type: Received `{type(params.get("no_posthoc", False))}` expected `bool`')
+    if params.get("NA_warn_off", False) is None:
+        raise StyxValidationError("`NA_warn_off` must not be None")
+    if not isinstance(params["NA_warn_off"], bool):
+        raise StyxValidationError(f'`NA_warn_off` has the wrong type: Received `{type(params.get("NA_warn_off", False))}` expected `bool`')
+    if params.get("subnet_pref", None) is not None:
+        if not isinstance(params["subnet_pref"], str):
+            raise StyxValidationError(f'`subnet_pref` has the wrong type: Received `{type(params.get("subnet_pref", None))}` expected `str | None`')
+    if params.get("cat_pair_off", False) is None:
+        raise StyxValidationError("`cat_pair_off` must not be None")
+    if not isinstance(params["cat_pair_off"], bool):
+        raise StyxValidationError(f'`cat_pair_off` has the wrong type: Received `{type(params.get("cat_pair_off", False))}` expected `bool`')
+
+
 def fat_mvm_scripter_py_cargs(
     params: FatMvmScripterPyParameters,
     execution: Execution,
@@ -247,6 +306,7 @@ def fat_mvm_scripter_py_execute(
     Returns:
         NamedTuple of outputs (described in `FatMvmScripterPyOutputs`).
     """
+    fat_mvm_scripter_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_MVM_SCRIPTER_PY_METADATA)
     params = execution.params(params)

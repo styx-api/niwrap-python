@@ -145,6 +145,86 @@ def aparcstats2table_params(
     return params
 
 
+def aparcstats2table_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Aparcstats2tableParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is not None:
+        if not isinstance(params["subjects"], list):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+        for e in params["subjects"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+    if params.get("subjectsfile", None) is not None:
+        if not isinstance(params["subjectsfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subjectsfile` has the wrong type: Received `{type(params.get("subjectsfile", None))}` expected `InputPathType | None`')
+    if params.get("qdec", None) is not None:
+        if not isinstance(params["qdec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`qdec` has the wrong type: Received `{type(params.get("qdec", None))}` expected `InputPathType | None`')
+    if params.get("qdec_long", None) is not None:
+        if not isinstance(params["qdec_long"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`qdec_long` has the wrong type: Received `{type(params.get("qdec_long", None))}` expected `InputPathType | None`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("tablefile", None) is None:
+        raise StyxValidationError("`tablefile` must not be None")
+    if not isinstance(params["tablefile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tablefile` has the wrong type: Received `{type(params.get("tablefile", None))}` expected `InputPathType`')
+    if params.get("parcellation", None) is not None:
+        if not isinstance(params["parcellation"], str):
+            raise StyxValidationError(f'`parcellation` has the wrong type: Received `{type(params.get("parcellation", None))}` expected `str | None`')
+    if params.get("measure", None) is not None:
+        if not isinstance(params["measure"], str):
+            raise StyxValidationError(f'`measure` has the wrong type: Received `{type(params.get("measure", None))}` expected `str | None`')
+    if params.get("delimiter", None) is not None:
+        if not isinstance(params["delimiter"], str):
+            raise StyxValidationError(f'`delimiter` has the wrong type: Received `{type(params.get("delimiter", None))}` expected `str | None`')
+    if params.get("skip_missing", False) is None:
+        raise StyxValidationError("`skip_missing` must not be None")
+    if not isinstance(params["skip_missing"], bool):
+        raise StyxValidationError(f'`skip_missing` has the wrong type: Received `{type(params.get("skip_missing", False))}` expected `bool`')
+    if params.get("parcid_only", False) is None:
+        raise StyxValidationError("`parcid_only` must not be None")
+    if not isinstance(params["parcid_only"], bool):
+        raise StyxValidationError(f'`parcid_only` has the wrong type: Received `{type(params.get("parcid_only", False))}` expected `bool`')
+    if params.get("common_parcs", False) is None:
+        raise StyxValidationError("`common_parcs` must not be None")
+    if not isinstance(params["common_parcs"], bool):
+        raise StyxValidationError(f'`common_parcs` has the wrong type: Received `{type(params.get("common_parcs", False))}` expected `bool`')
+    if params.get("parcs_file", None) is not None:
+        if not isinstance(params["parcs_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`parcs_file` has the wrong type: Received `{type(params.get("parcs_file", None))}` expected `InputPathType | None`')
+    if params.get("report_rois", False) is None:
+        raise StyxValidationError("`report_rois` must not be None")
+    if not isinstance(params["report_rois"], bool):
+        raise StyxValidationError(f'`report_rois` has the wrong type: Received `{type(params.get("report_rois", False))}` expected `bool`')
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("etiv", False) is None:
+        raise StyxValidationError("`etiv` must not be None")
+    if not isinstance(params["etiv"], bool):
+        raise StyxValidationError(f'`etiv` has the wrong type: Received `{type(params.get("etiv", False))}` expected `bool`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+
+
 def aparcstats2table_cargs(
     params: Aparcstats2tableParameters,
     execution: Execution,
@@ -270,6 +350,7 @@ def aparcstats2table_execute(
     Returns:
         NamedTuple of outputs (described in `Aparcstats2tableOutputs`).
     """
+    aparcstats2table_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APARCSTATS2TABLE_METADATA)
     params = execution.params(params)

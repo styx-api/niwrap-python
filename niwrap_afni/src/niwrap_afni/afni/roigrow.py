@@ -98,6 +98,54 @@ def roigrow_params(
     return params
 
 
+def roigrow_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RoigrowParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], str):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `str`')
+    if params.get("roi_labels", None) is None:
+        raise StyxValidationError("`roi_labels` must not be None")
+    if not isinstance(params["roi_labels"], str):
+        raise StyxValidationError(f'`roi_labels` has the wrong type: Received `{type(params.get("roi_labels", None))}` expected `str`')
+    if params.get("lim_distance", None) is None:
+        raise StyxValidationError("`lim_distance` must not be None")
+    if not isinstance(params["lim_distance"], (float, int)):
+        raise StyxValidationError(f'`lim_distance` has the wrong type: Received `{type(params.get("lim_distance", None))}` expected `float`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("full_list", False) is None:
+        raise StyxValidationError("`full_list` must not be None")
+    if not isinstance(params["full_list"], bool):
+        raise StyxValidationError(f'`full_list` has the wrong type: Received `{type(params.get("full_list", False))}` expected `bool`')
+    if params.get("grow_from_edge", False) is None:
+        raise StyxValidationError("`grow_from_edge` must not be None")
+    if not isinstance(params["grow_from_edge"], bool):
+        raise StyxValidationError(f'`grow_from_edge` has the wrong type: Received `{type(params.get("grow_from_edge", False))}` expected `bool`')
+    if params.get("insphere_diameter", None) is not None:
+        if not isinstance(params["insphere_diameter"], (float, int)):
+            raise StyxValidationError(f'`insphere_diameter` has the wrong type: Received `{type(params.get("insphere_diameter", None))}` expected `float | None`')
+    if params.get("inbox_edges", None) is not None:
+        if not isinstance(params["inbox_edges"], list):
+            raise StyxValidationError(f'`inbox_edges` has the wrong type: Received `{type(params.get("inbox_edges", None))}` expected `list[float] | None`')
+        if len(params["inbox_edges"]) == 3:
+            raise StyxValidationError("Parameter `inbox_edges` must contain exactly 3 elements")
+        for e in params["inbox_edges"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`inbox_edges` has the wrong type: Received `{type(params.get("inbox_edges", None))}` expected `list[float] | None`')
+
+
 def roigrow_cargs(
     params: RoigrowParameters,
     execution: Execution,
@@ -186,6 +234,7 @@ def roigrow_execute(
     Returns:
         NamedTuple of outputs (described in `RoigrowOutputs`).
     """
+    roigrow_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ROIGROW_METADATA)
     params = execution.params(params)

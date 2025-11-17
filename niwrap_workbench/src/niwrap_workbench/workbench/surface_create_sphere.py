@@ -55,6 +55,28 @@ def surface_create_sphere_params(
     return params
 
 
+def surface_create_sphere_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceCreateSphereParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sphere-out", None) is None:
+        raise StyxValidationError("`sphere-out` must not be None")
+    if not isinstance(params["sphere-out"], str):
+        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
+    if params.get("num-vertices", None) is None:
+        raise StyxValidationError("`num-vertices` must not be None")
+    if not isinstance(params["num-vertices"], int):
+        raise StyxValidationError(f'`num-vertices` has the wrong type: Received `{type(params.get("num-vertices", None))}` expected `int`')
+
+
 def surface_create_sphere_cargs(
     params: SurfaceCreateSphereParameters,
     execution: Execution,
@@ -123,6 +145,7 @@ def surface_create_sphere_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceCreateSphereOutputs`).
     """
+    surface_create_sphere_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_CREATE_SPHERE_METADATA)
     params = execution.params(params)

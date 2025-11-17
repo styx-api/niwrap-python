@@ -115,6 +115,59 @@ def mri_cc_params(
     return params
 
 
+def mri_cc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("aseg_file", None) is not None:
+        if not isinstance(params["aseg_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aseg_file` has the wrong type: Received `{type(params.get("aseg_file", None))}` expected `InputPathType | None`')
+    if params.get("norm_file", None) is not None:
+        if not isinstance(params["norm_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`norm_file` has the wrong type: Received `{type(params.get("norm_file", None))}` expected `InputPathType | None`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("rotation_lta", None) is not None:
+        if not isinstance(params["rotation_lta"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rotation_lta` has the wrong type: Received `{type(params.get("rotation_lta", None))}` expected `InputPathType | None`')
+    if params.get("force_flag", False) is None:
+        raise StyxValidationError("`force_flag` must not be None")
+    if not isinstance(params["force_flag"], bool):
+        raise StyxValidationError(f'`force_flag` has the wrong type: Received `{type(params.get("force_flag", False))}` expected `bool`')
+    if params.get("include_fornix", False) is None:
+        raise StyxValidationError("`include_fornix` must not be None")
+    if not isinstance(params["include_fornix"], bool):
+        raise StyxValidationError(f'`include_fornix` has the wrong type: Received `{type(params.get("include_fornix", False))}` expected `bool`')
+    if params.get("compartments", None) is not None:
+        if not isinstance(params["compartments"], (float, int)):
+            raise StyxValidationError(f'`compartments` has the wrong type: Received `{type(params.get("compartments", None))}` expected `float | None`')
+    if params.get("thickness", None) is not None:
+        if not isinstance(params["thickness"], (float, int)):
+            raise StyxValidationError(f'`thickness` has the wrong type: Received `{type(params.get("thickness", None))}` expected `float | None`')
+    if params.get("skip_voxels", None) is not None:
+        if not isinstance(params["skip_voxels"], (float, int)):
+            raise StyxValidationError(f'`skip_voxels` has the wrong type: Received `{type(params.get("skip_voxels", None))}` expected `float | None`')
+    if params.get("max_rotation", None) is not None:
+        if not isinstance(params["max_rotation"], (float, int)):
+            raise StyxValidationError(f'`max_rotation` has the wrong type: Received `{type(params.get("max_rotation", None))}` expected `float | None`')
+
+
 def mri_cc_cargs(
     params: MriCcParameters,
     execution: Execution,
@@ -223,6 +276,7 @@ def mri_cc_execute(
     Returns:
         NamedTuple of outputs (described in `MriCcOutputs`).
     """
+    mri_cc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CC_METADATA)
     params = execution.params(params)

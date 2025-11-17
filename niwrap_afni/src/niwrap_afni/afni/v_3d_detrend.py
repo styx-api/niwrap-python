@@ -59,6 +59,29 @@ def v_3d_detrend_params(
     return params
 
 
+def v_3d_detrend_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDetrendParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+
+
 def v_3d_detrend_cargs(
     params: V3dDetrendParameters,
     execution: Execution,
@@ -121,6 +144,7 @@ def v_3d_detrend_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDetrendOutputs`).
     """
+    v_3d_detrend_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DETREND_METADATA)
     params = execution.params(params)

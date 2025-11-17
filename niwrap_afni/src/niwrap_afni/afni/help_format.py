@@ -51,6 +51,24 @@ def help_format_params(
     return params
 
 
+def help_format_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HelpFormatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("stdin", None) is None:
+        raise StyxValidationError("`stdin` must not be None")
+    if not isinstance(params["stdin"], str):
+        raise StyxValidationError(f'`stdin` has the wrong type: Received `{type(params.get("stdin", None))}` expected `str`')
+
+
 def help_format_cargs(
     params: HelpFormatParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def help_format_execute(
     Returns:
         NamedTuple of outputs (described in `HelpFormatOutputs`).
     """
+    help_format_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HELP_FORMAT_METADATA)
     params = execution.params(params)

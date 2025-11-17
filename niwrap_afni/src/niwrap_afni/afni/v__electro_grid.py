@@ -83,6 +83,45 @@ def v__electro_grid_params(
     return params
 
 
+def v__electro_grid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VElectroGridParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("strip", None) is not None:
+        if not isinstance(params["strip"], int):
+            raise StyxValidationError(f'`strip` has the wrong type: Received `{type(params.get("strip", None))}` expected `int | None`')
+    if params.get("grid", None) is not None:
+        if not isinstance(params["grid"], list):
+            raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[int] | None`')
+        if len(params["grid"]) == 2:
+            raise StyxValidationError("Parameter `grid` must contain exactly 2 elements")
+        for e in params["grid"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`grid` has the wrong type: Received `{type(params.get("grid", None))}` expected `list[int] | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("coords", None) is not None:
+        if not isinstance(params["coords"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`coords` has the wrong type: Received `{type(params.get("coords", None))}` expected `InputPathType | None`')
+    if params.get("with_markers", False) is None:
+        raise StyxValidationError("`with_markers` must not be None")
+    if not isinstance(params["with_markers"], bool):
+        raise StyxValidationError(f'`with_markers` has the wrong type: Received `{type(params.get("with_markers", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+
+
 def v__electro_grid_cargs(
     params: VElectroGridParameters,
     execution: Execution,
@@ -164,6 +203,7 @@ def v__electro_grid_execute(
     Returns:
         NamedTuple of outputs (described in `VElectroGridOutputs`).
     """
+    v__electro_grid_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ELECTRO_GRID_METADATA)
     params = execution.params(params)

@@ -99,6 +99,59 @@ def tractstats2table_params(
     return params
 
 
+def tractstats2table_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tractstats2tableParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputs", None) is not None:
+        if not isinstance(params["inputs"], list):
+            raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[str] | None`')
+        for e in params["inputs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[str] | None`')
+    if params.get("load_pathstats_from_file", None) is not None:
+        if not isinstance(params["load_pathstats_from_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`load_pathstats_from_file` has the wrong type: Received `{type(params.get("load_pathstats_from_file", None))}` expected `InputPathType | None`')
+    if params.get("overall", False) is None:
+        raise StyxValidationError("`overall` must not be None")
+    if not isinstance(params["overall"], bool):
+        raise StyxValidationError(f'`overall` has the wrong type: Received `{type(params.get("overall", False))}` expected `bool`')
+    if params.get("byvoxel", False) is None:
+        raise StyxValidationError("`byvoxel` must not be None")
+    if not isinstance(params["byvoxel"], bool):
+        raise StyxValidationError(f'`byvoxel` has the wrong type: Received `{type(params.get("byvoxel", False))}` expected `bool`')
+    if params.get("byvoxel_measure", None) is not None:
+        if not isinstance(params["byvoxel_measure"], str):
+            raise StyxValidationError(f'`byvoxel_measure` has the wrong type: Received `{type(params.get("byvoxel_measure", None))}` expected `typing.Literal["AD", "RD", "MD", "FA"] | None`')
+        if params["byvoxel_measure"] not in ["AD", "RD", "MD", "FA"]:
+            raise StyxValidationError("Parameter `byvoxel_measure` must be one of [\"AD\", \"RD\", \"MD\", \"FA\"]")
+    if params.get("tablefile", None) is None:
+        raise StyxValidationError("`tablefile` must not be None")
+    if not isinstance(params["tablefile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tablefile` has the wrong type: Received `{type(params.get("tablefile", None))}` expected `InputPathType`')
+    if params.get("delimiter", None) is not None:
+        if not isinstance(params["delimiter"], str):
+            raise StyxValidationError(f'`delimiter` has the wrong type: Received `{type(params.get("delimiter", None))}` expected `typing.Literal["tab", "comma", "space", "semicolon"] | None`')
+        if params["delimiter"] not in ["tab", "comma", "space", "semicolon"]:
+            raise StyxValidationError("Parameter `delimiter` must be one of [\"tab\", \"comma\", \"space\", \"semicolon\"]")
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def tractstats2table_cargs(
     params: Tractstats2tableParameters,
     execution: Execution,
@@ -189,6 +242,7 @@ def tractstats2table_execute(
     Returns:
         NamedTuple of outputs (described in `Tractstats2tableOutputs`).
     """
+    tractstats2table_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TRACTSTATS2TABLE_METADATA)
     params = execution.params(params)

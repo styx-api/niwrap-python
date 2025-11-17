@@ -66,6 +66,34 @@ def v__djunct_anonymize_params(
     return params
 
 
+def v__djunct_anonymize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunctAnonymizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("add_note", None) is not None:
+        if not isinstance(params["add_note"], str):
+            raise StyxValidationError(f'`add_note` has the wrong type: Received `{type(params.get("add_note", None))}` expected `str | None`')
+    if params.get("copy_to", None) is not None:
+        if not isinstance(params["copy_to"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`copy_to` has the wrong type: Received `{type(params.get("copy_to", None))}` expected `InputPathType | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+
+
 def v__djunct_anonymize_cargs(
     params: VDjunctAnonymizeParameters,
     execution: Execution,
@@ -135,6 +163,7 @@ def v__djunct_anonymize_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunctAnonymizeOutputs`).
     """
+    v__djunct_anonymize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_ANONYMIZE_METADATA)
     params = execution.params(params)

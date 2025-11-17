@@ -94,6 +94,51 @@ def v_3d_zcat_params(
     return params
 
 
+def v_3d_zcat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dZcatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `typing.Literal["byte", "short", "float"] | None`')
+        if params["datum"] not in ["byte", "short", "float"]:
+            raise StyxValidationError("Parameter `datum` must be one of [\"byte\", \"short\", \"float\"]")
+    if params.get("fscale", False) is None:
+        raise StyxValidationError("`fscale` must not be None")
+    if not isinstance(params["fscale"], bool):
+        raise StyxValidationError(f'`fscale` has the wrong type: Received `{type(params.get("fscale", False))}` expected `bool`')
+    if params.get("nscale", False) is None:
+        raise StyxValidationError("`nscale` must not be None")
+    if not isinstance(params["nscale"], bool):
+        raise StyxValidationError(f'`nscale` has the wrong type: Received `{type(params.get("nscale", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+    if params.get("frugal", False) is None:
+        raise StyxValidationError("`frugal` must not be None")
+    if not isinstance(params["frugal"], bool):
+        raise StyxValidationError(f'`frugal` has the wrong type: Received `{type(params.get("frugal", False))}` expected `bool`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def v_3d_zcat_cargs(
     params: V3dZcatParameters,
     execution: Execution,
@@ -171,6 +216,7 @@ def v_3d_zcat_execute(
     Returns:
         NamedTuple of outputs (described in `V3dZcatOutputs`).
     """
+    v_3d_zcat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ZCAT_METADATA)
     params = execution.params(params)

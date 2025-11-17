@@ -81,6 +81,48 @@ def mris_image2vtk_params(
     return params
 
 
+def mris_image2vtk_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisImage2vtkParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_filename", None) is None:
+        raise StyxValidationError("`input_filename` must not be None")
+    if not isinstance(params["input_filename"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_filename` has the wrong type: Received `{type(params.get("input_filename", None))}` expected `InputPathType`')
+    if params.get("output_filename", None) is None:
+        raise StyxValidationError("`output_filename` must not be None")
+    if not isinstance(params["output_filename"], str):
+        raise StyxValidationError(f'`output_filename` has the wrong type: Received `{type(params.get("output_filename", None))}` expected `str`')
+    if params.get("lower_threshold", None) is None:
+        raise StyxValidationError("`lower_threshold` must not be None")
+    if not isinstance(params["lower_threshold"], (float, int)):
+        raise StyxValidationError(f'`lower_threshold` has the wrong type: Received `{type(params.get("lower_threshold", None))}` expected `float`')
+    if params.get("upper_threshold", None) is None:
+        raise StyxValidationError("`upper_threshold` must not be None")
+    if not isinstance(params["upper_threshold"], (float, int)):
+        raise StyxValidationError(f'`upper_threshold` has the wrong type: Received `{type(params.get("upper_threshold", None))}` expected `float`')
+    if params.get("vtk_smoothing_iters", None) is None:
+        raise StyxValidationError("`vtk_smoothing_iters` must not be None")
+    if not isinstance(params["vtk_smoothing_iters"], (float, int)):
+        raise StyxValidationError(f'`vtk_smoothing_iters` has the wrong type: Received `{type(params.get("vtk_smoothing_iters", None))}` expected `float`')
+    if params.get("image_smoothing_size", None) is None:
+        raise StyxValidationError("`image_smoothing_size` must not be None")
+    if not isinstance(params["image_smoothing_size"], (float, int)):
+        raise StyxValidationError(f'`image_smoothing_size` has the wrong type: Received `{type(params.get("image_smoothing_size", None))}` expected `float`')
+    if params.get("reduction_percent", None) is None:
+        raise StyxValidationError("`reduction_percent` must not be None")
+    if not isinstance(params["reduction_percent"], (float, int)):
+        raise StyxValidationError(f'`reduction_percent` has the wrong type: Received `{type(params.get("reduction_percent", None))}` expected `float`')
+
+
 def mris_image2vtk_cargs(
     params: MrisImage2vtkParameters,
     execution: Execution,
@@ -146,6 +188,7 @@ def mris_image2vtk_execute(
     Returns:
         NamedTuple of outputs (described in `MrisImage2vtkOutputs`).
     """
+    mris_image2vtk_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_IMAGE2VTK_METADATA)
     params = execution.params(params)

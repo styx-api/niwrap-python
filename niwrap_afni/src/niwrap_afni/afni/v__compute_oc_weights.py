@@ -109,6 +109,55 @@ def v__compute_oc_weights_params(
     return params
 
 
+def v__compute_oc_weights_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VComputeOcWeightsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("echo_times", None) is not None:
+        if not isinstance(params["echo_times"], str):
+            raise StyxValidationError(f'`echo_times` has the wrong type: Received `{type(params.get("echo_times", None))}` expected `str | None`')
+    if params.get("echo_times_file", None) is not None:
+        if not isinstance(params["echo_times_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`echo_times_file` has the wrong type: Received `{type(params.get("echo_times_file", None))}` expected `InputPathType | None`')
+    if params.get("echo_dsets", None) is None:
+        raise StyxValidationError("`echo_dsets` must not be None")
+    if not isinstance(params["echo_dsets"], list):
+        raise StyxValidationError(f'`echo_dsets` has the wrong type: Received `{type(params.get("echo_dsets", None))}` expected `list[str]`')
+    for e in params["echo_dsets"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`echo_dsets` has the wrong type: Received `{type(params.get("echo_dsets", None))}` expected `list[str]`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("def_to_equal", None) is not None:
+        if not isinstance(params["def_to_equal"], str):
+            raise StyxValidationError(f'`def_to_equal` has the wrong type: Received `{type(params.get("def_to_equal", None))}` expected `str | None`')
+    if params.get("oc_method", None) is not None:
+        if not isinstance(params["oc_method"], str):
+            raise StyxValidationError(f'`oc_method` has the wrong type: Received `{type(params.get("oc_method", None))}` expected `str | None`')
+    if params.get("sum_weight_tolerance", None) is not None:
+        if not isinstance(params["sum_weight_tolerance"], (float, int)):
+            raise StyxValidationError(f'`sum_weight_tolerance` has the wrong type: Received `{type(params.get("sum_weight_tolerance", None))}` expected `float | None`')
+    if params.get("t2_star_limit", None) is not None:
+        if not isinstance(params["t2_star_limit"], (float, int)):
+            raise StyxValidationError(f'`t2_star_limit` has the wrong type: Received `{type(params.get("t2_star_limit", None))}` expected `float | None`')
+    if params.get("work_dir", None) is not None:
+        if not isinstance(params["work_dir"], str):
+            raise StyxValidationError(f'`work_dir` has the wrong type: Received `{type(params.get("work_dir", None))}` expected `str | None`')
+    if params.get("verbosity", False) is None:
+        raise StyxValidationError("`verbosity` must not be None")
+    if not isinstance(params["verbosity"], bool):
+        raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", False))}` expected `bool`')
+
+
 def v__compute_oc_weights_cargs(
     params: VComputeOcWeightsParameters,
     execution: Execution,
@@ -212,6 +261,7 @@ def v__compute_oc_weights_execute(
     Returns:
         NamedTuple of outputs (described in `VComputeOcWeightsOutputs`).
     """
+    v__compute_oc_weights_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__COMPUTE_OC_WEIGHTS_METADATA)
     params = execution.params(params)

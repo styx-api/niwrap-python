@@ -71,6 +71,40 @@ def label_subject_flash_params(
     return params
 
 
+def label_subject_flash_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelSubjectFlashParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tissue_params", None) is None:
+        raise StyxValidationError("`tissue_params` must not be None")
+    if not isinstance(params["tissue_params"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tissue_params` has the wrong type: Received `{type(params.get("tissue_params", None))}` expected `InputPathType`')
+    if params.get("norm_volume", None) is None:
+        raise StyxValidationError("`norm_volume` must not be None")
+    if not isinstance(params["norm_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`norm_volume` has the wrong type: Received `{type(params.get("norm_volume", None))}` expected `InputPathType`')
+    if params.get("transform_file", None) is None:
+        raise StyxValidationError("`transform_file` must not be None")
+    if not isinstance(params["transform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType`')
+    if params.get("classifier_array", None) is None:
+        raise StyxValidationError("`classifier_array` must not be None")
+    if not isinstance(params["classifier_array"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`classifier_array` has the wrong type: Received `{type(params.get("classifier_array", None))}` expected `InputPathType`')
+    if params.get("aseg_output", None) is None:
+        raise StyxValidationError("`aseg_output` must not be None")
+    if not isinstance(params["aseg_output"], str):
+        raise StyxValidationError(f'`aseg_output` has the wrong type: Received `{type(params.get("aseg_output", None))}` expected `str`')
+
+
 def label_subject_flash_cargs(
     params: LabelSubjectFlashParameters,
     execution: Execution,
@@ -137,6 +171,7 @@ def label_subject_flash_execute(
     Returns:
         NamedTuple of outputs (described in `LabelSubjectFlashOutputs`).
     """
+    label_subject_flash_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL_SUBJECT_FLASH_METADATA)
     params = execution.params(params)

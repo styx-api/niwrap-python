@@ -80,6 +80,44 @@ def dmri_project_end_points_params(
     return params
 
 
+def dmri_project_end_points_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriProjectEndPointsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("streamline_file", None) is None:
+        raise StyxValidationError("`streamline_file` must not be None")
+    if not isinstance(params["streamline_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`streamline_file` has the wrong type: Received `{type(params.get("streamline_file", None))}` expected `InputPathType`')
+    if params.get("left_surface_file", None) is None:
+        raise StyxValidationError("`left_surface_file` must not be None")
+    if not isinstance(params["left_surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`left_surface_file` has the wrong type: Received `{type(params.get("left_surface_file", None))}` expected `InputPathType`')
+    if params.get("right_surface_file", None) is None:
+        raise StyxValidationError("`right_surface_file` must not be None")
+    if not isinstance(params["right_surface_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`right_surface_file` has the wrong type: Received `{type(params.get("right_surface_file", None))}` expected `InputPathType`')
+    if params.get("left_overlay_file", None) is None:
+        raise StyxValidationError("`left_overlay_file` must not be None")
+    if not isinstance(params["left_overlay_file"], str):
+        raise StyxValidationError(f'`left_overlay_file` has the wrong type: Received `{type(params.get("left_overlay_file", None))}` expected `str`')
+    if params.get("right_overlay_file", None) is None:
+        raise StyxValidationError("`right_overlay_file` must not be None")
+    if not isinstance(params["right_overlay_file"], str):
+        raise StyxValidationError(f'`right_overlay_file` has the wrong type: Received `{type(params.get("right_overlay_file", None))}` expected `str`')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+
+
 def dmri_project_end_points_cargs(
     params: DmriProjectEndPointsParameters,
     execution: Execution,
@@ -163,6 +201,7 @@ def dmri_project_end_points_execute(
     Returns:
         NamedTuple of outputs (described in `DmriProjectEndPointsOutputs`).
     """
+    dmri_project_end_points_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_PROJECT_END_POINTS_METADATA)
     params = execution.params(params)

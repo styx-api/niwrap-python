@@ -152,6 +152,96 @@ def groupstatsdiff_params(
     return params
 
 
+def groupstatsdiff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GroupstatsdiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("group1_dir", None) is None:
+        raise StyxValidationError("`group1_dir` must not be None")
+    if not isinstance(params["group1_dir"], str):
+        raise StyxValidationError(f'`group1_dir` has the wrong type: Received `{type(params.get("group1_dir", None))}` expected `str`')
+    if params.get("group2_dir", None) is None:
+        raise StyxValidationError("`group2_dir` must not be None")
+    if not isinstance(params["group2_dir"], str):
+        raise StyxValidationError(f'`group2_dir` has the wrong type: Received `{type(params.get("group2_dir", None))}` expected `str`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("no_maps", False) is None:
+        raise StyxValidationError("`no_maps` must not be None")
+    if not isinstance(params["no_maps"], bool):
+        raise StyxValidationError(f'`no_maps` has the wrong type: Received `{type(params.get("no_maps", False))}` expected `bool`')
+    if params.get("osgm", False) is None:
+        raise StyxValidationError("`osgm` must not be None")
+    if not isinstance(params["osgm"], bool):
+        raise StyxValidationError(f'`osgm` has the wrong type: Received `{type(params.get("osgm", False))}` expected `bool`')
+    if params.get("no_common", False) is None:
+        raise StyxValidationError("`no_common` must not be None")
+    if not isinstance(params["no_common"], bool):
+        raise StyxValidationError(f'`no_common` has the wrong type: Received `{type(params.get("no_common", False))}` expected `bool`')
+    if params.get("allow_subj_diff", False) is None:
+        raise StyxValidationError("`allow_subj_diff` must not be None")
+    if not isinstance(params["allow_subj_diff"], bool):
+        raise StyxValidationError(f'`allow_subj_diff` has the wrong type: Received `{type(params.get("allow_subj_diff", False))}` expected `bool`')
+    if params.get("no_area", False) is None:
+        raise StyxValidationError("`no_area` must not be None")
+    if not isinstance(params["no_area"], bool):
+        raise StyxValidationError(f'`no_area` has the wrong type: Received `{type(params.get("no_area", False))}` expected `bool`')
+    if params.get("no_volume", False) is None:
+        raise StyxValidationError("`no_volume` must not be None")
+    if not isinstance(params["no_volume"], bool):
+        raise StyxValidationError(f'`no_volume` has the wrong type: Received `{type(params.get("no_volume", False))}` expected `bool`')
+    if params.get("no_ba", False) is None:
+        raise StyxValidationError("`no_ba` must not be None")
+    if not isinstance(params["no_ba"], bool):
+        raise StyxValidationError(f'`no_ba` has the wrong type: Received `{type(params.get("no_ba", False))}` expected `bool`')
+    if params.get("no_aparcstats", False) is None:
+        raise StyxValidationError("`no_aparcstats` must not be None")
+    if not isinstance(params["no_aparcstats"], bool):
+        raise StyxValidationError(f'`no_aparcstats` has the wrong type: Received `{type(params.get("no_aparcstats", False))}` expected `bool`')
+    if params.get("no_asegstats", False) is None:
+        raise StyxValidationError("`no_asegstats` must not be None")
+    if not isinstance(params["no_asegstats"], bool):
+        raise StyxValidationError(f'`no_asegstats` has the wrong type: Received `{type(params.get("no_asegstats", False))}` expected `bool`')
+    if params.get("no_wparcstats", False) is None:
+        raise StyxValidationError("`no_wparcstats` must not be None")
+    if not isinstance(params["no_wparcstats"], bool):
+        raise StyxValidationError(f'`no_wparcstats` has the wrong type: Received `{type(params.get("no_wparcstats", False))}` expected `bool`')
+    if params.get("no_stats", False) is None:
+        raise StyxValidationError("`no_stats` must not be None")
+    if not isinstance(params["no_stats"], bool):
+        raise StyxValidationError(f'`no_stats` has the wrong type: Received `{type(params.get("no_stats", False))}` expected `bool`')
+    if params.get("no_prune", False) is None:
+        raise StyxValidationError("`no_prune` must not be None")
+    if not isinstance(params["no_prune"], bool):
+        raise StyxValidationError(f'`no_prune` has the wrong type: Received `{type(params.get("no_prune", False))}` expected `bool`')
+    if params.get("fwhm_value", None) is not None:
+        if not isinstance(params["fwhm_value"], (float, int)):
+            raise StyxValidationError(f'`fwhm_value` has the wrong type: Received `{type(params.get("fwhm_value", None))}` expected `float | None`')
+    if params.get("subjects_dir1", None) is not None:
+        if not isinstance(params["subjects_dir1"], str):
+            raise StyxValidationError(f'`subjects_dir1` has the wrong type: Received `{type(params.get("subjects_dir1", None))}` expected `str | None`')
+    if params.get("subjects_dir2", None) is not None:
+        if not isinstance(params["subjects_dir2"], str):
+            raise StyxValidationError(f'`subjects_dir2` has the wrong type: Received `{type(params.get("subjects_dir2", None))}` expected `str | None`')
+    if params.get("no_dice", False) is None:
+        raise StyxValidationError("`no_dice` must not be None")
+    if not isinstance(params["no_dice"], bool):
+        raise StyxValidationError(f'`no_dice` has the wrong type: Received `{type(params.get("no_dice", False))}` expected `bool`')
+    if params.get("dice_ctab", None) is not None:
+        if not isinstance(params["dice_ctab"], str):
+            raise StyxValidationError(f'`dice_ctab` has the wrong type: Received `{type(params.get("dice_ctab", None))}` expected `str | None`')
+
+
 def groupstatsdiff_cargs(
     params: GroupstatsdiffParameters,
     execution: Execution,
@@ -267,6 +357,7 @@ def groupstatsdiff_execute(
     Returns:
         NamedTuple of outputs (described in `GroupstatsdiffOutputs`).
     """
+    groupstatsdiff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GROUPSTATSDIFF_METADATA)
     params = execution.params(params)

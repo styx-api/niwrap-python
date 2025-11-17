@@ -61,6 +61,34 @@ def update_needed_params(
     return params
 
 
+def update_needed_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UpdateNeededParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("target_file", None) is None:
+        raise StyxValidationError("`target_file` must not be None")
+    if not isinstance(params["target_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target_file` has the wrong type: Received `{type(params.get("target_file", None))}` expected `InputPathType`')
+    if params.get("source_file", None) is None:
+        raise StyxValidationError("`source_file` must not be None")
+    if not isinstance(params["source_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_file` has the wrong type: Received `{type(params.get("source_file", None))}` expected `InputPathType`')
+    if params.get("additional_source_files", None) is not None:
+        if not isinstance(params["additional_source_files"], list):
+            raise StyxValidationError(f'`additional_source_files` has the wrong type: Received `{type(params.get("additional_source_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["additional_source_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`additional_source_files` has the wrong type: Received `{type(params.get("additional_source_files", None))}` expected `list[InputPathType] | None`')
+
+
 def update_needed_cargs(
     params: UpdateNeededParameters,
     execution: Execution,
@@ -122,6 +150,7 @@ def update_needed_execute(
     Returns:
         NamedTuple of outputs (described in `UpdateNeededOutputs`).
     """
+    update_needed_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UPDATE_NEEDED_METADATA)
     params = execution.params(params)

@@ -50,6 +50,23 @@ def afni_check_omp_params(
     return params
 
 
+def afni_check_omp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AfniCheckOmpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], (float, int)):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `float | None`')
+
+
 def afni_check_omp_cargs(
     params: AfniCheckOmpParameters,
     execution: Execution,
@@ -108,6 +125,7 @@ def afni_check_omp_execute(
     Returns:
         NamedTuple of outputs (described in `AfniCheckOmpOutputs`).
     """
+    afni_check_omp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_CHECK_OMP_METADATA)
     params = execution.params(params)

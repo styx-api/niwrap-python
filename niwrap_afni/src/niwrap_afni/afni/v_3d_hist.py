@@ -166,6 +166,89 @@ def v_3d_hist_params(
     return params
 
 
+def v_3d_hist_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dHistParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("dind_subbrick", None) is not None:
+        if not isinstance(params["dind_subbrick"], (float, int)):
+            raise StyxValidationError(f'`dind_subbrick` has the wrong type: Received `{type(params.get("dind_subbrick", None))}` expected `float | None`')
+    if params.get("mask_dset", None) is not None:
+        if not isinstance(params["mask_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dset` has the wrong type: Received `{type(params.get("mask_dset", None))}` expected `InputPathType | None`')
+    if params.get("mask_range", None) is not None:
+        if not isinstance(params["mask_range"], list):
+            raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
+        if len(params["mask_range"]) == 2:
+            raise StyxValidationError("Parameter `mask_range` must contain exactly 2 elements")
+        for e in params["mask_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mask_range` has the wrong type: Received `{type(params.get("mask_range", None))}` expected `list[float] | None`')
+    if params.get("cmask", None) is not None:
+        if not isinstance(params["cmask"], str):
+            raise StyxValidationError(f'`cmask` has the wrong type: Received `{type(params.get("cmask", None))}` expected `str | None`')
+    if params.get("hist_file", None) is not None:
+        if not isinstance(params["hist_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`hist_file` has the wrong type: Received `{type(params.get("hist_file", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("equalized", None) is not None:
+        if not isinstance(params["equalized"], str):
+            raise StyxValidationError(f'`equalized` has the wrong type: Received `{type(params.get("equalized", None))}` expected `str | None`')
+    if params.get("nbin", None) is not None:
+        if not isinstance(params["nbin"], (float, int)):
+            raise StyxValidationError(f'`nbin` has the wrong type: Received `{type(params.get("nbin", None))}` expected `float | None`')
+    if params.get("min", None) is not None:
+        if not isinstance(params["min"], (float, int)):
+            raise StyxValidationError(f'`min` has the wrong type: Received `{type(params.get("min", None))}` expected `float | None`')
+    if params.get("max", None) is not None:
+        if not isinstance(params["max"], (float, int)):
+            raise StyxValidationError(f'`max` has the wrong type: Received `{type(params.get("max", None))}` expected `float | None`')
+    if params.get("binwidth", None) is not None:
+        if not isinstance(params["binwidth"], (float, int)):
+            raise StyxValidationError(f'`binwidth` has the wrong type: Received `{type(params.get("binwidth", None))}` expected `float | None`')
+    if params.get("ignore_out", False) is None:
+        raise StyxValidationError("`ignore_out` must not be None")
+    if not isinstance(params["ignore_out"], bool):
+        raise StyxValidationError(f'`ignore_out` has the wrong type: Received `{type(params.get("ignore_out", False))}` expected `bool`')
+    if params.get("range_hist", None) is not None:
+        if not isinstance(params["range_hist"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`range_hist` has the wrong type: Received `{type(params.get("range_hist", None))}` expected `InputPathType | None`')
+    if params.get("showhist", False) is None:
+        raise StyxValidationError("`showhist` must not be None")
+    if not isinstance(params["showhist"], bool):
+        raise StyxValidationError(f'`showhist` has the wrong type: Received `{type(params.get("showhist", False))}` expected `bool`')
+    if params.get("at_val", None) is not None:
+        if not isinstance(params["at_val"], (float, int)):
+            raise StyxValidationError(f'`at_val` has the wrong type: Received `{type(params.get("at_val", None))}` expected `float | None`')
+    if params.get("get_params", None) is not None:
+        if not isinstance(params["get_params"], str):
+            raise StyxValidationError(f'`get_params` has the wrong type: Received `{type(params.get("get_params", None))}` expected `str | None`')
+    if params.get("voxvol", None) is not None:
+        if not isinstance(params["voxvol"], (float, int)):
+            raise StyxValidationError(f'`voxvol` has the wrong type: Received `{type(params.get("voxvol", None))}` expected `float | None`')
+    if params.get("val_at", None) is not None:
+        if not isinstance(params["val_at"], str):
+            raise StyxValidationError(f'`val_at` has the wrong type: Received `{type(params.get("val_at", None))}` expected `str | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3d_hist_cargs(
     params: V3dHistParameters,
     execution: Execution,
@@ -309,6 +392,7 @@ def v_3d_hist_execute(
     Returns:
         NamedTuple of outputs (described in `V3dHistOutputs`).
     """
+    v_3d_hist_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_HIST_METADATA)
     params = execution.params(params)

@@ -86,6 +86,52 @@ def cifti_vector_operation_params(
     return params
 
 
+def cifti_vector_operation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiVectorOperationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("normalize-a", False) is None:
+        raise StyxValidationError("`normalize-a` must not be None")
+    if not isinstance(params["normalize-a"], bool):
+        raise StyxValidationError(f'`normalize-a` has the wrong type: Received `{type(params.get("normalize-a", False))}` expected `bool`')
+    if params.get("normalize-b", False) is None:
+        raise StyxValidationError("`normalize-b` must not be None")
+    if not isinstance(params["normalize-b"], bool):
+        raise StyxValidationError(f'`normalize-b` has the wrong type: Received `{type(params.get("normalize-b", False))}` expected `bool`')
+    if params.get("normalize-output", False) is None:
+        raise StyxValidationError("`normalize-output` must not be None")
+    if not isinstance(params["normalize-output"], bool):
+        raise StyxValidationError(f'`normalize-output` has the wrong type: Received `{type(params.get("normalize-output", False))}` expected `bool`')
+    if params.get("magnitude", False) is None:
+        raise StyxValidationError("`magnitude` must not be None")
+    if not isinstance(params["magnitude"], bool):
+        raise StyxValidationError(f'`magnitude` has the wrong type: Received `{type(params.get("magnitude", False))}` expected `bool`')
+    if params.get("vectors-a", None) is None:
+        raise StyxValidationError("`vectors-a` must not be None")
+    if not isinstance(params["vectors-a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vectors-a` has the wrong type: Received `{type(params.get("vectors-a", None))}` expected `InputPathType`')
+    if params.get("vectors-b", None) is None:
+        raise StyxValidationError("`vectors-b` must not be None")
+    if not isinstance(params["vectors-b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vectors-b` has the wrong type: Received `{type(params.get("vectors-b", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
+
+
 def cifti_vector_operation_cargs(
     params: CiftiVectorOperationParameters,
     execution: Execution,
@@ -161,6 +207,7 @@ def cifti_vector_operation_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiVectorOperationOutputs`).
     """
+    cifti_vector_operation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_VECTOR_OPERATION_METADATA)
     params = execution.params(params)

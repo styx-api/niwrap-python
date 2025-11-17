@@ -66,6 +66,36 @@ def vsm_smooth_params(
     return params
 
 
+def vsm_smooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VsmSmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("fwhm_value", None) is None:
+        raise StyxValidationError("`fwhm_value` must not be None")
+    if not isinstance(params["fwhm_value"], (float, int)):
+        raise StyxValidationError(f'`fwhm_value` has the wrong type: Received `{type(params.get("fwhm_value", None))}` expected `float`')
+    if params.get("temp_dir", None) is None:
+        raise StyxValidationError("`temp_dir` must not be None")
+    if not isinstance(params["temp_dir"], str):
+        raise StyxValidationError(f'`temp_dir` has the wrong type: Received `{type(params.get("temp_dir", None))}` expected `str`')
+
+
 def vsm_smooth_cargs(
     params: VsmSmoothParameters,
     execution: Execution,
@@ -145,6 +175,7 @@ def vsm_smooth_execute(
     Returns:
         NamedTuple of outputs (described in `VsmSmoothOutputs`).
     """
+    vsm_smooth_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VSM_SMOOTH_METADATA)
     params = execution.params(params)

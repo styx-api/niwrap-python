@@ -186,6 +186,107 @@ def v_3ddelay_params(
     return params
 
 
+def v_3ddelay_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3ddelayParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("reference_file", None) is None:
+        raise StyxValidationError("`reference_file` must not be None")
+    if not isinstance(params["reference_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_file` has the wrong type: Received `{type(params.get("reference_file", None))}` expected `InputPathType`')
+    if params.get("sampling_freq", None) is None:
+        raise StyxValidationError("`sampling_freq` must not be None")
+    if not isinstance(params["sampling_freq"], (float, int)):
+        raise StyxValidationError(f'`sampling_freq` has the wrong type: Received `{type(params.get("sampling_freq", None))}` expected `float`')
+    if params.get("stim_period", None) is None:
+        raise StyxValidationError("`stim_period` must not be None")
+    if not isinstance(params["stim_period"], (float, int)):
+        raise StyxValidationError(f'`stim_period` has the wrong type: Received `{type(params.get("stim_period", None))}` expected `float`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], (float, int)):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `float | None`')
+    if params.get("nodtrnd", False) is None:
+        raise StyxValidationError("`nodtrnd` must not be None")
+    if not isinstance(params["nodtrnd"], bool):
+        raise StyxValidationError(f'`nodtrnd` has the wrong type: Received `{type(params.get("nodtrnd", False))}` expected `bool`')
+    if params.get("units_seconds", False) is None:
+        raise StyxValidationError("`units_seconds` must not be None")
+    if not isinstance(params["units_seconds"], bool):
+        raise StyxValidationError(f'`units_seconds` has the wrong type: Received `{type(params.get("units_seconds", False))}` expected `bool`')
+    if params.get("units_degrees", False) is None:
+        raise StyxValidationError("`units_degrees` must not be None")
+    if not isinstance(params["units_degrees"], bool):
+        raise StyxValidationError(f'`units_degrees` has the wrong type: Received `{type(params.get("units_degrees", False))}` expected `bool`')
+    if params.get("units_radians", False) is None:
+        raise StyxValidationError("`units_radians` must not be None")
+    if not isinstance(params["units_radians"], bool):
+        raise StyxValidationError(f'`units_radians` has the wrong type: Received `{type(params.get("units_radians", False))}` expected `bool`')
+    if params.get("phzwrp", False) is None:
+        raise StyxValidationError("`phzwrp` must not be None")
+    if not isinstance(params["phzwrp"], bool):
+        raise StyxValidationError(f'`phzwrp` has the wrong type: Received `{type(params.get("phzwrp", False))}` expected `bool`')
+    if params.get("nophzwrp", False) is None:
+        raise StyxValidationError("`nophzwrp` must not be None")
+    if not isinstance(params["nophzwrp"], bool):
+        raise StyxValidationError(f'`nophzwrp` has the wrong type: Received `{type(params.get("nophzwrp", False))}` expected `bool`')
+    if params.get("phzreverse", False) is None:
+        raise StyxValidationError("`phzreverse` must not be None")
+    if not isinstance(params["phzreverse"], bool):
+        raise StyxValidationError(f'`phzreverse` has the wrong type: Received `{type(params.get("phzreverse", False))}` expected `bool`')
+    if params.get("phzscale", None) is not None:
+        if not isinstance(params["phzscale"], (float, int)):
+            raise StyxValidationError(f'`phzscale` has the wrong type: Received `{type(params.get("phzscale", None))}` expected `float | None`')
+    if params.get("bias", False) is None:
+        raise StyxValidationError("`bias` must not be None")
+    if not isinstance(params["bias"], bool):
+        raise StyxValidationError(f'`bias` has the wrong type: Received `{type(params.get("bias", False))}` expected `bool`')
+    if params.get("nobias", False) is None:
+        raise StyxValidationError("`nobias` must not be None")
+    if not isinstance(params["nobias"], bool):
+        raise StyxValidationError(f'`nobias` has the wrong type: Received `{type(params.get("nobias", False))}` expected `bool`')
+    if params.get("dsamp", False) is None:
+        raise StyxValidationError("`dsamp` must not be None")
+    if not isinstance(params["dsamp"], bool):
+        raise StyxValidationError(f'`dsamp` has the wrong type: Received `{type(params.get("dsamp", False))}` expected `bool`')
+    if params.get("nodsamp", False) is None:
+        raise StyxValidationError("`nodsamp` must not be None")
+    if not isinstance(params["nodsamp"], bool):
+        raise StyxValidationError(f'`nodsamp` has the wrong type: Received `{type(params.get("nodsamp", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("nfirst", None) is not None:
+        if not isinstance(params["nfirst"], (float, int)):
+            raise StyxValidationError(f'`nfirst` has the wrong type: Received `{type(params.get("nfirst", None))}` expected `float | None`')
+    if params.get("nlast", None) is not None:
+        if not isinstance(params["nlast"], (float, int)):
+            raise StyxValidationError(f'`nlast` has the wrong type: Received `{type(params.get("nlast", None))}` expected `float | None`')
+    if params.get("co", None) is not None:
+        if not isinstance(params["co"], (float, int)):
+            raise StyxValidationError(f'`co` has the wrong type: Received `{type(params.get("co", None))}` expected `float | None`')
+    if params.get("asc", None) is not None:
+        if not isinstance(params["asc"], str):
+            raise StyxValidationError(f'`asc` has the wrong type: Received `{type(params.get("asc", None))}` expected `str | None`')
+    if params.get("ascts", None) is not None:
+        if not isinstance(params["ascts"], str):
+            raise StyxValidationError(f'`ascts` has the wrong type: Received `{type(params.get("ascts", None))}` expected `str | None`')
+
+
 def v_3ddelay_cargs(
     params: V3ddelayParameters,
     execution: Execution,
@@ -324,6 +425,7 @@ def v_3ddelay_execute(
     Returns:
         NamedTuple of outputs (described in `V3ddelayOutputs`).
     """
+    v_3ddelay_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DDELAY_METADATA)
     params = execution.params(params)

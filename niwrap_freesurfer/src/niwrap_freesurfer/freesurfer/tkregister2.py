@@ -86,6 +86,52 @@ def tkregister2_params(
     return params
 
 
+def tkregister2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Tkregister2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed_volume", None) is None:
+        raise StyxValidationError("`fixed_volume` must not be None")
+    if not isinstance(params["fixed_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_volume` has the wrong type: Received `{type(params.get("fixed_volume", None))}` expected `InputPathType`')
+    if params.get("moving_volume", None) is None:
+        raise StyxValidationError("`moving_volume` must not be None")
+    if not isinstance(params["moving_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_volume` has the wrong type: Received `{type(params.get("moving_volume", None))}` expected `InputPathType`')
+    if params.get("reg_file", None) is None:
+        raise StyxValidationError("`reg_file` must not be None")
+    if not isinstance(params["reg_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `InputPathType`')
+    if params.get("noedit", False) is None:
+        raise StyxValidationError("`noedit` must not be None")
+    if not isinstance(params["noedit"], bool):
+        raise StyxValidationError(f'`noedit` has the wrong type: Received `{type(params.get("noedit", False))}` expected `bool`')
+    if params.get("lta", False) is None:
+        raise StyxValidationError("`lta` must not be None")
+    if not isinstance(params["lta"], bool):
+        raise StyxValidationError(f'`lta` has the wrong type: Received `{type(params.get("lta", False))}` expected `bool`')
+    if params.get("surf_reg", False) is None:
+        raise StyxValidationError("`surf_reg` must not be None")
+    if not isinstance(params["surf_reg"], bool):
+        raise StyxValidationError(f'`surf_reg` has the wrong type: Received `{type(params.get("surf_reg", False))}` expected `bool`')
+    if params.get("reg_only", False) is None:
+        raise StyxValidationError("`reg_only` must not be None")
+    if not isinstance(params["reg_only"], bool):
+        raise StyxValidationError(f'`reg_only` has the wrong type: Received `{type(params.get("reg_only", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def tkregister2_cargs(
     params: Tkregister2Parameters,
     execution: Execution,
@@ -156,6 +202,7 @@ def tkregister2_execute(
     Returns:
         NamedTuple of outputs (described in `Tkregister2Outputs`).
     """
+    tkregister2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TKREGISTER2_METADATA)
     params = execution.params(params)

@@ -59,6 +59,32 @@ def mris_init_global_tractography_params(
     return params
 
 
+def mris_init_global_tractography_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisInitGlobalTractographyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("parcellation", None) is None:
+        raise StyxValidationError("`parcellation` must not be None")
+    if not isinstance(params["parcellation"], str):
+        raise StyxValidationError(f'`parcellation` has the wrong type: Received `{type(params.get("parcellation", None))}` expected `str`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mris_init_global_tractography_cargs(
     params: MrisInitGlobalTractographyParameters,
     execution: Execution,
@@ -118,6 +144,7 @@ def mris_init_global_tractography_execute(
     Returns:
         NamedTuple of outputs (described in `MrisInitGlobalTractographyOutputs`).
     """
+    mris_init_global_tractography_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA)
     params = execution.params(params)

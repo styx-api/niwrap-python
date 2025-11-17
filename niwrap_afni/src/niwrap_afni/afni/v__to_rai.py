@@ -54,6 +54,33 @@ def v__to_rai_params(
     return params
 
 
+def v__to_rai_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VToRaiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("coordinates", None) is None:
+        raise StyxValidationError("`coordinates` must not be None")
+    if not isinstance(params["coordinates"], list):
+        raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float]`')
+    if len(params["coordinates"]) == 3:
+        raise StyxValidationError("Parameter `coordinates` must contain exactly 3 elements")
+    for e in params["coordinates"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float]`')
+    if params.get("orientation", None) is None:
+        raise StyxValidationError("`orientation` must not be None")
+    if not isinstance(params["orientation"], str):
+        raise StyxValidationError(f'`orientation` has the wrong type: Received `{type(params.get("orientation", None))}` expected `str`')
+
+
 def v__to_rai_cargs(
     params: VToRaiParameters,
     execution: Execution,
@@ -118,6 +145,7 @@ def v__to_rai_execute(
     Returns:
         NamedTuple of outputs (described in `VToRaiOutputs`).
     """
+    v__to_rai_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__TO_RAI_METADATA)
     params = execution.params(params)

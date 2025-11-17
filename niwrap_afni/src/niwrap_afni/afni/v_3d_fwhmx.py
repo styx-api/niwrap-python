@@ -124,6 +124,67 @@ def v_3d_fwhmx_params(
     return params
 
 
+def v_3d_fwhmx_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dFwhmxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("demed", False) is None:
+        raise StyxValidationError("`demed` must not be None")
+    if not isinstance(params["demed"], bool):
+        raise StyxValidationError(f'`demed` has the wrong type: Received `{type(params.get("demed", False))}` expected `bool`')
+    if params.get("unif", False) is None:
+        raise StyxValidationError("`unif` must not be None")
+    if not isinstance(params["unif"], bool):
+        raise StyxValidationError(f'`unif` has the wrong type: Received `{type(params.get("unif", False))}` expected `bool`')
+    if params.get("detrend", None) is not None:
+        if not isinstance(params["detrend"], (float, int)):
+            raise StyxValidationError(f'`detrend` has the wrong type: Received `{type(params.get("detrend", None))}` expected `float | None`')
+    if params.get("detprefix", None) is not None:
+        if not isinstance(params["detprefix"], str):
+            raise StyxValidationError(f'`detprefix` has the wrong type: Received `{type(params.get("detprefix", None))}` expected `str | None`')
+    if params.get("geom", False) is None:
+        raise StyxValidationError("`geom` must not be None")
+    if not isinstance(params["geom"], bool):
+        raise StyxValidationError(f'`geom` has the wrong type: Received `{type(params.get("geom", False))}` expected `bool`')
+    if params.get("arith", False) is None:
+        raise StyxValidationError("`arith` must not be None")
+    if not isinstance(params["arith"], bool):
+        raise StyxValidationError(f'`arith` has the wrong type: Received `{type(params.get("arith", False))}` expected `bool`')
+    if params.get("combine", False) is None:
+        raise StyxValidationError("`combine` must not be None")
+    if not isinstance(params["combine"], bool):
+        raise StyxValidationError(f'`combine` has the wrong type: Received `{type(params.get("combine", False))}` expected `bool`')
+    if params.get("out", None) is not None:
+        if not isinstance(params["out"], str):
+            raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str | None`')
+    if params.get("compat", False) is None:
+        raise StyxValidationError("`compat` must not be None")
+    if not isinstance(params["compat"], bool):
+        raise StyxValidationError(f'`compat` has the wrong type: Received `{type(params.get("compat", False))}` expected `bool`')
+    if params.get("acf", None) is not None:
+        if not isinstance(params["acf"], str):
+            raise StyxValidationError(f'`acf` has the wrong type: Received `{type(params.get("acf", None))}` expected `str | None`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+
+
 def v_3d_fwhmx_cargs(
     params: V3dFwhmxParameters,
     execution: Execution,
@@ -223,6 +284,7 @@ def v_3d_fwhmx_execute(
     Returns:
         NamedTuple of outputs (described in `V3dFwhmxOutputs`).
     """
+    v_3d_fwhmx_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_FWHMX_METADATA)
     params = execution.params(params)

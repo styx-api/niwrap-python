@@ -220,6 +220,125 @@ def fslregister_params(
     return params
 
 
+def fslregister_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslregisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjid", None) is None:
+        raise StyxValidationError("`subjid` must not be None")
+    if not isinstance(params["subjid"], str):
+        raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str`')
+    if params.get("mov_vol", None) is None:
+        raise StyxValidationError("`mov_vol` must not be None")
+    if not isinstance(params["mov_vol"], str):
+        raise StyxValidationError(f'`mov_vol` has the wrong type: Received `{type(params.get("mov_vol", None))}` expected `str`')
+    if params.get("reg_file", None) is None:
+        raise StyxValidationError("`reg_file` must not be None")
+    if not isinstance(params["reg_file"], str):
+        raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `str`')
+    if params.get("fsl_matrix", None) is not None:
+        if not isinstance(params["fsl_matrix"], str):
+            raise StyxValidationError(f'`fsl_matrix` has the wrong type: Received `{type(params.get("fsl_matrix", None))}` expected `str | None`')
+    if params.get("init_fsl_matrix", None) is not None:
+        if not isinstance(params["init_fsl_matrix"], str):
+            raise StyxValidationError(f'`init_fsl_matrix` has the wrong type: Received `{type(params.get("init_fsl_matrix", None))}` expected `str | None`')
+    if params.get("no_init_xfm", False) is None:
+        raise StyxValidationError("`no_init_xfm` must not be None")
+    if not isinstance(params["no_init_xfm"], bool):
+        raise StyxValidationError(f'`no_init_xfm` has the wrong type: Received `{type(params.get("no_init_xfm", False))}` expected `bool`')
+    if params.get("niters", None) is not None:
+        if not isinstance(params["niters"], (float, int)):
+            raise StyxValidationError(f'`niters` has the wrong type: Received `{type(params.get("niters", None))}` expected `float | None`')
+    if params.get("dof", None) is not None:
+        if not isinstance(params["dof"], (float, int)):
+            raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `float | None`')
+    if params.get("bins", None) is not None:
+        if not isinstance(params["bins"], (float, int)):
+            raise StyxValidationError(f'`bins` has the wrong type: Received `{type(params.get("bins", None))}` expected `float | None`')
+    if params.get("cost", None) is not None:
+        if not isinstance(params["cost"], str):
+            raise StyxValidationError(f'`cost` has the wrong type: Received `{type(params.get("cost", None))}` expected `str | None`')
+    if params.get("max_angle", None) is not None:
+        if not isinstance(params["max_angle"], (float, int)):
+            raise StyxValidationError(f'`max_angle` has the wrong type: Received `{type(params.get("max_angle", None))}` expected `float | None`')
+    if params.get("no_new_schedule", False) is None:
+        raise StyxValidationError("`no_new_schedule` must not be None")
+    if not isinstance(params["no_new_schedule"], bool):
+        raise StyxValidationError(f'`no_new_schedule` has the wrong type: Received `{type(params.get("no_new_schedule", False))}` expected `bool`')
+    if params.get("no_allow_swap", False) is None:
+        raise StyxValidationError("`no_allow_swap` must not be None")
+    if not isinstance(params["no_allow_swap"], bool):
+        raise StyxValidationError(f'`no_allow_swap` has the wrong type: Received `{type(params.get("no_allow_swap", False))}` expected `bool`')
+    if params.get("no_trans", False) is None:
+        raise StyxValidationError("`no_trans` must not be None")
+    if not isinstance(params["no_trans"], bool):
+        raise StyxValidationError(f'`no_trans` has the wrong type: Received `{type(params.get("no_trans", False))}` expected `bool`')
+    if params.get("bet_mov", False) is None:
+        raise StyxValidationError("`bet_mov` must not be None")
+    if not isinstance(params["bet_mov"], bool):
+        raise StyxValidationError(f'`bet_mov` has the wrong type: Received `{type(params.get("bet_mov", False))}` expected `bool`')
+    if params.get("bet_fvalue", None) is not None:
+        if not isinstance(params["bet_fvalue"], (float, int)):
+            raise StyxValidationError(f'`bet_fvalue` has the wrong type: Received `{type(params.get("bet_fvalue", None))}` expected `float | None`')
+    if params.get("bet_func", False) is None:
+        raise StyxValidationError("`bet_func` must not be None")
+    if not isinstance(params["bet_func"], bool):
+        raise StyxValidationError(f'`bet_func` has the wrong type: Received `{type(params.get("bet_func", False))}` expected `bool`')
+    if params.get("bet_ref", False) is None:
+        raise StyxValidationError("`bet_ref` must not be None")
+    if not isinstance(params["bet_ref"], bool):
+        raise StyxValidationError(f'`bet_ref` has the wrong type: Received `{type(params.get("bet_ref", False))}` expected `bool`')
+    if params.get("frame", None) is not None:
+        if not isinstance(params["frame"], (float, int)):
+            raise StyxValidationError(f'`frame` has the wrong type: Received `{type(params.get("frame", None))}` expected `float | None`')
+    if params.get("mid_frame", False) is None:
+        raise StyxValidationError("`mid_frame` must not be None")
+    if not isinstance(params["mid_frame"], bool):
+        raise StyxValidationError(f'`mid_frame` has the wrong type: Received `{type(params.get("mid_frame", False))}` expected `bool`')
+    if params.get("freesurfer_volume", None) is not None:
+        if not isinstance(params["freesurfer_volume"], str):
+            raise StyxValidationError(f'`freesurfer_volume` has the wrong type: Received `{type(params.get("freesurfer_volume", None))}` expected `str | None`')
+    if params.get("template_output", None) is not None:
+        if not isinstance(params["template_output"], str):
+            raise StyxValidationError(f'`template_output` has the wrong type: Received `{type(params.get("template_output", None))}` expected `str | None`')
+    if params.get("output_volume", None) is not None:
+        if not isinstance(params["output_volume"], str):
+            raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str | None`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], (float, int)):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
+    if params.get("tmp_dir", None) is not None:
+        if not isinstance(params["tmp_dir"], str):
+            raise StyxValidationError(f'`tmp_dir` has the wrong type: Received `{type(params.get("tmp_dir", None))}` expected `str | None`')
+    if params.get("no_cleanup", False) is None:
+        raise StyxValidationError("`no_cleanup` must not be None")
+    if not isinstance(params["no_cleanup"], bool):
+        raise StyxValidationError(f'`no_cleanup` has the wrong type: Received `{type(params.get("no_cleanup", False))}` expected `bool`')
+    if params.get("no_log", False) is None:
+        raise StyxValidationError("`no_log` must not be None")
+    if not isinstance(params["no_log"], bool):
+        raise StyxValidationError(f'`no_log` has the wrong type: Received `{type(params.get("no_log", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("lta_format", None) is not None:
+        if not isinstance(params["lta_format"], str):
+            raise StyxValidationError(f'`lta_format` has the wrong type: Received `{type(params.get("lta_format", None))}` expected `str | None`')
+
+
 def fslregister_cargs(
     params: FslregisterParameters,
     execution: Execution,
@@ -393,6 +512,7 @@ def fslregister_execute(
     Returns:
         NamedTuple of outputs (described in `FslregisterOutputs`).
     """
+    fslregister_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLREGISTER_METADATA)
     params = execution.params(params)

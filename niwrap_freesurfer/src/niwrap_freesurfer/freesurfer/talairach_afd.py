@@ -74,6 +74,36 @@ def talairach_afd_params(
     return params
 
 
+def talairach_afd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TalairachAfdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is not None:
+        if not isinstance(params["subject_name"], str):
+            raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str | None`')
+    if params.get("xfm_file", None) is not None:
+        if not isinstance(params["xfm_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xfm_file` has the wrong type: Received `{type(params.get("xfm_file", None))}` expected `InputPathType | None`')
+    if params.get("p_value_threshold", None) is not None:
+        if not isinstance(params["p_value_threshold"], (float, int)):
+            raise StyxValidationError(f'`p_value_threshold` has the wrong type: Received `{type(params.get("p_value_threshold", None))}` expected `float | None`')
+    if params.get("afd_directory", None) is not None:
+        if not isinstance(params["afd_directory"], str):
+            raise StyxValidationError(f'`afd_directory` has the wrong type: Received `{type(params.get("afd_directory", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def talairach_afd_cargs(
     params: TalairachAfdParameters,
     execution: Execution,
@@ -152,6 +182,7 @@ def talairach_afd_execute(
     Returns:
         NamedTuple of outputs (described in `TalairachAfdOutputs`).
     """
+    talairach_afd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TALAIRACH_AFD_METADATA)
     params = execution.params(params)

@@ -67,6 +67,36 @@ def mri_strip_nonwhite_params(
     return params
 
 
+def mri_strip_nonwhite_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriStripNonwhiteParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType`')
+    if params.get("template_volume", None) is None:
+        raise StyxValidationError("`template_volume` must not be None")
+    if not isinstance(params["template_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template_volume` has the wrong type: Received `{type(params.get("template_volume", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_strip_nonwhite_cargs(
     params: MriStripNonwhiteParameters,
     execution: Execution,
@@ -129,6 +159,7 @@ def mri_strip_nonwhite_execute(
     Returns:
         NamedTuple of outputs (described in `MriStripNonwhiteOutputs`).
     """
+    mri_strip_nonwhite_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_STRIP_NONWHITE_METADATA)
     params = execution.params(params)

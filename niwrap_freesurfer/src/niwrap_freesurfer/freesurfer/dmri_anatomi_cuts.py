@@ -82,6 +82,50 @@ def dmri_anatomi_cuts_params(
     return params
 
 
+def dmri_anatomi_cuts_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriAnatomiCutsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("segmentation_file", None) is None:
+        raise StyxValidationError("`segmentation_file` must not be None")
+    if not isinstance(params["segmentation_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segmentation_file` has the wrong type: Received `{type(params.get("segmentation_file", None))}` expected `InputPathType`')
+    if params.get("fiber_file", None) is None:
+        raise StyxValidationError("`fiber_file` must not be None")
+    if not isinstance(params["fiber_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fiber_file` has the wrong type: Received `{type(params.get("fiber_file", None))}` expected `InputPathType`')
+    if params.get("clusters", None) is None:
+        raise StyxValidationError("`clusters` must not be None")
+    if not isinstance(params["clusters"], (float, int)):
+        raise StyxValidationError(f'`clusters` has the wrong type: Received `{type(params.get("clusters", None))}` expected `float`')
+    if params.get("points", None) is None:
+        raise StyxValidationError("`points` must not be None")
+    if not isinstance(params["points"], (float, int)):
+        raise StyxValidationError(f'`points` has the wrong type: Received `{type(params.get("points", None))}` expected `float`')
+    if params.get("fibers_eigen", None) is None:
+        raise StyxValidationError("`fibers_eigen` must not be None")
+    if not isinstance(params["fibers_eigen"], (float, int)):
+        raise StyxValidationError(f'`fibers_eigen` has the wrong type: Received `{type(params.get("fibers_eigen", None))}` expected `float`')
+    if params.get("output_folder", None) is None:
+        raise StyxValidationError("`output_folder` must not be None")
+    if not isinstance(params["output_folder"], str):
+        raise StyxValidationError(f'`output_folder` has the wrong type: Received `{type(params.get("output_folder", None))}` expected `str`')
+    if params.get("direction_flag", None) is None:
+        raise StyxValidationError("`direction_flag` must not be None")
+    if not isinstance(params["direction_flag"], str):
+        raise StyxValidationError(f'`direction_flag` has the wrong type: Received `{type(params.get("direction_flag", None))}` expected `typing.Literal["s", "d", "a", "o"]`')
+    if params["direction_flag"] not in ["s", "d", "a", "o"]:
+        raise StyxValidationError("Parameter `direction_flag` must be one of [\"s\", \"d\", \"a\", \"o\"]")
+
+
 def dmri_anatomi_cuts_cargs(
     params: DmriAnatomiCutsParameters,
     execution: Execution,
@@ -167,6 +211,7 @@ def dmri_anatomi_cuts_execute(
     Returns:
         NamedTuple of outputs (described in `DmriAnatomiCutsOutputs`).
     """
+    dmri_anatomi_cuts_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_ANATOMI_CUTS_METADATA)
     params = execution.params(params)

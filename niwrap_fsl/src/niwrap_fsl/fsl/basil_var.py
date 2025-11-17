@@ -54,6 +54,28 @@ def basil_var_params(
     return params
 
 
+def basil_var_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BasilVarParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("results_dir", None) is None:
+        raise StyxValidationError("`results_dir` must not be None")
+    if not isinstance(params["results_dir"], str):
+        raise StyxValidationError(f'`results_dir` has the wrong type: Received `{type(params.get("results_dir", None))}` expected `str`')
+    if params.get("mask_image", None) is None:
+        raise StyxValidationError("`mask_image` must not be None")
+    if not isinstance(params["mask_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType`')
+
+
 def basil_var_cargs(
     params: BasilVarParameters,
     execution: Execution,
@@ -118,6 +140,7 @@ def basil_var_execute(
     Returns:
         NamedTuple of outputs (described in `BasilVarOutputs`).
     """
+    basil_var_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BASIL_VAR_METADATA)
     params = execution.params(params)

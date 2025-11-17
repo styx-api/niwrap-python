@@ -83,6 +83,45 @@ def fslcc_params(
     return params
 
 
+def fslcc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslccParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("first_input", None) is None:
+        raise StyxValidationError("`first_input` must not be None")
+    if not isinstance(params["first_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`first_input` has the wrong type: Received `{type(params.get("first_input", None))}` expected `InputPathType`')
+    if params.get("second_input", None) is None:
+        raise StyxValidationError("`second_input` must not be None")
+    if not isinstance(params["second_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`second_input` has the wrong type: Received `{type(params.get("second_input", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("noabs_flag", False) is None:
+        raise StyxValidationError("`noabs_flag` must not be None")
+    if not isinstance(params["noabs_flag"], bool):
+        raise StyxValidationError(f'`noabs_flag` has the wrong type: Received `{type(params.get("noabs_flag", False))}` expected `bool`')
+    if params.get("nodemean_flag", False) is None:
+        raise StyxValidationError("`nodemean_flag` must not be None")
+    if not isinstance(params["nodemean_flag"], bool):
+        raise StyxValidationError(f'`nodemean_flag` has the wrong type: Received `{type(params.get("nodemean_flag", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("decimal_places", None) is not None:
+        if not isinstance(params["decimal_places"], (float, int)):
+            raise StyxValidationError(f'`decimal_places` has the wrong type: Received `{type(params.get("decimal_places", None))}` expected `float | None`')
+
+
 def fslcc_cargs(
     params: FslccParameters,
     execution: Execution,
@@ -160,6 +199,7 @@ def fslcc_execute(
     Returns:
         NamedTuple of outputs (described in `FslccOutputs`).
     """
+    fslcc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLCC_METADATA)
     params = execution.params(params)

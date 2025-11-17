@@ -165,6 +165,113 @@ def surface_metrics_params(
     return params
 
 
+def surface_metrics_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceMetricsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", False) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], bool):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", False))}` expected `bool`')
+    if params.get("convexity", False) is None:
+        raise StyxValidationError("`convexity` must not be None")
+    if not isinstance(params["convexity"], bool):
+        raise StyxValidationError(f'`convexity` has the wrong type: Received `{type(params.get("convexity", False))}` expected `bool`')
+    if params.get("closest_node", None) is not None:
+        if not isinstance(params["closest_node"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`closest_node` has the wrong type: Received `{type(params.get("closest_node", None))}` expected `InputPathType | None`')
+    if params.get("area", False) is None:
+        raise StyxValidationError("`area` must not be None")
+    if not isinstance(params["area"], bool):
+        raise StyxValidationError(f'`area` has the wrong type: Received `{type(params.get("area", False))}` expected `bool`')
+    if params.get("tri_sines", False) is None:
+        raise StyxValidationError("`tri_sines` must not be None")
+    if not isinstance(params["tri_sines"], bool):
+        raise StyxValidationError(f'`tri_sines` has the wrong type: Received `{type(params.get("tri_sines", False))}` expected `bool`')
+    if params.get("tri_cosines", False) is None:
+        raise StyxValidationError("`tri_cosines` must not be None")
+    if not isinstance(params["tri_cosines"], bool):
+        raise StyxValidationError(f'`tri_cosines` has the wrong type: Received `{type(params.get("tri_cosines", False))}` expected `bool`')
+    if params.get("tri_CoSines", False) is None:
+        raise StyxValidationError("`tri_CoSines` must not be None")
+    if not isinstance(params["tri_CoSines"], bool):
+        raise StyxValidationError(f'`tri_CoSines` has the wrong type: Received `{type(params.get("tri_CoSines", False))}` expected `bool`')
+    if params.get("tri_angles", False) is None:
+        raise StyxValidationError("`tri_angles` must not be None")
+    if not isinstance(params["tri_angles"], bool):
+        raise StyxValidationError(f'`tri_angles` has the wrong type: Received `{type(params.get("tri_angles", False))}` expected `bool`')
+    if params.get("node_angles", False) is None:
+        raise StyxValidationError("`node_angles` must not be None")
+    if not isinstance(params["node_angles"], bool):
+        raise StyxValidationError(f'`node_angles` has the wrong type: Received `{type(params.get("node_angles", False))}` expected `bool`')
+    if params.get("curvature", False) is None:
+        raise StyxValidationError("`curvature` must not be None")
+    if not isinstance(params["curvature"], bool):
+        raise StyxValidationError(f'`curvature` has the wrong type: Received `{type(params.get("curvature", False))}` expected `bool`')
+    if params.get("edges", False) is None:
+        raise StyxValidationError("`edges` must not be None")
+    if not isinstance(params["edges"], bool):
+        raise StyxValidationError(f'`edges` has the wrong type: Received `{type(params.get("edges", False))}` expected `bool`')
+    if params.get("node_normals", False) is None:
+        raise StyxValidationError("`node_normals` must not be None")
+    if not isinstance(params["node_normals"], bool):
+        raise StyxValidationError(f'`node_normals` has the wrong type: Received `{type(params.get("node_normals", False))}` expected `bool`')
+    if params.get("face_normals", False) is None:
+        raise StyxValidationError("`face_normals` must not be None")
+    if not isinstance(params["face_normals"], bool):
+        raise StyxValidationError(f'`face_normals` has the wrong type: Received `{type(params.get("face_normals", False))}` expected `bool`')
+    if params.get("normals_scale", None) is not None:
+        if not isinstance(params["normals_scale"], (float, int)):
+            raise StyxValidationError(f'`normals_scale` has the wrong type: Received `{type(params.get("normals_scale", None))}` expected `float | None`')
+    if params.get("coords", False) is None:
+        raise StyxValidationError("`coords` must not be None")
+    if not isinstance(params["coords"], bool):
+        raise StyxValidationError(f'`coords` has the wrong type: Received `{type(params.get("coords", False))}` expected `bool`')
+    if params.get("sph_coords", False) is None:
+        raise StyxValidationError("`sph_coords` must not be None")
+    if not isinstance(params["sph_coords"], bool):
+        raise StyxValidationError(f'`sph_coords` has the wrong type: Received `{type(params.get("sph_coords", False))}` expected `bool`')
+    if params.get("sph_coords_center", None) is not None:
+        if not isinstance(params["sph_coords_center"], list):
+            raise StyxValidationError(f'`sph_coords_center` has the wrong type: Received `{type(params.get("sph_coords_center", None))}` expected `list[float] | None`')
+        if len(params["sph_coords_center"]) <= 3:
+            raise StyxValidationError("Parameter `sph_coords_center` must contain at most 3 elements")
+        for e in params["sph_coords_center"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`sph_coords_center` has the wrong type: Received `{type(params.get("sph_coords_center", None))}` expected `list[float] | None`')
+    if params.get("boundary_nodes", False) is None:
+        raise StyxValidationError("`boundary_nodes` must not be None")
+    if not isinstance(params["boundary_nodes"], bool):
+        raise StyxValidationError(f'`boundary_nodes` has the wrong type: Received `{type(params.get("boundary_nodes", False))}` expected `bool`')
+    if params.get("boundary_triangles", False) is None:
+        raise StyxValidationError("`boundary_triangles` must not be None")
+    if not isinstance(params["boundary_triangles"], bool):
+        raise StyxValidationError(f'`boundary_triangles` has the wrong type: Received `{type(params.get("boundary_triangles", False))}` expected `bool`')
+    if params.get("internal_nodes", False) is None:
+        raise StyxValidationError("`internal_nodes` must not be None")
+    if not isinstance(params["internal_nodes"], bool):
+        raise StyxValidationError(f'`internal_nodes` has the wrong type: Received `{type(params.get("internal_nodes", False))}` expected `bool`')
+    if params.get("surf1", None) is None:
+        raise StyxValidationError("`surf1` must not be None")
+    if not isinstance(params["surf1"], str):
+        raise StyxValidationError(f'`surf1` has the wrong type: Received `{type(params.get("surf1", None))}` expected `str`')
+    if params.get("tlrc", False) is None:
+        raise StyxValidationError("`tlrc` must not be None")
+    if not isinstance(params["tlrc"], bool):
+        raise StyxValidationError(f'`tlrc` has the wrong type: Received `{type(params.get("tlrc", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def surface_metrics_cargs(
     params: SurfaceMetricsParameters,
     execution: Execution,
@@ -281,6 +388,7 @@ def surface_metrics_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceMetricsOutputs`).
     """
+    surface_metrics_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_METRICS_METADATA)
     params = execution.params(params)

@@ -71,6 +71,46 @@ def apply_morph_params(
     return params
 
 
+def apply_morph_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ApplyMorphParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputs", None) is None:
+        raise StyxValidationError("`inputs` must not be None")
+    if not isinstance(params["inputs"], list):
+        raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[InputPathType]`')
+    for e in params["inputs"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[InputPathType]`')
+    if params.get("template", None) is None:
+        raise StyxValidationError("`template` must not be None")
+    if not isinstance(params["template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType`')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `InputPathType`')
+    if params.get("zlib_buffer", None) is not None:
+        if not isinstance(params["zlib_buffer"], (float, int)):
+            raise StyxValidationError(f'`zlib_buffer` has the wrong type: Received `{type(params.get("zlib_buffer", None))}` expected `float | None`')
+    if params.get("dbg_coords", None) is not None:
+        if not isinstance(params["dbg_coords"], list):
+            raise StyxValidationError(f'`dbg_coords` has the wrong type: Received `{type(params.get("dbg_coords", None))}` expected `list[float] | None`')
+        if len(params["dbg_coords"]) == 3:
+            raise StyxValidationError("Parameter `dbg_coords` must contain exactly 3 elements")
+        for e in params["dbg_coords"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`dbg_coords` has the wrong type: Received `{type(params.get("dbg_coords", None))}` expected `list[float] | None`')
+
+
 def apply_morph_cargs(
     params: ApplyMorphParameters,
     execution: Execution,
@@ -146,6 +186,7 @@ def apply_morph_execute(
     Returns:
         NamedTuple of outputs (described in `ApplyMorphOutputs`).
     """
+    apply_morph_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APPLY_MORPH_METADATA)
     params = execution.params(params)

@@ -59,6 +59,27 @@ def run_segment_subject_sh_params(
     return params
 
 
+def run_segment_subject_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunSegmentSubjectShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("deployedMCRroot", None) is None:
+        raise StyxValidationError("`deployedMCRroot` must not be None")
+    if not isinstance(params["deployedMCRroot"], str):
+        raise StyxValidationError(f'`deployedMCRroot` has the wrong type: Received `{type(params.get("deployedMCRroot", None))}` expected `str`')
+    if params.get("arguments", None) is not None:
+        if not isinstance(params["arguments"], str):
+            raise StyxValidationError(f'`arguments` has the wrong type: Received `{type(params.get("arguments", None))}` expected `str | None`')
+
+
 def run_segment_subject_sh_cargs(
     params: RunSegmentSubjectShParameters,
     execution: Execution,
@@ -119,6 +140,7 @@ def run_segment_subject_sh_execute(
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubjectShOutputs`).
     """
+    run_segment_subject_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_SEGMENT_SUBJECT_SH_METADATA)
     params = execution.params(params)

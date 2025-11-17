@@ -115,6 +115,82 @@ def overlay_params(
     return params
 
 
+def overlay_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `OverlayParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("auto_thresh_bg", False) is None:
+        raise StyxValidationError("`auto_thresh_bg` must not be None")
+    if not isinstance(params["auto_thresh_bg"], bool):
+        raise StyxValidationError(f'`auto_thresh_bg` has the wrong type: Received `{type(params.get("auto_thresh_bg", False))}` expected `bool`')
+    if params.get("background_image", None) is None:
+        raise StyxValidationError("`background_image` must not be None")
+    if not isinstance(params["background_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`background_image` has the wrong type: Received `{type(params.get("background_image", None))}` expected `InputPathType`')
+    if params.get("bg_thresh", None) is None:
+        raise StyxValidationError("`bg_thresh` must not be None")
+    if not isinstance(params["bg_thresh"], list):
+        raise StyxValidationError(f'`bg_thresh` has the wrong type: Received `{type(params.get("bg_thresh", None))}` expected `list[float]`')
+    if len(params["bg_thresh"]) == 2:
+        raise StyxValidationError("Parameter `bg_thresh` must contain exactly 2 elements")
+    for e in params["bg_thresh"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`bg_thresh` has the wrong type: Received `{type(params.get("bg_thresh", None))}` expected `list[float]`')
+    if params.get("full_bg_range", False) is None:
+        raise StyxValidationError("`full_bg_range` must not be None")
+    if not isinstance(params["full_bg_range"], bool):
+        raise StyxValidationError(f'`full_bg_range` has the wrong type: Received `{type(params.get("full_bg_range", False))}` expected `bool`')
+    if params.get("out_file", None) is not None:
+        if not isinstance(params["out_file"], str):
+            raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str | None`')
+    if params.get("out_type", None) is not None:
+        if not isinstance(params["out_type"], str):
+            raise StyxValidationError(f'`out_type` has the wrong type: Received `{type(params.get("out_type", None))}` expected `typing.Literal["float", "int"] | None`')
+        if params["out_type"] not in ["float", "int"]:
+            raise StyxValidationError("Parameter `out_type` must be one of [\"float\", \"int\"]")
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None`')
+        if params["output_type"] not in ["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"NIFTI\", \"NIFTI_PAIR\", \"NIFTI_GZ\", \"NIFTI_PAIR_GZ\"]")
+    if params.get("stat_image", None) is None:
+        raise StyxValidationError("`stat_image` must not be None")
+    if not isinstance(params["stat_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`stat_image` has the wrong type: Received `{type(params.get("stat_image", None))}` expected `InputPathType`')
+    if params.get("stat_image2", None) is not None:
+        if not isinstance(params["stat_image2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`stat_image2` has the wrong type: Received `{type(params.get("stat_image2", None))}` expected `InputPathType | None`')
+    if params.get("stat_thresh", None) is None:
+        raise StyxValidationError("`stat_thresh` must not be None")
+    if not isinstance(params["stat_thresh"], list):
+        raise StyxValidationError(f'`stat_thresh` has the wrong type: Received `{type(params.get("stat_thresh", None))}` expected `list[float]`')
+    if len(params["stat_thresh"]) == 2:
+        raise StyxValidationError("Parameter `stat_thresh` must contain exactly 2 elements")
+    for e in params["stat_thresh"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`stat_thresh` has the wrong type: Received `{type(params.get("stat_thresh", None))}` expected `list[float]`')
+    if params.get("stat_thresh2", None) is not None:
+        if not isinstance(params["stat_thresh2"], list):
+            raise StyxValidationError(f'`stat_thresh2` has the wrong type: Received `{type(params.get("stat_thresh2", None))}` expected `list[float] | None`')
+        if len(params["stat_thresh2"]) == 2:
+            raise StyxValidationError("Parameter `stat_thresh2` must contain exactly 2 elements")
+        for e in params["stat_thresh2"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`stat_thresh2` has the wrong type: Received `{type(params.get("stat_thresh2", None))}` expected `list[float] | None`')
+    if params.get("use_checkerboard", False) is None:
+        raise StyxValidationError("`use_checkerboard` must not be None")
+    if not isinstance(params["use_checkerboard"], bool):
+        raise StyxValidationError(f'`use_checkerboard` has the wrong type: Received `{type(params.get("use_checkerboard", False))}` expected `bool`')
+
+
 def overlay_cargs(
     params: OverlayParameters,
     execution: Execution,
@@ -193,6 +269,7 @@ def overlay_execute(
     Returns:
         NamedTuple of outputs (described in `OverlayOutputs`).
     """
+    overlay_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(OVERLAY_METADATA)
     params = execution.params(params)

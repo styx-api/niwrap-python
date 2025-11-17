@@ -94,6 +94,58 @@ def spharm_reco_params(
     return params
 
 
+def spharm_reco_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpharmRecoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], str):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `str`')
+    if params.get("decomposition_order", None) is None:
+        raise StyxValidationError("`decomposition_order` must not be None")
+    if not isinstance(params["decomposition_order"], (float, int)):
+        raise StyxValidationError(f'`decomposition_order` has the wrong type: Received `{type(params.get("decomposition_order", None))}` expected `float`')
+    if params.get("bases_prefix", None) is None:
+        raise StyxValidationError("`bases_prefix` must not be None")
+    if not isinstance(params["bases_prefix"], str):
+        raise StyxValidationError(f'`bases_prefix` has the wrong type: Received `{type(params.get("bases_prefix", None))}` expected `str`')
+    if params.get("coefficients", None) is None:
+        raise StyxValidationError("`coefficients` must not be None")
+    if not isinstance(params["coefficients"], list):
+        raise StyxValidationError(f'`coefficients` has the wrong type: Received `{type(params.get("coefficients", None))}` expected `list[InputPathType]`')
+    if len(params["coefficients"]) >= 1:
+        raise StyxValidationError("Parameter `coefficients` must contain at least 1 element")
+    for e in params["coefficients"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`coefficients` has the wrong type: Received `{type(params.get("coefficients", None))}` expected `list[InputPathType]`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("output_surface", None) is not None:
+        if not isinstance(params["output_surface"], list):
+            raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `list[str] | None`')
+        for e in params["output_surface"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `list[str] | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("smoothing", None) is not None:
+        if not isinstance(params["smoothing"], (float, int)):
+            raise StyxValidationError(f'`smoothing` has the wrong type: Received `{type(params.get("smoothing", None))}` expected `float | None`')
+        if 0 <= params["smoothing"] <= 0.001:
+            raise StyxValidationError("Parameter `smoothing` must be between 0 and 0.001 (inclusive)")
+
+
 def spharm_reco_cargs(
     params: SpharmRecoParameters,
     execution: Execution,
@@ -187,6 +239,7 @@ def spharm_reco_execute(
     Returns:
         NamedTuple of outputs (described in `SpharmRecoOutputs`).
     """
+    spharm_reco_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPHARM_RECO_METADATA)
     params = execution.params(params)

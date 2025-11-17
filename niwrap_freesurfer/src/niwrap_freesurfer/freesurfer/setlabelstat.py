@@ -66,6 +66,36 @@ def setlabelstat_params(
     return params
 
 
+def setlabelstat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SetlabelstatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inlabelfile", None) is None:
+        raise StyxValidationError("`inlabelfile` must not be None")
+    if not isinstance(params["inlabelfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inlabelfile` has the wrong type: Received `{type(params.get("inlabelfile", None))}` expected `InputPathType`')
+    if params.get("outlabelfile", None) is None:
+        raise StyxValidationError("`outlabelfile` must not be None")
+    if not isinstance(params["outlabelfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outlabelfile` has the wrong type: Received `{type(params.get("outlabelfile", None))}` expected `InputPathType`')
+    if params.get("statval", None) is None:
+        raise StyxValidationError("`statval` must not be None")
+    if not isinstance(params["statval"], (float, int)):
+        raise StyxValidationError(f'`statval` has the wrong type: Received `{type(params.get("statval", None))}` expected `float`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def setlabelstat_cargs(
     params: SetlabelstatParameters,
     execution: Execution,
@@ -138,6 +168,7 @@ def setlabelstat_execute(
     Returns:
         NamedTuple of outputs (described in `SetlabelstatOutputs`).
     """
+    setlabelstat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SETLABELSTAT_METADATA)
     params = execution.params(params)

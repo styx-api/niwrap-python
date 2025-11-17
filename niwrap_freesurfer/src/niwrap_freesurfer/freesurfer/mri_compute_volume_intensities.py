@@ -61,6 +61,32 @@ def mri_compute_volume_intensities_params(
     return params
 
 
+def mri_compute_volume_intensities_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriComputeVolumeIntensitiesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_intensity", None) is None:
+        raise StyxValidationError("`input_intensity` must not be None")
+    if not isinstance(params["input_intensity"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_intensity` has the wrong type: Received `{type(params.get("input_intensity", None))}` expected `InputPathType`')
+    if params.get("volume_fraction_stem", None) is None:
+        raise StyxValidationError("`volume_fraction_stem` must not be None")
+    if not isinstance(params["volume_fraction_stem"], str):
+        raise StyxValidationError(f'`volume_fraction_stem` has the wrong type: Received `{type(params.get("volume_fraction_stem", None))}` expected `str`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_compute_volume_intensities_cargs(
     params: MriComputeVolumeIntensitiesParameters,
     execution: Execution,
@@ -122,6 +148,7 @@ def mri_compute_volume_intensities_execute(
     Returns:
         NamedTuple of outputs (described in `MriComputeVolumeIntensitiesOutputs`).
     """
+    mri_compute_volume_intensities_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COMPUTE_VOLUME_INTENSITIES_METADATA)
     params = execution.params(params)

@@ -63,6 +63,30 @@ def prompt_user_params(
     return params
 
 
+def prompt_user_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PromptUserParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pause_message", None) is None:
+        raise StyxValidationError("`pause_message` must not be None")
+    if not isinstance(params["pause_message"], str):
+        raise StyxValidationError(f'`pause_message` has the wrong type: Received `{type(params.get("pause_message", None))}` expected `str`')
+    if params.get("timeout", None) is not None:
+        if not isinstance(params["timeout"], (float, int)):
+            raise StyxValidationError(f'`timeout` has the wrong type: Received `{type(params.get("timeout", None))}` expected `float | None`')
+    if params.get("timeout_alias", None) is not None:
+        if not isinstance(params["timeout_alias"], (float, int)):
+            raise StyxValidationError(f'`timeout_alias` has the wrong type: Received `{type(params.get("timeout_alias", None))}` expected `float | None`')
+
+
 def prompt_user_cargs(
     params: PromptUserParameters,
     execution: Execution,
@@ -133,6 +157,7 @@ def prompt_user_execute(
     Returns:
         NamedTuple of outputs (described in `PromptUserOutputs`).
     """
+    prompt_user_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PROMPT_USER_METADATA)
     params = execution.params(params)

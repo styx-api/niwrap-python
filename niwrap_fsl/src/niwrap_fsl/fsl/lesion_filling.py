@@ -82,6 +82,47 @@ def lesion_filling_params(
     return params
 
 
+def lesion_filling_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LesionFillingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("lesionmask", None) is None:
+        raise StyxValidationError("`lesionmask` must not be None")
+    if not isinstance(params["lesionmask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lesionmask` has the wrong type: Received `{type(params.get("lesionmask", None))}` expected `InputPathType`')
+    if params.get("wmmask", None) is not None:
+        if not isinstance(params["wmmask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wmmask` has the wrong type: Received `{type(params.get("wmmask", None))}` expected `InputPathType | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("components_flag", False) is None:
+        raise StyxValidationError("`components_flag` must not be None")
+    if not isinstance(params["components_flag"], bool):
+        raise StyxValidationError(f'`components_flag` has the wrong type: Received `{type(params.get("components_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def lesion_filling_cargs(
     params: LesionFillingParameters,
     execution: Execution,
@@ -162,6 +203,7 @@ def lesion_filling_execute(
     Returns:
         NamedTuple of outputs (described in `LesionFillingOutputs`).
     """
+    lesion_filling_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LESION_FILLING_METADATA)
     params = execution.params(params)

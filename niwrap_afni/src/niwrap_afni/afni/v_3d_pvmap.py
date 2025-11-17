@@ -72,6 +72,34 @@ def v_3d_pvmap_params(
     return params
 
 
+def v_3d_pvmap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dPvmapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("inputdataset", None) is None:
+        raise StyxValidationError("`inputdataset` must not be None")
+    if not isinstance(params["inputdataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputdataset` has the wrong type: Received `{type(params.get("inputdataset", None))}` expected `InputPathType`')
+
+
 def v_3d_pvmap_cargs(
     params: V3dPvmapParameters,
     execution: Execution,
@@ -146,6 +174,7 @@ def v_3d_pvmap_execute(
     Returns:
         NamedTuple of outputs (described in `V3dPvmapOutputs`).
     """
+    v_3d_pvmap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_PVMAP_METADATA)
     params = execution.params(params)

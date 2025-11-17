@@ -67,6 +67,36 @@ def v_3d_normality_test_params(
     return params
 
 
+def v_3d_normality_test_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNormalityTestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("noexp", False) is None:
+        raise StyxValidationError("`noexp` must not be None")
+    if not isinstance(params["noexp"], bool):
+        raise StyxValidationError(f'`noexp` has the wrong type: Received `{type(params.get("noexp", False))}` expected `bool`')
+    if params.get("pval", False) is None:
+        raise StyxValidationError("`pval` must not be None")
+    if not isinstance(params["pval"], bool):
+        raise StyxValidationError(f'`pval` has the wrong type: Received `{type(params.get("pval", False))}` expected `bool`')
+
+
 def v_3d_normality_test_cargs(
     params: V3dNormalityTestParameters,
     execution: Execution,
@@ -134,6 +164,7 @@ def v_3d_normality_test_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNormalityTestOutputs`).
     """
+    v_3d_normality_test_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NORMALITY_TEST_METADATA)
     params = execution.params(params)

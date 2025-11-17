@@ -316,6 +316,178 @@ def v_3d_track_id_params(
     return params
 
 
+def v_3d_track_id_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTrackIdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mode", None) is None:
+        raise StyxValidationError("`mode` must not be None")
+    if not isinstance(params["mode"], str):
+        raise StyxValidationError(f'`mode` has the wrong type: Received `{type(params.get("mode", None))}` expected `typing.Literal["DET", "MINIP", "PROB"]`')
+    if params["mode"] not in ["DET", "MINIP", "PROB"]:
+        raise StyxValidationError("Parameter `mode` must be one of [\"DET\", \"MINIP\", \"PROB\"]")
+    if params.get("netrois", None) is None:
+        raise StyxValidationError("`netrois` must not be None")
+    if not isinstance(params["netrois"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`netrois` has the wrong type: Received `{type(params.get("netrois", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("dti_in", None) is not None:
+        if not isinstance(params["dti_in"], str):
+            raise StyxValidationError(f'`dti_in` has the wrong type: Received `{type(params.get("dti_in", None))}` expected `str | None`')
+    if params.get("dti_list", None) is not None:
+        if not isinstance(params["dti_list"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dti_list` has the wrong type: Received `{type(params.get("dti_list", None))}` expected `InputPathType | None`')
+    if params.get("dti_extra", None) is not None:
+        if not isinstance(params["dti_extra"], str):
+            raise StyxValidationError(f'`dti_extra` has the wrong type: Received `{type(params.get("dti_extra", None))}` expected `str | None`')
+    if params.get("dti_search_no", False) is None:
+        raise StyxValidationError("`dti_search_no` must not be None")
+    if not isinstance(params["dti_search_no"], bool):
+        raise StyxValidationError(f'`dti_search_no` has the wrong type: Received `{type(params.get("dti_search_no", False))}` expected `bool`')
+    if params.get("hardi_gfa", None) is not None:
+        if not isinstance(params["hardi_gfa"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`hardi_gfa` has the wrong type: Received `{type(params.get("hardi_gfa", None))}` expected `InputPathType | None`')
+    if params.get("hardi_dirs", None) is not None:
+        if not isinstance(params["hardi_dirs"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`hardi_dirs` has the wrong type: Received `{type(params.get("hardi_dirs", None))}` expected `InputPathType | None`')
+    if params.get("hardi_pars", None) is not None:
+        if not isinstance(params["hardi_pars"], str):
+            raise StyxValidationError(f'`hardi_pars` has the wrong type: Received `{type(params.get("hardi_pars", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("thru_mask", None) is not None:
+        if not isinstance(params["thru_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`thru_mask` has the wrong type: Received `{type(params.get("thru_mask", None))}` expected `InputPathType | None`')
+    if params.get("targ_surf_stop", False) is None:
+        raise StyxValidationError("`targ_surf_stop` must not be None")
+    if not isinstance(params["targ_surf_stop"], bool):
+        raise StyxValidationError(f'`targ_surf_stop` has the wrong type: Received `{type(params.get("targ_surf_stop", False))}` expected `bool`')
+    if params.get("targ_surf_twixt", False) is None:
+        raise StyxValidationError("`targ_surf_twixt` must not be None")
+    if not isinstance(params["targ_surf_twixt"], bool):
+        raise StyxValidationError(f'`targ_surf_twixt` has the wrong type: Received `{type(params.get("targ_surf_twixt", False))}` expected `bool`')
+    if params.get("logic", None) is None:
+        raise StyxValidationError("`logic` must not be None")
+    if not isinstance(params["logic"], str):
+        raise StyxValidationError(f'`logic` has the wrong type: Received `{type(params.get("logic", None))}` expected `typing.Literal["OR", "AND"]`')
+    if params["logic"] not in ["OR", "AND"]:
+        raise StyxValidationError("Parameter `logic` must be one of [\"OR\", \"AND\"]")
+    if params.get("mini_num", None) is not None:
+        if not isinstance(params["mini_num"], (float, int)):
+            raise StyxValidationError(f'`mini_num` has the wrong type: Received `{type(params.get("mini_num", None))}` expected `float | None`')
+    if params.get("uncert", None) is not None:
+        if not isinstance(params["uncert"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`uncert` has the wrong type: Received `{type(params.get("uncert", None))}` expected `InputPathType | None`')
+    if params.get("unc_min_fa", None) is not None:
+        if not isinstance(params["unc_min_fa"], (float, int)):
+            raise StyxValidationError(f'`unc_min_fa` has the wrong type: Received `{type(params.get("unc_min_fa", None))}` expected `float | None`')
+    if params.get("unc_min_v", None) is not None:
+        if not isinstance(params["unc_min_v"], (float, int)):
+            raise StyxValidationError(f'`unc_min_v` has the wrong type: Received `{type(params.get("unc_min_v", None))}` expected `float | None`')
+    if params.get("algopt", None) is not None:
+        if not isinstance(params["algopt"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`algopt` has the wrong type: Received `{type(params.get("algopt", None))}` expected `InputPathType | None`')
+    if params.get("alg_thresh_fa", None) is not None:
+        if not isinstance(params["alg_thresh_fa"], (float, int)):
+            raise StyxValidationError(f'`alg_thresh_fa` has the wrong type: Received `{type(params.get("alg_thresh_fa", None))}` expected `float | None`')
+    if params.get("alg_thresh_ang", None) is not None:
+        if not isinstance(params["alg_thresh_ang"], (float, int)):
+            raise StyxValidationError(f'`alg_thresh_ang` has the wrong type: Received `{type(params.get("alg_thresh_ang", None))}` expected `float | None`')
+    if params.get("alg_thresh_len", None) is not None:
+        if not isinstance(params["alg_thresh_len"], (float, int)):
+            raise StyxValidationError(f'`alg_thresh_len` has the wrong type: Received `{type(params.get("alg_thresh_len", None))}` expected `float | None`')
+    if params.get("alg_nseed_x", None) is not None:
+        if not isinstance(params["alg_nseed_x"], (float, int)):
+            raise StyxValidationError(f'`alg_nseed_x` has the wrong type: Received `{type(params.get("alg_nseed_x", None))}` expected `float | None`')
+    if params.get("alg_nseed_y", None) is not None:
+        if not isinstance(params["alg_nseed_y"], (float, int)):
+            raise StyxValidationError(f'`alg_nseed_y` has the wrong type: Received `{type(params.get("alg_nseed_y", None))}` expected `float | None`')
+    if params.get("alg_nseed_z", None) is not None:
+        if not isinstance(params["alg_nseed_z"], (float, int)):
+            raise StyxValidationError(f'`alg_nseed_z` has the wrong type: Received `{type(params.get("alg_nseed_z", None))}` expected `float | None`')
+    if params.get("alg_thresh_frac", None) is not None:
+        if not isinstance(params["alg_thresh_frac"], (float, int)):
+            raise StyxValidationError(f'`alg_thresh_frac` has the wrong type: Received `{type(params.get("alg_thresh_frac", None))}` expected `float | None`')
+    if params.get("alg_nseed_vox", None) is not None:
+        if not isinstance(params["alg_nseed_vox"], (float, int)):
+            raise StyxValidationError(f'`alg_nseed_vox` has the wrong type: Received `{type(params.get("alg_nseed_vox", None))}` expected `float | None`')
+    if params.get("alg_nmonte", None) is not None:
+        if not isinstance(params["alg_nmonte"], (float, int)):
+            raise StyxValidationError(f'`alg_nmonte` has the wrong type: Received `{type(params.get("alg_nmonte", None))}` expected `float | None`')
+    if params.get("extra_tr_par", False) is None:
+        raise StyxValidationError("`extra_tr_par` must not be None")
+    if not isinstance(params["extra_tr_par"], bool):
+        raise StyxValidationError(f'`extra_tr_par` has the wrong type: Received `{type(params.get("extra_tr_par", False))}` expected `bool`')
+    if params.get("uncut_at_rois", False) is None:
+        raise StyxValidationError("`uncut_at_rois` must not be None")
+    if not isinstance(params["uncut_at_rois"], bool):
+        raise StyxValidationError(f'`uncut_at_rois` has the wrong type: Received `{type(params.get("uncut_at_rois", False))}` expected `bool`')
+    if params.get("dump_rois", None) is not None:
+        if not isinstance(params["dump_rois"], str):
+            raise StyxValidationError(f'`dump_rois` has the wrong type: Received `{type(params.get("dump_rois", None))}` expected `typing.Literal["DUMP", "AFNI", "BOTH", "AFNI_MAP"] | None`')
+        if params["dump_rois"] not in ["DUMP", "AFNI", "BOTH", "AFNI_MAP"]:
+            raise StyxValidationError("Parameter `dump_rois` must be one of [\"DUMP\", \"AFNI\", \"BOTH\", \"AFNI_MAP\"]")
+    if params.get("dump_no_labtab", False) is None:
+        raise StyxValidationError("`dump_no_labtab` must not be None")
+    if not isinstance(params["dump_no_labtab"], bool):
+        raise StyxValidationError(f'`dump_no_labtab` has the wrong type: Received `{type(params.get("dump_no_labtab", False))}` expected `bool`')
+    if params.get("dump_lab_consec", False) is None:
+        raise StyxValidationError("`dump_lab_consec` must not be None")
+    if not isinstance(params["dump_lab_consec"], bool):
+        raise StyxValidationError(f'`dump_lab_consec` has the wrong type: Received `{type(params.get("dump_lab_consec", False))}` expected `bool`')
+    if params.get("posteriori", False) is None:
+        raise StyxValidationError("`posteriori` must not be None")
+    if not isinstance(params["posteriori"], bool):
+        raise StyxValidationError(f'`posteriori` has the wrong type: Received `{type(params.get("posteriori", False))}` expected `bool`')
+    if params.get("rec_orig", False) is None:
+        raise StyxValidationError("`rec_orig` must not be None")
+    if not isinstance(params["rec_orig"], bool):
+        raise StyxValidationError(f'`rec_orig` has the wrong type: Received `{type(params.get("rec_orig", False))}` expected `bool`')
+    if params.get("do_trk_out", False) is None:
+        raise StyxValidationError("`do_trk_out` must not be None")
+    if not isinstance(params["do_trk_out"], bool):
+        raise StyxValidationError(f'`do_trk_out` has the wrong type: Received `{type(params.get("do_trk_out", False))}` expected `bool`')
+    if params.get("trk_opp_orient", False) is None:
+        raise StyxValidationError("`trk_opp_orient` must not be None")
+    if not isinstance(params["trk_opp_orient"], bool):
+        raise StyxValidationError(f'`trk_opp_orient` has the wrong type: Received `{type(params.get("trk_opp_orient", False))}` expected `bool`')
+    if params.get("nifti", False) is None:
+        raise StyxValidationError("`nifti` must not be None")
+    if not isinstance(params["nifti"], bool):
+        raise StyxValidationError(f'`nifti` has the wrong type: Received `{type(params.get("nifti", False))}` expected `bool`')
+    if params.get("no_indipair_out", False) is None:
+        raise StyxValidationError("`no_indipair_out` must not be None")
+    if not isinstance(params["no_indipair_out"], bool):
+        raise StyxValidationError(f'`no_indipair_out` has the wrong type: Received `{type(params.get("no_indipair_out", False))}` expected `bool`')
+    if params.get("write_rois", False) is None:
+        raise StyxValidationError("`write_rois` must not be None")
+    if not isinstance(params["write_rois"], bool):
+        raise StyxValidationError(f'`write_rois` has the wrong type: Received `{type(params.get("write_rois", False))}` expected `bool`')
+    if params.get("write_opts", False) is None:
+        raise StyxValidationError("`write_opts` must not be None")
+    if not isinstance(params["write_opts"], bool):
+        raise StyxValidationError(f'`write_opts` has the wrong type: Received `{type(params.get("write_opts", False))}` expected `bool`')
+    if params.get("pair_out_power", False) is None:
+        raise StyxValidationError("`pair_out_power` must not be None")
+    if not isinstance(params["pair_out_power"], bool):
+        raise StyxValidationError(f'`pair_out_power` has the wrong type: Received `{type(params.get("pair_out_power", False))}` expected `bool`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+
+
 def v_3d_track_id_cargs(
     params: V3dTrackIdParameters,
     execution: Execution,
@@ -465,6 +637,7 @@ def v_3d_track_id_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTrackIdOutputs`).
     """
+    v_3d_track_id_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TRACK_ID_METADATA)
     params = execution.params(params)

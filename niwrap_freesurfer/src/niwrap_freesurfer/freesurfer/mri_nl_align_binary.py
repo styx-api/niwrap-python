@@ -61,6 +61,32 @@ def mri_nl_align_binary_params(
     return params
 
 
+def mri_nl_align_binary_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriNlAlignBinaryParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_file", None) is None:
+        raise StyxValidationError("`source_file` must not be None")
+    if not isinstance(params["source_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source_file` has the wrong type: Received `{type(params.get("source_file", None))}` expected `InputPathType`')
+    if params.get("target_file", None) is None:
+        raise StyxValidationError("`target_file` must not be None")
+    if not isinstance(params["target_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target_file` has the wrong type: Received `{type(params.get("target_file", None))}` expected `InputPathType`')
+    if params.get("warp_file", None) is None:
+        raise StyxValidationError("`warp_file` must not be None")
+    if not isinstance(params["warp_file"], str):
+        raise StyxValidationError(f'`warp_file` has the wrong type: Received `{type(params.get("warp_file", None))}` expected `str`')
+
+
 def mri_nl_align_binary_cargs(
     params: MriNlAlignBinaryParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mri_nl_align_binary_execute(
     Returns:
         NamedTuple of outputs (described in `MriNlAlignBinaryOutputs`).
     """
+    mri_nl_align_binary_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_NL_ALIGN_BINARY_METADATA)
     params = execution.params(params)

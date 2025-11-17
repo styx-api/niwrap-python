@@ -62,6 +62,32 @@ def orient_las_params(
     return params
 
 
+def orient_las_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `OrientLasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("check", False) is None:
+        raise StyxValidationError("`check` must not be None")
+    if not isinstance(params["check"], bool):
+        raise StyxValidationError(f'`check` has the wrong type: Received `{type(params.get("check", False))}` expected `bool`')
+
+
 def orient_las_cargs(
     params: OrientLasParameters,
     execution: Execution,
@@ -123,6 +149,7 @@ def orient_las_execute(
     Returns:
         NamedTuple of outputs (described in `OrientLasOutputs`).
     """
+    orient_las_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ORIENT_LAS_METADATA)
     params = execution.params(params)

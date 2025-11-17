@@ -86,6 +86,38 @@ def adjunct_tort_plot_dp_align_params(
     return params
 
 
+def adjunct_tort_plot_dp_align_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctTortPlotDpAlignParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("enorm_max", None) is not None:
+        if not isinstance(params["enorm_max"], (float, int)):
+            raise StyxValidationError(f'`enorm_max` has the wrong type: Received `{type(params.get("enorm_max", None))}` expected `float | None`')
+    if params.get("enorm_hline", None) is not None:
+        if not isinstance(params["enorm_hline"], (float, int)):
+            raise StyxValidationError(f'`enorm_hline` has the wrong type: Received `{type(params.get("enorm_hline", None))}` expected `float | None`')
+    if params.get("no_svg", False) is None:
+        raise StyxValidationError("`no_svg` must not be None")
+    if not isinstance(params["no_svg"], bool):
+        raise StyxValidationError(f'`no_svg` has the wrong type: Received `{type(params.get("no_svg", False))}` expected `bool`')
+
+
 def adjunct_tort_plot_dp_align_cargs(
     params: AdjunctTortPlotDpAlignParameters,
     execution: Execution,
@@ -167,6 +199,7 @@ def adjunct_tort_plot_dp_align_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctTortPlotDpAlignOutputs`).
     """
+    adjunct_tort_plot_dp_align_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA)
     params = execution.params(params)

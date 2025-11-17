@@ -97,6 +97,60 @@ def uber_align_test_py_params(
     return params
 
 
+def uber_align_test_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UberAlignTestPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("no_gui", False) is None:
+        raise StyxValidationError("`no_gui` must not be None")
+    if not isinstance(params["no_gui"], bool):
+        raise StyxValidationError(f'`no_gui` has the wrong type: Received `{type(params.get("no_gui", False))}` expected `bool`')
+    if params.get("print_script", False) is None:
+        raise StyxValidationError("`print_script` must not be None")
+    if not isinstance(params["print_script"], bool):
+        raise StyxValidationError(f'`print_script` has the wrong type: Received `{type(params.get("print_script", False))}` expected `bool`')
+    if params.get("save_script", None) is not None:
+        if not isinstance(params["save_script"], str):
+            raise StyxValidationError(f'`save_script` has the wrong type: Received `{type(params.get("save_script", None))}` expected `str | None`')
+    if params.get("user_variable", None) is not None:
+        if not isinstance(params["user_variable"], list):
+            raise StyxValidationError(f'`user_variable` has the wrong type: Received `{type(params.get("user_variable", None))}` expected `list[str] | None`')
+        for e in params["user_variable"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`user_variable` has the wrong type: Received `{type(params.get("user_variable", None))}` expected `list[str] | None`')
+    if params.get("qt_opts", None) is not None:
+        if not isinstance(params["qt_opts"], str):
+            raise StyxValidationError(f'`qt_opts` has the wrong type: Received `{type(params.get("qt_opts", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("help_gui", False) is None:
+        raise StyxValidationError("`help_gui` must not be None")
+    if not isinstance(params["help_gui"], bool):
+        raise StyxValidationError(f'`help_gui` has the wrong type: Received `{type(params.get("help_gui", False))}` expected `bool`')
+    if params.get("history", False) is None:
+        raise StyxValidationError("`history` must not be None")
+    if not isinstance(params["history"], bool):
+        raise StyxValidationError(f'`history` has the wrong type: Received `{type(params.get("history", False))}` expected `bool`')
+    if params.get("show_valid_opts", False) is None:
+        raise StyxValidationError("`show_valid_opts` must not be None")
+    if not isinstance(params["show_valid_opts"], bool):
+        raise StyxValidationError(f'`show_valid_opts` has the wrong type: Received `{type(params.get("show_valid_opts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def uber_align_test_py_cargs(
     params: UberAlignTestPyParameters,
     execution: Execution,
@@ -182,6 +236,7 @@ def uber_align_test_py_execute(
     Returns:
         NamedTuple of outputs (described in `UberAlignTestPyOutputs`).
     """
+    uber_align_test_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UBER_ALIGN_TEST_PY_METADATA)
     params = execution.params(params)

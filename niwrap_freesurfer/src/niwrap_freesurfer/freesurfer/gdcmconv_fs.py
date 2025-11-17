@@ -259,6 +259,179 @@ def gdcmconv_fs_params(
     return params
 
 
+def gdcmconv_fs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GdcmconvFsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("explicit_flag", False) is None:
+        raise StyxValidationError("`explicit_flag` must not be None")
+    if not isinstance(params["explicit_flag"], bool):
+        raise StyxValidationError(f'`explicit_flag` has the wrong type: Received `{type(params.get("explicit_flag", False))}` expected `bool`')
+    if params.get("implicit_flag", False) is None:
+        raise StyxValidationError("`implicit_flag` must not be None")
+    if not isinstance(params["implicit_flag"], bool):
+        raise StyxValidationError(f'`implicit_flag` has the wrong type: Received `{type(params.get("implicit_flag", False))}` expected `bool`')
+    if params.get("use_dict_flag", False) is None:
+        raise StyxValidationError("`use_dict_flag` must not be None")
+    if not isinstance(params["use_dict_flag"], bool):
+        raise StyxValidationError(f'`use_dict_flag` has the wrong type: Received `{type(params.get("use_dict_flag", False))}` expected `bool`')
+    if params.get("with_private_dict_flag", False) is None:
+        raise StyxValidationError("`with_private_dict_flag` must not be None")
+    if not isinstance(params["with_private_dict_flag"], bool):
+        raise StyxValidationError(f'`with_private_dict_flag` has the wrong type: Received `{type(params.get("with_private_dict_flag", False))}` expected `bool`')
+    if params.get("check_meta_flag", False) is None:
+        raise StyxValidationError("`check_meta_flag` must not be None")
+    if not isinstance(params["check_meta_flag"], bool):
+        raise StyxValidationError(f'`check_meta_flag` has the wrong type: Received `{type(params.get("check_meta_flag", False))}` expected `bool`')
+    if params.get("root_uid", None) is not None:
+        if not isinstance(params["root_uid"], str):
+            raise StyxValidationError(f'`root_uid` has the wrong type: Received `{type(params.get("root_uid", None))}` expected `str | None`')
+    if params.get("remove_gl_flag", False) is None:
+        raise StyxValidationError("`remove_gl_flag` must not be None")
+    if not isinstance(params["remove_gl_flag"], bool):
+        raise StyxValidationError(f'`remove_gl_flag` has the wrong type: Received `{type(params.get("remove_gl_flag", False))}` expected `bool`')
+    if params.get("remove_private_tags_flag", False) is None:
+        raise StyxValidationError("`remove_private_tags_flag` must not be None")
+    if not isinstance(params["remove_private_tags_flag"], bool):
+        raise StyxValidationError(f'`remove_private_tags_flag` has the wrong type: Received `{type(params.get("remove_private_tags_flag", False))}` expected `bool`')
+    if params.get("remove_retired_flag", False) is None:
+        raise StyxValidationError("`remove_retired_flag` must not be None")
+    if not isinstance(params["remove_retired_flag"], bool):
+        raise StyxValidationError(f'`remove_retired_flag` has the wrong type: Received `{type(params.get("remove_retired_flag", False))}` expected `bool`')
+    if params.get("apply_lut_flag", False) is None:
+        raise StyxValidationError("`apply_lut_flag` must not be None")
+    if not isinstance(params["apply_lut_flag"], bool):
+        raise StyxValidationError(f'`apply_lut_flag` has the wrong type: Received `{type(params.get("apply_lut_flag", False))}` expected `bool`')
+    if params.get("photometric_interpretation", None) is not None:
+        if not isinstance(params["photometric_interpretation"], str):
+            raise StyxValidationError(f'`photometric_interpretation` has the wrong type: Received `{type(params.get("photometric_interpretation", None))}` expected `str | None`')
+    if params.get("raw_flag", False) is None:
+        raise StyxValidationError("`raw_flag` must not be None")
+    if not isinstance(params["raw_flag"], bool):
+        raise StyxValidationError(f'`raw_flag` has the wrong type: Received `{type(params.get("raw_flag", False))}` expected `bool`')
+    if params.get("deflated_flag", False) is None:
+        raise StyxValidationError("`deflated_flag` must not be None")
+    if not isinstance(params["deflated_flag"], bool):
+        raise StyxValidationError(f'`deflated_flag` has the wrong type: Received `{type(params.get("deflated_flag", False))}` expected `bool`')
+    if params.get("jpeg_flag", False) is None:
+        raise StyxValidationError("`jpeg_flag` must not be None")
+    if not isinstance(params["jpeg_flag"], bool):
+        raise StyxValidationError(f'`jpeg_flag` has the wrong type: Received `{type(params.get("jpeg_flag", False))}` expected `bool`')
+    if params.get("j2k_flag", False) is None:
+        raise StyxValidationError("`j2k_flag` must not be None")
+    if not isinstance(params["j2k_flag"], bool):
+        raise StyxValidationError(f'`j2k_flag` has the wrong type: Received `{type(params.get("j2k_flag", False))}` expected `bool`')
+    if params.get("jpegls_flag", False) is None:
+        raise StyxValidationError("`jpegls_flag` must not be None")
+    if not isinstance(params["jpegls_flag"], bool):
+        raise StyxValidationError(f'`jpegls_flag` has the wrong type: Received `{type(params.get("jpegls_flag", False))}` expected `bool`')
+    if params.get("rle_flag", False) is None:
+        raise StyxValidationError("`rle_flag` must not be None")
+    if not isinstance(params["rle_flag"], bool):
+        raise StyxValidationError(f'`rle_flag` has the wrong type: Received `{type(params.get("rle_flag", False))}` expected `bool`')
+    if params.get("force_flag", False) is None:
+        raise StyxValidationError("`force_flag` must not be None")
+    if not isinstance(params["force_flag"], bool):
+        raise StyxValidationError(f'`force_flag` has the wrong type: Received `{type(params.get("force_flag", False))}` expected `bool`')
+    if params.get("generate_icon_flag", False) is None:
+        raise StyxValidationError("`generate_icon_flag` must not be None")
+    if not isinstance(params["generate_icon_flag"], bool):
+        raise StyxValidationError(f'`generate_icon_flag` has the wrong type: Received `{type(params.get("generate_icon_flag", False))}` expected `bool`')
+    if params.get("icon_minmax", None) is not None:
+        if not isinstance(params["icon_minmax"], list):
+            raise StyxValidationError(f'`icon_minmax` has the wrong type: Received `{type(params.get("icon_minmax", None))}` expected `list[float] | None`')
+        if len(params["icon_minmax"]) == 2:
+            raise StyxValidationError("Parameter `icon_minmax` must contain exactly 2 elements")
+        for e in params["icon_minmax"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`icon_minmax` has the wrong type: Received `{type(params.get("icon_minmax", None))}` expected `list[float] | None`')
+    if params.get("icon_auto_minmax_flag", False) is None:
+        raise StyxValidationError("`icon_auto_minmax_flag` must not be None")
+    if not isinstance(params["icon_auto_minmax_flag"], bool):
+        raise StyxValidationError(f'`icon_auto_minmax_flag` has the wrong type: Received `{type(params.get("icon_auto_minmax_flag", False))}` expected `bool`')
+    if params.get("compress_icon_flag", False) is None:
+        raise StyxValidationError("`compress_icon_flag` must not be None")
+    if not isinstance(params["compress_icon_flag"], bool):
+        raise StyxValidationError(f'`compress_icon_flag` has the wrong type: Received `{type(params.get("compress_icon_flag", False))}` expected `bool`')
+    if params.get("planar_configuration", None) is not None:
+        if not isinstance(params["planar_configuration"], str):
+            raise StyxValidationError(f'`planar_configuration` has the wrong type: Received `{type(params.get("planar_configuration", None))}` expected `str | None`')
+    if params.get("lossy_flag", False) is None:
+        raise StyxValidationError("`lossy_flag` must not be None")
+    if not isinstance(params["lossy_flag"], bool):
+        raise StyxValidationError(f'`lossy_flag` has the wrong type: Received `{type(params.get("lossy_flag", False))}` expected `bool`')
+    if params.get("split", None) is not None:
+        if not isinstance(params["split"], (float, int)):
+            raise StyxValidationError(f'`split` has the wrong type: Received `{type(params.get("split", None))}` expected `float | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("warning_flag", False) is None:
+        raise StyxValidationError("`warning_flag` must not be None")
+    if not isinstance(params["warning_flag"], bool):
+        raise StyxValidationError(f'`warning_flag` has the wrong type: Received `{type(params.get("warning_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("error_flag", False) is None:
+        raise StyxValidationError("`error_flag` must not be None")
+    if not isinstance(params["error_flag"], bool):
+        raise StyxValidationError(f'`error_flag` has the wrong type: Received `{type(params.get("error_flag", False))}` expected `bool`')
+    if params.get("quiet_flag", False) is None:
+        raise StyxValidationError("`quiet_flag` must not be None")
+    if not isinstance(params["quiet_flag"], bool):
+        raise StyxValidationError(f'`quiet_flag` has the wrong type: Received `{type(params.get("quiet_flag", False))}` expected `bool`')
+    if params.get("jpeg_quality", None) is not None:
+        if not isinstance(params["jpeg_quality"], (float, int)):
+            raise StyxValidationError(f'`jpeg_quality` has the wrong type: Received `{type(params.get("jpeg_quality", None))}` expected `float | None`')
+    if params.get("lossy_error", None) is not None:
+        if not isinstance(params["lossy_error"], int):
+            raise StyxValidationError(f'`lossy_error` has the wrong type: Received `{type(params.get("lossy_error", None))}` expected `int | None`')
+    if params.get("rate", None) is not None:
+        if not isinstance(params["rate"], (float, int)):
+            raise StyxValidationError(f'`rate` has the wrong type: Received `{type(params.get("rate", None))}` expected `float | None`')
+    if params.get("j2k_quality", None) is not None:
+        if not isinstance(params["j2k_quality"], (float, int)):
+            raise StyxValidationError(f'`j2k_quality` has the wrong type: Received `{type(params.get("j2k_quality", None))}` expected `float | None`')
+    if params.get("tile", None) is not None:
+        if not isinstance(params["tile"], list):
+            raise StyxValidationError(f'`tile` has the wrong type: Received `{type(params.get("tile", None))}` expected `list[float] | None`')
+        if len(params["tile"]) == 2:
+            raise StyxValidationError("Parameter `tile` must contain exactly 2 elements")
+        for e in params["tile"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`tile` has the wrong type: Received `{type(params.get("tile", None))}` expected `list[float] | None`')
+    if params.get("number_resolution", None) is not None:
+        if not isinstance(params["number_resolution"], (float, int)):
+            raise StyxValidationError(f'`number_resolution` has the wrong type: Received `{type(params.get("number_resolution", None))}` expected `float | None`')
+    if params.get("irreversible_flag", False) is None:
+        raise StyxValidationError("`irreversible_flag` must not be None")
+    if not isinstance(params["irreversible_flag"], bool):
+        raise StyxValidationError(f'`irreversible_flag` has the wrong type: Received `{type(params.get("irreversible_flag", False))}` expected `bool`')
+    if params.get("ignore_errors_flag", False) is None:
+        raise StyxValidationError("`ignore_errors_flag` must not be None")
+    if not isinstance(params["ignore_errors_flag"], bool):
+        raise StyxValidationError(f'`ignore_errors_flag` has the wrong type: Received `{type(params.get("ignore_errors_flag", False))}` expected `bool`')
+
+
 def gdcmconv_fs_cargs(
     params: GdcmconvFsParameters,
     execution: Execution,
@@ -426,6 +599,7 @@ def gdcmconv_fs_execute(
     Returns:
         NamedTuple of outputs (described in `GdcmconvFsOutputs`).
     """
+    gdcmconv_fs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GDCMCONV_FS_METADATA)
     params = execution.params(params)

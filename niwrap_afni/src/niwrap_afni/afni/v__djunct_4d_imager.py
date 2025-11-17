@@ -79,6 +79,37 @@ def v__djunct_4d_imager_params(
     return params
 
 
+def v__djunct_4d_imager_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDjunct4dImagerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("do_movie", None) is not None:
+        if not isinstance(params["do_movie"], str):
+            raise StyxValidationError(f'`do_movie` has the wrong type: Received `{type(params.get("do_movie", None))}` expected `typing.Literal["MPEG", "AGIF"] | None`')
+        if params["do_movie"] not in ["MPEG", "AGIF"]:
+            raise StyxValidationError("Parameter `do_movie` must be one of [\"MPEG\", \"AGIF\"]")
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def v__djunct_4d_imager_cargs(
     params: VDjunct4dImagerParameters,
     execution: Execution,
@@ -151,6 +182,7 @@ def v__djunct_4d_imager_execute(
     Returns:
         NamedTuple of outputs (described in `VDjunct4dImagerOutputs`).
     """
+    v__djunct_4d_imager_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DJUNCT_4D_IMAGER_METADATA)
     params = execution.params(params)

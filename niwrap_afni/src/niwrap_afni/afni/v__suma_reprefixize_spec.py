@@ -69,6 +69,40 @@ def v__suma_reprefixize_spec_params(
     return params
 
 
+def v__suma_reprefixize_spec_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VSumaReprefixizeSpecParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+    if params.get("work_dir", None) is None:
+        raise StyxValidationError("`work_dir` must not be None")
+    if not isinstance(params["work_dir"], str):
+        raise StyxValidationError(f'`work_dir` has the wrong type: Received `{type(params.get("work_dir", None))}` expected `str`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def v__suma_reprefixize_spec_cargs(
     params: VSumaReprefixizeSpecParameters,
     execution: Execution,
@@ -143,6 +177,7 @@ def v__suma_reprefixize_spec_execute(
     Returns:
         NamedTuple of outputs (described in `VSumaReprefixizeSpecOutputs`).
     """
+    v__suma_reprefixize_spec_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__SUMA_REPREFIXIZE_SPEC_METADATA)
     params = execution.params(params)

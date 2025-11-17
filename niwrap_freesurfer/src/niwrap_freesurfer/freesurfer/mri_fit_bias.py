@@ -115,6 +115,63 @@ def mri_fit_bias_params(
     return params
 
 
+def mri_fit_bias_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFitBiasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputvol", None) is None:
+        raise StyxValidationError("`inputvol` must not be None")
+    if not isinstance(params["inputvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputvol` has the wrong type: Received `{type(params.get("inputvol", None))}` expected `InputPathType`')
+    if params.get("lpf_cutoff", None) is not None:
+        if not isinstance(params["lpf_cutoff"], (float, int)):
+            raise StyxValidationError(f'`lpf_cutoff` has the wrong type: Received `{type(params.get("lpf_cutoff", None))}` expected `float | None`')
+    if params.get("segvol", None) is None:
+        raise StyxValidationError("`segvol` must not be None")
+    if not isinstance(params["segvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segvol` has the wrong type: Received `{type(params.get("segvol", None))}` expected `InputPathType`')
+    if params.get("maskvol", None) is None:
+        raise StyxValidationError("`maskvol` must not be None")
+    if not isinstance(params["maskvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskvol` has the wrong type: Received `{type(params.get("maskvol", None))}` expected `InputPathType`')
+    if params.get("outvol", None) is None:
+        raise StyxValidationError("`outvol` must not be None")
+    if not isinstance(params["outvol"], str):
+        raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str`')
+    if params.get("biasfield", None) is None:
+        raise StyxValidationError("`biasfield` must not be None")
+    if not isinstance(params["biasfield"], str):
+        raise StyxValidationError(f'`biasfield` has the wrong type: Received `{type(params.get("biasfield", None))}` expected `str`')
+    if params.get("dctvol", None) is not None:
+        if not isinstance(params["dctvol"], str):
+            raise StyxValidationError(f'`dctvol` has the wrong type: Received `{type(params.get("dctvol", None))}` expected `str | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("nerode", None) is not None:
+        if not isinstance(params["nerode"], (float, int)):
+            raise StyxValidationError(f'`nerode` has the wrong type: Received `{type(params.get("nerode", None))}` expected `float | None`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], (float, int)):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+
+
 def mri_fit_bias_cargs(
     params: MriFitBiasParameters,
     execution: Execution,
@@ -222,6 +279,7 @@ def mri_fit_bias_execute(
     Returns:
         NamedTuple of outputs (described in `MriFitBiasOutputs`).
     """
+    mri_fit_bias_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FIT_BIAS_METADATA)
     params = execution.params(params)

@@ -76,6 +76,47 @@ def map_all_labels_params(
     return params
 
 
+def map_all_labels_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MapAllLabelsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("which", None) is None:
+        raise StyxValidationError("`which` must not be None")
+    if not isinstance(params["which"], str):
+        raise StyxValidationError(f'`which` has the wrong type: Received `{type(params.get("which", None))}` expected `str`')
+    if params.get("fname", None) is None:
+        raise StyxValidationError("`fname` must not be None")
+    if not isinstance(params["fname"], str):
+        raise StyxValidationError(f'`fname` has the wrong type: Received `{type(params.get("fname", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("spherical_surf", None) is None:
+        raise StyxValidationError("`spherical_surf` must not be None")
+    if not isinstance(params["spherical_surf"], str):
+        raise StyxValidationError(f'`spherical_surf` has the wrong type: Received `{type(params.get("spherical_surf", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def map_all_labels_cargs(
     params: MapAllLabelsParameters,
     execution: Execution,
@@ -139,6 +180,7 @@ def map_all_labels_execute(
     Returns:
         NamedTuple of outputs (described in `MapAllLabelsOutputs`).
     """
+    map_all_labels_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAP_ALL_LABELS_METADATA)
     params = execution.params(params)

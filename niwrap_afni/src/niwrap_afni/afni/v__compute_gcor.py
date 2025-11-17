@@ -87,6 +87,46 @@ def v__compute_gcor_params(
     return params
 
 
+def v__compute_gcor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VComputeGcorParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("corr_vol_prefix", None) is not None:
+        if not isinstance(params["corr_vol_prefix"], str):
+            raise StyxValidationError(f'`corr_vol_prefix` has the wrong type: Received `{type(params.get("corr_vol_prefix", None))}` expected `str | None`')
+    if params.get("initial_trs", None) is not None:
+        if not isinstance(params["initial_trs"], (float, int)):
+            raise StyxValidationError(f'`initial_trs` has the wrong type: Received `{type(params.get("initial_trs", None))}` expected `float | None`')
+    if params.get("no_demean", False) is None:
+        raise StyxValidationError("`no_demean` must not be None")
+    if not isinstance(params["no_demean"], bool):
+        raise StyxValidationError(f'`no_demean` has the wrong type: Received `{type(params.get("no_demean", False))}` expected `bool`')
+    if params.get("save_tmp", False) is None:
+        raise StyxValidationError("`save_tmp` must not be None")
+    if not isinstance(params["save_tmp"], bool):
+        raise StyxValidationError(f'`save_tmp` has the wrong type: Received `{type(params.get("save_tmp", False))}` expected `bool`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], (float, int)):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
+        if 0 <= params["verbose"] <= 3:
+            raise StyxValidationError("Parameter `verbose` must be between 0 and 3 (inclusive)")
+
+
 def v__compute_gcor_cargs(
     params: VComputeGcorParameters,
     execution: Execution,
@@ -167,6 +207,7 @@ def v__compute_gcor_execute(
     Returns:
         NamedTuple of outputs (described in `VComputeGcorOutputs`).
     """
+    v__compute_gcor_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__COMPUTE_GCOR_METADATA)
     params = execution.params(params)

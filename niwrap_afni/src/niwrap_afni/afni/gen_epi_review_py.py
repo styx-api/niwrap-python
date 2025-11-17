@@ -103,6 +103,67 @@ def gen_epi_review_py_params(
     return params
 
 
+def gen_epi_review_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GenEpiReviewPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    for e in params["datasets"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    if params.get("script_name", None) is not None:
+        if not isinstance(params["script_name"], str):
+            raise StyxValidationError(f'`script_name` has the wrong type: Received `{type(params.get("script_name", None))}` expected `str | None`')
+    if params.get("windows", None) is not None:
+        if not isinstance(params["windows"], list):
+            raise StyxValidationError(f'`windows` has the wrong type: Received `{type(params.get("windows", None))}` expected `list[str] | None`')
+        for e in params["windows"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`windows` has the wrong type: Received `{type(params.get("windows", None))}` expected `list[str] | None`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+    if params.get("image_size", None) is not None:
+        if not isinstance(params["image_size"], list):
+            raise StyxValidationError(f'`image_size` has the wrong type: Received `{type(params.get("image_size", None))}` expected `list[float] | None`')
+        if len(params["image_size"]) == 2:
+            raise StyxValidationError("Parameter `image_size` must contain exactly 2 elements")
+        for e in params["image_size"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`image_size` has the wrong type: Received `{type(params.get("image_size", None))}` expected `list[float] | None`')
+    if params.get("image_xoffset", None) is not None:
+        if not isinstance(params["image_xoffset"], (float, int)):
+            raise StyxValidationError(f'`image_xoffset` has the wrong type: Received `{type(params.get("image_xoffset", None))}` expected `float | None`')
+    if params.get("image_yoffset", None) is not None:
+        if not isinstance(params["image_yoffset"], (float, int)):
+            raise StyxValidationError(f'`image_yoffset` has the wrong type: Received `{type(params.get("image_yoffset", None))}` expected `float | None`')
+    if params.get("graph_size", None) is not None:
+        if not isinstance(params["graph_size"], list):
+            raise StyxValidationError(f'`graph_size` has the wrong type: Received `{type(params.get("graph_size", None))}` expected `list[float] | None`')
+        if len(params["graph_size"]) == 2:
+            raise StyxValidationError("Parameter `graph_size` must contain exactly 2 elements")
+        for e in params["graph_size"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`graph_size` has the wrong type: Received `{type(params.get("graph_size", None))}` expected `list[float] | None`')
+    if params.get("graph_xoffset", None) is not None:
+        if not isinstance(params["graph_xoffset"], (float, int)):
+            raise StyxValidationError(f'`graph_xoffset` has the wrong type: Received `{type(params.get("graph_xoffset", None))}` expected `float | None`')
+    if params.get("graph_yoffset", None) is not None:
+        if not isinstance(params["graph_yoffset"], (float, int)):
+            raise StyxValidationError(f'`graph_yoffset` has the wrong type: Received `{type(params.get("graph_yoffset", None))}` expected `float | None`')
+
+
 def gen_epi_review_py_cargs(
     params: GenEpiReviewPyParameters,
     execution: Execution,
@@ -208,6 +269,7 @@ def gen_epi_review_py_execute(
     Returns:
         NamedTuple of outputs (described in `GenEpiReviewPyOutputs`).
     """
+    gen_epi_review_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GEN_EPI_REVIEW_PY_METADATA)
     params = execution.params(params)

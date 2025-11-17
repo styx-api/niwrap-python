@@ -220,6 +220,122 @@ def prelude_params(
     return params
 
 
+def prelude_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PreludeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_unwrap", None) is None:
+        raise StyxValidationError("`output_unwrap` must not be None")
+    if not isinstance(params["output_unwrap"], str):
+        raise StyxValidationError(f'`output_unwrap` has the wrong type: Received `{type(params.get("output_unwrap", None))}` expected `str`')
+    if params.get("output_unwrap_alias", None) is None:
+        raise StyxValidationError("`output_unwrap_alias` must not be None")
+    if not isinstance(params["output_unwrap_alias"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_unwrap_alias` has the wrong type: Received `{type(params.get("output_unwrap_alias", None))}` expected `InputPathType`')
+    if params.get("complex_phase", None) is not None:
+        if not isinstance(params["complex_phase"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`complex_phase` has the wrong type: Received `{type(params.get("complex_phase", None))}` expected `InputPathType | None`')
+    if params.get("complex_phase_alias", None) is not None:
+        if not isinstance(params["complex_phase_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`complex_phase_alias` has the wrong type: Received `{type(params.get("complex_phase_alias", None))}` expected `InputPathType | None`')
+    if params.get("absolute_volume", None) is not None:
+        if not isinstance(params["absolute_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`absolute_volume` has the wrong type: Received `{type(params.get("absolute_volume", None))}` expected `InputPathType | None`')
+    if params.get("absolute_volume_alias", None) is not None:
+        if not isinstance(params["absolute_volume_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`absolute_volume_alias` has the wrong type: Received `{type(params.get("absolute_volume_alias", None))}` expected `InputPathType | None`')
+    if params.get("phase_volume", None) is not None:
+        if not isinstance(params["phase_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`phase_volume` has the wrong type: Received `{type(params.get("phase_volume", None))}` expected `InputPathType | None`')
+    if params.get("phase_volume_alias", None) is not None:
+        if not isinstance(params["phase_volume_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`phase_volume_alias` has the wrong type: Received `{type(params.get("phase_volume_alias", None))}` expected `InputPathType | None`')
+    if params.get("num_phase_split", None) is not None:
+        if not isinstance(params["num_phase_split"], (float, int)):
+            raise StyxValidationError(f'`num_phase_split` has the wrong type: Received `{type(params.get("num_phase_split", None))}` expected `float | None`')
+    if params.get("label_slices", False) is None:
+        raise StyxValidationError("`label_slices` must not be None")
+    if not isinstance(params["label_slices"], bool):
+        raise StyxValidationError(f'`label_slices` has the wrong type: Received `{type(params.get("label_slices", False))}` expected `bool`')
+    if params.get("slice_processing", False) is None:
+        raise StyxValidationError("`slice_processing` must not be None")
+    if not isinstance(params["slice_processing"], bool):
+        raise StyxValidationError(f'`slice_processing` has the wrong type: Received `{type(params.get("slice_processing", False))}` expected `bool`')
+    if params.get("slice_processing_alias", False) is None:
+        raise StyxValidationError("`slice_processing_alias` must not be None")
+    if not isinstance(params["slice_processing_alias"], bool):
+        raise StyxValidationError(f'`slice_processing_alias` has the wrong type: Received `{type(params.get("slice_processing_alias", False))}` expected `bool`')
+    if params.get("force_3d", False) is None:
+        raise StyxValidationError("`force_3d` must not be None")
+    if not isinstance(params["force_3d"], bool):
+        raise StyxValidationError(f'`force_3d` has the wrong type: Received `{type(params.get("force_3d", False))}` expected `bool`')
+    if params.get("force_3d_alias", False) is None:
+        raise StyxValidationError("`force_3d_alias` must not be None")
+    if not isinstance(params["force_3d_alias"], bool):
+        raise StyxValidationError(f'`force_3d_alias` has the wrong type: Received `{type(params.get("force_3d_alias", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("threshold_alias", None) is not None:
+        if not isinstance(params["threshold_alias"], (float, int)):
+            raise StyxValidationError(f'`threshold_alias` has the wrong type: Received `{type(params.get("threshold_alias", None))}` expected `float | None`')
+    if params.get("mask_volume", None) is not None:
+        if not isinstance(params["mask_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_volume` has the wrong type: Received `{type(params.get("mask_volume", None))}` expected `InputPathType | None`')
+    if params.get("mask_volume_alias", None) is not None:
+        if not isinstance(params["mask_volume_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_volume_alias` has the wrong type: Received `{type(params.get("mask_volume_alias", None))}` expected `InputPathType | None`')
+    if params.get("start_image", None) is not None:
+        if not isinstance(params["start_image"], (float, int)):
+            raise StyxValidationError(f'`start_image` has the wrong type: Received `{type(params.get("start_image", None))}` expected `float | None`')
+    if params.get("end_image", None) is not None:
+        if not isinstance(params["end_image"], (float, int)):
+            raise StyxValidationError(f'`end_image` has the wrong type: Received `{type(params.get("end_image", None))}` expected `float | None`')
+    if params.get("save_mask", None) is not None:
+        if not isinstance(params["save_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`save_mask` has the wrong type: Received `{type(params.get("save_mask", None))}` expected `InputPathType | None`')
+    if params.get("save_raw_phase", None) is not None:
+        if not isinstance(params["save_raw_phase"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`save_raw_phase` has the wrong type: Received `{type(params.get("save_raw_phase", None))}` expected `InputPathType | None`')
+    if params.get("save_raw_phase_alias", None) is not None:
+        if not isinstance(params["save_raw_phase_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`save_raw_phase_alias` has the wrong type: Received `{type(params.get("save_raw_phase_alias", None))}` expected `InputPathType | None`')
+    if params.get("save_labels", None) is not None:
+        if not isinstance(params["save_labels"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`save_labels` has the wrong type: Received `{type(params.get("save_labels", None))}` expected `InputPathType | None`')
+    if params.get("save_labels_alias", None) is not None:
+        if not isinstance(params["save_labels_alias"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`save_labels_alias` has the wrong type: Received `{type(params.get("save_labels_alias", None))}` expected `InputPathType | None`')
+    if params.get("remove_ramps", False) is None:
+        raise StyxValidationError("`remove_ramps` must not be None")
+    if not isinstance(params["remove_ramps"], bool):
+        raise StyxValidationError(f'`remove_ramps` has the wrong type: Received `{type(params.get("remove_ramps", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("verbose_alias", False) is None:
+        raise StyxValidationError("`verbose_alias` must not be None")
+    if not isinstance(params["verbose_alias"], bool):
+        raise StyxValidationError(f'`verbose_alias` has the wrong type: Received `{type(params.get("verbose_alias", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("help_alias", False) is None:
+        raise StyxValidationError("`help_alias` must not be None")
+    if not isinstance(params["help_alias"], bool):
+        raise StyxValidationError(f'`help_alias` has the wrong type: Received `{type(params.get("help_alias", False))}` expected `bool`')
+
+
 def prelude_cargs(
     params: PreludeParameters,
     execution: Execution,
@@ -398,6 +514,7 @@ def prelude_execute(
     Returns:
         NamedTuple of outputs (described in `PreludeOutputs`).
     """
+    prelude_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PRELUDE_METADATA)
     params = execution.params(params)

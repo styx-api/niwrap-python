@@ -56,6 +56,28 @@ def cor_to_minc_params(
     return params
 
 
+def cor_to_minc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CorToMincParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cor_directory", None) is None:
+        raise StyxValidationError("`cor_directory` must not be None")
+    if not isinstance(params["cor_directory"], str):
+        raise StyxValidationError(f'`cor_directory` has the wrong type: Received `{type(params.get("cor_directory", None))}` expected `str`')
+    if params.get("minc_file", None) is None:
+        raise StyxValidationError("`minc_file` must not be None")
+    if not isinstance(params["minc_file"], str):
+        raise StyxValidationError(f'`minc_file` has the wrong type: Received `{type(params.get("minc_file", None))}` expected `str`')
+
+
 def cor_to_minc_cargs(
     params: CorToMincParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def cor_to_minc_execute(
     Returns:
         NamedTuple of outputs (described in `CorToMincOutputs`).
     """
+    cor_to_minc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(COR_TO_MINC_METADATA)
     params = execution.params(params)

@@ -294,6 +294,154 @@ def mri_surfcluster_params(
     return params
 
 
+def mri_surfcluster_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSurfclusterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("thmin", None) is not None:
+        if not isinstance(params["thmin"], (float, int)):
+            raise StyxValidationError(f'`thmin` has the wrong type: Received `{type(params.get("thmin", None))}` expected `float | None`')
+    if params.get("sign", None) is not None:
+        if not isinstance(params["sign"], str):
+            raise StyxValidationError(f'`sign` has the wrong type: Received `{type(params.get("sign", None))}` expected `str | None`')
+    if params.get("no_adjust_flag", False) is None:
+        raise StyxValidationError("`no_adjust_flag` must not be None")
+    if not isinstance(params["no_adjust_flag"], bool):
+        raise StyxValidationError(f'`no_adjust_flag` has the wrong type: Received `{type(params.get("no_adjust_flag", False))}` expected `bool`')
+    if params.get("fdr", None) is not None:
+        if not isinstance(params["fdr"], (float, int)):
+            raise StyxValidationError(f'`fdr` has the wrong type: Received `{type(params.get("fdr", None))}` expected `float | None`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], str):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `str | None`')
+    if params.get("surfpath", None) is not None:
+        if not isinstance(params["surfpath"], str):
+            raise StyxValidationError(f'`surfpath` has the wrong type: Received `{type(params.get("surfpath", None))}` expected `str | None`')
+    if params.get("annot", None) is not None:
+        if not isinstance(params["annot"], str):
+            raise StyxValidationError(f'`annot` has the wrong type: Received `{type(params.get("annot", None))}` expected `str | None`')
+    if params.get("frame", None) is not None:
+        if not isinstance(params["frame"], (float, int)):
+            raise StyxValidationError(f'`frame` has the wrong type: Received `{type(params.get("frame", None))}` expected `float | None`')
+    if params.get("csd", None) is not None:
+        if not isinstance(params["csd"], list):
+            raise StyxValidationError(f'`csd` has the wrong type: Received `{type(params.get("csd", None))}` expected `list[InputPathType] | None`')
+        for e in params["csd"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`csd` has the wrong type: Received `{type(params.get("csd", None))}` expected `list[InputPathType] | None`')
+    if params.get("vwsig", None) is not None:
+        if not isinstance(params["vwsig"], str):
+            raise StyxValidationError(f'`vwsig` has the wrong type: Received `{type(params.get("vwsig", None))}` expected `str | None`')
+    if params.get("cwsig", None) is not None:
+        if not isinstance(params["cwsig"], str):
+            raise StyxValidationError(f'`cwsig` has the wrong type: Received `{type(params.get("cwsig", None))}` expected `str | None`')
+    if params.get("maxcwpval", None) is not None:
+        if not isinstance(params["maxcwpval"], str):
+            raise StyxValidationError(f'`maxcwpval` has the wrong type: Received `{type(params.get("maxcwpval", None))}` expected `str | None`')
+    if params.get("bonferroni", None) is not None:
+        if not isinstance(params["bonferroni"], (float, int)):
+            raise StyxValidationError(f'`bonferroni` has the wrong type: Received `{type(params.get("bonferroni", None))}` expected `float | None`')
+    if params.get("sig2p_max_flag", False) is None:
+        raise StyxValidationError("`sig2p_max_flag` must not be None")
+    if not isinstance(params["sig2p_max_flag"], bool):
+        raise StyxValidationError(f'`sig2p_max_flag` has the wrong type: Received `{type(params.get("sig2p_max_flag", False))}` expected `bool`')
+    if params.get("bonferroni_max", None) is not None:
+        if not isinstance(params["bonferroni_max"], (float, int)):
+            raise StyxValidationError(f'`bonferroni_max` has the wrong type: Received `{type(params.get("bonferroni_max", None))}` expected `float | None`')
+    if params.get("csdpdf", None) is not None:
+        if not isinstance(params["csdpdf"], str):
+            raise StyxValidationError(f'`csdpdf` has the wrong type: Received `{type(params.get("csdpdf", None))}` expected `str | None`')
+    if params.get("csdpdf_only_flag", False) is None:
+        raise StyxValidationError("`csdpdf_only_flag` must not be None")
+    if not isinstance(params["csdpdf_only_flag"], bool):
+        raise StyxValidationError(f'`csdpdf_only_flag` has the wrong type: Received `{type(params.get("csdpdf_only_flag", False))}` expected `bool`')
+    if params.get("csd_out", None) is not None:
+        if not isinstance(params["csd_out"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`csd_out` has the wrong type: Received `{type(params.get("csd_out", None))}` expected `InputPathType | None`')
+    if params.get("cwpvalthresh", None) is not None:
+        if not isinstance(params["cwpvalthresh"], (float, int)):
+            raise StyxValidationError(f'`cwpvalthresh` has the wrong type: Received `{type(params.get("cwpvalthresh", None))}` expected `float | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("fwhmdat", None) is not None:
+        if not isinstance(params["fwhmdat"], str):
+            raise StyxValidationError(f'`fwhmdat` has the wrong type: Received `{type(params.get("fwhmdat", None))}` expected `str | None`')
+    if params.get("clabel", None) is not None:
+        if not isinstance(params["clabel"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`clabel` has the wrong type: Received `{type(params.get("clabel", None))}` expected `InputPathType | None`')
+    if params.get("cortex_flag", False) is None:
+        raise StyxValidationError("`cortex_flag` must not be None")
+    if not isinstance(params["cortex_flag"], bool):
+        raise StyxValidationError(f'`cortex_flag` has the wrong type: Received `{type(params.get("cortex_flag", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_inv_flag", False) is None:
+        raise StyxValidationError("`mask_inv_flag` must not be None")
+    if not isinstance(params["mask_inv_flag"], bool):
+        raise StyxValidationError(f'`mask_inv_flag` has the wrong type: Received `{type(params.get("mask_inv_flag", False))}` expected `bool`')
+    if params.get("centroid_flag", False) is None:
+        raise StyxValidationError("`centroid_flag` must not be None")
+    if not isinstance(params["centroid_flag"], bool):
+        raise StyxValidationError(f'`centroid_flag` has the wrong type: Received `{type(params.get("centroid_flag", False))}` expected `bool`')
+    if params.get("sum", None) is not None:
+        if not isinstance(params["sum"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", None))}` expected `InputPathType | None`')
+    if params.get("pointset", None) is not None:
+        if not isinstance(params["pointset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`pointset` has the wrong type: Received `{type(params.get("pointset", None))}` expected `InputPathType | None`')
+    if params.get("maxareafile", None) is not None:
+        if not isinstance(params["maxareafile"], str):
+            raise StyxValidationError(f'`maxareafile` has the wrong type: Received `{type(params.get("maxareafile", None))}` expected `str | None`')
+    if params.get("o", None) is not None:
+        if not isinstance(params["o"], str):
+            raise StyxValidationError(f'`o` has the wrong type: Received `{type(params.get("o", None))}` expected `str | None`')
+    if params.get("ocn", None) is not None:
+        if not isinstance(params["ocn"], str):
+            raise StyxValidationError(f'`ocn` has the wrong type: Received `{type(params.get("ocn", None))}` expected `str | None`')
+    if params.get("olab", None) is not None:
+        if not isinstance(params["olab"], str):
+            raise StyxValidationError(f'`olab` has the wrong type: Received `{type(params.get("olab", None))}` expected `str | None`')
+    if params.get("oannot", None) is not None:
+        if not isinstance(params["oannot"], str):
+            raise StyxValidationError(f'`oannot` has the wrong type: Received `{type(params.get("oannot", None))}` expected `str | None`')
+    if params.get("minarea", None) is not None:
+        if not isinstance(params["minarea"], (float, int)):
+            raise StyxValidationError(f'`minarea` has the wrong type: Received `{type(params.get("minarea", None))}` expected `float | None`')
+    if params.get("xfm", None) is not None:
+        if not isinstance(params["xfm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xfm` has the wrong type: Received `{type(params.get("xfm", None))}` expected `InputPathType | None`')
+    if params.get("no_fixmni_flag", False) is None:
+        raise StyxValidationError("`no_fixmni_flag` must not be None")
+    if not isinstance(params["no_fixmni_flag"], bool):
+        raise StyxValidationError(f'`no_fixmni_flag` has the wrong type: Received `{type(params.get("no_fixmni_flag", False))}` expected `bool`')
+    if params.get("sd", None) is not None:
+        if not isinstance(params["sd"], str):
+            raise StyxValidationError(f'`sd` has the wrong type: Received `{type(params.get("sd", None))}` expected `str | None`')
+    if params.get("thmax", None) is not None:
+        if not isinstance(params["thmax"], (float, int)):
+            raise StyxValidationError(f'`thmax` has the wrong type: Received `{type(params.get("thmax", None))}` expected `float | None`')
+
+
 def mri_surfcluster_cargs(
     params: MriSurfclusterParameters,
     execution: Execution,
@@ -540,6 +688,7 @@ def mri_surfcluster_execute(
     Returns:
         NamedTuple of outputs (described in `MriSurfclusterOutputs`).
     """
+    mri_surfcluster_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SURFCLUSTER_METADATA)
     params = execution.params(params)

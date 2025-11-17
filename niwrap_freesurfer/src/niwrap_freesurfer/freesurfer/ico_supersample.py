@@ -64,6 +64,33 @@ def ico_supersample_params(
     return params
 
 
+def ico_supersample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `IcoSupersampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("refine", False) is None:
+        raise StyxValidationError("`refine` must not be None")
+    if not isinstance(params["refine"], bool):
+        raise StyxValidationError(f'`refine` has the wrong type: Received `{type(params.get("refine", False))}` expected `bool`')
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], (float, int)):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float | None`')
+    if params.get("projection_point", None) is not None:
+        if not isinstance(params["projection_point"], list):
+            raise StyxValidationError(f'`projection_point` has the wrong type: Received `{type(params.get("projection_point", None))}` expected `list[float] | None`')
+        for e in params["projection_point"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`projection_point` has the wrong type: Received `{type(params.get("projection_point", None))}` expected `list[float] | None`')
+
+
 def ico_supersample_cargs(
     params: IcoSupersampleParameters,
     execution: Execution,
@@ -127,6 +154,7 @@ def ico_supersample_execute(
     Returns:
         NamedTuple of outputs (described in `IcoSupersampleOutputs`).
     """
+    ico_supersample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ICO_SUPERSAMPLE_METADATA)
     params = execution.params(params)

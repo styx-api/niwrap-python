@@ -74,6 +74,44 @@ def gcaprepone_params(
     return params
 
 
+def gcaprepone_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GcapreponeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gcadir", None) is None:
+        raise StyxValidationError("`gcadir` must not be None")
+    if not isinstance(params["gcadir"], str):
+        raise StyxValidationError(f'`gcadir` has the wrong type: Received `{type(params.get("gcadir", None))}` expected `str`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("init_subject", False) is None:
+        raise StyxValidationError("`init_subject` must not be None")
+    if not isinstance(params["init_subject"], bool):
+        raise StyxValidationError(f'`init_subject` has the wrong type: Received `{type(params.get("init_subject", False))}` expected `bool`')
+    if params.get("source_subjects_dir", None) is None:
+        raise StyxValidationError("`source_subjects_dir` must not be None")
+    if not isinstance(params["source_subjects_dir"], str):
+        raise StyxValidationError(f'`source_subjects_dir` has the wrong type: Received `{type(params.get("source_subjects_dir", None))}` expected `str`')
+    if params.get("done_file", None) is None:
+        raise StyxValidationError("`done_file` must not be None")
+    if not isinstance(params["done_file"], str):
+        raise StyxValidationError(f'`done_file` has the wrong type: Received `{type(params.get("done_file", None))}` expected `str`')
+    if params.get("no_emreg", False) is None:
+        raise StyxValidationError("`no_emreg` must not be None")
+    if not isinstance(params["no_emreg"], bool):
+        raise StyxValidationError(f'`no_emreg` has the wrong type: Received `{type(params.get("no_emreg", False))}` expected `bool`')
+
+
 def gcaprepone_cargs(
     params: GcapreponeParameters,
     execution: Execution,
@@ -151,6 +189,7 @@ def gcaprepone_execute(
     Returns:
         NamedTuple of outputs (described in `GcapreponeOutputs`).
     """
+    gcaprepone_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GCAPREPONE_METADATA)
     params = execution.params(params)

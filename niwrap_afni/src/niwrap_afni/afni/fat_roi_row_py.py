@@ -75,6 +75,34 @@ def fat_roi_row_py_params(
     return params
 
 
+def fat_roi_row_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatRoiRowPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi", None) is None:
+        raise StyxValidationError("`roi` must not be None")
+    if not isinstance(params["roi"], str):
+        raise StyxValidationError(f'`roi` has the wrong type: Received `{type(params.get("roi", None))}` expected `str`')
+    if params.get("matrix_files", None) is not None:
+        if not isinstance(params["matrix_files"], str):
+            raise StyxValidationError(f'`matrix_files` has the wrong type: Received `{type(params.get("matrix_files", None))}` expected `str | None`')
+    if params.get("list_file", None) is not None:
+        if not isinstance(params["list_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`list_file` has the wrong type: Received `{type(params.get("list_file", None))}` expected `InputPathType | None`')
+    if params.get("extern_labs_no", False) is None:
+        raise StyxValidationError("`extern_labs_no` must not be None")
+    if not isinstance(params["extern_labs_no"], bool):
+        raise StyxValidationError(f'`extern_labs_no` has the wrong type: Received `{type(params.get("extern_labs_no", False))}` expected `bool`')
+
+
 def fat_roi_row_py_cargs(
     params: FatRoiRowPyParameters,
     execution: Execution,
@@ -149,6 +177,7 @@ def fat_roi_row_py_execute(
     Returns:
         NamedTuple of outputs (described in `FatRoiRowPyOutputs`).
     """
+    fat_roi_row_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_ROI_ROW_PY_METADATA)
     params = execution.params(params)

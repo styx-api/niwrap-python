@@ -74,6 +74,28 @@ def metric_weighted_stats_roi_params(
     return params
 
 
+def metric_weighted_stats_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricWeightedStatsRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-metric", None) is None:
+        raise StyxValidationError("`roi-metric` must not be None")
+    if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType`')
+    if params.get("match-maps", False) is None:
+        raise StyxValidationError("`match-maps` must not be None")
+    if not isinstance(params["match-maps"], bool):
+        raise StyxValidationError(f'`match-maps` has the wrong type: Received `{type(params.get("match-maps", False))}` expected `bool`')
+
+
 def metric_weighted_stats_roi_cargs(
     params: MetricWeightedStatsRoiParameters,
     execution: Execution,
@@ -166,6 +188,53 @@ def metric_weighted_stats_params(
     return params
 
 
+def metric_weighted_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricWeightedStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("area-surface", None) is not None:
+        if not isinstance(params["area-surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`area-surface` has the wrong type: Received `{type(params.get("area-surface", None))}` expected `InputPathType | None`')
+    if params.get("weight-metric", None) is not None:
+        if not isinstance(params["weight-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight-metric` has the wrong type: Received `{type(params.get("weight-metric", None))}` expected `InputPathType | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("roi", None) is not None:
+        metric_weighted_stats_roi_validate(params["roi"])
+    if params.get("mean", False) is None:
+        raise StyxValidationError("`mean` must not be None")
+    if not isinstance(params["mean"], bool):
+        raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", False))}` expected `bool`')
+    if params.get("sample", False) is not None:
+        if not isinstance(params["sample"], bool):
+            raise StyxValidationError(f'`sample` has the wrong type: Received `{type(params.get("sample", False))}` expected `bool | None`')
+    if params.get("percent", None) is not None:
+        if not isinstance(params["percent"], (float, int)):
+            raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", None))}` expected `float | None`')
+    if params.get("sum", False) is None:
+        raise StyxValidationError("`sum` must not be None")
+    if not isinstance(params["sum"], bool):
+        raise StyxValidationError(f'`sum` has the wrong type: Received `{type(params.get("sum", False))}` expected `bool`')
+    if params.get("show-map-name", False) is None:
+        raise StyxValidationError("`show-map-name` must not be None")
+    if not isinstance(params["show-map-name"], bool):
+        raise StyxValidationError(f'`show-map-name` has the wrong type: Received `{type(params.get("show-map-name", False))}` expected `bool`')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+
+
 def metric_weighted_stats_cargs(
     params: MetricWeightedStatsParameters,
     execution: Execution,
@@ -249,6 +318,7 @@ def metric_weighted_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MetricWeightedStatsOutputs`).
     """
+    metric_weighted_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_WEIGHTED_STATS_METADATA)
     params = execution.params(params)

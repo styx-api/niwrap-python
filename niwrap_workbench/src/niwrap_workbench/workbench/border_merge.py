@@ -81,6 +81,28 @@ def border_merge_up_to_params(
     return params
 
 
+def border_merge_up_to_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderMergeUpToParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("last-border", None) is None:
+        raise StyxValidationError("`last-border` must not be None")
+    if not isinstance(params["last-border"], str):
+        raise StyxValidationError(f'`last-border` has the wrong type: Received `{type(params.get("last-border", None))}` expected `str`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+
+
 def border_merge_up_to_cargs(
     params: BorderMergeUpToParameters,
     execution: Execution,
@@ -126,6 +148,26 @@ def border_merge_select_params(
     return params
 
 
+def border_merge_select_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderMergeSelectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border", None) is None:
+        raise StyxValidationError("`border` must not be None")
+    if not isinstance(params["border"], str):
+        raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `str`')
+    if params.get("up-to", None) is not None:
+        border_merge_up_to_validate(params["up-to"])
+
+
 def border_merge_select_cargs(
     params: BorderMergeSelectParameters,
     execution: Execution,
@@ -169,6 +211,29 @@ def border_merge_border_params(
     if select_ is not None:
         params["select"] = select_
     return params
+
+
+def border_merge_border_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderMergeBorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border-file-in", None) is None:
+        raise StyxValidationError("`border-file-in` must not be None")
+    if not isinstance(params["border-file-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border-file-in` has the wrong type: Received `{type(params.get("border-file-in", None))}` expected `InputPathType`')
+    if params.get("select", None) is not None:
+        if not isinstance(params["select"], list):
+            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `list[BorderMergeSelectParameters] | None`')
+        for e in params["select"]:
+            border_merge_select_validate(e)
 
 
 def border_merge_border_cargs(
@@ -224,6 +289,29 @@ def border_merge_params(
     if border is not None:
         params["border"] = border
     return params
+
+
+def border_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border-file-out", None) is None:
+        raise StyxValidationError("`border-file-out` must not be None")
+    if not isinstance(params["border-file-out"], str):
+        raise StyxValidationError(f'`border-file-out` has the wrong type: Received `{type(params.get("border-file-out", None))}` expected `str`')
+    if params.get("border", None) is not None:
+        if not isinstance(params["border"], list):
+            raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `list[BorderMergeBorderParameters] | None`')
+        for e in params["border"]:
+            border_merge_border_validate(e)
 
 
 def border_merge_cargs(
@@ -292,6 +380,7 @@ def border_merge_execute(
     Returns:
         NamedTuple of outputs (described in `BorderMergeOutputs`).
     """
+    border_merge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BORDER_MERGE_METADATA)
     params = execution.params(params)

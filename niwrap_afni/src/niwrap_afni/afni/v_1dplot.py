@@ -181,6 +181,28 @@ def v_1dplot_noline_params(
     return params
 
 
+def v_1dplot_noline_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dplotNolineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("noline", False) is None:
+        raise StyxValidationError("`noline` must not be None")
+    if not isinstance(params["noline"], bool):
+        raise StyxValidationError(f'`noline` has the wrong type: Received `{type(params.get("noline", False))}` expected `bool`')
+    if params.get("NOLINE", False) is None:
+        raise StyxValidationError("`NOLINE` must not be None")
+    if not isinstance(params["NOLINE"], bool):
+        raise StyxValidationError(f'`NOLINE` has the wrong type: Received `{type(params.get("NOLINE", False))}` expected `bool`')
+
+
 def v_1dplot_noline_cargs(
     params: V1dplotNolineParameters,
     execution: Execution,
@@ -221,6 +243,28 @@ def v_1dplot_thick_params(
         "THICK": thick_,
     }
     return params
+
+
+def v_1dplot_thick_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dplotThickParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("thick", False) is None:
+        raise StyxValidationError("`thick` must not be None")
+    if not isinstance(params["thick"], bool):
+        raise StyxValidationError(f'`thick` has the wrong type: Received `{type(params.get("thick", False))}` expected `bool`')
+    if params.get("THICK", False) is None:
+        raise StyxValidationError("`THICK` must not be None")
+    if not isinstance(params["THICK"], bool):
+        raise StyxValidationError(f'`THICK` has the wrong type: Received `{type(params.get("THICK", False))}` expected `bool`')
 
 
 def v_1dplot_thick_cargs(
@@ -265,6 +309,26 @@ def v_1dplot_rbox_params(
     if rbox_ is not None:
         params["Rbox"] = rbox_
     return params
+
+
+def v_1dplot_rbox_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dplotRboxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rbox", None) is not None:
+        if not isinstance(params["rbox"], str):
+            raise StyxValidationError(f'`rbox` has the wrong type: Received `{type(params.get("rbox", None))}` expected `str | None`')
+    if params.get("Rbox", None) is not None:
+        if not isinstance(params["Rbox"], str):
+            raise StyxValidationError(f'`Rbox` has the wrong type: Received `{type(params.get("Rbox", None))}` expected `str | None`')
 
 
 def v_1dplot_rbox_cargs(
@@ -525,6 +589,195 @@ def v_1dplot_params(
     return params
 
 
+def v_1dplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tsfiles", None) is None:
+        raise StyxValidationError("`tsfiles` must not be None")
+    if not isinstance(params["tsfiles"], list):
+        raise StyxValidationError(f'`tsfiles` has the wrong type: Received `{type(params.get("tsfiles", None))}` expected `list[InputPathType]`')
+    for e in params["tsfiles"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`tsfiles` has the wrong type: Received `{type(params.get("tsfiles", None))}` expected `list[InputPathType]`')
+    if params.get("install", False) is None:
+        raise StyxValidationError("`install` must not be None")
+    if not isinstance(params["install"], bool):
+        raise StyxValidationError(f'`install` has the wrong type: Received `{type(params.get("install", False))}` expected `bool`')
+    if params.get("sep", False) is None:
+        raise StyxValidationError("`sep` must not be None")
+    if not isinstance(params["sep"], bool):
+        raise StyxValidationError(f'`sep` has the wrong type: Received `{type(params.get("sep", False))}` expected `bool`')
+    if params.get("one", False) is None:
+        raise StyxValidationError("`one` must not be None")
+    if not isinstance(params["one"], bool):
+        raise StyxValidationError(f'`one` has the wrong type: Received `{type(params.get("one", False))}` expected `bool`')
+    if params.get("sepscl", False) is None:
+        raise StyxValidationError("`sepscl` must not be None")
+    if not isinstance(params["sepscl"], bool):
+        raise StyxValidationError(f'`sepscl` has the wrong type: Received `{type(params.get("sepscl", False))}` expected `bool`')
+    if params.get("noline", None) is not None:
+        v_1dplot_noline_validate(params["noline"])
+    if params.get("box", False) is None:
+        raise StyxValidationError("`box` must not be None")
+    if not isinstance(params["box"], bool):
+        raise StyxValidationError(f'`box` has the wrong type: Received `{type(params.get("box", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("norm2", False) is None:
+        raise StyxValidationError("`norm2` must not be None")
+    if not isinstance(params["norm2"], bool):
+        raise StyxValidationError(f'`norm2` has the wrong type: Received `{type(params.get("norm2", False))}` expected `bool`')
+    if params.get("normx", False) is None:
+        raise StyxValidationError("`normx` must not be None")
+    if not isinstance(params["normx"], bool):
+        raise StyxValidationError(f'`normx` has the wrong type: Received `{type(params.get("normx", False))}` expected `bool`')
+    if params.get("norm1", False) is None:
+        raise StyxValidationError("`norm1` must not be None")
+    if not isinstance(params["norm1"], bool):
+        raise StyxValidationError(f'`norm1` has the wrong type: Received `{type(params.get("norm1", False))}` expected `bool`')
+    if params.get("demean", False) is None:
+        raise StyxValidationError("`demean` must not be None")
+    if not isinstance(params["demean"], bool):
+        raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool`')
+    if params.get("x", None) is not None:
+        if not isinstance(params["x"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`x` has the wrong type: Received `{type(params.get("x", None))}` expected `InputPathType | None`')
+    if params.get("xl10", None) is not None:
+        if not isinstance(params["xl10"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xl10` has the wrong type: Received `{type(params.get("xl10", None))}` expected `InputPathType | None`')
+    if params.get("dx", None) is not None:
+        if not isinstance(params["dx"], (float, int)):
+            raise StyxValidationError(f'`dx` has the wrong type: Received `{type(params.get("dx", None))}` expected `float | None`')
+    if params.get("xzero", None) is not None:
+        if not isinstance(params["xzero"], (float, int)):
+            raise StyxValidationError(f'`xzero` has the wrong type: Received `{type(params.get("xzero", None))}` expected `float | None`')
+    if params.get("nopush", False) is None:
+        raise StyxValidationError("`nopush` must not be None")
+    if not isinstance(params["nopush"], bool):
+        raise StyxValidationError(f'`nopush` has the wrong type: Received `{type(params.get("nopush", False))}` expected `bool`')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], (float, int)):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `float | None`')
+    if params.get("use", None) is not None:
+        if not isinstance(params["use"], (float, int)):
+            raise StyxValidationError(f'`use` has the wrong type: Received `{type(params.get("use", None))}` expected `float | None`')
+    if params.get("xlabel", None) is not None:
+        if not isinstance(params["xlabel"], str):
+            raise StyxValidationError(f'`xlabel` has the wrong type: Received `{type(params.get("xlabel", None))}` expected `str | None`')
+    if params.get("ylabel", None) is not None:
+        if not isinstance(params["ylabel"], str):
+            raise StyxValidationError(f'`ylabel` has the wrong type: Received `{type(params.get("ylabel", None))}` expected `str | None`')
+    if params.get("plabel", None) is not None:
+        if not isinstance(params["plabel"], str):
+            raise StyxValidationError(f'`plabel` has the wrong type: Received `{type(params.get("plabel", None))}` expected `str | None`')
+    if params.get("title", None) is not None:
+        if not isinstance(params["title"], str):
+            raise StyxValidationError(f'`title` has the wrong type: Received `{type(params.get("title", None))}` expected `str | None`')
+    if params.get("wintitle", None) is not None:
+        if not isinstance(params["wintitle"], str):
+            raise StyxValidationError(f'`wintitle` has the wrong type: Received `{type(params.get("wintitle", None))}` expected `str | None`')
+    if params.get("naked", False) is None:
+        raise StyxValidationError("`naked` must not be None")
+    if not isinstance(params["naked"], bool):
+        raise StyxValidationError(f'`naked` has the wrong type: Received `{type(params.get("naked", False))}` expected `bool`')
+    if params.get("aspect", None) is not None:
+        if not isinstance(params["aspect"], (float, int)):
+            raise StyxValidationError(f'`aspect` has the wrong type: Received `{type(params.get("aspect", None))}` expected `float | None`')
+    if params.get("stdin", False) is None:
+        raise StyxValidationError("`stdin` must not be None")
+    if not isinstance(params["stdin"], bool):
+        raise StyxValidationError(f'`stdin` has the wrong type: Received `{type(params.get("stdin", False))}` expected `bool`')
+    if params.get("ps", False) is None:
+        raise StyxValidationError("`ps` must not be None")
+    if not isinstance(params["ps"], bool):
+        raise StyxValidationError(f'`ps` has the wrong type: Received `{type(params.get("ps", False))}` expected `bool`')
+    if params.get("jpg", None) is not None:
+        if not isinstance(params["jpg"], str):
+            raise StyxValidationError(f'`jpg` has the wrong type: Received `{type(params.get("jpg", None))}` expected `str | None`')
+    if params.get("jpeg", None) is not None:
+        if not isinstance(params["jpeg"], str):
+            raise StyxValidationError(f'`jpeg` has the wrong type: Received `{type(params.get("jpeg", None))}` expected `str | None`')
+    if params.get("png", None) is not None:
+        if not isinstance(params["png"], str):
+            raise StyxValidationError(f'`png` has the wrong type: Received `{type(params.get("png", None))}` expected `str | None`')
+    if params.get("pnm", None) is not None:
+        if not isinstance(params["pnm"], str):
+            raise StyxValidationError(f'`pnm` has the wrong type: Received `{type(params.get("pnm", None))}` expected `str | None`')
+    if params.get("pngs", None) is not None:
+        if not isinstance(params["pngs"], str):
+            raise StyxValidationError(f'`pngs` has the wrong type: Received `{type(params.get("pngs", None))}` expected `str | None`')
+    if params.get("jpgs", None) is not None:
+        if not isinstance(params["jpgs"], str):
+            raise StyxValidationError(f'`jpgs` has the wrong type: Received `{type(params.get("jpgs", None))}` expected `str | None`')
+    if params.get("jpegs", None) is not None:
+        if not isinstance(params["jpegs"], str):
+            raise StyxValidationError(f'`jpegs` has the wrong type: Received `{type(params.get("jpegs", None))}` expected `str | None`')
+    if params.get("pnms", None) is not None:
+        if not isinstance(params["pnms"], str):
+            raise StyxValidationError(f'`pnms` has the wrong type: Received `{type(params.get("pnms", None))}` expected `str | None`')
+    if params.get("ytran", None) is not None:
+        if not isinstance(params["ytran"], str):
+            raise StyxValidationError(f'`ytran` has the wrong type: Received `{type(params.get("ytran", None))}` expected `str | None`')
+    if params.get("xtran", None) is not None:
+        if not isinstance(params["xtran"], str):
+            raise StyxValidationError(f'`xtran` has the wrong type: Received `{type(params.get("xtran", None))}` expected `str | None`')
+    if params.get("xaxis", None) is not None:
+        if not isinstance(params["xaxis"], str):
+            raise StyxValidationError(f'`xaxis` has the wrong type: Received `{type(params.get("xaxis", None))}` expected `str | None`')
+    if params.get("yaxis", None) is not None:
+        if not isinstance(params["yaxis"], str):
+            raise StyxValidationError(f'`yaxis` has the wrong type: Received `{type(params.get("yaxis", None))}` expected `str | None`')
+    if params.get("ynames", None) is not None:
+        if not isinstance(params["ynames"], list):
+            raise StyxValidationError(f'`ynames` has the wrong type: Received `{type(params.get("ynames", None))}` expected `list[str] | None`')
+        for e in params["ynames"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ynames` has the wrong type: Received `{type(params.get("ynames", None))}` expected `list[str] | None`')
+    if params.get("volreg", False) is None:
+        raise StyxValidationError("`volreg` must not be None")
+    if not isinstance(params["volreg"], bool):
+        raise StyxValidationError(f'`volreg` has the wrong type: Received `{type(params.get("volreg", False))}` expected `bool`')
+    if params.get("thick", None) is not None:
+        v_1dplot_thick_validate(params["thick"])
+    if params.get("dashed", None) is not None:
+        if not isinstance(params["dashed"], str):
+            raise StyxValidationError(f'`dashed` has the wrong type: Received `{type(params.get("dashed", None))}` expected `str | None`')
+    if params.get("setenv", None) is not None:
+        if not isinstance(params["setenv"], str):
+            raise StyxValidationError(f'`setenv` has the wrong type: Received `{type(params.get("setenv", None))}` expected `str | None`')
+    if params.get("censor_RGB", None) is not None:
+        if not isinstance(params["censor_RGB"], str):
+            raise StyxValidationError(f'`censor_RGB` has the wrong type: Received `{type(params.get("censor_RGB", None))}` expected `str | None`')
+    if params.get("censor", None) is not None:
+        if not isinstance(params["censor"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`censor` has the wrong type: Received `{type(params.get("censor", None))}` expected `InputPathType | None`')
+    if params.get("CENSORTR", None) is not None:
+        if not isinstance(params["CENSORTR"], list):
+            raise StyxValidationError(f'`CENSORTR` has the wrong type: Received `{type(params.get("CENSORTR", None))}` expected `list[str] | None`')
+        for e in params["CENSORTR"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`CENSORTR` has the wrong type: Received `{type(params.get("CENSORTR", None))}` expected `list[str] | None`')
+    if params.get("concat", None) is not None:
+        if not isinstance(params["concat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`concat` has the wrong type: Received `{type(params.get("concat", None))}` expected `InputPathType | None`')
+    if params.get("rbox", None) is not None:
+        v_1dplot_rbox_validate(params["rbox"])
+    if params.get("line", None) is not None:
+        if not isinstance(params["line"], str):
+            raise StyxValidationError(f'`line` has the wrong type: Received `{type(params.get("line", None))}` expected `str | None`')
+
+
 def v_1dplot_cargs(
     params: V1dplotParameters,
     execution: Execution,
@@ -779,6 +1032,7 @@ def v_1dplot_execute(
     Returns:
         NamedTuple of outputs (described in `V1dplotOutputs`).
     """
+    v_1dplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DPLOT_METADATA)
     params = execution.params(params)

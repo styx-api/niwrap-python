@@ -51,6 +51,26 @@ def anatomi_cuts_utils_params(
     return params
 
 
+def anatomi_cuts_utils_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AnatomiCutsUtilsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("modules", None) is not None:
+        if not isinstance(params["modules"], list):
+            raise StyxValidationError(f'`modules` has the wrong type: Received `{type(params.get("modules", None))}` expected `list[str] | None`')
+        for e in params["modules"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`modules` has the wrong type: Received `{type(params.get("modules", None))}` expected `list[str] | None`')
+
+
 def anatomi_cuts_utils_cargs(
     params: AnatomiCutsUtilsParameters,
     execution: Execution,
@@ -109,6 +129,7 @@ def anatomi_cuts_utils_execute(
     Returns:
         NamedTuple of outputs (described in `AnatomiCutsUtilsOutputs`).
     """
+    anatomi_cuts_utils_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANATOMI_CUTS_UTILS_METADATA)
     params = execution.params(params)

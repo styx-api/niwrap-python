@@ -62,6 +62,32 @@ def hiam_register_params(
     return params
 
 
+def hiam_register_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HiamRegisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("average_surface", None) is None:
+        raise StyxValidationError("`average_surface` must not be None")
+    if not isinstance(params["average_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`average_surface` has the wrong type: Received `{type(params.get("average_surface", None))}` expected `InputPathType`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+
+
 def hiam_register_cargs(
     params: HiamRegisterParameters,
     execution: Execution,
@@ -122,6 +148,7 @@ def hiam_register_execute(
     Returns:
         NamedTuple of outputs (described in `HiamRegisterOutputs`).
     """
+    hiam_register_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HIAM_REGISTER_METADATA)
     params = execution.params(params)

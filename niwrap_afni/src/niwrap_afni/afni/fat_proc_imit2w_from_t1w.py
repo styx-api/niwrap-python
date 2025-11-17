@@ -101,6 +101,48 @@ def fat_proc_imit2w_from_t1w_params(
     return params
 
 
+def fat_proc_imit2w_from_t1w_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcImit2wFromT1wParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("t1_file", None) is None:
+        raise StyxValidationError("`t1_file` must not be None")
+    if not isinstance(params["t1_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_file` has the wrong type: Received `{type(params.get("t1_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("ss_blur_fwhm", None) is not None:
+        if not isinstance(params["ss_blur_fwhm"], (float, int)):
+            raise StyxValidationError(f'`ss_blur_fwhm` has the wrong type: Received `{type(params.get("ss_blur_fwhm", None))}` expected `float | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("no_qc_view", False) is None:
+        raise StyxValidationError("`no_qc_view` must not be None")
+    if not isinstance(params["no_qc_view"], bool):
+        raise StyxValidationError(f'`no_qc_view` has the wrong type: Received `{type(params.get("no_qc_view", False))}` expected `bool`')
+    if params.get("qc_prefix", None) is not None:
+        if not isinstance(params["qc_prefix"], str):
+            raise StyxValidationError(f'`qc_prefix` has the wrong type: Received `{type(params.get("qc_prefix", None))}` expected `str | None`')
+
+
 def fat_proc_imit2w_from_t1w_cargs(
     params: FatProcImit2wFromT1wParameters,
     execution: Execution,
@@ -192,6 +234,7 @@ def fat_proc_imit2w_from_t1w_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcImit2wFromT1wOutputs`).
     """
+    fat_proc_imit2w_from_t1w_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_IMIT2W_FROM_T1W_METADATA)
     params = execution.params(params)

@@ -115,6 +115,66 @@ def rtfeedme_params(
     return params
 
 
+def rtfeedme_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RtfeedmeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    if params.get("host", None) is not None:
+        if not isinstance(params["host"], str):
+            raise StyxValidationError(f'`host` has the wrong type: Received `{type(params.get("host", None))}` expected `str | None`')
+    if params.get("interval_ms", None) is not None:
+        if not isinstance(params["interval_ms"], (float, int)):
+            raise StyxValidationError(f'`interval_ms` has the wrong type: Received `{type(params.get("interval_ms", None))}` expected `float | None`')
+    if params.get("send_3d", False) is None:
+        raise StyxValidationError("`send_3d` must not be None")
+    if not isinstance(params["send_3d"], bool):
+        raise StyxValidationError(f'`send_3d` has the wrong type: Received `{type(params.get("send_3d", False))}` expected `bool`')
+    if params.get("buffer_mb", None) is not None:
+        if not isinstance(params["buffer_mb"], (float, int)):
+            raise StyxValidationError(f'`buffer_mb` has the wrong type: Received `{type(params.get("buffer_mb", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("swap_bytes", False) is None:
+        raise StyxValidationError("`swap_bytes` must not be None")
+    if not isinstance(params["swap_bytes"], bool):
+        raise StyxValidationError(f'`swap_bytes` has the wrong type: Received `{type(params.get("swap_bytes", False))}` expected `bool`')
+    if params.get("nz_fake", None) is not None:
+        if not isinstance(params["nz_fake"], (float, int)):
+            raise StyxValidationError(f'`nz_fake` has the wrong type: Received `{type(params.get("nz_fake", None))}` expected `float | None`')
+    if params.get("drive_cmd", None) is not None:
+        if not isinstance(params["drive_cmd"], list):
+            raise StyxValidationError(f'`drive_cmd` has the wrong type: Received `{type(params.get("drive_cmd", None))}` expected `list[str] | None`')
+        for e in params["drive_cmd"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`drive_cmd` has the wrong type: Received `{type(params.get("drive_cmd", None))}` expected `list[str] | None`')
+    if params.get("note", None) is not None:
+        if not isinstance(params["note"], list):
+            raise StyxValidationError(f'`note` has the wrong type: Received `{type(params.get("note", None))}` expected `list[str] | None`')
+        for e in params["note"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`note` has the wrong type: Received `{type(params.get("note", None))}` expected `list[str] | None`')
+    if params.get("yrange", None) is not None:
+        if not isinstance(params["yrange"], (float, int)):
+            raise StyxValidationError(f'`yrange` has the wrong type: Received `{type(params.get("yrange", None))}` expected `float | None`')
+
+
 def rtfeedme_cargs(
     params: RtfeedmeParameters,
     execution: Execution,
@@ -213,6 +273,7 @@ def rtfeedme_execute(
     Returns:
         NamedTuple of outputs (described in `RtfeedmeOutputs`).
     """
+    rtfeedme_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RTFEEDME_METADATA)
     params = execution.params(params)

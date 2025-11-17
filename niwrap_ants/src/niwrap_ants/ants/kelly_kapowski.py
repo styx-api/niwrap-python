@@ -180,6 +180,77 @@ def kelly_kapowski_params(
     return params
 
 
+def kelly_kapowski_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `KellyKapowskiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["image_dimensionality"] not in [2, 3]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3]")
+    if params.get("segmentation_image", None) is not None:
+        if not isinstance(params["segmentation_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation_image` has the wrong type: Received `{type(params.get("segmentation_image", None))}` expected `InputPathType | None`')
+    if params.get("gray_matter_probability_image", None) is not None:
+        if not isinstance(params["gray_matter_probability_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gray_matter_probability_image` has the wrong type: Received `{type(params.get("gray_matter_probability_image", None))}` expected `InputPathType | None`')
+    if params.get("white_matter_probability_image", None) is not None:
+        if not isinstance(params["white_matter_probability_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`white_matter_probability_image` has the wrong type: Received `{type(params.get("white_matter_probability_image", None))}` expected `InputPathType | None`')
+    if params.get("convergence", None) is not None:
+        if not isinstance(params["convergence"], str):
+            raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `str | None`')
+    if params.get("thickness_prior_estimate", None) is not None:
+        if not isinstance(params["thickness_prior_estimate"], (float, int)):
+            raise StyxValidationError(f'`thickness_prior_estimate` has the wrong type: Received `{type(params.get("thickness_prior_estimate", None))}` expected `float | None`')
+    if params.get("thickness_prior_image", None) is not None:
+        if not isinstance(params["thickness_prior_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`thickness_prior_image` has the wrong type: Received `{type(params.get("thickness_prior_image", None))}` expected `InputPathType | None`')
+    if params.get("gradient_step", None) is not None:
+        if not isinstance(params["gradient_step"], (float, int)):
+            raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float | None`')
+    if params.get("smoothing_variance", None) is not None:
+        if not isinstance(params["smoothing_variance"], (float, int)):
+            raise StyxValidationError(f'`smoothing_variance` has the wrong type: Received `{type(params.get("smoothing_variance", None))}` expected `float | None`')
+    if params.get("smoothing_velocity_field_parameter", None) is not None:
+        if not isinstance(params["smoothing_velocity_field_parameter"], str):
+            raise StyxValidationError(f'`smoothing_velocity_field_parameter` has the wrong type: Received `{type(params.get("smoothing_velocity_field_parameter", None))}` expected `str | None`')
+    if params.get("use_bspline_smoothing", None) is not None:
+        if not isinstance(params["use_bspline_smoothing"], bool):
+            raise StyxValidationError(f'`use_bspline_smoothing` has the wrong type: Received `{type(params.get("use_bspline_smoothing", None))}` expected `bool | None`')
+    if params.get("use_masked_smoothing", None) is not None:
+        if not isinstance(params["use_masked_smoothing"], bool):
+            raise StyxValidationError(f'`use_masked_smoothing` has the wrong type: Received `{type(params.get("use_masked_smoothing", None))}` expected `bool | None`')
+    if params.get("time_points", None) is not None:
+        if not isinstance(params["time_points"], str):
+            raise StyxValidationError(f'`time_points` has the wrong type: Received `{type(params.get("time_points", None))}` expected `str | None`')
+    if params.get("restrict_deformation", None) is not None:
+        if not isinstance(params["restrict_deformation"], bool):
+            raise StyxValidationError(f'`restrict_deformation` has the wrong type: Received `{type(params.get("restrict_deformation", None))}` expected `bool | None`')
+    if params.get("number_of_integration_points", None) is not None:
+        if not isinstance(params["number_of_integration_points"], int):
+            raise StyxValidationError(f'`number_of_integration_points` has the wrong type: Received `{type(params.get("number_of_integration_points", None))}` expected `int | None`')
+    if params.get("maximum_number_of_invert_displacement_field_iterations", None) is not None:
+        if not isinstance(params["maximum_number_of_invert_displacement_field_iterations"], int):
+            raise StyxValidationError(f'`maximum_number_of_invert_displacement_field_iterations` has the wrong type: Received `{type(params.get("maximum_number_of_invert_displacement_field_iterations", None))}` expected `int | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def kelly_kapowski_cargs(
     params: KellyKapowskiParameters,
     execution: Execution,
@@ -329,6 +400,7 @@ def kelly_kapowski_execute(
     Returns:
         NamedTuple of outputs (described in `KellyKapowskiOutputs`).
     """
+    kelly_kapowski_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(KELLY_KAPOWSKI_METADATA)
     params = execution.params(params)

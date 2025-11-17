@@ -179,6 +179,96 @@ def mcflirt_params(
     return params
 
 
+def mcflirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `McflirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("bins", None) is not None:
+        if not isinstance(params["bins"], int):
+            raise StyxValidationError(f'`bins` has the wrong type: Received `{type(params.get("bins", None))}` expected `int | None`')
+    if params.get("cost", None) is not None:
+        if not isinstance(params["cost"], str):
+            raise StyxValidationError(f'`cost` has the wrong type: Received `{type(params.get("cost", None))}` expected `typing.Literal["mutualinfo", "woods", "corratio", "normcorr", "normmi", "leastsquares"] | None`')
+        if params["cost"] not in ["mutualinfo", "woods", "corratio", "normcorr", "normmi", "leastsquares"]:
+            raise StyxValidationError("Parameter `cost` must be one of [\"mutualinfo\", \"woods\", \"corratio\", \"normcorr\", \"normmi\", \"leastsquares\"]")
+    if params.get("dof", None) is not None:
+        if not isinstance(params["dof"], int):
+            raise StyxValidationError(f'`dof` has the wrong type: Received `{type(params.get("dof", None))}` expected `int | None`')
+    if params.get("init", None) is not None:
+        if not isinstance(params["init"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init` has the wrong type: Received `{type(params.get("init", None))}` expected `InputPathType | None`')
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], str):
+            raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `typing.Literal["spline_final", "nn_final", "sinc_final"] | None`')
+        if params["interpolation"] not in ["spline_final", "nn_final", "sinc_final"]:
+            raise StyxValidationError("Parameter `interpolation` must be one of [\"spline_final\", \"nn_final\", \"sinc_final\"]")
+    if params.get("mean_vol", False) is None:
+        raise StyxValidationError("`mean_vol` must not be None")
+    if not isinstance(params["mean_vol"], bool):
+        raise StyxValidationError(f'`mean_vol` has the wrong type: Received `{type(params.get("mean_vol", False))}` expected `bool`')
+    if params.get("out_file", None) is not None:
+        if not isinstance(params["out_file"], str):
+            raise StyxValidationError(f'`out_file` has the wrong type: Received `{type(params.get("out_file", None))}` expected `str | None`')
+    if params.get("ref_file", None) is not None:
+        if not isinstance(params["ref_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ref_file` has the wrong type: Received `{type(params.get("ref_file", None))}` expected `InputPathType | None`')
+    if params.get("ref_vol", None) is not None:
+        if not isinstance(params["ref_vol"], int):
+            raise StyxValidationError(f'`ref_vol` has the wrong type: Received `{type(params.get("ref_vol", None))}` expected `int | None`')
+    if params.get("rotation", None) is not None:
+        if not isinstance(params["rotation"], int):
+            raise StyxValidationError(f'`rotation` has the wrong type: Received `{type(params.get("rotation", None))}` expected `int | None`')
+    if params.get("save_mats", False) is None:
+        raise StyxValidationError("`save_mats` must not be None")
+    if not isinstance(params["save_mats"], bool):
+        raise StyxValidationError(f'`save_mats` has the wrong type: Received `{type(params.get("save_mats", False))}` expected `bool`')
+    if params.get("save_plots", False) is None:
+        raise StyxValidationError("`save_plots` must not be None")
+    if not isinstance(params["save_plots"], bool):
+        raise StyxValidationError(f'`save_plots` has the wrong type: Received `{type(params.get("save_plots", False))}` expected `bool`')
+    if params.get("save_rmsabs", False) is None:
+        raise StyxValidationError("`save_rmsabs` must not be None")
+    if not isinstance(params["save_rmsabs"], bool):
+        raise StyxValidationError(f'`save_rmsabs` has the wrong type: Received `{type(params.get("save_rmsabs", False))}` expected `bool`')
+    if params.get("save_rmsrel", False) is None:
+        raise StyxValidationError("`save_rmsrel` must not be None")
+    if not isinstance(params["save_rmsrel"], bool):
+        raise StyxValidationError(f'`save_rmsrel` has the wrong type: Received `{type(params.get("save_rmsrel", False))}` expected `bool`')
+    if params.get("scaling", None) is not None:
+        if not isinstance(params["scaling"], (float, int)):
+            raise StyxValidationError(f'`scaling` has the wrong type: Received `{type(params.get("scaling", None))}` expected `float | None`')
+    if params.get("smooth", None) is not None:
+        if not isinstance(params["smooth"], (float, int)):
+            raise StyxValidationError(f'`smooth` has the wrong type: Received `{type(params.get("smooth", None))}` expected `float | None`')
+    if params.get("stages", None) is not None:
+        if not isinstance(params["stages"], int):
+            raise StyxValidationError(f'`stages` has the wrong type: Received `{type(params.get("stages", None))}` expected `int | None`')
+    if params.get("stats_imgs", False) is None:
+        raise StyxValidationError("`stats_imgs` must not be None")
+    if not isinstance(params["stats_imgs"], bool):
+        raise StyxValidationError(f'`stats_imgs` has the wrong type: Received `{type(params.get("stats_imgs", False))}` expected `bool`')
+    if params.get("use_contour", False) is None:
+        raise StyxValidationError("`use_contour` must not be None")
+    if not isinstance(params["use_contour"], bool):
+        raise StyxValidationError(f'`use_contour` has the wrong type: Received `{type(params.get("use_contour", False))}` expected `bool`')
+    if params.get("use_gradient", False) is None:
+        raise StyxValidationError("`use_gradient` must not be None")
+    if not isinstance(params["use_gradient"], bool):
+        raise StyxValidationError(f'`use_gradient` has the wrong type: Received `{type(params.get("use_gradient", False))}` expected `bool`')
+
+
 def mcflirt_cargs(
     params: McflirtParameters,
     execution: Execution,
@@ -322,6 +412,7 @@ def mcflirt_execute(
     Returns:
         NamedTuple of outputs (described in `McflirtOutputs`).
     """
+    mcflirt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MCFLIRT_METADATA)
     params = execution.params(params)

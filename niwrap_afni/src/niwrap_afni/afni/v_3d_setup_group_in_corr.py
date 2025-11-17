@@ -99,6 +99,60 @@ def v_3d_setup_group_in_corr_params(
     return params
 
 
+def v_3d_setup_group_in_corr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSetupGroupInCorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("short_flag", False) is None:
+        raise StyxValidationError("`short_flag` must not be None")
+    if not isinstance(params["short_flag"], bool):
+        raise StyxValidationError(f'`short_flag` has the wrong type: Received `{type(params.get("short_flag", False))}` expected `bool`')
+    if params.get("byte_flag", False) is None:
+        raise StyxValidationError("`byte_flag` must not be None")
+    if not isinstance(params["byte_flag"], bool):
+        raise StyxValidationError(f'`byte_flag` has the wrong type: Received `{type(params.get("byte_flag", False))}` expected `bool`')
+    if params.get("labels_file", None) is not None:
+        if not isinstance(params["labels_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labels_file` has the wrong type: Received `{type(params.get("labels_file", None))}` expected `InputPathType | None`')
+    if params.get("delete_flag", False) is None:
+        raise StyxValidationError("`delete_flag` must not be None")
+    if not isinstance(params["delete_flag"], bool):
+        raise StyxValidationError(f'`delete_flag` has the wrong type: Received `{type(params.get("delete_flag", False))}` expected `bool`')
+    if params.get("prep_method", None) is not None:
+        if not isinstance(params["prep_method"], str):
+            raise StyxValidationError(f'`prep_method` has the wrong type: Received `{type(params.get("prep_method", None))}` expected `str | None`')
+    if params.get("lr_pairs", None) is not None:
+        if not isinstance(params["lr_pairs"], list):
+            raise StyxValidationError(f'`lr_pairs` has the wrong type: Received `{type(params.get("lr_pairs", None))}` expected `list[str] | None`')
+        if len(params["lr_pairs"]) <= 2:
+            raise StyxValidationError("Parameter `lr_pairs` must contain at most 2 elements")
+        for e in params["lr_pairs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`lr_pairs` has the wrong type: Received `{type(params.get("lr_pairs", None))}` expected `list[str] | None`')
+
+
 def v_3d_setup_group_in_corr_cargs(
     params: V3dSetupGroupInCorrParameters,
     execution: Execution,
@@ -189,6 +243,7 @@ def v_3d_setup_group_in_corr_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSetupGroupInCorrOutputs`).
     """
+    v_3d_setup_group_in_corr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SETUP_GROUP_IN_CORR_METADATA)
     params = execution.params(params)

@@ -96,6 +96,53 @@ def cifti_tool_params(
     return params
 
 
+def cifti_tool_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiToolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("as_cext", False) is None:
+        raise StyxValidationError("`as_cext` must not be None")
+    if not isinstance(params["as_cext"], bool):
+        raise StyxValidationError(f'`as_cext` has the wrong type: Received `{type(params.get("as_cext", False))}` expected `bool`')
+    if params.get("disp_cext", False) is None:
+        raise StyxValidationError("`disp_cext` must not be None")
+    if not isinstance(params["disp_cext"], bool):
+        raise StyxValidationError(f'`disp_cext` has the wrong type: Received `{type(params.get("disp_cext", False))}` expected `bool`')
+    if params.get("eval_cext", False) is None:
+        raise StyxValidationError("`eval_cext` must not be None")
+    if not isinstance(params["eval_cext"], bool):
+        raise StyxValidationError(f'`eval_cext` has the wrong type: Received `{type(params.get("eval_cext", False))}` expected `bool`')
+    if params.get("eval_type", None) is not None:
+        if not isinstance(params["eval_type"], str):
+            raise StyxValidationError(f'`eval_type` has the wrong type: Received `{type(params.get("eval_type", None))}` expected `typing.Literal["has_data", "has_bdata", "num_tokens", "show", "show_names", "show_summary", "show_text_data"] | None`')
+        if params["eval_type"] not in ["has_data", "has_bdata", "num_tokens", "show", "show_names", "show_summary", "show_text_data"]:
+            raise StyxValidationError("Parameter `eval_type` must be one of [\"has_data\", \"has_bdata\", \"num_tokens\", \"show\", \"show_names\", \"show_summary\", \"show_text_data\"]")
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("verbose_level", None) is not None:
+        if not isinstance(params["verbose_level"], (float, int)):
+            raise StyxValidationError(f'`verbose_level` has the wrong type: Received `{type(params.get("verbose_level", None))}` expected `float | None`')
+    if params.get("verbose_read_level", None) is not None:
+        if not isinstance(params["verbose_read_level"], (float, int)):
+            raise StyxValidationError(f'`verbose_read_level` has the wrong type: Received `{type(params.get("verbose_read_level", None))}` expected `float | None`')
+    if params.get("both_verbose_levels", None) is not None:
+        if not isinstance(params["both_verbose_levels"], (float, int)):
+            raise StyxValidationError(f'`both_verbose_levels` has the wrong type: Received `{type(params.get("both_verbose_levels", None))}` expected `float | None`')
+
+
 def cifti_tool_cargs(
     params: CiftiToolParameters,
     execution: Execution,
@@ -188,6 +235,7 @@ def cifti_tool_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiToolOutputs`).
     """
+    cifti_tool_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_TOOL_METADATA)
     params = execution.params(params)

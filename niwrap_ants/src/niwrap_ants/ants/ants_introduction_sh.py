@@ -111,6 +111,58 @@ def ants_introduction_sh_params(
     return params
 
 
+def ants_introduction_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsIntroductionShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `typing.Literal[2, 3]`')
+    if params["image_dimension"] not in [2, 3]:
+        raise StyxValidationError("Parameter `image_dimension` must be one of [2, 3]")
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("force", None) is not None:
+        if not isinstance(params["force"], bool):
+            raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", None))}` expected `bool | None`')
+    if params.get("labels_in_fixed_image_space", None) is not None:
+        if not isinstance(params["labels_in_fixed_image_space"], str):
+            raise StyxValidationError(f'`labels_in_fixed_image_space` has the wrong type: Received `{type(params.get("labels_in_fixed_image_space", None))}` expected `str | None`')
+    if params.get("max_iterations", None) is not None:
+        if not isinstance(params["max_iterations"], int):
+            raise StyxValidationError(f'`max_iterations` has the wrong type: Received `{type(params.get("max_iterations", None))}` expected `int | None`')
+    if params.get("n4_bias_field_correction", None) is not None:
+        if not isinstance(params["n4_bias_field_correction"], bool):
+            raise StyxValidationError(f'`n4_bias_field_correction` has the wrong type: Received `{type(params.get("n4_bias_field_correction", None))}` expected `bool | None`')
+    if params.get("outprefix", None) is not None:
+        if not isinstance(params["outprefix"], str):
+            raise StyxValidationError(f'`outprefix` has the wrong type: Received `{type(params.get("outprefix", None))}` expected `str | None`')
+    if params.get("quality_check", None) is not None:
+        if not isinstance(params["quality_check"], bool):
+            raise StyxValidationError(f'`quality_check` has the wrong type: Received `{type(params.get("quality_check", None))}` expected `bool | None`')
+    if params.get("similarity_metric", None) is not None:
+        if not isinstance(params["similarity_metric"], str):
+            raise StyxValidationError(f'`similarity_metric` has the wrong type: Received `{type(params.get("similarity_metric", None))}` expected `str | None`')
+    if params.get("transformation_model", None) is not None:
+        if not isinstance(params["transformation_model"], str):
+            raise StyxValidationError(f'`transformation_model` has the wrong type: Received `{type(params.get("transformation_model", None))}` expected `str | None`')
+
+
 def ants_introduction_sh_cargs(
     params: AntsIntroductionShParameters,
     execution: Execution,
@@ -219,6 +271,7 @@ def ants_introduction_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsIntroductionShOutputs`).
     """
+    ants_introduction_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_INTRODUCTION_SH_METADATA)
     params = execution.params(params)

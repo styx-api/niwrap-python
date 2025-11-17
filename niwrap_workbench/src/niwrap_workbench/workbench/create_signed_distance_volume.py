@@ -110,6 +110,50 @@ def create_signed_distance_volume_params(
     return params
 
 
+def create_signed_distance_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateSignedDistanceVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outvol", None) is None:
+        raise StyxValidationError("`outvol` must not be None")
+    if not isinstance(params["outvol"], str):
+        raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str`')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], str):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `str | None`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], (float, int)):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
+    if params.get("dist", None) is not None:
+        if not isinstance(params["dist"], (float, int)):
+            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
+    if params.get("dist", None) is not None:
+        if not isinstance(params["dist"], (float, int)):
+            raise StyxValidationError(f'`dist` has the wrong type: Received `{type(params.get("dist", None))}` expected `float | None`')
+    if params.get("num", None) is not None:
+        if not isinstance(params["num"], int):
+            raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `int | None`')
+    if params.get("method", None) is not None:
+        if not isinstance(params["method"], str):
+            raise StyxValidationError(f'`method` has the wrong type: Received `{type(params.get("method", None))}` expected `str | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("refspace", None) is None:
+        raise StyxValidationError("`refspace` must not be None")
+    if not isinstance(params["refspace"], str):
+        raise StyxValidationError(f'`refspace` has the wrong type: Received `{type(params.get("refspace", None))}` expected `str`')
+
+
 def create_signed_distance_volume_cargs(
     params: CreateSignedDistanceVolumeParameters,
     execution: Execution,
@@ -199,6 +243,7 @@ def create_signed_distance_volume_execute(
     Returns:
         NamedTuple of outputs (described in `CreateSignedDistanceVolumeOutputs`).
     """
+    create_signed_distance_volume_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CREATE_SIGNED_DISTANCE_VOLUME_METADATA)
     params = execution.params(params)

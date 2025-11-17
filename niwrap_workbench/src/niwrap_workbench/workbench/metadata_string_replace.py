@@ -68,6 +68,40 @@ def metadata_string_replace_params(
     return params
 
 
+def metadata_string_replace_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetadataStringReplaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("case-insensitive", False) is None:
+        raise StyxValidationError("`case-insensitive` must not be None")
+    if not isinstance(params["case-insensitive"], bool):
+        raise StyxValidationError(f'`case-insensitive` has the wrong type: Received `{type(params.get("case-insensitive", False))}` expected `bool`')
+    if params.get("input-file", None) is None:
+        raise StyxValidationError("`input-file` must not be None")
+    if not isinstance(params["input-file"], str):
+        raise StyxValidationError(f'`input-file` has the wrong type: Received `{type(params.get("input-file", None))}` expected `str`')
+    if params.get("find-string", None) is None:
+        raise StyxValidationError("`find-string` must not be None")
+    if not isinstance(params["find-string"], str):
+        raise StyxValidationError(f'`find-string` has the wrong type: Received `{type(params.get("find-string", None))}` expected `str`')
+    if params.get("replace-string", None) is None:
+        raise StyxValidationError("`replace-string` must not be None")
+    if not isinstance(params["replace-string"], str):
+        raise StyxValidationError(f'`replace-string` has the wrong type: Received `{type(params.get("replace-string", None))}` expected `str`')
+    if params.get("output-file", None) is None:
+        raise StyxValidationError("`output-file` must not be None")
+    if not isinstance(params["output-file"], str):
+        raise StyxValidationError(f'`output-file` has the wrong type: Received `{type(params.get("output-file", None))}` expected `str`')
+
+
 def metadata_string_replace_cargs(
     params: MetadataStringReplaceParameters,
     execution: Execution,
@@ -130,6 +164,7 @@ def metadata_string_replace_execute(
     Returns:
         NamedTuple of outputs (described in `MetadataStringReplaceOutputs`).
     """
+    metadata_string_replace_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METADATA_STRING_REPLACE_METADATA)
     params = execution.params(params)

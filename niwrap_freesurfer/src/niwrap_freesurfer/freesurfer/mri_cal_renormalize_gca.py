@@ -71,6 +71,40 @@ def mri_cal_renormalize_gca_params(
     return params
 
 
+def mri_cal_renormalize_gca_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCalRenormalizeGcaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timepoint_file", None) is None:
+        raise StyxValidationError("`timepoint_file` must not be None")
+    if not isinstance(params["timepoint_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`timepoint_file` has the wrong type: Received `{type(params.get("timepoint_file", None))}` expected `InputPathType`')
+    if params.get("in_vol", None) is None:
+        raise StyxValidationError("`in_vol` must not be None")
+    if not isinstance(params["in_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_vol` has the wrong type: Received `{type(params.get("in_vol", None))}` expected `InputPathType`')
+    if params.get("input_atlas", None) is None:
+        raise StyxValidationError("`input_atlas` must not be None")
+    if not isinstance(params["input_atlas"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_atlas` has the wrong type: Received `{type(params.get("input_atlas", None))}` expected `InputPathType`')
+    if params.get("transform_file", None) is None:
+        raise StyxValidationError("`transform_file` must not be None")
+    if not isinstance(params["transform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType`')
+    if params.get("output_atlas", None) is None:
+        raise StyxValidationError("`output_atlas` must not be None")
+    if not isinstance(params["output_atlas"], str):
+        raise StyxValidationError(f'`output_atlas` has the wrong type: Received `{type(params.get("output_atlas", None))}` expected `str`')
+
+
 def mri_cal_renormalize_gca_cargs(
     params: MriCalRenormalizeGcaParameters,
     execution: Execution,
@@ -133,6 +167,7 @@ def mri_cal_renormalize_gca_execute(
     Returns:
         NamedTuple of outputs (described in `MriCalRenormalizeGcaOutputs`).
     """
+    mri_cal_renormalize_gca_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CAL_RENORMALIZE_GCA_METADATA)
     params = execution.params(params)

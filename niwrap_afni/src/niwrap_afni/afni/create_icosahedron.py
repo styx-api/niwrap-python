@@ -102,6 +102,59 @@ def create_icosahedron_params(
     return params
 
 
+def create_icosahedron_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateIcosahedronParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rad", None) is not None:
+        if not isinstance(params["rad"], (float, int)):
+            raise StyxValidationError(f'`rad` has the wrong type: Received `{type(params.get("rad", None))}` expected `float | None`')
+    if params.get("rec_depth", None) is not None:
+        if not isinstance(params["rec_depth"], (float, int)):
+            raise StyxValidationError(f'`rec_depth` has the wrong type: Received `{type(params.get("rec_depth", None))}` expected `float | None`')
+    if params.get("lin_depth", None) is not None:
+        if not isinstance(params["lin_depth"], (float, int)):
+            raise StyxValidationError(f'`lin_depth` has the wrong type: Received `{type(params.get("lin_depth", None))}` expected `float | None`')
+    if params.get("min_nodes", None) is not None:
+        if not isinstance(params["min_nodes"], (float, int)):
+            raise StyxValidationError(f'`min_nodes` has the wrong type: Received `{type(params.get("min_nodes", None))}` expected `float | None`')
+    if params.get("nums", False) is None:
+        raise StyxValidationError("`nums` must not be None")
+    if not isinstance(params["nums"], bool):
+        raise StyxValidationError(f'`nums` has the wrong type: Received `{type(params.get("nums", False))}` expected `bool`')
+    if params.get("nums_quiet", False) is None:
+        raise StyxValidationError("`nums_quiet` must not be None")
+    if not isinstance(params["nums_quiet"], bool):
+        raise StyxValidationError(f'`nums_quiet` has the wrong type: Received `{type(params.get("nums_quiet", False))}` expected `bool`')
+    if params.get("center_coordinates", None) is not None:
+        if not isinstance(params["center_coordinates"], list):
+            raise StyxValidationError(f'`center_coordinates` has the wrong type: Received `{type(params.get("center_coordinates", None))}` expected `list[float] | None`')
+        if len(params["center_coordinates"]) == 3:
+            raise StyxValidationError("Parameter `center_coordinates` must contain exactly 3 elements")
+        for e in params["center_coordinates"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`center_coordinates` has the wrong type: Received `{type(params.get("center_coordinates", None))}` expected `list[float] | None`')
+    if params.get("to_sphere", False) is None:
+        raise StyxValidationError("`to_sphere` must not be None")
+    if not isinstance(params["to_sphere"], bool):
+        raise StyxValidationError(f'`to_sphere` has the wrong type: Received `{type(params.get("to_sphere", False))}` expected `bool`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def create_icosahedron_cargs(
     params: CreateIcosahedronParameters,
     execution: Execution,
@@ -196,6 +249,7 @@ def create_icosahedron_execute(
     Returns:
         NamedTuple of outputs (described in `CreateIcosahedronOutputs`).
     """
+    create_icosahedron_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CREATE_ICOSAHEDRON_METADATA)
     params = execution.params(params)

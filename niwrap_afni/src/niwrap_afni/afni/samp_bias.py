@@ -88,6 +88,44 @@ def samp_bias_params(
     return params
 
 
+def samp_bias_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SampBiasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("specfile", None) is None:
+        raise StyxValidationError("`specfile` must not be None")
+    if not isinstance(params["specfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`specfile` has the wrong type: Received `{type(params.get("specfile", None))}` expected `InputPathType`')
+    if params.get("surfname", None) is None:
+        raise StyxValidationError("`surfname` must not be None")
+    if not isinstance(params["surfname"], str):
+        raise StyxValidationError(f'`surfname` has the wrong type: Received `{type(params.get("surfname", None))}` expected `str`')
+    if params.get("plimit", None) is not None:
+        if not isinstance(params["plimit"], (float, int)):
+            raise StyxValidationError(f'`plimit` has the wrong type: Received `{type(params.get("plimit", None))}` expected `float | None`')
+    if params.get("dlimit", None) is not None:
+        if not isinstance(params["dlimit"], (float, int)):
+            raise StyxValidationError(f'`dlimit` has the wrong type: Received `{type(params.get("dlimit", None))}` expected `float | None`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("segdo", None) is not None:
+        if not isinstance(params["segdo"], str):
+            raise StyxValidationError(f'`segdo` has the wrong type: Received `{type(params.get("segdo", None))}` expected `str | None`')
+
+
 def samp_bias_cargs(
     params: SampBiasParameters,
     execution: Execution,
@@ -179,6 +217,7 @@ def samp_bias_execute(
     Returns:
         NamedTuple of outputs (described in `SampBiasOutputs`).
     """
+    samp_bias_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SAMP_BIAS_METADATA)
     params = execution.params(params)

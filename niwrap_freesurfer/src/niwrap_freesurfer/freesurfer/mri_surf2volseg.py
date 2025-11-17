@@ -198,6 +198,111 @@ def mri_surf2volseg_params(
     return params
 
 
+def mri_surf2volseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSurf2volsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_segmentation", None) is not None:
+        if not isinstance(params["input_segmentation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_segmentation` has the wrong type: Received `{type(params.get("input_segmentation", None))}` expected `InputPathType | None`')
+    if params.get("output_segmentation", None) is not None:
+        if not isinstance(params["output_segmentation"], str):
+            raise StyxValidationError(f'`output_segmentation` has the wrong type: Received `{type(params.get("output_segmentation", None))}` expected `str | None`')
+    if params.get("source_segmentation", None) is not None:
+        if not isinstance(params["source_segmentation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`source_segmentation` has the wrong type: Received `{type(params.get("source_segmentation", None))}` expected `InputPathType | None`')
+    if params.get("lh_white_surf", None) is not None:
+        if not isinstance(params["lh_white_surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lh_white_surf` has the wrong type: Received `{type(params.get("lh_white_surf", None))}` expected `InputPathType | None`')
+    if params.get("lh_pial_surf", None) is not None:
+        if not isinstance(params["lh_pial_surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lh_pial_surf` has the wrong type: Received `{type(params.get("lh_pial_surf", None))}` expected `InputPathType | None`')
+    if params.get("rh_white_surf", None) is not None:
+        if not isinstance(params["rh_white_surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rh_white_surf` has the wrong type: Received `{type(params.get("rh_white_surf", None))}` expected `InputPathType | None`')
+    if params.get("rh_pial_surf", None) is not None:
+        if not isinstance(params["rh_pial_surf"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rh_pial_surf` has the wrong type: Received `{type(params.get("rh_pial_surf", None))}` expected `InputPathType | None`')
+    if params.get("lh_cortex_mask", None) is not None:
+        if not isinstance(params["lh_cortex_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lh_cortex_mask` has the wrong type: Received `{type(params.get("lh_cortex_mask", None))}` expected `InputPathType | None`')
+    if params.get("rh_cortex_mask", None) is not None:
+        if not isinstance(params["rh_cortex_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rh_cortex_mask` has the wrong type: Received `{type(params.get("rh_cortex_mask", None))}` expected `InputPathType | None`')
+    if params.get("fix_presurf_ribbon", None) is not None:
+        if not isinstance(params["fix_presurf_ribbon"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fix_presurf_ribbon` has the wrong type: Received `{type(params.get("fix_presurf_ribbon", None))}` expected `InputPathType | None`')
+    if params.get("label_cortex", False) is None:
+        raise StyxValidationError("`label_cortex` must not be None")
+    if not isinstance(params["label_cortex"], bool):
+        raise StyxValidationError(f'`label_cortex` has the wrong type: Received `{type(params.get("label_cortex", False))}` expected `bool`')
+    if params.get("label_wm", False) is None:
+        raise StyxValidationError("`label_wm` must not be None")
+    if not isinstance(params["label_wm"], bool):
+        raise StyxValidationError(f'`label_wm` has the wrong type: Received `{type(params.get("label_wm", False))}` expected `bool`')
+    if params.get("label_wm_unknown", None) is not None:
+        if not isinstance(params["label_wm_unknown"], list):
+            raise StyxValidationError(f'`label_wm_unknown` has the wrong type: Received `{type(params.get("label_wm_unknown", None))}` expected `list[float] | None`')
+        if len(params["label_wm_unknown"]) == 2:
+            raise StyxValidationError("Parameter `label_wm_unknown` must contain exactly 2 elements")
+        for e in params["label_wm_unknown"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`label_wm_unknown` has the wrong type: Received `{type(params.get("label_wm_unknown", None))}` expected `list[float] | None`')
+    if params.get("lh_annotation", None) is not None:
+        if not isinstance(params["lh_annotation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lh_annotation` has the wrong type: Received `{type(params.get("lh_annotation", None))}` expected `InputPathType | None`')
+    if params.get("rh_annotation", None) is not None:
+        if not isinstance(params["rh_annotation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rh_annotation` has the wrong type: Received `{type(params.get("rh_annotation", None))}` expected `InputPathType | None`')
+    if params.get("wmparc_dmax", None) is not None:
+        if not isinstance(params["wmparc_dmax"], (float, int)):
+            raise StyxValidationError(f'`wmparc_dmax` has the wrong type: Received `{type(params.get("wmparc_dmax", None))}` expected `float | None`')
+    if params.get("rip_unknown", False) is None:
+        raise StyxValidationError("`rip_unknown` must not be None")
+    if not isinstance(params["rip_unknown"], bool):
+        raise StyxValidationError(f'`rip_unknown` has the wrong type: Received `{type(params.get("rip_unknown", False))}` expected `bool`')
+    if params.get("hypo_as_wm", False) is None:
+        raise StyxValidationError("`hypo_as_wm` must not be None")
+    if not isinstance(params["hypo_as_wm"], bool):
+        raise StyxValidationError(f'`hypo_as_wm` has the wrong type: Received `{type(params.get("hypo_as_wm", False))}` expected `bool`')
+    if params.get("hashres", None) is not None:
+        if not isinstance(params["hashres"], (float, int)):
+            raise StyxValidationError(f'`hashres` has the wrong type: Received `{type(params.get("hashres", None))}` expected `float | None`')
+    if params.get("nhops", None) is not None:
+        if not isinstance(params["nhops"], (float, int)):
+            raise StyxValidationError(f'`nhops` has the wrong type: Received `{type(params.get("nhops", None))}` expected `float | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("crs_test", None) is not None:
+        if not isinstance(params["crs_test"], list):
+            raise StyxValidationError(f'`crs_test` has the wrong type: Received `{type(params.get("crs_test", None))}` expected `list[float] | None`')
+        if len(params["crs_test"]) == 3:
+            raise StyxValidationError("Parameter `crs_test` must contain exactly 3 elements")
+        for e in params["crs_test"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`crs_test` has the wrong type: Received `{type(params.get("crs_test", None))}` expected `list[float] | None`')
+    if params.get("ctab_file", None) is not None:
+        if not isinstance(params["ctab_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab_file` has the wrong type: Received `{type(params.get("ctab_file", None))}` expected `InputPathType | None`')
+    if params.get("threads_number", None) is not None:
+        if not isinstance(params["threads_number"], (float, int)):
+            raise StyxValidationError(f'`threads_number` has the wrong type: Received `{type(params.get("threads_number", None))}` expected `float | None`')
+
+
 def mri_surf2volseg_cargs(
     params: MriSurf2volsegParameters,
     execution: Execution,
@@ -363,6 +468,7 @@ def mri_surf2volseg_execute(
     Returns:
         NamedTuple of outputs (described in `MriSurf2volsegOutputs`).
     """
+    mri_surf2volseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SURF2VOLSEG_METADATA)
     params = execution.params(params)

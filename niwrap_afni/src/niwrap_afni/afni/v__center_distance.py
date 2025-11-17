@@ -56,6 +56,28 @@ def v__center_distance_params(
     return params
 
 
+def v__center_distance_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VCenterDistanceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset1", None) is None:
+        raise StyxValidationError("`dset1` must not be None")
+    if not isinstance(params["dset1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset1` has the wrong type: Received `{type(params.get("dset1", None))}` expected `InputPathType`')
+    if params.get("dset2", None) is None:
+        raise StyxValidationError("`dset2` must not be None")
+    if not isinstance(params["dset2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset2` has the wrong type: Received `{type(params.get("dset2", None))}` expected `InputPathType`')
+
+
 def v__center_distance_cargs(
     params: VCenterDistanceParameters,
     execution: Execution,
@@ -118,6 +140,7 @@ def v__center_distance_execute(
     Returns:
         NamedTuple of outputs (described in `VCenterDistanceOutputs`).
     """
+    v__center_distance_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__CENTER_DISTANCE_METADATA)
     params = execution.params(params)

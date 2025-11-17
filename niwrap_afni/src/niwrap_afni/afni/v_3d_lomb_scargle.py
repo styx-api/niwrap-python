@@ -115,6 +115,48 @@ def v_3d_lomb_scargle_params(
     return params
 
 
+def v_3d_lomb_scargle_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLombScargleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("inset", None) is None:
+        raise StyxValidationError("`inset` must not be None")
+    if not isinstance(params["inset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `InputPathType`')
+    if params.get("censor_1d", None) is not None:
+        if not isinstance(params["censor_1d"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`censor_1d` has the wrong type: Received `{type(params.get("censor_1d", None))}` expected `InputPathType | None`')
+    if params.get("censor_string", None) is not None:
+        if not isinstance(params["censor_string"], str):
+            raise StyxValidationError(f'`censor_string` has the wrong type: Received `{type(params.get("censor_string", None))}` expected `str | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("out_pow_spec", False) is None:
+        raise StyxValidationError("`out_pow_spec` must not be None")
+    if not isinstance(params["out_pow_spec"], bool):
+        raise StyxValidationError(f'`out_pow_spec` has the wrong type: Received `{type(params.get("out_pow_spec", False))}` expected `bool`')
+    if params.get("nyquist_multiplier", None) is not None:
+        if not isinstance(params["nyquist_multiplier"], int):
+            raise StyxValidationError(f'`nyquist_multiplier` has the wrong type: Received `{type(params.get("nyquist_multiplier", None))}` expected `int | None`')
+    if params.get("nifti", False) is None:
+        raise StyxValidationError("`nifti` must not be None")
+    if not isinstance(params["nifti"], bool):
+        raise StyxValidationError(f'`nifti` has the wrong type: Received `{type(params.get("nifti", False))}` expected `bool`')
+
+
 def v_3d_lomb_scargle_cargs(
     params: V3dLombScargleParameters,
     execution: Execution,
@@ -208,6 +250,7 @@ def v_3d_lomb_scargle_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLombScargleOutputs`).
     """
+    v_3d_lomb_scargle_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOMB_SCARGLE_METADATA)
     params = execution.params(params)

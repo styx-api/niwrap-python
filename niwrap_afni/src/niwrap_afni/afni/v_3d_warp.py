@@ -168,6 +168,99 @@ def v_3d_warp_params(
     return params
 
 
+def v_3d_warp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dWarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matvec_in2out", None) is not None:
+        if not isinstance(params["matvec_in2out"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matvec_in2out` has the wrong type: Received `{type(params.get("matvec_in2out", None))}` expected `InputPathType | None`')
+    if params.get("matvec_out2in", None) is not None:
+        if not isinstance(params["matvec_out2in"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matvec_out2in` has the wrong type: Received `{type(params.get("matvec_out2in", None))}` expected `InputPathType | None`')
+    if params.get("tta2mni", False) is None:
+        raise StyxValidationError("`tta2mni` must not be None")
+    if not isinstance(params["tta2mni"], bool):
+        raise StyxValidationError(f'`tta2mni` has the wrong type: Received `{type(params.get("tta2mni", False))}` expected `bool`')
+    if params.get("mni2tta", False) is None:
+        raise StyxValidationError("`mni2tta` must not be None")
+    if not isinstance(params["mni2tta"], bool):
+        raise StyxValidationError(f'`mni2tta` has the wrong type: Received `{type(params.get("mni2tta", False))}` expected `bool`')
+    if params.get("matparent", None) is not None:
+        if not isinstance(params["matparent"], str):
+            raise StyxValidationError(f'`matparent` has the wrong type: Received `{type(params.get("matparent", None))}` expected `str | None`')
+    if params.get("card2oblique", None) is not None:
+        if not isinstance(params["card2oblique"], str):
+            raise StyxValidationError(f'`card2oblique` has the wrong type: Received `{type(params.get("card2oblique", None))}` expected `str | None`')
+    if params.get("oblique_parent", None) is not None:
+        if not isinstance(params["oblique_parent"], str):
+            raise StyxValidationError(f'`oblique_parent` has the wrong type: Received `{type(params.get("oblique_parent", None))}` expected `str | None`')
+    if params.get("deoblique", False) is None:
+        raise StyxValidationError("`deoblique` must not be None")
+    if not isinstance(params["deoblique"], bool):
+        raise StyxValidationError(f'`deoblique` has the wrong type: Received `{type(params.get("deoblique", False))}` expected `bool`')
+    if params.get("oblique2card", False) is None:
+        raise StyxValidationError("`oblique2card` must not be None")
+    if not isinstance(params["oblique2card"], bool):
+        raise StyxValidationError(f'`oblique2card` has the wrong type: Received `{type(params.get("oblique2card", False))}` expected `bool`')
+    if params.get("disp_obl_xform_only", False) is None:
+        raise StyxValidationError("`disp_obl_xform_only` must not be None")
+    if not isinstance(params["disp_obl_xform_only"], bool):
+        raise StyxValidationError(f'`disp_obl_xform_only` has the wrong type: Received `{type(params.get("disp_obl_xform_only", False))}` expected `bool`')
+    if params.get("linear", False) is None:
+        raise StyxValidationError("`linear` must not be None")
+    if not isinstance(params["linear"], bool):
+        raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", False))}` expected `bool`')
+    if params.get("cubic", False) is None:
+        raise StyxValidationError("`cubic` must not be None")
+    if not isinstance(params["cubic"], bool):
+        raise StyxValidationError(f'`cubic` has the wrong type: Received `{type(params.get("cubic", False))}` expected `bool`')
+    if params.get("NN", False) is None:
+        raise StyxValidationError("`NN` must not be None")
+    if not isinstance(params["NN"], bool):
+        raise StyxValidationError(f'`NN` has the wrong type: Received `{type(params.get("NN", False))}` expected `bool`')
+    if params.get("quintic", False) is None:
+        raise StyxValidationError("`quintic` must not be None")
+    if not isinstance(params["quintic"], bool):
+        raise StyxValidationError(f'`quintic` has the wrong type: Received `{type(params.get("quintic", False))}` expected `bool`')
+    if params.get("wsinc5", False) is None:
+        raise StyxValidationError("`wsinc5` must not be None")
+    if not isinstance(params["wsinc5"], bool):
+        raise StyxValidationError(f'`wsinc5` has the wrong type: Received `{type(params.get("wsinc5", False))}` expected `bool`')
+    if params.get("fsl_matvec", False) is None:
+        raise StyxValidationError("`fsl_matvec` must not be None")
+    if not isinstance(params["fsl_matvec"], bool):
+        raise StyxValidationError(f'`fsl_matvec` has the wrong type: Received `{type(params.get("fsl_matvec", False))}` expected `bool`')
+    if params.get("newgrid", None) is not None:
+        if not isinstance(params["newgrid"], (float, int)):
+            raise StyxValidationError(f'`newgrid` has the wrong type: Received `{type(params.get("newgrid", None))}` expected `float | None`')
+    if params.get("gridset", None) is not None:
+        if not isinstance(params["gridset"], str):
+            raise StyxValidationError(f'`gridset` has the wrong type: Received `{type(params.get("gridset", None))}` expected `str | None`')
+    if params.get("zpad", None) is not None:
+        if not isinstance(params["zpad"], (float, int)):
+            raise StyxValidationError(f'`zpad` has the wrong type: Received `{type(params.get("zpad", None))}` expected `float | None`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], str):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `str`')
+
+
 def v_3d_warp_cargs(
     params: V3dWarpParameters,
     execution: Execution,
@@ -294,6 +387,7 @@ def v_3d_warp_execute(
     Returns:
         NamedTuple of outputs (described in `V3dWarpOutputs`).
     """
+    v_3d_warp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_WARP_METADATA)
     params = execution.params(params)

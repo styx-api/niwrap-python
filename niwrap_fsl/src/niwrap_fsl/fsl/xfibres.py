@@ -198,6 +198,118 @@ def xfibres_params(
     return params
 
 
+def xfibres_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XfibresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datafile", None) is None:
+        raise StyxValidationError("`datafile` must not be None")
+    if not isinstance(params["datafile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datafile` has the wrong type: Received `{type(params.get("datafile", None))}` expected `InputPathType`')
+    if params.get("maskfile", None) is None:
+        raise StyxValidationError("`maskfile` must not be None")
+    if not isinstance(params["maskfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`maskfile` has the wrong type: Received `{type(params.get("maskfile", None))}` expected `InputPathType`')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
+    if params.get("logdir", None) is not None:
+        if not isinstance(params["logdir"], str):
+            raise StyxValidationError(f'`logdir` has the wrong type: Received `{type(params.get("logdir", None))}` expected `str | None`')
+    if params.get("forcedir", False) is None:
+        raise StyxValidationError("`forcedir` must not be None")
+    if not isinstance(params["forcedir"], bool):
+        raise StyxValidationError(f'`forcedir` has the wrong type: Received `{type(params.get("forcedir", False))}` expected `bool`')
+    if params.get("max_fibres", None) is not None:
+        if not isinstance(params["max_fibres"], (float, int)):
+            raise StyxValidationError(f'`max_fibres` has the wrong type: Received `{type(params.get("max_fibres", None))}` expected `float | None`')
+    if params.get("model", None) is not None:
+        if not isinstance(params["model"], (float, int)):
+            raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `float | None`')
+    if params.get("fudge", None) is not None:
+        if not isinstance(params["fudge"], str):
+            raise StyxValidationError(f'`fudge` has the wrong type: Received `{type(params.get("fudge", None))}` expected `str | None`')
+    if params.get("num_jumps", None) is not None:
+        if not isinstance(params["num_jumps"], (float, int)):
+            raise StyxValidationError(f'`num_jumps` has the wrong type: Received `{type(params.get("num_jumps", None))}` expected `float | None`')
+    if params.get("num_burnin", None) is not None:
+        if not isinstance(params["num_burnin"], (float, int)):
+            raise StyxValidationError(f'`num_burnin` has the wrong type: Received `{type(params.get("num_burnin", None))}` expected `float | None`')
+    if params.get("burnin_noard", None) is not None:
+        if not isinstance(params["burnin_noard"], (float, int)):
+            raise StyxValidationError(f'`burnin_noard` has the wrong type: Received `{type(params.get("burnin_noard", None))}` expected `float | None`')
+    if params.get("sampleevery", None) is not None:
+        if not isinstance(params["sampleevery"], (float, int)):
+            raise StyxValidationError(f'`sampleevery` has the wrong type: Received `{type(params.get("sampleevery", None))}` expected `float | None`')
+    if params.get("updateproposal", None) is not None:
+        if not isinstance(params["updateproposal"], (float, int)):
+            raise StyxValidationError(f'`updateproposal` has the wrong type: Received `{type(params.get("updateproposal", None))}` expected `float | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], str):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `str | None`')
+    if params.get("noard", False) is None:
+        raise StyxValidationError("`noard` must not be None")
+    if not isinstance(params["noard"], bool):
+        raise StyxValidationError(f'`noard` has the wrong type: Received `{type(params.get("noard", False))}` expected `bool`')
+    if params.get("allard", False) is None:
+        raise StyxValidationError("`allard` must not be None")
+    if not isinstance(params["allard"], bool):
+        raise StyxValidationError(f'`allard` has the wrong type: Received `{type(params.get("allard", False))}` expected `bool`')
+    if params.get("nospat", False) is None:
+        raise StyxValidationError("`nospat` must not be None")
+    if not isinstance(params["nospat"], bool):
+        raise StyxValidationError(f'`nospat` has the wrong type: Received `{type(params.get("nospat", False))}` expected `bool`')
+    if params.get("nonlinear", False) is None:
+        raise StyxValidationError("`nonlinear` must not be None")
+    if not isinstance(params["nonlinear"], bool):
+        raise StyxValidationError(f'`nonlinear` has the wrong type: Received `{type(params.get("nonlinear", False))}` expected `bool`')
+    if params.get("cnonlinear", False) is None:
+        raise StyxValidationError("`cnonlinear` must not be None")
+    if not isinstance(params["cnonlinear"], bool):
+        raise StyxValidationError(f'`cnonlinear` has the wrong type: Received `{type(params.get("cnonlinear", False))}` expected `bool`')
+    if params.get("rician", False) is None:
+        raise StyxValidationError("`rician` must not be None")
+    if not isinstance(params["rician"], bool):
+        raise StyxValidationError(f'`rician` has the wrong type: Received `{type(params.get("rician", False))}` expected `bool`')
+    if params.get("add_f0", False) is None:
+        raise StyxValidationError("`add_f0` must not be None")
+    if not isinstance(params["add_f0"], bool):
+        raise StyxValidationError(f'`add_f0` has the wrong type: Received `{type(params.get("add_f0", False))}` expected `bool`')
+    if params.get("ard_f0", False) is None:
+        raise StyxValidationError("`ard_f0` must not be None")
+    if not isinstance(params["ard_f0"], bool):
+        raise StyxValidationError(f'`ard_f0` has the wrong type: Received `{type(params.get("ard_f0", False))}` expected `bool`')
+    if params.get("rmean", None) is not None:
+        if not isinstance(params["rmean"], (float, int)):
+            raise StyxValidationError(f'`rmean` has the wrong type: Received `{type(params.get("rmean", None))}` expected `float | None`')
+        if params["rmean"] <= 0.5:
+            raise StyxValidationError("Parameter `rmean` must be at most 0.5")
+    if params.get("rstd", None) is not None:
+        if not isinstance(params["rstd"], (float, int)):
+            raise StyxValidationError(f'`rstd` has the wrong type: Received `{type(params.get("rstd", None))}` expected `float | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def xfibres_cargs(
     params: XfibresParameters,
     execution: Execution,
@@ -353,6 +465,7 @@ def xfibres_execute(
     Returns:
         NamedTuple of outputs (described in `XfibresOutputs`).
     """
+    xfibres_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XFIBRES_METADATA)
     params = execution.params(params)

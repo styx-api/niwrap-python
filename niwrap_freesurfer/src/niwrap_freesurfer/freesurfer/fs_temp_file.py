@@ -84,6 +84,44 @@ def fs_temp_file_params(
     return params
 
 
+def fs_temp_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsTempFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_dir", None) is not None:
+        if not isinstance(params["base_dir"], str):
+            raise StyxValidationError(f'`base_dir` has the wrong type: Received `{type(params.get("base_dir", None))}` expected `str | None`')
+    if params.get("base_dir_alt", None) is not None:
+        if not isinstance(params["base_dir_alt"], str):
+            raise StyxValidationError(f'`base_dir_alt` has the wrong type: Received `{type(params.get("base_dir_alt", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("suffix_alt", None) is not None:
+        if not isinstance(params["suffix_alt"], str):
+            raise StyxValidationError(f'`suffix_alt` has the wrong type: Received `{type(params.get("suffix_alt", None))}` expected `str | None`')
+    if params.get("scratch", False) is None:
+        raise StyxValidationError("`scratch` must not be None")
+    if not isinstance(params["scratch"], bool):
+        raise StyxValidationError(f'`scratch` has the wrong type: Received `{type(params.get("scratch", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("help_alt", False) is None:
+        raise StyxValidationError("`help_alt` must not be None")
+    if not isinstance(params["help_alt"], bool):
+        raise StyxValidationError(f'`help_alt` has the wrong type: Received `{type(params.get("help_alt", False))}` expected `bool`')
+
+
 def fs_temp_file_cargs(
     params: FsTempFileParameters,
     execution: Execution,
@@ -167,6 +205,7 @@ def fs_temp_file_execute(
     Returns:
         NamedTuple of outputs (described in `FsTempFileOutputs`).
     """
+    fs_temp_file_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_TEMP_FILE_METADATA)
     params = execution.params(params)

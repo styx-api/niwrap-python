@@ -61,6 +61,32 @@ def quotize_params(
     return params
 
 
+def quotize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QuotizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is None:
+        raise StyxValidationError("`name` must not be None")
+    if not isinstance(params["name"], str):
+        raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def quotize_cargs(
     params: QuotizeParameters,
     execution: Execution,
@@ -122,6 +148,7 @@ def quotize_execute(
     Returns:
         NamedTuple of outputs (described in `QuotizeOutputs`).
     """
+    quotize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QUOTIZE_METADATA)
     params = execution.params(params)

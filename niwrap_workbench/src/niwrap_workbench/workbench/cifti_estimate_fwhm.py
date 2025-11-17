@@ -63,6 +63,28 @@ def cifti_estimate_fwhm_surface_params(
     return params
 
 
+def cifti_estimate_fwhm_surface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiEstimateFwhmSurfaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+
+
 def cifti_estimate_fwhm_surface_cargs(
     params: CiftiEstimateFwhmSurfaceParameters,
     execution: Execution,
@@ -129,6 +151,39 @@ def cifti_estimate_fwhm_params(
     if surface is not None:
         params["surface"] = surface
     return params
+
+
+def cifti_estimate_fwhm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiEstimateFwhmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], int):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `int | None`')
+    if params.get("demean", False) is not None:
+        if not isinstance(params["demean"], bool):
+            raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], list):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `list[CiftiEstimateFwhmSurfaceParameters] | None`')
+        for e in params["surface"]:
+            cifti_estimate_fwhm_surface_validate(e)
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
 
 
 def cifti_estimate_fwhm_cargs(
@@ -234,6 +289,7 @@ def cifti_estimate_fwhm_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiEstimateFwhmOutputs`).
     """
+    cifti_estimate_fwhm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_ESTIMATE_FWHM_METADATA)
     params = execution.params(params)

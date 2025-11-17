@@ -107,6 +107,73 @@ def mri_long_normalize_params(
     return params
 
 
+def mri_long_normalize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriLongNormalizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_vol", None) is None:
+        raise StyxValidationError("`input_vol` must not be None")
+    if not isinstance(params["input_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vol` has the wrong type: Received `{type(params.get("input_vol", None))}` expected `InputPathType`')
+    if params.get("base_tp_file", None) is None:
+        raise StyxValidationError("`base_tp_file` must not be None")
+    if not isinstance(params["base_tp_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_tp_file` has the wrong type: Received `{type(params.get("base_tp_file", None))}` expected `InputPathType`')
+    if params.get("output_vol", None) is None:
+        raise StyxValidationError("`output_vol` must not be None")
+    if not isinstance(params["output_vol"], str):
+        raise StyxValidationError(f'`output_vol` has the wrong type: Received `{type(params.get("output_vol", None))}` expected `str`')
+    if params.get("normalization_iters", None) is not None:
+        if not isinstance(params["normalization_iters"], int):
+            raise StyxValidationError(f'`normalization_iters` has the wrong type: Received `{type(params.get("normalization_iters", None))}` expected `int | None`')
+    if params.get("disable_1d", False) is None:
+        raise StyxValidationError("`disable_1d` must not be None")
+    if not isinstance(params["disable_1d"], bool):
+        raise StyxValidationError(f'`disable_1d` has the wrong type: Received `{type(params.get("disable_1d", False))}` expected `bool`')
+    if params.get("smooth_bias", None) is not None:
+        if not isinstance(params["smooth_bias"], (float, int)):
+            raise StyxValidationError(f'`smooth_bias` has the wrong type: Received `{type(params.get("smooth_bias", None))}` expected `float | None`')
+    if params.get("aseg", None) is not None:
+        if not isinstance(params["aseg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aseg` has the wrong type: Received `{type(params.get("aseg", None))}` expected `InputPathType | None`')
+    if params.get("debug_gvx", None) is not None:
+        if not isinstance(params["debug_gvx"], list):
+            raise StyxValidationError(f'`debug_gvx` has the wrong type: Received `{type(params.get("debug_gvx", None))}` expected `list[float] | None`')
+        if len(params["debug_gvx"]) == 3:
+            raise StyxValidationError("Parameter `debug_gvx` must contain exactly 3 elements")
+        for e in params["debug_gvx"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_gvx` has the wrong type: Received `{type(params.get("debug_gvx", None))}` expected `list[float] | None`')
+    if params.get("debug_gx", None) is not None:
+        if not isinstance(params["debug_gx"], list):
+            raise StyxValidationError(f'`debug_gx` has the wrong type: Received `{type(params.get("debug_gx", None))}` expected `list[float] | None`')
+        if len(params["debug_gx"]) == 3:
+            raise StyxValidationError("Parameter `debug_gx` must contain exactly 3 elements")
+        for e in params["debug_gx"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_gx` has the wrong type: Received `{type(params.get("debug_gx", None))}` expected `list[float] | None`')
+    if params.get("reading", None) is not None:
+        if not isinstance(params["reading"], list):
+            raise StyxValidationError(f'`reading` has the wrong type: Received `{type(params.get("reading", None))}` expected `list[str] | None`')
+        if len(params["reading"]) == 2:
+            raise StyxValidationError("Parameter `reading` must contain exactly 2 elements")
+        for e in params["reading"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`reading` has the wrong type: Received `{type(params.get("reading", None))}` expected `list[str] | None`')
+    if params.get("print_usage", False) is None:
+        raise StyxValidationError("`print_usage` must not be None")
+    if not isinstance(params["print_usage"], bool):
+        raise StyxValidationError(f'`print_usage` has the wrong type: Received `{type(params.get("print_usage", False))}` expected `bool`')
+
+
 def mri_long_normalize_cargs(
     params: MriLongNormalizeParameters,
     execution: Execution,
@@ -202,6 +269,7 @@ def mri_long_normalize_execute(
     Returns:
         NamedTuple of outputs (described in `MriLongNormalizeOutputs`).
     """
+    mri_long_normalize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_LONG_NORMALIZE_METADATA)
     params = execution.params(params)

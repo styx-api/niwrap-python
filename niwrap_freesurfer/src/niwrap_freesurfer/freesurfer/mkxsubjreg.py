@@ -88,6 +88,48 @@ def mkxsubjreg_params(
     return params
 
 
+def mkxsubjreg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MkxsubjregParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("srcreg", None) is None:
+        raise StyxValidationError("`srcreg` must not be None")
+    if not isinstance(params["srcreg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`srcreg` has the wrong type: Received `{type(params.get("srcreg", None))}` expected `InputPathType`')
+    if params.get("targreg", None) is None:
+        raise StyxValidationError("`targreg` must not be None")
+    if not isinstance(params["targreg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`targreg` has the wrong type: Received `{type(params.get("targreg", None))}` expected `InputPathType`')
+    if params.get("targsubj", None) is not None:
+        if not isinstance(params["targsubj"], str):
+            raise StyxValidationError(f'`targsubj` has the wrong type: Received `{type(params.get("targsubj", None))}` expected `str | None`')
+    if params.get("xfm", None) is not None:
+        if not isinstance(params["xfm"], str):
+            raise StyxValidationError(f'`xfm` has the wrong type: Received `{type(params.get("xfm", None))}` expected `str | None`')
+    if params.get("sd", None) is not None:
+        if not isinstance(params["sd"], str):
+            raise StyxValidationError(f'`sd` has the wrong type: Received `{type(params.get("sd", None))}` expected `str | None`')
+    if params.get("fvol", None) is not None:
+        if not isinstance(params["fvol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fvol` has the wrong type: Received `{type(params.get("fvol", None))}` expected `InputPathType | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mkxsubjreg_cargs(
     params: MkxsubjregParameters,
     execution: Execution,
@@ -178,6 +220,7 @@ def mkxsubjreg_execute(
     Returns:
         NamedTuple of outputs (described in `MkxsubjregOutputs`).
     """
+    mkxsubjreg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MKXSUBJREG_METADATA)
     params = execution.params(params)

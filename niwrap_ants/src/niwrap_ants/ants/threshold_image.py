@@ -105,6 +105,53 @@ def threshold_image_params(
     return params
 
 
+def threshold_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ThresholdImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("image_in", None) is None:
+        raise StyxValidationError("`image_in` must not be None")
+    if not isinstance(params["image_in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image_in` has the wrong type: Received `{type(params.get("image_in", None))}` expected `InputPathType`')
+    if params.get("out_image", None) is None:
+        raise StyxValidationError("`out_image` must not be None")
+    if not isinstance(params["out_image"], str):
+        raise StyxValidationError(f'`out_image` has the wrong type: Received `{type(params.get("out_image", None))}` expected `str`')
+    if params.get("threshlo", None) is not None:
+        if not isinstance(params["threshlo"], (float, int)):
+            raise StyxValidationError(f'`threshlo` has the wrong type: Received `{type(params.get("threshlo", None))}` expected `float | None`')
+    if params.get("threshhi", None) is not None:
+        if not isinstance(params["threshhi"], (float, int)):
+            raise StyxValidationError(f'`threshhi` has the wrong type: Received `{type(params.get("threshhi", None))}` expected `float | None`')
+    if params.get("inside_value", None) is not None:
+        if not isinstance(params["inside_value"], (float, int)):
+            raise StyxValidationError(f'`inside_value` has the wrong type: Received `{type(params.get("inside_value", None))}` expected `float | None`')
+    if params.get("outside_value", None) is not None:
+        if not isinstance(params["outside_value"], (float, int)):
+            raise StyxValidationError(f'`outside_value` has the wrong type: Received `{type(params.get("outside_value", None))}` expected `float | None`')
+    if params.get("otsu_number_of_thresholds", None) is not None:
+        if not isinstance(params["otsu_number_of_thresholds"], (float, int)):
+            raise StyxValidationError(f'`otsu_number_of_thresholds` has the wrong type: Received `{type(params.get("otsu_number_of_thresholds", None))}` expected `float | None`')
+    if params.get("kmeans_number_of_thresholds", None) is not None:
+        if not isinstance(params["kmeans_number_of_thresholds"], (float, int)):
+            raise StyxValidationError(f'`kmeans_number_of_thresholds` has the wrong type: Received `{type(params.get("kmeans_number_of_thresholds", None))}` expected `float | None`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+
+
 def threshold_image_cargs(
     params: ThresholdImageParameters,
     execution: Execution,
@@ -181,6 +228,7 @@ def threshold_image_execute(
     Returns:
         NamedTuple of outputs (described in `ThresholdImageOutputs`).
     """
+    threshold_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(THRESHOLD_IMAGE_METADATA)
     params = execution.params(params)

@@ -109,6 +109,61 @@ def ants_slice_regularized_registration_params(
     return params
 
 
+def ants_slice_regularized_registration_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsSliceRegularizedRegistrationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("polydegree", None) is None:
+        raise StyxValidationError("`polydegree` must not be None")
+    if not isinstance(params["polydegree"], int):
+        raise StyxValidationError(f'`polydegree` has the wrong type: Received `{type(params.get("polydegree", None))}` expected `int`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], str):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `str`')
+    if params.get("transform", None) is None:
+        raise StyxValidationError("`transform` must not be None")
+    if not isinstance(params["transform"], str):
+        raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `str`')
+    if params.get("iterations", None) is None:
+        raise StyxValidationError("`iterations` must not be None")
+    if not isinstance(params["iterations"], str):
+        raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `str`')
+    if params.get("shrink_factors", None) is None:
+        raise StyxValidationError("`shrink_factors` must not be None")
+    if not isinstance(params["shrink_factors"], str):
+        raise StyxValidationError(f'`shrink_factors` has the wrong type: Received `{type(params.get("shrink_factors", None))}` expected `str`')
+    if params.get("smoothing_sigmas", None) is None:
+        raise StyxValidationError("`smoothing_sigmas` must not be None")
+    if not isinstance(params["smoothing_sigmas"], str):
+        raise StyxValidationError(f'`smoothing_sigmas` has the wrong type: Received `{type(params.get("smoothing_sigmas", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], str):
+            raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None`')
+        if params["interpolation"] not in ["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"]:
+            raise StyxValidationError("Parameter `interpolation` must be one of [\"Linear\", \"NearestNeighbor\", \"MultiLabel\", \"Gaussian\", \"BSpline\", \"CosineWindowedSinc\", \"WelchWindowedSinc\", \"HammingWindowedSinc\", \"LanczosWindowedSinc\", \"GenericLabel\"]")
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], int):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `typing.Literal[0] | None`')
+        if params["verbose"] not in [0]:
+            raise StyxValidationError("Parameter `verbose` must be one of [0]")
+
+
 def ants_slice_regularized_registration_cargs(
     params: AntsSliceRegularizedRegistrationParameters,
     execution: Execution,
@@ -217,6 +272,7 @@ def ants_slice_regularized_registration_execute(
     Returns:
         NamedTuple of outputs (described in `AntsSliceRegularizedRegistrationOutputs`).
     """
+    ants_slice_regularized_registration_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA)
     params = execution.params(params)

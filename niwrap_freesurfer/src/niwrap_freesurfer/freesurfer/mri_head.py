@@ -75,6 +75,43 @@ def mri_head_params(
     return params
 
 
+def mri_head_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriHeadParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("identify", False) is None:
+        raise StyxValidationError("`identify` must not be None")
+    if not isinstance(params["identify"], bool):
+        raise StyxValidationError(f'`identify` has the wrong type: Received `{type(params.get("identify", False))}` expected `bool`')
+    if params.get("read", False) is None:
+        raise StyxValidationError("`read` must not be None")
+    if not isinstance(params["read"], bool):
+        raise StyxValidationError(f'`read` has the wrong type: Received `{type(params.get("read", False))}` expected `bool`')
+    if params.get("filename", None) is not None:
+        if not isinstance(params["filename"], str):
+            raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("usage", False) is None:
+        raise StyxValidationError("`usage` must not be None")
+    if not isinstance(params["usage"], bool):
+        raise StyxValidationError(f'`usage` has the wrong type: Received `{type(params.get("usage", False))}` expected `bool`')
+    if params.get("question_mark_help", False) is None:
+        raise StyxValidationError("`question_mark_help` must not be None")
+    if not isinstance(params["question_mark_help"], bool):
+        raise StyxValidationError(f'`question_mark_help` has the wrong type: Received `{type(params.get("question_mark_help", False))}` expected `bool`')
+
+
 def mri_head_cargs(
     params: MriHeadParameters,
     execution: Execution,
@@ -143,6 +180,7 @@ def mri_head_execute(
     Returns:
         NamedTuple of outputs (described in `MriHeadOutputs`).
     """
+    mri_head_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_HEAD_METADATA)
     params = execution.params(params)

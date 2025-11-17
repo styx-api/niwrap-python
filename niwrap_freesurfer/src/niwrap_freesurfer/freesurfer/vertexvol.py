@@ -77,6 +77,43 @@ def vertexvol_params(
     return params
 
 
+def vertexvol_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VertexvolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("left_hemisphere", False) is None:
+        raise StyxValidationError("`left_hemisphere` must not be None")
+    if not isinstance(params["left_hemisphere"], bool):
+        raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", False))}` expected `bool`')
+    if params.get("right_hemisphere", False) is None:
+        raise StyxValidationError("`right_hemisphere` must not be None")
+    if not isinstance(params["right_hemisphere"], bool):
+        raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", False))}` expected `bool`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("use_th3", False) is None:
+        raise StyxValidationError("`use_th3` must not be None")
+    if not isinstance(params["use_th3"], bool):
+        raise StyxValidationError(f'`use_th3` has the wrong type: Received `{type(params.get("use_th3", False))}` expected `bool`')
+    if params.get("no_th3", False) is None:
+        raise StyxValidationError("`no_th3` must not be None")
+    if not isinstance(params["no_th3"], bool):
+        raise StyxValidationError(f'`no_th3` has the wrong type: Received `{type(params.get("no_th3", False))}` expected `bool`')
+
+
 def vertexvol_cargs(
     params: VertexvolParameters,
     execution: Execution,
@@ -151,6 +188,7 @@ def vertexvol_execute(
     Returns:
         NamedTuple of outputs (described in `VertexvolOutputs`).
     """
+    vertexvol_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VERTEXVOL_METADATA)
     params = execution.params(params)

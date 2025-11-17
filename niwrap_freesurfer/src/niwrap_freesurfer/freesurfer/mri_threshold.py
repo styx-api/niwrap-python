@@ -79,6 +79,42 @@ def mri_threshold_params(
     return params
 
 
+def mri_threshold_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriThresholdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_vol", None) is None:
+        raise StyxValidationError("`input_vol` must not be None")
+    if not isinstance(params["input_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vol` has the wrong type: Received `{type(params.get("input_vol", None))}` expected `InputPathType`')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
+    if params.get("output_vol", None) is None:
+        raise StyxValidationError("`output_vol` must not be None")
+    if not isinstance(params["output_vol"], str):
+        raise StyxValidationError(f'`output_vol` has the wrong type: Received `{type(params.get("output_vol", None))}` expected `str`')
+    if params.get("binarize", None) is not None:
+        if not isinstance(params["binarize"], (float, int)):
+            raise StyxValidationError(f'`binarize` has the wrong type: Received `{type(params.get("binarize", None))}` expected `float | None`')
+    if params.get("upper_threshold", False) is None:
+        raise StyxValidationError("`upper_threshold` must not be None")
+    if not isinstance(params["upper_threshold"], bool):
+        raise StyxValidationError(f'`upper_threshold` has the wrong type: Received `{type(params.get("upper_threshold", False))}` expected `bool`')
+    if params.get("frame_number", None) is not None:
+        if not isinstance(params["frame_number"], (float, int)):
+            raise StyxValidationError(f'`frame_number` has the wrong type: Received `{type(params.get("frame_number", None))}` expected `float | None`')
+
+
 def mri_threshold_cargs(
     params: MriThresholdParameters,
     execution: Execution,
@@ -151,6 +187,7 @@ def mri_threshold_execute(
     Returns:
         NamedTuple of outputs (described in `MriThresholdOutputs`).
     """
+    mri_threshold_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_THRESHOLD_METADATA)
     params = execution.params(params)

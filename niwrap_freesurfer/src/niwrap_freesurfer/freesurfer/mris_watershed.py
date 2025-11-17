@@ -74,6 +74,38 @@ def mris_watershed_params(
     return params
 
 
+def mris_watershed_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisWatershedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("input_gradient_field", None) is None:
+        raise StyxValidationError("`input_gradient_field` must not be None")
+    if not isinstance(params["input_gradient_field"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_gradient_field` has the wrong type: Received `{type(params.get("input_gradient_field", None))}` expected `InputPathType`')
+    if params.get("output_annotation", None) is None:
+        raise StyxValidationError("`output_annotation` must not be None")
+    if not isinstance(params["output_annotation"], str):
+        raise StyxValidationError(f'`output_annotation` has the wrong type: Received `{type(params.get("output_annotation", None))}` expected `str`')
+    if params.get("max_clusters", None) is not None:
+        if not isinstance(params["max_clusters"], (float, int)):
+            raise StyxValidationError(f'`max_clusters` has the wrong type: Received `{type(params.get("max_clusters", None))}` expected `float | None`')
+    if params.get("mask_label", None) is not None:
+        if not isinstance(params["mask_label"], str):
+            raise StyxValidationError(f'`mask_label` has the wrong type: Received `{type(params.get("mask_label", None))}` expected `str | None`')
+
+
 def mris_watershed_cargs(
     params: MrisWatershedParameters,
     execution: Execution,
@@ -145,6 +177,7 @@ def mris_watershed_execute(
     Returns:
         NamedTuple of outputs (described in `MrisWatershedOutputs`).
     """
+    mris_watershed_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_WATERSHED_METADATA)
     params = execution.params(params)

@@ -55,6 +55,28 @@ def volume_components_to_frames_params(
     return params
 
 
+def volume_components_to_frames_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeComponentsToFramesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+
+
 def volume_components_to_frames_cargs(
     params: VolumeComponentsToFramesParameters,
     execution: Execution,
@@ -114,6 +136,7 @@ def volume_components_to_frames_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeComponentsToFramesOutputs`).
     """
+    volume_components_to_frames_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_COMPONENTS_TO_FRAMES_METADATA)
     params = execution.params(params)

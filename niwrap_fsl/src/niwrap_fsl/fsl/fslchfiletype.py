@@ -64,6 +64,31 @@ def fslchfiletype_params(
     return params
 
 
+def fslchfiletype_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslchfiletypeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filetype", None) is None:
+        raise StyxValidationError("`filetype` must not be None")
+    if not isinstance(params["filetype"], str):
+        raise StyxValidationError(f'`filetype` has the wrong type: Received `{type(params.get("filetype", None))}` expected `str`')
+    if params.get("filename", None) is None:
+        raise StyxValidationError("`filename` must not be None")
+    if not isinstance(params["filename"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `InputPathType`')
+    if params.get("filename2", None) is not None:
+        if not isinstance(params["filename2"], str):
+            raise StyxValidationError(f'`filename2` has the wrong type: Received `{type(params.get("filename2", None))}` expected `str | None`')
+
+
 def fslchfiletype_cargs(
     params: FslchfiletypeParameters,
     execution: Execution,
@@ -125,6 +150,7 @@ def fslchfiletype_execute(
     Returns:
         NamedTuple of outputs (described in `FslchfiletypeOutputs`).
     """
+    fslchfiletype_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLCHFILETYPE_METADATA)
     params = execution.params(params)

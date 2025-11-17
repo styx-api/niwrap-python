@@ -54,6 +54,28 @@ def v_3drename_params(
     return params
 
 
+def v_3drename_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3drenameParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("old_prefix", None) is None:
+        raise StyxValidationError("`old_prefix` must not be None")
+    if not isinstance(params["old_prefix"], str):
+        raise StyxValidationError(f'`old_prefix` has the wrong type: Received `{type(params.get("old_prefix", None))}` expected `str`')
+    if params.get("new_prefix", None) is None:
+        raise StyxValidationError("`new_prefix` must not be None")
+    if not isinstance(params["new_prefix"], str):
+        raise StyxValidationError(f'`new_prefix` has the wrong type: Received `{type(params.get("new_prefix", None))}` expected `str`')
+
+
 def v_3drename_cargs(
     params: V3drenameParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def v_3drename_execute(
     Returns:
         NamedTuple of outputs (described in `V3drenameOutputs`).
     """
+    v_3drename_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DRENAME_METADATA)
     params = execution.params(params)

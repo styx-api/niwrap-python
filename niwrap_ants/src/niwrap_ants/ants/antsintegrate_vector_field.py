@@ -70,6 +70,36 @@ def antsintegrate_vector_field_params(
     return params
 
 
+def antsintegrate_vector_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsintegrateVectorFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("vector_field_input", None) is None:
+        raise StyxValidationError("`vector_field_input` must not be None")
+    if not isinstance(params["vector_field_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`vector_field_input` has the wrong type: Received `{type(params.get("vector_field_input", None))}` expected `InputPathType`')
+    if params.get("roi_mask_input", None) is None:
+        raise StyxValidationError("`roi_mask_input` must not be None")
+    if not isinstance(params["roi_mask_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi_mask_input` has the wrong type: Received `{type(params.get("roi_mask_input", None))}` expected `InputPathType`')
+    if params.get("fibers_output", None) is None:
+        raise StyxValidationError("`fibers_output` must not be None")
+    if not isinstance(params["fibers_output"], str):
+        raise StyxValidationError(f'`fibers_output` has the wrong type: Received `{type(params.get("fibers_output", None))}` expected `str`')
+    if params.get("length_image_output", None) is None:
+        raise StyxValidationError("`length_image_output` must not be None")
+    if not isinstance(params["length_image_output"], str):
+        raise StyxValidationError(f'`length_image_output` has the wrong type: Received `{type(params.get("length_image_output", None))}` expected `str`')
+
+
 def antsintegrate_vector_field_cargs(
     params: AntsintegrateVectorFieldParameters,
     execution: Execution,
@@ -134,6 +164,7 @@ def antsintegrate_vector_field_execute(
     Returns:
         NamedTuple of outputs (described in `AntsintegrateVectorFieldOutputs`).
     """
+    antsintegrate_vector_field_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTSINTEGRATE_VECTOR_FIELD_METADATA)
     params = execution.params(params)

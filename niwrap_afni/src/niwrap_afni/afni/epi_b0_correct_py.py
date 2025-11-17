@@ -202,6 +202,105 @@ def epi_b0_correct_py_params(
     return params
 
 
+def epi_b0_correct_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EpiB0CorrectPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("input_freq", None) is None:
+        raise StyxValidationError("`input_freq` must not be None")
+    if not isinstance(params["input_freq"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_freq` has the wrong type: Received `{type(params.get("input_freq", None))}` expected `InputPathType`')
+    if params.get("input_epi", None) is None:
+        raise StyxValidationError("`input_epi` must not be None")
+    if not isinstance(params["input_epi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_epi` has the wrong type: Received `{type(params.get("input_epi", None))}` expected `InputPathType`')
+    if params.get("input_mask", None) is not None:
+        if not isinstance(params["input_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_mask` has the wrong type: Received `{type(params.get("input_mask", None))}` expected `InputPathType | None`')
+    if params.get("input_magn", None) is not None:
+        if not isinstance(params["input_magn"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_magn` has the wrong type: Received `{type(params.get("input_magn", None))}` expected `InputPathType | None`')
+    if params.get("input_anat", None) is not None:
+        if not isinstance(params["input_anat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_anat` has the wrong type: Received `{type(params.get("input_anat", None))}` expected `InputPathType | None`')
+    if params.get("input_json", None) is not None:
+        if not isinstance(params["input_json"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_json` has the wrong type: Received `{type(params.get("input_json", None))}` expected `InputPathType | None`')
+    if params.get("epi_pe_dir", None) is None:
+        raise StyxValidationError("`epi_pe_dir` must not be None")
+    if not isinstance(params["epi_pe_dir"], str):
+        raise StyxValidationError(f'`epi_pe_dir` has the wrong type: Received `{type(params.get("epi_pe_dir", None))}` expected `str`')
+    if params.get("epi_pe_bwpp", None) is not None:
+        if not isinstance(params["epi_pe_bwpp"], (float, int)):
+            raise StyxValidationError(f'`epi_pe_bwpp` has the wrong type: Received `{type(params.get("epi_pe_bwpp", None))}` expected `float | None`')
+    if params.get("epi_pe_echo_sp", None) is not None:
+        if not isinstance(params["epi_pe_echo_sp"], (float, int)):
+            raise StyxValidationError(f'`epi_pe_echo_sp` has the wrong type: Received `{type(params.get("epi_pe_echo_sp", None))}` expected `float | None`')
+    if params.get("epi_pe_vox_dim", None) is not None:
+        if not isinstance(params["epi_pe_vox_dim"], (float, int)):
+            raise StyxValidationError(f'`epi_pe_vox_dim` has the wrong type: Received `{type(params.get("epi_pe_vox_dim", None))}` expected `float | None`')
+    if params.get("scale_freq", None) is not None:
+        if not isinstance(params["scale_freq"], (float, int)):
+            raise StyxValidationError(f'`scale_freq` has the wrong type: Received `{type(params.get("scale_freq", None))}` expected `float | None`')
+    if params.get("out_cmds", None) is not None:
+        if not isinstance(params["out_cmds"], str):
+            raise StyxValidationError(f'`out_cmds` has the wrong type: Received `{type(params.get("out_cmds", None))}` expected `str | None`')
+    if params.get("out_pars", None) is not None:
+        if not isinstance(params["out_pars"], str):
+            raise StyxValidationError(f'`out_pars` has the wrong type: Received `{type(params.get("out_pars", None))}` expected `str | None`')
+    if params.get("wdir_name", None) is not None:
+        if not isinstance(params["wdir_name"], str):
+            raise StyxValidationError(f'`wdir_name` has the wrong type: Received `{type(params.get("wdir_name", None))}` expected `str | None`')
+    if params.get("blur_sigma", None) is not None:
+        if not isinstance(params["blur_sigma"], (float, int)):
+            raise StyxValidationError(f'`blur_sigma` has the wrong type: Received `{type(params.get("blur_sigma", None))}` expected `float | None`')
+    if params.get("do_recenter_freq", None) is not None:
+        if not isinstance(params["do_recenter_freq"], str):
+            raise StyxValidationError(f'`do_recenter_freq` has the wrong type: Received `{type(params.get("do_recenter_freq", None))}` expected `str | None`')
+    if params.get("mask_dilate", None) is not None:
+        if not isinstance(params["mask_dilate"], list):
+            raise StyxValidationError(f'`mask_dilate` has the wrong type: Received `{type(params.get("mask_dilate", None))}` expected `list[float] | None`')
+        for e in params["mask_dilate"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`mask_dilate` has the wrong type: Received `{type(params.get("mask_dilate", None))}` expected `list[float] | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("qc_box_focus_ulay", False) is None:
+        raise StyxValidationError("`qc_box_focus_ulay` must not be None")
+    if not isinstance(params["qc_box_focus_ulay"], bool):
+        raise StyxValidationError(f'`qc_box_focus_ulay` has the wrong type: Received `{type(params.get("qc_box_focus_ulay", False))}` expected `bool`')
+    if params.get("no_qc_image", False) is None:
+        raise StyxValidationError("`no_qc_image` must not be None")
+    if not isinstance(params["no_qc_image"], bool):
+        raise StyxValidationError(f'`no_qc_image` has the wrong type: Received `{type(params.get("no_qc_image", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+    if params.get("date", False) is None:
+        raise StyxValidationError("`date` must not be None")
+    if not isinstance(params["date"], bool):
+        raise StyxValidationError(f'`date` has the wrong type: Received `{type(params.get("date", False))}` expected `bool`')
+
+
 def epi_b0_correct_py_cargs(
     params: EpiB0CorrectPyParameters,
     execution: Execution,
@@ -358,6 +457,7 @@ def epi_b0_correct_py_execute(
     Returns:
         NamedTuple of outputs (described in `EpiB0CorrectPyOutputs`).
     """
+    epi_b0_correct_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EPI_B0_CORRECT_PY_METADATA)
     params = execution.params(params)

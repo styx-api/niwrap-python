@@ -123,6 +123,78 @@ def mris_spherical_average_params(
     return params
 
 
+def mris_spherical_average_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisSphericalAverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("which", None) is None:
+        raise StyxValidationError("`which` must not be None")
+    if not isinstance(params["which"], str):
+        raise StyxValidationError(f'`which` has the wrong type: Received `{type(params.get("which", None))}` expected `typing.Literal["coords", "label", "vals", "curv", "area"]`')
+    if params["which"] not in ["coords", "label", "vals", "curv", "area"]:
+        raise StyxValidationError("Parameter `which` must be one of [\"coords\", \"label\", \"vals\", \"curv\", \"area\"]")
+    if params.get("fname", None) is None:
+        raise StyxValidationError("`fname` must not be None")
+    if not isinstance(params["fname"], str):
+        raise StyxValidationError(f'`fname` has the wrong type: Received `{type(params.get("fname", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `typing.Literal["lh", "rh"]`')
+    if params["hemi"] not in ["lh", "rh"]:
+        raise StyxValidationError("Parameter `hemi` must be one of [\"lh\", \"rh\"]")
+    if params.get("spherical_surf", None) is None:
+        raise StyxValidationError("`spherical_surf` must not be None")
+    if not isinstance(params["spherical_surf"], str):
+        raise StyxValidationError(f'`spherical_surf` has the wrong type: Received `{type(params.get("spherical_surf", None))}` expected `str`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("segment", False) is None:
+        raise StyxValidationError("`segment` must not be None")
+    if not isinstance(params["segment"], bool):
+        raise StyxValidationError(f'`segment` has the wrong type: Received `{type(params.get("segment", False))}` expected `bool`')
+    if params.get("normalize", False) is None:
+        raise StyxValidationError("`normalize` must not be None")
+    if not isinstance(params["normalize"], bool):
+        raise StyxValidationError(f'`normalize` has the wrong type: Received `{type(params.get("normalize", False))}` expected `bool`')
+    if params.get("orig", None) is not None:
+        if not isinstance(params["orig"], str):
+            raise StyxValidationError(f'`orig` has the wrong type: Received `{type(params.get("orig", None))}` expected `str | None`')
+    if params.get("output_subject_name", None) is not None:
+        if not isinstance(params["output_subject_name"], str):
+            raise StyxValidationError(f'`output_subject_name` has the wrong type: Received `{type(params.get("output_subject_name", None))}` expected `str | None`')
+    if params.get("output_subject_dir", None) is not None:
+        if not isinstance(params["output_subject_dir"], str):
+            raise StyxValidationError(f'`output_subject_dir` has the wrong type: Received `{type(params.get("output_subject_dir", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("average_area", False) is None:
+        raise StyxValidationError("`average_area` must not be None")
+    if not isinstance(params["average_area"], bool):
+        raise StyxValidationError(f'`average_area` has the wrong type: Received `{type(params.get("average_area", False))}` expected `bool`')
+    if params.get("summary_statistics", None) is not None:
+        if not isinstance(params["summary_statistics"], str):
+            raise StyxValidationError(f'`summary_statistics` has the wrong type: Received `{type(params.get("summary_statistics", None))}` expected `str | None`')
+
+
 def mris_spherical_average_cargs(
     params: MrisSphericalAverageParameters,
     execution: Execution,
@@ -216,6 +288,7 @@ def mris_spherical_average_execute(
     Returns:
         NamedTuple of outputs (described in `MrisSphericalAverageOutputs`).
     """
+    mris_spherical_average_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SPHERICAL_AVERAGE_METADATA)
     params = execution.params(params)

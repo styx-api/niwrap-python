@@ -154,6 +154,93 @@ def feat2segstats_params(
     return params
 
 
+def feat2segstats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Feat2segstatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("feat_dir", None) is None:
+        raise StyxValidationError("`feat_dir` must not be None")
+    if not isinstance(params["feat_dir"], str):
+        raise StyxValidationError(f'`feat_dir` has the wrong type: Received `{type(params.get("feat_dir", None))}` expected `str`')
+    if params.get("featdirfile", None) is not None:
+        if not isinstance(params["featdirfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`featdirfile` has the wrong type: Received `{type(params.get("featdirfile", None))}` expected `InputPathType | None`')
+    if params.get("seg_vol", None) is not None:
+        if not isinstance(params["seg_vol"], str):
+            raise StyxValidationError(f'`seg_vol` has the wrong type: Received `{type(params.get("seg_vol", None))}` expected `str | None`')
+    if params.get("aseg_flag", False) is None:
+        raise StyxValidationError("`aseg_flag` must not be None")
+    if not isinstance(params["aseg_flag"], bool):
+        raise StyxValidationError(f'`aseg_flag` has the wrong type: Received `{type(params.get("aseg_flag", False))}` expected `bool`')
+    if params.get("aparc_aseg_flag", False) is None:
+        raise StyxValidationError("`aparc_aseg_flag` must not be None")
+    if not isinstance(params["aparc_aseg_flag"], bool):
+        raise StyxValidationError(f'`aparc_aseg_flag` has the wrong type: Received `{type(params.get("aparc_aseg_flag", False))}` expected `bool`')
+    if params.get("ctab", None) is not None:
+        if not isinstance(params["ctab"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab` has the wrong type: Received `{type(params.get("ctab", None))}` expected `InputPathType | None`')
+    if params.get("all_segs_flag", False) is None:
+        raise StyxValidationError("`all_segs_flag` must not be None")
+    if not isinstance(params["all_segs_flag"], bool):
+        raise StyxValidationError(f'`all_segs_flag` has the wrong type: Received `{type(params.get("all_segs_flag", False))}` expected `bool`')
+    if params.get("copes_flag", False) is None:
+        raise StyxValidationError("`copes_flag` must not be None")
+    if not isinstance(params["copes_flag"], bool):
+        raise StyxValidationError(f'`copes_flag` has the wrong type: Received `{type(params.get("copes_flag", False))}` expected `bool`')
+    if params.get("varcopes_flag", False) is None:
+        raise StyxValidationError("`varcopes_flag` must not be None")
+    if not isinstance(params["varcopes_flag"], bool):
+        raise StyxValidationError(f'`varcopes_flag` has the wrong type: Received `{type(params.get("varcopes_flag", False))}` expected `bool`')
+    if params.get("zstats_flag", False) is None:
+        raise StyxValidationError("`zstats_flag` must not be None")
+    if not isinstance(params["zstats_flag"], bool):
+        raise StyxValidationError(f'`zstats_flag` has the wrong type: Received `{type(params.get("zstats_flag", False))}` expected `bool`')
+    if params.get("pes_flag", False) is None:
+        raise StyxValidationError("`pes_flag` must not be None")
+    if not isinstance(params["pes_flag"], bool):
+        raise StyxValidationError(f'`pes_flag` has the wrong type: Received `{type(params.get("pes_flag", False))}` expected `bool`')
+    if params.get("rvar", None) is not None:
+        if not isinstance(params["rvar"], str):
+            raise StyxValidationError(f'`rvar` has the wrong type: Received `{type(params.get("rvar", None))}` expected `str | None`')
+    if params.get("example_func", None) is not None:
+        if not isinstance(params["example_func"], str):
+            raise StyxValidationError(f'`example_func` has the wrong type: Received `{type(params.get("example_func", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], str):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `str | None`')
+    if params.get("mean_func", None) is not None:
+        if not isinstance(params["mean_func"], str):
+            raise StyxValidationError(f'`mean_func` has the wrong type: Received `{type(params.get("mean_func", None))}` expected `str | None`')
+    if params.get("stat", None) is None:
+        raise StyxValidationError("`stat` must not be None")
+    if not isinstance(params["stat"], str):
+        raise StyxValidationError(f'`stat` has the wrong type: Received `{type(params.get("stat", None))}` expected `str`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("nolog_flag", False) is None:
+        raise StyxValidationError("`nolog_flag` must not be None")
+    if not isinstance(params["nolog_flag"], bool):
+        raise StyxValidationError(f'`nolog_flag` has the wrong type: Received `{type(params.get("nolog_flag", False))}` expected `bool`')
+
+
 def feat2segstats_cargs(
     params: Feat2segstatsParameters,
     execution: Execution,
@@ -277,6 +364,7 @@ def feat2segstats_execute(
     Returns:
         NamedTuple of outputs (described in `Feat2segstatsOutputs`).
     """
+    feat2segstats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FEAT2SEGSTATS_METADATA)
     params = execution.params(params)

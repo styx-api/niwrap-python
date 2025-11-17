@@ -67,6 +67,35 @@ def avscale_params(
     return params
 
 
+def avscale_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AvscaleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("allparams_flag", False) is None:
+        raise StyxValidationError("`allparams_flag` must not be None")
+    if not isinstance(params["allparams_flag"], bool):
+        raise StyxValidationError(f'`allparams_flag` has the wrong type: Received `{type(params.get("allparams_flag", False))}` expected `bool`')
+    if params.get("inverteddies_flag", False) is None:
+        raise StyxValidationError("`inverteddies_flag` must not be None")
+    if not isinstance(params["inverteddies_flag"], bool):
+        raise StyxValidationError(f'`inverteddies_flag` has the wrong type: Received `{type(params.get("inverteddies_flag", False))}` expected `bool`')
+    if params.get("matrix_file", None) is None:
+        raise StyxValidationError("`matrix_file` must not be None")
+    if not isinstance(params["matrix_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`matrix_file` has the wrong type: Received `{type(params.get("matrix_file", None))}` expected `InputPathType`')
+    if params.get("non_reference_volume", None) is not None:
+        if not isinstance(params["non_reference_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`non_reference_volume` has the wrong type: Received `{type(params.get("non_reference_volume", None))}` expected `InputPathType | None`')
+
+
 def avscale_cargs(
     params: AvscaleParameters,
     execution: Execution,
@@ -131,6 +160,7 @@ def avscale_execute(
     Returns:
         NamedTuple of outputs (described in `AvscaleOutputs`).
     """
+    avscale_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AVSCALE_METADATA)
     params = execution.params(params)

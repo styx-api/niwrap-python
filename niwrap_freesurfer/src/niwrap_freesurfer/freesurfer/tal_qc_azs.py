@@ -49,6 +49,24 @@ def tal_qc_azs_params(
     return params
 
 
+def tal_qc_azs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TalQcAzsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("logfile", None) is None:
+        raise StyxValidationError("`logfile` must not be None")
+    if not isinstance(params["logfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`logfile` has the wrong type: Received `{type(params.get("logfile", None))}` expected `InputPathType`')
+
+
 def tal_qc_azs_cargs(
     params: TalQcAzsParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def tal_qc_azs_execute(
     Returns:
         NamedTuple of outputs (described in `TalQcAzsOutputs`).
     """
+    tal_qc_azs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TAL_QC_AZS_METADATA)
     params = execution.params(params)

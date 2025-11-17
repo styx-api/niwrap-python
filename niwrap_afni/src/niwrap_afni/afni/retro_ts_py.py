@@ -194,6 +194,105 @@ def retro_ts_py_params(
     return params
 
 
+def retro_ts_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RetroTsPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("resp_file", None) is not None:
+        if not isinstance(params["resp_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`resp_file` has the wrong type: Received `{type(params.get("resp_file", None))}` expected `InputPathType | None`')
+    if params.get("card_file", None) is not None:
+        if not isinstance(params["card_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`card_file` has the wrong type: Received `{type(params.get("card_file", None))}` expected `InputPathType | None`')
+    if params.get("phys_fs", None) is not None:
+        if not isinstance(params["phys_fs"], (float, int)):
+            raise StyxValidationError(f'`phys_fs` has the wrong type: Received `{type(params.get("phys_fs", None))}` expected `float | None`')
+    if params.get("num_slices", None) is None:
+        raise StyxValidationError("`num_slices` must not be None")
+    if not isinstance(params["num_slices"], (float, int)):
+        raise StyxValidationError(f'`num_slices` has the wrong type: Received `{type(params.get("num_slices", None))}` expected `float`')
+    if params.get("volume_tr", None) is None:
+        raise StyxValidationError("`volume_tr` must not be None")
+    if not isinstance(params["volume_tr"], (float, int)):
+        raise StyxValidationError(f'`volume_tr` has the wrong type: Received `{type(params.get("volume_tr", None))}` expected `float`')
+    if params.get("phys_file", None) is not None:
+        if not isinstance(params["phys_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`phys_file` has the wrong type: Received `{type(params.get("phys_file", None))}` expected `InputPathType | None`')
+    if params.get("phys_json", None) is not None:
+        if not isinstance(params["phys_json"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`phys_json` has the wrong type: Received `{type(params.get("phys_json", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("rvt_shifts", None) is not None:
+        if not isinstance(params["rvt_shifts"], str):
+            raise StyxValidationError(f'`rvt_shifts` has the wrong type: Received `{type(params.get("rvt_shifts", None))}` expected `str | None`')
+    if params.get("rvt_out", False) is None:
+        raise StyxValidationError("`rvt_out` must not be None")
+    if not isinstance(params["rvt_out"], bool):
+        raise StyxValidationError(f'`rvt_out` has the wrong type: Received `{type(params.get("rvt_out", False))}` expected `bool`')
+    if params.get("resp_cutoff_freq", None) is not None:
+        if not isinstance(params["resp_cutoff_freq"], (float, int)):
+            raise StyxValidationError(f'`resp_cutoff_freq` has the wrong type: Received `{type(params.get("resp_cutoff_freq", None))}` expected `float | None`')
+    if params.get("cardiac_cutoff_freq", None) is not None:
+        if not isinstance(params["cardiac_cutoff_freq"], (float, int)):
+            raise StyxValidationError(f'`cardiac_cutoff_freq` has the wrong type: Received `{type(params.get("cardiac_cutoff_freq", None))}` expected `float | None`')
+    if params.get("cardiac_out", False) is None:
+        raise StyxValidationError("`cardiac_out` must not be None")
+    if not isinstance(params["cardiac_out"], bool):
+        raise StyxValidationError(f'`cardiac_out` has the wrong type: Received `{type(params.get("cardiac_out", False))}` expected `bool`')
+    if params.get("respiration_out", False) is None:
+        raise StyxValidationError("`respiration_out` must not be None")
+    if not isinstance(params["respiration_out"], bool):
+        raise StyxValidationError(f'`respiration_out` has the wrong type: Received `{type(params.get("respiration_out", False))}` expected `bool`')
+    if params.get("interp_style", None) is not None:
+        if not isinstance(params["interp_style"], str):
+            raise StyxValidationError(f'`interp_style` has the wrong type: Received `{type(params.get("interp_style", None))}` expected `str | None`')
+    if params.get("fir_order", None) is not None:
+        if not isinstance(params["fir_order"], (float, int)):
+            raise StyxValidationError(f'`fir_order` has the wrong type: Received `{type(params.get("fir_order", None))}` expected `float | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("demo", False) is None:
+        raise StyxValidationError("`demo` must not be None")
+    if not isinstance(params["demo"], bool):
+        raise StyxValidationError(f'`demo` has the wrong type: Received `{type(params.get("demo", False))}` expected `bool`')
+    if params.get("show_graphs", False) is None:
+        raise StyxValidationError("`show_graphs` must not be None")
+    if not isinstance(params["show_graphs"], bool):
+        raise StyxValidationError(f'`show_graphs` has the wrong type: Received `{type(params.get("show_graphs", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("slice_offset", None) is not None:
+        if not isinstance(params["slice_offset"], str):
+            raise StyxValidationError(f'`slice_offset` has the wrong type: Received `{type(params.get("slice_offset", None))}` expected `str | None`')
+    if params.get("slice_major", None) is not None:
+        if not isinstance(params["slice_major"], (float, int)):
+            raise StyxValidationError(f'`slice_major` has the wrong type: Received `{type(params.get("slice_major", None))}` expected `float | None`')
+    if params.get("slice_order", None) is not None:
+        if not isinstance(params["slice_order"], str):
+            raise StyxValidationError(f'`slice_order` has the wrong type: Received `{type(params.get("slice_order", None))}` expected `str | None`')
+    if params.get("zero_phase_offset", False) is None:
+        raise StyxValidationError("`zero_phase_offset` must not be None")
+    if not isinstance(params["zero_phase_offset"], bool):
+        raise StyxValidationError(f'`zero_phase_offset` has the wrong type: Received `{type(params.get("zero_phase_offset", False))}` expected `bool`')
+    if params.get("legacy_transform", None) is not None:
+        if not isinstance(params["legacy_transform"], (float, int)):
+            raise StyxValidationError(f'`legacy_transform` has the wrong type: Received `{type(params.get("legacy_transform", None))}` expected `float | None`')
+
+
 def retro_ts_py_cargs(
     params: RetroTsPyParameters,
     execution: Execution,
@@ -352,6 +451,7 @@ def retro_ts_py_execute(
     Returns:
         NamedTuple of outputs (described in `RetroTsPyOutputs`).
     """
+    retro_ts_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RETRO_TS_PY_METADATA)
     params = execution.params(params)

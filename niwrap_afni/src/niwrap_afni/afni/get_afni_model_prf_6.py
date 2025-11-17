@@ -80,6 +80,48 @@ def get_afni_model_prf_6_params(
     return params
 
 
+def get_afni_model_prf_6_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GetAfniModelPrf6Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("NT", None) is None:
+        raise StyxValidationError("`NT` must not be None")
+    if not isinstance(params["NT"], (float, int)):
+        raise StyxValidationError(f'`NT` has the wrong type: Received `{type(params.get("NT", None))}` expected `float`')
+    if params.get("AMP", None) is None:
+        raise StyxValidationError("`AMP` must not be None")
+    if not isinstance(params["AMP"], (float, int)):
+        raise StyxValidationError(f'`AMP` has the wrong type: Received `{type(params.get("AMP", None))}` expected `float`')
+    if params.get("X", None) is None:
+        raise StyxValidationError("`X` must not be None")
+    if not isinstance(params["X"], (float, int)):
+        raise StyxValidationError(f'`X` has the wrong type: Received `{type(params.get("X", None))}` expected `float`')
+    if params.get("Y", None) is None:
+        raise StyxValidationError("`Y` must not be None")
+    if not isinstance(params["Y"], (float, int)):
+        raise StyxValidationError(f'`Y` has the wrong type: Received `{type(params.get("Y", None))}` expected `float`')
+    if params.get("SIGMA", None) is None:
+        raise StyxValidationError("`SIGMA` must not be None")
+    if not isinstance(params["SIGMA"], (float, int)):
+        raise StyxValidationError(f'`SIGMA` has the wrong type: Received `{type(params.get("SIGMA", None))}` expected `float`')
+    if params.get("SIGRAT", None) is None:
+        raise StyxValidationError("`SIGRAT` must not be None")
+    if not isinstance(params["SIGRAT"], (float, int)):
+        raise StyxValidationError(f'`SIGRAT` has the wrong type: Received `{type(params.get("SIGRAT", None))}` expected `float`')
+    if params.get("THETA", None) is None:
+        raise StyxValidationError("`THETA` must not be None")
+    if not isinstance(params["THETA"], (float, int)):
+        raise StyxValidationError(f'`THETA` has the wrong type: Received `{type(params.get("THETA", None))}` expected `float`')
+
+
 def get_afni_model_prf_6_cargs(
     params: GetAfniModelPrf6Parameters,
     execution: Execution,
@@ -143,6 +185,7 @@ def get_afni_model_prf_6_execute(
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrf6Outputs`).
     """
+    get_afni_model_prf_6_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GET_AFNI_MODEL_PRF_6_METADATA)
     params = execution.params(params)

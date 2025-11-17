@@ -157,6 +157,98 @@ def xmat_tool_py_params(
     return params
 
 
+def xmat_tool_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XmatToolPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("no_gui", False) is None:
+        raise StyxValidationError("`no_gui` must not be None")
+    if not isinstance(params["no_gui"], bool):
+        raise StyxValidationError(f'`no_gui` has the wrong type: Received `{type(params.get("no_gui", False))}` expected `bool`')
+    if params.get("load_xmat", None) is not None:
+        if not isinstance(params["load_xmat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`load_xmat` has the wrong type: Received `{type(params.get("load_xmat", None))}` expected `InputPathType | None`')
+    if params.get("load_1d", None) is not None:
+        if not isinstance(params["load_1d"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`load_1d` has the wrong type: Received `{type(params.get("load_1d", None))}` expected `InputPathType | None`')
+    if params.get("choose_cols", None) is not None:
+        if not isinstance(params["choose_cols"], str):
+            raise StyxValidationError(f'`choose_cols` has the wrong type: Received `{type(params.get("choose_cols", None))}` expected `str | None`')
+    if params.get("choose_nonzero_cols", False) is None:
+        raise StyxValidationError("`choose_nonzero_cols` must not be None")
+    if not isinstance(params["choose_nonzero_cols"], bool):
+        raise StyxValidationError(f'`choose_nonzero_cols` has the wrong type: Received `{type(params.get("choose_nonzero_cols", False))}` expected `bool`')
+    if params.get("chrono", False) is None:
+        raise StyxValidationError("`chrono` must not be None")
+    if not isinstance(params["chrono"], bool):
+        raise StyxValidationError(f'`chrono` has the wrong type: Received `{type(params.get("chrono", False))}` expected `bool`')
+    if params.get("cormat_cutoff", None) is not None:
+        if not isinstance(params["cormat_cutoff"], (float, int)):
+            raise StyxValidationError(f'`cormat_cutoff` has the wrong type: Received `{type(params.get("cormat_cutoff", None))}` expected `float | None`')
+    if params.get("cosmat_cutoff", None) is not None:
+        if not isinstance(params["cosmat_cutoff"], (float, int)):
+            raise StyxValidationError(f'`cosmat_cutoff` has the wrong type: Received `{type(params.get("cosmat_cutoff", None))}` expected `float | None`')
+    if params.get("cosmat_motion", False) is None:
+        raise StyxValidationError("`cosmat_motion` must not be None")
+    if not isinstance(params["cosmat_motion"], bool):
+        raise StyxValidationError(f'`cosmat_motion` has the wrong type: Received `{type(params.get("cosmat_motion", False))}` expected `bool`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+    if params.get("show_col_types", False) is None:
+        raise StyxValidationError("`show_col_types` must not be None")
+    if not isinstance(params["show_col_types"], bool):
+        raise StyxValidationError(f'`show_col_types` has the wrong type: Received `{type(params.get("show_col_types", False))}` expected `bool`')
+    if params.get("show_conds", False) is None:
+        raise StyxValidationError("`show_conds` must not be None")
+    if not isinstance(params["show_conds"], bool):
+        raise StyxValidationError(f'`show_conds` has the wrong type: Received `{type(params.get("show_conds", False))}` expected `bool`')
+    if params.get("show_cormat", False) is None:
+        raise StyxValidationError("`show_cormat` must not be None")
+    if not isinstance(params["show_cormat"], bool):
+        raise StyxValidationError(f'`show_cormat` has the wrong type: Received `{type(params.get("show_cormat", False))}` expected `bool`')
+    if params.get("show_cormat_warnings", False) is None:
+        raise StyxValidationError("`show_cormat_warnings` must not be None")
+    if not isinstance(params["show_cormat_warnings"], bool):
+        raise StyxValidationError(f'`show_cormat_warnings` has the wrong type: Received `{type(params.get("show_cormat_warnings", False))}` expected `bool`')
+    if params.get("show_cosmat", False) is None:
+        raise StyxValidationError("`show_cosmat` must not be None")
+    if not isinstance(params["show_cosmat"], bool):
+        raise StyxValidationError(f'`show_cosmat` has the wrong type: Received `{type(params.get("show_cosmat", False))}` expected `bool`')
+    if params.get("show_cosmat_warnings", False) is None:
+        raise StyxValidationError("`show_cosmat_warnings` must not be None")
+    if not isinstance(params["show_cosmat_warnings"], bool):
+        raise StyxValidationError(f'`show_cosmat_warnings` has the wrong type: Received `{type(params.get("show_cosmat_warnings", False))}` expected `bool`')
+    if params.get("show_fit_betas", False) is None:
+        raise StyxValidationError("`show_fit_betas` must not be None")
+    if not isinstance(params["show_fit_betas"], bool):
+        raise StyxValidationError(f'`show_fit_betas` has the wrong type: Received `{type(params.get("show_fit_betas", False))}` expected `bool`')
+    if params.get("show_fit_ts", False) is None:
+        raise StyxValidationError("`show_fit_ts` must not be None")
+    if not isinstance(params["show_fit_ts"], bool):
+        raise StyxValidationError(f'`show_fit_ts` has the wrong type: Received `{type(params.get("show_fit_ts", False))}` expected `bool`')
+    if params.get("show_xmat", False) is None:
+        raise StyxValidationError("`show_xmat` must not be None")
+    if not isinstance(params["show_xmat"], bool):
+        raise StyxValidationError(f'`show_xmat` has the wrong type: Received `{type(params.get("show_xmat", False))}` expected `bool`')
+    if params.get("show_1d", False) is None:
+        raise StyxValidationError("`show_1d` must not be None")
+    if not isinstance(params["show_1d"], bool):
+        raise StyxValidationError(f'`show_1d` has the wrong type: Received `{type(params.get("show_1d", False))}` expected `bool`')
+    if params.get("gui_plot_xmat_as_one", False) is None:
+        raise StyxValidationError("`gui_plot_xmat_as_one` must not be None")
+    if not isinstance(params["gui_plot_xmat_as_one"], bool):
+        raise StyxValidationError(f'`gui_plot_xmat_as_one` has the wrong type: Received `{type(params.get("gui_plot_xmat_as_one", False))}` expected `bool`')
+
+
 def xmat_tool_py_cargs(
     params: XmatToolPyParameters,
     execution: Execution,
@@ -274,6 +366,7 @@ def xmat_tool_py_execute(
     Returns:
         NamedTuple of outputs (described in `XmatToolPyOutputs`).
     """
+    xmat_tool_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XMAT_TOOL_PY_METADATA)
     params = execution.params(params)

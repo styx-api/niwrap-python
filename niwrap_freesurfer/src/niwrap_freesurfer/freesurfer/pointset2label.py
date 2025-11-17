@@ -71,6 +71,40 @@ def pointset2label_params(
     return params
 
 
+def pointset2label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Pointset2labelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("waypoint_file", None) is None:
+        raise StyxValidationError("`waypoint_file` must not be None")
+    if not isinstance(params["waypoint_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`waypoint_file` has the wrong type: Received `{type(params.get("waypoint_file", None))}` expected `InputPathType`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("label_value", None) is None:
+        raise StyxValidationError("`label_value` must not be None")
+    if not isinstance(params["label_value"], (float, int)):
+        raise StyxValidationError(f'`label_value` has the wrong type: Received `{type(params.get("label_value", None))}` expected `float`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("clear_option", False) is None:
+        raise StyxValidationError("`clear_option` must not be None")
+    if not isinstance(params["clear_option"], bool):
+        raise StyxValidationError(f'`clear_option` has the wrong type: Received `{type(params.get("clear_option", False))}` expected `bool`')
+
+
 def pointset2label_cargs(
     params: Pointset2labelParameters,
     execution: Execution,
@@ -134,6 +168,7 @@ def pointset2label_execute(
     Returns:
         NamedTuple of outputs (described in `Pointset2labelOutputs`).
     """
+    pointset2label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POINTSET2LABEL_METADATA)
     params = execution.params(params)

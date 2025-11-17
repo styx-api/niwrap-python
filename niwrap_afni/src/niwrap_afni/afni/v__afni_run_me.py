@@ -59,6 +59,32 @@ def v__afni_run_me_params(
     return params
 
 
+def v__afni_run_me_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAfniRunMeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("go", False) is None:
+        raise StyxValidationError("`go` must not be None")
+    if not isinstance(params["go"], bool):
+        raise StyxValidationError(f'`go` has the wrong type: Received `{type(params.get("go", False))}` expected `bool`')
+    if params.get("curl", False) is None:
+        raise StyxValidationError("`curl` must not be None")
+    if not isinstance(params["curl"], bool):
+        raise StyxValidationError(f'`curl` has the wrong type: Received `{type(params.get("curl", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__afni_run_me_cargs(
     params: VAfniRunMeParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def v__afni_run_me_execute(
     Returns:
         NamedTuple of outputs (described in `VAfniRunMeOutputs`).
     """
+    v__afni_run_me_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AFNI_RUN_ME_METADATA)
     params = execution.params(params)

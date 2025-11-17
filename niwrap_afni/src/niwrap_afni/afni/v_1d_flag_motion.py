@@ -67,6 +67,30 @@ def v_1d_flag_motion_params(
     return params
 
 
+def v_1d_flag_motion_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dFlagMotionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_motion_file", None) is None:
+        raise StyxValidationError("`input_motion_file` must not be None")
+    if not isinstance(params["input_motion_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_motion_file` has the wrong type: Received `{type(params.get("input_motion_file", None))}` expected `InputPathType`')
+    if params.get("max_translation", None) is not None:
+        if not isinstance(params["max_translation"], (float, int)):
+            raise StyxValidationError(f'`max_translation` has the wrong type: Received `{type(params.get("max_translation", None))}` expected `float | None`')
+    if params.get("max_rotation", None) is not None:
+        if not isinstance(params["max_rotation"], (float, int)):
+            raise StyxValidationError(f'`max_rotation` has the wrong type: Received `{type(params.get("max_rotation", None))}` expected `float | None`')
+
+
 def v_1d_flag_motion_cargs(
     params: V1dFlagMotionParameters,
     execution: Execution,
@@ -136,6 +160,7 @@ def v_1d_flag_motion_execute(
     Returns:
         NamedTuple of outputs (described in `V1dFlagMotionOutputs`).
     """
+    v_1d_flag_motion_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_FLAG_MOTION_METADATA)
     params = execution.params(params)

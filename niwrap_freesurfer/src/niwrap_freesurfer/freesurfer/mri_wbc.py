@@ -139,6 +139,78 @@ def mri_wbc_params(
     return params
 
 
+def mri_wbc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriWbcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("functional_volume", None) is None:
+        raise StyxValidationError("`functional_volume` must not be None")
+    if not isinstance(params["functional_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`functional_volume` has the wrong type: Received `{type(params.get("functional_volume", None))}` expected `InputPathType`')
+    if params.get("volume_mask", None) is not None:
+        if not isinstance(params["volume_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`volume_mask` has the wrong type: Received `{type(params.get("volume_mask", None))}` expected `InputPathType | None`')
+    if params.get("lh_functional_surface", None) is None:
+        raise StyxValidationError("`lh_functional_surface` must not be None")
+    if not isinstance(params["lh_functional_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lh_functional_surface` has the wrong type: Received `{type(params.get("lh_functional_surface", None))}` expected `InputPathType`')
+    if params.get("lh_surface", None) is None:
+        raise StyxValidationError("`lh_surface` must not be None")
+    if not isinstance(params["lh_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lh_surface` has the wrong type: Received `{type(params.get("lh_surface", None))}` expected `InputPathType`')
+    if params.get("lh_inflated", None) is not None:
+        if not isinstance(params["lh_inflated"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lh_inflated` has the wrong type: Received `{type(params.get("lh_inflated", None))}` expected `InputPathType | None`')
+    if params.get("lh_mask", None) is not None:
+        if not isinstance(params["lh_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lh_mask` has the wrong type: Received `{type(params.get("lh_mask", None))}` expected `InputPathType | None`')
+    if params.get("lh_label", None) is not None:
+        if not isinstance(params["lh_label"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lh_label` has the wrong type: Received `{type(params.get("lh_label", None))}` expected `InputPathType | None`')
+    if params.get("rh_functional_surface", None) is None:
+        raise StyxValidationError("`rh_functional_surface` must not be None")
+    if not isinstance(params["rh_functional_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rh_functional_surface` has the wrong type: Received `{type(params.get("rh_functional_surface", None))}` expected `InputPathType`')
+    if params.get("rh_surface", None) is None:
+        raise StyxValidationError("`rh_surface` must not be None")
+    if not isinstance(params["rh_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rh_surface` has the wrong type: Received `{type(params.get("rh_surface", None))}` expected `InputPathType`')
+    if params.get("rh_inflated", None) is not None:
+        if not isinstance(params["rh_inflated"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rh_inflated` has the wrong type: Received `{type(params.get("rh_inflated", None))}` expected `InputPathType | None`')
+    if params.get("rh_mask", None) is not None:
+        if not isinstance(params["rh_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rh_mask` has the wrong type: Received `{type(params.get("rh_mask", None))}` expected `InputPathType | None`')
+    if params.get("rh_label", None) is not None:
+        if not isinstance(params["rh_label"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rh_label` has the wrong type: Received `{type(params.get("rh_label", None))}` expected `InputPathType | None`')
+    if params.get("rho_threshold", None) is not None:
+        if not isinstance(params["rho_threshold"], (float, int)):
+            raise StyxValidationError(f'`rho_threshold` has the wrong type: Received `{type(params.get("rho_threshold", None))}` expected `float | None`')
+    if params.get("dist_threshold", None) is not None:
+        if not isinstance(params["dist_threshold"], (float, int)):
+            raise StyxValidationError(f'`dist_threshold` has the wrong type: Received `{type(params.get("dist_threshold", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+
+
 def mri_wbc_cargs(
     params: MriWbcParameters,
     execution: Execution,
@@ -270,6 +342,7 @@ def mri_wbc_execute(
     Returns:
         NamedTuple of outputs (described in `MriWbcOutputs`).
     """
+    mri_wbc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_WBC_METADATA)
     params = execution.params(params)

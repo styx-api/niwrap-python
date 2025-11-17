@@ -76,6 +76,39 @@ def r_pkgs_install_params(
     return params
 
 
+def r_pkgs_install_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RPkgsInstallParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("packages", None) is None:
+        raise StyxValidationError("`packages` must not be None")
+    if not isinstance(params["packages"], str):
+        raise StyxValidationError(f'`packages` has the wrong type: Received `{type(params.get("packages", None))}` expected `str`')
+    if params.get("download_site", None) is not None:
+        if not isinstance(params["download_site"], str):
+            raise StyxValidationError(f'`download_site` has the wrong type: Received `{type(params.get("download_site", None))}` expected `str | None`')
+    if params.get("check", False) is None:
+        raise StyxValidationError("`check` must not be None")
+    if not isinstance(params["check"], bool):
+        raise StyxValidationError(f'`check` has the wrong type: Received `{type(params.get("check", False))}` expected `bool`')
+    if params.get("update", False) is None:
+        raise StyxValidationError("`update` must not be None")
+    if not isinstance(params["update"], bool):
+        raise StyxValidationError(f'`update` has the wrong type: Received `{type(params.get("update", False))}` expected `bool`')
+    if params.get("remove", False) is None:
+        raise StyxValidationError("`remove` must not be None")
+    if not isinstance(params["remove"], bool):
+        raise StyxValidationError(f'`remove` has the wrong type: Received `{type(params.get("remove", False))}` expected `bool`')
+
+
 def r_pkgs_install_cargs(
     params: RPkgsInstallParameters,
     execution: Execution,
@@ -148,6 +181,7 @@ def r_pkgs_install_execute(
     Returns:
         NamedTuple of outputs (described in `RPkgsInstallOutputs`).
     """
+    r_pkgs_install_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(R_PKGS_INSTALL_METADATA)
     params = execution.params(params)

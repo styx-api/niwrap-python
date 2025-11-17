@@ -123,6 +123,68 @@ def rtview_params(
     return params
 
 
+def rtview_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RtviewParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("left_hemi", False) is None:
+        raise StyxValidationError("`left_hemi` must not be None")
+    if not isinstance(params["left_hemi"], bool):
+        raise StyxValidationError(f'`left_hemi` has the wrong type: Received `{type(params.get("left_hemi", False))}` expected `bool`')
+    if params.get("right_hemi", False) is None:
+        raise StyxValidationError("`right_hemi` must not be None")
+    if not isinstance(params["right_hemi"], bool):
+        raise StyxValidationError(f'`right_hemi` has the wrong type: Received `{type(params.get("right_hemi", False))}` expected `bool`')
+    if params.get("eccen", False) is None:
+        raise StyxValidationError("`eccen` must not be None")
+    if not isinstance(params["eccen"], bool):
+        raise StyxValidationError(f'`eccen` has the wrong type: Received `{type(params.get("eccen", False))}` expected `bool`')
+    if params.get("polar", False) is None:
+        raise StyxValidationError("`polar` must not be None")
+    if not isinstance(params["polar"], bool):
+        raise StyxValidationError(f'`polar` has the wrong type: Received `{type(params.get("polar", False))}` expected `bool`')
+    if params.get("real_file", None) is not None:
+        if not isinstance(params["real_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`real_file` has the wrong type: Received `{type(params.get("real_file", None))}` expected `InputPathType | None`')
+    if params.get("imag_file", None) is not None:
+        if not isinstance(params["imag_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`imag_file` has the wrong type: Received `{type(params.get("imag_file", None))}` expected `InputPathType | None`')
+    if params.get("fsig_file", None) is not None:
+        if not isinstance(params["fsig_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsig_file` has the wrong type: Received `{type(params.get("fsig_file", None))}` expected `InputPathType | None`')
+    if params.get("reg_file", None) is not None:
+        if not isinstance(params["reg_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `InputPathType | None`')
+    if params.get("flat_display", False) is None:
+        raise StyxValidationError("`flat_display` must not be None")
+    if not isinstance(params["flat_display"], bool):
+        raise StyxValidationError(f'`flat_display` has the wrong type: Received `{type(params.get("flat_display", False))}` expected `bool`')
+    if params.get("patch", None) is not None:
+        if not isinstance(params["patch"], str):
+            raise StyxValidationError(f'`patch` has the wrong type: Received `{type(params.get("patch", None))}` expected `str | None`')
+    if params.get("tcl_file", None) is not None:
+        if not isinstance(params["tcl_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tcl_file` has the wrong type: Received `{type(params.get("tcl_file", None))}` expected `InputPathType | None`')
+    if params.get("no_cleanup", False) is None:
+        raise StyxValidationError("`no_cleanup` must not be None")
+    if not isinstance(params["no_cleanup"], bool):
+        raise StyxValidationError(f'`no_cleanup` has the wrong type: Received `{type(params.get("no_cleanup", False))}` expected `bool`')
+
+
 def rtview_cargs(
     params: RtviewParameters,
     execution: Execution,
@@ -233,6 +295,7 @@ def rtview_execute(
     Returns:
         NamedTuple of outputs (described in `RtviewOutputs`).
     """
+    rtview_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RTVIEW_METADATA)
     params = execution.params(params)

@@ -99,6 +99,57 @@ def v_3d_stat_clust_params(
     return params
 
 
+def v_3d_stat_clust_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dStatClustParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("session_dir", None) is not None:
+        if not isinstance(params["session_dir"], str):
+            raise StyxValidationError(f'`session_dir` has the wrong type: Received `{type(params.get("session_dir", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("dist_euc", False) is None:
+        raise StyxValidationError("`dist_euc` must not be None")
+    if not isinstance(params["dist_euc"], bool):
+        raise StyxValidationError(f'`dist_euc` has the wrong type: Received `{type(params.get("dist_euc", False))}` expected `bool`')
+    if params.get("dist_ind", False) is None:
+        raise StyxValidationError("`dist_ind` must not be None")
+    if not isinstance(params["dist_ind"], bool):
+        raise StyxValidationError(f'`dist_ind` has the wrong type: Received `{type(params.get("dist_ind", False))}` expected `bool`')
+    if params.get("dist_cor", False) is None:
+        raise StyxValidationError("`dist_cor` must not be None")
+    if not isinstance(params["dist_cor"], bool):
+        raise StyxValidationError(f'`dist_cor` has the wrong type: Received `{type(params.get("dist_cor", False))}` expected `bool`')
+    if params.get("thresh", None) is None:
+        raise StyxValidationError("`thresh` must not be None")
+    if not isinstance(params["thresh"], str):
+        raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `str`')
+    if params.get("nclust", None) is None:
+        raise StyxValidationError("`nclust` must not be None")
+    if not isinstance(params["nclust"], (float, int)):
+        raise StyxValidationError(f'`nclust` has the wrong type: Received `{type(params.get("nclust", None))}` expected `float`')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+    for e in params["datasets"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[str]`')
+
+
 def v_3d_stat_clust_cargs(
     params: V3dStatClustParameters,
     execution: Execution,
@@ -186,6 +237,7 @@ def v_3d_stat_clust_execute(
     Returns:
         NamedTuple of outputs (described in `V3dStatClustOutputs`).
     """
+    v_3d_stat_clust_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_STAT_CLUST_METADATA)
     params = execution.params(params)

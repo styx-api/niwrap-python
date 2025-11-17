@@ -251,6 +251,138 @@ def probtrackx_params(
     return params
 
 
+def probtrackx_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ProbtrackxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("samples", None) is None:
+        raise StyxValidationError("`samples` must not be None")
+    if not isinstance(params["samples"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`samples` has the wrong type: Received `{type(params.get("samples", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("seed", None) is None:
+        raise StyxValidationError("`seed` must not be None")
+    if not isinstance(params["seed"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `InputPathType`')
+    if params.get("out", "fdt_paths") is None:
+        raise StyxValidationError("`out` must not be None")
+    if not isinstance(params["out"], str):
+        raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", "fdt_paths"))}` expected `str`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], int):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `int | None`')
+        if 0 <= params["verbose"] <= 2:
+            raise StyxValidationError("Parameter `verbose` must be between 0 and 2 (inclusive)")
+    if params.get("targetmasks", None) is not None:
+        if not isinstance(params["targetmasks"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`targetmasks` has the wrong type: Received `{type(params.get("targetmasks", None))}` expected `InputPathType | None`')
+    if params.get("mask2", None) is not None:
+        if not isinstance(params["mask2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask2` has the wrong type: Received `{type(params.get("mask2", None))}` expected `InputPathType | None`')
+    if params.get("waypoints", None) is not None:
+        if not isinstance(params["waypoints"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`waypoints` has the wrong type: Received `{type(params.get("waypoints", None))}` expected `InputPathType | None`')
+    if params.get("network", False) is None:
+        raise StyxValidationError("`network` must not be None")
+    if not isinstance(params["network"], bool):
+        raise StyxValidationError(f'`network` has the wrong type: Received `{type(params.get("network", False))}` expected `bool`')
+    if params.get("mesh", None) is not None:
+        if not isinstance(params["mesh"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mesh` has the wrong type: Received `{type(params.get("mesh", None))}` expected `InputPathType | None`')
+    if params.get("seedref", None) is not None:
+        if not isinstance(params["seedref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seedref` has the wrong type: Received `{type(params.get("seedref", None))}` expected `InputPathType | None`')
+    if params.get("dir", None) is not None:
+        if not isinstance(params["dir"], str):
+            raise StyxValidationError(f'`dir` has the wrong type: Received `{type(params.get("dir", None))}` expected `str | None`')
+    if params.get("forcedir", False) is None:
+        raise StyxValidationError("`forcedir` must not be None")
+    if not isinstance(params["forcedir"], bool):
+        raise StyxValidationError(f'`forcedir` has the wrong type: Received `{type(params.get("forcedir", False))}` expected `bool`')
+    if params.get("opd", False) is None:
+        raise StyxValidationError("`opd` must not be None")
+    if not isinstance(params["opd"], bool):
+        raise StyxValidationError(f'`opd` has the wrong type: Received `{type(params.get("opd", False))}` expected `bool`')
+    if params.get("pd", False) is None:
+        raise StyxValidationError("`pd` must not be None")
+    if not isinstance(params["pd"], bool):
+        raise StyxValidationError(f'`pd` has the wrong type: Received `{type(params.get("pd", False))}` expected `bool`')
+    if params.get("os2t", False) is None:
+        raise StyxValidationError("`os2t` must not be None")
+    if not isinstance(params["os2t"], bool):
+        raise StyxValidationError(f'`os2t` has the wrong type: Received `{type(params.get("os2t", False))}` expected `bool`')
+    if params.get("avoid", None) is not None:
+        if not isinstance(params["avoid"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`avoid` has the wrong type: Received `{type(params.get("avoid", None))}` expected `InputPathType | None`')
+    if params.get("stop", None) is not None:
+        if not isinstance(params["stop"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`stop` has the wrong type: Received `{type(params.get("stop", None))}` expected `InputPathType | None`')
+    if params.get("xfm", None) is not None:
+        if not isinstance(params["xfm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xfm` has the wrong type: Received `{type(params.get("xfm", None))}` expected `InputPathType | None`')
+    if params.get("invxfm", None) is not None:
+        if not isinstance(params["invxfm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`invxfm` has the wrong type: Received `{type(params.get("invxfm", None))}` expected `InputPathType | None`')
+    if params.get("nsamples", None) is not None:
+        if not isinstance(params["nsamples"], int):
+            raise StyxValidationError(f'`nsamples` has the wrong type: Received `{type(params.get("nsamples", None))}` expected `int | None`')
+    if params.get("nsteps", None) is not None:
+        if not isinstance(params["nsteps"], int):
+            raise StyxValidationError(f'`nsteps` has the wrong type: Received `{type(params.get("nsteps", None))}` expected `int | None`')
+    if params.get("distthresh", None) is not None:
+        if not isinstance(params["distthresh"], (float, int)):
+            raise StyxValidationError(f'`distthresh` has the wrong type: Received `{type(params.get("distthresh", None))}` expected `float | None`')
+    if params.get("cthr", None) is not None:
+        if not isinstance(params["cthr"], (float, int)):
+            raise StyxValidationError(f'`cthr` has the wrong type: Received `{type(params.get("cthr", None))}` expected `float | None`')
+    if params.get("fibthresh", None) is not None:
+        if not isinstance(params["fibthresh"], (float, int)):
+            raise StyxValidationError(f'`fibthresh` has the wrong type: Received `{type(params.get("fibthresh", None))}` expected `float | None`')
+    if params.get("sampvox", False) is None:
+        raise StyxValidationError("`sampvox` must not be None")
+    if not isinstance(params["sampvox"], bool):
+        raise StyxValidationError(f'`sampvox` has the wrong type: Received `{type(params.get("sampvox", False))}` expected `bool`')
+    if params.get("steplength", None) is not None:
+        if not isinstance(params["steplength"], (float, int)):
+            raise StyxValidationError(f'`steplength` has the wrong type: Received `{type(params.get("steplength", None))}` expected `float | None`')
+    if params.get("loopcheck", False) is None:
+        raise StyxValidationError("`loopcheck` must not be None")
+    if not isinstance(params["loopcheck"], bool):
+        raise StyxValidationError(f'`loopcheck` has the wrong type: Received `{type(params.get("loopcheck", False))}` expected `bool`')
+    if params.get("usef", False) is None:
+        raise StyxValidationError("`usef` must not be None")
+    if not isinstance(params["usef"], bool):
+        raise StyxValidationError(f'`usef` has the wrong type: Received `{type(params.get("usef", False))}` expected `bool`')
+    if params.get("randfib", None) is not None:
+        if not isinstance(params["randfib"], int):
+            raise StyxValidationError(f'`randfib` has the wrong type: Received `{type(params.get("randfib", None))}` expected `int | None`')
+    if params.get("fibst", None) is not None:
+        if not isinstance(params["fibst"], int):
+            raise StyxValidationError(f'`fibst` has the wrong type: Received `{type(params.get("fibst", None))}` expected `int | None`')
+    if params.get("modeuler", False) is None:
+        raise StyxValidationError("`modeuler` must not be None")
+    if not isinstance(params["modeuler"], bool):
+        raise StyxValidationError(f'`modeuler` has the wrong type: Received `{type(params.get("modeuler", False))}` expected `bool`')
+    if params.get("rseed", None) is not None:
+        if not isinstance(params["rseed"], int):
+            raise StyxValidationError(f'`rseed` has the wrong type: Received `{type(params.get("rseed", None))}` expected `int | None`')
+    if params.get("s2tastext", False) is None:
+        raise StyxValidationError("`s2tastext` must not be None")
+    if not isinstance(params["s2tastext"], bool):
+        raise StyxValidationError(f'`s2tastext` has the wrong type: Received `{type(params.get("s2tastext", False))}` expected `bool`')
+
+
 def probtrackx_cargs(
     params: ProbtrackxParameters,
     execution: Execution,
@@ -443,6 +575,7 @@ def probtrackx_execute(
     Returns:
         NamedTuple of outputs (described in `ProbtrackxOutputs`).
     """
+    probtrackx_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PROBTRACKX_METADATA)
     params = execution.params(params)

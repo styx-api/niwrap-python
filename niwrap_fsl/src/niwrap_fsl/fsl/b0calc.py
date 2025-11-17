@@ -140,6 +140,71 @@ def b0calc_params(
     return params
 
 
+def b0calc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `B0calcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("zero_order_x", None) is not None:
+        if not isinstance(params["zero_order_x"], (float, int)):
+            raise StyxValidationError(f'`zero_order_x` has the wrong type: Received `{type(params.get("zero_order_x", None))}` expected `float | None`')
+    if params.get("zero_order_y", None) is not None:
+        if not isinstance(params["zero_order_y"], (float, int)):
+            raise StyxValidationError(f'`zero_order_y` has the wrong type: Received `{type(params.get("zero_order_y", None))}` expected `float | None`')
+    if params.get("zero_order_z", None) is not None:
+        if not isinstance(params["zero_order_z"], (float, int)):
+            raise StyxValidationError(f'`zero_order_z` has the wrong type: Received `{type(params.get("zero_order_z", None))}` expected `float | None`')
+    if params.get("b0_x", None) is not None:
+        if not isinstance(params["b0_x"], (float, int)):
+            raise StyxValidationError(f'`b0_x` has the wrong type: Received `{type(params.get("b0_x", None))}` expected `float | None`')
+    if params.get("b0_y", None) is not None:
+        if not isinstance(params["b0_y"], (float, int)):
+            raise StyxValidationError(f'`b0_y` has the wrong type: Received `{type(params.get("b0_y", None))}` expected `float | None`')
+    if params.get("b0_z", None) is not None:
+        if not isinstance(params["b0_z"], (float, int)):
+            raise StyxValidationError(f'`b0_z` has the wrong type: Received `{type(params.get("b0_z", None))}` expected `float | None`')
+    if params.get("delta", None) is not None:
+        if not isinstance(params["delta"], (float, int)):
+            raise StyxValidationError(f'`delta` has the wrong type: Received `{type(params.get("delta", None))}` expected `float | None`')
+    if params.get("chi0", None) is not None:
+        if not isinstance(params["chi0"], (float, int)):
+            raise StyxValidationError(f'`chi0` has the wrong type: Received `{type(params.get("chi0", None))}` expected `float | None`')
+    if params.get("xyz_flag", False) is None:
+        raise StyxValidationError("`xyz_flag` must not be None")
+    if not isinstance(params["xyz_flag"], bool):
+        raise StyxValidationError(f'`xyz_flag` has the wrong type: Received `{type(params.get("xyz_flag", False))}` expected `bool`')
+    if params.get("extend_boundary", None) is not None:
+        if not isinstance(params["extend_boundary"], (float, int)):
+            raise StyxValidationError(f'`extend_boundary` has the wrong type: Received `{type(params.get("extend_boundary", None))}` expected `float | None`')
+    if params.get("direct_conv", False) is None:
+        raise StyxValidationError("`direct_conv` must not be None")
+    if not isinstance(params["direct_conv"], bool):
+        raise StyxValidationError(f'`direct_conv` has the wrong type: Received `{type(params.get("direct_conv", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def b0calc_cargs(
     params: B0calcParameters,
     execution: Execution,
@@ -261,6 +326,7 @@ def b0calc_execute(
     Returns:
         NamedTuple of outputs (described in `B0calcOutputs`).
     """
+    b0calc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(B0CALC_METADATA)
     params = execution.params(params)

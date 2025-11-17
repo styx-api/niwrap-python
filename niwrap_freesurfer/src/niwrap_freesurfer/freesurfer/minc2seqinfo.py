@@ -56,6 +56,28 @@ def minc2seqinfo_params(
     return params
 
 
+def minc2seqinfo_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Minc2seqinfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mincfile", None) is None:
+        raise StyxValidationError("`mincfile` must not be None")
+    if not isinstance(params["mincfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mincfile` has the wrong type: Received `{type(params.get("mincfile", None))}` expected `InputPathType`')
+    if params.get("seqinfofile", None) is None:
+        raise StyxValidationError("`seqinfofile` must not be None")
+    if not isinstance(params["seqinfofile"], str):
+        raise StyxValidationError(f'`seqinfofile` has the wrong type: Received `{type(params.get("seqinfofile", None))}` expected `str`')
+
+
 def minc2seqinfo_cargs(
     params: Minc2seqinfoParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def minc2seqinfo_execute(
     Returns:
         NamedTuple of outputs (described in `Minc2seqinfoOutputs`).
     """
+    minc2seqinfo_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MINC2SEQINFO_METADATA)
     params = execution.params(params)

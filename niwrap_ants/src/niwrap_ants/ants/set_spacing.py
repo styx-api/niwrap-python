@@ -67,6 +67,41 @@ def set_spacing_params(
     return params
 
 
+def set_spacing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SetSpacingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimension", None) is None:
+        raise StyxValidationError("`dimension` must not be None")
+    if not isinstance(params["dimension"], int):
+        raise StyxValidationError(f'`dimension` has the wrong type: Received `{type(params.get("dimension", None))}` expected `int`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("spacing", None) is None:
+        raise StyxValidationError("`spacing` must not be None")
+    if not isinstance(params["spacing"], list):
+        raise StyxValidationError(f'`spacing` has the wrong type: Received `{type(params.get("spacing", None))}` expected `list[float]`')
+    if 2 <= len(params["spacing"]) <= 3:
+        raise StyxValidationError("Parameter `spacing` must contain between 2 and 3 elements (inclusive)")
+    for e in params["spacing"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`spacing` has the wrong type: Received `{type(params.get("spacing", None))}` expected `list[float]`')
+
+
 def set_spacing_cargs(
     params: SetSpacingParameters,
     execution: Execution,
@@ -128,6 +163,7 @@ def set_spacing_execute(
     Returns:
         NamedTuple of outputs (described in `SetSpacingOutputs`).
     """
+    set_spacing_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SET_SPACING_METADATA)
     params = execution.params(params)

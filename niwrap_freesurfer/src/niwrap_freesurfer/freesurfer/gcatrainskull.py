@@ -49,6 +49,24 @@ def gcatrainskull_params(
     return params
 
 
+def gcatrainskull_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GcatrainskullParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gcatrain_dir", None) is None:
+        raise StyxValidationError("`gcatrain_dir` must not be None")
+    if not isinstance(params["gcatrain_dir"], str):
+        raise StyxValidationError(f'`gcatrain_dir` has the wrong type: Received `{type(params.get("gcatrain_dir", None))}` expected `str`')
+
+
 def gcatrainskull_cargs(
     params: GcatrainskullParameters,
     execution: Execution,
@@ -109,6 +127,7 @@ def gcatrainskull_execute(
     Returns:
         NamedTuple of outputs (described in `GcatrainskullOutputs`).
     """
+    gcatrainskull_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GCATRAINSKULL_METADATA)
     params = execution.params(params)

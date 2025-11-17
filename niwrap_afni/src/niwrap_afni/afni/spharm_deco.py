@@ -108,6 +108,59 @@ def spharm_deco_params(
     return params
 
 
+def spharm_deco_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SpharmDecoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("i_type_s", None) is None:
+        raise StyxValidationError("`i_type_s` must not be None")
+    if not isinstance(params["i_type_s"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`i_type_s` has the wrong type: Received `{type(params.get("i_type_s", None))}` expected `InputPathType`')
+    if params.get("unit_sph_label", None) is None:
+        raise StyxValidationError("`unit_sph_label` must not be None")
+    if not isinstance(params["unit_sph_label"], str):
+        raise StyxValidationError(f'`unit_sph_label` has the wrong type: Received `{type(params.get("unit_sph_label", None))}` expected `str`')
+    if params.get("order_l", None) is None:
+        raise StyxValidationError("`order_l` must not be None")
+    if not isinstance(params["order_l"], (float, int)):
+        raise StyxValidationError(f'`order_l` has the wrong type: Received `{type(params.get("order_l", None))}` expected `float`')
+    if params.get("i_type_sd", None) is not None:
+        if not isinstance(params["i_type_sd"], list):
+            raise StyxValidationError(f'`i_type_sd` has the wrong type: Received `{type(params.get("i_type_sd", None))}` expected `list[InputPathType] | None`')
+        for e in params["i_type_sd"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`i_type_sd` has the wrong type: Received `{type(params.get("i_type_sd", None))}` expected `list[InputPathType] | None`')
+    if params.get("data_d", None) is not None:
+        if not isinstance(params["data_d"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`data_d` has the wrong type: Received `{type(params.get("data_d", None))}` expected `InputPathType | None`')
+    if params.get("bases_prefix", None) is not None:
+        if not isinstance(params["bases_prefix"], str):
+            raise StyxValidationError(f'`bases_prefix` has the wrong type: Received `{type(params.get("bases_prefix", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("o_type_sdr", None) is not None:
+        if not isinstance(params["o_type_sdr"], list):
+            raise StyxValidationError(f'`o_type_sdr` has the wrong type: Received `{type(params.get("o_type_sdr", None))}` expected `list[InputPathType] | None`')
+        for e in params["o_type_sdr"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`o_type_sdr` has the wrong type: Received `{type(params.get("o_type_sdr", None))}` expected `list[InputPathType] | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], (float, int)):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `float | None`')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+
+
 def spharm_deco_cargs(
     params: SpharmDecoParameters,
     execution: Execution,
@@ -188,6 +241,7 @@ def spharm_deco_execute(
     Returns:
         NamedTuple of outputs (described in `SpharmDecoOutputs`).
     """
+    spharm_deco_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SPHARM_DECO_METADATA)
     params = execution.params(params)

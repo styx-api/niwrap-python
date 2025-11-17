@@ -78,6 +78,43 @@ def mris_entropy_params(
     return params
 
 
+def mris_entropy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisEntropyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("wfile", None) is None:
+        raise StyxValidationError("`wfile` must not be None")
+    if not isinstance(params["wfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`wfile` has the wrong type: Received `{type(params.get("wfile", None))}` expected `InputPathType`')
+    if params.get("curvfile", None) is None:
+        raise StyxValidationError("`curvfile` must not be None")
+    if not isinstance(params["curvfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`curvfile` has the wrong type: Received `{type(params.get("curvfile", None))}` expected `InputPathType`')
+    if params.get("average_iterations", None) is not None:
+        if not isinstance(params["average_iterations"], (float, int)):
+            raise StyxValidationError(f'`average_iterations` has the wrong type: Received `{type(params.get("average_iterations", None))}` expected `float | None`')
+    if params.get("normalize", False) is None:
+        raise StyxValidationError("`normalize` must not be None")
+    if not isinstance(params["normalize"], bool):
+        raise StyxValidationError(f'`normalize` has the wrong type: Received `{type(params.get("normalize", False))}` expected `bool`')
+
+
 def mris_entropy_cargs(
     params: MrisEntropyParameters,
     execution: Execution,
@@ -146,6 +183,7 @@ def mris_entropy_execute(
     Returns:
         NamedTuple of outputs (described in `MrisEntropyOutputs`).
     """
+    mris_entropy_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ENTROPY_METADATA)
     params = execution.params(params)

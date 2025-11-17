@@ -115,6 +115,76 @@ def dmri_vox2vox_params(
     return params
 
 
+def dmri_vox2vox_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriVox2voxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("input_directory", None) is not None:
+        if not isinstance(params["input_directory"], str):
+            raise StyxValidationError(f'`input_directory` has the wrong type: Received `{type(params.get("input_directory", None))}` expected `str | None`')
+    if params.get("output_files", None) is None:
+        raise StyxValidationError("`output_files` must not be None")
+    if not isinstance(params["output_files"], list):
+        raise StyxValidationError(f'`output_files` has the wrong type: Received `{type(params.get("output_files", None))}` expected `list[str]`')
+    for e in params["output_files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`output_files` has the wrong type: Received `{type(params.get("output_files", None))}` expected `list[str]`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+    if params.get("input_reference", None) is None:
+        raise StyxValidationError("`input_reference` must not be None")
+    if not isinstance(params["input_reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_reference` has the wrong type: Received `{type(params.get("input_reference", None))}` expected `InputPathType`')
+    if params.get("output_reference", None) is None:
+        raise StyxValidationError("`output_reference` must not be None")
+    if not isinstance(params["output_reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_reference` has the wrong type: Received `{type(params.get("output_reference", None))}` expected `InputPathType`')
+    if params.get("affine_registration", None) is None:
+        raise StyxValidationError("`affine_registration` must not be None")
+    if not isinstance(params["affine_registration"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`affine_registration` has the wrong type: Received `{type(params.get("affine_registration", None))}` expected `InputPathType`')
+    if params.get("nonlinear_registration", None) is None:
+        raise StyxValidationError("`nonlinear_registration` must not be None")
+    if not isinstance(params["nonlinear_registration"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`nonlinear_registration` has the wrong type: Received `{type(params.get("nonlinear_registration", None))}` expected `InputPathType`')
+    if params.get("inverse_nonlinear", False) is None:
+        raise StyxValidationError("`inverse_nonlinear` must not be None")
+    if not isinstance(params["inverse_nonlinear"], bool):
+        raise StyxValidationError(f'`inverse_nonlinear` has the wrong type: Received `{type(params.get("inverse_nonlinear", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_options", False) is None:
+        raise StyxValidationError("`check_options` must not be None")
+    if not isinstance(params["check_options"], bool):
+        raise StyxValidationError(f'`check_options` has the wrong type: Received `{type(params.get("check_options", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def dmri_vox2vox_cargs(
     params: DmriVox2voxParameters,
     execution: Execution,
@@ -215,6 +285,7 @@ def dmri_vox2vox_execute(
     Returns:
         NamedTuple of outputs (described in `DmriVox2voxOutputs`).
     """
+    dmri_vox2vox_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_VOX2VOX_METADATA)
     params = execution.params(params)

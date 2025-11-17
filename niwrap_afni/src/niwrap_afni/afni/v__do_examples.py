@@ -53,6 +53,24 @@ def v__do_examples_params(
     return params
 
 
+def v__do_examples_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VDoExamplesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("auto_test", False) is None:
+        raise StyxValidationError("`auto_test` must not be None")
+    if not isinstance(params["auto_test"], bool):
+        raise StyxValidationError(f'`auto_test` has the wrong type: Received `{type(params.get("auto_test", False))}` expected `bool`')
+
+
 def v__do_examples_cargs(
     params: VDoExamplesParameters,
     execution: Execution,
@@ -112,6 +130,7 @@ def v__do_examples_execute(
     Returns:
         NamedTuple of outputs (described in `VDoExamplesOutputs`).
     """
+    v__do_examples_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__DO_EXAMPLES_METADATA)
     params = execution.params(params)

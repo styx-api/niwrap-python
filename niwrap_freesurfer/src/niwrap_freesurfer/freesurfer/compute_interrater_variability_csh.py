@@ -77,6 +77,40 @@ def compute_interrater_variability_csh_params(
     return params
 
 
+def compute_interrater_variability_csh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ComputeInterraterVariabilityCshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label_vol1", None) is None:
+        raise StyxValidationError("`label_vol1` must not be None")
+    if not isinstance(params["label_vol1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_vol1` has the wrong type: Received `{type(params.get("label_vol1", None))}` expected `InputPathType`')
+    if params.get("label_vol2", None) is None:
+        raise StyxValidationError("`label_vol2` must not be None")
+    if not isinstance(params["label_vol2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_vol2` has the wrong type: Received `{type(params.get("label_vol2", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def compute_interrater_variability_csh_cargs(
     params: ComputeInterraterVariabilityCshParameters,
     execution: Execution,
@@ -153,6 +187,7 @@ def compute_interrater_variability_csh_execute(
     Returns:
         NamedTuple of outputs (described in `ComputeInterraterVariabilityCshOutputs`).
     """
+    compute_interrater_variability_csh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA)
     params = execution.params(params)

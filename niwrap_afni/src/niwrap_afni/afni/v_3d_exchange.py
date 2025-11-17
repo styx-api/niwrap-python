@@ -75,6 +75,40 @@ def v_3d_exchange_params(
     return params
 
 
+def v_3d_exchange_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dExchangeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("mapfile", None) is None:
+        raise StyxValidationError("`mapfile` must not be None")
+    if not isinstance(params["mapfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mapfile` has the wrong type: Received `{type(params.get("mapfile", None))}` expected `InputPathType`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v_3d_exchange_cargs(
     params: V3dExchangeParameters,
     execution: Execution,
@@ -149,6 +183,7 @@ def v_3d_exchange_execute(
     Returns:
         NamedTuple of outputs (described in `V3dExchangeOutputs`).
     """
+    v_3d_exchange_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_EXCHANGE_METADATA)
     params = execution.params(params)

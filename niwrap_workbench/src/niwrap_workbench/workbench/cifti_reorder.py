@@ -65,6 +65,36 @@ def cifti_reorder_params(
     return params
 
 
+def cifti_reorder_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+    if params.get("reorder-list", None) is None:
+        raise StyxValidationError("`reorder-list` must not be None")
+    if not isinstance(params["reorder-list"], str):
+        raise StyxValidationError(f'`reorder-list` has the wrong type: Received `{type(params.get("reorder-list", None))}` expected `str`')
+
+
 def cifti_reorder_cargs(
     params: CiftiReorderParameters,
     execution: Execution,
@@ -132,6 +162,7 @@ def cifti_reorder_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiReorderOutputs`).
     """
+    cifti_reorder_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_REORDER_METADATA)
     params = execution.params(params)

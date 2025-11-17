@@ -128,18 +128,20 @@ def mrfilter_strides_cargs_dyn_fn(
     }.get(t)
 
 
-def mrfilter_strides_outputs_dyn_fn(
+def mrfilter_strides_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": mrfilter_various_string_validate,
+        "VariousFile": mrfilter_various_file_validate,
     }.get(t)
 
 
@@ -159,6 +161,24 @@ def mrfilter_various_string_params(
         "obj": obj,
     }
     return params
+
+
+def mrfilter_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrfilterVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
 
 
 def mrfilter_various_string_cargs(
@@ -195,6 +215,24 @@ def mrfilter_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def mrfilter_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrfilterVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def mrfilter_various_file_cargs(
@@ -234,6 +272,28 @@ def mrfilter_config_params(
         "value": value,
     }
     return params
+
+
+def mrfilter_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrfilterConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mrfilter_config_cargs(
@@ -420,6 +480,147 @@ def mrfilter_params(
     return params
 
 
+def mrfilter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrfilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("axes", None) is not None:
+        if not isinstance(params["axes"], list):
+            raise StyxValidationError(f'`axes` has the wrong type: Received `{type(params.get("axes", None))}` expected `list[int] | None`')
+        for e in params["axes"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`axes` has the wrong type: Received `{type(params.get("axes", None))}` expected `list[int] | None`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+    if params.get("magnitude", False) is None:
+        raise StyxValidationError("`magnitude` must not be None")
+    if not isinstance(params["magnitude"], bool):
+        raise StyxValidationError(f'`magnitude` has the wrong type: Received `{type(params.get("magnitude", False))}` expected `bool`')
+    if params.get("centre_zero", False) is None:
+        raise StyxValidationError("`centre_zero` must not be None")
+    if not isinstance(params["centre_zero"], bool):
+        raise StyxValidationError(f'`centre_zero` has the wrong type: Received `{type(params.get("centre_zero", False))}` expected `bool`')
+    if params.get("stdev", None) is not None:
+        if not isinstance(params["stdev"], list):
+            raise StyxValidationError(f'`stdev` has the wrong type: Received `{type(params.get("stdev", None))}` expected `list[float] | None`')
+        for e in params["stdev"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`stdev` has the wrong type: Received `{type(params.get("stdev", None))}` expected `list[float] | None`')
+    if params.get("magnitude_1", False) is None:
+        raise StyxValidationError("`magnitude_1` must not be None")
+    if not isinstance(params["magnitude_1"], bool):
+        raise StyxValidationError(f'`magnitude_1` has the wrong type: Received `{type(params.get("magnitude_1", False))}` expected `bool`')
+    if params.get("scanner", False) is None:
+        raise StyxValidationError("`scanner` must not be None")
+    if not isinstance(params["scanner"], bool):
+        raise StyxValidationError(f'`scanner` has the wrong type: Received `{type(params.get("scanner", False))}` expected `bool`')
+    if params.get("extent", None) is not None:
+        if not isinstance(params["extent"], list):
+            raise StyxValidationError(f'`extent` has the wrong type: Received `{type(params.get("extent", None))}` expected `list[int] | None`')
+        for e in params["extent"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`extent` has the wrong type: Received `{type(params.get("extent", None))}` expected `list[int] | None`')
+    if params.get("extent_1", None) is not None:
+        if not isinstance(params["extent_1"], list):
+            raise StyxValidationError(f'`extent_1` has the wrong type: Received `{type(params.get("extent_1", None))}` expected `list[int] | None`')
+        for e in params["extent_1"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`extent_1` has the wrong type: Received `{type(params.get("extent_1", None))}` expected `list[int] | None`')
+    if params.get("stdev_1", None) is not None:
+        if not isinstance(params["stdev_1"], list):
+            raise StyxValidationError(f'`stdev_1` has the wrong type: Received `{type(params.get("stdev_1", None))}` expected `list[float] | None`')
+        for e in params["stdev_1"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`stdev_1` has the wrong type: Received `{type(params.get("stdev_1", None))}` expected `list[float] | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], list):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `list[float] | None`')
+        for e in params["fwhm"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `list[float] | None`')
+    if params.get("extent_2", None) is not None:
+        if not isinstance(params["extent_2"], list):
+            raise StyxValidationError(f'`extent_2` has the wrong type: Received `{type(params.get("extent_2", None))}` expected `list[int] | None`')
+        for e in params["extent_2"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`extent_2` has the wrong type: Received `{type(params.get("extent_2", None))}` expected `list[int] | None`')
+    if params.get("zupper", None) is not None:
+        if not isinstance(params["zupper"], (float, int)):
+            raise StyxValidationError(f'`zupper` has the wrong type: Received `{type(params.get("zupper", None))}` expected `float | None`')
+    if params.get("zlower", None) is not None:
+        if not isinstance(params["zlower"], (float, int)):
+            raise StyxValidationError(f'`zlower` has the wrong type: Received `{type(params.get("zlower", None))}` expected `float | None`')
+    if params.get("bridge", None) is not None:
+        if not isinstance(params["bridge"], int):
+            raise StyxValidationError(f'`bridge` has the wrong type: Received `{type(params.get("bridge", None))}` expected `int | None`')
+    if params.get("maskin", None) is not None:
+        if not isinstance(params["maskin"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`maskin` has the wrong type: Received `{type(params.get("maskin", None))}` expected `InputPathType | None`')
+    if params.get("maskout", None) is not None:
+        if not isinstance(params["maskout"], str):
+            raise StyxValidationError(f'`maskout` has the wrong type: Received `{type(params.get("maskout", None))}` expected `str | None`')
+    if params.get("strides", None) is not None:
+        if not isinstance(params["strides"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
+        if "@type" not in params["strides"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        mrfilter_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrfilterConfigParameters] | None`')
+        for e in params["config"]:
+            mrfilter_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("filter", None) is None:
+        raise StyxValidationError("`filter` must not be None")
+    if not isinstance(params["filter"], str):
+        raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `str`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def mrfilter_cargs(
     params: MrfilterParameters,
     execution: Execution,
@@ -585,6 +786,7 @@ def mrfilter_execute(
     Returns:
         NamedTuple of outputs (described in `MrfilterOutputs`).
     """
+    mrfilter_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRFILTER_METADATA)
     params = execution.params(params)

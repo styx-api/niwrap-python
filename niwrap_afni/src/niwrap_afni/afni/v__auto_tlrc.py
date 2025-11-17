@@ -282,6 +282,161 @@ def v__auto_tlrc_params(
     return params
 
 
+def v__auto_tlrc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAutoTlrcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("base_template", None) is None:
+        raise StyxValidationError("`base_template` must not be None")
+    if not isinstance(params["base_template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base_template` has the wrong type: Received `{type(params.get("base_template", None))}` expected `InputPathType`')
+    if params.get("input_anat", None) is None:
+        raise StyxValidationError("`input_anat` must not be None")
+    if not isinstance(params["input_anat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_anat` has the wrong type: Received `{type(params.get("input_anat", None))}` expected `InputPathType`')
+    if params.get("no_ss", False) is None:
+        raise StyxValidationError("`no_ss` must not be None")
+    if not isinstance(params["no_ss"], bool):
+        raise StyxValidationError(f'`no_ss` has the wrong type: Received `{type(params.get("no_ss", False))}` expected `bool`')
+    if params.get("warp_orig_vol", False) is None:
+        raise StyxValidationError("`warp_orig_vol` must not be None")
+    if not isinstance(params["warp_orig_vol"], bool):
+        raise StyxValidationError(f'`warp_orig_vol` has the wrong type: Received `{type(params.get("warp_orig_vol", False))}` expected `bool`')
+    if params.get("dxyz", None) is not None:
+        if not isinstance(params["dxyz"], (float, int)):
+            raise StyxValidationError(f'`dxyz` has the wrong type: Received `{type(params.get("dxyz", None))}` expected `float | None`')
+    if params.get("dx", None) is not None:
+        if not isinstance(params["dx"], (float, int)):
+            raise StyxValidationError(f'`dx` has the wrong type: Received `{type(params.get("dx", None))}` expected `float | None`')
+    if params.get("dy", None) is not None:
+        if not isinstance(params["dy"], (float, int)):
+            raise StyxValidationError(f'`dy` has the wrong type: Received `{type(params.get("dy", None))}` expected `float | None`')
+    if params.get("dz", None) is not None:
+        if not isinstance(params["dz"], (float, int)):
+            raise StyxValidationError(f'`dz` has the wrong type: Received `{type(params.get("dz", None))}` expected `float | None`')
+    if params.get("pad_base", None) is not None:
+        if not isinstance(params["pad_base"], (float, int)):
+            raise StyxValidationError(f'`pad_base` has the wrong type: Received `{type(params.get("pad_base", None))}` expected `float | None`')
+    if params.get("keep_tmp", False) is None:
+        raise StyxValidationError("`keep_tmp` must not be None")
+    if not isinstance(params["keep_tmp"], bool):
+        raise StyxValidationError(f'`keep_tmp` has the wrong type: Received `{type(params.get("keep_tmp", False))}` expected `bool`')
+    if params.get("clean", False) is None:
+        raise StyxValidationError("`clean` must not be None")
+    if not isinstance(params["clean"], bool):
+        raise StyxValidationError(f'`clean` has the wrong type: Received `{type(params.get("clean", False))}` expected `bool`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], str):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `str | None`')
+    if params.get("no_avoid_eyes", False) is None:
+        raise StyxValidationError("`no_avoid_eyes` must not be None")
+    if not isinstance(params["no_avoid_eyes"], bool):
+        raise StyxValidationError(f'`no_avoid_eyes` has the wrong type: Received `{type(params.get("no_avoid_eyes", False))}` expected `bool`')
+    if params.get("ncr", False) is None:
+        raise StyxValidationError("`ncr` must not be None")
+    if not isinstance(params["ncr"], bool):
+        raise StyxValidationError(f'`ncr` has the wrong type: Received `{type(params.get("ncr", False))}` expected `bool`')
+    if params.get("onepass", False) is None:
+        raise StyxValidationError("`onepass` must not be None")
+    if not isinstance(params["onepass"], bool):
+        raise StyxValidationError(f'`onepass` has the wrong type: Received `{type(params.get("onepass", False))}` expected `bool`')
+    if params.get("twopass", False) is None:
+        raise StyxValidationError("`twopass` must not be None")
+    if not isinstance(params["twopass"], bool):
+        raise StyxValidationError(f'`twopass` has the wrong type: Received `{type(params.get("twopass", False))}` expected `bool`')
+    if params.get("maxite", None) is not None:
+        if not isinstance(params["maxite"], (float, int)):
+            raise StyxValidationError(f'`maxite` has the wrong type: Received `{type(params.get("maxite", None))}` expected `float | None`')
+    if params.get("not_OK_maxite", False) is None:
+        raise StyxValidationError("`not_OK_maxite` must not be None")
+    if not isinstance(params["not_OK_maxite"], bool):
+        raise StyxValidationError(f'`not_OK_maxite` has the wrong type: Received `{type(params.get("not_OK_maxite", False))}` expected `bool`')
+    if params.get("inweight", False) is None:
+        raise StyxValidationError("`inweight` must not be None")
+    if not isinstance(params["inweight"], bool):
+        raise StyxValidationError(f'`inweight` has the wrong type: Received `{type(params.get("inweight", False))}` expected `bool`')
+    if params.get("rigid_equiv", False) is None:
+        raise StyxValidationError("`rigid_equiv` must not be None")
+    if not isinstance(params["rigid_equiv"], bool):
+        raise StyxValidationError(f'`rigid_equiv` has the wrong type: Received `{type(params.get("rigid_equiv", False))}` expected `bool`')
+    if params.get("init_xform", None) is not None:
+        if not isinstance(params["init_xform"], str):
+            raise StyxValidationError(f'`init_xform` has the wrong type: Received `{type(params.get("init_xform", None))}` expected `str | None`')
+    if params.get("no_pre", False) is None:
+        raise StyxValidationError("`no_pre` must not be None")
+    if not isinstance(params["no_pre"], bool):
+        raise StyxValidationError(f'`no_pre` has the wrong type: Received `{type(params.get("no_pre", False))}` expected `bool`')
+    if params.get("out_space", None) is not None:
+        if not isinstance(params["out_space"], str):
+            raise StyxValidationError(f'`out_space` has the wrong type: Received `{type(params.get("out_space", None))}` expected `str | None`')
+    if params.get("3dAllineate", False) is None:
+        raise StyxValidationError("`3dAllineate` must not be None")
+    if not isinstance(params["3dAllineate"], bool):
+        raise StyxValidationError(f'`3dAllineate` has the wrong type: Received `{type(params.get("3dAllineate", False))}` expected `bool`')
+    if params.get("3dAlcost", None) is not None:
+        if not isinstance(params["3dAlcost"], str):
+            raise StyxValidationError(f'`3dAlcost` has the wrong type: Received `{type(params.get("3dAlcost", None))}` expected `str | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("apar", None) is None:
+        raise StyxValidationError("`apar` must not be None")
+    if not isinstance(params["apar"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`apar` has the wrong type: Received `{type(params.get("apar", None))}` expected `InputPathType`')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("pad_input", None) is not None:
+        if not isinstance(params["pad_input"], (float, int)):
+            raise StyxValidationError(f'`pad_input` has the wrong type: Received `{type(params.get("pad_input", None))}` expected `float | None`')
+    if params.get("onewarp", False) is None:
+        raise StyxValidationError("`onewarp` must not be None")
+    if not isinstance(params["onewarp"], bool):
+        raise StyxValidationError(f'`onewarp` has the wrong type: Received `{type(params.get("onewarp", False))}` expected `bool`')
+    if params.get("twowarp", False) is None:
+        raise StyxValidationError("`twowarp` must not be None")
+    if not isinstance(params["twowarp"], bool):
+        raise StyxValidationError(f'`twowarp` has the wrong type: Received `{type(params.get("twowarp", False))}` expected `bool`')
+    if params.get("rmode", None) is not None:
+        if not isinstance(params["rmode"], str):
+            raise StyxValidationError(f'`rmode` has the wrong type: Received `{type(params.get("rmode", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+    if params.get("keep_view", False) is None:
+        raise StyxValidationError("`keep_view` must not be None")
+    if not isinstance(params["keep_view"], bool):
+        raise StyxValidationError(f'`keep_view` has the wrong type: Received `{type(params.get("keep_view", False))}` expected `bool`')
+    if params.get("base_copy", None) is not None:
+        if not isinstance(params["base_copy"], str):
+            raise StyxValidationError(f'`base_copy` has the wrong type: Received `{type(params.get("base_copy", None))}` expected `str | None`')
+    if params.get("base_list", False) is None:
+        raise StyxValidationError("`base_list` must not be None")
+    if not isinstance(params["base_list"], bool):
+        raise StyxValidationError(f'`base_list` has the wrong type: Received `{type(params.get("base_list", False))}` expected `bool`')
+    if params.get("use_gz", False) is None:
+        raise StyxValidationError("`use_gz` must not be None")
+    if not isinstance(params["use_gz"], bool):
+        raise StyxValidationError(f'`use_gz` has the wrong type: Received `{type(params.get("use_gz", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+
+
 def v__auto_tlrc_cargs(
     params: VAutoTlrcParameters,
     execution: Execution,
@@ -473,6 +628,7 @@ def v__auto_tlrc_execute(
     Returns:
         NamedTuple of outputs (described in `VAutoTlrcOutputs`).
     """
+    v__auto_tlrc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AUTO_TLRC_METADATA)
     params = execution.params(params)

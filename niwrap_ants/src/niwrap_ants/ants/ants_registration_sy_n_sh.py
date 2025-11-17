@@ -172,6 +172,81 @@ def ants_registration_sy_n_sh_params(
     return params
 
 
+def ants_registration_sy_n_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSyNShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `typing.Literal[2, 3]`')
+    if params["image_dimension"] not in [2, 3]:
+        raise StyxValidationError("Parameter `image_dimension` must be one of [2, 3]")
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], int):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int | None`')
+    if params.get("initial_transform", None) is not None:
+        if not isinstance(params["initial_transform"], list):
+            raise StyxValidationError(f'`initial_transform` has the wrong type: Received `{type(params.get("initial_transform", None))}` expected `list[str] | None`')
+        for e in params["initial_transform"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`initial_transform` has the wrong type: Received `{type(params.get("initial_transform", None))}` expected `list[str] | None`')
+    if params.get("transform_type", None) is not None:
+        if not isinstance(params["transform_type"], str):
+            raise StyxValidationError(f'`transform_type` has the wrong type: Received `{type(params.get("transform_type", None))}` expected `typing.Literal["t", "r", "a", "s", "sr", "so", "b", "br", "bo"] | None`')
+        if params["transform_type"] not in ["t", "r", "a", "s", "sr", "so", "b", "br", "bo"]:
+            raise StyxValidationError("Parameter `transform_type` must be one of [\"t\", \"r\", \"a\", \"s\", \"sr\", \"so\", \"b\", \"br\", \"bo\"]")
+    if params.get("radius", None) is not None:
+        if not isinstance(params["radius"], int):
+            raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `int | None`')
+    if params.get("spline_distance", None) is not None:
+        if not isinstance(params["spline_distance"], int):
+            raise StyxValidationError(f'`spline_distance` has the wrong type: Received `{type(params.get("spline_distance", None))}` expected `int | None`')
+    if params.get("gradient_step", None) is not None:
+        if not isinstance(params["gradient_step"], (float, int)):
+            raise StyxValidationError(f'`gradient_step` has the wrong type: Received `{type(params.get("gradient_step", None))}` expected `float | None`')
+    if params.get("masks", None) is not None:
+        if not isinstance(params["masks"], str):
+            raise StyxValidationError(f'`masks` has the wrong type: Received `{type(params.get("masks", None))}` expected `str | None`')
+    if params.get("precision_type", None) is not None:
+        if not isinstance(params["precision_type"], str):
+            raise StyxValidationError(f'`precision_type` has the wrong type: Received `{type(params.get("precision_type", None))}` expected `typing.Literal["f", "d"] | None`')
+        if params["precision_type"] not in ["f", "d"]:
+            raise StyxValidationError("Parameter `precision_type` must be one of [\"f\", \"d\"]")
+    if params.get("use_histogram_matching", None) is not None:
+        if not isinstance(params["use_histogram_matching"], bool):
+            raise StyxValidationError(f'`use_histogram_matching` has the wrong type: Received `{type(params.get("use_histogram_matching", None))}` expected `bool | None`')
+    if params.get("use_repro_mode", None) is not None:
+        if not isinstance(params["use_repro_mode"], bool):
+            raise StyxValidationError(f'`use_repro_mode` has the wrong type: Received `{type(params.get("use_repro_mode", None))}` expected `bool | None`')
+    if params.get("collapse_output_transforms", None) is not None:
+        if not isinstance(params["collapse_output_transforms"], bool):
+            raise StyxValidationError(f'`collapse_output_transforms` has the wrong type: Received `{type(params.get("collapse_output_transforms", None))}` expected `bool | None`')
+    if params.get("random_seed", None) is not None:
+        if not isinstance(params["random_seed"], int):
+            raise StyxValidationError(f'`random_seed` has the wrong type: Received `{type(params.get("random_seed", None))}` expected `int | None`')
+
+
 def ants_registration_sy_n_sh_cargs(
     params: AntsRegistrationSyNShParameters,
     execution: Execution,
@@ -307,6 +382,7 @@ def ants_registration_sy_n_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationSyNShOutputs`).
     """
+    ants_registration_sy_n_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_REGISTRATION_SY_N_SH_METADATA)
     params = execution.params(params)

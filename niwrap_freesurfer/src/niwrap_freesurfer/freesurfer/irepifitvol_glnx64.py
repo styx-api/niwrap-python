@@ -56,6 +56,28 @@ def irepifitvol_glnx64_params(
     return params
 
 
+def irepifitvol_glnx64_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `IrepifitvolGlnx64Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def irepifitvol_glnx64_cargs(
     params: IrepifitvolGlnx64Parameters,
     execution: Execution,
@@ -116,6 +138,7 @@ def irepifitvol_glnx64_execute(
     Returns:
         NamedTuple of outputs (described in `IrepifitvolGlnx64Outputs`).
     """
+    irepifitvol_glnx64_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IREPIFITVOL_GLNX64_METADATA)
     params = execution.params(params)

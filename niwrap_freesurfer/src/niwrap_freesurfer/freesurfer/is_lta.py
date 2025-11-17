@@ -56,6 +56,28 @@ def is_lta_params(
     return params
 
 
+def is_lta_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `IsLtaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("candidate_file", None) is None:
+        raise StyxValidationError("`candidate_file` must not be None")
+    if not isinstance(params["candidate_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`candidate_file` has the wrong type: Received `{type(params.get("candidate_file", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+
+
 def is_lta_cargs(
     params: IsLtaParameters,
     execution: Execution,
@@ -122,6 +144,7 @@ def is_lta_execute(
     Returns:
         NamedTuple of outputs (described in `IsLtaOutputs`).
     """
+    is_lta_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IS_LTA_METADATA)
     params = execution.params(params)

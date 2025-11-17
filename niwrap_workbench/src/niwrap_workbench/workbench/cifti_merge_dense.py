@@ -56,6 +56,24 @@ def cifti_merge_dense_cifti_params(
     return params
 
 
+def cifti_merge_dense_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMergeDenseCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+
+
 def cifti_merge_dense_cifti_cargs(
     params: CiftiMergeDenseCiftiParameters,
     execution: Execution,
@@ -117,6 +135,36 @@ def cifti_merge_dense_params(
     if cifti is not None:
         params["cifti"] = cifti
     return params
+
+
+def cifti_merge_dense_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMergeDenseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("action", None) is not None:
+        if not isinstance(params["action"], str):
+            raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
+    if params.get("cifti", None) is not None:
+        if not isinstance(params["cifti"], list):
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiMergeDenseCiftiParameters] | None`')
+        for e in params["cifti"]:
+            cifti_merge_dense_cifti_validate(e)
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_merge_dense_cargs(
@@ -183,6 +231,7 @@ def cifti_merge_dense_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiMergeDenseOutputs`).
     """
+    cifti_merge_dense_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_MERGE_DENSE_METADATA)
     params = execution.params(params)

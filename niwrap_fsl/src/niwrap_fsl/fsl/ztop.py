@@ -66,6 +66,35 @@ def ztop_params(
     return params
 
 
+def ztop_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `ZtopParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("z_score", None) is None:
+        raise StyxValidationError("`z_score` must not be None")
+    if not isinstance(params["z_score"], (float, int)):
+        raise StyxValidationError(f'`z_score` has the wrong type: Received `{type(params.get("z_score", None))}` expected `float`')
+    if params.get("tail_flag", False) is None:
+        raise StyxValidationError("`tail_flag` must not be None")
+    if not isinstance(params["tail_flag"], bool):
+        raise StyxValidationError(f'`tail_flag` has the wrong type: Received `{type(params.get("tail_flag", False))}` expected `bool`')
+    if params.get("grf_flag", False) is None:
+        raise StyxValidationError("`grf_flag` must not be None")
+    if not isinstance(params["grf_flag"], bool):
+        raise StyxValidationError(f'`grf_flag` has the wrong type: Received `{type(params.get("grf_flag", False))}` expected `bool`')
+    if params.get("number_of_resels", None) is not None:
+        if not isinstance(params["number_of_resels"], (float, int)):
+            raise StyxValidationError(f'`number_of_resels` has the wrong type: Received `{type(params.get("number_of_resels", None))}` expected `float | None`')
+
+
 def ztop_cargs(
     params: ZtopParameters,
     execution: Execution,
@@ -129,6 +158,7 @@ def ztop_execute(
     Returns:
         NamedTuple of outputs (described in `ZtopOutputs`).
     """
+    ztop_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ZTOP_METADATA)
     params = execution.params(params)

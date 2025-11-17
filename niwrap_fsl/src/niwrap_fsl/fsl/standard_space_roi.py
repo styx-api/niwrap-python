@@ -115,6 +115,64 @@ def standard_space_roi_params(
     return params
 
 
+def standard_space_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `StandardSpaceRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("mask_fov_flag", False) is None:
+        raise StyxValidationError("`mask_fov_flag` must not be None")
+    if not isinstance(params["mask_fov_flag"], bool):
+        raise StyxValidationError(f'`mask_fov_flag` has the wrong type: Received `{type(params.get("mask_fov_flag", False))}` expected `bool`')
+    if params.get("mask_mask", None) is not None:
+        if not isinstance(params["mask_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_mask` has the wrong type: Received `{type(params.get("mask_mask", None))}` expected `InputPathType | None`')
+    if params.get("mask_none_flag", False) is None:
+        raise StyxValidationError("`mask_none_flag` must not be None")
+    if not isinstance(params["mask_none_flag"], bool):
+        raise StyxValidationError(f'`mask_none_flag` has the wrong type: Received `{type(params.get("mask_none_flag", False))}` expected `bool`')
+    if params.get("roi_fov_flag", False) is None:
+        raise StyxValidationError("`roi_fov_flag` must not be None")
+    if not isinstance(params["roi_fov_flag"], bool):
+        raise StyxValidationError(f'`roi_fov_flag` has the wrong type: Received `{type(params.get("roi_fov_flag", False))}` expected `bool`')
+    if params.get("roi_mask", None) is not None:
+        if not isinstance(params["roi_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi_mask` has the wrong type: Received `{type(params.get("roi_mask", None))}` expected `InputPathType | None`')
+    if params.get("roi_none_flag", False) is None:
+        raise StyxValidationError("`roi_none_flag` must not be None")
+    if not isinstance(params["roi_none_flag"], bool):
+        raise StyxValidationError(f'`roi_none_flag` has the wrong type: Received `{type(params.get("roi_none_flag", False))}` expected `bool`')
+    if params.get("ss_ref", None) is not None:
+        if not isinstance(params["ss_ref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ss_ref` has the wrong type: Received `{type(params.get("ss_ref", None))}` expected `InputPathType | None`')
+    if params.get("alt_input", None) is not None:
+        if not isinstance(params["alt_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`alt_input` has the wrong type: Received `{type(params.get("alt_input", None))}` expected `InputPathType | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("bet_premask_flag", False) is None:
+        raise StyxValidationError("`bet_premask_flag` must not be None")
+    if not isinstance(params["bet_premask_flag"], bool):
+        raise StyxValidationError(f'`bet_premask_flag` has the wrong type: Received `{type(params.get("bet_premask_flag", False))}` expected `bool`')
+
+
 def standard_space_roi_cargs(
     params: StandardSpaceRoiParameters,
     execution: Execution,
@@ -207,6 +265,7 @@ def standard_space_roi_execute(
     Returns:
         NamedTuple of outputs (described in `StandardSpaceRoiOutputs`).
     """
+    standard_space_roi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(STANDARD_SPACE_ROI_METADATA)
     params = execution.params(params)

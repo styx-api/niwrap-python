@@ -60,6 +60,31 @@ def recon_all_exvivo_params(
     return params
 
 
+def recon_all_exvivo_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ReconAllExvivoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_id", None) is None:
+        raise StyxValidationError("`subject_id` must not be None")
+    if not isinstance(params["subject_id"], str):
+        raise StyxValidationError(f'`subject_id` has the wrong type: Received `{type(params.get("subject_id", None))}` expected `str`')
+    if params.get("hemisphere", None) is not None:
+        if not isinstance(params["hemisphere"], str):
+            raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str | None`')
+    if params.get("nocerebellum", False) is None:
+        raise StyxValidationError("`nocerebellum` must not be None")
+    if not isinstance(params["nocerebellum"], bool):
+        raise StyxValidationError(f'`nocerebellum` has the wrong type: Received `{type(params.get("nocerebellum", False))}` expected `bool`')
+
+
 def recon_all_exvivo_cargs(
     params: ReconAllExvivoParameters,
     execution: Execution,
@@ -127,6 +152,7 @@ def recon_all_exvivo_execute(
     Returns:
         NamedTuple of outputs (described in `ReconAllExvivoOutputs`).
     """
+    recon_all_exvivo_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RECON_ALL_EXVIVO_METADATA)
     params = execution.params(params)

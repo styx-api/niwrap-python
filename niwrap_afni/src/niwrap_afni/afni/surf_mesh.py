@@ -89,6 +89,52 @@ def surf_mesh_params(
     return params
 
 
+def surf_mesh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfMeshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], str):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `str`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], str):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str`')
+    if params.get("edge_fraction", None) is None:
+        raise StyxValidationError("`edge_fraction` must not be None")
+    if not isinstance(params["edge_fraction"], (float, int)):
+        raise StyxValidationError(f'`edge_fraction` has the wrong type: Received `{type(params.get("edge_fraction", None))}` expected `float`')
+    if 0 <= params["edge_fraction"] <= 1:
+        raise StyxValidationError("Parameter `edge_fraction` must be between 0 and 1 (inclusive)")
+    if params.get("surface_volume", None) is not None:
+        if not isinstance(params["surface_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_volume` has the wrong type: Received `{type(params.get("surface_volume", None))}` expected `InputPathType | None`')
+    if params.get("one_state", False) is None:
+        raise StyxValidationError("`one_state` must not be None")
+    if not isinstance(params["one_state"], bool):
+        raise StyxValidationError(f'`one_state` has the wrong type: Received `{type(params.get("one_state", False))}` expected `bool`')
+    if params.get("anatomical_label", False) is None:
+        raise StyxValidationError("`anatomical_label` must not be None")
+    if not isinstance(params["anatomical_label"], bool):
+        raise StyxValidationError(f'`anatomical_label` has the wrong type: Received `{type(params.get("anatomical_label", False))}` expected `bool`')
+    if params.get("no_volume_registration", False) is None:
+        raise StyxValidationError("`no_volume_registration` must not be None")
+    if not isinstance(params["no_volume_registration"], bool):
+        raise StyxValidationError(f'`no_volume_registration` has the wrong type: Received `{type(params.get("no_volume_registration", False))}` expected `bool`')
+    if params.get("set_env", None) is not None:
+        if not isinstance(params["set_env"], str):
+            raise StyxValidationError(f'`set_env` has the wrong type: Received `{type(params.get("set_env", None))}` expected `str | None`')
+
+
 def surf_mesh_cargs(
     params: SurfMeshParameters,
     execution: Execution,
@@ -174,6 +220,7 @@ def surf_mesh_execute(
     Returns:
         NamedTuple of outputs (described in `SurfMeshOutputs`).
     """
+    surf_mesh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_MESH_METADATA)
     params = execution.params(params)

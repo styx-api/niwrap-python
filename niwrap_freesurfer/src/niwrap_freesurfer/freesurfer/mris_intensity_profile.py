@@ -129,6 +129,68 @@ def mris_intensity_profile_params(
     return params
 
 
+def mris_intensity_profile_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisIntensityProfileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("write_surf", None) is not None:
+        if not isinstance(params["write_surf"], str):
+            raise StyxValidationError(f'`write_surf` has the wrong type: Received `{type(params.get("write_surf", None))}` expected `str | None`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("white", None) is not None:
+        if not isinstance(params["white"], str):
+            raise StyxValidationError(f'`white` has the wrong type: Received `{type(params.get("white", None))}` expected `str | None`')
+    if params.get("pial", None) is not None:
+        if not isinstance(params["pial"], str):
+            raise StyxValidationError(f'`pial` has the wrong type: Received `{type(params.get("pial", None))}` expected `str | None`')
+    if params.get("normalize_flag", False) is None:
+        raise StyxValidationError("`normalize_flag` must not be None")
+    if not isinstance(params["normalize_flag"], bool):
+        raise StyxValidationError(f'`normalize_flag` has the wrong type: Received `{type(params.get("normalize_flag", False))}` expected `bool`')
+    if params.get("mean", None) is not None:
+        if not isinstance(params["mean"], str):
+            raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", None))}` expected `str | None`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `InputPathType | None`')
+    if params.get("src", None) is not None:
+        if not isinstance(params["src"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`src` has the wrong type: Received `{type(params.get("src", None))}` expected `InputPathType | None`')
+    if params.get("dst", None) is not None:
+        if not isinstance(params["dst"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dst` has the wrong type: Received `{type(params.get("dst", None))}` expected `InputPathType | None`')
+    if params.get("invert_flag", False) is None:
+        raise StyxValidationError("`invert_flag` must not be None")
+    if not isinstance(params["invert_flag"], bool):
+        raise StyxValidationError(f'`invert_flag` has the wrong type: Received `{type(params.get("invert_flag", False))}` expected `bool`')
+
+
 def mris_intensity_profile_cargs(
     params: MrisIntensityProfileParameters,
     execution: Execution,
@@ -236,6 +298,7 @@ def mris_intensity_profile_execute(
     Returns:
         NamedTuple of outputs (described in `MrisIntensityProfileOutputs`).
     """
+    mris_intensity_profile_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_INTENSITY_PROFILE_METADATA)
     params = execution.params(params)

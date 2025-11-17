@@ -122,6 +122,74 @@ def mri_edit_wm_with_aseg_params(
     return params
 
 
+def mri_edit_wm_with_aseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriEditWmWithAsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_wm", None) is None:
+        raise StyxValidationError("`input_wm` must not be None")
+    if not isinstance(params["input_wm"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_wm` has the wrong type: Received `{type(params.get("input_wm", None))}` expected `InputPathType`')
+    if params.get("input_t1_brain", None) is None:
+        raise StyxValidationError("`input_t1_brain` must not be None")
+    if not isinstance(params["input_t1_brain"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_t1_brain` has the wrong type: Received `{type(params.get("input_t1_brain", None))}` expected `InputPathType`')
+    if params.get("aseg", None) is None:
+        raise StyxValidationError("`aseg` must not be None")
+    if not isinstance(params["aseg"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aseg` has the wrong type: Received `{type(params.get("aseg", None))}` expected `InputPathType`')
+    if params.get("output_wm", None) is None:
+        raise StyxValidationError("`output_wm` must not be None")
+    if not isinstance(params["output_wm"], str):
+        raise StyxValidationError(f'`output_wm` has the wrong type: Received `{type(params.get("output_wm", None))}` expected `str`')
+    if params.get("fillven", False) is None:
+        raise StyxValidationError("`fillven` must not be None")
+    if not isinstance(params["fillven"], bool):
+        raise StyxValidationError(f'`fillven` has the wrong type: Received `{type(params.get("fillven", False))}` expected `bool`')
+    if params.get("fix_scm_ha", None) is not None:
+        if not isinstance(params["fix_scm_ha"], int):
+            raise StyxValidationError(f'`fix_scm_ha` has the wrong type: Received `{type(params.get("fix_scm_ha", None))}` expected `int | None`')
+    if params.get("fix_scm_ha_only", None) is not None:
+        if not isinstance(params["fix_scm_ha_only"], str):
+            raise StyxValidationError(f'`fix_scm_ha_only` has the wrong type: Received `{type(params.get("fix_scm_ha_only", None))}` expected `str | None`')
+    if params.get("keep", False) is None:
+        raise StyxValidationError("`keep` must not be None")
+    if not isinstance(params["keep"], bool):
+        raise StyxValidationError(f'`keep` has the wrong type: Received `{type(params.get("keep", False))}` expected `bool`')
+    if params.get("keep_in", False) is None:
+        raise StyxValidationError("`keep_in` must not be None")
+    if not isinstance(params["keep_in"], bool):
+        raise StyxValidationError(f'`keep_in` has the wrong type: Received `{type(params.get("keep_in", False))}` expected `bool`')
+    if params.get("lh", False) is None:
+        raise StyxValidationError("`lh` must not be None")
+    if not isinstance(params["lh"], bool):
+        raise StyxValidationError(f'`lh` has the wrong type: Received `{type(params.get("lh", False))}` expected `bool`')
+    if params.get("rh", False) is None:
+        raise StyxValidationError("`rh` must not be None")
+    if not isinstance(params["rh"], bool):
+        raise StyxValidationError(f'`rh` has the wrong type: Received `{type(params.get("rh", False))}` expected `bool`')
+    if params.get("fix_ento_wm", None) is not None:
+        if not isinstance(params["fix_ento_wm"], str):
+            raise StyxValidationError(f'`fix_ento_wm` has the wrong type: Received `{type(params.get("fix_ento_wm", None))}` expected `str | None`')
+    if params.get("sa_fix_ento_wm", None) is not None:
+        if not isinstance(params["sa_fix_ento_wm"], str):
+            raise StyxValidationError(f'`sa_fix_ento_wm` has the wrong type: Received `{type(params.get("sa_fix_ento_wm", None))}` expected `str | None`')
+    if params.get("debug_voxel", None) is not None:
+        if not isinstance(params["debug_voxel"], list):
+            raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+        for e in params["debug_voxel"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`debug_voxel` has the wrong type: Received `{type(params.get("debug_voxel", None))}` expected `list[float] | None`')
+
+
 def mri_edit_wm_with_aseg_cargs(
     params: MriEditWmWithAsegParameters,
     execution: Execution,
@@ -218,6 +286,7 @@ def mri_edit_wm_with_aseg_execute(
     Returns:
         NamedTuple of outputs (described in `MriEditWmWithAsegOutputs`).
     """
+    mri_edit_wm_with_aseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EDIT_WM_WITH_ASEG_METADATA)
     params = execution.params(params)

@@ -62,6 +62,32 @@ def mri_refine_seg_params(
     return params
 
 
+def mri_refine_seg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriRefineSegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_segmentation", None) is None:
+        raise StyxValidationError("`input_segmentation` must not be None")
+    if not isinstance(params["input_segmentation"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_segmentation` has the wrong type: Received `{type(params.get("input_segmentation", None))}` expected `InputPathType`')
+    if params.get("output_segmentation", None) is None:
+        raise StyxValidationError("`output_segmentation` must not be None")
+    if not isinstance(params["output_segmentation"], str):
+        raise StyxValidationError(f'`output_segmentation` has the wrong type: Received `{type(params.get("output_segmentation", None))}` expected `str`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def mri_refine_seg_cargs(
     params: MriRefineSegParameters,
     execution: Execution,
@@ -129,6 +155,7 @@ def mri_refine_seg_execute(
     Returns:
         NamedTuple of outputs (described in `MriRefineSegOutputs`).
     """
+    mri_refine_seg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_REFINE_SEG_METADATA)
     params = execution.params(params)

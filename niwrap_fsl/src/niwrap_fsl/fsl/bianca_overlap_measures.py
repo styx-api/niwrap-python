@@ -75,6 +75,32 @@ def bianca_overlap_measures_params(
     return params
 
 
+def bianca_overlap_measures_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BiancaOverlapMeasuresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("lesion_mask", None) is None:
+        raise StyxValidationError("`lesion_mask` must not be None")
+    if not isinstance(params["lesion_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lesion_mask` has the wrong type: Received `{type(params.get("lesion_mask", None))}` expected `InputPathType`')
+    if params.get("manual_mask", None) is None:
+        raise StyxValidationError("`manual_mask` must not be None")
+    if not isinstance(params["manual_mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`manual_mask` has the wrong type: Received `{type(params.get("manual_mask", None))}` expected `InputPathType`')
+    if params.get("output_dir", None) is None:
+        raise StyxValidationError("`output_dir` must not be None")
+    if not isinstance(params["output_dir"], str):
+        raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str`')
+
+
 def bianca_overlap_measures_cargs(
     params: BiancaOverlapMeasuresParameters,
     execution: Execution,
@@ -142,6 +168,7 @@ def bianca_overlap_measures_execute(
     Returns:
         NamedTuple of outputs (described in `BiancaOverlapMeasuresOutputs`).
     """
+    bianca_overlap_measures_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BIANCA_OVERLAP_MEASURES_METADATA)
     params = execution.params(params)

@@ -65,6 +65,32 @@ def tbss_deproject_params(
     return params
 
 
+def tbss_deproject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TbssDeprojectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("skeleton_space_input_image", None) is None:
+        raise StyxValidationError("`skeleton_space_input_image` must not be None")
+    if not isinstance(params["skeleton_space_input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`skeleton_space_input_image` has the wrong type: Received `{type(params.get("skeleton_space_input_image", None))}` expected `InputPathType`')
+    if params.get("final_space_option", None) is None:
+        raise StyxValidationError("`final_space_option` must not be None")
+    if not isinstance(params["final_space_option"], int):
+        raise StyxValidationError(f'`final_space_option` has the wrong type: Received `{type(params.get("final_space_option", None))}` expected `int`')
+    if params.get("index_image_flag", False) is None:
+        raise StyxValidationError("`index_image_flag` must not be None")
+    if not isinstance(params["index_image_flag"], bool):
+        raise StyxValidationError(f'`index_image_flag` has the wrong type: Received `{type(params.get("index_image_flag", False))}` expected `bool`')
+
+
 def tbss_deproject_cargs(
     params: TbssDeprojectParameters,
     execution: Execution,
@@ -127,6 +153,7 @@ def tbss_deproject_execute(
     Returns:
         NamedTuple of outputs (described in `TbssDeprojectOutputs`).
     """
+    tbss_deproject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_DEPROJECT_METADATA)
     params = execution.params(params)

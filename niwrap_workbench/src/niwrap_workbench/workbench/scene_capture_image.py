@@ -123,6 +123,28 @@ def scene_capture_image_size_width_height_params(
     return params
 
 
+def scene_capture_image_size_width_height_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneCaptureImageSizeWidthHeightParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("width", None) is None:
+        raise StyxValidationError("`width` must not be None")
+    if not isinstance(params["width"], (float, int)):
+        raise StyxValidationError(f'`width` has the wrong type: Received `{type(params.get("width", None))}` expected `float`')
+    if params.get("height", None) is None:
+        raise StyxValidationError("`height` must not be None")
+    if not isinstance(params["height"], (float, int)):
+        raise StyxValidationError(f'`height` has the wrong type: Received `{type(params.get("height", None))}` expected `float`')
+
+
 def scene_capture_image_size_width_height_cargs(
     params: SceneCaptureImageSizeWidthHeightParameters,
     execution: Execution,
@@ -170,6 +192,28 @@ def scene_capture_image_resolution_params(
     return params
 
 
+def scene_capture_image_resolution_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneCaptureImageResolutionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Number of pixels", None) is None:
+        raise StyxValidationError("`Number of pixels` must not be None")
+    if not isinstance(params["Number of pixels"], (float, int)):
+        raise StyxValidationError(f'`Number of pixels` has the wrong type: Received `{type(params.get("Number of pixels", None))}` expected `float`')
+    if params.get("Units Name", None) is None:
+        raise StyxValidationError("`Units Name` must not be None")
+    if not isinstance(params["Units Name"], str):
+        raise StyxValidationError(f'`Units Name` has the wrong type: Received `{type(params.get("Units Name", None))}` expected `str`')
+
+
 def scene_capture_image_resolution_cargs(
     params: SceneCaptureImageResolutionParameters,
     execution: Execution,
@@ -214,6 +258,28 @@ def scene_capture_image_set_map_yoke_params(
     return params
 
 
+def scene_capture_image_set_map_yoke_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneCaptureImageSetMapYokeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("map yoking roman numeral", None) is None:
+        raise StyxValidationError("`map yoking roman numeral` must not be None")
+    if not isinstance(params["map yoking roman numeral"], str):
+        raise StyxValidationError(f'`map yoking roman numeral` has the wrong type: Received `{type(params.get("map yoking roman numeral", None))}` expected `str`')
+    if params.get("map undex", None) is None:
+        raise StyxValidationError("`map undex` must not be None")
+    if not isinstance(params["map undex"], int):
+        raise StyxValidationError(f'`map undex` has the wrong type: Received `{type(params.get("map undex", None))}` expected `int`')
+
+
 def scene_capture_image_set_map_yoke_cargs(
     params: SceneCaptureImageSetMapYokeParameters,
     execution: Execution,
@@ -255,6 +321,28 @@ def scene_capture_image_conn_db_login_params(
         "password": password,
     }
     return params
+
+
+def scene_capture_image_conn_db_login_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneCaptureImageConnDbLoginParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("username", None) is None:
+        raise StyxValidationError("`username` must not be None")
+    if not isinstance(params["username"], str):
+        raise StyxValidationError(f'`username` has the wrong type: Received `{type(params.get("username", None))}` expected `str`')
+    if params.get("password", None) is None:
+        raise StyxValidationError("`password` must not be None")
+    if not isinstance(params["password"], str):
+        raise StyxValidationError(f'`password` has the wrong type: Received `{type(params.get("password", None))}` expected `str`')
 
 
 def scene_capture_image_conn_db_login_cargs(
@@ -398,6 +486,75 @@ def scene_capture_image_params(
     return params
 
 
+def scene_capture_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneCaptureImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("size-window", False) is None:
+        raise StyxValidationError("`size-window` must not be None")
+    if not isinstance(params["size-window"], bool):
+        raise StyxValidationError(f'`size-window` has the wrong type: Received `{type(params.get("size-window", False))}` expected `bool`')
+    if params.get("size-capture", False) is None:
+        raise StyxValidationError("`size-capture` must not be None")
+    if not isinstance(params["size-capture"], bool):
+        raise StyxValidationError(f'`size-capture` has the wrong type: Received `{type(params.get("size-capture", False))}` expected `bool`')
+    if params.get("size-width-height", None) is not None:
+        scene_capture_image_size_width_height_validate(params["size-width-height"])
+    if params.get("width", None) is not None:
+        if not isinstance(params["width"], (float, int)):
+            raise StyxValidationError(f'`width` has the wrong type: Received `{type(params.get("width", None))}` expected `float | None`')
+    if params.get("height", None) is not None:
+        if not isinstance(params["height"], (float, int)):
+            raise StyxValidationError(f'`height` has the wrong type: Received `{type(params.get("height", None))}` expected `float | None`')
+    if params.get("units", None) is not None:
+        if not isinstance(params["units"], str):
+            raise StyxValidationError(f'`units` has the wrong type: Received `{type(params.get("units", None))}` expected `str | None`')
+    if params.get("resolution", None) is not None:
+        scene_capture_image_resolution_validate(params["resolution"])
+    if params.get("size", None) is not None:
+        if not isinstance(params["size"], int):
+            raise StyxValidationError(f'`size` has the wrong type: Received `{type(params.get("size", None))}` expected `int | None`')
+    if params.get("no-scene-colors", False) is None:
+        raise StyxValidationError("`no-scene-colors` must not be None")
+    if not isinstance(params["no-scene-colors"], bool):
+        raise StyxValidationError(f'`no-scene-colors` has the wrong type: Received `{type(params.get("no-scene-colors", False))}` expected `bool`')
+    if params.get("set-map-yoke", None) is not None:
+        scene_capture_image_set_map_yoke_validate(params["set-map-yoke"])
+    if params.get("conn-db-login", None) is not None:
+        scene_capture_image_conn_db_login_validate(params["conn-db-login"])
+    if params.get("show-capture-settings", False) is None:
+        raise StyxValidationError("`show-capture-settings` must not be None")
+    if not isinstance(params["show-capture-settings"], bool):
+        raise StyxValidationError(f'`show-capture-settings` has the wrong type: Received `{type(params.get("show-capture-settings", False))}` expected `bool`')
+    if params.get("Renderer", None) is not None:
+        if not isinstance(params["Renderer"], str):
+            raise StyxValidationError(f'`Renderer` has the wrong type: Received `{type(params.get("Renderer", None))}` expected `str | None`')
+    if params.get("print-image-info", False) is None:
+        raise StyxValidationError("`print-image-info` must not be None")
+    if not isinstance(params["print-image-info"], bool):
+        raise StyxValidationError(f'`print-image-info` has the wrong type: Received `{type(params.get("print-image-info", False))}` expected `bool`')
+    if params.get("scene-file", None) is None:
+        raise StyxValidationError("`scene-file` must not be None")
+    if not isinstance(params["scene-file"], str):
+        raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `str`')
+    if params.get("scene-name-or-number", None) is None:
+        raise StyxValidationError("`scene-name-or-number` must not be None")
+    if not isinstance(params["scene-name-or-number"], str):
+        raise StyxValidationError(f'`scene-name-or-number` has the wrong type: Received `{type(params.get("scene-name-or-number", None))}` expected `str`')
+    if params.get("image-file-name", None) is None:
+        raise StyxValidationError("`image-file-name` must not be None")
+    if not isinstance(params["image-file-name"], str):
+        raise StyxValidationError(f'`image-file-name` has the wrong type: Received `{type(params.get("image-file-name", None))}` expected `str`')
+
+
 def scene_capture_image_cargs(
     params: SceneCaptureImageParameters,
     execution: Execution,
@@ -517,6 +674,7 @@ def scene_capture_image_execute(
     Returns:
         NamedTuple of outputs (described in `SceneCaptureImageOutputs`).
     """
+    scene_capture_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SCENE_CAPTURE_IMAGE_METADATA)
     params = execution.params(params)

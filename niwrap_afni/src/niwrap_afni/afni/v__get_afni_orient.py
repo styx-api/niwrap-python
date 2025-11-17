@@ -56,6 +56,28 @@ def v__get_afni_orient_params(
     return params
 
 
+def v__get_afni_orient_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGetAfniOrientParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("exploratory", False) is None:
+        raise StyxValidationError("`exploratory` must not be None")
+    if not isinstance(params["exploratory"], bool):
+        raise StyxValidationError(f'`exploratory` has the wrong type: Received `{type(params.get("exploratory", False))}` expected `bool`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+
+
 def v__get_afni_orient_cargs(
     params: VGetAfniOrientParameters,
     execution: Execution,
@@ -116,6 +138,7 @@ def v__get_afni_orient_execute(
     Returns:
         NamedTuple of outputs (described in `VGetAfniOrientOutputs`).
     """
+    v__get_afni_orient_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GET_AFNI_ORIENT_METADATA)
     params = execution.params(params)

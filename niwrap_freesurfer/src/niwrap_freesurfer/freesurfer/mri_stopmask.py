@@ -113,6 +113,70 @@ def mri_stopmask_params(
     return params
 
 
+def mri_stopmask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriStopmaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_mask", None) is None:
+        raise StyxValidationError("`output_mask` must not be None")
+    if not isinstance(params["output_mask"], str):
+        raise StyxValidationError(f'`output_mask` has the wrong type: Received `{type(params.get("output_mask", None))}` expected `str`')
+    if params.get("filled", None) is None:
+        raise StyxValidationError("`filled` must not be None")
+    if not isinstance(params["filled"], list):
+        raise StyxValidationError(f'`filled` has the wrong type: Received `{type(params.get("filled", None))}` expected `list[InputPathType]`')
+    if len(params["filled"]) <= 2:
+        raise StyxValidationError("Parameter `filled` must contain at most 2 elements")
+    for e in params["filled"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`filled` has the wrong type: Received `{type(params.get("filled", None))}` expected `list[InputPathType]`')
+    if params.get("aseg_presurf", None) is None:
+        raise StyxValidationError("`aseg_presurf` must not be None")
+    if not isinstance(params["aseg_presurf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aseg_presurf` has the wrong type: Received `{type(params.get("aseg_presurf", None))}` expected `InputPathType`')
+    if params.get("lateral_ventricles", False) is None:
+        raise StyxValidationError("`lateral_ventricles` must not be None")
+    if not isinstance(params["lateral_ventricles"], bool):
+        raise StyxValidationError(f'`lateral_ventricles` has the wrong type: Received `{type(params.get("lateral_ventricles", False))}` expected `bool`')
+    if params.get("wmsa", None) is not None:
+        if not isinstance(params["wmsa"], (float, int)):
+            raise StyxValidationError(f'`wmsa` has the wrong type: Received `{type(params.get("wmsa", None))}` expected `float | None`')
+    if params.get("wm_voxels", None) is not None:
+        if not isinstance(params["wm_voxels"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`wm_voxels` has the wrong type: Received `{type(params.get("wm_voxels", None))}` expected `InputPathType | None`')
+    if params.get("brain_final_surfs", None) is not None:
+        if not isinstance(params["brain_final_surfs"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brain_final_surfs` has the wrong type: Received `{type(params.get("brain_final_surfs", None))}` expected `InputPathType | None`')
+    if params.get("no_filled", False) is None:
+        raise StyxValidationError("`no_filled` must not be None")
+    if not isinstance(params["no_filled"], bool):
+        raise StyxValidationError(f'`no_filled` has the wrong type: Received `{type(params.get("no_filled", False))}` expected `bool`')
+    if params.get("no_lv", False) is None:
+        raise StyxValidationError("`no_lv` must not be None")
+    if not isinstance(params["no_lv"], bool):
+        raise StyxValidationError(f'`no_lv` has the wrong type: Received `{type(params.get("no_lv", False))}` expected `bool`')
+    if params.get("no_wmsa", False) is None:
+        raise StyxValidationError("`no_wmsa` must not be None")
+    if not isinstance(params["no_wmsa"], bool):
+        raise StyxValidationError(f'`no_wmsa` has the wrong type: Received `{type(params.get("no_wmsa", False))}` expected `bool`')
+    if params.get("no_wm", False) is None:
+        raise StyxValidationError("`no_wm` must not be None")
+    if not isinstance(params["no_wm"], bool):
+        raise StyxValidationError(f'`no_wm` has the wrong type: Received `{type(params.get("no_wm", False))}` expected `bool`')
+    if params.get("no_bfs", False) is None:
+        raise StyxValidationError("`no_bfs` must not be None")
+    if not isinstance(params["no_bfs"], bool):
+        raise StyxValidationError(f'`no_bfs` has the wrong type: Received `{type(params.get("no_bfs", False))}` expected `bool`')
+
+
 def mri_stopmask_cargs(
     params: MriStopmaskParameters,
     execution: Execution,
@@ -211,6 +275,7 @@ def mri_stopmask_execute(
     Returns:
         NamedTuple of outputs (described in `MriStopmaskOutputs`).
     """
+    mri_stopmask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_STOPMASK_METADATA)
     params = execution.params(params)

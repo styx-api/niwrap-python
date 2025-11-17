@@ -99,6 +99,35 @@ def cifti_correlation_roi_override_params(
     return params
 
 
+def cifti_correlation_roi_override_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCorrelationRoiOverrideParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+    if params.get("roi-vol", None) is not None:
+        if not isinstance(params["roi-vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-vol` has the wrong type: Received `{type(params.get("roi-vol", None))}` expected `InputPathType | None`')
+    if params.get("roi-cifti", None) is not None:
+        if not isinstance(params["roi-cifti"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-cifti` has the wrong type: Received `{type(params.get("roi-cifti", None))}` expected `InputPathType | None`')
+
+
 def cifti_correlation_roi_override_cargs(
     params: CiftiCorrelationRoiOverrideParameters,
     execution: Execution,
@@ -187,6 +216,48 @@ def cifti_correlation_params(
     return params
 
 
+def cifti_correlation_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCorrelationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("roi-override", None) is not None:
+        cifti_correlation_roi_override_validate(params["roi-override"])
+    if params.get("weight-file", None) is not None:
+        if not isinstance(params["weight-file"], str):
+            raise StyxValidationError(f'`weight-file` has the wrong type: Received `{type(params.get("weight-file", None))}` expected `str | None`')
+    if params.get("fisher-z", False) is None:
+        raise StyxValidationError("`fisher-z` must not be None")
+    if not isinstance(params["fisher-z"], bool):
+        raise StyxValidationError(f'`fisher-z` has the wrong type: Received `{type(params.get("fisher-z", False))}` expected `bool`')
+    if params.get("no-demean", False) is None:
+        raise StyxValidationError("`no-demean` must not be None")
+    if not isinstance(params["no-demean"], bool):
+        raise StyxValidationError(f'`no-demean` has the wrong type: Received `{type(params.get("no-demean", False))}` expected `bool`')
+    if params.get("covariance", False) is None:
+        raise StyxValidationError("`covariance` must not be None")
+    if not isinstance(params["covariance"], bool):
+        raise StyxValidationError(f'`covariance` has the wrong type: Received `{type(params.get("covariance", False))}` expected `bool`')
+    if params.get("limit-GB", None) is not None:
+        if not isinstance(params["limit-GB"], (float, int)):
+            raise StyxValidationError(f'`limit-GB` has the wrong type: Received `{type(params.get("limit-GB", None))}` expected `float | None`')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+
+
 def cifti_correlation_cargs(
     params: CiftiCorrelationParameters,
     execution: Execution,
@@ -267,6 +338,7 @@ def cifti_correlation_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationOutputs`).
     """
+    cifti_correlation_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CORRELATION_METADATA)
     params = execution.params(params)

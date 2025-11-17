@@ -131,6 +131,69 @@ def seg2recon_params(
     return params
 
 
+def seg2recon_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Seg2reconParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("segvol", None) is None:
+        raise StyxValidationError("`segvol` must not be None")
+    if not isinstance(params["segvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`segvol` has the wrong type: Received `{type(params.get("segvol", None))}` expected `InputPathType`')
+    if params.get("inputvol", None) is None:
+        raise StyxValidationError("`inputvol` must not be None")
+    if not isinstance(params["inputvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputvol` has the wrong type: Received `{type(params.get("inputvol", None))}` expected `InputPathType`')
+    if params.get("ctab", None) is not None:
+        if not isinstance(params["ctab"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab` has the wrong type: Received `{type(params.get("ctab", None))}` expected `InputPathType | None`')
+    if params.get("ndilate", None) is not None:
+        if not isinstance(params["ndilate"], (float, int)):
+            raise StyxValidationError(f'`ndilate` has the wrong type: Received `{type(params.get("ndilate", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("force_update", False) is None:
+        raise StyxValidationError("`force_update` must not be None")
+    if not isinstance(params["force_update"], bool):
+        raise StyxValidationError(f'`force_update` has the wrong type: Received `{type(params.get("force_update", False))}` expected `bool`')
+    if params.get("no_cc", False) is None:
+        raise StyxValidationError("`no_cc` must not be None")
+    if not isinstance(params["no_cc"], bool):
+        raise StyxValidationError(f'`no_cc` has the wrong type: Received `{type(params.get("no_cc", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("headmask", None) is not None:
+        if not isinstance(params["headmask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`headmask` has the wrong type: Received `{type(params.get("headmask", None))}` expected `InputPathType | None`')
+    if params.get("thresh", None) is not None:
+        if not isinstance(params["thresh"], (float, int)):
+            raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `float | None`')
+    if params.get("expert", None) is not None:
+        if not isinstance(params["expert"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`expert` has the wrong type: Received `{type(params.get("expert", None))}` expected `InputPathType | None`')
+    if params.get("rca", False) is None:
+        raise StyxValidationError("`rca` must not be None")
+    if not isinstance(params["rca"], bool):
+        raise StyxValidationError(f'`rca` has the wrong type: Received `{type(params.get("rca", False))}` expected `bool`')
+    if params.get("no_bias_field_cor", False) is None:
+        raise StyxValidationError("`no_bias_field_cor` must not be None")
+    if not isinstance(params["no_bias_field_cor"], bool):
+        raise StyxValidationError(f'`no_bias_field_cor` has the wrong type: Received `{type(params.get("no_bias_field_cor", False))}` expected `bool`')
+
+
 def seg2recon_cargs(
     params: Seg2reconParameters,
     execution: Execution,
@@ -246,6 +309,7 @@ def seg2recon_execute(
     Returns:
         NamedTuple of outputs (described in `Seg2reconOutputs`).
     """
+    seg2recon_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEG2RECON_METADATA)
     params = execution.params(params)

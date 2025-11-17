@@ -105,6 +105,55 @@ def plugout_tta_params(
     return params
 
 
+def plugout_tta_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PlugoutTtaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("host", None) is not None:
+        if not isinstance(params["host"], str):
+            raise StyxValidationError(f'`host` has the wrong type: Received `{type(params.get("host", None))}` expected `str | None`')
+    if params.get("port", None) is not None:
+        if not isinstance(params["port"], int):
+            raise StyxValidationError(f'`port` has the wrong type: Received `{type(params.get("port", None))}` expected `int | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("port_offset", None) is not None:
+        if not isinstance(params["port_offset"], int):
+            raise StyxValidationError(f'`port_offset` has the wrong type: Received `{type(params.get("port_offset", None))}` expected `int | None`')
+    if params.get("port_offset_quiet", None) is not None:
+        if not isinstance(params["port_offset_quiet"], int):
+            raise StyxValidationError(f'`port_offset_quiet` has the wrong type: Received `{type(params.get("port_offset_quiet", None))}` expected `int | None`')
+    if params.get("port_offset_bloc", None) is not None:
+        if not isinstance(params["port_offset_bloc"], int):
+            raise StyxValidationError(f'`port_offset_bloc` has the wrong type: Received `{type(params.get("port_offset_bloc", None))}` expected `int | None`')
+    if params.get("max_port_bloc", False) is None:
+        raise StyxValidationError("`max_port_bloc` must not be None")
+    if not isinstance(params["max_port_bloc"], bool):
+        raise StyxValidationError(f'`max_port_bloc` has the wrong type: Received `{type(params.get("max_port_bloc", False))}` expected `bool`')
+    if params.get("max_port_bloc_quiet", False) is None:
+        raise StyxValidationError("`max_port_bloc_quiet` must not be None")
+    if not isinstance(params["max_port_bloc_quiet"], bool):
+        raise StyxValidationError(f'`max_port_bloc_quiet` has the wrong type: Received `{type(params.get("max_port_bloc_quiet", False))}` expected `bool`')
+    if params.get("num_assigned_ports", False) is None:
+        raise StyxValidationError("`num_assigned_ports` must not be None")
+    if not isinstance(params["num_assigned_ports"], bool):
+        raise StyxValidationError(f'`num_assigned_ports` has the wrong type: Received `{type(params.get("num_assigned_ports", False))}` expected `bool`')
+    if params.get("num_assigned_ports_quiet", False) is None:
+        raise StyxValidationError("`num_assigned_ports_quiet` must not be None")
+    if not isinstance(params["num_assigned_ports_quiet"], bool):
+        raise StyxValidationError(f'`num_assigned_ports_quiet` has the wrong type: Received `{type(params.get("num_assigned_ports_quiet", False))}` expected `bool`')
+
+
 def plugout_tta_cargs(
     params: PlugoutTtaParameters,
     execution: Execution,
@@ -198,6 +247,7 @@ def plugout_tta_execute(
     Returns:
         NamedTuple of outputs (described in `PlugoutTtaOutputs`).
     """
+    plugout_tta_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PLUGOUT_TTA_METADATA)
     params = execution.params(params)

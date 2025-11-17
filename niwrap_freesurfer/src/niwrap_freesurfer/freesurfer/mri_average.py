@@ -162,6 +162,108 @@ def mri_average_params(
     return params
 
 
+def mri_average_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriAverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volumes", None) is None:
+        raise StyxValidationError("`input_volumes` must not be None")
+    if not isinstance(params["input_volumes"], list):
+        raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+    for e in params["input_volumes"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("rigid_alignment", False) is None:
+        raise StyxValidationError("`rigid_alignment` must not be None")
+    if not isinstance(params["rigid_alignment"], bool):
+        raise StyxValidationError(f'`rigid_alignment` has the wrong type: Received `{type(params.get("rigid_alignment", False))}` expected `bool`')
+    if params.get("read_from_file", False) is None:
+        raise StyxValidationError("`read_from_file` must not be None")
+    if not isinstance(params["read_from_file"], bool):
+        raise StyxValidationError(f'`read_from_file` has the wrong type: Received `{type(params.get("read_from_file", False))}` expected `bool`')
+    if params.get("dt", None) is not None:
+        if not isinstance(params["dt"], (float, int)):
+            raise StyxValidationError(f'`dt` has the wrong type: Received `{type(params.get("dt", None))}` expected `float | None`')
+    if params.get("tol", None) is not None:
+        if not isinstance(params["tol"], (float, int)):
+            raise StyxValidationError(f'`tol` has the wrong type: Received `{type(params.get("tol", None))}` expected `float | None`')
+    if params.get("conform", False) is None:
+        raise StyxValidationError("`conform` must not be None")
+    if not isinstance(params["conform"], bool):
+        raise StyxValidationError(f'`conform` has the wrong type: Received `{type(params.get("conform", False))}` expected `bool`')
+    if params.get("noconform", False) is None:
+        raise StyxValidationError("`noconform` must not be None")
+    if not isinstance(params["noconform"], bool):
+        raise StyxValidationError(f'`noconform` has the wrong type: Received `{type(params.get("noconform", False))}` expected `bool`')
+    if params.get("reduce", None) is not None:
+        if not isinstance(params["reduce"], (float, int)):
+            raise StyxValidationError(f'`reduce` has the wrong type: Received `{type(params.get("reduce", None))}` expected `float | None`')
+    if params.get("sinc_interpolation", None) is not None:
+        if not isinstance(params["sinc_interpolation"], (float, int)):
+            raise StyxValidationError(f'`sinc_interpolation` has the wrong type: Received `{type(params.get("sinc_interpolation", None))}` expected `float | None`')
+    if params.get("trilinear", False) is None:
+        raise StyxValidationError("`trilinear` must not be None")
+    if not isinstance(params["trilinear"], bool):
+        raise StyxValidationError(f'`trilinear` has the wrong type: Received `{type(params.get("trilinear", False))}` expected `bool`')
+    if params.get("window", False) is None:
+        raise StyxValidationError("`window` must not be None")
+    if not isinstance(params["window"], bool):
+        raise StyxValidationError(f'`window` has the wrong type: Received `{type(params.get("window", False))}` expected `bool`')
+    if params.get("snapshots", None) is not None:
+        if not isinstance(params["snapshots"], (float, int)):
+            raise StyxValidationError(f'`snapshots` has the wrong type: Received `{type(params.get("snapshots", None))}` expected `float | None`')
+    if params.get("translation", None) is not None:
+        if not isinstance(params["translation"], list):
+            raise StyxValidationError(f'`translation` has the wrong type: Received `{type(params.get("translation", None))}` expected `list[float] | None`')
+        if len(params["translation"]) == 3:
+            raise StyxValidationError("Parameter `translation` must contain exactly 3 elements")
+        for e in params["translation"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`translation` has the wrong type: Received `{type(params.get("translation", None))}` expected `list[float] | None`')
+    if params.get("rotation", None) is not None:
+        if not isinstance(params["rotation"], list):
+            raise StyxValidationError(f'`rotation` has the wrong type: Received `{type(params.get("rotation", None))}` expected `list[float] | None`')
+        if len(params["rotation"]) == 3:
+            raise StyxValidationError("Parameter `rotation` must contain exactly 3 elements")
+        for e in params["rotation"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rotation` has the wrong type: Received `{type(params.get("rotation", None))}` expected `list[float] | None`')
+    if params.get("momentum", None) is not None:
+        if not isinstance(params["momentum"], (float, int)):
+            raise StyxValidationError(f'`momentum` has the wrong type: Received `{type(params.get("momentum", None))}` expected `float | None`')
+    if params.get("rms", False) is None:
+        raise StyxValidationError("`rms` must not be None")
+    if not isinstance(params["rms"], bool):
+        raise StyxValidationError(f'`rms` has the wrong type: Received `{type(params.get("rms", False))}` expected `bool`')
+    if params.get("rms_alt", False) is None:
+        raise StyxValidationError("`rms_alt` must not be None")
+    if not isinstance(params["rms_alt"], bool):
+        raise StyxValidationError(f'`rms_alt` has the wrong type: Received `{type(params.get("rms_alt", False))}` expected `bool`')
+    if params.get("percent", False) is None:
+        raise StyxValidationError("`percent` must not be None")
+    if not isinstance(params["percent"], bool):
+        raise StyxValidationError(f'`percent` has the wrong type: Received `{type(params.get("percent", False))}` expected `bool`')
+    if params.get("binarize", None) is not None:
+        if not isinstance(params["binarize"], (float, int)):
+            raise StyxValidationError(f'`binarize` has the wrong type: Received `{type(params.get("binarize", None))}` expected `float | None`')
+    if params.get("absolute", False) is None:
+        raise StyxValidationError("`absolute` must not be None")
+    if not isinstance(params["absolute"], bool):
+        raise StyxValidationError(f'`absolute` has the wrong type: Received `{type(params.get("absolute", False))}` expected `bool`')
+
+
 def mri_average_cargs(
     params: MriAverageParameters,
     execution: Execution,
@@ -287,6 +389,7 @@ def mri_average_execute(
     Returns:
         NamedTuple of outputs (described in `MriAverageOutputs`).
     """
+    mri_average_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_AVERAGE_METADATA)
     params = execution.params(params)

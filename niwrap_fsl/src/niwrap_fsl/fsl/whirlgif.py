@@ -82,6 +82,44 @@ def whirlgif_params(
     return params
 
 
+def whirlgif_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `WhirlgifParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outfile", None) is not None:
+        if not isinstance(params["outfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `InputPathType | None`')
+    if params.get("loop_count", None) is not None:
+        if not isinstance(params["loop_count"], int):
+            raise StyxValidationError(f'`loop_count` has the wrong type: Received `{type(params.get("loop_count", None))}` expected `int | None`')
+    if params.get("delay_time", None) is not None:
+        if not isinstance(params["delay_time"], int):
+            raise StyxValidationError(f'`delay_time` has the wrong type: Received `{type(params.get("delay_time", None))}` expected `int | None`')
+    if params.get("disp_flag", None) is not None:
+        if not isinstance(params["disp_flag"], str):
+            raise StyxValidationError(f'`disp_flag` has the wrong type: Received `{type(params.get("disp_flag", None))}` expected `typing.Literal["none", "back", "prev", "not"] | None`')
+        if params["disp_flag"] not in ["none", "back", "prev", "not"]:
+            raise StyxValidationError("Parameter `disp_flag` must be one of [\"none\", \"back\", \"prev\", \"not\"]")
+    if params.get("list_file", None) is not None:
+        if not isinstance(params["list_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`list_file` has the wrong type: Received `{type(params.get("list_file", None))}` expected `InputPathType | None`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def whirlgif_cargs(
     params: WhirlgifParameters,
     execution: Execution,
@@ -165,6 +203,7 @@ def whirlgif_execute(
     Returns:
         NamedTuple of outputs (described in `WhirlgifOutputs`).
     """
+    whirlgif_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(WHIRLGIF_METADATA)
     params = execution.params(params)

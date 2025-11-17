@@ -116,6 +116,70 @@ def v_3d_gen_feature_dist_params(
     return params
 
 
+def v_3d_gen_feature_dist_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dGenFeatureDistParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("features_string", None) is None:
+        raise StyxValidationError("`features_string` must not be None")
+    if not isinstance(params["features_string"], str):
+        raise StyxValidationError(f'`features_string` has the wrong type: Received `{type(params.get("features_string", None))}` expected `str`')
+    if params.get("class_string", None) is None:
+        raise StyxValidationError("`class_string` must not be None")
+    if not isinstance(params["class_string"], str):
+        raise StyxValidationError(f'`class_string` has the wrong type: Received `{type(params.get("class_string", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], (float, int)):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `float | None`')
+    if params.get("other", False) is None:
+        raise StyxValidationError("`other` must not be None")
+    if not isinstance(params["other"], bool):
+        raise StyxValidationError(f'`other` has the wrong type: Received `{type(params.get("other", False))}` expected `bool`')
+    if params.get("no_other", False) is None:
+        raise StyxValidationError("`no_other` must not be None")
+    if not isinstance(params["no_other"], bool):
+        raise StyxValidationError(f'`no_other` has the wrong type: Received `{type(params.get("no_other", False))}` expected `bool`')
+    if params.get("samp", None) is not None:
+        if not isinstance(params["samp"], list):
+            raise StyxValidationError(f'`samp` has the wrong type: Received `{type(params.get("samp", None))}` expected `list[str] | None`')
+        for e in params["samp"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`samp` has the wrong type: Received `{type(params.get("samp", None))}` expected `list[str] | None`')
+    if params.get("sig", None) is not None:
+        if not isinstance(params["sig"], list):
+            raise StyxValidationError(f'`sig` has the wrong type: Received `{type(params.get("sig", None))}` expected `list[str] | None`')
+        for e in params["sig"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`sig` has the wrong type: Received `{type(params.get("sig", None))}` expected `list[str] | None`')
+    if params.get("hspec", None) is not None:
+        if not isinstance(params["hspec"], list):
+            raise StyxValidationError(f'`hspec` has the wrong type: Received `{type(params.get("hspec", None))}` expected `list[str] | None`')
+        for e in params["hspec"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`hspec` has the wrong type: Received `{type(params.get("hspec", None))}` expected `list[str] | None`')
+    if params.get("labeltable", None) is not None:
+        if not isinstance(params["labeltable"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labeltable` has the wrong type: Received `{type(params.get("labeltable", None))}` expected `InputPathType | None`')
+    if params.get("show_histograms", None) is not None:
+        if not isinstance(params["show_histograms"], str):
+            raise StyxValidationError(f'`show_histograms` has the wrong type: Received `{type(params.get("show_histograms", None))}` expected `str | None`')
+
+
 def v_3d_gen_feature_dist_cargs(
     params: V3dGenFeatureDistParameters,
     execution: Execution,
@@ -222,6 +286,7 @@ def v_3d_gen_feature_dist_execute(
     Returns:
         NamedTuple of outputs (described in `V3dGenFeatureDistOutputs`).
     """
+    v_3d_gen_feature_dist_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_GEN_FEATURE_DIST_METADATA)
     params = execution.params(params)

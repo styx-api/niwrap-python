@@ -82,6 +82,40 @@ def samsegmesh2surf_params(
     return params
 
 
+def samsegmesh2surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Samsegmesh2surfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("atlas_mesh", None) is None:
+        raise StyxValidationError("`atlas_mesh` must not be None")
+    if not isinstance(params["atlas_mesh"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`atlas_mesh` has the wrong type: Received `{type(params.get("atlas_mesh", None))}` expected `InputPathType`')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("lta_transform", None) is not None:
+        if not isinstance(params["lta_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lta_transform` has the wrong type: Received `{type(params.get("lta_transform", None))}` expected `InputPathType | None`')
+    if params.get("output_surface", None) is not None:
+        if not isinstance(params["output_surface"], str):
+            raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `str | None`')
+    if params.get("output_priors", None) is not None:
+        if not isinstance(params["output_priors"], str):
+            raise StyxValidationError(f'`output_priors` has the wrong type: Received `{type(params.get("output_priors", None))}` expected `str | None`')
+    if params.get("invert_flag", False) is None:
+        raise StyxValidationError("`invert_flag` must not be None")
+    if not isinstance(params["invert_flag"], bool):
+        raise StyxValidationError(f'`invert_flag` has the wrong type: Received `{type(params.get("invert_flag", False))}` expected `bool`')
+
+
 def samsegmesh2surf_cargs(
     params: Samsegmesh2surfParameters,
     execution: Execution,
@@ -167,6 +201,7 @@ def samsegmesh2surf_execute(
     Returns:
         NamedTuple of outputs (described in `Samsegmesh2surfOutputs`).
     """
+    samsegmesh2surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SAMSEGMESH2SURF_METADATA)
     params = execution.params(params)

@@ -85,6 +85,48 @@ def stimband_params(
     return params
 
 
+def stimband_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `StimbandParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("matrixfiles", None) is None:
+        raise StyxValidationError("`matrixfiles` must not be None")
+    if not isinstance(params["matrixfiles"], list):
+        raise StyxValidationError(f'`matrixfiles` has the wrong type: Received `{type(params.get("matrixfiles", None))}` expected `list[InputPathType]`')
+    for e in params["matrixfiles"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`matrixfiles` has the wrong type: Received `{type(params.get("matrixfiles", None))}` expected `list[InputPathType]`')
+    if params.get("additional_matrixfiles", None) is not None:
+        if not isinstance(params["additional_matrixfiles"], list):
+            raise StyxValidationError(f'`additional_matrixfiles` has the wrong type: Received `{type(params.get("additional_matrixfiles", None))}` expected `list[InputPathType] | None`')
+        for e in params["additional_matrixfiles"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`additional_matrixfiles` has the wrong type: Received `{type(params.get("additional_matrixfiles", None))}` expected `list[InputPathType] | None`')
+    if params.get("min_freq", None) is not None:
+        if not isinstance(params["min_freq"], (float, int)):
+            raise StyxValidationError(f'`min_freq` has the wrong type: Received `{type(params.get("min_freq", None))}` expected `float | None`')
+    if params.get("min_bwidth", None) is not None:
+        if not isinstance(params["min_bwidth"], (float, int)):
+            raise StyxValidationError(f'`min_bwidth` has the wrong type: Received `{type(params.get("min_bwidth", None))}` expected `float | None`')
+    if params.get("min_pow", None) is not None:
+        if not isinstance(params["min_pow"], (float, int)):
+            raise StyxValidationError(f'`min_pow` has the wrong type: Received `{type(params.get("min_pow", None))}` expected `float | None`')
+        if 50 <= params["min_pow"] <= 99:
+            raise StyxValidationError("Parameter `min_pow` must be between 50 and 99 (inclusive)")
+
+
 def stimband_cargs(
     params: StimbandParameters,
     execution: Execution,
@@ -166,6 +208,7 @@ def stimband_execute(
     Returns:
         NamedTuple of outputs (described in `StimbandOutputs`).
     """
+    stimband_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(STIMBAND_METADATA)
     params = execution.params(params)

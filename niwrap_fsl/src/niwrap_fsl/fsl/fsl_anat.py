@@ -154,6 +154,86 @@ def fsl_anat_params(
     return params
 
 
+def fsl_anat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslAnatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structural_image", None) is not None:
+        if not isinstance(params["structural_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`structural_image` has the wrong type: Received `{type(params.get("structural_image", None))}` expected `InputPathType | None`')
+    if params.get("existing_anat_dir", None) is not None:
+        if not isinstance(params["existing_anat_dir"], str):
+            raise StyxValidationError(f'`existing_anat_dir` has the wrong type: Received `{type(params.get("existing_anat_dir", None))}` expected `str | None`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("clobber_flag", False) is None:
+        raise StyxValidationError("`clobber_flag` must not be None")
+    if not isinstance(params["clobber_flag"], bool):
+        raise StyxValidationError(f'`clobber_flag` has the wrong type: Received `{type(params.get("clobber_flag", False))}` expected `bool`')
+    if params.get("strongbias_flag", False) is None:
+        raise StyxValidationError("`strongbias_flag` must not be None")
+    if not isinstance(params["strongbias_flag"], bool):
+        raise StyxValidationError(f'`strongbias_flag` has the wrong type: Received `{type(params.get("strongbias_flag", False))}` expected `bool`')
+    if params.get("weakbias_flag", False) is None:
+        raise StyxValidationError("`weakbias_flag` must not be None")
+    if not isinstance(params["weakbias_flag"], bool):
+        raise StyxValidationError(f'`weakbias_flag` has the wrong type: Received `{type(params.get("weakbias_flag", False))}` expected `bool`')
+    if params.get("noreorient_flag", False) is None:
+        raise StyxValidationError("`noreorient_flag` must not be None")
+    if not isinstance(params["noreorient_flag"], bool):
+        raise StyxValidationError(f'`noreorient_flag` has the wrong type: Received `{type(params.get("noreorient_flag", False))}` expected `bool`')
+    if params.get("nocrop_flag", False) is None:
+        raise StyxValidationError("`nocrop_flag` must not be None")
+    if not isinstance(params["nocrop_flag"], bool):
+        raise StyxValidationError(f'`nocrop_flag` has the wrong type: Received `{type(params.get("nocrop_flag", False))}` expected `bool`')
+    if params.get("nobias_flag", False) is None:
+        raise StyxValidationError("`nobias_flag` must not be None")
+    if not isinstance(params["nobias_flag"], bool):
+        raise StyxValidationError(f'`nobias_flag` has the wrong type: Received `{type(params.get("nobias_flag", False))}` expected `bool`')
+    if params.get("noreg_flag", False) is None:
+        raise StyxValidationError("`noreg_flag` must not be None")
+    if not isinstance(params["noreg_flag"], bool):
+        raise StyxValidationError(f'`noreg_flag` has the wrong type: Received `{type(params.get("noreg_flag", False))}` expected `bool`')
+    if params.get("nononlinreg_flag", False) is None:
+        raise StyxValidationError("`nononlinreg_flag` must not be None")
+    if not isinstance(params["nononlinreg_flag"], bool):
+        raise StyxValidationError(f'`nononlinreg_flag` has the wrong type: Received `{type(params.get("nononlinreg_flag", False))}` expected `bool`')
+    if params.get("noseg_flag", False) is None:
+        raise StyxValidationError("`noseg_flag` must not be None")
+    if not isinstance(params["noseg_flag"], bool):
+        raise StyxValidationError(f'`noseg_flag` has the wrong type: Received `{type(params.get("noseg_flag", False))}` expected `bool`')
+    if params.get("nosubcortseg_flag", False) is None:
+        raise StyxValidationError("`nosubcortseg_flag` must not be None")
+    if not isinstance(params["nosubcortseg_flag"], bool):
+        raise StyxValidationError(f'`nosubcortseg_flag` has the wrong type: Received `{type(params.get("nosubcortseg_flag", False))}` expected `bool`')
+    if params.get("bias_smoothing", None) is not None:
+        if not isinstance(params["bias_smoothing"], (float, int)):
+            raise StyxValidationError(f'`bias_smoothing` has the wrong type: Received `{type(params.get("bias_smoothing", None))}` expected `float | None`')
+    if params.get("image_type", None) is not None:
+        if not isinstance(params["image_type"], str):
+            raise StyxValidationError(f'`image_type` has the wrong type: Received `{type(params.get("image_type", None))}` expected `str | None`')
+    if params.get("nosearch_flag", False) is None:
+        raise StyxValidationError("`nosearch_flag` must not be None")
+    if not isinstance(params["nosearch_flag"], bool):
+        raise StyxValidationError(f'`nosearch_flag` has the wrong type: Received `{type(params.get("nosearch_flag", False))}` expected `bool`')
+    if params.get("bet_f_param", None) is not None:
+        if not isinstance(params["bet_f_param"], (float, int)):
+            raise StyxValidationError(f'`bet_f_param` has the wrong type: Received `{type(params.get("bet_f_param", None))}` expected `float | None`')
+    if params.get("nocleanup_flag", False) is None:
+        raise StyxValidationError("`nocleanup_flag` must not be None")
+    if not isinstance(params["nocleanup_flag"], bool):
+        raise StyxValidationError(f'`nocleanup_flag` has the wrong type: Received `{type(params.get("nocleanup_flag", False))}` expected `bool`')
+
+
 def fsl_anat_cargs(
     params: FslAnatParameters,
     execution: Execution,
@@ -265,6 +345,7 @@ def fsl_anat_execute(
     Returns:
         NamedTuple of outputs (described in `FslAnatOutputs`).
     """
+    fsl_anat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_ANAT_METADATA)
     params = execution.params(params)

@@ -173,6 +173,95 @@ def v_3d_lmer_params(
     return params
 
 
+def v_3d_lmer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLmerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bound_lower", None) is not None:
+        if not isinstance(params["bound_lower"], (float, int)):
+            raise StyxValidationError(f'`bound_lower` has the wrong type: Received `{type(params.get("bound_lower", None))}` expected `float | None`')
+    if params.get("bound_upper", None) is not None:
+        if not isinstance(params["bound_upper"], (float, int)):
+            raise StyxValidationError(f'`bound_upper` has the wrong type: Received `{type(params.get("bound_upper", None))}` expected `float | None`')
+    if params.get("cio", False) is None:
+        raise StyxValidationError("`cio` must not be None")
+    if not isinstance(params["cio"], bool):
+        raise StyxValidationError(f'`cio` has the wrong type: Received `{type(params.get("cio", False))}` expected `bool`')
+    if params.get("data_table", None) is None:
+        raise StyxValidationError("`data_table` must not be None")
+    if not isinstance(params["data_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_table` has the wrong type: Received `{type(params.get("data_table", None))}` expected `InputPathType`')
+    if params.get("debug_args", False) is None:
+        raise StyxValidationError("`debug_args` must not be None")
+    if not isinstance(params["debug_args"], bool):
+        raise StyxValidationError(f'`debug_args` has the wrong type: Received `{type(params.get("debug_args", False))}` expected `bool`')
+    if params.get("glf_code", None) is not None:
+        if not isinstance(params["glf_code"], str):
+            raise StyxValidationError(f'`glf_code` has the wrong type: Received `{type(params.get("glf_code", None))}` expected `str | None`')
+    if params.get("glt_code", None) is not None:
+        if not isinstance(params["glt_code"], str):
+            raise StyxValidationError(f'`glt_code` has the wrong type: Received `{type(params.get("glt_code", None))}` expected `str | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("input_file_column", None) is not None:
+        if not isinstance(params["input_file_column"], str):
+            raise StyxValidationError(f'`input_file_column` has the wrong type: Received `{type(params.get("input_file_column", None))}` expected `str | None`')
+    if params.get("jobs", None) is not None:
+        if not isinstance(params["jobs"], (float, int)):
+            raise StyxValidationError(f'`jobs` has the wrong type: Received `{type(params.get("jobs", None))}` expected `float | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("model", None) is None:
+        raise StyxValidationError("`model` must not be None")
+    if not isinstance(params["model"], str):
+        raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("qvar_centers", None) is not None:
+        if not isinstance(params["qvar_centers"], str):
+            raise StyxValidationError(f'`qvar_centers` has the wrong type: Received `{type(params.get("qvar_centers", None))}` expected `str | None`')
+    if params.get("qvars", None) is not None:
+        if not isinstance(params["qvars"], str):
+            raise StyxValidationError(f'`qvars` has the wrong type: Received `{type(params.get("qvars", None))}` expected `str | None`')
+    if params.get("resid", None) is not None:
+        if not isinstance(params["resid"], str):
+            raise StyxValidationError(f'`resid` has the wrong type: Received `{type(params.get("resid", None))}` expected `str | None`')
+    if params.get("rio", False) is None:
+        raise StyxValidationError("`rio` must not be None")
+    if not isinstance(params["rio"], bool):
+        raise StyxValidationError(f'`rio` has the wrong type: Received `{type(params.get("rio", False))}` expected `bool`')
+    if params.get("show_options", False) is None:
+        raise StyxValidationError("`show_options` must not be None")
+    if not isinstance(params["show_options"], bool):
+        raise StyxValidationError(f'`show_options` has the wrong type: Received `{type(params.get("show_options", False))}` expected `bool`')
+    if params.get("ss_type", None) is not None:
+        if not isinstance(params["ss_type"], (float, int)):
+            raise StyxValidationError(f'`ss_type` has the wrong type: Received `{type(params.get("ss_type", None))}` expected `float | None`')
+    if params.get("trr", False) is None:
+        raise StyxValidationError("`trr` must not be None")
+    if not isinstance(params["trr"], bool):
+        raise StyxValidationError(f'`trr` has the wrong type: Received `{type(params.get("trr", False))}` expected `bool`')
+    if params.get("vvar_centers", None) is not None:
+        if not isinstance(params["vvar_centers"], str):
+            raise StyxValidationError(f'`vvar_centers` has the wrong type: Received `{type(params.get("vvar_centers", None))}` expected `str | None`')
+    if params.get("vvars", None) is not None:
+        if not isinstance(params["vvars"], str):
+            raise StyxValidationError(f'`vvars` has the wrong type: Received `{type(params.get("vvars", None))}` expected `str | None`')
+
+
 def v_3d_lmer_cargs(
     params: V3dLmerParameters,
     execution: Execution,
@@ -314,6 +403,7 @@ def v_3d_lmer_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLmerOutputs`).
     """
+    v_3d_lmer_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LMER_METADATA)
     params = execution.params(params)

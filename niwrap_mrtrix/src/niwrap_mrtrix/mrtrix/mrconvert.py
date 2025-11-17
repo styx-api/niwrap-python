@@ -246,18 +246,20 @@ def mrconvert_copy_properties_cargs_dyn_fn(
     }.get(t)
 
 
-def mrconvert_copy_properties_outputs_dyn_fn(
+def mrconvert_copy_properties_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": mrconvert_various_string_validate,
+        "VariousFile": mrconvert_various_file_validate,
     }.get(t)
 
 
@@ -278,18 +280,20 @@ def mrconvert_strides_cargs_dyn_fn(
     }.get(t)
 
 
-def mrconvert_strides_outputs_dyn_fn(
+def mrconvert_strides_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString_1": mrconvert_various_string_1_validate,
+        "VariousFile_1": mrconvert_various_file_1_validate,
     }.get(t)
 
 
@@ -318,6 +322,31 @@ def mrconvert_coord_params(
         "selection": selection,
     }
     return params
+
+
+def mrconvert_coord_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertCoordParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("axis", None) is None:
+        raise StyxValidationError("`axis` must not be None")
+    if not isinstance(params["axis"], int):
+        raise StyxValidationError(f'`axis` has the wrong type: Received `{type(params.get("axis", None))}` expected `int`')
+    if params.get("selection", None) is None:
+        raise StyxValidationError("`selection` must not be None")
+    if not isinstance(params["selection"], list):
+        raise StyxValidationError(f'`selection` has the wrong type: Received `{type(params.get("selection", None))}` expected `list[int]`')
+    for e in params["selection"]:
+        if not isinstance(e, int):
+            raise StyxValidationError(f'`selection` has the wrong type: Received `{type(params.get("selection", None))}` expected `list[int]`')
 
 
 def mrconvert_coord_cargs(
@@ -358,6 +387,24 @@ def mrconvert_clear_property_params(
     return params
 
 
+def mrconvert_clear_property_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertClearPropertyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+
+
 def mrconvert_clear_property_cargs(
     params: MrconvertClearPropertyParameters,
     execution: Execution,
@@ -396,6 +443,28 @@ def mrconvert_set_property_params(
         "value": value,
     }
     return params
+
+
+def mrconvert_set_property_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertSetPropertyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mrconvert_set_property_cargs(
@@ -441,6 +510,28 @@ def mrconvert_append_property_params(
     return params
 
 
+def mrconvert_append_property_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertAppendPropertyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def mrconvert_append_property_cargs(
     params: MrconvertAppendPropertyParameters,
     execution: Execution,
@@ -479,6 +570,24 @@ def mrconvert_various_string_params(
     return params
 
 
+def mrconvert_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def mrconvert_various_string_cargs(
     params: MrconvertVariousStringParameters,
     execution: Execution,
@@ -513,6 +622,24 @@ def mrconvert_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def mrconvert_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def mrconvert_various_file_cargs(
@@ -551,6 +678,24 @@ def mrconvert_various_string_1_params(
     return params
 
 
+def mrconvert_various_string_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertVariousString1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def mrconvert_various_string_1_cargs(
     params: MrconvertVariousString1Parameters,
     execution: Execution,
@@ -585,6 +730,24 @@ def mrconvert_various_file_1_params(
         "obj": obj,
     }
     return params
+
+
+def mrconvert_various_file_1_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertVariousFile1Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def mrconvert_various_file_1_cargs(
@@ -630,6 +793,28 @@ def mrconvert_fslgrad_params(
         "bvals": bvals,
     }
     return params
+
+
+def mrconvert_fslgrad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertFslgradParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
 
 
 def mrconvert_fslgrad_cargs(
@@ -687,6 +872,28 @@ def mrconvert_export_grad_fsl_params(
         "bvals_path": bvals_path,
     }
     return params
+
+
+def mrconvert_export_grad_fsl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertExportGradFslParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs_path", None) is None:
+        raise StyxValidationError("`bvecs_path` must not be None")
+    if not isinstance(params["bvecs_path"], str):
+        raise StyxValidationError(f'`bvecs_path` has the wrong type: Received `{type(params.get("bvecs_path", None))}` expected `str`')
+    if params.get("bvals_path", None) is None:
+        raise StyxValidationError("`bvals_path` must not be None")
+    if not isinstance(params["bvals_path"], str):
+        raise StyxValidationError(f'`bvals_path` has the wrong type: Received `{type(params.get("bvals_path", None))}` expected `str`')
 
 
 def mrconvert_export_grad_fsl_cargs(
@@ -753,6 +960,28 @@ def mrconvert_import_pe_eddy_params(
     return params
 
 
+def mrconvert_import_pe_eddy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertImportPeEddyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("config", None) is None:
+        raise StyxValidationError("`config` must not be None")
+    if not isinstance(params["config"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `InputPathType`')
+    if params.get("indices", None) is None:
+        raise StyxValidationError("`indices` must not be None")
+    if not isinstance(params["indices"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`indices` has the wrong type: Received `{type(params.get("indices", None))}` expected `InputPathType`')
+
+
 def mrconvert_import_pe_eddy_cargs(
     params: MrconvertImportPeEddyParameters,
     execution: Execution,
@@ -808,6 +1037,28 @@ def mrconvert_export_pe_eddy_params(
         "indices": indices,
     }
     return params
+
+
+def mrconvert_export_pe_eddy_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertExportPeEddyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("config", None) is None:
+        raise StyxValidationError("`config` must not be None")
+    if not isinstance(params["config"], str):
+        raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `str`')
+    if params.get("indices", None) is None:
+        raise StyxValidationError("`indices` must not be None")
+    if not isinstance(params["indices"], str):
+        raise StyxValidationError(f'`indices` has the wrong type: Received `{type(params.get("indices", None))}` expected `str`')
 
 
 def mrconvert_export_pe_eddy_cargs(
@@ -870,6 +1121,28 @@ def mrconvert_config_params(
         "value": value,
     }
     return params
+
+
+def mrconvert_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mrconvert_config_cargs(
@@ -1077,6 +1350,142 @@ def mrconvert_params(
     if config is not None:
         params["config"] = config
     return params
+
+
+def mrconvert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrconvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("coord", None) is not None:
+        if not isinstance(params["coord"], list):
+            raise StyxValidationError(f'`coord` has the wrong type: Received `{type(params.get("coord", None))}` expected `list[MrconvertCoordParameters] | None`')
+        for e in params["coord"]:
+            mrconvert_coord_validate(e)
+    if params.get("vox", None) is not None:
+        if not isinstance(params["vox"], list):
+            raise StyxValidationError(f'`vox` has the wrong type: Received `{type(params.get("vox", None))}` expected `list[float] | None`')
+        for e in params["vox"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`vox` has the wrong type: Received `{type(params.get("vox", None))}` expected `list[float] | None`')
+    if params.get("axes", None) is not None:
+        if not isinstance(params["axes"], list):
+            raise StyxValidationError(f'`axes` has the wrong type: Received `{type(params.get("axes", None))}` expected `list[int] | None`')
+        for e in params["axes"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`axes` has the wrong type: Received `{type(params.get("axes", None))}` expected `list[int] | None`')
+    if params.get("scaling", None) is not None:
+        if not isinstance(params["scaling"], list):
+            raise StyxValidationError(f'`scaling` has the wrong type: Received `{type(params.get("scaling", None))}` expected `list[float] | None`')
+        for e in params["scaling"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`scaling` has the wrong type: Received `{type(params.get("scaling", None))}` expected `list[float] | None`')
+    if params.get("json_import", None) is not None:
+        if not isinstance(params["json_import"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`json_import` has the wrong type: Received `{type(params.get("json_import", None))}` expected `InputPathType | None`')
+    if params.get("json_export", None) is not None:
+        if not isinstance(params["json_export"], str):
+            raise StyxValidationError(f'`json_export` has the wrong type: Received `{type(params.get("json_export", None))}` expected `str | None`')
+    if params.get("clear_property", None) is not None:
+        if not isinstance(params["clear_property"], list):
+            raise StyxValidationError(f'`clear_property` has the wrong type: Received `{type(params.get("clear_property", None))}` expected `list[MrconvertClearPropertyParameters] | None`')
+        for e in params["clear_property"]:
+            mrconvert_clear_property_validate(e)
+    if params.get("set_property", None) is not None:
+        if not isinstance(params["set_property"], list):
+            raise StyxValidationError(f'`set_property` has the wrong type: Received `{type(params.get("set_property", None))}` expected `list[MrconvertSetPropertyParameters] | None`')
+        for e in params["set_property"]:
+            mrconvert_set_property_validate(e)
+    if params.get("append_property", None) is not None:
+        if not isinstance(params["append_property"], list):
+            raise StyxValidationError(f'`append_property` has the wrong type: Received `{type(params.get("append_property", None))}` expected `list[MrconvertAppendPropertyParameters] | None`')
+        for e in params["append_property"]:
+            mrconvert_append_property_validate(e)
+    if params.get("copy_properties", None) is not None:
+        if not isinstance(params["copy_properties"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["copy_properties"])}\'')
+        if "@type" not in params["copy_properties"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        mrconvert_copy_properties_validate_dyn_fn(params["copy_properties"]["@type"])(params["copy_properties"])
+    if params.get("strides", None) is not None:
+        if not isinstance(params["strides"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
+        if "@type" not in params["strides"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        mrconvert_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `str | None`')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("fslgrad", None) is not None:
+        mrconvert_fslgrad_validate(params["fslgrad"])
+    if params.get("bvalue_scaling", None) is not None:
+        if not isinstance(params["bvalue_scaling"], str):
+            raise StyxValidationError(f'`bvalue_scaling` has the wrong type: Received `{type(params.get("bvalue_scaling", None))}` expected `str | None`')
+    if params.get("export_grad_mrtrix", None) is not None:
+        if not isinstance(params["export_grad_mrtrix"], str):
+            raise StyxValidationError(f'`export_grad_mrtrix` has the wrong type: Received `{type(params.get("export_grad_mrtrix", None))}` expected `str | None`')
+    if params.get("export_grad_fsl", None) is not None:
+        mrconvert_export_grad_fsl_validate(params["export_grad_fsl"])
+    if params.get("import_pe_table", None) is not None:
+        if not isinstance(params["import_pe_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`import_pe_table` has the wrong type: Received `{type(params.get("import_pe_table", None))}` expected `InputPathType | None`')
+    if params.get("import_pe_eddy", None) is not None:
+        mrconvert_import_pe_eddy_validate(params["import_pe_eddy"])
+    if params.get("export_pe_table", None) is not None:
+        if not isinstance(params["export_pe_table"], str):
+            raise StyxValidationError(f'`export_pe_table` has the wrong type: Received `{type(params.get("export_pe_table", None))}` expected `str | None`')
+    if params.get("export_pe_eddy", None) is not None:
+        mrconvert_export_pe_eddy_validate(params["export_pe_eddy"])
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrconvertConfigParameters] | None`')
+        for e in params["config"]:
+            mrconvert_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
 
 
 def mrconvert_cargs(
@@ -1292,6 +1701,7 @@ def mrconvert_execute(
     Returns:
         NamedTuple of outputs (described in `MrconvertOutputs`).
     """
+    mrconvert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRCONVERT_METADATA)
     params = execution.params(params)

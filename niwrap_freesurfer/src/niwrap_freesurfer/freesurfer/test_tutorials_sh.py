@@ -126,6 +126,84 @@ def test_tutorials_sh_params(
     return params
 
 
+def test_tutorials_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TestTutorialsShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("all_tutorials", False) is None:
+        raise StyxValidationError("`all_tutorials` must not be None")
+    if not isinstance(params["all_tutorials"], bool):
+        raise StyxValidationError(f'`all_tutorials` has the wrong type: Received `{type(params.get("all_tutorials", False))}` expected `bool`')
+    if params.get("quick_test", False) is None:
+        raise StyxValidationError("`quick_test` must not be None")
+    if not isinstance(params["quick_test"], bool):
+        raise StyxValidationError(f'`quick_test` has the wrong type: Received `{type(params.get("quick_test", False))}` expected `bool`')
+    if params.get("auto_quit_freeview", False) is None:
+        raise StyxValidationError("`auto_quit_freeview` must not be None")
+    if not isinstance(params["auto_quit_freeview"], bool):
+        raise StyxValidationError(f'`auto_quit_freeview` has the wrong type: Received `{type(params.get("auto_quit_freeview", False))}` expected `bool`')
+    if params.get("skip_all_guis", False) is None:
+        raise StyxValidationError("`skip_all_guis` must not be None")
+    if not isinstance(params["skip_all_guis"], bool):
+        raise StyxValidationError(f'`skip_all_guis` has the wrong type: Received `{type(params.get("skip_all_guis", False))}` expected `bool`')
+    if params.get("skip_tk_guis", False) is None:
+        raise StyxValidationError("`skip_tk_guis` must not be None")
+    if not isinstance(params["skip_tk_guis"], bool):
+        raise StyxValidationError(f'`skip_tk_guis` has the wrong type: Received `{type(params.get("skip_tk_guis", False))}` expected `bool`')
+    if params.get("skip_qdec_guis", False) is None:
+        raise StyxValidationError("`skip_qdec_guis` must not be None")
+    if not isinstance(params["skip_qdec_guis"], bool):
+        raise StyxValidationError(f'`skip_qdec_guis` has the wrong type: Received `{type(params.get("skip_qdec_guis", False))}` expected `bool`')
+    if params.get("individual_subject", False) is None:
+        raise StyxValidationError("`individual_subject` must not be None")
+    if not isinstance(params["individual_subject"], bool):
+        raise StyxValidationError(f'`individual_subject` has the wrong type: Received `{type(params.get("individual_subject", False))}` expected `bool`')
+    if params.get("troubleshooting", False) is None:
+        raise StyxValidationError("`troubleshooting` must not be None")
+    if not isinstance(params["troubleshooting"], bool):
+        raise StyxValidationError(f'`troubleshooting` has the wrong type: Received `{type(params.get("troubleshooting", False))}` expected `bool`')
+    if params.get("group_analysis", False) is None:
+        raise StyxValidationError("`group_analysis` must not be None")
+    if not isinstance(params["group_analysis"], bool):
+        raise StyxValidationError(f'`group_analysis` has the wrong type: Received `{type(params.get("group_analysis", False))}` expected `bool`')
+    if params.get("qdec", False) is None:
+        raise StyxValidationError("`qdec` must not be None")
+    if not isinstance(params["qdec"], bool):
+        raise StyxValidationError(f'`qdec` has the wrong type: Received `{type(params.get("qdec", False))}` expected `bool`')
+    if params.get("longitudinal", False) is None:
+        raise StyxValidationError("`longitudinal` must not be None")
+    if not isinstance(params["longitudinal"], bool):
+        raise StyxValidationError(f'`longitudinal` has the wrong type: Received `{type(params.get("longitudinal", False))}` expected `bool`')
+    if params.get("roi_analysis", False) is None:
+        raise StyxValidationError("`roi_analysis` must not be None")
+    if not isinstance(params["roi_analysis"], bool):
+        raise StyxValidationError(f'`roi_analysis` has the wrong type: Received `{type(params.get("roi_analysis", False))}` expected `bool`')
+    if params.get("diffusion", False) is None:
+        raise StyxValidationError("`diffusion` must not be None")
+    if not isinstance(params["diffusion"], bool):
+        raise StyxValidationError(f'`diffusion` has the wrong type: Received `{type(params.get("diffusion", False))}` expected `bool`')
+    if params.get("tracula", False) is None:
+        raise StyxValidationError("`tracula` must not be None")
+    if not isinstance(params["tracula"], bool):
+        raise StyxValidationError(f'`tracula` has the wrong type: Received `{type(params.get("tracula", False))}` expected `bool`')
+    if params.get("fsfast", False) is None:
+        raise StyxValidationError("`fsfast` must not be None")
+    if not isinstance(params["fsfast"], bool):
+        raise StyxValidationError(f'`fsfast` has the wrong type: Received `{type(params.get("fsfast", False))}` expected `bool`')
+    if params.get("multimodal", False) is None:
+        raise StyxValidationError("`multimodal` must not be None")
+    if not isinstance(params["multimodal"], bool):
+        raise StyxValidationError(f'`multimodal` has the wrong type: Received `{type(params.get("multimodal", False))}` expected `bool`')
+
+
 def test_tutorials_sh_cargs(
     params: TestTutorialsShParameters,
     execution: Execution,
@@ -215,6 +293,7 @@ def test_tutorials_sh_execute(
     Returns:
         NamedTuple of outputs (described in `TestTutorialsShOutputs`).
     """
+    test_tutorials_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TEST_TUTORIALS_SH_METADATA)
     params = execution.params(params)

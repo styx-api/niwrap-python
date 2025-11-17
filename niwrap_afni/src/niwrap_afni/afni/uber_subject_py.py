@@ -298,6 +298,153 @@ def uber_subject_py_params(
     return params
 
 
+def uber_subject_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UberSubjectPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qt_opts", None) is not None:
+        if not isinstance(params["qt_opts"], str):
+            raise StyxValidationError(f'`qt_opts` has the wrong type: Received `{type(params.get("qt_opts", None))}` expected `str | None`')
+    if params.get("svar", None) is not None:
+        if not isinstance(params["svar"], str):
+            raise StyxValidationError(f'`svar` has the wrong type: Received `{type(params.get("svar", None))}` expected `str | None`')
+    if params.get("cvar", None) is not None:
+        if not isinstance(params["cvar"], str):
+            raise StyxValidationError(f'`cvar` has the wrong type: Received `{type(params.get("cvar", None))}` expected `str | None`')
+    if params.get("no_gui", False) is None:
+        raise StyxValidationError("`no_gui` must not be None")
+    if not isinstance(params["no_gui"], bool):
+        raise StyxValidationError(f'`no_gui` has the wrong type: Received `{type(params.get("no_gui", False))}` expected `bool`')
+    if params.get("print_ap_command", False) is None:
+        raise StyxValidationError("`print_ap_command` must not be None")
+    if not isinstance(params["print_ap_command"], bool):
+        raise StyxValidationError(f'`print_ap_command` has the wrong type: Received `{type(params.get("print_ap_command", False))}` expected `bool`')
+    if params.get("save_ap_command", None) is not None:
+        if not isinstance(params["save_ap_command"], str):
+            raise StyxValidationError(f'`save_ap_command` has the wrong type: Received `{type(params.get("save_ap_command", None))}` expected `str | None`')
+    if params.get("exec_ap_command", False) is None:
+        raise StyxValidationError("`exec_ap_command` must not be None")
+    if not isinstance(params["exec_ap_command"], bool):
+        raise StyxValidationError(f'`exec_ap_command` has the wrong type: Received `{type(params.get("exec_ap_command", False))}` expected `bool`')
+    if params.get("exec_proc_script", False) is None:
+        raise StyxValidationError("`exec_proc_script` must not be None")
+    if not isinstance(params["exec_proc_script"], bool):
+        raise StyxValidationError(f'`exec_proc_script` has the wrong type: Received `{type(params.get("exec_proc_script", False))}` expected `bool`')
+    if params.get("align_cost", None) is not None:
+        if not isinstance(params["align_cost"], str):
+            raise StyxValidationError(f'`align_cost` has the wrong type: Received `{type(params.get("align_cost", None))}` expected `str | None`')
+    if params.get("align_giant_move", None) is not None:
+        if not isinstance(params["align_giant_move"], str):
+            raise StyxValidationError(f'`align_giant_move` has the wrong type: Received `{type(params.get("align_giant_move", None))}` expected `str | None`')
+    if params.get("align_opts_aea", None) is not None:
+        if not isinstance(params["align_opts_aea"], str):
+            raise StyxValidationError(f'`align_opts_aea` has the wrong type: Received `{type(params.get("align_opts_aea", None))}` expected `str | None`')
+    if params.get("anal_domain", None) is not None:
+        if not isinstance(params["anal_domain"], str):
+            raise StyxValidationError(f'`anal_domain` has the wrong type: Received `{type(params.get("anal_domain", None))}` expected `str | None`')
+    if params.get("anal_type", None) is not None:
+        if not isinstance(params["anal_type"], str):
+            raise StyxValidationError(f'`anal_type` has the wrong type: Received `{type(params.get("anal_type", None))}` expected `str | None`')
+    if params.get("anat", None) is not None:
+        if not isinstance(params["anat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`anat` has the wrong type: Received `{type(params.get("anat", None))}` expected `InputPathType | None`')
+    if params.get("anat_has_skull", None) is not None:
+        if not isinstance(params["anat_has_skull"], str):
+            raise StyxValidationError(f'`anat_has_skull` has the wrong type: Received `{type(params.get("anat_has_skull", None))}` expected `str | None`')
+    if params.get("blocks", None) is not None:
+        if not isinstance(params["blocks"], str):
+            raise StyxValidationError(f'`blocks` has the wrong type: Received `{type(params.get("blocks", None))}` expected `str | None`')
+    if params.get("blur_size", None) is not None:
+        if not isinstance(params["blur_size"], (float, int)):
+            raise StyxValidationError(f'`blur_size` has the wrong type: Received `{type(params.get("blur_size", None))}` expected `float | None`')
+    if params.get("epi", None) is not None:
+        if not isinstance(params["epi"], str):
+            raise StyxValidationError(f'`epi` has the wrong type: Received `{type(params.get("epi", None))}` expected `str | None`')
+    if params.get("epi_wildcard", None) is not None:
+        if not isinstance(params["epi_wildcard"], str):
+            raise StyxValidationError(f'`epi_wildcard` has the wrong type: Received `{type(params.get("epi_wildcard", None))}` expected `str | None`')
+    if params.get("gid", None) is not None:
+        if not isinstance(params["gid"], str):
+            raise StyxValidationError(f'`gid` has the wrong type: Received `{type(params.get("gid", None))}` expected `str | None`')
+    if params.get("gltsym", None) is not None:
+        if not isinstance(params["gltsym"], str):
+            raise StyxValidationError(f'`gltsym` has the wrong type: Received `{type(params.get("gltsym", None))}` expected `str | None`')
+    if params.get("gltsym_label", None) is not None:
+        if not isinstance(params["gltsym_label"], str):
+            raise StyxValidationError(f'`gltsym_label` has the wrong type: Received `{type(params.get("gltsym_label", None))}` expected `str | None`')
+    if params.get("motion_limit", None) is not None:
+        if not isinstance(params["motion_limit"], (float, int)):
+            raise StyxValidationError(f'`motion_limit` has the wrong type: Received `{type(params.get("motion_limit", None))}` expected `float | None`')
+    if params.get("outlier_limit", None) is not None:
+        if not isinstance(params["outlier_limit"], (float, int)):
+            raise StyxValidationError(f'`outlier_limit` has the wrong type: Received `{type(params.get("outlier_limit", None))}` expected `float | None`')
+    if params.get("regress_GOFORIT", None) is not None:
+        if not isinstance(params["regress_GOFORIT"], (float, int)):
+            raise StyxValidationError(f'`regress_GOFORIT` has the wrong type: Received `{type(params.get("regress_GOFORIT", None))}` expected `float | None`')
+    if params.get("regress_bandpass", None) is not None:
+        if not isinstance(params["regress_bandpass"], str):
+            raise StyxValidationError(f'`regress_bandpass` has the wrong type: Received `{type(params.get("regress_bandpass", None))}` expected `str | None`')
+    if params.get("regress_jobs", None) is not None:
+        if not isinstance(params["regress_jobs"], (float, int)):
+            raise StyxValidationError(f'`regress_jobs` has the wrong type: Received `{type(params.get("regress_jobs", None))}` expected `float | None`')
+    if params.get("regress_mot_deriv", None) is not None:
+        if not isinstance(params["regress_mot_deriv"], str):
+            raise StyxValidationError(f'`regress_mot_deriv` has the wrong type: Received `{type(params.get("regress_mot_deriv", None))}` expected `str | None`')
+    if params.get("regress_opts_3dD", None) is not None:
+        if not isinstance(params["regress_opts_3dD"], str):
+            raise StyxValidationError(f'`regress_opts_3dD` has the wrong type: Received `{type(params.get("regress_opts_3dD", None))}` expected `str | None`')
+    if params.get("reml_exec", None) is not None:
+        if not isinstance(params["reml_exec"], str):
+            raise StyxValidationError(f'`reml_exec` has the wrong type: Received `{type(params.get("reml_exec", None))}` expected `str | None`')
+    if params.get("run_clustsim", None) is not None:
+        if not isinstance(params["run_clustsim"], str):
+            raise StyxValidationError(f'`run_clustsim` has the wrong type: Received `{type(params.get("run_clustsim", None))}` expected `str | None`')
+    if params.get("sid", None) is not None:
+        if not isinstance(params["sid"], str):
+            raise StyxValidationError(f'`sid` has the wrong type: Received `{type(params.get("sid", None))}` expected `str | None`')
+    if params.get("stim", None) is not None:
+        if not isinstance(params["stim"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`stim` has the wrong type: Received `{type(params.get("stim", None))}` expected `InputPathType | None`')
+    if params.get("stim_basis", None) is not None:
+        if not isinstance(params["stim_basis"], str):
+            raise StyxValidationError(f'`stim_basis` has the wrong type: Received `{type(params.get("stim_basis", None))}` expected `str | None`')
+    if params.get("stim_label", None) is not None:
+        if not isinstance(params["stim_label"], str):
+            raise StyxValidationError(f'`stim_label` has the wrong type: Received `{type(params.get("stim_label", None))}` expected `str | None`')
+    if params.get("stim_type", None) is not None:
+        if not isinstance(params["stim_type"], str):
+            raise StyxValidationError(f'`stim_type` has the wrong type: Received `{type(params.get("stim_type", None))}` expected `str | None`')
+    if params.get("stim_wildcard", None) is not None:
+        if not isinstance(params["stim_wildcard"], str):
+            raise StyxValidationError(f'`stim_wildcard` has the wrong type: Received `{type(params.get("stim_wildcard", None))}` expected `str | None`')
+    if params.get("tcat_nfirst", None) is not None:
+        if not isinstance(params["tcat_nfirst"], (float, int)):
+            raise StyxValidationError(f'`tcat_nfirst` has the wrong type: Received `{type(params.get("tcat_nfirst", None))}` expected `float | None`')
+    if params.get("tlrc_base", None) is not None:
+        if not isinstance(params["tlrc_base"], str):
+            raise StyxValidationError(f'`tlrc_base` has the wrong type: Received `{type(params.get("tlrc_base", None))}` expected `str | None`')
+    if params.get("tlrc_ok_maxite", None) is not None:
+        if not isinstance(params["tlrc_ok_maxite"], str):
+            raise StyxValidationError(f'`tlrc_ok_maxite` has the wrong type: Received `{type(params.get("tlrc_ok_maxite", None))}` expected `str | None`')
+    if params.get("tlrc_opts_at", None) is not None:
+        if not isinstance(params["tlrc_opts_at"], str):
+            raise StyxValidationError(f'`tlrc_opts_at` has the wrong type: Received `{type(params.get("tlrc_opts_at", None))}` expected `str | None`')
+    if params.get("volreg_base", None) is not None:
+        if not isinstance(params["volreg_base"], str):
+            raise StyxValidationError(f'`volreg_base` has the wrong type: Received `{type(params.get("volreg_base", None))}` expected `str | None`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], str):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `str | None`')
+
+
 def uber_subject_py_cargs(
     params: UberSubjectPyParameters,
     execution: Execution,
@@ -557,6 +704,7 @@ def uber_subject_py_execute(
     Returns:
         NamedTuple of outputs (described in `UberSubjectPyOutputs`).
     """
+    uber_subject_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UBER_SUBJECT_PY_METADATA)
     params = execution.params(params)

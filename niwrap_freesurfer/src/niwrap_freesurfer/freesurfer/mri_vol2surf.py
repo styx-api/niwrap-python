@@ -101,6 +101,53 @@ def mri_vol2surf_params(
     return params
 
 
+def mri_vol2surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriVol2surfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("registration_file", None) is None:
+        raise StyxValidationError("`registration_file` must not be None")
+    if not isinstance(params["registration_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`registration_file` has the wrong type: Received `{type(params.get("registration_file", None))}` expected `InputPathType`')
+    if params.get("output_path", None) is None:
+        raise StyxValidationError("`output_path` must not be None")
+    if not isinstance(params["output_path"], str):
+        raise StyxValidationError(f'`output_path` has the wrong type: Received `{type(params.get("output_path", None))}` expected `str`')
+    if params.get("reference_volume", None) is not None:
+        if not isinstance(params["reference_volume"], str):
+            raise StyxValidationError(f'`reference_volume` has the wrong type: Received `{type(params.get("reference_volume", None))}` expected `str | None`')
+    if params.get("regheader_subject", None) is not None:
+        if not isinstance(params["regheader_subject"], str):
+            raise StyxValidationError(f'`regheader_subject` has the wrong type: Received `{type(params.get("regheader_subject", None))}` expected `str | None`')
+    if params.get("mni152reg_flag", False) is None:
+        raise StyxValidationError("`mni152reg_flag` must not be None")
+    if not isinstance(params["mni152reg_flag"], bool):
+        raise StyxValidationError(f'`mni152reg_flag` has the wrong type: Received `{type(params.get("mni152reg_flag", False))}` expected `bool`')
+    if params.get("target_subject", None) is not None:
+        if not isinstance(params["target_subject"], str):
+            raise StyxValidationError(f'`target_subject` has the wrong type: Received `{type(params.get("target_subject", None))}` expected `str | None`')
+    if params.get("hemisphere", None) is not None:
+        if not isinstance(params["hemisphere"], str):
+            raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `typing.Literal["lh", "rh"] | None`')
+        if params["hemisphere"] not in ["lh", "rh"]:
+            raise StyxValidationError("Parameter `hemisphere` must be one of [\"lh\", \"rh\"]")
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], str):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str | None`')
+
+
 def mri_vol2surf_cargs(
     params: MriVol2surfParameters,
     execution: Execution,
@@ -199,6 +246,7 @@ def mri_vol2surf_execute(
     Returns:
         NamedTuple of outputs (described in `MriVol2surfOutputs`).
     """
+    mri_vol2surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_VOL2SURF_METADATA)
     params = execution.params(params)

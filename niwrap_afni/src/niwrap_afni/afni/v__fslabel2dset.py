@@ -70,6 +70,39 @@ def v__fslabel2dset_params(
     return params
 
 
+def v__fslabel2dset_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VFslabel2dsetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fs_label_file", None) is None:
+        raise StyxValidationError("`fs_label_file` must not be None")
+    if not isinstance(params["fs_label_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fs_label_file` has the wrong type: Received `{type(params.get("fs_label_file", None))}` expected `InputPathType`')
+    if params.get("val", None) is not None:
+        if not isinstance(params["val"], (float, int)):
+            raise StyxValidationError(f'`val` has the wrong type: Received `{type(params.get("val", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("keep_tmp", False) is None:
+        raise StyxValidationError("`keep_tmp` must not be None")
+    if not isinstance(params["keep_tmp"], bool):
+        raise StyxValidationError(f'`keep_tmp` has the wrong type: Received `{type(params.get("keep_tmp", False))}` expected `bool`')
+
+
 def v__fslabel2dset_cargs(
     params: VFslabel2dsetParameters,
     execution: Execution,
@@ -142,6 +175,7 @@ def v__fslabel2dset_execute(
     Returns:
         NamedTuple of outputs (described in `VFslabel2dsetOutputs`).
     """
+    v__fslabel2dset_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__FSLABEL2DSET_METADATA)
     params = execution.params(params)

@@ -92,6 +92,51 @@ def export_gcam_params(
     return params
 
 
+def export_gcam_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExportGcamParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fixed", None) is None:
+        raise StyxValidationError("`fixed` must not be None")
+    if not isinstance(params["fixed"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed` has the wrong type: Received `{type(params.get("fixed", None))}` expected `InputPathType`')
+    if params.get("moving", None) is None:
+        raise StyxValidationError("`moving` must not be None")
+    if not isinstance(params["moving"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving` has the wrong type: Received `{type(params.get("moving", None))}` expected `InputPathType`')
+    if params.get("morph", None) is None:
+        raise StyxValidationError("`morph` must not be None")
+    if not isinstance(params["morph"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`morph` has the wrong type: Received `{type(params.get("morph", None))}` expected `InputPathType`')
+    if params.get("out_gcam", None) is None:
+        raise StyxValidationError("`out_gcam` must not be None")
+    if not isinstance(params["out_gcam"], str):
+        raise StyxValidationError(f'`out_gcam` has the wrong type: Received `{type(params.get("out_gcam", None))}` expected `str`')
+    if params.get("zlib_buffer", None) is not None:
+        if not isinstance(params["zlib_buffer"], (float, int)):
+            raise StyxValidationError(f'`zlib_buffer` has the wrong type: Received `{type(params.get("zlib_buffer", None))}` expected `float | None`')
+    if params.get("bbox_threshold", None) is not None:
+        if not isinstance(params["bbox_threshold"], (float, int)):
+            raise StyxValidationError(f'`bbox_threshold` has the wrong type: Received `{type(params.get("bbox_threshold", None))}` expected `float | None`')
+    if params.get("interp_method", None) is not None:
+        if not isinstance(params["interp_method"], str):
+            raise StyxValidationError(f'`interp_method` has the wrong type: Received `{type(params.get("interp_method", None))}` expected `typing.Literal["linear", "nearest"] | None`')
+        if params["interp_method"] not in ["linear", "nearest"]:
+            raise StyxValidationError("Parameter `interp_method` must be one of [\"linear\", \"nearest\"]")
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+
+
 def export_gcam_cargs(
     params: ExportGcamParameters,
     execution: Execution,
@@ -183,6 +228,7 @@ def export_gcam_execute(
     Returns:
         NamedTuple of outputs (described in `ExportGcamOutputs`).
     """
+    export_gcam_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EXPORT_GCAM_METADATA)
     params = execution.params(params)

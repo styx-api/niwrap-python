@@ -119,6 +119,60 @@ def mri_vol2label_params(
     return params
 
 
+def mri_vol2label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriVol2labelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("label_id", None) is not None:
+        if not isinstance(params["label_id"], (float, int)):
+            raise StyxValidationError(f'`label_id` has the wrong type: Received `{type(params.get("label_id", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("label_file", None) is None:
+        raise StyxValidationError("`label_file` must not be None")
+    if not isinstance(params["label_file"], str):
+        raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `str`')
+    if params.get("vol_file", None) is not None:
+        if not isinstance(params["vol_file"], str):
+            raise StyxValidationError(f'`vol_file` has the wrong type: Received `{type(params.get("vol_file", None))}` expected `str | None`')
+    if params.get("surf_subject_hemi", None) is not None:
+        if not isinstance(params["surf_subject_hemi"], str):
+            raise StyxValidationError(f'`surf_subject_hemi` has the wrong type: Received `{type(params.get("surf_subject_hemi", None))}` expected `str | None`')
+    if params.get("surf_path", None) is not None:
+        if not isinstance(params["surf_path"], str):
+            raise StyxValidationError(f'`surf_path` has the wrong type: Received `{type(params.get("surf_path", None))}` expected `str | None`')
+    if params.get("opt_params", None) is not None:
+        if not isinstance(params["opt_params"], str):
+            raise StyxValidationError(f'`opt_params` has the wrong type: Received `{type(params.get("opt_params", None))}` expected `str | None`')
+    if params.get("remove_holes", False) is None:
+        raise StyxValidationError("`remove_holes` must not be None")
+    if not isinstance(params["remove_holes"], bool):
+        raise StyxValidationError(f'`remove_holes` has the wrong type: Received `{type(params.get("remove_holes", False))}` expected `bool`')
+    if params.get("dilations", None) is not None:
+        if not isinstance(params["dilations"], (float, int)):
+            raise StyxValidationError(f'`dilations` has the wrong type: Received `{type(params.get("dilations", None))}` expected `float | None`')
+    if params.get("erosions", None) is not None:
+        if not isinstance(params["erosions"], (float, int)):
+            raise StyxValidationError(f'`erosions` has the wrong type: Received `{type(params.get("erosions", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_vol2label_cargs(
     params: MriVol2labelParameters,
     execution: Execution,
@@ -230,6 +284,7 @@ def mri_vol2label_execute(
     Returns:
         NamedTuple of outputs (described in `MriVol2labelOutputs`).
     """
+    mri_vol2label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_VOL2LABEL_METADATA)
     params = execution.params(params)

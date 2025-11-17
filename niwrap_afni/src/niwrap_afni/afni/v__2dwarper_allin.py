@@ -65,6 +65,30 @@ def v__2dwarper_allin_params(
     return params
 
 
+def v__2dwarper_allin_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V2dwarperAllinParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_prefix", None) is None:
+        raise StyxValidationError("`input_prefix` must not be None")
+    if not isinstance(params["input_prefix"], str):
+        raise StyxValidationError(f'`input_prefix` has the wrong type: Received `{type(params.get("input_prefix", None))}` expected `str`')
+    if params.get("mask_prefix", None) is not None:
+        if not isinstance(params["mask_prefix"], str):
+            raise StyxValidationError(f'`mask_prefix` has the wrong type: Received `{type(params.get("mask_prefix", None))}` expected `str | None`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+
+
 def v__2dwarper_allin_cargs(
     params: V2dwarperAllinParameters,
     execution: Execution,
@@ -135,6 +159,7 @@ def v__2dwarper_allin_execute(
     Returns:
         NamedTuple of outputs (described in `V2dwarperAllinOutputs`).
     """
+    v__2dwarper_allin_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__2DWARPER_ALLIN_METADATA)
     params = execution.params(params)

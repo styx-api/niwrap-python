@@ -59,6 +59,35 @@ def mri_log_likelihood_params(
     return params
 
 
+def mri_log_likelihood_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriLogLikelihoodParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_brain_images", None) is None:
+        raise StyxValidationError("`input_brain_images` must not be None")
+    if not isinstance(params["input_brain_images"], list):
+        raise StyxValidationError(f'`input_brain_images` has the wrong type: Received `{type(params.get("input_brain_images", None))}` expected `list[InputPathType]`')
+    for e in params["input_brain_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_brain_images` has the wrong type: Received `{type(params.get("input_brain_images", None))}` expected `list[InputPathType]`')
+    if params.get("atlas_file", None) is None:
+        raise StyxValidationError("`atlas_file` must not be None")
+    if not isinstance(params["atlas_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`atlas_file` has the wrong type: Received `{type(params.get("atlas_file", None))}` expected `InputPathType`')
+    if params.get("transform_file", None) is None:
+        raise StyxValidationError("`transform_file` must not be None")
+    if not isinstance(params["transform_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType`')
+
+
 def mri_log_likelihood_cargs(
     params: MriLogLikelihoodParameters,
     execution: Execution,
@@ -118,6 +147,7 @@ def mri_log_likelihood_execute(
     Returns:
         NamedTuple of outputs (described in `MriLogLikelihoodOutputs`).
     """
+    mri_log_likelihood_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_LOG_LIKELIHOOD_METADATA)
     params = execution.params(params)

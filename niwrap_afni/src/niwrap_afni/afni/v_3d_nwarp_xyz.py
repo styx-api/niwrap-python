@@ -66,6 +66,36 @@ def v_3d_nwarp_xyz_params(
     return params
 
 
+def v_3d_nwarp_xyz_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNwarpXyzParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("xyzfile", None) is None:
+        raise StyxValidationError("`xyzfile` must not be None")
+    if not isinstance(params["xyzfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`xyzfile` has the wrong type: Received `{type(params.get("xyzfile", None))}` expected `InputPathType`')
+    if params.get("warp_spec", None) is None:
+        raise StyxValidationError("`warp_spec` must not be None")
+    if not isinstance(params["warp_spec"], str):
+        raise StyxValidationError(f'`warp_spec` has the wrong type: Received `{type(params.get("warp_spec", None))}` expected `str`')
+    if params.get("iwarp", False) is None:
+        raise StyxValidationError("`iwarp` must not be None")
+    if not isinstance(params["iwarp"], bool):
+        raise StyxValidationError(f'`iwarp` has the wrong type: Received `{type(params.get("iwarp", False))}` expected `bool`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def v_3d_nwarp_xyz_cargs(
     params: V3dNwarpXyzParameters,
     execution: Execution,
@@ -132,6 +162,7 @@ def v_3d_nwarp_xyz_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpXyzOutputs`).
     """
+    v_3d_nwarp_xyz_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NWARP_XYZ_METADATA)
     params = execution.params(params)

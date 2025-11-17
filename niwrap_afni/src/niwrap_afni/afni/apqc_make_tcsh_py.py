@@ -79,6 +79,41 @@ def apqc_make_tcsh_py_params(
     return params
 
 
+def apqc_make_tcsh_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ApqcMakeTcshPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("uvar_json", None) is None:
+        raise StyxValidationError("`uvar_json` must not be None")
+    if not isinstance(params["uvar_json"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`uvar_json` has the wrong type: Received `{type(params.get("uvar_json", None))}` expected `InputPathType`')
+    if params.get("subj_dir", None) is None:
+        raise StyxValidationError("`subj_dir` must not be None")
+    if not isinstance(params["subj_dir"], str):
+        raise StyxValidationError(f'`subj_dir` has the wrong type: Received `{type(params.get("subj_dir", None))}` expected `str`')
+    if params.get("review_style", None) is not None:
+        if not isinstance(params["review_style"], str):
+            raise StyxValidationError(f'`review_style` has the wrong type: Received `{type(params.get("review_style", None))}` expected `str | None`')
+    if params.get("mot_grayplot_off", False) is None:
+        raise StyxValidationError("`mot_grayplot_off` must not be None")
+    if not isinstance(params["mot_grayplot_off"], bool):
+        raise StyxValidationError(f'`mot_grayplot_off` has the wrong type: Received `{type(params.get("mot_grayplot_off", False))}` expected `bool`')
+    if params.get("vstat_list", None) is not None:
+        if not isinstance(params["vstat_list"], list):
+            raise StyxValidationError(f'`vstat_list` has the wrong type: Received `{type(params.get("vstat_list", None))}` expected `list[str] | None`')
+        for e in params["vstat_list"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`vstat_list` has the wrong type: Received `{type(params.get("vstat_list", None))}` expected `list[str] | None`')
+
+
 def apqc_make_tcsh_py_cargs(
     params: ApqcMakeTcshPyParameters,
     execution: Execution,
@@ -157,6 +192,7 @@ def apqc_make_tcsh_py_execute(
     Returns:
         NamedTuple of outputs (described in `ApqcMakeTcshPyOutputs`).
     """
+    apqc_make_tcsh_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APQC_MAKE_TCSH_PY_METADATA)
     params = execution.params(params)

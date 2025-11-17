@@ -76,6 +76,38 @@ def mris_remove_intersection_params(
     return params
 
 
+def mris_remove_intersection_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisRemoveIntersectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface_in_file", None) is None:
+        raise StyxValidationError("`surface_in_file` must not be None")
+    if not isinstance(params["surface_in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface_in_file` has the wrong type: Received `{type(params.get("surface_in_file", None))}` expected `InputPathType`')
+    if params.get("corrected_surface_out_file", None) is None:
+        raise StyxValidationError("`corrected_surface_out_file` must not be None")
+    if not isinstance(params["corrected_surface_out_file"], str):
+        raise StyxValidationError(f'`corrected_surface_out_file` has the wrong type: Received `{type(params.get("corrected_surface_out_file", None))}` expected `str`')
+    if params.get("fill_holes", False) is None:
+        raise StyxValidationError("`fill_holes` must not be None")
+    if not isinstance(params["fill_holes"], bool):
+        raise StyxValidationError(f'`fill_holes` has the wrong type: Received `{type(params.get("fill_holes", False))}` expected `bool`')
+    if params.get("map_option", None) is not None:
+        if not isinstance(params["map_option"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`map_option` has the wrong type: Received `{type(params.get("map_option", None))}` expected `InputPathType | None`')
+    if params.get("projdistmm", None) is not None:
+        if not isinstance(params["projdistmm"], (float, int)):
+            raise StyxValidationError(f'`projdistmm` has the wrong type: Received `{type(params.get("projdistmm", None))}` expected `float | None`')
+
+
 def mris_remove_intersection_cargs(
     params: MrisRemoveIntersectionParameters,
     execution: Execution,
@@ -145,6 +177,7 @@ def mris_remove_intersection_execute(
     Returns:
         NamedTuple of outputs (described in `MrisRemoveIntersectionOutputs`).
     """
+    mris_remove_intersection_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_REMOVE_INTERSECTION_METADATA)
     params = execution.params(params)

@@ -56,6 +56,31 @@ def make_average_subcort_params(
     return params
 
 
+def make_average_subcort_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeAverageSubcortParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def make_average_subcort_cargs(
     params: MakeAverageSubcortParameters,
     execution: Execution,
@@ -120,6 +145,7 @@ def make_average_subcort_execute(
     Returns:
         NamedTuple of outputs (described in `MakeAverageSubcortOutputs`).
     """
+    make_average_subcort_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_AVERAGE_SUBCORT_METADATA)
     params = execution.params(params)

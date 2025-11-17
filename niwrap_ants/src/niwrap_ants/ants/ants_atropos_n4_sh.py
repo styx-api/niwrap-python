@@ -105,6 +105,26 @@ def ants_atropos_n4_sh_segmentation_priors_params(
     return params
 
 
+def ants_atropos_n4_sh_segmentation_priors_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAtroposN4ShSegmentationPriorsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("segmentation_priors_pattern", None) is not None:
+        if not isinstance(params["segmentation_priors_pattern"], str):
+            raise StyxValidationError(f'`segmentation_priors_pattern` has the wrong type: Received `{type(params.get("segmentation_priors_pattern", None))}` expected `str | None`')
+    if params.get("segmentation_priors_folder", None) is not None:
+        if not isinstance(params["segmentation_priors_folder"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation_priors_folder` has the wrong type: Received `{type(params.get("segmentation_priors_folder", None))}` expected `InputPathType | None`')
+
+
 def ants_atropos_n4_sh_segmentation_priors_cargs(
     params: AntsAtroposN4ShSegmentationPriorsParameters,
     execution: Execution,
@@ -277,6 +297,102 @@ def ants_atropos_n4_sh_params(
     return params
 
 
+def ants_atropos_n4_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsAtroposN4ShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `typing.Literal[2, 3]`')
+    if params["image_dimension"] not in [2, 3]:
+        raise StyxValidationError("Parameter `image_dimension` must be one of [2, 3]")
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("mask_image", None) is None:
+        raise StyxValidationError("`mask_image` must not be None")
+    if not isinstance(params["mask_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType`')
+    if params.get("number_of_classes", None) is None:
+        raise StyxValidationError("`number_of_classes` must not be None")
+    if not isinstance(params["number_of_classes"], int):
+        raise StyxValidationError(f'`number_of_classes` has the wrong type: Received `{type(params.get("number_of_classes", None))}` expected `int`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("max_n4_atropos_iterations", None) is not None:
+        if not isinstance(params["max_n4_atropos_iterations"], int):
+            raise StyxValidationError(f'`max_n4_atropos_iterations` has the wrong type: Received `{type(params.get("max_n4_atropos_iterations", None))}` expected `int | None`')
+        if params["max_n4_atropos_iterations"] >= 1:
+            raise StyxValidationError("Parameter `max_n4_atropos_iterations` must be at least 1")
+    if params.get("max_atropos_iterations", None) is not None:
+        if not isinstance(params["max_atropos_iterations"], int):
+            raise StyxValidationError(f'`max_atropos_iterations` has the wrong type: Received `{type(params.get("max_atropos_iterations", None))}` expected `int | None`')
+        if params["max_atropos_iterations"] >= 1:
+            raise StyxValidationError("Parameter `max_atropos_iterations` must be at least 1")
+    if params.get("segmentation_priors", None) is None:
+        raise StyxValidationError("`segmentation_priors` must not be None")
+    ants_atropos_n4_sh_segmentation_priors_validate(params["segmentation_priors"])
+    if params.get("mrf", None) is not None:
+        if not isinstance(params["mrf"], str):
+            raise StyxValidationError(f'`mrf` has the wrong type: Received `{type(params.get("mrf", None))}` expected `str | None`')
+    if params.get("denoise_anatomical_images", None) is not None:
+        if not isinstance(params["denoise_anatomical_images"], bool):
+            raise StyxValidationError(f'`denoise_anatomical_images` has the wrong type: Received `{type(params.get("denoise_anatomical_images", None))}` expected `bool | None`')
+    if params.get("posterior_formulation", None) is not None:
+        if not isinstance(params["posterior_formulation"], str):
+            raise StyxValidationError(f'`posterior_formulation` has the wrong type: Received `{type(params.get("posterior_formulation", None))}` expected `typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None`')
+        if params["posterior_formulation"] not in ["Socrates[ 1 ]", "Aristotle[ 1 ]"]:
+            raise StyxValidationError("Parameter `posterior_formulation` must be one of [\"Socrates[ 1 ]\", \"Aristotle[ 1 ]\"]")
+    if params.get("label_propagation", None) is not None:
+        if not isinstance(params["label_propagation"], str):
+            raise StyxValidationError(f'`label_propagation` has the wrong type: Received `{type(params.get("label_propagation", None))}` expected `str | None`')
+    if params.get("posterior_label_for_n4_weight_mask", None) is not None:
+        if not isinstance(params["posterior_label_for_n4_weight_mask"], str):
+            raise StyxValidationError(f'`posterior_label_for_n4_weight_mask` has the wrong type: Received `{type(params.get("posterior_label_for_n4_weight_mask", None))}` expected `str | None`')
+    if params.get("image_file_suffix", None) is not None:
+        if not isinstance(params["image_file_suffix"], str):
+            raise StyxValidationError(f'`image_file_suffix` has the wrong type: Received `{type(params.get("image_file_suffix", None))}` expected `str | None`')
+    if params.get("keep_temporary_files", None) is not None:
+        if not isinstance(params["keep_temporary_files"], bool):
+            raise StyxValidationError(f'`keep_temporary_files` has the wrong type: Received `{type(params.get("keep_temporary_files", None))}` expected `bool | None`')
+    if params.get("use_random_seeding", None) is not None:
+        if not isinstance(params["use_random_seeding"], bool):
+            raise StyxValidationError(f'`use_random_seeding` has the wrong type: Received `{type(params.get("use_random_seeding", None))}` expected `bool | None`')
+    if params.get("atropos_segmentation_prior_weight", None) is not None:
+        if not isinstance(params["atropos_segmentation_prior_weight"], (float, int)):
+            raise StyxValidationError(f'`atropos_segmentation_prior_weight` has the wrong type: Received `{type(params.get("atropos_segmentation_prior_weight", None))}` expected `float | None`')
+    if params.get("n4_convergence", None) is not None:
+        if not isinstance(params["n4_convergence"], str):
+            raise StyxValidationError(f'`n4_convergence` has the wrong type: Received `{type(params.get("n4_convergence", None))}` expected `str | None`')
+    if params.get("n4_shrink_factor", None) is not None:
+        if not isinstance(params["n4_shrink_factor"], int):
+            raise StyxValidationError(f'`n4_shrink_factor` has the wrong type: Received `{type(params.get("n4_shrink_factor", None))}` expected `int | None`')
+    if params.get("n4_bspline_params", None) is not None:
+        if not isinstance(params["n4_bspline_params"], str):
+            raise StyxValidationError(f'`n4_bspline_params` has the wrong type: Received `{type(params.get("n4_bspline_params", None))}` expected `str | None`')
+    if params.get("atropos_segmentation_icm", None) is not None:
+        if not isinstance(params["atropos_segmentation_icm"], str):
+            raise StyxValidationError(f'`atropos_segmentation_icm` has the wrong type: Received `{type(params.get("atropos_segmentation_icm", None))}` expected `str | None`')
+    if params.get("atropos_segmentation_use_euclidean_distance", None) is not None:
+        if not isinstance(params["atropos_segmentation_use_euclidean_distance"], bool):
+            raise StyxValidationError(f'`atropos_segmentation_use_euclidean_distance` has the wrong type: Received `{type(params.get("atropos_segmentation_use_euclidean_distance", None))}` expected `bool | None`')
+    if params.get("test_debug_mode", None) is not None:
+        if not isinstance(params["test_debug_mode"], int):
+            raise StyxValidationError(f'`test_debug_mode` has the wrong type: Received `{type(params.get("test_debug_mode", None))}` expected `int | None`')
+
+
 def ants_atropos_n4_sh_cargs(
     params: AntsAtroposN4ShParameters,
     execution: Execution,
@@ -446,6 +562,7 @@ def ants_atropos_n4_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsAtroposN4ShOutputs`).
     """
+    ants_atropos_n4_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_ATROPOS_N4_SH_METADATA)
     params = execution.params(params)

@@ -127,6 +127,71 @@ def v_3d_tsmooth_params(
     return params
 
 
+def v_3d_tsmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTsmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("datum_type", None) is not None:
+        if not isinstance(params["datum_type"], str):
+            raise StyxValidationError(f'`datum_type` has the wrong type: Received `{type(params.get("datum_type", None))}` expected `str | None`')
+    if params.get("lin_filter", False) is None:
+        raise StyxValidationError("`lin_filter` must not be None")
+    if not isinstance(params["lin_filter"], bool):
+        raise StyxValidationError(f'`lin_filter` has the wrong type: Received `{type(params.get("lin_filter", False))}` expected `bool`')
+    if params.get("med_filter", False) is None:
+        raise StyxValidationError("`med_filter` must not be None")
+    if not isinstance(params["med_filter"], bool):
+        raise StyxValidationError(f'`med_filter` has the wrong type: Received `{type(params.get("med_filter", False))}` expected `bool`')
+    if params.get("osf_filter", False) is None:
+        raise StyxValidationError("`osf_filter` must not be None")
+    if not isinstance(params["osf_filter"], bool):
+        raise StyxValidationError(f'`osf_filter` has the wrong type: Received `{type(params.get("osf_filter", False))}` expected `bool`')
+    if params.get("lin_filter_custom", None) is not None:
+        if not isinstance(params["lin_filter_custom"], (float, int)):
+            raise StyxValidationError(f'`lin_filter_custom` has the wrong type: Received `{type(params.get("lin_filter_custom", None))}` expected `float | None`')
+        if 0 <= params["lin_filter_custom"] <= 1:
+            raise StyxValidationError("Parameter `lin_filter_custom` must be between 0 and 1 (inclusive)")
+    if params.get("hamming", None) is not None:
+        if not isinstance(params["hamming"], int):
+            raise StyxValidationError(f'`hamming` has the wrong type: Received `{type(params.get("hamming", None))}` expected `int | None`')
+    if params.get("blackman", None) is not None:
+        if not isinstance(params["blackman"], int):
+            raise StyxValidationError(f'`blackman` has the wrong type: Received `{type(params.get("blackman", None))}` expected `int | None`')
+    if params.get("custom_filter", None) is not None:
+        if not isinstance(params["custom_filter"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`custom_filter` has the wrong type: Received `{type(params.get("custom_filter", None))}` expected `InputPathType | None`')
+    if params.get("extend", False) is None:
+        raise StyxValidationError("`extend` must not be None")
+    if not isinstance(params["extend"], bool):
+        raise StyxValidationError(f'`extend` has the wrong type: Received `{type(params.get("extend", False))}` expected `bool`')
+    if params.get("zero", False) is None:
+        raise StyxValidationError("`zero` must not be None")
+    if not isinstance(params["zero"], bool):
+        raise StyxValidationError(f'`zero` has the wrong type: Received `{type(params.get("zero", False))}` expected `bool`')
+    if params.get("trend", False) is None:
+        raise StyxValidationError("`trend` must not be None")
+    if not isinstance(params["trend"], bool):
+        raise StyxValidationError(f'`trend` has the wrong type: Received `{type(params.get("trend", False))}` expected `bool`')
+    if params.get("adaptive", None) is not None:
+        if not isinstance(params["adaptive"], int):
+            raise StyxValidationError(f'`adaptive` has the wrong type: Received `{type(params.get("adaptive", None))}` expected `int | None`')
+
+
 def v_3d_tsmooth_cargs(
     params: V3dTsmoothParameters,
     execution: Execution,
@@ -233,6 +298,7 @@ def v_3d_tsmooth_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTsmoothOutputs`).
     """
+    v_3d_tsmooth_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TSMOOTH_METADATA)
     params = execution.params(params)

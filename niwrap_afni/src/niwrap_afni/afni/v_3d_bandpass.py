@@ -154,6 +154,84 @@ def v_3d_bandpass_params(
     return params
 
 
+def v_3d_bandpass_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dBandpassParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("blur", None) is not None:
+        if not isinstance(params["blur"], (float, int)):
+            raise StyxValidationError(f'`blur` has the wrong type: Received `{type(params.get("blur", None))}` expected `float | None`')
+    if params.get("despike", False) is None:
+        raise StyxValidationError("`despike` must not be None")
+    if not isinstance(params["despike"], bool):
+        raise StyxValidationError(f'`despike` has the wrong type: Received `{type(params.get("despike", False))}` expected `bool`')
+    if params.get("highpass", None) is None:
+        raise StyxValidationError("`highpass` must not be None")
+    if not isinstance(params["highpass"], (float, int)):
+        raise StyxValidationError(f'`highpass` has the wrong type: Received `{type(params.get("highpass", None))}` expected `float`')
+    if params.get("lowpass", None) is None:
+        raise StyxValidationError("`lowpass` must not be None")
+    if not isinstance(params["lowpass"], (float, int)):
+        raise StyxValidationError(f'`lowpass` has the wrong type: Received `{type(params.get("lowpass", None))}` expected `float`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("localPV", None) is not None:
+        if not isinstance(params["localPV"], (float, int)):
+            raise StyxValidationError(f'`localPV` has the wrong type: Received `{type(params.get("localPV", None))}` expected `float | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("nfft", None) is not None:
+        if not isinstance(params["nfft"], int):
+            raise StyxValidationError(f'`nfft` has the wrong type: Received `{type(params.get("nfft", None))}` expected `int | None`')
+    if params.get("no_detrend", False) is None:
+        raise StyxValidationError("`no_detrend` must not be None")
+    if not isinstance(params["no_detrend"], bool):
+        raise StyxValidationError(f'`no_detrend` has the wrong type: Received `{type(params.get("no_detrend", False))}` expected `bool`')
+    if params.get("normalize", False) is None:
+        raise StyxValidationError("`normalize` must not be None")
+    if not isinstance(params["normalize"], bool):
+        raise StyxValidationError(f'`normalize` has the wrong type: Received `{type(params.get("normalize", False))}` expected `bool`')
+    if params.get("notrans", False) is None:
+        raise StyxValidationError("`notrans` must not be None")
+    if not isinstance(params["notrans"], bool):
+        raise StyxValidationError(f'`notrans` has the wrong type: Received `{type(params.get("notrans", False))}` expected `bool`')
+    if params.get("orthogonalize_dset", None) is not None:
+        if not isinstance(params["orthogonalize_dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`orthogonalize_dset` has the wrong type: Received `{type(params.get("orthogonalize_dset", None))}` expected `InputPathType | None`')
+    if params.get("orthogonalize_file", None) is not None:
+        if not isinstance(params["orthogonalize_file"], list):
+            raise StyxValidationError(f'`orthogonalize_file` has the wrong type: Received `{type(params.get("orthogonalize_file", None))}` expected `list[InputPathType] | None`')
+        for e in params["orthogonalize_file"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`orthogonalize_file` has the wrong type: Received `{type(params.get("orthogonalize_file", None))}` expected `list[InputPathType] | None`')
+    if params.get("outputtype", None) is not None:
+        if not isinstance(params["outputtype"], str):
+            raise StyxValidationError(f'`outputtype` has the wrong type: Received `{type(params.get("outputtype", None))}` expected `typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None`')
+        if params["outputtype"] not in ["NIFTI", "AFNI", "NIFTI_GZ"]:
+            raise StyxValidationError("Parameter `outputtype` must be one of [\"NIFTI\", \"AFNI\", \"NIFTI_GZ\"]")
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+
+
 def v_3d_bandpass_cargs(
     params: V3dBandpassParameters,
     execution: Execution,
@@ -267,6 +345,7 @@ def v_3d_bandpass_execute(
     Returns:
         NamedTuple of outputs (described in `V3dBandpassOutputs`).
     """
+    v_3d_bandpass_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_BANDPASS_METADATA)
     params = execution.params(params)

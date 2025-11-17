@@ -159,6 +159,106 @@ def mri_gtmseg_params(
     return params
 
 
+def mri_gtmseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriGtmsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("source_subject", None) is None:
+        raise StyxValidationError("`source_subject` must not be None")
+    if not isinstance(params["source_subject"], str):
+        raise StyxValidationError(f'`source_subject` has the wrong type: Received `{type(params.get("source_subject", None))}` expected `str`')
+    if params.get("internal_usf", None) is not None:
+        if not isinstance(params["internal_usf"], (float, int)):
+            raise StyxValidationError(f'`internal_usf` has the wrong type: Received `{type(params.get("internal_usf", None))}` expected `float | None`')
+    if params.get("apas_file", None) is not None:
+        if not isinstance(params["apas_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`apas_file` has the wrong type: Received `{type(params.get("apas_file", None))}` expected `InputPathType | None`')
+    if params.get("context_annotation", None) is not None:
+        if not isinstance(params["context_annotation"], list):
+            raise StyxValidationError(f'`context_annotation` has the wrong type: Received `{type(params.get("context_annotation", None))}` expected `list[str] | None`')
+        if len(params["context_annotation"]) == 3:
+            raise StyxValidationError("Parameter `context_annotation` must contain exactly 3 elements")
+        for e in params["context_annotation"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`context_annotation` has the wrong type: Received `{type(params.get("context_annotation", None))}` expected `list[str] | None`')
+    if params.get("subseg_wm", False) is None:
+        raise StyxValidationError("`subseg_wm` must not be None")
+    if not isinstance(params["subseg_wm"], bool):
+        raise StyxValidationError(f'`subseg_wm` has the wrong type: Received `{type(params.get("subseg_wm", False))}` expected `bool`')
+    if params.get("wm_annotation", None) is not None:
+        if not isinstance(params["wm_annotation"], list):
+            raise StyxValidationError(f'`wm_annotation` has the wrong type: Received `{type(params.get("wm_annotation", None))}` expected `list[str] | None`')
+        if len(params["wm_annotation"]) == 3:
+            raise StyxValidationError("Parameter `wm_annotation` must contain exactly 3 elements")
+        for e in params["wm_annotation"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`wm_annotation` has the wrong type: Received `{type(params.get("wm_annotation", None))}` expected `list[str] | None`')
+    if params.get("dmax", None) is not None:
+        if not isinstance(params["dmax"], (float, int)):
+            raise StyxValidationError(f'`dmax` has the wrong type: Received `{type(params.get("dmax", None))}` expected `float | None`')
+    if params.get("keep_hypo", False) is None:
+        raise StyxValidationError("`keep_hypo` must not be None")
+    if not isinstance(params["keep_hypo"], bool):
+        raise StyxValidationError(f'`keep_hypo` has the wrong type: Received `{type(params.get("keep_hypo", False))}` expected `bool`')
+    if params.get("keep_cc", False) is None:
+        raise StyxValidationError("`keep_cc` must not be None")
+    if not isinstance(params["keep_cc"], bool):
+        raise StyxValidationError(f'`keep_cc` has the wrong type: Received `{type(params.get("keep_cc", False))}` expected `bool`')
+    if params.get("ctab", None) is not None:
+        if not isinstance(params["ctab"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctab` has the wrong type: Received `{type(params.get("ctab", None))}` expected `InputPathType | None`')
+    if params.get("lhminmax", None) is not None:
+        if not isinstance(params["lhminmax"], list):
+            raise StyxValidationError(f'`lhminmax` has the wrong type: Received `{type(params.get("lhminmax", None))}` expected `list[float] | None`')
+        if len(params["lhminmax"]) == 2:
+            raise StyxValidationError("Parameter `lhminmax` must contain exactly 2 elements")
+        for e in params["lhminmax"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`lhminmax` has the wrong type: Received `{type(params.get("lhminmax", None))}` expected `list[float] | None`')
+    if params.get("rhminmax", None) is not None:
+        if not isinstance(params["rhminmax"], list):
+            raise StyxValidationError(f'`rhminmax` has the wrong type: Received `{type(params.get("rhminmax", None))}` expected `list[float] | None`')
+        if len(params["rhminmax"]) == 2:
+            raise StyxValidationError("Parameter `rhminmax` must contain exactly 2 elements")
+        for e in params["rhminmax"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`rhminmax` has the wrong type: Received `{type(params.get("rhminmax", None))}` expected `list[float] | None`')
+    if params.get("output_usf", None) is not None:
+        if not isinstance(params["output_usf"], (float, int)):
+            raise StyxValidationError(f'`output_usf` has the wrong type: Received `{type(params.get("output_usf", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("threads_max", False) is None:
+        raise StyxValidationError("`threads_max` must not be None")
+    if not isinstance(params["threads_max"], bool):
+        raise StyxValidationError(f'`threads_max` has the wrong type: Received `{type(params.get("threads_max", False))}` expected `bool`')
+    if params.get("threads_max_1", False) is None:
+        raise StyxValidationError("`threads_max_1` must not be None")
+    if not isinstance(params["threads_max_1"], bool):
+        raise StyxValidationError(f'`threads_max_1` has the wrong type: Received `{type(params.get("threads_max_1", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+
+
 def mri_gtmseg_cargs(
     params: MriGtmsegParameters,
     execution: Execution,
@@ -288,6 +388,7 @@ def mri_gtmseg_execute(
     Returns:
         NamedTuple of outputs (described in `MriGtmsegOutputs`).
     """
+    mri_gtmseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GTMSEG_METADATA)
     params = execution.params(params)

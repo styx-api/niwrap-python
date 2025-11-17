@@ -133,6 +133,77 @@ def mris_compute_parc_overlap_params(
     return params
 
 
+def mris_compute_parc_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisComputeParcOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("annot1", None) is not None:
+        if not isinstance(params["annot1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annot1` has the wrong type: Received `{type(params.get("annot1", None))}` expected `InputPathType | None`')
+    if params.get("annot2", None) is not None:
+        if not isinstance(params["annot2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annot2` has the wrong type: Received `{type(params.get("annot2", None))}` expected `InputPathType | None`')
+    if params.get("label1", None) is not None:
+        if not isinstance(params["label1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label1` has the wrong type: Received `{type(params.get("label1", None))}` expected `InputPathType | None`')
+    if params.get("label2", None) is not None:
+        if not isinstance(params["label2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label2` has the wrong type: Received `{type(params.get("label2", None))}` expected `InputPathType | None`')
+    if params.get("subj_dir", None) is not None:
+        if not isinstance(params["subj_dir"], str):
+            raise StyxValidationError(f'`subj_dir` has the wrong type: Received `{type(params.get("subj_dir", None))}` expected `str | None`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("label_list", None) is not None:
+        if not isinstance(params["label_list"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_list` has the wrong type: Received `{type(params.get("label_list", None))}` expected `InputPathType | None`')
+    if params.get("nocheck_label1_xyz", False) is None:
+        raise StyxValidationError("`nocheck_label1_xyz` must not be None")
+    if not isinstance(params["nocheck_label1_xyz"], bool):
+        raise StyxValidationError(f'`nocheck_label1_xyz` has the wrong type: Received `{type(params.get("nocheck_label1_xyz", False))}` expected `bool`')
+    if params.get("nocheck_label2_xyz", False) is None:
+        raise StyxValidationError("`nocheck_label2_xyz` must not be None")
+    if not isinstance(params["nocheck_label2_xyz"], bool):
+        raise StyxValidationError(f'`nocheck_label2_xyz` has the wrong type: Received `{type(params.get("nocheck_label2_xyz", False))}` expected `bool`')
+    if params.get("nocheck_label_xyz", False) is None:
+        raise StyxValidationError("`nocheck_label_xyz` must not be None")
+    if not isinstance(params["nocheck_label_xyz"], bool):
+        raise StyxValidationError(f'`nocheck_label_xyz` has the wrong type: Received `{type(params.get("nocheck_label_xyz", False))}` expected `bool`')
+    if params.get("use_label1_xyz", False) is None:
+        raise StyxValidationError("`use_label1_xyz` must not be None")
+    if not isinstance(params["use_label1_xyz"], bool):
+        raise StyxValidationError(f'`use_label1_xyz` has the wrong type: Received `{type(params.get("use_label1_xyz", False))}` expected `bool`')
+    if params.get("use_label2_xyz", False) is None:
+        raise StyxValidationError("`use_label2_xyz` must not be None")
+    if not isinstance(params["use_label2_xyz"], bool):
+        raise StyxValidationError(f'`use_label2_xyz` has the wrong type: Received `{type(params.get("use_label2_xyz", False))}` expected `bool`')
+    if params.get("use_label_xyz", False) is None:
+        raise StyxValidationError("`use_label_xyz` must not be None")
+    if not isinstance(params["use_label_xyz"], bool):
+        raise StyxValidationError(f'`use_label_xyz` has the wrong type: Received `{type(params.get("use_label_xyz", False))}` expected `bool`')
+    if params.get("debug_overlap", False) is None:
+        raise StyxValidationError("`debug_overlap` must not be None")
+    if not isinstance(params["debug_overlap"], bool):
+        raise StyxValidationError(f'`debug_overlap` has the wrong type: Received `{type(params.get("debug_overlap", False))}` expected `bool`')
+
+
 def mris_compute_parc_overlap_cargs(
     params: MrisComputeParcOverlapParameters,
     execution: Execution,
@@ -247,6 +318,7 @@ def mris_compute_parc_overlap_execute(
     Returns:
         NamedTuple of outputs (described in `MrisComputeParcOverlapOutputs`).
     """
+    mris_compute_parc_overlap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_COMPUTE_PARC_OVERLAP_METADATA)
     params = execution.params(params)

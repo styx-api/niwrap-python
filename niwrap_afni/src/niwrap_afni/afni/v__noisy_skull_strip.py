@@ -69,6 +69,31 @@ def v__noisy_skull_strip_params(
     return params
 
 
+def v__noisy_skull_strip_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VNoisySkullStripParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("keep_tmp", False) is None:
+        raise StyxValidationError("`keep_tmp` must not be None")
+    if not isinstance(params["keep_tmp"], bool):
+        raise StyxValidationError(f'`keep_tmp` has the wrong type: Received `{type(params.get("keep_tmp", False))}` expected `bool`')
+    if params.get("3dskullstrip_opts", None) is not None:
+        if not isinstance(params["3dskullstrip_opts"], str):
+            raise StyxValidationError(f'`3dskullstrip_opts` has the wrong type: Received `{type(params.get("3dskullstrip_opts", None))}` expected `str | None`')
+
+
 def v__noisy_skull_strip_cargs(
     params: VNoisySkullStripParameters,
     execution: Execution,
@@ -140,6 +165,7 @@ def v__noisy_skull_strip_execute(
     Returns:
         NamedTuple of outputs (described in `VNoisySkullStripOutputs`).
     """
+    v__noisy_skull_strip_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__NOISY_SKULL_STRIP_METADATA)
     params = execution.params(params)

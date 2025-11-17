@@ -281,6 +281,172 @@ def v__retino_proc_params(
     return params
 
 
+def v__retino_proc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VRetinoProcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ccw", None) is not None:
+        if not isinstance(params["ccw"], list):
+            raise StyxValidationError(f'`ccw` has the wrong type: Received `{type(params.get("ccw", None))}` expected `list[InputPathType] | None`')
+        for e in params["ccw"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`ccw` has the wrong type: Received `{type(params.get("ccw", None))}` expected `list[InputPathType] | None`')
+    if params.get("clw", None) is not None:
+        if not isinstance(params["clw"], list):
+            raise StyxValidationError(f'`clw` has the wrong type: Received `{type(params.get("clw", None))}` expected `list[InputPathType] | None`')
+        for e in params["clw"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`clw` has the wrong type: Received `{type(params.get("clw", None))}` expected `list[InputPathType] | None`')
+    if params.get("exp", None) is not None:
+        if not isinstance(params["exp"], list):
+            raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", None))}` expected `list[InputPathType] | None`')
+        for e in params["exp"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`exp` has the wrong type: Received `{type(params.get("exp", None))}` expected `list[InputPathType] | None`')
+    if params.get("con", None) is not None:
+        if not isinstance(params["con"], list):
+            raise StyxValidationError(f'`con` has the wrong type: Received `{type(params.get("con", None))}` expected `list[InputPathType] | None`')
+        for e in params["con"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`con` has the wrong type: Received `{type(params.get("con", None))}` expected `list[InputPathType] | None`')
+    if params.get("epi_ref", None) is not None:
+        if not isinstance(params["epi_ref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`epi_ref` has the wrong type: Received `{type(params.get("epi_ref", None))}` expected `InputPathType | None`')
+    if params.get("epi_anat_ref", None) is not None:
+        if not isinstance(params["epi_anat_ref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`epi_anat_ref` has the wrong type: Received `{type(params.get("epi_anat_ref", None))}` expected `InputPathType | None`')
+    if params.get("anat_vol", None) is not None:
+        if not isinstance(params["anat_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`anat_vol` has the wrong type: Received `{type(params.get("anat_vol", None))}` expected `InputPathType | None`')
+    if params.get("anat_vol_epi", None) is not None:
+        if not isinstance(params["anat_vol_epi"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`anat_vol_epi` has the wrong type: Received `{type(params.get("anat_vol_epi", None))}` expected `InputPathType | None`')
+    if params.get("surf_vol", None) is not None:
+        if not isinstance(params["surf_vol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_vol` has the wrong type: Received `{type(params.get("surf_vol", None))}` expected `InputPathType | None`')
+    if params.get("surf_vol_epi", None) is not None:
+        if not isinstance(params["surf_vol_epi"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_vol_epi` has the wrong type: Received `{type(params.get("surf_vol_epi", None))}` expected `InputPathType | None`')
+    if params.get("phase", False) is None:
+        raise StyxValidationError("`phase` must not be None")
+    if not isinstance(params["phase"], bool):
+        raise StyxValidationError(f'`phase` has the wrong type: Received `{type(params.get("phase", False))}` expected `bool`')
+    if params.get("delay", False) is None:
+        raise StyxValidationError("`delay` must not be None")
+    if not isinstance(params["delay"], bool):
+        raise StyxValidationError(f'`delay` has the wrong type: Received `{type(params.get("delay", False))}` expected `bool`')
+    if params.get("tr", None) is None:
+        raise StyxValidationError("`tr` must not be None")
+    if not isinstance(params["tr"], (float, int)):
+        raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float`')
+    if params.get("period_ecc", None) is None:
+        raise StyxValidationError("`period_ecc` must not be None")
+    if not isinstance(params["period_ecc"], (float, int)):
+        raise StyxValidationError(f'`period_ecc` has the wrong type: Received `{type(params.get("period_ecc", None))}` expected `float`')
+    if params.get("period_pol", None) is None:
+        raise StyxValidationError("`period_pol` must not be None")
+    if not isinstance(params["period_pol"], (float, int)):
+        raise StyxValidationError(f'`period_pol` has the wrong type: Received `{type(params.get("period_pol", None))}` expected `float`')
+    if params.get("pre_ecc", None) is not None:
+        if not isinstance(params["pre_ecc"], (float, int)):
+            raise StyxValidationError(f'`pre_ecc` has the wrong type: Received `{type(params.get("pre_ecc", None))}` expected `float | None`')
+    if params.get("pre_pol", None) is not None:
+        if not isinstance(params["pre_pol"], (float, int)):
+            raise StyxValidationError(f'`pre_pol` has the wrong type: Received `{type(params.get("pre_pol", None))}` expected `float | None`')
+    if params.get("on_ecc", None) is not None:
+        if not isinstance(params["on_ecc"], str):
+            raise StyxValidationError(f'`on_ecc` has the wrong type: Received `{type(params.get("on_ecc", None))}` expected `str | None`')
+    if params.get("on_pol", None) is not None:
+        if not isinstance(params["on_pol"], str):
+            raise StyxValidationError(f'`on_pol` has the wrong type: Received `{type(params.get("on_pol", None))}` expected `str | None`')
+    if params.get("var_on_ecc", None) is not None:
+        if not isinstance(params["var_on_ecc"], str):
+            raise StyxValidationError(f'`var_on_ecc` has the wrong type: Received `{type(params.get("var_on_ecc", None))}` expected `str | None`')
+    if params.get("var_on_pol", None) is not None:
+        if not isinstance(params["var_on_pol"], str):
+            raise StyxValidationError(f'`var_on_pol` has the wrong type: Received `{type(params.get("var_on_pol", None))}` expected `str | None`')
+    if params.get("nwedges", None) is not None:
+        if not isinstance(params["nwedges"], (float, int)):
+            raise StyxValidationError(f'`nwedges` has the wrong type: Received `{type(params.get("nwedges", None))}` expected `float | None`')
+    if params.get("nrings", None) is not None:
+        if not isinstance(params["nrings"], (float, int)):
+            raise StyxValidationError(f'`nrings` has the wrong type: Received `{type(params.get("nrings", None))}` expected `float | None`')
+    if params.get("fwhm_pol", None) is not None:
+        if not isinstance(params["fwhm_pol"], (float, int)):
+            raise StyxValidationError(f'`fwhm_pol` has the wrong type: Received `{type(params.get("fwhm_pol", None))}` expected `float | None`')
+    if params.get("fwhm_ecc", None) is not None:
+        if not isinstance(params["fwhm_ecc"], (float, int)):
+            raise StyxValidationError(f'`fwhm_ecc` has the wrong type: Received `{type(params.get("fwhm_ecc", None))}` expected `float | None`')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], (float, int)):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `float | None`')
+    if params.get("no_tshift", False) is None:
+        raise StyxValidationError("`no_tshift` must not be None")
+    if not isinstance(params["no_tshift"], bool):
+        raise StyxValidationError(f'`no_tshift` has the wrong type: Received `{type(params.get("no_tshift", False))}` expected `bool`')
+    if params.get("spec_left", None) is not None:
+        if not isinstance(params["spec_left"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`spec_left` has the wrong type: Received `{type(params.get("spec_left", None))}` expected `InputPathType | None`')
+    if params.get("spec_right", None) is not None:
+        if not isinstance(params["spec_right"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`spec_right` has the wrong type: Received `{type(params.get("spec_right", None))}` expected `InputPathType | None`')
+    if params.get("dorts", None) is not None:
+        if not isinstance(params["dorts"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dorts` has the wrong type: Received `{type(params.get("dorts", None))}` expected `InputPathType | None`')
+    if params.get("ccw_orts", None) is not None:
+        if not isinstance(params["ccw_orts"], list):
+            raise StyxValidationError(f'`ccw_orts` has the wrong type: Received `{type(params.get("ccw_orts", None))}` expected `list[InputPathType] | None`')
+        for e in params["ccw_orts"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`ccw_orts` has the wrong type: Received `{type(params.get("ccw_orts", None))}` expected `list[InputPathType] | None`')
+    if params.get("clw_orts", None) is not None:
+        if not isinstance(params["clw_orts"], list):
+            raise StyxValidationError(f'`clw_orts` has the wrong type: Received `{type(params.get("clw_orts", None))}` expected `list[InputPathType] | None`')
+        for e in params["clw_orts"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`clw_orts` has the wrong type: Received `{type(params.get("clw_orts", None))}` expected `list[InputPathType] | None`')
+    if params.get("exp_orts", None) is not None:
+        if not isinstance(params["exp_orts"], list):
+            raise StyxValidationError(f'`exp_orts` has the wrong type: Received `{type(params.get("exp_orts", None))}` expected `list[InputPathType] | None`')
+        for e in params["exp_orts"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`exp_orts` has the wrong type: Received `{type(params.get("exp_orts", None))}` expected `list[InputPathType] | None`')
+    if params.get("con_orts", None) is not None:
+        if not isinstance(params["con_orts"], list):
+            raise StyxValidationError(f'`con_orts` has the wrong type: Received `{type(params.get("con_orts", None))}` expected `list[InputPathType] | None`')
+        for e in params["con_orts"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`con_orts` has the wrong type: Received `{type(params.get("con_orts", None))}` expected `list[InputPathType] | None`')
+    if params.get("sid", None) is not None:
+        if not isinstance(params["sid"], str):
+            raise StyxValidationError(f'`sid` has the wrong type: Received `{type(params.get("sid", None))}` expected `str | None`')
+    if params.get("out_dir", None) is not None:
+        if not isinstance(params["out_dir"], str):
+            raise StyxValidationError(f'`out_dir` has the wrong type: Received `{type(params.get("out_dir", None))}` expected `str | None`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("echo_edu", False) is None:
+        raise StyxValidationError("`echo_edu` must not be None")
+    if not isinstance(params["echo_edu"], bool):
+        raise StyxValidationError(f'`echo_edu` has the wrong type: Received `{type(params.get("echo_edu", False))}` expected `bool`')
+    if params.get("a2e_opts", None) is not None:
+        if not isinstance(params["a2e_opts"], str):
+            raise StyxValidationError(f'`a2e_opts` has the wrong type: Received `{type(params.get("a2e_opts", None))}` expected `str | None`')
+    if params.get("aea_opts", None) is not None:
+        if not isinstance(params["aea_opts"], str):
+            raise StyxValidationError(f'`aea_opts` has the wrong type: Received `{type(params.get("aea_opts", None))}` expected `str | None`')
+
+
 def v__retino_proc_cargs(
     params: VRetinoProcParameters,
     execution: Execution,
@@ -520,6 +686,7 @@ def v__retino_proc_execute(
     Returns:
         NamedTuple of outputs (described in `VRetinoProcOutputs`).
     """
+    v__retino_proc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__RETINO_PROC_METADATA)
     params = execution.params(params)

@@ -113,6 +113,77 @@ def afni_proc_py_params(
     return params
 
 
+def afni_proc_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AfniProcPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dsets", None) is None:
+        raise StyxValidationError("`dsets` must not be None")
+    if not isinstance(params["dsets"], list):
+        raise StyxValidationError(f'`dsets` has the wrong type: Received `{type(params.get("dsets", None))}` expected `list[InputPathType]`')
+    for e in params["dsets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`dsets` has the wrong type: Received `{type(params.get("dsets", None))}` expected `list[InputPathType]`')
+    if params.get("subj_id", None) is None:
+        raise StyxValidationError("`subj_id` must not be None")
+    if not isinstance(params["subj_id"], str):
+        raise StyxValidationError(f'`subj_id` has the wrong type: Received `{type(params.get("subj_id", None))}` expected `str`')
+    if params.get("out_dir", None) is not None:
+        if not isinstance(params["out_dir"], str):
+            raise StyxValidationError(f'`out_dir` has the wrong type: Received `{type(params.get("out_dir", None))}` expected `str | None`')
+    if params.get("blocks", None) is not None:
+        if not isinstance(params["blocks"], list):
+            raise StyxValidationError(f'`blocks` has the wrong type: Received `{type(params.get("blocks", None))}` expected `list[str] | None`')
+        for e in params["blocks"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`blocks` has the wrong type: Received `{type(params.get("blocks", None))}` expected `list[str] | None`')
+    if params.get("anat", None) is None:
+        raise StyxValidationError("`anat` must not be None")
+    if not isinstance(params["anat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anat` has the wrong type: Received `{type(params.get("anat", None))}` expected `InputPathType`')
+    if params.get("echo_times", None) is not None:
+        if not isinstance(params["echo_times"], list):
+            raise StyxValidationError(f'`echo_times` has the wrong type: Received `{type(params.get("echo_times", None))}` expected `list[float] | None`')
+        for e in params["echo_times"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`echo_times` has the wrong type: Received `{type(params.get("echo_times", None))}` expected `list[float] | None`')
+    if params.get("stim_times", None) is not None:
+        if not isinstance(params["stim_times"], list):
+            raise StyxValidationError(f'`stim_times` has the wrong type: Received `{type(params.get("stim_times", None))}` expected `list[InputPathType] | None`')
+        for e in params["stim_times"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`stim_times` has the wrong type: Received `{type(params.get("stim_times", None))}` expected `list[InputPathType] | None`')
+    if params.get("stim_files", None) is not None:
+        if not isinstance(params["stim_files"], list):
+            raise StyxValidationError(f'`stim_files` has the wrong type: Received `{type(params.get("stim_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["stim_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`stim_files` has the wrong type: Received `{type(params.get("stim_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("copy_files", None) is not None:
+        if not isinstance(params["copy_files"], list):
+            raise StyxValidationError(f'`copy_files` has the wrong type: Received `{type(params.get("copy_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["copy_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`copy_files` has the wrong type: Received `{type(params.get("copy_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("copy_anat", None) is not None:
+        if not isinstance(params["copy_anat"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`copy_anat` has the wrong type: Received `{type(params.get("copy_anat", None))}` expected `InputPathType | None`')
+    if params.get("regress_params", None) is not None:
+        if not isinstance(params["regress_params"], list):
+            raise StyxValidationError(f'`regress_params` has the wrong type: Received `{type(params.get("regress_params", None))}` expected `list[str] | None`')
+        for e in params["regress_params"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`regress_params` has the wrong type: Received `{type(params.get("regress_params", None))}` expected `list[str] | None`')
+
+
 def afni_proc_py_cargs(
     params: AfniProcPyParameters,
     execution: Execution,
@@ -192,6 +263,7 @@ def afni_proc_py_execute(
     Returns:
         NamedTuple of outputs (described in `AfniProcPyOutputs`).
     """
+    afni_proc_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AFNI_PROC_PY_METADATA)
     params = execution.params(params)

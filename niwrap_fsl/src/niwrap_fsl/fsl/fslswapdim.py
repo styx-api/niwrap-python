@@ -73,6 +73,39 @@ def fslswapdim_params(
     return params
 
 
+def fslswapdim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslswapdimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("axis_a", None) is None:
+        raise StyxValidationError("`axis_a` must not be None")
+    if not isinstance(params["axis_a"], str):
+        raise StyxValidationError(f'`axis_a` has the wrong type: Received `{type(params.get("axis_a", None))}` expected `str`')
+    if params.get("axis_b", None) is None:
+        raise StyxValidationError("`axis_b` must not be None")
+    if not isinstance(params["axis_b"], str):
+        raise StyxValidationError(f'`axis_b` has the wrong type: Received `{type(params.get("axis_b", None))}` expected `str`')
+    if params.get("axis_c", None) is None:
+        raise StyxValidationError("`axis_c` must not be None")
+    if not isinstance(params["axis_c"], str):
+        raise StyxValidationError(f'`axis_c` has the wrong type: Received `{type(params.get("axis_c", None))}` expected `str`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+
+
 def fslswapdim_cargs(
     params: FslswapdimParameters,
     execution: Execution,
@@ -136,6 +169,7 @@ def fslswapdim_execute(
     Returns:
         NamedTuple of outputs (described in `FslswapdimOutputs`).
     """
+    fslswapdim_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLSWAPDIM_METADATA)
     params = execution.params(params)

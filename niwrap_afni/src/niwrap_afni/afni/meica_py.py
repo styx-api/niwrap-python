@@ -90,6 +90,50 @@ def meica_py_params(
     return params
 
 
+def meica_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MeicaPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("echo_times", None) is None:
+        raise StyxValidationError("`echo_times` must not be None")
+    if not isinstance(params["echo_times"], str):
+        raise StyxValidationError(f'`echo_times` has the wrong type: Received `{type(params.get("echo_times", None))}` expected `str`')
+    if params.get("affine", None) is None:
+        raise StyxValidationError("`affine` must not be None")
+    if not isinstance(params["affine"], str):
+        raise StyxValidationError(f'`affine` has the wrong type: Received `{type(params.get("affine", None))}` expected `str`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+    if params.get("components", None) is not None:
+        if not isinstance(params["components"], (float, int)):
+            raise StyxValidationError(f'`components` has the wrong type: Received `{type(params.get("components", None))}` expected `float | None`')
+    if params.get("talairach", False) is None:
+        raise StyxValidationError("`talairach` must not be None")
+    if not isinstance(params["talairach"], bool):
+        raise StyxValidationError(f'`talairach` has the wrong type: Received `{type(params.get("talairach", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+
+
 def meica_py_cargs(
     params: MeicaPyParameters,
     execution: Execution,
@@ -178,6 +222,7 @@ def meica_py_execute(
     Returns:
         NamedTuple of outputs (described in `MeicaPyOutputs`).
     """
+    meica_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MEICA_PY_METADATA)
     params = execution.params(params)

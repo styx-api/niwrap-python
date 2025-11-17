@@ -91,6 +91,46 @@ def ants_n4_bias_field_correction_fs_params(
     return params
 
 
+def ants_n4_bias_field_correction_fs_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsN4BiasFieldCorrectionFsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("shrink_factor", None) is not None:
+        if not isinstance(params["shrink_factor"], int):
+            raise StyxValidationError(f'`shrink_factor` has the wrong type: Received `{type(params.get("shrink_factor", None))}` expected `int | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], list):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `list[float] | None`')
+        for e in params["iterations"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `list[float] | None`')
+    if params.get("output_dtype", None) is not None:
+        if not isinstance(params["output_dtype"], str):
+            raise StyxValidationError(f'`output_dtype` has the wrong type: Received `{type(params.get("output_dtype", None))}` expected `str | None`')
+    if params.get("replace_zeros", None) is not None:
+        if not isinstance(params["replace_zeros"], str):
+            raise StyxValidationError(f'`replace_zeros` has the wrong type: Received `{type(params.get("replace_zeros", None))}` expected `str | None`')
+
+
 def ants_n4_bias_field_correction_fs_cargs(
     params: AntsN4BiasFieldCorrectionFsParameters,
     execution: Execution,
@@ -183,6 +223,7 @@ def ants_n4_bias_field_correction_fs_execute(
     Returns:
         NamedTuple of outputs (described in `AntsN4BiasFieldCorrectionFsOutputs`).
     """
+    ants_n4_bias_field_correction_fs_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA)
     params = execution.params(params)

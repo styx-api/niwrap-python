@@ -55,6 +55,27 @@ def v__vol_center_params(
     return params
 
 
+def v__vol_center_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VVolCenterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+    if params.get("orient", None) is not None:
+        if not isinstance(params["orient"], str):
+            raise StyxValidationError(f'`orient` has the wrong type: Received `{type(params.get("orient", None))}` expected `str | None`')
+
+
 def v__vol_center_cargs(
     params: VVolCenterParameters,
     execution: Execution,
@@ -120,6 +141,7 @@ def v__vol_center_execute(
     Returns:
         NamedTuple of outputs (described in `VVolCenterOutputs`).
     """
+    v__vol_center_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__VOL_CENTER_METADATA)
     params = execution.params(params)

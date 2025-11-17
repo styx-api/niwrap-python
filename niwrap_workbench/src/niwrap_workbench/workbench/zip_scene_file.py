@@ -80,6 +80,43 @@ def zip_scene_file_params(
     return params
 
 
+def zip_scene_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ZipSceneFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("directory", None) is not None:
+        if not isinstance(params["directory"], str):
+            raise StyxValidationError(f'`directory` has the wrong type: Received `{type(params.get("directory", None))}` expected `str | None`')
+    if params.get("skip-missing", False) is None:
+        raise StyxValidationError("`skip-missing` must not be None")
+    if not isinstance(params["skip-missing"], bool):
+        raise StyxValidationError(f'`skip-missing` has the wrong type: Received `{type(params.get("skip-missing", False))}` expected `bool`')
+    if params.get("write-scene-file", False) is None:
+        raise StyxValidationError("`write-scene-file` must not be None")
+    if not isinstance(params["write-scene-file"], bool):
+        raise StyxValidationError(f'`write-scene-file` has the wrong type: Received `{type(params.get("write-scene-file", False))}` expected `bool`')
+    if params.get("scene-file", None) is None:
+        raise StyxValidationError("`scene-file` must not be None")
+    if not isinstance(params["scene-file"], str):
+        raise StyxValidationError(f'`scene-file` has the wrong type: Received `{type(params.get("scene-file", None))}` expected `str`')
+    if params.get("extract-folder", None) is None:
+        raise StyxValidationError("`extract-folder` must not be None")
+    if not isinstance(params["extract-folder"], str):
+        raise StyxValidationError(f'`extract-folder` has the wrong type: Received `{type(params.get("extract-folder", None))}` expected `str`')
+    if params.get("zip-file", None) is None:
+        raise StyxValidationError("`zip-file` must not be None")
+    if not isinstance(params["zip-file"], str):
+        raise StyxValidationError(f'`zip-file` has the wrong type: Received `{type(params.get("zip-file", None))}` expected `str`')
+
+
 def zip_scene_file_cargs(
     params: ZipSceneFileParameters,
     execution: Execution,
@@ -146,6 +183,7 @@ def zip_scene_file_execute(
     Returns:
         NamedTuple of outputs (described in `ZipSceneFileOutputs`).
     """
+    zip_scene_file_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ZIP_SCENE_FILE_METADATA)
     params = execution.params(params)

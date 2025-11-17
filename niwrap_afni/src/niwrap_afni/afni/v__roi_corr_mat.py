@@ -101,6 +101,58 @@ def v__roi_corr_mat_params(
     return params
 
 
+def v__roi_corr_mat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VRoiCorrMatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ts_vol", None) is None:
+        raise StyxValidationError("`ts_vol` must not be None")
+    if not isinstance(params["ts_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ts_vol` has the wrong type: Received `{type(params.get("ts_vol", None))}` expected `InputPathType`')
+    if params.get("roi_vol", None) is None:
+        raise StyxValidationError("`roi_vol` must not be None")
+    if not isinstance(params["roi_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi_vol` has the wrong type: Received `{type(params.get("roi_vol", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("roisel", None) is not None:
+        if not isinstance(params["roisel"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roisel` has the wrong type: Received `{type(params.get("roisel", None))}` expected `InputPathType | None`')
+    if params.get("zval", False) is None:
+        raise StyxValidationError("`zval` must not be None")
+    if not isinstance(params["zval"], bool):
+        raise StyxValidationError(f'`zval` has the wrong type: Received `{type(params.get("zval", False))}` expected `bool`')
+    if params.get("mat_opt", None) is not None:
+        if not isinstance(params["mat_opt"], str):
+            raise StyxValidationError(f'`mat_opt` has the wrong type: Received `{type(params.get("mat_opt", None))}` expected `str | None`')
+    if params.get("dirty", False) is None:
+        raise StyxValidationError("`dirty` must not be None")
+    if not isinstance(params["dirty"], bool):
+        raise StyxValidationError(f'`dirty` has the wrong type: Received `{type(params.get("dirty", False))}` expected `bool`')
+    if params.get("keep_tmp", False) is None:
+        raise StyxValidationError("`keep_tmp` must not be None")
+    if not isinstance(params["keep_tmp"], bool):
+        raise StyxValidationError(f'`keep_tmp` has the wrong type: Received `{type(params.get("keep_tmp", False))}` expected `bool`')
+    if params.get("echo", False) is None:
+        raise StyxValidationError("`echo` must not be None")
+    if not isinstance(params["echo"], bool):
+        raise StyxValidationError(f'`echo` has the wrong type: Received `{type(params.get("echo", False))}` expected `bool`')
+    if params.get("verb", False) is None:
+        raise StyxValidationError("`verb` must not be None")
+    if not isinstance(params["verb"], bool):
+        raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", False))}` expected `bool`')
+
+
 def v__roi_corr_mat_cargs(
     params: VRoiCorrMatParameters,
     execution: Execution,
@@ -191,6 +243,7 @@ def v__roi_corr_mat_execute(
     Returns:
         NamedTuple of outputs (described in `VRoiCorrMatOutputs`).
     """
+    v__roi_corr_mat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ROI_CORR_MAT_METADATA)
     params = execution.params(params)

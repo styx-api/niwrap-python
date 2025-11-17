@@ -58,6 +58,32 @@ def surface_match_params(
     return params
 
 
+def surface_match_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceMatchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Match Surface File", None) is None:
+        raise StyxValidationError("`Match Surface File` must not be None")
+    if not isinstance(params["Match Surface File"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`Match Surface File` has the wrong type: Received `{type(params.get("Match Surface File", None))}` expected `InputPathType`')
+    if params.get("Input Surface File", None) is None:
+        raise StyxValidationError("`Input Surface File` must not be None")
+    if not isinstance(params["Input Surface File"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`Input Surface File` has the wrong type: Received `{type(params.get("Input Surface File", None))}` expected `InputPathType`')
+    if params.get("Output Surface Name", None) is None:
+        raise StyxValidationError("`Output Surface Name` must not be None")
+    if not isinstance(params["Output Surface Name"], str):
+        raise StyxValidationError(f'`Output Surface Name` has the wrong type: Received `{type(params.get("Output Surface Name", None))}` expected `str`')
+
+
 def surface_match_cargs(
     params: SurfaceMatchParameters,
     execution: Execution,
@@ -117,6 +143,7 @@ def surface_match_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceMatchOutputs`).
     """
+    surface_match_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_MATCH_METADATA)
     params = execution.params(params)

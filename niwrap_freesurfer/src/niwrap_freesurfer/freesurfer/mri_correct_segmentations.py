@@ -54,6 +54,28 @@ def mri_correct_segmentations_params(
     return params
 
 
+def mri_correct_segmentations_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCorrectSegmentationsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file_1", None) is None:
+        raise StyxValidationError("`input_file_1` must not be None")
+    if not isinstance(params["input_file_1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file_1` has the wrong type: Received `{type(params.get("input_file_1", None))}` expected `InputPathType`')
+    if params.get("input_file_2", None) is None:
+        raise StyxValidationError("`input_file_2` must not be None")
+    if not isinstance(params["input_file_2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file_2` has the wrong type: Received `{type(params.get("input_file_2", None))}` expected `InputPathType`')
+
+
 def mri_correct_segmentations_cargs(
     params: MriCorrectSegmentationsParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def mri_correct_segmentations_execute(
     Returns:
         NamedTuple of outputs (described in `MriCorrectSegmentationsOutputs`).
     """
+    mri_correct_segmentations_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CORRECT_SEGMENTATIONS_METADATA)
     params = execution.params(params)

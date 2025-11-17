@@ -189,6 +189,98 @@ def v_3d_clust_sim_params(
     return params
 
 
+def v_3d_clust_sim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dClustSimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nxyz", None) is not None:
+        if not isinstance(params["nxyz"], str):
+            raise StyxValidationError(f'`nxyz` has the wrong type: Received `{type(params.get("nxyz", None))}` expected `str | None`')
+    if params.get("dxyz", None) is not None:
+        if not isinstance(params["dxyz"], str):
+            raise StyxValidationError(f'`dxyz` has the wrong type: Received `{type(params.get("dxyz", None))}` expected `str | None`')
+    if params.get("ball", False) is None:
+        raise StyxValidationError("`ball` must not be None")
+    if not isinstance(params["ball"], bool):
+        raise StyxValidationError(f'`ball` has the wrong type: Received `{type(params.get("ball", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("oksmallmask", False) is None:
+        raise StyxValidationError("`oksmallmask` must not be None")
+    if not isinstance(params["oksmallmask"], bool):
+        raise StyxValidationError(f'`oksmallmask` has the wrong type: Received `{type(params.get("oksmallmask", False))}` expected `bool`')
+    if params.get("inset", None) is not None:
+        if not isinstance(params["inset"], list):
+            raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `list[InputPathType] | None`')
+        for e in params["inset"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`inset` has the wrong type: Received `{type(params.get("inset", None))}` expected `list[InputPathType] | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("acf", None) is not None:
+        if not isinstance(params["acf"], str):
+            raise StyxValidationError(f'`acf` has the wrong type: Received `{type(params.get("acf", None))}` expected `str | None`')
+    if params.get("nopad", False) is None:
+        raise StyxValidationError("`nopad` must not be None")
+    if not isinstance(params["nopad"], bool):
+        raise StyxValidationError(f'`nopad` has the wrong type: Received `{type(params.get("nopad", False))}` expected `bool`')
+    if params.get("pthr", None) is not None:
+        if not isinstance(params["pthr"], str):
+            raise StyxValidationError(f'`pthr` has the wrong type: Received `{type(params.get("pthr", None))}` expected `str | None`')
+    if params.get("athr", None) is not None:
+        if not isinstance(params["athr"], str):
+            raise StyxValidationError(f'`athr` has the wrong type: Received `{type(params.get("athr", None))}` expected `str | None`')
+    if params.get("lots", False) is None:
+        raise StyxValidationError("`lots` must not be None")
+    if not isinstance(params["lots"], bool):
+        raise StyxValidationError(f'`lots` has the wrong type: Received `{type(params.get("lots", False))}` expected `bool`')
+    if params.get("mega", False) is None:
+        raise StyxValidationError("`mega` must not be None")
+    if not isinstance(params["mega"], bool):
+        raise StyxValidationError(f'`mega` has the wrong type: Received `{type(params.get("mega", False))}` expected `bool`')
+    if params.get("iter", None) is not None:
+        if not isinstance(params["iter"], (float, int)):
+            raise StyxValidationError(f'`iter` has the wrong type: Received `{type(params.get("iter", None))}` expected `float | None`')
+    if params.get("nodec", False) is None:
+        raise StyxValidationError("`nodec` must not be None")
+    if not isinstance(params["nodec"], bool):
+        raise StyxValidationError(f'`nodec` has the wrong type: Received `{type(params.get("nodec", False))}` expected `bool`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("niml", False) is None:
+        raise StyxValidationError("`niml` must not be None")
+    if not isinstance(params["niml"], bool):
+        raise StyxValidationError(f'`niml` has the wrong type: Received `{type(params.get("niml", False))}` expected `bool`')
+    if params.get("both", False) is None:
+        raise StyxValidationError("`both` must not be None")
+    if not isinstance(params["both"], bool):
+        raise StyxValidationError(f'`both` has the wrong type: Received `{type(params.get("both", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("cmd", None) is not None:
+        if not isinstance(params["cmd"], str):
+            raise StyxValidationError(f'`cmd` has the wrong type: Received `{type(params.get("cmd", None))}` expected `str | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("ssave", None) is not None:
+        if not isinstance(params["ssave"], str):
+            raise StyxValidationError(f'`ssave` has the wrong type: Received `{type(params.get("ssave", None))}` expected `str | None`')
+
+
 def v_3d_clust_sim_cargs(
     params: V3dClustSimParameters,
     execution: Execution,
@@ -338,6 +430,7 @@ def v_3d_clust_sim_execute(
     Returns:
         NamedTuple of outputs (described in `V3dClustSimOutputs`).
     """
+    v_3d_clust_sim_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_CLUST_SIM_METADATA)
     params = execution.params(params)

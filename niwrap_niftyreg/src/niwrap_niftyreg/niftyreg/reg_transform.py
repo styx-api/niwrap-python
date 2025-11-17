@@ -253,6 +253,105 @@ def reg_transform_params(
     return params
 
 
+def reg_transform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RegTransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("cpp2def_input", None) is not None:
+        if not isinstance(params["cpp2def_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cpp2def_input` has the wrong type: Received `{type(params.get("cpp2def_input", None))}` expected `InputPathType | None`')
+    if params.get("cpp2def_output", None) is not None:
+        if not isinstance(params["cpp2def_output"], str):
+            raise StyxValidationError(f'`cpp2def_output` has the wrong type: Received `{type(params.get("cpp2def_output", None))}` expected `str | None`')
+    if params.get("comp1_cpp2", None) is not None:
+        if not isinstance(params["comp1_cpp2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp1_cpp2` has the wrong type: Received `{type(params.get("comp1_cpp2", None))}` expected `InputPathType | None`')
+    if params.get("comp1_cpp1", None) is not None:
+        if not isinstance(params["comp1_cpp1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp1_cpp1` has the wrong type: Received `{type(params.get("comp1_cpp1", None))}` expected `InputPathType | None`')
+    if params.get("comp1_output", None) is not None:
+        if not isinstance(params["comp1_output"], str):
+            raise StyxValidationError(f'`comp1_output` has the wrong type: Received `{type(params.get("comp1_output", None))}` expected `str | None`')
+    if params.get("comp2_cpp", None) is not None:
+        if not isinstance(params["comp2_cpp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp2_cpp` has the wrong type: Received `{type(params.get("comp2_cpp", None))}` expected `InputPathType | None`')
+    if params.get("comp2_def", None) is not None:
+        if not isinstance(params["comp2_def"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp2_def` has the wrong type: Received `{type(params.get("comp2_def", None))}` expected `InputPathType | None`')
+    if params.get("comp2_output", None) is not None:
+        if not isinstance(params["comp2_output"], str):
+            raise StyxValidationError(f'`comp2_output` has the wrong type: Received `{type(params.get("comp2_output", None))}` expected `str | None`')
+    if params.get("comp3_def2", None) is not None:
+        if not isinstance(params["comp3_def2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp3_def2` has the wrong type: Received `{type(params.get("comp3_def2", None))}` expected `InputPathType | None`')
+    if params.get("comp3_def1", None) is not None:
+        if not isinstance(params["comp3_def1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp3_def1` has the wrong type: Received `{type(params.get("comp3_def1", None))}` expected `InputPathType | None`')
+    if params.get("comp3_output", None) is not None:
+        if not isinstance(params["comp3_output"], str):
+            raise StyxValidationError(f'`comp3_output` has the wrong type: Received `{type(params.get("comp3_output", None))}` expected `str | None`')
+    if params.get("def2disp_input", None) is not None:
+        if not isinstance(params["def2disp_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`def2disp_input` has the wrong type: Received `{type(params.get("def2disp_input", None))}` expected `InputPathType | None`')
+    if params.get("def2disp_output", None) is not None:
+        if not isinstance(params["def2disp_output"], str):
+            raise StyxValidationError(f'`def2disp_output` has the wrong type: Received `{type(params.get("def2disp_output", None))}` expected `str | None`')
+    if params.get("disp2def_input", None) is not None:
+        if not isinstance(params["disp2def_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`disp2def_input` has the wrong type: Received `{type(params.get("disp2def_input", None))}` expected `InputPathType | None`')
+    if params.get("disp2def_output", None) is not None:
+        if not isinstance(params["disp2def_output"], str):
+            raise StyxValidationError(f'`disp2def_output` has the wrong type: Received `{type(params.get("disp2def_output", None))}` expected `str | None`')
+    if params.get("upd_sform_image", None) is not None:
+        if not isinstance(params["upd_sform_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`upd_sform_image` has the wrong type: Received `{type(params.get("upd_sform_image", None))}` expected `InputPathType | None`')
+    if params.get("upd_sform_affine", None) is not None:
+        if not isinstance(params["upd_sform_affine"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`upd_sform_affine` has the wrong type: Received `{type(params.get("upd_sform_affine", None))}` expected `InputPathType | None`')
+    if params.get("upd_sform_output", None) is not None:
+        if not isinstance(params["upd_sform_output"], str):
+            raise StyxValidationError(f'`upd_sform_output` has the wrong type: Received `{type(params.get("upd_sform_output", None))}` expected `str | None`')
+    if params.get("aff2def_affine", None) is not None:
+        if not isinstance(params["aff2def_affine"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aff2def_affine` has the wrong type: Received `{type(params.get("aff2def_affine", None))}` expected `InputPathType | None`')
+    if params.get("aff2def_target", None) is not None:
+        if not isinstance(params["aff2def_target"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aff2def_target` has the wrong type: Received `{type(params.get("aff2def_target", None))}` expected `InputPathType | None`')
+    if params.get("aff2def_cpp_or_def", None) is not None:
+        if not isinstance(params["aff2def_cpp_or_def"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`aff2def_cpp_or_def` has the wrong type: Received `{type(params.get("aff2def_cpp_or_def", None))}` expected `InputPathType | None`')
+    if params.get("aff2def_output", None) is not None:
+        if not isinstance(params["aff2def_output"], str):
+            raise StyxValidationError(f'`aff2def_output` has the wrong type: Received `{type(params.get("aff2def_output", None))}` expected `str | None`')
+    if params.get("inv_affine_input", None) is not None:
+        if not isinstance(params["inv_affine_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`inv_affine_input` has the wrong type: Received `{type(params.get("inv_affine_input", None))}` expected `InputPathType | None`')
+    if params.get("inv_affine_output", None) is not None:
+        if not isinstance(params["inv_affine_output"], str):
+            raise StyxValidationError(f'`inv_affine_output` has the wrong type: Received `{type(params.get("inv_affine_output", None))}` expected `str | None`')
+    if params.get("comp_aff_1st", None) is not None:
+        if not isinstance(params["comp_aff_1st"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp_aff_1st` has the wrong type: Received `{type(params.get("comp_aff_1st", None))}` expected `InputPathType | None`')
+    if params.get("comp_aff_2nd", None) is not None:
+        if not isinstance(params["comp_aff_2nd"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`comp_aff_2nd` has the wrong type: Received `{type(params.get("comp_aff_2nd", None))}` expected `InputPathType | None`')
+    if params.get("comp_aff_output", None) is not None:
+        if not isinstance(params["comp_aff_output"], str):
+            raise StyxValidationError(f'`comp_aff_output` has the wrong type: Received `{type(params.get("comp_aff_output", None))}` expected `str | None`')
+
+
 def reg_transform_cargs(
     params: RegTransformParameters,
     execution: Execution,
@@ -409,6 +508,7 @@ def reg_transform_execute(
     Returns:
         NamedTuple of outputs (described in `RegTransformOutputs`).
     """
+    reg_transform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REG_TRANSFORM_METADATA)
     params = execution.params(params)

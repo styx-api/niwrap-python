@@ -73,6 +73,38 @@ def v_3dmatmult_params(
     return params
 
 
+def v_3dmatmult_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dmatmultParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputA", None) is None:
+        raise StyxValidationError("`inputA` must not be None")
+    if not isinstance(params["inputA"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputA` has the wrong type: Received `{type(params.get("inputA", None))}` expected `InputPathType`')
+    if params.get("inputB", None) is None:
+        raise StyxValidationError("`inputB` must not be None")
+    if not isinstance(params["inputB"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inputB` has the wrong type: Received `{type(params.get("inputB", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `str | None`')
+    if params.get("verb", None) is not None:
+        if not isinstance(params["verb"], (float, int)):
+            raise StyxValidationError(f'`verb` has the wrong type: Received `{type(params.get("verb", None))}` expected `float | None`')
+
+
 def v_3dmatmult_cargs(
     params: V3dmatmultParameters,
     execution: Execution,
@@ -152,6 +184,7 @@ def v_3dmatmult_execute(
     Returns:
         NamedTuple of outputs (described in `V3dmatmultOutputs`).
     """
+    v_3dmatmult_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DMATMULT_METADATA)
     params = execution.params(params)

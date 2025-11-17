@@ -155,6 +155,83 @@ def mri_create_tests_params(
     return params
 
 
+def mri_create_tests_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCreateTestsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("out_src", None) is None:
+        raise StyxValidationError("`out_src` must not be None")
+    if not isinstance(params["out_src"], str):
+        raise StyxValidationError(f'`out_src` has the wrong type: Received `{type(params.get("out_src", None))}` expected `str`')
+    if params.get("out_target", None) is None:
+        raise StyxValidationError("`out_target` must not be None")
+    if not isinstance(params["out_target"], str):
+        raise StyxValidationError(f'`out_target` has the wrong type: Received `{type(params.get("out_target", None))}` expected `str`')
+    if params.get("input_target", None) is not None:
+        if not isinstance(params["input_target"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_target` has the wrong type: Received `{type(params.get("input_target", None))}` expected `InputPathType | None`')
+    if params.get("lta_in", None) is not None:
+        if not isinstance(params["lta_in"], str):
+            raise StyxValidationError(f'`lta_in` has the wrong type: Received `{type(params.get("lta_in", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("noise", None) is not None:
+        if not isinstance(params["noise"], (float, int)):
+            raise StyxValidationError(f'`noise` has the wrong type: Received `{type(params.get("noise", None))}` expected `float | None`')
+    if params.get("outlier", None) is not None:
+        if not isinstance(params["outlier"], (float, int)):
+            raise StyxValidationError(f'`outlier` has the wrong type: Received `{type(params.get("outlier", None))}` expected `float | None`')
+    if params.get("outlier_box", None) is not None:
+        if not isinstance(params["outlier_box"], (float, int)):
+            raise StyxValidationError(f'`outlier_box` has the wrong type: Received `{type(params.get("outlier_box", None))}` expected `float | None`')
+    if params.get("translation_flag", False) is None:
+        raise StyxValidationError("`translation_flag` must not be None")
+    if not isinstance(params["translation_flag"], bool):
+        raise StyxValidationError(f'`translation_flag` has the wrong type: Received `{type(params.get("translation_flag", False))}` expected `bool`')
+    if params.get("transdist", None) is not None:
+        if not isinstance(params["transdist"], (float, int)):
+            raise StyxValidationError(f'`transdist` has the wrong type: Received `{type(params.get("transdist", None))}` expected `float | None`')
+    if params.get("rotation_flag", False) is None:
+        raise StyxValidationError("`rotation_flag` must not be None")
+    if not isinstance(params["rotation_flag"], bool):
+        raise StyxValidationError(f'`rotation_flag` has the wrong type: Received `{type(params.get("rotation_flag", False))}` expected `bool`')
+    if params.get("maxdeg", None) is not None:
+        if not isinstance(params["maxdeg"], (float, int)):
+            raise StyxValidationError(f'`maxdeg` has the wrong type: Received `{type(params.get("maxdeg", None))}` expected `float | None`')
+    if params.get("intensity_flag", False) is None:
+        raise StyxValidationError("`intensity_flag` must not be None")
+    if not isinstance(params["intensity_flag"], bool):
+        raise StyxValidationError(f'`intensity_flag` has the wrong type: Received `{type(params.get("intensity_flag", False))}` expected `bool`')
+    if params.get("iscale", None) is not None:
+        if not isinstance(params["iscale"], (float, int)):
+            raise StyxValidationError(f'`iscale` has the wrong type: Received `{type(params.get("iscale", None))}` expected `float | None`')
+    if params.get("lta_out", None) is not None:
+        if not isinstance(params["lta_out"], str):
+            raise StyxValidationError(f'`lta_out` has the wrong type: Received `{type(params.get("lta_out", None))}` expected `str | None`')
+    if params.get("lta_outs", None) is not None:
+        if not isinstance(params["lta_outs"], str):
+            raise StyxValidationError(f'`lta_outs` has the wrong type: Received `{type(params.get("lta_outs", None))}` expected `str | None`')
+    if params.get("lta_outt", None) is not None:
+        if not isinstance(params["lta_outt"], str):
+            raise StyxValidationError(f'`lta_outt` has the wrong type: Received `{type(params.get("lta_outt", None))}` expected `str | None`')
+    if params.get("iscale_out", None) is not None:
+        if not isinstance(params["iscale_out"], str):
+            raise StyxValidationError(f'`iscale_out` has the wrong type: Received `{type(params.get("iscale_out", None))}` expected `str | None`')
+
+
 def mri_create_tests_cargs(
     params: MriCreateTestsParameters,
     execution: Execution,
@@ -295,6 +372,7 @@ def mri_create_tests_execute(
     Returns:
         NamedTuple of outputs (described in `MriCreateTestsOutputs`).
     """
+    mri_create_tests_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CREATE_TESTS_METADATA)
     params = execution.params(params)

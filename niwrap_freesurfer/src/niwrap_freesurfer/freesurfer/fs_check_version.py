@@ -82,6 +82,47 @@ def fs_check_version_params(
     return params
 
 
+def fs_check_version_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FsCheckVersionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("require_match", False) is None:
+        raise StyxValidationError("`require_match` must not be None")
+    if not isinstance(params["require_match"], bool):
+        raise StyxValidationError(f'`require_match` has the wrong type: Received `{type(params.get("require_match", False))}` expected `bool`')
+    if params.get("no_require_match", False) is None:
+        raise StyxValidationError("`no_require_match` must not be None")
+    if not isinstance(params["no_require_match"], bool):
+        raise StyxValidationError(f'`no_require_match` has the wrong type: Received `{type(params.get("no_require_match", False))}` expected `bool`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+    if params.get("test_debug", False) is None:
+        raise StyxValidationError("`test_debug` must not be None")
+    if not isinstance(params["test_debug"], bool):
+        raise StyxValidationError(f'`test_debug` has the wrong type: Received `{type(params.get("test_debug", False))}` expected `bool`')
+
+
 def fs_check_version_cargs(
     params: FsCheckVersionParameters,
     execution: Execution,
@@ -161,6 +202,7 @@ def fs_check_version_execute(
     Returns:
         NamedTuple of outputs (described in `FsCheckVersionOutputs`).
     """
+    fs_check_version_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_CHECK_VERSION_METADATA)
     params = execution.params(params)

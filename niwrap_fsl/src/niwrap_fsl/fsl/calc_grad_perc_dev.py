@@ -64,6 +64,36 @@ def calc_grad_perc_dev_params(
     return params
 
 
+def calc_grad_perc_dev_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CalcGradPercDevParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fullwarp_image", None) is None:
+        raise StyxValidationError("`fullwarp_image` must not be None")
+    if not isinstance(params["fullwarp_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fullwarp_image` has the wrong type: Received `{type(params.get("fullwarp_image", None))}` expected `InputPathType`')
+    if params.get("out_basename", None) is None:
+        raise StyxValidationError("`out_basename` must not be None")
+    if not isinstance(params["out_basename"], str):
+        raise StyxValidationError(f'`out_basename` has the wrong type: Received `{type(params.get("out_basename", None))}` expected `str`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def calc_grad_perc_dev_cargs(
     params: CalcGradPercDevParameters,
     execution: Execution,
@@ -133,6 +163,7 @@ def calc_grad_perc_dev_execute(
     Returns:
         NamedTuple of outputs (described in `CalcGradPercDevOutputs`).
     """
+    calc_grad_perc_dev_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CALC_GRAD_PERC_DEV_METADATA)
     params = execution.params(params)

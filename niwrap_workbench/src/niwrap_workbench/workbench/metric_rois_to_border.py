@@ -81,6 +81,42 @@ def metric_rois_to_border_params(
     return params
 
 
+def metric_rois_to_border_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricRoisToBorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("border-out", None) is None:
+        raise StyxValidationError("`border-out` must not be None")
+    if not isinstance(params["border-out"], str):
+        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
+    if params.get("fraction", None) is not None:
+        if not isinstance(params["fraction"], (float, int)):
+            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("class-name", None) is None:
+        raise StyxValidationError("`class-name` must not be None")
+    if not isinstance(params["class-name"], str):
+        raise StyxValidationError(f'`class-name` has the wrong type: Received `{type(params.get("class-name", None))}` expected `str`')
+
+
 def metric_rois_to_border_cargs(
     params: MetricRoisToBorderParameters,
     execution: Execution,
@@ -148,6 +184,7 @@ def metric_rois_to_border_execute(
     Returns:
         NamedTuple of outputs (described in `MetricRoisToBorderOutputs`).
     """
+    metric_rois_to_border_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_ROIS_TO_BORDER_METADATA)
     params = execution.params(params)

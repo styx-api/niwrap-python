@@ -76,6 +76,47 @@ def mris_extract_values_params(
     return params
 
 
+def mris_extract_values_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisExtractValuesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("overlay", None) is None:
+        raise StyxValidationError("`overlay` must not be None")
+    if not isinstance(params["overlay"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`overlay` has the wrong type: Received `{type(params.get("overlay", None))}` expected `InputPathType`')
+    if params.get("annotation", None) is None:
+        raise StyxValidationError("`annotation` must not be None")
+    if not isinstance(params["annotation"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`annotation` has the wrong type: Received `{type(params.get("annotation", None))}` expected `InputPathType`')
+    if params.get("csvfile", None) is None:
+        raise StyxValidationError("`csvfile` must not be None")
+    if not isinstance(params["csvfile"], str):
+        raise StyxValidationError(f'`csvfile` has the wrong type: Received `{type(params.get("csvfile", None))}` expected `str`')
+    if params.get("num_images", None) is None:
+        raise StyxValidationError("`num_images` must not be None")
+    if not isinstance(params["num_images"], (float, int)):
+        raise StyxValidationError(f'`num_images` has the wrong type: Received `{type(params.get("num_images", None))}` expected `float`')
+    if params.get("image_files", None) is None:
+        raise StyxValidationError("`image_files` must not be None")
+    if not isinstance(params["image_files"], list):
+        raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+    for e in params["image_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+
+
 def mris_extract_values_cargs(
     params: MrisExtractValuesParameters,
     execution: Execution,
@@ -158,6 +199,7 @@ def mris_extract_values_execute(
     Returns:
         NamedTuple of outputs (described in `MrisExtractValuesOutputs`).
     """
+    mris_extract_values_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_EXTRACT_VALUES_METADATA)
     params = execution.params(params)

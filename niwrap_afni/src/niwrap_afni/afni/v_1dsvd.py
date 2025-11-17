@@ -102,6 +102,66 @@ def v_1dsvd_params(
     return params
 
 
+def v_1dsvd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dsvdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("one", False) is None:
+        raise StyxValidationError("`one` must not be None")
+    if not isinstance(params["one"], bool):
+        raise StyxValidationError(f'`one` has the wrong type: Received `{type(params.get("one", False))}` expected `bool`')
+    if params.get("vmean", False) is None:
+        raise StyxValidationError("`vmean` must not be None")
+    if not isinstance(params["vmean"], bool):
+        raise StyxValidationError(f'`vmean` has the wrong type: Received `{type(params.get("vmean", False))}` expected `bool`')
+    if params.get("vnorm", False) is None:
+        raise StyxValidationError("`vnorm` must not be None")
+    if not isinstance(params["vnorm"], bool):
+        raise StyxValidationError(f'`vnorm` has the wrong type: Received `{type(params.get("vnorm", False))}` expected `bool`')
+    if params.get("cond", False) is None:
+        raise StyxValidationError("`cond` must not be None")
+    if not isinstance(params["cond"], bool):
+        raise StyxValidationError(f'`cond` has the wrong type: Received `{type(params.get("cond", False))}` expected `bool`')
+    if params.get("sing", False) is None:
+        raise StyxValidationError("`sing` must not be None")
+    if not isinstance(params["sing"], bool):
+        raise StyxValidationError(f'`sing` has the wrong type: Received `{type(params.get("sing", False))}` expected `bool`')
+    if params.get("sort", False) is None:
+        raise StyxValidationError("`sort` must not be None")
+    if not isinstance(params["sort"], bool):
+        raise StyxValidationError(f'`sort` has the wrong type: Received `{type(params.get("sort", False))}` expected `bool`')
+    if params.get("nosort", False) is None:
+        raise StyxValidationError("`nosort` must not be None")
+    if not isinstance(params["nosort"], bool):
+        raise StyxValidationError(f'`nosort` has the wrong type: Received `{type(params.get("nosort", False))}` expected `bool`')
+    if params.get("asort", False) is None:
+        raise StyxValidationError("`asort` must not be None")
+    if not isinstance(params["asort"], bool):
+        raise StyxValidationError(f'`asort` has the wrong type: Received `{type(params.get("asort", False))}` expected `bool`')
+    if params.get("left_eigenvectors", False) is None:
+        raise StyxValidationError("`left_eigenvectors` must not be None")
+    if not isinstance(params["left_eigenvectors"], bool):
+        raise StyxValidationError(f'`left_eigenvectors` has the wrong type: Received `{type(params.get("left_eigenvectors", False))}` expected `bool`')
+    if params.get("num_eigenvectors", None) is not None:
+        if not isinstance(params["num_eigenvectors"], str):
+            raise StyxValidationError(f'`num_eigenvectors` has the wrong type: Received `{type(params.get("num_eigenvectors", None))}` expected `str | None`')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+
+
 def v_1dsvd_cargs(
     params: V1dsvdParameters,
     execution: Execution,
@@ -184,6 +244,7 @@ def v_1dsvd_execute(
     Returns:
         NamedTuple of outputs (described in `V1dsvdOutputs`).
     """
+    v_1dsvd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DSVD_METADATA)
     params = execution.params(params)

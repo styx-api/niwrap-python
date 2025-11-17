@@ -151,6 +151,80 @@ def fsl_regfilt_params(
     return params
 
 
+def fsl_regfilt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslRegfiltParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("designfile", None) is None:
+        raise StyxValidationError("`designfile` must not be None")
+    if not isinstance(params["designfile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`designfile` has the wrong type: Received `{type(params.get("designfile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("maskfile", None) is not None:
+        if not isinstance(params["maskfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`maskfile` has the wrong type: Received `{type(params.get("maskfile", None))}` expected `InputPathType | None`')
+    if params.get("filter", None) is not None:
+        if not isinstance(params["filter"], str):
+            raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `str | None`')
+    if params.get("freq_filter_flag", False) is None:
+        raise StyxValidationError("`freq_filter_flag` must not be None")
+    if not isinstance(params["freq_filter_flag"], bool):
+        raise StyxValidationError(f'`freq_filter_flag` has the wrong type: Received `{type(params.get("freq_filter_flag", False))}` expected `bool`')
+    if params.get("freq_ic_flag", False) is None:
+        raise StyxValidationError("`freq_ic_flag` must not be None")
+    if not isinstance(params["freq_ic_flag"], bool):
+        raise StyxValidationError(f'`freq_ic_flag` has the wrong type: Received `{type(params.get("freq_ic_flag", False))}` expected `bool`')
+    if params.get("freq_ic_smooth", None) is not None:
+        if not isinstance(params["freq_ic_smooth"], (float, int)):
+            raise StyxValidationError(f'`freq_ic_smooth` has the wrong type: Received `{type(params.get("freq_ic_smooth", None))}` expected `float | None`')
+    if params.get("fthresh", None) is not None:
+        if not isinstance(params["fthresh"], (float, int)):
+            raise StyxValidationError(f'`fthresh` has the wrong type: Received `{type(params.get("fthresh", None))}` expected `float | None`')
+    if params.get("fthresh2", None) is not None:
+        if not isinstance(params["fthresh2"], (float, int)):
+            raise StyxValidationError(f'`fthresh2` has the wrong type: Received `{type(params.get("fthresh2", None))}` expected `float | None`')
+    if params.get("vn_flag", False) is None:
+        raise StyxValidationError("`vn_flag` must not be None")
+    if not isinstance(params["vn_flag"], bool):
+        raise StyxValidationError(f'`vn_flag` has the wrong type: Received `{type(params.get("vn_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("aggressive_flag", False) is None:
+        raise StyxValidationError("`aggressive_flag` must not be None")
+    if not isinstance(params["aggressive_flag"], bool):
+        raise StyxValidationError(f'`aggressive_flag` has the wrong type: Received `{type(params.get("aggressive_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("out_data", None) is not None:
+        if not isinstance(params["out_data"], str):
+            raise StyxValidationError(f'`out_data` has the wrong type: Received `{type(params.get("out_data", None))}` expected `str | None`')
+    if params.get("out_mix", None) is not None:
+        if not isinstance(params["out_mix"], str):
+            raise StyxValidationError(f'`out_mix` has the wrong type: Received `{type(params.get("out_mix", None))}` expected `str | None`')
+    if params.get("out_vnscales", None) is not None:
+        if not isinstance(params["out_vnscales"], str):
+            raise StyxValidationError(f'`out_vnscales` has the wrong type: Received `{type(params.get("out_vnscales", None))}` expected `str | None`')
+
+
 def fsl_regfilt_cargs(
     params: FslRegfiltParameters,
     execution: Execution,
@@ -276,6 +350,7 @@ def fsl_regfilt_execute(
     Returns:
         NamedTuple of outputs (described in `FslRegfiltOutputs`).
     """
+    fsl_regfilt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_REGFILT_METADATA)
     params = execution.params(params)

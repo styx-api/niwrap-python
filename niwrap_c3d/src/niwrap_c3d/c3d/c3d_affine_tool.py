@@ -146,6 +146,79 @@ def c3d_affine_tool_params(
     return params
 
 
+def c3d_affine_tool_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `C3dAffineToolParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transform_file", None) is not None:
+        if not isinstance(params["transform_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`transform_file` has the wrong type: Received `{type(params.get("transform_file", None))}` expected `InputPathType | None`')
+    if params.get("reference_file", None) is not None:
+        if not isinstance(params["reference_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_file` has the wrong type: Received `{type(params.get("reference_file", None))}` expected `InputPathType | None`')
+    if params.get("source_file", None) is not None:
+        if not isinstance(params["source_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`source_file` has the wrong type: Received `{type(params.get("source_file", None))}` expected `InputPathType | None`')
+    if params.get("sform_file", None) is not None:
+        if not isinstance(params["sform_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sform_file` has the wrong type: Received `{type(params.get("sform_file", None))}` expected `InputPathType | None`')
+    if params.get("invert", False) is None:
+        raise StyxValidationError("`invert` must not be None")
+    if not isinstance(params["invert"], bool):
+        raise StyxValidationError(f'`invert` has the wrong type: Received `{type(params.get("invert", False))}` expected `bool`')
+    if params.get("determinant", False) is None:
+        raise StyxValidationError("`determinant` must not be None")
+    if not isinstance(params["determinant"], bool):
+        raise StyxValidationError(f'`determinant` has the wrong type: Received `{type(params.get("determinant", False))}` expected `bool`')
+    if params.get("multiply", False) is None:
+        raise StyxValidationError("`multiply` must not be None")
+    if not isinstance(params["multiply"], bool):
+        raise StyxValidationError(f'`multiply` has the wrong type: Received `{type(params.get("multiply", False))}` expected `bool`')
+    if params.get("sqrt", False) is None:
+        raise StyxValidationError("`sqrt` must not be None")
+    if not isinstance(params["sqrt"], bool):
+        raise StyxValidationError(f'`sqrt` has the wrong type: Received `{type(params.get("sqrt", False))}` expected `bool`')
+    if params.get("itk_transform", None) is not None:
+        if not isinstance(params["itk_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`itk_transform` has the wrong type: Received `{type(params.get("itk_transform", None))}` expected `InputPathType | None`')
+    if params.get("irtk_transform", None) is not None:
+        if not isinstance(params["irtk_transform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`irtk_transform` has the wrong type: Received `{type(params.get("irtk_transform", None))}` expected `InputPathType | None`')
+    if params.get("fsl2ras", False) is None:
+        raise StyxValidationError("`fsl2ras` must not be None")
+    if not isinstance(params["fsl2ras"], bool):
+        raise StyxValidationError(f'`fsl2ras` has the wrong type: Received `{type(params.get("fsl2ras", False))}` expected `bool`')
+    if params.get("ras2fsl", False) is None:
+        raise StyxValidationError("`ras2fsl` must not be None")
+    if not isinstance(params["ras2fsl"], bool):
+        raise StyxValidationError(f'`ras2fsl` has the wrong type: Received `{type(params.get("ras2fsl", False))}` expected `bool`')
+    if params.get("out_itk_transform", None) is not None:
+        if not isinstance(params["out_itk_transform"], str):
+            raise StyxValidationError(f'`out_itk_transform` has the wrong type: Received `{type(params.get("out_itk_transform", None))}` expected `str | None`')
+    if params.get("out_irtk_transform", None) is not None:
+        if not isinstance(params["out_irtk_transform"], str):
+            raise StyxValidationError(f'`out_irtk_transform` has the wrong type: Received `{type(params.get("out_irtk_transform", None))}` expected `str | None`')
+    if params.get("out_matfile", None) is not None:
+        if not isinstance(params["out_matfile"], str):
+            raise StyxValidationError(f'`out_matfile` has the wrong type: Received `{type(params.get("out_matfile", None))}` expected `str | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("info_full", False) is None:
+        raise StyxValidationError("`info_full` must not be None")
+    if not isinstance(params["info_full"], bool):
+        raise StyxValidationError(f'`info_full` has the wrong type: Received `{type(params.get("info_full", False))}` expected `bool`')
+
+
 def c3d_affine_tool_cargs(
     params: C3dAffineToolParameters,
     execution: Execution,
@@ -263,6 +336,7 @@ def c3d_affine_tool_execute(
     Returns:
         NamedTuple of outputs (described in `C3dAffineToolOutputs`).
     """
+    c3d_affine_tool_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(C3D_AFFINE_TOOL_METADATA)
     params = execution.params(params)

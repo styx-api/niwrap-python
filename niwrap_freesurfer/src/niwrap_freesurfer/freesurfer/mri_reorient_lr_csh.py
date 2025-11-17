@@ -82,6 +82,48 @@ def mri_reorient_lr_csh_params(
     return params
 
 
+def mri_reorient_lr_csh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriReorientLrCshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_vol", None) is None:
+        raise StyxValidationError("`input_vol` must not be None")
+    if not isinstance(params["input_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vol` has the wrong type: Received `{type(params.get("input_vol", None))}` expected `InputPathType`')
+    if params.get("output_vol", None) is None:
+        raise StyxValidationError("`output_vol` must not be None")
+    if not isinstance(params["output_vol"], str):
+        raise StyxValidationError(f'`output_vol` has the wrong type: Received `{type(params.get("output_vol", None))}` expected `str`')
+    if params.get("display_result", False) is None:
+        raise StyxValidationError("`display_result` must not be None")
+    if not isinstance(params["display_result"], bool):
+        raise StyxValidationError(f'`display_result` has the wrong type: Received `{type(params.get("display_result", False))}` expected `bool`')
+    if params.get("clean_files", False) is None:
+        raise StyxValidationError("`clean_files` must not be None")
+    if not isinstance(params["clean_files"], bool):
+        raise StyxValidationError(f'`clean_files` has the wrong type: Received `{type(params.get("clean_files", False))}` expected `bool`')
+    if params.get("output_registration", False) is None:
+        raise StyxValidationError("`output_registration` must not be None")
+    if not isinstance(params["output_registration"], bool):
+        raise StyxValidationError(f'`output_registration` has the wrong type: Received `{type(params.get("output_registration", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_reorient_lr_csh_cargs(
     params: MriReorientLrCshParameters,
     execution: Execution,
@@ -157,6 +199,7 @@ def mri_reorient_lr_csh_execute(
     Returns:
         NamedTuple of outputs (described in `MriReorientLrCshOutputs`).
     """
+    mri_reorient_lr_csh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_REORIENT_LR_CSH_METADATA)
     params = execution.params(params)

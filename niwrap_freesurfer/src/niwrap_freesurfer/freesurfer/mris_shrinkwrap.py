@@ -67,6 +67,31 @@ def mris_shrinkwrap_params(
     return params
 
 
+def mris_shrinkwrap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisShrinkwrapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+
+
 def mris_shrinkwrap_cargs(
     params: MrisShrinkwrapParameters,
     execution: Execution,
@@ -133,6 +158,7 @@ def mris_shrinkwrap_execute(
     Returns:
         NamedTuple of outputs (described in `MrisShrinkwrapOutputs`).
     """
+    mris_shrinkwrap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SHRINKWRAP_METADATA)
     params = execution.params(params)

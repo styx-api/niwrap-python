@@ -96,6 +96,48 @@ def tbss_skeleton_params(
     return params
 
 
+def tbss_skeleton_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TbssSkeletonParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is not None:
+        if not isinstance(params["output_image"], str):
+            raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str | None`')
+    if params.get("skeleton_params", None) is not None:
+        if not isinstance(params["skeleton_params"], list):
+            raise StyxValidationError(f'`skeleton_params` has the wrong type: Received `{type(params.get("skeleton_params", None))}` expected `list[str] | None`')
+        if len(params["skeleton_params"]) == 5:
+            raise StyxValidationError("Parameter `skeleton_params` must contain exactly 5 elements")
+        for e in params["skeleton_params"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`skeleton_params` has the wrong type: Received `{type(params.get("skeleton_params", None))}` expected `list[str] | None`')
+    if params.get("alt_4d", None) is not None:
+        if not isinstance(params["alt_4d"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`alt_4d` has the wrong type: Received `{type(params.get("alt_4d", None))}` expected `InputPathType | None`')
+    if params.get("alt_skeleton", None) is not None:
+        if not isinstance(params["alt_skeleton"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`alt_skeleton` has the wrong type: Received `{type(params.get("alt_skeleton", None))}` expected `InputPathType | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("debug2_flag", None) is not None:
+        if not isinstance(params["debug2_flag"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`debug2_flag` has the wrong type: Received `{type(params.get("debug2_flag", None))}` expected `InputPathType | None`')
+
+
 def tbss_skeleton_cargs(
     params: TbssSkeletonParameters,
     execution: Execution,
@@ -189,6 +231,7 @@ def tbss_skeleton_execute(
     Returns:
         NamedTuple of outputs (described in `TbssSkeletonOutputs`).
     """
+    tbss_skeleton_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TBSS_SKELETON_METADATA)
     params = execution.params(params)

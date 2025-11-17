@@ -113,6 +113,28 @@ def scale_to_map_trace_params(
     return params
 
 
+def scale_to_map_trace_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ScaleToMapTraceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("trace", False) is None:
+        raise StyxValidationError("`trace` must not be None")
+    if not isinstance(params["trace"], bool):
+        raise StyxValidationError(f'`trace` has the wrong type: Received `{type(params.get("trace", False))}` expected `bool`')
+    if params.get("TRACE", False) is None:
+        raise StyxValidationError("`TRACE` must not be None")
+    if not isinstance(params["TRACE"], bool):
+        raise StyxValidationError(f'`TRACE` has the wrong type: Received `{type(params.get("TRACE", False))}` expected `bool`')
+
+
 def scale_to_map_trace_cargs(
     params: ScaleToMapTraceParameters,
     execution: Execution,
@@ -260,6 +282,143 @@ def scale_to_map_params(
     return params
 
 
+def scale_to_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ScaleToMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("icol", None) is None:
+        raise StyxValidationError("`icol` must not be None")
+    if not isinstance(params["icol"], (float, int)):
+        raise StyxValidationError(f'`icol` has the wrong type: Received `{type(params.get("icol", None))}` expected `float`')
+    if params.get("vcol", None) is None:
+        raise StyxValidationError("`vcol` must not be None")
+    if not isinstance(params["vcol"], (float, int)):
+        raise StyxValidationError(f'`vcol` has the wrong type: Received `{type(params.get("vcol", None))}` expected `float`')
+    if params.get("cmap", None) is not None:
+        if not isinstance(params["cmap"], str):
+            raise StyxValidationError(f'`cmap` has the wrong type: Received `{type(params.get("cmap", None))}` expected `str | None`')
+    if params.get("cmapfile", None) is not None:
+        if not isinstance(params["cmapfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cmapfile` has the wrong type: Received `{type(params.get("cmapfile", None))}` expected `InputPathType | None`')
+    if params.get("cmapdb", None) is not None:
+        if not isinstance(params["cmapdb"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cmapdb` has the wrong type: Received `{type(params.get("cmapdb", None))}` expected `InputPathType | None`')
+    if params.get("frf", False) is None:
+        raise StyxValidationError("`frf` must not be None")
+    if not isinstance(params["frf"], bool):
+        raise StyxValidationError(f'`frf` has the wrong type: Received `{type(params.get("frf", False))}` expected `bool`')
+    if params.get("clp", None) is not None:
+        if not isinstance(params["clp"], list):
+            raise StyxValidationError(f'`clp` has the wrong type: Received `{type(params.get("clp", None))}` expected `list[float] | None`')
+        if len(params["clp"]) <= 2:
+            raise StyxValidationError("Parameter `clp` must contain at most 2 elements")
+        for e in params["clp"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`clp` has the wrong type: Received `{type(params.get("clp", None))}` expected `list[float] | None`')
+    if params.get("perc_clp", None) is not None:
+        if not isinstance(params["perc_clp"], list):
+            raise StyxValidationError(f'`perc_clp` has the wrong type: Received `{type(params.get("perc_clp", None))}` expected `list[float] | None`')
+        if len(params["perc_clp"]) <= 2:
+            raise StyxValidationError("Parameter `perc_clp` must contain at most 2 elements")
+        for e in params["perc_clp"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`perc_clp` has the wrong type: Received `{type(params.get("perc_clp", None))}` expected `list[float] | None`')
+    if params.get("apr", None) is not None:
+        if not isinstance(params["apr"], (float, int)):
+            raise StyxValidationError(f'`apr` has the wrong type: Received `{type(params.get("apr", None))}` expected `float | None`')
+    if params.get("anr", None) is not None:
+        if not isinstance(params["anr"], (float, int)):
+            raise StyxValidationError(f'`anr` has the wrong type: Received `{type(params.get("anr", None))}` expected `float | None`')
+    if params.get("interp", False) is None:
+        raise StyxValidationError("`interp` must not be None")
+    if not isinstance(params["interp"], bool):
+        raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", False))}` expected `bool`')
+    if params.get("nointerp", False) is None:
+        raise StyxValidationError("`nointerp` must not be None")
+    if not isinstance(params["nointerp"], bool):
+        raise StyxValidationError(f'`nointerp` has the wrong type: Received `{type(params.get("nointerp", False))}` expected `bool`')
+    if params.get("direct", False) is None:
+        raise StyxValidationError("`direct` must not be None")
+    if not isinstance(params["direct"], bool):
+        raise StyxValidationError(f'`direct` has the wrong type: Received `{type(params.get("direct", False))}` expected `bool`')
+    if params.get("msk_zero", False) is None:
+        raise StyxValidationError("`msk_zero` must not be None")
+    if not isinstance(params["msk_zero"], bool):
+        raise StyxValidationError(f'`msk_zero` has the wrong type: Received `{type(params.get("msk_zero", False))}` expected `bool`')
+    if params.get("msk", None) is not None:
+        if not isinstance(params["msk"], list):
+            raise StyxValidationError(f'`msk` has the wrong type: Received `{type(params.get("msk", None))}` expected `list[float] | None`')
+        if len(params["msk"]) <= 2:
+            raise StyxValidationError("Parameter `msk` must contain at most 2 elements")
+        for e in params["msk"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`msk` has the wrong type: Received `{type(params.get("msk", None))}` expected `list[float] | None`')
+    if params.get("msk_col", None) is not None:
+        if not isinstance(params["msk_col"], list):
+            raise StyxValidationError(f'`msk_col` has the wrong type: Received `{type(params.get("msk_col", None))}` expected `list[float] | None`')
+        if len(params["msk_col"]) == 3:
+            raise StyxValidationError("Parameter `msk_col` must contain exactly 3 elements")
+        for e in params["msk_col"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`msk_col` has the wrong type: Received `{type(params.get("msk_col", None))}` expected `list[float] | None`')
+    if params.get("nomsk_col", False) is None:
+        raise StyxValidationError("`nomsk_col` must not be None")
+    if not isinstance(params["nomsk_col"], bool):
+        raise StyxValidationError(f'`nomsk_col` has the wrong type: Received `{type(params.get("nomsk_col", False))}` expected `bool`')
+    if params.get("br", None) is not None:
+        if not isinstance(params["br"], (float, int)):
+            raise StyxValidationError(f'`br` has the wrong type: Received `{type(params.get("br", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("showmap", False) is None:
+        raise StyxValidationError("`showmap` must not be None")
+    if not isinstance(params["showmap"], bool):
+        raise StyxValidationError(f'`showmap` has the wrong type: Received `{type(params.get("showmap", False))}` expected `bool`')
+    if params.get("showdb", False) is None:
+        raise StyxValidationError("`showdb` must not be None")
+    if not isinstance(params["showdb"], bool):
+        raise StyxValidationError(f'`showdb` has the wrong type: Received `{type(params.get("showdb", False))}` expected `bool`')
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("noxform", False) is None:
+        raise StyxValidationError("`noxform` must not be None")
+    if not isinstance(params["noxform"], bool):
+        raise StyxValidationError(f'`noxform` has the wrong type: Received `{type(params.get("noxform", False))}` expected `bool`')
+    if params.get("setenv", None) is not None:
+        if not isinstance(params["setenv"], str):
+            raise StyxValidationError(f'`setenv` has the wrong type: Received `{type(params.get("setenv", None))}` expected `str | None`')
+    if params.get("trace", None) is not None:
+        scale_to_map_trace_validate(params["trace"])
+    if params.get("nomall", False) is None:
+        raise StyxValidationError("`nomall` must not be None")
+    if not isinstance(params["nomall"], bool):
+        raise StyxValidationError(f'`nomall` has the wrong type: Received `{type(params.get("nomall", False))}` expected `bool`')
+    if params.get("yesmall", False) is None:
+        raise StyxValidationError("`yesmall` must not be None")
+    if not isinstance(params["yesmall"], bool):
+        raise StyxValidationError(f'`yesmall` has the wrong type: Received `{type(params.get("yesmall", False))}` expected `bool`')
+
+
 def scale_to_map_cargs(
     params: ScaleToMapParameters,
     execution: Execution,
@@ -404,6 +563,7 @@ def scale_to_map_execute(
     Returns:
         NamedTuple of outputs (described in `ScaleToMapOutputs`).
     """
+    scale_to_map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SCALE_TO_MAP_METADATA)
     params = execution.params(params)

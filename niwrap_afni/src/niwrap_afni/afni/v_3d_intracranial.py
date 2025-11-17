@@ -98,6 +98,52 @@ def v_3d_intracranial_params(
     return params
 
 
+def v_3d_intracranial_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dIntracranialParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("min_val", None) is not None:
+        if not isinstance(params["min_val"], (float, int)):
+            raise StyxValidationError(f'`min_val` has the wrong type: Received `{type(params.get("min_val", None))}` expected `float | None`')
+    if params.get("max_val", None) is not None:
+        if not isinstance(params["max_val"], (float, int)):
+            raise StyxValidationError(f'`max_val` has the wrong type: Received `{type(params.get("max_val", None))}` expected `float | None`')
+    if params.get("min_conn", None) is not None:
+        if not isinstance(params["min_conn"], (float, int)):
+            raise StyxValidationError(f'`min_conn` has the wrong type: Received `{type(params.get("min_conn", None))}` expected `float | None`')
+    if params.get("max_conn", None) is not None:
+        if not isinstance(params["max_conn"], (float, int)):
+            raise StyxValidationError(f'`max_conn` has the wrong type: Received `{type(params.get("max_conn", None))}` expected `float | None`')
+    if params.get("no_smooth", False) is None:
+        raise StyxValidationError("`no_smooth` must not be None")
+    if not isinstance(params["no_smooth"], bool):
+        raise StyxValidationError(f'`no_smooth` has the wrong type: Received `{type(params.get("no_smooth", False))}` expected `bool`')
+    if params.get("mask", False) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], bool):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3d_intracranial_cargs(
     params: V3dIntracranialParameters,
     execution: Execution,
@@ -189,6 +235,7 @@ def v_3d_intracranial_execute(
     Returns:
         NamedTuple of outputs (described in `V3dIntracranialOutputs`).
     """
+    v_3d_intracranial_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_INTRACRANIAL_METADATA)
     params = execution.params(params)

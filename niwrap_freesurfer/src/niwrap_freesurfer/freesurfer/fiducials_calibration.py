@@ -52,6 +52,23 @@ def fiducials_calibration_params(
     return params
 
 
+def fiducials_calibration_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FiducialsCalibrationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("qt_plugin_installation", None) is not None:
+        if not isinstance(params["qt_plugin_installation"], str):
+            raise StyxValidationError(f'`qt_plugin_installation` has the wrong type: Received `{type(params.get("qt_plugin_installation", None))}` expected `str | None`')
+
+
 def fiducials_calibration_cargs(
     params: FiducialsCalibrationParameters,
     execution: Execution,
@@ -110,6 +127,7 @@ def fiducials_calibration_execute(
     Returns:
         NamedTuple of outputs (described in `FiducialsCalibrationOutputs`).
     """
+    fiducials_calibration_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIDUCIALS_CALIBRATION_METADATA)
     params = execution.params(params)

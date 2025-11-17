@@ -84,6 +84,45 @@ def pointflirt_params(
     return params
 
 
+def pointflirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PointflirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("invol_coords", None) is None:
+        raise StyxValidationError("`invol_coords` must not be None")
+    if not isinstance(params["invol_coords"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`invol_coords` has the wrong type: Received `{type(params.get("invol_coords", None))}` expected `InputPathType`')
+    if params.get("refvol_coords", None) is None:
+        raise StyxValidationError("`refvol_coords` must not be None")
+    if not isinstance(params["refvol_coords"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`refvol_coords` has the wrong type: Received `{type(params.get("refvol_coords", None))}` expected `InputPathType`')
+    if params.get("out_matrix", None) is not None:
+        if not isinstance(params["out_matrix"], str):
+            raise StyxValidationError(f'`out_matrix` has the wrong type: Received `{type(params.get("out_matrix", None))}` expected `str | None`')
+    if params.get("use_vox", False) is None:
+        raise StyxValidationError("`use_vox` must not be None")
+    if not isinstance(params["use_vox"], bool):
+        raise StyxValidationError(f'`use_vox` has the wrong type: Received `{type(params.get("use_vox", False))}` expected `bool`')
+    if params.get("vol_input", None) is not None:
+        if not isinstance(params["vol_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vol_input` has the wrong type: Received `{type(params.get("vol_input", None))}` expected `InputPathType | None`')
+    if params.get("vol_ref", None) is not None:
+        if not isinstance(params["vol_ref"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vol_ref` has the wrong type: Received `{type(params.get("vol_ref", None))}` expected `InputPathType | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def pointflirt_cargs(
     params: PointflirtParameters,
     execution: Execution,
@@ -169,6 +208,7 @@ def pointflirt_execute(
     Returns:
         NamedTuple of outputs (described in `PointflirtOutputs`).
     """
+    pointflirt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POINTFLIRT_METADATA)
     params = execution.params(params)

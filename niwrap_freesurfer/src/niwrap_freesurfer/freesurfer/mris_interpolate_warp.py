@@ -59,6 +59,32 @@ def mris_interpolate_warp_params(
     return params
 
 
+def mris_interpolate_warp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisInterpolateWarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("start_surface", None) is None:
+        raise StyxValidationError("`start_surface` must not be None")
+    if not isinstance(params["start_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`start_surface` has the wrong type: Received `{type(params.get("start_surface", None))}` expected `InputPathType`')
+    if params.get("end_surface", None) is None:
+        raise StyxValidationError("`end_surface` must not be None")
+    if not isinstance(params["end_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`end_surface` has the wrong type: Received `{type(params.get("end_surface", None))}` expected `InputPathType`')
+    if params.get("warp_field", None) is None:
+        raise StyxValidationError("`warp_field` must not be None")
+    if not isinstance(params["warp_field"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`warp_field` has the wrong type: Received `{type(params.get("warp_field", None))}` expected `InputPathType`')
+
+
 def mris_interpolate_warp_cargs(
     params: MrisInterpolateWarpParameters,
     execution: Execution,
@@ -118,6 +144,7 @@ def mris_interpolate_warp_execute(
     Returns:
         NamedTuple of outputs (described in `MrisInterpolateWarpOutputs`).
     """
+    mris_interpolate_warp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_INTERPOLATE_WARP_METADATA)
     params = execution.params(params)

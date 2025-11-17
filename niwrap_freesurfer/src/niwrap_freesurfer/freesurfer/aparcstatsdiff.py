@@ -77,6 +77,43 @@ def aparcstatsdiff_params(
     return params
 
 
+def aparcstatsdiff_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AparcstatsdiffParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subj1", None) is None:
+        raise StyxValidationError("`subj1` must not be None")
+    if not isinstance(params["subj1"], str):
+        raise StyxValidationError(f'`subj1` has the wrong type: Received `{type(params.get("subj1", None))}` expected `str`')
+    if params.get("subj2", None) is None:
+        raise StyxValidationError("`subj2` must not be None")
+    if not isinstance(params["subj2"], str):
+        raise StyxValidationError(f'`subj2` has the wrong type: Received `{type(params.get("subj2", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("parc", None) is None:
+        raise StyxValidationError("`parc` must not be None")
+    if not isinstance(params["parc"], str):
+        raise StyxValidationError(f'`parc` has the wrong type: Received `{type(params.get("parc", None))}` expected `str`')
+    if params.get("meas", None) is None:
+        raise StyxValidationError("`meas` must not be None")
+    if not isinstance(params["meas"], str):
+        raise StyxValidationError(f'`meas` has the wrong type: Received `{type(params.get("meas", None))}` expected `str`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+
+
 def aparcstatsdiff_cargs(
     params: AparcstatsdiffParameters,
     execution: Execution,
@@ -142,6 +179,7 @@ def aparcstatsdiff_execute(
     Returns:
         NamedTuple of outputs (described in `AparcstatsdiffOutputs`).
     """
+    aparcstatsdiff_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(APARCSTATSDIFF_METADATA)
     params = execution.params(params)

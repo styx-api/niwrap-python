@@ -146,18 +146,20 @@ def dwi2fod_strides_cargs_dyn_fn(
     }.get(t)
 
 
-def dwi2fod_strides_outputs_dyn_fn(
+def dwi2fod_strides_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": dwi2fod_various_string_validate,
+        "VariousFile": dwi2fod_various_file_validate,
     }.get(t)
 
 
@@ -186,6 +188,28 @@ def dwi2fod_fslgrad_params(
         "bvals": bvals,
     }
     return params
+
+
+def dwi2fod_fslgrad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Dwi2fodFslgradParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
 
 
 def dwi2fod_fslgrad_cargs(
@@ -226,6 +250,24 @@ def dwi2fod_various_string_params(
     return params
 
 
+def dwi2fod_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Dwi2fodVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def dwi2fod_various_string_cargs(
     params: Dwi2fodVariousStringParameters,
     execution: Execution,
@@ -260,6 +302,24 @@ def dwi2fod_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def dwi2fod_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Dwi2fodVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def dwi2fod_various_file_cargs(
@@ -299,6 +359,28 @@ def dwi2fod_config_params(
         "value": value,
     }
     return params
+
+
+def dwi2fod_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Dwi2fodConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def dwi2fod_config_cargs(
@@ -350,6 +432,28 @@ def dwi2fod_response_odf_params(
         "odf": odf,
     }
     return params
+
+
+def dwi2fod_response_odf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Dwi2fodResponseOdfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("response", None) is None:
+        raise StyxValidationError("`response` must not be None")
+    if not isinstance(params["response"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`response` has the wrong type: Received `{type(params.get("response", None))}` expected `InputPathType`')
+    if params.get("odf", None) is None:
+        raise StyxValidationError("`odf` must not be None")
+    if not isinstance(params["odf"], str):
+        raise StyxValidationError(f'`odf` has the wrong type: Received `{type(params.get("odf", None))}` expected `str`')
 
 
 def dwi2fod_response_odf_cargs(
@@ -560,6 +664,119 @@ def dwi2fod_params(
     return params
 
 
+def dwi2fod_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Dwi2fodParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("fslgrad", None) is not None:
+        dwi2fod_fslgrad_validate(params["fslgrad"])
+    if params.get("shells", None) is not None:
+        if not isinstance(params["shells"], list):
+            raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+        for e in params["shells"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`shells` has the wrong type: Received `{type(params.get("shells", None))}` expected `list[float] | None`')
+    if params.get("directions", None) is not None:
+        if not isinstance(params["directions"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`directions` has the wrong type: Received `{type(params.get("directions", None))}` expected `InputPathType | None`')
+    if params.get("lmax", None) is not None:
+        if not isinstance(params["lmax"], list):
+            raise StyxValidationError(f'`lmax` has the wrong type: Received `{type(params.get("lmax", None))}` expected `list[int] | None`')
+        for e in params["lmax"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`lmax` has the wrong type: Received `{type(params.get("lmax", None))}` expected `list[int] | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("filter", None) is not None:
+        if not isinstance(params["filter"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`filter` has the wrong type: Received `{type(params.get("filter", None))}` expected `InputPathType | None`')
+    if params.get("neg_lambda", None) is not None:
+        if not isinstance(params["neg_lambda"], (float, int)):
+            raise StyxValidationError(f'`neg_lambda` has the wrong type: Received `{type(params.get("neg_lambda", None))}` expected `float | None`')
+    if params.get("norm_lambda", None) is not None:
+        if not isinstance(params["norm_lambda"], (float, int)):
+            raise StyxValidationError(f'`norm_lambda` has the wrong type: Received `{type(params.get("norm_lambda", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("niter", None) is not None:
+        if not isinstance(params["niter"], int):
+            raise StyxValidationError(f'`niter` has the wrong type: Received `{type(params.get("niter", None))}` expected `int | None`')
+    if params.get("norm_lambda_1", None) is not None:
+        if not isinstance(params["norm_lambda_1"], (float, int)):
+            raise StyxValidationError(f'`norm_lambda_1` has the wrong type: Received `{type(params.get("norm_lambda_1", None))}` expected `float | None`')
+    if params.get("neg_lambda_1", None) is not None:
+        if not isinstance(params["neg_lambda_1"], (float, int)):
+            raise StyxValidationError(f'`neg_lambda_1` has the wrong type: Received `{type(params.get("neg_lambda_1", None))}` expected `float | None`')
+    if params.get("predicted_signal", None) is not None:
+        if not isinstance(params["predicted_signal"], str):
+            raise StyxValidationError(f'`predicted_signal` has the wrong type: Received `{type(params.get("predicted_signal", None))}` expected `str | None`')
+    if params.get("strides", None) is not None:
+        if not isinstance(params["strides"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
+        if "@type" not in params["strides"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        dwi2fod_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[Dwi2fodConfigParameters] | None`')
+        for e in params["config"]:
+            dwi2fod_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("algorithm", None) is None:
+        raise StyxValidationError("`algorithm` must not be None")
+    if not isinstance(params["algorithm"], str):
+        raise StyxValidationError(f'`algorithm` has the wrong type: Received `{type(params.get("algorithm", None))}` expected `str`')
+    if params.get("dwi", None) is None:
+        raise StyxValidationError("`dwi` must not be None")
+    if not isinstance(params["dwi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", None))}` expected `InputPathType`')
+    if params.get("response_odf", None) is None:
+        raise StyxValidationError("`response_odf` must not be None")
+    if not isinstance(params["response_odf"], list):
+        raise StyxValidationError(f'`response_odf` has the wrong type: Received `{type(params.get("response_odf", None))}` expected `list[Dwi2fodResponseOdfParameters]`')
+    for e in params["response_odf"]:
+        dwi2fod_response_odf_validate(e)
+
+
 def dwi2fod_cargs(
     params: Dwi2fodParameters,
     execution: Execution,
@@ -733,6 +950,7 @@ def dwi2fod_execute(
     Returns:
         NamedTuple of outputs (described in `Dwi2fodOutputs`).
     """
+    dwi2fod_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DWI2FOD_METADATA)
     params = execution.params(params)

@@ -122,6 +122,75 @@ def v_3d_local_bistat_params(
     return params
 
 
+def v_3d_local_bistat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLocalBistatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nbhd", None) is None:
+        raise StyxValidationError("`nbhd` must not be None")
+    if not isinstance(params["nbhd"], str):
+        raise StyxValidationError(f'`nbhd` has the wrong type: Received `{type(params.get("nbhd", None))}` expected `str`')
+    if params.get("stats", None) is None:
+        raise StyxValidationError("`stats` must not be None")
+    if not isinstance(params["stats"], list):
+        raise StyxValidationError(f'`stats` has the wrong type: Received `{type(params.get("stats", None))}` expected `list[str]`')
+    for e in params["stats"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`stats` has the wrong type: Received `{type(params.get("stats", None))}` expected `list[str]`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("weight", None) is not None:
+        if not isinstance(params["weight"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("histpow", None) is not None:
+        if not isinstance(params["histpow"], (float, int)):
+            raise StyxValidationError(f'`histpow` has the wrong type: Received `{type(params.get("histpow", None))}` expected `float | None`')
+    if params.get("histbin", None) is not None:
+        if not isinstance(params["histbin"], (float, int)):
+            raise StyxValidationError(f'`histbin` has the wrong type: Received `{type(params.get("histbin", None))}` expected `float | None`')
+    if params.get("hclip1", None) is not None:
+        if not isinstance(params["hclip1"], list):
+            raise StyxValidationError(f'`hclip1` has the wrong type: Received `{type(params.get("hclip1", None))}` expected `list[str] | None`')
+        if len(params["hclip1"]) == 2:
+            raise StyxValidationError("Parameter `hclip1` must contain exactly 2 elements")
+        for e in params["hclip1"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`hclip1` has the wrong type: Received `{type(params.get("hclip1", None))}` expected `list[str] | None`')
+    if params.get("hclip2", None) is not None:
+        if not isinstance(params["hclip2"], list):
+            raise StyxValidationError(f'`hclip2` has the wrong type: Received `{type(params.get("hclip2", None))}` expected `list[str] | None`')
+        if len(params["hclip2"]) == 2:
+            raise StyxValidationError("Parameter `hclip2` must contain exactly 2 elements")
+        for e in params["hclip2"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`hclip2` has the wrong type: Received `{type(params.get("hclip2", None))}` expected `list[str] | None`')
+    if params.get("dataset1", None) is None:
+        raise StyxValidationError("`dataset1` must not be None")
+    if not isinstance(params["dataset1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset1` has the wrong type: Received `{type(params.get("dataset1", None))}` expected `InputPathType`')
+    if params.get("dataset2", None) is None:
+        raise StyxValidationError("`dataset2` must not be None")
+    if not isinstance(params["dataset2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset2` has the wrong type: Received `{type(params.get("dataset2", None))}` expected `InputPathType`')
+
+
 def v_3d_local_bistat_cargs(
     params: V3dLocalBistatParameters,
     execution: Execution,
@@ -227,6 +296,7 @@ def v_3d_local_bistat_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLocalBistatOutputs`).
     """
+    v_3d_local_bistat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LOCAL_BISTAT_METADATA)
     params = execution.params(params)

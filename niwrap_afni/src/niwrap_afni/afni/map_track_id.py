@@ -88,6 +88,52 @@ def map_track_id_params(
     return params
 
 
+def map_track_id_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MapTrackIdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("in_trk", None) is None:
+        raise StyxValidationError("`in_trk` must not be None")
+    if not isinstance(params["in_trk"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_trk` has the wrong type: Received `{type(params.get("in_trk", None))}` expected `InputPathType`')
+    if params.get("in_map", None) is None:
+        raise StyxValidationError("`in_map` must not be None")
+    if not isinstance(params["in_map"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_map` has the wrong type: Received `{type(params.get("in_map", None))}` expected `InputPathType`')
+    if params.get("reference", None) is None:
+        raise StyxValidationError("`reference` must not be None")
+    if not isinstance(params["reference"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference` has the wrong type: Received `{type(params.get("reference", None))}` expected `InputPathType`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("orig_zero", False) is None:
+        raise StyxValidationError("`orig_zero` must not be None")
+    if not isinstance(params["orig_zero"], bool):
+        raise StyxValidationError(f'`orig_zero` has the wrong type: Received `{type(params.get("orig_zero", False))}` expected `bool`')
+    if params.get("line_only_num", False) is None:
+        raise StyxValidationError("`line_only_num` must not be None")
+    if not isinstance(params["line_only_num"], bool):
+        raise StyxValidationError(f'`line_only_num` has the wrong type: Received `{type(params.get("line_only_num", False))}` expected `bool`')
+    if params.get("already_inv", False) is None:
+        raise StyxValidationError("`already_inv` must not be None")
+    if not isinstance(params["already_inv"], bool):
+        raise StyxValidationError(f'`already_inv` has the wrong type: Received `{type(params.get("already_inv", False))}` expected `bool`')
+
+
 def map_track_id_cargs(
     params: MapTrackIdParameters,
     execution: Execution,
@@ -170,6 +216,7 @@ def map_track_id_execute(
     Returns:
         NamedTuple of outputs (described in `MapTrackIdOutputs`).
     """
+    map_track_id_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAP_TRACK_ID_METADATA)
     params = execution.params(params)

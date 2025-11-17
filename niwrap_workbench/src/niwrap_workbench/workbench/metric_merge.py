@@ -81,6 +81,28 @@ def metric_merge_up_to_params(
     return params
 
 
+def metric_merge_up_to_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricMergeUpToParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("last-column", None) is None:
+        raise StyxValidationError("`last-column` must not be None")
+    if not isinstance(params["last-column"], str):
+        raise StyxValidationError(f'`last-column` has the wrong type: Received `{type(params.get("last-column", None))}` expected `str`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+
+
 def metric_merge_up_to_cargs(
     params: MetricMergeUpToParameters,
     execution: Execution,
@@ -126,6 +148,26 @@ def metric_merge_column_params(
     return params
 
 
+def metric_merge_column_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricMergeColumnParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("column", None) is None:
+        raise StyxValidationError("`column` must not be None")
+    if not isinstance(params["column"], str):
+        raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str`')
+    if params.get("up-to", None) is not None:
+        metric_merge_up_to_validate(params["up-to"])
+
+
 def metric_merge_column_cargs(
     params: MetricMergeColumnParameters,
     execution: Execution,
@@ -169,6 +211,29 @@ def metric_merge_metric_params(
     if column is not None:
         params["column"] = column
     return params
+
+
+def metric_merge_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricMergeMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-in", None) is None:
+        raise StyxValidationError("`metric-in` must not be None")
+    if not isinstance(params["metric-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric-in` has the wrong type: Received `{type(params.get("metric-in", None))}` expected `InputPathType`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], list):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[MetricMergeColumnParameters] | None`')
+        for e in params["column"]:
+            metric_merge_column_validate(e)
 
 
 def metric_merge_metric_cargs(
@@ -224,6 +289,29 @@ def metric_merge_params(
     if metric is not None:
         params["metric"] = metric
     return params
+
+
+def metric_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("metric", None) is not None:
+        if not isinstance(params["metric"], list):
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[MetricMergeMetricParameters] | None`')
+        for e in params["metric"]:
+            metric_merge_metric_validate(e)
 
 
 def metric_merge_cargs(
@@ -293,6 +381,7 @@ def metric_merge_execute(
     Returns:
         NamedTuple of outputs (described in `MetricMergeOutputs`).
     """
+    metric_merge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_MERGE_METADATA)
     params = execution.params(params)

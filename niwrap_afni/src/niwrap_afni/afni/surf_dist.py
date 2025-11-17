@@ -91,6 +91,49 @@ def surf_dist_params(
     return params
 
 
+def surf_dist_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfDistParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("nodepairs", None) is None:
+        raise StyxValidationError("`nodepairs` must not be None")
+    if not isinstance(params["nodepairs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`nodepairs` has the wrong type: Received `{type(params.get("nodepairs", None))}` expected `InputPathType`')
+    if params.get("node_path_do", None) is not None:
+        if not isinstance(params["node_path_do"], str):
+            raise StyxValidationError(f'`node_path_do` has the wrong type: Received `{type(params.get("node_path_do", None))}` expected `str | None`')
+    if params.get("euclidean", False) is None:
+        raise StyxValidationError("`euclidean` must not be None")
+    if not isinstance(params["euclidean"], bool):
+        raise StyxValidationError(f'`euclidean` has the wrong type: Received `{type(params.get("euclidean", False))}` expected `bool`')
+    if params.get("euclidian", False) is None:
+        raise StyxValidationError("`euclidian` must not be None")
+    if not isinstance(params["euclidian"], bool):
+        raise StyxValidationError(f'`euclidian` has the wrong type: Received `{type(params.get("euclidian", False))}` expected `bool`')
+    if params.get("graph", False) is None:
+        raise StyxValidationError("`graph` must not be None")
+    if not isinstance(params["graph"], bool):
+        raise StyxValidationError(f'`graph` has the wrong type: Received `{type(params.get("graph", False))}` expected `bool`')
+    if params.get("from_node", None) is not None:
+        if not isinstance(params["from_node"], str):
+            raise StyxValidationError(f'`from_node` has the wrong type: Received `{type(params.get("from_node", None))}` expected `str | None`')
+    if params.get("to_nodes", None) is not None:
+        if not isinstance(params["to_nodes"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`to_nodes` has the wrong type: Received `{type(params.get("to_nodes", None))}` expected `InputPathType | None`')
+
+
 def surf_dist_cargs(
     params: SurfDistParameters,
     execution: Execution,
@@ -171,6 +214,7 @@ def surf_dist_execute(
     Returns:
         NamedTuple of outputs (described in `SurfDistOutputs`).
     """
+    surf_dist_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_DIST_METADATA)
     params = execution.params(params)

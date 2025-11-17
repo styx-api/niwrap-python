@@ -73,6 +73,39 @@ def volume_distortion_params(
     return params
 
 
+def volume_distortion_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeDistortionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("source-volume", None) is not None:
+        if not isinstance(params["source-volume"], str):
+            raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str | None`')
+    if params.get("circular", False) is None:
+        raise StyxValidationError("`circular` must not be None")
+    if not isinstance(params["circular"], bool):
+        raise StyxValidationError(f'`circular` has the wrong type: Received `{type(params.get("circular", False))}` expected `bool`')
+    if params.get("log2", False) is None:
+        raise StyxValidationError("`log2` must not be None")
+    if not isinstance(params["log2"], bool):
+        raise StyxValidationError(f'`log2` has the wrong type: Received `{type(params.get("log2", False))}` expected `bool`')
+    if params.get("warpfield", None) is None:
+        raise StyxValidationError("`warpfield` must not be None")
+    if not isinstance(params["warpfield"], str):
+        raise StyxValidationError(f'`warpfield` has the wrong type: Received `{type(params.get("warpfield", None))}` expected `str`')
+
+
 def volume_distortion_cargs(
     params: VolumeDistortionParameters,
     execution: Execution,
@@ -147,6 +180,7 @@ def volume_distortion_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeDistortionOutputs`).
     """
+    volume_distortion_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_DISTORTION_METADATA)
     params = execution.params(params)

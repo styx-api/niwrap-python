@@ -66,6 +66,36 @@ def make_pq_script_py_params(
     return params
 
 
+def make_pq_script_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakePqScriptPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("brick_index", None) is None:
+        raise StyxValidationError("`brick_index` must not be None")
+    if not isinstance(params["brick_index"], (float, int)):
+        raise StyxValidationError(f'`brick_index` has the wrong type: Received `{type(params.get("brick_index", None))}` expected `float`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("out_script", None) is None:
+        raise StyxValidationError("`out_script` must not be None")
+    if not isinstance(params["out_script"], str):
+        raise StyxValidationError(f'`out_script` has the wrong type: Received `{type(params.get("out_script", None))}` expected `str`')
+
+
 def make_pq_script_py_cargs(
     params: MakePqScriptPyParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def make_pq_script_py_execute(
     Returns:
         NamedTuple of outputs (described in `MakePqScriptPyOutputs`).
     """
+    make_pq_script_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_PQ_SCRIPT_PY_METADATA)
     params = execution.params(params)

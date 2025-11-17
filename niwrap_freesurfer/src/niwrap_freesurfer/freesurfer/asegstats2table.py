@@ -191,6 +191,116 @@ def asegstats2table_params(
     return params
 
 
+def asegstats2table_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Asegstats2tableParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjects", None) is not None:
+        if not isinstance(params["subjects"], list):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+        for e in params["subjects"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+    if params.get("inputs", None) is not None:
+        if not isinstance(params["inputs"], list):
+            raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[str] | None`')
+        for e in params["inputs"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `list[str] | None`')
+    if params.get("tablefile", None) is None:
+        raise StyxValidationError("`tablefile` must not be None")
+    if not isinstance(params["tablefile"], str):
+        raise StyxValidationError(f'`tablefile` has the wrong type: Received `{type(params.get("tablefile", None))}` expected `str`')
+    if params.get("subjectsfile", None) is not None:
+        if not isinstance(params["subjectsfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subjectsfile` has the wrong type: Received `{type(params.get("subjectsfile", None))}` expected `InputPathType | None`')
+    if params.get("qdec", None) is not None:
+        if not isinstance(params["qdec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`qdec` has the wrong type: Received `{type(params.get("qdec", None))}` expected `InputPathType | None`')
+    if params.get("qdec_long", None) is not None:
+        if not isinstance(params["qdec_long"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`qdec_long` has the wrong type: Received `{type(params.get("qdec_long", None))}` expected `InputPathType | None`')
+    if params.get("fsgd", None) is not None:
+        if not isinstance(params["fsgd"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsgd` has the wrong type: Received `{type(params.get("fsgd", None))}` expected `InputPathType | None`')
+    if params.get("maxsegno", None) is not None:
+        if not isinstance(params["maxsegno"], list):
+            raise StyxValidationError(f'`maxsegno` has the wrong type: Received `{type(params.get("maxsegno", None))}` expected `list[str] | None`')
+        for e in params["maxsegno"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`maxsegno` has the wrong type: Received `{type(params.get("maxsegno", None))}` expected `list[str] | None`')
+    if params.get("segids_from_file", None) is not None:
+        if not isinstance(params["segids_from_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segids_from_file` has the wrong type: Received `{type(params.get("segids_from_file", None))}` expected `InputPathType | None`')
+    if params.get("segno_include", None) is not None:
+        if not isinstance(params["segno_include"], list):
+            raise StyxValidationError(f'`segno_include` has the wrong type: Received `{type(params.get("segno_include", None))}` expected `list[str] | None`')
+        for e in params["segno_include"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`segno_include` has the wrong type: Received `{type(params.get("segno_include", None))}` expected `list[str] | None`')
+    if params.get("segno_exclude", None) is not None:
+        if not isinstance(params["segno_exclude"], list):
+            raise StyxValidationError(f'`segno_exclude` has the wrong type: Received `{type(params.get("segno_exclude", None))}` expected `list[str] | None`')
+        for e in params["segno_exclude"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`segno_exclude` has the wrong type: Received `{type(params.get("segno_exclude", None))}` expected `list[str] | None`')
+    if params.get("measure", None) is not None:
+        if not isinstance(params["measure"], str):
+            raise StyxValidationError(f'`measure` has the wrong type: Received `{type(params.get("measure", None))}` expected `str | None`')
+    if params.get("delimiter", None) is not None:
+        if not isinstance(params["delimiter"], str):
+            raise StyxValidationError(f'`delimiter` has the wrong type: Received `{type(params.get("delimiter", None))}` expected `str | None`')
+    if params.get("statsfile", None) is not None:
+        if not isinstance(params["statsfile"], str):
+            raise StyxValidationError(f'`statsfile` has the wrong type: Received `{type(params.get("statsfile", None))}` expected `str | None`')
+    if params.get("subdir", None) is not None:
+        if not isinstance(params["subdir"], str):
+            raise StyxValidationError(f'`subdir` has the wrong type: Received `{type(params.get("subdir", None))}` expected `str | None`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+    if params.get("write_etiv", False) is None:
+        raise StyxValidationError("`write_etiv` must not be None")
+    if not isinstance(params["write_etiv"], bool):
+        raise StyxValidationError(f'`write_etiv` has the wrong type: Received `{type(params.get("write_etiv", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("transpose_flag", False) is None:
+        raise StyxValidationError("`transpose_flag` must not be None")
+    if not isinstance(params["transpose_flag"], bool):
+        raise StyxValidationError(f'`transpose_flag` has the wrong type: Received `{type(params.get("transpose_flag", False))}` expected `bool`')
+    if params.get("common_segs_flag", False) is None:
+        raise StyxValidationError("`common_segs_flag` must not be None")
+    if not isinstance(params["common_segs_flag"], bool):
+        raise StyxValidationError(f'`common_segs_flag` has the wrong type: Received `{type(params.get("common_segs_flag", False))}` expected `bool`')
+    if params.get("all_segs_flag", False) is None:
+        raise StyxValidationError("`all_segs_flag` must not be None")
+    if not isinstance(params["all_segs_flag"], bool):
+        raise StyxValidationError(f'`all_segs_flag` has the wrong type: Received `{type(params.get("all_segs_flag", False))}` expected `bool`')
+    if params.get("no_vol_extras_flag", False) is None:
+        raise StyxValidationError("`no_vol_extras_flag` must not be None")
+    if not isinstance(params["no_vol_extras_flag"], bool):
+        raise StyxValidationError(f'`no_vol_extras_flag` has the wrong type: Received `{type(params.get("no_vol_extras_flag", False))}` expected `bool`')
+    if params.get("skip_missing_flag", False) is None:
+        raise StyxValidationError("`skip_missing_flag` must not be None")
+    if not isinstance(params["skip_missing_flag"], bool):
+        raise StyxValidationError(f'`skip_missing_flag` has the wrong type: Received `{type(params.get("skip_missing_flag", False))}` expected `bool`')
+    if params.get("replace53_flag", False) is None:
+        raise StyxValidationError("`replace53_flag` must not be None")
+    if not isinstance(params["replace53_flag"], bool):
+        raise StyxValidationError(f'`replace53_flag` has the wrong type: Received `{type(params.get("replace53_flag", False))}` expected `bool`')
+
+
 def asegstats2table_cargs(
     params: Asegstats2tableParameters,
     execution: Execution,
@@ -344,6 +454,7 @@ def asegstats2table_execute(
     Returns:
         NamedTuple of outputs (described in `Asegstats2tableOutputs`).
     """
+    asegstats2table_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ASEGSTATS2TABLE_METADATA)
     params = execution.params(params)

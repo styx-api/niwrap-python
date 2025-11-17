@@ -54,6 +54,23 @@ def mri_gdfglm_params(
     return params
 
 
+def mri_gdfglm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriGdfglmParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inputs", None) is not None:
+        if not isinstance(params["inputs"], str):
+            raise StyxValidationError(f'`inputs` has the wrong type: Received `{type(params.get("inputs", None))}` expected `str | None`')
+
+
 def mri_gdfglm_cargs(
     params: MriGdfglmParameters,
     execution: Execution,
@@ -114,6 +131,7 @@ def mri_gdfglm_execute(
     Returns:
         NamedTuple of outputs (described in `MriGdfglmOutputs`).
     """
+    mri_gdfglm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GDFGLM_METADATA)
     params = execution.params(params)

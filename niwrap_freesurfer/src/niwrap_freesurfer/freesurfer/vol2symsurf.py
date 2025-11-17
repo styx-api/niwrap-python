@@ -95,6 +95,49 @@ def vol2symsurf_params(
     return params
 
 
+def vol2symsurf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Vol2symsurfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("registration_file", None) is None:
+        raise StyxValidationError("`registration_file` must not be None")
+    if not isinstance(params["registration_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`registration_file` has the wrong type: Received `{type(params.get("registration_file", None))}` expected `InputPathType`')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("fwhm", None) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], (float, int)):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float`')
+    if params.get("output_stem", None) is not None:
+        if not isinstance(params["output_stem"], str):
+            raise StyxValidationError(f'`output_stem` has the wrong type: Received `{type(params.get("output_stem", None))}` expected `str | None`')
+    if params.get("regheader", None) is not None:
+        if not isinstance(params["regheader"], str):
+            raise StyxValidationError(f'`regheader` has the wrong type: Received `{type(params.get("regheader", None))}` expected `str | None`')
+    if params.get("projection_fraction", None) is not None:
+        if not isinstance(params["projection_fraction"], (float, int)):
+            raise StyxValidationError(f'`projection_fraction` has the wrong type: Received `{type(params.get("projection_fraction", None))}` expected `float | None`')
+    if params.get("no_diff", False) is None:
+        raise StyxValidationError("`no_diff` must not be None")
+    if not isinstance(params["no_diff"], bool):
+        raise StyxValidationError(f'`no_diff` has the wrong type: Received `{type(params.get("no_diff", False))}` expected `bool`')
+    if params.get("laterality_index", False) is None:
+        raise StyxValidationError("`laterality_index` must not be None")
+    if not isinstance(params["laterality_index"], bool):
+        raise StyxValidationError(f'`laterality_index` has the wrong type: Received `{type(params.get("laterality_index", False))}` expected `bool`')
+
+
 def vol2symsurf_cargs(
     params: Vol2symsurfParameters,
     execution: Execution,
@@ -187,6 +230,7 @@ def vol2symsurf_execute(
     Returns:
         NamedTuple of outputs (described in `Vol2symsurfOutputs`).
     """
+    vol2symsurf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOL2SYMSURF_METADATA)
     params = execution.params(params)

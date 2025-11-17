@@ -82,6 +82,42 @@ def v_3d_rankizer_params(
     return params
 
 
+def v_3d_rankizer_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRankizerParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("base_rank", None) is not None:
+        if not isinstance(params["base_rank"], (float, int)):
+            raise StyxValidationError(f'`base_rank` has the wrong type: Received `{type(params.get("base_rank", None))}` expected `float | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("percentize", False) is None:
+        raise StyxValidationError("`percentize` must not be None")
+    if not isinstance(params["percentize"], bool):
+        raise StyxValidationError(f'`percentize` has the wrong type: Received `{type(params.get("percentize", False))}` expected `bool`')
+    if params.get("percentize_mask", False) is None:
+        raise StyxValidationError("`percentize_mask` must not be None")
+    if not isinstance(params["percentize_mask"], bool):
+        raise StyxValidationError(f'`percentize_mask` has the wrong type: Received `{type(params.get("percentize_mask", False))}` expected `bool`')
+
+
 def v_3d_rankizer_cargs(
     params: V3dRankizerParameters,
     execution: Execution,
@@ -159,6 +195,7 @@ def v_3d_rankizer_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRankizerOutputs`).
     """
+    v_3d_rankizer_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_RANKIZER_METADATA)
     params = execution.params(params)

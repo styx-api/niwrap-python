@@ -48,6 +48,24 @@ def surface_information_params(
     return params
 
 
+def surface_information_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceInformationParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("Surface File", None) is None:
+        raise StyxValidationError("`Surface File` must not be None")
+    if not isinstance(params["Surface File"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`Surface File` has the wrong type: Received `{type(params.get("Surface File", None))}` expected `InputPathType`')
+
+
 def surface_information_cargs(
     params: SurfaceInformationParameters,
     execution: Execution,
@@ -105,6 +123,7 @@ def surface_information_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceInformationOutputs`).
     """
+    surface_information_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_INFORMATION_METADATA)
     params = execution.params(params)

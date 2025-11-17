@@ -90,6 +90,59 @@ def v__quiet_talkers_params(
     return params
 
 
+def v__quiet_talkers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VQuietTalkersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sudo", False) is None:
+        raise StyxValidationError("`sudo` must not be None")
+    if not isinstance(params["sudo"], bool):
+        raise StyxValidationError(f'`sudo` has the wrong type: Received `{type(params.get("sudo", False))}` expected `bool`')
+    if params.get("prog", None) is not None:
+        if not isinstance(params["prog"], list):
+            raise StyxValidationError(f'`prog` has the wrong type: Received `{type(params.get("prog", None))}` expected `list[str] | None`')
+        for e in params["prog"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`prog` has the wrong type: Received `{type(params.get("prog", None))}` expected `list[str] | None`')
+    if params.get("npb_val", None) is not None:
+        if not isinstance(params["npb_val"], list):
+            raise StyxValidationError(f'`npb_val` has the wrong type: Received `{type(params.get("npb_val", None))}` expected `list[float] | None`')
+        for e in params["npb_val"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`npb_val` has the wrong type: Received `{type(params.get("npb_val", None))}` expected `list[float] | None`')
+    if params.get("npb_range", None) is not None:
+        if not isinstance(params["npb_range"], list):
+            raise StyxValidationError(f'`npb_range` has the wrong type: Received `{type(params.get("npb_range", None))}` expected `list[float] | None`')
+        if len(params["npb_range"]) == 2:
+            raise StyxValidationError("Parameter `npb_range` must contain exactly 2 elements")
+        for e in params["npb_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`npb_range` has the wrong type: Received `{type(params.get("npb_range", None))}` expected `list[float] | None`')
+    if params.get("pif_key", None) is not None:
+        if not isinstance(params["pif_key"], str):
+            raise StyxValidationError(f'`pif_key` has the wrong type: Received `{type(params.get("pif_key", None))}` expected `str | None`')
+    if params.get("no_npb", False) is None:
+        raise StyxValidationError("`no_npb` must not be None")
+    if not isinstance(params["no_npb"], bool):
+        raise StyxValidationError(f'`no_npb` has the wrong type: Received `{type(params.get("no_npb", False))}` expected `bool`')
+    if params.get("list", False) is None:
+        raise StyxValidationError("`list` must not be None")
+    if not isinstance(params["list"], bool):
+        raise StyxValidationError(f'`list` has the wrong type: Received `{type(params.get("list", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v__quiet_talkers_cargs(
     params: VQuietTalkersParameters,
     execution: Execution,
@@ -174,6 +227,7 @@ def v__quiet_talkers_execute(
     Returns:
         NamedTuple of outputs (described in `VQuietTalkersOutputs`).
     """
+    v__quiet_talkers_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__QUIET_TALKERS_METADATA)
     params = execution.params(params)

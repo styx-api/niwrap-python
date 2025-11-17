@@ -181,6 +181,111 @@ def v_3d_rsfc_params(
     return params
 
 
+def v_3d_rsfc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRsfcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fbot", None) is None:
+        raise StyxValidationError("`fbot` must not be None")
+    if not isinstance(params["fbot"], (float, int)):
+        raise StyxValidationError(f'`fbot` has the wrong type: Received `{type(params.get("fbot", None))}` expected `float`')
+    if params.get("ftop", None) is None:
+        raise StyxValidationError("`ftop` must not be None")
+    if not isinstance(params["ftop"], (float, int)):
+        raise StyxValidationError(f'`ftop` has the wrong type: Received `{type(params.get("ftop", None))}` expected `float`')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("despike", False) is None:
+        raise StyxValidationError("`despike` must not be None")
+    if not isinstance(params["despike"], bool):
+        raise StyxValidationError(f'`despike` has the wrong type: Received `{type(params.get("despike", False))}` expected `bool`')
+    if params.get("ort_file", None) is not None:
+        if not isinstance(params["ort_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ort_file` has the wrong type: Received `{type(params.get("ort_file", None))}` expected `InputPathType | None`')
+    if params.get("dsort_file", None) is not None:
+        if not isinstance(params["dsort_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dsort_file` has the wrong type: Received `{type(params.get("dsort_file", None))}` expected `InputPathType | None`')
+    if params.get("nodetrend", False) is None:
+        raise StyxValidationError("`nodetrend` must not be None")
+    if not isinstance(params["nodetrend"], bool):
+        raise StyxValidationError(f'`nodetrend` has the wrong type: Received `{type(params.get("nodetrend", False))}` expected `bool`')
+    if params.get("time_step", None) is not None:
+        if not isinstance(params["time_step"], (float, int)):
+            raise StyxValidationError(f'`time_step` has the wrong type: Received `{type(params.get("time_step", None))}` expected `float | None`')
+    if params.get("nfft", None) is not None:
+        if not isinstance(params["nfft"], int):
+            raise StyxValidationError(f'`nfft` has the wrong type: Received `{type(params.get("nfft", None))}` expected `int | None`')
+    if params.get("norm", False) is None:
+        raise StyxValidationError("`norm` must not be None")
+    if not isinstance(params["norm"], bool):
+        raise StyxValidationError(f'`norm` has the wrong type: Received `{type(params.get("norm", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("blur", None) is not None:
+        if not isinstance(params["blur"], (float, int)):
+            raise StyxValidationError(f'`blur` has the wrong type: Received `{type(params.get("blur", None))}` expected `float | None`')
+    if params.get("localpv", None) is not None:
+        if not isinstance(params["localpv"], (float, int)):
+            raise StyxValidationError(f'`localpv` has the wrong type: Received `{type(params.get("localpv", None))}` expected `float | None`')
+    if params.get("input_alt", None) is not None:
+        if not isinstance(params["input_alt"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_alt` has the wrong type: Received `{type(params.get("input_alt", None))}` expected `InputPathType | None`')
+    if params.get("band", None) is not None:
+        if not isinstance(params["band"], list):
+            raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float] | None`')
+        if len(params["band"]) == 2:
+            raise StyxValidationError("Parameter `band` must contain exactly 2 elements")
+        for e in params["band"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`band` has the wrong type: Received `{type(params.get("band", None))}` expected `list[float] | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("no_rs_out", False) is None:
+        raise StyxValidationError("`no_rs_out` must not be None")
+    if not isinstance(params["no_rs_out"], bool):
+        raise StyxValidationError(f'`no_rs_out` has the wrong type: Received `{type(params.get("no_rs_out", False))}` expected `bool`')
+    if params.get("un_bandpass_out", False) is None:
+        raise StyxValidationError("`un_bandpass_out` must not be None")
+    if not isinstance(params["un_bandpass_out"], bool):
+        raise StyxValidationError(f'`un_bandpass_out` has the wrong type: Received `{type(params.get("un_bandpass_out", False))}` expected `bool`')
+    if params.get("no_rsfa", False) is None:
+        raise StyxValidationError("`no_rsfa` must not be None")
+    if not isinstance(params["no_rsfa"], bool):
+        raise StyxValidationError(f'`no_rsfa` has the wrong type: Received `{type(params.get("no_rsfa", False))}` expected `bool`')
+    if params.get("bp_at_end", False) is None:
+        raise StyxValidationError("`bp_at_end` must not be None")
+    if not isinstance(params["bp_at_end"], bool):
+        raise StyxValidationError(f'`bp_at_end` has the wrong type: Received `{type(params.get("bp_at_end", False))}` expected `bool`')
+    if params.get("notrans", False) is None:
+        raise StyxValidationError("`notrans` must not be None")
+    if not isinstance(params["notrans"], bool):
+        raise StyxValidationError(f'`notrans` has the wrong type: Received `{type(params.get("notrans", False))}` expected `bool`')
+    if params.get("nosat", False) is None:
+        raise StyxValidationError("`nosat` must not be None")
+    if not isinstance(params["nosat"], bool):
+        raise StyxValidationError(f'`nosat` has the wrong type: Received `{type(params.get("nosat", False))}` expected `bool`')
+
+
 def v_3d_rsfc_cargs(
     params: V3dRsfcParameters,
     execution: Execution,
@@ -315,6 +420,7 @@ def v_3d_rsfc_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRsfcOutputs`).
     """
+    v_3d_rsfc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_RSFC_METADATA)
     params = execution.params(params)

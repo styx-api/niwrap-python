@@ -97,6 +97,53 @@ def v_3dedge3_params(
     return params
 
 
+def v_3dedge3_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dedge3Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `str | None`')
+    if params.get("fscale", False) is None:
+        raise StyxValidationError("`fscale` must not be None")
+    if not isinstance(params["fscale"], bool):
+        raise StyxValidationError(f'`fscale` has the wrong type: Received `{type(params.get("fscale", False))}` expected `bool`')
+    if params.get("gscale", False) is None:
+        raise StyxValidationError("`gscale` must not be None")
+    if not isinstance(params["gscale"], bool):
+        raise StyxValidationError(f'`gscale` has the wrong type: Received `{type(params.get("gscale", False))}` expected `bool`')
+    if params.get("nscale", False) is None:
+        raise StyxValidationError("`nscale` must not be None")
+    if not isinstance(params["nscale"], bool):
+        raise StyxValidationError(f'`nscale` has the wrong type: Received `{type(params.get("nscale", False))}` expected `bool`')
+    if params.get("scale_floats", None) is not None:
+        if not isinstance(params["scale_floats"], (float, int)):
+            raise StyxValidationError(f'`scale_floats` has the wrong type: Received `{type(params.get("scale_floats", None))}` expected `float | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+
+
 def v_3dedge3_cargs(
     params: V3dedge3Parameters,
     execution: Execution,
@@ -183,6 +230,7 @@ def v_3dedge3_execute(
     Returns:
         NamedTuple of outputs (described in `V3dedge3Outputs`).
     """
+    v_3dedge3_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DEDGE3_METADATA)
     params = execution.params(params)

@@ -61,6 +61,32 @@ def volume_label_probability_params(
     return params
 
 
+def volume_label_probability_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeLabelProbabilityParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("probability-out", None) is None:
+        raise StyxValidationError("`probability-out` must not be None")
+    if not isinstance(params["probability-out"], str):
+        raise StyxValidationError(f'`probability-out` has the wrong type: Received `{type(params.get("probability-out", None))}` expected `str`')
+    if params.get("exclude-unlabeled", False) is None:
+        raise StyxValidationError("`exclude-unlabeled` must not be None")
+    if not isinstance(params["exclude-unlabeled"], bool):
+        raise StyxValidationError(f'`exclude-unlabeled` has the wrong type: Received `{type(params.get("exclude-unlabeled", False))}` expected `bool`')
+    if params.get("label-maps", None) is None:
+        raise StyxValidationError("`label-maps` must not be None")
+    if not isinstance(params["label-maps"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-maps` has the wrong type: Received `{type(params.get("label-maps", None))}` expected `InputPathType`')
+
+
 def volume_label_probability_cargs(
     params: VolumeLabelProbabilityParameters,
     execution: Execution,
@@ -123,6 +149,7 @@ def volume_label_probability_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelProbabilityOutputs`).
     """
+    volume_label_probability_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_LABEL_PROBABILITY_METADATA)
     params = execution.params(params)

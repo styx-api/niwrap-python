@@ -114,6 +114,64 @@ def realtime_receiver_py_params(
     return params
 
 
+def realtime_receiver_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RealtimeReceiverPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("show_data", None) is not None:
+        if not isinstance(params["show_data"], bool):
+            raise StyxValidationError(f'`show_data` has the wrong type: Received `{type(params.get("show_data", None))}` expected `bool | None`')
+    if params.get("write_text_data", None) is not None:
+        if not isinstance(params["write_text_data"], str):
+            raise StyxValidationError(f'`write_text_data` has the wrong type: Received `{type(params.get("write_text_data", None))}` expected `str | None`')
+    if params.get("data_choice", None) is not None:
+        if not isinstance(params["data_choice"], str):
+            raise StyxValidationError(f'`data_choice` has the wrong type: Received `{type(params.get("data_choice", None))}` expected `typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None`')
+        if params["data_choice"] not in ["motion", "motion_norm", "all_extras", "diff_ratio"]:
+            raise StyxValidationError("Parameter `data_choice` must be one of [\"motion\", \"motion_norm\", \"all_extras\", \"diff_ratio\"]")
+    if params.get("serial_port", None) is not None:
+        if not isinstance(params["serial_port"], str):
+            raise StyxValidationError(f'`serial_port` has the wrong type: Received `{type(params.get("serial_port", None))}` expected `str | None`')
+    if params.get("show_demo_gui", None) is not None:
+        if not isinstance(params["show_demo_gui"], bool):
+            raise StyxValidationError(f'`show_demo_gui` has the wrong type: Received `{type(params.get("show_demo_gui", None))}` expected `bool | None`')
+    if params.get("dc_params", None) is not None:
+        if not isinstance(params["dc_params"], list):
+            raise StyxValidationError(f'`dc_params` has the wrong type: Received `{type(params.get("dc_params", None))}` expected `list[float] | None`')
+        for e in params["dc_params"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`dc_params` has the wrong type: Received `{type(params.get("dc_params", None))}` expected `list[float] | None`')
+    if params.get("extras_on_one_line", None) is not None:
+        if not isinstance(params["extras_on_one_line"], bool):
+            raise StyxValidationError(f'`extras_on_one_line` has the wrong type: Received `{type(params.get("extras_on_one_line", None))}` expected `bool | None`')
+    if params.get("show_comm_times", False) is None:
+        raise StyxValidationError("`show_comm_times` must not be None")
+    if not isinstance(params["show_comm_times"], bool):
+        raise StyxValidationError(f'`show_comm_times` has the wrong type: Received `{type(params.get("show_comm_times", False))}` expected `bool`')
+    if params.get("show_demo_data", False) is None:
+        raise StyxValidationError("`show_demo_data` must not be None")
+    if not isinstance(params["show_demo_data"], bool):
+        raise StyxValidationError(f'`show_demo_data` has the wrong type: Received `{type(params.get("show_demo_data", False))}` expected `bool`')
+    if params.get("swap", False) is None:
+        raise StyxValidationError("`swap` must not be None")
+    if not isinstance(params["swap"], bool):
+        raise StyxValidationError(f'`swap` has the wrong type: Received `{type(params.get("swap", False))}` expected `bool`')
+    if params.get("tcp_port", None) is not None:
+        if not isinstance(params["tcp_port"], (float, int)):
+            raise StyxValidationError(f'`tcp_port` has the wrong type: Received `{type(params.get("tcp_port", None))}` expected `float | None`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+
+
 def realtime_receiver_py_cargs(
     params: RealtimeReceiverPyParameters,
     execution: Execution,
@@ -221,6 +279,7 @@ def realtime_receiver_py_execute(
     Returns:
         NamedTuple of outputs (described in `RealtimeReceiverPyOutputs`).
     """
+    realtime_receiver_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(REALTIME_RECEIVER_PY_METADATA)
     params = execution.params(params)

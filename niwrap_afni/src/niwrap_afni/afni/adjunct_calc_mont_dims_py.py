@@ -49,6 +49,24 @@ def adjunct_calc_mont_dims_py_params(
     return params
 
 
+def adjunct_calc_mont_dims_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AdjunctCalcMontDimsPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def adjunct_calc_mont_dims_py_cargs(
     params: AdjunctCalcMontDimsPyParameters,
     execution: Execution,
@@ -107,6 +125,7 @@ def adjunct_calc_mont_dims_py_execute(
     Returns:
         NamedTuple of outputs (described in `AdjunctCalcMontDimsPyOutputs`).
     """
+    adjunct_calc_mont_dims_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ADJUNCT_CALC_MONT_DIMS_PY_METADATA)
     params = execution.params(params)

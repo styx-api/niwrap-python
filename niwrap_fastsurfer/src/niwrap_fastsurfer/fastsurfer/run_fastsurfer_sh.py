@@ -247,6 +247,151 @@ def run_fastsurfer_sh_params(
     return params
 
 
+def run_fastsurfer_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunFastsurferShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sid", None) is None:
+        raise StyxValidationError("`sid` must not be None")
+    if not isinstance(params["sid"], str):
+        raise StyxValidationError(f'`sid` has the wrong type: Received `{type(params.get("sid", None))}` expected `str`')
+    if params.get("subjects_dir", None) is None:
+        raise StyxValidationError("`subjects_dir` must not be None")
+    if not isinstance(params["subjects_dir"], str):
+        raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str`')
+    if params.get("t1_input", None) is None:
+        raise StyxValidationError("`t1_input` must not be None")
+    if not isinstance(params["t1_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_input` has the wrong type: Received `{type(params.get("t1_input", None))}` expected `InputPathType`')
+    if params.get("fs_license", None) is not None:
+        if not isinstance(params["fs_license"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fs_license` has the wrong type: Received `{type(params.get("fs_license", None))}` expected `InputPathType | None`')
+    if params.get("asegdkt_segfile", None) is not None:
+        if not isinstance(params["asegdkt_segfile"], str):
+            raise StyxValidationError(f'`asegdkt_segfile` has the wrong type: Received `{type(params.get("asegdkt_segfile", None))}` expected `str | None`')
+    if params.get("vox_size", None) is not None:
+        if not isinstance(params["vox_size"], str):
+            raise StyxValidationError(f'`vox_size` has the wrong type: Received `{type(params.get("vox_size", None))}` expected `str | None`')
+    if params.get("seg_only", False) is None:
+        raise StyxValidationError("`seg_only` must not be None")
+    if not isinstance(params["seg_only"], bool):
+        raise StyxValidationError(f'`seg_only` has the wrong type: Received `{type(params.get("seg_only", False))}` expected `bool`')
+    if params.get("seg_log", None) is not None:
+        if not isinstance(params["seg_log"], str):
+            raise StyxValidationError(f'`seg_log` has the wrong type: Received `{type(params.get("seg_log", None))}` expected `str | None`')
+    if params.get("conformed_name", None) is not None:
+        if not isinstance(params["conformed_name"], str):
+            raise StyxValidationError(f'`conformed_name` has the wrong type: Received `{type(params.get("conformed_name", None))}` expected `str | None`')
+    if params.get("norm_name", None) is not None:
+        if not isinstance(params["norm_name"], str):
+            raise StyxValidationError(f'`norm_name` has the wrong type: Received `{type(params.get("norm_name", None))}` expected `str | None`')
+    if params.get("t2_input", None) is not None:
+        if not isinstance(params["t2_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t2_input` has the wrong type: Received `{type(params.get("t2_input", None))}` expected `InputPathType | None`')
+    if params.get("reg_mode", None) is not None:
+        if not isinstance(params["reg_mode"], str):
+            raise StyxValidationError(f'`reg_mode` has the wrong type: Received `{type(params.get("reg_mode", None))}` expected `typing.Literal["none", "coreg", "robust"] | None`')
+        if params["reg_mode"] not in ["none", "coreg", "robust"]:
+            raise StyxValidationError("Parameter `reg_mode` must be one of [\"none\", \"coreg\", \"robust\"]")
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], int):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `int | None`')
+        if params["threads"] >= 1:
+            raise StyxValidationError("Parameter `threads` must be at least 1")
+    if params.get("device", None) is not None:
+        if not isinstance(params["device"], str):
+            raise StyxValidationError(f'`device` has the wrong type: Received `{type(params.get("device", None))}` expected `str | None`')
+    if params.get("viewagg_device", None) is not None:
+        if not isinstance(params["viewagg_device"], str):
+            raise StyxValidationError(f'`viewagg_device` has the wrong type: Received `{type(params.get("viewagg_device", None))}` expected `str | None`')
+    if params.get("batch_size", None) is not None:
+        if not isinstance(params["batch_size"], int):
+            raise StyxValidationError(f'`batch_size` has the wrong type: Received `{type(params.get("batch_size", None))}` expected `int | None`')
+        if params["batch_size"] >= 1:
+            raise StyxValidationError("Parameter `batch_size` must be at least 1")
+    if params.get("python_cmd", None) is not None:
+        if not isinstance(params["python_cmd"], str):
+            raise StyxValidationError(f'`python_cmd` has the wrong type: Received `{type(params.get("python_cmd", None))}` expected `str | None`')
+    if params.get("surf_only", False) is None:
+        raise StyxValidationError("`surf_only` must not be None")
+    if not isinstance(params["surf_only"], bool):
+        raise StyxValidationError(f'`surf_only` has the wrong type: Received `{type(params.get("surf_only", False))}` expected `bool`')
+    if params.get("no_biasfield", False) is None:
+        raise StyxValidationError("`no_biasfield` must not be None")
+    if not isinstance(params["no_biasfield"], bool):
+        raise StyxValidationError(f'`no_biasfield` has the wrong type: Received `{type(params.get("no_biasfield", False))}` expected `bool`')
+    if params.get("tal_reg", False) is None:
+        raise StyxValidationError("`tal_reg` must not be None")
+    if not isinstance(params["tal_reg"], bool):
+        raise StyxValidationError(f'`tal_reg` has the wrong type: Received `{type(params.get("tal_reg", False))}` expected `bool`')
+    if params.get("no_asegdkt", False) is None:
+        raise StyxValidationError("`no_asegdkt` must not be None")
+    if not isinstance(params["no_asegdkt"], bool):
+        raise StyxValidationError(f'`no_asegdkt` has the wrong type: Received `{type(params.get("no_asegdkt", False))}` expected `bool`')
+    if params.get("no_cereb", False) is None:
+        raise StyxValidationError("`no_cereb` must not be None")
+    if not isinstance(params["no_cereb"], bool):
+        raise StyxValidationError(f'`no_cereb` has the wrong type: Received `{type(params.get("no_cereb", False))}` expected `bool`')
+    if params.get("cereb_segfile", None) is not None:
+        if not isinstance(params["cereb_segfile"], str):
+            raise StyxValidationError(f'`cereb_segfile` has the wrong type: Received `{type(params.get("cereb_segfile", None))}` expected `str | None`')
+    if params.get("no_hypothal", False) is None:
+        raise StyxValidationError("`no_hypothal` must not be None")
+    if not isinstance(params["no_hypothal"], bool):
+        raise StyxValidationError(f'`no_hypothal` has the wrong type: Received `{type(params.get("no_hypothal", False))}` expected `bool`')
+    if params.get("qc_snap", False) is None:
+        raise StyxValidationError("`qc_snap` must not be None")
+    if not isinstance(params["qc_snap"], bool):
+        raise StyxValidationError(f'`qc_snap` has the wrong type: Received `{type(params.get("qc_snap", False))}` expected `bool`')
+    if params.get("three_t", False) is None:
+        raise StyxValidationError("`three_t` must not be None")
+    if not isinstance(params["three_t"], bool):
+        raise StyxValidationError(f'`three_t` has the wrong type: Received `{type(params.get("three_t", False))}` expected `bool`')
+    if params.get("parallel", False) is None:
+        raise StyxValidationError("`parallel` must not be None")
+    if not isinstance(params["parallel"], bool):
+        raise StyxValidationError(f'`parallel` has the wrong type: Received `{type(params.get("parallel", False))}` expected `bool`')
+    if params.get("ignore_fs_version", False) is None:
+        raise StyxValidationError("`ignore_fs_version` must not be None")
+    if not isinstance(params["ignore_fs_version"], bool):
+        raise StyxValidationError(f'`ignore_fs_version` has the wrong type: Received `{type(params.get("ignore_fs_version", False))}` expected `bool`')
+    if params.get("fstess", False) is None:
+        raise StyxValidationError("`fstess` must not be None")
+    if not isinstance(params["fstess"], bool):
+        raise StyxValidationError(f'`fstess` has the wrong type: Received `{type(params.get("fstess", False))}` expected `bool`')
+    if params.get("fsqsphere", False) is None:
+        raise StyxValidationError("`fsqsphere` must not be None")
+    if not isinstance(params["fsqsphere"], bool):
+        raise StyxValidationError(f'`fsqsphere` has the wrong type: Received `{type(params.get("fsqsphere", False))}` expected `bool`')
+    if params.get("fsaparc", False) is None:
+        raise StyxValidationError("`fsaparc` must not be None")
+    if not isinstance(params["fsaparc"], bool):
+        raise StyxValidationError(f'`fsaparc` has the wrong type: Received `{type(params.get("fsaparc", False))}` expected `bool`')
+    if params.get("no_fs_t1", False) is None:
+        raise StyxValidationError("`no_fs_t1` must not be None")
+    if not isinstance(params["no_fs_t1"], bool):
+        raise StyxValidationError(f'`no_fs_t1` has the wrong type: Received `{type(params.get("no_fs_t1", False))}` expected `bool`')
+    if params.get("no_surfreg", False) is None:
+        raise StyxValidationError("`no_surfreg` must not be None")
+    if not isinstance(params["no_surfreg"], bool):
+        raise StyxValidationError(f'`no_surfreg` has the wrong type: Received `{type(params.get("no_surfreg", False))}` expected `bool`')
+    if params.get("allow_root", False) is None:
+        raise StyxValidationError("`allow_root` must not be None")
+    if not isinstance(params["allow_root"], bool):
+        raise StyxValidationError(f'`allow_root` has the wrong type: Received `{type(params.get("allow_root", False))}` expected `bool`')
+    if params.get("version", None) is not None:
+        if not isinstance(params["version"], str):
+            raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", None))}` expected `str | None`')
+
+
 def run_fastsurfer_sh_cargs(
     params: RunFastsurferShParameters,
     execution: Execution,
@@ -426,6 +571,7 @@ def run_fastsurfer_sh_execute(
     Returns:
         NamedTuple of outputs (described in `RunFastsurferShOutputs`).
     """
+    run_fastsurfer_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_FASTSURFER_SH_METADATA)
     params = execution.params(params)

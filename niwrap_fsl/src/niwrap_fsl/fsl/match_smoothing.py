@@ -66,6 +66,36 @@ def match_smoothing_params(
     return params
 
 
+def match_smoothing_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MatchSmoothingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("example_func", None) is None:
+        raise StyxValidationError("`example_func` must not be None")
+    if not isinstance(params["example_func"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`example_func` has the wrong type: Received `{type(params.get("example_func", None))}` expected `InputPathType`')
+    if params.get("func_smoothing_FWHM", None) is None:
+        raise StyxValidationError("`func_smoothing_FWHM` must not be None")
+    if not isinstance(params["func_smoothing_FWHM"], (float, int)):
+        raise StyxValidationError(f'`func_smoothing_FWHM` has the wrong type: Received `{type(params.get("func_smoothing_FWHM", None))}` expected `float`')
+    if params.get("example_structural", None) is None:
+        raise StyxValidationError("`example_structural` must not be None")
+    if not isinstance(params["example_structural"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`example_structural` has the wrong type: Received `{type(params.get("example_structural", None))}` expected `InputPathType`')
+    if params.get("standard_space_resolution", None) is None:
+        raise StyxValidationError("`standard_space_resolution` must not be None")
+    if not isinstance(params["standard_space_resolution"], (float, int)):
+        raise StyxValidationError(f'`standard_space_resolution` has the wrong type: Received `{type(params.get("standard_space_resolution", None))}` expected `float`')
+
+
 def match_smoothing_cargs(
     params: MatchSmoothingParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def match_smoothing_execute(
     Returns:
         NamedTuple of outputs (described in `MatchSmoothingOutputs`).
     """
+    match_smoothing_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MATCH_SMOOTHING_METADATA)
     params = execution.params(params)

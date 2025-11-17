@@ -166,6 +166,91 @@ def make_color_map_params(
     return params
 
 
+def make_color_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeColorMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fiducials_ncol", None) is not None:
+        if not isinstance(params["fiducials_ncol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fiducials_ncol` has the wrong type: Received `{type(params.get("fiducials_ncol", None))}` expected `InputPathType | None`')
+    if params.get("fiducials", None) is not None:
+        if not isinstance(params["fiducials"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fiducials` has the wrong type: Received `{type(params.get("fiducials", None))}` expected `InputPathType | None`')
+    if params.get("num_colors", None) is not None:
+        if not isinstance(params["num_colors"], (float, int)):
+            raise StyxValidationError(f'`num_colors` has the wrong type: Received `{type(params.get("num_colors", None))}` expected `float | None`')
+    if params.get("std_mapname", None) is not None:
+        if not isinstance(params["std_mapname"], str):
+            raise StyxValidationError(f'`std_mapname` has the wrong type: Received `{type(params.get("std_mapname", None))}` expected `str | None`')
+    if params.get("palette_file", None) is not None:
+        if not isinstance(params["palette_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`palette_file` has the wrong type: Received `{type(params.get("palette_file", None))}` expected `InputPathType | None`')
+    if params.get("cmap_name", None) is not None:
+        if not isinstance(params["cmap_name"], str):
+            raise StyxValidationError(f'`cmap_name` has the wrong type: Received `{type(params.get("cmap_name", None))}` expected `str | None`')
+    if params.get("fscolut_labels", None) is not None:
+        if not isinstance(params["fscolut_labels"], list):
+            raise StyxValidationError(f'`fscolut_labels` has the wrong type: Received `{type(params.get("fscolut_labels", None))}` expected `list[float] | None`')
+        if len(params["fscolut_labels"]) == 2:
+            raise StyxValidationError("Parameter `fscolut_labels` must contain exactly 2 elements")
+        for e in params["fscolut_labels"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fscolut_labels` has the wrong type: Received `{type(params.get("fscolut_labels", None))}` expected `list[float] | None`')
+    if params.get("fscolut_file", None) is not None:
+        if not isinstance(params["fscolut_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fscolut_file` has the wrong type: Received `{type(params.get("fscolut_file", None))}` expected `InputPathType | None`')
+    if params.get("afni_hex", None) is not None:
+        if not isinstance(params["afni_hex"], str):
+            raise StyxValidationError(f'`afni_hex` has the wrong type: Received `{type(params.get("afni_hex", None))}` expected `str | None`')
+    if params.get("afni_hex_complete", None) is not None:
+        if not isinstance(params["afni_hex_complete"], str):
+            raise StyxValidationError(f'`afni_hex_complete` has the wrong type: Received `{type(params.get("afni_hex_complete", None))}` expected `str | None`')
+    if params.get("suma_colormap", None) is not None:
+        if not isinstance(params["suma_colormap"], str):
+            raise StyxValidationError(f'`suma_colormap` has the wrong type: Received `{type(params.get("suma_colormap", None))}` expected `str | None`')
+    if params.get("user_colut_file", None) is not None:
+        if not isinstance(params["user_colut_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`user_colut_file` has the wrong type: Received `{type(params.get("user_colut_file", None))}` expected `InputPathType | None`')
+    if params.get("sdset", None) is not None:
+        if not isinstance(params["sdset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sdset` has the wrong type: Received `{type(params.get("sdset", None))}` expected `InputPathType | None`')
+    if params.get("sdset_prefix", None) is not None:
+        if not isinstance(params["sdset_prefix"], str):
+            raise StyxValidationError(f'`sdset_prefix` has the wrong type: Received `{type(params.get("sdset_prefix", None))}` expected `str | None`')
+    if params.get("flipupdown", False) is None:
+        raise StyxValidationError("`flipupdown` must not be None")
+    if not isinstance(params["flipupdown"], bool):
+        raise StyxValidationError(f'`flipupdown` has the wrong type: Received `{type(params.get("flipupdown", False))}` expected `bool`')
+    if params.get("skip_last", False) is None:
+        raise StyxValidationError("`skip_last` must not be None")
+    if not isinstance(params["skip_last"], bool):
+        raise StyxValidationError(f'`skip_last` has the wrong type: Received `{type(params.get("skip_last", False))}` expected `bool`')
+    if params.get("show_fscolut", False) is None:
+        raise StyxValidationError("`show_fscolut` must not be None")
+    if not isinstance(params["show_fscolut"], bool):
+        raise StyxValidationError(f'`show_fscolut` has the wrong type: Received `{type(params.get("show_fscolut", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("help_full_flag", False) is None:
+        raise StyxValidationError("`help_full_flag` must not be None")
+    if not isinstance(params["help_full_flag"], bool):
+        raise StyxValidationError(f'`help_full_flag` has the wrong type: Received `{type(params.get("help_full_flag", False))}` expected `bool`')
+    if params.get("flip_map_updside_down", False) is None:
+        raise StyxValidationError("`flip_map_updside_down` must not be None")
+    if not isinstance(params["flip_map_updside_down"], bool):
+        raise StyxValidationError(f'`flip_map_updside_down` has the wrong type: Received `{type(params.get("flip_map_updside_down", False))}` expected `bool`')
+
+
 def make_color_map_cargs(
     params: MakeColorMapParameters,
     execution: Execution,
@@ -307,6 +392,7 @@ def make_color_map_execute(
     Returns:
         NamedTuple of outputs (described in `MakeColorMapOutputs`).
     """
+    make_color_map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_COLOR_MAP_METADATA)
     params = execution.params(params)

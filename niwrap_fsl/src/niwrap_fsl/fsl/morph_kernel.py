@@ -56,6 +56,28 @@ def morph_kernel_params(
     return params
 
 
+def morph_kernel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MorphKernelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cube_side_length", None) is None:
+        raise StyxValidationError("`cube_side_length` must not be None")
+    if not isinstance(params["cube_side_length"], (float, int)):
+        raise StyxValidationError(f'`cube_side_length` has the wrong type: Received `{type(params.get("cube_side_length", None))}` expected `float`')
+    if params.get("sphere_radius", None) is None:
+        raise StyxValidationError("`sphere_radius` must not be None")
+    if not isinstance(params["sphere_radius"], (float, int)):
+        raise StyxValidationError(f'`sphere_radius` has the wrong type: Received `{type(params.get("sphere_radius", None))}` expected `float`')
+
+
 def morph_kernel_cargs(
     params: MorphKernelParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def morph_kernel_execute(
     Returns:
         NamedTuple of outputs (described in `MorphKernelOutputs`).
     """
+    morph_kernel_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MORPH_KERNEL_METADATA)
     params = execution.params(params)

@@ -109,6 +109,60 @@ def analyze_trace_params(
     return params
 
 
+def analyze_trace_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AnalyzeTraceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("tracefile", None) is None:
+        raise StyxValidationError("`tracefile` must not be None")
+    if not isinstance(params["tracefile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`tracefile` has the wrong type: Received `{type(params.get("tracefile", None))}` expected `InputPathType`')
+    if params.get("max_func_lines", None) is not None:
+        if not isinstance(params["max_func_lines"], int):
+            raise StyxValidationError(f'`max_func_lines` has the wrong type: Received `{type(params.get("max_func_lines", None))}` expected `int | None`')
+    if params.get("suma_c", None) is not None:
+        if not isinstance(params["suma_c"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`suma_c` has the wrong type: Received `{type(params.get("suma_c", None))}` expected `InputPathType | None`')
+    if params.get("max_err", None) is not None:
+        if not isinstance(params["max_err"], int):
+            raise StyxValidationError(f'`max_err` has the wrong type: Received `{type(params.get("max_err", None))}` expected `int | None`')
+    if params.get("novolreg", False) is None:
+        raise StyxValidationError("`novolreg` must not be None")
+    if not isinstance(params["novolreg"], bool):
+        raise StyxValidationError(f'`novolreg` has the wrong type: Received `{type(params.get("novolreg", False))}` expected `bool`')
+    if params.get("noxform", False) is None:
+        raise StyxValidationError("`noxform` must not be None")
+    if not isinstance(params["noxform"], bool):
+        raise StyxValidationError(f'`noxform` has the wrong type: Received `{type(params.get("noxform", False))}` expected `bool`')
+    if params.get("setenv", None) is not None:
+        if not isinstance(params["setenv"], str):
+            raise StyxValidationError(f'`setenv` has the wrong type: Received `{type(params.get("setenv", None))}` expected `str | None`')
+    if params.get("trace", False) is None:
+        raise StyxValidationError("`trace` must not be None")
+    if not isinstance(params["trace"], bool):
+        raise StyxValidationError(f'`trace` has the wrong type: Received `{type(params.get("trace", False))}` expected `bool`')
+    if params.get("extreme_trace", False) is None:
+        raise StyxValidationError("`extreme_trace` must not be None")
+    if not isinstance(params["extreme_trace"], bool):
+        raise StyxValidationError(f'`extreme_trace` has the wrong type: Received `{type(params.get("extreme_trace", False))}` expected `bool`')
+    if params.get("nomall", False) is None:
+        raise StyxValidationError("`nomall` must not be None")
+    if not isinstance(params["nomall"], bool):
+        raise StyxValidationError(f'`nomall` has the wrong type: Received `{type(params.get("nomall", False))}` expected `bool`')
+    if params.get("yesmall", False) is None:
+        raise StyxValidationError("`yesmall` must not be None")
+    if not isinstance(params["yesmall"], bool):
+        raise StyxValidationError(f'`yesmall` has the wrong type: Received `{type(params.get("yesmall", False))}` expected `bool`')
+
+
 def analyze_trace_cargs(
     params: AnalyzeTraceParameters,
     execution: Execution,
@@ -199,6 +253,7 @@ def analyze_trace_execute(
     Returns:
         NamedTuple of outputs (described in `AnalyzeTraceOutputs`).
     """
+    analyze_trace_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANALYZE_TRACE_METADATA)
     params = execution.params(params)

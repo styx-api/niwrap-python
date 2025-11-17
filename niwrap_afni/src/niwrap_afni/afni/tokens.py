@@ -57,6 +57,29 @@ def tokens_params(
     return params
 
 
+def tokens_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TokensParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is not None:
+        if not isinstance(params["infile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType | None`')
+    if params.get("extra_char", None) is not None:
+        if not isinstance(params["extra_char"], list):
+            raise StyxValidationError(f'`extra_char` has the wrong type: Received `{type(params.get("extra_char", None))}` expected `list[str] | None`')
+        for e in params["extra_char"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`extra_char` has the wrong type: Received `{type(params.get("extra_char", None))}` expected `list[str] | None`')
+
+
 def tokens_cargs(
     params: TokensParameters,
     execution: Execution,
@@ -123,6 +146,7 @@ def tokens_execute(
     Returns:
         NamedTuple of outputs (described in `TokensOutputs`).
     """
+    tokens_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TOKENS_METADATA)
     params = execution.params(params)

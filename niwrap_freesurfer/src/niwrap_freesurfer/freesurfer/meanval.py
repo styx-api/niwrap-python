@@ -66,6 +66,36 @@ def meanval_params(
     return params
 
 
+def meanval_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MeanvalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("avgwf_flag", False) is None:
+        raise StyxValidationError("`avgwf_flag` must not be None")
+    if not isinstance(params["avgwf_flag"], bool):
+        raise StyxValidationError(f'`avgwf_flag` has the wrong type: Received `{type(params.get("avgwf_flag", False))}` expected `bool`')
+
+
 def meanval_cargs(
     params: MeanvalParameters,
     execution: Execution,
@@ -137,6 +167,7 @@ def meanval_execute(
     Returns:
         NamedTuple of outputs (described in `MeanvalOutputs`).
     """
+    meanval_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MEANVAL_METADATA)
     params = execution.params(params)

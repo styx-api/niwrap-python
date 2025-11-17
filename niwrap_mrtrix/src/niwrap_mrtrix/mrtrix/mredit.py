@@ -125,6 +125,35 @@ def mredit_plane_params(
     return params
 
 
+def mredit_plane_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MreditPlaneParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("axis", None) is None:
+        raise StyxValidationError("`axis` must not be None")
+    if not isinstance(params["axis"], int):
+        raise StyxValidationError(f'`axis` has the wrong type: Received `{type(params.get("axis", None))}` expected `int`')
+    if params.get("coord", None) is None:
+        raise StyxValidationError("`coord` must not be None")
+    if not isinstance(params["coord"], list):
+        raise StyxValidationError(f'`coord` has the wrong type: Received `{type(params.get("coord", None))}` expected `list[int]`')
+    for e in params["coord"]:
+        if not isinstance(e, int):
+            raise StyxValidationError(f'`coord` has the wrong type: Received `{type(params.get("coord", None))}` expected `list[int]`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], (float, int)):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float`')
+
+
 def mredit_plane_cargs(
     params: MreditPlaneParameters,
     execution: Execution,
@@ -170,6 +199,35 @@ def mredit_sphere_params(
     return params
 
 
+def mredit_sphere_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MreditSphereParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("position", None) is None:
+        raise StyxValidationError("`position` must not be None")
+    if not isinstance(params["position"], list):
+        raise StyxValidationError(f'`position` has the wrong type: Received `{type(params.get("position", None))}` expected `list[float]`')
+    for e in params["position"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`position` has the wrong type: Received `{type(params.get("position", None))}` expected `list[float]`')
+    if params.get("radius", None) is None:
+        raise StyxValidationError("`radius` must not be None")
+    if not isinstance(params["radius"], (float, int)):
+        raise StyxValidationError(f'`radius` has the wrong type: Received `{type(params.get("radius", None))}` expected `float`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], (float, int)):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float`')
+
+
 def mredit_sphere_cargs(
     params: MreditSphereParameters,
     execution: Execution,
@@ -212,6 +270,31 @@ def mredit_voxel_params(
     return params
 
 
+def mredit_voxel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MreditVoxelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("position", None) is None:
+        raise StyxValidationError("`position` must not be None")
+    if not isinstance(params["position"], list):
+        raise StyxValidationError(f'`position` has the wrong type: Received `{type(params.get("position", None))}` expected `list[float]`')
+    for e in params["position"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`position` has the wrong type: Received `{type(params.get("position", None))}` expected `list[float]`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], (float, int)):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float`')
+
+
 def mredit_voxel_cargs(
     params: MreditVoxelParameters,
     execution: Execution,
@@ -251,6 +334,28 @@ def mredit_config_params(
         "value": value,
     }
     return params
+
+
+def mredit_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MreditConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mredit_config_cargs(
@@ -351,6 +456,78 @@ def mredit_params(
     return params
 
 
+def mredit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MreditParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("plane", None) is not None:
+        if not isinstance(params["plane"], list):
+            raise StyxValidationError(f'`plane` has the wrong type: Received `{type(params.get("plane", None))}` expected `list[MreditPlaneParameters] | None`')
+        for e in params["plane"]:
+            mredit_plane_validate(e)
+    if params.get("sphere", None) is not None:
+        if not isinstance(params["sphere"], list):
+            raise StyxValidationError(f'`sphere` has the wrong type: Received `{type(params.get("sphere", None))}` expected `list[MreditSphereParameters] | None`')
+        for e in params["sphere"]:
+            mredit_sphere_validate(e)
+    if params.get("voxel", None) is not None:
+        if not isinstance(params["voxel"], list):
+            raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `list[MreditVoxelParameters] | None`')
+        for e in params["voxel"]:
+            mredit_voxel_validate(e)
+    if params.get("scanner", False) is None:
+        raise StyxValidationError("`scanner` must not be None")
+    if not isinstance(params["scanner"], bool):
+        raise StyxValidationError(f'`scanner` has the wrong type: Received `{type(params.get("scanner", False))}` expected `bool`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MreditConfigParameters] | None`')
+        for e in params["config"]:
+            mredit_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+
+
 def mredit_cargs(
     params: MreditParameters,
     execution: Execution,
@@ -448,6 +625,7 @@ def mredit_execute(
     Returns:
         NamedTuple of outputs (described in `MreditOutputs`).
     """
+    mredit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MREDIT_METADATA)
     params = execution.params(params)

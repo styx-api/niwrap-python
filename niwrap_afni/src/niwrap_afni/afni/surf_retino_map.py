@@ -77,6 +77,38 @@ def surf_retino_map_params(
     return params
 
 
+def surf_retino_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfRetinoMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("polar", None) is None:
+        raise StyxValidationError("`polar` must not be None")
+    if not isinstance(params["polar"], str):
+        raise StyxValidationError(f'`polar` has the wrong type: Received `{type(params.get("polar", None))}` expected `str`')
+    if params.get("eccentricity", None) is None:
+        raise StyxValidationError("`eccentricity` must not be None")
+    if not isinstance(params["eccentricity"], str):
+        raise StyxValidationError(f'`eccentricity` has the wrong type: Received `{type(params.get("eccentricity", None))}` expected `str`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("node_debug", None) is not None:
+        if not isinstance(params["node_debug"], (float, int)):
+            raise StyxValidationError(f'`node_debug` has the wrong type: Received `{type(params.get("node_debug", None))}` expected `float | None`')
+
+
 def surf_retino_map_cargs(
     params: SurfRetinoMapParameters,
     execution: Execution,
@@ -148,6 +180,7 @@ def surf_retino_map_execute(
     Returns:
         NamedTuple of outputs (described in `SurfRetinoMapOutputs`).
     """
+    surf_retino_map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_RETINO_MAP_METADATA)
     params = execution.params(params)

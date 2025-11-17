@@ -81,6 +81,48 @@ def easythresh_params(
     return params
 
 
+def easythresh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `EasythreshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("raw_zstat_input", None) is None:
+        raise StyxValidationError("`raw_zstat_input` must not be None")
+    if not isinstance(params["raw_zstat_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`raw_zstat_input` has the wrong type: Received `{type(params.get("raw_zstat_input", None))}` expected `InputPathType`')
+    if params.get("brain_mask_input", None) is None:
+        raise StyxValidationError("`brain_mask_input` must not be None")
+    if not isinstance(params["brain_mask_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`brain_mask_input` has the wrong type: Received `{type(params.get("brain_mask_input", None))}` expected `InputPathType`')
+    if params.get("cluster_z_thresh_input", None) is None:
+        raise StyxValidationError("`cluster_z_thresh_input` must not be None")
+    if not isinstance(params["cluster_z_thresh_input"], (float, int)):
+        raise StyxValidationError(f'`cluster_z_thresh_input` has the wrong type: Received `{type(params.get("cluster_z_thresh_input", None))}` expected `float`')
+    if params.get("cluster_prob_thresh_input", None) is None:
+        raise StyxValidationError("`cluster_prob_thresh_input` must not be None")
+    if not isinstance(params["cluster_prob_thresh_input"], (float, int)):
+        raise StyxValidationError(f'`cluster_prob_thresh_input` has the wrong type: Received `{type(params.get("cluster_prob_thresh_input", None))}` expected `float`')
+    if params.get("background_image_input", None) is None:
+        raise StyxValidationError("`background_image_input` must not be None")
+    if not isinstance(params["background_image_input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`background_image_input` has the wrong type: Received `{type(params.get("background_image_input", None))}` expected `InputPathType`')
+    if params.get("output_root", None) is None:
+        raise StyxValidationError("`output_root` must not be None")
+    if not isinstance(params["output_root"], str):
+        raise StyxValidationError(f'`output_root` has the wrong type: Received `{type(params.get("output_root", None))}` expected `str`')
+    if params.get("mm_flag", False) is None:
+        raise StyxValidationError("`mm_flag` must not be None")
+    if not isinstance(params["mm_flag"], bool):
+        raise StyxValidationError(f'`mm_flag` has the wrong type: Received `{type(params.get("mm_flag", False))}` expected `bool`')
+
+
 def easythresh_cargs(
     params: EasythreshParameters,
     execution: Execution,
@@ -146,6 +188,7 @@ def easythresh_execute(
     Returns:
         NamedTuple of outputs (described in `EasythreshOutputs`).
     """
+    easythresh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EASYTHRESH_METADATA)
     params = execution.params(params)

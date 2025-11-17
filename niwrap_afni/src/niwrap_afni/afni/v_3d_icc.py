@@ -141,6 +141,73 @@ def v_3d_icc_params(
     return params
 
 
+def v_3d_icc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dIccParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("model", None) is None:
+        raise StyxValidationError("`model` must not be None")
+    if not isinstance(params["model"], str):
+        raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("data_table", None) is None:
+        raise StyxValidationError("`data_table` must not be None")
+    if not isinstance(params["data_table"], str):
+        raise StyxValidationError(f'`data_table` has the wrong type: Received `{type(params.get("data_table", None))}` expected `str`')
+    if params.get("bounds", None) is not None:
+        if not isinstance(params["bounds"], list):
+            raise StyxValidationError(f'`bounds` has the wrong type: Received `{type(params.get("bounds", None))}` expected `list[float] | None`')
+        if len(params["bounds"]) == 2:
+            raise StyxValidationError("Parameter `bounds` must contain exactly 2 elements")
+        for e in params["bounds"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`bounds` has the wrong type: Received `{type(params.get("bounds", None))}` expected `list[float] | None`')
+    if params.get("jobs", None) is not None:
+        if not isinstance(params["jobs"], (float, int)):
+            raise StyxValidationError(f'`jobs` has the wrong type: Received `{type(params.get("jobs", None))}` expected `float | None`')
+    if params.get("qVars", None) is not None:
+        if not isinstance(params["qVars"], str):
+            raise StyxValidationError(f'`qVars` has the wrong type: Received `{type(params.get("qVars", None))}` expected `str | None`')
+    if params.get("qVarCenters", None) is not None:
+        if not isinstance(params["qVarCenters"], str):
+            raise StyxValidationError(f'`qVarCenters` has the wrong type: Received `{type(params.get("qVarCenters", None))}` expected `str | None`')
+    if params.get("subj", None) is not None:
+        if not isinstance(params["subj"], str):
+            raise StyxValidationError(f'`subj` has the wrong type: Received `{type(params.get("subj", None))}` expected `str | None`')
+    if params.get("input_file_column", None) is not None:
+        if not isinstance(params["input_file_column"], str):
+            raise StyxValidationError(f'`input_file_column` has the wrong type: Received `{type(params.get("input_file_column", None))}` expected `str | None`')
+    if params.get("tStat", None) is not None:
+        if not isinstance(params["tStat"], str):
+            raise StyxValidationError(f'`tStat` has the wrong type: Received `{type(params.get("tStat", None))}` expected `str | None`')
+    if params.get("dbgArgs", False) is None:
+        raise StyxValidationError("`dbgArgs` must not be None")
+    if not isinstance(params["dbgArgs"], bool):
+        raise StyxValidationError(f'`dbgArgs` has the wrong type: Received `{type(params.get("dbgArgs", False))}` expected `bool`')
+    if params.get("cio", False) is None:
+        raise StyxValidationError("`cio` must not be None")
+    if not isinstance(params["cio"], bool):
+        raise StyxValidationError(f'`cio` has the wrong type: Received `{type(params.get("cio", False))}` expected `bool`')
+    if params.get("rio", False) is None:
+        raise StyxValidationError("`rio` must not be None")
+    if not isinstance(params["rio"], bool):
+        raise StyxValidationError(f'`rio` has the wrong type: Received `{type(params.get("rio", False))}` expected `bool`')
+
+
 def v_3d_icc_cargs(
     params: V3dIccParameters,
     execution: Execution,
@@ -253,6 +320,7 @@ def v_3d_icc_execute(
     Returns:
         NamedTuple of outputs (described in `V3dIccOutputs`).
     """
+    v_3d_icc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ICC_METADATA)
     params = execution.params(params)

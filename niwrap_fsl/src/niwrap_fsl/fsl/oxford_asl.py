@@ -215,6 +215,115 @@ def oxford_asl_params(
     return params
 
 
+def oxford_asl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `OxfordAslParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("asl_data", None) is None:
+        raise StyxValidationError("`asl_data` must not be None")
+    if not isinstance(params["asl_data"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`asl_data` has the wrong type: Received `{type(params.get("asl_data", None))}` expected `InputPathType`')
+    if params.get("output_dir_name", None) is None:
+        raise StyxValidationError("`output_dir_name` must not be None")
+    if not isinstance(params["output_dir_name"], str):
+        raise StyxValidationError(f'`output_dir_name` has the wrong type: Received `{type(params.get("output_dir_name", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("spatial_smoothing", False) is None:
+        raise StyxValidationError("`spatial_smoothing` must not be None")
+    if not isinstance(params["spatial_smoothing"], bool):
+        raise StyxValidationError(f'`spatial_smoothing` has the wrong type: Received `{type(params.get("spatial_smoothing", False))}` expected `bool`')
+    if params.get("white_paper_analysis", False) is None:
+        raise StyxValidationError("`white_paper_analysis` must not be None")
+    if not isinstance(params["white_paper_analysis"], bool):
+        raise StyxValidationError(f'`white_paper_analysis` has the wrong type: Received `{type(params.get("white_paper_analysis", False))}` expected `bool`')
+    if params.get("motion_correction", False) is None:
+        raise StyxValidationError("`motion_correction` must not be None")
+    if not isinstance(params["motion_correction"], bool):
+        raise StyxValidationError(f'`motion_correction` has the wrong type: Received `{type(params.get("motion_correction", False))}` expected `bool`')
+    if params.get("input_asl_format", None) is not None:
+        if not isinstance(params["input_asl_format"], str):
+            raise StyxValidationError(f'`input_asl_format` has the wrong type: Received `{type(params.get("input_asl_format", None))}` expected `str | None`')
+    if params.get("input_block_format", None) is not None:
+        if not isinstance(params["input_block_format"], str):
+            raise StyxValidationError(f'`input_block_format` has the wrong type: Received `{type(params.get("input_block_format", None))}` expected `str | None`')
+    if params.get("inversion_times", None) is not None:
+        if not isinstance(params["inversion_times"], str):
+            raise StyxValidationError(f'`inversion_times` has the wrong type: Received `{type(params.get("inversion_times", None))}` expected `str | None`')
+    if params.get("ti_image", None) is not None:
+        if not isinstance(params["ti_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ti_image` has the wrong type: Received `{type(params.get("ti_image", None))}` expected `InputPathType | None`')
+    if params.get("casl", False) is None:
+        raise StyxValidationError("`casl` must not be None")
+    if not isinstance(params["casl"], bool):
+        raise StyxValidationError(f'`casl` has the wrong type: Received `{type(params.get("casl", False))}` expected `bool`')
+    if params.get("arterial_suppression", False) is None:
+        raise StyxValidationError("`arterial_suppression` must not be None")
+    if not isinstance(params["arterial_suppression"], bool):
+        raise StyxValidationError(f'`arterial_suppression` has the wrong type: Received `{type(params.get("arterial_suppression", False))}` expected `bool`')
+    if params.get("bolus_duration", None) is not None:
+        if not isinstance(params["bolus_duration"], (float, int)):
+            raise StyxValidationError(f'`bolus_duration` has the wrong type: Received `{type(params.get("bolus_duration", None))}` expected `float | None`')
+    if params.get("bat", None) is not None:
+        if not isinstance(params["bat"], (float, int)):
+            raise StyxValidationError(f'`bat` has the wrong type: Received `{type(params.get("bat", None))}` expected `float | None`')
+    if params.get("tissue_t1", None) is not None:
+        if not isinstance(params["tissue_t1"], (float, int)):
+            raise StyxValidationError(f'`tissue_t1` has the wrong type: Received `{type(params.get("tissue_t1", None))}` expected `float | None`')
+    if params.get("blood_t1", None) is not None:
+        if not isinstance(params["blood_t1"], (float, int)):
+            raise StyxValidationError(f'`blood_t1` has the wrong type: Received `{type(params.get("blood_t1", None))}` expected `float | None`')
+    if params.get("slice_timing_difference", None) is not None:
+        if not isinstance(params["slice_timing_difference"], (float, int)):
+            raise StyxValidationError(f'`slice_timing_difference` has the wrong type: Received `{type(params.get("slice_timing_difference", None))}` expected `float | None`')
+    if params.get("slice_band", None) is not None:
+        if not isinstance(params["slice_band"], (float, int)):
+            raise StyxValidationError(f'`slice_band` has the wrong type: Received `{type(params.get("slice_band", None))}` expected `float | None`')
+    if params.get("flip_angle", None) is not None:
+        if not isinstance(params["flip_angle"], (float, int)):
+            raise StyxValidationError(f'`flip_angle` has the wrong type: Received `{type(params.get("flip_angle", None))}` expected `float | None`')
+    if params.get("fsl_anat_dir", None) is not None:
+        if not isinstance(params["fsl_anat_dir"], str):
+            raise StyxValidationError(f'`fsl_anat_dir` has the wrong type: Received `{type(params.get("fsl_anat_dir", None))}` expected `str | None`')
+    if params.get("structural_image", None) is not None:
+        if not isinstance(params["structural_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`structural_image` has the wrong type: Received `{type(params.get("structural_image", None))}` expected `InputPathType | None`')
+    if params.get("bet_structural_image", None) is not None:
+        if not isinstance(params["bet_structural_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bet_structural_image` has the wrong type: Received `{type(params.get("bet_structural_image", None))}` expected `InputPathType | None`')
+    if params.get("fast_segmentation_images", None) is not None:
+        if not isinstance(params["fast_segmentation_images"], str):
+            raise StyxValidationError(f'`fast_segmentation_images` has the wrong type: Received `{type(params.get("fast_segmentation_images", None))}` expected `str | None`')
+    if params.get("sensitivity_correction", False) is None:
+        raise StyxValidationError("`sensitivity_correction` must not be None")
+    if not isinstance(params["sensitivity_correction"], bool):
+        raise StyxValidationError(f'`sensitivity_correction` has the wrong type: Received `{type(params.get("sensitivity_correction", False))}` expected `bool`')
+    if params.get("precomputed_m0_value", None) is not None:
+        if not isinstance(params["precomputed_m0_value"], (float, int)):
+            raise StyxValidationError(f'`precomputed_m0_value` has the wrong type: Received `{type(params.get("precomputed_m0_value", None))}` expected `float | None`')
+    if params.get("inversion_efficiency", None) is not None:
+        if not isinstance(params["inversion_efficiency"], (float, int)):
+            raise StyxValidationError(f'`inversion_efficiency` has the wrong type: Received `{type(params.get("inversion_efficiency", None))}` expected `float | None`')
+    if params.get("tr_calibration_data", None) is not None:
+        if not isinstance(params["tr_calibration_data"], (float, int)):
+            raise StyxValidationError(f'`tr_calibration_data` has the wrong type: Received `{type(params.get("tr_calibration_data", None))}` expected `float | None`')
+    if params.get("calibration_image", None) is not None:
+        if not isinstance(params["calibration_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`calibration_image` has the wrong type: Received `{type(params.get("calibration_image", None))}` expected `InputPathType | None`')
+    if params.get("calibration_method", None) is not None:
+        if not isinstance(params["calibration_method"], str):
+            raise StyxValidationError(f'`calibration_method` has the wrong type: Received `{type(params.get("calibration_method", None))}` expected `str | None`')
+
+
 def oxford_asl_cargs(
     params: OxfordAslParameters,
     execution: Execution,
@@ -397,6 +506,7 @@ def oxford_asl_execute(
     Returns:
         NamedTuple of outputs (described in `OxfordAslOutputs`).
     """
+    oxford_asl_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(OXFORD_ASL_METADATA)
     params = execution.params(params)

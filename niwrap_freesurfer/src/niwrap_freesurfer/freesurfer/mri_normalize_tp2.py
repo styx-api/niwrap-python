@@ -109,6 +109,56 @@ def mri_normalize_tp2_params(
     return params
 
 
+def mri_normalize_tp2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriNormalizeTp2Parameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_vol", None) is None:
+        raise StyxValidationError("`input_vol` must not be None")
+    if not isinstance(params["input_vol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vol` has the wrong type: Received `{type(params.get("input_vol", None))}` expected `InputPathType`')
+    if params.get("normalized_vol", None) is None:
+        raise StyxValidationError("`normalized_vol` must not be None")
+    if not isinstance(params["normalized_vol"], str):
+        raise StyxValidationError(f'`normalized_vol` has the wrong type: Received `{type(params.get("normalized_vol", None))}` expected `str`')
+    if params.get("t1_volume", None) is not None:
+        if not isinstance(params["t1_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t1_volume` has the wrong type: Received `{type(params.get("t1_volume", None))}` expected `InputPathType | None`')
+    if params.get("mask1", None) is not None:
+        if not isinstance(params["mask1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask1` has the wrong type: Received `{type(params.get("mask1", None))}` expected `InputPathType | None`')
+    if params.get("mask2", None) is not None:
+        if not isinstance(params["mask2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask2` has the wrong type: Received `{type(params.get("mask2", None))}` expected `InputPathType | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("ctrl", None) is not None:
+        if not isinstance(params["ctrl"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ctrl` has the wrong type: Received `{type(params.get("ctrl", None))}` expected `InputPathType | None`')
+    if params.get("xform", None) is not None:
+        if not isinstance(params["xform"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`xform` has the wrong type: Received `{type(params.get("xform", None))}` expected `InputPathType | None`')
+    if params.get("invert_flag", False) is None:
+        raise StyxValidationError("`invert_flag` must not be None")
+    if not isinstance(params["invert_flag"], bool):
+        raise StyxValidationError(f'`invert_flag` has the wrong type: Received `{type(params.get("invert_flag", False))}` expected `bool`')
+    if params.get("lta_src", None) is not None:
+        if not isinstance(params["lta_src"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lta_src` has the wrong type: Received `{type(params.get("lta_src", None))}` expected `InputPathType | None`')
+    if params.get("lta_dst", None) is not None:
+        if not isinstance(params["lta_dst"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lta_dst` has the wrong type: Received `{type(params.get("lta_dst", None))}` expected `InputPathType | None`')
+
+
 def mri_normalize_tp2_cargs(
     params: MriNormalizeTp2Parameters,
     execution: Execution,
@@ -211,6 +261,7 @@ def mri_normalize_tp2_execute(
     Returns:
         NamedTuple of outputs (described in `MriNormalizeTp2Outputs`).
     """
+    mri_normalize_tp2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_NORMALIZE_TP2_METADATA)
     params = execution.params(params)

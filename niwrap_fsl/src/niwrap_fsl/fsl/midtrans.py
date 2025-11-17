@@ -80,6 +80,44 @@ def midtrans_params(
     return params
 
 
+def midtrans_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MidtransParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transforms", None) is None:
+        raise StyxValidationError("`transforms` must not be None")
+    if not isinstance(params["transforms"], list):
+        raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[InputPathType]`')
+    for e in params["transforms"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`transforms` has the wrong type: Received `{type(params.get("transforms", None))}` expected `list[InputPathType]`')
+    if params.get("output_matrix", None) is not None:
+        if not isinstance(params["output_matrix"], str):
+            raise StyxValidationError(f'`output_matrix` has the wrong type: Received `{type(params.get("output_matrix", None))}` expected `str | None`')
+    if params.get("template_image", None) is not None:
+        if not isinstance(params["template_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template_image` has the wrong type: Received `{type(params.get("template_image", None))}` expected `InputPathType | None`')
+    if params.get("separate_basename", None) is not None:
+        if not isinstance(params["separate_basename"], str):
+            raise StyxValidationError(f'`separate_basename` has the wrong type: Received `{type(params.get("separate_basename", None))}` expected `str | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+
+
 def midtrans_cargs(
     params: MidtransParameters,
     execution: Execution,
@@ -156,6 +194,7 @@ def midtrans_execute(
     Returns:
         NamedTuple of outputs (described in `MidtransOutputs`).
     """
+    midtrans_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MIDTRANS_METADATA)
     params = execution.params(params)

@@ -88,6 +88,47 @@ def possum_matrix_params(
     return params
 
 
+def possum_matrix_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PossumMatrixParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("pulse_sequence", None) is None:
+        raise StyxValidationError("`pulse_sequence` must not be None")
+    if not isinstance(params["pulse_sequence"], str):
+        raise StyxValidationError(f'`pulse_sequence` has the wrong type: Received `{type(params.get("pulse_sequence", None))}` expected `str`')
+    if params.get("motion_matrix", None) is None:
+        raise StyxValidationError("`motion_matrix` must not be None")
+    if not isinstance(params["motion_matrix"], str):
+        raise StyxValidationError(f'`motion_matrix` has the wrong type: Received `{type(params.get("motion_matrix", None))}` expected `str`')
+    if params.get("output_matrix", None) is None:
+        raise StyxValidationError("`output_matrix` must not be None")
+    if not isinstance(params["output_matrix"], str):
+        raise StyxValidationError(f'`output_matrix` has the wrong type: Received `{type(params.get("output_matrix", None))}` expected `str`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("old_version_flag", False) is None:
+        raise StyxValidationError("`old_version_flag` must not be None")
+    if not isinstance(params["old_version_flag"], bool):
+        raise StyxValidationError(f'`old_version_flag` has the wrong type: Received `{type(params.get("old_version_flag", False))}` expected `bool`')
+    if params.get("segment_size", None) is not None:
+        if not isinstance(params["segment_size"], (float, int)):
+            raise StyxValidationError(f'`segment_size` has the wrong type: Received `{type(params.get("segment_size", None))}` expected `float | None`')
+
+
 def possum_matrix_cargs(
     params: PossumMatrixParameters,
     execution: Execution,
@@ -168,6 +209,7 @@ def possum_matrix_execute(
     Returns:
         NamedTuple of outputs (described in `PossumMatrixOutputs`).
     """
+    possum_matrix_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POSSUM_MATRIX_METADATA)
     params = execution.params(params)

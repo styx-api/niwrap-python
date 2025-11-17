@@ -235,21 +235,21 @@ def ants_apply_transforms_output_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_apply_transforms_output_outputs_dyn_fn(
+def ants_apply_transforms_output_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
-        "warpedOutput": ants_apply_transforms_warped_output_outputs,
-        "compositeDisplacementFieldOutput": ants_apply_transforms_composite_displacement_field_output_outputs,
-        "genericAffineTransformOutput": ants_apply_transforms_generic_affine_transform_output_outputs,
+        "warpedOutput": ants_apply_transforms_warped_output_validate,
+        "compositeDisplacementFieldOutput": ants_apply_transforms_composite_displacement_field_output_validate,
+        "genericAffineTransformOutput": ants_apply_transforms_generic_affine_transform_output_validate,
     }.get(t)
 
 
@@ -279,18 +279,29 @@ def ants_apply_transforms_interpolation_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_apply_transforms_interpolation_outputs_dyn_fn(
+def ants_apply_transforms_interpolation_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "linear": ants_apply_transforms_linear_validate,
+        "nearestNeighbor": ants_apply_transforms_nearest_neighbor_validate,
+        "multiLabelnoparams": ants_apply_transforms_multi_labelnoparams_validate,
+        "multiLabel": ants_apply_transforms_multi_label_validate,
+        "gaussian": ants_apply_transforms_gaussian_validate,
+        "bspline": ants_apply_transforms_bspline_validate,
+        "cosineWindowedSinc": ants_apply_transforms_cosine_windowed_sinc_validate,
+        "welchWindowedSinc": ants_apply_transforms_welch_windowed_sinc_validate,
+        "hammingWindowedSinc": ants_apply_transforms_hamming_windowed_sinc_validate,
+        "lanczosWindowedSinc": ants_apply_transforms_lanczos_windowed_sinc_validate,
+        "genericLabel": ants_apply_transforms_generic_label_validate,
     }.get(t)
 
 
@@ -311,18 +322,20 @@ def ants_apply_transforms_params_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_apply_transforms_params_outputs_dyn_fn(
+def ants_apply_transforms_params_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "sigma": ants_apply_transforms_sigma_validate,
+        "alpha": ants_apply_transforms_alpha_validate,
     }.get(t)
 
 
@@ -343,18 +356,20 @@ def ants_apply_transforms_transform_cargs_dyn_fn(
     }.get(t)
 
 
-def ants_apply_transforms_transform_outputs_dyn_fn(
+def ants_apply_transforms_transform_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "transformFileName": ants_apply_transforms_transform_file_name_validate,
+        "useInverse": ants_apply_transforms_use_inverse_validate,
     }.get(t)
 
 
@@ -384,6 +399,24 @@ def ants_apply_transforms_warped_output_params(
         "warpedOutputFileName": warped_output_file_name,
     }
     return params
+
+
+def ants_apply_transforms_warped_output_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsWarpedOutputParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warpedOutputFileName", None) is None:
+        raise StyxValidationError("`warpedOutputFileName` must not be None")
+    if not isinstance(params["warpedOutputFileName"], str):
+        raise StyxValidationError(f'`warpedOutputFileName` has the wrong type: Received `{type(params.get("warpedOutputFileName", None))}` expected `str`')
 
 
 def ants_apply_transforms_warped_output_cargs(
@@ -457,6 +490,27 @@ def ants_apply_transforms_composite_displacement_field_output_params(
     return params
 
 
+def ants_apply_transforms_composite_displacement_field_output_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsCompositeDisplacementFieldOutputParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("compositeDisplacementField", None) is None:
+        raise StyxValidationError("`compositeDisplacementField` must not be None")
+    if not isinstance(params["compositeDisplacementField"], str):
+        raise StyxValidationError(f'`compositeDisplacementField` has the wrong type: Received `{type(params.get("compositeDisplacementField", None))}` expected `str`')
+    if params.get("printOutCompositeWarpFile", None) is not None:
+        if not isinstance(params["printOutCompositeWarpFile"], bool):
+            raise StyxValidationError(f'`printOutCompositeWarpFile` has the wrong type: Received `{type(params.get("printOutCompositeWarpFile", None))}` expected `bool | None`')
+
+
 def ants_apply_transforms_composite_displacement_field_output_cargs(
     params: AntsApplyTransformsCompositeDisplacementFieldOutputParameters,
     execution: Execution,
@@ -528,6 +582,27 @@ def ants_apply_transforms_generic_affine_transform_output_params(
     return params
 
 
+def ants_apply_transforms_generic_affine_transform_output_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsGenericAffineTransformOutputParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("genericAffineTransformFile", None) is None:
+        raise StyxValidationError("`genericAffineTransformFile` must not be None")
+    if not isinstance(params["genericAffineTransformFile"], str):
+        raise StyxValidationError(f'`genericAffineTransformFile` has the wrong type: Received `{type(params.get("genericAffineTransformFile", None))}` expected `str`')
+    if params.get("calculateInverse", None) is not None:
+        if not isinstance(params["calculateInverse"], bool):
+            raise StyxValidationError(f'`calculateInverse` has the wrong type: Received `{type(params.get("calculateInverse", None))}` expected `bool | None`')
+
+
 def ants_apply_transforms_generic_affine_transform_output_cargs(
     params: AntsApplyTransformsGenericAffineTransformOutputParameters,
     execution: Execution,
@@ -582,6 +657,20 @@ def ants_apply_transforms_linear_params(
     return params
 
 
+def ants_apply_transforms_linear_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsLinearParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
 def ants_apply_transforms_linear_cargs(
     params: AntsApplyTransformsLinearParameters,
     execution: Execution,
@@ -615,6 +704,20 @@ def ants_apply_transforms_nearest_neighbor_params(
     return params
 
 
+def ants_apply_transforms_nearest_neighbor_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsNearestNeighborParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
 def ants_apply_transforms_nearest_neighbor_cargs(
     params: AntsApplyTransformsNearestNeighborParameters,
     execution: Execution,
@@ -646,6 +749,20 @@ def ants_apply_transforms_multi_labelnoparams_params(
         "@type": "multiLabelnoparams",
     }
     return params
+
+
+def ants_apply_transforms_multi_labelnoparams_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsMultiLabelnoparamsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
 
 
 def ants_apply_transforms_multi_labelnoparams_cargs(
@@ -684,6 +801,24 @@ def ants_apply_transforms_sigma_params(
     return params
 
 
+def ants_apply_transforms_sigma_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsSigmaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], (float, int)):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float`')
+
+
 def ants_apply_transforms_sigma_cargs(
     params: AntsApplyTransformsSigmaParameters,
     execution: Execution,
@@ -720,6 +855,24 @@ def ants_apply_transforms_alpha_params(
     return params
 
 
+def ants_apply_transforms_alpha_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsAlphaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("alpha", None) is None:
+        raise StyxValidationError("`alpha` must not be None")
+    if not isinstance(params["alpha"], (float, int)):
+        raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float`')
+
+
 def ants_apply_transforms_alpha_cargs(
     params: AntsApplyTransformsAlphaParameters,
     execution: Execution,
@@ -754,6 +907,30 @@ def ants_apply_transforms_multi_label_params(
         "params": params_,
     }
     return params
+
+
+def ants_apply_transforms_multi_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsMultiLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("params", None) is None:
+        raise StyxValidationError("`params` must not be None")
+    if not isinstance(params["params"], list):
+        raise StyxValidationError(f'`params` has the wrong type: Received `{type(params.get("params", None))}` expected `list[typing.Union[AntsApplyTransformsSigmaParametersTagged, AntsApplyTransformsAlphaParametersTagged]]`')
+    for e in params["params"]:
+        if not isinstance(e, dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
+        if "@type" not in e:
+            raise StyxValidationError("Params object is missing `@type`")
+        ants_apply_transforms_params_validate_dyn_fn(e["@type"])(e)
 
 
 def ants_apply_transforms_multi_label_cargs(
@@ -797,6 +974,26 @@ def ants_apply_transforms_gaussian_params(
     return params
 
 
+def ants_apply_transforms_gaussian_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsGaussianParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma", None) is not None:
+        if not isinstance(params["sigma"], (float, int)):
+            raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float | None`')
+    if params.get("alpha", None) is not None:
+        if not isinstance(params["alpha"], (float, int)):
+            raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float | None`')
+
+
 def ants_apply_transforms_gaussian_cargs(
     params: AntsApplyTransformsGaussianParameters,
     execution: Execution,
@@ -835,6 +1032,23 @@ def ants_apply_transforms_bspline_params(
     return params
 
 
+def ants_apply_transforms_bspline_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsBsplineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("order", None) is not None:
+        if not isinstance(params["order"], int):
+            raise StyxValidationError(f'`order` has the wrong type: Received `{type(params.get("order", None))}` expected `int | None`')
+
+
 def ants_apply_transforms_bspline_cargs(
     params: AntsApplyTransformsBsplineParameters,
     execution: Execution,
@@ -867,6 +1081,20 @@ def ants_apply_transforms_cosine_windowed_sinc_params(
         "@type": "cosineWindowedSinc",
     }
     return params
+
+
+def ants_apply_transforms_cosine_windowed_sinc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsCosineWindowedSincParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
 
 
 def ants_apply_transforms_cosine_windowed_sinc_cargs(
@@ -902,6 +1130,20 @@ def ants_apply_transforms_welch_windowed_sinc_params(
     return params
 
 
+def ants_apply_transforms_welch_windowed_sinc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsWelchWindowedSincParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
 def ants_apply_transforms_welch_windowed_sinc_cargs(
     params: AntsApplyTransformsWelchWindowedSincParameters,
     execution: Execution,
@@ -935,6 +1177,20 @@ def ants_apply_transforms_hamming_windowed_sinc_params(
     return params
 
 
+def ants_apply_transforms_hamming_windowed_sinc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsHammingWindowedSincParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+
+
 def ants_apply_transforms_hamming_windowed_sinc_cargs(
     params: AntsApplyTransformsHammingWindowedSincParameters,
     execution: Execution,
@@ -966,6 +1222,20 @@ def ants_apply_transforms_lanczos_windowed_sinc_params(
         "@type": "lanczosWindowedSinc",
     }
     return params
+
+
+def ants_apply_transforms_lanczos_windowed_sinc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsLanczosWindowedSincParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
 
 
 def ants_apply_transforms_lanczos_windowed_sinc_cargs(
@@ -1005,6 +1275,23 @@ def ants_apply_transforms_generic_label_params(
     return params
 
 
+def ants_apply_transforms_generic_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsGenericLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("interpolator", None) is not None:
+        if not isinstance(params["interpolator"], str):
+            raise StyxValidationError(f'`interpolator` has the wrong type: Received `{type(params.get("interpolator", None))}` expected `str | None`')
+
+
 def ants_apply_transforms_generic_label_cargs(
     params: AntsApplyTransformsGenericLabelParameters,
     execution: Execution,
@@ -1042,6 +1329,24 @@ def ants_apply_transforms_transform_file_name_params(
     return params
 
 
+def ants_apply_transforms_transform_file_name_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsTransformFileNameParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transformFileName", None) is None:
+        raise StyxValidationError("`transformFileName` must not be None")
+    if not isinstance(params["transformFileName"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transformFileName` has the wrong type: Received `{type(params.get("transformFileName", None))}` expected `InputPathType`')
+
+
 def ants_apply_transforms_transform_file_name_cargs(
     params: AntsApplyTransformsTransformFileNameParameters,
     execution: Execution,
@@ -1076,6 +1381,24 @@ def ants_apply_transforms_use_inverse_params(
         "transformFileName": transform_file_name,
     }
     return params
+
+
+def ants_apply_transforms_use_inverse_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsUseInverseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("transformFileName", None) is None:
+        raise StyxValidationError("`transformFileName` must not be None")
+    if not isinstance(params["transformFileName"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`transformFileName` has the wrong type: Received `{type(params.get("transformFileName", None))}` expected `InputPathType`')
 
 
 def ants_apply_transforms_use_inverse_cargs(
@@ -1202,6 +1525,76 @@ def ants_apply_transforms_params(
     return params
 
 
+def ants_apply_transforms_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsApplyTransformsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is not None:
+        if not isinstance(params["dimensionality"], int):
+            raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3, 4]")
+    if params.get("input_image_type", None) is not None:
+        if not isinstance(params["input_image_type"], int):
+            raise StyxValidationError(f'`input_image_type` has the wrong type: Received `{type(params.get("input_image_type", None))}` expected `typing.Literal[0, 1, 2, 3, 4, 5] | None`')
+        if params["input_image_type"] not in [0, 1, 2, 3, 4, 5]:
+            raise StyxValidationError("Parameter `input_image_type` must be one of [0, 1, 2, 3, 4, 5]")
+    if params.get("input_image", None) is not None:
+        if not isinstance(params["input_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType | None`')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
+    if "@type" not in params["output"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    ants_apply_transforms_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["interpolation"])}\'')
+        if "@type" not in params["interpolation"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        ants_apply_transforms_interpolation_validate_dyn_fn(params["interpolation"]["@type"])(params["interpolation"])
+    if params.get("output_data_type", None) is not None:
+        if not isinstance(params["output_data_type"], str):
+            raise StyxValidationError(f'`output_data_type` has the wrong type: Received `{type(params.get("output_data_type", None))}` expected `typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None`')
+        if params["output_data_type"] not in ["char", "uchar", "short", "int", "float", "double", "default"]:
+            raise StyxValidationError("Parameter `output_data_type` must be one of [\"char\", \"uchar\", \"short\", \"int\", \"float\", \"double\", \"default\"]")
+    if params.get("transform", None) is not None:
+        if not isinstance(params["transform"], list):
+            raise StyxValidationError(f'`transform` has the wrong type: Received `{type(params.get("transform", None))}` expected `list[typing.Union[AntsApplyTransformsTransformFileNameParametersTagged, AntsApplyTransformsUseInverseParametersTagged]] | None`')
+        for e in params["transform"]:
+            if not isinstance(e, dict):
+                raise StyxValidationError(f'Params object has the wrong type \'{type(e)}\'')
+            if "@type" not in e:
+                raise StyxValidationError("Params object is missing `@type`")
+            ants_apply_transforms_transform_validate_dyn_fn(e["@type"])(e)
+    if params.get("default_value", None) is not None:
+        if not isinstance(params["default_value"], (float, int)):
+            raise StyxValidationError(f'`default_value` has the wrong type: Received `{type(params.get("default_value", None))}` expected `float | None`')
+    if params.get("static_cast_for_R", None) is not None:
+        if not isinstance(params["static_cast_for_R"], str):
+            raise StyxValidationError(f'`static_cast_for_R` has the wrong type: Received `{type(params.get("static_cast_for_R", None))}` expected `str | None`')
+    if params.get("float", None) is not None:
+        if not isinstance(params["float"], bool):
+            raise StyxValidationError(f'`float` has the wrong type: Received `{type(params.get("float", None))}` expected `bool | None`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def ants_apply_transforms_cargs(
     params: AntsApplyTransformsParameters,
     execution: Execution,
@@ -1318,6 +1711,7 @@ def ants_apply_transforms_execute(
     Returns:
         NamedTuple of outputs (described in `AntsApplyTransformsOutputs`).
     """
+    ants_apply_transforms_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_APPLY_TRANSFORMS_METADATA)
     params = execution.params(params)

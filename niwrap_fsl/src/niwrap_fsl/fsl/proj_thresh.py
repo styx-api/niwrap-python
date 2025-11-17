@@ -55,6 +55,31 @@ def proj_thresh_params(
     return params
 
 
+def proj_thresh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ProjThreshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_paths", None) is None:
+        raise StyxValidationError("`input_paths` must not be None")
+    if not isinstance(params["input_paths"], list):
+        raise StyxValidationError(f'`input_paths` has the wrong type: Received `{type(params.get("input_paths", None))}` expected `list[InputPathType]`')
+    for e in params["input_paths"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_paths` has the wrong type: Received `{type(params.get("input_paths", None))}` expected `list[InputPathType]`')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
+
+
 def proj_thresh_cargs(
     params: ProjThreshParameters,
     execution: Execution,
@@ -113,6 +138,7 @@ def proj_thresh_execute(
     Returns:
         NamedTuple of outputs (described in `ProjThreshOutputs`).
     """
+    proj_thresh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PROJ_THRESH_METADATA)
     params = execution.params(params)

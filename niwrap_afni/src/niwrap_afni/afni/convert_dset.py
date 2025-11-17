@@ -169,6 +169,99 @@ def convert_dset_params(
     return params
 
 
+def convert_dset_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertDsetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_type", None) is None:
+        raise StyxValidationError("`output_type` must not be None")
+    if not isinstance(params["output_type"], list):
+        raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `list[typing.Literal["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]]`')
+    for e in params["output_type"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `list[typing.Literal["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]]`')
+        if e not in ["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"niml_asc\", \"niml_bi\", \"1D\", \"1Dp\", \"1Dpt\", \"gii\", \"gii_asc\", \"gii_b64\", \"gii_b64gz\", \"1D_stderr\", \"1D_stdout\", \"niml_stderr\", \"niml_stdout\", \"1Dp_stdout\", \"1Dp_stderr\", \"1Dpt_stdout\", \"1Dpt_stderr\"]")
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("input_type", None) is not None:
+        if not isinstance(params["input_type"], str):
+            raise StyxValidationError(f'`input_type` has the wrong type: Received `{type(params.get("input_type", None))}` expected `typing.Literal["niml", "1D", "dx"] | None`')
+        if params["input_type"] not in ["niml", "1D", "dx"]:
+            raise StyxValidationError("Parameter `input_type` must be one of [\"niml\", \"1D\", \"dx\"]")
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("dset_labels", None) is not None:
+        if not isinstance(params["dset_labels"], str):
+            raise StyxValidationError(f'`dset_labels` has the wrong type: Received `{type(params.get("dset_labels", None))}` expected `str | None`')
+    if params.get("add_node_index", False) is None:
+        raise StyxValidationError("`add_node_index` must not be None")
+    if not isinstance(params["add_node_index"], bool):
+        raise StyxValidationError(f'`add_node_index` has the wrong type: Received `{type(params.get("add_node_index", False))}` expected `bool`')
+    if params.get("node_index_file", None) is not None:
+        if not isinstance(params["node_index_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`node_index_file` has the wrong type: Received `{type(params.get("node_index_file", None))}` expected `InputPathType | None`')
+    if params.get("node_select_file", None) is not None:
+        if not isinstance(params["node_select_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`node_select_file` has the wrong type: Received `{type(params.get("node_select_file", None))}` expected `InputPathType | None`')
+    if params.get("prepend_node_index", False) is None:
+        raise StyxValidationError("`prepend_node_index` must not be None")
+    if not isinstance(params["prepend_node_index"], bool):
+        raise StyxValidationError(f'`prepend_node_index` has the wrong type: Received `{type(params.get("prepend_node_index", False))}` expected `bool`')
+    if params.get("pad_to_node", None) is not None:
+        if not isinstance(params["pad_to_node"], str):
+            raise StyxValidationError(f'`pad_to_node` has the wrong type: Received `{type(params.get("pad_to_node", None))}` expected `str | None`')
+    if params.get("labelize", None) is not None:
+        if not isinstance(params["labelize"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labelize` has the wrong type: Received `{type(params.get("labelize", None))}` expected `InputPathType | None`')
+    if params.get("graphize", False) is None:
+        raise StyxValidationError("`graphize` must not be None")
+    if not isinstance(params["graphize"], bool):
+        raise StyxValidationError(f'`graphize` has the wrong type: Received `{type(params.get("graphize", False))}` expected `bool`')
+    if params.get("graph_nodelist", None) is not None:
+        if not isinstance(params["graph_nodelist"], str):
+            raise StyxValidationError(f'`graph_nodelist` has the wrong type: Received `{type(params.get("graph_nodelist", None))}` expected `str | None`')
+    if params.get("graph_full_nodelist", None) is not None:
+        if not isinstance(params["graph_full_nodelist"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`graph_full_nodelist` has the wrong type: Received `{type(params.get("graph_full_nodelist", None))}` expected `InputPathType | None`')
+    if params.get("graph_named_nodelist", None) is not None:
+        if not isinstance(params["graph_named_nodelist"], str):
+            raise StyxValidationError(f'`graph_named_nodelist` has the wrong type: Received `{type(params.get("graph_named_nodelist", None))}` expected `str | None`')
+    if params.get("graph_xyz_lpi", False) is None:
+        raise StyxValidationError("`graph_xyz_lpi` must not be None")
+    if not isinstance(params["graph_xyz_lpi"], bool):
+        raise StyxValidationError(f'`graph_xyz_lpi` has the wrong type: Received `{type(params.get("graph_xyz_lpi", False))}` expected `bool`')
+    if params.get("graph_edgelist", None) is not None:
+        if not isinstance(params["graph_edgelist"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`graph_edgelist` has the wrong type: Received `{type(params.get("graph_edgelist", None))}` expected `InputPathType | None`')
+    if params.get("onegraph", False) is None:
+        raise StyxValidationError("`onegraph` must not be None")
+    if not isinstance(params["onegraph"], bool):
+        raise StyxValidationError(f'`onegraph` has the wrong type: Received `{type(params.get("onegraph", False))}` expected `bool`')
+    if params.get("multigraph", False) is None:
+        raise StyxValidationError("`multigraph` must not be None")
+    if not isinstance(params["multigraph"], bool):
+        raise StyxValidationError(f'`multigraph` has the wrong type: Received `{type(params.get("multigraph", False))}` expected `bool`')
+    if params.get("split", None) is not None:
+        if not isinstance(params["split"], int):
+            raise StyxValidationError(f'`split` has the wrong type: Received `{type(params.get("split", None))}` expected `int | None`')
+    if params.get("no_history", False) is None:
+        raise StyxValidationError("`no_history` must not be None")
+    if not isinstance(params["no_history"], bool):
+        raise StyxValidationError(f'`no_history` has the wrong type: Received `{type(params.get("no_history", False))}` expected `bool`')
+
+
 def convert_dset_cargs(
     params: ConvertDsetParameters,
     execution: Execution,
@@ -308,6 +401,7 @@ def convert_dset_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertDsetOutputs`).
     """
+    convert_dset_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_DSET_METADATA)
     params = execution.params(params)

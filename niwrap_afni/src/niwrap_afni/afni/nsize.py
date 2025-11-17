@@ -56,6 +56,28 @@ def nsize_params(
     return params
 
 
+def nsize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NsizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_in", None) is None:
+        raise StyxValidationError("`image_in` must not be None")
+    if not isinstance(params["image_in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image_in` has the wrong type: Received `{type(params.get("image_in", None))}` expected `InputPathType`')
+    if params.get("image_out", None) is None:
+        raise StyxValidationError("`image_out` must not be None")
+    if not isinstance(params["image_out"], str):
+        raise StyxValidationError(f'`image_out` has the wrong type: Received `{type(params.get("image_out", None))}` expected `str`')
+
+
 def nsize_cargs(
     params: NsizeParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def nsize_execute(
     Returns:
         NamedTuple of outputs (described in `NsizeOutputs`).
     """
+    nsize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NSIZE_METADATA)
     params = execution.params(params)

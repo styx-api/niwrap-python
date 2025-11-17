@@ -331,6 +331,177 @@ def mri_volcluster_params(
     return params
 
 
+def mri_volcluster_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriVolclusterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("summary_file", None) is not None:
+        if not isinstance(params["summary_file"], str):
+            raise StyxValidationError(f'`summary_file` has the wrong type: Received `{type(params.get("summary_file", None))}` expected `str | None`')
+    if params.get("output_volid", None) is not None:
+        if not isinstance(params["output_volid"], str):
+            raise StyxValidationError(f'`output_volid` has the wrong type: Received `{type(params.get("output_volid", None))}` expected `str | None`')
+    if params.get("output_cluster_num_volid", None) is not None:
+        if not isinstance(params["output_cluster_num_volid"], str):
+            raise StyxValidationError(f'`output_cluster_num_volid` has the wrong type: Received `{type(params.get("output_cluster_num_volid", None))}` expected `str | None`')
+    if params.get("cwsig_volid", None) is not None:
+        if not isinstance(params["cwsig_volid"], str):
+            raise StyxValidationError(f'`cwsig_volid` has the wrong type: Received `{type(params.get("cwsig_volid", None))}` expected `str | None`')
+    if params.get("pointset_file", None) is not None:
+        if not isinstance(params["pointset_file"], str):
+            raise StyxValidationError(f'`pointset_file` has the wrong type: Received `{type(params.get("pointset_file", None))}` expected `str | None`')
+    if params.get("min_threshold", None) is not None:
+        if not isinstance(params["min_threshold"], (float, int)):
+            raise StyxValidationError(f'`min_threshold` has the wrong type: Received `{type(params.get("min_threshold", None))}` expected `float | None`')
+    if params.get("max_threshold", None) is not None:
+        if not isinstance(params["max_threshold"], (float, int)):
+            raise StyxValidationError(f'`max_threshold` has the wrong type: Received `{type(params.get("max_threshold", None))}` expected `float | None`')
+    if params.get("sign", None) is not None:
+        if not isinstance(params["sign"], str):
+            raise StyxValidationError(f'`sign` has the wrong type: Received `{type(params.get("sign", None))}` expected `str | None`')
+    if params.get("no_adjust_flag", False) is None:
+        raise StyxValidationError("`no_adjust_flag` must not be None")
+    if not isinstance(params["no_adjust_flag"], bool):
+        raise StyxValidationError(f'`no_adjust_flag` has the wrong type: Received `{type(params.get("no_adjust_flag", False))}` expected `bool`')
+    if params.get("match_value", None) is not None:
+        if not isinstance(params["match_value"], (float, int)):
+            raise StyxValidationError(f'`match_value` has the wrong type: Received `{type(params.get("match_value", None))}` expected `float | None`')
+    if params.get("cwpval_threshold", None) is not None:
+        if not isinstance(params["cwpval_threshold"], (float, int)):
+            raise StyxValidationError(f'`cwpval_threshold` has the wrong type: Received `{type(params.get("cwpval_threshold", None))}` expected `float | None`')
+    if params.get("registration_file", None) is not None:
+        if not isinstance(params["registration_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`registration_file` has the wrong type: Received `{type(params.get("registration_file", None))}` expected `InputPathType | None`')
+    if params.get("mni152reg_flag", False) is None:
+        raise StyxValidationError("`mni152reg_flag` must not be None")
+    if not isinstance(params["mni152reg_flag"], bool):
+        raise StyxValidationError(f'`mni152reg_flag` has the wrong type: Received `{type(params.get("mni152reg_flag", False))}` expected `bool`')
+    if params.get("regheader_subject", None) is not None:
+        if not isinstance(params["regheader_subject"], str):
+            raise StyxValidationError(f'`regheader_subject` has the wrong type: Received `{type(params.get("regheader_subject", None))}` expected `str | None`')
+    if params.get("fsaverage_flag", False) is None:
+        raise StyxValidationError("`fsaverage_flag` must not be None")
+    if not isinstance(params["fsaverage_flag"], bool):
+        raise StyxValidationError(f'`fsaverage_flag` has the wrong type: Received `{type(params.get("fsaverage_flag", False))}` expected `bool`')
+    if params.get("frame_number", None) is not None:
+        if not isinstance(params["frame_number"], (float, int)):
+            raise StyxValidationError(f'`frame_number` has the wrong type: Received `{type(params.get("frame_number", None))}` expected `float | None`')
+    if params.get("csd_files", None) is not None:
+        if not isinstance(params["csd_files"], list):
+            raise StyxValidationError(f'`csd_files` has the wrong type: Received `{type(params.get("csd_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["csd_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`csd_files` has the wrong type: Received `{type(params.get("csd_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("cwsig_map", None) is not None:
+        if not isinstance(params["cwsig_map"], str):
+            raise StyxValidationError(f'`cwsig_map` has the wrong type: Received `{type(params.get("cwsig_map", None))}` expected `str | None`')
+    if params.get("vwsig_map", None) is not None:
+        if not isinstance(params["vwsig_map"], str):
+            raise StyxValidationError(f'`vwsig_map` has the wrong type: Received `{type(params.get("vwsig_map", None))}` expected `str | None`')
+    if params.get("max_cwpval_file", None) is not None:
+        if not isinstance(params["max_cwpval_file"], str):
+            raise StyxValidationError(f'`max_cwpval_file` has the wrong type: Received `{type(params.get("max_cwpval_file", None))}` expected `str | None`')
+    if params.get("csdpdf_file", None) is not None:
+        if not isinstance(params["csdpdf_file"], str):
+            raise StyxValidationError(f'`csdpdf_file` has the wrong type: Received `{type(params.get("csdpdf_file", None))}` expected `str | None`')
+    if params.get("csdpdf_only_flag", False) is None:
+        raise StyxValidationError("`csdpdf_only_flag` must not be None")
+    if not isinstance(params["csdpdf_only_flag"], bool):
+        raise StyxValidationError(f'`csdpdf_only_flag` has the wrong type: Received `{type(params.get("csdpdf_only_flag", False))}` expected `bool`')
+    if params.get("fwhm_value", None) is not None:
+        if not isinstance(params["fwhm_value"], (float, int)):
+            raise StyxValidationError(f'`fwhm_value` has the wrong type: Received `{type(params.get("fwhm_value", None))}` expected `float | None`')
+    if params.get("fwhm_file", None) is not None:
+        if not isinstance(params["fwhm_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fwhm_file` has the wrong type: Received `{type(params.get("fwhm_file", None))}` expected `InputPathType | None`')
+    if params.get("min_size", None) is not None:
+        if not isinstance(params["min_size"], (float, int)):
+            raise StyxValidationError(f'`min_size` has the wrong type: Received `{type(params.get("min_size", None))}` expected `float | None`')
+    if params.get("min_size_vox", None) is not None:
+        if not isinstance(params["min_size_vox"], (float, int)):
+            raise StyxValidationError(f'`min_size_vox` has the wrong type: Received `{type(params.get("min_size_vox", None))}` expected `float | None`')
+    if params.get("min_distance", None) is not None:
+        if not isinstance(params["min_distance"], (float, int)):
+            raise StyxValidationError(f'`min_distance` has the wrong type: Received `{type(params.get("min_distance", None))}` expected `float | None`')
+    if params.get("allow_diag_flag", False) is None:
+        raise StyxValidationError("`allow_diag_flag` must not be None")
+    if not isinstance(params["allow_diag_flag"], bool):
+        raise StyxValidationError(f'`allow_diag_flag` has the wrong type: Received `{type(params.get("allow_diag_flag", False))}` expected `bool`')
+    if params.get("bonferroni_number", None) is not None:
+        if not isinstance(params["bonferroni_number"], (float, int)):
+            raise StyxValidationError(f'`bonferroni_number` has the wrong type: Received `{type(params.get("bonferroni_number", None))}` expected `float | None`')
+    if params.get("bonferroni_max_number", None) is not None:
+        if not isinstance(params["bonferroni_max_number"], (float, int)):
+            raise StyxValidationError(f'`bonferroni_max_number` has the wrong type: Received `{type(params.get("bonferroni_max_number", None))}` expected `float | None`')
+    if params.get("sig2p_max_flag", False) is None:
+        raise StyxValidationError("`sig2p_max_flag` must not be None")
+    if not isinstance(params["sig2p_max_flag"], bool):
+        raise StyxValidationError(f'`sig2p_max_flag` has the wrong type: Received `{type(params.get("sig2p_max_flag", False))}` expected `bool`')
+    if params.get("gte_flag", False) is None:
+        raise StyxValidationError("`gte_flag` must not be None")
+    if not isinstance(params["gte_flag"], bool):
+        raise StyxValidationError(f'`gte_flag` has the wrong type: Received `{type(params.get("gte_flag", False))}` expected `bool`')
+    if params.get("mask_volid", None) is not None:
+        if not isinstance(params["mask_volid"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_volid` has the wrong type: Received `{type(params.get("mask_volid", None))}` expected `InputPathType | None`')
+    if params.get("mask_type", None) is not None:
+        if not isinstance(params["mask_type"], str):
+            raise StyxValidationError(f'`mask_type` has the wrong type: Received `{type(params.get("mask_type", None))}` expected `str | None`')
+    if params.get("mask_frame", None) is not None:
+        if not isinstance(params["mask_frame"], (float, int)):
+            raise StyxValidationError(f'`mask_frame` has the wrong type: Received `{type(params.get("mask_frame", None))}` expected `float | None`')
+    if params.get("mask_threshold", None) is not None:
+        if not isinstance(params["mask_threshold"], (float, int)):
+            raise StyxValidationError(f'`mask_threshold` has the wrong type: Received `{type(params.get("mask_threshold", None))}` expected `float | None`')
+    if params.get("mask_sign", None) is not None:
+        if not isinstance(params["mask_sign"], str):
+            raise StyxValidationError(f'`mask_sign` has the wrong type: Received `{type(params.get("mask_sign", None))}` expected `str | None`')
+    if params.get("mask_invert_flag", False) is None:
+        raise StyxValidationError("`mask_invert_flag` must not be None")
+    if not isinstance(params["mask_invert_flag"], bool):
+        raise StyxValidationError(f'`mask_invert_flag` has the wrong type: Received `{type(params.get("mask_invert_flag", False))}` expected `bool`')
+    if params.get("out_mask_volid", None) is not None:
+        if not isinstance(params["out_mask_volid"], str):
+            raise StyxValidationError(f'`out_mask_volid` has the wrong type: Received `{type(params.get("out_mask_volid", None))}` expected `str | None`')
+    if params.get("out_mask_type", None) is not None:
+        if not isinstance(params["out_mask_type"], str):
+            raise StyxValidationError(f'`out_mask_type` has the wrong type: Received `{type(params.get("out_mask_type", None))}` expected `str | None`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], str):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `str | None`')
+    if params.get("nlabel_cluster", None) is not None:
+        if not isinstance(params["nlabel_cluster"], (float, int)):
+            raise StyxValidationError(f'`nlabel_cluster` has the wrong type: Received `{type(params.get("nlabel_cluster", None))}` expected `float | None`')
+    if params.get("label_base", None) is not None:
+        if not isinstance(params["label_base"], str):
+            raise StyxValidationError(f'`label_base` has the wrong type: Received `{type(params.get("label_base", None))}` expected `str | None`')
+    if params.get("synth_func", None) is not None:
+        if not isinstance(params["synth_func"], str):
+            raise StyxValidationError(f'`synth_func` has the wrong type: Received `{type(params.get("synth_func", None))}` expected `str | None`')
+    if params.get("diagnostic_level", None) is not None:
+        if not isinstance(params["diagnostic_level"], (float, int)):
+            raise StyxValidationError(f'`diagnostic_level` has the wrong type: Received `{type(params.get("diagnostic_level", None))}` expected `float | None`')
+    if params.get("fill_params", None) is not None:
+        if not isinstance(params["fill_params"], str):
+            raise StyxValidationError(f'`fill_params` has the wrong type: Received `{type(params.get("fill_params", None))}` expected `str | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def mri_volcluster_cargs(
     params: MriVolclusterParameters,
     execution: Execution,
@@ -603,6 +774,7 @@ def mri_volcluster_execute(
     Returns:
         NamedTuple of outputs (described in `MriVolclusterOutputs`).
     """
+    mri_volcluster_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_VOLCLUSTER_METADATA)
     params = execution.params(params)

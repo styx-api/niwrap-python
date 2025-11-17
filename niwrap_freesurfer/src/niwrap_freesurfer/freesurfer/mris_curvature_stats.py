@@ -261,6 +261,150 @@ def mris_curvature_stats_params(
     return params
 
 
+def mris_curvature_stats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisCurvatureStatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("curvature_files", None) is not None:
+        if not isinstance(params["curvature_files"], list):
+            raise StyxValidationError(f'`curvature_files` has the wrong type: Received `{type(params.get("curvature_files", None))}` expected `list[InputPathType] | None`')
+        for e in params["curvature_files"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`curvature_files` has the wrong type: Received `{type(params.get("curvature_files", None))}` expected `list[InputPathType] | None`')
+    if params.get("number_of_averages", None) is not None:
+        if not isinstance(params["number_of_averages"], (float, int)):
+            raise StyxValidationError(f'`number_of_averages` has the wrong type: Received `{type(params.get("number_of_averages", None))}` expected `float | None`')
+    if params.get("principal_curvatures", False) is None:
+        raise StyxValidationError("`principal_curvatures` must not be None")
+    if not isinstance(params["principal_curvatures"], bool):
+        raise StyxValidationError(f'`principal_curvatures` has the wrong type: Received `{type(params.get("principal_curvatures", False))}` expected `bool`')
+    if params.get("discrete_method", False) is None:
+        raise StyxValidationError("`discrete_method` must not be None")
+    if not isinstance(params["discrete_method"], bool):
+        raise StyxValidationError(f'`discrete_method` has the wrong type: Received `{type(params.get("discrete_method", False))}` expected `bool`')
+    if params.get("continuous_method", False) is None:
+        raise StyxValidationError("`continuous_method` must not be None")
+    if not isinstance(params["continuous_method"], bool):
+        raise StyxValidationError(f'`continuous_method` has the wrong type: Received `{type(params.get("continuous_method", False))}` expected `bool`')
+    if params.get("signed_principals", False) is None:
+        raise StyxValidationError("`signed_principals` must not be None")
+    if not isinstance(params["signed_principals"], bool):
+        raise StyxValidationError(f'`signed_principals` has the wrong type: Received `{type(params.get("signed_principals", False))}` expected `bool`')
+    if params.get("vertex_area_weigh", False) is None:
+        raise StyxValidationError("`vertex_area_weigh` must not be None")
+    if not isinstance(params["vertex_area_weigh"], bool):
+        raise StyxValidationError(f'`vertex_area_weigh` has the wrong type: Received `{type(params.get("vertex_area_weigh", False))}` expected `bool`')
+    if params.get("vertex_area_normalize", False) is None:
+        raise StyxValidationError("`vertex_area_normalize` must not be None")
+    if not isinstance(params["vertex_area_normalize"], bool):
+        raise StyxValidationError(f'`vertex_area_normalize` has the wrong type: Received `{type(params.get("vertex_area_normalize", False))}` expected `bool`')
+    if params.get("vertex_area_weigh_frac", False) is None:
+        raise StyxValidationError("`vertex_area_weigh_frac` must not be None")
+    if not isinstance(params["vertex_area_weigh_frac"], bool):
+        raise StyxValidationError(f'`vertex_area_weigh_frac` has the wrong type: Received `{type(params.get("vertex_area_weigh_frac", False))}` expected `bool`')
+    if params.get("vertex_area_normalize_frac", False) is None:
+        raise StyxValidationError("`vertex_area_normalize_frac` must not be None")
+    if not isinstance(params["vertex_area_normalize_frac"], bool):
+        raise StyxValidationError(f'`vertex_area_normalize_frac` has the wrong type: Received `{type(params.get("vertex_area_normalize_frac", False))}` expected `bool`')
+    if params.get("post_scale", None) is not None:
+        if not isinstance(params["post_scale"], (float, int)):
+            raise StyxValidationError(f'`post_scale` has the wrong type: Received `{type(params.get("post_scale", None))}` expected `float | None`')
+    if params.get("write_curvature_files", False) is None:
+        raise StyxValidationError("`write_curvature_files` must not be None")
+    if not isinstance(params["write_curvature_files"], bool):
+        raise StyxValidationError(f'`write_curvature_files` has the wrong type: Received `{type(params.get("write_curvature_files", False))}` expected `bool`')
+    if params.get("shape_index", False) is None:
+        raise StyxValidationError("`shape_index` must not be None")
+    if not isinstance(params["shape_index"], bool):
+        raise StyxValidationError(f'`shape_index` has the wrong type: Received `{type(params.get("shape_index", False))}` expected `bool`')
+    if params.get("output_file_stem", None) is not None:
+        if not isinstance(params["output_file_stem"], str):
+            raise StyxValidationError(f'`output_file_stem` has the wrong type: Received `{type(params.get("output_file_stem", None))}` expected `str | None`')
+    if params.get("histogram_bins", None) is not None:
+        if not isinstance(params["histogram_bins"], (float, int)):
+            raise StyxValidationError(f'`histogram_bins` has the wrong type: Received `{type(params.get("histogram_bins", None))}` expected `float | None`')
+    if params.get("percentage_histogram_bins", None) is not None:
+        if not isinstance(params["percentage_histogram_bins"], (float, int)):
+            raise StyxValidationError(f'`percentage_histogram_bins` has the wrong type: Received `{type(params.get("percentage_histogram_bins", None))}` expected `float | None`')
+    if params.get("bin_size", None) is not None:
+        if not isinstance(params["bin_size"], (float, int)):
+            raise StyxValidationError(f'`bin_size` has the wrong type: Received `{type(params.get("bin_size", None))}` expected `float | None`')
+    if params.get("bin_start_curvature", None) is not None:
+        if not isinstance(params["bin_start_curvature"], (float, int)):
+            raise StyxValidationError(f'`bin_start_curvature` has the wrong type: Received `{type(params.get("bin_start_curvature", None))}` expected `float | None`')
+    if params.get("bin_end_curvature", None) is not None:
+        if not isinstance(params["bin_end_curvature"], (float, int)):
+            raise StyxValidationError(f'`bin_end_curvature` has the wrong type: Received `{type(params.get("bin_end_curvature", None))}` expected `float | None`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("regional_percentages", False) is None:
+        raise StyxValidationError("`regional_percentages` must not be None")
+    if not isinstance(params["regional_percentages"], bool):
+        raise StyxValidationError(f'`regional_percentages` has the wrong type: Received `{type(params.get("regional_percentages", False))}` expected `bool`')
+    if params.get("high_pass_filter", None) is not None:
+        if not isinstance(params["high_pass_filter"], (float, int)):
+            raise StyxValidationError(f'`high_pass_filter` has the wrong type: Received `{type(params.get("high_pass_filter", None))}` expected `float | None`')
+    if params.get("low_pass_filter", None) is not None:
+        if not isinstance(params["low_pass_filter"], (float, int)):
+            raise StyxValidationError(f'`low_pass_filter` has the wrong type: Received `{type(params.get("low_pass_filter", None))}` expected `float | None`')
+    if params.get("high_pass_filter_gaussian", None) is not None:
+        if not isinstance(params["high_pass_filter_gaussian"], (float, int)):
+            raise StyxValidationError(f'`high_pass_filter_gaussian` has the wrong type: Received `{type(params.get("high_pass_filter_gaussian", None))}` expected `float | None`')
+    if params.get("low_pass_filter_gaussian", None) is not None:
+        if not isinstance(params["low_pass_filter_gaussian"], (float, int)):
+            raise StyxValidationError(f'`low_pass_filter_gaussian` has the wrong type: Received `{type(params.get("low_pass_filter_gaussian", None))}` expected `float | None`')
+    if params.get("filter_label", None) is not None:
+        if not isinstance(params["filter_label"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`filter_label` has the wrong type: Received `{type(params.get("filter_label", None))}` expected `InputPathType | None`')
+    if params.get("min_max_info", False) is None:
+        raise StyxValidationError("`min_max_info` must not be None")
+    if not isinstance(params["min_max_info"], bool):
+        raise StyxValidationError(f'`min_max_info` has the wrong type: Received `{type(params.get("min_max_info", False))}` expected `bool`')
+    if params.get("normalize_curvature", False) is None:
+        raise StyxValidationError("`normalize_curvature` must not be None")
+    if not isinstance(params["normalize_curvature"], bool):
+        raise StyxValidationError(f'`normalize_curvature` has the wrong type: Received `{type(params.get("normalize_curvature", False))}` expected `bool`')
+    if params.get("summary_condition", None) is not None:
+        if not isinstance(params["summary_condition"], str):
+            raise StyxValidationError(f'`summary_condition` has the wrong type: Received `{type(params.get("summary_condition", None))}` expected `str | None`')
+    if params.get("min_curvature_scale", None) is not None:
+        if not isinstance(params["min_curvature_scale"], (float, int)):
+            raise StyxValidationError(f'`min_curvature_scale` has the wrong type: Received `{type(params.get("min_curvature_scale", None))}` expected `float | None`')
+    if params.get("max_curvature_scale", None) is not None:
+        if not isinstance(params["max_curvature_scale"], (float, int)):
+            raise StyxValidationError(f'`max_curvature_scale` has the wrong type: Received `{type(params.get("max_curvature_scale", None))}` expected `float | None`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("set_zero_vertex", None) is not None:
+        if not isinstance(params["set_zero_vertex"], (float, int)):
+            raise StyxValidationError(f'`set_zero_vertex` has the wrong type: Received `{type(params.get("set_zero_vertex", None))}` expected `float | None`')
+    if params.get("max_ulps", None) is not None:
+        if not isinstance(params["max_ulps"], (float, int)):
+            raise StyxValidationError(f'`max_ulps` has the wrong type: Received `{type(params.get("max_ulps", None))}` expected `float | None`')
+
+
 def mris_curvature_stats_cargs(
     params: MrisCurvatureStatsParameters,
     execution: Execution,
@@ -449,6 +593,7 @@ def mris_curvature_stats_execute(
     Returns:
         NamedTuple of outputs (described in `MrisCurvatureStatsOutputs`).
     """
+    mris_curvature_stats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CURVATURE_STATS_METADATA)
     params = execution.params(params)

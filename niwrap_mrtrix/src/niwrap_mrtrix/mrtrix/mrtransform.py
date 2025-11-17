@@ -162,18 +162,20 @@ def mrtransform_strides_cargs_dyn_fn(
     }.get(t)
 
 
-def mrtransform_strides_outputs_dyn_fn(
+def mrtransform_strides_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": mrtransform_various_string_validate,
+        "VariousFile": mrtransform_various_file_validate,
     }.get(t)
 
 
@@ -202,6 +204,28 @@ def mrtransform_fslgrad_params(
         "bvals": bvals,
     }
     return params
+
+
+def mrtransform_fslgrad_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrtransformFslgradParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs", None) is None:
+        raise StyxValidationError("`bvecs` must not be None")
+    if not isinstance(params["bvecs"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvecs` has the wrong type: Received `{type(params.get("bvecs", None))}` expected `InputPathType`')
+    if params.get("bvals", None) is None:
+        raise StyxValidationError("`bvals` must not be None")
+    if not isinstance(params["bvals"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvals` has the wrong type: Received `{type(params.get("bvals", None))}` expected `InputPathType`')
 
 
 def mrtransform_fslgrad_cargs(
@@ -259,6 +283,28 @@ def mrtransform_export_grad_fsl_params(
         "bvals_path": bvals_path,
     }
     return params
+
+
+def mrtransform_export_grad_fsl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrtransformExportGradFslParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("bvecs_path", None) is None:
+        raise StyxValidationError("`bvecs_path` must not be None")
+    if not isinstance(params["bvecs_path"], str):
+        raise StyxValidationError(f'`bvecs_path` has the wrong type: Received `{type(params.get("bvecs_path", None))}` expected `str`')
+    if params.get("bvals_path", None) is None:
+        raise StyxValidationError("`bvals_path` must not be None")
+    if not isinstance(params["bvals_path"], str):
+        raise StyxValidationError(f'`bvals_path` has the wrong type: Received `{type(params.get("bvals_path", None))}` expected `str`')
 
 
 def mrtransform_export_grad_fsl_cargs(
@@ -320,6 +366,24 @@ def mrtransform_various_string_params(
     return params
 
 
+def mrtransform_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrtransformVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def mrtransform_various_string_cargs(
     params: MrtransformVariousStringParameters,
     execution: Execution,
@@ -354,6 +418,24 @@ def mrtransform_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def mrtransform_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrtransformVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def mrtransform_various_file_cargs(
@@ -393,6 +475,28 @@ def mrtransform_config_params(
         "value": value,
     }
     return params
+
+
+def mrtransform_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrtransformConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mrtransform_config_cargs(
@@ -639,6 +743,145 @@ def mrtransform_params(
     return params
 
 
+def mrtransform_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrtransformParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("linear", None) is not None:
+        if not isinstance(params["linear"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`linear` has the wrong type: Received `{type(params.get("linear", None))}` expected `InputPathType | None`')
+    if params.get("flip", None) is not None:
+        if not isinstance(params["flip"], list):
+            raise StyxValidationError(f'`flip` has the wrong type: Received `{type(params.get("flip", None))}` expected `list[int] | None`')
+        for e in params["flip"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`flip` has the wrong type: Received `{type(params.get("flip", None))}` expected `list[int] | None`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+    if params.get("half", False) is None:
+        raise StyxValidationError("`half` must not be None")
+    if not isinstance(params["half"], bool):
+        raise StyxValidationError(f'`half` has the wrong type: Received `{type(params.get("half", False))}` expected `bool`')
+    if params.get("replace", None) is not None:
+        if not isinstance(params["replace"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `InputPathType | None`')
+    if params.get("identity", False) is None:
+        raise StyxValidationError("`identity` must not be None")
+    if not isinstance(params["identity"], bool):
+        raise StyxValidationError(f'`identity` has the wrong type: Received `{type(params.get("identity", False))}` expected `bool`')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("midway_space", False) is None:
+        raise StyxValidationError("`midway_space` must not be None")
+    if not isinstance(params["midway_space"], bool):
+        raise StyxValidationError(f'`midway_space` has the wrong type: Received `{type(params.get("midway_space", False))}` expected `bool`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `str | None`')
+    if params.get("oversample", None) is not None:
+        if not isinstance(params["oversample"], list):
+            raise StyxValidationError(f'`oversample` has the wrong type: Received `{type(params.get("oversample", None))}` expected `list[int] | None`')
+        for e in params["oversample"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`oversample` has the wrong type: Received `{type(params.get("oversample", None))}` expected `list[int] | None`')
+    if params.get("warp", None) is not None:
+        if not isinstance(params["warp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `InputPathType | None`')
+    if params.get("warp_full", None) is not None:
+        if not isinstance(params["warp_full"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp_full` has the wrong type: Received `{type(params.get("warp_full", None))}` expected `InputPathType | None`')
+    if params.get("from", None) is not None:
+        if not isinstance(params["from"], int):
+            raise StyxValidationError(f'`from` has the wrong type: Received `{type(params.get("from", None))}` expected `int | None`')
+    if params.get("modulate", None) is not None:
+        if not isinstance(params["modulate"], str):
+            raise StyxValidationError(f'`modulate` has the wrong type: Received `{type(params.get("modulate", None))}` expected `str | None`')
+    if params.get("directions", None) is not None:
+        if not isinstance(params["directions"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`directions` has the wrong type: Received `{type(params.get("directions", None))}` expected `InputPathType | None`')
+    if params.get("reorient_fod", None) is not None:
+        if not isinstance(params["reorient_fod"], str):
+            raise StyxValidationError(f'`reorient_fod` has the wrong type: Received `{type(params.get("reorient_fod", None))}` expected `str | None`')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("fslgrad", None) is not None:
+        mrtransform_fslgrad_validate(params["fslgrad"])
+    if params.get("export_grad_mrtrix", None) is not None:
+        if not isinstance(params["export_grad_mrtrix"], str):
+            raise StyxValidationError(f'`export_grad_mrtrix` has the wrong type: Received `{type(params.get("export_grad_mrtrix", None))}` expected `str | None`')
+    if params.get("export_grad_fsl", None) is not None:
+        mrtransform_export_grad_fsl_validate(params["export_grad_fsl"])
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `str | None`')
+    if params.get("strides", None) is not None:
+        if not isinstance(params["strides"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
+        if "@type" not in params["strides"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        mrtransform_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
+    if params.get("nan", False) is None:
+        raise StyxValidationError("`nan` must not be None")
+    if not isinstance(params["nan"], bool):
+        raise StyxValidationError(f'`nan` has the wrong type: Received `{type(params.get("nan", False))}` expected `bool`')
+    if params.get("no_reorientation", False) is None:
+        raise StyxValidationError("`no_reorientation` must not be None")
+    if not isinstance(params["no_reorientation"], bool):
+        raise StyxValidationError(f'`no_reorientation` has the wrong type: Received `{type(params.get("no_reorientation", False))}` expected `bool`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrtransformConfigParameters] | None`')
+        for e in params["config"]:
+            mrtransform_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def mrtransform_cargs(
     params: MrtransformParameters,
     execution: Execution,
@@ -854,6 +1097,7 @@ def mrtransform_execute(
     Returns:
         NamedTuple of outputs (described in `MrtransformOutputs`).
     """
+    mrtransform_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRTRANSFORM_METADATA)
     params = execution.params(params)

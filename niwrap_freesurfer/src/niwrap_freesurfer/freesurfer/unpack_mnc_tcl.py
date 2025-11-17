@@ -63,6 +63,30 @@ def unpack_mnc_tcl_params(
     return params
 
 
+def unpack_mnc_tcl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UnpackMncTclParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("output_dir", None) is not None:
+        if not isinstance(params["output_dir"], str):
+            raise StyxValidationError(f'`output_dir` has the wrong type: Received `{type(params.get("output_dir", None))}` expected `str | None`')
+    if params.get("input_file", None) is not None:
+        if not isinstance(params["input_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType | None`')
+
+
 def unpack_mnc_tcl_cargs(
     params: UnpackMncTclParameters,
     execution: Execution,
@@ -132,6 +156,7 @@ def unpack_mnc_tcl_execute(
     Returns:
         NamedTuple of outputs (described in `UnpackMncTclOutputs`).
     """
+    unpack_mnc_tcl_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UNPACK_MNC_TCL_METADATA)
     params = execution.params(params)

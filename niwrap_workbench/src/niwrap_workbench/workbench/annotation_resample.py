@@ -61,6 +61,28 @@ def annotation_resample_surface_pair_params(
     return params
 
 
+def annotation_resample_surface_pair_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AnnotationResampleSurfacePairParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source-surface", None) is None:
+        raise StyxValidationError("`source-surface` must not be None")
+    if not isinstance(params["source-surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source-surface` has the wrong type: Received `{type(params.get("source-surface", None))}` expected `InputPathType`')
+    if params.get("target-surface", None) is None:
+        raise StyxValidationError("`target-surface` must not be None")
+    if not isinstance(params["target-surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`target-surface` has the wrong type: Received `{type(params.get("target-surface", None))}` expected `InputPathType`')
+
+
 def annotation_resample_surface_pair_cargs(
     params: AnnotationResampleSurfacePairParameters,
     execution: Execution,
@@ -115,6 +137,33 @@ def annotation_resample_params(
     if surface_pair is not None:
         params["surface-pair"] = surface_pair
     return params
+
+
+def annotation_resample_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AnnotationResampleParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-pair", None) is not None:
+        if not isinstance(params["surface-pair"], list):
+            raise StyxValidationError(f'`surface-pair` has the wrong type: Received `{type(params.get("surface-pair", None))}` expected `list[AnnotationResampleSurfacePairParameters] | None`')
+        for e in params["surface-pair"]:
+            annotation_resample_surface_pair_validate(e)
+    if params.get("annotation-in", None) is None:
+        raise StyxValidationError("`annotation-in` must not be None")
+    if not isinstance(params["annotation-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`annotation-in` has the wrong type: Received `{type(params.get("annotation-in", None))}` expected `InputPathType`')
+    if params.get("annotation-out", None) is None:
+        raise StyxValidationError("`annotation-out` must not be None")
+    if not isinstance(params["annotation-out"], str):
+        raise StyxValidationError(f'`annotation-out` has the wrong type: Received `{type(params.get("annotation-out", None))}` expected `str`')
 
 
 def annotation_resample_cargs(
@@ -180,6 +229,7 @@ def annotation_resample_execute(
     Returns:
         NamedTuple of outputs (described in `AnnotationResampleOutputs`).
     """
+    annotation_resample_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANNOTATION_RESAMPLE_METADATA)
     params = execution.params(params)

@@ -125,6 +125,83 @@ def mris_multimodal_surface_placement_params(
     return params
 
 
+def mris_multimodal_surface_placement_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisMultimodalSurfacePlacementParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("output_surface", None) is None:
+        raise StyxValidationError("`output_surface` must not be None")
+    if not isinstance(params["output_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_surface` has the wrong type: Received `{type(params.get("output_surface", None))}` expected `InputPathType`')
+    if params.get("sphere_surface", None) is None:
+        raise StyxValidationError("`sphere_surface` must not be None")
+    if not isinstance(params["sphere_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sphere_surface` has the wrong type: Received `{type(params.get("sphere_surface", None))}` expected `InputPathType`')
+    if params.get("normals", None) is None:
+        raise StyxValidationError("`normals` must not be None")
+    if not isinstance(params["normals"], str):
+        raise StyxValidationError(f'`normals` has the wrong type: Received `{type(params.get("normals", None))}` expected `str`')
+    if params.get("values", None) is None:
+        raise StyxValidationError("`values` must not be None")
+    if not isinstance(params["values"], str):
+        raise StyxValidationError(f'`values` has the wrong type: Received `{type(params.get("values", None))}` expected `str`')
+    if params.get("debug_vertex", None) is not None:
+        if not isinstance(params["debug_vertex"], (float, int)):
+            raise StyxValidationError(f'`debug_vertex` has the wrong type: Received `{type(params.get("debug_vertex", None))}` expected `float | None`')
+    if params.get("step_size", None) is None:
+        raise StyxValidationError("`step_size` must not be None")
+    if not isinstance(params["step_size"], (float, int)):
+        raise StyxValidationError(f'`step_size` has the wrong type: Received `{type(params.get("step_size", None))}` expected `float`')
+    if params.get("number_of_steps", None) is None:
+        raise StyxValidationError("`number_of_steps` must not be None")
+    if not isinstance(params["number_of_steps"], (float, int)):
+        raise StyxValidationError(f'`number_of_steps` has the wrong type: Received `{type(params.get("number_of_steps", None))}` expected `float`')
+    if params.get("gradient_sigma", None) is None:
+        raise StyxValidationError("`gradient_sigma` must not be None")
+    if not isinstance(params["gradient_sigma"], (float, int)):
+        raise StyxValidationError(f'`gradient_sigma` has the wrong type: Received `{type(params.get("gradient_sigma", None))}` expected `float`')
+    if params.get("aseg_aparc", None) is None:
+        raise StyxValidationError("`aseg_aparc` must not be None")
+    if not isinstance(params["aseg_aparc"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aseg_aparc` has the wrong type: Received `{type(params.get("aseg_aparc", None))}` expected `InputPathType`')
+    if params.get("white_surface", None) is None:
+        raise StyxValidationError("`white_surface` must not be None")
+    if not isinstance(params["white_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`white_surface` has the wrong type: Received `{type(params.get("white_surface", None))}` expected `InputPathType`')
+    if params.get("prob_of_csf", None) is None:
+        raise StyxValidationError("`prob_of_csf` must not be None")
+    if not isinstance(params["prob_of_csf"], (float, int)):
+        raise StyxValidationError(f'`prob_of_csf` has the wrong type: Received `{type(params.get("prob_of_csf", None))}` expected `float`')
+    if params.get("t1_image", None) is None:
+        raise StyxValidationError("`t1_image` must not be None")
+    if not isinstance(params["t1_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1_image` has the wrong type: Received `{type(params.get("t1_image", None))}` expected `InputPathType`')
+    if params.get("t2_image", None) is None:
+        raise StyxValidationError("`t2_image` must not be None")
+    if not isinstance(params["t2_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t2_image` has the wrong type: Received `{type(params.get("t2_image", None))}` expected `InputPathType`')
+    if params.get("flair_image", None) is None:
+        raise StyxValidationError("`flair_image` must not be None")
+    if not isinstance(params["flair_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`flair_image` has the wrong type: Received `{type(params.get("flair_image", None))}` expected `InputPathType`')
+    if params.get("min_max", False) is None:
+        raise StyxValidationError("`min_max` must not be None")
+    if not isinstance(params["min_max"], bool):
+        raise StyxValidationError(f'`min_max` has the wrong type: Received `{type(params.get("min_max", False))}` expected `bool`')
+
+
 def mris_multimodal_surface_placement_cargs(
     params: MrisMultimodalSurfacePlacementParameters,
     execution: Execution,
@@ -244,6 +321,7 @@ def mris_multimodal_surface_placement_execute(
     Returns:
         NamedTuple of outputs (described in `MrisMultimodalSurfacePlacementOutputs`).
     """
+    mris_multimodal_surface_placement_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA)
     params = execution.params(params)

@@ -77,6 +77,43 @@ def v_1d_tsort_params(
     return params
 
 
+def v_1d_tsort_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dTsortParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inc_order", False) is None:
+        raise StyxValidationError("`inc_order` must not be None")
+    if not isinstance(params["inc_order"], bool):
+        raise StyxValidationError(f'`inc_order` has the wrong type: Received `{type(params.get("inc_order", False))}` expected `bool`')
+    if params.get("dec_order", False) is None:
+        raise StyxValidationError("`dec_order` must not be None")
+    if not isinstance(params["dec_order"], bool):
+        raise StyxValidationError(f'`dec_order` has the wrong type: Received `{type(params.get("dec_order", False))}` expected `bool`')
+    if params.get("transpose", False) is None:
+        raise StyxValidationError("`transpose` must not be None")
+    if not isinstance(params["transpose"], bool):
+        raise StyxValidationError(f'`transpose` has the wrong type: Received `{type(params.get("transpose", False))}` expected `bool`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], (float, int)):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `float | None`')
+    if params.get("imode", False) is None:
+        raise StyxValidationError("`imode` must not be None")
+    if not isinstance(params["imode"], bool):
+        raise StyxValidationError(f'`imode` has the wrong type: Received `{type(params.get("imode", False))}` expected `bool`')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+
+
 def v_1d_tsort_cargs(
     params: V1dTsortParameters,
     execution: Execution,
@@ -147,6 +184,7 @@ def v_1d_tsort_execute(
     Returns:
         NamedTuple of outputs (described in `V1dTsortOutputs`).
     """
+    v_1d_tsort_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_TSORT_METADATA)
     params = execution.params(params)

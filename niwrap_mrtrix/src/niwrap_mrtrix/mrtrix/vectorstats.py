@@ -110,6 +110,24 @@ def vectorstats_column_params(
     return params
 
 
+def vectorstats_column_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VectorstatsColumnParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("path", None) is None:
+        raise StyxValidationError("`path` must not be None")
+    if not isinstance(params["path"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`path` has the wrong type: Received `{type(params.get("path", None))}` expected `InputPathType`')
+
+
 def vectorstats_column_cargs(
     params: VectorstatsColumnParameters,
     execution: Execution,
@@ -148,6 +166,28 @@ def vectorstats_config_params(
         "value": value,
     }
     return params
+
+
+def vectorstats_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VectorstatsConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def vectorstats_config_cargs(
@@ -294,6 +334,106 @@ def vectorstats_params(
     return params
 
 
+def vectorstats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VectorstatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("notest", False) is None:
+        raise StyxValidationError("`notest` must not be None")
+    if not isinstance(params["notest"], bool):
+        raise StyxValidationError(f'`notest` has the wrong type: Received `{type(params.get("notest", False))}` expected `bool`')
+    if params.get("errors", None) is not None:
+        if not isinstance(params["errors"], str):
+            raise StyxValidationError(f'`errors` has the wrong type: Received `{type(params.get("errors", None))}` expected `str | None`')
+    if params.get("exchange_within", None) is not None:
+        if not isinstance(params["exchange_within"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exchange_within` has the wrong type: Received `{type(params.get("exchange_within", None))}` expected `InputPathType | None`')
+    if params.get("exchange_whole", None) is not None:
+        if not isinstance(params["exchange_whole"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exchange_whole` has the wrong type: Received `{type(params.get("exchange_whole", None))}` expected `InputPathType | None`')
+    if params.get("strong", False) is None:
+        raise StyxValidationError("`strong` must not be None")
+    if not isinstance(params["strong"], bool):
+        raise StyxValidationError(f'`strong` has the wrong type: Received `{type(params.get("strong", False))}` expected `bool`')
+    if params.get("nshuffles", None) is not None:
+        if not isinstance(params["nshuffles"], int):
+            raise StyxValidationError(f'`nshuffles` has the wrong type: Received `{type(params.get("nshuffles", None))}` expected `int | None`')
+    if params.get("permutations", None) is not None:
+        if not isinstance(params["permutations"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`permutations` has the wrong type: Received `{type(params.get("permutations", None))}` expected `InputPathType | None`')
+    if params.get("variance", None) is not None:
+        if not isinstance(params["variance"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`variance` has the wrong type: Received `{type(params.get("variance", None))}` expected `InputPathType | None`')
+    if params.get("ftests", None) is not None:
+        if not isinstance(params["ftests"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ftests` has the wrong type: Received `{type(params.get("ftests", None))}` expected `InputPathType | None`')
+    if params.get("fonly", False) is None:
+        raise StyxValidationError("`fonly` must not be None")
+    if not isinstance(params["fonly"], bool):
+        raise StyxValidationError(f'`fonly` has the wrong type: Received `{type(params.get("fonly", False))}` expected `bool`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], list):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[VectorstatsColumnParameters] | None`')
+        for e in params["column"]:
+            vectorstats_column_validate(e)
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[VectorstatsConfigParameters] | None`')
+        for e in params["config"]:
+            vectorstats_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("design", None) is None:
+        raise StyxValidationError("`design` must not be None")
+    if not isinstance(params["design"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`design` has the wrong type: Received `{type(params.get("design", None))}` expected `InputPathType`')
+    if params.get("contrast", None) is None:
+        raise StyxValidationError("`contrast` must not be None")
+    if not isinstance(params["contrast"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`contrast` has the wrong type: Received `{type(params.get("contrast", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def vectorstats_cargs(
     params: VectorstatsParameters,
     execution: Execution,
@@ -436,6 +576,7 @@ def vectorstats_execute(
     Returns:
         NamedTuple of outputs (described in `VectorstatsOutputs`).
     """
+    vectorstats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VECTORSTATS_METADATA)
     params = execution.params(params)

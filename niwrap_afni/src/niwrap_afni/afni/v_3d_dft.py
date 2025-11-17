@@ -85,6 +85,48 @@ def v_3d_dft_params(
     return params
 
 
+def v_3d_dft_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("abs_output", False) is None:
+        raise StyxValidationError("`abs_output` must not be None")
+    if not isinstance(params["abs_output"], bool):
+        raise StyxValidationError(f'`abs_output` has the wrong type: Received `{type(params.get("abs_output", False))}` expected `bool`')
+    if params.get("nfft", None) is not None:
+        if not isinstance(params["nfft"], (float, int)):
+            raise StyxValidationError(f'`nfft` has the wrong type: Received `{type(params.get("nfft", None))}` expected `float | None`')
+    if params.get("detrend", False) is None:
+        raise StyxValidationError("`detrend` must not be None")
+    if not isinstance(params["detrend"], bool):
+        raise StyxValidationError(f'`detrend` has the wrong type: Received `{type(params.get("detrend", False))}` expected `bool`')
+    if params.get("taper", None) is not None:
+        if not isinstance(params["taper"], (float, int)):
+            raise StyxValidationError(f'`taper` has the wrong type: Received `{type(params.get("taper", None))}` expected `float | None`')
+        if 0.0 <= params["taper"] <= 1.0:
+            raise StyxValidationError("Parameter `taper` must be between 0.0 and 1.0 (inclusive)")
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+
+
 def v_3d_dft_cargs(
     params: V3dDftParameters,
     execution: Execution,
@@ -165,6 +207,7 @@ def v_3d_dft_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDftOutputs`).
     """
+    v_3d_dft_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DFT_METADATA)
     params = execution.params(params)

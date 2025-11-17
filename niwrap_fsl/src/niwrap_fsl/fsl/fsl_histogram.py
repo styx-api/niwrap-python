@@ -195,6 +195,100 @@ def fsl_histogram_params(
     return params
 
 
+def fsl_histogram_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslHistogramParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("input_file_duplicate", None) is None:
+        raise StyxValidationError("`input_file_duplicate` must not be None")
+    if not isinstance(params["input_file_duplicate"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file_duplicate` has the wrong type: Received `{type(params.get("input_file_duplicate", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("output_file_duplicate", None) is None:
+        raise StyxValidationError("`output_file_duplicate` must not be None")
+    if not isinstance(params["output_file_duplicate"], str):
+        raise StyxValidationError(f'`output_file_duplicate` has the wrong type: Received `{type(params.get("output_file_duplicate", None))}` expected `str`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_file_duplicate", None) is not None:
+        if not isinstance(params["mask_file_duplicate"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file_duplicate` has the wrong type: Received `{type(params.get("mask_file_duplicate", None))}` expected `InputPathType | None`')
+    if params.get("gmmfit_file", None) is not None:
+        if not isinstance(params["gmmfit_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gmmfit_file` has the wrong type: Received `{type(params.get("gmmfit_file", None))}` expected `InputPathType | None`')
+    if params.get("gmmfit_file_duplicate", None) is not None:
+        if not isinstance(params["gmmfit_file_duplicate"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gmmfit_file_duplicate` has the wrong type: Received `{type(params.get("gmmfit_file_duplicate", None))}` expected `InputPathType | None`')
+    if params.get("plot_title", None) is not None:
+        if not isinstance(params["plot_title"], str):
+            raise StyxValidationError(f'`plot_title` has the wrong type: Received `{type(params.get("plot_title", None))}` expected `str | None`')
+    if params.get("plot_title_duplicate", None) is not None:
+        if not isinstance(params["plot_title_duplicate"], str):
+            raise StyxValidationError(f'`plot_title_duplicate` has the wrong type: Received `{type(params.get("plot_title_duplicate", None))}` expected `str | None`')
+    if params.get("legend_file", None) is not None:
+        if not isinstance(params["legend_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`legend_file` has the wrong type: Received `{type(params.get("legend_file", None))}` expected `InputPathType | None`')
+    if params.get("legend_file_duplicate", None) is not None:
+        if not isinstance(params["legend_file_duplicate"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`legend_file_duplicate` has the wrong type: Received `{type(params.get("legend_file_duplicate", None))}` expected `InputPathType | None`')
+    if params.get("xlabel", None) is not None:
+        if not isinstance(params["xlabel"], str):
+            raise StyxValidationError(f'`xlabel` has the wrong type: Received `{type(params.get("xlabel", None))}` expected `str | None`')
+    if params.get("xlabel_duplicate", None) is not None:
+        if not isinstance(params["xlabel_duplicate"], str):
+            raise StyxValidationError(f'`xlabel_duplicate` has the wrong type: Received `{type(params.get("xlabel_duplicate", None))}` expected `str | None`')
+    if params.get("ylabel", None) is not None:
+        if not isinstance(params["ylabel"], str):
+            raise StyxValidationError(f'`ylabel` has the wrong type: Received `{type(params.get("ylabel", None))}` expected `str | None`')
+    if params.get("ylabel_duplicate", None) is not None:
+        if not isinstance(params["ylabel_duplicate"], str):
+            raise StyxValidationError(f'`ylabel_duplicate` has the wrong type: Received `{type(params.get("ylabel_duplicate", None))}` expected `str | None`')
+    if params.get("plot_height", None) is not None:
+        if not isinstance(params["plot_height"], (float, int)):
+            raise StyxValidationError(f'`plot_height` has the wrong type: Received `{type(params.get("plot_height", None))}` expected `float | None`')
+    if params.get("plot_height_duplicate", None) is not None:
+        if not isinstance(params["plot_height_duplicate"], (float, int)):
+            raise StyxValidationError(f'`plot_height_duplicate` has the wrong type: Received `{type(params.get("plot_height_duplicate", None))}` expected `float | None`')
+    if params.get("plot_width", None) is not None:
+        if not isinstance(params["plot_width"], (float, int)):
+            raise StyxValidationError(f'`plot_width` has the wrong type: Received `{type(params.get("plot_width", None))}` expected `float | None`')
+    if params.get("plot_width_duplicate", None) is not None:
+        if not isinstance(params["plot_width_duplicate"], (float, int)):
+            raise StyxValidationError(f'`plot_width_duplicate` has the wrong type: Received `{type(params.get("plot_width_duplicate", None))}` expected `float | None`')
+    if params.get("num_bins", None) is not None:
+        if not isinstance(params["num_bins"], (float, int)):
+            raise StyxValidationError(f'`num_bins` has the wrong type: Received `{type(params.get("num_bins", None))}` expected `float | None`')
+    if params.get("num_bins_duplicate", None) is not None:
+        if not isinstance(params["num_bins_duplicate"], (float, int)):
+            raise StyxValidationError(f'`num_bins_duplicate` has the wrong type: Received `{type(params.get("num_bins_duplicate", None))}` expected `float | None`')
+    if params.get("zoom_factor", None) is not None:
+        if not isinstance(params["zoom_factor"], (float, int)):
+            raise StyxValidationError(f'`zoom_factor` has the wrong type: Received `{type(params.get("zoom_factor", None))}` expected `float | None`')
+    if params.get("zoom_factor_duplicate", None) is not None:
+        if not isinstance(params["zoom_factor_duplicate"], (float, int)):
+            raise StyxValidationError(f'`zoom_factor_duplicate` has the wrong type: Received `{type(params.get("zoom_factor_duplicate", None))}` expected `float | None`')
+    if params.get("use_gmm_flag", False) is None:
+        raise StyxValidationError("`use_gmm_flag` must not be None")
+    if not isinstance(params["use_gmm_flag"], bool):
+        raise StyxValidationError(f'`use_gmm_flag` has the wrong type: Received `{type(params.get("use_gmm_flag", False))}` expected `bool`')
+
+
 def fsl_histogram_cargs(
     params: FslHistogramParameters,
     execution: Execution,
@@ -370,6 +464,7 @@ def fsl_histogram_execute(
     Returns:
         NamedTuple of outputs (described in `FslHistogramOutputs`).
     """
+    fsl_histogram_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_HISTOGRAM_METADATA)
     params = execution.params(params)

@@ -49,6 +49,24 @@ def fslinfo_params(
     return params
 
 
+def fslinfo_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslinfoParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filename", None) is None:
+        raise StyxValidationError("`filename` must not be None")
+    if not isinstance(params["filename"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `InputPathType`')
+
+
 def fslinfo_cargs(
     params: FslinfoParameters,
     execution: Execution,
@@ -106,6 +124,7 @@ def fslinfo_execute(
     Returns:
         NamedTuple of outputs (described in `FslinfoOutputs`).
     """
+    fslinfo_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLINFO_METADATA)
     params = execution.params(params)

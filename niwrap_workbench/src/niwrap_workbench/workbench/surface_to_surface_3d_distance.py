@@ -68,6 +68,35 @@ def surface_to_surface_3d_distance_params(
     return params
 
 
+def surface_to_surface_3d_distance_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceToSurface3dDistanceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dists-out", None) is None:
+        raise StyxValidationError("`dists-out` must not be None")
+    if not isinstance(params["dists-out"], str):
+        raise StyxValidationError(f'`dists-out` has the wrong type: Received `{type(params.get("dists-out", None))}` expected `str`')
+    if params.get("vectors-out", None) is not None:
+        if not isinstance(params["vectors-out"], str):
+            raise StyxValidationError(f'`vectors-out` has the wrong type: Received `{type(params.get("vectors-out", None))}` expected `str | None`')
+    if params.get("surface-comp", None) is None:
+        raise StyxValidationError("`surface-comp` must not be None")
+    if not isinstance(params["surface-comp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-comp` has the wrong type: Received `{type(params.get("surface-comp", None))}` expected `InputPathType`')
+    if params.get("surface-ref", None) is None:
+        raise StyxValidationError("`surface-ref` must not be None")
+    if not isinstance(params["surface-ref"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface-ref` has the wrong type: Received `{type(params.get("surface-ref", None))}` expected `InputPathType`')
+
+
 def surface_to_surface_3d_distance_cargs(
     params: SurfaceToSurface3dDistanceParameters,
     execution: Execution,
@@ -132,6 +161,7 @@ def surface_to_surface_3d_distance_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceToSurface3dDistanceOutputs`).
     """
+    surface_to_surface_3d_distance_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_TO_SURFACE_3D_DISTANCE_METADATA)
     params = execution.params(params)

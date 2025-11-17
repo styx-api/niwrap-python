@@ -84,6 +84,39 @@ def metric_to_volume_mapping_ribbon_constrained_params(
     return params
 
 
+def metric_to_volume_mapping_ribbon_constrained_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricToVolumeMappingRibbonConstrainedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("inner-surf", None) is None:
+        raise StyxValidationError("`inner-surf` must not be None")
+    if not isinstance(params["inner-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`inner-surf` has the wrong type: Received `{type(params.get("inner-surf", None))}` expected `InputPathType`')
+    if params.get("outer-surf", None) is None:
+        raise StyxValidationError("`outer-surf` must not be None")
+    if not isinstance(params["outer-surf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`outer-surf` has the wrong type: Received `{type(params.get("outer-surf", None))}` expected `InputPathType`')
+    if params.get("subdiv-num", None) is not None:
+        if not isinstance(params["subdiv-num"], int):
+            raise StyxValidationError(f'`subdiv-num` has the wrong type: Received `{type(params.get("subdiv-num", None))}` expected `int | None`')
+    if params.get("greedy", False) is None:
+        raise StyxValidationError("`greedy` must not be None")
+    if not isinstance(params["greedy"], bool):
+        raise StyxValidationError(f'`greedy` has the wrong type: Received `{type(params.get("greedy", False))}` expected `bool`')
+    if params.get("thick-columns", False) is None:
+        raise StyxValidationError("`thick-columns` must not be None")
+    if not isinstance(params["thick-columns"], bool):
+        raise StyxValidationError(f'`thick-columns` has the wrong type: Received `{type(params.get("thick-columns", False))}` expected `bool`')
+
+
 def metric_to_volume_mapping_ribbon_constrained_cargs(
     params: MetricToVolumeMappingRibbonConstrainedParameters,
     execution: Execution,
@@ -158,6 +191,41 @@ def metric_to_volume_mapping_params(
     return params
 
 
+def metric_to_volume_mapping_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricToVolumeMappingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("distance", None) is not None:
+        if not isinstance(params["distance"], (float, int)):
+            raise StyxValidationError(f'`distance` has the wrong type: Received `{type(params.get("distance", None))}` expected `float | None`')
+    if params.get("ribbon-constrained", None) is not None:
+        metric_to_volume_mapping_ribbon_constrained_validate(params["ribbon-constrained"])
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("volume-space", None) is None:
+        raise StyxValidationError("`volume-space` must not be None")
+    if not isinstance(params["volume-space"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-space` has the wrong type: Received `{type(params.get("volume-space", None))}` expected `InputPathType`')
+
+
 def metric_to_volume_mapping_cargs(
     params: MetricToVolumeMappingParameters,
     execution: Execution,
@@ -228,6 +296,7 @@ def metric_to_volume_mapping_execute(
     Returns:
         NamedTuple of outputs (described in `MetricToVolumeMappingOutputs`).
     """
+    metric_to_volume_mapping_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_TO_VOLUME_MAPPING_METADATA)
     params = execution.params(params)

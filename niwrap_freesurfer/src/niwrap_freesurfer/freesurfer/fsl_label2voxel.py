@@ -66,6 +66,36 @@ def fsl_label2voxel_params(
     return params
 
 
+def fsl_label2voxel_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslLabel2voxelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label_value", None) is None:
+        raise StyxValidationError("`label_value` must not be None")
+    if not isinstance(params["label_value"], (float, int)):
+        raise StyxValidationError(f'`label_value` has the wrong type: Received `{type(params.get("label_value", None))}` expected `float`')
+    if params.get("labeled_volume", None) is None:
+        raise StyxValidationError("`labeled_volume` must not be None")
+    if not isinstance(params["labeled_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`labeled_volume` has the wrong type: Received `{type(params.get("labeled_volume", None))}` expected `InputPathType`')
+    if params.get("src_volume", None) is None:
+        raise StyxValidationError("`src_volume` must not be None")
+    if not isinstance(params["src_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`src_volume` has the wrong type: Received `{type(params.get("src_volume", None))}` expected `InputPathType`')
+    if params.get("output_filename", None) is None:
+        raise StyxValidationError("`output_filename` must not be None")
+    if not isinstance(params["output_filename"], str):
+        raise StyxValidationError(f'`output_filename` has the wrong type: Received `{type(params.get("output_filename", None))}` expected `str`')
+
+
 def fsl_label2voxel_cargs(
     params: FslLabel2voxelParameters,
     execution: Execution,
@@ -127,6 +157,7 @@ def fsl_label2voxel_execute(
     Returns:
         NamedTuple of outputs (described in `FslLabel2voxelOutputs`).
     """
+    fsl_label2voxel_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_LABEL2VOXEL_METADATA)
     params = execution.params(params)

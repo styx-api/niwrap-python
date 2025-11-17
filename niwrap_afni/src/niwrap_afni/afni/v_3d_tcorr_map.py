@@ -155,6 +155,74 @@ def v_3d_tcorr_map_params(
     return params
 
 
+def v_3d_tcorr_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTcorrMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("mean", None) is not None:
+        if not isinstance(params["mean"], str):
+            raise StyxValidationError(f'`mean` has the wrong type: Received `{type(params.get("mean", None))}` expected `str | None`')
+    if params.get("zmean", None) is not None:
+        if not isinstance(params["zmean"], str):
+            raise StyxValidationError(f'`zmean` has the wrong type: Received `{type(params.get("zmean", None))}` expected `str | None`')
+    if params.get("qmean", None) is not None:
+        if not isinstance(params["qmean"], str):
+            raise StyxValidationError(f'`qmean` has the wrong type: Received `{type(params.get("qmean", None))}` expected `str | None`')
+    if params.get("pmean", None) is not None:
+        if not isinstance(params["pmean"], str):
+            raise StyxValidationError(f'`pmean` has the wrong type: Received `{type(params.get("pmean", None))}` expected `str | None`')
+    if params.get("thresh", None) is not None:
+        if not isinstance(params["thresh"], str):
+            raise StyxValidationError(f'`thresh` has the wrong type: Received `{type(params.get("thresh", None))}` expected `str | None`')
+    if params.get("varthresh", None) is not None:
+        if not isinstance(params["varthresh"], str):
+            raise StyxValidationError(f'`varthresh` has the wrong type: Received `{type(params.get("varthresh", None))}` expected `str | None`')
+    if params.get("norm_varthresh", None) is not None:
+        if not isinstance(params["norm_varthresh"], str):
+            raise StyxValidationError(f'`norm_varthresh` has the wrong type: Received `{type(params.get("norm_varthresh", None))}` expected `str | None`')
+    if params.get("corrmap", None) is not None:
+        if not isinstance(params["corrmap"], str):
+            raise StyxValidationError(f'`corrmap` has the wrong type: Received `{type(params.get("corrmap", None))}` expected `str | None`')
+    if params.get("corrmask", False) is None:
+        raise StyxValidationError("`corrmask` must not be None")
+    if not isinstance(params["corrmask"], bool):
+        raise StyxValidationError(f'`corrmask` has the wrong type: Received `{type(params.get("corrmask", False))}` expected `bool`')
+    if params.get("aexpr", None) is not None:
+        if not isinstance(params["aexpr"], str):
+            raise StyxValidationError(f'`aexpr` has the wrong type: Received `{type(params.get("aexpr", None))}` expected `str | None`')
+    if params.get("cexpr", None) is not None:
+        if not isinstance(params["cexpr"], str):
+            raise StyxValidationError(f'`cexpr` has the wrong type: Received `{type(params.get("cexpr", None))}` expected `str | None`')
+    if params.get("sexpr", None) is not None:
+        if not isinstance(params["sexpr"], str):
+            raise StyxValidationError(f'`sexpr` has the wrong type: Received `{type(params.get("sexpr", None))}` expected `str | None`')
+    if params.get("hist", None) is not None:
+        if not isinstance(params["hist"], str):
+            raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", None))}` expected `str | None`')
+
+
 def v_3d_tcorr_map_cargs(
     params: V3dTcorrMapParameters,
     execution: Execution,
@@ -286,6 +354,7 @@ def v_3d_tcorr_map_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTcorrMapOutputs`).
     """
+    v_3d_tcorr_map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TCORR_MAP_METADATA)
     params = execution.params(params)

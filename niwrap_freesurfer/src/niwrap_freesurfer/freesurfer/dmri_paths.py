@@ -265,6 +265,131 @@ def dmri_paths_params(
     return params
 
 
+def dmri_paths_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriPathsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("indir", None) is not None:
+        if not isinstance(params["indir"], str):
+            raise StyxValidationError(f'`indir` has the wrong type: Received `{type(params.get("indir", None))}` expected `str | None`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+    if params.get("dwi", None) is not None:
+        if not isinstance(params["dwi"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dwi` has the wrong type: Received `{type(params.get("dwi", None))}` expected `InputPathType | None`')
+    if params.get("grad", None) is not None:
+        if not isinstance(params["grad"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`grad` has the wrong type: Received `{type(params.get("grad", None))}` expected `InputPathType | None`')
+    if params.get("bval", None) is not None:
+        if not isinstance(params["bval"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bval` has the wrong type: Received `{type(params.get("bval", None))}` expected `InputPathType | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("bpdir", None) is not None:
+        if not isinstance(params["bpdir"], str):
+            raise StyxValidationError(f'`bpdir` has the wrong type: Received `{type(params.get("bpdir", None))}` expected `str | None`')
+    if params.get("ntr", None) is not None:
+        if not isinstance(params["ntr"], (float, int)):
+            raise StyxValidationError(f'`ntr` has the wrong type: Received `{type(params.get("ntr", None))}` expected `float | None`')
+    if params.get("fmin", None) is not None:
+        if not isinstance(params["fmin"], (float, int)):
+            raise StyxValidationError(f'`fmin` has the wrong type: Received `{type(params.get("fmin", None))}` expected `float | None`')
+    if params.get("basereg", None) is not None:
+        if not isinstance(params["basereg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`basereg` has the wrong type: Received `{type(params.get("basereg", None))}` expected `InputPathType | None`')
+    if params.get("basemask", None) is not None:
+        if not isinstance(params["basemask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`basemask` has the wrong type: Received `{type(params.get("basemask", None))}` expected `InputPathType | None`')
+    if params.get("roi1", None) is not None:
+        if not isinstance(params["roi1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi1` has the wrong type: Received `{type(params.get("roi1", None))}` expected `InputPathType | None`')
+    if params.get("roi2", None) is not None:
+        if not isinstance(params["roi2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi2` has the wrong type: Received `{type(params.get("roi2", None))}` expected `InputPathType | None`')
+    if params.get("roimesh1", None) is not None:
+        if not isinstance(params["roimesh1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roimesh1` has the wrong type: Received `{type(params.get("roimesh1", None))}` expected `InputPathType | None`')
+    if params.get("roimesh2", None) is not None:
+        if not isinstance(params["roimesh2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roimesh2` has the wrong type: Received `{type(params.get("roimesh2", None))}` expected `InputPathType | None`')
+    if params.get("roiref1", None) is not None:
+        if not isinstance(params["roiref1"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roiref1` has the wrong type: Received `{type(params.get("roiref1", None))}` expected `InputPathType | None`')
+    if params.get("roiref2", None) is not None:
+        if not isinstance(params["roiref2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roiref2` has the wrong type: Received `{type(params.get("roiref2", None))}` expected `InputPathType | None`')
+    if params.get("prior", None) is not None:
+        if not isinstance(params["prior"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`prior` has the wrong type: Received `{type(params.get("prior", None))}` expected `InputPathType | None`')
+    if params.get("nprior", None) is not None:
+        if not isinstance(params["nprior"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nprior` has the wrong type: Received `{type(params.get("nprior", None))}` expected `InputPathType | None`')
+    if params.get("nset", None) is not None:
+        if not isinstance(params["nset"], (float, int)):
+            raise StyxValidationError(f'`nset` has the wrong type: Received `{type(params.get("nset", None))}` expected `float | None`')
+    if params.get("lprior", None) is not None:
+        if not isinstance(params["lprior"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`lprior` has the wrong type: Received `{type(params.get("lprior", None))}` expected `InputPathType | None`')
+    if params.get("lset", None) is not None:
+        if not isinstance(params["lset"], (float, int)):
+            raise StyxValidationError(f'`lset` has the wrong type: Received `{type(params.get("lset", None))}` expected `float | None`')
+    if params.get("seg", None) is not None:
+        if not isinstance(params["seg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`seg` has the wrong type: Received `{type(params.get("seg", None))}` expected `InputPathType | None`')
+    if params.get("tprior", None) is not None:
+        if not isinstance(params["tprior"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`tprior` has the wrong type: Received `{type(params.get("tprior", None))}` expected `InputPathType | None`')
+    if params.get("cprior", None) is not None:
+        if not isinstance(params["cprior"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cprior` has the wrong type: Received `{type(params.get("cprior", None))}` expected `InputPathType | None`')
+    if params.get("reg", None) is not None:
+        if not isinstance(params["reg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reg` has the wrong type: Received `{type(params.get("reg", None))}` expected `InputPathType | None`')
+    if params.get("regnl", None) is not None:
+        if not isinstance(params["regnl"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`regnl` has the wrong type: Received `{type(params.get("regnl", None))}` expected `InputPathType | None`')
+    if params.get("init", None) is not None:
+        if not isinstance(params["init"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init` has the wrong type: Received `{type(params.get("init", None))}` expected `InputPathType | None`')
+    if params.get("nb", None) is not None:
+        if not isinstance(params["nb"], (float, int)):
+            raise StyxValidationError(f'`nb` has the wrong type: Received `{type(params.get("nb", None))}` expected `float | None`')
+    if params.get("ns", None) is not None:
+        if not isinstance(params["ns"], (float, int)):
+            raise StyxValidationError(f'`ns` has the wrong type: Received `{type(params.get("ns", None))}` expected `float | None`')
+    if params.get("nk", None) is not None:
+        if not isinstance(params["nk"], (float, int)):
+            raise StyxValidationError(f'`nk` has the wrong type: Received `{type(params.get("nk", None))}` expected `float | None`')
+    if params.get("nu", None) is not None:
+        if not isinstance(params["nu"], (float, int)):
+            raise StyxValidationError(f'`nu` has the wrong type: Received `{type(params.get("nu", None))}` expected `float | None`')
+    if params.get("sdp", None) is not None:
+        if not isinstance(params["sdp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`sdp` has the wrong type: Received `{type(params.get("sdp", None))}` expected `InputPathType | None`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def dmri_paths_cargs(
     params: DmriPathsParameters,
     execution: Execution,
@@ -492,6 +617,7 @@ def dmri_paths_execute(
     Returns:
         NamedTuple of outputs (described in `DmriPathsOutputs`).
     """
+    dmri_paths_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_PATHS_METADATA)
     params = execution.params(params)

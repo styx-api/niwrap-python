@@ -79,6 +79,43 @@ def ants_registration_sy_nquick_sh_params(
     return params
 
 
+def ants_registration_sy_nquick_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsRegistrationSyNquickShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is None:
+        raise StyxValidationError("`dimensionality` must not be None")
+    if not isinstance(params["dimensionality"], int):
+        raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3]`')
+    if params["dimensionality"] not in [2, 3]:
+        raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3]")
+    if params.get("fixed_image", None) is None:
+        raise StyxValidationError("`fixed_image` must not be None")
+    if not isinstance(params["fixed_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`fixed_image` has the wrong type: Received `{type(params.get("fixed_image", None))}` expected `InputPathType`')
+    if params.get("moving_image", None) is None:
+        raise StyxValidationError("`moving_image` must not be None")
+    if not isinstance(params["moving_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moving_image` has the wrong type: Received `{type(params.get("moving_image", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("transform_type", None) is not None:
+        if not isinstance(params["transform_type"], str):
+            raise StyxValidationError(f'`transform_type` has the wrong type: Received `{type(params.get("transform_type", None))}` expected `typing.Literal["s", "b"] | None`')
+        if params["transform_type"] not in ["s", "b"]:
+            raise StyxValidationError("Parameter `transform_type` must be one of [\"s\", \"b\"]")
+
+
 def ants_registration_sy_nquick_sh_cargs(
     params: AntsRegistrationSyNquickShParameters,
     execution: Execution,
@@ -158,6 +195,7 @@ def ants_registration_sy_nquick_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationSyNquickShOutputs`).
     """
+    ants_registration_sy_nquick_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_REGISTRATION_SY_NQUICK_SH_METADATA)
     params = execution.params(params)

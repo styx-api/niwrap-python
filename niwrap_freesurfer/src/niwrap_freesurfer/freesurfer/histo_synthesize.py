@@ -61,6 +61,32 @@ def histo_synthesize_params(
     return params
 
 
+def histo_synthesize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `HistoSynthesizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mri_volume", None) is None:
+        raise StyxValidationError("`mri_volume` must not be None")
+    if not isinstance(params["mri_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mri_volume` has the wrong type: Received `{type(params.get("mri_volume", None))}` expected `InputPathType`')
+    if params.get("histo_volume", None) is None:
+        raise StyxValidationError("`histo_volume` must not be None")
+    if not isinstance(params["histo_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`histo_volume` has the wrong type: Received `{type(params.get("histo_volume", None))}` expected `InputPathType`')
+    if params.get("synthetic_histo", None) is None:
+        raise StyxValidationError("`synthetic_histo` must not be None")
+    if not isinstance(params["synthetic_histo"], str):
+        raise StyxValidationError(f'`synthetic_histo` has the wrong type: Received `{type(params.get("synthetic_histo", None))}` expected `str`')
+
+
 def histo_synthesize_cargs(
     params: HistoSynthesizeParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def histo_synthesize_execute(
     Returns:
         NamedTuple of outputs (described in `HistoSynthesizeOutputs`).
     """
+    histo_synthesize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(HISTO_SYNTHESIZE_METADATA)
     params = execution.params(params)

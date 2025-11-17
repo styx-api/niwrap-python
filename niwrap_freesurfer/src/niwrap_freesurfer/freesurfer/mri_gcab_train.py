@@ -52,6 +52,23 @@ def mri_gcab_train_params(
     return params
 
 
+def mri_gcab_train_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriGcabTrainParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("removed_info", None) is not None:
+        if not isinstance(params["removed_info"], str):
+            raise StyxValidationError(f'`removed_info` has the wrong type: Received `{type(params.get("removed_info", None))}` expected `str | None`')
+
+
 def mri_gcab_train_cargs(
     params: MriGcabTrainParameters,
     execution: Execution,
@@ -111,6 +128,7 @@ def mri_gcab_train_execute(
     Returns:
         NamedTuple of outputs (described in `MriGcabTrainOutputs`).
     """
+    mri_gcab_train_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GCAB_TRAIN_METADATA)
     params = execution.params(params)

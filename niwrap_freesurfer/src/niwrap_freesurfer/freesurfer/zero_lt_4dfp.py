@@ -71,6 +71,34 @@ def zero_lt_4dfp_params(
     return params
 
 
+def zero_lt_4dfp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ZeroLt4dfpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("flt_value", None) is None:
+        raise StyxValidationError("`flt_value` must not be None")
+    if not isinstance(params["flt_value"], (float, int)):
+        raise StyxValidationError(f'`flt_value` has the wrong type: Received `{type(params.get("flt_value", None))}` expected `float`')
+    if params.get("file_4dfp", None) is None:
+        raise StyxValidationError("`file_4dfp` must not be None")
+    if not isinstance(params["file_4dfp"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file_4dfp` has the wrong type: Received `{type(params.get("file_4dfp", None))}` expected `InputPathType`')
+    if params.get("outroot", None) is not None:
+        if not isinstance(params["outroot"], str):
+            raise StyxValidationError(f'`outroot` has the wrong type: Received `{type(params.get("outroot", None))}` expected `str | None`')
+    if params.get("endianness", None) is not None:
+        if not isinstance(params["endianness"], str):
+            raise StyxValidationError(f'`endianness` has the wrong type: Received `{type(params.get("endianness", None))}` expected `str | None`')
+
+
 def zero_lt_4dfp_cargs(
     params: ZeroLt4dfpParameters,
     execution: Execution,
@@ -138,6 +166,7 @@ def zero_lt_4dfp_execute(
     Returns:
         NamedTuple of outputs (described in `ZeroLt4dfpOutputs`).
     """
+    zero_lt_4dfp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ZERO_LT_4DFP_METADATA)
     params = execution.params(params)

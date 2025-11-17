@@ -91,6 +91,46 @@ def surf_qual_params(
     return params
 
 
+def surf_qual_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfQualParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("surface_a", None) is None:
+        raise StyxValidationError("`surface_a` must not be None")
+    if not isinstance(params["surface_a"], list):
+        raise StyxValidationError(f'`surface_a` has the wrong type: Received `{type(params.get("surface_a", None))}` expected `list[InputPathType]`')
+    for e in params["surface_a"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface_a` has the wrong type: Received `{type(params.get("surface_a", None))}` expected `list[InputPathType]`')
+    if params.get("sphere_flag", False) is None:
+        raise StyxValidationError("`sphere_flag` must not be None")
+    if not isinstance(params["sphere_flag"], bool):
+        raise StyxValidationError(f'`sphere_flag` has the wrong type: Received `{type(params.get("sphere_flag", False))}` expected `bool`')
+    if params.get("summary_flag", False) is None:
+        raise StyxValidationError("`summary_flag` must not be None")
+    if not isinstance(params["summary_flag"], bool):
+        raise StyxValidationError(f'`summary_flag` has the wrong type: Received `{type(params.get("summary_flag", False))}` expected `bool`')
+    if params.get("self_intersect_flag", False) is None:
+        raise StyxValidationError("`self_intersect_flag` must not be None")
+    if not isinstance(params["self_intersect_flag"], bool):
+        raise StyxValidationError(f'`self_intersect_flag` has the wrong type: Received `{type(params.get("self_intersect_flag", False))}` expected `bool`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+
+
 def surf_qual_cargs(
     params: SurfQualParameters,
     execution: Execution,
@@ -173,6 +213,7 @@ def surf_qual_execute(
     Returns:
         NamedTuple of outputs (described in `SurfQualOutputs`).
     """
+    surf_qual_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_QUAL_METADATA)
     params = execution.params(params)

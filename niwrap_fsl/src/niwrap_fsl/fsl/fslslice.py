@@ -55,6 +55,27 @@ def fslslice_params(
     return params
 
 
+def fslslice_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslsliceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("output_basename", None) is not None:
+        if not isinstance(params["output_basename"], str):
+            raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str | None`')
+
+
 def fslslice_cargs(
     params: FslsliceParameters,
     execution: Execution,
@@ -114,6 +135,7 @@ def fslslice_execute(
     Returns:
         NamedTuple of outputs (described in `FslsliceOutputs`).
     """
+    fslslice_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLSLICE_METADATA)
     params = execution.params(params)

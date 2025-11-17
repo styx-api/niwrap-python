@@ -55,6 +55,27 @@ def ifh2hdr_params(
     return params
 
 
+def ifh2hdr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Ifh2hdrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("range", None) is not None:
+        if not isinstance(params["range"], str):
+            raise StyxValidationError(f'`range` has the wrong type: Received `{type(params.get("range", None))}` expected `str | None`')
+
+
 def ifh2hdr_cargs(
     params: Ifh2hdrParameters,
     execution: Execution,
@@ -118,6 +139,7 @@ def ifh2hdr_execute(
     Returns:
         NamedTuple of outputs (described in `Ifh2hdrOutputs`).
     """
+    ifh2hdr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IFH2HDR_METADATA)
     params = execution.params(params)

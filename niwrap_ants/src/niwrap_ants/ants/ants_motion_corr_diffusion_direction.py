@@ -71,6 +71,40 @@ def ants_motion_corr_diffusion_direction_params(
     return params
 
 
+def ants_motion_corr_diffusion_direction_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsMotionCorrDiffusionDirectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scheme", None) is None:
+        raise StyxValidationError("`scheme` must not be None")
+    if not isinstance(params["scheme"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`scheme` has the wrong type: Received `{type(params.get("scheme", None))}` expected `InputPathType`')
+    if params.get("bvec", None) is None:
+        raise StyxValidationError("`bvec` must not be None")
+    if not isinstance(params["bvec"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvec` has the wrong type: Received `{type(params.get("bvec", None))}` expected `InputPathType`')
+    if params.get("physical", None) is None:
+        raise StyxValidationError("`physical` must not be None")
+    if not isinstance(params["physical"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`physical` has the wrong type: Received `{type(params.get("physical", None))}` expected `InputPathType`')
+    if params.get("moco", None) is None:
+        raise StyxValidationError("`moco` must not be None")
+    if not isinstance(params["moco"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moco` has the wrong type: Received `{type(params.get("moco", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def ants_motion_corr_diffusion_direction_cargs(
     params: AntsMotionCorrDiffusionDirectionParameters,
     execution: Execution,
@@ -148,6 +182,7 @@ def ants_motion_corr_diffusion_direction_execute(
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrDiffusionDirectionOutputs`).
     """
+    ants_motion_corr_diffusion_direction_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA)
     params = execution.params(params)

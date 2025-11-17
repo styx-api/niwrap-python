@@ -52,6 +52,24 @@ def fname2ext_params(
     return params
 
 
+def fname2ext_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Fname2extParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filename", None) is None:
+        raise StyxValidationError("`filename` must not be None")
+    if not isinstance(params["filename"], str):
+        raise StyxValidationError(f'`filename` has the wrong type: Received `{type(params.get("filename", None))}` expected `str`')
+
+
 def fname2ext_cargs(
     params: Fname2extParameters,
     execution: Execution,
@@ -110,6 +128,7 @@ def fname2ext_execute(
     Returns:
         NamedTuple of outputs (described in `Fname2extOutputs`).
     """
+    fname2ext_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FNAME2EXT_METADATA)
     params = execution.params(params)

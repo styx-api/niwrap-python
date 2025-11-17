@@ -96,6 +96,48 @@ def smooth_displacement_field_params(
     return params
 
 
+def smooth_displacement_field_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SmoothDisplacementFieldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("input_field", None) is None:
+        raise StyxValidationError("`input_field` must not be None")
+    if not isinstance(params["input_field"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_field` has the wrong type: Received `{type(params.get("input_field", None))}` expected `InputPathType`')
+    if params.get("output_field", None) is None:
+        raise StyxValidationError("`output_field` must not be None")
+    if not isinstance(params["output_field"], str):
+        raise StyxValidationError(f'`output_field` has the wrong type: Received `{type(params.get("output_field", None))}` expected `str`')
+    if params.get("variance_or_mesh_size_base_level", None) is None:
+        raise StyxValidationError("`variance_or_mesh_size_base_level` must not be None")
+    if not isinstance(params["variance_or_mesh_size_base_level"], (float, int)):
+        raise StyxValidationError(f'`variance_or_mesh_size_base_level` has the wrong type: Received `{type(params.get("variance_or_mesh_size_base_level", None))}` expected `float`')
+    if params.get("number_of_levels", None) is not None:
+        if not isinstance(params["number_of_levels"], int):
+            raise StyxValidationError(f'`number_of_levels` has the wrong type: Received `{type(params.get("number_of_levels", None))}` expected `int | None`')
+    if params.get("spline_order", None) is not None:
+        if not isinstance(params["spline_order"], int):
+            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `int | None`')
+    if params.get("estimate_inverse", None) is not None:
+        if not isinstance(params["estimate_inverse"], bool):
+            raise StyxValidationError(f'`estimate_inverse` has the wrong type: Received `{type(params.get("estimate_inverse", None))}` expected `bool | None`')
+    if params.get("confidence_image", None) is not None:
+        if not isinstance(params["confidence_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`confidence_image` has the wrong type: Received `{type(params.get("confidence_image", None))}` expected `InputPathType | None`')
+
+
 def smooth_displacement_field_cargs(
     params: SmoothDisplacementFieldParameters,
     execution: Execution,
@@ -168,6 +210,7 @@ def smooth_displacement_field_execute(
     Returns:
         NamedTuple of outputs (described in `SmoothDisplacementFieldOutputs`).
     """
+    smooth_displacement_field_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SMOOTH_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)

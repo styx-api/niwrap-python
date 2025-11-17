@@ -70,6 +70,39 @@ def mri_extract_params(
     return params
 
 
+def mri_extract_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriExtractParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("like_template", None) is not None:
+        if not isinstance(params["like_template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`like_template` has the wrong type: Received `{type(params.get("like_template", None))}` expected `InputPathType | None`')
+    if params.get("src_volume", None) is None:
+        raise StyxValidationError("`src_volume` must not be None")
+    if not isinstance(params["src_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`src_volume` has the wrong type: Received `{type(params.get("src_volume", None))}` expected `InputPathType`')
+    if params.get("dst_volume", None) is None:
+        raise StyxValidationError("`dst_volume` must not be None")
+    if not isinstance(params["dst_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dst_volume` has the wrong type: Received `{type(params.get("dst_volume", None))}` expected `InputPathType`')
+    if params.get("coordinates", None) is not None:
+        if not isinstance(params["coordinates"], list):
+            raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
+        if len(params["coordinates"]) == 6:
+            raise StyxValidationError("Parameter `coordinates` must contain exactly 6 elements")
+        for e in params["coordinates"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`coordinates` has the wrong type: Received `{type(params.get("coordinates", None))}` expected `list[float] | None`')
+
+
 def mri_extract_cargs(
     params: MriExtractParameters,
     execution: Execution,
@@ -136,6 +169,7 @@ def mri_extract_execute(
     Returns:
         NamedTuple of outputs (described in `MriExtractOutputs`).
     """
+    mri_extract_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_EXTRACT_METADATA)
     params = execution.params(params)

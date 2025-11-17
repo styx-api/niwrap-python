@@ -79,6 +79,41 @@ def create_warped_grid_image_params(
     return params
 
 
+def create_warped_grid_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CreateWarpedGridImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("deformation_field", None) is None:
+        raise StyxValidationError("`deformation_field` must not be None")
+    if not isinstance(params["deformation_field"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`deformation_field` has the wrong type: Received `{type(params.get("deformation_field", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("directions", None) is not None:
+        if not isinstance(params["directions"], str):
+            raise StyxValidationError(f'`directions` has the wrong type: Received `{type(params.get("directions", None))}` expected `str | None`')
+    if params.get("grid_spacing", None) is not None:
+        if not isinstance(params["grid_spacing"], str):
+            raise StyxValidationError(f'`grid_spacing` has the wrong type: Received `{type(params.get("grid_spacing", None))}` expected `str | None`')
+    if params.get("grid_sigma", None) is not None:
+        if not isinstance(params["grid_sigma"], str):
+            raise StyxValidationError(f'`grid_sigma` has the wrong type: Received `{type(params.get("grid_sigma", None))}` expected `str | None`')
+
+
 def create_warped_grid_image_cargs(
     params: CreateWarpedGridImageParameters,
     execution: Execution,
@@ -145,6 +180,7 @@ def create_warped_grid_image_execute(
     Returns:
         NamedTuple of outputs (described in `CreateWarpedGridImageOutputs`).
     """
+    create_warped_grid_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CREATE_WARPED_GRID_IMAGE_METADATA)
     params = execution.params(params)

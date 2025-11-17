@@ -78,6 +78,44 @@ def v_1dnorm_params(
     return params
 
 
+def v_1dnorm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dnormParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("norm1", False) is None:
+        raise StyxValidationError("`norm1` must not be None")
+    if not isinstance(params["norm1"], bool):
+        raise StyxValidationError(f'`norm1` has the wrong type: Received `{type(params.get("norm1", False))}` expected `bool`')
+    if params.get("normx", False) is None:
+        raise StyxValidationError("`normx` must not be None")
+    if not isinstance(params["normx"], bool):
+        raise StyxValidationError(f'`normx` has the wrong type: Received `{type(params.get("normx", False))}` expected `bool`')
+    if params.get("demean", False) is None:
+        raise StyxValidationError("`demean` must not be None")
+    if not isinstance(params["demean"], bool):
+        raise StyxValidationError(f'`demean` has the wrong type: Received `{type(params.get("demean", False))}` expected `bool`')
+    if params.get("demed", False) is None:
+        raise StyxValidationError("`demed` must not be None")
+    if not isinstance(params["demed"], bool):
+        raise StyxValidationError(f'`demed` has the wrong type: Received `{type(params.get("demed", False))}` expected `bool`')
+
+
 def v_1dnorm_cargs(
     params: V1dnormParameters,
     execution: Execution,
@@ -145,6 +183,7 @@ def v_1dnorm_execute(
     Returns:
         NamedTuple of outputs (described in `V1dnormOutputs`).
     """
+    v_1dnorm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DNORM_METADATA)
     params = execution.params(params)

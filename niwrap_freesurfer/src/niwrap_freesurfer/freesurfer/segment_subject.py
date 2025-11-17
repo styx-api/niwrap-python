@@ -77,6 +77,43 @@ def segment_subject_params(
     return params
 
 
+def segment_subject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SegmentSubjectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_xfm", None) is None:
+        raise StyxValidationError("`output_xfm` must not be None")
+    if not isinstance(params["output_xfm"], str):
+        raise StyxValidationError(f'`output_xfm` has the wrong type: Received `{type(params.get("output_xfm", None))}` expected `str`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+
+
 def segment_subject_cargs(
     params: SegmentSubjectParameters,
     execution: Execution,
@@ -154,6 +191,7 @@ def segment_subject_execute(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectOutputs`).
     """
+    segment_subject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_SUBJECT_METADATA)
     params = execution.params(params)

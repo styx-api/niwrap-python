@@ -87,6 +87,44 @@ def mri_synthstrip_params(
     return params
 
 
+def mri_synthstrip_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriSynthstripParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is not None:
+        if not isinstance(params["output_image"], str):
+            raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("gpu", False) is None:
+        raise StyxValidationError("`gpu` must not be None")
+    if not isinstance(params["gpu"], bool):
+        raise StyxValidationError(f'`gpu` has the wrong type: Received `{type(params.get("gpu", False))}` expected `bool`')
+    if params.get("border", None) is not None:
+        if not isinstance(params["border"], (float, int)):
+            raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `float | None`')
+    if params.get("exclude_csf", False) is None:
+        raise StyxValidationError("`exclude_csf` must not be None")
+    if not isinstance(params["exclude_csf"], bool):
+        raise StyxValidationError(f'`exclude_csf` has the wrong type: Received `{type(params.get("exclude_csf", False))}` expected `bool`')
+    if params.get("model_weights", None) is not None:
+        if not isinstance(params["model_weights"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`model_weights` has the wrong type: Received `{type(params.get("model_weights", None))}` expected `InputPathType | None`')
+
+
 def mri_synthstrip_cargs(
     params: MriSynthstripParameters,
     execution: Execution,
@@ -173,6 +211,7 @@ def mri_synthstrip_execute(
     Returns:
         NamedTuple of outputs (described in `MriSynthstripOutputs`).
     """
+    mri_synthstrip_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_SYNTHSTRIP_METADATA)
     params = execution.params(params)

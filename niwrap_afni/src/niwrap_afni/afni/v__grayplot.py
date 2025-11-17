@@ -74,6 +74,40 @@ def v__grayplot_params(
     return params
 
 
+def v__grayplot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGrayplotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dirname", None) is None:
+        raise StyxValidationError("`dirname` must not be None")
+    if not isinstance(params["dirname"], str):
+        raise StyxValidationError(f'`dirname` has the wrong type: Received `{type(params.get("dirname", None))}` expected `str`')
+    if params.get("pvorder", False) is None:
+        raise StyxValidationError("`pvorder` must not be None")
+    if not isinstance(params["pvorder"], bool):
+        raise StyxValidationError(f'`pvorder` has the wrong type: Received `{type(params.get("pvorder", False))}` expected `bool`')
+    if params.get("peelorder", False) is None:
+        raise StyxValidationError("`peelorder` must not be None")
+    if not isinstance(params["peelorder"], bool):
+        raise StyxValidationError(f'`peelorder` has the wrong type: Received `{type(params.get("peelorder", False))}` expected `bool`')
+    if params.get("ijkorder", False) is None:
+        raise StyxValidationError("`ijkorder` must not be None")
+    if not isinstance(params["ijkorder"], bool):
+        raise StyxValidationError(f'`ijkorder` has the wrong type: Received `{type(params.get("ijkorder", False))}` expected `bool`')
+    if params.get("allorder", False) is None:
+        raise StyxValidationError("`allorder` must not be None")
+    if not isinstance(params["allorder"], bool):
+        raise StyxValidationError(f'`allorder` has the wrong type: Received `{type(params.get("allorder", False))}` expected `bool`')
+
+
 def v__grayplot_cargs(
     params: VGrayplotParameters,
     execution: Execution,
@@ -142,6 +176,7 @@ def v__grayplot_execute(
     Returns:
         NamedTuple of outputs (described in `VGrayplotOutputs`).
     """
+    v__grayplot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GRAYPLOT_METADATA)
     params = execution.params(params)

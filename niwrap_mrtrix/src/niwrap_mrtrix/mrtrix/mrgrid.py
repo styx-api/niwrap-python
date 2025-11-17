@@ -134,18 +134,20 @@ def mrgrid_strides_cargs_dyn_fn(
     }.get(t)
 
 
-def mrgrid_strides_outputs_dyn_fn(
+def mrgrid_strides_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "VariousString": mrgrid_various_string_validate,
+        "VariousFile": mrgrid_various_file_validate,
     }.get(t)
 
 
@@ -188,6 +190,28 @@ def mrgrid_axis_params(
     return params
 
 
+def mrgrid_axis_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrgridAxisParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("index", None) is None:
+        raise StyxValidationError("`index` must not be None")
+    if not isinstance(params["index"], int):
+        raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", None))}` expected `int`')
+    if params.get("spec", None) is None:
+        raise StyxValidationError("`spec` must not be None")
+    if not isinstance(params["spec"], str):
+        raise StyxValidationError(f'`spec` has the wrong type: Received `{type(params.get("spec", None))}` expected `str`')
+
+
 def mrgrid_axis_cargs(
     params: MrgridAxisParameters,
     execution: Execution,
@@ -226,6 +250,24 @@ def mrgrid_various_string_params(
     return params
 
 
+def mrgrid_various_string_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrgridVariousStringParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], str):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `str`')
+
+
 def mrgrid_various_string_cargs(
     params: MrgridVariousStringParameters,
     execution: Execution,
@@ -260,6 +302,24 @@ def mrgrid_various_file_params(
         "obj": obj,
     }
     return params
+
+
+def mrgrid_various_file_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrgridVariousFileParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("obj", None) is None:
+        raise StyxValidationError("`obj` must not be None")
+    if not isinstance(params["obj"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`obj` has the wrong type: Received `{type(params.get("obj", None))}` expected `InputPathType`')
 
 
 def mrgrid_various_file_cargs(
@@ -299,6 +359,28 @@ def mrgrid_config_params(
         "value": value,
     }
     return params
+
+
+def mrgrid_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrgridConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
 
 
 def mrgrid_config_cargs(
@@ -488,6 +570,128 @@ def mrgrid_params(
     return params
 
 
+def mrgrid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrgridParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template", None) is not None:
+        if not isinstance(params["template"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType | None`')
+    if params.get("size", None) is not None:
+        if not isinstance(params["size"], list):
+            raise StyxValidationError(f'`size` has the wrong type: Received `{type(params.get("size", None))}` expected `list[int] | None`')
+        for e in params["size"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`size` has the wrong type: Received `{type(params.get("size", None))}` expected `list[int] | None`')
+    if params.get("voxel", None) is not None:
+        if not isinstance(params["voxel"], list):
+            raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `list[float] | None`')
+        for e in params["voxel"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`voxel` has the wrong type: Received `{type(params.get("voxel", None))}` expected `list[float] | None`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], list):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `list[float] | None`')
+        for e in params["scale"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `list[float] | None`')
+    if params.get("interp", None) is not None:
+        if not isinstance(params["interp"], str):
+            raise StyxValidationError(f'`interp` has the wrong type: Received `{type(params.get("interp", None))}` expected `str | None`')
+    if params.get("oversample", None) is not None:
+        if not isinstance(params["oversample"], list):
+            raise StyxValidationError(f'`oversample` has the wrong type: Received `{type(params.get("oversample", None))}` expected `list[int] | None`')
+        for e in params["oversample"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`oversample` has the wrong type: Received `{type(params.get("oversample", None))}` expected `list[int] | None`')
+    if params.get("as", None) is not None:
+        if not isinstance(params["as"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`as` has the wrong type: Received `{type(params.get("as", None))}` expected `InputPathType | None`')
+    if params.get("uniform", None) is not None:
+        if not isinstance(params["uniform"], int):
+            raise StyxValidationError(f'`uniform` has the wrong type: Received `{type(params.get("uniform", None))}` expected `int | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("crop_unbound", False) is None:
+        raise StyxValidationError("`crop_unbound` must not be None")
+    if not isinstance(params["crop_unbound"], bool):
+        raise StyxValidationError(f'`crop_unbound` has the wrong type: Received `{type(params.get("crop_unbound", False))}` expected `bool`')
+    if params.get("axis", None) is not None:
+        if not isinstance(params["axis"], list):
+            raise StyxValidationError(f'`axis` has the wrong type: Received `{type(params.get("axis", None))}` expected `list[MrgridAxisParameters] | None`')
+        for e in params["axis"]:
+            mrgrid_axis_validate(e)
+    if params.get("all_axes", False) is None:
+        raise StyxValidationError("`all_axes` must not be None")
+    if not isinstance(params["all_axes"], bool):
+        raise StyxValidationError(f'`all_axes` has the wrong type: Received `{type(params.get("all_axes", False))}` expected `bool`')
+    if params.get("fill", None) is not None:
+        if not isinstance(params["fill"], (float, int)):
+            raise StyxValidationError(f'`fill` has the wrong type: Received `{type(params.get("fill", None))}` expected `float | None`')
+    if params.get("strides", None) is not None:
+        if not isinstance(params["strides"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["strides"])}\'')
+        if "@type" not in params["strides"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        mrgrid_strides_validate_dyn_fn(params["strides"]["@type"])(params["strides"])
+    if params.get("datatype", None) is not None:
+        if not isinstance(params["datatype"], str):
+            raise StyxValidationError(f'`datatype` has the wrong type: Received `{type(params.get("datatype", None))}` expected `str | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[MrgridConfigParameters] | None`')
+        for e in params["config"]:
+            mrgrid_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def mrgrid_cargs(
     params: MrgridParameters,
     execution: Execution,
@@ -662,6 +866,7 @@ def mrgrid_execute(
     Returns:
         NamedTuple of outputs (described in `MrgridOutputs`).
     """
+    mrgrid_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRGRID_METADATA)
     params = execution.params(params)

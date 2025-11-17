@@ -67,6 +67,36 @@ def surface_curvature_params(
     return params
 
 
+def surface_curvature_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceCurvatureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("filename_in", None) is None:
+        raise StyxValidationError("`filename_in` must not be None")
+    if not isinstance(params["filename_in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`filename_in` has the wrong type: Received `{type(params.get("filename_in", None))}` expected `InputPathType`')
+    if params.get("filename_out", None) is None:
+        raise StyxValidationError("`filename_out` must not be None")
+    if not isinstance(params["filename_out"], str):
+        raise StyxValidationError(f'`filename_out` has the wrong type: Received `{type(params.get("filename_out", None))}` expected `str`')
+    if params.get("sigma", None) is None:
+        raise StyxValidationError("`sigma` must not be None")
+    if not isinstance(params["sigma"], (float, int)):
+        raise StyxValidationError(f'`sigma` has the wrong type: Received `{type(params.get("sigma", None))}` expected `float`')
+    if params.get("option", None) is None:
+        raise StyxValidationError("`option` must not be None")
+    if not isinstance(params["option"], (float, int)):
+        raise StyxValidationError(f'`option` has the wrong type: Received `{type(params.get("option", None))}` expected `float`')
+
+
 def surface_curvature_cargs(
     params: SurfaceCurvatureParameters,
     execution: Execution,
@@ -129,6 +159,7 @@ def surface_curvature_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).
     """
+    surface_curvature_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_CURVATURE_METADATA)
     params = execution.params(params)

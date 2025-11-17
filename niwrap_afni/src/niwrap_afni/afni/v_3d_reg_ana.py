@@ -146,6 +146,85 @@ def v_3d_reg_ana_params(
     return params
 
 
+def v_3d_reg_ana_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRegAnaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rows", None) is None:
+        raise StyxValidationError("`rows` must not be None")
+    if not isinstance(params["rows"], (float, int)):
+        raise StyxValidationError(f'`rows` has the wrong type: Received `{type(params.get("rows", None))}` expected `float`')
+    if params.get("cols", None) is None:
+        raise StyxValidationError("`cols` must not be None")
+    if not isinstance(params["cols"], (float, int)):
+        raise StyxValidationError(f'`cols` has the wrong type: Received `{type(params.get("cols", None))}` expected `float`')
+    if params.get("xydata", None) is None:
+        raise StyxValidationError("`xydata` must not be None")
+    if not isinstance(params["xydata"], list):
+        raise StyxValidationError(f'`xydata` has the wrong type: Received `{type(params.get("xydata", None))}` expected `list[str]`')
+    for e in params["xydata"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`xydata` has the wrong type: Received `{type(params.get("xydata", None))}` expected `list[str]`')
+    if params.get("model", None) is None:
+        raise StyxValidationError("`model` must not be None")
+    if not isinstance(params["model"], str):
+        raise StyxValidationError(f'`model` has the wrong type: Received `{type(params.get("model", None))}` expected `str`')
+    if params.get("diskspace", False) is None:
+        raise StyxValidationError("`diskspace` must not be None")
+    if not isinstance(params["diskspace"], bool):
+        raise StyxValidationError(f'`diskspace` has the wrong type: Received `{type(params.get("diskspace", False))}` expected `bool`')
+    if params.get("workmem", None) is not None:
+        if not isinstance(params["workmem"], (float, int)):
+            raise StyxValidationError(f'`workmem` has the wrong type: Received `{type(params.get("workmem", None))}` expected `float | None`')
+    if params.get("rmsmin", None) is not None:
+        if not isinstance(params["rmsmin"], (float, int)):
+            raise StyxValidationError(f'`rmsmin` has the wrong type: Received `{type(params.get("rmsmin", None))}` expected `float | None`')
+    if params.get("fdisp", None) is not None:
+        if not isinstance(params["fdisp"], (float, int)):
+            raise StyxValidationError(f'`fdisp` has the wrong type: Received `{type(params.get("fdisp", None))}` expected `float | None`')
+    if params.get("flof", None) is not None:
+        if not isinstance(params["flof"], (float, int)):
+            raise StyxValidationError(f'`flof` has the wrong type: Received `{type(params.get("flof", None))}` expected `float | None`')
+    if params.get("fcoef", None) is not None:
+        if not isinstance(params["fcoef"], list):
+            raise StyxValidationError(f'`fcoef` has the wrong type: Received `{type(params.get("fcoef", None))}` expected `list[str] | None`')
+        for e in params["fcoef"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`fcoef` has the wrong type: Received `{type(params.get("fcoef", None))}` expected `list[str] | None`')
+    if params.get("rcoef", None) is not None:
+        if not isinstance(params["rcoef"], list):
+            raise StyxValidationError(f'`rcoef` has the wrong type: Received `{type(params.get("rcoef", None))}` expected `list[str] | None`')
+        for e in params["rcoef"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`rcoef` has the wrong type: Received `{type(params.get("rcoef", None))}` expected `list[str] | None`')
+    if params.get("tcoef", None) is not None:
+        if not isinstance(params["tcoef"], list):
+            raise StyxValidationError(f'`tcoef` has the wrong type: Received `{type(params.get("tcoef", None))}` expected `list[str] | None`')
+        for e in params["tcoef"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`tcoef` has the wrong type: Received `{type(params.get("tcoef", None))}` expected `list[str] | None`')
+    if params.get("bucket", None) is not None:
+        if not isinstance(params["bucket"], str):
+            raise StyxValidationError(f'`bucket` has the wrong type: Received `{type(params.get("bucket", None))}` expected `str | None`')
+    if params.get("brick", None) is not None:
+        if not isinstance(params["brick"], list):
+            raise StyxValidationError(f'`brick` has the wrong type: Received `{type(params.get("brick", None))}` expected `list[str] | None`')
+        for e in params["brick"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`brick` has the wrong type: Received `{type(params.get("brick", None))}` expected `list[str] | None`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `str | None`')
+
+
 def v_3d_reg_ana_cargs(
     params: V3dRegAnaParameters,
     execution: Execution,
@@ -275,6 +354,7 @@ def v_3d_reg_ana_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRegAnaOutputs`).
     """
+    v_3d_reg_ana_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_REG_ANA_METADATA)
     params = execution.params(params)

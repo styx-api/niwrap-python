@@ -93,6 +93,46 @@ def swi_preprocess_params(
     return params
 
 
+def swi_preprocess_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SwiPreprocessParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("scanner", None) is None:
+        raise StyxValidationError("`scanner` must not be None")
+    if not isinstance(params["scanner"], str):
+        raise StyxValidationError(f'`scanner` has the wrong type: Received `{type(params.get("scanner", None))}` expected `typing.Literal["ge", "siemens", "philips"]`')
+    if params["scanner"] not in ["ge", "siemens", "philips"]:
+        raise StyxValidationError("Parameter `scanner` must be one of [\"ge\", \"siemens\", \"philips\"]")
+    if params.get("ge_file", None) is not None:
+        if not isinstance(params["ge_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ge_file` has the wrong type: Received `{type(params.get("ge_file", None))}` expected `InputPathType | None`')
+    if params.get("philips_file", None) is not None:
+        if not isinstance(params["philips_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`philips_file` has the wrong type: Received `{type(params.get("philips_file", None))}` expected `InputPathType | None`')
+    if params.get("siemens_magnitude", None) is not None:
+        if not isinstance(params["siemens_magnitude"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`siemens_magnitude` has the wrong type: Received `{type(params.get("siemens_magnitude", None))}` expected `InputPathType | None`')
+    if params.get("siemens_phase", None) is not None:
+        if not isinstance(params["siemens_phase"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`siemens_phase` has the wrong type: Received `{type(params.get("siemens_phase", None))}` expected `InputPathType | None`')
+    if params.get("out_magnitude", None) is None:
+        raise StyxValidationError("`out_magnitude` must not be None")
+    if not isinstance(params["out_magnitude"], str):
+        raise StyxValidationError(f'`out_magnitude` has the wrong type: Received `{type(params.get("out_magnitude", None))}` expected `str`')
+    if params.get("out_phase", None) is None:
+        raise StyxValidationError("`out_phase` must not be None")
+    if not isinstance(params["out_phase"], str):
+        raise StyxValidationError(f'`out_phase` has the wrong type: Received `{type(params.get("out_phase", None))}` expected `str`')
+
+
 def swi_preprocess_cargs(
     params: SwiPreprocessParameters,
     execution: Execution,
@@ -184,6 +224,7 @@ def swi_preprocess_execute(
     Returns:
         NamedTuple of outputs (described in `SwiPreprocessOutputs`).
     """
+    swi_preprocess_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SWI_PREPROCESS_METADATA)
     params = execution.params(params)

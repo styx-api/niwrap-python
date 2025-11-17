@@ -104,6 +104,62 @@ def v_3d_tsort_params(
     return params
 
 
+def v_3d_tsort_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTsortParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("inc", False) is None:
+        raise StyxValidationError("`inc` must not be None")
+    if not isinstance(params["inc"], bool):
+        raise StyxValidationError(f'`inc` has the wrong type: Received `{type(params.get("inc", False))}` expected `bool`')
+    if params.get("dec", False) is None:
+        raise StyxValidationError("`dec` must not be None")
+    if not isinstance(params["dec"], bool):
+        raise StyxValidationError(f'`dec` has the wrong type: Received `{type(params.get("dec", False))}` expected `bool`')
+    if params.get("rank", False) is None:
+        raise StyxValidationError("`rank` must not be None")
+    if not isinstance(params["rank"], bool):
+        raise StyxValidationError(f'`rank` has the wrong type: Received `{type(params.get("rank", False))}` expected `bool`')
+    if params.get("ind", False) is None:
+        raise StyxValidationError("`ind` must not be None")
+    if not isinstance(params["ind"], bool):
+        raise StyxValidationError(f'`ind` has the wrong type: Received `{type(params.get("ind", False))}` expected `bool`')
+    if params.get("val", False) is None:
+        raise StyxValidationError("`val` must not be None")
+    if not isinstance(params["val"], bool):
+        raise StyxValidationError(f'`val` has the wrong type: Received `{type(params.get("val", False))}` expected `bool`')
+    if params.get("random", False) is None:
+        raise StyxValidationError("`random` must not be None")
+    if not isinstance(params["random"], bool):
+        raise StyxValidationError(f'`random` has the wrong type: Received `{type(params.get("random", False))}` expected `bool`')
+    if params.get("ranfft", False) is None:
+        raise StyxValidationError("`ranfft` must not be None")
+    if not isinstance(params["ranfft"], bool):
+        raise StyxValidationError(f'`ranfft` has the wrong type: Received `{type(params.get("ranfft", False))}` expected `bool`')
+    if params.get("randft", False) is None:
+        raise StyxValidationError("`randft` must not be None")
+    if not isinstance(params["randft"], bool):
+        raise StyxValidationError(f'`randft` has the wrong type: Received `{type(params.get("randft", False))}` expected `bool`')
+    if params.get("datum", None) is not None:
+        if not isinstance(params["datum"], str):
+            raise StyxValidationError(f'`datum` has the wrong type: Received `{type(params.get("datum", None))}` expected `str | None`')
+
+
 def v_3d_tsort_cargs(
     params: V3dTsortParameters,
     execution: Execution,
@@ -188,6 +244,7 @@ def v_3d_tsort_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTsortOutputs`).
     """
+    v_3d_tsort_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TSORT_METADATA)
     params = execution.params(params)

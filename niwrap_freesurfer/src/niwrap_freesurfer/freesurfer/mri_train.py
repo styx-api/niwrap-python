@@ -56,6 +56,28 @@ def mri_train_params(
     return params
 
 
+def mri_train_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriTrainParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("training_file", None) is None:
+        raise StyxValidationError("`training_file` must not be None")
+    if not isinstance(params["training_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`training_file` has the wrong type: Received `{type(params.get("training_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def mri_train_cargs(
     params: MriTrainParameters,
     execution: Execution,
@@ -115,6 +137,7 @@ def mri_train_execute(
     Returns:
         NamedTuple of outputs (described in `MriTrainOutputs`).
     """
+    mri_train_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_TRAIN_METADATA)
     params = execution.params(params)

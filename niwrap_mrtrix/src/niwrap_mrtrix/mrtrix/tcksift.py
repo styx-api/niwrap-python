@@ -108,6 +108,28 @@ def tcksift_config_params(
     return params
 
 
+def tcksift_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TcksiftConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def tcksift_config_cargs(
     params: TcksiftConfigParameters,
     execution: Execution,
@@ -283,6 +305,121 @@ def tcksift_params(
     return params
 
 
+def tcksift_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TcksiftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("nofilter", False) is None:
+        raise StyxValidationError("`nofilter` must not be None")
+    if not isinstance(params["nofilter"], bool):
+        raise StyxValidationError(f'`nofilter` has the wrong type: Received `{type(params.get("nofilter", False))}` expected `bool`')
+    if params.get("output_at_counts", None) is not None:
+        if not isinstance(params["output_at_counts"], list):
+            raise StyxValidationError(f'`output_at_counts` has the wrong type: Received `{type(params.get("output_at_counts", None))}` expected `list[int] | None`')
+        for e in params["output_at_counts"]:
+            if not isinstance(e, int):
+                raise StyxValidationError(f'`output_at_counts` has the wrong type: Received `{type(params.get("output_at_counts", None))}` expected `list[int] | None`')
+    if params.get("proc_mask", None) is not None:
+        if not isinstance(params["proc_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`proc_mask` has the wrong type: Received `{type(params.get("proc_mask", None))}` expected `InputPathType | None`')
+    if params.get("act", None) is not None:
+        if not isinstance(params["act"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`act` has the wrong type: Received `{type(params.get("act", None))}` expected `InputPathType | None`')
+    if params.get("fd_scale_gm", False) is None:
+        raise StyxValidationError("`fd_scale_gm` must not be None")
+    if not isinstance(params["fd_scale_gm"], bool):
+        raise StyxValidationError(f'`fd_scale_gm` has the wrong type: Received `{type(params.get("fd_scale_gm", False))}` expected `bool`')
+    if params.get("no_dilate_lut", False) is None:
+        raise StyxValidationError("`no_dilate_lut` must not be None")
+    if not isinstance(params["no_dilate_lut"], bool):
+        raise StyxValidationError(f'`no_dilate_lut` has the wrong type: Received `{type(params.get("no_dilate_lut", False))}` expected `bool`')
+    if params.get("make_null_lobes", False) is None:
+        raise StyxValidationError("`make_null_lobes` must not be None")
+    if not isinstance(params["make_null_lobes"], bool):
+        raise StyxValidationError(f'`make_null_lobes` has the wrong type: Received `{type(params.get("make_null_lobes", False))}` expected `bool`')
+    if params.get("remove_untracked", False) is None:
+        raise StyxValidationError("`remove_untracked` must not be None")
+    if not isinstance(params["remove_untracked"], bool):
+        raise StyxValidationError(f'`remove_untracked` has the wrong type: Received `{type(params.get("remove_untracked", False))}` expected `bool`')
+    if params.get("fd_thresh", None) is not None:
+        if not isinstance(params["fd_thresh"], (float, int)):
+            raise StyxValidationError(f'`fd_thresh` has the wrong type: Received `{type(params.get("fd_thresh", None))}` expected `float | None`')
+    if params.get("csv", None) is not None:
+        if not isinstance(params["csv"], str):
+            raise StyxValidationError(f'`csv` has the wrong type: Received `{type(params.get("csv", None))}` expected `str | None`')
+    if params.get("out_mu", None) is not None:
+        if not isinstance(params["out_mu"], str):
+            raise StyxValidationError(f'`out_mu` has the wrong type: Received `{type(params.get("out_mu", None))}` expected `str | None`')
+    if params.get("output_debug", False) is None:
+        raise StyxValidationError("`output_debug` must not be None")
+    if not isinstance(params["output_debug"], bool):
+        raise StyxValidationError(f'`output_debug` has the wrong type: Received `{type(params.get("output_debug", False))}` expected `bool`')
+    if params.get("out_selection", None) is not None:
+        if not isinstance(params["out_selection"], str):
+            raise StyxValidationError(f'`out_selection` has the wrong type: Received `{type(params.get("out_selection", None))}` expected `str | None`')
+    if params.get("term_number", None) is not None:
+        if not isinstance(params["term_number"], int):
+            raise StyxValidationError(f'`term_number` has the wrong type: Received `{type(params.get("term_number", None))}` expected `int | None`')
+    if params.get("term_ratio", None) is not None:
+        if not isinstance(params["term_ratio"], (float, int)):
+            raise StyxValidationError(f'`term_ratio` has the wrong type: Received `{type(params.get("term_ratio", None))}` expected `float | None`')
+    if params.get("term_mu", None) is not None:
+        if not isinstance(params["term_mu"], (float, int)):
+            raise StyxValidationError(f'`term_mu` has the wrong type: Received `{type(params.get("term_mu", None))}` expected `float | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[TcksiftConfigParameters] | None`')
+        for e in params["config"]:
+            tcksift_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("in_tracks", None) is None:
+        raise StyxValidationError("`in_tracks` must not be None")
+    if not isinstance(params["in_tracks"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_tracks` has the wrong type: Received `{type(params.get("in_tracks", None))}` expected `InputPathType`')
+    if params.get("in_fod", None) is None:
+        raise StyxValidationError("`in_fod` must not be None")
+    if not isinstance(params["in_fod"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_fod` has the wrong type: Received `{type(params.get("in_fod", None))}` expected `InputPathType`')
+    if params.get("out_tracks", None) is None:
+        raise StyxValidationError("`out_tracks` must not be None")
+    if not isinstance(params["out_tracks"], str):
+        raise StyxValidationError(f'`out_tracks` has the wrong type: Received `{type(params.get("out_tracks", None))}` expected `str`')
+
+
 def tcksift_cargs(
     params: TcksiftParameters,
     execution: Execution,
@@ -436,6 +573,7 @@ def tcksift_execute(
     Returns:
         NamedTuple of outputs (described in `TcksiftOutputs`).
     """
+    tcksift_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TCKSIFT_METADATA)
     params = execution.params(params)

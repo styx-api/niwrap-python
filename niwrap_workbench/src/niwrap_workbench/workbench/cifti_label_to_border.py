@@ -71,6 +71,28 @@ def cifti_label_to_border_border_params(
     return params
 
 
+def cifti_label_to_border_border_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiLabelToBorderBorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("border-out", None) is None:
+        raise StyxValidationError("`border-out` must not be None")
+    if not isinstance(params["border-out"], str):
+        raise StyxValidationError(f'`border-out` has the wrong type: Received `{type(params.get("border-out", None))}` expected `str`')
+
+
 def cifti_label_to_border_border_cargs(
     params: CiftiLabelToBorderBorderParameters,
     execution: Execution,
@@ -158,6 +180,35 @@ def cifti_label_to_border_params(
     return params
 
 
+def cifti_label_to_border_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiLabelToBorderParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fraction", None) is not None:
+        if not isinstance(params["fraction"], (float, int)):
+            raise StyxValidationError(f'`fraction` has the wrong type: Received `{type(params.get("fraction", None))}` expected `float | None`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("border", None) is not None:
+        if not isinstance(params["border"], list):
+            raise StyxValidationError(f'`border` has the wrong type: Received `{type(params.get("border", None))}` expected `list[CiftiLabelToBorderBorderParameters] | None`')
+        for e in params["border"]:
+            cifti_label_to_border_border_validate(e)
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+
+
 def cifti_label_to_border_cargs(
     params: CiftiLabelToBorderParameters,
     execution: Execution,
@@ -223,6 +274,7 @@ def cifti_label_to_border_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelToBorderOutputs`).
     """
+    cifti_label_to_border_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_LABEL_TO_BORDER_METADATA)
     params = execution.params(params)

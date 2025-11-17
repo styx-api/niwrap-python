@@ -57,6 +57,30 @@ def run_segment_subject_t2_auto_estimate_alveus_ml_sh_params(
     return params
 
 
+def run_segment_subject_t2_auto_estimate_alveus_ml_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RunSegmentSubjectT2AutoEstimateAlveusMlShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("deployed_mcr_root", None) is None:
+        raise StyxValidationError("`deployed_mcr_root` must not be None")
+    if not isinstance(params["deployed_mcr_root"], str):
+        raise StyxValidationError(f'`deployed_mcr_root` has the wrong type: Received `{type(params.get("deployed_mcr_root", None))}` expected `str`')
+    if params.get("arguments", None) is not None:
+        if not isinstance(params["arguments"], list):
+            raise StyxValidationError(f'`arguments` has the wrong type: Received `{type(params.get("arguments", None))}` expected `list[str] | None`')
+        for e in params["arguments"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`arguments` has the wrong type: Received `{type(params.get("arguments", None))}` expected `list[str] | None`')
+
+
 def run_segment_subject_t2_auto_estimate_alveus_ml_sh_cargs(
     params: RunSegmentSubjectT2AutoEstimateAlveusMlShParameters,
     execution: Execution,
@@ -118,6 +142,7 @@ def run_segment_subject_t2_auto_estimate_alveus_ml_sh_execute(
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubjectT2AutoEstimateAlveusMlShOutputs`).
     """
+    run_segment_subject_t2_auto_estimate_alveus_ml_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(RUN_SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA)
     params = execution.params(params)

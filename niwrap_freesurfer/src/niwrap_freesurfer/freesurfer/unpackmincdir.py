@@ -90,6 +90,48 @@ def unpackmincdir_params(
     return params
 
 
+def unpackmincdir_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `UnpackmincdirParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source_directory", None) is None:
+        raise StyxValidationError("`source_directory` must not be None")
+    if not isinstance(params["source_directory"], str):
+        raise StyxValidationError(f'`source_directory` has the wrong type: Received `{type(params.get("source_directory", None))}` expected `str`')
+    if params.get("target_directory", None) is None:
+        raise StyxValidationError("`target_directory` must not be None")
+    if not isinstance(params["target_directory"], str):
+        raise StyxValidationError(f'`target_directory` has the wrong type: Received `{type(params.get("target_directory", None))}` expected `str`')
+    if params.get("scan_sequence_info", None) is not None:
+        if not isinstance(params["scan_sequence_info"], str):
+            raise StyxValidationError(f'`scan_sequence_info` has the wrong type: Received `{type(params.get("scan_sequence_info", None))}` expected `str | None`')
+    if params.get("functional_sequence", None) is not None:
+        if not isinstance(params["functional_sequence"], str):
+            raise StyxValidationError(f'`functional_sequence` has the wrong type: Received `{type(params.get("functional_sequence", None))}` expected `str | None`')
+    if params.get("functional_subdirectory", None) is not None:
+        if not isinstance(params["functional_subdirectory"], str):
+            raise StyxValidationError(f'`functional_subdirectory` has the wrong type: Received `{type(params.get("functional_subdirectory", None))}` expected `str | None`')
+    if params.get("minc_only", False) is None:
+        raise StyxValidationError("`minc_only` must not be None")
+    if not isinstance(params["minc_only"], bool):
+        raise StyxValidationError(f'`minc_only` has the wrong type: Received `{type(params.get("minc_only", False))}` expected `bool`')
+    if params.get("no_copy", False) is None:
+        raise StyxValidationError("`no_copy` must not be None")
+    if not isinstance(params["no_copy"], bool):
+        raise StyxValidationError(f'`no_copy` has the wrong type: Received `{type(params.get("no_copy", False))}` expected `bool`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+
+
 def unpackmincdir_cargs(
     params: UnpackmincdirParameters,
     execution: Execution,
@@ -178,6 +220,7 @@ def unpackmincdir_execute(
     Returns:
         NamedTuple of outputs (described in `UnpackmincdirOutputs`).
     """
+    unpackmincdir_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(UNPACKMINCDIR_METADATA)
     params = execution.params(params)

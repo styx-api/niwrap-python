@@ -87,6 +87,42 @@ def v__roi_modal_grow_params(
     return params
 
 
+def v__roi_modal_grow_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VRoiModalGrowParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dset", None) is None:
+        raise StyxValidationError("`input_dset` must not be None")
+    if not isinstance(params["input_dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dset` has the wrong type: Received `{type(params.get("input_dset", None))}` expected `InputPathType`')
+    if params.get("niters", None) is None:
+        raise StyxValidationError("`niters` must not be None")
+    if not isinstance(params["niters"], (float, int)):
+        raise StyxValidationError(f'`niters` has the wrong type: Received `{type(params.get("niters", None))}` expected `float`')
+    if params.get("outdir", None) is not None:
+        if not isinstance(params["outdir"], str):
+            raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("neighborhood_type", None) is not None:
+        if not isinstance(params["neighborhood_type"], int):
+            raise StyxValidationError(f'`neighborhood_type` has the wrong type: Received `{type(params.get("neighborhood_type", None))}` expected `int | None`')
+        if 1 <= params["neighborhood_type"] <= 3:
+            raise StyxValidationError("Parameter `neighborhood_type` must be between 1 and 3 (inclusive)")
+
+
 def v__roi_modal_grow_cargs(
     params: VRoiModalGrowParameters,
     execution: Execution,
@@ -173,6 +209,7 @@ def v__roi_modal_grow_execute(
     Returns:
         NamedTuple of outputs (described in `VRoiModalGrowOutputs`).
     """
+    v__roi_modal_grow_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ROI_MODAL_GROW_METADATA)
     params = execution.params(params)

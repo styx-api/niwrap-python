@@ -147,6 +147,89 @@ def surf_measures_params(
     return params
 
 
+def surf_measures_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfMeasuresParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("surf_A", None) is None:
+        raise StyxValidationError("`surf_A` must not be None")
+    if not isinstance(params["surf_A"], str):
+        raise StyxValidationError(f'`surf_A` has the wrong type: Received `{type(params.get("surf_A", None))}` expected `str`')
+    if params.get("surf_B", None) is not None:
+        if not isinstance(params["surf_B"], str):
+            raise StyxValidationError(f'`surf_B` has the wrong type: Received `{type(params.get("surf_B", None))}` expected `str | None`')
+    if params.get("out_1D", None) is not None:
+        if not isinstance(params["out_1D"], str):
+            raise StyxValidationError(f'`out_1D` has the wrong type: Received `{type(params.get("out_1D", None))}` expected `str | None`')
+    if params.get("out_dset", None) is None:
+        raise StyxValidationError("`out_dset` must not be None")
+    if not isinstance(params["out_dset"], str):
+        raise StyxValidationError(f'`out_dset` has the wrong type: Received `{type(params.get("out_dset", None))}` expected `str`')
+    if params.get("func", None) is not None:
+        if not isinstance(params["func"], list):
+            raise StyxValidationError(f'`func` has the wrong type: Received `{type(params.get("func", None))}` expected `list[str] | None`')
+        for e in params["func"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`func` has the wrong type: Received `{type(params.get("func", None))}` expected `list[str] | None`')
+    if params.get("surf_volume", None) is not None:
+        if not isinstance(params["surf_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surf_volume` has the wrong type: Received `{type(params.get("surf_volume", None))}` expected `InputPathType | None`')
+    if params.get("cmask", None) is not None:
+        if not isinstance(params["cmask"], str):
+            raise StyxValidationError(f'`cmask` has the wrong type: Received `{type(params.get("cmask", None))}` expected `str | None`')
+    if params.get("debug", None) is not None:
+        if not isinstance(params["debug"], int):
+            raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", None))}` expected `int | None`')
+        if 0 <= params["debug"] <= 5:
+            raise StyxValidationError("Parameter `debug` must be between 0 and 5 (inclusive)")
+    if params.get("dnode", None) is not None:
+        if not isinstance(params["dnode"], (float, int)):
+            raise StyxValidationError(f'`dnode` has the wrong type: Received `{type(params.get("dnode", None))}` expected `float | None`')
+    if params.get("nodes_1D", None) is not None:
+        if not isinstance(params["nodes_1D"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`nodes_1D` has the wrong type: Received `{type(params.get("nodes_1D", None))}` expected `InputPathType | None`')
+    if params.get("info_all", False) is None:
+        raise StyxValidationError("`info_all` must not be None")
+    if not isinstance(params["info_all"], bool):
+        raise StyxValidationError(f'`info_all` has the wrong type: Received `{type(params.get("info_all", False))}` expected `bool`')
+    if params.get("info_area", False) is None:
+        raise StyxValidationError("`info_area` must not be None")
+    if not isinstance(params["info_area"], bool):
+        raise StyxValidationError(f'`info_area` has the wrong type: Received `{type(params.get("info_area", False))}` expected `bool`')
+    if params.get("info_norms", False) is None:
+        raise StyxValidationError("`info_norms` must not be None")
+    if not isinstance(params["info_norms"], bool):
+        raise StyxValidationError(f'`info_norms` has the wrong type: Received `{type(params.get("info_norms", False))}` expected `bool`')
+    if params.get("info_thick", False) is None:
+        raise StyxValidationError("`info_thick` must not be None")
+    if not isinstance(params["info_thick"], bool):
+        raise StyxValidationError(f'`info_thick` has the wrong type: Received `{type(params.get("info_thick", False))}` expected `bool`')
+    if params.get("info_vol", False) is None:
+        raise StyxValidationError("`info_vol` must not be None")
+    if not isinstance(params["info_vol"], bool):
+        raise StyxValidationError(f'`info_vol` has the wrong type: Received `{type(params.get("info_vol", False))}` expected `bool`')
+    if params.get("info_volg", False) is None:
+        raise StyxValidationError("`info_volg` must not be None")
+    if not isinstance(params["info_volg"], bool):
+        raise StyxValidationError(f'`info_volg` has the wrong type: Received `{type(params.get("info_volg", False))}` expected `bool`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+
+
 def surf_measures_cargs(
     params: SurfMeasuresParameters,
     execution: Execution,
@@ -271,6 +354,7 @@ def surf_measures_execute(
     Returns:
         NamedTuple of outputs (described in `SurfMeasuresOutputs`).
     """
+    surf_measures_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURF_MEASURES_METADATA)
     params = execution.params(params)

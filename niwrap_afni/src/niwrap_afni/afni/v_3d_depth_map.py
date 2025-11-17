@@ -119,6 +119,68 @@ def v_3d_depth_map_params(
     return params
 
 
+def v_3d_depth_map_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDepthMapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("dist_squared", False) is None:
+        raise StyxValidationError("`dist_squared` must not be None")
+    if not isinstance(params["dist_squared"], bool):
+        raise StyxValidationError(f'`dist_squared` has the wrong type: Received `{type(params.get("dist_squared", False))}` expected `bool`')
+    if params.get("ignore_voxdims", False) is None:
+        raise StyxValidationError("`ignore_voxdims` must not be None")
+    if not isinstance(params["ignore_voxdims"], bool):
+        raise StyxValidationError(f'`ignore_voxdims` has the wrong type: Received `{type(params.get("ignore_voxdims", False))}` expected `bool`')
+    if params.get("rimify", None) is not None:
+        if not isinstance(params["rimify"], (float, int)):
+            raise StyxValidationError(f'`rimify` has the wrong type: Received `{type(params.get("rimify", None))}` expected `float | None`')
+    if params.get("zeros_are_zero", False) is None:
+        raise StyxValidationError("`zeros_are_zero` must not be None")
+    if not isinstance(params["zeros_are_zero"], bool):
+        raise StyxValidationError(f'`zeros_are_zero` has the wrong type: Received `{type(params.get("zeros_are_zero", False))}` expected `bool`')
+    if params.get("zeros_are_neg", False) is None:
+        raise StyxValidationError("`zeros_are_neg` must not be None")
+    if not isinstance(params["zeros_are_neg"], bool):
+        raise StyxValidationError(f'`zeros_are_neg` has the wrong type: Received `{type(params.get("zeros_are_neg", False))}` expected `bool`')
+    if params.get("nz_are_neg", False) is None:
+        raise StyxValidationError("`nz_are_neg` must not be None")
+    if not isinstance(params["nz_are_neg"], bool):
+        raise StyxValidationError(f'`nz_are_neg` has the wrong type: Received `{type(params.get("nz_are_neg", False))}` expected `bool`')
+    if params.get("bounds_are_not_zero", False) is None:
+        raise StyxValidationError("`bounds_are_not_zero` must not be None")
+    if not isinstance(params["bounds_are_not_zero"], bool):
+        raise StyxValidationError(f'`bounds_are_not_zero` has the wrong type: Received `{type(params.get("bounds_are_not_zero", False))}` expected `bool`')
+    if params.get("only2D", None) is not None:
+        if not isinstance(params["only2D"], str):
+            raise StyxValidationError(f'`only2D` has the wrong type: Received `{type(params.get("only2D", None))}` expected `str | None`')
+    if params.get("binary_only", False) is None:
+        raise StyxValidationError("`binary_only` must not be None")
+    if not isinstance(params["binary_only"], bool):
+        raise StyxValidationError(f'`binary_only` has the wrong type: Received `{type(params.get("binary_only", False))}` expected `bool`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+
+
 def v_3d_depth_map_cargs(
     params: V3dDepthMapParameters,
     execution: Execution,
@@ -220,6 +282,7 @@ def v_3d_depth_map_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDepthMapOutputs`).
     """
+    v_3d_depth_map_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DEPTH_MAP_METADATA)
     params = execution.params(params)

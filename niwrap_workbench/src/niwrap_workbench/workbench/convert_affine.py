@@ -105,6 +105,28 @@ def convert_affine_from_world_params(
     return params
 
 
+def convert_affine_from_world_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertAffineFromWorldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], str):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+
+
 def convert_affine_from_world_cargs(
     params: ConvertAffineFromWorldParameters,
     execution: Execution,
@@ -152,6 +174,32 @@ def convert_affine_from_flirt_params(
     return params
 
 
+def convert_affine_from_flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertAffineFromFlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], str):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str`')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("target-volume", None) is None:
+        raise StyxValidationError("`target-volume` must not be None")
+    if not isinstance(params["target-volume"], str):
+        raise StyxValidationError(f'`target-volume` has the wrong type: Received `{type(params.get("target-volume", None))}` expected `str`')
+
+
 def convert_affine_from_flirt_cargs(
     params: ConvertAffineFromFlirtParameters,
     execution: Execution,
@@ -194,6 +242,28 @@ def convert_affine_to_world_params(
         "inverse": inverse,
     }
     return params
+
+
+def convert_affine_to_world_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertAffineToWorldParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
 
 
 def convert_affine_to_world_cargs(
@@ -242,6 +312,32 @@ def convert_affine_to_flirt_params(
         "target-volume": target_volume,
     }
     return params
+
+
+def convert_affine_to_flirt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertAffineToFlirtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("source-volume", None) is None:
+        raise StyxValidationError("`source-volume` must not be None")
+    if not isinstance(params["source-volume"], str):
+        raise StyxValidationError(f'`source-volume` has the wrong type: Received `{type(params.get("source-volume", None))}` expected `str`')
+    if params.get("target-volume", None) is None:
+        raise StyxValidationError("`target-volume` must not be None")
+    if not isinstance(params["target-volume"], str):
+        raise StyxValidationError(f'`target-volume` has the wrong type: Received `{type(params.get("target-volume", None))}` expected `str`')
 
 
 def convert_affine_to_flirt_cargs(
@@ -318,6 +414,37 @@ def convert_affine_params(
     return params
 
 
+def convert_affine_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertAffineParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("from-world", None) is not None:
+        convert_affine_from_world_validate(params["from-world"])
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], str):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `str | None`')
+    if params.get("from-flirt", None) is not None:
+        convert_affine_from_flirt_validate(params["from-flirt"])
+    if params.get("to-world", None) is not None:
+        convert_affine_to_world_validate(params["to-world"])
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("to-flirt", None) is not None:
+        if not isinstance(params["to-flirt"], list):
+            raise StyxValidationError(f'`to-flirt` has the wrong type: Received `{type(params.get("to-flirt", None))}` expected `list[ConvertAffineToFlirtParameters] | None`')
+        for e in params["to-flirt"]:
+            convert_affine_to_flirt_validate(e)
+
+
 def convert_affine_cargs(
     params: ConvertAffineParameters,
     execution: Execution,
@@ -392,6 +519,7 @@ def convert_affine_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertAffineOutputs`).
     """
+    convert_affine_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_AFFINE_METADATA)
     params = execution.params(params)

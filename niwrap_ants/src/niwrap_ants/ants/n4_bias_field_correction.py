@@ -120,20 +120,20 @@ def n4_bias_field_correction_output_cargs_dyn_fn(
     }.get(t)
 
 
-def n4_bias_field_correction_output_outputs_dyn_fn(
+def n4_bias_field_correction_output_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
-        "correctedOutput": n4_bias_field_correction_corrected_output_outputs,
-        "correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_outputs,
+        "correctedOutput": n4_bias_field_correction_corrected_output_validate,
+        "correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_validate,
     }.get(t)
 
 
@@ -157,6 +157,30 @@ def n4_bias_field_correction_convergence_params(
     if convergence_threshold is not None:
         params["convergence_threshold"] = convergence_threshold
     return params
+
+
+def n4_bias_field_correction_convergence_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `N4BiasFieldCorrectionConvergenceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("convergence", None) is None:
+        raise StyxValidationError("`convergence` must not be None")
+    if not isinstance(params["convergence"], list):
+        raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `list[int]`')
+    for e in params["convergence"]:
+        if not isinstance(e, int):
+            raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `list[int]`')
+    if params.get("convergence_threshold", None) is not None:
+        if not isinstance(params["convergence_threshold"], (float, int)):
+            raise StyxValidationError(f'`convergence_threshold` has the wrong type: Received `{type(params.get("convergence_threshold", None))}` expected `float | None`')
 
 
 def n4_bias_field_correction_convergence_cargs(
@@ -198,6 +222,30 @@ def n4_bias_field_correction_bspline_fitting_params(
     if spline_order is not None:
         params["spline_order"] = spline_order
     return params
+
+
+def n4_bias_field_correction_bspline_fitting_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `N4BiasFieldCorrectionBsplineFittingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spline_distance", None) is None:
+        raise StyxValidationError("`spline_distance` must not be None")
+    if not isinstance(params["spline_distance"], list):
+        raise StyxValidationError(f'`spline_distance` has the wrong type: Received `{type(params.get("spline_distance", None))}` expected `list[float]`')
+    for e in params["spline_distance"]:
+        if not isinstance(e, (float, int)):
+            raise StyxValidationError(f'`spline_distance` has the wrong type: Received `{type(params.get("spline_distance", None))}` expected `list[float]`')
+    if params.get("spline_order", None) is not None:
+        if not isinstance(params["spline_order"], int):
+            raise StyxValidationError(f'`spline_order` has the wrong type: Received `{type(params.get("spline_order", None))}` expected `int | None`')
 
 
 def n4_bias_field_correction_bspline_fitting_cargs(
@@ -246,6 +294,29 @@ def n4_bias_field_correction_histogram_sharpening_params(
     return params
 
 
+def n4_bias_field_correction_histogram_sharpening_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `N4BiasFieldCorrectionHistogramSharpeningParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], (float, int)):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `float | None`')
+    if params.get("wiener_noise", None) is not None:
+        if not isinstance(params["wiener_noise"], (float, int)):
+            raise StyxValidationError(f'`wiener_noise` has the wrong type: Received `{type(params.get("wiener_noise", None))}` expected `float | None`')
+    if params.get("number_of_histogram_bins", None) is not None:
+        if not isinstance(params["number_of_histogram_bins"], int):
+            raise StyxValidationError(f'`number_of_histogram_bins` has the wrong type: Received `{type(params.get("number_of_histogram_bins", None))}` expected `int | None`')
+
+
 def n4_bias_field_correction_histogram_sharpening_cargs(
     params: N4BiasFieldCorrectionHistogramSharpeningParameters,
     execution: Execution,
@@ -291,6 +362,24 @@ def n4_bias_field_correction_corrected_output_params(
         "correctedOutputFileName": corrected_output_file_name,
     }
     return params
+
+
+def n4_bias_field_correction_corrected_output_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `N4BiasFieldCorrectionCorrectedOutputParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("correctedOutputFileName", None) is None:
+        raise StyxValidationError("`correctedOutputFileName` must not be None")
+    if not isinstance(params["correctedOutputFileName"], str):
+        raise StyxValidationError(f'`correctedOutputFileName` has the wrong type: Received `{type(params.get("correctedOutputFileName", None))}` expected `str`')
 
 
 def n4_bias_field_correction_corrected_output_cargs(
@@ -363,6 +452,27 @@ def n4_bias_field_correction_corrected_output_noise_params(
     if bias_file is not None:
         params["biasFile"] = bias_file
     return params
+
+
+def n4_bias_field_correction_corrected_output_noise_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `N4BiasFieldCorrectionCorrectedOutputNoiseParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("correctedOutputFileName", None) is None:
+        raise StyxValidationError("`correctedOutputFileName` must not be None")
+    if not isinstance(params["correctedOutputFileName"], str):
+        raise StyxValidationError(f'`correctedOutputFileName` has the wrong type: Received `{type(params.get("correctedOutputFileName", None))}` expected `str`')
+    if params.get("biasFile", None) is not None:
+        if not isinstance(params["biasFile"], str):
+            raise StyxValidationError(f'`biasFile` has the wrong type: Received `{type(params.get("biasFile", None))}` expected `str | None`')
 
 
 def n4_bias_field_correction_corrected_output_noise_cargs(
@@ -531,6 +641,57 @@ def n4_bias_field_correction_params(
     return params
 
 
+def n4_bias_field_correction_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `N4BiasFieldCorrectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["image_dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3, 4]")
+    if params.get("shrink_factor", None) is not None:
+        if not isinstance(params["shrink_factor"], int):
+            raise StyxValidationError(f'`shrink_factor` has the wrong type: Received `{type(params.get("shrink_factor", None))}` expected `int | None`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("rescale_intensities", None) is not None:
+        if not isinstance(params["rescale_intensities"], bool):
+            raise StyxValidationError(f'`rescale_intensities` has the wrong type: Received `{type(params.get("rescale_intensities", None))}` expected `bool | None`')
+    if params.get("weight_image", None) is not None:
+        if not isinstance(params["weight_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight_image` has the wrong type: Received `{type(params.get("weight_image", None))}` expected `InputPathType | None`')
+    if params.get("convergence", None) is not None:
+        n4_bias_field_correction_convergence_validate(params["convergence"])
+    if params.get("bspline_fitting", None) is not None:
+        n4_bias_field_correction_bspline_fitting_validate(params["bspline_fitting"])
+    if params.get("histogram_sharpening", None) is not None:
+        n4_bias_field_correction_histogram_sharpening_validate(params["histogram_sharpening"])
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["output"])}\'')
+    if "@type" not in params["output"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    n4_bias_field_correction_output_validate_dyn_fn(params["output"]["@type"])(params["output"])
+
+
 def n4_bias_field_correction_cargs(
     params: N4BiasFieldCorrectionParameters,
     execution: Execution,
@@ -647,6 +808,7 @@ def n4_bias_field_correction_execute(
     Returns:
         NamedTuple of outputs (described in `N4BiasFieldCorrectionOutputs`).
     """
+    n4_bias_field_correction_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(N4_BIAS_FIELD_CORRECTION_METADATA)
     params = execution.params(params)

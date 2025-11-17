@@ -79,6 +79,49 @@ def abids_tool_py_params(
     return params
 
 
+def abids_tool_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AbidsToolPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("tr_match", False) is None:
+        raise StyxValidationError("`tr_match` must not be None")
+    if not isinstance(params["tr_match"], bool):
+        raise StyxValidationError(f'`tr_match` has the wrong type: Received `{type(params.get("tr_match", False))}` expected `bool`')
+    if params.get("add_tr", False) is None:
+        raise StyxValidationError("`add_tr` must not be None")
+    if not isinstance(params["add_tr"], bool):
+        raise StyxValidationError(f'`add_tr` has the wrong type: Received `{type(params.get("add_tr", False))}` expected `bool`')
+    if params.get("add_slice_times", False) is None:
+        raise StyxValidationError("`add_slice_times` must not be None")
+    if not isinstance(params["add_slice_times"], bool):
+        raise StyxValidationError(f'`add_slice_times` has the wrong type: Received `{type(params.get("add_slice_times", False))}` expected `bool`')
+    if params.get("copy_prefix", None) is not None:
+        if not isinstance(params["copy_prefix"], list):
+            raise StyxValidationError(f'`copy_prefix` has the wrong type: Received `{type(params.get("copy_prefix", None))}` expected `list[str] | None`')
+        for e in params["copy_prefix"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`copy_prefix` has the wrong type: Received `{type(params.get("copy_prefix", None))}` expected `list[str] | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def abids_tool_py_cargs(
     params: AbidsToolPyParameters,
     execution: Execution,
@@ -151,6 +194,7 @@ def abids_tool_py_execute(
     Returns:
         NamedTuple of outputs (described in `AbidsToolPyOutputs`).
     """
+    abids_tool_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ABIDS_TOOL_PY_METADATA)
     params = execution.params(params)

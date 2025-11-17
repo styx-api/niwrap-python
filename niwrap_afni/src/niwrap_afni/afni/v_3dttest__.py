@@ -179,6 +179,109 @@ def v_3dttest___params(
     return params
 
 
+def v_3dttest___validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dttestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("setA", None) is None:
+        raise StyxValidationError("`setA` must not be None")
+    if not isinstance(params["setA"], list):
+        raise StyxValidationError(f'`setA` has the wrong type: Received `{type(params.get("setA", None))}` expected `list[str]`')
+    for e in params["setA"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`setA` has the wrong type: Received `{type(params.get("setA", None))}` expected `list[str]`')
+    if params.get("setB", None) is not None:
+        if not isinstance(params["setB"], list):
+            raise StyxValidationError(f'`setB` has the wrong type: Received `{type(params.get("setB", None))}` expected `list[str] | None`')
+        for e in params["setB"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`setB` has the wrong type: Received `{type(params.get("setB", None))}` expected `list[str] | None`')
+    if params.get("setA_long", None) is not None:
+        if not isinstance(params["setA_long"], list):
+            raise StyxValidationError(f'`setA_long` has the wrong type: Received `{type(params.get("setA_long", None))}` expected `list[str] | None`')
+        for e in params["setA_long"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`setA_long` has the wrong type: Received `{type(params.get("setA_long", None))}` expected `list[str] | None`')
+    if params.get("setB_long", None) is not None:
+        if not isinstance(params["setB_long"], list):
+            raise StyxValidationError(f'`setB_long` has the wrong type: Received `{type(params.get("setB_long", None))}` expected `list[str] | None`')
+        for e in params["setB_long"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`setB_long` has the wrong type: Received `{type(params.get("setB_long", None))}` expected `list[str] | None`')
+    if params.get("covariates", None) is not None:
+        if not isinstance(params["covariates"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`covariates` has the wrong type: Received `{type(params.get("covariates", None))}` expected `InputPathType | None`')
+    if params.get("labelA", None) is not None:
+        if not isinstance(params["labelA"], str):
+            raise StyxValidationError(f'`labelA` has the wrong type: Received `{type(params.get("labelA", None))}` expected `str | None`')
+    if params.get("labelB", None) is not None:
+        if not isinstance(params["labelB"], str):
+            raise StyxValidationError(f'`labelB` has the wrong type: Received `{type(params.get("labelB", None))}` expected `str | None`')
+    if params.get("setweightA", None) is not None:
+        if not isinstance(params["setweightA"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`setweightA` has the wrong type: Received `{type(params.get("setweightA", None))}` expected `InputPathType | None`')
+    if params.get("setweightB", None) is not None:
+        if not isinstance(params["setweightB"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`setweightB` has the wrong type: Received `{type(params.get("setweightB", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("resid", None) is not None:
+        if not isinstance(params["resid"], str):
+            raise StyxValidationError(f'`resid` has the wrong type: Received `{type(params.get("resid", None))}` expected `str | None`')
+    if params.get("paired", False) is None:
+        raise StyxValidationError("`paired` must not be None")
+    if not isinstance(params["paired"], bool):
+        raise StyxValidationError(f'`paired` has the wrong type: Received `{type(params.get("paired", False))}` expected `bool`')
+    if params.get("unpooled", False) is None:
+        raise StyxValidationError("`unpooled` must not be None")
+    if not isinstance(params["unpooled"], bool):
+        raise StyxValidationError(f'`unpooled` has the wrong type: Received `{type(params.get("unpooled", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("exblur", None) is not None:
+        if not isinstance(params["exblur"], int):
+            raise StyxValidationError(f'`exblur` has the wrong type: Received `{type(params.get("exblur", None))}` expected `int | None`')
+        if 0 <= params["exblur"] <= 100:
+            raise StyxValidationError("Parameter `exblur` must be between 0 and 100 (inclusive)")
+    if params.get("randomsign", False) is None:
+        raise StyxValidationError("`randomsign` must not be None")
+    if not isinstance(params["randomsign"], bool):
+        raise StyxValidationError(f'`randomsign` has the wrong type: Received `{type(params.get("randomsign", False))}` expected `bool`')
+    if params.get("permute", False) is None:
+        raise StyxValidationError("`permute` must not be None")
+    if not isinstance(params["permute"], bool):
+        raise StyxValidationError(f'`permute` has the wrong type: Received `{type(params.get("permute", False))}` expected `bool`')
+    if params.get("ETAC", False) is None:
+        raise StyxValidationError("`ETAC` must not be None")
+    if not isinstance(params["ETAC"], bool):
+        raise StyxValidationError(f'`ETAC` has the wrong type: Received `{type(params.get("ETAC", False))}` expected `bool`')
+    if params.get("ETAC_blur", None) is not None:
+        if not isinstance(params["ETAC_blur"], list):
+            raise StyxValidationError(f'`ETAC_blur` has the wrong type: Received `{type(params.get("ETAC_blur", None))}` expected `list[float] | None`')
+        for e in params["ETAC_blur"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`ETAC_blur` has the wrong type: Received `{type(params.get("ETAC_blur", None))}` expected `list[float] | None`')
+    if params.get("ETAC_opt", None) is not None:
+        if not isinstance(params["ETAC_opt"], list):
+            raise StyxValidationError(f'`ETAC_opt` has the wrong type: Received `{type(params.get("ETAC_opt", None))}` expected `list[str] | None`')
+        for e in params["ETAC_opt"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ETAC_opt` has the wrong type: Received `{type(params.get("ETAC_opt", None))}` expected `list[str] | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+
+
 def v_3dttest___cargs(
     params: V3dttestParameters,
     execution: Execution,
@@ -326,6 +429,7 @@ def v_3dttest___execute(
     Returns:
         NamedTuple of outputs (described in `V3dttestOutputs`).
     """
+    v_3dttest___validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DTTEST___METADATA)
     params = execution.params(params)

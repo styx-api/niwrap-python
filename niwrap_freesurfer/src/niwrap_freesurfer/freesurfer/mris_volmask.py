@@ -156,6 +156,81 @@ def mris_volmask_params(
     return params
 
 
+def mris_volmask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisVolmaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cap_distance", None) is not None:
+        if not isinstance(params["cap_distance"], (float, int)):
+            raise StyxValidationError(f'`cap_distance` has the wrong type: Received `{type(params.get("cap_distance", None))}` expected `float | None`')
+    if params.get("label_background", None) is not None:
+        if not isinstance(params["label_background"], (float, int)):
+            raise StyxValidationError(f'`label_background` has the wrong type: Received `{type(params.get("label_background", None))}` expected `float | None`')
+    if params.get("label_left_white", None) is not None:
+        if not isinstance(params["label_left_white"], (float, int)):
+            raise StyxValidationError(f'`label_left_white` has the wrong type: Received `{type(params.get("label_left_white", None))}` expected `float | None`')
+    if params.get("label_left_ribbon", None) is not None:
+        if not isinstance(params["label_left_ribbon"], (float, int)):
+            raise StyxValidationError(f'`label_left_ribbon` has the wrong type: Received `{type(params.get("label_left_ribbon", None))}` expected `float | None`')
+    if params.get("label_right_white", None) is not None:
+        if not isinstance(params["label_right_white"], (float, int)):
+            raise StyxValidationError(f'`label_right_white` has the wrong type: Received `{type(params.get("label_right_white", None))}` expected `float | None`')
+    if params.get("label_right_ribbon", None) is not None:
+        if not isinstance(params["label_right_ribbon"], (float, int)):
+            raise StyxValidationError(f'`label_right_ribbon` has the wrong type: Received `{type(params.get("label_right_ribbon", None))}` expected `float | None`')
+    if params.get("surf_white", None) is not None:
+        if not isinstance(params["surf_white"], str):
+            raise StyxValidationError(f'`surf_white` has the wrong type: Received `{type(params.get("surf_white", None))}` expected `str | None`')
+    if params.get("surf_pial", None) is not None:
+        if not isinstance(params["surf_pial"], str):
+            raise StyxValidationError(f'`surf_pial` has the wrong type: Received `{type(params.get("surf_pial", None))}` expected `str | None`')
+    if params.get("aseg_name", None) is not None:
+        if not isinstance(params["aseg_name"], str):
+            raise StyxValidationError(f'`aseg_name` has the wrong type: Received `{type(params.get("aseg_name", None))}` expected `str | None`')
+    if params.get("out_root", None) is not None:
+        if not isinstance(params["out_root"], str):
+            raise StyxValidationError(f'`out_root` has the wrong type: Received `{type(params.get("out_root", None))}` expected `str | None`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("save_distance", False) is None:
+        raise StyxValidationError("`save_distance` must not be None")
+    if not isinstance(params["save_distance"], bool):
+        raise StyxValidationError(f'`save_distance` has the wrong type: Received `{type(params.get("save_distance", False))}` expected `bool`')
+    if params.get("lh_only", False) is None:
+        raise StyxValidationError("`lh_only` must not be None")
+    if not isinstance(params["lh_only"], bool):
+        raise StyxValidationError(f'`lh_only` has the wrong type: Received `{type(params.get("lh_only", False))}` expected `bool`')
+    if params.get("rh_only", False) is None:
+        raise StyxValidationError("`rh_only` must not be None")
+    if not isinstance(params["rh_only"], bool):
+        raise StyxValidationError(f'`rh_only` has the wrong type: Received `{type(params.get("rh_only", False))}` expected `bool`')
+    if params.get("parallel", False) is None:
+        raise StyxValidationError("`parallel` must not be None")
+    if not isinstance(params["parallel"], bool):
+        raise StyxValidationError(f'`parallel` has the wrong type: Received `{type(params.get("parallel", False))}` expected `bool`')
+    if params.get("edit_aseg", False) is None:
+        raise StyxValidationError("`edit_aseg` must not be None")
+    if not isinstance(params["edit_aseg"], bool):
+        raise StyxValidationError(f'`edit_aseg` has the wrong type: Received `{type(params.get("edit_aseg", False))}` expected `bool`')
+    if params.get("save_ribbon", False) is None:
+        raise StyxValidationError("`save_ribbon` must not be None")
+    if not isinstance(params["save_ribbon"], bool):
+        raise StyxValidationError(f'`save_ribbon` has the wrong type: Received `{type(params.get("save_ribbon", False))}` expected `bool`')
+    if params.get("io", None) is None:
+        raise StyxValidationError("`io` must not be None")
+    if not isinstance(params["io"], str):
+        raise StyxValidationError(f'`io` has the wrong type: Received `{type(params.get("io", None))}` expected `str`')
+
+
 def mris_volmask_cargs(
     params: MrisVolmaskParameters,
     execution: Execution,
@@ -282,6 +357,7 @@ def mris_volmask_execute(
     Returns:
         NamedTuple of outputs (described in `MrisVolmaskOutputs`).
     """
+    mris_volmask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_VOLMASK_METADATA)
     params = execution.params(params)

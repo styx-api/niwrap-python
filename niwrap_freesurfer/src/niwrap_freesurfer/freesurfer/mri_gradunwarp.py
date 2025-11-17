@@ -113,6 +113,58 @@ def mri_gradunwarp_params(
     return params
 
 
+def mri_gradunwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriGradunwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("gradient_coeff", None) is not None:
+        if not isinstance(params["gradient_coeff"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gradient_coeff` has the wrong type: Received `{type(params.get("gradient_coeff", None))}` expected `InputPathType | None`')
+    if params.get("load_transtbl", None) is not None:
+        if not isinstance(params["load_transtbl"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`load_transtbl` has the wrong type: Received `{type(params.get("load_transtbl", None))}` expected `InputPathType | None`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("out_transtbl", None) is not None:
+        if not isinstance(params["out_transtbl"], str):
+            raise StyxValidationError(f'`out_transtbl` has the wrong type: Received `{type(params.get("out_transtbl", None))}` expected `str | None`')
+    if params.get("save_transtbl_only", False) is None:
+        raise StyxValidationError("`save_transtbl_only` must not be None")
+    if not isinstance(params["save_transtbl_only"], bool):
+        raise StyxValidationError(f'`save_transtbl_only` has the wrong type: Received `{type(params.get("save_transtbl_only", False))}` expected `bool`')
+    if params.get("interpolation_type", None) is not None:
+        if not isinstance(params["interpolation_type"], str):
+            raise StyxValidationError(f'`interpolation_type` has the wrong type: Received `{type(params.get("interpolation_type", None))}` expected `str | None`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], (float, int)):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `float | None`')
+    if params.get("checkopts", False) is None:
+        raise StyxValidationError("`checkopts` must not be None")
+    if not isinstance(params["checkopts"], bool):
+        raise StyxValidationError(f'`checkopts` has the wrong type: Received `{type(params.get("checkopts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def mri_gradunwarp_cargs(
     params: MriGradunwarpParameters,
     execution: Execution,
@@ -213,6 +265,7 @@ def mri_gradunwarp_execute(
     Returns:
         NamedTuple of outputs (described in `MriGradunwarpOutputs`).
     """
+    mri_gradunwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GRADUNWARP_METADATA)
     params = execution.params(params)

@@ -63,6 +63,28 @@ def volume_reduce_exclude_outliers_params(
     return params
 
 
+def volume_reduce_exclude_outliers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeReduceExcludeOutliersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma-below", None) is None:
+        raise StyxValidationError("`sigma-below` must not be None")
+    if not isinstance(params["sigma-below"], (float, int)):
+        raise StyxValidationError(f'`sigma-below` has the wrong type: Received `{type(params.get("sigma-below", None))}` expected `float`')
+    if params.get("sigma-above", None) is None:
+        raise StyxValidationError("`sigma-above` must not be None")
+    if not isinstance(params["sigma-above"], (float, int)):
+        raise StyxValidationError(f'`sigma-above` has the wrong type: Received `{type(params.get("sigma-above", None))}` expected `float`')
+
+
 def volume_reduce_exclude_outliers_cargs(
     params: VolumeReduceExcludeOutliersParameters,
     execution: Execution,
@@ -125,6 +147,38 @@ def volume_reduce_params(
     if exclude_outliers is not None:
         params["exclude-outliers"] = exclude_outliers
     return params
+
+
+def volume_reduce_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeReduceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("exclude-outliers", None) is not None:
+        volume_reduce_exclude_outliers_validate(params["exclude-outliers"])
+    if params.get("only-numeric", False) is None:
+        raise StyxValidationError("`only-numeric` must not be None")
+    if not isinstance(params["only-numeric"], bool):
+        raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
 
 
 def volume_reduce_cargs(
@@ -209,6 +263,7 @@ def volume_reduce_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeReduceOutputs`).
     """
+    volume_reduce_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_REDUCE_METADATA)
     params = execution.params(params)

@@ -57,6 +57,27 @@ def v_3d_despike_params(
     return params
 
 
+def v_3d_despike_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dDespikeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+
+
 def v_3d_despike_cargs(
     params: V3dDespikeParameters,
     execution: Execution,
@@ -121,6 +142,7 @@ def v_3d_despike_execute(
     Returns:
         NamedTuple of outputs (described in `V3dDespikeOutputs`).
     """
+    v_3d_despike_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_DESPIKE_METADATA)
     params = execution.params(params)

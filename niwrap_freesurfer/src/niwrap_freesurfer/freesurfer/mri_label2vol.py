@@ -163,6 +163,83 @@ def mri_label2vol_params(
     return params
 
 
+def mri_label2vol_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriLabel2volParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("labels", None) is not None:
+        if not isinstance(params["labels"], list):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+        for e in params["labels"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str] | None`')
+    if params.get("annotation", None) is not None:
+        if not isinstance(params["annotation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annotation` has the wrong type: Received `{type(params.get("annotation", None))}` expected `InputPathType | None`')
+    if params.get("segmentation", None) is not None:
+        if not isinstance(params["segmentation"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmentation` has the wrong type: Received `{type(params.get("segmentation", None))}` expected `InputPathType | None`')
+    if params.get("template", None) is None:
+        raise StyxValidationError("`template` must not be None")
+    if not isinstance(params["template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType`')
+    if params.get("registration", None) is not None:
+        if not isinstance(params["registration"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`registration` has the wrong type: Received `{type(params.get("registration", None))}` expected `InputPathType | None`')
+    if params.get("identity_flag", False) is None:
+        raise StyxValidationError("`identity_flag` must not be None")
+    if not isinstance(params["identity_flag"], bool):
+        raise StyxValidationError(f'`identity_flag` has the wrong type: Received `{type(params.get("identity_flag", False))}` expected `bool`')
+    if params.get("fill_threshold", None) is not None:
+        if not isinstance(params["fill_threshold"], (float, int)):
+            raise StyxValidationError(f'`fill_threshold` has the wrong type: Received `{type(params.get("fill_threshold", None))}` expected `float | None`')
+        if 0 <= params["fill_threshold"] <= 1:
+            raise StyxValidationError("Parameter `fill_threshold` must be between 0 and 1 (inclusive)")
+    if params.get("label_vox_vol", None) is not None:
+        if not isinstance(params["label_vox_vol"], (float, int)):
+            raise StyxValidationError(f'`label_vox_vol` has the wrong type: Received `{type(params.get("label_vox_vol", None))}` expected `float | None`')
+    if params.get("projection", None) is not None:
+        if not isinstance(params["projection"], str):
+            raise StyxValidationError(f'`projection` has the wrong type: Received `{type(params.get("projection", None))}` expected `str | None`')
+    if params.get("subject", None) is not None:
+        if not isinstance(params["subject"], str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str | None`')
+    if params.get("hemisphere", None) is not None:
+        if not isinstance(params["hemisphere"], str):
+            raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str | None`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("hits_volume", None) is not None:
+        if not isinstance(params["hits_volume"], str):
+            raise StyxValidationError(f'`hits_volume` has the wrong type: Received `{type(params.get("hits_volume", None))}` expected `str | None`')
+    if params.get("label_stat_volume", None) is not None:
+        if not isinstance(params["label_stat_volume"], str):
+            raise StyxValidationError(f'`label_stat_volume` has the wrong type: Received `{type(params.get("label_stat_volume", None))}` expected `str | None`')
+    if params.get("stat_threshold", None) is not None:
+        if not isinstance(params["stat_threshold"], (float, int)):
+            raise StyxValidationError(f'`stat_threshold` has the wrong type: Received `{type(params.get("stat_threshold", None))}` expected `float | None`')
+    if params.get("offset", None) is not None:
+        if not isinstance(params["offset"], (float, int)):
+            raise StyxValidationError(f'`offset` has the wrong type: Received `{type(params.get("offset", None))}` expected `float | None`')
+    if params.get("defects", None) is not None:
+        if not isinstance(params["defects"], str):
+            raise StyxValidationError(f'`defects` has the wrong type: Received `{type(params.get("defects", None))}` expected `str | None`')
+    if params.get("native_vox2ras_flag", False) is None:
+        raise StyxValidationError("`native_vox2ras_flag` must not be None")
+    if not isinstance(params["native_vox2ras_flag"], bool):
+        raise StyxValidationError(f'`native_vox2ras_flag` has the wrong type: Received `{type(params.get("native_vox2ras_flag", False))}` expected `bool`')
+
+
 def mri_label2vol_cargs(
     params: MriLabel2volParameters,
     execution: Execution,
@@ -304,6 +381,7 @@ def mri_label2vol_execute(
     Returns:
         NamedTuple of outputs (described in `MriLabel2volOutputs`).
     """
+    mri_label2vol_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_LABEL2VOL_METADATA)
     params = execution.params(params)

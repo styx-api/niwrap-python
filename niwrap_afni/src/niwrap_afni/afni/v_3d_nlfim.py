@@ -305,6 +305,140 @@ def v_3d_nlfim_params(
     return params
 
 
+def v_3d_nlfim_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dNlfimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("signal_model", None) is None:
+        raise StyxValidationError("`signal_model` must not be None")
+    if not isinstance(params["signal_model"], str):
+        raise StyxValidationError(f'`signal_model` has the wrong type: Received `{type(params.get("signal_model", None))}` expected `str`')
+    if params.get("noise_model", None) is None:
+        raise StyxValidationError("`noise_model` must not be None")
+    if not isinstance(params["noise_model"], str):
+        raise StyxValidationError(f'`noise_model` has the wrong type: Received `{type(params.get("noise_model", None))}` expected `str`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("ignore", None) is not None:
+        if not isinstance(params["ignore"], int):
+            raise StyxValidationError(f'`ignore` has the wrong type: Received `{type(params.get("ignore", None))}` expected `int | None`')
+    if params.get("intr", None) is not None:
+        if not isinstance(params["intr"], int):
+            raise StyxValidationError(f'`intr` has the wrong type: Received `{type(params.get("intr", None))}` expected `int | None`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], int):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `int | None`')
+    if params.get("time_file", None) is not None:
+        if not isinstance(params["time_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`time_file` has the wrong type: Received `{type(params.get("time_file", None))}` expected `InputPathType | None`')
+    if params.get("sconstr", None) is not None:
+        if not isinstance(params["sconstr"], str):
+            raise StyxValidationError(f'`sconstr` has the wrong type: Received `{type(params.get("sconstr", None))}` expected `str | None`')
+    if params.get("nconstr", None) is not None:
+        if not isinstance(params["nconstr"], str):
+            raise StyxValidationError(f'`nconstr` has the wrong type: Received `{type(params.get("nconstr", None))}` expected `str | None`')
+    if params.get("nabs", False) is None:
+        raise StyxValidationError("`nabs` must not be None")
+    if not isinstance(params["nabs"], bool):
+        raise StyxValidationError(f'`nabs` has the wrong type: Received `{type(params.get("nabs", False))}` expected `bool`')
+    if params.get("nrand", None) is not None:
+        if not isinstance(params["nrand"], int):
+            raise StyxValidationError(f'`nrand` has the wrong type: Received `{type(params.get("nrand", None))}` expected `int | None`')
+    if params.get("nbest", None) is not None:
+        if not isinstance(params["nbest"], int):
+            raise StyxValidationError(f'`nbest` has the wrong type: Received `{type(params.get("nbest", None))}` expected `int | None`')
+    if params.get("rmsmin", None) is not None:
+        if not isinstance(params["rmsmin"], (float, int)):
+            raise StyxValidationError(f'`rmsmin` has the wrong type: Received `{type(params.get("rmsmin", None))}` expected `float | None`')
+    if params.get("fdisp", None) is not None:
+        if not isinstance(params["fdisp"], (float, int)):
+            raise StyxValidationError(f'`fdisp` has the wrong type: Received `{type(params.get("fdisp", None))}` expected `float | None`')
+    if params.get("progress", None) is not None:
+        if not isinstance(params["progress"], int):
+            raise StyxValidationError(f'`progress` has the wrong type: Received `{type(params.get("progress", None))}` expected `int | None`')
+    if params.get("voxel_count", False) is None:
+        raise StyxValidationError("`voxel_count` must not be None")
+    if not isinstance(params["voxel_count"], bool):
+        raise StyxValidationError(f'`voxel_count` has the wrong type: Received `{type(params.get("voxel_count", False))}` expected `bool`')
+    if params.get("simplex", False) is None:
+        raise StyxValidationError("`simplex` must not be None")
+    if not isinstance(params["simplex"], bool):
+        raise StyxValidationError(f'`simplex` has the wrong type: Received `{type(params.get("simplex", False))}` expected `bool`')
+    if params.get("powell", False) is None:
+        raise StyxValidationError("`powell` must not be None")
+    if not isinstance(params["powell"], bool):
+        raise StyxValidationError(f'`powell` has the wrong type: Received `{type(params.get("powell", False))}` expected `bool`')
+    if params.get("both", False) is None:
+        raise StyxValidationError("`both` must not be None")
+    if not isinstance(params["both"], bool):
+        raise StyxValidationError(f'`both` has the wrong type: Received `{type(params.get("both", False))}` expected `bool`')
+    if params.get("freg", None) is not None:
+        if not isinstance(params["freg"], str):
+            raise StyxValidationError(f'`freg` has the wrong type: Received `{type(params.get("freg", None))}` expected `str | None`')
+    if params.get("frsqr", None) is not None:
+        if not isinstance(params["frsqr"], str):
+            raise StyxValidationError(f'`frsqr` has the wrong type: Received `{type(params.get("frsqr", None))}` expected `str | None`')
+    if params.get("fsmax", None) is not None:
+        if not isinstance(params["fsmax"], str):
+            raise StyxValidationError(f'`fsmax` has the wrong type: Received `{type(params.get("fsmax", None))}` expected `str | None`')
+    if params.get("ftmax", None) is not None:
+        if not isinstance(params["ftmax"], str):
+            raise StyxValidationError(f'`ftmax` has the wrong type: Received `{type(params.get("ftmax", None))}` expected `str | None`')
+    if params.get("fpsmax", None) is not None:
+        if not isinstance(params["fpsmax"], str):
+            raise StyxValidationError(f'`fpsmax` has the wrong type: Received `{type(params.get("fpsmax", None))}` expected `str | None`')
+    if params.get("farea", None) is not None:
+        if not isinstance(params["farea"], str):
+            raise StyxValidationError(f'`farea` has the wrong type: Received `{type(params.get("farea", None))}` expected `str | None`')
+    if params.get("fparea", None) is not None:
+        if not isinstance(params["fparea"], str):
+            raise StyxValidationError(f'`fparea` has the wrong type: Received `{type(params.get("fparea", None))}` expected `str | None`')
+    if params.get("fscoef", None) is not None:
+        if not isinstance(params["fscoef"], str):
+            raise StyxValidationError(f'`fscoef` has the wrong type: Received `{type(params.get("fscoef", None))}` expected `str | None`')
+    if params.get("fncoef", None) is not None:
+        if not isinstance(params["fncoef"], str):
+            raise StyxValidationError(f'`fncoef` has the wrong type: Received `{type(params.get("fncoef", None))}` expected `str | None`')
+    if params.get("tscoef", None) is not None:
+        if not isinstance(params["tscoef"], str):
+            raise StyxValidationError(f'`tscoef` has the wrong type: Received `{type(params.get("tscoef", None))}` expected `str | None`')
+    if params.get("tncoef", None) is not None:
+        if not isinstance(params["tncoef"], str):
+            raise StyxValidationError(f'`tncoef` has the wrong type: Received `{type(params.get("tncoef", None))}` expected `str | None`')
+    if params.get("bucket", None) is not None:
+        if not isinstance(params["bucket"], str):
+            raise StyxValidationError(f'`bucket` has the wrong type: Received `{type(params.get("bucket", None))}` expected `str | None`')
+    if params.get("brick", None) is not None:
+        if not isinstance(params["brick"], str):
+            raise StyxValidationError(f'`brick` has the wrong type: Received `{type(params.get("brick", None))}` expected `str | None`')
+    if params.get("nofdr", False) is None:
+        raise StyxValidationError("`nofdr` must not be None")
+    if not isinstance(params["nofdr"], bool):
+        raise StyxValidationError(f'`nofdr` has the wrong type: Received `{type(params.get("nofdr", False))}` expected `bool`')
+    if params.get("sfit", None) is not None:
+        if not isinstance(params["sfit"], str):
+            raise StyxValidationError(f'`sfit` has the wrong type: Received `{type(params.get("sfit", None))}` expected `str | None`')
+    if params.get("snfit", None) is not None:
+        if not isinstance(params["snfit"], str):
+            raise StyxValidationError(f'`snfit` has the wrong type: Received `{type(params.get("snfit", None))}` expected `str | None`')
+    if params.get("jobs", None) is not None:
+        if not isinstance(params["jobs"], int):
+            raise StyxValidationError(f'`jobs` has the wrong type: Received `{type(params.get("jobs", None))}` expected `int | None`')
+
+
 def v_3d_nlfim_cargs(
     params: V3dNlfimParameters,
     execution: Execution,
@@ -539,6 +673,7 @@ def v_3d_nlfim_execute(
     Returns:
         NamedTuple of outputs (described in `V3dNlfimOutputs`).
     """
+    v_3d_nlfim_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NLFIM_METADATA)
     params = execution.params(params)

@@ -156,6 +156,95 @@ def v_3dmaxima_params(
     return params
 
 
+def v_3dmaxima_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dmaximaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+    if params.get("min_dist", None) is not None:
+        if not isinstance(params["min_dist"], (float, int)):
+            raise StyxValidationError(f'`min_dist` has the wrong type: Received `{type(params.get("min_dist", None))}` expected `float | None`')
+    if params.get("out_rad", None) is not None:
+        if not isinstance(params["out_rad"], (float, int)):
+            raise StyxValidationError(f'`out_rad` has the wrong type: Received `{type(params.get("out_rad", None))}` expected `float | None`')
+    if params.get("input_flag", False) is None:
+        raise StyxValidationError("`input_flag` must not be None")
+    if not isinstance(params["input_flag"], bool):
+        raise StyxValidationError(f'`input_flag` has the wrong type: Received `{type(params.get("input_flag", False))}` expected `bool`')
+    if params.get("spheres_1_flag", False) is None:
+        raise StyxValidationError("`spheres_1_flag` must not be None")
+    if not isinstance(params["spheres_1_flag"], bool):
+        raise StyxValidationError(f'`spheres_1_flag` has the wrong type: Received `{type(params.get("spheres_1_flag", False))}` expected `bool`')
+    if params.get("spheres_1toN_flag", False) is None:
+        raise StyxValidationError("`spheres_1toN_flag` must not be None")
+    if not isinstance(params["spheres_1toN_flag"], bool):
+        raise StyxValidationError(f'`spheres_1toN_flag` has the wrong type: Received `{type(params.get("spheres_1toN_flag", False))}` expected `bool`')
+    if params.get("spheres_Nto1_flag", False) is None:
+        raise StyxValidationError("`spheres_Nto1_flag` must not be None")
+    if not isinstance(params["spheres_Nto1_flag"], bool):
+        raise StyxValidationError(f'`spheres_Nto1_flag` has the wrong type: Received `{type(params.get("spheres_Nto1_flag", False))}` expected `bool`')
+    if params.get("neg_ext_flag", False) is None:
+        raise StyxValidationError("`neg_ext_flag` must not be None")
+    if not isinstance(params["neg_ext_flag"], bool):
+        raise StyxValidationError(f'`neg_ext_flag` has the wrong type: Received `{type(params.get("neg_ext_flag", False))}` expected `bool`')
+    if params.get("true_max_flag", False) is None:
+        raise StyxValidationError("`true_max_flag` must not be None")
+    if not isinstance(params["true_max_flag"], bool):
+        raise StyxValidationError(f'`true_max_flag` has the wrong type: Received `{type(params.get("true_max_flag", False))}` expected `bool`')
+    if params.get("dset_coords_flag", False) is None:
+        raise StyxValidationError("`dset_coords_flag` must not be None")
+    if not isinstance(params["dset_coords_flag"], bool):
+        raise StyxValidationError(f'`dset_coords_flag` has the wrong type: Received `{type(params.get("dset_coords_flag", False))}` expected `bool`')
+    if params.get("no_text_flag", False) is None:
+        raise StyxValidationError("`no_text_flag` must not be None")
+    if not isinstance(params["no_text_flag"], bool):
+        raise StyxValidationError(f'`no_text_flag` has the wrong type: Received `{type(params.get("no_text_flag", False))}` expected `bool`')
+    if params.get("coords_only_flag", False) is None:
+        raise StyxValidationError("`coords_only_flag` must not be None")
+    if not isinstance(params["coords_only_flag"], bool):
+        raise StyxValidationError(f'`coords_only_flag` has the wrong type: Received `{type(params.get("coords_only_flag", False))}` expected `bool`')
+    if params.get("n_style_sort_flag", False) is None:
+        raise StyxValidationError("`n_style_sort_flag` must not be None")
+    if not isinstance(params["n_style_sort_flag"], bool):
+        raise StyxValidationError(f'`n_style_sort_flag` has the wrong type: Received `{type(params.get("n_style_sort_flag", False))}` expected `bool`')
+    if params.get("n_style_weight_ave_flag", False) is None:
+        raise StyxValidationError("`n_style_weight_ave_flag` must not be None")
+    if not isinstance(params["n_style_weight_ave_flag"], bool):
+        raise StyxValidationError(f'`n_style_weight_ave_flag` has the wrong type: Received `{type(params.get("n_style_weight_ave_flag", False))}` expected `bool`')
+    if params.get("debug_level", None) is not None:
+        if not isinstance(params["debug_level"], (float, int)):
+            raise StyxValidationError(f'`debug_level` has the wrong type: Received `{type(params.get("debug_level", None))}` expected `float | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("hist_flag", False) is None:
+        raise StyxValidationError("`hist_flag` must not be None")
+    if not isinstance(params["hist_flag"], bool):
+        raise StyxValidationError(f'`hist_flag` has the wrong type: Received `{type(params.get("hist_flag", False))}` expected `bool`')
+    if params.get("ver_flag", False) is None:
+        raise StyxValidationError("`ver_flag` must not be None")
+    if not isinstance(params["ver_flag"], bool):
+        raise StyxValidationError(f'`ver_flag` has the wrong type: Received `{type(params.get("ver_flag", False))}` expected `bool`')
+
+
 def v_3dmaxima_cargs(
     params: V3dmaximaParameters,
     execution: Execution,
@@ -268,6 +357,7 @@ def v_3dmaxima_execute(
     Returns:
         NamedTuple of outputs (described in `V3dmaximaOutputs`).
     """
+    v_3dmaxima_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DMAXIMA_METADATA)
     params = execution.params(params)

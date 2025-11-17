@@ -106,6 +106,63 @@ def slow_surf_clustsim_py_params(
     return params
 
 
+def slow_surf_clustsim_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlowSurfClustsimPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("on_surface", None) is not None:
+        if not isinstance(params["on_surface"], str):
+            raise StyxValidationError(f'`on_surface` has the wrong type: Received `{type(params.get("on_surface", None))}` expected `str | None`')
+    if params.get("save_script", None) is not None:
+        if not isinstance(params["save_script"], str):
+            raise StyxValidationError(f'`save_script` has the wrong type: Received `{type(params.get("save_script", None))}` expected `str | None`')
+    if params.get("print_script", False) is None:
+        raise StyxValidationError("`print_script` must not be None")
+    if not isinstance(params["print_script"], bool):
+        raise StyxValidationError(f'`print_script` has the wrong type: Received `{type(params.get("print_script", False))}` expected `bool`')
+    if params.get("uvar", None) is not None:
+        if not isinstance(params["uvar"], list):
+            raise StyxValidationError(f'`uvar` has the wrong type: Received `{type(params.get("uvar", None))}` expected `list[str] | None`')
+        for e in params["uvar"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`uvar` has the wrong type: Received `{type(params.get("uvar", None))}` expected `list[str] | None`')
+    if params.get("verbosity", None) is not None:
+        if not isinstance(params["verbosity"], (float, int)):
+            raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", None))}` expected `float | None`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hist", False) is None:
+        raise StyxValidationError("`hist` must not be None")
+    if not isinstance(params["hist"], bool):
+        raise StyxValidationError(f'`hist` has the wrong type: Received `{type(params.get("hist", False))}` expected `bool`')
+    if params.get("show_default_cvars", False) is None:
+        raise StyxValidationError("`show_default_cvars` must not be None")
+    if not isinstance(params["show_default_cvars"], bool):
+        raise StyxValidationError(f'`show_default_cvars` has the wrong type: Received `{type(params.get("show_default_cvars", False))}` expected `bool`')
+    if params.get("show_default_uvars", False) is None:
+        raise StyxValidationError("`show_default_uvars` must not be None")
+    if not isinstance(params["show_default_uvars"], bool):
+        raise StyxValidationError(f'`show_default_uvars` has the wrong type: Received `{type(params.get("show_default_uvars", False))}` expected `bool`')
+    if params.get("show_valid_opts", False) is None:
+        raise StyxValidationError("`show_valid_opts` must not be None")
+    if not isinstance(params["show_valid_opts"], bool):
+        raise StyxValidationError(f'`show_valid_opts` has the wrong type: Received `{type(params.get("show_valid_opts", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def slow_surf_clustsim_py_cargs(
     params: SlowSurfClustsimPyParameters,
     execution: Execution,
@@ -196,6 +253,7 @@ def slow_surf_clustsim_py_execute(
     Returns:
         NamedTuple of outputs (described in `SlowSurfClustsimPyOutputs`).
     """
+    slow_surf_clustsim_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLOW_SURF_CLUSTSIM_PY_METADATA)
     params = execution.params(params)

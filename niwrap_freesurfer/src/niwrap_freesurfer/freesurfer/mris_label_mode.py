@@ -86,6 +86,53 @@ def mris_label_mode_params(
     return params
 
 
+def mris_label_mode_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisLabelModeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_curv_file", None) is None:
+        raise StyxValidationError("`input_curv_file` must not be None")
+    if not isinstance(params["input_curv_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_curv_file` has the wrong type: Received `{type(params.get("input_curv_file", None))}` expected `InputPathType`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], list):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `list[str]`')
+    for e in params["subject"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `list[str]`')
+    if params.get("output_curv_file", None) is None:
+        raise StyxValidationError("`output_curv_file` must not be None")
+    if not isinstance(params["output_curv_file"], str):
+        raise StyxValidationError(f'`output_curv_file` has the wrong type: Received `{type(params.get("output_curv_file", None))}` expected `str`')
+    if params.get("summary_statistics", False) is None:
+        raise StyxValidationError("`summary_statistics` must not be None")
+    if not isinstance(params["summary_statistics"], bool):
+        raise StyxValidationError(f'`summary_statistics` has the wrong type: Received `{type(params.get("summary_statistics", False))}` expected `bool`')
+    if params.get("statistics_cond", None) is not None:
+        if not isinstance(params["statistics_cond"], str):
+            raise StyxValidationError(f'`statistics_cond` has the wrong type: Received `{type(params.get("statistics_cond", None))}` expected `str | None`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+
+
 def mris_label_mode_cargs(
     params: MrisLabelModeParameters,
     execution: Execution,
@@ -156,6 +203,7 @@ def mris_label_mode_execute(
     Returns:
         NamedTuple of outputs (described in `MrisLabelModeOutputs`).
     """
+    mris_label_mode_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_LABEL_MODE_METADATA)
     params = execution.params(params)

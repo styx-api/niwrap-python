@@ -84,6 +84,47 @@ def flirt_average_params(
     return params
 
 
+def flirt_average_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FlirtAverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ninputs", None) is None:
+        raise StyxValidationError("`ninputs` must not be None")
+    if not isinstance(params["ninputs"], int):
+        raise StyxValidationError(f'`ninputs` has the wrong type: Received `{type(params.get("ninputs", None))}` expected `int`')
+    if params["ninputs"] >= 2:
+        raise StyxValidationError("Parameter `ninputs` must be at least 2")
+    if params.get("input1", None) is None:
+        raise StyxValidationError("`input1` must not be None")
+    if not isinstance(params["input1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input1` has the wrong type: Received `{type(params.get("input1", None))}` expected `InputPathType`')
+    if params.get("input2", None) is None:
+        raise StyxValidationError("`input2` must not be None")
+    if not isinstance(params["input2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input2` has the wrong type: Received `{type(params.get("input2", None))}` expected `InputPathType`')
+    if params.get("input3", None) is not None:
+        if not isinstance(params["input3"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input3` has the wrong type: Received `{type(params.get("input3", None))}` expected `InputPathType | None`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("reference_image", None) is not None:
+        if not isinstance(params["reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType | None`')
+    if params.get("flirt_options", None) is not None:
+        if not isinstance(params["flirt_options"], str):
+            raise StyxValidationError(f'`flirt_options` has the wrong type: Received `{type(params.get("flirt_options", None))}` expected `str | None`')
+
+
 def flirt_average_cargs(
     params: FlirtAverageParameters,
     execution: Execution,
@@ -154,6 +195,7 @@ def flirt_average_execute(
     Returns:
         NamedTuple of outputs (described in `FlirtAverageOutputs`).
     """
+    flirt_average_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FLIRT_AVERAGE_METADATA)
     params = execution.params(params)

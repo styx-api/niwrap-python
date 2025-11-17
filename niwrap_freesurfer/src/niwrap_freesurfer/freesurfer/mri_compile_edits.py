@@ -56,6 +56,28 @@ def mri_compile_edits_params(
     return params
 
 
+def mri_compile_edits_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCompileEditsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+
+
 def mri_compile_edits_cargs(
     params: MriCompileEditsParameters,
     execution: Execution,
@@ -116,6 +138,7 @@ def mri_compile_edits_execute(
     Returns:
         NamedTuple of outputs (described in `MriCompileEditsOutputs`).
     """
+    mri_compile_edits_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_COMPILE_EDITS_METADATA)
     params = execution.params(params)

@@ -84,6 +84,48 @@ def convert_fiber_orientations_fiber_params(
     return params
 
 
+def convert_fiber_orientations_fiber_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertFiberOrientationsFiberParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mean-f", None) is None:
+        raise StyxValidationError("`mean-f` must not be None")
+    if not isinstance(params["mean-f"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mean-f` has the wrong type: Received `{type(params.get("mean-f", None))}` expected `InputPathType`')
+    if params.get("stdev-f", None) is None:
+        raise StyxValidationError("`stdev-f` must not be None")
+    if not isinstance(params["stdev-f"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`stdev-f` has the wrong type: Received `{type(params.get("stdev-f", None))}` expected `InputPathType`')
+    if params.get("theta", None) is None:
+        raise StyxValidationError("`theta` must not be None")
+    if not isinstance(params["theta"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`theta` has the wrong type: Received `{type(params.get("theta", None))}` expected `InputPathType`')
+    if params.get("phi", None) is None:
+        raise StyxValidationError("`phi` must not be None")
+    if not isinstance(params["phi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`phi` has the wrong type: Received `{type(params.get("phi", None))}` expected `InputPathType`')
+    if params.get("psi", None) is None:
+        raise StyxValidationError("`psi` must not be None")
+    if not isinstance(params["psi"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`psi` has the wrong type: Received `{type(params.get("psi", None))}` expected `InputPathType`')
+    if params.get("ka", None) is None:
+        raise StyxValidationError("`ka` must not be None")
+    if not isinstance(params["ka"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ka` has the wrong type: Received `{type(params.get("ka", None))}` expected `InputPathType`')
+    if params.get("kb", None) is None:
+        raise StyxValidationError("`kb` must not be None")
+    if not isinstance(params["kb"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`kb` has the wrong type: Received `{type(params.get("kb", None))}` expected `InputPathType`')
+
+
 def convert_fiber_orientations_fiber_cargs(
     params: ConvertFiberOrientationsFiberParameters,
     execution: Execution,
@@ -144,6 +186,33 @@ def convert_fiber_orientations_params(
     if fiber is not None:
         params["fiber"] = fiber
     return params
+
+
+def convert_fiber_orientations_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertFiberOrientationsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fiber-out", None) is None:
+        raise StyxValidationError("`fiber-out` must not be None")
+    if not isinstance(params["fiber-out"], str):
+        raise StyxValidationError(f'`fiber-out` has the wrong type: Received `{type(params.get("fiber-out", None))}` expected `str`')
+    if params.get("fiber", None) is not None:
+        if not isinstance(params["fiber"], list):
+            raise StyxValidationError(f'`fiber` has the wrong type: Received `{type(params.get("fiber", None))}` expected `list[ConvertFiberOrientationsFiberParameters] | None`')
+        for e in params["fiber"]:
+            convert_fiber_orientations_fiber_validate(e)
+    if params.get("label-volume", None) is None:
+        raise StyxValidationError("`label-volume` must not be None")
+    if not isinstance(params["label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
 
 
 def convert_fiber_orientations_cargs(
@@ -245,6 +314,7 @@ def convert_fiber_orientations_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertFiberOrientationsOutputs`).
     """
+    convert_fiber_orientations_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_FIBER_ORIENTATIONS_METADATA)
     params = execution.params(params)

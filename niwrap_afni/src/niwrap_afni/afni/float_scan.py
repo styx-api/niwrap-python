@@ -69,6 +69,35 @@ def float_scan_params(
     return params
 
 
+def float_scan_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FloatScanParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("fix_illegal_values", False) is None:
+        raise StyxValidationError("`fix_illegal_values` must not be None")
+    if not isinstance(params["fix_illegal_values"], bool):
+        raise StyxValidationError(f'`fix_illegal_values` has the wrong type: Received `{type(params.get("fix_illegal_values", False))}` expected `bool`')
+    if params.get("verbose_mode", False) is None:
+        raise StyxValidationError("`verbose_mode` must not be None")
+    if not isinstance(params["verbose_mode"], bool):
+        raise StyxValidationError(f'`verbose_mode` has the wrong type: Received `{type(params.get("verbose_mode", False))}` expected `bool`')
+    if params.get("skip_count", None) is not None:
+        if not isinstance(params["skip_count"], int):
+            raise StyxValidationError(f'`skip_count` has the wrong type: Received `{type(params.get("skip_count", None))}` expected `int | None`')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+
+
 def float_scan_cargs(
     params: FloatScanParameters,
     execution: Execution,
@@ -137,6 +166,7 @@ def float_scan_execute(
     Returns:
         NamedTuple of outputs (described in `FloatScanOutputs`).
     """
+    float_scan_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FLOAT_SCAN_METADATA)
     params = execution.params(params)

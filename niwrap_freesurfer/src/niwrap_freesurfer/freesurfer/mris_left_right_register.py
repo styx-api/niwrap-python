@@ -70,6 +70,36 @@ def mris_left_right_register_params(
     return params
 
 
+def mris_left_right_register_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisLeftRightRegisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("lh_sphere", None) is None:
+        raise StyxValidationError("`lh_sphere` must not be None")
+    if not isinstance(params["lh_sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`lh_sphere` has the wrong type: Received `{type(params.get("lh_sphere", None))}` expected `InputPathType`')
+    if params.get("rh_sphere", None) is None:
+        raise StyxValidationError("`rh_sphere` must not be None")
+    if not isinstance(params["rh_sphere"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rh_sphere` has the wrong type: Received `{type(params.get("rh_sphere", None))}` expected `InputPathType`')
+    if params.get("lh_sphere_left_right", None) is None:
+        raise StyxValidationError("`lh_sphere_left_right` must not be None")
+    if not isinstance(params["lh_sphere_left_right"], str):
+        raise StyxValidationError(f'`lh_sphere_left_right` has the wrong type: Received `{type(params.get("lh_sphere_left_right", None))}` expected `str`')
+    if params.get("rh_sphere_left_right", None) is None:
+        raise StyxValidationError("`rh_sphere_left_right` must not be None")
+    if not isinstance(params["rh_sphere_left_right"], str):
+        raise StyxValidationError(f'`rh_sphere_left_right` has the wrong type: Received `{type(params.get("rh_sphere_left_right", None))}` expected `str`')
+
+
 def mris_left_right_register_cargs(
     params: MrisLeftRightRegisterParameters,
     execution: Execution,
@@ -132,6 +162,7 @@ def mris_left_right_register_execute(
     Returns:
         NamedTuple of outputs (described in `MrisLeftRightRegisterOutputs`).
     """
+    mris_left_right_register_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_LEFT_RIGHT_REGISTER_METADATA)
     params = execution.params(params)

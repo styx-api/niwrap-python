@@ -136,6 +136,85 @@ def groupstats_params(
     return params
 
 
+def groupstats_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GroupstatsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outdir", None) is None:
+        raise StyxValidationError("`outdir` must not be None")
+    if not isinstance(params["outdir"], str):
+        raise StyxValidationError(f'`outdir` has the wrong type: Received `{type(params.get("outdir", None))}` expected `str`')
+    if params.get("group_fsgd", None) is not None:
+        if not isinstance(params["group_fsgd"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`group_fsgd` has the wrong type: Received `{type(params.get("group_fsgd", None))}` expected `InputPathType | None`')
+    if params.get("subjectfile", None) is not None:
+        if not isinstance(params["subjectfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subjectfile` has the wrong type: Received `{type(params.get("subjectfile", None))}` expected `InputPathType | None`')
+    if params.get("fwhm", None) is not None:
+        if not isinstance(params["fwhm"], list):
+            raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `list[float] | None`')
+        for e in params["fwhm"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", None))}` expected `list[float] | None`')
+    if params.get("subject_dir", None) is not None:
+        if not isinstance(params["subject_dir"], str):
+            raise StyxValidationError(f'`subject_dir` has the wrong type: Received `{type(params.get("subject_dir", None))}` expected `str | None`')
+    if params.get("mapname", None) is not None:
+        if not isinstance(params["mapname"], str):
+            raise StyxValidationError(f'`mapname` has the wrong type: Received `{type(params.get("mapname", None))}` expected `str | None`')
+    if params.get("srcsurfreg", None) is not None:
+        if not isinstance(params["srcsurfreg"], str):
+            raise StyxValidationError(f'`srcsurfreg` has the wrong type: Received `{type(params.get("srcsurfreg", None))}` expected `str | None`')
+    if params.get("no_maps", False) is None:
+        raise StyxValidationError("`no_maps` must not be None")
+    if not isinstance(params["no_maps"], bool):
+        raise StyxValidationError(f'`no_maps` has the wrong type: Received `{type(params.get("no_maps", False))}` expected `bool`')
+    if params.get("lh_only", False) is None:
+        raise StyxValidationError("`lh_only` must not be None")
+    if not isinstance(params["lh_only"], bool):
+        raise StyxValidationError(f'`lh_only` has the wrong type: Received `{type(params.get("lh_only", False))}` expected `bool`')
+    if params.get("rh_only", False) is None:
+        raise StyxValidationError("`rh_only` must not be None")
+    if not isinstance(params["rh_only"], bool):
+        raise StyxValidationError(f'`rh_only` has the wrong type: Received `{type(params.get("rh_only", False))}` expected `bool`')
+    if params.get("no_aparcstats", False) is None:
+        raise StyxValidationError("`no_aparcstats` must not be None")
+    if not isinstance(params["no_aparcstats"], bool):
+        raise StyxValidationError(f'`no_aparcstats` has the wrong type: Received `{type(params.get("no_aparcstats", False))}` expected `bool`')
+    if params.get("no_asegstats", False) is None:
+        raise StyxValidationError("`no_asegstats` must not be None")
+    if not isinstance(params["no_asegstats"], bool):
+        raise StyxValidationError(f'`no_asegstats` has the wrong type: Received `{type(params.get("no_asegstats", False))}` expected `bool`')
+    if params.get("no_wparcstats", False) is None:
+        raise StyxValidationError("`no_wparcstats` must not be None")
+    if not isinstance(params["no_wparcstats"], bool):
+        raise StyxValidationError(f'`no_wparcstats` has the wrong type: Received `{type(params.get("no_wparcstats", False))}` expected `bool`')
+    if params.get("no_stats", False) is None:
+        raise StyxValidationError("`no_stats` must not be None")
+    if not isinstance(params["no_stats"], bool):
+        raise StyxValidationError(f'`no_stats` has the wrong type: Received `{type(params.get("no_stats", False))}` expected `bool`')
+    if params.get("new", False) is None:
+        raise StyxValidationError("`new` must not be None")
+    if not isinstance(params["new"], bool):
+        raise StyxValidationError(f'`new` has the wrong type: Received `{type(params.get("new", False))}` expected `bool`')
+    if params.get("base", False) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], bool):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", False))}` expected `bool`')
+    if params.get("keep53", False) is None:
+        raise StyxValidationError("`keep53` must not be None")
+    if not isinstance(params["keep53"], bool):
+        raise StyxValidationError(f'`keep53` has the wrong type: Received `{type(params.get("keep53", False))}` expected `bool`')
+
+
 def groupstats_cargs(
     params: GroupstatsParameters,
     execution: Execution,
@@ -247,6 +326,7 @@ def groupstats_execute(
     Returns:
         NamedTuple of outputs (described in `GroupstatsOutputs`).
     """
+    groupstats_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GROUPSTATS_METADATA)
     params = execution.params(params)

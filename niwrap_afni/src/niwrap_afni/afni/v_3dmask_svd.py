@@ -98,6 +98,60 @@ def v_3dmask_svd_params(
     return params
 
 
+def v_3dmask_svd_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dmaskSvdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("vnorm", False) is None:
+        raise StyxValidationError("`vnorm` must not be None")
+    if not isinstance(params["vnorm"], bool):
+        raise StyxValidationError(f'`vnorm` has the wrong type: Received `{type(params.get("vnorm", False))}` expected `bool`')
+    if params.get("sval", None) is not None:
+        if not isinstance(params["sval"], (float, int)):
+            raise StyxValidationError(f'`sval` has the wrong type: Received `{type(params.get("sval", None))}` expected `float | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], (float, int)):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `float | None`')
+    if params.get("bandpass", None) is not None:
+        if not isinstance(params["bandpass"], list):
+            raise StyxValidationError(f'`bandpass` has the wrong type: Received `{type(params.get("bandpass", None))}` expected `list[str] | None`')
+        if len(params["bandpass"]) == 2:
+            raise StyxValidationError("Parameter `bandpass` must contain exactly 2 elements")
+        for e in params["bandpass"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`bandpass` has the wrong type: Received `{type(params.get("bandpass", None))}` expected `list[str] | None`')
+    if params.get("ort", None) is not None:
+        if not isinstance(params["ort"], list):
+            raise StyxValidationError(f'`ort` has the wrong type: Received `{type(params.get("ort", None))}` expected `list[InputPathType] | None`')
+        if len(params["ort"]) <= 999:
+            raise StyxValidationError("Parameter `ort` must contain at most 999 elements")
+        for e in params["ort"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`ort` has the wrong type: Received `{type(params.get("ort", None))}` expected `list[InputPathType] | None`')
+    if params.get("alt_input", None) is not None:
+        if not isinstance(params["alt_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`alt_input` has the wrong type: Received `{type(params.get("alt_input", None))}` expected `InputPathType | None`')
+
+
 def v_3dmask_svd_cargs(
     params: V3dmaskSvdParameters,
     execution: Execution,
@@ -191,6 +245,7 @@ def v_3dmask_svd_execute(
     Returns:
         NamedTuple of outputs (described in `V3dmaskSvdOutputs`).
     """
+    v_3dmask_svd_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DMASK_SVD_METADATA)
     params = execution.params(params)

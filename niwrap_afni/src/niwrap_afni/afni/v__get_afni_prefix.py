@@ -55,6 +55,27 @@ def v__get_afni_prefix_params(
     return params
 
 
+def v__get_afni_prefix_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VGetAfniPrefixParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is None:
+        raise StyxValidationError("`name` must not be None")
+    if not isinstance(params["name"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `InputPathType`')
+    if params.get("suffix", None) is not None:
+        if not isinstance(params["suffix"], str):
+            raise StyxValidationError(f'`suffix` has the wrong type: Received `{type(params.get("suffix", None))}` expected `str | None`')
+
+
 def v__get_afni_prefix_cargs(
     params: VGetAfniPrefixParameters,
     execution: Execution,
@@ -114,6 +135,7 @@ def v__get_afni_prefix_execute(
     Returns:
         NamedTuple of outputs (described in `VGetAfniPrefixOutputs`).
     """
+    v__get_afni_prefix_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__GET_AFNI_PREFIX_METADATA)
     params = execution.params(params)

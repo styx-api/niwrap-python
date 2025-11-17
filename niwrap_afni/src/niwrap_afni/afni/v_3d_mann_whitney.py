@@ -74,6 +74,44 @@ def v_3d_mann_whitney_params(
     return params
 
 
+def v_3d_mann_whitney_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMannWhitneyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset1_x", None) is None:
+        raise StyxValidationError("`dset1_x` must not be None")
+    if not isinstance(params["dset1_x"], list):
+        raise StyxValidationError(f'`dset1_x` has the wrong type: Received `{type(params.get("dset1_x", None))}` expected `list[str]`')
+    for e in params["dset1_x"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`dset1_x` has the wrong type: Received `{type(params.get("dset1_x", None))}` expected `list[str]`')
+    if params.get("dset2_y", None) is None:
+        raise StyxValidationError("`dset2_y` must not be None")
+    if not isinstance(params["dset2_y"], list):
+        raise StyxValidationError(f'`dset2_y` has the wrong type: Received `{type(params.get("dset2_y", None))}` expected `list[str]`')
+    for e in params["dset2_y"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`dset2_y` has the wrong type: Received `{type(params.get("dset2_y", None))}` expected `list[str]`')
+    if params.get("output_prefix", None) is None:
+        raise StyxValidationError("`output_prefix` must not be None")
+    if not isinstance(params["output_prefix"], str):
+        raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str`')
+    if params.get("workmem", None) is not None:
+        if not isinstance(params["workmem"], int):
+            raise StyxValidationError(f'`workmem` has the wrong type: Received `{type(params.get("workmem", None))}` expected `int | None`')
+    if params.get("voxel_num", None) is not None:
+        if not isinstance(params["voxel_num"], int):
+            raise StyxValidationError(f'`voxel_num` has the wrong type: Received `{type(params.get("voxel_num", None))}` expected `int | None`')
+
+
 def v_3d_mann_whitney_cargs(
     params: V3dMannWhitneyParameters,
     execution: Execution,
@@ -152,6 +190,7 @@ def v_3d_mann_whitney_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMannWhitneyOutputs`).
     """
+    v_3d_mann_whitney_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MANN_WHITNEY_METADATA)
     params = execution.params(params)

@@ -111,6 +111,60 @@ def convert_scalar_image_to_rgb_params(
     return params
 
 
+def convert_scalar_image_to_rgb_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertScalarImageToRgbParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("colormap", None) is None:
+        raise StyxValidationError("`colormap` must not be None")
+    if not isinstance(params["colormap"], str):
+        raise StyxValidationError(f'`colormap` has the wrong type: Received `{type(params.get("colormap", None))}` expected `typing.Literal["grey", "red", "green", "blue", "copper", "jet", "hsv", "spring", "summer", "autumn", "winter", "hot", "cool", "overunder", "custom"]`')
+    if params["colormap"] not in ["grey", "red", "green", "blue", "copper", "jet", "hsv", "spring", "summer", "autumn", "winter", "hot", "cool", "overunder", "custom"]:
+        raise StyxValidationError("Parameter `colormap` must be one of [\"grey\", \"red\", \"green\", \"blue\", \"copper\", \"jet\", \"hsv\", \"spring\", \"summer\", \"autumn\", \"winter\", \"hot\", \"cool\", \"overunder\", \"custom\"]")
+    if params.get("custom_colormap_file", None) is not None:
+        if not isinstance(params["custom_colormap_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`custom_colormap_file` has the wrong type: Received `{type(params.get("custom_colormap_file", None))}` expected `InputPathType | None`')
+    if params.get("minimum_input", None) is not None:
+        if not isinstance(params["minimum_input"], (float, int)):
+            raise StyxValidationError(f'`minimum_input` has the wrong type: Received `{type(params.get("minimum_input", None))}` expected `float | None`')
+    if params.get("maximum_input", None) is not None:
+        if not isinstance(params["maximum_input"], (float, int)):
+            raise StyxValidationError(f'`maximum_input` has the wrong type: Received `{type(params.get("maximum_input", None))}` expected `float | None`')
+    if params.get("minimum_rgb_output", None) is not None:
+        if not isinstance(params["minimum_rgb_output"], int):
+            raise StyxValidationError(f'`minimum_rgb_output` has the wrong type: Received `{type(params.get("minimum_rgb_output", None))}` expected `int | None`')
+    if params.get("maximum_rgb_output", None) is not None:
+        if not isinstance(params["maximum_rgb_output"], int):
+            raise StyxValidationError(f'`maximum_rgb_output` has the wrong type: Received `{type(params.get("maximum_rgb_output", None))}` expected `int | None`')
+    if params.get("vtk_lookup_table", None) is not None:
+        if not isinstance(params["vtk_lookup_table"], str):
+            raise StyxValidationError(f'`vtk_lookup_table` has the wrong type: Received `{type(params.get("vtk_lookup_table", None))}` expected `str | None`')
+
+
 def convert_scalar_image_to_rgb_cargs(
     params: ConvertScalarImageToRgbParameters,
     execution: Execution,
@@ -186,6 +240,7 @@ def convert_scalar_image_to_rgb_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertScalarImageToRgbOutputs`).
     """
+    convert_scalar_image_to_rgb_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_SCALAR_IMAGE_TO_RGB_METADATA)
     params = execution.params(params)

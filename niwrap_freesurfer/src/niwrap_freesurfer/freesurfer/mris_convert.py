@@ -263,6 +263,156 @@ def mris_convert_params(
     return params
 
 
+def mris_convert_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisConvertParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("second_input_file", None) is not None:
+        if not isinstance(params["second_input_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`second_input_file` has the wrong type: Received `{type(params.get("second_input_file", None))}` expected `InputPathType | None`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("patch", False) is None:
+        raise StyxValidationError("`patch` must not be None")
+    if not isinstance(params["patch"], bool):
+        raise StyxValidationError(f'`patch` has the wrong type: Received `{type(params.get("patch", False))}` expected `bool`')
+    if params.get("curv_overlay_files", None) is not None:
+        if not isinstance(params["curv_overlay_files"], list):
+            raise StyxValidationError(f'`curv_overlay_files` has the wrong type: Received `{type(params.get("curv_overlay_files", None))}` expected `list[str] | None`')
+        for e in params["curv_overlay_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`curv_overlay_files` has the wrong type: Received `{type(params.get("curv_overlay_files", None))}` expected `list[str] | None`')
+    if params.get("functional_data_file", None) is not None:
+        if not isinstance(params["functional_data_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`functional_data_file` has the wrong type: Received `{type(params.get("functional_data_file", None))}` expected `InputPathType | None`')
+    if params.get("orig_positions", None) is not None:
+        if not isinstance(params["orig_positions"], str):
+            raise StyxValidationError(f'`orig_positions` has the wrong type: Received `{type(params.get("orig_positions", None))}` expected `str | None`')
+    if params.get("scale", None) is not None:
+        if not isinstance(params["scale"], (float, int)):
+            raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float | None`')
+    if params.get("rescale", False) is None:
+        raise StyxValidationError("`rescale` must not be None")
+    if not isinstance(params["rescale"], bool):
+        raise StyxValidationError(f'`rescale` has the wrong type: Received `{type(params.get("rescale", False))}` expected `bool`')
+    if params.get("talairach_xfm", None) is not None:
+        if not isinstance(params["talairach_xfm"], str):
+            raise StyxValidationError(f'`talairach_xfm` has the wrong type: Received `{type(params.get("talairach_xfm", None))}` expected `str | None`')
+    if params.get("normals", False) is None:
+        raise StyxValidationError("`normals` must not be None")
+    if not isinstance(params["normals"], bool):
+        raise StyxValidationError(f'`normals` has the wrong type: Received `{type(params.get("normals", False))}` expected `bool`')
+    if params.get("neighbors", False) is None:
+        raise StyxValidationError("`neighbors` must not be None")
+    if not isinstance(params["neighbors"], bool):
+        raise StyxValidationError(f'`neighbors` has the wrong type: Received `{type(params.get("neighbors", False))}` expected `bool`')
+    if params.get("xyz", False) is None:
+        raise StyxValidationError("`xyz` must not be None")
+    if not isinstance(params["xyz"], bool):
+        raise StyxValidationError(f'`xyz` has the wrong type: Received `{type(params.get("xyz", False))}` expected `bool`')
+    if params.get("annotation_file", None) is not None:
+        if not isinstance(params["annotation_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`annotation_file` has the wrong type: Received `{type(params.get("annotation_file", None))}` expected `InputPathType | None`')
+    if params.get("parcstats_file", None) is not None:
+        if not isinstance(params["parcstats_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`parcstats_file` has the wrong type: Received `{type(params.get("parcstats_file", None))}` expected `InputPathType | None`')
+    if params.get("gifti_dataarray_num", None) is not None:
+        if not isinstance(params["gifti_dataarray_num"], (float, int)):
+            raise StyxValidationError(f'`gifti_dataarray_num` has the wrong type: Received `{type(params.get("gifti_dataarray_num", None))}` expected `float | None`')
+    if params.get("label_file", None) is not None:
+        if not isinstance(params["label_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`label_file` has the wrong type: Received `{type(params.get("label_file", None))}` expected `InputPathType | None`')
+    if params.get("label_stats_file", None) is not None:
+        if not isinstance(params["label_stats_file"], str):
+            raise StyxValidationError(f'`label_stats_file` has the wrong type: Received `{type(params.get("label_stats_file", None))}` expected `str | None`')
+    if params.get("combine_surfs", False) is None:
+        raise StyxValidationError("`combine_surfs` must not be None")
+    if not isinstance(params["combine_surfs"], bool):
+        raise StyxValidationError(f'`combine_surfs` has the wrong type: Received `{type(params.get("combine_surfs", False))}` expected `bool`')
+    if params.get("merge_gifti", False) is None:
+        raise StyxValidationError("`merge_gifti` must not be None")
+    if not isinstance(params["merge_gifti"], bool):
+        raise StyxValidationError(f'`merge_gifti` has the wrong type: Received `{type(params.get("merge_gifti", False))}` expected `bool`')
+    if params.get("split_gifti", False) is None:
+        raise StyxValidationError("`split_gifti` must not be None")
+    if not isinstance(params["split_gifti"], bool):
+        raise StyxValidationError(f'`split_gifti` has the wrong type: Received `{type(params.get("split_gifti", False))}` expected `bool`')
+    if params.get("gifti_outdir", None) is not None:
+        if not isinstance(params["gifti_outdir"], str):
+            raise StyxValidationError(f'`gifti_outdir` has the wrong type: Received `{type(params.get("gifti_outdir", None))}` expected `str | None`')
+    if params.get("delete_cmds", False) is None:
+        raise StyxValidationError("`delete_cmds` must not be None")
+    if not isinstance(params["delete_cmds"], bool):
+        raise StyxValidationError(f'`delete_cmds` has the wrong type: Received `{type(params.get("delete_cmds", False))}` expected `bool`')
+    if params.get("center", False) is None:
+        raise StyxValidationError("`center` must not be None")
+    if not isinstance(params["center"], bool):
+        raise StyxValidationError(f'`center` has the wrong type: Received `{type(params.get("center", False))}` expected `bool`')
+    if params.get("vol_geom", None) is not None:
+        if not isinstance(params["vol_geom"], str):
+            raise StyxValidationError(f'`vol_geom` has the wrong type: Received `{type(params.get("vol_geom", None))}` expected `str | None`')
+    if params.get("remove_vol_geom", False) is None:
+        raise StyxValidationError("`remove_vol_geom` must not be None")
+    if not isinstance(params["remove_vol_geom"], bool):
+        raise StyxValidationError(f'`remove_vol_geom` has the wrong type: Received `{type(params.get("remove_vol_geom", False))}` expected `bool`')
+    if params.get("to_surf", None) is not None:
+        if not isinstance(params["to_surf"], str):
+            raise StyxValidationError(f'`to_surf` has the wrong type: Received `{type(params.get("to_surf", None))}` expected `str | None`')
+    if params.get("to_scanner", False) is None:
+        raise StyxValidationError("`to_scanner` must not be None")
+    if not isinstance(params["to_scanner"], bool):
+        raise StyxValidationError(f'`to_scanner` has the wrong type: Received `{type(params.get("to_scanner", False))}` expected `bool`')
+    if params.get("to_tkr", False) is None:
+        raise StyxValidationError("`to_tkr` must not be None")
+    if not isinstance(params["to_tkr"], bool):
+        raise StyxValidationError(f'`to_tkr` has the wrong type: Received `{type(params.get("to_tkr", False))}` expected `bool`')
+    if params.get("userealras", False) is None:
+        raise StyxValidationError("`userealras` must not be None")
+    if not isinstance(params["userealras"], bool):
+        raise StyxValidationError(f'`userealras` has the wrong type: Received `{type(params.get("userealras", False))}` expected `bool`')
+    if params.get("usesurfras", False) is None:
+        raise StyxValidationError("`usesurfras` must not be None")
+    if not isinstance(params["usesurfras"], bool):
+        raise StyxValidationError(f'`usesurfras` has the wrong type: Received `{type(params.get("usesurfras", False))}` expected `bool`')
+    if params.get("upsample", None) is not None:
+        if not isinstance(params["upsample"], str):
+            raise StyxValidationError(f'`upsample` has the wrong type: Received `{type(params.get("upsample", None))}` expected `str | None`')
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], str):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `str | None`')
+    if params.get("area", None) is not None:
+        if not isinstance(params["area"], str):
+            raise StyxValidationError(f'`area` has the wrong type: Received `{type(params.get("area", None))}` expected `str | None`')
+    if params.get("angle", None) is not None:
+        if not isinstance(params["angle"], str):
+            raise StyxValidationError(f'`angle` has the wrong type: Received `{type(params.get("angle", None))}` expected `str | None`')
+    if params.get("label_to_mask", None) is not None:
+        if not isinstance(params["label_to_mask"], str):
+            raise StyxValidationError(f'`label_to_mask` has the wrong type: Received `{type(params.get("label_to_mask", None))}` expected `str | None`')
+    if params.get("cras_add", False) is None:
+        raise StyxValidationError("`cras_add` must not be None")
+    if not isinstance(params["cras_add"], bool):
+        raise StyxValidationError(f'`cras_add` has the wrong type: Received `{type(params.get("cras_add", False))}` expected `bool`')
+    if params.get("cras_subtract", False) is None:
+        raise StyxValidationError("`cras_subtract` must not be None")
+    if not isinstance(params["cras_subtract"], bool):
+        raise StyxValidationError(f'`cras_subtract` has the wrong type: Received `{type(params.get("cras_subtract", False))}` expected `bool`')
+
+
 def mris_convert_cargs(
     params: MrisConvertParameters,
     execution: Execution,
@@ -448,6 +598,7 @@ def mris_convert_execute(
     Returns:
         NamedTuple of outputs (described in `MrisConvertOutputs`).
     """
+    mris_convert_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CONVERT_METADATA)
     params = execution.params(params)

@@ -67,6 +67,35 @@ def siena_cal_params(
     return params
 
 
+def siena_cal_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SienaCalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input1_file", None) is None:
+        raise StyxValidationError("`input1_file` must not be None")
+    if not isinstance(params["input1_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input1_file` has the wrong type: Received `{type(params.get("input1_file", None))}` expected `InputPathType`')
+    if params.get("input2_file", None) is None:
+        raise StyxValidationError("`input2_file` must not be None")
+    if not isinstance(params["input2_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input2_file` has the wrong type: Received `{type(params.get("input2_file", None))}` expected `InputPathType`')
+    if params.get("scale", None) is None:
+        raise StyxValidationError("`scale` must not be None")
+    if not isinstance(params["scale"], (float, int)):
+        raise StyxValidationError(f'`scale` has the wrong type: Received `{type(params.get("scale", None))}` expected `float`')
+    if params.get("siena_diff_options", None) is not None:
+        if not isinstance(params["siena_diff_options"], str):
+            raise StyxValidationError(f'`siena_diff_options` has the wrong type: Received `{type(params.get("siena_diff_options", None))}` expected `str | None`')
+
+
 def siena_cal_cargs(
     params: SienaCalParameters,
     execution: Execution,
@@ -130,6 +159,7 @@ def siena_cal_execute(
     Returns:
         NamedTuple of outputs (described in `SienaCalOutputs`).
     """
+    siena_cal_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SIENA_CAL_METADATA)
     params = execution.params(params)

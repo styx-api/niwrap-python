@@ -83,6 +83,41 @@ def v_2perm_params(
     return params
 
 
+def v_2perm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V2permParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("comma", False) is None:
+        raise StyxValidationError("`comma` must not be None")
+    if not isinstance(params["comma"], bool):
+        raise StyxValidationError(f'`comma` has the wrong type: Received `{type(params.get("comma", False))}` expected `bool`')
+    if params.get("bottom_int", None) is None:
+        raise StyxValidationError("`bottom_int` must not be None")
+    if not isinstance(params["bottom_int"], (float, int)):
+        raise StyxValidationError(f'`bottom_int` has the wrong type: Received `{type(params.get("bottom_int", None))}` expected `float`')
+    if params.get("top_int", None) is None:
+        raise StyxValidationError("`top_int` must not be None")
+    if not isinstance(params["top_int"], (float, int)):
+        raise StyxValidationError(f'`top_int` has the wrong type: Received `{type(params.get("top_int", None))}` expected `float`')
+    if params.get("subset1_size", None) is not None:
+        if not isinstance(params["subset1_size"], (float, int)):
+            raise StyxValidationError(f'`subset1_size` has the wrong type: Received `{type(params.get("subset1_size", None))}` expected `float | None`')
+    if params.get("subset2_size", None) is not None:
+        if not isinstance(params["subset2_size"], (float, int)):
+            raise StyxValidationError(f'`subset2_size` has the wrong type: Received `{type(params.get("subset2_size", None))}` expected `float | None`')
+
+
 def v_2perm_cargs(
     params: V2permParameters,
     execution: Execution,
@@ -154,6 +189,7 @@ def v_2perm_execute(
     Returns:
         NamedTuple of outputs (described in `V2permOutputs`).
     """
+    v_2perm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_2PERM_METADATA)
     params = execution.params(params)

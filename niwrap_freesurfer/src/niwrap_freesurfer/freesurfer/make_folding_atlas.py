@@ -159,6 +159,93 @@ def make_folding_atlas_params(
     return params
 
 
+def make_folding_atlas_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeFoldingAtlasParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjlistfile", None) is not None:
+        if not isinstance(params["subjlistfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subjlistfile` has the wrong type: Received `{type(params.get("subjlistfile", None))}` expected `InputPathType | None`')
+    if params.get("fsgdfile", None) is not None:
+        if not isinstance(params["fsgdfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fsgdfile` has the wrong type: Received `{type(params.get("fsgdfile", None))}` expected `InputPathType | None`')
+    if params.get("subjects", None) is not None:
+        if not isinstance(params["subjects"], list):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+        for e in params["subjects"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str] | None`')
+    if params.get("output_base", None) is not None:
+        if not isinstance(params["output_base"], str):
+            raise StyxValidationError(f'`output_base` has the wrong type: Received `{type(params.get("output_base", None))}` expected `str | None`')
+    if params.get("max_iterations", None) is not None:
+        if not isinstance(params["max_iterations"], (float, int)):
+            raise StyxValidationError(f'`max_iterations` has the wrong type: Received `{type(params.get("max_iterations", None))}` expected `float | None`')
+    if params.get("xhemi", False) is None:
+        raise StyxValidationError("`xhemi` must not be None")
+    if not isinstance(params["xhemi"], bool):
+        raise StyxValidationError(f'`xhemi` has the wrong type: Received `{type(params.get("xhemi", False))}` expected `bool`')
+    if params.get("init_surf_reg", None) is not None:
+        if not isinstance(params["init_surf_reg"], str):
+            raise StyxValidationError(f'`init_surf_reg` has the wrong type: Received `{type(params.get("init_surf_reg", None))}` expected `str | None`')
+    if params.get("init_subject", None) is not None:
+        if not isinstance(params["init_subject"], str):
+            raise StyxValidationError(f'`init_subject` has the wrong type: Received `{type(params.get("init_subject", None))}` expected `str | None`')
+    if params.get("no_annot_template", False) is None:
+        raise StyxValidationError("`no_annot_template` must not be None")
+    if not isinstance(params["no_annot_template"], bool):
+        raise StyxValidationError(f'`no_annot_template` has the wrong type: Received `{type(params.get("no_annot_template", False))}` expected `bool`')
+    if params.get("left_hemisphere", False) is None:
+        raise StyxValidationError("`left_hemisphere` must not be None")
+    if not isinstance(params["left_hemisphere"], bool):
+        raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", False))}` expected `bool`')
+    if params.get("right_hemisphere", False) is None:
+        raise StyxValidationError("`right_hemisphere` must not be None")
+    if not isinstance(params["right_hemisphere"], bool):
+        raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", False))}` expected `bool`')
+    if params.get("lhrh", False) is None:
+        raise StyxValidationError("`lhrh` must not be None")
+    if not isinstance(params["lhrh"], bool):
+        raise StyxValidationError(f'`lhrh` has the wrong type: Received `{type(params.get("lhrh", False))}` expected `bool`')
+    if params.get("ico_order", None) is not None:
+        if not isinstance(params["ico_order"], (float, int)):
+            raise StyxValidationError(f'`ico_order` has the wrong type: Received `{type(params.get("ico_order", None))}` expected `float | None`')
+    if params.get("no_vol_on_last", False) is None:
+        raise StyxValidationError("`no_vol_on_last` must not be None")
+    if not isinstance(params["no_vol_on_last"], bool):
+        raise StyxValidationError(f'`no_vol_on_last` has the wrong type: Received `{type(params.get("no_vol_on_last", False))}` expected `bool`')
+    if params.get("vol", False) is None:
+        raise StyxValidationError("`vol` must not be None")
+    if not isinstance(params["vol"], bool):
+        raise StyxValidationError(f'`vol` has the wrong type: Received `{type(params.get("vol", False))}` expected `bool`')
+    if params.get("init", False) is None:
+        raise StyxValidationError("`init` must not be None")
+    if not isinstance(params["init"], bool):
+        raise StyxValidationError(f'`init` has the wrong type: Received `{type(params.get("init", False))}` expected `bool`')
+    if params.get("short_sleep", False) is None:
+        raise StyxValidationError("`short_sleep` must not be None")
+    if not isinstance(params["short_sleep"], bool):
+        raise StyxValidationError(f'`short_sleep` has the wrong type: Received `{type(params.get("short_sleep", False))}` expected `bool`')
+    if params.get("no_template_only", False) is None:
+        raise StyxValidationError("`no_template_only` must not be None")
+    if not isinstance(params["no_template_only"], bool):
+        raise StyxValidationError(f'`no_template_only` has the wrong type: Received `{type(params.get("no_template_only", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+    if params.get("slurm_account", None) is not None:
+        if not isinstance(params["slurm_account"], str):
+            raise StyxValidationError(f'`slurm_account` has the wrong type: Received `{type(params.get("slurm_account", None))}` expected `str | None`')
+
+
 def make_folding_atlas_cargs(
     params: MakeFoldingAtlasParameters,
     execution: Execution,
@@ -285,6 +372,7 @@ def make_folding_atlas_execute(
     Returns:
         NamedTuple of outputs (described in `MakeFoldingAtlasOutputs`).
     """
+    make_folding_atlas_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_FOLDING_ATLAS_METADATA)
     params = execution.params(params)

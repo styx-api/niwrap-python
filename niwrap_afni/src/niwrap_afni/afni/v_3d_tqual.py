@@ -95,6 +95,50 @@ def v_3d_tqual_params(
     return params
 
 
+def v_3d_tqual_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTqualParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("spearman", False) is None:
+        raise StyxValidationError("`spearman` must not be None")
+    if not isinstance(params["spearman"], bool):
+        raise StyxValidationError(f'`spearman` has the wrong type: Received `{type(params.get("spearman", False))}` expected `bool`')
+    if params.get("quadrant", False) is None:
+        raise StyxValidationError("`quadrant` must not be None")
+    if not isinstance(params["quadrant"], bool):
+        raise StyxValidationError(f'`quadrant` has the wrong type: Received `{type(params.get("quadrant", False))}` expected `bool`')
+    if params.get("autoclip", False) is None:
+        raise StyxValidationError("`autoclip` must not be None")
+    if not isinstance(params["autoclip"], bool):
+        raise StyxValidationError(f'`autoclip` has the wrong type: Received `{type(params.get("autoclip", False))}` expected `bool`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("clip", None) is not None:
+        if not isinstance(params["clip"], (float, int)):
+            raise StyxValidationError(f'`clip` has the wrong type: Received `{type(params.get("clip", None))}` expected `float | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("range", False) is None:
+        raise StyxValidationError("`range` must not be None")
+    if not isinstance(params["range"], bool):
+        raise StyxValidationError(f'`range` has the wrong type: Received `{type(params.get("range", False))}` expected `bool`')
+
+
 def v_3d_tqual_cargs(
     params: V3dTqualParameters,
     execution: Execution,
@@ -173,6 +217,7 @@ def v_3d_tqual_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTqualOutputs`).
     """
+    v_3d_tqual_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TQUAL_METADATA)
     params = execution.params(params)

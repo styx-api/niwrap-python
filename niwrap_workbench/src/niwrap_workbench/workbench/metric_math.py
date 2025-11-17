@@ -74,6 +74,35 @@ def metric_math_var_params(
     return params
 
 
+def metric_math_var_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricMathVarParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is None:
+        raise StyxValidationError("`name` must not be None")
+    if not isinstance(params["name"], str):
+        raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], str):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str | None`')
+    if params.get("repeat", False) is None:
+        raise StyxValidationError("`repeat` must not be None")
+    if not isinstance(params["repeat"], bool):
+        raise StyxValidationError(f'`repeat` has the wrong type: Received `{type(params.get("repeat", False))}` expected `bool`')
+
+
 def metric_math_var_cargs(
     params: MetricMathVarParameters,
     execution: Execution,
@@ -139,6 +168,36 @@ def metric_math_params(
     if var is not None:
         params["var"] = var
     return params
+
+
+def metric_math_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MetricMathParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("replace", None) is not None:
+        if not isinstance(params["replace"], (float, int)):
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
+    if params.get("var", None) is not None:
+        if not isinstance(params["var"], list):
+            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[MetricMathVarParameters] | None`')
+        for e in params["var"]:
+            metric_math_var_validate(e)
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
 
 
 def metric_math_cargs(
@@ -271,6 +330,7 @@ def metric_math_execute(
     Returns:
         NamedTuple of outputs (described in `MetricMathOutputs`).
     """
+    metric_math_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(METRIC_MATH_METADATA)
     params = execution.params(params)

@@ -81,6 +81,52 @@ def dmri_mergepaths_params(
     return params
 
 
+def dmri_mergepaths_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DmriMergepathsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volumes", None) is None:
+        raise StyxValidationError("`input_volumes` must not be None")
+    if not isinstance(params["input_volumes"], list):
+        raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+    for e in params["input_volumes"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_volumes` has the wrong type: Received `{type(params.get("input_volumes", None))}` expected `list[InputPathType]`')
+    if params.get("input_directory", None) is not None:
+        if not isinstance(params["input_directory"], str):
+            raise StyxValidationError(f'`input_directory` has the wrong type: Received `{type(params.get("input_directory", None))}` expected `str | None`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("color_table", None) is None:
+        raise StyxValidationError("`color_table` must not be None")
+    if not isinstance(params["color_table"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`color_table` has the wrong type: Received `{type(params.get("color_table", None))}` expected `InputPathType`')
+    if params.get("threshold", None) is None:
+        raise StyxValidationError("`threshold` must not be None")
+    if not isinstance(params["threshold"], (float, int)):
+        raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float`')
+    if 0 <= params["threshold"] <= 1:
+        raise StyxValidationError("Parameter `threshold` must be between 0 and 1 (inclusive)")
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("check_opts", False) is None:
+        raise StyxValidationError("`check_opts` must not be None")
+    if not isinstance(params["check_opts"], bool):
+        raise StyxValidationError(f'`check_opts` has the wrong type: Received `{type(params.get("check_opts", False))}` expected `bool`')
+
+
 def dmri_mergepaths_cargs(
     params: DmriMergepathsParameters,
     execution: Execution,
@@ -159,6 +205,7 @@ def dmri_mergepaths_execute(
     Returns:
         NamedTuple of outputs (described in `DmriMergepathsOutputs`).
     """
+    dmri_mergepaths_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DMRI_MERGEPATHS_METADATA)
     params = execution.params(params)

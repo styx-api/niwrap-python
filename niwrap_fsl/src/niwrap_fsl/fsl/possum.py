@@ -184,6 +184,104 @@ def possum_params(
     return params
 
 
+def possum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PossumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("mr_parameters", None) is None:
+        raise StyxValidationError("`mr_parameters` must not be None")
+    if not isinstance(params["mr_parameters"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mr_parameters` has the wrong type: Received `{type(params.get("mr_parameters", None))}` expected `InputPathType`')
+    if params.get("motion_matrix", None) is None:
+        raise StyxValidationError("`motion_matrix` must not be None")
+    if not isinstance(params["motion_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`motion_matrix` has the wrong type: Received `{type(params.get("motion_matrix", None))}` expected `InputPathType`')
+    if params.get("pulse_sequence", None) is None:
+        raise StyxValidationError("`pulse_sequence` must not be None")
+    if not isinstance(params["pulse_sequence"], str):
+        raise StyxValidationError(f'`pulse_sequence` has the wrong type: Received `{type(params.get("pulse_sequence", None))}` expected `str`')
+    if params.get("rf_slice_profile", None) is None:
+        raise StyxValidationError("`rf_slice_profile` must not be None")
+    if not isinstance(params["rf_slice_profile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`rf_slice_profile` has the wrong type: Received `{type(params.get("rf_slice_profile", None))}` expected `InputPathType`')
+    if params.get("output_signal", None) is None:
+        raise StyxValidationError("`output_signal` must not be None")
+    if not isinstance(params["output_signal"], str):
+        raise StyxValidationError(f'`output_signal` has the wrong type: Received `{type(params.get("output_signal", None))}` expected `str`')
+    if params.get("event_matrix", None) is None:
+        raise StyxValidationError("`event_matrix` must not be None")
+    if not isinstance(params["event_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`event_matrix` has the wrong type: Received `{type(params.get("event_matrix", None))}` expected `InputPathType`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("kcoord", False) is None:
+        raise StyxValidationError("`kcoord` must not be None")
+    if not isinstance(params["kcoord"], bool):
+        raise StyxValidationError(f'`kcoord` has the wrong type: Received `{type(params.get("kcoord", False))}` expected `bool`')
+    if params.get("b0_inhomogeneities", None) is not None:
+        if not isinstance(params["b0_inhomogeneities"], str):
+            raise StyxValidationError(f'`b0_inhomogeneities` has the wrong type: Received `{type(params.get("b0_inhomogeneities", None))}` expected `str | None`')
+    if params.get("extra_b0_inhomogeneities", None) is not None:
+        if not isinstance(params["extra_b0_inhomogeneities"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`extra_b0_inhomogeneities` has the wrong type: Received `{type(params.get("extra_b0_inhomogeneities", None))}` expected `InputPathType | None`')
+    if params.get("b0_inhomogeneities_timecourse", None) is not None:
+        if not isinstance(params["b0_inhomogeneities_timecourse"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`b0_inhomogeneities_timecourse` has the wrong type: Received `{type(params.get("b0_inhomogeneities_timecourse", None))}` expected `InputPathType | None`')
+    if params.get("rf_inhomogeneity_receive", None) is not None:
+        if not isinstance(params["rf_inhomogeneity_receive"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rf_inhomogeneity_receive` has the wrong type: Received `{type(params.get("rf_inhomogeneity_receive", None))}` expected `InputPathType | None`')
+    if params.get("rf_inhomogeneity_transmit", None) is not None:
+        if not isinstance(params["rf_inhomogeneity_transmit"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`rf_inhomogeneity_transmit` has the wrong type: Received `{type(params.get("rf_inhomogeneity_transmit", None))}` expected `InputPathType | None`')
+    if params.get("activation_volume", None) is not None:
+        if not isinstance(params["activation_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`activation_volume` has the wrong type: Received `{type(params.get("activation_volume", None))}` expected `InputPathType | None`')
+    if params.get("activation_timecourse", None) is not None:
+        if not isinstance(params["activation_timecourse"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`activation_timecourse` has the wrong type: Received `{type(params.get("activation_timecourse", None))}` expected `InputPathType | None`')
+    if params.get("activation_4d_volume", None) is not None:
+        if not isinstance(params["activation_4d_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`activation_4d_volume` has the wrong type: Received `{type(params.get("activation_4d_volume", None))}` expected `InputPathType | None`')
+    if params.get("activation_4d_timecourse", None) is not None:
+        if not isinstance(params["activation_4d_timecourse"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`activation_4d_timecourse` has the wrong type: Received `{type(params.get("activation_4d_timecourse", None))}` expected `InputPathType | None`')
+    if params.get("level", None) is not None:
+        if not isinstance(params["level"], str):
+            raise StyxValidationError(f'`level` has the wrong type: Received `{type(params.get("level", None))}` expected `str | None`')
+    if params.get("num_procs", None) is not None:
+        if not isinstance(params["num_procs"], (float, int)):
+            raise StyxValidationError(f'`num_procs` has the wrong type: Received `{type(params.get("num_procs", None))}` expected `float | None`')
+    if params.get("proc_id", None) is not None:
+        if not isinstance(params["proc_id"], (float, int)):
+            raise StyxValidationError(f'`proc_id` has the wrong type: Received `{type(params.get("proc_id", None))}` expected `float | None`')
+    if params.get("no_speedup", False) is None:
+        raise StyxValidationError("`no_speedup` must not be None")
+    if not isinstance(params["no_speedup"], bool):
+        raise StyxValidationError(f'`no_speedup` has the wrong type: Received `{type(params.get("no_speedup", False))}` expected `bool`')
+    if params.get("rf_average", False) is None:
+        raise StyxValidationError("`rf_average` must not be None")
+    if not isinstance(params["rf_average"], bool):
+        raise StyxValidationError(f'`rf_average` has the wrong type: Received `{type(params.get("rf_average", False))}` expected `bool`')
+
+
 def possum_cargs(
     params: PossumParameters,
     execution: Execution,
@@ -339,6 +437,7 @@ def possum_execute(
     Returns:
         NamedTuple of outputs (described in `PossumOutputs`).
     """
+    possum_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(POSSUM_METADATA)
     params = execution.params(params)

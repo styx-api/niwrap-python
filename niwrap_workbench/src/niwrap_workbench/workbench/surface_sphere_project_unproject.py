@@ -66,6 +66,36 @@ def surface_sphere_project_unproject_params(
     return params
 
 
+def surface_sphere_project_unproject_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceSphereProjectUnprojectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sphere-out", None) is None:
+        raise StyxValidationError("`sphere-out` must not be None")
+    if not isinstance(params["sphere-out"], str):
+        raise StyxValidationError(f'`sphere-out` has the wrong type: Received `{type(params.get("sphere-out", None))}` expected `str`')
+    if params.get("sphere-in", None) is None:
+        raise StyxValidationError("`sphere-in` must not be None")
+    if not isinstance(params["sphere-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sphere-in` has the wrong type: Received `{type(params.get("sphere-in", None))}` expected `InputPathType`')
+    if params.get("sphere-project-to", None) is None:
+        raise StyxValidationError("`sphere-project-to` must not be None")
+    if not isinstance(params["sphere-project-to"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sphere-project-to` has the wrong type: Received `{type(params.get("sphere-project-to", None))}` expected `InputPathType`')
+    if params.get("sphere-unproject-from", None) is None:
+        raise StyxValidationError("`sphere-unproject-from` must not be None")
+    if not isinstance(params["sphere-unproject-from"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`sphere-unproject-from` has the wrong type: Received `{type(params.get("sphere-unproject-from", None))}` expected `InputPathType`')
+
+
 def surface_sphere_project_unproject_cargs(
     params: SurfaceSphereProjectUnprojectParameters,
     execution: Execution,
@@ -179,6 +209,7 @@ def surface_sphere_project_unproject_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceSphereProjectUnprojectOutputs`).
     """
+    surface_sphere_project_unproject_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA)
     params = execution.params(params)

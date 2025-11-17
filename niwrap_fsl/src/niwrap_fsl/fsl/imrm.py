@@ -50,6 +50,27 @@ def imrm_params(
     return params
 
 
+def imrm_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `ImrmParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("images_to_remove", None) is None:
+        raise StyxValidationError("`images_to_remove` must not be None")
+    if not isinstance(params["images_to_remove"], list):
+        raise StyxValidationError(f'`images_to_remove` has the wrong type: Received `{type(params.get("images_to_remove", None))}` expected `list[str]`')
+    for e in params["images_to_remove"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`images_to_remove` has the wrong type: Received `{type(params.get("images_to_remove", None))}` expected `list[str]`')
+
+
 def imrm_cargs(
     params: ImrmParameters,
     execution: Execution,
@@ -107,6 +128,7 @@ def imrm_execute(
     Returns:
         NamedTuple of outputs (described in `ImrmOutputs`).
     """
+    imrm_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMRM_METADATA)
     params = execution.params(params)

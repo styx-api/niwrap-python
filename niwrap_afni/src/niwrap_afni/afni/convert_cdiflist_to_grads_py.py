@@ -88,6 +88,48 @@ def convert_cdiflist_to_grads_py_params(
     return params
 
 
+def convert_cdiflist_to_grads_py_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ConvertCdiflistToGradsPyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cdiflist", None) is None:
+        raise StyxValidationError("`cdiflist` must not be None")
+    if not isinstance(params["cdiflist"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cdiflist` has the wrong type: Received `{type(params.get("cdiflist", None))}` expected `InputPathType`')
+    if params.get("bval_max", None) is None:
+        raise StyxValidationError("`bval_max` must not be None")
+    if not isinstance(params["bval_max"], (float, int)):
+        raise StyxValidationError(f'`bval_max` has the wrong type: Received `{type(params.get("bval_max", None))}` expected `float`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("ver", False) is None:
+        raise StyxValidationError("`ver` must not be None")
+    if not isinstance(params["ver"], bool):
+        raise StyxValidationError(f'`ver` has the wrong type: Received `{type(params.get("ver", False))}` expected `bool`')
+    if params.get("date", False) is None:
+        raise StyxValidationError("`date` must not be None")
+    if not isinstance(params["date"], bool):
+        raise StyxValidationError(f'`date` has the wrong type: Received `{type(params.get("date", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("hview", False) is None:
+        raise StyxValidationError("`hview` must not be None")
+    if not isinstance(params["hview"], bool):
+        raise StyxValidationError(f'`hview` has the wrong type: Received `{type(params.get("hview", False))}` expected `bool`')
+
+
 def convert_cdiflist_to_grads_py_cargs(
     params: ConvertCdiflistToGradsPyParameters,
     execution: Execution,
@@ -168,6 +210,7 @@ def convert_cdiflist_to_grads_py_execute(
     Returns:
         NamedTuple of outputs (described in `ConvertCdiflistToGradsPyOutputs`).
     """
+    convert_cdiflist_to_grads_py_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONVERT_CDIFLIST_TO_GRADS_PY_METADATA)
     params = execution.params(params)

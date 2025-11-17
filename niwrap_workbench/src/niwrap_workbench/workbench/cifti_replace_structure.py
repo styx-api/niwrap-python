@@ -107,6 +107,28 @@ def cifti_replace_structure_volume_all_params(
     return params
 
 
+def cifti_replace_structure_volume_all_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReplaceStructureVolumeAllParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("from-cropped", False) is None:
+        raise StyxValidationError("`from-cropped` must not be None")
+    if not isinstance(params["from-cropped"], bool):
+        raise StyxValidationError(f'`from-cropped` has the wrong type: Received `{type(params.get("from-cropped", False))}` expected `bool`')
+
+
 def cifti_replace_structure_volume_all_cargs(
     params: CiftiReplaceStructureVolumeAllParameters,
     execution: Execution,
@@ -151,6 +173,28 @@ def cifti_replace_structure_label_params(
     return params
 
 
+def cifti_replace_structure_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReplaceStructureLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+
+
 def cifti_replace_structure_label_cargs(
     params: CiftiReplaceStructureLabelParameters,
     execution: Execution,
@@ -192,6 +236,28 @@ def cifti_replace_structure_metric_params(
         "metric": metric,
     }
     return params
+
+
+def cifti_replace_structure_metric_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReplaceStructureMetricParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("metric", None) is None:
+        raise StyxValidationError("`metric` must not be None")
+    if not isinstance(params["metric"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType`')
 
 
 def cifti_replace_structure_metric_cargs(
@@ -238,6 +304,32 @@ def cifti_replace_structure_volume_params(
         "from-cropped": from_cropped,
     }
     return params
+
+
+def cifti_replace_structure_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReplaceStructureVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("volume", None) is None:
+        raise StyxValidationError("`volume` must not be None")
+    if not isinstance(params["volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `InputPathType`')
+    if params.get("from-cropped", False) is None:
+        raise StyxValidationError("`from-cropped` must not be None")
+    if not isinstance(params["from-cropped"], bool):
+        raise StyxValidationError(f'`from-cropped` has the wrong type: Received `{type(params.get("from-cropped", False))}` expected `bool`')
 
 
 def cifti_replace_structure_volume_cargs(
@@ -318,6 +410,52 @@ def cifti_replace_structure_params(
     if volume is not None:
         params["volume"] = volume
     return params
+
+
+def cifti_replace_structure_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReplaceStructureParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-all", None) is not None:
+        cifti_replace_structure_volume_all_validate(params["volume-all"])
+    if params.get("discard-unused-labels", False) is None:
+        raise StyxValidationError("`discard-unused-labels` must not be None")
+    if not isinstance(params["discard-unused-labels"], bool):
+        raise StyxValidationError(f'`discard-unused-labels` has the wrong type: Received `{type(params.get("discard-unused-labels", False))}` expected `bool`')
+    if params.get("action", None) is not None:
+        if not isinstance(params["action"], str):
+            raise StyxValidationError(f'`action` has the wrong type: Received `{type(params.get("action", None))}` expected `str | None`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], list):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiReplaceStructureLabelParameters] | None`')
+        for e in params["label"]:
+            cifti_replace_structure_label_validate(e)
+    if params.get("metric", None) is not None:
+        if not isinstance(params["metric"], list):
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `list[CiftiReplaceStructureMetricParameters] | None`')
+        for e in params["metric"]:
+            cifti_replace_structure_metric_validate(e)
+    if params.get("volume", None) is not None:
+        if not isinstance(params["volume"], list):
+            raise StyxValidationError(f'`volume` has the wrong type: Received `{type(params.get("volume", None))}` expected `list[CiftiReplaceStructureVolumeParameters] | None`')
+        for e in params["volume"]:
+            cifti_replace_structure_volume_validate(e)
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], str):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `str`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
 
 
 def cifti_replace_structure_cargs(
@@ -431,6 +569,7 @@ def cifti_replace_structure_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiReplaceStructureOutputs`).
     """
+    cifti_replace_structure_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_REPLACE_STRUCTURE_METADATA)
     params = execution.params(params)

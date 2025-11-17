@@ -109,6 +109,57 @@ def map_icosahedron_params(
     return params
 
 
+def map_icosahedron_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MapIcosahedronParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("spec_file", None) is None:
+        raise StyxValidationError("`spec_file` must not be None")
+    if not isinstance(params["spec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`spec_file` has the wrong type: Received `{type(params.get("spec_file", None))}` expected `InputPathType`')
+    if params.get("rec_depth", None) is not None:
+        if not isinstance(params["rec_depth"], (float, int)):
+            raise StyxValidationError(f'`rec_depth` has the wrong type: Received `{type(params.get("rec_depth", None))}` expected `float | None`')
+    if params.get("lin_depth", None) is not None:
+        if not isinstance(params["lin_depth"], (float, int)):
+            raise StyxValidationError(f'`lin_depth` has the wrong type: Received `{type(params.get("lin_depth", None))}` expected `float | None`')
+    if params.get("morph_surf", None) is not None:
+        if not isinstance(params["morph_surf"], str):
+            raise StyxValidationError(f'`morph_surf` has the wrong type: Received `{type(params.get("morph_surf", None))}` expected `str | None`')
+    if params.get("num_it", None) is not None:
+        if not isinstance(params["num_it"], (float, int)):
+            raise StyxValidationError(f'`num_it` has the wrong type: Received `{type(params.get("num_it", None))}` expected `float | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("nn_dset", None) is not None:
+        if not isinstance(params["nn_dset"], str):
+            raise StyxValidationError(f'`nn_dset` has the wrong type: Received `{type(params.get("nn_dset", None))}` expected `str | None`')
+    if params.get("dset", None) is not None:
+        if not isinstance(params["dset"], str):
+            raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `str | None`')
+    if params.get("fix_cut_surfaces", False) is None:
+        raise StyxValidationError("`fix_cut_surfaces` must not be None")
+    if not isinstance(params["fix_cut_surfaces"], bool):
+        raise StyxValidationError(f'`fix_cut_surfaces` has the wrong type: Received `{type(params.get("fix_cut_surfaces", False))}` expected `bool`')
+    if params.get("verbosity", False) is None:
+        raise StyxValidationError("`verbosity` must not be None")
+    if not isinstance(params["verbosity"], bool):
+        raise StyxValidationError(f'`verbosity` has the wrong type: Received `{type(params.get("verbosity", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def map_icosahedron_cargs(
     params: MapIcosahedronParameters,
     execution: Execution,
@@ -208,6 +259,7 @@ def map_icosahedron_execute(
     Returns:
         NamedTuple of outputs (described in `MapIcosahedronOutputs`).
     """
+    map_icosahedron_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAP_ICOSAHEDRON_METADATA)
     params = execution.params(params)

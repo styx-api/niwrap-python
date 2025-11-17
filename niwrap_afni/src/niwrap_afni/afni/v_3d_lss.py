@@ -100,6 +100,48 @@ def v_3d_lss_params(
     return params
 
 
+def v_3d_lss_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dLssParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("matrix", None) is None:
+        raise StyxValidationError("`matrix` must not be None")
+    if not isinstance(params["matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `InputPathType`')
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType | None`')
+    if params.get("nodata", False) is None:
+        raise StyxValidationError("`nodata` must not be None")
+    if not isinstance(params["nodata"], bool):
+        raise StyxValidationError(f'`nodata` has the wrong type: Received `{type(params.get("nodata", False))}` expected `bool`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("save1D", None) is not None:
+        if not isinstance(params["save1D"], str):
+            raise StyxValidationError(f'`save1D` has the wrong type: Received `{type(params.get("save1D", None))}` expected `str | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v_3d_lss_cargs(
     params: V3dLssParameters,
     execution: Execution,
@@ -189,6 +231,7 @@ def v_3d_lss_execute(
     Returns:
         NamedTuple of outputs (described in `V3dLssOutputs`).
     """
+    v_3d_lss_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LSS_METADATA)
     params = execution.params(params)

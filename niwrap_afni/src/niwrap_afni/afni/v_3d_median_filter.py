@@ -81,6 +81,41 @@ def v_3d_median_filter_params(
     return params
 
 
+def v_3d_median_filter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMedianFilterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("irad", None) is not None:
+        if not isinstance(params["irad"], (float, int)):
+            raise StyxValidationError(f'`irad` has the wrong type: Received `{type(params.get("irad", None))}` expected `float | None`')
+    if params.get("iter", None) is not None:
+        if not isinstance(params["iter"], (float, int)):
+            raise StyxValidationError(f'`iter` has the wrong type: Received `{type(params.get("iter", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("automask", False) is None:
+        raise StyxValidationError("`automask` must not be None")
+    if not isinstance(params["automask"], bool):
+        raise StyxValidationError(f'`automask` has the wrong type: Received `{type(params.get("automask", False))}` expected `bool`')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_median_filter_cargs(
     params: V3dMedianFilterParameters,
     execution: Execution,
@@ -160,6 +195,7 @@ def v_3d_median_filter_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMedianFilterOutputs`).
     """
+    v_3d_median_filter_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MEDIAN_FILTER_METADATA)
     params = execution.params(params)

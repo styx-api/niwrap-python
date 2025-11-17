@@ -190,6 +190,114 @@ def mris_ca_train_params(
     return params
 
 
+def mris_ca_train_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisCaTrainParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("canonsurf", None) is None:
+        raise StyxValidationError("`canonsurf` must not be None")
+    if not isinstance(params["canonsurf"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`canonsurf` has the wrong type: Received `{type(params.get("canonsurf", None))}` expected `InputPathType`')
+    if params.get("annot_file", None) is None:
+        raise StyxValidationError("`annot_file` must not be None")
+    if not isinstance(params["annot_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`annot_file` has the wrong type: Received `{type(params.get("annot_file", None))}` expected `InputPathType`')
+    if params.get("subjects", None) is None:
+        raise StyxValidationError("`subjects` must not be None")
+    if not isinstance(params["subjects"], list):
+        raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    for e in params["subjects"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`subjects` has the wrong type: Received `{type(params.get("subjects", None))}` expected `list[str]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+    if params.get("sdir", None) is not None:
+        if not isinstance(params["sdir"], str):
+            raise StyxValidationError(f'`sdir` has the wrong type: Received `{type(params.get("sdir", None))}` expected `str | None`')
+    if params.get("nbrs", None) is not None:
+        if not isinstance(params["nbrs"], (float, int)):
+            raise StyxValidationError(f'`nbrs` has the wrong type: Received `{type(params.get("nbrs", None))}` expected `float | None`')
+    if params.get("orig", None) is not None:
+        if not isinstance(params["orig"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`orig` has the wrong type: Received `{type(params.get("orig", None))}` expected `InputPathType | None`')
+    if params.get("norm1", False) is None:
+        raise StyxValidationError("`norm1` must not be None")
+    if not isinstance(params["norm1"], bool):
+        raise StyxValidationError(f'`norm1` has the wrong type: Received `{type(params.get("norm1", False))}` expected `bool`')
+    if params.get("norm2", False) is None:
+        raise StyxValidationError("`norm2` must not be None")
+    if not isinstance(params["norm2"], bool):
+        raise StyxValidationError(f'`norm2` has the wrong type: Received `{type(params.get("norm2", False))}` expected `bool`')
+    if params.get("norm3", False) is None:
+        raise StyxValidationError("`norm3` must not be None")
+    if not isinstance(params["norm3"], bool):
+        raise StyxValidationError(f'`norm3` has the wrong type: Received `{type(params.get("norm3", False))}` expected `bool`')
+    if params.get("ic", None) is not None:
+        if not isinstance(params["ic"], str):
+            raise StyxValidationError(f'`ic` has the wrong type: Received `{type(params.get("ic", None))}` expected `str | None`')
+    if params.get("sulc", False) is None:
+        raise StyxValidationError("`sulc` must not be None")
+    if not isinstance(params["sulc"], bool):
+        raise StyxValidationError(f'`sulc` has the wrong type: Received `{type(params.get("sulc", False))}` expected `bool`')
+    if params.get("sulconly", False) is None:
+        raise StyxValidationError("`sulconly` must not be None")
+    if not isinstance(params["sulconly"], bool):
+        raise StyxValidationError(f'`sulconly` has the wrong type: Received `{type(params.get("sulconly", False))}` expected `bool`')
+    if params.get("a", None) is not None:
+        if not isinstance(params["a"], (float, int)):
+            raise StyxValidationError(f'`a` has the wrong type: Received `{type(params.get("a", None))}` expected `float | None`')
+    if params.get("parcellation_table", None) is not None:
+        if not isinstance(params["parcellation_table"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`parcellation_table` has the wrong type: Received `{type(params.get("parcellation_table", None))}` expected `InputPathType | None`')
+    if params.get("n", None) is not None:
+        if not isinstance(params["n"], (float, int)):
+            raise StyxValidationError(f'`n` has the wrong type: Received `{type(params.get("n", None))}` expected `float | None`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], (float, int)):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `float | None`')
+    if params.get("debug_vertex", None) is not None:
+        if not isinstance(params["debug_vertex"], (float, int)):
+            raise StyxValidationError(f'`debug_vertex` has the wrong type: Received `{type(params.get("debug_vertex", None))}` expected `float | None`')
+    if params.get("gcs_means", None) is not None:
+        if not isinstance(params["gcs_means"], str):
+            raise StyxValidationError(f'`gcs_means` has the wrong type: Received `{type(params.get("gcs_means", None))}` expected `str | None`')
+    if params.get("gcs_priors", None) is not None:
+        if not isinstance(params["gcs_priors"], str):
+            raise StyxValidationError(f'`gcs_priors` has the wrong type: Received `{type(params.get("gcs_priors", None))}` expected `str | None`')
+    if params.get("gcs_diff", None) is not None:
+        if not isinstance(params["gcs_diff"], str):
+            raise StyxValidationError(f'`gcs_diff` has the wrong type: Received `{type(params.get("gcs_diff", None))}` expected `str | None`')
+    if params.get("nfill", None) is not None:
+        if not isinstance(params["nfill"], (float, int)):
+            raise StyxValidationError(f'`nfill` has the wrong type: Received `{type(params.get("nfill", None))}` expected `float | None`')
+    if params.get("no_fill", False) is None:
+        raise StyxValidationError("`no_fill` must not be None")
+    if not isinstance(params["no_fill"], bool):
+        raise StyxValidationError(f'`no_fill` has the wrong type: Received `{type(params.get("no_fill", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+
+
 def mris_ca_train_cargs(
     params: MrisCaTrainParameters,
     execution: Execution,
@@ -334,6 +442,7 @@ def mris_ca_train_execute(
     Returns:
         NamedTuple of outputs (described in `MrisCaTrainOutputs`).
     """
+    mris_ca_train_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_CA_TRAIN_METADATA)
     params = execution.params(params)

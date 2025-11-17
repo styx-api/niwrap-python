@@ -271,6 +271,176 @@ def mri_robust_template_params(
     return params
 
 
+def mri_robust_template_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriRobustTemplateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mov_files", None) is None:
+        raise StyxValidationError("`mov_files` must not be None")
+    if not isinstance(params["mov_files"], list):
+        raise StyxValidationError(f'`mov_files` has the wrong type: Received `{type(params.get("mov_files", None))}` expected `list[InputPathType]`')
+    for e in params["mov_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`mov_files` has the wrong type: Received `{type(params.get("mov_files", None))}` expected `list[InputPathType]`')
+    if params.get("template_file", None) is None:
+        raise StyxValidationError("`template_file` must not be None")
+    if not isinstance(params["template_file"], str):
+        raise StyxValidationError(f'`template_file` has the wrong type: Received `{type(params.get("template_file", None))}` expected `str`')
+    if params.get("sat_value", None) is not None:
+        if not isinstance(params["sat_value"], (float, int)):
+            raise StyxValidationError(f'`sat_value` has the wrong type: Received `{type(params.get("sat_value", None))}` expected `float | None`')
+    if params.get("satit_flag", False) is None:
+        raise StyxValidationError("`satit_flag` must not be None")
+    if not isinstance(params["satit_flag"], bool):
+        raise StyxValidationError(f'`satit_flag` has the wrong type: Received `{type(params.get("satit_flag", False))}` expected `bool`')
+    if params.get("lta_files", None) is not None:
+        if not isinstance(params["lta_files"], list):
+            raise StyxValidationError(f'`lta_files` has the wrong type: Received `{type(params.get("lta_files", None))}` expected `list[str] | None`')
+        for e in params["lta_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`lta_files` has the wrong type: Received `{type(params.get("lta_files", None))}` expected `list[str] | None`')
+    if params.get("mapmov_files", None) is not None:
+        if not isinstance(params["mapmov_files"], list):
+            raise StyxValidationError(f'`mapmov_files` has the wrong type: Received `{type(params.get("mapmov_files", None))}` expected `list[str] | None`')
+        for e in params["mapmov_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mapmov_files` has the wrong type: Received `{type(params.get("mapmov_files", None))}` expected `list[str] | None`')
+    if params.get("mapmovhdr_files", None) is not None:
+        if not isinstance(params["mapmovhdr_files"], list):
+            raise StyxValidationError(f'`mapmovhdr_files` has the wrong type: Received `{type(params.get("mapmovhdr_files", None))}` expected `list[str] | None`')
+        for e in params["mapmovhdr_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`mapmovhdr_files` has the wrong type: Received `{type(params.get("mapmovhdr_files", None))}` expected `list[str] | None`')
+    if params.get("weights_files", None) is not None:
+        if not isinstance(params["weights_files"], list):
+            raise StyxValidationError(f'`weights_files` has the wrong type: Received `{type(params.get("weights_files", None))}` expected `list[str] | None`')
+        for e in params["weights_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`weights_files` has the wrong type: Received `{type(params.get("weights_files", None))}` expected `list[str] | None`')
+    if params.get("oneminusw_flag", False) is None:
+        raise StyxValidationError("`oneminusw_flag` must not be None")
+    if not isinstance(params["oneminusw_flag"], bool):
+        raise StyxValidationError(f'`oneminusw_flag` has the wrong type: Received `{type(params.get("oneminusw_flag", False))}` expected `bool`')
+    if params.get("average_type", None) is not None:
+        if not isinstance(params["average_type"], int):
+            raise StyxValidationError(f'`average_type` has the wrong type: Received `{type(params.get("average_type", None))}` expected `int | None`')
+    if params.get("inittp", None) is not None:
+        if not isinstance(params["inittp"], int):
+            raise StyxValidationError(f'`inittp` has the wrong type: Received `{type(params.get("inittp", None))}` expected `int | None`')
+    if params.get("fixtp_flag", False) is None:
+        raise StyxValidationError("`fixtp_flag` must not be None")
+    if not isinstance(params["fixtp_flag"], bool):
+        raise StyxValidationError(f'`fixtp_flag` has the wrong type: Received `{type(params.get("fixtp_flag", False))}` expected `bool`')
+    if params.get("iscale_flag", False) is None:
+        raise StyxValidationError("`iscale_flag` must not be None")
+    if not isinstance(params["iscale_flag"], bool):
+        raise StyxValidationError(f'`iscale_flag` has the wrong type: Received `{type(params.get("iscale_flag", False))}` expected `bool`')
+    if params.get("iscaleonly_flag", False) is None:
+        raise StyxValidationError("`iscaleonly_flag` must not be None")
+    if not isinstance(params["iscaleonly_flag"], bool):
+        raise StyxValidationError(f'`iscaleonly_flag` has the wrong type: Received `{type(params.get("iscaleonly_flag", False))}` expected `bool`')
+    if params.get("iscalein_files", None) is not None:
+        if not isinstance(params["iscalein_files"], list):
+            raise StyxValidationError(f'`iscalein_files` has the wrong type: Received `{type(params.get("iscalein_files", None))}` expected `list[str] | None`')
+        for e in params["iscalein_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`iscalein_files` has the wrong type: Received `{type(params.get("iscalein_files", None))}` expected `list[str] | None`')
+    if params.get("iscaleout_files", None) is not None:
+        if not isinstance(params["iscaleout_files"], list):
+            raise StyxValidationError(f'`iscaleout_files` has the wrong type: Received `{type(params.get("iscaleout_files", None))}` expected `list[str] | None`')
+        for e in params["iscaleout_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`iscaleout_files` has the wrong type: Received `{type(params.get("iscaleout_files", None))}` expected `list[str] | None`')
+    if params.get("transonly_flag", False) is None:
+        raise StyxValidationError("`transonly_flag` must not be None")
+    if not isinstance(params["transonly_flag"], bool):
+        raise StyxValidationError(f'`transonly_flag` has the wrong type: Received `{type(params.get("transonly_flag", False))}` expected `bool`')
+    if params.get("affine_flag", False) is None:
+        raise StyxValidationError("`affine_flag` must not be None")
+    if not isinstance(params["affine_flag"], bool):
+        raise StyxValidationError(f'`affine_flag` has the wrong type: Received `{type(params.get("affine_flag", False))}` expected `bool`')
+    if params.get("ixforms_files", None) is not None:
+        if not isinstance(params["ixforms_files"], list):
+            raise StyxValidationError(f'`ixforms_files` has the wrong type: Received `{type(params.get("ixforms_files", None))}` expected `list[str] | None`')
+        for e in params["ixforms_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`ixforms_files` has the wrong type: Received `{type(params.get("ixforms_files", None))}` expected `list[str] | None`')
+    if params.get("masks_files", None) is not None:
+        if not isinstance(params["masks_files"], list):
+            raise StyxValidationError(f'`masks_files` has the wrong type: Received `{type(params.get("masks_files", None))}` expected `list[str] | None`')
+        for e in params["masks_files"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`masks_files` has the wrong type: Received `{type(params.get("masks_files", None))}` expected `list[str] | None`')
+    if params.get("vox2vox_flag", False) is None:
+        raise StyxValidationError("`vox2vox_flag` must not be None")
+    if not isinstance(params["vox2vox_flag"], bool):
+        raise StyxValidationError(f'`vox2vox_flag` has the wrong type: Received `{type(params.get("vox2vox_flag", False))}` expected `bool`')
+    if params.get("leastsquares_flag", False) is None:
+        raise StyxValidationError("`leastsquares_flag` must not be None")
+    if not isinstance(params["leastsquares_flag"], bool):
+        raise StyxValidationError(f'`leastsquares_flag` has the wrong type: Received `{type(params.get("leastsquares_flag", False))}` expected `bool`')
+    if params.get("noit_flag", False) is None:
+        raise StyxValidationError("`noit_flag` must not be None")
+    if not isinstance(params["noit_flag"], bool):
+        raise StyxValidationError(f'`noit_flag` has the wrong type: Received `{type(params.get("noit_flag", False))}` expected `bool`')
+    if params.get("maxit", None) is not None:
+        if not isinstance(params["maxit"], int):
+            raise StyxValidationError(f'`maxit` has the wrong type: Received `{type(params.get("maxit", None))}` expected `int | None`')
+    if params.get("highit", None) is not None:
+        if not isinstance(params["highit"], int):
+            raise StyxValidationError(f'`highit` has the wrong type: Received `{type(params.get("highit", None))}` expected `int | None`')
+    if params.get("epsit", None) is not None:
+        if not isinstance(params["epsit"], (float, int)):
+            raise StyxValidationError(f'`epsit` has the wrong type: Received `{type(params.get("epsit", None))}` expected `float | None`')
+    if params.get("pairmaxit", None) is not None:
+        if not isinstance(params["pairmaxit"], int):
+            raise StyxValidationError(f'`pairmaxit` has the wrong type: Received `{type(params.get("pairmaxit", None))}` expected `int | None`')
+    if params.get("pairepsit", None) is not None:
+        if not isinstance(params["pairepsit"], (float, int)):
+            raise StyxValidationError(f'`pairepsit` has the wrong type: Received `{type(params.get("pairepsit", None))}` expected `float | None`')
+    if params.get("subsample", None) is not None:
+        if not isinstance(params["subsample"], int):
+            raise StyxValidationError(f'`subsample` has the wrong type: Received `{type(params.get("subsample", None))}` expected `int | None`')
+    if params.get("nomulti_flag", False) is None:
+        raise StyxValidationError("`nomulti_flag` must not be None")
+    if not isinstance(params["nomulti_flag"], bool):
+        raise StyxValidationError(f'`nomulti_flag` has the wrong type: Received `{type(params.get("nomulti_flag", False))}` expected `bool`')
+    if params.get("floattype_flag", False) is None:
+        raise StyxValidationError("`floattype_flag` must not be None")
+    if not isinstance(params["floattype_flag"], bool):
+        raise StyxValidationError(f'`floattype_flag` has the wrong type: Received `{type(params.get("floattype_flag", False))}` expected `bool`')
+    if params.get("finalnearest_flag", False) is None:
+        raise StyxValidationError("`finalnearest_flag` must not be None")
+    if not isinstance(params["finalnearest_flag"], bool):
+        raise StyxValidationError(f'`finalnearest_flag` has the wrong type: Received `{type(params.get("finalnearest_flag", False))}` expected `bool`')
+    if params.get("doubleprec_flag", False) is None:
+        raise StyxValidationError("`doubleprec_flag` must not be None")
+    if not isinstance(params["doubleprec_flag"], bool):
+        raise StyxValidationError(f'`doubleprec_flag` has the wrong type: Received `{type(params.get("doubleprec_flag", False))}` expected `bool`')
+    if params.get("cras_flag", False) is None:
+        raise StyxValidationError("`cras_flag` must not be None")
+    if not isinstance(params["cras_flag"], bool):
+        raise StyxValidationError(f'`cras_flag` has the wrong type: Received `{type(params.get("cras_flag", False))}` expected `bool`')
+    if params.get("res_thresh", None) is not None:
+        if not isinstance(params["res_thresh"], (float, int)):
+            raise StyxValidationError(f'`res_thresh` has the wrong type: Received `{type(params.get("res_thresh", None))}` expected `float | None`')
+    if params.get("frobnorm_thresh", None) is not None:
+        if not isinstance(params["frobnorm_thresh"], (float, int)):
+            raise StyxValidationError(f'`frobnorm_thresh` has the wrong type: Received `{type(params.get("frobnorm_thresh", None))}` expected `float | None`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def mri_robust_template_cargs(
     params: MriRobustTemplateParameters,
     execution: Execution,
@@ -467,6 +637,7 @@ def mri_robust_template_execute(
     Returns:
         NamedTuple of outputs (described in `MriRobustTemplateOutputs`).
     """
+    mri_robust_template_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_ROBUST_TEMPLATE_METADATA)
     params = execution.params(params)

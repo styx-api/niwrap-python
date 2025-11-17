@@ -97,6 +97,47 @@ def v_3d_threeto_rgb_params(
     return params
 
 
+def v_3d_threeto_rgb_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dThreetoRgbParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("scale_factor", None) is not None:
+        if not isinstance(params["scale_factor"], (float, int)):
+            raise StyxValidationError(f'`scale_factor` has the wrong type: Received `{type(params.get("scale_factor", None))}` expected `float | None`')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("fim", False) is None:
+        raise StyxValidationError("`fim` must not be None")
+    if not isinstance(params["fim"], bool):
+        raise StyxValidationError(f'`fim` has the wrong type: Received `{type(params.get("fim", False))}` expected `bool`')
+    if params.get("anat", False) is None:
+        raise StyxValidationError("`anat` must not be None")
+    if not isinstance(params["anat"], bool):
+        raise StyxValidationError(f'`anat` has the wrong type: Received `{type(params.get("anat", False))}` expected `bool`')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `InputPathType`')
+    if params.get("input_dataset2", None) is not None:
+        if not isinstance(params["input_dataset2"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_dataset2` has the wrong type: Received `{type(params.get("input_dataset2", None))}` expected `InputPathType | None`')
+    if params.get("input_dataset3", None) is not None:
+        if not isinstance(params["input_dataset3"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_dataset3` has the wrong type: Received `{type(params.get("input_dataset3", None))}` expected `InputPathType | None`')
+
+
 def v_3d_threeto_rgb_cargs(
     params: V3dThreetoRgbParameters,
     execution: Execution,
@@ -179,6 +220,7 @@ def v_3d_threeto_rgb_execute(
     Returns:
         NamedTuple of outputs (described in `V3dThreetoRgbOutputs`).
     """
+    v_3d_threeto_rgb_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_THREETO_RGB_METADATA)
     params = execution.params(params)

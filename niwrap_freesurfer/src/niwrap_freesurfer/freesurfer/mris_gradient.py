@@ -62,6 +62,32 @@ def mris_gradient_params(
     return params
 
 
+def mris_gradient_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisGradientParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_surface", None) is None:
+        raise StyxValidationError("`input_surface` must not be None")
+    if not isinstance(params["input_surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_surface` has the wrong type: Received `{type(params.get("input_surface", None))}` expected `InputPathType`')
+    if params.get("input_vector_field", None) is None:
+        raise StyxValidationError("`input_vector_field` must not be None")
+    if not isinstance(params["input_vector_field"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_vector_field` has the wrong type: Received `{type(params.get("input_vector_field", None))}` expected `InputPathType`')
+    if params.get("output_gradient_file", None) is None:
+        raise StyxValidationError("`output_gradient_file` must not be None")
+    if not isinstance(params["output_gradient_file"], str):
+        raise StyxValidationError(f'`output_gradient_file` has the wrong type: Received `{type(params.get("output_gradient_file", None))}` expected `str`')
+
+
 def mris_gradient_cargs(
     params: MrisGradientParameters,
     execution: Execution,
@@ -123,6 +149,7 @@ def mris_gradient_execute(
     Returns:
         NamedTuple of outputs (described in `MrisGradientOutputs`).
     """
+    mris_gradient_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_GRADIENT_METADATA)
     params = execution.params(params)

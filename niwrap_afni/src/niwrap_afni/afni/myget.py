@@ -63,6 +63,33 @@ def myget_params(
     return params
 
 
+def myget_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MygetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("protocol_version", None) is not None:
+        if not isinstance(params["protocol_version"], str):
+            raise StyxValidationError(f'`protocol_version` has the wrong type: Received `{type(params.get("protocol_version", None))}` expected `typing.Literal["-1", "-1.1"] | None`')
+        if params["protocol_version"] not in ["-1", "-1.1"]:
+            raise StyxValidationError("Parameter `protocol_version` must be one of [\"-1\", \"-1.1\"]")
+    if params.get("url", None) is None:
+        raise StyxValidationError("`url` must not be None")
+    if not isinstance(params["url"], str):
+        raise StyxValidationError(f'`url` has the wrong type: Received `{type(params.get("url", None))}` expected `str`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def myget_cargs(
     params: MygetParameters,
     execution: Execution,
@@ -127,6 +154,7 @@ def myget_execute(
     Returns:
         NamedTuple of outputs (described in `MygetOutputs`).
     """
+    myget_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MYGET_METADATA)
     params = execution.params(params)

@@ -81,6 +81,45 @@ def v_1dsum_params(
     return params
 
 
+def v_1dsum_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dsumParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("ignore_rows", None) is not None:
+        if not isinstance(params["ignore_rows"], (float, int)):
+            raise StyxValidationError(f'`ignore_rows` has the wrong type: Received `{type(params.get("ignore_rows", None))}` expected `float | None`')
+    if params.get("use_rows", None) is not None:
+        if not isinstance(params["use_rows"], (float, int)):
+            raise StyxValidationError(f'`use_rows` has the wrong type: Received `{type(params.get("use_rows", None))}` expected `float | None`')
+    if params.get("mean_flag", False) is None:
+        raise StyxValidationError("`mean_flag` must not be None")
+    if not isinstance(params["mean_flag"], bool):
+        raise StyxValidationError(f'`mean_flag` has the wrong type: Received `{type(params.get("mean_flag", False))}` expected `bool`')
+    if params.get("nocomment_flag", False) is None:
+        raise StyxValidationError("`nocomment_flag` must not be None")
+    if not isinstance(params["nocomment_flag"], bool):
+        raise StyxValidationError(f'`nocomment_flag` has the wrong type: Received `{type(params.get("nocomment_flag", False))}` expected `bool`')
+    if params.get("okempty_flag", False) is None:
+        raise StyxValidationError("`okempty_flag` must not be None")
+    if not isinstance(params["okempty_flag"], bool):
+        raise StyxValidationError(f'`okempty_flag` has the wrong type: Received `{type(params.get("okempty_flag", False))}` expected `bool`')
+
+
 def v_1dsum_cargs(
     params: V1dsumParameters,
     execution: Execution,
@@ -156,6 +195,7 @@ def v_1dsum_execute(
     Returns:
         NamedTuple of outputs (described in `V1dsumOutputs`).
     """
+    v_1dsum_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DSUM_METADATA)
     params = execution.params(params)

@@ -68,6 +68,38 @@ def imupsam_params(
     return params
 
 
+def imupsam_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImupsamParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("ascii_flag", False) is None:
+        raise StyxValidationError("`ascii_flag` must not be None")
+    if not isinstance(params["ascii_flag"], bool):
+        raise StyxValidationError(f'`ascii_flag` has the wrong type: Received `{type(params.get("ascii_flag", False))}` expected `bool`')
+    if params.get("factor", None) is None:
+        raise StyxValidationError("`factor` must not be None")
+    if not isinstance(params["factor"], int):
+        raise StyxValidationError(f'`factor` has the wrong type: Received `{type(params.get("factor", None))}` expected `int`')
+    if 2 <= params["factor"] <= 30:
+        raise StyxValidationError("Parameter `factor` must be between 2 and 30 (inclusive)")
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+
+
 def imupsam_cargs(
     params: ImupsamParameters,
     execution: Execution,
@@ -130,6 +162,7 @@ def imupsam_execute(
     Returns:
         NamedTuple of outputs (described in `ImupsamOutputs`).
     """
+    imupsam_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMUPSAM_METADATA)
     params = execution.params(params)

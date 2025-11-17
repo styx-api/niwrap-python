@@ -166,6 +166,99 @@ def v_3d_tfitter_params(
     return params
 
 
+def v_3d_tfitter_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dTfitterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("RHS", None) is None:
+        raise StyxValidationError("`RHS` must not be None")
+    if not isinstance(params["RHS"], str):
+        raise StyxValidationError(f'`RHS` has the wrong type: Received `{type(params.get("RHS", None))}` expected `str`')
+    if params.get("LHS", None) is not None:
+        if not isinstance(params["LHS"], list):
+            raise StyxValidationError(f'`LHS` has the wrong type: Received `{type(params.get("LHS", None))}` expected `list[str] | None`')
+        for e in params["LHS"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`LHS` has the wrong type: Received `{type(params.get("LHS", None))}` expected `list[str] | None`')
+    if params.get("polort", None) is not None:
+        if not isinstance(params["polort"], (float, int)):
+            raise StyxValidationError(f'`polort` has the wrong type: Received `{type(params.get("polort", None))}` expected `float | None`')
+    if params.get("vthr", None) is not None:
+        if not isinstance(params["vthr"], (float, int)):
+            raise StyxValidationError(f'`vthr` has the wrong type: Received `{type(params.get("vthr", None))}` expected `float | None`')
+    if params.get("FALTUNG", None) is not None:
+        if not isinstance(params["FALTUNG"], list):
+            raise StyxValidationError(f'`FALTUNG` has the wrong type: Received `{type(params.get("FALTUNG", None))}` expected `list[str] | None`')
+        for e in params["FALTUNG"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`FALTUNG` has the wrong type: Received `{type(params.get("FALTUNG", None))}` expected `list[str] | None`')
+    if params.get("lsqfit", False) is None:
+        raise StyxValidationError("`lsqfit` must not be None")
+    if not isinstance(params["lsqfit"], bool):
+        raise StyxValidationError(f'`lsqfit` has the wrong type: Received `{type(params.get("lsqfit", False))}` expected `bool`')
+    if params.get("l1fit", False) is None:
+        raise StyxValidationError("`l1fit` must not be None")
+    if not isinstance(params["l1fit"], bool):
+        raise StyxValidationError(f'`l1fit` has the wrong type: Received `{type(params.get("l1fit", False))}` expected `bool`')
+    if params.get("l2lasso", None) is not None:
+        if not isinstance(params["l2lasso"], list):
+            raise StyxValidationError(f'`l2lasso` has the wrong type: Received `{type(params.get("l2lasso", None))}` expected `list[str] | None`')
+        for e in params["l2lasso"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`l2lasso` has the wrong type: Received `{type(params.get("l2lasso", None))}` expected `list[str] | None`')
+    if params.get("lasso_centro_block", None) is not None:
+        if not isinstance(params["lasso_centro_block"], list):
+            raise StyxValidationError(f'`lasso_centro_block` has the wrong type: Received `{type(params.get("lasso_centro_block", None))}` expected `list[str] | None`')
+        for e in params["lasso_centro_block"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`lasso_centro_block` has the wrong type: Received `{type(params.get("lasso_centro_block", None))}` expected `list[str] | None`')
+    if params.get("l2sqrtlasso", None) is not None:
+        if not isinstance(params["l2sqrtlasso"], list):
+            raise StyxValidationError(f'`l2sqrtlasso` has the wrong type: Received `{type(params.get("l2sqrtlasso", None))}` expected `list[str] | None`')
+        for e in params["l2sqrtlasso"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`l2sqrtlasso` has the wrong type: Received `{type(params.get("l2sqrtlasso", None))}` expected `list[str] | None`')
+    if params.get("consign", None) is not None:
+        if not isinstance(params["consign"], list):
+            raise StyxValidationError(f'`consign` has the wrong type: Received `{type(params.get("consign", None))}` expected `list[str] | None`')
+        for e in params["consign"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`consign` has the wrong type: Received `{type(params.get("consign", None))}` expected `list[str] | None`')
+    if params.get("consFAL", None) is not None:
+        if not isinstance(params["consFAL"], str):
+            raise StyxValidationError(f'`consFAL` has the wrong type: Received `{type(params.get("consFAL", None))}` expected `str | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], list):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[str] | None`')
+        for e in params["label"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[str] | None`')
+    if params.get("fitts", None) is not None:
+        if not isinstance(params["fitts"], str):
+            raise StyxValidationError(f'`fitts` has the wrong type: Received `{type(params.get("fitts", None))}` expected `str | None`')
+    if params.get("errsum", None) is not None:
+        if not isinstance(params["errsum"], str):
+            raise StyxValidationError(f'`errsum` has the wrong type: Received `{type(params.get("errsum", None))}` expected `str | None`')
+    if params.get("mask", None) is not None:
+        if not isinstance(params["mask"], str):
+            raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `str | None`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+
+
 def v_3d_tfitter_cargs(
     params: V3dTfitterParameters,
     execution: Execution,
@@ -311,6 +404,7 @@ def v_3d_tfitter_execute(
     Returns:
         NamedTuple of outputs (described in `V3dTfitterOutputs`).
     """
+    v_3d_tfitter_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TFITTER_METADATA)
     params = execution.params(params)

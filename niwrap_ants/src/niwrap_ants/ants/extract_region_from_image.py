@@ -92,18 +92,22 @@ def extract_region_from_image_region_specification_cargs_dyn_fn(
     }.get(t)
 
 
-def extract_region_from_image_region_specification_outputs_dyn_fn(
+def extract_region_from_image_region_specification_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "region_min_max_index": extract_region_from_image_region_min_max_index_validate,
+        "region_label": extract_region_from_image_region_label_validate,
+        "region_domain_image": extract_region_from_image_region_domain_image_validate,
+        "region_label_with_image": extract_region_from_image_region_label_with_image_validate,
     }.get(t)
 
 
@@ -126,6 +130,28 @@ def extract_region_from_image_region_min_max_index_params(
         "max_index": max_index,
     }
     return params
+
+
+def extract_region_from_image_region_min_max_index_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtractRegionFromImageRegionMinMaxIndexParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("min_index", None) is None:
+        raise StyxValidationError("`min_index` must not be None")
+    if not isinstance(params["min_index"], str):
+        raise StyxValidationError(f'`min_index` has the wrong type: Received `{type(params.get("min_index", None))}` expected `str`')
+    if params.get("max_index", None) is None:
+        raise StyxValidationError("`max_index` must not be None")
+    if not isinstance(params["max_index"], str):
+        raise StyxValidationError(f'`max_index` has the wrong type: Received `{type(params.get("max_index", None))}` expected `str`')
 
 
 def extract_region_from_image_region_min_max_index_cargs(
@@ -166,6 +192,24 @@ def extract_region_from_image_region_label_params(
     return params
 
 
+def extract_region_from_image_region_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtractRegionFromImageRegionLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], str):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str`')
+
+
 def extract_region_from_image_region_label_cargs(
     params: ExtractRegionFromImageRegionLabelParameters,
     execution: Execution,
@@ -201,6 +245,24 @@ def extract_region_from_image_region_domain_image_params(
         "domain_image": domain_image,
     }
     return params
+
+
+def extract_region_from_image_region_domain_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtractRegionFromImageRegionDomainImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("domain_image", None) is None:
+        raise StyxValidationError("`domain_image` must not be None")
+    if not isinstance(params["domain_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`domain_image` has the wrong type: Received `{type(params.get("domain_image", None))}` expected `InputPathType`')
 
 
 def extract_region_from_image_region_domain_image_cargs(
@@ -240,6 +302,28 @@ def extract_region_from_image_region_label_with_image_params(
         "label_image": label_image,
     }
     return params
+
+
+def extract_region_from_image_region_label_with_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtractRegionFromImageRegionLabelWithImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], str):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `str`')
+    if params.get("label_image", None) is None:
+        raise StyxValidationError("`label_image` must not be None")
+    if not isinstance(params["label_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_image` has the wrong type: Received `{type(params.get("label_image", None))}` expected `InputPathType`')
 
 
 def extract_region_from_image_region_label_with_image_cargs(
@@ -300,6 +384,39 @@ def extract_region_from_image_params(
         "region_specification": region_specification,
     }
     return params
+
+
+def extract_region_from_image_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ExtractRegionFromImageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("region_specification", None) is None:
+        raise StyxValidationError("`region_specification` must not be None")
+    if not isinstance(params["region_specification"], dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params["region_specification"])}\'')
+    if "@type" not in params["region_specification"]:
+        raise StyxValidationError("Params object is missing `@type`")
+    extract_region_from_image_region_specification_validate_dyn_fn(params["region_specification"]["@type"])(params["region_specification"])
 
 
 def extract_region_from_image_cargs(
@@ -365,6 +482,7 @@ def extract_region_from_image_execute(
     Returns:
         NamedTuple of outputs (described in `ExtractRegionFromImageOutputs`).
     """
+    extract_region_from_image_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(EXTRACT_REGION_FROM_IMAGE_METADATA)
     params = execution.params(params)

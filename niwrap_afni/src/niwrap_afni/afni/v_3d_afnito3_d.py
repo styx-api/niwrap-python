@@ -67,6 +67,35 @@ def v_3d_afnito3_d_params(
     return params
 
 
+def v_3d_afnito3_d_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAfnito3DParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("binary", False) is None:
+        raise StyxValidationError("`binary` must not be None")
+    if not isinstance(params["binary"], bool):
+        raise StyxValidationError(f'`binary` has the wrong type: Received `{type(params.get("binary", False))}` expected `bool`')
+    if params.get("text", False) is None:
+        raise StyxValidationError("`text` must not be None")
+    if not isinstance(params["text"], bool):
+        raise StyxValidationError(f'`text` has the wrong type: Received `{type(params.get("text", False))}` expected `bool`')
+
+
 def v_3d_afnito3_d_cargs(
     params: V3dAfnito3DParameters,
     execution: Execution,
@@ -134,6 +163,7 @@ def v_3d_afnito3_d_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAfnito3DOutputs`).
     """
+    v_3d_afnito3_d_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AFNITO3_D_METADATA)
     params = execution.params(params)

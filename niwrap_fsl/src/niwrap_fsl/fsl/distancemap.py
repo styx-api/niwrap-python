@@ -109,6 +109,55 @@ def distancemap_params(
     return params
 
 
+def distancemap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DistancemapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("second_image", None) is not None:
+        if not isinstance(params["second_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`second_image` has the wrong type: Received `{type(params.get("second_image", None))}` expected `InputPathType | None`')
+    if params.get("local_maxima_image", None) is not None:
+        if not isinstance(params["local_maxima_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`local_maxima_image` has the wrong type: Received `{type(params.get("local_maxima_image", None))}` expected `InputPathType | None`')
+    if params.get("segmented_image", None) is not None:
+        if not isinstance(params["segmented_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`segmented_image` has the wrong type: Received `{type(params.get("segmented_image", None))}` expected `InputPathType | None`')
+    if params.get("invert_flag", False) is None:
+        raise StyxValidationError("`invert_flag` must not be None")
+    if not isinstance(params["invert_flag"], bool):
+        raise StyxValidationError(f'`invert_flag` has the wrong type: Received `{type(params.get("invert_flag", False))}` expected `bool`')
+    if params.get("interpolate_values", None) is not None:
+        if not isinstance(params["interpolate_values"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`interpolate_values` has the wrong type: Received `{type(params.get("interpolate_values", None))}` expected `InputPathType | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def distancemap_cargs(
     params: DistancemapParameters,
     execution: Execution,
@@ -207,6 +256,7 @@ def distancemap_execute(
     Returns:
         NamedTuple of outputs (described in `DistancemapOutputs`).
     """
+    distancemap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DISTANCEMAP_METADATA)
     params = execution.params(params)

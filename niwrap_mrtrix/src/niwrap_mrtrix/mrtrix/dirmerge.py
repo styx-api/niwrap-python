@@ -78,6 +78,28 @@ def dirmerge_config_params(
     return params
 
 
+def dirmerge_config_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DirmergeConfigParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("key", None) is None:
+        raise StyxValidationError("`key` must not be None")
+    if not isinstance(params["key"], str):
+        raise StyxValidationError(f'`key` has the wrong type: Received `{type(params.get("key", None))}` expected `str`')
+    if params.get("value", None) is None:
+        raise StyxValidationError("`value` must not be None")
+    if not isinstance(params["value"], str):
+        raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `str`')
+
+
 def dirmerge_config_cargs(
     params: DirmergeConfigParameters,
     execution: Execution,
@@ -172,6 +194,70 @@ def dirmerge_params(
     return params
 
 
+def dirmerge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DirmergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("unipolar_weight", None) is not None:
+        if not isinstance(params["unipolar_weight"], (float, int)):
+            raise StyxValidationError(f'`unipolar_weight` has the wrong type: Received `{type(params.get("unipolar_weight", None))}` expected `float | None`')
+    if params.get("info", False) is None:
+        raise StyxValidationError("`info` must not be None")
+    if not isinstance(params["info"], bool):
+        raise StyxValidationError(f'`info` has the wrong type: Received `{type(params.get("info", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+    if params.get("nthreads", None) is not None:
+        if not isinstance(params["nthreads"], int):
+            raise StyxValidationError(f'`nthreads` has the wrong type: Received `{type(params.get("nthreads", None))}` expected `int | None`')
+    if params.get("config", None) is not None:
+        if not isinstance(params["config"], list):
+            raise StyxValidationError(f'`config` has the wrong type: Received `{type(params.get("config", None))}` expected `list[DirmergeConfigParameters] | None`')
+        for e in params["config"]:
+            dirmerge_config_validate(e)
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("subsets", None) is None:
+        raise StyxValidationError("`subsets` must not be None")
+    if not isinstance(params["subsets"], int):
+        raise StyxValidationError(f'`subsets` has the wrong type: Received `{type(params.get("subsets", None))}` expected `int`')
+    if params.get("bvalue_files", None) is None:
+        raise StyxValidationError("`bvalue_files` must not be None")
+    if not isinstance(params["bvalue_files"], list):
+        raise StyxValidationError(f'`bvalue_files` has the wrong type: Received `{type(params.get("bvalue_files", None))}` expected `list[str]`')
+    for e in params["bvalue_files"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`bvalue_files` has the wrong type: Received `{type(params.get("bvalue_files", None))}` expected `list[str]`')
+    if params.get("out", None) is None:
+        raise StyxValidationError("`out` must not be None")
+    if not isinstance(params["out"], str):
+        raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str`')
+
+
 def dirmerge_cargs(
     params: DirmergeParameters,
     execution: Execution,
@@ -263,6 +349,7 @@ def dirmerge_execute(
     Returns:
         NamedTuple of outputs (described in `DirmergeOutputs`).
     """
+    dirmerge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DIRMERGE_METADATA)
     params = execution.params(params)

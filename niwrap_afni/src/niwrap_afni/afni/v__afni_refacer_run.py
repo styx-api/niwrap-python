@@ -135,6 +135,70 @@ def v__afni_refacer_run_params(
     return params
 
 
+def v__afni_refacer_run_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAfniRefacerRunParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("mode_deface", False) is None:
+        raise StyxValidationError("`mode_deface` must not be None")
+    if not isinstance(params["mode_deface"], bool):
+        raise StyxValidationError(f'`mode_deface` has the wrong type: Received `{type(params.get("mode_deface", False))}` expected `bool`')
+    if params.get("mode_reface", False) is None:
+        raise StyxValidationError("`mode_reface` must not be None")
+    if not isinstance(params["mode_reface"], bool):
+        raise StyxValidationError(f'`mode_reface` has the wrong type: Received `{type(params.get("mode_reface", False))}` expected `bool`')
+    if params.get("mode_reface_plus", False) is None:
+        raise StyxValidationError("`mode_reface_plus` must not be None")
+    if not isinstance(params["mode_reface_plus"], bool):
+        raise StyxValidationError(f'`mode_reface_plus` has the wrong type: Received `{type(params.get("mode_reface_plus", False))}` expected `bool`')
+    if params.get("mode_all", False) is None:
+        raise StyxValidationError("`mode_all` must not be None")
+    if not isinstance(params["mode_all"], bool):
+        raise StyxValidationError(f'`mode_all` has the wrong type: Received `{type(params.get("mode_all", False))}` expected `bool`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("anonymize_output", False) is None:
+        raise StyxValidationError("`anonymize_output` must not be None")
+    if not isinstance(params["anonymize_output"], bool):
+        raise StyxValidationError(f'`anonymize_output` has the wrong type: Received `{type(params.get("anonymize_output", False))}` expected `bool`')
+    if params.get("cost_function", None) is not None:
+        if not isinstance(params["cost_function"], str):
+            raise StyxValidationError(f'`cost_function` has the wrong type: Received `{type(params.get("cost_function", None))}` expected `str | None`')
+    if params.get("shell_option", None) is not None:
+        if not isinstance(params["shell_option"], str):
+            raise StyxValidationError(f'`shell_option` has the wrong type: Received `{type(params.get("shell_option", None))}` expected `str | None`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("no_images", False) is None:
+        raise StyxValidationError("`no_images` must not be None")
+    if not isinstance(params["no_images"], bool):
+        raise StyxValidationError(f'`no_images` has the wrong type: Received `{type(params.get("no_images", False))}` expected `bool`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def v__afni_refacer_run_cargs(
     params: VAfniRefacerRunParameters,
     execution: Execution,
@@ -233,6 +297,7 @@ def v__afni_refacer_run_execute(
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerRunOutputs`).
     """
+    v__afni_refacer_run_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__AFNI_REFACER_RUN_METADATA)
     params = execution.params(params)

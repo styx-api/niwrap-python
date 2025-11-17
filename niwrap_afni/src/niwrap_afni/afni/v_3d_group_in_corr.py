@@ -205,6 +205,120 @@ def v_3d_group_in_corr_params(
     return params
 
 
+def v_3d_group_in_corr_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dGroupInCorrParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("set_a", None) is None:
+        raise StyxValidationError("`set_a` must not be None")
+    if not isinstance(params["set_a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`set_a` has the wrong type: Received `{type(params.get("set_a", None))}` expected `InputPathType`')
+    if params.get("set_b", None) is not None:
+        if not isinstance(params["set_b"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`set_b` has the wrong type: Received `{type(params.get("set_b", None))}` expected `InputPathType | None`')
+    if params.get("apair", False) is None:
+        raise StyxValidationError("`apair` must not be None")
+    if not isinstance(params["apair"], bool):
+        raise StyxValidationError(f'`apair` has the wrong type: Received `{type(params.get("apair", False))}` expected `bool`')
+    if params.get("label_a", None) is not None:
+        if not isinstance(params["label_a"], str):
+            raise StyxValidationError(f'`label_a` has the wrong type: Received `{type(params.get("label_a", None))}` expected `str | None`')
+    if params.get("label_b", None) is not None:
+        if not isinstance(params["label_b"], str):
+            raise StyxValidationError(f'`label_b` has the wrong type: Received `{type(params.get("label_b", None))}` expected `str | None`')
+    if params.get("pooled", False) is None:
+        raise StyxValidationError("`pooled` must not be None")
+    if not isinstance(params["pooled"], bool):
+        raise StyxValidationError(f'`pooled` has the wrong type: Received `{type(params.get("pooled", False))}` expected `bool`')
+    if params.get("unpooled", False) is None:
+        raise StyxValidationError("`unpooled` must not be None")
+    if not isinstance(params["unpooled"], bool):
+        raise StyxValidationError(f'`unpooled` has the wrong type: Received `{type(params.get("unpooled", False))}` expected `bool`')
+    if params.get("paired", False) is None:
+        raise StyxValidationError("`paired` must not be None")
+    if not isinstance(params["paired"], bool):
+        raise StyxValidationError(f'`paired` has the wrong type: Received `{type(params.get("paired", False))}` expected `bool`')
+    if params.get("nosix", False) is None:
+        raise StyxValidationError("`nosix` must not be None")
+    if not isinstance(params["nosix"], bool):
+        raise StyxValidationError(f'`nosix` has the wrong type: Received `{type(params.get("nosix", False))}` expected `bool`')
+    if params.get("covariates_file", None) is not None:
+        if not isinstance(params["covariates_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`covariates_file` has the wrong type: Received `{type(params.get("covariates_file", None))}` expected `InputPathType | None`')
+    if params.get("center", None) is not None:
+        if not isinstance(params["center"], str):
+            raise StyxValidationError(f'`center` has the wrong type: Received `{type(params.get("center", None))}` expected `str | None`')
+    if params.get("seed_radius", None) is not None:
+        if not isinstance(params["seed_radius"], (float, int)):
+            raise StyxValidationError(f'`seed_radius` has the wrong type: Received `{type(params.get("seed_radius", None))}` expected `float | None`')
+    if params.get("sendall", False) is None:
+        raise StyxValidationError("`sendall` must not be None")
+    if not isinstance(params["sendall"], bool):
+        raise StyxValidationError(f'`sendall` has the wrong type: Received `{type(params.get("sendall", False))}` expected `bool`')
+    if params.get("donocov", False) is None:
+        raise StyxValidationError("`donocov` must not be None")
+    if not isinstance(params["donocov"], bool):
+        raise StyxValidationError(f'`donocov` has the wrong type: Received `{type(params.get("donocov", False))}` expected `bool`')
+    if params.get("dospcov", False) is None:
+        raise StyxValidationError("`dospcov` must not be None")
+    if not isinstance(params["dospcov"], bool):
+        raise StyxValidationError(f'`dospcov` has the wrong type: Received `{type(params.get("dospcov", False))}` expected `bool`')
+    if params.get("cluster", None) is not None:
+        if not isinstance(params["cluster"], str):
+            raise StyxValidationError(f'`cluster` has the wrong type: Received `{type(params.get("cluster", None))}` expected `str | None`')
+    if params.get("read", False) is None:
+        raise StyxValidationError("`read` must not be None")
+    if not isinstance(params["read"], bool):
+        raise StyxValidationError(f'`read` has the wrong type: Received `{type(params.get("read", False))}` expected `bool`')
+    if params.get("ztest", False) is None:
+        raise StyxValidationError("`ztest` must not be None")
+    if not isinstance(params["ztest"], bool):
+        raise StyxValidationError(f'`ztest` has the wrong type: Received `{type(params.get("ztest", False))}` expected `bool`')
+    if params.get("ah", None) is not None:
+        if not isinstance(params["ah"], str):
+            raise StyxValidationError(f'`ah` has the wrong type: Received `{type(params.get("ah", None))}` expected `str | None`')
+    if params.get("port_offset", None) is not None:
+        if not isinstance(params["port_offset"], (float, int)):
+            raise StyxValidationError(f'`port_offset` has the wrong type: Received `{type(params.get("port_offset", None))}` expected `float | None`')
+    if params.get("port_offset_quiet", None) is not None:
+        if not isinstance(params["port_offset_quiet"], (float, int)):
+            raise StyxValidationError(f'`port_offset_quiet` has the wrong type: Received `{type(params.get("port_offset_quiet", None))}` expected `float | None`')
+    if params.get("port_bloc", None) is not None:
+        if not isinstance(params["port_bloc"], (float, int)):
+            raise StyxValidationError(f'`port_bloc` has the wrong type: Received `{type(params.get("port_bloc", None))}` expected `float | None`')
+    if params.get("suma", False) is None:
+        raise StyxValidationError("`suma` must not be None")
+    if not isinstance(params["suma"], bool):
+        raise StyxValidationError(f'`suma` has the wrong type: Received `{type(params.get("suma", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("very_verbose", False) is None:
+        raise StyxValidationError("`very_verbose` must not be None")
+    if not isinstance(params["very_verbose"], bool):
+        raise StyxValidationError(f'`very_verbose` has the wrong type: Received `{type(params.get("very_verbose", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("batch", None) is not None:
+        if not isinstance(params["batch"], str):
+            raise StyxValidationError(f'`batch` has the wrong type: Received `{type(params.get("batch", None))}` expected `str | None`')
+
+
 def v_3d_group_in_corr_cargs(
     params: V3dGroupInCorrParameters,
     execution: Execution,
@@ -356,6 +470,7 @@ def v_3d_group_in_corr_execute(
     Returns:
         NamedTuple of outputs (described in `V3dGroupInCorrOutputs`).
     """
+    v_3d_group_in_corr_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_GROUP_IN_CORR_METADATA)
     params = execution.params(params)

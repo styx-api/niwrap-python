@@ -83,6 +83,41 @@ def trk_tools_params(
     return params
 
 
+def trk_tools_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TrkToolsParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reference_image", None) is None:
+        raise StyxValidationError("`reference_image` must not be None")
+    if not isinstance(params["reference_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType`')
+    if params.get("input_trk", None) is None:
+        raise StyxValidationError("`input_trk` must not be None")
+    if not isinstance(params["input_trk"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_trk` has the wrong type: Received `{type(params.get("input_trk", None))}` expected `InputPathType`')
+    if params.get("output_trk", None) is not None:
+        if not isinstance(params["output_trk"], str):
+            raise StyxValidationError(f'`output_trk` has the wrong type: Received `{type(params.get("output_trk", None))}` expected `str | None`')
+    if params.get("output_image", None) is not None:
+        if not isinstance(params["output_image"], str):
+            raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str | None`')
+    if params.get("update_header", False) is None:
+        raise StyxValidationError("`update_header` must not be None")
+    if not isinstance(params["update_header"], bool):
+        raise StyxValidationError(f'`update_header` has the wrong type: Received `{type(params.get("update_header", False))}` expected `bool`')
+    if params.get("output_vtk", None) is not None:
+        if not isinstance(params["output_vtk"], str):
+            raise StyxValidationError(f'`output_vtk` has the wrong type: Received `{type(params.get("output_vtk", None))}` expected `str | None`')
+
+
 def trk_tools_cargs(
     params: TrkToolsParameters,
     execution: Execution,
@@ -167,6 +202,7 @@ def trk_tools_execute(
     Returns:
         NamedTuple of outputs (described in `TrkToolsOutputs`).
     """
+    trk_tools_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TRK_TOOLS_METADATA)
     params = execution.params(params)

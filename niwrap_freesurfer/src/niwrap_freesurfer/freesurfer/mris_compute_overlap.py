@@ -86,6 +86,53 @@ def mris_compute_overlap_params(
     return params
 
 
+def mris_compute_overlap_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisComputeOverlapParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is None:
+        raise StyxValidationError("`hemi` must not be None")
+    if not isinstance(params["hemi"], str):
+        raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], str):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `str`')
+    if params.get("annotation", None) is None:
+        raise StyxValidationError("`annotation` must not be None")
+    if not isinstance(params["annotation"], str):
+        raise StyxValidationError(f'`annotation` has the wrong type: Received `{type(params.get("annotation", None))}` expected `str`')
+    if params.get("labels", None) is None:
+        raise StyxValidationError("`labels` must not be None")
+    if not isinstance(params["labels"], list):
+        raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    for e in params["labels"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`labels` has the wrong type: Received `{type(params.get("labels", None))}` expected `list[str]`')
+    if params.get("percentage", False) is None:
+        raise StyxValidationError("`percentage` must not be None")
+    if not isinstance(params["percentage"], bool):
+        raise StyxValidationError(f'`percentage` has the wrong type: Received `{type(params.get("percentage", False))}` expected `bool`')
+    if params.get("log_file", None) is not None:
+        if not isinstance(params["log_file"], str):
+            raise StyxValidationError(f'`log_file` has the wrong type: Received `{type(params.get("log_file", None))}` expected `str | None`')
+    if params.get("brain_volume", None) is not None:
+        if not isinstance(params["brain_volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`brain_volume` has the wrong type: Received `{type(params.get("brain_volume", None))}` expected `InputPathType | None`')
+
+
 def mris_compute_overlap_cargs(
     params: MrisComputeOverlapParameters,
     execution: Execution,
@@ -160,6 +207,7 @@ def mris_compute_overlap_execute(
     Returns:
         NamedTuple of outputs (described in `MrisComputeOverlapOutputs`).
     """
+    mris_compute_overlap_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_COMPUTE_OVERLAP_METADATA)
     params = execution.params(params)

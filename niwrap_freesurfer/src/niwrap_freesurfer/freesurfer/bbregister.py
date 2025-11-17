@@ -141,6 +141,78 @@ def bbregister_params(
     return params
 
 
+def bbregister_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BbregisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("moveable_volume", None) is None:
+        raise StyxValidationError("`moveable_volume` must not be None")
+    if not isinstance(params["moveable_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`moveable_volume` has the wrong type: Received `{type(params.get("moveable_volume", None))}` expected `InputPathType`')
+    if params.get("reg_file", None) is None:
+        raise StyxValidationError("`reg_file` must not be None")
+    if not isinstance(params["reg_file"], str):
+        raise StyxValidationError(f'`reg_file` has the wrong type: Received `{type(params.get("reg_file", None))}` expected `str`')
+    if params.get("contrast_type_t1", False) is None:
+        raise StyxValidationError("`contrast_type_t1` must not be None")
+    if not isinstance(params["contrast_type_t1"], bool):
+        raise StyxValidationError(f'`contrast_type_t1` has the wrong type: Received `{type(params.get("contrast_type_t1", False))}` expected `bool`')
+    if params.get("contrast_type_t2", False) is None:
+        raise StyxValidationError("`contrast_type_t2` must not be None")
+    if not isinstance(params["contrast_type_t2"], bool):
+        raise StyxValidationError(f'`contrast_type_t2` has the wrong type: Received `{type(params.get("contrast_type_t2", False))}` expected `bool`')
+    if params.get("vsm", None) is not None:
+        if not isinstance(params["vsm"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`vsm` has the wrong type: Received `{type(params.get("vsm", None))}` expected `InputPathType | None`')
+    if params.get("init_coreg", False) is None:
+        raise StyxValidationError("`init_coreg` must not be None")
+    if not isinstance(params["init_coreg"], bool):
+        raise StyxValidationError(f'`init_coreg` has the wrong type: Received `{type(params.get("init_coreg", False))}` expected `bool`')
+    if params.get("no_coreg_ref_mask", False) is None:
+        raise StyxValidationError("`no_coreg_ref_mask` must not be None")
+    if not isinstance(params["no_coreg_ref_mask"], bool):
+        raise StyxValidationError(f'`no_coreg_ref_mask` has the wrong type: Received `{type(params.get("no_coreg_ref_mask", False))}` expected `bool`')
+    if params.get("init_header", False) is None:
+        raise StyxValidationError("`init_header` must not be None")
+    if not isinstance(params["init_header"], bool):
+        raise StyxValidationError(f'`init_header` has the wrong type: Received `{type(params.get("init_header", False))}` expected `bool`')
+    if params.get("init_reg", None) is not None:
+        if not isinstance(params["init_reg"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`init_reg` has the wrong type: Received `{type(params.get("init_reg", None))}` expected `InputPathType | None`')
+    if params.get("intvol", None) is not None:
+        if not isinstance(params["intvol"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`intvol` has the wrong type: Received `{type(params.get("intvol", None))}` expected `InputPathType | None`')
+    if params.get("mid_frame", False) is None:
+        raise StyxValidationError("`mid_frame` must not be None")
+    if not isinstance(params["mid_frame"], bool):
+        raise StyxValidationError(f'`mid_frame` has the wrong type: Received `{type(params.get("mid_frame", False))}` expected `bool`')
+    if params.get("frame_no", None) is not None:
+        if not isinstance(params["frame_no"], (float, int)):
+            raise StyxValidationError(f'`frame_no` has the wrong type: Received `{type(params.get("frame_no", None))}` expected `float | None`')
+    if params.get("template_out", None) is not None:
+        if not isinstance(params["template_out"], str):
+            raise StyxValidationError(f'`template_out` has the wrong type: Received `{type(params.get("template_out", None))}` expected `str | None`')
+    if params.get("o_outvol", None) is not None:
+        if not isinstance(params["o_outvol"], str):
+            raise StyxValidationError(f'`o_outvol` has the wrong type: Received `{type(params.get("o_outvol", None))}` expected `str | None`')
+    if params.get("s_from_reg", False) is None:
+        raise StyxValidationError("`s_from_reg` must not be None")
+    if not isinstance(params["s_from_reg"], bool):
+        raise StyxValidationError(f'`s_from_reg` has the wrong type: Received `{type(params.get("s_from_reg", False))}` expected `bool`')
+
+
 def bbregister_cargs(
     params: BbregisterParameters,
     execution: Execution,
@@ -256,6 +328,7 @@ def bbregister_execute(
     Returns:
         NamedTuple of outputs (described in `BbregisterOutputs`).
     """
+    bbregister_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BBREGISTER_METADATA)
     params = execution.params(params)

@@ -61,6 +61,31 @@ def fslvbm_1_bet_params(
     return params
 
 
+def fslvbm_1_bet_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Fslvbm1BetParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("default_bet", False) is None:
+        raise StyxValidationError("`default_bet` must not be None")
+    if not isinstance(params["default_bet"], bool):
+        raise StyxValidationError(f'`default_bet` has the wrong type: Received `{type(params.get("default_bet", False))}` expected `bool`')
+    if params.get("increased_robustness", False) is None:
+        raise StyxValidationError("`increased_robustness` must not be None")
+    if not isinstance(params["increased_robustness"], bool):
+        raise StyxValidationError(f'`increased_robustness` has the wrong type: Received `{type(params.get("increased_robustness", False))}` expected `bool`')
+    if params.get("bet_parameters", None) is not None:
+        if not isinstance(params["bet_parameters"], str):
+            raise StyxValidationError(f'`bet_parameters` has the wrong type: Received `{type(params.get("bet_parameters", None))}` expected `str | None`')
+
+
 def fslvbm_1_bet_cargs(
     params: Fslvbm1BetParameters,
     execution: Execution,
@@ -123,6 +148,7 @@ def fslvbm_1_bet_execute(
     Returns:
         NamedTuple of outputs (described in `Fslvbm1BetOutputs`).
     """
+    fslvbm_1_bet_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLVBM_1_BET_METADATA)
     params = execution.params(params)

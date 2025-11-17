@@ -87,6 +87,28 @@ def cifti_extrema_threshold_params(
     return params
 
 
+def cifti_extrema_threshold_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiExtremaThresholdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("low", None) is None:
+        raise StyxValidationError("`low` must not be None")
+    if not isinstance(params["low"], (float, int)):
+        raise StyxValidationError(f'`low` has the wrong type: Received `{type(params.get("low", None))}` expected `float`')
+    if params.get("high", None) is None:
+        raise StyxValidationError("`high` must not be None")
+    if not isinstance(params["high"], (float, int)):
+        raise StyxValidationError(f'`high` has the wrong type: Received `{type(params.get("high", None))}` expected `float`')
+
+
 def cifti_extrema_threshold_cargs(
     params: CiftiExtremaThresholdParameters,
     execution: Execution,
@@ -208,6 +230,81 @@ def cifti_extrema_params(
     return params
 
 
+def cifti_extrema_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiExtremaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("surface", None) is not None:
+        if not isinstance(params["surface"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType | None`')
+    if params.get("surface-kernel", None) is not None:
+        if not isinstance(params["surface-kernel"], (float, int)):
+            raise StyxValidationError(f'`surface-kernel` has the wrong type: Received `{type(params.get("surface-kernel", None))}` expected `float | None`')
+    if params.get("volume-kernel", None) is not None:
+        if not isinstance(params["volume-kernel"], (float, int)):
+            raise StyxValidationError(f'`volume-kernel` has the wrong type: Received `{type(params.get("volume-kernel", None))}` expected `float | None`')
+    if params.get("presmooth-fwhm", False) is None:
+        raise StyxValidationError("`presmooth-fwhm` must not be None")
+    if not isinstance(params["presmooth-fwhm"], bool):
+        raise StyxValidationError(f'`presmooth-fwhm` has the wrong type: Received `{type(params.get("presmooth-fwhm", False))}` expected `bool`')
+    if params.get("threshold", None) is not None:
+        cifti_extrema_threshold_validate(params["threshold"])
+    if params.get("merged-volume", False) is None:
+        raise StyxValidationError("`merged-volume` must not be None")
+    if not isinstance(params["merged-volume"], bool):
+        raise StyxValidationError(f'`merged-volume` has the wrong type: Received `{type(params.get("merged-volume", False))}` expected `bool`')
+    if params.get("sum-maps", False) is None:
+        raise StyxValidationError("`sum-maps` must not be None")
+    if not isinstance(params["sum-maps"], bool):
+        raise StyxValidationError(f'`sum-maps` has the wrong type: Received `{type(params.get("sum-maps", False))}` expected `bool`')
+    if params.get("consolidate-mode", False) is None:
+        raise StyxValidationError("`consolidate-mode` must not be None")
+    if not isinstance(params["consolidate-mode"], bool):
+        raise StyxValidationError(f'`consolidate-mode` has the wrong type: Received `{type(params.get("consolidate-mode", False))}` expected `bool`')
+    if params.get("only-maxima", False) is None:
+        raise StyxValidationError("`only-maxima` must not be None")
+    if not isinstance(params["only-maxima"], bool):
+        raise StyxValidationError(f'`only-maxima` has the wrong type: Received `{type(params.get("only-maxima", False))}` expected `bool`')
+    if params.get("only-minima", False) is None:
+        raise StyxValidationError("`only-minima` must not be None")
+    if not isinstance(params["only-minima"], bool):
+        raise StyxValidationError(f'`only-minima` has the wrong type: Received `{type(params.get("only-minima", False))}` expected `bool`')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("surface-distance", None) is None:
+        raise StyxValidationError("`surface-distance` must not be None")
+    if not isinstance(params["surface-distance"], (float, int)):
+        raise StyxValidationError(f'`surface-distance` has the wrong type: Received `{type(params.get("surface-distance", None))}` expected `float`')
+    if params.get("volume-distance", None) is None:
+        raise StyxValidationError("`volume-distance` must not be None")
+    if not isinstance(params["volume-distance"], (float, int)):
+        raise StyxValidationError(f'`volume-distance` has the wrong type: Received `{type(params.get("volume-distance", None))}` expected `float`')
+    if params.get("direction", None) is None:
+        raise StyxValidationError("`direction` must not be None")
+    if not isinstance(params["direction"], str):
+        raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str`')
+
+
 def cifti_extrema_cargs(
     params: CiftiExtremaParameters,
     execution: Execution,
@@ -291,6 +388,7 @@ def cifti_extrema_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiExtremaOutputs`).
     """
+    cifti_extrema_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_EXTREMA_METADATA)
     params = execution.params(params)

@@ -68,6 +68,30 @@ def fslreorient2std_params(
     return params
 
 
+def fslreorient2std_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Fslreorient2stdParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is not None:
+        if not isinstance(params["output_image"], str):
+            raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str | None`')
+    if params.get("matrix_file", None) is not None:
+        if not isinstance(params["matrix_file"], str):
+            raise StyxValidationError(f'`matrix_file` has the wrong type: Received `{type(params.get("matrix_file", None))}` expected `str | None`')
+
+
 def fslreorient2std_cargs(
     params: Fslreorient2stdParameters,
     execution: Execution,
@@ -135,6 +159,7 @@ def fslreorient2std_execute(
     Returns:
         NamedTuple of outputs (described in `Fslreorient2stdOutputs`).
     """
+    fslreorient2std_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLREORIENT2STD_METADATA)
     params = execution.params(params)

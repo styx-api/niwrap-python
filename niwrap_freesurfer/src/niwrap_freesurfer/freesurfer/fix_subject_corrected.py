@@ -54,6 +54,28 @@ def fix_subject_corrected_params(
     return params
 
 
+def fix_subject_corrected_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FixSubjectCorrectedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_directory", None) is None:
+        raise StyxValidationError("`subject_directory` must not be None")
+    if not isinstance(params["subject_directory"], str):
+        raise StyxValidationError(f'`subject_directory` has the wrong type: Received `{type(params.get("subject_directory", None))}` expected `str`')
+    if params.get("output_directory", None) is None:
+        raise StyxValidationError("`output_directory` must not be None")
+    if not isinstance(params["output_directory"], str):
+        raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str`')
+
+
 def fix_subject_corrected_cargs(
     params: FixSubjectCorrectedParameters,
     execution: Execution,
@@ -112,6 +134,7 @@ def fix_subject_corrected_execute(
     Returns:
         NamedTuple of outputs (described in `FixSubjectCorrectedOutputs`).
     """
+    fix_subject_corrected_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIX_SUBJECT_CORRECTED_METADATA)
     params = execution.params(params)

@@ -72,6 +72,39 @@ def ftoz_params(
     return params
 
 
+def ftoz_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `FtozParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("dof1", None) is None:
+        raise StyxValidationError("`dof1` must not be None")
+    if not isinstance(params["dof1"], (float, int)):
+        raise StyxValidationError(f'`dof1` has the wrong type: Received `{type(params.get("dof1", None))}` expected `float`')
+    if params.get("dof2", None) is None:
+        raise StyxValidationError("`dof2` must not be None")
+    if not isinstance(params["dof2"], (float, int)):
+        raise StyxValidationError(f'`dof2` has the wrong type: Received `{type(params.get("dof2", None))}` expected `float`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+
+
 def ftoz_cargs(
     params: FtozParameters,
     execution: Execution,
@@ -139,6 +172,7 @@ def ftoz_execute(
     Returns:
         NamedTuple of outputs (described in `FtozOutputs`).
     """
+    ftoz_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FTOZ_METADATA)
     params = execution.params(params)

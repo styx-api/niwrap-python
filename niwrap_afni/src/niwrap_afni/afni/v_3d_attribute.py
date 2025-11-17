@@ -89,6 +89,50 @@ def v_3d_attribute_params(
     return params
 
 
+def v_3d_attribute_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAttributeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("all", False) is None:
+        raise StyxValidationError("`all` must not be None")
+    if not isinstance(params["all"], bool):
+        raise StyxValidationError(f'`all` has the wrong type: Received `{type(params.get("all", False))}` expected `bool`')
+    if params.get("name", False) is None:
+        raise StyxValidationError("`name` must not be None")
+    if not isinstance(params["name"], bool):
+        raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", False))}` expected `bool`')
+    if params.get("center", False) is None:
+        raise StyxValidationError("`center` must not be None")
+    if not isinstance(params["center"], bool):
+        raise StyxValidationError(f'`center` has the wrong type: Received `{type(params.get("center", False))}` expected `bool`')
+    if params.get("ssep", None) is not None:
+        if not isinstance(params["ssep"], str):
+            raise StyxValidationError(f'`ssep` has the wrong type: Received `{type(params.get("ssep", None))}` expected `str | None`')
+    if params.get("sprep", None) is not None:
+        if not isinstance(params["sprep"], str):
+            raise StyxValidationError(f'`sprep` has the wrong type: Received `{type(params.get("sprep", None))}` expected `str | None`')
+    if params.get("quote", False) is None:
+        raise StyxValidationError("`quote` must not be None")
+    if not isinstance(params["quote"], bool):
+        raise StyxValidationError(f'`quote` has the wrong type: Received `{type(params.get("quote", False))}` expected `bool`')
+    if params.get("aname", None) is None:
+        raise StyxValidationError("`aname` must not be None")
+    if not isinstance(params["aname"], str):
+        raise StyxValidationError(f'`aname` has the wrong type: Received `{type(params.get("aname", None))}` expected `str`')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+
+
 def v_3d_attribute_cargs(
     params: V3dAttributeParameters,
     execution: Execution,
@@ -167,6 +211,7 @@ def v_3d_attribute_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAttributeOutputs`).
     """
+    v_3d_attribute_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ATTRIBUTE_METADATA)
     params = execution.params(params)

@@ -50,6 +50,27 @@ def nmovie_qt_params(
     return params
 
 
+def nmovie_qt_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NmovieQtParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("images", None) is None:
+        raise StyxValidationError("`images` must not be None")
+    if not isinstance(params["images"], list):
+        raise StyxValidationError(f'`images` has the wrong type: Received `{type(params.get("images", None))}` expected `list[InputPathType]`')
+    for e in params["images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`images` has the wrong type: Received `{type(params.get("images", None))}` expected `list[InputPathType]`')
+
+
 def nmovie_qt_cargs(
     params: NmovieQtParameters,
     execution: Execution,
@@ -107,6 +128,7 @@ def nmovie_qt_execute(
     Returns:
         NamedTuple of outputs (described in `NmovieQtOutputs`).
     """
+    nmovie_qt_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NMOVIE_QT_METADATA)
     params = execution.params(params)

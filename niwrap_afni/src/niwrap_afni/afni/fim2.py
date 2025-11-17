@@ -194,6 +194,106 @@ def fim2_params(
     return params
 
 
+def fim2_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `Fim2Parameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_files", None) is None:
+        raise StyxValidationError("`image_files` must not be None")
+    if not isinstance(params["image_files"], list):
+        raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+    for e in params["image_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`image_files` has the wrong type: Received `{type(params.get("image_files", None))}` expected `list[InputPathType]`')
+    if params.get("pcnt", None) is not None:
+        if not isinstance(params["pcnt"], (float, int)):
+            raise StyxValidationError(f'`pcnt` has the wrong type: Received `{type(params.get("pcnt", None))}` expected `float | None`')
+    if params.get("pcthresh", None) is not None:
+        if not isinstance(params["pcthresh"], (float, int)):
+            raise StyxValidationError(f'`pcthresh` has the wrong type: Received `{type(params.get("pcthresh", None))}` expected `float | None`')
+    if params.get("im1", None) is not None:
+        if not isinstance(params["im1"], int):
+            raise StyxValidationError(f'`im1` has the wrong type: Received `{type(params.get("im1", None))}` expected `int | None`')
+    if params.get("num", None) is not None:
+        if not isinstance(params["num"], int):
+            raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `int | None`')
+    if params.get("non", False) is None:
+        raise StyxValidationError("`non` must not be None")
+    if not isinstance(params["non"], bool):
+        raise StyxValidationError(f'`non` has the wrong type: Received `{type(params.get("non", False))}` expected `bool`')
+    if params.get("coef", None) is not None:
+        if not isinstance(params["coef"], (float, int)):
+            raise StyxValidationError(f'`coef` has the wrong type: Received `{type(params.get("coef", None))}` expected `float | None`')
+    if params.get("ort", None) is not None:
+        if not isinstance(params["ort"], list):
+            raise StyxValidationError(f'`ort` has the wrong type: Received `{type(params.get("ort", None))}` expected `list[InputPathType] | None`')
+        for e in params["ort"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`ort` has the wrong type: Received `{type(params.get("ort", None))}` expected `list[InputPathType] | None`')
+    if params.get("ideal", None) is not None:
+        if not isinstance(params["ideal"], list):
+            raise StyxValidationError(f'`ideal` has the wrong type: Received `{type(params.get("ideal", None))}` expected `list[InputPathType] | None`')
+        for e in params["ideal"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`ideal` has the wrong type: Received `{type(params.get("ideal", None))}` expected `list[InputPathType] | None`')
+    if params.get("polref", None) is not None:
+        if not isinstance(params["polref"], int):
+            raise StyxValidationError(f'`polref` has the wrong type: Received `{type(params.get("polref", None))}` expected `int | None`')
+    if params.get("fimfile", None) is not None:
+        if not isinstance(params["fimfile"], str):
+            raise StyxValidationError(f'`fimfile` has the wrong type: Received `{type(params.get("fimfile", None))}` expected `str | None`')
+    if params.get("corr", False) is None:
+        raise StyxValidationError("`corr` must not be None")
+    if not isinstance(params["corr"], bool):
+        raise StyxValidationError(f'`corr` has the wrong type: Received `{type(params.get("corr", False))}` expected `bool`')
+    if params.get("corfile", None) is not None:
+        if not isinstance(params["corfile"], str):
+            raise StyxValidationError(f'`corfile` has the wrong type: Received `{type(params.get("corfile", None))}` expected `str | None`')
+    if params.get("cnrfile", None) is not None:
+        if not isinstance(params["cnrfile"], str):
+            raise StyxValidationError(f'`cnrfile` has the wrong type: Received `{type(params.get("cnrfile", None))}` expected `str | None`')
+    if params.get("sigfile", None) is not None:
+        if not isinstance(params["sigfile"], str):
+            raise StyxValidationError(f'`sigfile` has the wrong type: Received `{type(params.get("sigfile", None))}` expected `str | None`')
+    if params.get("fitfile", None) is not None:
+        if not isinstance(params["fitfile"], str):
+            raise StyxValidationError(f'`fitfile` has the wrong type: Received `{type(params.get("fitfile", None))}` expected `str | None`')
+    if params.get("subort", None) is not None:
+        if not isinstance(params["subort"], str):
+            raise StyxValidationError(f'`subort` has the wrong type: Received `{type(params.get("subort", None))}` expected `str | None`')
+    if params.get("flim", False) is None:
+        raise StyxValidationError("`flim` must not be None")
+    if not isinstance(params["flim"], bool):
+        raise StyxValidationError(f'`flim` has the wrong type: Received `{type(params.get("flim", False))}` expected `bool`')
+    if params.get("clean", False) is None:
+        raise StyxValidationError("`clean` must not be None")
+    if not isinstance(params["clean"], bool):
+        raise StyxValidationError(f'`clean` has the wrong type: Received `{type(params.get("clean", False))}` expected `bool`')
+    if params.get("clip", False) is None:
+        raise StyxValidationError("`clip` must not be None")
+    if not isinstance(params["clip"], bool):
+        raise StyxValidationError(f'`clip` has the wrong type: Received `{type(params.get("clip", False))}` expected `bool`')
+    if params.get("q", False) is None:
+        raise StyxValidationError("`q` must not be None")
+    if not isinstance(params["q"], bool):
+        raise StyxValidationError(f'`q` has the wrong type: Received `{type(params.get("q", False))}` expected `bool`')
+    if params.get("dfspace", False) is None:
+        raise StyxValidationError("`dfspace` must not be None")
+    if not isinstance(params["dfspace"], bool):
+        raise StyxValidationError(f'`dfspace` has the wrong type: Received `{type(params.get("dfspace", False))}` expected `bool`')
+    if params.get("regbase", None) is not None:
+        if not isinstance(params["regbase"], str):
+            raise StyxValidationError(f'`regbase` has the wrong type: Received `{type(params.get("regbase", None))}` expected `str | None`')
+
+
 def fim2_cargs(
     params: Fim2Parameters,
     execution: Execution,
@@ -346,6 +446,7 @@ def fim2_execute(
     Returns:
         NamedTuple of outputs (described in `Fim2Outputs`).
     """
+    fim2_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIM2_METADATA)
     params = execution.params(params)

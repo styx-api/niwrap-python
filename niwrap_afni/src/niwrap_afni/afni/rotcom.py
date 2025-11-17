@@ -58,6 +58,27 @@ def rotcom_params(
     return params
 
 
+def rotcom_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `RotcomParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("rotate_ashift", None) is None:
+        raise StyxValidationError("`rotate_ashift` must not be None")
+    if not isinstance(params["rotate_ashift"], str):
+        raise StyxValidationError(f'`rotate_ashift` has the wrong type: Received `{type(params.get("rotate_ashift", None))}` expected `str`')
+    if params.get("dataset", None) is not None:
+        if not isinstance(params["dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType | None`')
+
+
 def rotcom_cargs(
     params: RotcomParameters,
     execution: Execution,
@@ -119,6 +140,7 @@ def rotcom_execute(
     Returns:
         NamedTuple of outputs (described in `RotcomOutputs`).
     """
+    rotcom_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ROTCOM_METADATA)
     params = execution.params(params)

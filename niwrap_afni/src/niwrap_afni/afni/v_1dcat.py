@@ -98,6 +98,57 @@ def v_1dcat_params(
     return params
 
 
+def v_1dcat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dcatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files", None) is None:
+        raise StyxValidationError("`input_files` must not be None")
+    if not isinstance(params["input_files"], list):
+        raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_files` has the wrong type: Received `{type(params.get("input_files", None))}` expected `list[InputPathType]`')
+    if params.get("tsv_output", False) is None:
+        raise StyxValidationError("`tsv_output` must not be None")
+    if not isinstance(params["tsv_output"], bool):
+        raise StyxValidationError(f'`tsv_output` has the wrong type: Received `{type(params.get("tsv_output", False))}` expected `bool`')
+    if params.get("csv_output", False) is None:
+        raise StyxValidationError("`csv_output` must not be None")
+    if not isinstance(params["csv_output"], bool):
+        raise StyxValidationError(f'`csv_output` has the wrong type: Received `{type(params.get("csv_output", False))}` expected `bool`')
+    if params.get("nonconst_output", False) is None:
+        raise StyxValidationError("`nonconst_output` must not be None")
+    if not isinstance(params["nonconst_output"], bool):
+        raise StyxValidationError(f'`nonconst_output` has the wrong type: Received `{type(params.get("nonconst_output", False))}` expected `bool`')
+    if params.get("nonfixed_output", False) is None:
+        raise StyxValidationError("`nonfixed_output` must not be None")
+    if not isinstance(params["nonfixed_output"], bool):
+        raise StyxValidationError(f'`nonfixed_output` has the wrong type: Received `{type(params.get("nonfixed_output", False))}` expected `bool`')
+    if params.get("number_format", None) is not None:
+        if not isinstance(params["number_format"], str):
+            raise StyxValidationError(f'`number_format` has the wrong type: Received `{type(params.get("number_format", None))}` expected `str | None`')
+    if params.get("stack_output", False) is None:
+        raise StyxValidationError("`stack_output` must not be None")
+    if not isinstance(params["stack_output"], bool):
+        raise StyxValidationError(f'`stack_output` has the wrong type: Received `{type(params.get("stack_output", False))}` expected `bool`')
+    if params.get("column_row_selection", None) is not None:
+        if not isinstance(params["column_row_selection"], str):
+            raise StyxValidationError(f'`column_row_selection` has the wrong type: Received `{type(params.get("column_row_selection", None))}` expected `str | None`')
+    if params.get("ok_empty", False) is None:
+        raise StyxValidationError("`ok_empty` must not be None")
+    if not isinstance(params["ok_empty"], bool):
+        raise StyxValidationError(f'`ok_empty` has the wrong type: Received `{type(params.get("ok_empty", False))}` expected `bool`')
+
+
 def v_1dcat_cargs(
     params: V1dcatParameters,
     execution: Execution,
@@ -178,6 +229,7 @@ def v_1dcat_execute(
     Returns:
         NamedTuple of outputs (described in `V1dcatOutputs`).
     """
+    v_1dcat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DCAT_METADATA)
     params = execution.params(params)

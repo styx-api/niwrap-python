@@ -338,6 +338,190 @@ def melodic_params(
     return params
 
 
+def melodic_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MelodicParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_file", None) is None:
+        raise StyxValidationError("`input_file` must not be None")
+    if not isinstance(params["input_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_file` has the wrong type: Received `{type(params.get("input_file", None))}` expected `InputPathType`')
+    if params.get("output_directory", None) is not None:
+        if not isinstance(params["output_directory"], str):
+            raise StyxValidationError(f'`output_directory` has the wrong type: Received `{type(params.get("output_directory", None))}` expected `str | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("dimensionality_reduction", None) is not None:
+        if not isinstance(params["dimensionality_reduction"], (float, int)):
+            raise StyxValidationError(f'`dimensionality_reduction` has the wrong type: Received `{type(params.get("dimensionality_reduction", None))}` expected `float | None`')
+    if params.get("generate_report", False) is None:
+        raise StyxValidationError("`generate_report` must not be None")
+    if not isinstance(params["generate_report"], bool):
+        raise StyxValidationError(f'`generate_report` has the wrong type: Received `{type(params.get("generate_report", False))}` expected `bool`')
+    if params.get("cifti_io", False) is None:
+        raise StyxValidationError("`cifti_io` must not be None")
+    if not isinstance(params["cifti_io"], bool):
+        raise StyxValidationError(f'`cifti_io` has the wrong type: Received `{type(params.get("cifti_io", False))}` expected `bool`')
+    if params.get("variance_normalization", False) is None:
+        raise StyxValidationError("`variance_normalization` must not be None")
+    if not isinstance(params["variance_normalization"], bool):
+        raise StyxValidationError(f'`variance_normalization` has the wrong type: Received `{type(params.get("variance_normalization", False))}` expected `bool`')
+    if params.get("no_masking", False) is None:
+        raise StyxValidationError("`no_masking` must not be None")
+    if not isinstance(params["no_masking"], bool):
+        raise StyxValidationError(f'`no_masking` has the wrong type: Received `{type(params.get("no_masking", False))}` expected `bool`')
+    if params.get("update_masking", False) is None:
+        raise StyxValidationError("`update_masking` must not be None")
+    if not isinstance(params["update_masking"], bool):
+        raise StyxValidationError(f'`update_masking` has the wrong type: Received `{type(params.get("update_masking", False))}` expected `bool`')
+    if params.get("no_bet", False) is None:
+        raise StyxValidationError("`no_bet` must not be None")
+    if not isinstance(params["no_bet"], bool):
+        raise StyxValidationError(f'`no_bet` has the wrong type: Received `{type(params.get("no_bet", False))}` expected `bool`')
+    if params.get("bg_threshold", None) is not None:
+        if not isinstance(params["bg_threshold"], (float, int)):
+            raise StyxValidationError(f'`bg_threshold` has the wrong type: Received `{type(params.get("bg_threshold", None))}` expected `float | None`')
+    if params.get("dimest_technique", None) is not None:
+        if not isinstance(params["dimest_technique"], str):
+            raise StyxValidationError(f'`dimest_technique` has the wrong type: Received `{type(params.get("dimest_technique", None))}` expected `str | None`')
+    if params.get("separate_variance_normalization", False) is None:
+        raise StyxValidationError("`separate_variance_normalization` must not be None")
+    if not isinstance(params["separate_variance_normalization"], bool):
+        raise StyxValidationError(f'`separate_variance_normalization` has the wrong type: Received `{type(params.get("separate_variance_normalization", False))}` expected `bool`')
+    if params.get("disable_migp", False) is None:
+        raise StyxValidationError("`disable_migp` must not be None")
+    if not isinstance(params["disable_migp"], bool):
+        raise StyxValidationError(f'`disable_migp` has the wrong type: Received `{type(params.get("disable_migp", False))}` expected `bool`')
+    if params.get("num_internal_eigenmaps", None) is not None:
+        if not isinstance(params["num_internal_eigenmaps"], (float, int)):
+            raise StyxValidationError(f'`num_internal_eigenmaps` has the wrong type: Received `{type(params.get("num_internal_eigenmaps", None))}` expected `float | None`')
+    if params.get("migp_shuffle", False) is None:
+        raise StyxValidationError("`migp_shuffle` must not be None")
+    if not isinstance(params["migp_shuffle"], bool):
+        raise StyxValidationError(f'`migp_shuffle` has the wrong type: Received `{type(params.get("migp_shuffle", False))}` expected `bool`')
+    if params.get("migp_factor", None) is not None:
+        if not isinstance(params["migp_factor"], (float, int)):
+            raise StyxValidationError(f'`migp_factor` has the wrong type: Received `{type(params.get("migp_factor", None))}` expected `float | None`')
+    if params.get("num_ics", None) is not None:
+        if not isinstance(params["num_ics"], (float, int)):
+            raise StyxValidationError(f'`num_ics` has the wrong type: Received `{type(params.get("num_ics", None))}` expected `float | None`')
+    if params.get("nonlinearity", None) is not None:
+        if not isinstance(params["nonlinearity"], str):
+            raise StyxValidationError(f'`nonlinearity` has the wrong type: Received `{type(params.get("nonlinearity", None))}` expected `str | None`')
+    if params.get("covar_weights", None) is not None:
+        if not isinstance(params["covar_weights"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`covar_weights` has the wrong type: Received `{type(params.get("covar_weights", None))}` expected `InputPathType | None`')
+    if params.get("eps_error", None) is not None:
+        if not isinstance(params["eps_error"], (float, int)):
+            raise StyxValidationError(f'`eps_error` has the wrong type: Received `{type(params.get("eps_error", None))}` expected `float | None`')
+    if params.get("eps_rank1_error", None) is not None:
+        if not isinstance(params["eps_rank1_error"], (float, int)):
+            raise StyxValidationError(f'`eps_rank1_error` has the wrong type: Received `{type(params.get("eps_rank1_error", None))}` expected `float | None`')
+    if params.get("max_iters", None) is not None:
+        if not isinstance(params["max_iters"], (float, int)):
+            raise StyxValidationError(f'`max_iters` has the wrong type: Received `{type(params.get("max_iters", None))}` expected `float | None`')
+    if params.get("max_restarts", None) is not None:
+        if not isinstance(params["max_restarts"], (float, int)):
+            raise StyxValidationError(f'`max_restarts` has the wrong type: Received `{type(params.get("max_restarts", None))}` expected `float | None`')
+    if params.get("mm_threshold", None) is not None:
+        if not isinstance(params["mm_threshold"], (float, int)):
+            raise StyxValidationError(f'`mm_threshold` has the wrong type: Received `{type(params.get("mm_threshold", None))}` expected `float | None`')
+    if params.get("no_mixture_modeling", False) is None:
+        raise StyxValidationError("`no_mixture_modeling` must not be None")
+    if not isinstance(params["no_mixture_modeling"], bool):
+        raise StyxValidationError(f'`no_mixture_modeling` has the wrong type: Received `{type(params.get("no_mixture_modeling", False))}` expected `bool`')
+    if params.get("ic_components_file", None) is not None:
+        if not isinstance(params["ic_components_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ic_components_file` has the wrong type: Received `{type(params.get("ic_components_file", None))}` expected `InputPathType | None`')
+    if params.get("mixing_matrix_file", None) is not None:
+        if not isinstance(params["mixing_matrix_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mixing_matrix_file` has the wrong type: Received `{type(params.get("mixing_matrix_file", None))}` expected `InputPathType | None`')
+    if params.get("session_modes_file", None) is not None:
+        if not isinstance(params["session_modes_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`session_modes_file` has the wrong type: Received `{type(params.get("session_modes_file", None))}` expected `InputPathType | None`')
+    if params.get("component_filter", None) is not None:
+        if not isinstance(params["component_filter"], str):
+            raise StyxValidationError(f'`component_filter` has the wrong type: Received `{type(params.get("component_filter", None))}` expected `str | None`')
+    if params.get("background_image", None) is not None:
+        if not isinstance(params["background_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`background_image` has the wrong type: Received `{type(params.get("background_image", None))}` expected `InputPathType | None`')
+    if params.get("tr_seconds", None) is not None:
+        if not isinstance(params["tr_seconds"], (float, int)):
+            raise StyxValidationError(f'`tr_seconds` has the wrong type: Received `{type(params.get("tr_seconds", None))}` expected `float | None`')
+    if params.get("log_power_calc", False) is None:
+        raise StyxValidationError("`log_power_calc` must not be None")
+    if not isinstance(params["log_power_calc"], bool):
+        raise StyxValidationError(f'`log_power_calc` has the wrong type: Received `{type(params.get("log_power_calc", False))}` expected `bool`')
+    if params.get("time_domain_design_matrix", None) is not None:
+        if not isinstance(params["time_domain_design_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`time_domain_design_matrix` has the wrong type: Received `{type(params.get("time_domain_design_matrix", None))}` expected `InputPathType | None`')
+    if params.get("time_domain_t_contrast_matrix", None) is not None:
+        if not isinstance(params["time_domain_t_contrast_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`time_domain_t_contrast_matrix` has the wrong type: Received `{type(params.get("time_domain_t_contrast_matrix", None))}` expected `InputPathType | None`')
+    if params.get("subject_domain_design_matrix", None) is not None:
+        if not isinstance(params["subject_domain_design_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subject_domain_design_matrix` has the wrong type: Received `{type(params.get("subject_domain_design_matrix", None))}` expected `InputPathType | None`')
+    if params.get("subject_domain_t_contrast_matrix", None) is not None:
+        if not isinstance(params["subject_domain_t_contrast_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`subject_domain_t_contrast_matrix` has the wrong type: Received `{type(params.get("subject_domain_t_contrast_matrix", None))}` expected `InputPathType | None`')
+    if params.get("output_unmixing_matrix", False) is None:
+        raise StyxValidationError("`output_unmixing_matrix` must not be None")
+    if not isinstance(params["output_unmixing_matrix"], bool):
+        raise StyxValidationError(f'`output_unmixing_matrix` has the wrong type: Received `{type(params.get("output_unmixing_matrix", False))}` expected `bool`')
+    if params.get("output_stats", False) is None:
+        raise StyxValidationError("`output_stats` must not be None")
+    if not isinstance(params["output_stats"], bool):
+        raise StyxValidationError(f'`output_stats` has the wrong type: Received `{type(params.get("output_stats", False))}` expected `bool`')
+    if params.get("output_pca", False) is None:
+        raise StyxValidationError("`output_pca` must not be None")
+    if not isinstance(params["output_pca"], bool):
+        raise StyxValidationError(f'`output_pca` has the wrong type: Received `{type(params.get("output_pca", False))}` expected `bool`')
+    if params.get("output_whitening", False) is None:
+        raise StyxValidationError("`output_whitening` must not be None")
+    if not isinstance(params["output_whitening"], bool):
+        raise StyxValidationError(f'`output_whitening` has the wrong type: Received `{type(params.get("output_whitening", False))}` expected `bool`')
+    if params.get("output_original_ics", False) is None:
+        raise StyxValidationError("`output_original_ics` must not be None")
+    if not isinstance(params["output_original_ics"], bool):
+        raise StyxValidationError(f'`output_original_ics` has the wrong type: Received `{type(params.get("output_original_ics", False))}` expected `bool`')
+    if params.get("output_mean_volume", False) is None:
+        raise StyxValidationError("`output_mean_volume` must not be None")
+    if not isinstance(params["output_mean_volume"], bool):
+        raise StyxValidationError(f'`output_mean_volume` has the wrong type: Received `{type(params.get("output_mean_volume", False))}` expected `bool`')
+    if params.get("version", False) is None:
+        raise StyxValidationError("`version` must not be None")
+    if not isinstance(params["version"], bool):
+        raise StyxValidationError(f'`version` has the wrong type: Received `{type(params.get("version", False))}` expected `bool`')
+    if params.get("copyright", False) is None:
+        raise StyxValidationError("`copyright` must not be None")
+    if not isinstance(params["copyright"], bool):
+        raise StyxValidationError(f'`copyright` has the wrong type: Received `{type(params.get("copyright", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("report_maps", None) is not None:
+        if not isinstance(params["report_maps"], str):
+            raise StyxValidationError(f'`report_maps` has the wrong type: Received `{type(params.get("report_maps", None))}` expected `str | None`')
+    if params.get("keep_meanvol", False) is None:
+        raise StyxValidationError("`keep_meanvol` must not be None")
+    if not isinstance(params["keep_meanvol"], bool):
+        raise StyxValidationError(f'`keep_meanvol` has the wrong type: Received `{type(params.get("keep_meanvol", False))}` expected `bool`')
+
+
 def melodic_cargs(
     params: MelodicParameters,
     execution: Execution,
@@ -578,6 +762,7 @@ def melodic_execute(
     Returns:
         NamedTuple of outputs (described in `MelodicOutputs`).
     """
+    melodic_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MELODIC_METADATA)
     params = execution.params(params)

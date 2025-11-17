@@ -84,6 +84,48 @@ def v_3d_synthesize_params(
     return params
 
 
+def v_3d_synthesize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dSynthesizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("c_bucket", None) is None:
+        raise StyxValidationError("`c_bucket` must not be None")
+    if not isinstance(params["c_bucket"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`c_bucket` has the wrong type: Received `{type(params.get("c_bucket", None))}` expected `InputPathType`')
+    if params.get("matrix", None) is None:
+        raise StyxValidationError("`matrix` must not be None")
+    if not isinstance(params["matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `InputPathType`')
+    if params.get("select", None) is None:
+        raise StyxValidationError("`select` must not be None")
+    if not isinstance(params["select"], str):
+        raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `str`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("dry_flag", False) is None:
+        raise StyxValidationError("`dry_flag` must not be None")
+    if not isinstance(params["dry_flag"], bool):
+        raise StyxValidationError(f'`dry_flag` has the wrong type: Received `{type(params.get("dry_flag", False))}` expected `bool`')
+    if params.get("tr", None) is not None:
+        if not isinstance(params["tr"], (float, int)):
+            raise StyxValidationError(f'`tr` has the wrong type: Received `{type(params.get("tr", None))}` expected `float | None`')
+    if params.get("cenfill", None) is not None:
+        if not isinstance(params["cenfill"], str):
+            raise StyxValidationError(f'`cenfill` has the wrong type: Received `{type(params.get("cenfill", None))}` expected `typing.Literal["zero", "nbhr", "none"] | None`')
+        if params["cenfill"] not in ["zero", "nbhr", "none"]:
+            raise StyxValidationError("Parameter `cenfill` must be one of [\"zero\", \"nbhr\", \"none\"]")
+
+
 def v_3d_synthesize_cargs(
     params: V3dSynthesizeParameters,
     execution: Execution,
@@ -169,6 +211,7 @@ def v_3d_synthesize_execute(
     Returns:
         NamedTuple of outputs (described in `V3dSynthesizeOutputs`).
     """
+    v_3d_synthesize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_SYNTHESIZE_METADATA)
     params = execution.params(params)

@@ -116,6 +116,28 @@ def cifti_create_label_volume_params(
     return params
 
 
+def cifti_create_label_volume_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateLabelVolumeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-volume", None) is None:
+        raise StyxValidationError("`label-volume` must not be None")
+    if not isinstance(params["label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-volume` has the wrong type: Received `{type(params.get("label-volume", None))}` expected `InputPathType`')
+    if params.get("structure-label-volume", None) is None:
+        raise StyxValidationError("`structure-label-volume` must not be None")
+    if not isinstance(params["structure-label-volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`structure-label-volume` has the wrong type: Received `{type(params.get("structure-label-volume", None))}` expected `InputPathType`')
+
+
 def cifti_create_label_volume_cargs(
     params: CiftiCreateLabelVolumeParameters,
     execution: Execution,
@@ -160,6 +182,27 @@ def cifti_create_label_left_label_params(
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     return params
+
+
+def cifti_create_label_left_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateLabelLeftLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_create_label_left_label_cargs(
@@ -210,6 +253,27 @@ def cifti_create_label_right_label_params(
     return params
 
 
+def cifti_create_label_right_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateLabelRightLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
+
+
 def cifti_create_label_right_label_cargs(
     params: CiftiCreateLabelRightLabelParameters,
     execution: Execution,
@@ -256,6 +320,27 @@ def cifti_create_label_cerebellum_label_params(
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     return params
+
+
+def cifti_create_label_cerebellum_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateLabelCerebellumLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_create_label_cerebellum_label_cargs(
@@ -307,6 +392,31 @@ def cifti_create_label_label_params(
     if roi_metric is not None:
         params["roi-metric"] = roi_metric
     return params
+
+
+def cifti_create_label_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateLabelLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("structure", None) is None:
+        raise StyxValidationError("`structure` must not be None")
+    if not isinstance(params["structure"], str):
+        raise StyxValidationError(f'`structure` has the wrong type: Received `{type(params.get("structure", None))}` expected `str`')
+    if params.get("label", None) is None:
+        raise StyxValidationError("`label` must not be None")
+    if not isinstance(params["label"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `InputPathType`')
+    if params.get("roi-metric", None) is not None:
+        if not isinstance(params["roi-metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-metric` has the wrong type: Received `{type(params.get("roi-metric", None))}` expected `InputPathType | None`')
 
 
 def cifti_create_label_label_cargs(
@@ -380,6 +490,37 @@ def cifti_create_label_params(
     if label is not None:
         params["label"] = label
     return params
+
+
+def cifti_create_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("volume", None) is not None:
+        cifti_create_label_volume_validate(params["volume"])
+    if params.get("left-label", None) is not None:
+        cifti_create_label_left_label_validate(params["left-label"])
+    if params.get("right-label", None) is not None:
+        cifti_create_label_right_label_validate(params["right-label"])
+    if params.get("cerebellum-label", None) is not None:
+        cifti_create_label_cerebellum_label_validate(params["cerebellum-label"])
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], list):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[CiftiCreateLabelLabelParameters] | None`')
+        for e in params["label"]:
+            cifti_create_label_label_validate(e)
 
 
 def cifti_create_label_cargs(
@@ -493,6 +634,7 @@ def cifti_create_label_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateLabelOutputs`).
     """
+    cifti_create_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CREATE_LABEL_METADATA)
     params = execution.params(params)

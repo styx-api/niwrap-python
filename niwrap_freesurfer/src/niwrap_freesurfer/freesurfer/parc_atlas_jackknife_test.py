@@ -112,6 +112,62 @@ def parc_atlas_jackknife_test_params(
     return params
 
 
+def parc_atlas_jackknife_test_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ParcAtlasJackknifeTestParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("register", False) is None:
+        raise StyxValidationError("`register` must not be None")
+    if not isinstance(params["register"], bool):
+        raise StyxValidationError(f'`register` has the wrong type: Received `{type(params.get("register", False))}` expected `bool`')
+    if params.get("reg_dist", None) is not None:
+        if not isinstance(params["reg_dist"], str):
+            raise StyxValidationError(f'`reg_dist` has the wrong type: Received `{type(params.get("reg_dist", None))}` expected `str | None`')
+    if params.get("reg_append", None) is not None:
+        if not isinstance(params["reg_append"], str):
+            raise StyxValidationError(f'`reg_append` has the wrong type: Received `{type(params.get("reg_append", None))}` expected `str | None`')
+    if params.get("reg_copy", None) is not None:
+        if not isinstance(params["reg_copy"], str):
+            raise StyxValidationError(f'`reg_copy` has the wrong type: Received `{type(params.get("reg_copy", None))}` expected `str | None`')
+    if params.get("train", False) is None:
+        raise StyxValidationError("`train` must not be None")
+    if not isinstance(params["train"], bool):
+        raise StyxValidationError(f'`train` has the wrong type: Received `{type(params.get("train", False))}` expected `bool`')
+    if params.get("classify", False) is None:
+        raise StyxValidationError("`classify` must not be None")
+    if not isinstance(params["classify"], bool):
+        raise StyxValidationError(f'`classify` has the wrong type: Received `{type(params.get("classify", False))}` expected `bool`')
+    if params.get("test", False) is None:
+        raise StyxValidationError("`test` must not be None")
+    if not isinstance(params["test"], bool):
+        raise StyxValidationError(f'`test` has the wrong type: Received `{type(params.get("test", False))}` expected `bool`')
+    if params.get("all", False) is None:
+        raise StyxValidationError("`all` must not be None")
+    if not isinstance(params["all"], bool):
+        raise StyxValidationError(f'`all` has the wrong type: Received `{type(params.get("all", False))}` expected `bool`')
+    if params.get("subjects_dir", None) is not None:
+        if not isinstance(params["subjects_dir"], str):
+            raise StyxValidationError(f'`subjects_dir` has the wrong type: Received `{type(params.get("subjects_dir", None))}` expected `str | None`')
+    if params.get("freesurfer_home", None) is not None:
+        if not isinstance(params["freesurfer_home"], str):
+            raise StyxValidationError(f'`freesurfer_home` has the wrong type: Received `{type(params.get("freesurfer_home", None))}` expected `str | None`')
+    if params.get("binaries_path", None) is not None:
+        if not isinstance(params["binaries_path"], str):
+            raise StyxValidationError(f'`binaries_path` has the wrong type: Received `{type(params.get("binaries_path", None))}` expected `str | None`')
+    if params.get("dontrun", False) is None:
+        raise StyxValidationError("`dontrun` must not be None")
+    if not isinstance(params["dontrun"], bool):
+        raise StyxValidationError(f'`dontrun` has the wrong type: Received `{type(params.get("dontrun", False))}` expected `bool`')
+
+
 def parc_atlas_jackknife_test_cargs(
     params: ParcAtlasJackknifeTestParameters,
     execution: Execution,
@@ -211,6 +267,7 @@ def parc_atlas_jackknife_test_execute(
     Returns:
         NamedTuple of outputs (described in `ParcAtlasJackknifeTestOutputs`).
     """
+    parc_atlas_jackknife_test_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PARC_ATLAS_JACKKNIFE_TEST_METADATA)
     params = execution.params(params)

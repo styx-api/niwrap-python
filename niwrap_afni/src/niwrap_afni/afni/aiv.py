@@ -77,6 +77,46 @@ def aiv_params(
     return params
 
 
+def aiv_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid `AivParameters`
+    object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("quiet", False) is None:
+        raise StyxValidationError("`quiet` must not be None")
+    if not isinstance(params["quiet"], bool):
+        raise StyxValidationError(f'`quiet` has the wrong type: Received `{type(params.get("quiet", False))}` expected `bool`')
+    if params.get("title", None) is not None:
+        if not isinstance(params["title"], str):
+            raise StyxValidationError(f'`title` has the wrong type: Received `{type(params.get("title", None))}` expected `str | None`')
+    if params.get("port", None) is not None:
+        if not isinstance(params["port"], (float, int)):
+            raise StyxValidationError(f'`port` has the wrong type: Received `{type(params.get("port", None))}` expected `float | None`')
+        if 1024 <= params["port"] <= 65535:
+            raise StyxValidationError("Parameter `port` must be between 1024 and 65535 (inclusive)")
+    if params.get("pad", None) is not None:
+        if not isinstance(params["pad"], str):
+            raise StyxValidationError(f'`pad` has the wrong type: Received `{type(params.get("pad", None))}` expected `str | None`')
+    if params.get("input_images", None) is None:
+        raise StyxValidationError("`input_images` must not be None")
+    if not isinstance(params["input_images"], list):
+        raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    for e in params["input_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+
+
 def aiv_cargs(
     params: AivParameters,
     execution: Execution,
@@ -154,6 +194,7 @@ def aiv_execute(
     Returns:
         NamedTuple of outputs (described in `AivOutputs`).
     """
+    aiv_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(AIV_METADATA)
     params = execution.params(params)

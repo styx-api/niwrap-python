@@ -68,6 +68,35 @@ def border_to_vertices_params(
     return params
 
 
+def border_to_vertices_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `BorderToVerticesParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("name", None) is not None:
+        if not isinstance(params["name"], str):
+            raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str | None`')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("border-file", None) is None:
+        raise StyxValidationError("`border-file` must not be None")
+    if not isinstance(params["border-file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`border-file` has the wrong type: Received `{type(params.get("border-file", None))}` expected `InputPathType`')
+
+
 def border_to_vertices_cargs(
     params: BorderToVerticesParameters,
     execution: Execution,
@@ -131,6 +160,7 @@ def border_to_vertices_execute(
     Returns:
         NamedTuple of outputs (described in `BorderToVerticesOutputs`).
     """
+    border_to_vertices_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BORDER_TO_VERTICES_METADATA)
     params = execution.params(params)

@@ -104,6 +104,61 @@ def v__fast_roi_params(
     return params
 
 
+def v__fast_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VFastRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("region", None) is None:
+        raise StyxValidationError("`region` must not be None")
+    if not isinstance(params["region"], list):
+        raise StyxValidationError(f'`region` has the wrong type: Received `{type(params.get("region", None))}` expected `list[str]`')
+    for e in params["region"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`region` has the wrong type: Received `{type(params.get("region", None))}` expected `list[str]`')
+    if params.get("drawn_roi", None) is not None:
+        if not isinstance(params["drawn_roi"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`drawn_roi` has the wrong type: Received `{type(params.get("drawn_roi", None))}` expected `InputPathType | None`')
+    if params.get("anat", None) is None:
+        raise StyxValidationError("`anat` must not be None")
+    if not isinstance(params["anat"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`anat` has the wrong type: Received `{type(params.get("anat", None))}` expected `InputPathType`')
+    if params.get("anat_ns", None) is not None:
+        if not isinstance(params["anat_ns"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`anat_ns` has the wrong type: Received `{type(params.get("anat_ns", None))}` expected `InputPathType | None`')
+    if params.get("base", None) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `InputPathType`')
+    if params.get("roi_grid", None) is None:
+        raise StyxValidationError("`roi_grid` must not be None")
+    if not isinstance(params["roi_grid"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`roi_grid` has the wrong type: Received `{type(params.get("roi_grid", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("time", False) is None:
+        raise StyxValidationError("`time` must not be None")
+    if not isinstance(params["time"], bool):
+        raise StyxValidationError(f'`time` has the wrong type: Received `{type(params.get("time", False))}` expected `bool`')
+    if params.get("twopass", False) is None:
+        raise StyxValidationError("`twopass` must not be None")
+    if not isinstance(params["twopass"], bool):
+        raise StyxValidationError(f'`twopass` has the wrong type: Received `{type(params.get("twopass", False))}` expected `bool`')
+    if params.get("help", False) is None:
+        raise StyxValidationError("`help` must not be None")
+    if not isinstance(params["help"], bool):
+        raise StyxValidationError(f'`help` has the wrong type: Received `{type(params.get("help", False))}` expected `bool`')
+
+
 def v__fast_roi_cargs(
     params: VFastRoiParameters,
     execution: Execution,
@@ -198,6 +253,7 @@ def v__fast_roi_execute(
     Returns:
         NamedTuple of outputs (described in `VFastRoiOutputs`).
     """
+    v__fast_roi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__FAST_ROI_METADATA)
     params = execution.params(params)

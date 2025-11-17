@@ -78,6 +78,28 @@ def volume_tfce_presmooth_params(
     return params
 
 
+def volume_tfce_presmooth_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeTfcePresmoothParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+
+
 def volume_tfce_presmooth_cargs(
     params: VolumeTfcePresmoothParameters,
     execution: Execution,
@@ -120,6 +142,28 @@ def volume_tfce_parameters_params(
         "H": h,
     }
     return params
+
+
+def volume_tfce_parameters_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeTfceParametersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("E", None) is None:
+        raise StyxValidationError("`E` must not be None")
+    if not isinstance(params["E"], (float, int)):
+        raise StyxValidationError(f'`E` has the wrong type: Received `{type(params.get("E", None))}` expected `float`')
+    if params.get("H", None) is None:
+        raise StyxValidationError("`H` must not be None")
+    if not isinstance(params["H"], (float, int)):
+        raise StyxValidationError(f'`H` has the wrong type: Received `{type(params.get("H", None))}` expected `float`')
 
 
 def volume_tfce_parameters_cargs(
@@ -193,6 +237,38 @@ def volume_tfce_params(
     if subvolume is not None:
         params["subvolume"] = subvolume
     return params
+
+
+def volume_tfce_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeTfceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("presmooth", None) is not None:
+        volume_tfce_presmooth_validate(params["presmooth"])
+    if params.get("roi-volume", None) is not None:
+        if not isinstance(params["roi-volume"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`roi-volume` has the wrong type: Received `{type(params.get("roi-volume", None))}` expected `InputPathType | None`')
+    if params.get("parameters", None) is not None:
+        volume_tfce_parameters_validate(params["parameters"])
+    if params.get("subvolume", None) is not None:
+        if not isinstance(params["subvolume"], str):
+            raise StyxValidationError(f'`subvolume` has the wrong type: Received `{type(params.get("subvolume", None))}` expected `str | None`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
 
 
 def volume_tfce_cargs(
@@ -277,6 +353,7 @@ def volume_tfce_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeTfceOutputs`).
     """
+    volume_tfce_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_TFCE_METADATA)
     params = execution.params(params)

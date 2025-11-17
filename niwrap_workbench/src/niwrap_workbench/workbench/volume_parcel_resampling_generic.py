@@ -89,6 +89,51 @@ def volume_parcel_resampling_generic_params(
     return params
 
 
+def volume_parcel_resampling_generic_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VolumeParcelResamplingGenericParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("volume-out", None) is None:
+        raise StyxValidationError("`volume-out` must not be None")
+    if not isinstance(params["volume-out"], str):
+        raise StyxValidationError(f'`volume-out` has the wrong type: Received `{type(params.get("volume-out", None))}` expected `str`')
+    if params.get("fwhm", False) is None:
+        raise StyxValidationError("`fwhm` must not be None")
+    if not isinstance(params["fwhm"], bool):
+        raise StyxValidationError(f'`fwhm` has the wrong type: Received `{type(params.get("fwhm", False))}` expected `bool`')
+    if params.get("fix-zeros", False) is None:
+        raise StyxValidationError("`fix-zeros` must not be None")
+    if not isinstance(params["fix-zeros"], bool):
+        raise StyxValidationError(f'`fix-zeros` has the wrong type: Received `{type(params.get("fix-zeros", False))}` expected `bool`')
+    if params.get("subvol", None) is not None:
+        if not isinstance(params["subvol"], str):
+            raise StyxValidationError(f'`subvol` has the wrong type: Received `{type(params.get("subvol", None))}` expected `str | None`')
+    if params.get("volume-in", None) is None:
+        raise StyxValidationError("`volume-in` must not be None")
+    if not isinstance(params["volume-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`volume-in` has the wrong type: Received `{type(params.get("volume-in", None))}` expected `InputPathType`')
+    if params.get("cur-parcels", None) is None:
+        raise StyxValidationError("`cur-parcels` must not be None")
+    if not isinstance(params["cur-parcels"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cur-parcels` has the wrong type: Received `{type(params.get("cur-parcels", None))}` expected `InputPathType`')
+    if params.get("new-parcels", None) is None:
+        raise StyxValidationError("`new-parcels` must not be None")
+    if not isinstance(params["new-parcels"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`new-parcels` has the wrong type: Received `{type(params.get("new-parcels", None))}` expected `InputPathType`')
+    if params.get("kernel", None) is None:
+        raise StyxValidationError("`kernel` must not be None")
+    if not isinstance(params["kernel"], (float, int)):
+        raise StyxValidationError(f'`kernel` has the wrong type: Received `{type(params.get("kernel", None))}` expected `float`')
+
+
 def volume_parcel_resampling_generic_cargs(
     params: VolumeParcelResamplingGenericParameters,
     execution: Execution,
@@ -163,6 +208,7 @@ def volume_parcel_resampling_generic_execute(
     Returns:
         NamedTuple of outputs (described in `VolumeParcelResamplingGenericOutputs`).
     """
+    volume_parcel_resampling_generic_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA)
     params = execution.params(params)

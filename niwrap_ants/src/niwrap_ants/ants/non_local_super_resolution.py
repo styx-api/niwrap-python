@@ -123,6 +123,66 @@ def non_local_super_resolution_params(
     return params
 
 
+def non_local_super_resolution_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NonLocalSuperResolutionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["image_dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3, 4]")
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("interpolated_image", None) is not None:
+        if not isinstance(params["interpolated_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`interpolated_image` has the wrong type: Received `{type(params.get("interpolated_image", None))}` expected `InputPathType | None`')
+    if params.get("reference_image", None) is not None:
+        if not isinstance(params["reference_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`reference_image` has the wrong type: Received `{type(params.get("reference_image", None))}` expected `InputPathType | None`')
+    if params.get("patch_radius", None) is not None:
+        if not isinstance(params["patch_radius"], str):
+            raise StyxValidationError(f'`patch_radius` has the wrong type: Received `{type(params.get("patch_radius", None))}` expected `typing.Literal["1", "1x1x1"] | None`')
+        if params["patch_radius"] not in ["1", "1x1x1"]:
+            raise StyxValidationError("Parameter `patch_radius` must be one of [\"1\", \"1x1x1\"]")
+    if params.get("search_radius", None) is not None:
+        if not isinstance(params["search_radius"], str):
+            raise StyxValidationError(f'`search_radius` has the wrong type: Received `{type(params.get("search_radius", None))}` expected `typing.Literal["3", "3x3x3"] | None`')
+        if params["search_radius"] not in ["3", "3x3x3"]:
+            raise StyxValidationError("Parameter `search_radius` must be one of [\"3\", \"3x3x3\"]")
+    if params.get("intensity_difference_sigma", None) is not None:
+        if not isinstance(params["intensity_difference_sigma"], (float, int)):
+            raise StyxValidationError(f'`intensity_difference_sigma` has the wrong type: Received `{type(params.get("intensity_difference_sigma", None))}` expected `float | None`')
+    if params.get("patch_similarity_sigma", None) is not None:
+        if not isinstance(params["patch_similarity_sigma"], (float, int)):
+            raise StyxValidationError(f'`patch_similarity_sigma` has the wrong type: Received `{type(params.get("patch_similarity_sigma", None))}` expected `float | None`')
+    if params.get("scale_levels", None) is not None:
+        if not isinstance(params["scale_levels"], str):
+            raise StyxValidationError(f'`scale_levels` has the wrong type: Received `{type(params.get("scale_levels", None))}` expected `str | None`')
+    if params.get("interpolation", None) is not None:
+        if not isinstance(params["interpolation"], str):
+            raise StyxValidationError(f'`interpolation` has the wrong type: Received `{type(params.get("interpolation", None))}` expected `typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None`')
+        if params["interpolation"] not in ["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"]:
+            raise StyxValidationError("Parameter `interpolation` must be one of [\"Linear\", \"NearestNeighbor\", \"Gaussian\", \"BSpline\", \"CosineWindowedSinc\", \"WelchWindowedSinc\", \"HammingWindowedSinc\", \"LanczosWindowedSinc\"]")
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def non_local_super_resolution_cargs(
     params: NonLocalSuperResolutionParameters,
     execution: Execution,
@@ -239,6 +299,7 @@ def non_local_super_resolution_execute(
     Returns:
         NamedTuple of outputs (described in `NonLocalSuperResolutionOutputs`).
     """
+    non_local_super_resolution_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NON_LOCAL_SUPER_RESOLUTION_METADATA)
     params = execution.params(params)

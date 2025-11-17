@@ -99,6 +99,58 @@ def new_invwarp_params(
     return params
 
 
+def new_invwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `NewInvwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("warpvol", None) is None:
+        raise StyxValidationError("`warpvol` must not be None")
+    if not isinstance(params["warpvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`warpvol` has the wrong type: Received `{type(params.get("warpvol", None))}` expected `InputPathType`')
+    if params.get("outvol", None) is None:
+        raise StyxValidationError("`outvol` must not be None")
+    if not isinstance(params["outvol"], str):
+        raise StyxValidationError(f'`outvol` has the wrong type: Received `{type(params.get("outvol", None))}` expected `str`')
+    if params.get("refvol", None) is None:
+        raise StyxValidationError("`refvol` must not be None")
+    if not isinstance(params["refvol"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`refvol` has the wrong type: Received `{type(params.get("refvol", None))}` expected `InputPathType`')
+    if params.get("relflag", False) is None:
+        raise StyxValidationError("`relflag` must not be None")
+    if not isinstance(params["relflag"], bool):
+        raise StyxValidationError(f'`relflag` has the wrong type: Received `{type(params.get("relflag", False))}` expected `bool`')
+    if params.get("absflag", False) is None:
+        raise StyxValidationError("`absflag` must not be None")
+    if not isinstance(params["absflag"], bool):
+        raise StyxValidationError(f'`absflag` has the wrong type: Received `{type(params.get("absflag", False))}` expected `bool`')
+    if params.get("noconstraintflag", False) is None:
+        raise StyxValidationError("`noconstraintflag` must not be None")
+    if not isinstance(params["noconstraintflag"], bool):
+        raise StyxValidationError(f'`noconstraintflag` has the wrong type: Received `{type(params.get("noconstraintflag", False))}` expected `bool`')
+    if params.get("jmin", None) is not None:
+        if not isinstance(params["jmin"], (float, int)):
+            raise StyxValidationError(f'`jmin` has the wrong type: Received `{type(params.get("jmin", None))}` expected `float | None`')
+    if params.get("jmax", None) is not None:
+        if not isinstance(params["jmax"], (float, int)):
+            raise StyxValidationError(f'`jmax` has the wrong type: Received `{type(params.get("jmax", None))}` expected `float | None`')
+    if params.get("debugflag", False) is None:
+        raise StyxValidationError("`debugflag` must not be None")
+    if not isinstance(params["debugflag"], bool):
+        raise StyxValidationError(f'`debugflag` has the wrong type: Received `{type(params.get("debugflag", False))}` expected `bool`')
+    if params.get("verboseflag", False) is None:
+        raise StyxValidationError("`verboseflag` must not be None")
+    if not isinstance(params["verboseflag"], bool):
+        raise StyxValidationError(f'`verboseflag` has the wrong type: Received `{type(params.get("verboseflag", False))}` expected `bool`')
+
+
 def new_invwarp_cargs(
     params: NewInvwarpParameters,
     execution: Execution,
@@ -188,6 +240,7 @@ def new_invwarp_execute(
     Returns:
         NamedTuple of outputs (described in `NewInvwarpOutputs`).
     """
+    new_invwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(NEW_INVWARP_METADATA)
     params = execution.params(params)

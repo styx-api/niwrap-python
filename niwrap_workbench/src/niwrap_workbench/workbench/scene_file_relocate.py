@@ -53,6 +53,28 @@ def scene_file_relocate_params(
     return params
 
 
+def scene_file_relocate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SceneFileRelocateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input-scene", None) is None:
+        raise StyxValidationError("`input-scene` must not be None")
+    if not isinstance(params["input-scene"], str):
+        raise StyxValidationError(f'`input-scene` has the wrong type: Received `{type(params.get("input-scene", None))}` expected `str`')
+    if params.get("output-scene", None) is None:
+        raise StyxValidationError("`output-scene` must not be None")
+    if not isinstance(params["output-scene"], str):
+        raise StyxValidationError(f'`output-scene` has the wrong type: Received `{type(params.get("output-scene", None))}` expected `str`')
+
+
 def scene_file_relocate_cargs(
     params: SceneFileRelocateParameters,
     execution: Execution,
@@ -113,6 +135,7 @@ def scene_file_relocate_execute(
     Returns:
         NamedTuple of outputs (described in `SceneFileRelocateOutputs`).
     """
+    scene_file_relocate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SCENE_FILE_RELOCATE_METADATA)
     params = execution.params(params)

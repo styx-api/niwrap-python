@@ -62,6 +62,32 @@ def images_equal_params(
     return params
 
 
+def images_equal_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImagesEqualParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("file_a", None) is None:
+        raise StyxValidationError("`file_a` must not be None")
+    if not isinstance(params["file_a"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file_a` has the wrong type: Received `{type(params.get("file_a", None))}` expected `InputPathType`')
+    if params.get("file_b", None) is None:
+        raise StyxValidationError("`file_b` must not be None")
+    if not isinstance(params["file_b"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`file_b` has the wrong type: Received `{type(params.get("file_b", None))}` expected `InputPathType`')
+    if params.get("all_flag", False) is None:
+        raise StyxValidationError("`all_flag` must not be None")
+    if not isinstance(params["all_flag"], bool):
+        raise StyxValidationError(f'`all_flag` has the wrong type: Received `{type(params.get("all_flag", False))}` expected `bool`')
+
+
 def images_equal_cargs(
     params: ImagesEqualParameters,
     execution: Execution,
@@ -123,6 +149,7 @@ def images_equal_execute(
     Returns:
         NamedTuple of outputs (described in `ImagesEqualOutputs`).
     """
+    images_equal_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMAGES_EQUAL_METADATA)
     params = execution.params(params)

@@ -147,6 +147,76 @@ def ants_joint_fusion_params(
     return params
 
 
+def ants_joint_fusion_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsJointFusionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["image_dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3, 4]")
+    if params.get("target_image", None) is None:
+        raise StyxValidationError("`target_image` must not be None")
+    if not isinstance(params["target_image"], list):
+        raise StyxValidationError(f'`target_image` has the wrong type: Received `{type(params.get("target_image", None))}` expected `list[InputPathType]`')
+    for e in params["target_image"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`target_image` has the wrong type: Received `{type(params.get("target_image", None))}` expected `list[InputPathType]`')
+    if params.get("atlas_image", None) is None:
+        raise StyxValidationError("`atlas_image` must not be None")
+    if not isinstance(params["atlas_image"], list):
+        raise StyxValidationError(f'`atlas_image` has the wrong type: Received `{type(params.get("atlas_image", None))}` expected `list[InputPathType]`')
+    for e in params["atlas_image"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`atlas_image` has the wrong type: Received `{type(params.get("atlas_image", None))}` expected `list[InputPathType]`')
+    if params.get("atlas_segmentation", None) is None:
+        raise StyxValidationError("`atlas_segmentation` must not be None")
+    if not isinstance(params["atlas_segmentation"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`atlas_segmentation` has the wrong type: Received `{type(params.get("atlas_segmentation", None))}` expected `InputPathType`')
+    if params.get("alpha", None) is not None:
+        if not isinstance(params["alpha"], (float, int)):
+            raise StyxValidationError(f'`alpha` has the wrong type: Received `{type(params.get("alpha", None))}` expected `float | None`')
+    if params.get("beta", None) is not None:
+        if not isinstance(params["beta"], (float, int)):
+            raise StyxValidationError(f'`beta` has the wrong type: Received `{type(params.get("beta", None))}` expected `float | None`')
+    if params.get("constrain_nonnegative", None) is not None:
+        if not isinstance(params["constrain_nonnegative"], bool):
+            raise StyxValidationError(f'`constrain_nonnegative` has the wrong type: Received `{type(params.get("constrain_nonnegative", None))}` expected `bool | None`')
+    if params.get("patch_radius", None) is not None:
+        if not isinstance(params["patch_radius"], str):
+            raise StyxValidationError(f'`patch_radius` has the wrong type: Received `{type(params.get("patch_radius", None))}` expected `str | None`')
+    if params.get("patch_metric", None) is not None:
+        if not isinstance(params["patch_metric"], str):
+            raise StyxValidationError(f'`patch_metric` has the wrong type: Received `{type(params.get("patch_metric", None))}` expected `typing.Literal["PC", "MSQ"] | None`')
+        if params["patch_metric"] not in ["PC", "MSQ"]:
+            raise StyxValidationError("Parameter `patch_metric` must be one of [\"PC\", \"MSQ\"]")
+    if params.get("search_radius", None) is not None:
+        if not isinstance(params["search_radius"], str):
+            raise StyxValidationError(f'`search_radius` has the wrong type: Received `{type(params.get("search_radius", None))}` expected `str | None`')
+    if params.get("exclusion_image", None) is not None:
+        if not isinstance(params["exclusion_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`exclusion_image` has the wrong type: Received `{type(params.get("exclusion_image", None))}` expected `InputPathType | None`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def ants_joint_fusion_cargs(
     params: AntsJointFusionParameters,
     execution: Execution,
@@ -276,6 +346,7 @@ def ants_joint_fusion_execute(
     Returns:
         NamedTuple of outputs (described in `AntsJointFusionOutputs`).
     """
+    ants_joint_fusion_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_JOINT_FUSION_METADATA)
     params = execution.params(params)

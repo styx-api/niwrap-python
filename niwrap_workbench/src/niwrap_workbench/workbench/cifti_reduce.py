@@ -65,6 +65,28 @@ def cifti_reduce_exclude_outliers_params(
     return params
 
 
+def cifti_reduce_exclude_outliers_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReduceExcludeOutliersParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sigma-below", None) is None:
+        raise StyxValidationError("`sigma-below` must not be None")
+    if not isinstance(params["sigma-below"], (float, int)):
+        raise StyxValidationError(f'`sigma-below` has the wrong type: Received `{type(params.get("sigma-below", None))}` expected `float`')
+    if params.get("sigma-above", None) is None:
+        raise StyxValidationError("`sigma-above` must not be None")
+    if not isinstance(params["sigma-above"], (float, int)):
+        raise StyxValidationError(f'`sigma-above` has the wrong type: Received `{type(params.get("sigma-above", None))}` expected `float`')
+
+
 def cifti_reduce_exclude_outliers_cargs(
     params: CiftiReduceExcludeOutliersParameters,
     execution: Execution,
@@ -133,6 +155,41 @@ def cifti_reduce_params(
     if exclude_outliers is not None:
         params["exclude-outliers"] = exclude_outliers
     return params
+
+
+def cifti_reduce_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiReduceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("direction", None) is not None:
+        if not isinstance(params["direction"], str):
+            raise StyxValidationError(f'`direction` has the wrong type: Received `{type(params.get("direction", None))}` expected `str | None`')
+    if params.get("exclude-outliers", None) is not None:
+        cifti_reduce_exclude_outliers_validate(params["exclude-outliers"])
+    if params.get("only-numeric", False) is None:
+        raise StyxValidationError("`only-numeric` must not be None")
+    if not isinstance(params["only-numeric"], bool):
+        raise StyxValidationError(f'`only-numeric` has the wrong type: Received `{type(params.get("only-numeric", False))}` expected `bool`')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+    if params.get("operation", None) is None:
+        raise StyxValidationError("`operation` must not be None")
+    if not isinstance(params["operation"], str):
+        raise StyxValidationError(f'`operation` has the wrong type: Received `{type(params.get("operation", None))}` expected `str`')
 
 
 def cifti_reduce_cargs(
@@ -219,6 +276,7 @@ def cifti_reduce_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiReduceOutputs`).
     """
+    cifti_reduce_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_REDUCE_METADATA)
     params = execution.params(params)

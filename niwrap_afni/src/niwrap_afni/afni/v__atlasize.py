@@ -160,6 +160,85 @@ def v__atlasize_params(
     return params
 
 
+def v__atlasize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VAtlasizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset", None) is not None:
+        if not isinstance(params["dset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType | None`')
+    if params.get("space", None) is not None:
+        if not isinstance(params["space"], str):
+            raise StyxValidationError(f'`space` has the wrong type: Received `{type(params.get("space", None))}` expected `str | None`')
+    if params.get("lab_file", None) is not None:
+        if not isinstance(params["lab_file"], list):
+            raise StyxValidationError(f'`lab_file` has the wrong type: Received `{type(params.get("lab_file", None))}` expected `list[str] | None`')
+        if len(params["lab_file"]) <= 3:
+            raise StyxValidationError("Parameter `lab_file` must contain at most 3 elements")
+        for e in params["lab_file"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`lab_file` has the wrong type: Received `{type(params.get("lab_file", None))}` expected `list[str] | None`')
+    if params.get("lab_file_delim", None) is not None:
+        if not isinstance(params["lab_file_delim"], str):
+            raise StyxValidationError(f'`lab_file_delim` has the wrong type: Received `{type(params.get("lab_file_delim", None))}` expected `str | None`')
+    if params.get("longnames", None) is not None:
+        if not isinstance(params["longnames"], (float, int)):
+            raise StyxValidationError(f'`longnames` has the wrong type: Received `{type(params.get("longnames", None))}` expected `float | None`')
+    if params.get("last_longname_col", None) is not None:
+        if not isinstance(params["last_longname_col"], (float, int)):
+            raise StyxValidationError(f'`last_longname_col` has the wrong type: Received `{type(params.get("last_longname_col", None))}` expected `float | None`')
+    if params.get("atlas_type", None) is not None:
+        if not isinstance(params["atlas_type"], str):
+            raise StyxValidationError(f'`atlas_type` has the wrong type: Received `{type(params.get("atlas_type", None))}` expected `str | None`')
+    if params.get("atlas_description", None) is not None:
+        if not isinstance(params["atlas_description"], str):
+            raise StyxValidationError(f'`atlas_description` has the wrong type: Received `{type(params.get("atlas_description", None))}` expected `str | None`')
+    if params.get("atlas_name", None) is not None:
+        if not isinstance(params["atlas_name"], str):
+            raise StyxValidationError(f'`atlas_name` has the wrong type: Received `{type(params.get("atlas_name", None))}` expected `str | None`')
+    if params.get("auto_backup", False) is None:
+        raise StyxValidationError("`auto_backup` must not be None")
+    if not isinstance(params["auto_backup"], bool):
+        raise StyxValidationError(f'`auto_backup` has the wrong type: Received `{type(params.get("auto_backup", False))}` expected `bool`')
+    if params.get("centers", False) is None:
+        raise StyxValidationError("`centers` must not be None")
+    if not isinstance(params["centers"], bool):
+        raise StyxValidationError(f'`centers` has the wrong type: Received `{type(params.get("centers", False))}` expected `bool`')
+    if params.get("centertype", None) is not None:
+        if not isinstance(params["centertype"], str):
+            raise StyxValidationError(f'`centertype` has the wrong type: Received `{type(params.get("centertype", None))}` expected `str | None`')
+    if params.get("centermask", None) is not None:
+        if not isinstance(params["centermask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`centermask` has the wrong type: Received `{type(params.get("centermask", None))}` expected `InputPathType | None`')
+    if params.get("skip_novoxels", False) is None:
+        raise StyxValidationError("`skip_novoxels` must not be None")
+    if not isinstance(params["skip_novoxels"], bool):
+        raise StyxValidationError(f'`skip_novoxels` has the wrong type: Received `{type(params.get("skip_novoxels", False))}` expected `bool`')
+    if params.get("h_web", False) is None:
+        raise StyxValidationError("`h_web` must not be None")
+    if not isinstance(params["h_web"], bool):
+        raise StyxValidationError(f'`h_web` has the wrong type: Received `{type(params.get("h_web", False))}` expected `bool`')
+    if params.get("h_view", False) is None:
+        raise StyxValidationError("`h_view` must not be None")
+    if not isinstance(params["h_view"], bool):
+        raise StyxValidationError(f'`h_view` has the wrong type: Received `{type(params.get("h_view", False))}` expected `bool`')
+    if params.get("all_opts", False) is None:
+        raise StyxValidationError("`all_opts` must not be None")
+    if not isinstance(params["all_opts"], bool):
+        raise StyxValidationError(f'`all_opts` has the wrong type: Received `{type(params.get("all_opts", False))}` expected `bool`')
+    if params.get("h_find", None) is not None:
+        if not isinstance(params["h_find"], str):
+            raise StyxValidationError(f'`h_find` has the wrong type: Received `{type(params.get("h_find", None))}` expected `str | None`')
+
+
 def v__atlasize_cargs(
     params: VAtlasizeParameters,
     execution: Execution,
@@ -289,6 +368,7 @@ def v__atlasize_execute(
     Returns:
         NamedTuple of outputs (described in `VAtlasizeOutputs`).
     """
+    v__atlasize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__ATLASIZE_METADATA)
     params = execution.params(params)

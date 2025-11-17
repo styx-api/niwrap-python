@@ -55,6 +55,31 @@ def pngappend_params(
     return params
 
 
+def pngappend_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `PngappendParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_files_and_options", None) is None:
+        raise StyxValidationError("`input_files_and_options` must not be None")
+    if not isinstance(params["input_files_and_options"], list):
+        raise StyxValidationError(f'`input_files_and_options` has the wrong type: Received `{type(params.get("input_files_and_options", None))}` expected `list[str]`')
+    for e in params["input_files_and_options"]:
+        if not isinstance(e, str):
+            raise StyxValidationError(f'`input_files_and_options` has the wrong type: Received `{type(params.get("input_files_and_options", None))}` expected `list[str]`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `InputPathType`')
+
+
 def pngappend_cargs(
     params: PngappendParameters,
     execution: Execution,
@@ -114,6 +139,7 @@ def pngappend_execute(
     Returns:
         NamedTuple of outputs (described in `PngappendOutputs`).
     """
+    pngappend_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(PNGAPPEND_METADATA)
     params = execution.params(params)

@@ -61,6 +61,32 @@ def mri_linear_register_params(
     return params
 
 
+def mri_linear_register_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriLinearRegisterParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_brain", None) is None:
+        raise StyxValidationError("`input_brain` must not be None")
+    if not isinstance(params["input_brain"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_brain` has the wrong type: Received `{type(params.get("input_brain", None))}` expected `InputPathType`')
+    if params.get("template", None) is None:
+        raise StyxValidationError("`template` must not be None")
+    if not isinstance(params["template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType`')
+    if params.get("output_file", None) is None:
+        raise StyxValidationError("`output_file` must not be None")
+    if not isinstance(params["output_file"], str):
+        raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str`')
+
+
 def mri_linear_register_cargs(
     params: MriLinearRegisterParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def mri_linear_register_execute(
     Returns:
         NamedTuple of outputs (described in `MriLinearRegisterOutputs`).
     """
+    mri_linear_register_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_LINEAR_REGISTER_METADATA)
     params = execution.params(params)

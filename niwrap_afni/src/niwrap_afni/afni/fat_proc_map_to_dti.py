@@ -111,6 +111,76 @@ def fat_proc_map_to_dti_params(
     return params
 
 
+def fat_proc_map_to_dti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcMapToDtiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("source", None) is None:
+        raise StyxValidationError("`source` must not be None")
+    if not isinstance(params["source"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`source` has the wrong type: Received `{type(params.get("source", None))}` expected `InputPathType`')
+    if params.get("base", None) is None:
+        raise StyxValidationError("`base` must not be None")
+    if not isinstance(params["base"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`base` has the wrong type: Received `{type(params.get("base", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("followers_nn", None) is not None:
+        if not isinstance(params["followers_nn"], list):
+            raise StyxValidationError(f'`followers_nn` has the wrong type: Received `{type(params.get("followers_nn", None))}` expected `list[InputPathType] | None`')
+        for e in params["followers_nn"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`followers_nn` has the wrong type: Received `{type(params.get("followers_nn", None))}` expected `list[InputPathType] | None`')
+    if params.get("followers_wsinc5", None) is not None:
+        if not isinstance(params["followers_wsinc5"], list):
+            raise StyxValidationError(f'`followers_wsinc5` has the wrong type: Received `{type(params.get("followers_wsinc5", None))}` expected `list[InputPathType] | None`')
+        for e in params["followers_wsinc5"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`followers_wsinc5` has the wrong type: Received `{type(params.get("followers_wsinc5", None))}` expected `list[InputPathType] | None`')
+    if params.get("followers_surf", None) is not None:
+        if not isinstance(params["followers_surf"], list):
+            raise StyxValidationError(f'`followers_surf` has the wrong type: Received `{type(params.get("followers_surf", None))}` expected `list[InputPathType] | None`')
+        for e in params["followers_surf"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`followers_surf` has the wrong type: Received `{type(params.get("followers_surf", None))}` expected `list[InputPathType] | None`')
+    if params.get("followers_ndset", None) is not None:
+        if not isinstance(params["followers_ndset"], list):
+            raise StyxValidationError(f'`followers_ndset` has the wrong type: Received `{type(params.get("followers_ndset", None))}` expected `list[InputPathType] | None`')
+        for e in params["followers_ndset"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`followers_ndset` has the wrong type: Received `{type(params.get("followers_ndset", None))}` expected `list[InputPathType] | None`')
+    if params.get("followers_spec", None) is not None:
+        if not isinstance(params["followers_spec"], list):
+            raise StyxValidationError(f'`followers_spec` has the wrong type: Received `{type(params.get("followers_spec", None))}` expected `list[InputPathType] | None`')
+        for e in params["followers_spec"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`followers_spec` has the wrong type: Received `{type(params.get("followers_spec", None))}` expected `list[InputPathType] | None`')
+    if params.get("matrix", None) is not None:
+        if not isinstance(params["matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matrix` has the wrong type: Received `{type(params.get("matrix", None))}` expected `InputPathType | None`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("no_cmd_out", False) is None:
+        raise StyxValidationError("`no_cmd_out` must not be None")
+    if not isinstance(params["no_cmd_out"], bool):
+        raise StyxValidationError(f'`no_cmd_out` has the wrong type: Received `{type(params.get("no_cmd_out", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+
+
 def fat_proc_map_to_dti_cargs(
     params: FatProcMapToDtiParameters,
     execution: Execution,
@@ -219,6 +289,7 @@ def fat_proc_map_to_dti_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcMapToDtiOutputs`).
     """
+    fat_proc_map_to_dti_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_MAP_TO_DTI_METADATA)
     params = execution.params(params)

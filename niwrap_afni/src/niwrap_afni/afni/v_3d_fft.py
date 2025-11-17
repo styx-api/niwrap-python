@@ -116,6 +116,63 @@ def v_3d_fft_params(
     return params
 
 
+def v_3d_fft_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dFftParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dataset", None) is None:
+        raise StyxValidationError("`dataset` must not be None")
+    if not isinstance(params["dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dataset` has the wrong type: Received `{type(params.get("dataset", None))}` expected `InputPathType`')
+    if params.get("abs", False) is None:
+        raise StyxValidationError("`abs` must not be None")
+    if not isinstance(params["abs"], bool):
+        raise StyxValidationError(f'`abs` has the wrong type: Received `{type(params.get("abs", False))}` expected `bool`')
+    if params.get("phase", False) is None:
+        raise StyxValidationError("`phase` must not be None")
+    if not isinstance(params["phase"], bool):
+        raise StyxValidationError(f'`phase` has the wrong type: Received `{type(params.get("phase", False))}` expected `bool`')
+    if params.get("complex", False) is None:
+        raise StyxValidationError("`complex` must not be None")
+    if not isinstance(params["complex"], bool):
+        raise StyxValidationError(f'`complex` has the wrong type: Received `{type(params.get("complex", False))}` expected `bool`')
+    if params.get("inverse", False) is None:
+        raise StyxValidationError("`inverse` must not be None")
+    if not isinstance(params["inverse"], bool):
+        raise StyxValidationError(f'`inverse` has the wrong type: Received `{type(params.get("inverse", False))}` expected `bool`')
+    if params.get("Lx", None) is not None:
+        if not isinstance(params["Lx"], (float, int)):
+            raise StyxValidationError(f'`Lx` has the wrong type: Received `{type(params.get("Lx", None))}` expected `float | None`')
+    if params.get("Ly", None) is not None:
+        if not isinstance(params["Ly"], (float, int)):
+            raise StyxValidationError(f'`Ly` has the wrong type: Received `{type(params.get("Ly", None))}` expected `float | None`')
+    if params.get("Lz", None) is not None:
+        if not isinstance(params["Lz"], (float, int)):
+            raise StyxValidationError(f'`Lz` has the wrong type: Received `{type(params.get("Lz", None))}` expected `float | None`')
+    if params.get("altIN", False) is None:
+        raise StyxValidationError("`altIN` must not be None")
+    if not isinstance(params["altIN"], bool):
+        raise StyxValidationError(f'`altIN` has the wrong type: Received `{type(params.get("altIN", False))}` expected `bool`')
+    if params.get("altOUT", False) is None:
+        raise StyxValidationError("`altOUT` must not be None")
+    if not isinstance(params["altOUT"], bool):
+        raise StyxValidationError(f'`altOUT` has the wrong type: Received `{type(params.get("altOUT", False))}` expected `bool`')
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType | None`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+
+
 def v_3d_fft_cargs(
     params: V3dFftParameters,
     execution: Execution,
@@ -212,6 +269,7 @@ def v_3d_fft_execute(
     Returns:
         NamedTuple of outputs (described in `V3dFftOutputs`).
     """
+    v_3d_fft_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_FFT_METADATA)
     params = execution.params(params)

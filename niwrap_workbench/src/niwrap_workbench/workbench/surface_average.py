@@ -64,6 +64,27 @@ def surface_average_surf_params(
     return params
 
 
+def surface_average_surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceAverageSurfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface", None) is None:
+        raise StyxValidationError("`surface` must not be None")
+    if not isinstance(params["surface"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surface` has the wrong type: Received `{type(params.get("surface", None))}` expected `InputPathType`')
+    if params.get("weight", None) is not None:
+        if not isinstance(params["weight"], (float, int)):
+            raise StyxValidationError(f'`weight` has the wrong type: Received `{type(params.get("weight", None))}` expected `float | None`')
+
+
 def surface_average_surf_cargs(
     params: SurfaceAverageSurfParameters,
     execution: Execution,
@@ -130,6 +151,35 @@ def surface_average_params(
     if surf is not None:
         params["surf"] = surf
     return params
+
+
+def surface_average_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SurfaceAverageParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surface-out", None) is None:
+        raise StyxValidationError("`surface-out` must not be None")
+    if not isinstance(params["surface-out"], str):
+        raise StyxValidationError(f'`surface-out` has the wrong type: Received `{type(params.get("surface-out", None))}` expected `str`')
+    if params.get("stddev-metric-out", None) is not None:
+        if not isinstance(params["stddev-metric-out"], str):
+            raise StyxValidationError(f'`stddev-metric-out` has the wrong type: Received `{type(params.get("stddev-metric-out", None))}` expected `str | None`')
+    if params.get("uncert-metric-out", None) is not None:
+        if not isinstance(params["uncert-metric-out"], str):
+            raise StyxValidationError(f'`uncert-metric-out` has the wrong type: Received `{type(params.get("uncert-metric-out", None))}` expected `str | None`')
+    if params.get("surf", None) is not None:
+        if not isinstance(params["surf"], list):
+            raise StyxValidationError(f'`surf` has the wrong type: Received `{type(params.get("surf", None))}` expected `list[SurfaceAverageSurfParameters] | None`')
+        for e in params["surf"]:
+            surface_average_surf_validate(e)
 
 
 def surface_average_cargs(
@@ -202,6 +252,7 @@ def surface_average_execute(
     Returns:
         NamedTuple of outputs (described in `SurfaceAverageOutputs`).
     """
+    surface_average_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_AVERAGE_METADATA)
     params = execution.params(params)

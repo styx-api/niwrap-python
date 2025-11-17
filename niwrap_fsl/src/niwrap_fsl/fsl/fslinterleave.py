@@ -66,6 +66,36 @@ def fslinterleave_params(
     return params
 
 
+def fslinterleave_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslinterleaveParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile1", None) is None:
+        raise StyxValidationError("`infile1` must not be None")
+    if not isinstance(params["infile1"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile1` has the wrong type: Received `{type(params.get("infile1", None))}` expected `InputPathType`')
+    if params.get("infile2", None) is None:
+        raise StyxValidationError("`infile2` must not be None")
+    if not isinstance(params["infile2"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile2` has the wrong type: Received `{type(params.get("infile2", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("reverse_slice_order_flag", False) is None:
+        raise StyxValidationError("`reverse_slice_order_flag` must not be None")
+    if not isinstance(params["reverse_slice_order_flag"], bool):
+        raise StyxValidationError(f'`reverse_slice_order_flag` has the wrong type: Received `{type(params.get("reverse_slice_order_flag", False))}` expected `bool`')
+
+
 def fslinterleave_cargs(
     params: FslinterleaveParameters,
     execution: Execution,
@@ -128,6 +158,7 @@ def fslinterleave_execute(
     Returns:
         NamedTuple of outputs (described in `FslinterleaveOutputs`).
     """
+    fslinterleave_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLINTERLEAVE_METADATA)
     params = execution.params(params)

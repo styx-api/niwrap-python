@@ -66,6 +66,36 @@ def talairach_params(
     return params
 
 
+def talairach_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TalairachParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("output_transform", None) is None:
+        raise StyxValidationError("`output_transform` must not be None")
+    if not isinstance(params["output_transform"], str):
+        raise StyxValidationError(f'`output_transform` has the wrong type: Received `{type(params.get("output_transform", None))}` expected `str`')
+    if params.get("log_flag", False) is None:
+        raise StyxValidationError("`log_flag` must not be None")
+    if not isinstance(params["log_flag"], bool):
+        raise StyxValidationError(f'`log_flag` has the wrong type: Received `{type(params.get("log_flag", False))}` expected `bool`')
+    if params.get("debug_flag", False) is None:
+        raise StyxValidationError("`debug_flag` must not be None")
+    if not isinstance(params["debug_flag"], bool):
+        raise StyxValidationError(f'`debug_flag` has the wrong type: Received `{type(params.get("debug_flag", False))}` expected `bool`')
+
+
 def talairach_cargs(
     params: TalairachParameters,
     execution: Execution,
@@ -136,6 +166,7 @@ def talairach_execute(
     Returns:
         NamedTuple of outputs (described in `TalairachOutputs`).
     """
+    talairach_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TALAIRACH_METADATA)
     params = execution.params(params)

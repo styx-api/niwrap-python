@@ -126,6 +126,57 @@ def n3_bias_field_correction_params(
     return params
 
 
+def n3_bias_field_correction_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `N3BiasFieldCorrectionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimensionality", None) is not None:
+        if not isinstance(params["image_dimensionality"], int):
+            raise StyxValidationError(f'`image_dimensionality` has the wrong type: Received `{type(params.get("image_dimensionality", None))}` expected `typing.Literal[2, 3, 4] | None`')
+        if params["image_dimensionality"] not in [2, 3, 4]:
+            raise StyxValidationError("Parameter `image_dimensionality` must be one of [2, 3, 4]")
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("mask_image", None) is not None:
+        if not isinstance(params["mask_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType | None`')
+    if params.get("rescale_intensities", None) is not None:
+        if not isinstance(params["rescale_intensities"], bool):
+            raise StyxValidationError(f'`rescale_intensities` has the wrong type: Received `{type(params.get("rescale_intensities", None))}` expected `bool | None`')
+    if params.get("weight_image", None) is not None:
+        if not isinstance(params["weight_image"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`weight_image` has the wrong type: Received `{type(params.get("weight_image", None))}` expected `InputPathType | None`')
+    if params.get("shrink_factor", None) is not None:
+        if not isinstance(params["shrink_factor"], int):
+            raise StyxValidationError(f'`shrink_factor` has the wrong type: Received `{type(params.get("shrink_factor", None))}` expected `int | None`')
+    if params.get("convergence", None) is not None:
+        if not isinstance(params["convergence"], str):
+            raise StyxValidationError(f'`convergence` has the wrong type: Received `{type(params.get("convergence", None))}` expected `str | None`')
+    if params.get("bspline_fitting", None) is not None:
+        if not isinstance(params["bspline_fitting"], str):
+            raise StyxValidationError(f'`bspline_fitting` has the wrong type: Received `{type(params.get("bspline_fitting", None))}` expected `str | None`')
+    if params.get("histogram_sharpening", None) is not None:
+        if not isinstance(params["histogram_sharpening"], str):
+            raise StyxValidationError(f'`histogram_sharpening` has the wrong type: Received `{type(params.get("histogram_sharpening", None))}` expected `str | None`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+
+
 def n3_bias_field_correction_cargs(
     params: N3BiasFieldCorrectionParameters,
     execution: Execution,
@@ -243,6 +294,7 @@ def n3_bias_field_correction_execute(
     Returns:
         NamedTuple of outputs (described in `N3BiasFieldCorrectionOutputs`).
     """
+    n3_bias_field_correction_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(N3_BIAS_FIELD_CORRECTION_METADATA)
     params = execution.params(params)

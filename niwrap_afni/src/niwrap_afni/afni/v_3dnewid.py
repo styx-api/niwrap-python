@@ -82,6 +82,44 @@ def v_3dnewid_params(
     return params
 
 
+def v_3dnewid_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dnewidParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datasets", None) is None:
+        raise StyxValidationError("`datasets` must not be None")
+    if not isinstance(params["datasets"], list):
+        raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    for e in params["datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`datasets` has the wrong type: Received `{type(params.get("datasets", None))}` expected `list[InputPathType]`')
+    if params.get("fun", None) is not None:
+        if not isinstance(params["fun"], (float, int)):
+            raise StyxValidationError(f'`fun` has the wrong type: Received `{type(params.get("fun", None))}` expected `float | None`')
+    if params.get("fun11", False) is None:
+        raise StyxValidationError("`fun11` must not be None")
+    if not isinstance(params["fun11"], bool):
+        raise StyxValidationError(f'`fun11` has the wrong type: Received `{type(params.get("fun11", False))}` expected `bool`')
+    if params.get("int", False) is None:
+        raise StyxValidationError("`int` must not be None")
+    if not isinstance(params["int"], bool):
+        raise StyxValidationError(f'`int` has the wrong type: Received `{type(params.get("int", False))}` expected `bool`')
+    if params.get("hash", None) is not None:
+        if not isinstance(params["hash"], str):
+            raise StyxValidationError(f'`hash` has the wrong type: Received `{type(params.get("hash", None))}` expected `str | None`')
+    if params.get("MD5", None) is not None:
+        if not isinstance(params["MD5"], str):
+            raise StyxValidationError(f'`MD5` has the wrong type: Received `{type(params.get("MD5", None))}` expected `str | None`')
+
+
 def v_3dnewid_cargs(
     params: V3dnewidParameters,
     execution: Execution,
@@ -159,6 +197,7 @@ def v_3dnewid_execute(
     Returns:
         NamedTuple of outputs (described in `V3dnewidOutputs`).
     """
+    v_3dnewid_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DNEWID_METADATA)
     params = execution.params(params)

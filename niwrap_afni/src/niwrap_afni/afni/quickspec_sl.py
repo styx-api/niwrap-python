@@ -98,6 +98,47 @@ def quickspec_sl_params(
     return params
 
 
+def quickspec_sl_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `QuickspecSlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("surf_A", None) is None:
+        raise StyxValidationError("`surf_A` must not be None")
+    if not isinstance(params["surf_A"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf_A` has the wrong type: Received `{type(params.get("surf_A", None))}` expected `InputPathType`')
+    if params.get("surf_B", None) is None:
+        raise StyxValidationError("`surf_B` must not be None")
+    if not isinstance(params["surf_B"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`surf_B` has the wrong type: Received `{type(params.get("surf_B", None))}` expected `InputPathType`')
+    if params.get("surf_intermed_pref", None) is not None:
+        if not isinstance(params["surf_intermed_pref"], str):
+            raise StyxValidationError(f'`surf_intermed_pref` has the wrong type: Received `{type(params.get("surf_intermed_pref", None))}` expected `str | None`')
+    if params.get("infl_surf_A", None) is not None:
+        if not isinstance(params["infl_surf_A"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`infl_surf_A` has the wrong type: Received `{type(params.get("infl_surf_A", None))}` expected `InputPathType | None`')
+    if params.get("infl_surf_B", None) is not None:
+        if not isinstance(params["infl_surf_B"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`infl_surf_B` has the wrong type: Received `{type(params.get("infl_surf_B", None))}` expected `InputPathType | None`')
+    if params.get("infl_surf_intermed_pref", None) is not None:
+        if not isinstance(params["infl_surf_intermed_pref"], str):
+            raise StyxValidationError(f'`infl_surf_intermed_pref` has the wrong type: Received `{type(params.get("infl_surf_intermed_pref", None))}` expected `str | None`')
+    if params.get("both_lr_flag", False) is None:
+        raise StyxValidationError("`both_lr_flag` must not be None")
+    if not isinstance(params["both_lr_flag"], bool):
+        raise StyxValidationError(f'`both_lr_flag` has the wrong type: Received `{type(params.get("both_lr_flag", False))}` expected `bool`')
+    if params.get("out_spec", None) is not None:
+        if not isinstance(params["out_spec"], str):
+            raise StyxValidationError(f'`out_spec` has the wrong type: Received `{type(params.get("out_spec", None))}` expected `str | None`')
+
+
 def quickspec_sl_cargs(
     params: QuickspecSlParameters,
     execution: Execution,
@@ -192,6 +233,7 @@ def quickspec_sl_execute(
     Returns:
         NamedTuple of outputs (described in `QuickspecSlOutputs`).
     """
+    quickspec_sl_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(QUICKSPEC_SL_METADATA)
     params = execution.params(params)

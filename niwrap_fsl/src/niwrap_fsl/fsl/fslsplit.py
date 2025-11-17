@@ -77,6 +77,43 @@ def fslsplit_params(
     return params
 
 
+def fslsplit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslsplitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("output_basename", None) is not None:
+        if not isinstance(params["output_basename"], str):
+            raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str | None`')
+    if params.get("separation_x", False) is None:
+        raise StyxValidationError("`separation_x` must not be None")
+    if not isinstance(params["separation_x"], bool):
+        raise StyxValidationError(f'`separation_x` has the wrong type: Received `{type(params.get("separation_x", False))}` expected `bool`')
+    if params.get("separation_y", False) is None:
+        raise StyxValidationError("`separation_y` must not be None")
+    if not isinstance(params["separation_y"], bool):
+        raise StyxValidationError(f'`separation_y` has the wrong type: Received `{type(params.get("separation_y", False))}` expected `bool`')
+    if params.get("separation_z", False) is None:
+        raise StyxValidationError("`separation_z` must not be None")
+    if not isinstance(params["separation_z"], bool):
+        raise StyxValidationError(f'`separation_z` has the wrong type: Received `{type(params.get("separation_z", False))}` expected `bool`')
+    if params.get("separation_time", False) is None:
+        raise StyxValidationError("`separation_time` must not be None")
+    if not isinstance(params["separation_time"], bool):
+        raise StyxValidationError(f'`separation_time` has the wrong type: Received `{type(params.get("separation_time", False))}` expected `bool`')
+
+
 def fslsplit_cargs(
     params: FslsplitParameters,
     execution: Execution,
@@ -145,6 +182,7 @@ def fslsplit_execute(
     Returns:
         NamedTuple of outputs (described in `FslsplitOutputs`).
     """
+    fslsplit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLSPLIT_METADATA)
     params = execution.params(params)

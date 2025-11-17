@@ -56,6 +56,27 @@ def v_3d_mvm_validator_params(
     return params
 
 
+def v_3d_mvm_validator_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dMvmValidatorParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datatable", None) is None:
+        raise StyxValidationError("`datatable` must not be None")
+    if not isinstance(params["datatable"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datatable` has the wrong type: Received `{type(params.get("datatable", None))}` expected `InputPathType`')
+    if params.get("shinyfolder", None) is not None:
+        if not isinstance(params["shinyfolder"], str):
+            raise StyxValidationError(f'`shinyfolder` has the wrong type: Received `{type(params.get("shinyfolder", None))}` expected `str | None`')
+
+
 def v_3d_mvm_validator_cargs(
     params: V3dMvmValidatorParameters,
     execution: Execution,
@@ -118,6 +139,7 @@ def v_3d_mvm_validator_execute(
     Returns:
         NamedTuple of outputs (described in `V3dMvmValidatorOutputs`).
     """
+    v_3d_mvm_validator_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_MVM_VALIDATOR_METADATA)
     params = execution.params(params)

@@ -83,6 +83,32 @@ def cifti_math_select_params(
     return params
 
 
+def cifti_math_select_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMathSelectParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dim", None) is None:
+        raise StyxValidationError("`dim` must not be None")
+    if not isinstance(params["dim"], int):
+        raise StyxValidationError(f'`dim` has the wrong type: Received `{type(params.get("dim", None))}` expected `int`')
+    if params.get("index", None) is None:
+        raise StyxValidationError("`index` must not be None")
+    if not isinstance(params["index"], str):
+        raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", None))}` expected `str`')
+    if params.get("repeat", False) is None:
+        raise StyxValidationError("`repeat` must not be None")
+    if not isinstance(params["repeat"], bool):
+        raise StyxValidationError(f'`repeat` has the wrong type: Received `{type(params.get("repeat", False))}` expected `bool`')
+
+
 def cifti_math_select_cargs(
     params: CiftiMathSelectParameters,
     execution: Execution,
@@ -130,6 +156,33 @@ def cifti_math_var_params(
     if select_ is not None:
         params["select"] = select_
     return params
+
+
+def cifti_math_var_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMathVarParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("name", None) is None:
+        raise StyxValidationError("`name` must not be None")
+    if not isinstance(params["name"], str):
+        raise StyxValidationError(f'`name` has the wrong type: Received `{type(params.get("name", None))}` expected `str`')
+    if params.get("cifti", None) is None:
+        raise StyxValidationError("`cifti` must not be None")
+    if not isinstance(params["cifti"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `InputPathType`')
+    if params.get("select", None) is not None:
+        if not isinstance(params["select"], list):
+            raise StyxValidationError(f'`select` has the wrong type: Received `{type(params.get("select", None))}` expected `list[CiftiMathSelectParameters] | None`')
+        for e in params["select"]:
+            cifti_math_select_validate(e)
 
 
 def cifti_math_var_cargs(
@@ -199,6 +252,40 @@ def cifti_math_params(
     if var is not None:
         params["var"] = var
     return params
+
+
+def cifti_math_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiMathParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("replace", None) is not None:
+        if not isinstance(params["replace"], (float, int)):
+            raise StyxValidationError(f'`replace` has the wrong type: Received `{type(params.get("replace", None))}` expected `float | None`')
+    if params.get("override-mapping-check", False) is None:
+        raise StyxValidationError("`override-mapping-check` must not be None")
+    if not isinstance(params["override-mapping-check"], bool):
+        raise StyxValidationError(f'`override-mapping-check` has the wrong type: Received `{type(params.get("override-mapping-check", False))}` expected `bool`')
+    if params.get("var", None) is not None:
+        if not isinstance(params["var"], list):
+            raise StyxValidationError(f'`var` has the wrong type: Received `{type(params.get("var", None))}` expected `list[CiftiMathVarParameters] | None`')
+        for e in params["var"]:
+            cifti_math_var_validate(e)
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
 
 
 def cifti_math_cargs(
@@ -335,6 +422,7 @@ def cifti_math_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiMathOutputs`).
     """
+    cifti_math_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_MATH_METADATA)
     params = execution.params(params)

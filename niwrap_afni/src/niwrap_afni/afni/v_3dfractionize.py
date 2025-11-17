@@ -90,6 +90,45 @@ def v_3dfractionize_params(
     return params
 
 
+def v_3dfractionize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dfractionizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("template", None) is None:
+        raise StyxValidationError("`template` must not be None")
+    if not isinstance(params["template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`template` has the wrong type: Received `{type(params.get("template", None))}` expected `InputPathType`')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("clip", None) is not None:
+        if not isinstance(params["clip"], (float, int)):
+            raise StyxValidationError(f'`clip` has the wrong type: Received `{type(params.get("clip", None))}` expected `float | None`')
+    if params.get("warp", None) is not None:
+        if not isinstance(params["warp"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`warp` has the wrong type: Received `{type(params.get("warp", None))}` expected `InputPathType | None`')
+    if params.get("preserve", False) is None:
+        raise StyxValidationError("`preserve` must not be None")
+    if not isinstance(params["preserve"], bool):
+        raise StyxValidationError(f'`preserve` has the wrong type: Received `{type(params.get("preserve", False))}` expected `bool`')
+    if params.get("vote", False) is None:
+        raise StyxValidationError("`vote` must not be None")
+    if not isinstance(params["vote"], bool):
+        raise StyxValidationError(f'`vote` has the wrong type: Received `{type(params.get("vote", False))}` expected `bool`')
+
+
 def v_3dfractionize_cargs(
     params: V3dfractionizeParameters,
     execution: Execution,
@@ -175,6 +214,7 @@ def v_3dfractionize_execute(
     Returns:
         NamedTuple of outputs (described in `V3dfractionizeOutputs`).
     """
+    v_3dfractionize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DFRACTIONIZE_METADATA)
     params = execution.params(params)

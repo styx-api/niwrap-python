@@ -93,6 +93,47 @@ def mri_make_uchar_params(
     return params
 
 
+def mri_make_uchar_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriMakeUcharParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_volume", None) is None:
+        raise StyxValidationError("`input_volume` must not be None")
+    if not isinstance(params["input_volume"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_volume` has the wrong type: Received `{type(params.get("input_volume", None))}` expected `InputPathType`')
+    if params.get("talairach_xform", None) is None:
+        raise StyxValidationError("`talairach_xform` must not be None")
+    if not isinstance(params["talairach_xform"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`talairach_xform` has the wrong type: Received `{type(params.get("talairach_xform", None))}` expected `InputPathType`')
+    if params.get("output_volume", None) is None:
+        raise StyxValidationError("`output_volume` must not be None")
+    if not isinstance(params["output_volume"], str):
+        raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str`')
+    if params.get("first_percentile", None) is not None:
+        if not isinstance(params["first_percentile"], (float, int)):
+            raise StyxValidationError(f'`first_percentile` has the wrong type: Received `{type(params.get("first_percentile", None))}` expected `float | None`')
+    if params.get("wm_percentile", None) is not None:
+        if not isinstance(params["wm_percentile"], (float, int)):
+            raise StyxValidationError(f'`wm_percentile` has the wrong type: Received `{type(params.get("wm_percentile", None))}` expected `float | None`')
+    if params.get("max_radius", None) is not None:
+        if not isinstance(params["max_radius"], (float, int)):
+            raise StyxValidationError(f'`max_radius` has the wrong type: Received `{type(params.get("max_radius", None))}` expected `float | None`')
+    if params.get("cumulative_histo", None) is not None:
+        if not isinstance(params["cumulative_histo"], str):
+            raise StyxValidationError(f'`cumulative_histo` has the wrong type: Received `{type(params.get("cumulative_histo", None))}` expected `str | None`')
+    if params.get("vradvol", None) is not None:
+        if not isinstance(params["vradvol"], str):
+            raise StyxValidationError(f'`vradvol` has the wrong type: Received `{type(params.get("vradvol", None))}` expected `str | None`')
+
+
 def mri_make_uchar_cargs(
     params: MriMakeUcharParameters,
     execution: Execution,
@@ -179,6 +220,7 @@ def mri_make_uchar_execute(
     Returns:
         NamedTuple of outputs (described in `MriMakeUcharOutputs`).
     """
+    mri_make_uchar_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_MAKE_UCHAR_METADATA)
     params = execution.params(params)

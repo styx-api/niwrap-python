@@ -85,6 +85,51 @@ def super_resolution_params(
     return params
 
 
+def super_resolution_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SuperResolutionParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image_dimension", None) is None:
+        raise StyxValidationError("`image_dimension` must not be None")
+    if not isinstance(params["image_dimension"], int):
+        raise StyxValidationError(f'`image_dimension` has the wrong type: Received `{type(params.get("image_dimension", None))}` expected `int`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+    if params.get("domain_image", None) is None:
+        raise StyxValidationError("`domain_image` must not be None")
+    if not isinstance(params["domain_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`domain_image` has the wrong type: Received `{type(params.get("domain_image", None))}` expected `InputPathType`')
+    if params.get("gradient_sigma", None) is None:
+        raise StyxValidationError("`gradient_sigma` must not be None")
+    if not isinstance(params["gradient_sigma"], (float, int)):
+        raise StyxValidationError(f'`gradient_sigma` has the wrong type: Received `{type(params.get("gradient_sigma", None))}` expected `float`')
+    if params.get("mesh_size", None) is None:
+        raise StyxValidationError("`mesh_size` must not be None")
+    if not isinstance(params["mesh_size"], (float, int)):
+        raise StyxValidationError(f'`mesh_size` has the wrong type: Received `{type(params.get("mesh_size", None))}` expected `float`')
+    if params.get("number_of_levels", None) is None:
+        raise StyxValidationError("`number_of_levels` must not be None")
+    if not isinstance(params["number_of_levels"], int):
+        raise StyxValidationError(f'`number_of_levels` has the wrong type: Received `{type(params.get("number_of_levels", None))}` expected `int`')
+    if params.get("input_image_files", None) is None:
+        raise StyxValidationError("`input_image_files` must not be None")
+    if not isinstance(params["input_image_files"], list):
+        raise StyxValidationError(f'`input_image_files` has the wrong type: Received `{type(params.get("input_image_files", None))}` expected `list[InputPathType]`')
+    for e in params["input_image_files"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_image_files` has the wrong type: Received `{type(params.get("input_image_files", None))}` expected `list[InputPathType]`')
+
+
 def super_resolution_cargs(
     params: SuperResolutionParameters,
     execution: Execution,
@@ -152,6 +197,7 @@ def super_resolution_execute(
     Returns:
         NamedTuple of outputs (described in `SuperResolutionOutputs`).
     """
+    super_resolution_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SUPER_RESOLUTION_METADATA)
     params = execution.params(params)

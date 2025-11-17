@@ -98,6 +98,52 @@ def v_1deval_params(
     return params
 
 
+def v_1deval_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1devalParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("del", None) is not None:
+        if not isinstance(params["del"], (float, int)):
+            raise StyxValidationError(f'`del` has the wrong type: Received `{type(params.get("del", None))}` expected `float | None`')
+    if params.get("start", None) is not None:
+        if not isinstance(params["start"], (float, int)):
+            raise StyxValidationError(f'`start` has the wrong type: Received `{type(params.get("start", None))}` expected `float | None`')
+    if params.get("num", None) is not None:
+        if not isinstance(params["num"], (float, int)):
+            raise StyxValidationError(f'`num` has the wrong type: Received `{type(params.get("num", None))}` expected `float | None`')
+    if params.get("index", None) is not None:
+        if not isinstance(params["index"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`index` has the wrong type: Received `{type(params.get("index", None))}` expected `InputPathType | None`')
+    if params.get("1D", False) is None:
+        raise StyxValidationError("`1D` must not be None")
+    if not isinstance(params["1D"], bool):
+        raise StyxValidationError(f'`1D` has the wrong type: Received `{type(params.get("1D", False))}` expected `bool`')
+    if params.get("symbols", None) is not None:
+        if not isinstance(params["symbols"], list):
+            raise StyxValidationError(f'`symbols` has the wrong type: Received `{type(params.get("symbols", None))}` expected `list[InputPathType] | None`')
+        for e in params["symbols"]:
+            if not isinstance(e, (pathlib.Path, str)):
+                raise StyxValidationError(f'`symbols` has the wrong type: Received `{type(params.get("symbols", None))}` expected `list[InputPathType] | None`')
+    if params.get("symbol_values", None) is not None:
+        if not isinstance(params["symbol_values"], list):
+            raise StyxValidationError(f'`symbol_values` has the wrong type: Received `{type(params.get("symbol_values", None))}` expected `list[str] | None`')
+        for e in params["symbol_values"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`symbol_values` has the wrong type: Received `{type(params.get("symbol_values", None))}` expected `list[str] | None`')
+    if params.get("expression", None) is None:
+        raise StyxValidationError("`expression` must not be None")
+    if not isinstance(params["expression"], str):
+        raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str`')
+
+
 def v_1deval_cargs(
     params: V1devalParameters,
     execution: Execution,
@@ -192,6 +238,7 @@ def v_1deval_execute(
     Returns:
         NamedTuple of outputs (described in `V1devalOutputs`).
     """
+    v_1deval_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DEVAL_METADATA)
     params = execution.params(params)

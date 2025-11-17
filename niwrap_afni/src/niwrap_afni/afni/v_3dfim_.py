@@ -133,6 +133,65 @@ def v_3dfim__params(
     return params
 
 
+def v_3dfim__validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dfimParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("input1dfile", None) is not None:
+        if not isinstance(params["input1dfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input1dfile` has the wrong type: Received `{type(params.get("input1dfile", None))}` expected `InputPathType | None`')
+    if params.get("maskfile", None) is not None:
+        if not isinstance(params["maskfile"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`maskfile` has the wrong type: Received `{type(params.get("maskfile", None))}` expected `InputPathType | None`')
+    if params.get("first_image", None) is not None:
+        if not isinstance(params["first_image"], (float, int)):
+            raise StyxValidationError(f'`first_image` has the wrong type: Received `{type(params.get("first_image", None))}` expected `float | None`')
+    if params.get("last_image", None) is not None:
+        if not isinstance(params["last_image"], (float, int)):
+            raise StyxValidationError(f'`last_image` has the wrong type: Received `{type(params.get("last_image", None))}` expected `float | None`')
+    if params.get("baseline_polynomial", None) is not None:
+        if not isinstance(params["baseline_polynomial"], (float, int)):
+            raise StyxValidationError(f'`baseline_polynomial` has the wrong type: Received `{type(params.get("baseline_polynomial", None))}` expected `float | None`')
+    if params.get("threshold", None) is not None:
+        if not isinstance(params["threshold"], (float, int)):
+            raise StyxValidationError(f'`threshold` has the wrong type: Received `{type(params.get("threshold", None))}` expected `float | None`')
+        if 0 <= params["threshold"] <= 1:
+            raise StyxValidationError("Parameter `threshold` must be between 0 and 1 (inclusive)")
+    if params.get("cdisp_value", None) is not None:
+        if not isinstance(params["cdisp_value"], (float, int)):
+            raise StyxValidationError(f'`cdisp_value` has the wrong type: Received `{type(params.get("cdisp_value", None))}` expected `float | None`')
+        if 0 <= params["cdisp_value"] <= 1:
+            raise StyxValidationError("Parameter `cdisp_value` must be between 0 and 1 (inclusive)")
+    if params.get("ort_file", None) is not None:
+        if not isinstance(params["ort_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`ort_file` has the wrong type: Received `{type(params.get("ort_file", None))}` expected `InputPathType | None`')
+    if params.get("ideal_file", None) is None:
+        raise StyxValidationError("`ideal_file` must not be None")
+    if not isinstance(params["ideal_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ideal_file` has the wrong type: Received `{type(params.get("ideal_file", None))}` expected `InputPathType`')
+    if params.get("output_params", None) is not None:
+        if not isinstance(params["output_params"], list):
+            raise StyxValidationError(f'`output_params` has the wrong type: Received `{type(params.get("output_params", None))}` expected `list[str] | None`')
+        for e in params["output_params"]:
+            if not isinstance(e, str):
+                raise StyxValidationError(f'`output_params` has the wrong type: Received `{type(params.get("output_params", None))}` expected `list[str] | None`')
+    if params.get("output_bucket", None) is not None:
+        if not isinstance(params["output_bucket"], str):
+            raise StyxValidationError(f'`output_bucket` has the wrong type: Received `{type(params.get("output_bucket", None))}` expected `str | None`')
+
+
 def v_3dfim__cargs(
     params: V3dfimParameters,
     execution: Execution,
@@ -249,6 +308,7 @@ def v_3dfim__execute(
     Returns:
         NamedTuple of outputs (described in `V3dfimOutputs`).
     """
+    v_3dfim__validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DFIM__METADATA)
     params = execution.params(params)

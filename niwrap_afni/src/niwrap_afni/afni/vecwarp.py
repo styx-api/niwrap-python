@@ -93,6 +93,44 @@ def vecwarp_params(
     return params
 
 
+def vecwarp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `VecwarpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("apar", None) is not None:
+        if not isinstance(params["apar"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`apar` has the wrong type: Received `{type(params.get("apar", None))}` expected `InputPathType | None`')
+    if params.get("matvec", None) is not None:
+        if not isinstance(params["matvec"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`matvec` has the wrong type: Received `{type(params.get("matvec", None))}` expected `InputPathType | None`')
+    if params.get("forward", False) is None:
+        raise StyxValidationError("`forward` must not be None")
+    if not isinstance(params["forward"], bool):
+        raise StyxValidationError(f'`forward` has the wrong type: Received `{type(params.get("forward", False))}` expected `bool`')
+    if params.get("backward", False) is None:
+        raise StyxValidationError("`backward` must not be None")
+    if not isinstance(params["backward"], bool):
+        raise StyxValidationError(f'`backward` has the wrong type: Received `{type(params.get("backward", False))}` expected `bool`')
+    if params.get("input", None) is not None:
+        if not isinstance(params["input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType | None`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("force", False) is None:
+        raise StyxValidationError("`force` must not be None")
+    if not isinstance(params["force"], bool):
+        raise StyxValidationError(f'`force` has the wrong type: Received `{type(params.get("force", False))}` expected `bool`')
+
+
 def vecwarp_cargs(
     params: VecwarpParameters,
     execution: Execution,
@@ -177,6 +215,7 @@ def vecwarp_execute(
     Returns:
         NamedTuple of outputs (described in `VecwarpOutputs`).
     """
+    vecwarp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(VECWARP_METADATA)
     params = execution.params(params)

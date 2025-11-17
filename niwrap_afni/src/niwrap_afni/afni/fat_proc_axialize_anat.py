@@ -174,6 +174,105 @@ def fat_proc_axialize_anat_params(
     return params
 
 
+def fat_proc_axialize_anat_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FatProcAxializeAnatParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("in_file", None) is None:
+        raise StyxValidationError("`in_file` must not be None")
+    if not isinstance(params["in_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType`')
+    if params.get("ref_file", None) is None:
+        raise StyxValidationError("`ref_file` must not be None")
+    if not isinstance(params["ref_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`ref_file` has the wrong type: Received `{type(params.get("ref_file", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is None:
+        raise StyxValidationError("`prefix` must not be None")
+    if not isinstance(params["prefix"], str):
+        raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str`')
+    if params.get("mode_t2w", False) is None:
+        raise StyxValidationError("`mode_t2w` must not be None")
+    if not isinstance(params["mode_t2w"], bool):
+        raise StyxValidationError(f'`mode_t2w` has the wrong type: Received `{type(params.get("mode_t2w", False))}` expected `bool`')
+    if params.get("mode_t1w", False) is None:
+        raise StyxValidationError("`mode_t1w` must not be None")
+    if not isinstance(params["mode_t1w"], bool):
+        raise StyxValidationError(f'`mode_t1w` has the wrong type: Received `{type(params.get("mode_t1w", False))}` expected `bool`')
+    if params.get("workdir", None) is not None:
+        if not isinstance(params["workdir"], str):
+            raise StyxValidationError(f'`workdir` has the wrong type: Received `{type(params.get("workdir", None))}` expected `str | None`')
+    if params.get("out_match_ref", False) is None:
+        raise StyxValidationError("`out_match_ref` must not be None")
+    if not isinstance(params["out_match_ref"], bool):
+        raise StyxValidationError(f'`out_match_ref` has the wrong type: Received `{type(params.get("out_match_ref", False))}` expected `bool`')
+    if params.get("do_ceil_out", False) is None:
+        raise StyxValidationError("`do_ceil_out` must not be None")
+    if not isinstance(params["do_ceil_out"], bool):
+        raise StyxValidationError(f'`do_ceil_out` has the wrong type: Received `{type(params.get("do_ceil_out", False))}` expected `bool`')
+    if params.get("extra_al_wtmask", None) is not None:
+        if not isinstance(params["extra_al_wtmask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`extra_al_wtmask` has the wrong type: Received `{type(params.get("extra_al_wtmask", None))}` expected `InputPathType | None`')
+    if params.get("extra_al_cost", None) is not None:
+        if not isinstance(params["extra_al_cost"], str):
+            raise StyxValidationError(f'`extra_al_cost` has the wrong type: Received `{type(params.get("extra_al_cost", None))}` expected `str | None`')
+    if params.get("extra_al_opts", None) is not None:
+        if not isinstance(params["extra_al_opts"], str):
+            raise StyxValidationError(f'`extra_al_opts` has the wrong type: Received `{type(params.get("extra_al_opts", None))}` expected `str | None`')
+    if params.get("focus_mask", None) is not None:
+        if not isinstance(params["focus_mask"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`focus_mask` has the wrong type: Received `{type(params.get("focus_mask", None))}` expected `InputPathType | None`')
+    if params.get("focus_by_ss", False) is None:
+        raise StyxValidationError("`focus_by_ss` must not be None")
+    if not isinstance(params["focus_by_ss"], bool):
+        raise StyxValidationError(f'`focus_by_ss` has the wrong type: Received `{type(params.get("focus_by_ss", False))}` expected `bool`')
+    if params.get("remove_inf_sli", None) is not None:
+        if not isinstance(params["remove_inf_sli"], (float, int)):
+            raise StyxValidationError(f'`remove_inf_sli` has the wrong type: Received `{type(params.get("remove_inf_sli", None))}` expected `float | None`')
+    if params.get("pre_align_center_mass", False) is None:
+        raise StyxValidationError("`pre_align_center_mass` must not be None")
+    if not isinstance(params["pre_align_center_mass"], bool):
+        raise StyxValidationError(f'`pre_align_center_mass` has the wrong type: Received `{type(params.get("pre_align_center_mass", False))}` expected `bool`')
+    if params.get("pre_center_mass", False) is None:
+        raise StyxValidationError("`pre_center_mass` must not be None")
+    if not isinstance(params["pre_center_mass"], bool):
+        raise StyxValidationError(f'`pre_center_mass` has the wrong type: Received `{type(params.get("pre_center_mass", False))}` expected `bool`')
+    if params.get("post_lr_symm", False) is None:
+        raise StyxValidationError("`post_lr_symm` must not be None")
+    if not isinstance(params["post_lr_symm"], bool):
+        raise StyxValidationError(f'`post_lr_symm` has the wrong type: Received `{type(params.get("post_lr_symm", False))}` expected `bool`')
+    if params.get("no_pre_lr_symm", False) is None:
+        raise StyxValidationError("`no_pre_lr_symm` must not be None")
+    if not isinstance(params["no_pre_lr_symm"], bool):
+        raise StyxValidationError(f'`no_pre_lr_symm` has the wrong type: Received `{type(params.get("no_pre_lr_symm", False))}` expected `bool`')
+    if params.get("no_clean", False) is None:
+        raise StyxValidationError("`no_clean` must not be None")
+    if not isinstance(params["no_clean"], bool):
+        raise StyxValidationError(f'`no_clean` has the wrong type: Received `{type(params.get("no_clean", False))}` expected `bool`')
+    if params.get("qc_ulay_range", None) is not None:
+        if not isinstance(params["qc_ulay_range"], list):
+            raise StyxValidationError(f'`qc_ulay_range` has the wrong type: Received `{type(params.get("qc_ulay_range", None))}` expected `list[float] | None`')
+        if len(params["qc_ulay_range"]) == 2:
+            raise StyxValidationError("Parameter `qc_ulay_range` must contain exactly 2 elements")
+        for e in params["qc_ulay_range"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`qc_ulay_range` has the wrong type: Received `{type(params.get("qc_ulay_range", None))}` expected `list[float] | None`')
+    if params.get("no_qc_view", False) is None:
+        raise StyxValidationError("`no_qc_view` must not be None")
+    if not isinstance(params["no_qc_view"], bool):
+        raise StyxValidationError(f'`no_qc_view` has the wrong type: Received `{type(params.get("no_qc_view", False))}` expected `bool`')
+    if params.get("qc_prefix", None) is not None:
+        if not isinstance(params["qc_prefix"], str):
+            raise StyxValidationError(f'`qc_prefix` has the wrong type: Received `{type(params.get("qc_prefix", None))}` expected `str | None`')
+
+
 def fat_proc_axialize_anat_cargs(
     params: FatProcAxializeAnatParameters,
     execution: Execution,
@@ -298,6 +397,7 @@ def fat_proc_axialize_anat_execute(
     Returns:
         NamedTuple of outputs (described in `FatProcAxializeAnatOutputs`).
     """
+    fat_proc_axialize_anat_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_AXIALIZE_ANAT_METADATA)
     params = execution.params(params)

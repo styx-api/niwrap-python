@@ -58,6 +58,24 @@ def cifti_create_parcellated_from_template_cifti_params(
     return params
 
 
+def cifti_create_parcellated_from_template_cifti_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateParcellatedFromTemplateCiftiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-in", None) is None:
+        raise StyxValidationError("`cifti-in` must not be None")
+    if not isinstance(params["cifti-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-in` has the wrong type: Received `{type(params.get("cifti-in", None))}` expected `InputPathType`')
+
+
 def cifti_create_parcellated_from_template_cifti_cargs(
     params: CiftiCreateParcellatedFromTemplateCiftiParameters,
     execution: Execution,
@@ -123,6 +141,40 @@ def cifti_create_parcellated_from_template_params(
     if cifti is not None:
         params["cifti"] = cifti
     return params
+
+
+def cifti_create_parcellated_from_template_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `CiftiCreateParcellatedFromTemplateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("cifti-out", None) is None:
+        raise StyxValidationError("`cifti-out` must not be None")
+    if not isinstance(params["cifti-out"], str):
+        raise StyxValidationError(f'`cifti-out` has the wrong type: Received `{type(params.get("cifti-out", None))}` expected `str`')
+    if params.get("value", None) is not None:
+        if not isinstance(params["value"], (float, int)):
+            raise StyxValidationError(f'`value` has the wrong type: Received `{type(params.get("value", None))}` expected `float | None`')
+    if params.get("cifti", None) is not None:
+        if not isinstance(params["cifti"], list):
+            raise StyxValidationError(f'`cifti` has the wrong type: Received `{type(params.get("cifti", None))}` expected `list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None`')
+        for e in params["cifti"]:
+            cifti_create_parcellated_from_template_cifti_validate(e)
+    if params.get("cifti-template", None) is None:
+        raise StyxValidationError("`cifti-template` must not be None")
+    if not isinstance(params["cifti-template"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`cifti-template` has the wrong type: Received `{type(params.get("cifti-template", None))}` expected `InputPathType`')
+    if params.get("modify-direction", None) is None:
+        raise StyxValidationError("`modify-direction` must not be None")
+    if not isinstance(params["modify-direction"], str):
+        raise StyxValidationError(f'`modify-direction` has the wrong type: Received `{type(params.get("modify-direction", None))}` expected `str`')
 
 
 def cifti_create_parcellated_from_template_cargs(
@@ -192,6 +244,7 @@ def cifti_create_parcellated_from_template_execute(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateParcellatedFromTemplateOutputs`).
     """
+    cifti_create_parcellated_from_template_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA)
     params = execution.params(params)

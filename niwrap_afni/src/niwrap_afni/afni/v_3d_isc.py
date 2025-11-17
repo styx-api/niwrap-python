@@ -107,6 +107,53 @@ def v_3d_isc_params(
     return params
 
 
+def v_3d_isc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dIscParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("outfile_prefix", None) is None:
+        raise StyxValidationError("`outfile_prefix` must not be None")
+    if not isinstance(params["outfile_prefix"], str):
+        raise StyxValidationError(f'`outfile_prefix` has the wrong type: Received `{type(params.get("outfile_prefix", None))}` expected `str`')
+    if params.get("num_jobs", None) is not None:
+        if not isinstance(params["num_jobs"], (float, int)):
+            raise StyxValidationError(f'`num_jobs` has the wrong type: Received `{type(params.get("num_jobs", None))}` expected `float | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("model_structure", None) is None:
+        raise StyxValidationError("`model_structure` must not be None")
+    if not isinstance(params["model_structure"], str):
+        raise StyxValidationError(f'`model_structure` has the wrong type: Received `{type(params.get("model_structure", None))}` expected `str`')
+    if params.get("qvar_centers", None) is not None:
+        if not isinstance(params["qvar_centers"], str):
+            raise StyxValidationError(f'`qvar_centers` has the wrong type: Received `{type(params.get("qvar_centers", None))}` expected `str | None`')
+    if params.get("quantitative_vars", None) is not None:
+        if not isinstance(params["quantitative_vars"], str):
+            raise StyxValidationError(f'`quantitative_vars` has the wrong type: Received `{type(params.get("quantitative_vars", None))}` expected `str | None`')
+    if params.get("fisher_transform", False) is None:
+        raise StyxValidationError("`fisher_transform` must not be None")
+    if not isinstance(params["fisher_transform"], bool):
+        raise StyxValidationError(f'`fisher_transform` has the wrong type: Received `{type(params.get("fisher_transform", False))}` expected `bool`')
+    if params.get("io_functions", None) is not None:
+        if not isinstance(params["io_functions"], str):
+            raise StyxValidationError(f'`io_functions` has the wrong type: Received `{type(params.get("io_functions", None))}` expected `typing.Literal["AFNI", "R"] | None`')
+        if params["io_functions"] not in ["AFNI", "R"]:
+            raise StyxValidationError("Parameter `io_functions` must be one of [\"AFNI\", \"R\"]")
+    if params.get("data_table", None) is None:
+        raise StyxValidationError("`data_table` must not be None")
+    if not isinstance(params["data_table"], str):
+        raise StyxValidationError(f'`data_table` has the wrong type: Received `{type(params.get("data_table", None))}` expected `str`')
+
+
 def v_3d_isc_cargs(
     params: V3dIscParameters,
     execution: Execution,
@@ -205,6 +252,7 @@ def v_3d_isc_execute(
     Returns:
         NamedTuple of outputs (described in `V3dIscOutputs`).
     """
+    v_3d_isc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_ISC_METADATA)
     params = execution.params(params)

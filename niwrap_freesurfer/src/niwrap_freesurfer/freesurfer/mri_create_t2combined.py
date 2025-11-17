@@ -85,6 +85,47 @@ def mri_create_t2combined_params(
     return params
 
 
+def mri_create_t2combined_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriCreateT2combinedParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subjid", None) is None:
+        raise StyxValidationError("`subjid` must not be None")
+    if not isinstance(params["subjid"], str):
+        raise StyxValidationError(f'`subjid` has the wrong type: Received `{type(params.get("subjid", None))}` expected `str`')
+    if params.get("t1wb", None) is None:
+        raise StyxValidationError("`t1wb` must not be None")
+    if not isinstance(params["t1wb"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t1wb` has the wrong type: Received `{type(params.get("t1wb", None))}` expected `InputPathType`')
+    if params.get("t2upper", None) is None:
+        raise StyxValidationError("`t2upper` must not be None")
+    if not isinstance(params["t2upper"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t2upper` has the wrong type: Received `{type(params.get("t2upper", None))}` expected `InputPathType`')
+    if params.get("t2middle", None) is not None:
+        if not isinstance(params["t2middle"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`t2middle` has the wrong type: Received `{type(params.get("t2middle", None))}` expected `InputPathType | None`')
+    if params.get("t2lower", None) is None:
+        raise StyxValidationError("`t2lower` must not be None")
+    if not isinstance(params["t2lower"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`t2lower` has the wrong type: Received `{type(params.get("t2lower", None))}` expected `InputPathType`')
+    if params.get("t2combined", None) is None:
+        raise StyxValidationError("`t2combined` must not be None")
+    if not isinstance(params["t2combined"], str):
+        raise StyxValidationError(f'`t2combined` has the wrong type: Received `{type(params.get("t2combined", None))}` expected `str`')
+    if params.get("show", False) is None:
+        raise StyxValidationError("`show` must not be None")
+    if not isinstance(params["show"], bool):
+        raise StyxValidationError(f'`show` has the wrong type: Received `{type(params.get("show", False))}` expected `bool`')
+
+
 def mri_create_t2combined_cargs(
     params: MriCreateT2combinedParameters,
     execution: Execution,
@@ -153,6 +194,7 @@ def mri_create_t2combined_execute(
     Returns:
         NamedTuple of outputs (described in `MriCreateT2combinedOutputs`).
     """
+    mri_create_t2combined_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_CREATE_T2COMBINED_METADATA)
     params = execution.params(params)

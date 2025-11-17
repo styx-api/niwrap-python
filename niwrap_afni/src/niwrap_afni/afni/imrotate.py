@@ -81,6 +81,48 @@ def imrotate_params(
     return params
 
 
+def imrotate_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `ImrotateParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("linear_interpolation", False) is None:
+        raise StyxValidationError("`linear_interpolation` must not be None")
+    if not isinstance(params["linear_interpolation"], bool):
+        raise StyxValidationError(f'`linear_interpolation` has the wrong type: Received `{type(params.get("linear_interpolation", False))}` expected `bool`')
+    if params.get("fourier_interpolation", False) is None:
+        raise StyxValidationError("`fourier_interpolation` must not be None")
+    if not isinstance(params["fourier_interpolation"], bool):
+        raise StyxValidationError(f'`fourier_interpolation` has the wrong type: Received `{type(params.get("fourier_interpolation", False))}` expected `bool`')
+    if params.get("dx", None) is None:
+        raise StyxValidationError("`dx` must not be None")
+    if not isinstance(params["dx"], (float, int)):
+        raise StyxValidationError(f'`dx` has the wrong type: Received `{type(params.get("dx", None))}` expected `float`')
+    if params.get("dy", None) is None:
+        raise StyxValidationError("`dy` must not be None")
+    if not isinstance(params["dy"], (float, int)):
+        raise StyxValidationError(f'`dy` has the wrong type: Received `{type(params.get("dy", None))}` expected `float`')
+    if params.get("phi", None) is None:
+        raise StyxValidationError("`phi` must not be None")
+    if not isinstance(params["phi"], (float, int)):
+        raise StyxValidationError(f'`phi` has the wrong type: Received `{type(params.get("phi", None))}` expected `float`')
+    if params.get("input_image", None) is None:
+        raise StyxValidationError("`input_image` must not be None")
+    if not isinstance(params["input_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input_image` has the wrong type: Received `{type(params.get("input_image", None))}` expected `InputPathType`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+
+
 def imrotate_cargs(
     params: ImrotateParameters,
     execution: Execution,
@@ -147,6 +189,7 @@ def imrotate_execute(
     Returns:
         NamedTuple of outputs (described in `ImrotateOutputs`).
     """
+    imrotate_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMROTATE_METADATA)
     params = execution.params(params)

@@ -165,6 +165,92 @@ def dtifit_params(
     return params
 
 
+def dtifit_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `DtifitParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("data_file", None) is None:
+        raise StyxValidationError("`data_file` must not be None")
+    if not isinstance(params["data_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`data_file` has the wrong type: Received `{type(params.get("data_file", None))}` expected `InputPathType`')
+    if params.get("output_basename", None) is None:
+        raise StyxValidationError("`output_basename` must not be None")
+    if not isinstance(params["output_basename"], str):
+        raise StyxValidationError(f'`output_basename` has the wrong type: Received `{type(params.get("output_basename", None))}` expected `str`')
+    if params.get("mask_file", None) is None:
+        raise StyxValidationError("`mask_file` must not be None")
+    if not isinstance(params["mask_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType`')
+    if params.get("bvec_file", None) is None:
+        raise StyxValidationError("`bvec_file` must not be None")
+    if not isinstance(params["bvec_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bvec_file` has the wrong type: Received `{type(params.get("bvec_file", None))}` expected `InputPathType`')
+    if params.get("bval_file", None) is None:
+        raise StyxValidationError("`bval_file` must not be None")
+    if not isinstance(params["bval_file"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`bval_file` has the wrong type: Received `{type(params.get("bval_file", None))}` expected `InputPathType`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("sse_flag", False) is None:
+        raise StyxValidationError("`sse_flag` must not be None")
+    if not isinstance(params["sse_flag"], bool):
+        raise StyxValidationError(f'`sse_flag` has the wrong type: Received `{type(params.get("sse_flag", False))}` expected `bool`')
+    if params.get("wls_flag", False) is None:
+        raise StyxValidationError("`wls_flag` must not be None")
+    if not isinstance(params["wls_flag"], bool):
+        raise StyxValidationError(f'`wls_flag` has the wrong type: Received `{type(params.get("wls_flag", False))}` expected `bool`')
+    if params.get("kurt_flag", False) is None:
+        raise StyxValidationError("`kurt_flag` must not be None")
+    if not isinstance(params["kurt_flag"], bool):
+        raise StyxValidationError(f'`kurt_flag` has the wrong type: Received `{type(params.get("kurt_flag", False))}` expected `bool`')
+    if params.get("kurtdir_flag", False) is None:
+        raise StyxValidationError("`kurtdir_flag` must not be None")
+    if not isinstance(params["kurtdir_flag"], bool):
+        raise StyxValidationError(f'`kurtdir_flag` has the wrong type: Received `{type(params.get("kurtdir_flag", False))}` expected `bool`')
+    if params.get("littlebit_flag", False) is None:
+        raise StyxValidationError("`littlebit_flag` must not be None")
+    if not isinstance(params["littlebit_flag"], bool):
+        raise StyxValidationError(f'`littlebit_flag` has the wrong type: Received `{type(params.get("littlebit_flag", False))}` expected `bool`')
+    if params.get("save_tensor_flag", False) is None:
+        raise StyxValidationError("`save_tensor_flag` must not be None")
+    if not isinstance(params["save_tensor_flag"], bool):
+        raise StyxValidationError(f'`save_tensor_flag` has the wrong type: Received `{type(params.get("save_tensor_flag", False))}` expected `bool`')
+    if params.get("zmin", None) is not None:
+        if not isinstance(params["zmin"], (float, int)):
+            raise StyxValidationError(f'`zmin` has the wrong type: Received `{type(params.get("zmin", None))}` expected `float | None`')
+    if params.get("zmax", None) is not None:
+        if not isinstance(params["zmax"], (float, int)):
+            raise StyxValidationError(f'`zmax` has the wrong type: Received `{type(params.get("zmax", None))}` expected `float | None`')
+    if params.get("ymin", None) is not None:
+        if not isinstance(params["ymin"], (float, int)):
+            raise StyxValidationError(f'`ymin` has the wrong type: Received `{type(params.get("ymin", None))}` expected `float | None`')
+    if params.get("ymax", None) is not None:
+        if not isinstance(params["ymax"], (float, int)):
+            raise StyxValidationError(f'`ymax` has the wrong type: Received `{type(params.get("ymax", None))}` expected `float | None`')
+    if params.get("xmin", None) is not None:
+        if not isinstance(params["xmin"], (float, int)):
+            raise StyxValidationError(f'`xmin` has the wrong type: Received `{type(params.get("xmin", None))}` expected `float | None`')
+    if params.get("xmax", None) is not None:
+        if not isinstance(params["xmax"], (float, int)):
+            raise StyxValidationError(f'`xmax` has the wrong type: Received `{type(params.get("xmax", None))}` expected `float | None`')
+    if params.get("gradnonlin_file", None) is not None:
+        if not isinstance(params["gradnonlin_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`gradnonlin_file` has the wrong type: Received `{type(params.get("gradnonlin_file", None))}` expected `InputPathType | None`')
+    if params.get("confound_regressors", None) is not None:
+        if not isinstance(params["confound_regressors"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`confound_regressors` has the wrong type: Received `{type(params.get("confound_regressors", None))}` expected `InputPathType | None`')
+
+
 def dtifit_cargs(
     params: DtifitParameters,
     execution: Execution,
@@ -301,6 +387,7 @@ def dtifit_execute(
     Returns:
         NamedTuple of outputs (described in `DtifitOutputs`).
     """
+    dtifit_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(DTIFIT_METADATA)
     params = execution.params(params)

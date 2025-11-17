@@ -130,6 +130,70 @@ def v_3d_autobox_params(
     return params
 
 
+def v_3d_autobox_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAutoboxParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input", None) is None:
+        raise StyxValidationError("`input` must not be None")
+    if not isinstance(params["input"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`input` has the wrong type: Received `{type(params.get("input", None))}` expected `InputPathType`')
+    if params.get("prefix", None) is not None:
+        if not isinstance(params["prefix"], str):
+            raise StyxValidationError(f'`prefix` has the wrong type: Received `{type(params.get("prefix", None))}` expected `str | None`')
+    if params.get("alt_input", None) is not None:
+        if not isinstance(params["alt_input"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`alt_input` has the wrong type: Received `{type(params.get("alt_input", None))}` expected `InputPathType | None`')
+    if params.get("noclust", False) is None:
+        raise StyxValidationError("`noclust` must not be None")
+    if not isinstance(params["noclust"], bool):
+        raise StyxValidationError(f'`noclust` has the wrong type: Received `{type(params.get("noclust", False))}` expected `bool`')
+    if params.get("extent", False) is None:
+        raise StyxValidationError("`extent` must not be None")
+    if not isinstance(params["extent"], bool):
+        raise StyxValidationError(f'`extent` has the wrong type: Received `{type(params.get("extent", False))}` expected `bool`')
+    if params.get("extent_ijk", False) is None:
+        raise StyxValidationError("`extent_ijk` must not be None")
+    if not isinstance(params["extent_ijk"], bool):
+        raise StyxValidationError(f'`extent_ijk` has the wrong type: Received `{type(params.get("extent_ijk", False))}` expected `bool`')
+    if params.get("extent_ijk_to_file", None) is not None:
+        if not isinstance(params["extent_ijk_to_file"], str):
+            raise StyxValidationError(f'`extent_ijk_to_file` has the wrong type: Received `{type(params.get("extent_ijk_to_file", None))}` expected `str | None`')
+    if params.get("extent_ijk_midslice", False) is None:
+        raise StyxValidationError("`extent_ijk_midslice` must not be None")
+    if not isinstance(params["extent_ijk_midslice"], bool):
+        raise StyxValidationError(f'`extent_ijk_midslice` has the wrong type: Received `{type(params.get("extent_ijk_midslice", False))}` expected `bool`')
+    if params.get("extent_ijkord", False) is None:
+        raise StyxValidationError("`extent_ijkord` must not be None")
+    if not isinstance(params["extent_ijkord"], bool):
+        raise StyxValidationError(f'`extent_ijkord` has the wrong type: Received `{type(params.get("extent_ijkord", False))}` expected `bool`')
+    if params.get("extent_ijkord_to_file", None) is not None:
+        if not isinstance(params["extent_ijkord_to_file"], str):
+            raise StyxValidationError(f'`extent_ijkord_to_file` has the wrong type: Received `{type(params.get("extent_ijkord_to_file", None))}` expected `str | None`')
+    if params.get("extent_xyz_to_file", None) is not None:
+        if not isinstance(params["extent_xyz_to_file"], str):
+            raise StyxValidationError(f'`extent_xyz_to_file` has the wrong type: Received `{type(params.get("extent_xyz_to_file", None))}` expected `str | None`')
+    if params.get("extent_xyz_midslice", False) is None:
+        raise StyxValidationError("`extent_xyz_midslice` must not be None")
+    if not isinstance(params["extent_xyz_midslice"], bool):
+        raise StyxValidationError(f'`extent_xyz_midslice` has the wrong type: Received `{type(params.get("extent_xyz_midslice", False))}` expected `bool`')
+    if params.get("npad", None) is not None:
+        if not isinstance(params["npad"], (float, int)):
+            raise StyxValidationError(f'`npad` has the wrong type: Received `{type(params.get("npad", None))}` expected `float | None`')
+    if params.get("npad_safety_on", False) is None:
+        raise StyxValidationError("`npad_safety_on` must not be None")
+    if not isinstance(params["npad_safety_on"], bool):
+        raise StyxValidationError(f'`npad_safety_on` has the wrong type: Received `{type(params.get("npad_safety_on", False))}` expected `bool`')
+
+
 def v_3d_autobox_cargs(
     params: V3dAutoboxParameters,
     execution: Execution,
@@ -232,6 +296,7 @@ def v_3d_autobox_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAutoboxOutputs`).
     """
+    v_3d_autobox_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AUTOBOX_METADATA)
     params = execution.params(params)

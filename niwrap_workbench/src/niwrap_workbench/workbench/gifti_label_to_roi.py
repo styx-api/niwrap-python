@@ -79,6 +79,37 @@ def gifti_label_to_roi_params(
     return params
 
 
+def gifti_label_to_roi_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `GiftiLabelToRoiParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("metric-out", None) is None:
+        raise StyxValidationError("`metric-out` must not be None")
+    if not isinstance(params["metric-out"], str):
+        raise StyxValidationError(f'`metric-out` has the wrong type: Received `{type(params.get("metric-out", None))}` expected `str`')
+    if params.get("label-name", None) is not None:
+        if not isinstance(params["label-name"], str):
+            raise StyxValidationError(f'`label-name` has the wrong type: Received `{type(params.get("label-name", None))}` expected `str | None`')
+    if params.get("label-key", None) is not None:
+        if not isinstance(params["label-key"], int):
+            raise StyxValidationError(f'`label-key` has the wrong type: Received `{type(params.get("label-key", None))}` expected `int | None`')
+    if params.get("map", None) is not None:
+        if not isinstance(params["map"], str):
+            raise StyxValidationError(f'`map` has the wrong type: Received `{type(params.get("map", None))}` expected `str | None`')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+
+
 def gifti_label_to_roi_cargs(
     params: GiftiLabelToRoiParameters,
     execution: Execution,
@@ -147,6 +178,7 @@ def gifti_label_to_roi_execute(
     Returns:
         NamedTuple of outputs (described in `GiftiLabelToRoiOutputs`).
     """
+    gifti_label_to_roi_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(GIFTI_LABEL_TO_ROI_METADATA)
     params = execution.params(params)

@@ -74,6 +74,39 @@ def mni152reg_params(
     return params
 
 
+def mni152reg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Mni152regParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("register_1mm", False) is None:
+        raise StyxValidationError("`register_1mm` must not be None")
+    if not isinstance(params["register_1mm"], bool):
+        raise StyxValidationError(f'`register_1mm` has the wrong type: Received `{type(params.get("register_1mm", False))}` expected `bool`')
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("symmetric", False) is None:
+        raise StyxValidationError("`symmetric` must not be None")
+    if not isinstance(params["symmetric"], bool):
+        raise StyxValidationError(f'`symmetric` has the wrong type: Received `{type(params.get("symmetric", False))}` expected `bool`')
+    if params.get("save_volume", False) is None:
+        raise StyxValidationError("`save_volume` must not be None")
+    if not isinstance(params["save_volume"], bool):
+        raise StyxValidationError(f'`save_volume` has the wrong type: Received `{type(params.get("save_volume", False))}` expected `bool`')
+
+
 def mni152reg_cargs(
     params: Mni152regParameters,
     execution: Execution,
@@ -148,6 +181,7 @@ def mni152reg_execute(
     Returns:
         NamedTuple of outputs (described in `Mni152regOutputs`).
     """
+    mni152reg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MNI152REG_METADATA)
     params = execution.params(params)

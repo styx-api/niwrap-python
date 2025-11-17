@@ -75,6 +75,38 @@ def v_3d_rank_params(
     return params
 
 
+def v_3d_rank_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dRankParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_datasets", None) is None:
+        raise StyxValidationError("`input_datasets` must not be None")
+    if not isinstance(params["input_datasets"], list):
+        raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+    for e in params["input_datasets"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_datasets` has the wrong type: Received `{type(params.get("input_datasets", None))}` expected `list[InputPathType]`')
+    if params.get("output_prefix", None) is not None:
+        if not isinstance(params["output_prefix"], str):
+            raise StyxValidationError(f'`output_prefix` has the wrong type: Received `{type(params.get("output_prefix", None))}` expected `str | None`')
+    if params.get("version_info", False) is None:
+        raise StyxValidationError("`version_info` must not be None")
+    if not isinstance(params["version_info"], bool):
+        raise StyxValidationError(f'`version_info` has the wrong type: Received `{type(params.get("version_info", False))}` expected `bool`')
+    if params.get("help_info", False) is None:
+        raise StyxValidationError("`help_info` must not be None")
+    if not isinstance(params["help_info"], bool):
+        raise StyxValidationError(f'`help_info` has the wrong type: Received `{type(params.get("help_info", False))}` expected `bool`')
+
+
 def v_3d_rank_cargs(
     params: V3dRankParameters,
     execution: Execution,
@@ -145,6 +177,7 @@ def v_3d_rank_execute(
     Returns:
         NamedTuple of outputs (described in `V3dRankOutputs`).
     """
+    v_3d_rank_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_RANK_METADATA)
     params = execution.params(params)

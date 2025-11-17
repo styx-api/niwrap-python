@@ -60,6 +60,31 @@ def fsl_5_0_2_xyztrans_sch_params(
     return params
 
 
+def fsl_5_0_2_xyztrans_sch_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Fsl502XyztransSchParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("term_option", None) is not None:
+        if not isinstance(params["term_option"], str):
+            raise StyxValidationError(f'`term_option` has the wrong type: Received `{type(params.get("term_option", None))}` expected `str | None`')
+    if params.get("version_flag", False) is None:
+        raise StyxValidationError("`version_flag` must not be None")
+    if not isinstance(params["version_flag"], bool):
+        raise StyxValidationError(f'`version_flag` has the wrong type: Received `{type(params.get("version_flag", False))}` expected `bool`')
+    if params.get("no_scrollback_flag", False) is None:
+        raise StyxValidationError("`no_scrollback_flag` must not be None")
+    if not isinstance(params["no_scrollback_flag"], bool):
+        raise StyxValidationError(f'`no_scrollback_flag` has the wrong type: Received `{type(params.get("no_scrollback_flag", False))}` expected `bool`')
+
+
 def fsl_5_0_2_xyztrans_sch_cargs(
     params: Fsl502XyztransSchParameters,
     execution: Execution,
@@ -126,6 +151,7 @@ def fsl_5_0_2_xyztrans_sch_execute(
     Returns:
         NamedTuple of outputs (described in `Fsl502XyztransSchOutputs`).
     """
+    fsl_5_0_2_xyztrans_sch_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_5_0_2_XYZTRANS_SCH_METADATA)
     params = execution.params(params)

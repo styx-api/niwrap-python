@@ -186,6 +186,112 @@ def mris_fix_topology_params(
     return params
 
 
+def mris_fix_topology_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MrisFixTopologyParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject_name", None) is None:
+        raise StyxValidationError("`subject_name` must not be None")
+    if not isinstance(params["subject_name"], str):
+        raise StyxValidationError(f'`subject_name` has the wrong type: Received `{type(params.get("subject_name", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `str`')
+    if params.get("orig_name", None) is not None:
+        if not isinstance(params["orig_name"], str):
+            raise StyxValidationError(f'`orig_name` has the wrong type: Received `{type(params.get("orig_name", None))}` expected `str | None`')
+    if params.get("sphere_name", None) is not None:
+        if not isinstance(params["sphere_name"], str):
+            raise StyxValidationError(f'`sphere_name` has the wrong type: Received `{type(params.get("sphere_name", None))}` expected `str | None`')
+    if params.get("inflated_name", None) is not None:
+        if not isinstance(params["inflated_name"], str):
+            raise StyxValidationError(f'`inflated_name` has the wrong type: Received `{type(params.get("inflated_name", None))}` expected `str | None`')
+    if params.get("output_name", None) is not None:
+        if not isinstance(params["output_name"], str):
+            raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str | None`')
+    if params.get("defect_base_name", None) is not None:
+        if not isinstance(params["defect_base_name"], str):
+            raise StyxValidationError(f'`defect_base_name` has the wrong type: Received `{type(params.get("defect_base_name", None))}` expected `str | None`')
+    if params.get("write_fixed_inflated", False) is None:
+        raise StyxValidationError("`write_fixed_inflated` must not be None")
+    if not isinstance(params["write_fixed_inflated"], bool):
+        raise StyxValidationError(f'`write_fixed_inflated` has the wrong type: Received `{type(params.get("write_fixed_inflated", False))}` expected `bool`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+    if params.get("verbose_low", False) is None:
+        raise StyxValidationError("`verbose_low` must not be None")
+    if not isinstance(params["verbose_low"], bool):
+        raise StyxValidationError(f'`verbose_low` has the wrong type: Received `{type(params.get("verbose_low", False))}` expected `bool`')
+    if params.get("warnings", False) is None:
+        raise StyxValidationError("`warnings` must not be None")
+    if not isinstance(params["warnings"], bool):
+        raise StyxValidationError(f'`warnings` has the wrong type: Received `{type(params.get("warnings", False))}` expected `bool`')
+    if params.get("errors", False) is None:
+        raise StyxValidationError("`errors` must not be None")
+    if not isinstance(params["errors"], bool):
+        raise StyxValidationError(f'`errors` has the wrong type: Received `{type(params.get("errors", False))}` expected `bool`')
+    if params.get("movies", False) is None:
+        raise StyxValidationError("`movies` must not be None")
+    if not isinstance(params["movies"], bool):
+        raise StyxValidationError(f'`movies` has the wrong type: Received `{type(params.get("movies", False))}` expected `bool`')
+    if params.get("intersect", False) is None:
+        raise StyxValidationError("`intersect` must not be None")
+    if not isinstance(params["intersect"], bool):
+        raise StyxValidationError(f'`intersect` has the wrong type: Received `{type(params.get("intersect", False))}` expected `bool`')
+    if params.get("mappings", False) is None:
+        raise StyxValidationError("`mappings` must not be None")
+    if not isinstance(params["mappings"], bool):
+        raise StyxValidationError(f'`mappings` has the wrong type: Received `{type(params.get("mappings", False))}` expected `bool`')
+    if params.get("correct_defect", None) is not None:
+        if not isinstance(params["correct_defect"], (float, int)):
+            raise StyxValidationError(f'`correct_defect` has the wrong type: Received `{type(params.get("correct_defect", None))}` expected `float | None`')
+    if params.get("niters", None) is not None:
+        if not isinstance(params["niters"], (float, int)):
+            raise StyxValidationError(f'`niters` has the wrong type: Received `{type(params.get("niters", None))}` expected `float | None`')
+    if params.get("genetic", False) is None:
+        raise StyxValidationError("`genetic` must not be None")
+    if not isinstance(params["genetic"], bool):
+        raise StyxValidationError(f'`genetic` has the wrong type: Received `{type(params.get("genetic", False))}` expected `bool`')
+    if params.get("optimize", False) is None:
+        raise StyxValidationError("`optimize` must not be None")
+    if not isinstance(params["optimize"], bool):
+        raise StyxValidationError(f'`optimize` has the wrong type: Received `{type(params.get("optimize", False))}` expected `bool`')
+    if params.get("random", None) is not None:
+        if not isinstance(params["random"], (float, int)):
+            raise StyxValidationError(f'`random` has the wrong type: Received `{type(params.get("random", None))}` expected `float | None`')
+    if params.get("seed", None) is not None:
+        if not isinstance(params["seed"], (float, int)):
+            raise StyxValidationError(f'`seed` has the wrong type: Received `{type(params.get("seed", None))}` expected `float | None`')
+    if params.get("diag", False) is None:
+        raise StyxValidationError("`diag` must not be None")
+    if not isinstance(params["diag"], bool):
+        raise StyxValidationError(f'`diag` has the wrong type: Received `{type(params.get("diag", False))}` expected `bool`')
+    if params.get("mgz", False) is None:
+        raise StyxValidationError("`mgz` must not be None")
+    if not isinstance(params["mgz"], bool):
+        raise StyxValidationError(f'`mgz` has the wrong type: Received `{type(params.get("mgz", False))}` expected `bool`')
+    if params.get("smooth", None) is not None:
+        if not isinstance(params["smooth"], (float, int)):
+            raise StyxValidationError(f'`smooth` has the wrong type: Received `{type(params.get("smooth", None))}` expected `float | None`')
+    if params.get("diagnostic_level", None) is not None:
+        if not isinstance(params["diagnostic_level"], (float, int)):
+            raise StyxValidationError(f'`diagnostic_level` has the wrong type: Received `{type(params.get("diagnostic_level", None))}` expected `float | None`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+
+
 def mris_fix_topology_cargs(
     params: MrisFixTopologyParameters,
     execution: Execution,
@@ -329,6 +435,7 @@ def mris_fix_topology_execute(
     Returns:
         NamedTuple of outputs (described in `MrisFixTopologyOutputs`).
     """
+    mris_fix_topology_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_FIX_TOPOLOGY_METADATA)
     params = execution.params(params)

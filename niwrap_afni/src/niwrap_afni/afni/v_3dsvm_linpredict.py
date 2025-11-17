@@ -65,6 +65,31 @@ def v_3dsvm_linpredict_params(
     return params
 
 
+def v_3dsvm_linpredict_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dsvmLinpredictParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("mask_dataset", None) is not None:
+        if not isinstance(params["mask_dataset"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_dataset` has the wrong type: Received `{type(params.get("mask_dataset", None))}` expected `InputPathType | None`')
+    if params.get("weight_vector", None) is None:
+        raise StyxValidationError("`weight_vector` must not be None")
+    if not isinstance(params["weight_vector"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`weight_vector` has the wrong type: Received `{type(params.get("weight_vector", None))}` expected `InputPathType`')
+    if params.get("input_dataset", None) is None:
+        raise StyxValidationError("`input_dataset` must not be None")
+    if not isinstance(params["input_dataset"], str):
+        raise StyxValidationError(f'`input_dataset` has the wrong type: Received `{type(params.get("input_dataset", None))}` expected `str`')
+
+
 def v_3dsvm_linpredict_cargs(
     params: V3dsvmLinpredictParameters,
     execution: Execution,
@@ -129,6 +154,7 @@ def v_3dsvm_linpredict_execute(
     Returns:
         NamedTuple of outputs (described in `V3dsvmLinpredictOutputs`).
     """
+    v_3dsvm_linpredict_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3DSVM_LINPREDICT_METADATA)
     params = execution.params(params)

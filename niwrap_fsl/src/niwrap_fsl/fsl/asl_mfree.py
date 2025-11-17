@@ -157,6 +157,87 @@ def asl_mfree_params(
     return params
 
 
+def asl_mfree_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AslMfreeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("datafile", None) is None:
+        raise StyxValidationError("`datafile` must not be None")
+    if not isinstance(params["datafile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`datafile` has the wrong type: Received `{type(params.get("datafile", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("out", None) is None:
+        raise StyxValidationError("`out` must not be None")
+    if not isinstance(params["out"], str):
+        raise StyxValidationError(f'`out` has the wrong type: Received `{type(params.get("out", None))}` expected `str`')
+    if params.get("aif", None) is None:
+        raise StyxValidationError("`aif` must not be None")
+    if not isinstance(params["aif"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`aif` has the wrong type: Received `{type(params.get("aif", None))}` expected `InputPathType`')
+    if params.get("dt", None) is None:
+        raise StyxValidationError("`dt` must not be None")
+    if not isinstance(params["dt"], (float, int)):
+        raise StyxValidationError(f'`dt` has the wrong type: Received `{type(params.get("dt", None))}` expected `float`')
+    if params.get("metric", None) is not None:
+        if not isinstance(params["metric"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`metric` has the wrong type: Received `{type(params.get("metric", None))}` expected `InputPathType | None`')
+    if params.get("mthresh", None) is not None:
+        if not isinstance(params["mthresh"], (float, int)):
+            raise StyxValidationError(f'`mthresh` has the wrong type: Received `{type(params.get("mthresh", None))}` expected `float | None`')
+    if params.get("tcorrect", False) is None:
+        raise StyxValidationError("`tcorrect` must not be None")
+    if not isinstance(params["tcorrect"], bool):
+        raise StyxValidationError(f'`tcorrect` has the wrong type: Received `{type(params.get("tcorrect", False))}` expected `bool`')
+    if params.get("bata", None) is not None:
+        if not isinstance(params["bata"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`bata` has the wrong type: Received `{type(params.get("bata", None))}` expected `InputPathType | None`')
+    if params.get("batt", None) is not None:
+        if not isinstance(params["batt"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`batt` has the wrong type: Received `{type(params.get("batt", None))}` expected `InputPathType | None`')
+    if params.get("bat", False) is None:
+        raise StyxValidationError("`bat` must not be None")
+    if not isinstance(params["bat"], bool):
+        raise StyxValidationError(f'`bat` has the wrong type: Received `{type(params.get("bat", False))}` expected `bool`')
+    if params.get("bat_grad_thr", None) is not None:
+        if not isinstance(params["bat_grad_thr"], (float, int)):
+            raise StyxValidationError(f'`bat_grad_thr` has the wrong type: Received `{type(params.get("bat_grad_thr", None))}` expected `float | None`')
+    if params.get("t1", None) is not None:
+        if not isinstance(params["t1"], (float, int)):
+            raise StyxValidationError(f'`t1` has the wrong type: Received `{type(params.get("t1", None))}` expected `float | None`')
+    if params.get("fa", None) is not None:
+        if not isinstance(params["fa"], (float, int)):
+            raise StyxValidationError(f'`fa` has the wrong type: Received `{type(params.get("fa", None))}` expected `float | None`')
+    if params.get("std", False) is None:
+        raise StyxValidationError("`std` must not be None")
+    if not isinstance(params["std"], bool):
+        raise StyxValidationError(f'`std` has the wrong type: Received `{type(params.get("std", False))}` expected `bool`')
+    if params.get("nwb", None) is not None:
+        if not isinstance(params["nwb"], (float, int)):
+            raise StyxValidationError(f'`nwb` has the wrong type: Received `{type(params.get("nwb", None))}` expected `float | None`')
+    if params.get("turbo_quasar", False) is None:
+        raise StyxValidationError("`turbo_quasar` must not be None")
+    if not isinstance(params["turbo_quasar"], bool):
+        raise StyxValidationError(f'`turbo_quasar` has the wrong type: Received `{type(params.get("turbo_quasar", False))}` expected `bool`')
+    if params.get("shift_factor", None) is not None:
+        if not isinstance(params["shift_factor"], (float, int)):
+            raise StyxValidationError(f'`shift_factor` has the wrong type: Received `{type(params.get("shift_factor", None))}` expected `float | None`')
+    if params.get("verbose", False) is None:
+        raise StyxValidationError("`verbose` must not be None")
+    if not isinstance(params["verbose"], bool):
+        raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", False))}` expected `bool`')
+
+
 def asl_mfree_cargs(
     params: AslMfreeParameters,
     execution: Execution,
@@ -290,6 +371,7 @@ def asl_mfree_execute(
     Returns:
         NamedTuple of outputs (described in `AslMfreeOutputs`).
     """
+    asl_mfree_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ASL_MFREE_METADATA)
     params = execution.params(params)

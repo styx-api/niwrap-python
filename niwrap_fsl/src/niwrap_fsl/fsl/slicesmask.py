@@ -61,6 +61,32 @@ def slicesmask_params(
     return params
 
 
+def slicesmask_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `SlicesmaskParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("image", None) is None:
+        raise StyxValidationError("`image` must not be None")
+    if not isinstance(params["image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`image` has the wrong type: Received `{type(params.get("image", None))}` expected `InputPathType`')
+    if params.get("mask", None) is None:
+        raise StyxValidationError("`mask` must not be None")
+    if not isinstance(params["mask"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask` has the wrong type: Received `{type(params.get("mask", None))}` expected `InputPathType`')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+
+
 def slicesmask_cargs(
     params: SlicesmaskParameters,
     execution: Execution,
@@ -121,6 +147,7 @@ def slicesmask_execute(
     Returns:
         NamedTuple of outputs (described in `SlicesmaskOutputs`).
     """
+    slicesmask_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(SLICESMASK_METADATA)
     params = execution.params(params)

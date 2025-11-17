@@ -81,6 +81,28 @@ def label_merge_up_to_params(
     return params
 
 
+def label_merge_up_to_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelMergeUpToParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("last-column", None) is None:
+        raise StyxValidationError("`last-column` must not be None")
+    if not isinstance(params["last-column"], str):
+        raise StyxValidationError(f'`last-column` has the wrong type: Received `{type(params.get("last-column", None))}` expected `str`')
+    if params.get("reverse", False) is None:
+        raise StyxValidationError("`reverse` must not be None")
+    if not isinstance(params["reverse"], bool):
+        raise StyxValidationError(f'`reverse` has the wrong type: Received `{type(params.get("reverse", False))}` expected `bool`')
+
+
 def label_merge_up_to_cargs(
     params: LabelMergeUpToParameters,
     execution: Execution,
@@ -126,6 +148,26 @@ def label_merge_column_params(
     return params
 
 
+def label_merge_column_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelMergeColumnParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("column", None) is None:
+        raise StyxValidationError("`column` must not be None")
+    if not isinstance(params["column"], str):
+        raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `str`')
+    if params.get("up-to", None) is not None:
+        label_merge_up_to_validate(params["up-to"])
+
+
 def label_merge_column_cargs(
     params: LabelMergeColumnParameters,
     execution: Execution,
@@ -169,6 +211,29 @@ def label_merge_label_params(
     if column is not None:
         params["column"] = column
     return params
+
+
+def label_merge_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelMergeLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-in", None) is None:
+        raise StyxValidationError("`label-in` must not be None")
+    if not isinstance(params["label-in"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label-in` has the wrong type: Received `{type(params.get("label-in", None))}` expected `InputPathType`')
+    if params.get("column", None) is not None:
+        if not isinstance(params["column"], list):
+            raise StyxValidationError(f'`column` has the wrong type: Received `{type(params.get("column", None))}` expected `list[LabelMergeColumnParameters] | None`')
+        for e in params["column"]:
+            label_merge_column_validate(e)
 
 
 def label_merge_label_cargs(
@@ -224,6 +289,29 @@ def label_merge_params(
     if label is not None:
         params["label"] = label
     return params
+
+
+def label_merge_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `LabelMergeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("label-out", None) is None:
+        raise StyxValidationError("`label-out` must not be None")
+    if not isinstance(params["label-out"], str):
+        raise StyxValidationError(f'`label-out` has the wrong type: Received `{type(params.get("label-out", None))}` expected `str`')
+    if params.get("label", None) is not None:
+        if not isinstance(params["label"], list):
+            raise StyxValidationError(f'`label` has the wrong type: Received `{type(params.get("label", None))}` expected `list[LabelMergeLabelParameters] | None`')
+        for e in params["label"]:
+            label_merge_label_validate(e)
 
 
 def label_merge_cargs(
@@ -293,6 +381,7 @@ def label_merge_execute(
     Returns:
         NamedTuple of outputs (described in `LabelMergeOutputs`).
     """
+    label_merge_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(LABEL_MERGE_METADATA)
     params = execution.params(params)

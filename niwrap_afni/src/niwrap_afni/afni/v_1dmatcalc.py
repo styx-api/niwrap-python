@@ -52,6 +52,23 @@ def v_1dmatcalc_params(
     return params
 
 
+def v_1dmatcalc_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V1dmatcalcParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("expression", None) is not None:
+        if not isinstance(params["expression"], str):
+            raise StyxValidationError(f'`expression` has the wrong type: Received `{type(params.get("expression", None))}` expected `str | None`')
+
+
 def v_1dmatcalc_cargs(
     params: V1dmatcalcParameters,
     execution: Execution,
@@ -112,6 +129,7 @@ def v_1dmatcalc_execute(
     Returns:
         NamedTuple of outputs (described in `V1dmatcalcOutputs`).
     """
+    v_1dmatcalc_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DMATCALC_METADATA)
     params = execution.params(params)

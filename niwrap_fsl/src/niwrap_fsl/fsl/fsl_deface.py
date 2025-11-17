@@ -141,6 +141,75 @@ def fsl_deface_params(
     return params
 
 
+def fsl_deface_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FslDefaceParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("infile", None) is None:
+        raise StyxValidationError("`infile` must not be None")
+    if not isinstance(params["infile"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`infile` has the wrong type: Received `{type(params.get("infile", None))}` expected `InputPathType`')
+    if params.get("outfile", None) is None:
+        raise StyxValidationError("`outfile` must not be None")
+    if not isinstance(params["outfile"], str):
+        raise StyxValidationError(f'`outfile` has the wrong type: Received `{type(params.get("outfile", None))}` expected `str`')
+    if params.get("cropped_defacing_flag", False) is None:
+        raise StyxValidationError("`cropped_defacing_flag` must not be None")
+    if not isinstance(params["cropped_defacing_flag"], bool):
+        raise StyxValidationError(f'`cropped_defacing_flag` has the wrong type: Received `{type(params.get("cropped_defacing_flag", False))}` expected `bool`')
+    if params.get("defacing_mask", None) is not None:
+        if not isinstance(params["defacing_mask"], str):
+            raise StyxValidationError(f'`defacing_mask` has the wrong type: Received `{type(params.get("defacing_mask", None))}` expected `str | None`')
+    if params.get("cropped_struc", None) is not None:
+        if not isinstance(params["cropped_struc"], str):
+            raise StyxValidationError(f'`cropped_struc` has the wrong type: Received `{type(params.get("cropped_struc", None))}` expected `str | None`')
+    if params.get("orig_to_std_mat", None) is not None:
+        if not isinstance(params["orig_to_std_mat"], str):
+            raise StyxValidationError(f'`orig_to_std_mat` has the wrong type: Received `{type(params.get("orig_to_std_mat", None))}` expected `str | None`')
+    if params.get("orig_to_cropped_mat", None) is not None:
+        if not isinstance(params["orig_to_cropped_mat"], str):
+            raise StyxValidationError(f'`orig_to_cropped_mat` has the wrong type: Received `{type(params.get("orig_to_cropped_mat", None))}` expected `str | None`')
+    if params.get("cropped_to_std_mat", None) is not None:
+        if not isinstance(params["cropped_to_std_mat"], str):
+            raise StyxValidationError(f'`cropped_to_std_mat` has the wrong type: Received `{type(params.get("cropped_to_std_mat", None))}` expected `str | None`')
+    if params.get("shift_nud", None) is not None:
+        if not isinstance(params["shift_nud"], list):
+            raise StyxValidationError(f'`shift_nud` has the wrong type: Received `{type(params.get("shift_nud", None))}` expected `list[float] | None`')
+        if len(params["shift_nud"]) == 3:
+            raise StyxValidationError("Parameter `shift_nud` must contain exactly 3 elements")
+        for e in params["shift_nud"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`shift_nud` has the wrong type: Received `{type(params.get("shift_nud", None))}` expected `list[float] | None`')
+    if params.get("fractional_intensity", None) is not None:
+        if not isinstance(params["fractional_intensity"], (float, int)):
+            raise StyxValidationError(f'`fractional_intensity` has the wrong type: Received `{type(params.get("fractional_intensity", None))}` expected `float | None`')
+        if 0 <= params["fractional_intensity"] <= 1:
+            raise StyxValidationError("Parameter `fractional_intensity` must be between 0 and 1 (inclusive)")
+    if params.get("bias_correct_flag", False) is None:
+        raise StyxValidationError("`bias_correct_flag` must not be None")
+    if not isinstance(params["bias_correct_flag"], bool):
+        raise StyxValidationError(f'`bias_correct_flag` has the wrong type: Received `{type(params.get("bias_correct_flag", False))}` expected `bool`')
+    if params.get("center_of_gravity", None) is not None:
+        if not isinstance(params["center_of_gravity"], list):
+            raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
+        if len(params["center_of_gravity"]) == 3:
+            raise StyxValidationError("Parameter `center_of_gravity` must contain exactly 3 elements")
+        for e in params["center_of_gravity"]:
+            if not isinstance(e, (float, int)):
+                raise StyxValidationError(f'`center_of_gravity` has the wrong type: Received `{type(params.get("center_of_gravity", None))}` expected `list[float] | None`')
+    if params.get("qc_images", None) is not None:
+        if not isinstance(params["qc_images"], str):
+            raise StyxValidationError(f'`qc_images` has the wrong type: Received `{type(params.get("qc_images", None))}` expected `str | None`')
+
+
 def fsl_deface_cargs(
     params: FslDefaceParameters,
     execution: Execution,
@@ -256,6 +325,7 @@ def fsl_deface_execute(
     Returns:
         NamedTuple of outputs (described in `FslDefaceOutputs`).
     """
+    fsl_deface_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSL_DEFACE_METADATA)
     params = execution.params(params)

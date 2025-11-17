@@ -88,6 +88,50 @@ def mri_func2sph_params(
     return params
 
 
+def mri_func2sph_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MriFunc2sphParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("instem", None) is None:
+        raise StyxValidationError("`instem` must not be None")
+    if not isinstance(params["instem"], str):
+        raise StyxValidationError(f'`instem` has the wrong type: Received `{type(params.get("instem", None))}` expected `str`')
+    if params.get("outstem", None) is None:
+        raise StyxValidationError("`outstem` must not be None")
+    if not isinstance(params["outstem"], str):
+        raise StyxValidationError(f'`outstem` has the wrong type: Received `{type(params.get("outstem", None))}` expected `str`')
+    if params.get("hemisphere", None) is None:
+        raise StyxValidationError("`hemisphere` must not be None")
+    if not isinstance(params["hemisphere"], str):
+        raise StyxValidationError(f'`hemisphere` has the wrong type: Received `{type(params.get("hemisphere", None))}` expected `typing.Literal["lh", "rh"]`')
+    if params["hemisphere"] not in ["lh", "rh"]:
+        raise StyxValidationError("Parameter `hemisphere` must be one of [\"lh\", \"rh\"]")
+    if params.get("fvitdir", None) is None:
+        raise StyxValidationError("`fvitdir` must not be None")
+    if not isinstance(params["fvitdir"], str):
+        raise StyxValidationError(f'`fvitdir` has the wrong type: Received `{type(params.get("fvitdir", None))}` expected `str`')
+    if params.get("hole_filling_iters", None) is not None:
+        if not isinstance(params["hole_filling_iters"], (float, int)):
+            raise StyxValidationError(f'`hole_filling_iters` has the wrong type: Received `{type(params.get("hole_filling_iters", None))}` expected `float | None`')
+    if params.get("icosahedron_size", None) is not None:
+        if not isinstance(params["icosahedron_size"], (float, int)):
+            raise StyxValidationError(f'`icosahedron_size` has the wrong type: Received `{type(params.get("icosahedron_size", None))}` expected `float | None`')
+    if params.get("input_type", None) is not None:
+        if not isinstance(params["input_type"], str):
+            raise StyxValidationError(f'`input_type` has the wrong type: Received `{type(params.get("input_type", None))}` expected `str | None`')
+    if params.get("umask", None) is not None:
+        if not isinstance(params["umask"], str):
+            raise StyxValidationError(f'`umask` has the wrong type: Received `{type(params.get("umask", None))}` expected `str | None`')
+
+
 def mri_func2sph_cargs(
     params: MriFunc2sphParameters,
     execution: Execution,
@@ -180,6 +224,7 @@ def mri_func2sph_execute(
     Returns:
         NamedTuple of outputs (described in `MriFunc2sphOutputs`).
     """
+    mri_func2sph_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_FUNC2SPH_METADATA)
     params = execution.params(params)

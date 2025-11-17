@@ -113,6 +113,73 @@ def t4imgs_4dfp_params(
     return params
 
 
+def t4imgs_4dfp_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `T4imgs4dfpParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("sqrt_normalize", False) is None:
+        raise StyxValidationError("`sqrt_normalize` must not be None")
+    if not isinstance(params["sqrt_normalize"], bool):
+        raise StyxValidationError(f'`sqrt_normalize` has the wrong type: Received `{type(params.get("sqrt_normalize", False))}` expected `bool`')
+    if params.get("cubic_spline", False) is None:
+        raise StyxValidationError("`cubic_spline` must not be None")
+    if not isinstance(params["cubic_spline"], bool):
+        raise StyxValidationError(f'`cubic_spline` has the wrong type: Received `{type(params.get("cubic_spline", False))}` expected `bool`')
+    if params.get("output_nan", False) is None:
+        raise StyxValidationError("`output_nan` must not be None")
+    if not isinstance(params["output_nan"], bool):
+        raise StyxValidationError(f'`output_nan` has the wrong type: Received `{type(params.get("output_nan", False))}` expected `bool`')
+    if params.get("convert_t4", False) is None:
+        raise StyxValidationError("`convert_t4` must not be None")
+    if not isinstance(params["convert_t4"], bool):
+        raise StyxValidationError(f'`convert_t4` has the wrong type: Received `{type(params.get("convert_t4", False))}` expected `bool`')
+    if params.get("nearest_neighbor", False) is None:
+        raise StyxValidationError("`nearest_neighbor` must not be None")
+    if not isinstance(params["nearest_neighbor"], bool):
+        raise StyxValidationError(f'`nearest_neighbor` has the wrong type: Received `{type(params.get("nearest_neighbor", False))}` expected `bool`')
+    if params.get("output_111_space", False) is None:
+        raise StyxValidationError("`output_111_space` must not be None")
+    if not isinstance(params["output_111_space"], bool):
+        raise StyxValidationError(f'`output_111_space` has the wrong type: Received `{type(params.get("output_111_space", False))}` expected `bool`')
+    if params.get("output_222_space", False) is None:
+        raise StyxValidationError("`output_222_space` must not be None")
+    if not isinstance(params["output_222_space"], bool):
+        raise StyxValidationError(f'`output_222_space` has the wrong type: Received `{type(params.get("output_222_space", False))}` expected `bool`')
+    if params.get("output_333n_space", None) is not None:
+        if not isinstance(params["output_333n_space"], str):
+            raise StyxValidationError(f'`output_333n_space` has the wrong type: Received `{type(params.get("output_333n_space", None))}` expected `str | None`')
+    if params.get("duplicate_dimensions", None) is not None:
+        if not isinstance(params["duplicate_dimensions"], str):
+            raise StyxValidationError(f'`duplicate_dimensions` has the wrong type: Received `{type(params.get("duplicate_dimensions", None))}` expected `str | None`')
+    if params.get("big_endian", False) is None:
+        raise StyxValidationError("`big_endian` must not be None")
+    if not isinstance(params["big_endian"], bool):
+        raise StyxValidationError(f'`big_endian` has the wrong type: Received `{type(params.get("big_endian", False))}` expected `bool`')
+    if params.get("little_endian", False) is None:
+        raise StyxValidationError("`little_endian` must not be None")
+    if not isinstance(params["little_endian"], bool):
+        raise StyxValidationError(f'`little_endian` has the wrong type: Received `{type(params.get("little_endian", False))}` expected `bool`')
+    if params.get("input_images", None) is None:
+        raise StyxValidationError("`input_images` must not be None")
+    if not isinstance(params["input_images"], list):
+        raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    for e in params["input_images"]:
+        if not isinstance(e, (pathlib.Path, str)):
+            raise StyxValidationError(f'`input_images` has the wrong type: Received `{type(params.get("input_images", None))}` expected `list[InputPathType]`')
+    if params.get("output_image", None) is None:
+        raise StyxValidationError("`output_image` must not be None")
+    if not isinstance(params["output_image"], str):
+        raise StyxValidationError(f'`output_image` has the wrong type: Received `{type(params.get("output_image", None))}` expected `str`')
+
+
 def t4imgs_4dfp_cargs(
     params: T4imgs4dfpParameters,
     execution: Execution,
@@ -200,6 +267,7 @@ def t4imgs_4dfp_execute(
     Returns:
         NamedTuple of outputs (described in `T4imgs4dfpOutputs`).
     """
+    t4imgs_4dfp_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(T4IMGS_4DFP_METADATA)
     params = execution.params(params)

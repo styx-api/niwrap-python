@@ -97,6 +97,39 @@ def test_recon_all_csh_params(
     return params
 
 
+def test_recon_all_csh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TestReconAllCshParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("reference_subj_source_dir", None) is not None:
+        if not isinstance(params["reference_subj_source_dir"], str):
+            raise StyxValidationError(f'`reference_subj_source_dir` has the wrong type: Received `{type(params.get("reference_subj_source_dir", None))}` expected `str | None`')
+    if params.get("reference_subjid", None) is not None:
+        if not isinstance(params["reference_subjid"], str):
+            raise StyxValidationError(f'`reference_subjid` has the wrong type: Received `{type(params.get("reference_subjid", None))}` expected `str | None`')
+    if params.get("test_subject_dest_dir", None) is not None:
+        if not isinstance(params["test_subject_dest_dir"], str):
+            raise StyxValidationError(f'`test_subject_dest_dir` has the wrong type: Received `{type(params.get("test_subject_dest_dir", None))}` expected `str | None`')
+    if params.get("test_subjid", None) is not None:
+        if not isinstance(params["test_subjid"], str):
+            raise StyxValidationError(f'`test_subjid` has the wrong type: Received `{type(params.get("test_subjid", None))}` expected `str | None`')
+    if params.get("freesurfer_home", None) is not None:
+        if not isinstance(params["freesurfer_home"], str):
+            raise StyxValidationError(f'`freesurfer_home` has the wrong type: Received `{type(params.get("freesurfer_home", None))}` expected `str | None`')
+    if params.get("norecon", False) is None:
+        raise StyxValidationError("`norecon` must not be None")
+    if not isinstance(params["norecon"], bool):
+        raise StyxValidationError(f'`norecon` has the wrong type: Received `{type(params.get("norecon", False))}` expected `bool`')
+
+
 def test_recon_all_csh_cargs(
     params: TestReconAllCshParameters,
     execution: Execution,
@@ -189,6 +222,7 @@ def test_recon_all_csh_execute(
     Returns:
         NamedTuple of outputs (described in `TestReconAllCshOutputs`).
     """
+    test_recon_all_csh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TEST_RECON_ALL_CSH_METADATA)
     params = execution.params(params)

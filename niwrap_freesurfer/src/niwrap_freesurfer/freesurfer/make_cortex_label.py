@@ -72,6 +72,34 @@ def make_cortex_label_params(
     return params
 
 
+def make_cortex_label_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakeCortexLabelParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("hemi", None) is not None:
+        if not isinstance(params["hemi"], str):
+            raise StyxValidationError(f'`hemi` has the wrong type: Received `{type(params.get("hemi", None))}` expected `str | None`')
+    if params.get("use_a2009s", False) is None:
+        raise StyxValidationError("`use_a2009s` must not be None")
+    if not isinstance(params["use_a2009s"], bool):
+        raise StyxValidationError(f'`use_a2009s` has the wrong type: Received `{type(params.get("use_a2009s", False))}` expected `bool`')
+    if params.get("output_name", None) is not None:
+        if not isinstance(params["output_name"], str):
+            raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str | None`')
+
+
 def make_cortex_label_cargs(
     params: MakeCortexLabelParameters,
     execution: Execution,
@@ -146,6 +174,7 @@ def make_cortex_label_execute(
     Returns:
         NamedTuple of outputs (described in `MakeCortexLabelOutputs`).
     """
+    make_cortex_label_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKE_CORTEX_LABEL_METADATA)
     params = execution.params(params)

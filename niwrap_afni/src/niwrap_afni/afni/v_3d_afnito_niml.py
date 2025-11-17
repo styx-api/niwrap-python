@@ -66,6 +66,35 @@ def v_3d_afnito_niml_params(
     return params
 
 
+def v_3d_afnito_niml_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAfnitoNimlParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dset", None) is None:
+        raise StyxValidationError("`dset` must not be None")
+    if not isinstance(params["dset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`dset` has the wrong type: Received `{type(params.get("dset", None))}` expected `InputPathType`')
+    if params.get("data", False) is None:
+        raise StyxValidationError("`data` must not be None")
+    if not isinstance(params["data"], bool):
+        raise StyxValidationError(f'`data` has the wrong type: Received `{type(params.get("data", False))}` expected `bool`')
+    if params.get("ascii", False) is None:
+        raise StyxValidationError("`ascii` must not be None")
+    if not isinstance(params["ascii"], bool):
+        raise StyxValidationError(f'`ascii` has the wrong type: Received `{type(params.get("ascii", False))}` expected `bool`')
+    if params.get("tcp", None) is not None:
+        if not isinstance(params["tcp"], str):
+            raise StyxValidationError(f'`tcp` has the wrong type: Received `{type(params.get("tcp", None))}` expected `str | None`')
+
+
 def v_3d_afnito_niml_cargs(
     params: V3dAfnitoNimlParameters,
     execution: Execution,
@@ -133,6 +162,7 @@ def v_3d_afnito_niml_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoNimlOutputs`).
     """
+    v_3d_afnito_niml_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AFNITO_NIML_METADATA)
     params = execution.params(params)

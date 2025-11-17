@@ -119,6 +119,60 @@ def ants_joint_label_fusion_sh_params(
     return params
 
 
+def ants_joint_label_fusion_sh_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `AntsJointLabelFusionShParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("dimensionality", None) is not None:
+        if not isinstance(params["dimensionality"], int):
+            raise StyxValidationError(f'`dimensionality` has the wrong type: Received `{type(params.get("dimensionality", None))}` expected `typing.Literal[2, 3] | None`')
+        if params["dimensionality"] not in [2, 3]:
+            raise StyxValidationError("Parameter `dimensionality` must be one of [2, 3]")
+    if params.get("output", None) is not None:
+        if not isinstance(params["output"], str):
+            raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str | None`')
+    if params.get("atlas_image_mrf", None) is not None:
+        if not isinstance(params["atlas_image_mrf"], str):
+            raise StyxValidationError(f'`atlas_image_mrf` has the wrong type: Received `{type(params.get("atlas_image_mrf", None))}` expected `str | None`')
+    if params.get("atlas_segmentation_mrf", None) is not None:
+        if not isinstance(params["atlas_segmentation_mrf"], str):
+            raise StyxValidationError(f'`atlas_segmentation_mrf` has the wrong type: Received `{type(params.get("atlas_segmentation_mrf", None))}` expected `str | None`')
+    if params.get("rigid_transform", None) is not None:
+        if not isinstance(params["rigid_transform"], str):
+            raise StyxValidationError(f'`rigid_transform` has the wrong type: Received `{type(params.get("rigid_transform", None))}` expected `str | None`')
+    if params.get("similarity_metric", None) is not None:
+        if not isinstance(params["similarity_metric"], str):
+            raise StyxValidationError(f'`similarity_metric` has the wrong type: Received `{type(params.get("similarity_metric", None))}` expected `str | None`')
+    if params.get("other_options", None) is not None:
+        if not isinstance(params["other_options"], str):
+            raise StyxValidationError(f'`other_options` has the wrong type: Received `{type(params.get("other_options", None))}` expected `str | None`')
+    if params.get("verbose", None) is not None:
+        if not isinstance(params["verbose"], bool):
+            raise StyxValidationError(f'`verbose` has the wrong type: Received `{type(params.get("verbose", None))}` expected `bool | None`')
+    if params.get("target_image", None) is None:
+        raise StyxValidationError("`target_image` must not be None")
+    if not isinstance(params["target_image"], str):
+        raise StyxValidationError(f'`target_image` has the wrong type: Received `{type(params.get("target_image", None))}` expected `str`')
+    if params.get("mask_image", None) is None:
+        raise StyxValidationError("`mask_image` must not be None")
+    if not isinstance(params["mask_image"], str):
+        raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `str`')
+    if params.get("rigid_transform_additional_options", None) is not None:
+        if not isinstance(params["rigid_transform_additional_options"], str):
+            raise StyxValidationError(f'`rigid_transform_additional_options` has the wrong type: Received `{type(params.get("rigid_transform_additional_options", None))}` expected `str | None`')
+    if params.get("similarity_metric_additional_options", None) is not None:
+        if not isinstance(params["similarity_metric_additional_options"], str):
+            raise StyxValidationError(f'`similarity_metric_additional_options` has the wrong type: Received `{type(params.get("similarity_metric_additional_options", None))}` expected `str | None`')
+
+
 def ants_joint_label_fusion_sh_cargs(
     params: AntsJointLabelFusionShParameters,
     execution: Execution,
@@ -235,6 +289,7 @@ def ants_joint_label_fusion_sh_execute(
     Returns:
         NamedTuple of outputs (described in `AntsJointLabelFusionShOutputs`).
     """
+    ants_joint_label_fusion_sh_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(ANTS_JOINT_LABEL_FUSION_SH_METADATA)
     params = execution.params(params)

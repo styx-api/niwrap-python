@@ -241,6 +241,137 @@ def fugue_params(
     return params
 
 
+def fugue_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `FugueParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("asym_se_time", None) is not None:
+        if not isinstance(params["asym_se_time"], (float, int)):
+            raise StyxValidationError(f'`asym_se_time` has the wrong type: Received `{type(params.get("asym_se_time", None))}` expected `float | None`')
+    if params.get("despike_2dfilter", False) is None:
+        raise StyxValidationError("`despike_2dfilter` must not be None")
+    if not isinstance(params["despike_2dfilter"], bool):
+        raise StyxValidationError(f'`despike_2dfilter` has the wrong type: Received `{type(params.get("despike_2dfilter", False))}` expected `bool`')
+    if params.get("despike_threshold", None) is not None:
+        if not isinstance(params["despike_threshold"], (float, int)):
+            raise StyxValidationError(f'`despike_threshold` has the wrong type: Received `{type(params.get("despike_threshold", None))}` expected `float | None`')
+    if params.get("dwell_time", None) is not None:
+        if not isinstance(params["dwell_time"], (float, int)):
+            raise StyxValidationError(f'`dwell_time` has the wrong type: Received `{type(params.get("dwell_time", None))}` expected `float | None`')
+    if params.get("dwell_to_asym_ratio", None) is not None:
+        if not isinstance(params["dwell_to_asym_ratio"], (float, int)):
+            raise StyxValidationError(f'`dwell_to_asym_ratio` has the wrong type: Received `{type(params.get("dwell_to_asym_ratio", None))}` expected `float | None`')
+    if params.get("fmap_in_file", None) is not None:
+        if not isinstance(params["fmap_in_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`fmap_in_file` has the wrong type: Received `{type(params.get("fmap_in_file", None))}` expected `InputPathType | None`')
+    if params.get("fmap_out_file", None) is not None:
+        if not isinstance(params["fmap_out_file"], str):
+            raise StyxValidationError(f'`fmap_out_file` has the wrong type: Received `{type(params.get("fmap_out_file", None))}` expected `str | None`')
+    if params.get("forward_warping", False) is None:
+        raise StyxValidationError("`forward_warping` must not be None")
+    if not isinstance(params["forward_warping"], bool):
+        raise StyxValidationError(f'`forward_warping` has the wrong type: Received `{type(params.get("forward_warping", False))}` expected `bool`')
+    if params.get("fourier_order", None) is not None:
+        if not isinstance(params["fourier_order"], int):
+            raise StyxValidationError(f'`fourier_order` has the wrong type: Received `{type(params.get("fourier_order", None))}` expected `int | None`')
+    if params.get("icorr", False) is None:
+        raise StyxValidationError("`icorr` must not be None")
+    if not isinstance(params["icorr"], bool):
+        raise StyxValidationError(f'`icorr` has the wrong type: Received `{type(params.get("icorr", False))}` expected `bool`')
+    if params.get("icorr_only", False) is None:
+        raise StyxValidationError("`icorr_only` must not be None")
+    if not isinstance(params["icorr_only"], bool):
+        raise StyxValidationError(f'`icorr_only` has the wrong type: Received `{type(params.get("icorr_only", False))}` expected `bool`')
+    if params.get("in_file", None) is not None:
+        if not isinstance(params["in_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`in_file` has the wrong type: Received `{type(params.get("in_file", None))}` expected `InputPathType | None`')
+    if params.get("mask_file", None) is not None:
+        if not isinstance(params["mask_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`mask_file` has the wrong type: Received `{type(params.get("mask_file", None))}` expected `InputPathType | None`')
+    if params.get("median_2dfilter", False) is None:
+        raise StyxValidationError("`median_2dfilter` must not be None")
+    if not isinstance(params["median_2dfilter"], bool):
+        raise StyxValidationError(f'`median_2dfilter` has the wrong type: Received `{type(params.get("median_2dfilter", False))}` expected `bool`')
+    if params.get("no_extend", False) is None:
+        raise StyxValidationError("`no_extend` must not be None")
+    if not isinstance(params["no_extend"], bool):
+        raise StyxValidationError(f'`no_extend` has the wrong type: Received `{type(params.get("no_extend", False))}` expected `bool`')
+    if params.get("no_gap_fill", False) is None:
+        raise StyxValidationError("`no_gap_fill` must not be None")
+    if not isinstance(params["no_gap_fill"], bool):
+        raise StyxValidationError(f'`no_gap_fill` has the wrong type: Received `{type(params.get("no_gap_fill", False))}` expected `bool`')
+    if params.get("nokspace", False) is None:
+        raise StyxValidationError("`nokspace` must not be None")
+    if not isinstance(params["nokspace"], bool):
+        raise StyxValidationError(f'`nokspace` has the wrong type: Received `{type(params.get("nokspace", False))}` expected `bool`')
+    if params.get("output_type", None) is not None:
+        if not isinstance(params["output_type"], str):
+            raise StyxValidationError(f'`output_type` has the wrong type: Received `{type(params.get("output_type", None))}` expected `typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None`')
+        if params["output_type"] not in ["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"]:
+            raise StyxValidationError("Parameter `output_type` must be one of [\"NIFTI\", \"NIFTI_PAIR\", \"NIFTI_GZ\", \"NIFTI_PAIR_GZ\"]")
+    if params.get("pava", False) is None:
+        raise StyxValidationError("`pava` must not be None")
+    if not isinstance(params["pava"], bool):
+        raise StyxValidationError(f'`pava` has the wrong type: Received `{type(params.get("pava", False))}` expected `bool`')
+    if params.get("phase_conjugate", False) is None:
+        raise StyxValidationError("`phase_conjugate` must not be None")
+    if not isinstance(params["phase_conjugate"], bool):
+        raise StyxValidationError(f'`phase_conjugate` has the wrong type: Received `{type(params.get("phase_conjugate", False))}` expected `bool`')
+    if params.get("phasemap_in_file", None) is not None:
+        if not isinstance(params["phasemap_in_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`phasemap_in_file` has the wrong type: Received `{type(params.get("phasemap_in_file", None))}` expected `InputPathType | None`')
+    if params.get("poly_order", None) is not None:
+        if not isinstance(params["poly_order"], int):
+            raise StyxValidationError(f'`poly_order` has the wrong type: Received `{type(params.get("poly_order", None))}` expected `int | None`')
+    if params.get("save_fmap", False) is None:
+        raise StyxValidationError("`save_fmap` must not be None")
+    if not isinstance(params["save_fmap"], bool):
+        raise StyxValidationError(f'`save_fmap` has the wrong type: Received `{type(params.get("save_fmap", False))}` expected `bool`')
+    if params.get("save_shift", False) is None:
+        raise StyxValidationError("`save_shift` must not be None")
+    if not isinstance(params["save_shift"], bool):
+        raise StyxValidationError(f'`save_shift` has the wrong type: Received `{type(params.get("save_shift", False))}` expected `bool`')
+    if params.get("save_unmasked_fmap", False) is None:
+        raise StyxValidationError("`save_unmasked_fmap` must not be None")
+    if not isinstance(params["save_unmasked_fmap"], bool):
+        raise StyxValidationError(f'`save_unmasked_fmap` has the wrong type: Received `{type(params.get("save_unmasked_fmap", False))}` expected `bool`')
+    if params.get("save_unmasked_shift", False) is None:
+        raise StyxValidationError("`save_unmasked_shift` must not be None")
+    if not isinstance(params["save_unmasked_shift"], bool):
+        raise StyxValidationError(f'`save_unmasked_shift` has the wrong type: Received `{type(params.get("save_unmasked_shift", False))}` expected `bool`')
+    if params.get("shift_in_file", None) is not None:
+        if not isinstance(params["shift_in_file"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`shift_in_file` has the wrong type: Received `{type(params.get("shift_in_file", None))}` expected `InputPathType | None`')
+    if params.get("shift_out_file", None) is not None:
+        if not isinstance(params["shift_out_file"], str):
+            raise StyxValidationError(f'`shift_out_file` has the wrong type: Received `{type(params.get("shift_out_file", None))}` expected `str | None`')
+    if params.get("smooth2d", None) is not None:
+        if not isinstance(params["smooth2d"], (float, int)):
+            raise StyxValidationError(f'`smooth2d` has the wrong type: Received `{type(params.get("smooth2d", None))}` expected `float | None`')
+    if params.get("smooth3d", None) is not None:
+        if not isinstance(params["smooth3d"], (float, int)):
+            raise StyxValidationError(f'`smooth3d` has the wrong type: Received `{type(params.get("smooth3d", None))}` expected `float | None`')
+    if params.get("unwarp_direction", None) is not None:
+        if not isinstance(params["unwarp_direction"], str):
+            raise StyxValidationError(f'`unwarp_direction` has the wrong type: Received `{type(params.get("unwarp_direction", None))}` expected `typing.Literal["x", "y", "z", "x-", "y-", "z-"] | None`')
+        if params["unwarp_direction"] not in ["x", "y", "z", "x-", "y-", "z-"]:
+            raise StyxValidationError("Parameter `unwarp_direction` must be one of [\"x\", \"y\", \"z\", \"x-\", \"y-\", \"z-\"]")
+    if params.get("unwarped_file", None) is not None:
+        if not isinstance(params["unwarped_file"], str):
+            raise StyxValidationError(f'`unwarped_file` has the wrong type: Received `{type(params.get("unwarped_file", None))}` expected `str | None`')
+    if params.get("warped_file", None) is not None:
+        if not isinstance(params["warped_file"], str):
+            raise StyxValidationError(f'`warped_file` has the wrong type: Received `{type(params.get("warped_file", None))}` expected `str | None`')
+
+
 def fugue_cargs(
     params: FugueParameters,
     execution: Execution,
@@ -367,6 +498,7 @@ def fugue_execute(
     Returns:
         NamedTuple of outputs (described in `FugueOutputs`).
     """
+    fugue_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(FUGUE_METADATA)
     params = execution.params(params)

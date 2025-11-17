@@ -85,6 +85,44 @@ def makerot_params(
     return params
 
 
+def makerot_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `MakerotParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("axis", None) is not None:
+        if not isinstance(params["axis"], str):
+            raise StyxValidationError(f'`axis` has the wrong type: Received `{type(params.get("axis", None))}` expected `str | None`')
+    if params.get("cov", None) is not None:
+        if not isinstance(params["cov"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`cov` has the wrong type: Received `{type(params.get("cov", None))}` expected `InputPathType | None`')
+    if params.get("center", None) is not None:
+        if not isinstance(params["center"], str):
+            raise StyxValidationError(f'`center` has the wrong type: Received `{type(params.get("center", None))}` expected `str | None`')
+    if params.get("output_file", None) is not None:
+        if not isinstance(params["output_file"], str):
+            raise StyxValidationError(f'`output_file` has the wrong type: Received `{type(params.get("output_file", None))}` expected `str | None`')
+    if params.get("verbose_flag", False) is None:
+        raise StyxValidationError("`verbose_flag` must not be None")
+    if not isinstance(params["verbose_flag"], bool):
+        raise StyxValidationError(f'`verbose_flag` has the wrong type: Received `{type(params.get("verbose_flag", False))}` expected `bool`')
+    if params.get("help_flag", False) is None:
+        raise StyxValidationError("`help_flag` must not be None")
+    if not isinstance(params["help_flag"], bool):
+        raise StyxValidationError(f'`help_flag` has the wrong type: Received `{type(params.get("help_flag", False))}` expected `bool`')
+    if params.get("theta", None) is None:
+        raise StyxValidationError("`theta` must not be None")
+    if not isinstance(params["theta"], (float, int)):
+        raise StyxValidationError(f'`theta` has the wrong type: Received `{type(params.get("theta", None))}` expected `float`')
+
+
 def makerot_cargs(
     params: MakerotParameters,
     execution: Execution,
@@ -170,6 +208,7 @@ def makerot_execute(
     Returns:
         NamedTuple of outputs (described in `MakerotOutputs`).
     """
+    makerot_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(MAKEROT_METADATA)
     params = execution.params(params)

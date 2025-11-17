@@ -91,6 +91,47 @@ def stat_normalize_params(
     return params
 
 
+def stat_normalize_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `StatNormalizeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("input_sv_prefix", None) is None:
+        raise StyxValidationError("`input_sv_prefix` must not be None")
+    if not isinstance(params["input_sv_prefix"], str):
+        raise StyxValidationError(f'`input_sv_prefix` has the wrong type: Received `{type(params.get("input_sv_prefix", None))}` expected `str`')
+    if params.get("output_sv_prefix", None) is None:
+        raise StyxValidationError("`output_sv_prefix` must not be None")
+    if not isinstance(params["output_sv_prefix"], str):
+        raise StyxValidationError(f'`output_sv_prefix` has the wrong type: Received `{type(params.get("output_sv_prefix", None))}` expected `str`')
+    if params.get("resolution", None) is not None:
+        if not isinstance(params["resolution"], (float, int)):
+            raise StyxValidationError(f'`resolution` has the wrong type: Received `{type(params.get("resolution", None))}` expected `float | None`')
+    if params.get("field_of_view", None) is not None:
+        if not isinstance(params["field_of_view"], (float, int)):
+            raise StyxValidationError(f'`field_of_view` has the wrong type: Received `{type(params.get("field_of_view", None))}` expected `float | None`')
+    if params.get("sph_avg", None) is not None:
+        if not isinstance(params["sph_avg"], str):
+            raise StyxValidationError(f'`sph_avg` has the wrong type: Received `{type(params.get("sph_avg", None))}` expected `str | None`')
+    if params.get("xfm_file", None) is not None:
+        if not isinstance(params["xfm_file"], str):
+            raise StyxValidationError(f'`xfm_file` has the wrong type: Received `{type(params.get("xfm_file", None))}` expected `str | None`')
+    if params.get("fix_xfm_flag", False) is None:
+        raise StyxValidationError("`fix_xfm_flag` must not be None")
+    if not isinstance(params["fix_xfm_flag"], bool):
+        raise StyxValidationError(f'`fix_xfm_flag` has the wrong type: Received `{type(params.get("fix_xfm_flag", False))}` expected `bool`')
+    if params.get("float2int_option", None) is not None:
+        if not isinstance(params["float2int_option"], str):
+            raise StyxValidationError(f'`float2int_option` has the wrong type: Received `{type(params.get("float2int_option", None))}` expected `str | None`')
+
+
 def stat_normalize_cargs(
     params: StatNormalizeParameters,
     execution: Execution,
@@ -177,6 +218,7 @@ def stat_normalize_execute(
     Returns:
         NamedTuple of outputs (described in `StatNormalizeOutputs`).
     """
+    stat_normalize_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(STAT_NORMALIZE_METADATA)
     params = execution.params(params)

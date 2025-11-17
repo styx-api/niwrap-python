@@ -110,6 +110,59 @@ def bmedits2surf_params(
     return params
 
 
+def bmedits2surf_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `Bmedits2surfParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("self", False) is None:
+        raise StyxValidationError("`self` must not be None")
+    if not isinstance(params["self"], bool):
+        raise StyxValidationError(f'`self` has the wrong type: Received `{type(params.get("self", False))}` expected `bool`')
+    if params.get("overwrite", False) is None:
+        raise StyxValidationError("`overwrite` must not be None")
+    if not isinstance(params["overwrite"], bool):
+        raise StyxValidationError(f'`overwrite` has the wrong type: Received `{type(params.get("overwrite", False))}` expected `bool`')
+    if params.get("tmp_dir", None) is not None:
+        if not isinstance(params["tmp_dir"], str):
+            raise StyxValidationError(f'`tmp_dir` has the wrong type: Received `{type(params.get("tmp_dir", None))}` expected `str | None`')
+    if params.get("cleanup", False) is None:
+        raise StyxValidationError("`cleanup` must not be None")
+    if not isinstance(params["cleanup"], bool):
+        raise StyxValidationError(f'`cleanup` has the wrong type: Received `{type(params.get("cleanup", False))}` expected `bool`')
+    if params.get("no_cleanup", False) is None:
+        raise StyxValidationError("`no_cleanup` must not be None")
+    if not isinstance(params["no_cleanup"], bool):
+        raise StyxValidationError(f'`no_cleanup` has the wrong type: Received `{type(params.get("no_cleanup", False))}` expected `bool`')
+    if params.get("debug", False) is None:
+        raise StyxValidationError("`debug` must not be None")
+    if not isinstance(params["debug"], bool):
+        raise StyxValidationError(f'`debug` has the wrong type: Received `{type(params.get("debug", False))}` expected `bool`')
+    if params.get("left_hemisphere", False) is None:
+        raise StyxValidationError("`left_hemisphere` must not be None")
+    if not isinstance(params["left_hemisphere"], bool):
+        raise StyxValidationError(f'`left_hemisphere` has the wrong type: Received `{type(params.get("left_hemisphere", False))}` expected `bool`')
+    if params.get("right_hemisphere", False) is None:
+        raise StyxValidationError("`right_hemisphere` must not be None")
+    if not isinstance(params["right_hemisphere"], bool):
+        raise StyxValidationError(f'`right_hemisphere` has the wrong type: Received `{type(params.get("right_hemisphere", False))}` expected `bool`')
+    if params.get("no_surfs", False) is None:
+        raise StyxValidationError("`no_surfs` must not be None")
+    if not isinstance(params["no_surfs"], bool):
+        raise StyxValidationError(f'`no_surfs` has the wrong type: Received `{type(params.get("no_surfs", False))}` expected `bool`')
+
+
 def bmedits2surf_cargs(
     params: Bmedits2surfParameters,
     execution: Execution,
@@ -198,6 +251,7 @@ def bmedits2surf_execute(
     Returns:
         NamedTuple of outputs (described in `Bmedits2surfOutputs`).
     """
+    bmedits2surf_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(BMEDITS2SURF_METADATA)
     params = execution.params(params)

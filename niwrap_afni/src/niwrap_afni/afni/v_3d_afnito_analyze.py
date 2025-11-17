@@ -75,6 +75,35 @@ def v_3d_afnito_analyze_params(
     return params
 
 
+def v_3d_afnito_analyze_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `V3dAfnitoAnalyzeParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("4d_option", False) is None:
+        raise StyxValidationError("`4d_option` must not be None")
+    if not isinstance(params["4d_option"], bool):
+        raise StyxValidationError(f'`4d_option` has the wrong type: Received `{type(params.get("4d_option", False))}` expected `bool`')
+    if params.get("orient_option", None) is not None:
+        if not isinstance(params["orient_option"], str):
+            raise StyxValidationError(f'`orient_option` has the wrong type: Received `{type(params.get("orient_option", None))}` expected `str | None`')
+    if params.get("output_name", None) is None:
+        raise StyxValidationError("`output_name` must not be None")
+    if not isinstance(params["output_name"], str):
+        raise StyxValidationError(f'`output_name` has the wrong type: Received `{type(params.get("output_name", None))}` expected `str`')
+    if params.get("afni_dataset", None) is None:
+        raise StyxValidationError("`afni_dataset` must not be None")
+    if not isinstance(params["afni_dataset"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`afni_dataset` has the wrong type: Received `{type(params.get("afni_dataset", None))}` expected `InputPathType`')
+
+
 def v_3d_afnito_analyze_cargs(
     params: V3dAfnitoAnalyzeParameters,
     execution: Execution,
@@ -144,6 +173,7 @@ def v_3d_afnito_analyze_execute(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoAnalyzeOutputs`).
     """
+    v_3d_afnito_analyze_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_AFNITO_ANALYZE_METADATA)
     params = execution.params(params)

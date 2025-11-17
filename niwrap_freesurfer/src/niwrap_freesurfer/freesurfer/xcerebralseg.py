@@ -104,6 +104,54 @@ def xcerebralseg_params(
     return params
 
 
+def xcerebralseg_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `XcerebralsegParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("subject", None) is None:
+        raise StyxValidationError("`subject` must not be None")
+    if not isinstance(params["subject"], str):
+        raise StyxValidationError(f'`subject` has the wrong type: Received `{type(params.get("subject", None))}` expected `str`')
+    if params.get("output_volume", None) is not None:
+        if not isinstance(params["output_volume"], str):
+            raise StyxValidationError(f'`output_volume` has the wrong type: Received `{type(params.get("output_volume", None))}` expected `str | None`')
+    if params.get("atlas", None) is not None:
+        if not isinstance(params["atlas"], str):
+            raise StyxValidationError(f'`atlas` has the wrong type: Received `{type(params.get("atlas", None))}` expected `str | None`')
+    if params.get("mergevol", None) is not None:
+        if not isinstance(params["mergevol"], str):
+            raise StyxValidationError(f'`mergevol` has the wrong type: Received `{type(params.get("mergevol", None))}` expected `str | None`')
+    if params.get("source_volume", None) is not None:
+        if not isinstance(params["source_volume"], str):
+            raise StyxValidationError(f'`source_volume` has the wrong type: Received `{type(params.get("source_volume", None))}` expected `str | None`')
+    if params.get("no_stats", False) is None:
+        raise StyxValidationError("`no_stats` must not be None")
+    if not isinstance(params["no_stats"], bool):
+        raise StyxValidationError(f'`no_stats` has the wrong type: Received `{type(params.get("no_stats", False))}` expected `bool`')
+    if params.get("seg1_name", None) is not None:
+        if not isinstance(params["seg1_name"], str):
+            raise StyxValidationError(f'`seg1_name` has the wrong type: Received `{type(params.get("seg1_name", None))}` expected `str | None`')
+    if params.get("no_pons", False) is None:
+        raise StyxValidationError("`no_pons` must not be None")
+    if not isinstance(params["no_pons"], bool):
+        raise StyxValidationError(f'`no_pons` has the wrong type: Received `{type(params.get("no_pons", False))}` expected `bool`')
+    if params.get("no_vermis", False) is None:
+        raise StyxValidationError("`no_vermis` must not be None")
+    if not isinstance(params["no_vermis"], bool):
+        raise StyxValidationError(f'`no_vermis` has the wrong type: Received `{type(params.get("no_vermis", False))}` expected `bool`')
+    if params.get("threads", None) is not None:
+        if not isinstance(params["threads"], (float, int)):
+            raise StyxValidationError(f'`threads` has the wrong type: Received `{type(params.get("threads", None))}` expected `float | None`')
+
+
 def xcerebralseg_cargs(
     params: XcerebralsegParameters,
     execution: Execution,
@@ -203,6 +251,7 @@ def xcerebralseg_execute(
     Returns:
         NamedTuple of outputs (described in `XcerebralsegOutputs`).
     """
+    xcerebralseg_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(XCEREBRALSEG_METADATA)
     params = execution.params(params)

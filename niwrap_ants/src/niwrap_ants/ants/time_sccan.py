@@ -102,18 +102,20 @@ def time_sccan_network_cargs_dyn_fn(
     }.get(t)
 
 
-def time_sccan_network_outputs_dyn_fn(
+def time_sccan_network_validate_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
-    Get build outputs function by command type.
+    Get validate params function by command type.
     
     Args:
         t: Command type.
     Returns:
-        Build outputs function.
+        Validate params function.
     """
     return {
+        "network_scca": time_sccan_network_scca_validate,
+        "network_region_averaging": time_sccan_network_region_averaging_validate,
     }.get(t)
 
 
@@ -136,6 +138,28 @@ def time_sccan_timeseriesimage_to_matrix_params(
         "mask_image": mask_image,
     }
     return params
+
+
+def time_sccan_timeseriesimage_to_matrix_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TimeSccanTimeseriesimageToMatrixParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("timeseries_image", None) is None:
+        raise StyxValidationError("`timeseries_image` must not be None")
+    if not isinstance(params["timeseries_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`timeseries_image` has the wrong type: Received `{type(params.get("timeseries_image", None))}` expected `InputPathType`')
+    if params.get("mask_image", None) is None:
+        raise StyxValidationError("`mask_image` must not be None")
+    if not isinstance(params["mask_image"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`mask_image` has the wrong type: Received `{type(params.get("mask_image", None))}` expected `InputPathType`')
 
 
 def time_sccan_timeseriesimage_to_matrix_cargs(
@@ -177,6 +201,28 @@ def time_sccan_network_scca_params(
     return params
 
 
+def time_sccan_network_scca_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TimeSccanNetworkSccaParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("time_matrix", None) is None:
+        raise StyxValidationError("`time_matrix` must not be None")
+    if not isinstance(params["time_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`time_matrix` has the wrong type: Received `{type(params.get("time_matrix", None))}` expected `InputPathType`')
+    if params.get("label_matrix", None) is None:
+        raise StyxValidationError("`label_matrix` must not be None")
+    if not isinstance(params["label_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_matrix` has the wrong type: Received `{type(params.get("label_matrix", None))}` expected `InputPathType`')
+
+
 def time_sccan_network_scca_cargs(
     params: TimeSccanNetworkSccaParameters,
     execution: Execution,
@@ -214,6 +260,28 @@ def time_sccan_network_region_averaging_params(
         "label_matrix": label_matrix,
     }
     return params
+
+
+def time_sccan_network_region_averaging_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TimeSccanNetworkRegionAveragingParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("time_matrix", None) is None:
+        raise StyxValidationError("`time_matrix` must not be None")
+    if not isinstance(params["time_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`time_matrix` has the wrong type: Received `{type(params.get("time_matrix", None))}` expected `InputPathType`')
+    if params.get("label_matrix", None) is None:
+        raise StyxValidationError("`label_matrix` must not be None")
+    if not isinstance(params["label_matrix"], (pathlib.Path, str)):
+        raise StyxValidationError(f'`label_matrix` has the wrong type: Received `{type(params.get("label_matrix", None))}` expected `InputPathType`')
 
 
 def time_sccan_network_region_averaging_cargs(
@@ -321,6 +389,67 @@ def time_sccan_params(
     if network is not None:
         params["network"] = network
     return params
+
+
+def time_sccan_validate(
+    params: typing.Any,
+) -> None:
+    """
+    Validate parameters. Throws an error if `params` is not a valid
+    `TimeSccanParameters` object.
+    
+    Args:
+        params: The parameters object to validate.
+    """
+    if params is None or not isinstance(params, dict):
+        raise StyxValidationError(f'Params object has the wrong type \'{type(params)}\'')
+    if params.get("output", None) is None:
+        raise StyxValidationError("`output` must not be None")
+    if not isinstance(params["output"], str):
+        raise StyxValidationError(f'`output` has the wrong type: Received `{type(params.get("output", None))}` expected `str`')
+    if params.get("number_consecutive_labels", None) is not None:
+        if not isinstance(params["number_consecutive_labels"], int):
+            raise StyxValidationError(f'`number_consecutive_labels` has the wrong type: Received `{type(params.get("number_consecutive_labels", None))}` expected `int | None`')
+    if params.get("minimum_region_size", None) is not None:
+        if not isinstance(params["minimum_region_size"], int):
+            raise StyxValidationError(f'`minimum_region_size` has the wrong type: Received `{type(params.get("minimum_region_size", None))}` expected `int | None`')
+    if params.get("iterations", None) is not None:
+        if not isinstance(params["iterations"], int):
+            raise StyxValidationError(f'`iterations` has the wrong type: Received `{type(params.get("iterations", None))}` expected `int | None`')
+    if params.get("sparsity", None) is not None:
+        if not isinstance(params["sparsity"], (float, int)):
+            raise StyxValidationError(f'`sparsity` has the wrong type: Received `{type(params.get("sparsity", None))}` expected `float | None`')
+    if params.get("n_eigenvectors", None) is not None:
+        if not isinstance(params["n_eigenvectors"], int):
+            raise StyxValidationError(f'`n_eigenvectors` has the wrong type: Received `{type(params.get("n_eigenvectors", None))}` expected `int | None`')
+    if params.get("robustify", None) is not None:
+        if not isinstance(params["robustify"], int):
+            raise StyxValidationError(f'`robustify` has the wrong type: Received `{type(params.get("robustify", None))}` expected `int | None`')
+    if params.get("l1", None) is not None:
+        if not isinstance(params["l1"], (float, int)):
+            raise StyxValidationError(f'`l1` has the wrong type: Received `{type(params.get("l1", None))}` expected `float | None`')
+    if params.get("cluster_thresh", None) is not None:
+        if not isinstance(params["cluster_thresh"], int):
+            raise StyxValidationError(f'`cluster_thresh` has the wrong type: Received `{type(params.get("cluster_thresh", None))}` expected `int | None`')
+    if params.get("ridge_cca", None) is not None:
+        if not isinstance(params["ridge_cca"], int):
+            raise StyxValidationError(f'`ridge_cca` has the wrong type: Received `{type(params.get("ridge_cca", None))}` expected `int | None`')
+    if params.get("partial_scca_option", None) is not None:
+        if not isinstance(params["partial_scca_option"], str):
+            raise StyxValidationError(f'`partial_scca_option` has the wrong type: Received `{type(params.get("partial_scca_option", None))}` expected `typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None`')
+        if params["partial_scca_option"] not in ["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"]:
+            raise StyxValidationError("Parameter `partial_scca_option` must be one of [\"PQ\", \"PminusRQ\", \"PQminusR\", \"PminusRQminusR\"]")
+    if params.get("timeseriesimage_to_matrix", None) is not None:
+        time_sccan_timeseriesimage_to_matrix_validate(params["timeseriesimage_to_matrix"])
+    if params.get("labelsimage_to_matrix", None) is not None:
+        if not isinstance(params["labelsimage_to_matrix"], (pathlib.Path, str)):
+            raise StyxValidationError(f'`labelsimage_to_matrix` has the wrong type: Received `{type(params.get("labelsimage_to_matrix", None))}` expected `InputPathType | None`')
+    if params.get("network", None) is not None:
+        if not isinstance(params["network"], dict):
+            raise StyxValidationError(f'Params object has the wrong type \'{type(params["network"])}\'')
+        if "@type" not in params["network"]:
+            raise StyxValidationError("Params object is missing `@type`")
+        time_sccan_network_validate_dyn_fn(params["network"]["@type"])(params["network"])
 
 
 def time_sccan_cargs(
@@ -449,6 +578,7 @@ def time_sccan_execute(
     Returns:
         NamedTuple of outputs (described in `TimeSccanOutputs`).
     """
+    time_sccan_validate(params)
     runner = runner or get_global_runner()
     execution = runner.start_execution(TIME_SCCAN_METADATA)
     params = execution.params(params)
